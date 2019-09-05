@@ -519,8 +519,6 @@ public abstract class BaseEmailAddressResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -599,9 +597,9 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("emailAddress", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						emailAddress.getEmailAddress(),
-						(String)jsonObject.getString("emailAddress"))) {
+						jsonObject.getString("emailAddress"))) {
 
 					return false;
 				}
@@ -610,8 +608,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						emailAddress.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						emailAddress.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -620,9 +618,9 @@ public abstract class BaseEmailAddressResourceTestCase {
 			}
 
 			if (Objects.equals("primary", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						emailAddress.getPrimary(),
-						(Boolean)jsonObject.getBoolean("primary"))) {
+						jsonObject.getBoolean("primary"))) {
 
 					return false;
 				}
@@ -631,9 +629,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 			}
 
 			if (Objects.equals("type", fieldName)) {
-				if (!Objects.equals(
-						emailAddress.getType(),
-						(String)jsonObject.getString("type"))) {
+				if (!Objects.deepEquals(
+						emailAddress.getType(), jsonObject.getString("type"))) {
 
 					return false;
 				}
@@ -802,6 +799,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -812,6 +811,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

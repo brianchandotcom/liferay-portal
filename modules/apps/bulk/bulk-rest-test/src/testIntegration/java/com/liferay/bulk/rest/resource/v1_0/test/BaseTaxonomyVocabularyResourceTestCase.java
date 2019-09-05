@@ -191,14 +191,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected TaxonomyVocabulary
-			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -363,8 +355,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -461,9 +451,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("multiValued", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getMultiValued(),
-						(Boolean)jsonObject.getBoolean("multiValued"))) {
+						jsonObject.getBoolean("multiValued"))) {
 
 					return false;
 				}
@@ -472,9 +462,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -483,9 +473,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			}
 
 			if (Objects.equals("required", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getRequired(),
-						(Boolean)jsonObject.getBoolean("required"))) {
+						jsonObject.getBoolean("required"))) {
 
 					return false;
 				}
@@ -494,9 +484,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			}
 
 			if (Objects.equals("taxonomyVocabularyId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getTaxonomyVocabularyId(),
-						(Long)jsonObject.getLong("taxonomyVocabularyId"))) {
+						jsonObject.getLong("taxonomyVocabularyId"))) {
 
 					return false;
 				}
@@ -673,6 +663,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -683,6 +675,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

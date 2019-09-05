@@ -877,7 +877,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 				"dataLayout",
 				new HashMap<String, Object>() {
 					{
-						put("dataLayoutId", dataLayout.getId());
+						put("siteId", dataLayout.getSiteId());
+						put("dataLayoutKey", dataLayout.getDataLayoutKey());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1078,8 +1079,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1225,9 +1224,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataLayout.getDataDefinitionId(),
-						(Long)jsonObject.getLong("dataDefinitionId"))) {
+						jsonObject.getLong("dataDefinitionId"))) {
 
 					return false;
 				}
@@ -1236,9 +1235,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 			}
 
 			if (Objects.equals("dataLayoutKey", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataLayout.getDataLayoutKey(),
-						(String)jsonObject.getString("dataLayoutKey"))) {
+						jsonObject.getString("dataLayoutKey"))) {
 
 					return false;
 				}
@@ -1247,8 +1246,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						dataLayout.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						dataLayout.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1257,20 +1256,9 @@ public abstract class BaseDataLayoutResourceTestCase {
 			}
 
 			if (Objects.equals("paginationMode", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataLayout.getPaginationMode(),
-						(String)jsonObject.getString("paginationMode"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						dataLayout.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getString("paginationMode"))) {
 
 					return false;
 				}
@@ -1279,9 +1267,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			}
 
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
-						dataLayout.getUserId(),
-						(Long)jsonObject.getLong("userId"))) {
+				if (!Objects.deepEquals(
+						dataLayout.getUserId(), jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -1544,6 +1531,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1554,6 +1543,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

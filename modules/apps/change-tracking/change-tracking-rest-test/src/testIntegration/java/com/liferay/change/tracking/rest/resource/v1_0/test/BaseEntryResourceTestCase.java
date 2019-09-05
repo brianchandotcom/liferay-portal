@@ -441,8 +441,6 @@ public abstract class BaseEntryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -601,10 +599,32 @@ public abstract class BaseEntryResourceTestCase {
 
 	protected boolean equalsJSONObject(Entry entry, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("affectedByEntriesCount", fieldName)) {
+				if (!Objects.deepEquals(
+						entry.getAffectedByEntriesCount(),
+						jsonObject.getInt("affectedByEntriesCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("changeType", fieldName)) {
+				if (!Objects.deepEquals(
+						entry.getChangeType(),
+						jsonObject.getInt("changeType"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("classNameId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						entry.getClassNameId(),
-						(Long)jsonObject.getLong("classNameId"))) {
+						jsonObject.getLong("classNameId"))) {
 
 					return false;
 				}
@@ -613,9 +633,8 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("classPK", fieldName)) {
-				if (!Objects.equals(
-						entry.getClassPK(),
-						(Long)jsonObject.getLong("classPK"))) {
+				if (!Objects.deepEquals(
+						entry.getClassPK(), jsonObject.getLong("classPK"))) {
 
 					return false;
 				}
@@ -624,9 +643,9 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("collision", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						entry.getCollision(),
-						(Boolean)jsonObject.getBoolean("collision"))) {
+						jsonObject.getBoolean("collision"))) {
 
 					return false;
 				}
@@ -635,9 +654,9 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("contentType", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						entry.getContentType(),
-						(String)jsonObject.getString("contentType"))) {
+						jsonObject.getString("contentType"))) {
 
 					return false;
 				}
@@ -646,8 +665,8 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						entry.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						entry.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -656,8 +675,8 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("key", fieldName)) {
-				if (!Objects.equals(
-						entry.getKey(), (Long)jsonObject.getLong("key"))) {
+				if (!Objects.deepEquals(
+						entry.getKey(), jsonObject.getLong("key"))) {
 
 					return false;
 				}
@@ -666,9 +685,9 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("siteName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						entry.getSiteName(),
-						(String)jsonObject.getString("siteName"))) {
+						jsonObject.getString("siteName"))) {
 
 					return false;
 				}
@@ -677,9 +696,8 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
-						entry.getTitle(),
-						(String)jsonObject.getString("title"))) {
+				if (!Objects.deepEquals(
+						entry.getTitle(), jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -688,9 +706,9 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("userName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						entry.getUserName(),
-						(String)jsonObject.getString("userName"))) {
+						jsonObject.getString("userName"))) {
 
 					return false;
 				}
@@ -699,9 +717,8 @@ public abstract class BaseEntryResourceTestCase {
 			}
 
 			if (Objects.equals("version", fieldName)) {
-				if (!Objects.equals(
-						entry.getVersion(),
-						(String)jsonObject.getString("version"))) {
+				if (!Objects.deepEquals(
+						entry.getVersion(), jsonObject.getString("version"))) {
 
 					return false;
 				}
@@ -896,6 +913,8 @@ public abstract class BaseEntryResourceTestCase {
 	protected Entry randomEntry() throws Exception {
 		return new Entry() {
 			{
+				affectedByEntriesCount = RandomTestUtil.randomInt();
+				changeType = RandomTestUtil.randomInt();
 				classNameId = RandomTestUtil.randomLong();
 				classPK = RandomTestUtil.randomLong();
 				collision = RandomTestUtil.randomBoolean();
@@ -957,6 +976,8 @@ public abstract class BaseEntryResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -967,6 +988,8 @@ public abstract class BaseEntryResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -772,8 +772,6 @@ public abstract class BaseDataListViewResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -912,9 +910,9 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataListView.getDataDefinitionId(),
-						(Long)jsonObject.getLong("dataDefinitionId"))) {
+						jsonObject.getLong("dataDefinitionId"))) {
 
 					return false;
 				}
@@ -923,19 +921,8 @@ public abstract class BaseDataListViewResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						dataListView.getId(), (Long)jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						dataListView.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						dataListView.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -944,9 +931,9 @@ public abstract class BaseDataListViewResourceTestCase {
 			}
 
 			if (Objects.equals("sortField", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataListView.getSortField(),
-						(String)jsonObject.getString("sortField"))) {
+						jsonObject.getString("sortField"))) {
 
 					return false;
 				}
@@ -955,9 +942,9 @@ public abstract class BaseDataListViewResourceTestCase {
 			}
 
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataListView.getUserId(),
-						(Long)jsonObject.getLong("userId"))) {
+						jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -1214,6 +1201,8 @@ public abstract class BaseDataListViewResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1224,6 +1213,8 @@ public abstract class BaseDataListViewResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

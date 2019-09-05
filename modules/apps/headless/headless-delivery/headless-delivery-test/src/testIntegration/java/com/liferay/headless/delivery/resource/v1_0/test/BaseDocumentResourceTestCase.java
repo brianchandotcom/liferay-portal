@@ -1224,6 +1224,24 @@ public abstract class BaseDocumentResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getNumberOfComments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1623,8 +1641,6 @@ public abstract class BaseDocumentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1959,9 +1975,9 @@ public abstract class BaseDocumentResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getContentUrl(),
-						(String)jsonObject.getString("contentUrl"))) {
+						jsonObject.getString("contentUrl"))) {
 
 					return false;
 				}
@@ -1970,9 +1986,9 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1981,9 +1997,9 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("documentFolderId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getDocumentFolderId(),
-						(Long)jsonObject.getLong("documentFolderId"))) {
+						jsonObject.getLong("documentFolderId"))) {
 
 					return false;
 				}
@@ -1992,9 +2008,9 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -2003,9 +2019,9 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getFileExtension(),
-						(String)jsonObject.getString("fileExtension"))) {
+						jsonObject.getString("fileExtension"))) {
 
 					return false;
 				}
@@ -2014,8 +2030,19 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						document.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						document.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfComments", fieldName)) {
+				if (!Objects.deepEquals(
+						document.getNumberOfComments(),
+						jsonObject.getInt("numberOfComments"))) {
 
 					return false;
 				}
@@ -2024,9 +2051,9 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						document.getSizeInBytes(),
-						(Long)jsonObject.getLong("sizeInBytes"))) {
+						jsonObject.getLong("sizeInBytes"))) {
 
 					return false;
 				}
@@ -2035,9 +2062,8 @@ public abstract class BaseDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
-						document.getTitle(),
-						(String)jsonObject.getString("title"))) {
+				if (!Objects.deepEquals(
+						document.getTitle(), jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -2306,6 +2332,7 @@ public abstract class BaseDocumentResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				fileExtension = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				numberOfComments = RandomTestUtil.randomInt();
 				sizeInBytes = RandomTestUtil.randomLong();
 				title = RandomTestUtil.randomString();
 			}
@@ -2371,6 +2398,8 @@ public abstract class BaseDocumentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -2381,6 +2410,8 @@ public abstract class BaseDocumentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

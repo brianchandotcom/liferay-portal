@@ -199,11 +199,6 @@ public abstract class BaseKeywordResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -317,8 +312,6 @@ public abstract class BaseKeywordResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -361,9 +354,8 @@ public abstract class BaseKeywordResourceTestCase {
 	protected boolean equalsJSONObject(Keyword keyword, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						keyword.getName(),
-						(String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						keyword.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -511,6 +503,8 @@ public abstract class BaseKeywordResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -521,6 +515,8 @@ public abstract class BaseKeywordResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

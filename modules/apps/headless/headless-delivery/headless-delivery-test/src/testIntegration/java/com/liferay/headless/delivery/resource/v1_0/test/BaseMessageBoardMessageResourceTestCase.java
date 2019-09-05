@@ -1551,8 +1551,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1879,9 +1877,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("anonymous", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getAnonymous(),
-						(Boolean)jsonObject.getBoolean("anonymous"))) {
+						jsonObject.getBoolean("anonymous"))) {
 
 					return false;
 				}
@@ -1890,9 +1888,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("articleBody", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getArticleBody(),
-						(String)jsonObject.getString("articleBody"))) {
+						jsonObject.getString("articleBody"))) {
 
 					return false;
 				}
@@ -1901,9 +1899,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -1912,9 +1910,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("headline", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getHeadline(),
-						(String)jsonObject.getString("headline"))) {
+						jsonObject.getString("headline"))) {
 
 					return false;
 				}
@@ -1923,9 +1921,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1934,9 +1932,32 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("messageBoardThreadId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getMessageBoardThreadId(),
-						(Long)jsonObject.getLong("messageBoardThreadId"))) {
+						jsonObject.getLong("messageBoardThreadId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfMessageBoardAttachments", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage.
+							getNumberOfMessageBoardAttachments(),
+						jsonObject.getInt("numberOfMessageBoardAttachments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfMessageBoardMessages", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage.getNumberOfMessageBoardMessages(),
+						jsonObject.getInt("numberOfMessageBoardMessages"))) {
 
 					return false;
 				}
@@ -1945,20 +1966,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			}
 
 			if (Objects.equals("showAsAnswer", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardMessage.getShowAsAnswer(),
-						(Boolean)jsonObject.getBoolean("showAsAnswer"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						messageBoardMessage.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getBoolean("showAsAnswer"))) {
 
 					return false;
 				}
@@ -2213,6 +2223,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				messageBoardThreadId = RandomTestUtil.randomLong();
+				numberOfMessageBoardAttachments = RandomTestUtil.randomInt();
+				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				showAsAnswer = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
 			}
@@ -2286,6 +2298,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -2296,6 +2310,8 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

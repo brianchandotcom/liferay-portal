@@ -590,8 +590,6 @@ public abstract class BaseFormStructureResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -733,9 +731,9 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formStructure.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -744,9 +742,8 @@ public abstract class BaseFormStructureResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						formStructure.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						formStructure.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -755,20 +752,9 @@ public abstract class BaseFormStructureResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formStructure.getName(),
-						(String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						formStructure.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1027,6 +1013,8 @@ public abstract class BaseFormStructureResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1037,6 +1025,8 @@ public abstract class BaseFormStructureResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

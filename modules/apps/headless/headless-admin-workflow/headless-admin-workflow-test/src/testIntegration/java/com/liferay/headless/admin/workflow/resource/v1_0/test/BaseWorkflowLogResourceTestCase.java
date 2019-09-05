@@ -540,8 +540,6 @@ public abstract class BaseWorkflowLogResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -683,9 +681,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("commentLog", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowLog.getCommentLog(),
-						(String)jsonObject.getString("commentLog"))) {
+						jsonObject.getString("commentLog"))) {
 
 					return false;
 				}
@@ -694,8 +692,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						workflowLog.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						workflowLog.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -704,9 +702,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 
 			if (Objects.equals("previousState", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowLog.getPreviousState(),
-						(String)jsonObject.getString("previousState"))) {
+						jsonObject.getString("previousState"))) {
 
 					return false;
 				}
@@ -715,9 +713,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 
 			if (Objects.equals("state", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowLog.getState(),
-						(String)jsonObject.getString("state"))) {
+						jsonObject.getString("state"))) {
 
 					return false;
 				}
@@ -726,9 +724,9 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 
 			if (Objects.equals("taskId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowLog.getTaskId(),
-						(Long)jsonObject.getLong("taskId"))) {
+						jsonObject.getLong("taskId"))) {
 
 					return false;
 				}
@@ -737,9 +735,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 			}
 
 			if (Objects.equals("type", fieldName)) {
-				if (!Objects.equals(
-						workflowLog.getType(),
-						(String)jsonObject.getString("type"))) {
+				if (!Objects.deepEquals(
+						workflowLog.getType(), jsonObject.getString("type"))) {
 
 					return false;
 				}
@@ -974,6 +971,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -984,6 +983,8 @@ public abstract class BaseWorkflowLogResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -1219,6 +1219,49 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"numberOfMessageBoardSections",
+					additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					messageBoardSection.getNumberOfMessageBoardSections();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"numberOfMessageBoardThreads", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					messageBoardSection.getNumberOfMessageBoardThreads();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1490,8 +1533,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1653,9 +1694,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardSection.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1664,9 +1705,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardSection.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1674,10 +1715,21 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						messageBoardSection.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfMessageBoardSections", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardSection.getNumberOfMessageBoardSections(),
+						jsonObject.getInt("numberOfMessageBoardSections"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfMessageBoardThreads", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardSection.getNumberOfMessageBoardThreads(),
+						jsonObject.getInt("numberOfMessageBoardThreads"))) {
 
 					return false;
 				}
@@ -1686,9 +1738,9 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						messageBoardSection.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -1901,6 +1953,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				numberOfMessageBoardSections = RandomTestUtil.randomInt();
+				numberOfMessageBoardThreads = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 				title = RandomTestUtil.randomString();
 			}
@@ -1961,6 +2015,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1971,6 +2027,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

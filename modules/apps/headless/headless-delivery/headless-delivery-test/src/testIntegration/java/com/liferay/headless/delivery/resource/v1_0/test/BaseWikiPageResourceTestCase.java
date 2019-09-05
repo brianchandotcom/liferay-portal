@@ -952,8 +952,6 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1179,9 +1177,9 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("content", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPage.getContent(),
-						(String)jsonObject.getString("content"))) {
+						jsonObject.getString("content"))) {
 
 					return false;
 				}
@@ -1190,9 +1188,9 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPage.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1201,9 +1199,9 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPage.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -1212,9 +1210,9 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals("headline", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPage.getHeadline(),
-						(String)jsonObject.getString("headline"))) {
+						jsonObject.getString("headline"))) {
 
 					return false;
 				}
@@ -1223,8 +1221,8 @@ public abstract class BaseWikiPageResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						wikiPage.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						wikiPage.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1232,10 +1230,21 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						wikiPage.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfAttachments", fieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage.getNumberOfAttachments(),
+						jsonObject.getInt("numberOfAttachments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfWikiPages", fieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage.getNumberOfWikiPages(),
+						jsonObject.getInt("numberOfWikiPages"))) {
 
 					return false;
 				}
@@ -1485,6 +1494,8 @@ public abstract class BaseWikiPageResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				numberOfAttachments = RandomTestUtil.randomInt();
+				numberOfWikiPages = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -1538,6 +1549,8 @@ public abstract class BaseWikiPageResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1548,6 +1561,8 @@ public abstract class BaseWikiPageResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

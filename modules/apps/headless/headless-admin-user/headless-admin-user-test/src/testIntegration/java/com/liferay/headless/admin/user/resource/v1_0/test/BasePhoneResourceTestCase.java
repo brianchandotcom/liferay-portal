@@ -496,8 +496,6 @@ public abstract class BasePhoneResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -578,9 +576,9 @@ public abstract class BasePhoneResourceTestCase {
 	protected boolean equalsJSONObject(Phone phone, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("extension", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						phone.getExtension(),
-						(String)jsonObject.getString("extension"))) {
+						jsonObject.getString("extension"))) {
 
 					return false;
 				}
@@ -589,8 +587,8 @@ public abstract class BasePhoneResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						phone.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						phone.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -599,9 +597,9 @@ public abstract class BasePhoneResourceTestCase {
 			}
 
 			if (Objects.equals("phoneNumber", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						phone.getPhoneNumber(),
-						(String)jsonObject.getString("phoneNumber"))) {
+						jsonObject.getString("phoneNumber"))) {
 
 					return false;
 				}
@@ -610,9 +608,9 @@ public abstract class BasePhoneResourceTestCase {
 			}
 
 			if (Objects.equals("phoneType", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						phone.getPhoneType(),
-						(String)jsonObject.getString("phoneType"))) {
+						jsonObject.getString("phoneType"))) {
 
 					return false;
 				}
@@ -621,9 +619,8 @@ public abstract class BasePhoneResourceTestCase {
 			}
 
 			if (Objects.equals("primary", fieldName)) {
-				if (!Objects.equals(
-						phone.getPrimary(),
-						(Boolean)jsonObject.getBoolean("primary"))) {
+				if (!Objects.deepEquals(
+						phone.getPrimary(), jsonObject.getBoolean("primary"))) {
 
 					return false;
 				}
@@ -801,6 +798,8 @@ public abstract class BasePhoneResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -811,6 +810,8 @@ public abstract class BasePhoneResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

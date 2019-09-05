@@ -491,8 +491,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -621,9 +619,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getContentUrl(),
-						(String)jsonObject.getString("contentUrl"))) {
+						jsonObject.getString("contentUrl"))) {
 
 					return false;
 				}
@@ -632,9 +630,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -643,9 +641,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -654,9 +652,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getFileExtension(),
-						(String)jsonObject.getString("fileExtension"))) {
+						jsonObject.getString("fileExtension"))) {
 
 					return false;
 				}
@@ -665,9 +663,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("folderId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getFolderId(),
-						(Long)jsonObject.getLong("folderId"))) {
+						jsonObject.getLong("folderId"))) {
 
 					return false;
 				}
@@ -676,19 +674,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						formDocument.getId(), (Long)jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						formDocument.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						formDocument.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -697,9 +684,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getSizeInBytes(),
-						(Long)jsonObject.getLong("sizeInBytes"))) {
+						jsonObject.getLong("sizeInBytes"))) {
 
 					return false;
 				}
@@ -708,9 +695,9 @@ public abstract class BaseFormDocumentResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formDocument.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -920,6 +907,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -930,6 +919,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

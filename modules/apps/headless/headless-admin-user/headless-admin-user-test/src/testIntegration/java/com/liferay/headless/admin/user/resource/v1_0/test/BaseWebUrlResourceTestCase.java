@@ -479,8 +479,6 @@ public abstract class BaseWebUrlResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -539,8 +537,8 @@ public abstract class BaseWebUrlResourceTestCase {
 	protected boolean equalsJSONObject(WebUrl webUrl, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						webUrl.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						webUrl.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -549,8 +547,8 @@ public abstract class BaseWebUrlResourceTestCase {
 			}
 
 			if (Objects.equals("url", fieldName)) {
-				if (!Objects.equals(
-						webUrl.getUrl(), (String)jsonObject.getString("url"))) {
+				if (!Objects.deepEquals(
+						webUrl.getUrl(), jsonObject.getString("url"))) {
 
 					return false;
 				}
@@ -559,9 +557,8 @@ public abstract class BaseWebUrlResourceTestCase {
 			}
 
 			if (Objects.equals("urlType", fieldName)) {
-				if (!Objects.equals(
-						webUrl.getUrlType(),
-						(String)jsonObject.getString("urlType"))) {
+				if (!Objects.deepEquals(
+						webUrl.getUrlType(), jsonObject.getString("urlType"))) {
 
 					return false;
 				}
@@ -724,6 +721,8 @@ public abstract class BaseWebUrlResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -734,6 +733,8 @@ public abstract class BaseWebUrlResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

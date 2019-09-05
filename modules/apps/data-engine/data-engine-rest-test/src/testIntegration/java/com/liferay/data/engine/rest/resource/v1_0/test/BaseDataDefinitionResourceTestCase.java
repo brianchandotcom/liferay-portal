@@ -716,7 +716,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				"dataDefinition",
 				new HashMap<String, Object>() {
 					{
-						put("dataDefinitionId", dataDefinition.getId());
+						put("siteId", dataDefinition.getSiteId());
+						put(
+							"dataDefinitionKey",
+							dataDefinition.getDataDefinitionKey());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1102,8 +1105,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1286,9 +1287,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataDefinitionKey", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataDefinition.getDataDefinitionKey(),
-						(String)jsonObject.getString("dataDefinitionKey"))) {
+						jsonObject.getString("dataDefinitionKey"))) {
 
 					return false;
 				}
@@ -1297,9 +1298,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("defaultLanguageId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataDefinition.getDefaultLanguageId(),
-						(String)jsonObject.getString("defaultLanguageId"))) {
+						jsonObject.getString("defaultLanguageId"))) {
 
 					return false;
 				}
@@ -1308,20 +1309,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						dataDefinition.getId(),
-						(Long)jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						dataDefinition.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						dataDefinition.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1330,9 +1319,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("storageType", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataDefinition.getStorageType(),
-						(String)jsonObject.getString("storageType"))) {
+						jsonObject.getString("storageType"))) {
 
 					return false;
 				}
@@ -1341,9 +1330,9 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataDefinition.getUserId(),
-						(Long)jsonObject.getLong("userId"))) {
+						jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -1623,6 +1612,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1633,6 +1624,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

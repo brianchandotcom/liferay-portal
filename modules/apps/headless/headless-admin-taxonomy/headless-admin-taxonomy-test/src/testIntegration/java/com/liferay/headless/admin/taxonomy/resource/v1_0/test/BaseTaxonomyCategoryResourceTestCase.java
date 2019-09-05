@@ -1294,8 +1294,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1461,9 +1459,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyCategory.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1472,9 +1470,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						taxonomyCategory.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						taxonomyCategory.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1483,9 +1480,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyCategory.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfTaxonomyCategories", fieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyCategory.getNumberOfTaxonomyCategories(),
+						jsonObject.getInt("numberOfTaxonomyCategories"))) {
 
 					return false;
 				}
@@ -1699,6 +1707,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				numberOfTaxonomyCategories = RandomTestUtil.randomInt();
 			}
 		};
 	}
@@ -1752,6 +1761,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1762,6 +1773,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

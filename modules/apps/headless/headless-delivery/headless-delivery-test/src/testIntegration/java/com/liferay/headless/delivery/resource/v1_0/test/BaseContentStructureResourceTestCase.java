@@ -782,8 +782,6 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -918,9 +916,9 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						contentStructure.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -929,9 +927,8 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						contentStructure.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						contentStructure.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -940,20 +937,9 @@ public abstract class BaseContentStructureResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						contentStructure.getName(),
-						(String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						contentStructure.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1214,6 +1200,8 @@ public abstract class BaseContentStructureResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1224,6 +1212,8 @@ public abstract class BaseContentStructureResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

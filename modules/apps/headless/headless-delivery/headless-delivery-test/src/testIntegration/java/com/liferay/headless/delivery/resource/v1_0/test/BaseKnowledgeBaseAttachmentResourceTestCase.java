@@ -654,8 +654,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -760,9 +758,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getContentUrl(),
-						(String)jsonObject.getString("contentUrl"))) {
+						jsonObject.getString("contentUrl"))) {
 
 					return false;
 				}
@@ -771,9 +769,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -782,9 +780,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getFileExtension(),
-						(String)jsonObject.getString("fileExtension"))) {
+						jsonObject.getString("fileExtension"))) {
 
 					return false;
 				}
@@ -793,9 +791,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -804,9 +802,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getSizeInBytes(),
-						(Long)jsonObject.getLong("sizeInBytes"))) {
+						jsonObject.getLong("sizeInBytes"))) {
 
 					return false;
 				}
@@ -815,9 +813,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseAttachment.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -1021,6 +1019,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1031,6 +1031,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

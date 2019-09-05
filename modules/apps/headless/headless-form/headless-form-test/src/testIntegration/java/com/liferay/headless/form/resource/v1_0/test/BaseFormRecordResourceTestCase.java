@@ -401,7 +401,7 @@ public abstract class BaseFormRecordResourceTestCase {
 				"formFormRecordByLatestDraft",
 				new HashMap<String, Object>() {
 					{
-						put("formRecordId", formRecord.getId());
+						put("formId", formRecord.getFormId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -583,8 +583,6 @@ public abstract class BaseFormRecordResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -703,9 +701,9 @@ public abstract class BaseFormRecordResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("draft", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						formRecord.getDraft(),
-						(Boolean)jsonObject.getBoolean("draft"))) {
+						jsonObject.getBoolean("draft"))) {
 
 					return false;
 				}
@@ -714,9 +712,8 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 
 			if (Objects.equals("formId", fieldName)) {
-				if (!Objects.equals(
-						formRecord.getFormId(),
-						(Long)jsonObject.getLong("formId"))) {
+				if (!Objects.deepEquals(
+						formRecord.getFormId(), jsonObject.getLong("formId"))) {
 
 					return false;
 				}
@@ -725,8 +722,8 @@ public abstract class BaseFormRecordResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						formRecord.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						formRecord.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -992,6 +989,8 @@ public abstract class BaseFormRecordResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1002,6 +1001,8 @@ public abstract class BaseFormRecordResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

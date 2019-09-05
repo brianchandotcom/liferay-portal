@@ -862,6 +862,50 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"numberOfKnowledgeBaseArticles",
+					additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"numberOfKnowledgeBaseFolders",
+					additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
 					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
 
 				sb.append(additionalAssertFieldName);
@@ -1160,8 +1204,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1351,9 +1393,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseFolder.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1362,9 +1404,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseFolder.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1373,9 +1415,31 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseFolder.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfKnowledgeBaseArticles", fieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles(),
+						jsonObject.getInt("numberOfKnowledgeBaseArticles"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfKnowledgeBaseFolders", fieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders(),
+						jsonObject.getInt("numberOfKnowledgeBaseFolders"))) {
 
 					return false;
 				}
@@ -1384,21 +1448,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			}
 
 			if (Objects.equals("parentKnowledgeBaseFolderId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseFolder.getParentKnowledgeBaseFolderId(),
-						(Long)jsonObject.getLong(
-							"parentKnowledgeBaseFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						knowledgeBaseFolder.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getLong("parentKnowledgeBaseFolderId"))) {
 
 					return false;
 				}
@@ -1622,6 +1674,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				numberOfKnowledgeBaseArticles = RandomTestUtil.randomInt();
+				numberOfKnowledgeBaseFolders = RandomTestUtil.randomInt();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 			}
@@ -1682,6 +1736,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1692,6 +1748,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

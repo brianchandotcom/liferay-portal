@@ -944,8 +944,6 @@ public abstract class BaseAppResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1075,9 +1073,9 @@ public abstract class BaseAppResourceTestCase {
 	protected boolean equalsJSONObject(App app, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						app.getDataDefinitionId(),
-						(Long)jsonObject.getLong("dataDefinitionId"))) {
+						jsonObject.getLong("dataDefinitionId"))) {
 
 					return false;
 				}
@@ -1086,9 +1084,9 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			if (Objects.equals("dataLayoutId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						app.getDataLayoutId(),
-						(Long)jsonObject.getLong("dataLayoutId"))) {
+						jsonObject.getLong("dataLayoutId"))) {
 
 					return false;
 				}
@@ -1097,9 +1095,9 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			if (Objects.equals("dataListViewId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						app.getDataListViewId(),
-						(Long)jsonObject.getLong("dataListViewId"))) {
+						jsonObject.getLong("dataListViewId"))) {
 
 					return false;
 				}
@@ -1108,18 +1106,8 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						app.getId(), (Long)jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						app.getSiteId(), (Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						app.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1128,9 +1116,8 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			if (Objects.equals("status", fieldName)) {
-				if (!Objects.equals(
-						app.getStatus(),
-						(String)jsonObject.getString("status"))) {
+				if (!Objects.deepEquals(
+						app.getStatus(), jsonObject.getString("status"))) {
 
 					return false;
 				}
@@ -1139,8 +1126,8 @@ public abstract class BaseAppResourceTestCase {
 			}
 
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
-						app.getUserId(), (Long)jsonObject.getLong("userId"))) {
+				if (!Objects.deepEquals(
+						app.getUserId(), jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -1400,6 +1387,8 @@ public abstract class BaseAppResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1410,6 +1399,8 @@ public abstract class BaseAppResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

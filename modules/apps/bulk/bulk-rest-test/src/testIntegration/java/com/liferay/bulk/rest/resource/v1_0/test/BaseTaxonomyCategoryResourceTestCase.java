@@ -195,13 +195,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected TaxonomyCategory testGraphQLTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -336,8 +329,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -401,9 +392,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("taxonomyCategoryId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyCategory.getTaxonomyCategoryId(),
-						(Long)jsonObject.getLong("taxonomyCategoryId"))) {
+						jsonObject.getLong("taxonomyCategoryId"))) {
 
 					return false;
 				}
@@ -412,9 +403,9 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			}
 
 			if (Objects.equals("taxonomyCategoryName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyCategory.getTaxonomyCategoryName(),
-						(String)jsonObject.getString("taxonomyCategoryName"))) {
+						jsonObject.getString("taxonomyCategoryName"))) {
 
 					return false;
 				}
@@ -573,6 +564,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -583,6 +576,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

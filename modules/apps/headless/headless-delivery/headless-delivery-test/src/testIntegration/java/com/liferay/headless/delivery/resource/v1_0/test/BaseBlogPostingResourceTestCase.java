@@ -948,6 +948,24 @@ public abstract class BaseBlogPostingResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = blogPosting.getNumberOfComments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1330,8 +1348,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1681,9 +1697,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("alternativeHeadline", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getAlternativeHeadline(),
-						(String)jsonObject.getString("alternativeHeadline"))) {
+						jsonObject.getString("alternativeHeadline"))) {
 
 					return false;
 				}
@@ -1692,9 +1708,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("articleBody", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getArticleBody(),
-						(String)jsonObject.getString("articleBody"))) {
+						jsonObject.getString("articleBody"))) {
 
 					return false;
 				}
@@ -1703,9 +1719,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1714,9 +1730,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -1725,9 +1741,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("friendlyUrlPath", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getFriendlyUrlPath(),
-						(String)jsonObject.getString("friendlyUrlPath"))) {
+						jsonObject.getString("friendlyUrlPath"))) {
 
 					return false;
 				}
@@ -1736,9 +1752,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("headline", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						blogPosting.getHeadline(),
-						(String)jsonObject.getString("headline"))) {
+						jsonObject.getString("headline"))) {
 
 					return false;
 				}
@@ -1747,8 +1763,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						blogPosting.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						blogPosting.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1756,10 +1772,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						blogPosting.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfComments", fieldName)) {
+				if (!Objects.deepEquals(
+						blogPosting.getNumberOfComments(),
+						jsonObject.getInt("numberOfComments"))) {
 
 					return false;
 				}
@@ -2064,6 +2080,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 				friendlyUrlPath = RandomTestUtil.randomString();
 				headline = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				numberOfComments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -2130,6 +2147,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -2140,6 +2159,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

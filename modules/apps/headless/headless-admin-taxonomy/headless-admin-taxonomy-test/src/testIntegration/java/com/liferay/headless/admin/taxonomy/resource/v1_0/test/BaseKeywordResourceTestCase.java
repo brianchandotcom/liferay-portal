@@ -694,6 +694,26 @@ public abstract class BaseKeywordResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"keywordUsageCount", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = keyword.getKeywordUsageCount();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -908,8 +928,6 @@ public abstract class BaseKeywordResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1008,8 +1026,19 @@ public abstract class BaseKeywordResourceTestCase {
 	protected boolean equalsJSONObject(Keyword keyword, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						keyword.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						keyword.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("keywordUsageCount", fieldName)) {
+				if (!Objects.deepEquals(
+						keyword.getKeywordUsageCount(),
+						jsonObject.getInt("keywordUsageCount"))) {
 
 					return false;
 				}
@@ -1018,20 +1047,8 @@ public abstract class BaseKeywordResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						keyword.getName(),
-						(String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						keyword.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						keyword.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1213,6 +1230,7 @@ public abstract class BaseKeywordResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				keywordUsageCount = RandomTestUtil.randomInt();
 				name = RandomTestUtil.randomString();
 				siteId = testGroup.getGroupId();
 			}
@@ -1267,6 +1285,8 @@ public abstract class BaseKeywordResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1277,6 +1297,8 @@ public abstract class BaseKeywordResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -764,9 +764,10 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 				"dataRecordCollection",
 				new HashMap<String, Object>() {
 					{
+						put("siteId", dataRecordCollection.getSiteId());
 						put(
-							"dataRecordCollectionId",
-							dataRecordCollection.getId());
+							"dataRecordCollectionKey",
+							dataRecordCollection.getDataRecordCollectionKey());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -960,8 +961,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1063,9 +1062,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataDefinitionId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataRecordCollection.getDataDefinitionId(),
-						(Long)jsonObject.getLong("dataDefinitionId"))) {
+						jsonObject.getLong("dataDefinitionId"))) {
 
 					return false;
 				}
@@ -1074,10 +1073,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			}
 
 			if (Objects.equals("dataRecordCollectionKey", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataRecordCollection.getDataRecordCollectionKey(),
-						(String)jsonObject.getString(
-							"dataRecordCollectionKey"))) {
+						jsonObject.getString("dataRecordCollectionKey"))) {
 
 					return false;
 				}
@@ -1086,20 +1084,9 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataRecordCollection.getId(),
-						(Long)jsonObject.getLong("id"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						dataRecordCollection.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1288,6 +1275,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1298,6 +1287,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

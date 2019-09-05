@@ -245,7 +245,6 @@ public abstract class BaseUserAccountResourceTestCase {
 				"myUserAccount",
 				new HashMap<String, Object>() {
 					{
-						put("userAccountId", userAccount.getId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1429,8 +1428,6 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1710,9 +1707,9 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("additionalName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getAdditionalName(),
-						(String)jsonObject.getString("additionalName"))) {
+						jsonObject.getString("additionalName"))) {
 
 					return false;
 				}
@@ -1721,9 +1718,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("alternateName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getAlternateName(),
-						(String)jsonObject.getString("alternateName"))) {
+						jsonObject.getString("alternateName"))) {
 
 					return false;
 				}
@@ -1732,9 +1729,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("dashboardURL", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getDashboardURL(),
-						(String)jsonObject.getString("dashboardURL"))) {
+						jsonObject.getString("dashboardURL"))) {
 
 					return false;
 				}
@@ -1743,9 +1740,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("emailAddress", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getEmailAddress(),
-						(String)jsonObject.getString("emailAddress"))) {
+						jsonObject.getString("emailAddress"))) {
 
 					return false;
 				}
@@ -1754,9 +1751,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("familyName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getFamilyName(),
-						(String)jsonObject.getString("familyName"))) {
+						jsonObject.getString("familyName"))) {
 
 					return false;
 				}
@@ -1765,9 +1762,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("givenName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getGivenName(),
-						(String)jsonObject.getString("givenName"))) {
+						jsonObject.getString("givenName"))) {
 
 					return false;
 				}
@@ -1776,9 +1773,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("honorificPrefix", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getHonorificPrefix(),
-						(String)jsonObject.getString("honorificPrefix"))) {
+						jsonObject.getString("honorificPrefix"))) {
 
 					return false;
 				}
@@ -1787,9 +1784,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("honorificSuffix", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getHonorificSuffix(),
-						(String)jsonObject.getString("honorificSuffix"))) {
+						jsonObject.getString("honorificSuffix"))) {
 
 					return false;
 				}
@@ -1798,8 +1795,8 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						userAccount.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						userAccount.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1808,9 +1805,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("image", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getImage(),
-						(String)jsonObject.getString("image"))) {
+						jsonObject.getString("image"))) {
 
 					return false;
 				}
@@ -1819,9 +1816,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("jobTitle", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getJobTitle(),
-						(String)jsonObject.getString("jobTitle"))) {
+						jsonObject.getString("jobTitle"))) {
 
 					return false;
 				}
@@ -1830,9 +1827,8 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						userAccount.getName(),
-						(String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						userAccount.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1841,9 +1837,9 @@ public abstract class BaseUserAccountResourceTestCase {
 			}
 
 			if (Objects.equals("profileURL", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						userAccount.getProfileURL(),
-						(String)jsonObject.getString("profileURL"))) {
+						jsonObject.getString("profileURL"))) {
 
 					return false;
 				}
@@ -2225,6 +2221,8 @@ public abstract class BaseUserAccountResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -2235,6 +2233,8 @@ public abstract class BaseUserAccountResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

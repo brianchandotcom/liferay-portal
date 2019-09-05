@@ -32,7 +32,6 @@ import com.liferay.change.tracking.rest.client.resource.v1_0.ProcessUserResource
 import com.liferay.change.tracking.rest.client.serdes.v1_0.ProcessUserSerDes;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -262,61 +261,7 @@ public abstract class BaseProcessUserResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProcessUsersPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"processUsers",
-				new HashMap<String, Object>() {
-					{
-						put("page", 1);
-						put("pageSize", 2);
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject processUsersJSONObject = dataJSONObject.getJSONObject(
-			"processUsers");
-
-		Assert.assertEquals(0, processUsersJSONObject.get("totalCount"));
-
-		ProcessUser processUser1 = testGraphQLProcessUser_addProcessUser();
-		ProcessUser processUser2 = testGraphQLProcessUser_addProcessUser();
-
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		dataJSONObject = jsonObject.getJSONObject("data");
-
-		processUsersJSONObject = dataJSONObject.getJSONObject("processUsers");
-
-		Assert.assertEquals(2, processUsersJSONObject.get("totalCount"));
-
-		assertEqualsJSONArray(
-			Arrays.asList(processUser1, processUser2),
-			processUsersJSONObject.getJSONArray("items"));
-	}
-
-	protected ProcessUser testGraphQLProcessUser_addProcessUser()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Assert.assertTrue(false);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -458,8 +403,6 @@ public abstract class BaseProcessUserResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -539,9 +482,9 @@ public abstract class BaseProcessUserResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						processUser.getUserId(),
-						(Long)jsonObject.getLong("userId"))) {
+						jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -550,9 +493,9 @@ public abstract class BaseProcessUserResourceTestCase {
 			}
 
 			if (Objects.equals("userInitials", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						processUser.getUserInitials(),
-						(String)jsonObject.getString("userInitials"))) {
+						jsonObject.getString("userInitials"))) {
 
 					return false;
 				}
@@ -561,9 +504,9 @@ public abstract class BaseProcessUserResourceTestCase {
 			}
 
 			if (Objects.equals("userName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						processUser.getUserName(),
-						(String)jsonObject.getString("userName"))) {
+						jsonObject.getString("userName"))) {
 
 					return false;
 				}
@@ -572,9 +515,9 @@ public abstract class BaseProcessUserResourceTestCase {
 			}
 
 			if (Objects.equals("userPortraitURL", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						processUser.getUserPortraitURL(),
-						(String)jsonObject.getString("userPortraitURL"))) {
+						jsonObject.getString("userPortraitURL"))) {
 
 					return false;
 				}
@@ -746,6 +689,8 @@ public abstract class BaseProcessUserResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -756,6 +701,8 @@ public abstract class BaseProcessUserResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

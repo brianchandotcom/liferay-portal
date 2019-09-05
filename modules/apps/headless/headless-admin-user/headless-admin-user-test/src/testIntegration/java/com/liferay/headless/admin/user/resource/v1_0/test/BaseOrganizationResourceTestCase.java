@@ -1029,8 +1029,6 @@ public abstract class BaseOrganizationResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1213,9 +1211,9 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("comment", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						organization.getComment(),
-						(String)jsonObject.getString("comment"))) {
+						jsonObject.getString("comment"))) {
 
 					return false;
 				}
@@ -1224,8 +1222,8 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						organization.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						organization.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1234,9 +1232,9 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 
 			if (Objects.equals("image", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						organization.getImage(),
-						(String)jsonObject.getString("image"))) {
+						jsonObject.getString("image"))) {
 
 					return false;
 				}
@@ -1245,9 +1243,19 @@ public abstract class BaseOrganizationResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						organization.getName(),
-						(String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						organization.getName(), jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfOrganizations", fieldName)) {
+				if (!Objects.deepEquals(
+						organization.getNumberOfOrganizations(),
+						jsonObject.getInt("numberOfOrganizations"))) {
 
 					return false;
 				}
@@ -1472,6 +1480,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
+				numberOfOrganizations = RandomTestUtil.randomInt();
 			}
 		};
 	}
@@ -1522,6 +1531,8 @@ public abstract class BaseOrganizationResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1532,6 +1543,8 @@ public abstract class BaseOrganizationResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

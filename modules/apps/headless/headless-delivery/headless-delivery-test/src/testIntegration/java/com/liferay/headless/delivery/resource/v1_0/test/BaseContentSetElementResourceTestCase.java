@@ -771,8 +771,6 @@ public abstract class BaseContentSetElementResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -854,9 +852,9 @@ public abstract class BaseContentSetElementResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentType", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						contentSetElement.getContentType(),
-						(String)jsonObject.getString("contentType"))) {
+						jsonObject.getString("contentType"))) {
 
 					return false;
 				}
@@ -865,9 +863,8 @@ public abstract class BaseContentSetElementResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						contentSetElement.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						contentSetElement.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -876,9 +873,9 @@ public abstract class BaseContentSetElementResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						contentSetElement.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -1052,6 +1049,8 @@ public abstract class BaseContentSetElementResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1062,6 +1061,8 @@ public abstract class BaseContentSetElementResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

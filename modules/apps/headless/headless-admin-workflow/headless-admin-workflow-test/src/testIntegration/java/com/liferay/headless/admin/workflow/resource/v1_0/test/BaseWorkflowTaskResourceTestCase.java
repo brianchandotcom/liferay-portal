@@ -625,8 +625,6 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -771,9 +769,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("completed", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowTask.getCompleted(),
-						(Boolean)jsonObject.getBoolean("completed"))) {
+						jsonObject.getBoolean("completed"))) {
 
 					return false;
 				}
@@ -782,9 +780,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals("definitionName", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowTask.getDefinitionName(),
-						(String)jsonObject.getString("definitionName"))) {
+						jsonObject.getString("definitionName"))) {
 
 					return false;
 				}
@@ -793,9 +791,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						workflowTask.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -804,8 +802,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						workflowTask.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						workflowTask.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -814,9 +812,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						workflowTask.getName(),
-						(String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						workflowTask.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1104,6 +1101,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1114,6 +1113,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

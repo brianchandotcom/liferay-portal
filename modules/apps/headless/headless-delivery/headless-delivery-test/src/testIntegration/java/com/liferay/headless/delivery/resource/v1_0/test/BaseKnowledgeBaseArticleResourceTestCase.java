@@ -1752,6 +1752,48 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"numberOfAttachments", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = knowledgeBaseArticle.getNumberOfAttachments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"numberOfKnowledgeBaseArticles",
+					additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
 					"parentKnowledgeBaseFolderId", additionalAssertFieldName)) {
 
 				sb.append(additionalAssertFieldName);
@@ -2206,8 +2248,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -2572,9 +2612,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("articleBody", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getArticleBody(),
-						(String)jsonObject.getString("articleBody"))) {
+						jsonObject.getString("articleBody"))) {
 
 					return false;
 				}
@@ -2583,9 +2623,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -2594,9 +2634,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -2605,9 +2645,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("friendlyUrlPath", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getFriendlyUrlPath(),
-						(String)jsonObject.getString("friendlyUrlPath"))) {
+						jsonObject.getString("friendlyUrlPath"))) {
 
 					return false;
 				}
@@ -2616,9 +2656,31 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfAttachments", fieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle.getNumberOfAttachments(),
+						jsonObject.getInt("numberOfAttachments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfKnowledgeBaseArticles", fieldName)) {
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles(),
+						jsonObject.getInt("numberOfKnowledgeBaseArticles"))) {
 
 					return false;
 				}
@@ -2627,21 +2689,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("parentKnowledgeBaseFolderId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getParentKnowledgeBaseFolderId(),
-						(Long)jsonObject.getLong(
-							"parentKnowledgeBaseFolderId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						knowledgeBaseArticle.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+						jsonObject.getLong("parentKnowledgeBaseFolderId"))) {
 
 					return false;
 				}
@@ -2650,9 +2700,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						knowledgeBaseArticle.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -2930,6 +2980,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				encodingFormat = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				numberOfAttachments = RandomTestUtil.randomInt();
+				numberOfKnowledgeBaseArticles = RandomTestUtil.randomInt();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 				title = RandomTestUtil.randomString();
@@ -3004,6 +3056,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -3014,6 +3068,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -614,8 +614,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -719,9 +717,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentUrl", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPageAttachment.getContentUrl(),
-						(String)jsonObject.getString("contentUrl"))) {
+						jsonObject.getString("contentUrl"))) {
 
 					return false;
 				}
@@ -730,9 +728,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("encodingFormat", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPageAttachment.getEncodingFormat(),
-						(String)jsonObject.getString("encodingFormat"))) {
+						jsonObject.getString("encodingFormat"))) {
 
 					return false;
 				}
@@ -741,9 +739,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("fileExtension", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPageAttachment.getFileExtension(),
-						(String)jsonObject.getString("fileExtension"))) {
+						jsonObject.getString("fileExtension"))) {
 
 					return false;
 				}
@@ -752,9 +750,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						wikiPageAttachment.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						wikiPageAttachment.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -763,9 +760,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("sizeInBytes", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPageAttachment.getSizeInBytes(),
-						(Long)jsonObject.getLong("sizeInBytes"))) {
+						jsonObject.getLong("sizeInBytes"))) {
 
 					return false;
 				}
@@ -774,9 +771,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						wikiPageAttachment.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -974,6 +971,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -984,6 +983,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

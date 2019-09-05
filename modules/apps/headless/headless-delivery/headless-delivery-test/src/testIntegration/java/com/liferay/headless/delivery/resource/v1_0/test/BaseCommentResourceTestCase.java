@@ -1623,8 +1623,6 @@ public abstract class BaseCommentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1717,8 +1715,19 @@ public abstract class BaseCommentResourceTestCase {
 	protected boolean equalsJSONObject(Comment comment, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						comment.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						comment.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfComments", fieldName)) {
+				if (!Objects.deepEquals(
+						comment.getNumberOfComments(),
+						jsonObject.getInt("numberOfComments"))) {
 
 					return false;
 				}
@@ -1727,9 +1736,8 @@ public abstract class BaseCommentResourceTestCase {
 			}
 
 			if (Objects.equals("text", fieldName)) {
-				if (!Objects.equals(
-						comment.getText(),
-						(String)jsonObject.getString("text"))) {
+				if (!Objects.deepEquals(
+						comment.getText(), jsonObject.getString("text"))) {
 
 					return false;
 				}
@@ -1906,6 +1914,7 @@ public abstract class BaseCommentResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				numberOfComments = RandomTestUtil.randomInt();
 				text = RandomTestUtil.randomString();
 			}
 		};
@@ -1957,6 +1966,8 @@ public abstract class BaseCommentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1967,6 +1978,8 @@ public abstract class BaseCommentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -743,8 +743,6 @@ public abstract class BaseFormResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1100,9 +1098,9 @@ public abstract class BaseFormResourceTestCase {
 	protected boolean equalsJSONObject(Form form, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("defaultLanguage", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						form.getDefaultLanguage(),
-						(String)jsonObject.getString("defaultLanguage"))) {
+						jsonObject.getString("defaultLanguage"))) {
 
 					return false;
 				}
@@ -1111,9 +1109,9 @@ public abstract class BaseFormResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						form.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1122,8 +1120,8 @@ public abstract class BaseFormResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						form.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						form.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1132,18 +1130,8 @@ public abstract class BaseFormResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						form.getName(), (String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						form.getSiteId(), (Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						form.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1152,9 +1140,9 @@ public abstract class BaseFormResourceTestCase {
 			}
 
 			if (Objects.equals("structureId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						form.getStructureId(),
-						(Long)jsonObject.getLong("structureId"))) {
+						jsonObject.getLong("structureId"))) {
 
 					return false;
 				}
@@ -1487,6 +1475,8 @@ public abstract class BaseFormResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1497,6 +1487,8 @@ public abstract class BaseFormResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

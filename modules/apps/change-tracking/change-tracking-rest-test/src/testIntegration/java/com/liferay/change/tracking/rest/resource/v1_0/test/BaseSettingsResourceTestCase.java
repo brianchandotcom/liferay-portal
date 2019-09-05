@@ -215,11 +215,6 @@ public abstract class BaseSettingsResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected Settings testGraphQLSettings_addSettings() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -395,8 +390,6 @@ public abstract class BaseSettingsResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -519,10 +512,9 @@ public abstract class BaseSettingsResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("changeTrackingAllowed", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						settings.getChangeTrackingAllowed(),
-						(Boolean)jsonObject.getBoolean(
-							"changeTrackingAllowed"))) {
+						jsonObject.getBoolean("changeTrackingAllowed"))) {
 
 					return false;
 				}
@@ -531,10 +523,9 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("changeTrackingEnabled", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						settings.getChangeTrackingEnabled(),
-						(Boolean)jsonObject.getBoolean(
-							"changeTrackingEnabled"))) {
+						jsonObject.getBoolean("changeTrackingEnabled"))) {
 
 					return false;
 				}
@@ -545,9 +536,9 @@ public abstract class BaseSettingsResourceTestCase {
 			if (Objects.equals(
 					"checkoutCTCollectionConfirmationEnabled", fieldName)) {
 
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						settings.getCheckoutCTCollectionConfirmationEnabled(),
-						(Boolean)jsonObject.getBoolean(
+						jsonObject.getBoolean(
 							"checkoutCTCollectionConfirmationEnabled"))) {
 
 					return false;
@@ -557,9 +548,9 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("companyId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						settings.getCompanyId(),
-						(Long)jsonObject.getLong("companyId"))) {
+						jsonObject.getLong("companyId"))) {
 
 					return false;
 				}
@@ -568,9 +559,8 @@ public abstract class BaseSettingsResourceTestCase {
 			}
 
 			if (Objects.equals("userId", fieldName)) {
-				if (!Objects.equals(
-						settings.getUserId(),
-						(Long)jsonObject.getLong("userId"))) {
+				if (!Objects.deepEquals(
+						settings.getUserId(), jsonObject.getLong("userId"))) {
 
 					return false;
 				}
@@ -750,6 +740,8 @@ public abstract class BaseSettingsResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -760,6 +752,8 @@ public abstract class BaseSettingsResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

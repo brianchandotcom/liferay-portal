@@ -447,8 +447,6 @@ public abstract class BaseRoleResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -560,9 +558,9 @@ public abstract class BaseRoleResourceTestCase {
 	protected boolean equalsJSONObject(Role role, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						role.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -571,8 +569,8 @@ public abstract class BaseRoleResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						role.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						role.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -581,8 +579,8 @@ public abstract class BaseRoleResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						role.getName(), (String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						role.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -591,9 +589,8 @@ public abstract class BaseRoleResourceTestCase {
 			}
 
 			if (Objects.equals("roleType", fieldName)) {
-				if (!Objects.equals(
-						role.getRoleType(),
-						(String)jsonObject.getString("roleType"))) {
+				if (!Objects.deepEquals(
+						role.getRoleType(), jsonObject.getString("roleType"))) {
 
 					return false;
 				}
@@ -839,6 +836,8 @@ public abstract class BaseRoleResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -849,6 +848,8 @@ public abstract class BaseRoleResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

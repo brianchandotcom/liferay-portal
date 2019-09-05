@@ -1288,6 +1288,50 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"numberOfStructuredContentFolders",
+					additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					structuredContentFolder.
+						getNumberOfStructuredContentFolders();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"numberOfStructuredContents", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					structuredContentFolder.getNumberOfStructuredContents();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1554,8 +1598,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1720,9 +1762,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContentFolder.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1731,9 +1773,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContentFolder.getId(),
-						(Long)jsonObject.getLong("id"))) {
+						jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1742,9 +1784,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContentFolder.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1752,10 +1794,23 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						structuredContentFolder.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfStructuredContentFolders", fieldName)) {
+				if (!Objects.deepEquals(
+						structuredContentFolder.
+							getNumberOfStructuredContentFolders(),
+						jsonObject.getInt(
+							"numberOfStructuredContentFolders"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfStructuredContents", fieldName)) {
+				if (!Objects.deepEquals(
+						structuredContentFolder.getNumberOfStructuredContents(),
+						jsonObject.getInt("numberOfStructuredContents"))) {
 
 					return false;
 				}
@@ -1975,6 +2030,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				numberOfStructuredContentFolders = RandomTestUtil.randomInt();
+				numberOfStructuredContents = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -2034,6 +2091,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -2044,6 +2103,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

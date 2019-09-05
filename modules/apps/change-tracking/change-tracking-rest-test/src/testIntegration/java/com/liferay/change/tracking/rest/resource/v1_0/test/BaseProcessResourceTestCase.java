@@ -601,8 +601,6 @@ public abstract class BaseProcessResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -703,9 +701,9 @@ public abstract class BaseProcessResourceTestCase {
 	protected boolean equalsJSONObject(Process process, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("companyId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						process.getCompanyId(),
-						(Long)jsonObject.getLong("companyId"))) {
+						jsonObject.getLong("companyId"))) {
 
 					return false;
 				}
@@ -714,8 +712,19 @@ public abstract class BaseProcessResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						process.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						process.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("percentage", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getPercentage(),
+						jsonObject.getInt("percentage"))) {
 
 					return false;
 				}
@@ -724,9 +733,8 @@ public abstract class BaseProcessResourceTestCase {
 			}
 
 			if (Objects.equals("status", fieldName)) {
-				if (!Objects.equals(
-						process.getStatus(),
-						(String)jsonObject.getString("status"))) {
+				if (!Objects.deepEquals(
+						process.getStatus(), jsonObject.getString("status"))) {
 
 					return false;
 				}
@@ -882,6 +890,7 @@ public abstract class BaseProcessResourceTestCase {
 				companyId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
+				percentage = RandomTestUtil.randomInt();
 				status = RandomTestUtil.randomString();
 			}
 		};
@@ -933,6 +942,8 @@ public abstract class BaseProcessResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -943,6 +954,8 @@ public abstract class BaseProcessResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

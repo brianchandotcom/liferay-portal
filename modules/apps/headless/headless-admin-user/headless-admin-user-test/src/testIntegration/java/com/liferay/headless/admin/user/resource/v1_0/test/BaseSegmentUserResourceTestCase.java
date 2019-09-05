@@ -434,8 +434,6 @@ public abstract class BaseSegmentUserResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -503,9 +501,9 @@ public abstract class BaseSegmentUserResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("emailAddress", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						segmentUser.getEmailAddress(),
-						(String)jsonObject.getString("emailAddress"))) {
+						jsonObject.getString("emailAddress"))) {
 
 					return false;
 				}
@@ -514,8 +512,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						segmentUser.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						segmentUser.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -524,9 +522,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						segmentUser.getName(),
-						(String)jsonObject.getString("name"))) {
+				if (!Objects.deepEquals(
+						segmentUser.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -689,6 +686,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -699,6 +698,8 @@ public abstract class BaseSegmentUserResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

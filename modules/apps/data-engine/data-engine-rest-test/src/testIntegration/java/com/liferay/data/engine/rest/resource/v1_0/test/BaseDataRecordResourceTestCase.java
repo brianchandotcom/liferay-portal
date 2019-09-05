@@ -748,8 +748,6 @@ public abstract class BaseDataRecordResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -818,9 +816,9 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("dataRecordCollectionId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						dataRecord.getDataRecordCollectionId(),
-						(Long)jsonObject.getLong("dataRecordCollectionId"))) {
+						jsonObject.getLong("dataRecordCollectionId"))) {
 
 					return false;
 				}
@@ -829,8 +827,8 @@ public abstract class BaseDataRecordResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						dataRecord.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						dataRecord.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -986,6 +984,8 @@ public abstract class BaseDataRecordResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -996,6 +996,8 @@ public abstract class BaseDataRecordResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

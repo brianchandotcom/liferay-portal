@@ -1168,6 +1168,46 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"numberOfDocumentFolders", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = documentFolder.getNumberOfDocumentFolders();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals(
+					"numberOfDocuments", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = documentFolder.getNumberOfDocuments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1406,8 +1446,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1562,9 +1600,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						documentFolder.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1573,9 +1611,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						documentFolder.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						documentFolder.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1584,9 +1621,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						documentFolder.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1594,10 +1631,21 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						documentFolder.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfDocumentFolders", fieldName)) {
+				if (!Objects.deepEquals(
+						documentFolder.getNumberOfDocumentFolders(),
+						jsonObject.getInt("numberOfDocumentFolders"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("numberOfDocuments", fieldName)) {
+				if (!Objects.deepEquals(
+						documentFolder.getNumberOfDocuments(),
+						jsonObject.getInt("numberOfDocuments"))) {
 
 					return false;
 				}
@@ -1809,6 +1857,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				numberOfDocumentFolders = RandomTestUtil.randomInt();
+				numberOfDocuments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -1862,6 +1912,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1872,6 +1924,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

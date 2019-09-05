@@ -581,8 +581,6 @@ public abstract class BaseSegmentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -688,9 +686,8 @@ public abstract class BaseSegmentResourceTestCase {
 	protected boolean equalsJSONObject(Segment segment, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("active", fieldName)) {
-				if (!Objects.equals(
-						segment.getActive(),
-						(Boolean)jsonObject.getBoolean("active"))) {
+				if (!Objects.deepEquals(
+						segment.getActive(), jsonObject.getBoolean("active"))) {
 
 					return false;
 				}
@@ -699,9 +696,9 @@ public abstract class BaseSegmentResourceTestCase {
 			}
 
 			if (Objects.equals("criteria", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						segment.getCriteria(),
-						(String)jsonObject.getString("criteria"))) {
+						jsonObject.getString("criteria"))) {
 
 					return false;
 				}
@@ -710,8 +707,8 @@ public abstract class BaseSegmentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						segment.getId(), (Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						segment.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -720,20 +717,8 @@ public abstract class BaseSegmentResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
-						segment.getName(),
-						(String)jsonObject.getString("name"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						segment.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+				if (!Objects.deepEquals(
+						segment.getName(), jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -742,9 +727,8 @@ public abstract class BaseSegmentResourceTestCase {
 			}
 
 			if (Objects.equals("source", fieldName)) {
-				if (!Objects.equals(
-						segment.getSource(),
-						(String)jsonObject.getString("source"))) {
+				if (!Objects.deepEquals(
+						segment.getSource(), jsonObject.getString("source"))) {
 
 					return false;
 				}
@@ -994,6 +978,8 @@ public abstract class BaseSegmentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1004,6 +990,8 @@ public abstract class BaseSegmentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

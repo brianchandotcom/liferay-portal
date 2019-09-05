@@ -198,11 +198,6 @@ public abstract class BaseSelectionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Selection testGraphQLSelection_addSelection() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -316,8 +311,6 @@ public abstract class BaseSelectionResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -362,9 +355,8 @@ public abstract class BaseSelectionResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("size", fieldName)) {
-				if (!Objects.equals(
-						selection.getSize(),
-						(Long)jsonObject.getLong("size"))) {
+				if (!Objects.deepEquals(
+						selection.getSize(), jsonObject.getLong("size"))) {
 
 					return false;
 				}
@@ -509,6 +501,8 @@ public abstract class BaseSelectionResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -519,6 +513,8 @@ public abstract class BaseSelectionResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

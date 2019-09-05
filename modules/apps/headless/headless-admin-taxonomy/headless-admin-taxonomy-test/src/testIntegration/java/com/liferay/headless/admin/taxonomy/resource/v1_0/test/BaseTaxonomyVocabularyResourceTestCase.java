@@ -868,6 +868,27 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals(
+					"numberOfTaxonomyCategories", additionalAssertFieldName)) {
+
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value =
+					taxonomyVocabulary.getNumberOfTaxonomyCategories();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1118,8 +1139,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1278,9 +1297,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -1289,9 +1308,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						taxonomyVocabulary.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						taxonomyVocabulary.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -1300,9 +1318,9 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			}
 
 			if (Objects.equals("name", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						taxonomyVocabulary.getName(),
-						(String)jsonObject.getString("name"))) {
+						jsonObject.getString("name"))) {
 
 					return false;
 				}
@@ -1310,10 +1328,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						taxonomyVocabulary.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfTaxonomyCategories", fieldName)) {
+				if (!Objects.deepEquals(
+						taxonomyVocabulary.getNumberOfTaxonomyCategories(),
+						jsonObject.getInt("numberOfTaxonomyCategories"))) {
 
 					return false;
 				}
@@ -1527,6 +1545,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				description = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				name = RandomTestUtil.randomString();
+				numberOfTaxonomyCategories = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -1586,6 +1605,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1596,6 +1617,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

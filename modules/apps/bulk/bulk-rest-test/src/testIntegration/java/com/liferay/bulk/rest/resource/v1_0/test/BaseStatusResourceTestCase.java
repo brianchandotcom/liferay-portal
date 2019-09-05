@@ -190,11 +190,6 @@ public abstract class BaseStatusResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Status testGraphQLStatus_addStatus() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -307,8 +302,6 @@ public abstract class BaseStatusResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -352,9 +345,9 @@ public abstract class BaseStatusResourceTestCase {
 	protected boolean equalsJSONObject(Status status, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("actionInProgress", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						status.getActionInProgress(),
-						(Boolean)jsonObject.getBoolean("actionInProgress"))) {
+						jsonObject.getBoolean("actionInProgress"))) {
 
 					return false;
 				}
@@ -499,6 +492,8 @@ public abstract class BaseStatusResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -509,6 +504,8 @@ public abstract class BaseStatusResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

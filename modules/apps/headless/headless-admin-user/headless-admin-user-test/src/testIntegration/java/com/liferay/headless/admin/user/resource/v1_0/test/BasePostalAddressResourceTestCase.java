@@ -588,8 +588,6 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -741,9 +739,9 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("addressCountry", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getAddressCountry(),
-						(String)jsonObject.getString("addressCountry"))) {
+						jsonObject.getString("addressCountry"))) {
 
 					return false;
 				}
@@ -752,9 +750,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("addressLocality", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getAddressLocality(),
-						(String)jsonObject.getString("addressLocality"))) {
+						jsonObject.getString("addressLocality"))) {
 
 					return false;
 				}
@@ -763,9 +761,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("addressRegion", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getAddressRegion(),
-						(String)jsonObject.getString("addressRegion"))) {
+						jsonObject.getString("addressRegion"))) {
 
 					return false;
 				}
@@ -774,9 +772,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("addressType", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getAddressType(),
-						(String)jsonObject.getString("addressType"))) {
+						jsonObject.getString("addressType"))) {
 
 					return false;
 				}
@@ -785,9 +783,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						postalAddress.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						postalAddress.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -796,9 +793,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("postalCode", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getPostalCode(),
-						(String)jsonObject.getString("postalCode"))) {
+						jsonObject.getString("postalCode"))) {
 
 					return false;
 				}
@@ -807,9 +804,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("primary", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getPrimary(),
-						(Boolean)jsonObject.getBoolean("primary"))) {
+						jsonObject.getBoolean("primary"))) {
 
 					return false;
 				}
@@ -818,9 +815,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("streetAddressLine1", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getStreetAddressLine1(),
-						(String)jsonObject.getString("streetAddressLine1"))) {
+						jsonObject.getString("streetAddressLine1"))) {
 
 					return false;
 				}
@@ -829,9 +826,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("streetAddressLine2", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getStreetAddressLine2(),
-						(String)jsonObject.getString("streetAddressLine2"))) {
+						jsonObject.getString("streetAddressLine2"))) {
 
 					return false;
 				}
@@ -840,9 +837,9 @@ public abstract class BasePostalAddressResourceTestCase {
 			}
 
 			if (Objects.equals("streetAddressLine3", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						postalAddress.getStreetAddressLine3(),
-						(String)jsonObject.getString("streetAddressLine3"))) {
+						jsonObject.getString("streetAddressLine3"))) {
 
 					return false;
 				}
@@ -1065,6 +1062,8 @@ public abstract class BasePostalAddressResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1075,6 +1074,8 @@ public abstract class BasePostalAddressResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

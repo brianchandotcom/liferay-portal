@@ -962,7 +962,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"structuredContentByKey",
 				new HashMap<String, Object>() {
 					{
-						put("structuredContentId", structuredContent.getId());
+						put("siteId", structuredContent.getSiteId());
+						put("key", structuredContent.getKey());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1013,7 +1014,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"structuredContentByUuid",
 				new HashMap<String, Object>() {
 					{
-						put("structuredContentId", structuredContent.getId());
+						put("siteId", structuredContent.getSiteId());
+						put("uuid", structuredContent.getUuid());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -1780,6 +1782,24 @@ public abstract class BaseStructuredContentResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("numberOfComments", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = structuredContent.getNumberOfComments();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("siteId", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -2225,8 +2245,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -2605,9 +2623,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("contentStructureId", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getContentStructureId(),
-						(Long)jsonObject.getLong("contentStructureId"))) {
+						jsonObject.getLong("contentStructureId"))) {
 
 					return false;
 				}
@@ -2616,9 +2634,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("description", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getDescription(),
-						(String)jsonObject.getString("description"))) {
+						jsonObject.getString("description"))) {
 
 					return false;
 				}
@@ -2627,9 +2645,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("friendlyUrlPath", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getFriendlyUrlPath(),
-						(String)jsonObject.getString("friendlyUrlPath"))) {
+						jsonObject.getString("friendlyUrlPath"))) {
 
 					return false;
 				}
@@ -2638,9 +2656,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("id", fieldName)) {
-				if (!Objects.equals(
-						structuredContent.getId(),
-						(Long)jsonObject.getLong("id"))) {
+				if (!Objects.deepEquals(
+						structuredContent.getId(), jsonObject.getLong("id"))) {
 
 					return false;
 				}
@@ -2649,9 +2666,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("key", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getKey(),
-						(String)jsonObject.getString("key"))) {
+						jsonObject.getString("key"))) {
 
 					return false;
 				}
@@ -2659,10 +2676,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("siteId", fieldName)) {
-				if (!Objects.equals(
-						structuredContent.getSiteId(),
-						(Long)jsonObject.getLong("siteId"))) {
+			if (Objects.equals("numberOfComments", fieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent.getNumberOfComments(),
+						jsonObject.getInt("numberOfComments"))) {
 
 					return false;
 				}
@@ -2671,9 +2688,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("title", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getTitle(),
-						(String)jsonObject.getString("title"))) {
+						jsonObject.getString("title"))) {
 
 					return false;
 				}
@@ -2682,9 +2699,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 			}
 
 			if (Objects.equals("uuid", fieldName)) {
-				if (!Objects.equals(
+				if (!Objects.deepEquals(
 						structuredContent.getUuid(),
-						(String)jsonObject.getString("uuid"))) {
+						jsonObject.getString("uuid"))) {
 
 					return false;
 				}
@@ -2999,6 +3016,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomString();
+				numberOfComments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
 				title = RandomTestUtil.randomString();
 				uuid = RandomTestUtil.randomString();
@@ -3073,6 +3091,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -3083,6 +3103,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

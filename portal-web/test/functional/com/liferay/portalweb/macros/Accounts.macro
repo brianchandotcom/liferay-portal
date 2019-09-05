@@ -62,4 +62,14 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro viewDeactivateAccount {
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		Search.searchCP(searchTerm = "${accountName}");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "${accountName}",
+			rowStatus = "INACTIVE");
+	}
+
 }

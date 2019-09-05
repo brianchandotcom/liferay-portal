@@ -176,6 +176,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		site.setDescription(regex);
 		site.setFriendlyUrlPath(regex);
+		site.setKey(regex);
 		site.setMembershipType(regex);
 		site.setName(regex);
 
@@ -187,6 +188,7 @@ public abstract class BaseSiteResourceTestCase {
 
 		Assert.assertEquals(regex, site.getDescription());
 		Assert.assertEquals(regex, site.getFriendlyUrlPath());
+		Assert.assertEquals(regex, site.getKey());
 		Assert.assertEquals(regex, site.getMembershipType());
 		Assert.assertEquals(regex, site.getName());
 	}
@@ -237,6 +239,47 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				site, dataJSONObject.getJSONObject("byFriendlyUrlPath")));
+	}
+
+	@Test
+	public void testGetSiteByKey() throws Exception {
+		Site postSite = testGetSiteByKey_addSite();
+
+		Site getSite = siteResource.getSiteByKey(postSite.getKey());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSiteByKey_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteByKey() throws Exception {
+		Site site = testGraphQLSite_addSite();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"byKey",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", site.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(site, dataJSONObject.getJSONObject("byKey")));
 	}
 
 	@Test
@@ -392,6 +435,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (site.getKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("membershipType", additionalAssertFieldName)) {
 				if (site.getMembershipType() == null) {
 					valid = false;
@@ -523,6 +574,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("key", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(site1.getKey(), site2.getKey())) {
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("membershipType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						site1.getMembershipType(), site2.getMembershipType())) {
@@ -584,6 +643,16 @@ public abstract class BaseSiteResourceTestCase {
 			if (Objects.equals("id", fieldName)) {
 				if (!Objects.equals(
 						site.getId(), (Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", fieldName)) {
+				if (!Objects.equals(
+						site.getKey(), (String)jsonObject.getString("key"))) {
 
 					return false;
 				}
@@ -700,6 +769,14 @@ public abstract class BaseSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("key")) {
+			sb.append("'");
+			sb.append(String.valueOf(site.getKey()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("membershipType")) {
 			sb.append("'");
 			sb.append(String.valueOf(site.getMembershipType()));
@@ -748,6 +825,7 @@ public abstract class BaseSiteResourceTestCase {
 				description = RandomTestUtil.randomString();
 				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
+				key = RandomTestUtil.randomString();
 				membershipType = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
 			}

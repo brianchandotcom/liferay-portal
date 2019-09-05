@@ -126,6 +126,20 @@ public class SiteSerDes {
 			sb.append(site.getId());
 		}
 
+		if (site.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(site.getKey()));
+
+			sb.append("\"");
+		}
+
 		if (site.getMembershipType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -230,6 +244,13 @@ public class SiteSerDes {
 			map.put("id", String.valueOf(site.getId()));
 		}
 
+		if (site.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(site.getKey()));
+		}
+
 		if (site.getMembershipType() == null) {
 			map.put("membershipType", null);
 		}
@@ -296,6 +317,11 @@ public class SiteSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					site.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					site.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "membershipType")) {

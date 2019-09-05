@@ -48,6 +48,8 @@ public interface SiteResource {
 	public Site getSiteByFriendlyUrlPath(String friendlyUrlPath)
 		throws Exception;
 
+	public Site getSiteByKey(String key) throws Exception;
+
 	public Site getSite(Long siteId) throws Exception;
 
 	public default void setContextAcceptLanguage(

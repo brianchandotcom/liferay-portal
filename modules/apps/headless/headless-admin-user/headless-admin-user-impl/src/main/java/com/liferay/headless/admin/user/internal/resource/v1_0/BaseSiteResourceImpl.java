@@ -27,6 +27,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collections;
@@ -92,6 +93,24 @@ public abstract class BaseSiteResourceImpl implements SiteResource {
 	public Site getSiteByFriendlyUrlPath(
 			@NotNull @Parameter(hidden = true) @PathParam("friendlyUrlPath")
 				String friendlyUrlPath)
+		throws Exception {
+
+		return new Site();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/by-key/{key}'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "key")})
+	@Path("/sites/by-key/{key}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Site")})
+	public Site getSiteByKey(
+			@NotNull @Parameter(hidden = true) @PathParam("key") String key)
 		throws Exception {
 
 		return new Site();

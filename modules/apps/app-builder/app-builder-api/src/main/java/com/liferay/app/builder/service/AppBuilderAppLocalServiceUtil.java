@@ -253,7 +253,7 @@ public class AppBuilderAppLocalServiceUtil {
 	}
 
 	public static java.util.List<Long> getAppBuilderAppIds(
-		String status, String type) {
+		int status, String type) {
 
 		return getService().getAppBuilderAppIds(status, type);
 	}

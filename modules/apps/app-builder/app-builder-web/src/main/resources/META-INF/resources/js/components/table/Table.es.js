@@ -65,4 +65,6 @@ const Table = ({actions, columns, forwardRef, items}) => {
 	);
 };
 
-export default Table;
+export default React.forwardRef((props, ref) => (
+	<Table {...props} forwardRef={ref} />
+));

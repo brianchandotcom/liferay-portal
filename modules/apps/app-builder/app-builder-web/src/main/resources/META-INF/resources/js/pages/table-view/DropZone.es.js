@@ -80,8 +80,8 @@ const DropZone = ({columns, onAddColumn, onRemoveColumn}) => {
 					</div>
 				)
 			}))}
-			forwardRef={drop}
 			items={generateItems(columns)}
+			ref={drop}
 		/>
 	);
 };

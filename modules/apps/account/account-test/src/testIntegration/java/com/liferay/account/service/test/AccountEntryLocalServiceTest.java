@@ -225,7 +225,7 @@ public class AccountEntryLocalServiceTest {
 	private AccountEntry _addAccountEntry(int status) throws Exception {
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
-			RandomTestUtil.randomString(50), 0L, status);
+			RandomTestUtil.randomString(50), null, status);
 
 		_accountEntries.add(accountEntry);
 

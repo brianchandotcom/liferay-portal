@@ -26,38 +26,11 @@ import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienc
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
 import templates from './FloatingToolbarFragmentBackgroundImagePanel.soy';
 import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
-import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
  * FloatingToolbarFragmentBackgroundImagePanel
  */
 class FloatingToolbarFragmentBackgroundImagePanel extends Component {
-	/**
-	 * @inheritdoc
-	 * @param {object} state
-	 * @return {object}
-	 * @review
-	 */
-	prepareStateForRender(state) {
-		let nextState = state;
-
-		if (this.item.backgroundImage.title) {
-			nextState = setIn(
-				nextState,
-				['_backgroundImage'],
-				this.item.backgroundImage.title
-			);
-		} else {
-			nextState = setIn(
-				nextState,
-				['_backgroundImage'],
-				this.item.backgroundImage
-			);
-		}
-
-		return nextState;
-	}
-
 	/**
 	 * Show image selector
 	 * @private
@@ -108,14 +81,6 @@ class FloatingToolbarFragmentBackgroundImagePanel extends Component {
  * @type {!Object}
  */
 FloatingToolbarFragmentBackgroundImagePanel.STATE = {
-	/**
-	 * @default ''
-	 * @memberof FloatingToolbarFragmentBackgroundImagePanel
-	 * @review
-	 * @type {string}
-	 */
-	_backgroundImage: Config.object().value(''),
-
 	/**
 	 * @default undefined
 	 * @memberof FloatingToolbarFragmentBackgroundImagePanel

@@ -41,11 +41,7 @@ public class AppBuilderAppFinderImpl
 		AppBuilderAppFinder.class.getName() + ".findByS_T";
 
 	@Override
-	public List<Long> findByS_T(String status, String type) {
-		return doFindByS_T(status, type);
-	}
-
-	protected List<Long> doFindByS_T(String status, String type) {
+	public List<Long> findByS_T(int status, String type) {
 		Session session = null;
 
 		try {

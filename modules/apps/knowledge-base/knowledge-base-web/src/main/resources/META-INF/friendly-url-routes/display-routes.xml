@@ -3,6 +3,9 @@
 
 <routes>
 	<route>
+		<pattern></pattern>
+	</route>
+	<route>
 		<pattern>/{kbFolderUrlTitle}/{urlTitle}</pattern>
 	</route>
 	<route>

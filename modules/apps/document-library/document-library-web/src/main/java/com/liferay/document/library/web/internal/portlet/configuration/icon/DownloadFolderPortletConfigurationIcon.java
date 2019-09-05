@@ -97,15 +97,16 @@ public class DownloadFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			if (folder.isMountPoint()) {
 				return false;
 			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			return ModelResourcePermissionHelper.contains(
 				_folderModelResourcePermission,

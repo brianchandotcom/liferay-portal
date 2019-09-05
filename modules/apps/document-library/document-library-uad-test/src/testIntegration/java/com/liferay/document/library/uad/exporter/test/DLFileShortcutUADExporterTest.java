@@ -20,18 +20,17 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileShortcutUADTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -57,32 +56,24 @@ public class DLFileShortcutUADExporterTest
 			long userId, long statusByUserId)
 		throws Exception {
 
-		DLFileShortcut dlFileShortcut =
-			DLFileShortcutUADTestUtil.addDLFileShortcutWithStatusByUserId(
-				_dlFileEntryLocalService, _dlFileShortcutLocalService,
-				_dlFolderLocalService, userId, statusByUserId);
-
-		_dlFileShortcuts.add(dlFileShortcut);
-
-		return dlFileShortcut;
+		return DLFileShortcutUADTestUtil.addDLFileShortcutWithStatusByUserId(
+			_dlFileEntryLocalService, _dlFileShortcutLocalService,
+			_dlFolderLocalService, userId, _group.getGroupId(), statusByUserId);
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		DLFileShortcutUADTestUtil.cleanUpDependencies(
-			_dlFileEntryLocalService, _dlFolderLocalService, _dlFileShortcuts);
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Override
 	protected DLFileShortcut addBaseModel(long userId) throws Exception {
-		DLFileShortcut dlFileShortcut =
-			DLFileShortcutUADTestUtil.addDLFileShortcut(
-				_dlFileEntryLocalService, _dlFileShortcutLocalService,
-				_dlFolderLocalService, userId);
-
-		_dlFileShortcuts.add(dlFileShortcut);
-
-		return dlFileShortcut;
+		return DLFileShortcutUADTestUtil.addDLFileShortcut(
+			_dlFileEntryLocalService, _dlFileShortcutLocalService,
+			_dlFolderLocalService, userId, _group.getGroupId());
 	}
 
 	@Override
@@ -101,11 +92,11 @@ public class DLFileShortcutUADExporterTest
 	@Inject
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
-	@DeleteAfterTestRun
-	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<>();
-
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject(filter = "component.name=*.DLFileShortcutUADExporter")
 	private UADExporter _uadExporter;

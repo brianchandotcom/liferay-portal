@@ -29,10 +29,12 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -43,10 +45,8 @@ import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,6 +63,14 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_group = GroupTestUtil.addGroup();
+	}
+
 	@Test
 	public void testGetOnlyManuallyManagedFolders() throws Exception {
 		MBMessage mbMessage = null;
@@ -75,7 +83,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
 
 			mbMessage = MBTestUtil.addMessage(
-				TestPropsValues.getGroupId(), user.getUserId(),
+				_group.getGroupId(), user.getUserId(),
 				RandomTestUtil.randomString(50),
 				RandomTestUtil.randomString(50));
 
@@ -84,7 +92,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
 
 			_mbMessageLocalService.getTempAttachmentNames(
-				TestPropsValues.getGroupId(), user.getUserId(),
+				_group.getGroupId(), user.getUserId(),
 				MBMessageConstants.TEMP_FOLDER_NAME);
 
 			Assert.assertEquals(1, _uadDisplay.count(user.getUserId()));
@@ -95,7 +103,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 			}
 
 			Repository mbRepository = _repositoryLocalService.fetchRepository(
-				TestPropsValues.getGroupId(), MBConstants.SERVICE_NAME,
+				_group.getGroupId(), MBConstants.SERVICE_NAME,
 				MBConstants.SERVICE_NAME);
 
 			if (mbRepository != null) {
@@ -107,8 +115,8 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 
 			Repository tempFilesRepository =
 				_repositoryLocalService.fetchRepository(
-					TestPropsValues.getGroupId(),
-					TempFileEntryUtil.class.getName(), null);
+					_group.getGroupId(), TempFileEntryUtil.class.getName(),
+					null);
 
 			if (tempFilesRepository != null) {
 				_dlFolderLocalService.deleteAllByRepository(
@@ -220,20 +228,15 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
-		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
-			_dlAppLocalService, _dlFolderLocalService, userId);
-
-		_dlFolders.add(dlFolder);
-
-		return dlFolder;
+		return DLFolderUADTestUtil.addDLFolder(
+			_dlAppLocalService, _dlFolderLocalService, userId,
+			_group.getGroupId());
 	}
 
 	protected void assertParentContainerId(long dlFolderId) throws Exception {
 		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
 			_dlAppLocalService, _dlFolderLocalService,
-			TestPropsValues.getUserId(), dlFolderId);
-
-		_dlFolders.add(dlFolder);
+			TestPropsValues.getUserId(), _group.getGroupId(), dlFolderId);
 
 		Serializable parentContainerId = _uadDisplay.getParentContainerId(
 			dlFolder);
@@ -247,23 +250,15 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	}
 
 	private DLFileEntry _addFileEntry(long dlFolderId) throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
+		return DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, dlFolderId,
-			TestPropsValues.getUserId());
-
-		_dlFileEntries.add(dlFileEntry);
-
-		return dlFileEntry;
+			TestPropsValues.getUserId(), _group.getGroupId());
 	}
 
 	private DLFolder _addFolder(long parentFolderId) throws Exception {
-		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
+		return DLFolderUADTestUtil.addDLFolder(
 			_dlAppLocalService, _dlFolderLocalService,
-			TestPropsValues.getUserId(), parentFolderId);
-
-		_dlFolders.add(dlFolder);
-
-		return dlFolder;
+			TestPropsValues.getUserId(), _group.getGroupId(), parentFolderId);
 	}
 
 	private DLFolder _getTopLevelContainer(
@@ -276,9 +271,6 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
-	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
-
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
@@ -286,7 +278,7 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@DeleteAfterTestRun
-	private final List<DLFolder> _dlFolders = new ArrayList<>();
+	private Group _group;
 
 	@Inject
 	private MBMessageLocalService _mbMessageLocalService;

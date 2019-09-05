@@ -352,6 +352,10 @@ public interface FragmentEntryLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryLink> getFragmentEntryLinks(String rendererKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
+		long fragmentEntryId);
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *
@@ -397,6 +401,10 @@ public interface FragmentEntryLinkLocalService
 	public int getFragmentEntryLinksCount(
 		long groupId, long fragmentEntryId, long classNameId,
 		int layoutPageTemplateType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentEntryLinksCountByFragmentEntryId(
+		long fragmentEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

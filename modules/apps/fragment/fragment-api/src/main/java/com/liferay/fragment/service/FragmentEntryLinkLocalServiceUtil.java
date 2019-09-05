@@ -465,6 +465,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 		return getService().getFragmentEntryLinks(rendererKey);
 	}
 
+	public static java.util.List<com.liferay.fragment.model.FragmentEntryLink>
+		getFragmentEntryLinksByFragmentEntryId(long fragmentEntryId) {
+
+		return getService().getFragmentEntryLinksByFragmentEntryId(
+			fragmentEntryId);
+	}
+
 	/**
 	 * Returns all the fragment entry links matching the UUID and company.
 	 *
@@ -529,6 +536,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 
 		return getService().getFragmentEntryLinksCount(
 			groupId, fragmentEntryId, classNameId, layoutPageTemplateType);
+	}
+
+	public static int getFragmentEntryLinksCountByFragmentEntryId(
+		long fragmentEntryId) {
+
+		return getService().getFragmentEntryLinksCountByFragmentEntryId(
+			fragmentEntryId);
 	}
 
 	public static

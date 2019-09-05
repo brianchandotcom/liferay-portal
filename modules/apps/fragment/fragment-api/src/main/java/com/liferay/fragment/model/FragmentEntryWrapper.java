@@ -283,6 +283,11 @@ public class FragmentEntryWrapper
 		return model.getFragmentEntryKey();
 	}
 
+	@Override
+	public int getGlobalUsageCount() {
+		return model.getGlobalUsageCount();
+	}
+
 	/**
 	 * Returns the group ID of this fragment entry.
 	 *

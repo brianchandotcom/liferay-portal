@@ -65,7 +65,7 @@ public class AppDeployerActivator {
 
 			List<Long> appBuilderAppIds =
 				_appBuilderAppLocalService.getAppBuilderAppIds(
-					AppBuilderAppConstants.Status.DEPLOYED.getLabel(),
+					AppBuilderAppConstants.STATUS_DEPLOYED,
 					(String)serviceReference.getProperty(
 						"com.app.builder.deploy.type"));
 

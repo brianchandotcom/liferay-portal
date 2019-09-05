@@ -69,7 +69,7 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getAppBuilderAppIds(String status, String type) {
+	public List<Long> getAppBuilderAppIds(int status, String type) {
 		return appBuilderAppFinder.findByS_T(status, type);
 	}
 

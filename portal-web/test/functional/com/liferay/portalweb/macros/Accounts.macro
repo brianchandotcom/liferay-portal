@@ -26,4 +26,40 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro deactivateAccount {
+		Search.searchCP(searchTerm = "${accountName}");
+
+		if ("${deactivateType}" == "Hide Icon") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
+
+			ClickNoError(locator1 = "Icon#DEACTIVATE");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+		else if ("${deactivateType}" == "Management Toolbar") {
+			LexiconEntry.selectEntry(key_rowEntry = "${accountName}");
+
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Deactivate");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItemNoError(
+				menuItem = "Deactivate",
+				rowEntry = "${accountName}");
+
+			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+			Alert.viewSuccessMessage();
+		}
+
+		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
+	}
+
 }

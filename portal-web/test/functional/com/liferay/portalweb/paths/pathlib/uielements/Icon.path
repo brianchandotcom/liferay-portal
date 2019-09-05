@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEACTIVATE</td>
+	<td>//button[@data-title='Deactivate' or @title='Deactivate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE</td>
 	<td>//*[*[name()='svg'][contains(@class,'icon-trash')]] | //button[@data-title='Delete' or @title='Delete'] | //*[*[name()='svg'][contains(@class,'times-circle')]] | //a[@data-title='Deactivate' or @title='Deactivate'] | //a[@data-title='Remove' or @title='Remove']</td>
 	<td></td>

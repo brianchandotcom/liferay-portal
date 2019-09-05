@@ -653,54 +653,6 @@ const INITIAL_STATE = {
 	segmentsExperienceId: Config.string().value(),
 
 	/**
-	 * EditableId of the field that is being mapped
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	selectMappingDialogEditableId: Config.string().value(''),
-
-	/**
-	 * Editable type of the field that is being mapped
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	selectMappingDialogEditableType: Config.string().value(''),
-
-	/**
-	 * FragmentEntryLinkId of the field that is being mapped
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	selectMappingDialogFragmentEntryLinkId: Config.string().value(''),
-
-	/**
-	 * Mapped field ID of the field that is being mapped
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	selectMappingDialogMappedFieldId: Config.string().value(''),
-
-	/**
-	 * Flag indicating if the SelectMappingDialog should be shown
-	 * @default false
-	 * @review
-	 * @type {boolean}
-	 */
-	selectMappingDialogVisible: Config.bool().value(false),
-
-	/**
-	 * Flag indicating if the SelectMappingTypeDialog should be shown
-	 * @default false
-	 * @review
-	 * @type {boolean}
-	 */
-	selectMappingTypeDialogVisible: Config.bool().value(false),
-
-	/**
 	 * Selected items
 	 * @default []
 	 * @review
@@ -799,14 +751,6 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	updateLayoutPageTemplateDataURL: Config.string().value(''),
-
-	/**
-	 * URL for updating the asset type associated to a template.
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().value(''),
 
 	/**
 	 * Available widgets that can be dragged inside the existing Page Template,

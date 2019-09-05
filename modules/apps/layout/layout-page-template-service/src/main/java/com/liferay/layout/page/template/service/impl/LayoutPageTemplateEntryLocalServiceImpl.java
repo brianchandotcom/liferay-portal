@@ -571,6 +571,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)

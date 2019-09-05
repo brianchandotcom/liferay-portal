@@ -45,8 +45,13 @@ public class FilePropagator {
 					targetDirName + "/" + fileName));
 		}
 
+		if (primaryTargetSlave != null) {
+			targetSlaves.remove(primaryTargetSlave);
+
+			_targetSlaves.add(primaryTargetSlave);
+		}
+
 		_targetSlaves.addAll(targetSlaves);
-		_primaryTargetSlave = primaryTargetSlave;
 	}
 
 	public long getAverageThreadDuration() {
@@ -162,36 +167,21 @@ public class FilePropagator {
 			commands.add("ls -al " + targetDirName);
 		}
 
-		String targetSlave;
-
-		if (_primaryTargetSlave != null) {
-			targetSlave = _primaryTargetSlave;
-
-			_primaryTargetSlave = null;
-		}
-		else {
-			targetSlave = _targetSlaves.get(0);
-		}
+		String targetSlave = _targetSlaves.remove(0);
 
 		try {
 			if (_executeBashCommands(commands, targetSlave) != 0) {
 				_errorSlaves.add(targetSlave);
-				_targetSlaves.remove(targetSlave);
 
 				_copyFromSource();
-
-				targetSlave = null;
+			}
+			else {
+				_mirrorSlaves.add(targetSlave);
 			}
 		}
 		catch (Exception e) {
 			throw new RuntimeException(
 				"Unable to copy from source. Executed: " + commands, e);
-		}
-
-		if (targetSlave != null) {
-			_mirrorSlaves.add(targetSlave);
-
-			_targetSlaves.remove(targetSlave);
 		}
 
 		System.out.println("Finished copying from source.");
@@ -239,7 +229,6 @@ public class FilePropagator {
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
-	private String _primaryTargetSlave;
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;

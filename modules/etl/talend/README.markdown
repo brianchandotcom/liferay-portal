@@ -17,15 +17,21 @@ Download Talend Open Studio: https://www.talend.com/products/talend-open-studio/
 
 ## Build
 
-Run Maven `install` task in the components folder:
+Run Maven `clean install` tasks in the `modules/etl/talend` folder:
 
 ```sh
-$ cd components-liferay
+$ cd modules/etl/talend
 $ mvn clean install
 ```
 
 This gives you a definition OSGi bundle of the component in
 `talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar`
+and additional:
+`talend-common/target/com.liferay.talend.common-0.1.0-SNAPSHOT.jar`
+`talend-runtime/target/com.liferay.talend.runtime-0.1.0-SNAPSHOT.jar`
+
+Maven install task will succeed only if all tests pass. JAR files will be published
+to current user's local maven repository `USER_HOME/.m2`.
 
 ## Registering components in Talend Studio
 
@@ -72,15 +78,15 @@ Here is a brief summary:
 	```
 
 5. In the `configuration` folder, remove any folders which start their names
-with `org.eclipse`.
+    with `org.eclipse`.
 
-6. Copy the `com.liferay.talend.runtime` folder from your local
-`$USER_HOME/.m2/repository/com/liferay/` to
-`$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+6. Copy the `com.liferay.talend.common` and `com.liferay.talend.runtime` folders from your local
+ `$USER_HOME/.m2/repository/com/liferay/` to
+ `$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
 
 	Tip: you can alternatively add `maven.repository=global` to the
 	studio_installation/configuration/config.ini file to make the Studio use
-	your local .m2 repository.
+	your local `ÙSER_HOME/.m2` repository and thus you can skip this task.
 
 * Now start the Studio, and you should be able to see new components on palette
 under `Business/Liferay` category.
@@ -98,3 +104,52 @@ under `Business/Liferay` category.
 	2. Maven -> Update Project
 	3. Uncheck "Offline" and run Update
 	```
+
+## Reloading components in Talend Studio after codebase changed
+
+When ever component codebase is changed user should reload generated JARs to Talend Studio.
+
+1. Shutdown Talend Studio
+
+2. From the root folder of the project, `liferay-portal/modules/etl/talend/`, execute
+    `mvn clean install` to rebuild and publish the components to Maven repo.
+
+3. Now copy the component definition bundle into `$STUDIO_ROOT/plugins`
+
+	```sh
+	$ cp [liferay-portal/modules/etl/talend]/talend-definition/target/com.liferay.talend.definition-0.1.0-SNAPSHOT.jar \
+		 $STUDIO_ROOT/plugins
+	```
+
+4. Copy the `com.liferay.talend.common` and `com.liferay.talend.runtime` folders from your local
+`$USER_HOME/.m2/repository/com/liferay/` to
+`$STUDIO_ROOT/configuration/.m2/repository/com/liferay/`
+
+	Tip: if you configured Talend Studio to use local `ÙSER_HOME/.m2` repository with `maven.repository=global`
+	setting in the studio_installation/configuration/config.ini file you can skip this task.
+
+5. Start Talend Studio
+
+6. Update existing Talend jobs to use latest component version
+ This has to be done manually. In Talend Studio workspace open job that uses Liferay components.
+ Remove components. Pick back components from Palette view and configure them as before.
+
+ Tip: Make sure you are aware of all previous configurations otherwise your updated job may not
+ keep the same funcionality as before.
+
+OSX and Linux users may use these 2 scripts to automatize process:
+
+1. install component: https://gist.github.com/igorbeslic/1bc7aeb76445e8d72908157ff40a466a
+2. redeploy component: https://gist.github.com/igorbeslic/6ddccd61c7fbc20c3fd65b303c46caa7
+
+## Running Talend studio in OS with multiple java versions
+
+Regarding to JVM requirements from prerequisites section, user may end up in problems in OS where
+multiple versions of Java present. Talend Studio doesn't rely on `JAVA_HOME`environment variable
+but on system launcher Java version so it will pick the latest Java version installed in OS. For
+XOS users OS can be easily forced to use particular Java version by renaming
+`[JAVA_INSTALL_DIR]/Contents/Info.plist` to `Info.plist.disabled`.
+
+Use `/usr/libexec/java_home -V` command to locate and disable unwanted JREs.
+
+	Tip: User can still use newer JREs by manipulating `JAVA_HOME` environment variable.

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.seo.internal;
 
-import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
+import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -91,12 +91,12 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return layoutCanonicalURL;
 		}
 
-		SEOCompanyConfiguration seoCompanyConfiguration =
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				SEOCompanyConfiguration.class, layout.getCompanyId());
+				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
 
 		if (Objects.equals(
-				seoCompanyConfiguration.canonicalURL(),
+				layoutSEOCompanyConfiguration.canonicalURL(),
 				"default-language-url")) {
 
 			return canonicalURL;

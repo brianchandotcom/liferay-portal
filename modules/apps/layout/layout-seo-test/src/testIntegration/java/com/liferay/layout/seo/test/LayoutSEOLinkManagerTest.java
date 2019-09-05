@@ -61,7 +61,7 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetClassicLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
-		_testWithSEOCompanyConfiguration(
+		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
 			() -> {
 				List<LayoutSEOLink> layoutSEOLinks =
@@ -82,7 +82,7 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetClassicLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
-		_testWithSEOCompanyConfiguration(
+		_testWithLayoutSEOCompanyConfiguration(
 			"default-language-url",
 			() -> {
 				List<LayoutSEOLink> layoutSEOLinks =
@@ -104,7 +104,7 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetDefaultLocalizedLayoutSEOLinksWithDefaultLocale()
 		throws Exception {
 
-		_testWithSEOCompanyConfiguration(
+		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
 			() -> {
 				List<LayoutSEOLink> layoutSEOLinks =
@@ -124,7 +124,7 @@ public class LayoutSEOLinkManagerTest {
 	public void testGetDefaultLocalizedLayoutSEOLinksWithNoDefaultLocale()
 		throws Exception {
 
-		_testWithSEOCompanyConfiguration(
+		_testWithLayoutSEOCompanyConfiguration(
 			"localized-url",
 			() -> {
 				List<LayoutSEOLink> layoutSEOLinks =
@@ -245,13 +245,13 @@ public class LayoutSEOLinkManagerTest {
 		return null;
 	}
 
-	private void _testWithSEOCompanyConfiguration(
+	private void _testWithLayoutSEOCompanyConfiguration(
 			String canonicalURL, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					_SEO_CONFIGURATION_PID,
+					_LAYOUT_SEO_CONFIGURATION_PID,
 					new HashMapDictionary<String, Object>() {
 						{
 							put("canonicalURL", canonicalURL);
@@ -264,8 +264,9 @@ public class LayoutSEOLinkManagerTest {
 
 	private static final String _CANONICAL_URL = "canonicalURL";
 
-	private static final String _SEO_CONFIGURATION_PID =
-		"com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration";
+	private static final String _LAYOUT_SEO_CONFIGURATION_PID =
+		"com.liferay.layout.seo.internal.configuration." +
+			"LayoutSEOCompanyConfiguration";
 
 	private final Map<Locale, String> _alternateURLs =
 		new HashMap<Locale, String>() {

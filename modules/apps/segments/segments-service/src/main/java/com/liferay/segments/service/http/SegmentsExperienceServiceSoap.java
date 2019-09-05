@@ -115,6 +115,25 @@ public class SegmentsExperienceServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperienceSoap
+			fetchSegmentsExperience(long groupId, String segmentsExperienceKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperience returnValue =
+				SegmentsExperienceServiceUtil.fetchSegmentsExperience(
+					groupId, segmentsExperienceKey);
+
+			return com.liferay.segments.model.SegmentsExperienceSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperienceSoap
 			getSegmentsExperience(long segmentsExperienceId)
 		throws RemoteException {
 

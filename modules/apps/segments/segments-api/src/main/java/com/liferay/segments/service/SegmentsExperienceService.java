@@ -65,6 +65,11 @@ public interface SegmentsExperienceService extends BaseService {
 			long segmentsExperienceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience fetchSegmentsExperience(
+			long groupId, String segmentsExperienceKey)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

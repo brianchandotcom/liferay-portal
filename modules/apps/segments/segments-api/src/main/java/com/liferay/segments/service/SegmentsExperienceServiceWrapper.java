@@ -57,6 +57,15 @@ public class SegmentsExperienceServiceWrapper
 			segmentsExperienceId);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperience
+			fetchSegmentsExperience(long groupId, String segmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceService.fetchSegmentsExperience(
+			groupId, segmentsExperienceKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

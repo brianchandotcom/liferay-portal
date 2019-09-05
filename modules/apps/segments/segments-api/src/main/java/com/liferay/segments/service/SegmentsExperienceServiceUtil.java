@@ -58,6 +58,14 @@ public class SegmentsExperienceServiceUtil {
 		return getService().deleteSegmentsExperience(segmentsExperienceId);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperience
+			fetchSegmentsExperience(long groupId, String segmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchSegmentsExperience(
+			groupId, segmentsExperienceKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

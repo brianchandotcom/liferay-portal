@@ -124,37 +124,6 @@ definition {
 	}
 
 	@priority = "4"
-	test AddFrontPage {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
-	}
-
-	@priority = "4"
-	test AddFrontPageWithAttachment {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiPage.addAttachmentViaPageEdit(
-			attachmentFileName = "Document_1.jpg",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiPage.viewAttachmentPGViaEdit(
-			attachmentFileName = "Document_1.jpg",
-			attachmentFileSize = "13 KB",
-			wikiPageTitle = "FrontPage");
-	}
-
-	@priority = "4"
 	test AddFrontPageWithAttachments {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

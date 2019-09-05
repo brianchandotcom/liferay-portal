@@ -24,7 +24,6 @@
 
 package ${packagePath}.service.persistence.impl;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 <#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity) />
@@ -167,8 +166,6 @@ import org.osgi.service.component.annotations.Reference;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}> implements ${entity.name}Persistence {
 
 	/*

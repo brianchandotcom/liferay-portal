@@ -1,7 +1,5 @@
 package ${packagePath}.service.http;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 <#if hasHttpMethods>
 	import ${apiPackagePath}.service.${entity.name}ServiceUtil;
 </#if>
@@ -47,8 +45,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}ServiceHttp {
 
 	<#assign hasMethods = false />

@@ -1,7 +1,5 @@
 package ${apiPackagePath}.model;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 <#if entity.hasCompoundPK()>
 	import ${apiPackagePath}.service.persistence.${entity.name}PK;
 </#if>
@@ -15,7 +13,6 @@ import java.sql.Blob;
  * @see ${entity.name}
  * @generated
  */
-@ProviderType
 public class ${entity.name}${column.methodName}BlobModel {
 
 	public ${entity.name}${column.methodName}BlobModel() {

@@ -1,7 +1,5 @@
 package ${apiPackagePath}.service.persistence;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
@@ -16,8 +14,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}FinderUtil {
 
 	<#list methods as method>

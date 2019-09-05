@@ -1,7 +1,5 @@
 package ${apiPackagePath}.service;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
@@ -46,8 +44,6 @@ import org.osgi.util.tracker.ServiceTracker;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}${sessionTypeName}ServiceUtil {
 
 	/*

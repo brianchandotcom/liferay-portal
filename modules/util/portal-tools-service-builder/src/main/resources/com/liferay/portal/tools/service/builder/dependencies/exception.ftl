@@ -2,14 +2,11 @@
 
 package ${apiPackagePath}.exception;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author ${author}
  */
-@ProviderType
 public class ${exception}Exception extends PortalException {
 
 	public ${exception}Exception() {

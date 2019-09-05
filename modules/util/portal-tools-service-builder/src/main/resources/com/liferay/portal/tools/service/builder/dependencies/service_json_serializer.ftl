@@ -1,7 +1,5 @@
 package ${packagePath}.service.http;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import ${apiPackagePath}.model.${entity.name};
 
 import com.liferay.portal.kernel.json.JSONArray;
@@ -15,7 +13,6 @@ import java.util.List;
  * @author ${author}
  * @generated
  */
-@ProviderType
 public class ${entity.name}JSONSerializer {
 
 	public static JSONObject toJSONObject(${entity.name} model) {

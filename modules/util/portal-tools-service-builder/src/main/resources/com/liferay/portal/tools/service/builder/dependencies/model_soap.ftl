@@ -1,7 +1,5 @@
 package ${apiPackagePath}.model;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 <#if entity.hasCompoundPK()>
 	import ${apiPackagePath}.service.persistence.${entity.name}PK;
 </#if>
@@ -30,8 +28,6 @@ import java.util.Map;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}Soap implements Serializable {
 
 	public static ${entity.name}Soap toSoapModel(${entity.name} model) {

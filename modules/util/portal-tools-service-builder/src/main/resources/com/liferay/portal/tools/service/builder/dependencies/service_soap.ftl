@@ -1,7 +1,5 @@
 package ${packagePath}.service.http;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import ${apiPackagePath}.service.${entity.name}ServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -63,8 +61,6 @@ import java.util.Map;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}ServiceSoap {
 
 	<#assign hasMethods = false />

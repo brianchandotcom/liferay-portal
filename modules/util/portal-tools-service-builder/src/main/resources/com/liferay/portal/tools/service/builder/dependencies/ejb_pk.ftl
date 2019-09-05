@@ -1,7 +1,6 @@
 package ${apiPackagePath}.service.persistence;
 
 import ${serviceBuilder.getCompatJavaClassName("HashUtil")};
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import com.liferay.portal.kernel.util.DateUtil;
@@ -14,7 +13,6 @@ import java.util.Date;
  * @author ${author}
  * @generated
  */
-@ProviderType
 public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>, Serializable {
 
 	<#list entity.PKEntityColumns as entityColumn>

@@ -1,7 +1,5 @@
 package ${packagePath}.model.impl;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 /**
  * The extended model implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
  *
@@ -11,7 +9,6 @@ import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
  *
  * @author ${author}
  */
-@ProviderType
 public class ${entity.name}Impl extends ${entity.name}BaseImpl {
 
 	/*

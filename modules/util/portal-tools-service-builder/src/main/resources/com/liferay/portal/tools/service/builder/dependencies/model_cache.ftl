@@ -1,7 +1,6 @@
 package ${packagePath}.model.impl;
 
 import ${serviceBuilder.getCompatJavaClassName("HashUtil")};
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import ${apiPackagePath}.model.${entity.name};
@@ -37,8 +36,6 @@ import java.util.Map;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Externalizable
 	<#if entity.isMvccEnabled()>
 		, MVCCModel

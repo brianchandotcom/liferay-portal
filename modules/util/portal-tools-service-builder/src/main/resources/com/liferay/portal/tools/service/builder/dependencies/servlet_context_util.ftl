@@ -1,7 +1,5 @@
 package ${apiPackagePath}.service;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -13,7 +11,6 @@ import java.lang.reflect.Method;
  * @author ${author}
  * @generated
  */
-@ProviderType
 public class ServletContextUtil {
 
 	public static String getServletContextName() {

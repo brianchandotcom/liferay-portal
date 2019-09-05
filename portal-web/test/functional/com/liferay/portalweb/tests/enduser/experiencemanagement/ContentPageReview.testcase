@@ -106,7 +106,7 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Title");
 
-		PageEditor.contentPageAddExperience(experienceName = "New Experience Name");
+		PageEditor.addExperience(experienceName = "New Experience Name");
 
 		PageEditor.addComment(
 			content = "Lorem ipsum dolor sit amet",
@@ -115,7 +115,7 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
-		PageEditor.contentPageChangeExperience(changeExperienceName = "Default");
+		PageEditor.changeExperience(changeExperienceName = "Default");
 
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
@@ -125,7 +125,7 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
 			value1 = "There are no comments yet.");
 
-		PageEditor.contentPageChangeExperience(changeExperienceName = "New Experience Name");
+		PageEditor.changeExperience(changeExperienceName = "New Experience Name");
 
 		PageEditor.viewCommentList(
 			commentCount = "1 Comment",

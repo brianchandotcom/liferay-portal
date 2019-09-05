@@ -22,6 +22,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -197,13 +198,10 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				_group.getGroupId(), RandomTestUtil.randomLong(),
-				RandomTestUtil.randomString(), _serviceContext);
-
-		layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				ddmStructure.getStructureId());
+				ddmStructure.getStructureId(), _serviceContext);
 
 		if (defaultLayoutPageTemplateEntry) {
 			layoutPageTemplateEntry =

@@ -5,10 +5,14 @@
 	cursor: grab;
 	transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
 
-	&:hover {
+	&:hover:not(.disabled) {
 		border-color: #80acff;
 		box-shadow: 0px 2px 4px rgba(39, 40, 51, 0.12);
 		transform: translateX(-2px);
+	}
+
+	&.disabled {
+		opacity: 0.3;
 	}
 
 	&.dragging {

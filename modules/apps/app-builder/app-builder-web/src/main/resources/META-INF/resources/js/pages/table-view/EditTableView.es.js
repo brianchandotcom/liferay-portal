@@ -215,6 +215,9 @@ const EditTableView = ({
 							<FieldTypeList
 								fieldTypes={availableFields.map(field => ({
 									description: field.fieldType,
+									disabled: columns.some(
+										column => column === field.name
+									),
 									icon: field.fieldType,
 									label: field.name,
 									name: field.fieldType

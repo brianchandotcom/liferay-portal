@@ -57,11 +57,11 @@ definition {
 
 		var contentXML = JSONWebcontentSetter.setContentXML(content = "${content}");
 
-		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(
-			description = "${description}");
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(description = "${description}");
 
 		var folderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${folderName}");
+			folderName = "${folderName}",
+			groupId = "${groupId}");
 
 		var serviceContext = JSONWebcontentSetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",

@@ -18,10 +18,12 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * @author Rubén Pulido
@@ -302,6 +305,40 @@ public class FragmentEntryConfigUtil {
 		return false;
 	}
 
+	public static String translateConfigurationFields(
+		JSONObject jsonObject, ResourceBundle resourceBundle) {
+
+		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return StringPool.BLANK;
+		}
+
+		Iterator<JSONObject> iterator = fieldSetsJSONArray.iterator();
+
+		iterator.forEachRemaining(
+			fieldSetJSONObject -> {
+				String fieldSetLabel = fieldSetJSONObject.getString("label");
+
+				fieldSetJSONObject.put(
+					"label",
+					LanguageUtil.get(
+						resourceBundle, fieldSetLabel, fieldSetLabel));
+
+				JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
+					"fields");
+
+				Iterator<JSONObject> fieldsIterator =
+					fieldsJSONArray.iterator();
+
+				fieldsIterator.forEachRemaining(
+					fieldJSONObject -> _translateConfigurationField(
+						fieldJSONObject, resourceBundle));
+			});
+
+		return jsonObject.toString();
+	}
+
 	private static Object _getAssetEntry(String value) {
 		if (Validator.isNull(value)) {
 			return null;
@@ -422,6 +459,42 @@ public class FragmentEntryConfigUtil {
 		}
 
 		return null;
+	}
+
+	private static void _translateConfigurationField(
+		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
+
+		String fieldLabel = fieldJSONObject.getString("label");
+
+		fieldJSONObject.put(
+			"label", LanguageUtil.get(resourceBundle, fieldLabel, fieldLabel));
+
+		String type = fieldJSONObject.getString("type");
+
+		if (!Objects.equals(type, "select")) {
+			return;
+		}
+
+		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
+			"typeOptions");
+
+		JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
+			"validValues");
+
+		Iterator<JSONObject> validValuesIterator =
+			validValuesJSONArray.iterator();
+
+		validValuesIterator.forEachRemaining(
+			validValueJSONObject -> {
+				String value = validValueJSONObject.getString("value");
+
+				String key = value;
+
+				String label = validValueJSONObject.getString("label", key);
+
+				validValueJSONObject.put(
+					"label", LanguageUtil.get(resourceBundle, label, key));
+			});
 	}
 
 	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";

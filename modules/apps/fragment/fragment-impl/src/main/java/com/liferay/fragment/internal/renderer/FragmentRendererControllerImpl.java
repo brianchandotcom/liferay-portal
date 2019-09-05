@@ -23,11 +23,11 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -46,9 +46,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -212,42 +210,6 @@ public class FragmentRendererControllerImpl
 		return fragmentRenderer;
 	}
 
-	private void _translateConfigurationField(
-		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
-
-		String fieldLabel = fieldJSONObject.getString("label");
-
-		fieldJSONObject.put(
-			"label", LanguageUtil.get(resourceBundle, fieldLabel, fieldLabel));
-
-		String type = fieldJSONObject.getString("type");
-
-		if (!Objects.equals(type, "select")) {
-			return;
-		}
-
-		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
-			"typeOptions");
-
-		JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
-			"validValues");
-
-		Iterator<JSONObject> validValuesIterator =
-			validValuesJSONArray.iterator();
-
-		validValuesIterator.forEachRemaining(
-			validValueJSONObject -> {
-				String value = validValueJSONObject.getString("value");
-
-				String key = value;
-
-				String label = validValueJSONObject.getString("label", key);
-
-				validValueJSONObject.put(
-					"label", LanguageUtil.get(resourceBundle, label, key));
-			});
-	}
-
 	private String _translateConfigurationFields(
 		JSONObject jsonObject, Locale locale) {
 
@@ -260,41 +222,8 @@ public class FragmentRendererControllerImpl
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		return _translateConfigurationFields(jsonObject, resourceBundle);
-	}
-
-	private String _translateConfigurationFields(
-		JSONObject jsonObject, ResourceBundle resourceBundle) {
-
-		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
-
-		if (fieldSetsJSONArray == null) {
-			return StringPool.BLANK;
-		}
-
-		Iterator<JSONObject> iterator = fieldSetsJSONArray.iterator();
-
-		iterator.forEachRemaining(
-			fieldSetJSONObject -> {
-				String fieldSetLabel = fieldSetJSONObject.getString("label");
-
-				fieldSetJSONObject.put(
-					"label",
-					LanguageUtil.get(
-						resourceBundle, fieldSetLabel, fieldSetLabel));
-
-				JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
-					"fields");
-
-				Iterator<JSONObject> fieldsIterator =
-					fieldsJSONArray.iterator();
-
-				fieldsIterator.forEachRemaining(
-					fieldJSONObject -> _translateConfigurationField(
-						fieldJSONObject, resourceBundle));
-			});
-
-		return jsonObject.toString();
+		return FragmentEntryConfigUtil.translateConfigurationFields(
+			jsonObject, resourceBundle);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

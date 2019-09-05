@@ -35,6 +35,9 @@ import org.osgi.service.component.annotations.Reference;
 @Deprecated
 public class KaleoFormsPermission extends BaseResourcePermissionChecker {
 
+	public static final String RESOURCE_NAME =
+		KaleoFormsConstants.RESOURCE_NAME;
+
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {

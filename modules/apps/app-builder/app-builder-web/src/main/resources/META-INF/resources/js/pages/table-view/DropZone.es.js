@@ -52,7 +52,7 @@ const DropZone = ({columns, onRemoveColumn}) => {
 			columns={columns.map(fieldName => ({
 				key: fieldName,
 				value: (
-					<div className="container drop-zone-column">
+					<div className="container p-0">
 						<div className="row align-items-center">
 							<div className="col">{fieldName}</div>
 							<div className="col-md-auto">

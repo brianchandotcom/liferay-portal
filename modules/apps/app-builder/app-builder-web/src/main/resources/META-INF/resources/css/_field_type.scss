@@ -2,8 +2,11 @@
 	border: 2px solid transparent;
 	border-radius: 4px;
 	box-sizing: border-box;
-	cursor: grab;
 	transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+	&:not(.disabled) {
+		cursor: grab;
+	}
 
 	&:hover:not(.disabled) {
 		border-color: #80acff;

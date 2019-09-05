@@ -66,7 +66,7 @@ export default props => {
 				'pt-3',
 				{
 					disabled,
-					dragging
+					dragging: !disabled && dragging
 				}
 			)}
 			data-field-type-name={name}

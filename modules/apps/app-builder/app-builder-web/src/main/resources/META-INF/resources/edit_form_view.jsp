@@ -37,7 +37,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			<liferay-data-engine:data-layout-builder
 				componentId="<%= componentId %>"
 				dataDefinitionInputId="dataDefinition"
-				dataLayoutId="<%= 0L %>"
+				dataLayoutId="<%= dataLayoutId %>"
 				dataLayoutInputId="dataLayout"
 				namespace="<%= renderResponse.getNamespace() %>"
 			/>

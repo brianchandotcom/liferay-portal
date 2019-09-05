@@ -71,30 +71,32 @@ public class DeleteExpiredTemporaryFileEntriesPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/edit_folder");
-		portletURL.setParameter(
-			Constants.CMD, "deleteExpiredTemporaryFileEntries");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
 		try {
+			PortletURL portletURL = _portal.getControlPanelPortletURL(
+				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				PortletRequest.ACTION_PHASE);
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/document_library/edit_folder");
+			portletURL.setParameter(
+				Constants.CMD, "deleteExpiredTemporaryFileEntries");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			portletURL.setParameter(
 				"repositoryId", String.valueOf(folder.getRepositoryId()));
-		}
-		catch (Exception e) {
-		}
 
-		return portletURL.toString();
+			return portletURL.toString();
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	@Override

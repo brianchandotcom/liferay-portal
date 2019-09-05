@@ -70,52 +70,53 @@ public class EditFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		Folder folder = null;
-
 		try {
-			folder = ActionUtil.getFolder(portletRequest);
-		}
-		catch (Exception e) {
-			return null;
-		}
+			PortletURL portletURL = _portal.getControlPanelPortletURL(
+				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+				PortletRequest.RENDER_PHASE);
 
-		if (folder == null) {
-			portletURL.setParameter(
-				"mvcRenderCommandName", "/document_library/edit_folder");
-			portletURL.setParameter(
-				"folderId",
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-			portletURL.setParameter(
-				"repositoryId", String.valueOf(themeDisplay.getScopeGroupId()));
-			portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
-		}
-		else {
-			if (folder.isMountPoint()) {
-				portletURL.setParameter(
-					"mvcRenderCommandName",
-					"/document_library/edit_repository");
-			}
-			else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			if (folder == null) {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "/document_library/edit_folder");
+				portletURL.setParameter(
+					"folderId",
+					String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+				portletURL.setParameter(
+					"repositoryId",
+					String.valueOf(themeDisplay.getScopeGroupId()));
+				portletURL.setParameter("rootFolder", Boolean.TRUE.toString());
+			}
+			else {
+				if (folder.isMountPoint()) {
+					portletURL.setParameter(
+						"mvcRenderCommandName",
+						"/document_library/edit_repository");
+				}
+				else {
+					portletURL.setParameter(
+						"mvcRenderCommandName",
+						"/document_library/edit_folder");
+				}
+
+				portletURL.setParameter(
+					"folderId", String.valueOf(folder.getFolderId()));
+				portletURL.setParameter(
+					"repositoryId", String.valueOf(folder.getRepositoryId()));
 			}
 
-			portletURL.setParameter(
-				"folderId", String.valueOf(folder.getFolderId()));
-			portletURL.setParameter(
-				"repositoryId", String.valueOf(folder.getRepositoryId()));
+			return portletURL.toString();
 		}
-
-		return portletURL.toString();
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	@Override

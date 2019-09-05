@@ -74,8 +74,8 @@ public class MoveFolderPortletConfigurationIcon
 				"javascript: ", liferayPortletResponse.getNamespace(),
 				"move(1, 'rowIdsFolder', ", folder.getFolderId(), ");");
 		}
-		catch (Exception e) {
-			return null;
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
 		}
 	}
 

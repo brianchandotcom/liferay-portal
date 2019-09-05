@@ -126,31 +126,23 @@ public class EditFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		String navigation = ParamUtil.getString(portletRequest, "navigation");
-
-		if (Validator.isNotNull(navigation)) {
-			return false;
-		}
-
 		try {
-			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+			String navigation = ParamUtil.getString(
+				portletRequest, "navigation");
+
+			if (Validator.isNotNull(navigation)) {
+				return false;
+			}
 
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (folder == null) {
-				if (!WorkflowEngineManagerUtil.isDeployed()) {
-					return false;
-				}
-
-				WorkflowHandler<?> workflowHandler =
-					WorkflowHandlerRegistryUtil.getWorkflowHandler(
-						DLFileEntry.class.getName());
-
-				if (workflowHandler == null) {
-					return false;
-				}
+			if ((folder == null) && !_isDLWorkflowEnabled()) {
+				return false;
 			}
-			else {
+
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+			if (folder != null) {
 				folderId = folder.getFolderId();
 			}
 
@@ -178,6 +170,22 @@ public class EditFolderPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
+	}
+
+	private boolean _isDLWorkflowEnabled() {
+		if (!WorkflowEngineManagerUtil.isDeployed()) {
+			return false;
+		}
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				DLFileEntry.class.getName());
+
+		if (workflowHandler == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

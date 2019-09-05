@@ -59,15 +59,16 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			String key = "delete";
 
-			if (isTrashEnabled(
+			if (_dlTrashUtil.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 				key = "move-to-recycle-bin";
@@ -107,7 +108,7 @@ public class DeleteFolderPortletConfigurationIcon
 					WebKeys.THEME_DISPLAY);
 
 			if (folder.isMountPoint() ||
-				!isTrashEnabled(
+				!_dlTrashUtil.isTrashEnabled(
 					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 				portletURL.setParameter(Constants.CMD, Constants.DELETE);
@@ -152,10 +153,11 @@ public class DeleteFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			return ModelResourcePermissionHelper.contains(
@@ -179,12 +181,6 @@ public class DeleteFolderPortletConfigurationIcon
 	@Override
 	public boolean isToolTip() {
 		return false;
-	}
-
-	protected boolean isTrashEnabled(long groupId, long repositoryId)
-		throws PortalException {
-
-		return _dlTrashUtil.isTrashEnabled(groupId, repositoryId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

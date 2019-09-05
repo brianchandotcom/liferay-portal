@@ -27,7 +27,7 @@ public interface CTPersistence<T extends CTModel<T>>
 
 	public List<T> findByCTCollectionId(long ctCollectionId);
 
-	public List<String[]> getUniqueColumnNames();
+	public List<String[]> getUniqueIndexColumnNames();
 
 	public T removeCTModel(T ctModel, boolean quiet);
 

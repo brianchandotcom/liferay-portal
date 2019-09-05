@@ -85,9 +85,10 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 
 		CTPersistence<?> ctPersistence = ctService.getCTPersistence();
 
-		List<String[]> uniqueColumnNames = ctPersistence.getUniqueColumnNames();
+		List<String[]> uniqueIndexColumnNames =
+			ctPersistence.getUniqueIndexColumnNames();
 
-		if (uniqueColumnNames.isEmpty()) {
+		if (uniqueIndexColumnNames.isEmpty()) {
 			return added;
 		}
 
@@ -98,9 +99,9 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 
 		wrappedSession.doWork(
 			connection -> {
-				for (String[] uniqueColumns : uniqueColumnNames) {
+				for (String[] columnNames : uniqueIndexColumnNames) {
 					StringBundler sb = new StringBundler(
-						4 * uniqueColumns.length + 13);
+						4 * columnNames.length + 13);
 
 					sb.append("select ct1.");
 					sb.append(primaryColumnName);
@@ -116,11 +117,11 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 					sb.append("ct2.ctCollectionId = ");
 					sb.append(ctCollectionId);
 
-					for (String uniqueColumn : uniqueColumns) {
+					for (String column : columnNames) {
 						sb.append(" and ct1.");
-						sb.append(uniqueColumn);
+						sb.append(column);
 						sb.append(" = ct2.");
-						sb.append(uniqueColumn);
+						sb.append(column);
 					}
 
 					try (PreparedStatement ps = connection.prepareStatement(

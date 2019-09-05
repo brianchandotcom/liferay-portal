@@ -51,5 +51,5 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 	</c:choose>
 </span>
 <span>
-    <%= DLUtil.getAbsolutePath(liferayPortletRequest, folder.getParentFolderId()).replace(StringPool.RAQUO_CHAR, StringPool.GREATER_THAN)%>
+	<%= DLUtil.getAbsolutePath(liferayPortletRequest, folder.getParentFolderId()).replace(StringPool.RAQUO_CHAR, StringPool.GREATER_THAN) %>
 </span>

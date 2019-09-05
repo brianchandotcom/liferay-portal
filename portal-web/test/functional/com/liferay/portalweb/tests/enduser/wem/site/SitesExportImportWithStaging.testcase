@@ -33,7 +33,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder to the first site") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-1-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-1-staging");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
@@ -214,7 +214,7 @@ definition {
 		}
 
 		task ("Assert the fragments from the first site survived the import") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Content");
 
@@ -234,7 +234,7 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Title");
 
-			FragmentsAdmin.gotoEntryEllipsisItem(
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Button",
 				item = "Edit");
 

@@ -146,9 +146,9 @@ definition {
 			groupName = "Site Name",
 			name = "Collection Name");
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "site-name");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
 
-		FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
 		FragmentsAdmin.addSection(fragmentName = "Fragment Name");
 

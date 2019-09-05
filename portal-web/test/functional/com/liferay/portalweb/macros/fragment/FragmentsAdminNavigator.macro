@@ -1,0 +1,47 @@
+definition {
+
+	macro gotoAddCollection {
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+		}
+		else {
+			Button.click(button = "New");
+
+			MenuItem.click(menuItem = "Collection");
+		}
+	}
+
+	macro gotoCollection {
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
+			value1 = "${collectionName}");
+	}
+
+	macro gotoEntry {
+		LexiconCard.clickCardTitle(card = "${entry}");
+	}
+
+	macro gotoEntryEllipsisItem {
+		LexiconCard.clickEllipsisItem(
+			card = "${entry}",
+			item = "${item}");
+	}
+
+	macro gotoImportCollection {
+		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
+			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		}
+		else {
+			Button.click(button = "New");
+		}
+
+		Button.click(button = "Import");
+
+		IFrame.selectConfigurationFrame();
+	}
+
+	macro openFragmentsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
+	}
+
+}

@@ -16,7 +16,7 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 
@@ -194,7 +194,7 @@ definition {
 	@priority = "4"
 	test ViewDraftFragmentDoesNotDisplayInSidebar {
 		task ("Add a fragment without publishing it") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.addCollection(
 				collectionDescription = "Collection Description",

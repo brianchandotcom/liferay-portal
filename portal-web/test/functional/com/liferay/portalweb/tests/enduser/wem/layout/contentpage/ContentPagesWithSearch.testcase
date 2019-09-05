@@ -31,7 +31,7 @@ definition {
 		}
 
 		task ("Import test fragments from dependencies folder") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}

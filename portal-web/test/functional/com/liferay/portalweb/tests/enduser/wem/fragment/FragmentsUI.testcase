@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Add a fragment collection") {
@@ -25,7 +25,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {
@@ -118,7 +118,7 @@ definition {
 		}
 
 		task ("Edit the section fragment to have the Title fragment code") {
-			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 			FragmentsEditor.typeFileContent(fileName = "fragment_title.html");
 
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("Navigate to the section fragment") {
-			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 		}
 
 		task ("Assert the edits to the section fragment persist by asserting that the preview displays the Title fragment") {

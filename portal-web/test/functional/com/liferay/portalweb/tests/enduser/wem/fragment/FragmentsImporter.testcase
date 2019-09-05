@@ -17,7 +17,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -42,7 +42,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the fragment import screen") {
-			FragmentsAdmin.gotoImportCollection();
+			FragmentsAdminNavigator.gotoImportCollection();
 		}
 
 		task ("Attempt to import a zip file with invalid structure") {
@@ -66,7 +66,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the fragment import screen") {
-			FragmentsAdmin.gotoImportCollection();
+			FragmentsAdminNavigator.gotoImportCollection();
 		}
 
 		task ("Attempt to import a non-zip file") {
@@ -96,7 +96,7 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a section fragment that uses the Button fragment code") {
@@ -122,7 +122,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin in the new site") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "new-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "new-site-name");
 		}
 
 		task ("Import the fragment collection into the new site") {
@@ -130,11 +130,11 @@ definition {
 		}
 
 		task ("Navigate to the fragment collection in the new site") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment survived the import and the fragment preview displays the Button fragment") {
-			FragmentsAdmin.gotoEntry(entry = "Fragment Name");
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
@@ -152,7 +152,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the fragment import screen") {
-			FragmentsAdmin.gotoImportCollection();
+			FragmentsAdminNavigator.gotoImportCollection();
 		}
 
 		task ("Import fragment dependencies") {

@@ -1493,7 +1493,7 @@ definition {
 
 	macro viewMSBUpgrade {
 		task ("Assert the fragments survived") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.viewEntryPresent(entry = "Content");
 
@@ -1513,7 +1513,7 @@ definition {
 
 			FragmentsAdmin.viewEntryPresent(entry = "Title");
 
-			FragmentsAdmin.gotoEntryEllipsisItem(
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Button",
 				item = "Edit");
 

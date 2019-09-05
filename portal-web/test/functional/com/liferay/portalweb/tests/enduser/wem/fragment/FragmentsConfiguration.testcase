@@ -16,9 +16,9 @@ definition {
 			groupName = "Test Site Name",
 			name = "Collection Name");
 
-		FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-		FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 	}
 
 	tearDown {

@@ -1,18 +1,7 @@
 definition {
 
-	macro _gotoAddCollection {
-		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
-			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
-		}
-		else {
-			Button.click(button = "New");
-
-			MenuItem.click(menuItem = "Collection");
-		}
-	}
-
 	macro addCollection {
-		FragmentsAdmin._gotoAddCollection();
+		FragmentsAdminNavigator.gotoAddCollection();
 
 		Collection.editCollection(
 			collectionDescription = "${collectionDescription}",
@@ -77,37 +66,8 @@ definition {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 	}
 
-	macro gotoCollection {
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
-			value1 = "${collectionName}");
-	}
-
-	macro gotoEntry {
-		LexiconCard.clickCardTitle(card = "${entry}");
-	}
-
-	macro gotoEntryEllipsisItem {
-		LexiconCard.clickEllipsisItem(
-			card = "${entry}",
-			item = "${item}");
-	}
-
-	macro gotoImportCollection {
-		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
-			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
-		}
-		else {
-			Button.click(button = "New");
-		}
-
-		Button.click(button = "Import");
-
-		IFrame.selectConfigurationFrame();
-	}
-
 	macro importCollectionFromDependenciesFolder {
-		FragmentsAdmin.gotoImportCollection();
+		FragmentsAdminNavigator.gotoImportCollection();
 
 		UploadCommonFile(
 			locator1 = "TextInput#FILE",
@@ -121,7 +81,7 @@ definition {
 	}
 
 	macro importCollectionFromTempFolder {
-		FragmentsAdmin.gotoImportCollection();
+		FragmentsAdminNavigator.gotoImportCollection();
 
 		var collectionsZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "collections-*.zip");
 

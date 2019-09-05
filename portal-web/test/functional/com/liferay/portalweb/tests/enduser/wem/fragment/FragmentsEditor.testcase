@@ -23,7 +23,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -42,7 +42,7 @@ definition {
 	@priority = "4"
 	test AutocompleteFragment {
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a fragment section") {

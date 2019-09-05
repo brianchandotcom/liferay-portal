@@ -30,7 +30,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -49,7 +49,7 @@ definition {
 	@priority = "4"
 	test AddAndDeleteResource {
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Navigate to the resources tab") {
@@ -77,17 +77,17 @@ definition {
 	@priority = "5"
 	test CopyFragment {
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Copy the section fragment") {
-			FragmentsAdmin.gotoEntryEllipsisItem(
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Fragment Name",
 				item = "Make a Copy");
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the copied section fragment is present") {
@@ -101,7 +101,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Delete the section fragment") {
@@ -109,11 +109,11 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment is not present") {
@@ -131,7 +131,7 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Assert the fragment collection is not present") {
@@ -143,11 +143,11 @@ definition {
 	@priority = "4"
 	test RenameFragment {
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Rename the section fragment") {
-			FragmentsAdmin.gotoEntryEllipsisItem(
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
 				entry = "Fragment Name",
 				item = "Rename");
 
@@ -157,11 +157,11 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment has the new name") {
@@ -193,11 +193,11 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the section fragment cannot be deleted because it is being used by the page template") {
@@ -214,13 +214,13 @@ definition {
 	test ViewContributedFragmentCollections {
 		property portal.acceptance = "true";
 
-		FragmentsAdmin.gotoCollection(collectionName = "Basic Components");
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
 
 		task ("Assert a fragments appears in Fragments Admin") {
 			FragmentsAdmin.viewEntryPresent(entry = "Button");
 		}
 
-		FragmentsAdmin.gotoCollection(collectionName = "Basic Sections");
+		FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Sections");
 
 		task ("Assert a fragment appears in Fragments Admin") {
 			FragmentsAdmin.viewEntryPresent(entry = "Banner Center");
@@ -231,7 +231,7 @@ definition {
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Add a second section fragment") {
@@ -245,11 +245,11 @@ definition {
 		}
 
 		task ("Navigate to fragments admin") {
-			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Navigate to the fragment collection") {
-			FragmentsAdmin.gotoCollection(collectionName = "Collection Name");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 		}
 
 		task ("Assert the second section fragment is in draft status") {
@@ -259,7 +259,7 @@ definition {
 		}
 
 		task ("Edit the second section fragment") {
-			FragmentsAdmin.gotoEntry(entry = "Fragment Name 2");
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name 2");
 
 			var htmlSnippet = '''
 <html>${line.separator}

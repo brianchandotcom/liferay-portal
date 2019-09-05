@@ -43,7 +43,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -715,10 +714,7 @@ public class DataLayoutTaglibUtil {
 			DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 				_dataLayout.getDataDefinitionId());
 
-			DDMStructureVersion ddmStructureVersion =
-				ddmStructure.getLatestStructureVersion();
-
-			String dataDefinitionJSON = ddmStructureVersion.getDefinition();
+			String dataDefinitionJSON = ddmStructure.getDefinition();
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				dataDefinitionJSON.replace("defaultValue", "predefinedValue"));

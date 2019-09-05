@@ -292,7 +292,7 @@ definition {
 
 		var fragmentHTML = '''<lfr-widget-web-content>''';
 
-		FragmentsAdmin.autocompleteFragmentHTML(
+		FragmentsEditor.autocompleteFragmentHTML(
 			autocompleteField = "lfr-widget-web-content",
 			fragmentHTML = "${fragmentHTML}");
 

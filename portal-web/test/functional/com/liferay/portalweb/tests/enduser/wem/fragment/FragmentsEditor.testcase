@@ -52,7 +52,7 @@ definition {
 		task ("Assert the fragment editor has autocomplete for lfr-editable tags") {
 			var fragmentHTML = '''<lfr-editable id="" type="image">''';
 
-			FragmentsAdmin.autocompleteFragmentHTML(
+			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-editable:image",
 				fragmentHTML = "${fragmentHTML}");
 		}
@@ -60,7 +60,7 @@ definition {
 		task ("Assert the fragment editor has autocomplete for lfr-widget tags") {
 			var fragmentHTML = '''<lfr-widget-asset-list>''';
 
-			FragmentsAdmin.autocompleteFragmentHTML(
+			FragmentsEditor.autocompleteFragmentHTML(
 				autocompleteField = "lfr-widget-asset-list",
 				fragmentHTML = "${fragmentHTML}");
 		}

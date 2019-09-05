@@ -15,6 +15,24 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	@summary = "Type HTML into the fragment HTML editor using the auto complete feature."
+	macro autocompleteFragmentHTML {
+
+		var htmlSnippet = '''<lfr-''';
+
+		Type.typeAceEditorNoError(
+			locator1 = "FragmentEditor#HTML_EDITOR",
+			value1 = "${htmlSnippet}");
+
+		Click(
+			autocompleteField = "${autocompleteField}",
+			locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+			value1 = "${fragmentHTML}");
+	}
+
 	macro gotoCodeTab {
 		Navigator.gotoNavItem(navItem = "Code");
 	}

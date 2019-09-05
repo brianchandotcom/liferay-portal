@@ -67,6 +67,14 @@ public class ConfigYAML {
 		return _forcePredictableSchemaPropertyName;
 	}
 
+	public boolean isGenerateGraphQL() {
+		return _generateGraphQL;
+	}
+
+	public boolean isGenerateREST() {
+		return _generateREST;
+	}
+
 	public boolean isWarningsEnabled() {
 		return _warningsEnabled;
 	}
@@ -111,6 +119,14 @@ public class ConfigYAML {
 			forcePredictableSchemaPropertyName;
 	}
 
+	public void setGenerateGraphQL(boolean generateGraphQL) {
+		_generateGraphQL = generateGraphQL;
+	}
+
+	public void setGenerateREST(boolean generateREST) {
+		_generateREST = generateREST;
+	}
+
 	public void setImplDir(String implDir) {
 		_implDir = implDir;
 	}
@@ -139,6 +155,8 @@ public class ConfigYAML {
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId = true;
 	private boolean _forcePredictableSchemaPropertyName = true;
+	private boolean _generateGraphQL = true;
+	private boolean _generateREST = true;
 	private String _implDir = "src/main/java";
 	private String _licenseName = "Apache 2.0";
 	private String _licenseURL =

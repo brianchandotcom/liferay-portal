@@ -320,6 +320,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										<c:choose>
 											<c:when test="<%= Validator.isNull(thumbnailSrc) %>">
 												<liferay-frontend:icon-vertical-card
+													actionJsp="/repository_entry_browser/action_button_preview.jsp"
+													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
 													cssClass="file-card form-check form-check-card item-preview"
 													data="<%= data %>"
@@ -336,6 +338,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											</c:when>
 											<c:otherwise>
 												<liferay-frontend:vertical-card
+													actionJsp="/repository_entry_browser/action_button_preview.jsp"
+													actionJspServletContext="<%= application %>"
 													cardCssClass="card-interactive"
 													cssClass="form-check form-check-card image-card item-preview"
 													data="<%= data %>"

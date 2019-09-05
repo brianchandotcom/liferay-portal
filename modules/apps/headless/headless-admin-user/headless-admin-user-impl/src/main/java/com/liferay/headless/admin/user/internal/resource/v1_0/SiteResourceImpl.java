@@ -64,6 +64,18 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return _toSite(group);
 	}
 
+	@Override
+	public Site getSiteByKey(String key) throws Exception {
+		Group group = _groupLocalService.fetchGroup(
+			contextCompany.getCompanyId(), key);
+
+		GroupPermissionUtil.check(
+			PermissionThreadLocal.getPermissionChecker(), group,
+			ActionKeys.VIEW);
+
+		return _toSite(group);
+	}
+
 	private Site _toSite(Group group) throws Exception {
 		return new Site() {
 			{
@@ -76,6 +88,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					contextAcceptLanguage.getPreferredLocale());
 				friendlyUrlPath = group.getFriendlyURL();
 				id = group.getGroupId();
+				key = group.getGroupKey();
 				membershipType = group.getTypeLabel();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());

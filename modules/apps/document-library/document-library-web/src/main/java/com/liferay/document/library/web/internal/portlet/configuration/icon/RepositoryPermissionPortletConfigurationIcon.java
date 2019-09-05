@@ -18,7 +18,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -62,15 +61,14 @@ public class RepositoryPermissionPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Repository repository = ActionUtil.getRepository(portletRequest);
 
-			url = PermissionsURLTag.doTag(
+			return PermissionsURLTag.doTag(
 				null, DLFolderConstants.getClassName(),
 				HtmlUtil.unescape(repository.getName()), null,
 				String.valueOf(repository.getDlFolderId()),
@@ -78,9 +76,8 @@ public class RepositoryPermissionPortletConfigurationIcon
 				themeDisplay.getRequest());
 		}
 		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
 		}
-
-		return url;
 	}
 
 	@Override

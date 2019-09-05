@@ -18,7 +18,6 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -68,35 +67,32 @@ public class FolderPermissionPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			Folder folder = ActionUtil.getFolder(portletRequest);
 
 			if (folder != null) {
-				url = PermissionsURLTag.doTag(
+				return PermissionsURLTag.doTag(
 					null, DLFolderConstants.getClassName(),
 					HtmlUtil.unescape(folder.getName()), null,
 					String.valueOf(folder.getFolderId()),
 					LiferayWindowState.POP_UP.toString(), null,
 					themeDisplay.getRequest());
 			}
-			else {
-				url = PermissionsURLTag.doTag(
-					null, "com.liferay.document.library",
-					HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
-					String.valueOf(themeDisplay.getScopeGroupId()),
-					LiferayWindowState.POP_UP.toString(), null,
-					themeDisplay.getRequest());
-			}
+
+			return PermissionsURLTag.doTag(
+				null, "com.liferay.document.library",
+				HtmlUtil.unescape(themeDisplay.getScopeGroupName()), null,
+				String.valueOf(themeDisplay.getScopeGroupId()),
+				LiferayWindowState.POP_UP.toString(), null,
+				themeDisplay.getRequest());
 		}
 		catch (Exception e) {
+			return ReflectionUtil.throwException(e);
 		}
-
-		return url;
 	}
 
 	@Override

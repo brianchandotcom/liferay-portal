@@ -68,27 +68,26 @@ public class DownloadFolderPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ResourceURL portletURL = (ResourceURL)_portal.getControlPanelPortletURL(
-			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			PortletRequest.RESOURCE_PHASE);
-
-		portletURL.setResourceID("/document_library/download_folder");
-
-		Folder folder = null;
-
 		try {
-			folder = ActionUtil.getFolder(portletRequest);
-		}
-		catch (Exception e) {
-			return null;
-		}
+			ResourceURL portletURL =
+				(ResourceURL)_portal.getControlPanelPortletURL(
+					portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+					PortletRequest.RESOURCE_PHASE);
 
-		portletURL.setParameter(
-			"folderId", String.valueOf(folder.getFolderId()));
-		portletURL.setParameter(
-			"repositoryId", String.valueOf(folder.getRepositoryId()));
+			portletURL.setResourceID("/document_library/download_folder");
 
-		return portletURL.toString();
+			Folder folder = ActionUtil.getFolder(portletRequest);
+
+			portletURL.setParameter(
+				"folderId", String.valueOf(folder.getFolderId()));
+			portletURL.setParameter(
+				"repositoryId", String.valueOf(folder.getRepositoryId()));
+
+			return portletURL.toString();
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	@Override

@@ -117,19 +117,9 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		try {
-			if (!_portletResourcePermission.contains(
-					permissionChecker, themeDisplay.getScopeGroup(),
-					ActionKeys.PERMISSIONS)) {
-
-				return false;
-			}
-		}
-		catch (Exception e) {
-			return false;
-		}
-
-		return true;
+		return _portletResourcePermission.contains(
+			permissionChecker, themeDisplay.getScopeGroup(),
+			ActionKeys.PERMISSIONS);
 	}
 
 	@Override

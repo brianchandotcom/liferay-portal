@@ -192,6 +192,9 @@ public class ContentPageEditorDisplayContext {
 			"addPortletURL",
 			getFragmentEntryActionURL("/content_layout/add_portlet")
 		).put(
+			"addStructuredContentURL",
+			getFragmentEntryActionURL("/content_layout/add_structured_content")
+		).put(
 			"assetBrowserLinks", _getAssetBrowserLinksSoyContexts()
 		).put(
 			"availableAssets", _getAvailableAssetsSoyContexts()

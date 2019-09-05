@@ -25,22 +25,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	description = "seo-configuration-description",
-	id = "com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration",
-	localization = "content/Language", name = "seo-configuration-name"
+	description = "layout-seo-configuration-description",
+	id = "com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration",
+	localization = "content/Language", name = "layout-seo-configuration-name"
 )
-public interface SEOCompanyConfiguration {
+public interface LayoutSEOCompanyConfiguration {
 
 	/**
 	 * Sets the configuration type to use with the localized URL.
 	 */
 	@Meta.AD(
 		deflt = "default-language-url",
-		description = "seo-configuration-canonical-url-description",
-		name = "seo-configuration-canonical-url",
+		description = "layout-seo-configuration-canonical-url-description",
+		name = "layout-seo-configuration-canonical-url",
 		optionLabels = {
-			"seo-configuration-page-default-language-url",
-			"seo-configuration-page-localized-url"
+			"layout-seo-configuration-page-default-language-url",
+			"layout-seo-configuration-page-localized-url"
 		},
 		optionValues = {"default-language-url", "localized-url"},
 		required = false

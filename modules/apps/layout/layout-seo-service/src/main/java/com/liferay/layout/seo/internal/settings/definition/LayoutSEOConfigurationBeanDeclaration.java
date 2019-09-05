@@ -14,7 +14,7 @@
 
 package com.liferay.layout.seo.internal.settings.definition;
 
-import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
+import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Cristina González
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class SEOConfigurationBeanDeclaration
+public class LayoutSEOConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class getConfigurationBeanClass() {
-		return SEOCompanyConfiguration.class;
+		return LayoutSEOCompanyConfiguration.class;
 	}
 
 }

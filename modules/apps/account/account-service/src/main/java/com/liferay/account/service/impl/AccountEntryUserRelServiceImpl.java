@@ -42,9 +42,10 @@ import org.osgi.service.component.annotations.Component;
 public class AccountEntryUserRelServiceImpl
 	extends AccountEntryUserRelServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.account.service.AccountEntryUserRelServiceUtil</code> to access the account entry user rel remote service.
 	 */
+
 }

@@ -78,22 +78,28 @@ class Carousel extends Component {
 
 	render() {
 		const {currentItem} = this.state;
+		const showArrows = this.props.items.length > 1;
 
 		return (
 			<div className="carousel">
-				<Arrow
-					direction="left"
-					clickFunction={this.previousSlide}
-				/>
+
+				{showArrows && (
+					<Arrow
+						direction="left"
+						clickFunction={this.previousSlide}
+					/>
+				)}
 
 				<ImageSlide
 					url={currentItem.dataset.url}
 				/>
 
-				<Arrow
-					direction="right"
-					clickFunction={this.nextSlide}
-				/>
+				{showArrows && (
+					<Arrow
+						direction="right"
+						clickFunction={this.nextSlide}
+					/>
+				)}
 			</div>
 		);
 	}

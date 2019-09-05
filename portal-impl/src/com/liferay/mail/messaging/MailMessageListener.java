@@ -30,8 +30,10 @@ import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
 
@@ -128,17 +130,15 @@ public class MailMessageListener extends BaseMessageListener {
 			return null;
 		}
 
-		for (String blacklistedEmail : PropsValues.MAIL_SEND_BLACKLIST) {
-			if (Objects.equals(emailAddress, blacklistedEmail)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Email ", emailAddress, " will be ignored as it",
-							"is included in ", PropsKeys.MAIL_SEND_BLACKLIST));
-				}
-
-				return null;
+		if (_mailSendBlacklist.contains(emailAddress)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Email ", emailAddress, " will be ignored as it",
+						"is included in ", PropsKeys.MAIL_SEND_BLACKLIST));
 			}
+
+			return null;
 		}
 
 		return internetAddress;
@@ -168,5 +168,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MailMessageListener.class);
+
+	private static final Set<String> _mailSendBlacklist = new HashSet<>(
+		Arrays.asList(PropsValues.MAIL_SEND_BLACKLIST));
 
 }

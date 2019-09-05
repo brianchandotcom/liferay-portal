@@ -81,6 +81,12 @@
 				transition: none;
 			}
 
+			.lexicon-icon-angle-down,
+			.lexicon-icon-angle-right {
+				height: 10px;
+				width: 10px;
+			}
+
 			&-name--padded {
 				padding-left: 3em;
 			}

@@ -133,7 +133,9 @@ definition {
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
-		Click(locator1 = "PageEditor#EXPERIENCE_NEW_BUTTON");
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "Experience");
 
 		Type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",

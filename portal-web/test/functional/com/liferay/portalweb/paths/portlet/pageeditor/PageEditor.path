@@ -232,11 +232,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EXPERIENCE_NEW_BUTTON</td>
-	<td>//button[contains(.,'New Experience')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

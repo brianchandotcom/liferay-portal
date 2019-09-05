@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.model.change.tracking;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.portal.kernel.model.bean.BeanModel;
 
 /**
  * @author Preston Crary
  */
-public interface CTModel<T> extends BeanModel<T>, MVCCModel {
+public interface CTModel<T> extends BaseModel<T>, MVCCModel {
 
 	public long getCtCollectionId();
 

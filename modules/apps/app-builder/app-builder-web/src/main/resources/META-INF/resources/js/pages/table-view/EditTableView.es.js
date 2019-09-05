@@ -76,6 +76,18 @@ const EditTableView = ({
 		}));
 	};
 
+	const onRemoveColumn = column => {
+		setState(prevState => ({
+			...prevState,
+			dataListView: {
+				...prevState.dataListView,
+				fieldNames: prevState.dataListView.fieldNames.filter(
+					fieldName => fieldName != column
+				)
+			}
+		}));
+	};
+
 	const validate = () => {
 		const name = dataListView.name.en_US.trim();
 
@@ -220,7 +232,10 @@ const EditTableView = ({
 					})}
 				>
 					<div className="container table-view-container">
-						<DropZone columns={columns} />
+						<DropZone
+							columns={columns}
+							onRemoveColumn={onRemoveColumn}
+						/>
 					</div>
 				</div>
 			</Loading>

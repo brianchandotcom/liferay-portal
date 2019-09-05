@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';
 
 const generateItems = (columns, rows = 10) => {
@@ -34,7 +35,7 @@ const generateItem = (columns, index) =>
 		{}
 	);
 
-const DropZone = ({columns}) => {
+const DropZone = ({columns, onRemoveColumn}) => {
 	if (columns.length == 0) {
 		return (
 			<div className="empty-drop-zone">
@@ -50,7 +51,22 @@ const DropZone = ({columns}) => {
 			actions={[]}
 			columns={columns.map(fieldName => ({
 				key: fieldName,
-				value: fieldName
+				value: (
+					<div className="container drop-zone-column">
+						<div className="row align-items-center">
+							<div className="col">{fieldName}</div>
+							<div className="col-md-auto">
+								<Button
+									borderless
+									displayType="secondary"
+									onClick={() => onRemoveColumn(fieldName)}
+									symbol="trash"
+									tooltip={Liferay.Language.get('remove')}
+								/>
+							</div>
+						</div>
+					</div>
+				)
 			}))}
 			items={generateItems(columns)}
 		/>

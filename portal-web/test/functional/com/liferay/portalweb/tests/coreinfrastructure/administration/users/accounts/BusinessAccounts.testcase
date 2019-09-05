@@ -97,6 +97,62 @@ definition {
 		Accounts.viewDeactivateAccount(accountName = "Accounts Name 3 for Test");
 	}
 
+	@priority = "4"
+	test DeleteAccount {
+		for (var accountNumber : list "1,2,3") {
+			ProductMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "Accounts Name ${accountNumber} Description",
+				accountName = "Delete Accounts Name ${accountNumber} for Test");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deleteAccount(accountName = "Delete Accounts Name 1 for Test");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 1 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deleteAccount(
+			accountName = "Delete Accounts Name 2 for Test",
+			deactivateType = "Delete Icon");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 2 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deleteAccount(
+			accountName = "Delete Accounts Name 3 for Test",
+			deactivateType = "Management Toolbar");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 3 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		for (var accountNumber : list "1,2,3") {
+			LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name ${accountNumber} for Test");
+		}
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

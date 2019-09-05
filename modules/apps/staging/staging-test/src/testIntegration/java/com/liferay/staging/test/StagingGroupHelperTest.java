@@ -69,6 +69,8 @@ public class StagingGroupHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
 		_addLocalStagingGroups();
 
 		_addRemoteStagingGroups();

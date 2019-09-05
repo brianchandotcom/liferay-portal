@@ -268,6 +268,23 @@ public class SegmentsExperimentLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testDeleteSegmentsExperimentInStatusRunning() throws Exception {
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
+			segmentsExperience);
+
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsExperimentLocalService.deleteSegmentsExperiments(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			segmentsExperience.getClassPK());
+	}
+
 	@Test
 	public void testDeleteSegmentsExperiments() throws Exception {
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();

@@ -28,6 +28,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -71,6 +72,8 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
 		return new DropdownItemList() {
 			{
+				Group group = _themeDisplay.getScopeGroup();
+
 				if (FragmentPermission.contains(
 						_themeDisplay.getPermissionChecker(),
 						_themeDisplay.getScopeGroupId(),
@@ -86,11 +89,20 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 						add(
 							_getDeleteFragmentEntryPreviewActionUnsafeConsumer());
 					}
+
+					if (group.isCompany() &&
+						(_fragmentEntry.getGlobalUsageCount() > 0)) {
+
+						add(
+							_getPropagateFragmentEntryChangesActionUnsafeConsumer());
+					}
 				}
 
 				add(_getExportFragmentEntryActionUnsafeConsumer());
 
-				if (_fragmentEntry.getUsageCount() > 0) {
+				if (!group.isCompany() &&
+					(_fragmentEntry.getUsageCount() > 0)) {
+
 					add(_getViewFragmentEntryUsagesActionUnsafeConsumer());
 				}
 
@@ -284,6 +296,43 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				selectFragmentCollectionURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getPropagateFragmentEntryChangesActionUnsafeConsumer() {
+
+		ResourceURL getFragmentEntryUsagesURL =
+			_renderResponse.createResourceURL();
+
+		getFragmentEntryUsagesURL.setResourceID(
+			"/fragment/get_fragment_entry_usages");
+
+		PortletURL propagateFragmentEntryChangesURL =
+			_renderResponse.createActionURL();
+
+		propagateFragmentEntryChangesURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/propagate_global_fragment_entry_changes");
+		propagateFragmentEntryChangesURL.setParameter(
+			"fragmentEntryId",
+			String.valueOf(_fragmentEntry.getFragmentEntryId()));
+		propagateFragmentEntryChangesURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "propagateFragmentEntryChanges");
+			dropdownItem.putData(
+				"fragmentEntryId",
+				String.valueOf(_fragmentEntry.getFragmentEntryId()));
+			dropdownItem.putData(
+				"getFragmentEntryUsagesURL",
+				getFragmentEntryUsagesURL.toString());
+			dropdownItem.putData(
+				"propagateFragmentEntryChangesURL",
+				propagateFragmentEntryChangesURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "propagate-changes"));
 		};
 	}
 

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	navigate,
+	openSimpleInputModal
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -79,6 +83,30 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			itemData.selectFragmentCollectionURL,
 			itemData.moveFragmentEntryURL
 		);
+	}
+
+	propagateFragmentEntryChanges(itemData) {
+		this.fetch(itemData.getFragmentEntryUsagesURL, {
+			fragmentEntryId: itemData.fragmentEntryId
+		})
+			.then(response => response.json())
+			.then(response => {
+				if (response.sites && response.sites > 0) {
+					if (
+						confirm(
+							Liferay.Util.sub(
+								Liferay.Language.get(
+									'the-fragment-is-used-in-x-places-across-x-sites-are-you-sure-you-want-to-propagate-the-changes'
+								),
+								response.usages,
+								response.sites
+							)
+						)
+					) {
+						navigate(itemData.propagateFragmentEntryChangesURL);
+					}
+				}
+			});
 	}
 
 	renameFragmentEntry(itemData) {

@@ -40,10 +40,6 @@ import {
 	selectSegmentsExperienceReducer,
 	updateSegmentsExperiencePriorityReducer
 } from './segmentsExperiences.es';
-import {
-	openMappingFieldsDialogReducer,
-	selectMappeableTypeReducer
-} from './dialogs.es';
 import {saveChangesReducer} from './changes.es';
 import {
 	updateActiveItemReducer,
@@ -70,14 +66,10 @@ import {
 	DUPLICATE_FRAGMENT_ENTRY_LINK,
 	EDIT_SEGMENTS_EXPERIENCE,
 	ENABLE_FRAGMENT_EDITOR,
-	HIDE_MAPPING_TYPE_DIALOG,
 	MOVE_FRAGMENT_ENTRY_LINK,
 	MOVE_ROW,
-	OPEN_ASSET_TYPE_DIALOG,
-	OPEN_MAPPING_FIELDS_DIALOG,
 	REMOVE_FRAGMENT_ENTRY_LINK,
 	REMOVE_ROW,
-	SELECT_MAPPEABLE_TYPE,
 	SELECT_SEGMENTS_EXPERIENCE,
 	TOGGLE_SHOW_RESOLVED_COMMENTS,
 	UPDATE_ACTIVE_ITEM,
@@ -123,18 +115,10 @@ const reducers = {
 	[DUPLICATE_FRAGMENT_ENTRY_LINK]: duplicateFragmentEntryLinkReducer,
 	[EDIT_SEGMENTS_EXPERIENCE]: editSegmentsExperienceReducer,
 	[ENABLE_FRAGMENT_EDITOR]: createSetValueReducer('fragmentEditorEnabled'),
-	[HIDE_MAPPING_TYPE_DIALOG]: createSetValueReducer(
-		'selectMappingTypeDialogVisible'
-	),
 	[MOVE_FRAGMENT_ENTRY_LINK]: moveFragmentEntryLinkReducer,
 	[MOVE_ROW]: moveRowReducer,
-	[OPEN_ASSET_TYPE_DIALOG]: createSetValueReducer(
-		'selectMappingTypeDialogVisible'
-	),
-	[OPEN_MAPPING_FIELDS_DIALOG]: openMappingFieldsDialogReducer,
 	[REMOVE_FRAGMENT_ENTRY_LINK]: removeFragmentEntryLinkReducer,
 	[REMOVE_ROW]: removeRowReducer,
-	[SELECT_MAPPEABLE_TYPE]: selectMappeableTypeReducer,
 	[SELECT_SEGMENTS_EXPERIENCE]: selectSegmentsExperienceReducer,
 	[TOGGLE_SHOW_RESOLVED_COMMENTS]: toggleShowResolvedCommentsReducer,
 	[UPDATE_ACTIVE_ITEM]: updateActiveItemReducer,

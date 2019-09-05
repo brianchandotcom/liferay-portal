@@ -11,25 +11,9 @@
 	{@param languageId: string}
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
-	{@param spritemap: string}
 	{@param? defaultSegmentsExperienceId: string}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
-	{@param? selectMappingDialogEditableId: string}
-	{@param? selectMappingDialogEditableType: string}
-	{@param? selectMappingDialogFragmentEntryLinkId: string}
-	{@param? selectMappingDialogMappedFieldId: string}
-	{@param? selectMappingDialogVisible: bool}
-	{@param? selectedMappingTypes: [
-		subtype: [
-			id: string,
-			label: string
-		],
-		type: [
-			id: string,
-			label: string
-		]
-	]}
 	{@param? store: ?}
 
 	<div class="fragments-editor" id="{$id}">
@@ -51,24 +35,6 @@
 			{param ref: 'fragmentsEditorRender' /}
 			{param store: $store /}
 			{param translating: $languageId != $defaultLanguageId /}
-		{/call}
-
-		{if $mappingFieldsURL and $selectMappingDialogVisible}
-			{call com.liferay.layout.content.page.editor.web.SelectMappingDialog.render}
-				{param editableId: $selectMappingDialogEditableId /}
-				{param editableType: $selectMappingDialogEditableType /}
-				{param fragmentEntryLinkId: $selectMappingDialogFragmentEntryLinkId /}
-				{param mappedFieldId: $selectMappingDialogMappedFieldId /}
-				{param mappingFieldsURL: $mappingFieldsURL /}
-				{param portletNamespace: $portletNamespace /}
-				{param selectedMappingTypes: $selectedMappingTypes /}
-				{param spritemap: $spritemap /}
-				{param store: $store /}
-			{/call}
-		{/if}
-
-		{call com.liferay.layout.content.page.editor.web.SelectMappingTypeDialog.render}
-			{param store: $store /}
 		{/call}
 	</div>
 {/template}

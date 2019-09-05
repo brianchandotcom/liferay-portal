@@ -34,7 +34,6 @@ import {
 } from '../../utils/constants';
 import {getAssetFieldValue} from '../../utils/FragmentsEditorFetchUtils.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {OPEN_ASSET_TYPE_DIALOG} from '../../actions/actions.es';
 import {openImageSelector} from '../../utils/FragmentsEditorDialogUtils';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
@@ -284,17 +283,6 @@ class FragmentEditableBackgroundImage extends Component {
 				callback: image => this._updateFragmentBackgroundImage(image),
 				imageSelectorURL: this.imageSelectorURL,
 				portletNamespace: this.portletNamespace
-			});
-		} else if (
-			panelId === FLOATING_TOOLBAR_BUTTONS.map.panelId &&
-			this.mappingFieldsURL &&
-			!this.selectedMappingTypes.type
-		) {
-			event.preventDefault();
-
-			this.store.dispatch({
-				type: OPEN_ASSET_TYPE_DIALOG,
-				value: true
 			});
 		}
 	}

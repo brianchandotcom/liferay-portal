@@ -16,12 +16,6 @@ export const ADD_MAPPED_ASSET_ENTRY = 'addMappedAssetEntry';
 
 export const UPDATE_PAGE_CONTENTS = 'updatePageContents';
 
-export const HIDE_MAPPING_TYPE_DIALOG = 'hideMappingTypeDialog';
-export const OPEN_ASSET_TYPE_DIALOG = 'openAssetTypeDialog';
-export const OPEN_MAPPING_FIELDS_DIALOG = 'openMappingFieldsDialog';
-export const SELECT_MAPPEABLE_FIELD = 'selectMappeableField';
-export const SELECT_MAPPEABLE_TYPE = 'selectMappeableType';
-
 export const UPDATE_SELECTED_SIDEBAR_PANEL_ID = 'updateSelectedSidebarPanelId';
 
 export const UPDATE_LAST_SAVE_DATE = 'UPDATE_LAST_SAVE_DATE';

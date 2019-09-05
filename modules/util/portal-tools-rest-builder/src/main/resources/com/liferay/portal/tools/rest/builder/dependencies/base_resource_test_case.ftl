@@ -1607,11 +1607,20 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected boolean equalsJSONObject(${schemaName} ${schemaVarName}, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			<#list properties?keys as propertyName>
+				<#if stringUtil.equals(propertyName, "siteId")>
+					 <#continue>
+				</#if>
+
 				<#if randomDataTypes?seq_contains(properties[propertyName])>
 					if (Objects.equals("${propertyName}", fieldName)) {
 						<#assign capitalizedPropertyName = propertyName?cap_first />
 
-						if (!Objects.equals(${schemaVarName}.get${capitalizedPropertyName}(), (${properties[propertyName]})jsonObject.get${properties[propertyName]}("${propertyName}"))) {
+						<#if stringUtil.equals(properties[propertyName], "Integer")>
+							if (!Objects.deepEquals(${schemaVarName}.get${capitalizedPropertyName}(), jsonObject.getInt("${propertyName}"))) {
+						<#else>
+							if (!Objects.deepEquals(${schemaVarName}.get${capitalizedPropertyName}(), jsonObject.get${properties[propertyName]}("${propertyName}"))) {
+						</#if>
+
 							return false;
 						}
 

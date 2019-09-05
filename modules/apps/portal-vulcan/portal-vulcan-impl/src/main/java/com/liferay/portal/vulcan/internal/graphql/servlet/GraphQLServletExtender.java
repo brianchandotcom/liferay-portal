@@ -958,12 +958,10 @@ public class GraphQLServletExtender {
 			Dictionary<String, Object> dictionary =
 				configurations[0].getProperties();
 
-			if ((Boolean)dictionary.get("graphQLEnabled")) {
-				return true;
-			}
+			return (Boolean)dictionary.get("graphQLEnabled");
 		}
 
-		return false;
+		return true;
 	}
 
 	private void _registerInterfaces(

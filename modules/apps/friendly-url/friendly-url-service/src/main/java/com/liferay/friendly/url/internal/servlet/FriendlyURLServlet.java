@@ -372,10 +372,6 @@ public class FriendlyURLServlet extends HttpServlet {
 			redirect = new Redirect();
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Redirect " + redirect.getPath());
-		}
-
 		if (redirect.isValidForward()) {
 			ServletContext servletContext = getServletContext();
 
@@ -394,17 +390,44 @@ public class FriendlyURLServlet extends HttpServlet {
 			}
 
 			if (requestDispatcher != null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Forward from ",
+							httpServletRequest.getRequestURI(),
+							" to ",
+							redirect.getPath()));
+				}
+
 				requestDispatcher.forward(
 					httpServletRequest, httpServletResponse);
 			}
 		}
 		else {
 			if (redirect.isPermanent()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Location Moved Permanently from ",
+							httpServletRequest.getRequestURI(),
+							" to ",
+							redirect.getPath()));
+				}
+
 				httpServletResponse.setHeader("Location", redirect.getPath());
 				httpServletResponse.setStatus(
 					HttpServletResponse.SC_MOVED_PERMANENTLY);
 			}
 			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Redirect from ",
+							httpServletRequest.getRequestURI(),
+							" to ",
+							redirect.getPath()));
+				}
+
 				httpServletResponse.sendRedirect(redirect.getPath());
 			}
 		}

@@ -106,6 +106,7 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				ParamUtil.getLong(actionRequest, "segmentsExperimentId"),
+				ParamUtil.getLong(actionRequest, "segmentsExperienceId"),
 				ParamUtil.getInteger(actionRequest, "status"));
 
 		return JSONUtil.put(

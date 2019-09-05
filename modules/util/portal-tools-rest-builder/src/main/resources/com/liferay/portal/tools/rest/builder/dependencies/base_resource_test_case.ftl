@@ -1814,6 +1814,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 					sb.append(",");
 				}
 
+				sb.setLength(sb.length() - 1);
+
 				sb.append(")");
 			}
 
@@ -1824,6 +1826,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
+
+				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = DocumentLibraryURLHelper.class)
-public class DocumentLibraryURLHelper {
+@Component(service = OneDriveURLHelper.class)
+public class OneDriveURLHelper {
 
-	public String getOneDriveBackgroundTaskStatusURL(
+	public String getBackgroundTaskStatusURL(
 		PortletRequest portletRequest,
 		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference) {
 

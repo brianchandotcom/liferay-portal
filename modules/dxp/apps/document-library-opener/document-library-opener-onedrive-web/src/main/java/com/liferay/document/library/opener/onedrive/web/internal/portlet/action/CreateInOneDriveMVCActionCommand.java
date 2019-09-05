@@ -22,7 +22,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.DocumentLibraryURLHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.OneDriveURLHelper;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,6 +52,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -138,41 +139,41 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return _dlOpenerOneDriveManager.createFile(userId, fileEntry);
 	}
 
-	private JSONObject _executeCommand(ActionRequest actionRequest)
+	private JSONObject _executeCommand(PortletRequest portletRequest)
 		throws PortalException {
 
 		try {
 			long repositoryId = ParamUtil.getLong(
-				actionRequest, "repositoryId");
-			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+				portletRequest, "repositoryId");
+			long folderId = ParamUtil.getLong(portletRequest, "folderId");
 			String contentType = ParamUtil.getString(
-				actionRequest, "contentType",
+				portletRequest, "contentType",
 				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 			String title = ParamUtil.getString(
-				actionRequest, "title",
-				_translateKey(_portal.getLocale(actionRequest), "untitled"));
+				portletRequest, "title",
+				_translateKey(_portal.getLocale(portletRequest), "untitled"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
+				portletRequest);
 
 			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,
 					() -> _addDLOpenerOneDriveFileReference(
-						_portal.getLocale(actionRequest),
-						_portal.getUserId(actionRequest), repositoryId,
+						_portal.getLocale(portletRequest),
+						_portal.getUserId(portletRequest), repositoryId,
 						folderId, contentType, title, serviceContext));
 
-			hideDefaultSuccessMessage(actionRequest);
+			hideDefaultSuccessMessage(portletRequest);
 
 			String oneDriveBackgroundTaskStatusURL =
-				_documentLibraryURLHelper.getOneDriveBackgroundTaskStatusURL(
-					actionRequest, dlOpenerOneDriveFileReference);
+				_oneDriveURLHelper.getBackgroundTaskStatusURL(
+					portletRequest, dlOpenerOneDriveFileReference);
 
 			return JSONUtil.put(
 				"dialogMessage",
 				_translateKey(
-					_portal.getLocale(actionRequest),
+					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-" +
 						"create-this-document")
 			).put(
@@ -180,11 +181,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				oneDriveBackgroundTaskStatusURL
 			);
 		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (RuntimeException re) {
-			throw re;
+		catch (PortalException | RuntimeException e) {
+			throw e;
 		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);
@@ -205,15 +203,15 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
-	private DocumentLibraryURLHelper _documentLibraryURLHelper;
-
-	@Reference
 	private Language _language;
 
 	private OAuth2Controller _oAuth2Controller;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
+
+	@Reference
+	private OneDriveURLHelper _oneDriveURLHelper;
 
 	@Reference
 	private Portal _portal;

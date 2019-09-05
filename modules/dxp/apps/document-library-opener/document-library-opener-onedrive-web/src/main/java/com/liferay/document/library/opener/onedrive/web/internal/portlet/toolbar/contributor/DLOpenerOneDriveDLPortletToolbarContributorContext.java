@@ -111,6 +111,8 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
+		urlMenuItem.setData(
+			Collections.singletonMap("file-icon-color", iconColor));
 		urlMenuItem.setIcon(icon);
 		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
@@ -123,9 +125,6 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 				_getActionURL(portletRequest, folder, contentType),
 				StringPool.APOSTROPHE, StringPool.COMMA, StringPool.APOSTROPHE,
 				modalTitle, "');"));
-
-		urlMenuItem.setData(
-			Collections.singletonMap("file-icon-color", iconColor));
 
 		return urlMenuItem;
 	}

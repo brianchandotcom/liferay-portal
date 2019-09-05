@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.BrowserSnifferImpl;
 import com.liferay.portal.util.PropsImpl;
@@ -46,7 +48,6 @@ import org.junit.Test;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -95,7 +96,7 @@ public class OAuth2ControllerTest {
 
 		Mockito.when(
 			_portletURLFactory.create(
-				(PortletRequest)Matchers.any(), Matchers.anyString(),
+				Matchers.any(PortletRequest.class), Matchers.anyString(),
 				Matchers.anyLong(), Matchers.anyString())
 		).thenReturn(
 			_liferayPortletURL
@@ -103,7 +104,7 @@ public class OAuth2ControllerTest {
 
 		Mockito.when(
 			_portletURLFactory.create(
-				(PortletRequest)Matchers.any(), Matchers.anyString(),
+				Matchers.any(PortletRequest.class), Matchers.anyString(),
 				Matchers.anyString())
 		).thenReturn(
 			_liferayPortletURL
@@ -116,7 +117,8 @@ public class OAuth2ControllerTest {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
 		_oAuth2Controller = new OAuth2Controller(
-			_oAuth2Manager, _portal, _portletURLFactory);
+			Mockito.mock(Language.class), _oAuth2Manager, _portal,
+			_portletURLFactory, Mockito.mock(ResourceBundleLoader.class));
 	}
 
 	@Test
@@ -300,8 +302,8 @@ public class OAuth2ControllerTest {
 		);
 
 		Mockito.doAnswer(
-			(Answer<Void>)answerd -> {
-				Object[] arguments = answerd.getArguments();
+			answer -> {
+				Object[] arguments = answer.getArguments();
 
 				httpServletRequest.setAttribute(
 					String.valueOf(arguments[0]), arguments[1]);

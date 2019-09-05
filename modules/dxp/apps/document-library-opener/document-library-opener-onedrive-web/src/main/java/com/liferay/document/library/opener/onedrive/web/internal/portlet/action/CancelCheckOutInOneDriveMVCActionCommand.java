@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -72,11 +73,11 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 			actionRequest, actionResponse, this::_executeCommand);
 	}
 
-	private JSONObject _executeCommand(ActionRequest actionRequest)
+	private JSONObject _executeCommand(PortletRequest portletRequest)
 		throws PortalException {
 
 		_dlAppService.cancelCheckOut(
-			ParamUtil.getLong(actionRequest, "fileEntryId"));
+			ParamUtil.getLong(portletRequest, "fileEntryId"));
 
 		return null;
 	}

@@ -97,6 +97,7 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 
 		if (Validator.isNull(code)) {
 			OAuth2StateUtil.cleanUp(httpServletRequest);
+
 			httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
 		}
 		else {
@@ -111,23 +112,23 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 				httpServletResponse.sendRedirect(oAuth2State.getSuccessURL());
 			}
 			catch (OAuth2AccessTokenErrorResponse | SocketException e) {
+				_log.error(e, e);
+
 				OAuth2StateUtil.cleanUp(httpServletRequest);
 
 				SessionErrors.add(httpServletRequest, "externalServiceFailed");
 
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
-
-				_log.error(e, e);
 			}
 			catch (Exception e) {
+				_log.error(e, e);
+
 				OAuth2StateUtil.cleanUp(httpServletRequest);
 
 				SessionErrors.add(
 					httpServletRequest, IOException.class.getName());
 
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
-
-				_log.error(e, e);
 			}
 		}
 	}

@@ -20,7 +20,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.DocumentLibraryURLHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.OneDriveURLHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -45,6 +45,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -97,18 +98,18 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.getFileEntry(fileEntryId));
 	}
 
-	private JSONObject _executeCommand(ActionRequest actionRequest)
+	private JSONObject _executeCommand(PortletRequest portletRequest)
 		throws PortalException {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
+		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
 
 		if (cmd.equals(Constants.CHECKOUT)) {
 			try {
 				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
+					ServiceContextFactory.getInstance(portletRequest);
 
-				hideDefaultSuccessMessage(actionRequest);
+				hideDefaultSuccessMessage(portletRequest);
 
 				DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
 					TransactionInvokerUtil.invoke(
@@ -117,14 +118,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 							fileEntryId, serviceContext));
 
 				String oneDriveBackgroundTaskStatusURL =
-					_documentLibraryURLHelper.
-						getOneDriveBackgroundTaskStatusURL(
-							actionRequest, dlOpenerOneDriveFileReference);
+					_oneDriveURLHelper.getBackgroundTaskStatusURL(
+						portletRequest, dlOpenerOneDriveFileReference);
 
 				return JSONUtil.put(
 					"dialogMessage",
 					_translateKey(
-						_portal.getLocale(actionRequest),
+						_portal.getLocale(portletRequest),
 						"you-are-being-redirected-to-an-external-editor-to-" +
 							"edit-this-document")
 				).put(
@@ -132,11 +132,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					oneDriveBackgroundTaskStatusURL
 				);
 			}
-			catch (PortalException pe) {
-				throw pe;
-			}
-			catch (RuntimeException re) {
-				throw re;
+			catch (PortalException | RuntimeException e) {
+				throw e;
 			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
@@ -144,7 +141,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals(Constants.EDIT)) {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
 				_dlOpenerOneDriveManager.requestEditAccess(
@@ -152,13 +150,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					_dlAppService.getFileEntry(fileEntryId));
 
 			String oneDriveBackgroundTaskStatusURL =
-				_documentLibraryURLHelper.getOneDriveBackgroundTaskStatusURL(
-					actionRequest, dlOpenerOneDriveFileReference);
+				_oneDriveURLHelper.getBackgroundTaskStatusURL(
+					portletRequest, dlOpenerOneDriveFileReference);
 
 			return JSONUtil.put(
 				"dialogMessage",
 				_translateKey(
-					_portal.getLocale(actionRequest),
+					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-edit-" +
 						"this-document")
 			).put(
@@ -185,15 +183,15 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
-	private DocumentLibraryURLHelper _documentLibraryURLHelper;
-
-	@Reference
 	private Language _language;
 
 	private OAuth2Controller _oAuth2Controller;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
+
+	@Reference
+	private OneDriveURLHelper _oneDriveURLHelper;
 
 	@Reference
 	private Portal _portal;

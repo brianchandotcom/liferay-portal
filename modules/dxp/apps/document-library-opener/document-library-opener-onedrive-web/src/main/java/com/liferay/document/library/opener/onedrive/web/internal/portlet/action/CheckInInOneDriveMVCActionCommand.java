@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -74,19 +75,19 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, this::_executeCommand);
 	}
 
-	private JSONObject _executeCommand(ActionRequest actionRequest)
+	private JSONObject _executeCommand(PortletRequest portletRequest)
 		throws PortalException {
 
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
 
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
-				actionRequest.getParameter("versionIncrease"),
+				portletRequest.getParameter("versionIncrease"),
 				DLVersionNumberIncrease.AUTOMATIC);
-		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
+		String changeLog = ParamUtil.getString(portletRequest, "changeLog");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+			portletRequest);
 
 		_dlAppService.checkInFileEntry(
 			fileEntryId, dlVersionNumberIncrease, changeLog, serviceContext);

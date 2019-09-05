@@ -80,4 +80,17 @@ definition {
 			titleMap = "${titleMap}");
 	}
 
+	@summary = "Get the 'folderId' for the folder '${folderName}' that is part of the Site '${groupName}' via JSON"
+	macro getFolderIdByFolderName {
+		Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+
+		var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
+			folderName = "${folderName}",
+			groupId = "${groupId}");
+
+		return "${folderId}";
+	}
+
 }

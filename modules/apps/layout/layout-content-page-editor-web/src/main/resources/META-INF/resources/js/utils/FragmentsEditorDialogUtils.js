@@ -114,7 +114,7 @@ function openImageSelector({
 							IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
 						returnType === IMAGE_SELECTOR_RETURN_TYPES.url
 					) {
-						selectedImage.title = _parseImageTitle(value);
+						selectedImage.title = value;
 						selectedImage.url = value;
 					}
 
@@ -189,12 +189,6 @@ function stopListeningWidgetConfigurationChange() {
 
 		_widgetConfigurationChangeHandler = null;
 	}
-}
-
-function _parseImageTitle(url) {
-	const match = /\/([^\/\.]+\.\w{3,4})$/i.exec(url);
-
-	return match[1] || url;
 }
 
 export {

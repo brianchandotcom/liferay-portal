@@ -14,15 +14,12 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.petra.function.UnsafeSupplier;
-
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
  */
-public class CounterTransactionExecutor
-	implements TransactionExecutor, TransactionHandler {
+public class CounterTransactionExecutor extends BaseTransactionExecutor {
 
 	public CounterTransactionExecutor(
 		PlatformTransactionManager platformTransactionManager) {
@@ -37,31 +34,6 @@ public class CounterTransactionExecutor
 
 		_platformTransactionManager.commit(
 			transactionStatusAdapter.getTransactionStatus());
-	}
-
-	@Override
-	public <T> T execute(
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			UnsafeSupplier<T, Throwable> unsafeSupplier)
-		throws Throwable {
-
-		TransactionStatusAdapter transactionStatusAdapter = start(
-			transactionAttributeAdapter);
-
-		T returnValue = null;
-
-		try {
-			returnValue = unsafeSupplier.get();
-		}
-		catch (Throwable throwable) {
-			rollback(
-				throwable, transactionAttributeAdapter,
-				transactionStatusAdapter);
-		}
-
-		commit(transactionAttributeAdapter, transactionStatusAdapter);
-
-		return returnValue;
 	}
 
 	@Override

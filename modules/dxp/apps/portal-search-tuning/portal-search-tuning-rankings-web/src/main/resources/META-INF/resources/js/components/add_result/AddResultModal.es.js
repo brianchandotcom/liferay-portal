@@ -100,7 +100,7 @@ function AddResultModal({
 
 					<div className="add-result-scroller inline-scroller">
 						{dataLoading && (
-							<div className="list-group sheet">
+							<div className="add-result-sheet sheet">
 								<div className="sheet-title">
 									<div className="load-more-container">
 										<ClayLoadingIndicator />
@@ -210,26 +210,40 @@ function AddResultModal({
 											)}
 										</ul>
 									</div>
-
-									{/*
-									Temporarily hide pagination bar (LPS-101090) until
-									'show more results' bug (LPS-96397) is fixed.
-
-									<div className="add-result-container">
-										<PaginationBar
-											deltas={DELTAS}
-											onDeltaChange={handleDeltaChange}
-											onPageChange={handlePageChange}
-											page={page}
-											selectedDelta={selectedDelta}
-											totalItems={results.total}
-										/>
-									</div>
-									*/}
 								</>
 							) : (
 								renderEmptyState()
 							))}
+
+						{/*
+						Temporarily hide pagination bar (LPS-101090) until
+						'show more results' bug (LPS-96397) is fixed.
+
+						{results.total && results.items && (
+							<div className="add-result-container">
+								<ClayPaginationWithBar
+									activeDelta={selectedDelta}
+									activePage={page}
+									deltas={DELTAS}
+									ellipsisBuffer={1}
+									labels={{
+										paginationResults: Liferay.Language.get(
+											'showing-x-to-x-of-x-entries'
+										),
+										perPageItems: Liferay.Language.get(
+											'x-items'
+										),
+										selectPerPageItems: Liferay.Language.get(
+											'x-items'
+										)
+									}}
+									onDeltaChange={handleDeltaChange}
+									onPageChange={handlePageChange}
+									totalItems={results.total}
+								/>
+							</div>
+						)}
+						*/}
 					</div>
 				</ClayModal.Body>
 
@@ -259,7 +273,6 @@ function AddResultModal({
 }
 
 AddResultModal.propTypes = {
-	DELTAS: PropTypes.array.isRequired,
 	addResultSearchQuery: PropTypes.string.isRequired,
 	addResultSelectedIds: PropTypes.array.isRequired,
 	dataLoading: PropTypes.bool.isRequired,

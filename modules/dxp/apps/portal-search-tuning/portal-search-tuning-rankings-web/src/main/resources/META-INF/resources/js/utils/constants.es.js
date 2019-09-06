@@ -19,3 +19,23 @@ export const KEY_CODES = {
 	SPACE: ' ',
 	TAB: 'Tab'
 };
+
+export const DELTAS = [
+	{
+		label: 5
+	},
+	{
+		label: 10
+	},
+	{
+		label: 20
+	},
+	{
+		label: 40
+	},
+	{
+		label: 50
+	}
+];
+
+export const DEFAULT_DELTA = DELTAS[4];

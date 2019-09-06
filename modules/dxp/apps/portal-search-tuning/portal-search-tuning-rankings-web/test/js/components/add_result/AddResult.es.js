@@ -211,7 +211,7 @@ describe('AddResult', () => {
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
-		fireEvent.click(modal.querySelector('.page-item-next a'));
+		fireEvent.click(modal.querySelector('.lexicon-icon-angle-right'));
 
 		await waitForElement(() => getByTestId('350'));
 
@@ -230,7 +230,7 @@ describe('AddResult', () => {
 	xit('updates results count in the modal after page delta is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
-		const {getByTestId, getByText} = render(
+		const {getByTestId, getByText, queryAllByText} = render(
 			<AddResult
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={onAddResultSubmit}
@@ -251,10 +251,12 @@ describe('AddResult', () => {
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
-		fireEvent.click(getByText('50'));
+		fireEvent.click(queryAllByText('x-items')[4]);
 
-		await waitForElement(() => getByTestId('349'));
+		await waitForElement(() => getByTestId('339'));
 
-		expect(modal).toHaveTextContent('349 This is a Web Content Example');
+		expect(modal).not.toHaveTextContent(
+			'349 This is a Web Content Example'
+		);
 	});
 });

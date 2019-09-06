@@ -14,12 +14,11 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState, {DISPLAY_STATES} from '../shared/ClayEmptyState.es';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
+import {DEFAULT_DELTA, DELTAS} from '../../utils/constants.es';
 import {fetchDocuments} from '../../utils/api.es';
 import {PropTypes} from 'prop-types';
 import {resultsDataToMap} from '../../utils/util.es';
 import {toggleListItem} from '../../utils/util.es';
-
-const DELTAS = [5, 10, 20, 30, 50];
 
 class AddResult extends Component {
 	static contextType = ThemeContext;
@@ -38,7 +37,7 @@ class AddResult extends Component {
 		displayInitialMessage: true,
 		page: 1,
 		results: {},
-		selectedDelta: DELTAS[4],
+		selectedDelta: DEFAULT_DELTA.label,
 		showModal: false
 	};
 
@@ -134,15 +133,10 @@ class AddResult extends Component {
 
 	_handleDeltaChange = item => {
 		this.setState(
-			state => ({
-				page: Math.ceil(
-					(state.page * state.selectedDelta -
-						state.selectedDelta +
-						1) /
-						item
-				),
+			{
+				page: 1,
 				selectedDelta: item
-			}),
+			},
 			this._fetchSearchResults
 		);
 	};

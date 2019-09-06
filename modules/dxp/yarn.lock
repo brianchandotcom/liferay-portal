@@ -1070,6 +1070,17 @@
     "@clayui/link" "^3.0.0-alpha.1"
     classnames "^2.2.6"
 
+"@clayui/pagination@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0-milestone.3.tgz#db18efea14dae794399c13a16bd372ddcdd4859e"
+  integrity sha512-H5icARgTFZlQIZJj6dg3pk6yntPeNKFKUv8+qYH3broKioU09G6UZJKVs/YuLB7A/XEWJPsIafaIUkzalT3oGg==
+  dependencies:
+    "@clayui/button" "^3.0.0-milestone.3"
+    "@clayui/drop-down" "^3.0.0-milestone.3"
+    "@clayui/icon" "^3.0.0-milestone.3"
+    "@clayui/shared" "^3.0.0-milestone.3"
+    classnames "^2.2.6"
+
 "@clayui/shared@^3.0.0-milestone.3":
   version "3.0.0-milestone.3"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-milestone.3.tgz#f9fc10a30684f258b4d2b06abd25cd70f3637f1b"

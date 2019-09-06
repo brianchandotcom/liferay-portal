@@ -7,6 +7,7 @@
 		"@clayui/link": "3.0.0-alpha.1",
 		"@clayui/loading-indicator": "3.0.0-alpha.1",
 		"@clayui/modal": "3.0.0-alpha.1",
+		"@clayui/pagination": "3.0.0-milestone.3",
 		"@clayui/tabs": "3.0.0-milestone.3",
 		"classnames": "2.2.6",
 		"lodash.isfunction": "3.0.9",

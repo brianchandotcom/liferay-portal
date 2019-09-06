@@ -69,7 +69,7 @@ storiesOf('Pages|ResultsRankingForm', module).add('default', () => (
 	<ResultsRankingForm
 		cancelUrl=""
 		fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
-		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
+		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"
 		fetchDocumentsVisibleUrl="http://www.mocky.io/v2/5cca1d49310000bf0312ce66"
 		formName="testFm"
 		initialAliases={['one', 'two', 'three']}

@@ -15,12 +15,12 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
+import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -49,15 +46,14 @@ import javax.portlet.PortletURL;
 public class OAuth2Controller {
 
 	public OAuth2Controller(
-		Language language, OAuth2Manager oAuth2Manager, Portal portal,
+		OAuth2Manager oAuth2Manager, Portal portal,
 		PortletURLFactory portletURLFactory,
-		ResourceBundleLoader resourceBundleLoader) {
+		TranslationHelper translationHelper) {
 
-		_language = language;
 		_oAuth2Manager = oAuth2Manager;
 		_portal = portal;
 		_portletURLFactory = portletURLFactory;
-		_resourceBundleLoader = resourceBundleLoader;
+		_translationHelper = translationHelper;
 	}
 
 	public void execute(
@@ -70,52 +66,6 @@ public class OAuth2Controller {
 		oAuth2ResultExecutor.execute(
 			portletRequest, portletResponse,
 			_getOAuth2Result(portletRequest, unsafeFunction));
-	}
-
-	public static class OAuth2Result {
-
-		public OAuth2Result(JSONObject response) {
-			_portalException = null;
-			_response = response;
-			_redirectURL = null;
-		}
-
-		public OAuth2Result(PortalException portalException) {
-			_portalException = portalException;
-			_response = null;
-			_redirectURL = null;
-		}
-
-		public OAuth2Result(String redirectURL) {
-			_portalException = null;
-			_redirectURL = redirectURL;
-			_response = null;
-		}
-
-		public PortalException getPortalException() {
-			return _portalException;
-		}
-
-		public String getRedirectURL() {
-			return _redirectURL;
-		}
-
-		public JSONObject getResponse() {
-			if (_redirectURL != null) {
-				return JSONUtil.put("redirectURL", _redirectURL);
-			}
-
-			return Optional.ofNullable(
-				_response
-			).orElseGet(
-				JSONFactoryUtil::createJSONObject
-			);
-		}
-
-		private final PortalException _portalException;
-		private final String _redirectURL;
-		private final JSONObject _response;
-
 	}
 
 	public interface OAuth2Executor {
@@ -145,7 +95,7 @@ public class OAuth2Controller {
 						portletRequest, portletResponse,
 						JSONUtil.put(
 							"error",
-							_translateKey(
+							_translationHelper.translateKey(
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}
@@ -268,20 +218,58 @@ public class OAuth2Controller {
 		return liferayPortletURL.toString();
 	}
 
-	private String _translateKey(Locale locale, String key) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
-
-		return _language.get(resourceBundle, key);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2Controller.class);
 
-	private final Language _language;
 	private final OAuth2Manager _oAuth2Manager;
 	private final Portal _portal;
 	private final PortletURLFactory _portletURLFactory;
-	private final ResourceBundleLoader _resourceBundleLoader;
+	private final TranslationHelper _translationHelper;
+
+	private static class OAuth2Result {
+
+		public OAuth2Result(JSONObject response) {
+			_portalException = null;
+			_response = response;
+			_redirectURL = null;
+		}
+
+		public OAuth2Result(PortalException portalException) {
+			_portalException = portalException;
+			_response = null;
+			_redirectURL = null;
+		}
+
+		public OAuth2Result(String redirectURL) {
+			_portalException = null;
+			_redirectURL = redirectURL;
+			_response = null;
+		}
+
+		public PortalException getPortalException() {
+			return _portalException;
+		}
+
+		public String getRedirectURL() {
+			return _redirectURL;
+		}
+
+		public JSONObject getResponse() {
+			if (_redirectURL != null) {
+				return JSONUtil.put("redirectURL", _redirectURL);
+			}
+
+			return Optional.ofNullable(
+				_response
+			).orElseGet(
+				JSONFactoryUtil::createJSONObject
+			);
+		}
+
+		private final PortalException _portalException;
+		private final String _redirectURL;
+		private final JSONObject _response;
+
+	}
 
 }

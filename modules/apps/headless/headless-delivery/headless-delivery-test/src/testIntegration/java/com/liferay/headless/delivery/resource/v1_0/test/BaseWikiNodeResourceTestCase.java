@@ -781,6 +781,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("id"));
+
 		GraphQLField graphQLField = new GraphQLField(
 			"mutation",
 			new GraphQLField(

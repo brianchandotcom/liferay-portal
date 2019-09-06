@@ -18,15 +18,13 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -126,45 +124,38 @@ public class EditFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			String navigation = ParamUtil.getString(
-				portletRequest, "navigation");
+		return DLPortletConfigurationIconUtil.runWithDefaultValueOnError(
+			false,
+			() -> {
+				String navigation = ParamUtil.getString(
+					portletRequest, "navigation");
 
-			if (Validator.isNotNull(navigation)) {
-				return false;
-			}
+				if (Validator.isNotNull(navigation)) {
+					return false;
+				}
 
-			Folder folder = ActionUtil.getFolder(portletRequest);
+				Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if ((folder == null) && !_isDLWorkflowEnabled()) {
-				return false;
-			}
+				if ((folder == null) && !_isDLWorkflowEnabled()) {
+					return false;
+				}
 
-			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
+				if (folder != null) {
+					folderId = folder.getFolderId();
+				}
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			return ModelResourcePermissionHelper.contains(
-				_folderModelResourcePermission,
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId, ActionKeys.UPDATE);
-		}
-		catch (PrincipalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
+				return ModelResourcePermissionHelper.contains(
+					_folderModelResourcePermission,
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), folderId,
+					ActionKeys.UPDATE);
+			});
 	}
 
 	@Override
@@ -187,9 +178,6 @@ public class EditFolderPortletConfigurationIcon
 
 		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditFolderPortletConfigurationIcon.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

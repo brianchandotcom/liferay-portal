@@ -17,15 +17,11 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
-import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -81,46 +77,39 @@ public class AccessFromDesktopPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		return DLPortletConfigurationIconUtil.runWithDefaultValueOnError(
+			false,
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
 
-			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-			Folder folder = ActionUtil.getFolder(portletRequest);
+				Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (folder != null) {
-				folderId = folder.getFolderId();
-			}
+				if (folder != null) {
+					folderId = folder.getFolderId();
+				}
 
-			if (ModelResourcePermissionHelper.contains(
-					_folderModelResourcePermission,
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), folderId,
-					ActionKeys.VIEW) &&
-				portletDisplay.isWebDAVEnabled() &&
-				((folder == null) ||
-				 (folder.getRepositoryId() ==
-					 themeDisplay.getScopeGroupId()))) {
+				if (ModelResourcePermissionHelper.contains(
+						_folderModelResourcePermission,
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(), folderId,
+						ActionKeys.VIEW) &&
+					portletDisplay.isWebDAVEnabled() &&
+					((folder == null) ||
+					 (folder.getRepositoryId() ==
+						 themeDisplay.getScopeGroupId()))) {
 
-				return true;
-			}
+					return true;
+				}
 
-			return false;
-		}
-		catch (PrincipalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
+				return false;
+			});
 	}
 
 	@Override
@@ -136,9 +125,6 @@ public class AccessFromDesktopPortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AccessFromDesktopPortletConfigurationIcon.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

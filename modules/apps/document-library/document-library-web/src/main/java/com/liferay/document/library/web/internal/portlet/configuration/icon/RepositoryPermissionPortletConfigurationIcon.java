@@ -17,16 +17,13 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -87,25 +84,18 @@ public class RepositoryPermissionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		try {
-			Repository repository = ActionUtil.getRepository(portletRequest);
+		return DLPortletConfigurationIconUtil.runWithDefaultValueOnError(
+			false,
+			() -> {
+				Repository repository = ActionUtil.getRepository(
+					portletRequest);
 
-			if (repository != null) {
-				return true;
-			}
+				if (repository != null) {
+					return true;
+				}
 
-			return false;
-		}
-		catch (PrincipalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
+				return false;
+			});
 	}
 
 	@Override
@@ -117,8 +107,5 @@ public class RepositoryPermissionPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RepositoryPermissionPortletConfigurationIcon.class);
 
 }

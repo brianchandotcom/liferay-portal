@@ -16,17 +16,15 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
+import com.liferay.document.library.web.internal.util.DLPortletConfigurationIconUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -86,43 +84,33 @@ public class MoveFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		return DLPortletConfigurationIconUtil.runWithDefaultValueOnError(
+			false,
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		try {
-			Folder folder = ActionUtil.getFolder(portletRequest);
+				Folder folder = ActionUtil.getFolder(portletRequest);
 
-			if (ModelResourcePermissionHelper.contains(
-					_folderModelResourcePermission,
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(), folder.getFolderId(),
-					ActionKeys.UPDATE) &&
-				!folder.isMountPoint()) {
+				if (ModelResourcePermissionHelper.contains(
+						_folderModelResourcePermission,
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(), folder.getFolderId(),
+						ActionKeys.UPDATE) &&
+					!folder.isMountPoint()) {
 
-				return true;
-			}
+					return true;
+				}
 
-			return false;
-		}
-		catch (PrincipalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return false;
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
+				return false;
+			});
 	}
 
 	@Override
 	public boolean isToolTip() {
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MoveFolderPortletConfigurationIcon.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

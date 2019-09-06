@@ -160,6 +160,56 @@ gradle.beforeProject {
 			}
 		}
 
+		if (project.path.startsWith(":sdk:project-templates:project-templates")) {
+			File mavenWrapperPropertiesFile = project.project(":sdk:project-templates:project-templates").file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
+
+			Properties mavenWrapperProperties = GUtil.loadProperties(mavenWrapperPropertiesFile)
+
+			String mavenDistributionVersion = mavenWrapperProperties["distributionUrl"]
+
+			mavenDistributionVersion = mavenDistributionVersion.find(/\d+\.\d+\.\d+/)
+
+			configurations {
+				mavenDistribution
+			}
+
+			dependencies {
+				mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
+			}
+
+			test {
+				doFirst {
+					Properties gradleWrapperProperties = new Properties()
+
+					File gradleWrapperPropertiesFile = project.project(":sdk:project-templates:project-templates").file("src/main/resources/gradle-wrapper/gradle/wrapper/gradle-wrapper.properties")
+
+					gradleWrapperPropertiesFile.withInputStream {
+						gradleWrapperProperties.load it
+					}
+
+					String gradleDistributionUrl = gradleWrapperProperties["distributionUrl"]
+
+					File gradleDistributionFile = FileUtil.get(project, gradleDistributionUrl)
+
+					systemProperty "gradle.distribution", uri(gradleDistributionFile)
+					systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+				}
+
+				jvmArgs "-XX:MaxMetaspaceSize=256m"
+				maxHeapSize = "1024m"
+
+				systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+				systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+				systemProperty "maven.debug", System.properties["maven.debug"]
+				systemProperty "maven.repo.local", System.properties["maven.repo.local"]
+				systemProperty "nodejs.npm.ci.registry", project.findProperty("nodejs.npm.ci.registry")
+				systemProperty "nodejs.npm.ci.sass.binary.site", project.findProperty("nodejs.npm.ci.sass.binary.site")
+				systemProperty "project.templates.test.builds", project.findProperty("project.templates.test.builds")
+				systemProperty "repository.url", System.properties["repository.url"]
+				systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
+			}
+		}
+
 		if (project.path.startsWith(":sdk:project-templates:project-templates-")) {
 			task generateSampleProject(type:JavaExec)
 

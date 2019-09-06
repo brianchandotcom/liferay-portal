@@ -6,16 +6,9 @@ import org.gradle.util.GUtil
 
 task cleanProjectTemplatesTests(type: Delete)
 task projectTemplateJarVersions
+task testAPIJar(type: Jar, dependsOn: testClasses)
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
-
-File mavenWrapperPropertiesFile = file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
-
-Properties mavenWrapperProperties = GUtil.loadProperties(mavenWrapperPropertiesFile)
-
-String mavenDistributionVersion = mavenWrapperProperties["distributionUrl"]
-
-mavenDistributionVersion = mavenDistributionVersion.find(/\d+\.\d+\.\d+/)
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 	it.name.startsWith "project-templates-"
@@ -32,8 +25,8 @@ cleanProjectTemplatesTests {
 }
 
 configurations {
-	mavenDistribution
 	projectTemplates
+	testAPI
 
 	projectTemplatesTests {
 		extendsFrom projectTemplates
@@ -58,14 +51,16 @@ configurations {
 	}
 }
 
+artifacts {
+	testAPI testAPIJar
+}
+
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 	compileInclude group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
-
-	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
 
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.activator", version: "1.0.61"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.62"
@@ -164,37 +159,12 @@ test {
 
 	dependsOn writeProjectTemplateVersions
 
-	doFirst {
-		Properties gradleWrapperProperties = new Properties()
-
-		File gradleWrapperPropertiesFile = file("src/main/resources/gradle-wrapper/gradle/wrapper/gradle-wrapper.properties")
-
-		gradleWrapperPropertiesFile.withInputStream {
-			gradleWrapperProperties.load it
-		}
-
-		String gradleDistributionUrl = gradleWrapperProperties["distributionUrl"]
-
-		File gradleDistributionFile = FileUtil.get(project, gradleDistributionUrl)
-
-		systemProperty "gradle.distribution", uri(gradleDistributionFile)
-		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
-	}
-
-	jvmArgs "-XX:MaxMetaspaceSize=256m"
-	maxHeapSize = "1024m"
-
-	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
-	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
-	systemProperty "maven.debug", System.properties["maven.debug"]
-	systemProperty "maven.repo.local", System.properties["maven.repo.local"]
-	systemProperty "nodejs.npm.ci.registry", project.findProperty("nodejs.npm.ci.registry")
-	systemProperty "nodejs.npm.ci.sass.binary.site", project.findProperty("nodejs.npm.ci.sass.binary.site")
-	systemProperty "project.templates.test.builds", project.findProperty("project.templates.test.builds")
-	systemProperty "repository.url", System.properties["repository.url"]
-	systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
-
 	systemProperties projectTemplateTokens
+}
+
+testAPIJar {
+	classifier = "tests"
+	from sourceSets.test.output
 }
 
 uploadProjectTemplateArchives {

@@ -204,6 +204,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testDeleteDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
 			testDeleteDataDefinition_addDataDefinition();

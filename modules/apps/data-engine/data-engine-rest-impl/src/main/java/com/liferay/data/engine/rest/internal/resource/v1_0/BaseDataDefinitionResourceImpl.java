@@ -18,6 +18,7 @@ import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinitionPermission;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -62,6 +63,22 @@ import javax.ws.rs.core.UriInfo;
 @Path("/v1.0")
 public abstract class BaseDataDefinitionResourceImpl
 	implements DataDefinitionResource {
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/data-engine/v1.0/data-definitions/data-definition-fields/field-types'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Path("/data-definitions/data-definition-fields/field-types")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DataDefinition")})
+	public String getDataDefinitionDataDefinitionFieldFieldType()
+		throws Exception {
+
+		return StringPool.BLANK;
+	}
 
 	/**
 	 * Invoke this method with the command line:

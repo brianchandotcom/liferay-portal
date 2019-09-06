@@ -83,7 +83,7 @@ public class DLOpenerOneDriveManager {
 				userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
-		return new DLOpenerOneDriveFileReference(
+		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),
 			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
@@ -102,7 +102,7 @@ public class DLOpenerOneDriveManager {
 				userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
-		return new DLOpenerOneDriveFileReference(
+		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),
 			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
@@ -155,7 +155,7 @@ public class DLOpenerOneDriveManager {
 
 		_getAccessToken(fileEntry.getCompanyId(), userId);
 
-		return new DLOpenerOneDriveFileReference(
+		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),
 			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
@@ -251,7 +251,7 @@ public class DLOpenerOneDriveManager {
 
 		_getAccessToken(fileEntry.getCompanyId(), userId);
 
-		return new DLOpenerOneDriveFileReference(
+		return new DLOpenerOneDriveFileReference<>(
 			fileEntry.getFileEntryId(),
 			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),

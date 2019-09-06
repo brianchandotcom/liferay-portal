@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
@@ -33,6 +35,16 @@ public class TransactionStatusAdapter
 	}
 
 	@Override
+	public void bufferLifecycleListenerThrowable(Throwable lifecycleThrowable) {
+		if (_lifecycleThrowable == null) {
+			_lifecycleThrowable = lifecycleThrowable;
+		}
+		else {
+			_lifecycleThrowable.addSuppressed(lifecycleThrowable);
+		}
+	}
+
+	@Override
 	public Object createSavepoint() throws TransactionException {
 		return _transactionStatus.createSavepoint();
 	}
@@ -40,6 +52,16 @@ public class TransactionStatusAdapter
 	@Override
 	public void flush() {
 		_transactionStatus.flush();
+	}
+
+	public void flushLifecycleListenerThrowables(Throwable throwable) {
+		if (_lifecycleThrowable != null) {
+			if (throwable == null) {
+				ReflectionUtil.throwException(_lifecycleThrowable);
+			}
+
+			throwable.addSuppressed(_lifecycleThrowable);
+		}
 	}
 
 	/**
@@ -92,6 +114,7 @@ public class TransactionStatusAdapter
 		_transactionStatus.setRollbackOnly();
 	}
 
+	private Throwable _lifecycleThrowable;
 	private final TransactionStatus _transactionStatus;
 
 }

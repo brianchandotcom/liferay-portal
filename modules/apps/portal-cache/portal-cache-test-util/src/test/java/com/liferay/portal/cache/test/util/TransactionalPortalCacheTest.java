@@ -1444,6 +1444,11 @@ public class TransactionalPortalCacheTest {
 	private static class TestTrasactionStatus implements TransactionStatus {
 
 		@Override
+		public void bufferLifecycleListenerThrowable(
+			Throwable lifecycleThrowable) {
+		}
+
+		@Override
 		public Object getPlatformTransactionManager() {
 			return null;
 		}

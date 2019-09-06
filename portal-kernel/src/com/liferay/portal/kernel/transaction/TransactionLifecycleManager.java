@@ -30,8 +30,13 @@ public class TransactionLifecycleManager {
 		for (TransactionLifecycleListener transactionLifecycleListener :
 				_transactionLifecycleListenersReference.get()) {
 
-			transactionLifecycleListener.committed(
-				transactionAttribute, transactionStatus);
+			try {
+				transactionLifecycleListener.committed(
+					transactionAttribute, transactionStatus);
+			}
+			catch (Throwable t) {
+				transactionStatus.bufferLifecycleListenerThrowable(t);
+			}
 		}
 	}
 
@@ -42,8 +47,13 @@ public class TransactionLifecycleManager {
 		for (TransactionLifecycleListener transactionLifecycleListener :
 				_transactionLifecycleListenersReference.get()) {
 
-			transactionLifecycleListener.created(
-				transactionAttribute, transactionStatus);
+			try {
+				transactionLifecycleListener.created(
+					transactionAttribute, transactionStatus);
+			}
+			catch (Throwable t) {
+				transactionStatus.bufferLifecycleListenerThrowable(t);
+			}
 		}
 	}
 
@@ -54,8 +64,13 @@ public class TransactionLifecycleManager {
 		for (TransactionLifecycleListener transactionLifecycleListener :
 				_transactionLifecycleListenersReference.get()) {
 
-			transactionLifecycleListener.rollbacked(
-				transactionAttribute, transactionStatus, throwable);
+			try {
+				transactionLifecycleListener.rollbacked(
+					transactionAttribute, transactionStatus, throwable);
+			}
+			catch (Throwable t) {
+				transactionStatus.bufferLifecycleListenerThrowable(t);
+			}
 		}
 	}
 

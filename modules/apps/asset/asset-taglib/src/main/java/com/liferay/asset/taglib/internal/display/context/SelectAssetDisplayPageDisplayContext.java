@@ -175,7 +175,7 @@ public class SelectAssetDisplayPageDisplayContext {
 			_getAssetDisplayPageEntry();
 
 		if (assetDisplayPageEntry == null) {
-			_displayPageType = AssetDisplayPageConstants.TYPE_NONE;
+			_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
 		}
 		else {
 			_displayPageType = assetDisplayPageEntry.getType();

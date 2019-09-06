@@ -118,9 +118,9 @@
 		<finder name="WorkflowMetricsSLADefinitionId" return-type="Collection">
 			<finder-column name="workflowMetricsSLADefinitionId" />
 		</finder>
-		<finder name="WMSLAD_V" return-type="WorkflowMetricsSLADefinitionVersion">
-			<finder-column name="workflowMetricsSLADefinitionId" />
+		<finder name="V_WMSLAD" return-type="WorkflowMetricsSLADefinitionVersion">
 			<finder-column name="version" />
+			<finder-column name="workflowMetricsSLADefinitionId" />
 		</finder>
 	</entity>
 	<exceptions>

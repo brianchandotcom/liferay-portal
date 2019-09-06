@@ -19,5 +19,8 @@ module.exports = {
 		module: true,
 		require: true,
 		sinon: true
+	},
+	rules: {
+		'liferay-portal/no-global-fetch': 'off'
 	}
 };

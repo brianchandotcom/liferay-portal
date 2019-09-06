@@ -5,21 +5,23 @@
 	{@param pages: ?}
 	{@param? _handleItemClicked: any}
 
-	<div class="ddm-form-tabs navbar-collapse">
-		<ul class="nav navbar-nav" role="tablist">
-			{foreach $page in $pages}
-				{let $itemRenderer: $page.tabbedItemRenderer ?: 'tabbed' /}
+	<nav class="component-tbar ddm-form-tabs mb-3 tbar">
+		<div className="container-fluid">
+			<ul class="nav nav-underline" role="tablist">
+				{foreach $page in $pages}
+					{let $itemRenderer: $page.tabbedItemRenderer ?: 'tabbed' /}
 
-				{delcall DDM.Form.Tabs.item variant="$itemRenderer"}
-					{param _handleItemClicked: $_handleItemClicked /}
-					{param activePage: $activePage /}
-					{param page: $page /}
-					{param pageIndex: index($page) /}
-					{param total: length($pages) /}
-				{/delcall}
-			{/foreach}
-		</ul>
-	</div>
+					{delcall DDM.Form.Tabs.item variant="$itemRenderer"}
+						{param _handleItemClicked: $_handleItemClicked /}
+						{param activePage: $activePage /}
+						{param page: $page /}
+						{param pageIndex: index($page) /}
+						{param total: length($pages) /}
+					{/delcall}
+				{/foreach}
+			</ul>
+		</div>
+	</nav>
 {/template}
 
 {deltemplate DDM.Form.Tabs.item variant="'tabbed'"}

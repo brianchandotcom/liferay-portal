@@ -17,7 +17,7 @@ import React from "react";
 const ImageSlide = ({ url }) => {
 	const styles = {
 		cursor: "pointer",
-		maxHeight: `calc(100vh - 90px)`
+		maxHeight: `100%`
 	};
 
 	return <img alt="alt" src={url} style={styles} />;

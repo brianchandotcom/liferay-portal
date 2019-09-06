@@ -18,7 +18,25 @@
 	}
 
 	.carousel {
+		height: calc(100% - 6.5rem);
+		padding: 3.5rem;
 		text-align: center;
+
+		> div {
+			height: 100%;
+		}
+
+		.icon-arrow {
+			font-size: 2rem;
+			position: relative;
+			top: calc(50% - 1rem);
+
+			&:active,
+			&:hover,
+			&:focus {
+				color: #fff;
+			}
+		}
 	}
 
 	.footer {

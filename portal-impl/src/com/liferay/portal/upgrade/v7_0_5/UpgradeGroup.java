@@ -140,7 +140,7 @@ public class UpgradeGroup extends UpgradeProcess {
 				PreparedStatement ps3 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
-						"update Group_ set parentGroupId = ?, treePath = ?" +
+						"update Group_ set parentGroupId = ?, treePath = ? " +
 							"where groupId = ?");
 				ResultSet rs1 = ps1.executeQuery()) {
 

@@ -50,16 +50,19 @@ class ItemSelectorPreview extends Component {
 				cliclableItem = item.querySelector(selector);
 			}
 
-			cliclableItem.addEventListener('click', e => {
-				e.preventDefault();
-				e.stopPropagation();
+			if (cliclableItem) {
+				cliclableItem.addEventListener('click', e => {
+					e.preventDefault();
+					e.stopPropagation();
 
-				this.setState({
-					currentItem: item,
-					currentItemIndex: index,
-					openViewer: true
+					this.setState({
+						currentItem: item,
+						currentItemIndex: index,
+						openViewer: true
+					});
 				});
-			});
+
+			}
 		});
 	}
 

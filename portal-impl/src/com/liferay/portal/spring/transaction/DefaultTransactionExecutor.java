@@ -60,7 +60,7 @@ public class DefaultTransactionExecutor
 				transactionStatusAdapter);
 		}
 
-		_commit(transactionAttributeAdapter, transactionStatusAdapter, null);
+		commit(transactionAttributeAdapter, transactionStatusAdapter);
 
 		return returnValue;
 	}

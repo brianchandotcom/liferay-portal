@@ -89,11 +89,15 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 				_platformTransactionManager.commit(
 					transactionStatusAdapter.getTransactionStatus());
 			}
+
+			throw throwable;
 		}
 		catch (Throwable t) {
-			t.addSuppressed(throwable);
+			if (t != throwable) {
+				t.addSuppressed(throwable);
 
-			transactionManagerThrowable = t;
+				transactionManagerThrowable = t;
+			}
 
 			throw t;
 		}
@@ -124,8 +128,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 					transactionManagerThrowable);
 			}
 		}
-
-		throw throwable;
 	}
 
 	@Override

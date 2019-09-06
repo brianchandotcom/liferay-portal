@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 import {useDrop} from 'react-dnd';
 import Button from '../../components/button/Button.es';
@@ -50,7 +51,12 @@ const DropZone = ({columns, onAddColumn, onRemoveColumn}) => {
 
 	if (columns.length == 0) {
 		return (
-			<div className="empty-drop-zone" ref={drop}>
+			<div
+				className={classNames('empty-drop-zone', {
+					'target-droppable': canDrop
+				})}
+				ref={drop}
+			>
 				{Liferay.Language.get(
 					'drag-columns-from-the-sidebar-and-drop-here'
 				)}

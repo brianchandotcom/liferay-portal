@@ -6,6 +6,27 @@
 	color: #a7a9bc;
 	line-height: 57px;
 	text-align: center;
+
+	&.target-droppable {
+		animation-direction: alternate;
+		animation-duration: 0.7s;
+		animation-iteration-count: infinite;
+		animation-name: drop-color;
+		animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+		background-color: #2e5aac;
+		border-color: #0b5fff;
+		color: #0b5fff;
+	}
+
+	@keyframes drop-color {
+		0% {
+			background-color: #f0f5ff;
+		}
+
+		100% {
+			background-color: rgba(179, 205, 255, 0.3);
+		}
+	}
 }
 
 .table-view-container {

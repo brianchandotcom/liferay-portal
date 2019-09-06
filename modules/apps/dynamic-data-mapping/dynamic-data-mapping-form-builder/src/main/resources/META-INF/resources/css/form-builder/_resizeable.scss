@@ -6,9 +6,12 @@ $c: '.ddm-form-builder';
 		width: 21px;
 	}
 
-	.ddm-resize-handle,
 	.ddm-resize-column {
 		top: 0 !important;
+	}
+
+	.ddm-resize-handle {
+		top: calc(50% - 4px);
 	}
 
 	@for $range from 1 to 13 {
@@ -25,13 +28,15 @@ $c: '.ddm-form-builder';
 	}
 
 	.ddm-field-container {
+		margin: 0 1px;
+
 		.ddm-resize-handle-left {
-			left: -1px !important;
+			left: -5px !important;
 		}
 
 		.ddm-resize-handle-right {
 			left: inherit !important;
-			right: -1px !important;
+			right: -5px !important;
 		}
 
 		.ddm-resize-handle-left,
@@ -44,8 +49,6 @@ $c: '.ddm-form-builder';
 
 		&:hover,
 		&:active {
-			border-color: #cdced9;
-
 			.ddm-resize-handle-left,
 			.ddm-resize-handle-right {
 				opacity: 0.5;
@@ -68,9 +71,9 @@ $c: '.ddm-form-builder';
 
 .ddm-resize-handle,
 .ddm-resize-column {
-	height: 100%;
+	height: 8px;
 	position: absolute;
-	width: 5px;
+	width: 8px;
 }
 
 .shim {

@@ -23,6 +23,22 @@
 	<td>//div[contains(@class,'row')][div[normalize-space()='Server Dashboard']]//a</td>
 	<td></td>
 </tr>
+<!--LCS_SERVER-->
+<tr>
+	<td>LCS_SERVER_SELECT_OFFLINE_BUTTON</td>
+	<td>//button[contains(.,'Select Offline')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LCS_SERVER_UNREGISTER_SELECTED_BUTTON</td>
+	<td>//button[contains(.,'Unregister Selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LCS_SERVER_ENVIRONMENT_NAME</td>
+	<td>//section[contains(@class,'information-container')]//h2[contains(.,'${key_environmentName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

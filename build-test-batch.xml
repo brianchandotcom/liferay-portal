@@ -3925,36 +3925,36 @@ log.sanitizer.enabled=false</echo>
 								substring="&quot;test&quot;:"
 							/>
 							<then>
+								<var name="js.project.dir.native" unset="true" />
+								<var name="js.project.dir.unix" unset="true" />
+
+								<dirname file="@{js.test.dir}" property="js.project.dir.native" />
+
+								<pathconvert property="js.project.dir.unix" targetos="unix">
+									<path location="${js.project.dir.native}" />
+								</pathconvert>
+
 								<propertyregex
 									global="false"
-									input="@{js.test.dir}"
+									input="${js.project.dir.unix}"
 									override="yes"
-									property="js.test.subproject.path"
-									regexp="${project.dir}\/modules"
-									replace=""
+									property="js.project.path"
+									regexp="^.*/modules(/.*)"
+									select="\1"
 								/>
 
 								<propertyregex
 									global="true"
-									input="${js.test.subproject.path}"
+									input="${js.project.path}"
 									override="yes"
-									property="js.test.subproject.path"
-									regexp="\/"
+									property="js.project.path"
+									regexp="/"
 									replace=":"
 								/>
 
-								<propertyregex
-									global="true"
-									input="${js.test.subproject.path}"
-									override="yes"
-									property="js.test.subproject.path"
-									regexp=":test"
-									replace=":packageRunTest"
-								/>
+								<echo message="${js.project.path}:packageRunTest" />
 
-								<echo message="${js.test.subproject.path}" />
-
-								<gradle-execute dir="modules" task="${js.test.subproject.path}">
+								<gradle-execute dir="modules" task="${js.project.path}:packageRunTest">
 									<arg value="--continue" />
 									<arg value="--parallel" />
 								</gradle-execute>

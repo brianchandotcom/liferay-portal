@@ -334,8 +334,6 @@ class FragmentEditableBackgroundImage extends Component {
 				this.activeItemId,
 				this.activeItemType,
 				this.fragmentEntryLinkId,
-				this.hoveredItemId,
-				this.hoveredItemType,
 				this.layoutData.structure
 			)
 		) {

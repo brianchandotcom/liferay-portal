@@ -25,7 +25,7 @@ import {
 	applyCriteriaChangeToContributors,
 	initialContributorsToContributors
 } from '../../utils/contributors.es';
-import {debounce} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import {FieldArray, withFormik} from 'formik';
 import {initialContributorShape} from '../../utils/types.es';
 import {

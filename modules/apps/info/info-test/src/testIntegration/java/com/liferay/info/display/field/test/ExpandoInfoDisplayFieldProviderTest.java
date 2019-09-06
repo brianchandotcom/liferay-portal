@@ -23,6 +23,8 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -68,6 +70,54 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testGetGeolocationExpandoInfoDisplayFieldValue()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, "test-geolocation",
+			ExpandoColumnConstants.GEOLOCATION);
+
+		JSONObject valueJSONObject = JSONUtil.put(
+			"latitude", "0.5"
+		).put(
+			"longitude", "0.5"
+		);
+
+		ExpandoTestUtil.addValue(
+			_expandoTable, expandoColumn, _user.getPrimaryKey(),
+			valueJSONObject.toString());
+
+		Map<String, Object> infoDisplayFieldsValues =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					User.class.getName(), _user, LocaleUtil.getDefault());
+
+		List<InfoDisplayField> infoDisplayFields =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					User.class.getName(), LocaleUtil.getDefault());
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		infoDisplayFields = stream.filter(
+			infoDisplayField -> StringUtil.equals(
+				infoDisplayField.getLabel(), expandoColumn.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(
+			infoDisplayFields.toString(), 1, infoDisplayFields.size());
+
+		InfoDisplayField infoDisplayField = infoDisplayFields.get(0);
+
+		Assert.assertEquals(
+			valueJSONObject.getString("latitude") + StringPool.COMMA_AND_SPACE +
+				valueJSONObject.getString("longitude"),
+			infoDisplayFieldsValues.get(infoDisplayField.getKey()));
 	}
 
 	@Test

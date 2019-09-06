@@ -12,6 +12,16 @@
  * details.
  */
 
+export const addSegmentsExperiment = payload => ({
+	payload,
+	type: 'ADD_EXPERIMENT'
+});
+
+export const addVariant = payload => ({
+	payload,
+	type: 'ADD_VARIANT'
+});
+
 export const closeCreationModal = () => ({
 	type: 'CREATE_EXPERIMENT_FINISH'
 });
@@ -30,25 +40,17 @@ export const openEditionModal = payload => ({
 	type: 'EDIT_EXPERIMENT_START'
 });
 
-export const addSegmentsExperiment = payload => ({
-	payload,
-	type: 'ADD_EXPERIMENT'
-});
-
 export const updateSegmentsExperiment = payload => ({
 	payload,
 	type: 'UPDATE_EXPERIMENT'
 });
 
-export const addVariant = payload => ({
-	payload,
-	type: 'ADD_VARIANT'
-});
-export const updateVariants = payload => ({
-	payload,
-	type: 'UPDATE_VARIANTS'
-});
 export const updateVariant = payload => ({
 	payload,
 	type: 'UPDATE_VARIANT'
+});
+
+export const updateVariants = payload => ({
+	payload,
+	type: 'UPDATE_VARIANTS'
 });

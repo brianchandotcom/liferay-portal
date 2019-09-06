@@ -21,11 +21,11 @@ import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
+	STATUS_FINISHED_NO_WINNER,
+	STATUS_FINISHED_WINNER,
 	STATUS_PAUSED,
 	STATUS_RUNNING,
-	STATUS_TERMINATED,
-	STATUS_FINISHED_NO_WINNER,
-	STATUS_FINISHED_WINNER
+	STATUS_TERMINATED
 } from '../util/statuses.es';
 import SegmentsExperimentsContext from '../context.es';
 import {updateSegmentsExperiment, updateVariants} from '../state/actions.es';

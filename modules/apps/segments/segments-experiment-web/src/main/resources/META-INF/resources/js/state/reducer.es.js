@@ -14,34 +14,10 @@
 
 export function reducer(state, action) {
 	switch (action.type) {
-		case 'EDIT_EXPERIMENT_START':
-			return _editExperienceStart(state, action.payload);
-		case 'EDIT_EXPERIMENT_FINISH':
-			return {
-				...state,
-				editExperimentModal: {
-					active: false
-				}
-			};
-		case 'CREATE_EXPERIMENT_START':
-			return _createExperimentStart(state, action.payload);
-		case 'CREATE_EXPERIMENT_FINISH':
-			return {
-				...state,
-				createExperimentModal: {
-					active: false
-				}
-			};
 		case 'ADD_EXPERIMENT':
 			return {
 				...state,
 				experiment: action.payload
-			};
-
-		case 'UPDATE_EXPERIMENT':
-			return {
-				...state,
-				experiment: {...state.experiment, ...action.payload}
 			};
 
 		case 'ADD_VARIANT':
@@ -50,10 +26,32 @@ export function reducer(state, action) {
 				variants: [...state.variants, action.payload]
 			};
 
-		case 'UPDATE_VARIANTS':
+		case 'CREATE_EXPERIMENT_FINISH':
 			return {
 				...state,
-				variants: action.payload
+				createExperimentModal: {
+					active: false
+				}
+			};
+
+		case 'CREATE_EXPERIMENT_START':
+			return _createExperimentStart(state, action.payload);
+
+		case 'EDIT_EXPERIMENT_FINISH':
+			return {
+				...state,
+				editExperimentModal: {
+					active: false
+				}
+			};
+
+		case 'EDIT_EXPERIMENT_START':
+			return _editExperienceStart(state, action.payload);
+
+		case 'UPDATE_EXPERIMENT':
+			return {
+				...state,
+				experiment: {...state.experiment, ...action.payload}
 			};
 
 		case 'UPDATE_VARIANT':
@@ -71,6 +69,12 @@ export function reducer(state, action) {
 					}
 					return variant;
 				})
+			};
+
+		case 'UPDATE_VARIANTS':
+			return {
+				...state,
+				variants: action.payload
 			};
 
 		default:

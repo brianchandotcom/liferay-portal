@@ -472,13 +472,14 @@ public class SegmentsExperimentLocalServiceImpl
 					" no found");
 		}
 
-		UnicodeProperties typeSettings = new UnicodeProperties(true);
+		UnicodeProperties typeSettingsProperties =
+			segmentsExperiment.getTypeSettingsProperties();
 
-		typeSettings.setProperty(
+		typeSettingsProperties.setProperty(
 			"winnerSegmentsExperienceId",
 			String.valueOf(winnerSegmentsExperienceId));
 
-		segmentsExperiment.setTypeSettings(typeSettings.toString());
+		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
 
 		SegmentsExperimentConstants.Status statusObject =
 			SegmentsExperimentConstants.Status.valueOf(status);

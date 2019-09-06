@@ -19,9 +19,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -62,6 +67,16 @@ public class FragmentEntryConfigUtilTest {
 		Assert.assertEquals(
 			expectedConfigurationDefaultValuesJSONObject.toJSONString(),
 			configurationDefaultValuesJSONObject.toJSONString());
+	}
+
+	private ResourceBundle _getResourceBundle(String language) {
+		Class<?> clazz = getClass();
+
+		Package pkg = clazz.getPackage();
+
+		return ResourceBundleUtil.getBundle(
+			pkg.getName() + ".dependencies.content.Language",
+			new Locale(language), clazz);
 	}
 
 	private String _read(String fileName) throws Exception {

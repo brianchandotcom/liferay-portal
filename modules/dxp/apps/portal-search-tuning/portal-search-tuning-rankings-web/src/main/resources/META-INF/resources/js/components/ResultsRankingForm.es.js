@@ -43,8 +43,11 @@ class ErrorBoundary extends Component {
 		return {hasError: true};
 	}
 
+	/**
+	 * Display the reason why the component was unable to load in the console.
+	 */
 	componentDidCatch(error, info) {
-		console.log('error', error, info);
+		console.log('error', error, info); // eslint-disable-line no-console
 	}
 
 	render() {

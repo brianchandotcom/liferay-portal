@@ -220,7 +220,7 @@
 }
 
 .lfr-simulation-device {
-	bottom: 25px;
+	bottom: 0;
 	display: none;
 	left: 0;
 	overflow: auto;
@@ -252,9 +252,5 @@
 
 	.lfr-simulation-device {
 		display: block;
-	}
-
-	.simulation-icon {
-		display: none;
 	}
 }

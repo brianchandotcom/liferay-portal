@@ -54,9 +54,7 @@ public class WorkflowPermissionImpl implements WorkflowPermission {
 
 		long companyId = permissionChecker.getCompanyId();
 
-		if (permissionChecker.isCompanyAdmin() ||
-			permissionChecker.isGroupAdmin(groupId)) {
-
+		if (permissionChecker.isContentReviewer(companyId, groupId)) {
 			return Boolean.TRUE;
 		}
 

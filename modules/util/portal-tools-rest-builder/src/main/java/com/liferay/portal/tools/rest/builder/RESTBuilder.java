@@ -987,6 +987,10 @@ public class RESTBuilder {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
+		if (pathItems == null) {
+			return s;
+		}
+
 		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
 			String path = entry1.getKey();
 
@@ -1096,7 +1100,13 @@ public class RESTBuilder {
 				fieldValue = fieldValue + '\n' + line;
 			}
 
-			line = s.substring(y + 1, s.indexOf("\n", y + 1));
+			if (s.indexOf('\n', y + 1) == -1) {
+				y = s.length();
+
+				break;
+			}
+
+			line = s.substring(y + 1, s.indexOf('\n', y + 1));
 
 			y = s.indexOf('\n', y + 1);
 		}
@@ -1214,6 +1224,10 @@ public class RESTBuilder {
 		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return s;
+		}
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			String path = entry.getKey();

@@ -25,6 +25,7 @@ import {
 	CLEAR_HOVERED_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
+import {getFragmentEntryLinkListElement} from './utils/FragmentsEditorGetUtils.es';
 import {INITIAL_STATE} from './store/state.es';
 import {
 	startListeningWidgetConfigurationChange,
@@ -234,16 +235,8 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_handleDocumentMouseOver(event) {
-		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
-			event
-		);
-
-		if (targetItemId && targetItemType && this.store) {
-			this.store.dispatch({
-				hoveredItemId: targetItemId,
-				hoveredItemType: targetItemType,
-				type: UPDATE_HOVERED_ITEM
-			});
+		if (this.store) {
+			this._updateHoveredItem(event);
 		} else if (this.store) {
 			this.store.dispatch({
 				type: CLEAR_HOVERED_ITEM
@@ -264,19 +257,8 @@ class FragmentsEditor extends Component {
 		);
 
 		if (targetItemId && targetItemType) {
-			const {
-				activeItemId,
-				activeItemType
-			} = FragmentsEditor.getBackgroundEditableTarget(
-				event.target,
-				targetItemId,
-				targetItemType,
-				this.activeItemId,
-				this.activeItemType
-			);
-
 			this.store.dispatch(
-				updateActiveItemAction(activeItemId, activeItemType, {
+				updateActiveItemAction(targetItemId, targetItemType, {
 					appendItem: this._shiftPressed
 				})
 			);
@@ -289,6 +271,53 @@ class FragmentsEditor extends Component {
 				type: CLEAR_ACTIVE_ITEM
 			});
 		}
+	}
+
+	/**
+	 * Update hovered item
+	 * @param {MouseEvent} event
+	 * @private
+	 * @review
+	 */
+	_updateHoveredItem(event) {
+		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
+			event
+		);
+
+		let hoveredItemId = targetItemId;
+		let hoveredItemType = targetItemType;
+
+		const itemIsEditable =
+			targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
+			targetItemType ===
+				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
+
+		if (itemIsEditable) {
+			const editable = getFragmentEntryLinkListElement(
+				targetItemId,
+				targetItemType
+			);
+
+			const fragment = getFragmentEntryLinkListElement(
+				editable.dataset.fragmentEntryLinkId,
+				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+			);
+
+			if (
+				!editable.classList.contains(
+					'fragments-editor__editable--highlighted'
+				)
+			) {
+				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
+				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+			}
+		}
+
+		this.store.dispatch({
+			hoveredItemId,
+			hoveredItemType,
+			type: UPDATE_HOVERED_ITEM
+		});
 	}
 }
 

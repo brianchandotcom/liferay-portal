@@ -147,7 +147,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
-		AutoTagging.assertNoAutoTag();
+		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
 	@description = "This test asserts that the max number of tags at the instance level cannot be greater than the max number of tags at the portal level."
@@ -285,7 +285,7 @@ definition {
 			dmDocumentDescription = "Auto Tagged Image Description",
 			dmDocumentTitle = "Auto Tagged Image");
 
-		AutoTagging.assertNoAutoTag();
+		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
 	@description = "This test covers LPS-94209. It asserts that OpenNLP auto-tags can be deleted."
@@ -346,7 +346,7 @@ definition {
 			dmDocumentDescription = "Auto Tagged PDF Description",
 			dmDocumentTitle = "Auto Tagged PDF");
 
-		AutoTagging.assertNoAutoTag();
+		AutoTagging.assertNoAutoTag(tagName = "alice");
 	}
 
 	@description = "This test asserts that an image is auto-tagged during upload when Auto-Tagging is enabled."

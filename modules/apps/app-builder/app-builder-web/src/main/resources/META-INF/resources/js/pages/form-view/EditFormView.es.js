@@ -12,14 +12,12 @@
  * details.
  */
 
-import React, {useState, useRef, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {AppContext} from '../../AppContext.es';
-import FieldTypeList from '../../components/field-types/FieldTypeList.es';
-import Sidebar from '../../components/sidebar/Sidebar.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
-import {useSidebarContent} from '../../hooks/index.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
 import LayoutBuilderManager from './LayoutBuilderManager.es';
+import LayoutBuilderSidebar from './LayoutBuilderSidebar.es';
 
 const saveDataLayoutBuilder = ({
 	dataDefinition,
@@ -77,8 +75,6 @@ export default ({
 }) => {
 	const [dataDefinition, setDataDefinition] = useState({});
 	const [dataLayout, setDataLayout] = useState({name: {}});
-	const [keywords, setKeywords] = useState('');
-	const [sidebarClosed, setSidebarClosed] = useState(false);
 
 	const {basePortletURL} = useContext(AppContext);
 	const listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
@@ -122,12 +118,6 @@ export default ({
 			window.location.href = `${listUrl}`;
 		});
 	};
-
-	const builderElementRef = useRef(
-		document.querySelector(`#${dataLayoutBuilderElementId}`)
-	);
-
-	useSidebarContent(builderElementRef, sidebarClosed);
 
 	useEffect(() => {
 		if (dataLayoutId) {
@@ -173,21 +163,10 @@ export default ({
 				</UpperToolbar.Group>
 			</UpperToolbar>
 
-			<Sidebar
-				onSearch={setKeywords}
-				onToggle={closed => setSidebarClosed(closed)}
-			>
-				<Sidebar.Body>
-					<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
-
-					<Sidebar.TabContent>
-						<FieldTypeList
-							fieldTypes={dataLayoutBuilder.getFieldTypes()}
-							keywords={keywords}
-						/>
-					</Sidebar.TabContent>
-				</Sidebar.Body>
-			</Sidebar>
+			<LayoutBuilderSidebar
+				dataLayoutBuilder={dataLayoutBuilder}
+				dataLayoutBuilderElementId={dataLayoutBuilderElementId}
+			/>
 
 			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
 		</>

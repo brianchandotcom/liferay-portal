@@ -33,7 +33,6 @@ config = {
 		MODULE_PATH: true
 	},
 	rules: {
-		'liferay-portal/no-global-fetch': 'off',
 		'no-empty': ['error', {allowEmptyCatch: true}]
 	}
 };

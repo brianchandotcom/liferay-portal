@@ -4,7 +4,7 @@
 <project>
 	<path id="rest.builder.classpath">
 		<fileset
-			dir="../lib"
+			dir="../../../../tools/sdk/dependencies/com.liferay.portal.tools.rest.builder/lib"
 			includes="*.jar"
 		/>
 		<fileset
@@ -19,9 +19,6 @@
 	/>
 
 	<target name="build-rest">
-		<build-rest
-			restConfigFileName="rest-config.yaml"
-			restOpenAPIFileName="rest-openapi.yaml"
-		/>
+		<build-rest />
 	</target>
 </project>

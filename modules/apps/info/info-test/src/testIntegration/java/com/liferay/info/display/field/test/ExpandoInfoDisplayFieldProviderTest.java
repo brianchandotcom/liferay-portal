@@ -15,21 +15,35 @@
 package com.liferay.info.display.field.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -52,6 +66,46 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 		_user = UserTestUtil.addUser();
 	}
+
+	@Test
+	public void testGetStringExpandoInfoDisplayFieldValue() throws Exception {
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, "test-string", ExpandoColumnConstants.STRING);
+
+		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+			_expandoTable, expandoColumn, _user.getPrimaryKey(), "test-value");
+
+		Map<String, Object> infoDisplayFieldsValues =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					User.class.getName(), _user, LocaleUtil.getDefault());
+
+		List<InfoDisplayField> infoDisplayFields =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					User.class.getName(), LocaleUtil.getDefault());
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		infoDisplayFields = stream.filter(
+			infoDisplayField -> StringUtil.equals(
+				infoDisplayField.getLabel(), expandoColumn.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(
+			infoDisplayFields.toString(), 1, infoDisplayFields.size());
+
+		InfoDisplayField infoDisplayField = infoDisplayFields.get(0);
+
+		Assert.assertEquals(
+			expandoValue.getString(),
+			infoDisplayFieldsValues.get(infoDisplayField.getKey()));
+	}
+
+	@Inject
+	private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;

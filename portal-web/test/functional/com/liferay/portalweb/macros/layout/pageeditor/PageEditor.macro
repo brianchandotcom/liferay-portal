@@ -129,7 +129,9 @@ definition {
 	macro addExperience {
 		var key_experienceName = "${experienceName}";
 
-		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		AssertTextEquals(
+			locator1 = "PageEditor#EXPERIENCE_LABEL"),
+			value1 = "Experience");
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 

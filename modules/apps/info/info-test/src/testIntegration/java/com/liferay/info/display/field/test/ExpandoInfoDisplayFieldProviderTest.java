@@ -35,7 +35,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,6 +68,66 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testGetLocalizedStringArrayExpandoInfoDisplayFieldValue()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, "test-localized-string-array",
+			ExpandoColumnConstants.STRING_ARRAY_LOCALIZED);
+
+		Map<Locale, String[]> values = new HashMap<>();
+
+		values.put(
+			LocaleUtil.ENGLISH, new String[] {"en-value-1", "en-value-2"});
+		values.put(
+			LocaleUtil.FRENCH, new String[] {"fr-value-1", "fr-value-2"});
+
+		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+			_expandoTable, expandoColumn, _user.getPrimaryKey(), values);
+
+		List<InfoDisplayField> infoDisplayFields =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					User.class.getName(), LocaleUtil.getDefault());
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		infoDisplayFields = stream.filter(
+			infoDisplayField -> StringUtil.equals(
+				infoDisplayField.getLabel(), expandoColumn.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(
+			infoDisplayFields.toString(), 1, infoDisplayFields.size());
+
+		InfoDisplayField infoDisplayField = infoDisplayFields.get(0);
+
+		Map<String, Object> enInfoDisplayFieldsValues =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					User.class.getName(), _user, LocaleUtil.ENGLISH);
+
+		Map<String, Object> frInfoDisplayFieldsValues =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					User.class.getName(), _user, LocaleUtil.FRENCH);
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				expandoValue.getStringArray(LocaleUtil.ENGLISH),
+				StringPool.COMMA_AND_SPACE),
+			enInfoDisplayFieldsValues.get(infoDisplayField.getKey()));
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				expandoValue.getStringArray(LocaleUtil.FRENCH),
+				StringPool.COMMA_AND_SPACE),
+			frInfoDisplayFieldsValues.get(infoDisplayField.getKey()));
 	}
 
 	@Test

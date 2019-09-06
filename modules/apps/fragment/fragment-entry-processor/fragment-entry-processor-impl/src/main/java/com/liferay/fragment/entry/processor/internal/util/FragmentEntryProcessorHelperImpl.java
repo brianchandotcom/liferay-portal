@@ -19,7 +19,7 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessorUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -56,8 +56,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = FragmentEntryProcessorUtil.class)
-public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
+@Component(immediate = true, service = FragmentEntryProcessorHelper.class)
+public class FragmentEntryProcessorHelperImpl
+	implements FragmentEntryProcessorHelper {
 
 	@Override
 	public String getEditableValue(

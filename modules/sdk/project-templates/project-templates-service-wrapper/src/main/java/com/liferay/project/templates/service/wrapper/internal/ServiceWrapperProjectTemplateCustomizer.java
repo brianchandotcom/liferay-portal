@@ -14,8 +14,8 @@
 
 package com.liferay.project.templates.service.wrapper.internal;
 
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 
 import java.io.File;
 
@@ -29,6 +29,11 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  */
 public class ServiceWrapperProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
+
+	@Override
+	public String getTemplateName() {
+		return "service-wrapper";
+	}
 
 	@Override
 	public void onAfterGenerateProject(
@@ -45,8 +50,13 @@ public class ServiceWrapperProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put(
-			"serviceWrapperClass", projectTemplatesArgs.getService());
+		ServiceWrapperProjectTemplatesArgs serviceWrapperProjectTemplatesArgs =
+			(ServiceWrapperProjectTemplatesArgs)
+				projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+		setProperty(
+			properties, "serviceWrapperClass",
+			serviceWrapperProjectTemplatesArgs.getService());
 	}
 
 }

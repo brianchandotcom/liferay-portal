@@ -60,6 +60,7 @@ configurations {
 
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
+	compileInclude group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"

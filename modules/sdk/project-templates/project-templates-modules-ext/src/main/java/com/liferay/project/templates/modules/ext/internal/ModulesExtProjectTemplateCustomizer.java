@@ -14,8 +14,8 @@
 
 package com.liferay.project.templates.modules.ext.internal;
 
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 
 import java.io.File;
 
@@ -26,9 +26,15 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 
 /**
  * @author Charles Wu
+ * @author Gregory Amerson
  */
 public class ModulesExtProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
+
+	@Override
+	public String getTemplateName() {
+		return "modules-ext";
+	}
 
 	@Override
 	public void onAfterGenerateProject(
@@ -43,18 +49,23 @@ public class ModulesExtProjectTemplateCustomizer
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
 
+		ModulesExtProjectTemplatesArgs modulesExtProjectTemplatesArgs =
+			(ModulesExtProjectTemplatesArgs)
+				projectTemplatesArgs.getProjectTemplatesArgsExt();
+
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put(
-			"originalModuleName", projectTemplatesArgs.getOriginalModuleName());
+		setProperty(
+			properties, "originalModuleName",
+			modulesExtProjectTemplatesArgs.getOriginalModuleName());
 
 		if (!projectTemplatesArgs.isDependencyManagementEnabled()) {
-			properties.put(
-				"originalModuleVersion",
-				projectTemplatesArgs.getOriginalModuleVersion());
+			setProperty(
+				properties, "originalModuleVersion",
+				modulesExtProjectTemplatesArgs.getOriginalModuleVersion());
 		}
 		else {
-			properties.put("originalModuleVersion", "1.0.0");
+			setProperty(properties, "originalModuleVersion", "1.0.0");
 		}
 	}
 

@@ -14,8 +14,8 @@
 
 package com.liferay.project.templates.npm.vuejs.portlet.internal;
 
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
 
 import java.io.File;
 
@@ -29,6 +29,11 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  */
 public class NPMVuejsPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
+
+	@Override
+	public String getTemplateName() {
+		return "npm-vuejs-portlet";
+	}
 
 	@Override
 	public void onAfterGenerateProject(

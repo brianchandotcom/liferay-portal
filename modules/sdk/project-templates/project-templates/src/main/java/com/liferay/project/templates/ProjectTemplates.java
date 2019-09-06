@@ -17,10 +17,15 @@ package com.liferay.project.templates;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgsExt;
+import com.liferay.project.templates.extensions.ProjectTemplatesConstants;
+import com.liferay.project.templates.extensions.util.FileUtil;
+import com.liferay.project.templates.extensions.util.ProjectTemplatesUtil;
+import com.liferay.project.templates.extensions.util.StringUtil;
+import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.internal.ProjectGenerator;
-import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
-import com.liferay.project.templates.internal.util.StringUtil;
-import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 import java.io.InputStream;
@@ -58,9 +63,6 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplates {
-
-	public static final String TEMPLATE_BUNDLE_PREFIX =
-		"com.liferay.project.templates.";
 
 	public static Map<String, String> getTemplates() throws Exception {
 		return getTemplates(Collections.emptySet());
@@ -111,7 +113,10 @@ public class ProjectTemplates {
 
 						String template = jarEntry.getName();
 
-						if (!template.startsWith(TEMPLATE_BUNDLE_PREFIX)) {
+						if (!template.startsWith(
+								ProjectTemplatesConstants.
+									TEMPLATE_BUNDLE_PREFIX)) {
+
 							continue;
 						}
 
@@ -223,7 +228,7 @@ public class ProjectTemplates {
 				jCommander.setProgramName("java -jar " + jarPath.getFileName());
 			}
 
-			jCommander.parseWithoutValidation(args);
+			jCommander.parse(args);
 
 			String template = projectTemplatesArgs.getTemplate();
 
@@ -461,10 +466,6 @@ public class ProjectTemplates {
 			Validator.isNotNull(name)) {
 
 			projectTemplatesArgs.setPackageName(_getPackageName(name));
-		}
-
-		if (Validator.isNull(projectTemplatesArgs.getContributorType())) {
-			projectTemplatesArgs.setContributorType(name);
 		}
 	}
 

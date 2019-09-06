@@ -14,8 +14,9 @@
 
 package com.liferay.project.templates.theme.contributor.internal;
 
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.util.Validator;
 
 import java.io.File;
 
@@ -29,6 +30,11 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  */
 public class ThemeContributorProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
+
+	@Override
+	public String getTemplateName() {
+		return "theme-contributor";
+	}
 
 	@Override
 	public void onAfterGenerateProject(
@@ -45,8 +51,21 @@ public class ThemeContributorProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put(
-			"contributorType", projectTemplatesArgs.getContributorType());
+		ThemeContributorProjectTemplatesArgs
+			themeContributorProjectTemplatesArgs =
+				(ThemeContributorProjectTemplatesArgs)
+					projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+		if (Validator.isNull(
+				themeContributorProjectTemplatesArgs.getContributorType())) {
+
+			themeContributorProjectTemplatesArgs.setContributorType(
+				projectTemplatesArgs.getName());
+		}
+
+		setProperty(
+			properties, "contributorType",
+			themeContributorProjectTemplatesArgs.getContributorType());
 	}
 
 }

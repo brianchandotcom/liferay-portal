@@ -12,13 +12,35 @@
  * details.
  */
 
-package com.liferay.project.templates;
+package com.liferay.project.templates.service.wrapper.internal;
+
+import com.beust.jcommander.Parameter;
+
+import com.liferay.project.templates.extensions.ProjectTemplatesArgsExt;
 
 /**
  * @author Gregory Amerson
  */
-public interface ProjectTemplatesArgsExt {
+public class ServiceWrapperProjectTemplatesArgs
+	implements ProjectTemplatesArgsExt {
 
-	public String getTemplateName();
+	public String getService() {
+		return _service;
+	}
+
+	@Override
+	public String getTemplateName() {
+		return "service-wrapper";
+	}
+
+	public void setService(String service) {
+		_service = service;
+	}
+
+	@Parameter(
+		description = "Provide the name of the service to be implemented.",
+		names = "--service", required = true
+	)
+	private String _service;
 
 }

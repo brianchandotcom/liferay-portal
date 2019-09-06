@@ -14,14 +14,15 @@
 
 package com.liferay.project.templates.spring.mvc.portlet.internal;
 
-import com.liferay.project.templates.FileUtil;
-import com.liferay.project.templates.ProjectTemplateCustomizer;
-import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.ProjectTemplateCustomizer;
+import com.liferay.project.templates.extensions.ProjectTemplatesArgs;
+import com.liferay.project.templates.extensions.util.FileUtil;
 
 import java.io.File;
 
 import java.nio.file.Path;
 
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
@@ -35,10 +36,19 @@ public class SpringMVCPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
+	public String getTemplateName() {
+		return "spring-mvc-portlet";
+	}
+
+	@Override
 	public void onAfterGenerateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 			ArchetypeGenerationResult archetypeGenerationResult)
 		throws Exception {
+
+		SpringMVCPortletProjectTemplatesArgsExt ext =
+			(SpringMVCPortletProjectTemplatesArgsExt)
+				projectTemplatesArgs.getProjectTemplatesArgsExt();
 
 		Path destinationDirPath = destinationDir.toPath();
 
@@ -55,7 +65,7 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			buildDir,
 			"src/main/java/" + packageName.replaceAll("[.]", "/") + "/spring4");
 
-		String viewType = projectTemplatesArgs.getViewType();
+		String viewType = ext.getViewType();
 
 		if (viewType.equals("jsp")) {
 			FileUtil.deleteFilesByPattern(viewsDir.toPath(), _jspPattern);
@@ -64,7 +74,7 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			FileUtil.deleteFilesByPattern(viewsDir.toPath(), _thymeleafPattern);
 		}
 
-		String framework = projectTemplatesArgs.getFramework();
+		String framework = ext.getFramework();
 
 		if (viewType.equals("jsp") || framework.equals("portletmvc4spring")) {
 			FileUtil.deleteDir(spring4JavaPkgDir.toPath());
@@ -76,6 +86,23 @@ public class SpringMVCPortletProjectTemplateCustomizer
 			ProjectTemplatesArgs projectTemplatesArgs,
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception {
+
+		Properties properties = archetypeGenerationRequest.getProperties();
+
+		SpringMVCPortletProjectTemplatesArgsExt
+			springMVCPortletProjectTemplatesArgsExt =
+				(SpringMVCPortletProjectTemplatesArgsExt)
+					projectTemplatesArgs.getProjectTemplatesArgsExt();
+
+		setProperty(
+			properties, "framework",
+			springMVCPortletProjectTemplatesArgsExt.getFramework());
+		setProperty(
+			properties, "frameworkDependencies",
+			springMVCPortletProjectTemplatesArgsExt.getFrameworkDependencies());
+		setProperty(
+			properties, "viewType",
+			springMVCPortletProjectTemplatesArgsExt.getViewType());
 	}
 
 	private static final Pattern _jspPattern = Pattern.compile(".*.html");

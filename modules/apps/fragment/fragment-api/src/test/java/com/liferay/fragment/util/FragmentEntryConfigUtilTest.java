@@ -84,6 +84,21 @@ public class FragmentEntryConfigUtilTest {
 				configurationJSONOjbect, _getResourceBundle("en")));
 	}
 
+	@Test
+	public void testTranslateConfigurationEs() throws Exception {
+		JSONObject configurationJSONOjbect = JSONFactoryUtil.createJSONObject(
+			_read("configuration_untranslated.json"));
+
+		JSONObject expectedConfigurationTranslatedJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				_read("expected_configuration_translated_es.json"));
+
+		Assert.assertEquals(
+			expectedConfigurationTranslatedJSONObject.toJSONString(),
+			FragmentEntryConfigUtil.translateConfiguration(
+				configurationJSONOjbect, _getResourceBundle("es")));
+	}
+
 	private ResourceBundle _getResourceBundle(String language) {
 		Class<?> clazz = getClass();
 

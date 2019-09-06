@@ -15,7 +15,7 @@
 package com.liferay.fragment.entry.processor.background.image;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -111,7 +111,7 @@ public class BackgroundImageFragmentEntryProcessor
 
 			String value = StringPool.BLANK;
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
+			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode())) {
 
 				String mappedField = editableValueJSONObject.getString(
@@ -132,10 +132,13 @@ public class BackgroundImageFragmentEntryProcessor
 				}
 			}
 
-			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
-				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					editableValueJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext);
+			if (_fragmentEntryProcessorHelper.isMapped(
+					editableValueJSONObject)) {
+
+				Object fieldValue =
+					_fragmentEntryProcessorHelper.getMappedValue(
+						editableValueJSONObject, infoDisplaysFieldValues,
+						fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
 					if (fieldValue instanceof JSONObject) {
@@ -151,7 +154,7 @@ public class BackgroundImageFragmentEntryProcessor
 			}
 
 			if (Validator.isNull(value)) {
-				value = _fragmentEntryProcessorUtil.getEditableValue(
+				value = _fragmentEntryProcessorHelper.getEditableValue(
 					editableValueJSONObject,
 					fragmentEntryProcessorContext.getLocale(),
 					fragmentEntryProcessorContext.getSegmentsExperienceIds());
@@ -237,6 +240,6 @@ public class BackgroundImageFragmentEntryProcessor
 	}
 
 	@Reference
-	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 }

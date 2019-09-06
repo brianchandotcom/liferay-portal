@@ -17,7 +17,7 @@ package com.liferay.fragment.entry.processor.editable;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -167,7 +167,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject mappedValueConfigJSONObject =
 				JSONFactoryUtil.createJSONObject();
 
-			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
+			if (_fragmentEntryProcessorHelper.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode())) {
 
 				value = editableValueJSONObject.getString("mappedField");
@@ -182,15 +182,18 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 						editableElementParser.getFieldTemplate(), "field_name",
 						value);
 
-					value = _fragmentEntryProcessorUtil.processTemplate(
+					value = _fragmentEntryProcessorHelper.processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
 			}
 
-			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {
-				Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
-					editableValueJSONObject, infoDisplaysFieldValues,
-					fragmentEntryProcessorContext);
+			if (_fragmentEntryProcessorHelper.isMapped(
+					editableValueJSONObject)) {
+
+				Object fieldValue =
+					_fragmentEntryProcessorHelper.getMappedValue(
+						editableValueJSONObject, infoDisplaysFieldValues,
+						fragmentEntryProcessorContext);
 
 				if (fieldValue != null) {
 					String fieldId = editableValueJSONObject.getString(
@@ -203,13 +206,13 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 					value = editableElementParser.parseFieldValue(fieldValue);
 
-					value = _fragmentEntryProcessorUtil.processTemplate(
+					value = _fragmentEntryProcessorHelper.processTemplate(
 						value, fragmentEntryProcessorContext);
 				}
 			}
 
 			if (Validator.isNull(value)) {
-				value = _fragmentEntryProcessorUtil.getEditableValue(
+				value = _fragmentEntryProcessorHelper.getEditableValue(
 					editableValueJSONObject,
 					fragmentEntryProcessorContext.getLocale(),
 					fragmentEntryProcessorContext.getSegmentsExperienceIds());
@@ -471,6 +474,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		new HashMap<>();
 
 	@Reference
-	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 }

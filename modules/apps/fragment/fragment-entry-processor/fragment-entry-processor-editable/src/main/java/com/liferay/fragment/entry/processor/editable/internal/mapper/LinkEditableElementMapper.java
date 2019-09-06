@@ -15,7 +15,7 @@
 package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
-import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorUtil;
+import com.liferay.fragment.entry.processor.util.FragmentEntryProcessorHelper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,10 +48,11 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		String href = configJSONObject.getString("href");
 
 		boolean assetDisplayPage =
-			_fragmentEntryProcessorUtil.isAssetDisplayPage(
+			_fragmentEntryProcessorHelper.isAssetDisplayPage(
 				fragmentEntryProcessorContext.getMode());
 
-		boolean mapped = _fragmentEntryProcessorUtil.isMapped(configJSONObject);
+		boolean mapped = _fragmentEntryProcessorHelper.isMapped(
+			configJSONObject);
 
 		if (Validator.isNull(href) && !assetDisplayPage && !mapped) {
 			return;
@@ -79,7 +80,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		String mappedField = configJSONObject.getString("mappedField");
 
 		if (mapped) {
-			Object fieldValue = _fragmentEntryProcessorUtil.getMappedValue(
+			Object fieldValue = _fragmentEntryProcessorHelper.getMappedValue(
 				configJSONObject, new HashMap<>(),
 				fragmentEntryProcessorContext);
 
@@ -106,12 +107,12 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			linkElement.html(replaceLink ? firstChild.html() : element.html());
 
 			element.html(
-				_fragmentEntryProcessorUtil.processTemplate(
+				_fragmentEntryProcessorHelper.processTemplate(
 					linkElement.outerHtml(), fragmentEntryProcessorContext));
 		}
 	}
 
 	@Reference
-	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
+	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 
 }

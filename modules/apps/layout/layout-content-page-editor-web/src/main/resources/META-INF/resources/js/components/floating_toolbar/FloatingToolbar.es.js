@@ -12,10 +12,10 @@
  * details.
  */
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
 import {Align} from 'metal-position';
+import Component from 'metal-component';
 import {Config} from 'metal-state';
+import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './FloatingToolbar.soy';
@@ -211,6 +211,24 @@ class FloatingToolbar extends Component {
 
 		requestAnimationFrame(() => {
 			this._align();
+		});
+	}
+
+	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	syncSelectedPanelId() {
+		requestAnimationFrame(() => {
+			if (this.refs.selectedPanel) {
+				this.refs.selectedPanel.on('clearEditor', () =>
+					this.emit('clearEditor')
+				);
+
+				this.refs.selectedPanel.on('createProcessor', () =>
+					this.emit('createProcessor')
+				);
+			}
 		});
 	}
 

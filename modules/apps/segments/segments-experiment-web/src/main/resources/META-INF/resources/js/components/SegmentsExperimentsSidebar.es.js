@@ -25,11 +25,7 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 import {navigateToExperience} from '../util/navigation.es';
-import {
-	STATUS_RUNNING,
-	STATUS_COMPLETED,
-	STATUS_TERMINATED
-} from '../util/statuses.es';
+import {STATUS_RUNNING, STATUS_TERMINATED} from '../util/statuses.es';
 import {reducer} from '../util/reducer.es';
 import {
 	closeCreationModal,
@@ -117,9 +113,6 @@ function SegmentsExperimentsSidebar({
 							_handleSelectSegmentsExperience
 						}
 						onTargetChange={_handleTargetChange}
-						onWinnerExperiencePublishing={
-							_handleWinnerExperiencePublishing
-						}
 						segmentsExperiences={initialSegmentsExperiences}
 						segmentsExperiment={experiment}
 						selectedSegmentsExperienceId={
@@ -404,18 +397,6 @@ function SegmentsExperimentsSidebar({
 					goal: {...experiment.goal, target: selector}
 				})
 			);
-		});
-	}
-
-	function _handleWinnerExperiencePublishing() {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: winnerSegmentsVariantId
-		};
-
-		APIService.publishExperience(body).then(({segmentsExperiment}) => {
-			dispatch(updateSegmentsExperiment(segmentsExperiment));
 		});
 	}
 }

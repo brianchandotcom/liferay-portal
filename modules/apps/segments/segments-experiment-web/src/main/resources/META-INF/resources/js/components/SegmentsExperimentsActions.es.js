@@ -15,8 +15,11 @@
 import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 import {
+	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_PAUSED,
 	STATUS_RUNNING,
@@ -24,9 +27,8 @@ import {
 	STATUS_FINISHED_WINNER
 } from '../util/statuses.es';
 import SegmentsExperimentsContext from '../context.es';
-import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
-import {StateContext} from './SegmentsExperimentsSidebar.es';
+import {updateSegmentsExperiment} from '../util/actions.es';
+import {StateContext, DispatchContext} from './SegmentsExperimentsSidebar.es';
 
 function _experimentReady(experiment, variants) {
 	if (variants.length <= 1) return false;
@@ -38,13 +40,13 @@ function _experimentReady(experiment, variants) {
 function SegmentsExperimentsActions({
 	onEditSegmentsExperimentStatus,
 	onExperimentDiscard,
-	onWinnerExperiencePublishing,
 	onRunExperiment
 }) {
-	const {variants, experiment} = useContext(StateContext);
+	const {variants, experiment, winnerVariant} = useContext(StateContext);
+	const dispatch = useContext(DispatchContext);
 
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
-	const {viewSegmentsExperimentDetailsURL} = useContext(
+	const {APIService, viewSegmentsExperimentDetailsURL} = useContext(
 		SegmentsExperimentsContext
 	);
 
@@ -118,7 +120,7 @@ function SegmentsExperimentsActions({
 				<>
 					<ClayButton
 						className="w-100 mb-3"
-						onClick={onWinnerExperiencePublishing}
+						onClick={_handlePublishWinnerExperience}
 					>
 						{Liferay.Language.get('publish-winner-as-experience')}
 					</ClayButton>
@@ -154,13 +156,24 @@ function SegmentsExperimentsActions({
 			)}
 		</>
 	);
+
+	function _handlePublishWinnerExperience() {
+		const body = {
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: winnerVariant
+		};
+
+		APIService.publishExperience(body).then(({segmentsExperiment}) => {
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
+		});
+	}
 }
 
 SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
 	onExperimentDiscard: PropTypes.func.isRequired,
-	onRunExperiment: PropTypes.func.isRequired,
-	onWinnerExperiencePublishing: PropTypes.func.isRequired
+	onRunExperiment: PropTypes.func.isRequired
 };
 
 export default SegmentsExperimentsActions;

@@ -409,9 +409,9 @@ function SegmentsExperimentsSidebar({
 
 	function _handleWinnerExperiencePublishing() {
 		const body = {
-			segmentsExperienceId: winnerSegmentsVariantId,
 			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: winnerSegmentsVariantId
 		};
 
 		APIService.publishExperience(body).then(({segmentsExperiment}) => {

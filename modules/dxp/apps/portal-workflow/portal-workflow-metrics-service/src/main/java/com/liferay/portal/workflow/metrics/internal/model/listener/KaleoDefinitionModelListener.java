@@ -42,21 +42,21 @@ public class KaleoDefinitionModelListener
 	}
 
 	@Override
-	public void onAfterRemove(KaleoDefinition kaleoDefinition)
-		throws ModelListenerException {
-
-		_workflowMetricsPortalExecutor.execute(
-			() -> _processWorkflowMetricsIndexer.deleteDocument(
-				_processWorkflowMetricsIndexer.createDocument(
-					kaleoDefinition)));
-	}
-
-	@Override
 	public void onAfterUpdate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _processWorkflowMetricsIndexer.updateDocument(
+				_processWorkflowMetricsIndexer.createDocument(
+					kaleoDefinition)));
+	}
+
+	@Override
+	public void onBeforeRemove(KaleoDefinition kaleoDefinition)
+		throws ModelListenerException {
+
+		_workflowMetricsPortalExecutor.execute(
+			() -> _processWorkflowMetricsIndexer.deleteDocument(
 				_processWorkflowMetricsIndexer.createDocument(
 					kaleoDefinition)));
 	}

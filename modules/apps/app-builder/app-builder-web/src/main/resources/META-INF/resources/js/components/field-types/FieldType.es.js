@@ -31,6 +31,7 @@ export default props => {
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
+		canDrag: _ => !disabled,
 		collect: monitor => ({
 			dragging: monitor.isDragging()
 		}),
@@ -47,7 +48,7 @@ export default props => {
 		preview(getEmptyImage(), {captureDraggingState: true});
 	}, [preview]);
 
-	const handleOnAddField = label => {
+	const handleOnAddColumn = label => {
 		if (disabled) {
 			return;
 		}
@@ -66,11 +67,11 @@ export default props => {
 				'pt-3',
 				{
 					disabled,
-					dragging: !disabled && dragging
+					dragging
 				}
 			)}
 			data-field-type-name={name}
-			onDoubleClick={() => handleOnAddField(label)}
+			onDoubleClick={() => handleOnAddColumn(label)}
 			ref={drag}
 		>
 			<div className="autofit-col pl-2 pr-2">

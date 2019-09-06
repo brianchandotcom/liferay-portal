@@ -16,6 +16,7 @@ import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import DropZone from './DropZone.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
+import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import {Loading} from '../../components/loading/Loading.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
@@ -174,6 +175,8 @@ const EditTableView = ({
 			<ControlMenu backURL="../" title={title} />
 
 			<Loading isLoading={dataDefinition === null}>
+				<DragLayer />
+
 				<form
 					onSubmit={event => {
 						event.preventDefault();

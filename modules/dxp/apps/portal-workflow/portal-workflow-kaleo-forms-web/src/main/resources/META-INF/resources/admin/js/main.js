@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-forms-admin',
 	function(A) {
@@ -46,7 +57,7 @@ AUI.add(
 			NAME: 'liferay-kaleo-forms-admin',
 
 			prototype: {
-				initializer: function(config) {
+				initializer(config) {
 					var instance = this;
 
 					instance.nextBtn = instance.one('.kaleo-process-next');
@@ -64,7 +75,7 @@ AUI.add(
 					instance.syncUI();
 				},
 
-				bindUI: function() {
+				bindUI() {
 					var instance = this;
 
 					var form = instance.get('form');
@@ -99,7 +110,7 @@ AUI.add(
 					);
 				},
 
-				syncUI: function() {
+				syncUI() {
 					var instance = this;
 
 					instance.updateNavigationControls();
@@ -107,7 +118,7 @@ AUI.add(
 					instance.formWizard.validator.resetAllFields();
 				},
 
-				_afterCurrentStepChange: function(event) {
+				_afterCurrentStepChange(event) {
 					var instance = this;
 
 					var sessionMap = instance._getSessionMap();
@@ -145,7 +156,7 @@ AUI.add(
 					instance.syncUI();
 				},
 
-				_afterValidateField: function(event) {
+				_afterValidateField(event) {
 					var instance = this;
 
 					var tabView = instance.get('tabView');
@@ -168,7 +179,7 @@ AUI.add(
 					}
 				},
 
-				_getInputLocalizedValuesMap: function(inputLocalized, name) {
+				_getInputLocalizedValuesMap(inputLocalized, name) {
 					var instance = this;
 
 					var localizedValuesMap = {};
@@ -194,7 +205,7 @@ AUI.add(
 					return localizedValuesMap;
 				},
 
-				_getSessionMap: function() {
+				_getSessionMap() {
 					var instance = this;
 
 					var descriptionInputLocalized = Liferay.component(
@@ -228,15 +239,15 @@ AUI.add(
 						.val();
 
 					return A.merge(sessionMap, {
-						ddmStructureId: ddmStructureId,
-						ddmStructureName: ddmStructureName,
-						ddmTemplateId: ddmTemplateId,
-						kaleoTaskFormPairsData: kaleoTaskFormPairsData,
-						workflowDefinition: workflowDefinition
+						ddmStructureId,
+						ddmStructureName,
+						ddmTemplateId,
+						kaleoTaskFormPairsData,
+						workflowDefinition
 					});
 				},
 
-				_hideSuccessMessage: function() {
+				_hideSuccessMessage() {
 					var instance = this;
 
 					var successMessageNode = instance.one('.alert-success');
@@ -246,7 +257,7 @@ AUI.add(
 					}
 				},
 
-				_isCurrentStepValid: function() {
+				_isCurrentStepValid() {
 					var instance = this;
 
 					var formWizard = instance.formWizard;
@@ -256,7 +267,7 @@ AUI.add(
 					return formWizard.validateStep(currentStep);
 				},
 
-				_loadFormsStep: function() {
+				_loadFormsStep() {
 					var instance = this;
 
 					var currentURL = instance.get('currentURL');
@@ -318,19 +329,19 @@ AUI.add(
 					);
 				},
 
-				_onClickNext: function(event) {
+				_onClickNext(event) {
 					var instance = this;
 
 					instance.formWizard.navigate(1);
 				},
 
-				_onClickPrev: function(event) {
+				_onClickPrev(event) {
 					var instance = this;
 
 					instance.formWizard.navigate(-1);
 				},
 
-				_onSubmitForm: function(event) {
+				_onSubmitForm(event) {
 					var instance = this;
 
 					event.preventDefault();
@@ -340,7 +351,7 @@ AUI.add(
 					}
 				},
 
-				saveInPortletSession: function(data, dialogId) {
+				saveInPortletSession(data, dialogId) {
 					var instance = this;
 
 					A.io.request(instance.get('saveInPortletSessionURL'), {
@@ -348,7 +359,7 @@ AUI.add(
 					});
 				},
 
-				updateNavigationControls: function(currentStepValid) {
+				updateNavigationControls(currentStepValid) {
 					var instance = this;
 
 					if (currentStepValid === undefined) {

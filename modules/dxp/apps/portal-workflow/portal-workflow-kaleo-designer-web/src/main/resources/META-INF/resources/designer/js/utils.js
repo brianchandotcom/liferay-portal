@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-utils',
 	function(A) {
@@ -13,7 +24,7 @@ AUI.add(
 		var KaleoDesignerUtils = {};
 
 		var PropertyListFormatter = {
-			assignmentsType: function(data) {
+			assignmentsType(data) {
 				var value = data.value;
 
 				var assignmentType;
@@ -25,7 +36,7 @@ AUI.add(
 				return KaleoDesignerStrings[assignmentType || 'assetCreator'];
 			},
 
-			forms: function(data) {
+			forms(data) {
 				var value = data.value;
 
 				var templateName;
@@ -37,7 +48,7 @@ AUI.add(
 				return AArray(templateName).join(', ');
 			},
 
-			names: function(data) {
+			names(data) {
 				var value = data.value;
 
 				var names;
@@ -49,7 +60,7 @@ AUI.add(
 				return AArray(names).join(', ');
 			},
 
-			script: function(data) {
+			script(data) {
 				return STR_ELLIPSIS;
 			}
 		};
@@ -158,7 +169,7 @@ AUI.add(
 								discardDefaultButtonCssClasses: true,
 								label: Liferay.Language.get('cancel'),
 								on: {
-									click: function() {
+									click() {
 										dialog.destroy();
 									}
 								}
@@ -168,7 +179,7 @@ AUI.add(
 								discardDefaultButtonCssClasses: true,
 								label: Liferay.Language.get('restore'),
 								on: {
-									click: function() {
+									click() {
 										window.location.assign(actionUrl);
 									}
 								}
@@ -185,7 +196,7 @@ AUI.add(
 									Liferay.Language.get('close') +
 									'</title></svg>',
 								on: {
-									click: function(event) {
+									click(event) {
 										dialog.destroy();
 
 										event.domEvent.stopPropagation();
@@ -195,7 +206,7 @@ AUI.add(
 						]
 					}
 				},
-				title: title,
+				title,
 				uri: renderUrl
 			});
 		};

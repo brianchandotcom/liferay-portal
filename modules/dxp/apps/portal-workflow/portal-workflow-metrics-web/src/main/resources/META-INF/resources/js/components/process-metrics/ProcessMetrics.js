@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
 import AlertMessage from './AlertMessage';
 import {AppContext} from '../AppContext';
@@ -107,7 +118,7 @@ class ProcessMetrics extends React.Component {
 
 				{!!blockedSLACount && (
 					<AlertMessage iconName="exclamation-full">
-						<React.Fragment>
+						<>
 							{`${sub(blockedSLAText, [
 								blockedSLACount
 							])} ${Liferay.Language.get(
@@ -121,13 +132,13 @@ class ProcessMetrics extends React.Component {
 									{Liferay.Language.get('set-up-slas')}
 								</strong>
 							</ChildLink>
-						</React.Fragment>
+						</>
 					</AlertMessage>
 				)}
 
 				{slaCount === 0 && (
 					<AlertMessage iconName="warning-full" type="warning">
-						<React.Fragment>
+						<>
 							{`${Liferay.Language.get(
 								'no-slas-are-defined-for-this-process'
 							)} `}
@@ -137,7 +148,7 @@ class ProcessMetrics extends React.Component {
 									{Liferay.Language.get('add-a-new-sla')}
 								</strong>
 							</ChildLink>
-						</React.Fragment>
+						</>
 					</AlertMessage>
 				)}
 

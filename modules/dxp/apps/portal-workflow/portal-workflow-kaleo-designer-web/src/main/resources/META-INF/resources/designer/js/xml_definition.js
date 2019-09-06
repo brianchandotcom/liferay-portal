@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-xml-definition',
 	function(A) {
@@ -55,7 +66,7 @@ AUI.add(
 			NAME: 'kaleo-designer-xml-definition',
 
 			prototype: {
-				initializer: function(config) {
+				initializer(config) {
 					var instance = this;
 
 					var val = instance._sanitizeDefinitionXML(config.value);
@@ -69,7 +80,7 @@ AUI.add(
 					}
 				},
 
-				forEachField: function(fn) {
+				forEachField(fn) {
 					var instance = this;
 
 					COL_TYPES_FIELD.forEach(function(item, index, collection) {
@@ -81,7 +92,7 @@ AUI.add(
 					});
 				},
 
-				getDefinitionMetadata: function() {
+				getDefinitionMetadata() {
 					var instance = this;
 
 					var output = A.DataSchema.XML.apply(
@@ -99,7 +110,7 @@ AUI.add(
 					return output.meta;
 				},
 
-				translate: function(tagName) {
+				translate(tagName) {
 					var instance = this;
 
 					var schema = {
@@ -128,7 +139,7 @@ AUI.add(
 					);
 				},
 
-				_getSchemaActions: function(key, tagName) {
+				_getSchemaActions(key, tagName) {
 					var instance = this;
 
 					return {
@@ -165,7 +176,7 @@ AUI.add(
 					};
 				},
 
-				_getSchemaAssignments: function(key, tagName) {
+				_getSchemaAssignments(key, tagName) {
 					var instance = this;
 
 					return {
@@ -294,7 +305,7 @@ AUI.add(
 					};
 				},
 
-				_getSchemaNotifications: function(
+				_getSchemaNotifications(
 					key,
 					tagName,
 					assignmentKey,
@@ -351,7 +362,7 @@ AUI.add(
 					};
 				},
 
-				_getSchemaTaskTimers: function(key, tagNode) {
+				_getSchemaTaskTimers(key, tagNode) {
 					var instance = this;
 
 					return {
@@ -420,7 +431,7 @@ AUI.add(
 					};
 				},
 
-				_getSchemaTransitions: function(key, tagName) {
+				_getSchemaTransitions(key, tagName) {
 					var instance = this;
 
 					return {
@@ -445,7 +456,7 @@ AUI.add(
 					};
 				},
 
-				_sanitizeDefinitionXML: function(val) {
+				_sanitizeDefinitionXML(val) {
 					var instance = this;
 
 					val = decodeURIComponent(val);
@@ -461,7 +472,7 @@ AUI.add(
 					);
 				},
 
-				_updateXMLNamespace: function(definition) {
+				_updateXMLNamespace(definition) {
 					var instance = this;
 
 					var workflowDefinition = /(<workflow-definition)[^>]*(>)/.exec(

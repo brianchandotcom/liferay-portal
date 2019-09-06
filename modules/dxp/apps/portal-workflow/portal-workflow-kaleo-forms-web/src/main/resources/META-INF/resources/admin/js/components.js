@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-forms-components',
 	function(A) {
@@ -25,7 +36,7 @@ AUI.add(
 			NAME: 'liferay-kaleo-form-wizard',
 
 			prototype: {
-				initializer: function(config) {
+				initializer(config) {
 					var instance = this;
 
 					instance.form = instance.get('form');
@@ -47,7 +58,7 @@ AUI.add(
 					instance.bindUI();
 				},
 
-				bindUI: function() {
+				bindUI() {
 					var instance = this;
 
 					instance.after(
@@ -62,7 +73,7 @@ AUI.add(
 					);
 				},
 
-				_afterTabSelectedChange: function(event) {
+				_afterTabSelectedChange(event) {
 					var instance = this;
 
 					var tabView = instance.tabView;
@@ -76,7 +87,7 @@ AUI.add(
 					}
 				},
 
-				_onTabSelectedChange: function(event) {
+				_onTabSelectedChange(event) {
 					var instance = this;
 
 					var tabView = instance.tabView;
@@ -90,7 +101,7 @@ AUI.add(
 					}
 				},
 
-				_valueCurrentStep: function() {
+				_valueCurrentStep() {
 					var instance = this;
 
 					var tabView = instance.get('tabView');
@@ -102,7 +113,7 @@ AUI.add(
 					return activeTabIndex + 1;
 				},
 
-				getTabViewPanels: function() {
+				getTabViewPanels() {
 					var instance = this;
 
 					var queries = A.TabviewBase._queries;
@@ -112,7 +123,7 @@ AUI.add(
 						.all(queries.tabPanel);
 				},
 
-				navigate: function(offset) {
+				navigate(offset) {
 					var instance = this;
 
 					var tabView = instance.tabView;
@@ -130,7 +141,7 @@ AUI.add(
 					}
 				},
 
-				validatePanel: function(panel) {
+				validatePanel(panel) {
 					var instance = this;
 
 					var validator = instance.validator;
@@ -144,7 +155,7 @@ AUI.add(
 					});
 				},
 
-				validateStep: function(step) {
+				validateStep(step) {
 					var instance = this;
 
 					var tabViewPanels = instance.getTabViewPanels();
@@ -192,7 +203,7 @@ AUI.add(
 		};
 
 		A.mix(ReadOnlyFormBuilderSupport.prototype, {
-			initializer: function() {
+			initializer() {
 				var instance = this;
 
 				var formBuilder = instance.get('formBuilder');
@@ -214,19 +225,19 @@ AUI.add(
 				);
 			},
 
-			_afterFieldFocusedChangeReadOnlyFormBuilder: function() {
+			_afterFieldFocusedChangeReadOnlyFormBuilder() {
 				var instance = this;
 
 				instance.unselectFields();
 			},
 
-			_afterRenderReadOnlyFormBuilder: function() {
+			_afterRenderReadOnlyFormBuilder() {
 				var instance = this;
 
 				instance.fieldsSortableList.destroy();
 			},
 
-			_onMouseOverFieldReadOnlyFormBuilder: function(event) {
+			_onMouseOverFieldReadOnlyFormBuilder(event) {
 				var field = A.Widget.getByNode(event.currentTarget);
 
 				field.controlsToolbar.hide();
@@ -236,11 +247,11 @@ AUI.add(
 					.removeClass('form-builder-field-hover');
 			},
 
-			_setFormBuilder: function(val) {
+			_setFormBuilder(val) {
 				return new Liferay.FormBuilder(val);
 			},
 
-			_valueFormBuilder: function() {
+			_valueFormBuilder() {
 				var instance = this;
 
 				return {
@@ -285,7 +296,7 @@ AUI.add(
 			NAME: 'liferay-kaleo-definition-preview',
 
 			prototype: {
-				initializer: function() {
+				initializer() {
 					var instance = this;
 
 					var dialog = instance.get('dialog');
@@ -301,7 +312,7 @@ AUI.add(
 					dialog.on('keyup', instance._onDialogKeyUp, instance);
 				},
 
-				_onDialogKeyUp: function(event) {
+				_onDialogKeyUp(event) {
 					var instance = this;
 
 					var availableDefinitions = instance.get(
@@ -337,11 +348,11 @@ AUI.add(
 					}
 				},
 
-				_setDialog: function(val) {
+				_setDialog(val) {
 					return Liferay.Util.Window.getWindow(val);
 				},
 
-				_syncDialog: function() {
+				_syncDialog() {
 					var instance = this;
 
 					var definition = instance.getDefinition();
@@ -353,7 +364,7 @@ AUI.add(
 					dialog.fillHeight(dialog.bodyNode);
 				},
 
-				_syncFormBuilder: function() {
+				_syncFormBuilder() {
 					var instance = this;
 
 					var definition = instance.getDefinition();
@@ -365,7 +376,7 @@ AUI.add(
 					formBuilder.set('fields', definition.definitionFields);
 				},
 
-				_valueDialog: function() {
+				_valueDialog() {
 					var instance = this;
 
 					var formBuilder = instance.get('formBuilder');
@@ -381,7 +392,7 @@ AUI.add(
 									{
 										label: Liferay.Language.get('choose'),
 										on: {
-											click: function() {
+											click() {
 												instance.choose();
 											}
 										}
@@ -389,7 +400,7 @@ AUI.add(
 									{
 										label: Liferay.Language.get('cancel'),
 										on: {
-											click: function() {
+											click() {
 												instance.get('dialog').hide();
 											}
 										}
@@ -400,7 +411,7 @@ AUI.add(
 										cssClass: 'close',
 										label: '\u00D7',
 										on: {
-											click: function() {
+											click() {
 												instance.get('dialog').hide();
 											}
 										}
@@ -414,7 +425,7 @@ AUI.add(
 					};
 				},
 
-				choose: function() {
+				choose() {
 					var instance = this;
 
 					instance.fire('choose', instance.getDefinition());
@@ -430,7 +441,7 @@ AUI.add(
 					}
 				},
 
-				getDefinition: function(definitionId) {
+				getDefinition(definitionId) {
 					var instance = this;
 
 					var availableDefinitions = instance.get(
@@ -455,7 +466,7 @@ AUI.add(
 					return definition;
 				},
 
-				preview: function() {
+				preview() {
 					var instance = this;
 
 					var formBuilder = instance.get('formBuilder');
@@ -471,7 +482,7 @@ AUI.add(
 					instance._syncDialog();
 				},
 
-				select: function(definitionId) {
+				select(definitionId) {
 					var instance = this;
 
 					var availableDefinitions = instance.get(

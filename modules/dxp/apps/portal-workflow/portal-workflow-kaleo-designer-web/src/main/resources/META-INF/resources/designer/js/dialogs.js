@@ -1,8 +1,19 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-dialogs',
 	function(A) {
 		var KaleoDesignerDialogs = {
-			confirmBeforeDuplicateDialog: function(
+			confirmBeforeDuplicateDialog(
 				event,
 				actionUrl,
 				title,
@@ -41,7 +52,7 @@ AUI.add(
 									discardDefaultButtonCssClasses: true,
 									label: Liferay.Language.get('cancel'),
 									on: {
-										click: function() {
+										click() {
 											if (form) {
 												form.reset();
 											}
@@ -55,7 +66,7 @@ AUI.add(
 									discardDefaultButtonCssClasses: true,
 									label: Liferay.Language.get('duplicate'),
 									on: {
-										click: function() {
+										click() {
 											if (form) {
 												submitForm(form);
 											}
@@ -76,7 +87,7 @@ AUI.add(
 										Liferay.Language.get('close') +
 										'</title></svg>',
 									on: {
-										click: function(event) {
+										click(event) {
 											if (form) {
 												form.reset();
 											}
@@ -89,7 +100,7 @@ AUI.add(
 						},
 						width: 500
 					},
-					title: title
+					title
 				});
 
 				instance._duplicationDialog = dialog;
@@ -113,7 +124,7 @@ AUI.add(
 								discardDefaultButtonCssClasses: true,
 								label: Liferay.Language.get('delete'),
 								on: {
-									click: function() {
+									click() {
 										window.location.assign(actionUrl);
 									}
 								}
@@ -123,7 +134,7 @@ AUI.add(
 								discardDefaultButtonCssClasses: true,
 								label: Liferay.Language.get('cancel'),
 								on: {
-									click: function() {
+									click() {
 										dialog.destroy();
 									}
 								}
@@ -140,7 +151,7 @@ AUI.add(
 									Liferay.Language.get('close') +
 									'</title></svg>',
 								on: {
-									click: function(event) {
+									click(event) {
 										dialog.destroy();
 
 										event.domEvent.stopPropagation();
@@ -151,7 +162,7 @@ AUI.add(
 					},
 					width: 600
 				},
-				title: title
+				title
 			});
 		};
 

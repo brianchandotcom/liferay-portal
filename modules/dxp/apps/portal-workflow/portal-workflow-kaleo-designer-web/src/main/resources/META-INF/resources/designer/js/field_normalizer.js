@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-field-normalizer',
 	function(A) {
@@ -72,7 +83,7 @@ AUI.add(
 		};
 
 		var FieldNormalizer = {
-			normalizeToActions: function(data) {
+			normalizeToActions(data) {
 				var actions = {};
 
 				data = data || {};
@@ -92,7 +103,7 @@ AUI.add(
 				return actions;
 			},
 
-			normalizeToAssignments: function(data) {
+			normalizeToAssignments(data) {
 				var assignments = {};
 
 				if (data && data.length) {
@@ -167,7 +178,7 @@ AUI.add(
 				return assignments;
 			},
 
-			normalizeToDelays: function(data) {
+			normalizeToDelays(data) {
 				var delays = {};
 
 				data = data || {};
@@ -183,7 +194,7 @@ AUI.add(
 				return delays;
 			},
 
-			normalizeToNotifications: function(data) {
+			normalizeToNotifications(data) {
 				var notifications = {};
 
 				data = data || {};
@@ -213,7 +224,7 @@ AUI.add(
 				return notifications;
 			},
 
-			normalizeToTaskTimers: function(data) {
+			normalizeToTaskTimers(data) {
 				var taskTimers = {};
 
 				data = data || {};

@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-xml-util',
 	function(A) {
@@ -33,7 +44,7 @@ AUI.add(
 			REGEX_TOKEN_3: /^<\/\w/,
 			REGEX_TOKEN_4: /^<\w[^>]*[^\/]>.*$/,
 
-			create: function(name, content, attrs) {
+			create(name, content, attrs) {
 				var instance = this;
 
 				var node = instance.createObj(name, attrs);
@@ -45,7 +56,7 @@ AUI.add(
 				);
 			},
 
-			createObj: function(name, attrs) {
+			createObj(name, attrs) {
 				var instance = this;
 
 				var attrBuffer = [STR_SPACE];
@@ -76,7 +87,7 @@ AUI.add(
 				};
 			},
 
-			format: function(xml) {
+			format(xml) {
 				var instance = this;
 
 				var formatted = STR_BLANK;
@@ -121,7 +132,7 @@ AUI.add(
 				return formatted;
 			},
 
-			validateDefinition: function(definition) {
+			validateDefinition(definition) {
 				var doc = A.DataType.XML.parse(definition);
 
 				var valid = true;

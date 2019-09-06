@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-definition-diagram-controller',
 	function(A) {
@@ -22,7 +33,7 @@ AUI.add(
 		};
 
 		DefinitionDiagramController.prototype = {
-			getConnectors: function() {
+			getConnectors() {
 				var instance = this;
 
 				var connectors = [];
@@ -53,7 +64,7 @@ AUI.add(
 				return connectors;
 			},
 
-			getFields: function() {
+			getFields() {
 				var instance = this;
 
 				var fields = [];
@@ -92,7 +103,7 @@ AUI.add(
 							description: item.description,
 							fields: [{}],
 							initial: item.initial,
-							metadata: metadata,
+							metadata,
 							name: item.name,
 							notifications: FieldNormalizer.normalizeToNotifications(
 								item.notifications
@@ -103,7 +114,7 @@ AUI.add(
 							taskTimers: FieldNormalizer.normalizeToTaskTimers(
 								item.taskTimers
 							),
-							type: type,
+							type,
 							xy: metadata.xy
 						});
 					});
@@ -112,7 +123,7 @@ AUI.add(
 				return fields;
 			},
 
-			serializeDefinition: function(json) {
+			serializeDefinition(json) {
 				var instance = this;
 
 				return serializeDefinition(
@@ -126,7 +137,7 @@ AUI.add(
 				);
 			},
 
-			_getRandomXY: function() {
+			_getRandomXY() {
 				var instance = this;
 
 				var region = instance.canvas.get('region');

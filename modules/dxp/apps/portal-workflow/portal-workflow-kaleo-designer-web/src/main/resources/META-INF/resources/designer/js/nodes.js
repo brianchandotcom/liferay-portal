@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-nodes',
 	function(A) {
@@ -49,7 +60,7 @@ AUI.add(
 					['default']
 				),
 
-				getPropertyModel: function() {
+				getPropertyModel() {
 					var instance = this;
 
 					var parentModel = A.Connector.superclass.getPropertyModel.apply(
@@ -122,13 +133,13 @@ AUI.add(
 					]
 				),
 
-				initializer: function() {
+				initializer() {
 					var instance = this;
 
 					instance.after('render', instance._afterNodeRender);
 				},
 
-				getConnectionNode: function() {
+				getConnectionNode() {
 					var instance = this;
 
 					var node = new Liferay.KaleoDesignerNodes.DiagramNodeTask({
@@ -138,7 +149,7 @@ AUI.add(
 					return node;
 				},
 
-				getPropertyModel: function() {
+				getPropertyModel() {
 					var instance = this;
 
 					var builder = instance.get('builder');
@@ -154,7 +165,7 @@ AUI.add(
 						{
 							attributeName: 'actions',
 							editor: new KaleoDesignerEditors.ActionsEditor({
-								builder: builder
+								builder
 							}),
 							formatter: PropertyListFormatter.names,
 							name: strings.actions
@@ -163,7 +174,7 @@ AUI.add(
 							attributeName: 'notifications',
 							editor: new KaleoDesignerEditors.NotificationsEditor(
 								{
-									builder: builder
+									builder
 								}
 							),
 							formatter: PropertyListFormatter.names,
@@ -172,7 +183,7 @@ AUI.add(
 						{
 							attributeName: 'taskTimers',
 							editor: new KaleoDesignerEditors.TaskTimersEditor({
-								builder: builder
+								builder
 							}),
 							formatter: PropertyListFormatter.names,
 							name: strings.timers
@@ -202,9 +213,9 @@ AUI.add(
 					return returnValue;
 				},
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				updateMetadata: function(key, value) {
+				updateMetadata(key, value) {
 					var instance = this;
 
 					var metadata = instance.get('metadata');
@@ -214,7 +225,7 @@ AUI.add(
 					instance.set('metadata', metadata);
 				},
 
-				_afterNodeRender: function() {
+				_afterNodeRender() {
 					var instance = this;
 
 					var icon = A.Node.create(
@@ -250,7 +261,7 @@ AUI.add(
 					}
 				},
 
-				_uiSetXY: function(val) {
+				_uiSetXY(val) {
 					var instance = this;
 
 					DiagramNodeState.superclass._uiSetXY.apply(this, arguments);
@@ -258,7 +269,7 @@ AUI.add(
 					instance.updateMetadata('xy', val);
 				},
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeState.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
@@ -312,7 +323,7 @@ AUI.add(
 			prototype: {
 				hotPoints: A.DiagramNode.DIAMOND_POINTS,
 
-				getPropertyModel: function() {
+				getPropertyModel() {
 					var instance = this;
 
 					var builder = instance.get('builder');
@@ -364,7 +375,7 @@ AUI.add(
 					return returnValue;
 				},
 
-				getScriptLanguageOptions: function() {
+				getScriptLanguageOptions() {
 					var instance = this;
 
 					var scriptLanguages = [];
@@ -384,7 +395,7 @@ AUI.add(
 					return scriptLanguageOptions;
 				},
 
-				getScriptLanguages: function(scriptLanguages) {
+				getScriptLanguages(scriptLanguages) {
 					KaleoDesignerRemoteServices.getScriptLanguages(function(
 						data
 					) {
@@ -396,9 +407,9 @@ AUI.add(
 					});
 				},
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
 
 					shape.width = 20;
@@ -443,9 +454,9 @@ AUI.add(
 			prototype: {
 				hotPoints: A.DiagramNode.DIAMOND_POINTS,
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
 					shape.width = 20;
@@ -480,9 +491,9 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
 					shape.width = 20;
@@ -527,7 +538,7 @@ AUI.add(
 			prototype: {
 				hotPoints: A.DiagramNode.DIAMOND_POINTS,
 
-				getConnectionNode: function() {
+				getConnectionNode() {
 					var instance = this;
 
 					var node = new DiagramNodeJoin({
@@ -537,9 +548,9 @@ AUI.add(
 					return node;
 				},
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeFork.prototype._valueShapeBoundary();
 
 					shape.width = 20;
@@ -578,7 +589,7 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				getConnectionNode: function() {
+				getConnectionNode() {
 					var instance = this;
 
 					var node = new DiagramNodeCondition({
@@ -588,9 +599,9 @@ AUI.add(
 					return node;
 				},
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeStart.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
@@ -625,9 +636,9 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_handleAddAnchorEvent: function(event) {
+				_handleAddAnchorEvent(event) {
 					var instance = this;
 
 					instance.addField({
@@ -635,7 +646,7 @@ AUI.add(
 					});
 				},
 
-				_handleAddNodeEvent: function(event) {
+				_handleAddNodeEvent(event) {
 					var instance = this;
 
 					var builder = instance.get('builder');
@@ -650,7 +661,7 @@ AUI.add(
 					}
 				},
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeEnd.prototype._valueShapeBoundary();
 
 					shape.radius = 17;
@@ -710,9 +721,9 @@ AUI.add(
 
 				hotPoints: A.DiagramNode.SQUARE_POINTS,
 
-				renderShapeBoundary: renderShapeBoundary,
+				renderShapeBoundary,
 
-				_valueShapeBoundary: function() {
+				_valueShapeBoundary() {
 					var shape = A.DiagramNodeTask.prototype._valueShapeBoundary();
 
 					shape.width = 34;
@@ -730,13 +741,13 @@ AUI.add(
 		Liferay.DiagramBuilderTypes = DiagramBuilderTypes;
 
 		Liferay.KaleoDesignerNodes = {
-			DiagramNodeCondition: DiagramNodeCondition,
-			DiagramNodeEnd: DiagramNodeEnd,
-			DiagramNodeFork: DiagramNodeFork,
-			DiagramNodeJoin: DiagramNodeJoin,
-			DiagramNodeStart: DiagramNodeStart,
-			DiagramNodeState: DiagramNodeState,
-			DiagramNodeTask: DiagramNodeTask
+			DiagramNodeCondition,
+			DiagramNodeEnd,
+			DiagramNodeFork,
+			DiagramNodeJoin,
+			DiagramNodeStart,
+			DiagramNodeState,
+			DiagramNodeTask
 		};
 	},
 	'',

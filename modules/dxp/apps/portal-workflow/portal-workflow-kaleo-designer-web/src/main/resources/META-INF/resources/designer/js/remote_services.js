@@ -1,12 +1,23 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-remote-services',
 	function(A) {
 		var KaleoDesignerRemoteServices = {
-			getRole: function(roleId, callback) {
+			getRole(roleId, callback) {
 				var instance = this;
 
 				instance._invokeResourceURL({
-					callback: callback,
+					callback,
 					queryParameters: {
 						roleIds: roleId
 					},
@@ -15,22 +26,22 @@ AUI.add(
 				});
 			},
 
-			getScriptLanguages: function(callback) {
+			getScriptLanguages(callback) {
 				var instance = this;
 
 				instance._invokeResourceURL({
-					callback: callback,
+					callback,
 					queryParameters: {},
 					resourceId: 'scriptLanguages',
 					sync: true
 				});
 			},
 
-			getUser: function(userId, callback) {
+			getUser(userId, callback) {
 				var instance = this;
 
 				instance._invokeResourceURL({
-					callback: callback,
+					callback,
 					queryParameters: {
 						userIds: userId
 					},
@@ -39,7 +50,7 @@ AUI.add(
 				});
 			},
 
-			_invokeResourceURL: function(params) {
+			_invokeResourceURL(params) {
 				var instance = this;
 
 				var url = Liferay.PortletURL.createResourceURL();
@@ -53,7 +64,7 @@ AUI.add(
 				A.io.request(url.toString(), {
 					dataType: 'JSON',
 					on: {
-						success: function() {
+						success() {
 							params.callback(this.get('responseData'));
 						}
 					},

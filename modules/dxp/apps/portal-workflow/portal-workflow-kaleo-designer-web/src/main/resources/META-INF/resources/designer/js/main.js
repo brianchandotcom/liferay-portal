@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-portlet-kaleo-designer',
 	function(A) {
@@ -41,14 +52,14 @@ AUI.add(
 
 				availableFields: {
 					validator: isObject,
-					valueFn: function() {
+					valueFn() {
 						return KaleoDesigner.AVAILABLE_FIELDS.DEFAULT;
 					}
 				},
 
 				availablePropertyModels: {
 					validator: isObject,
-					valueFn: function() {
+					valueFn() {
 						return KaleoDesigner.AVAILABLE_PROPERTY_MODELS.DEFAULT;
 					}
 				},
@@ -111,7 +122,7 @@ AUI.add(
 			UI_ATTRS: ['definition'],
 
 			prototype: {
-				initializer: function(config) {
+				initializer(config) {
 					var instance = this;
 
 					instance.definitionController = new DefinitionDiagramController(
@@ -142,7 +153,7 @@ AUI.add(
 					);
 				},
 
-				destructor: function() {
+				destructor() {
 					var instance = this;
 
 					var dataTable = instance.propertyList;
@@ -160,7 +171,7 @@ AUI.add(
 					}
 				},
 
-				connectDefinitionFields: function() {
+				connectDefinitionFields() {
 					var instance = this;
 
 					var connectors = instance.definitionController.getConnectors();
@@ -168,7 +179,7 @@ AUI.add(
 					instance.connectAll(connectors);
 				},
 
-				createField: function(val) {
+				createField(val) {
 					var instance = this;
 
 					var field = KaleoDesigner.superclass.createField.call(
@@ -185,7 +196,7 @@ AUI.add(
 					return field;
 				},
 
-				editNode: function(diagramNode) {
+				editNode(diagramNode) {
 					var instance = this;
 
 					if (diagramNode.getProperties()) {
@@ -200,7 +211,7 @@ AUI.add(
 					instance._fixTableWidth();
 				},
 
-				getContent: function() {
+				getContent() {
 					var instance = this;
 
 					var json = instance.toJSON();
@@ -210,7 +221,7 @@ AUI.add(
 					);
 				},
 
-				getEditorContent: function() {
+				getEditorContent() {
 					var instance = this;
 
 					var editor = instance.editor;
@@ -218,7 +229,7 @@ AUI.add(
 					return editor.get('value');
 				},
 
-				setEditorContent: function(content) {
+				setEditorContent(content) {
 					var instance = this;
 
 					var editor = instance.editor;
@@ -226,7 +237,7 @@ AUI.add(
 					editor.set('value', content);
 				},
 
-				showEditor: function() {
+				showEditor() {
 					var instance = this;
 
 					var editor = instance.editor;
@@ -252,7 +263,7 @@ AUI.add(
 					}
 				},
 
-				showSuccessMessage: function() {
+				showSuccessMessage() {
 					var instance = this;
 
 					var successMessage = Liferay.Language.get(
@@ -285,7 +296,7 @@ AUI.add(
 					instance._alert = alert;
 				},
 
-				_afterRenderKaleoDesigner: function() {
+				_afterRenderKaleoDesigner() {
 					var instance = this;
 
 					instance.connectDefinitionFields();
@@ -298,7 +309,7 @@ AUI.add(
 					);
 				},
 
-				_afterRenderSettings: function() {
+				_afterRenderSettings() {
 					var instance = this;
 
 					var dataTable = instance.propertyList;
@@ -352,13 +363,13 @@ AUI.add(
 					};
 				},
 
-				_afterRenderSettingsTableBody: function() {
+				_afterRenderSettingsTableBody() {
 					var instance = this;
 
 					instance._fixTableWidth();
 				},
 
-				_afterSelectionChangeKaleoDesigner: function(event) {
+				_afterSelectionChangeKaleoDesigner(event) {
 					var instance = this;
 					var tabContentNode = event.newVal.get('boundingBox');
 
@@ -371,19 +382,19 @@ AUI.add(
 					}
 				},
 
-				_fixTableWidth: function() {
+				_fixTableWidth() {
 					var instance = this;
 
 					instance.propertyList._tableNode.setStyle('width', '100%');
 				},
 
-				_onDestroyPortlet: function() {
+				_onDestroyPortlet() {
 					var instance = this;
 
 					instance.destroy(true);
 				},
 
-				_renderContentTabs: function() {
+				_renderContentTabs() {
 					var instance = this;
 
 					instance.closeEditProperties();
@@ -406,7 +417,7 @@ AUI.add(
 					}
 				},
 
-				_setAceEditor: function(val) {
+				_setAceEditor(val) {
 					var instance = this;
 
 					var portletNamespace = instance.get('portletNamespace');
@@ -426,7 +437,7 @@ AUI.add(
 					);
 				},
 
-				_setContentTabView: function(val) {
+				_setContentTabView(val) {
 					var instance = this;
 
 					var boundingBox = instance.get('boundingBox');
@@ -470,7 +481,7 @@ AUI.add(
 					return A.merge(defaultValue, val);
 				},
 
-				_setDefinition: function(val) {
+				_setDefinition(val) {
 					var instance = this;
 
 					instance.definitionController = new DefinitionDiagramController(
@@ -481,7 +492,7 @@ AUI.add(
 					return val;
 				},
 
-				_uiSetAvailableFields: function(val) {
+				_uiSetAvailableFields(val) {
 					var instance = this;
 
 					var disabled = instance.get('disabled');
@@ -503,7 +514,7 @@ AUI.add(
 					}
 				},
 
-				_uiSetDefinition: function(val) {
+				_uiSetDefinition(val) {
 					var instance = this;
 
 					instance.clearFields();
@@ -569,7 +580,7 @@ AUI.add(
 			DEFAULT: {},
 
 			KALEO_FORMS_EDIT: {
-				task: function(model, parentModel) {
+				task(model, parentModel) {
 					var instance = this;
 
 					var strings = instance.getStrings();

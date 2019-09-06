@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI().use('escape', 'aui-lang', function(A) {
 	var AEscape = A.Escape;
 	var ALang = A.Lang;
@@ -16,124 +27,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 		'</div>';
 
 	Liferay.Report = {
-		initialize: function(param) {
-			var instance = this;
-
-			var namespace = param.namespace;
-
-			instance._portletMessageContainer = A.one('.report-message');
-
-			instance._displayParameters(param.parameters);
-
-			instance._disableAddParameterButton(namespace);
-
-			A.one('.parameters-key').on('valueChange', function() {
-				instance._toggleAddParameterButton(namespace);
-			});
-
-			A.one('.parameters-value').on('valueChange', function() {
-				instance._toggleAddParameterButton(namespace);
-			});
-
-			A.one('.add-parameter .btn').on('click', function() {
-				instance._addParameter(namespace);
-			});
-
-			instance._createRemoveParameterEvent();
-
-			A.one('.remove-existing-report').on('click', function() {
-				A.one('.existing-report').setStyle('display', 'none');
-				A.one('.template-report').setStyle('display', 'block');
-				A.one('.cancel-update-template-report').setStyle(
-					'display',
-					'block'
-				);
-			});
-
-			A.one('.cancel-update-template-report').on('click', function() {
-				A.one('.existing-report').setStyle('display', 'block');
-				A.one('.template-report').setStyle('display', 'none');
-				A.one('.cancel-update-template-report').setStyle(
-					'display',
-					'none'
-				);
-			});
-
-			A.one('.parameters-input-type').on('change', function(event) {
-				var currentTarget = event.currentTarget;
-
-				var parametersInputDate = A.one('.parameters-input-date');
-				var parametersValue = A.one('.parameters-value');
-				var parametersValueFieldSet = A.one(
-					'.parameters-value-field-set'
-				);
-
-				if (currentTarget.val() == 'text') {
-					parametersValue.val('');
-					parametersValue.attr('disabled', '');
-					parametersInputDate.setStyle('display', 'none');
-					parametersValueFieldSet.setStyle('display', 'block');
-				}
-
-				if (currentTarget.val() == 'date') {
-					parametersValueFieldSet.setStyle('display', 'none');
-					parametersInputDate.setStyle('display', 'block');
-				}
-
-				if (currentTarget.val() == 'startDateDay') {
-					parametersInputDate.setStyle('display', 'none');
-					parametersValueFieldSet.setStyle('display', 'block');
-					parametersValue.attr('disabled', 'disabled');
-					parametersValue.val('${startDateDay}');
-				}
-
-				if (currentTarget.val() == 'endDateDay') {
-					parametersInputDate.setStyle('display', 'none');
-					parametersValueFieldSet.setStyle('display', 'block');
-					parametersValue.attr('disabled', 'disabled');
-					parametersValue.val('${endDateDay}');
-				}
-			});
-		},
-
-		deleteParameter: function(parameterKey, parameterValue, parameterType) {
-			var instance = this;
-
-			instance._portletMessageContainer.setStyle('display', 'none');
-
-			if (
-				confirm(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-delete-this-entry'
-					)
-				)
-			) {
-				var parametersInput = A.one('.report-parameters');
-
-				var reportParameters = JSON.parse(parametersInput.val());
-
-				for (var i in reportParameters) {
-					var reportParameter = reportParameters[i];
-
-					if (reportParameter.key == parameterKey) {
-						reportParameters.splice(i, 1);
-
-						break;
-					}
-				}
-
-				parametersInput.val(JSON.stringify(reportParameters));
-
-				var key = ('.report-tag-' + parameterKey).replace(
-					/ /g,
-					'BLANK'
-				);
-
-				A.one(key).remove(true);
-			}
-		},
-
-		_addParameter: function(namespace) {
+		_addParameter(namespace) {
 			var instance = this;
 
 			instance._portletMessageContainer.setStyle('display', 'none');
@@ -244,11 +138,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 			instance._disableAddParameterButton(namespace);
 		},
 
-		_addReportParameter: function(
-			parameterKey,
-			parameterValue,
-			parameterType
-		) {
+		_addReportParameter(parameterKey, parameterValue, parameterType) {
 			var reportParameters = [];
 
 			var parametersInput = A.one('.report-parameters');
@@ -268,7 +158,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 			parametersInput.val(JSON.stringify(reportParameters));
 		},
 
-		_addTag: function(parameterKey, parameterValue, parameterType) {
+		_addTag(parameterKey, parameterValue, parameterType) {
 			var tagsContainer = A.one('.report-tags');
 
 			parameterKey = AEscape.html(parameterKey);
@@ -280,16 +170,16 @@ AUI().use('escape', 'aui-lang', function(A) {
 			);
 
 			var html = A.Lang.sub(TPL_TAG_FORM, {
-				key: key,
-				parameterKey: parameterKey,
-				parameterType: parameterType,
-				parameterValue: parameterValue
+				key,
+				parameterKey,
+				parameterType,
+				parameterValue
 			});
 
 			tagsContainer.append(html);
 		},
 
-		_createRemoveParameterEvent: function() {
+		_createRemoveParameterEvent() {
 			var instance = this;
 
 			var reportTags = A.one('.report-tags');
@@ -315,11 +205,11 @@ AUI().use('escape', 'aui-lang', function(A) {
 			);
 		},
 
-		_disableAddParameterButton: function() {
+		_disableAddParameterButton() {
 			A.one('.add-parameter .btn').attr('disabled', true);
 		},
 
-		_displayParameters: function(parameters) {
+		_displayParameters(parameters) {
 			var instance = this;
 
 			instance._portletMessageContainer.setStyle('display', 'none');
@@ -345,11 +235,11 @@ AUI().use('escape', 'aui-lang', function(A) {
 			}
 		},
 
-		_enableAddParameterButton: function() {
+		_enableAddParameterButton() {
 			A.one('.add-parameter .btn').attr('disabled', false);
 		},
 
-		_sendMessage: function(message) {
+		_sendMessage(message) {
 			var instance = this;
 
 			message = ALang.String.unescapeHTML(message);
@@ -361,7 +251,7 @@ AUI().use('escape', 'aui-lang', function(A) {
 			portletMessageContainer.setStyle('display', 'block');
 		},
 
-		_toggleAddParameterButton: function(namespace) {
+		_toggleAddParameterButton() {
 			var instance = this;
 
 			var parameterKey = A.one('.parameters-key').val();
@@ -372,6 +262,123 @@ AUI().use('escape', 'aui-lang', function(A) {
 			} else {
 				instance._disableAddParameterButton();
 			}
+		},
+
+		deleteParameter(parameterKey) {
+			var instance = this;
+
+			instance._portletMessageContainer.setStyle('display', 'none');
+
+			if (
+				confirm(
+					Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this-entry'
+					)
+				)
+			) {
+				var parametersInput = A.one('.report-parameters');
+
+				var reportParameters = JSON.parse(parametersInput.val());
+
+				for (var i in reportParameters) {
+					var reportParameter = reportParameters[i];
+
+					if (reportParameter.key == parameterKey) {
+						reportParameters.splice(i, 1);
+
+						break;
+					}
+				}
+
+				parametersInput.val(JSON.stringify(reportParameters));
+
+				var key = ('.report-tag-' + parameterKey).replace(
+					/ /g,
+					'BLANK'
+				);
+
+				A.one(key).remove(true);
+			}
+		},
+
+		initialize(param) {
+			var instance = this;
+
+			var namespace = param.namespace;
+
+			instance._portletMessageContainer = A.one('.report-message');
+
+			instance._displayParameters(param.parameters);
+
+			instance._disableAddParameterButton(namespace);
+
+			A.one('.parameters-key').on('valueChange', function() {
+				instance._toggleAddParameterButton(namespace);
+			});
+
+			A.one('.parameters-value').on('valueChange', function() {
+				instance._toggleAddParameterButton(namespace);
+			});
+
+			A.one('.add-parameter .btn').on('click', function() {
+				instance._addParameter(namespace);
+			});
+
+			instance._createRemoveParameterEvent();
+
+			A.one('.remove-existing-report').on('click', function() {
+				A.one('.existing-report').setStyle('display', 'none');
+				A.one('.template-report').setStyle('display', 'block');
+				A.one('.cancel-update-template-report').setStyle(
+					'display',
+					'block'
+				);
+			});
+
+			A.one('.cancel-update-template-report').on('click', function() {
+				A.one('.existing-report').setStyle('display', 'block');
+				A.one('.template-report').setStyle('display', 'none');
+				A.one('.cancel-update-template-report').setStyle(
+					'display',
+					'none'
+				);
+			});
+
+			A.one('.parameters-input-type').on('change', function(event) {
+				var currentTarget = event.currentTarget;
+
+				var parametersInputDate = A.one('.parameters-input-date');
+				var parametersValue = A.one('.parameters-value');
+				var parametersValueFieldSet = A.one(
+					'.parameters-value-field-set'
+				);
+
+				if (currentTarget.val() == 'text') {
+					parametersValue.val('');
+					parametersValue.attr('disabled', '');
+					parametersInputDate.setStyle('display', 'none');
+					parametersValueFieldSet.setStyle('display', 'block');
+				}
+
+				if (currentTarget.val() == 'date') {
+					parametersValueFieldSet.setStyle('display', 'none');
+					parametersInputDate.setStyle('display', 'block');
+				}
+
+				if (currentTarget.val() == 'startDateDay') {
+					parametersInputDate.setStyle('display', 'none');
+					parametersValueFieldSet.setStyle('display', 'block');
+					parametersValue.attr('disabled', 'disabled');
+					parametersValue.val('${startDateDay}');
+				}
+
+				if (currentTarget.val() == 'endDateDay') {
+					parametersInputDate.setStyle('display', 'none');
+					parametersValueFieldSet.setStyle('display', 'block');
+					parametersValue.attr('disabled', 'disabled');
+					parametersValue.val('${endDateDay}');
+				}
+			});
 		}
 	};
 });

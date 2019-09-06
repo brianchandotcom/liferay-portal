@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 AUI.add(
 	'liferay-kaleo-designer-editors',
 	function(A) {
@@ -68,7 +79,7 @@ AUI.add(
 			NAME: 'base-abstract-multi-section-editor',
 
 			prototype: {
-				initializer: function(config) {
+				initializer(config) {
 					var instance = this;
 
 					instance.set('editorForm', instance._getEditorForm(config));
@@ -94,7 +105,7 @@ AUI.add(
 					);
 				},
 
-				destructor: function() {
+				destructor() {
 					var instance = this;
 
 					var editorForm = instance.get('editorForm');
@@ -104,7 +115,7 @@ AUI.add(
 					}
 				},
 
-				customizeToolbar: function() {
+				customizeToolbar() {
 					var instance = this;
 
 					var editorForm = instance.get('editorForm');
@@ -118,7 +129,7 @@ AUI.add(
 					}
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					var editorForm = instance.get('editorForm');
@@ -126,7 +137,7 @@ AUI.add(
 					return editorForm.getValue();
 				},
 
-				_afterEditorVisibleChange: function(event) {
+				_afterEditorVisibleChange(event) {
 					var instance = this;
 
 					if (event.newVal) {
@@ -136,7 +147,7 @@ AUI.add(
 					}
 				},
 
-				_afterRender: function() {
+				_afterRender() {
 					var instance = this;
 
 					BaseAbstractEditor.superclass._afterRender.apply(
@@ -155,7 +166,7 @@ AUI.add(
 					editorForm.syncViewsUI();
 				},
 
-				_getEditorForm: function(config) {
+				_getEditorForm(config) {
 					var instance = this;
 
 					var editorFormClass = instance.get('editorFormClass');
@@ -169,7 +180,7 @@ AUI.add(
 					return editorForm;
 				},
 
-				_onClickViewMenu: function(event) {
+				_onClickViewMenu(event) {
 					var anchor = event.currentTarget;
 
 					if (anchor.hasClass('celleditor-view-menu-remove')) {
@@ -179,13 +190,13 @@ AUI.add(
 					event.halt();
 				},
 
-				_onDestroyPortlet: function() {
+				_onDestroyPortlet() {
 					var instance = this;
 
 					instance.destroy(true);
 				},
 
-				_onValueChange: function(event) {
+				_onValueChange(event) {
 					var instance = this;
 
 					var editorForm = instance.get('editorForm');
@@ -193,7 +204,7 @@ AUI.add(
 					editorForm.set('value', event.newVal);
 				},
 
-				_setViewTemplate: function(val) {
+				_setViewTemplate(val) {
 					var instance = this;
 
 					if (!A.instanceOf(val, A.Template)) {
@@ -203,7 +214,7 @@ AUI.add(
 					return val;
 				},
 
-				_syncElementsFocus: function() {
+				_syncElementsFocus() {
 					var instance = this;
 
 					var editorForm = instance.get('editorForm');
@@ -220,7 +231,7 @@ AUI.add(
 				},
 
 				bodyNode: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						if (!instance.bodyNode) {
@@ -272,13 +283,13 @@ AUI.add(
 			UI_ATTRS: ['value'],
 
 			prototype: {
-				initializer: function() {
+				initializer() {
 					var instance = this;
 
 					instance.after('render', instance._afterRender);
 				},
 
-				destructor: function() {
+				destructor() {
 					var instance = this;
 
 					instance.bodyNode.remove(true);
@@ -288,7 +299,7 @@ AUI.add(
 
 				addStaticViews: emptyFn,
 
-				appendToDynamicView: function(view) {
+				appendToDynamicView(view) {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -315,7 +326,7 @@ AUI.add(
 					}
 				},
 
-				appendToStaticView: function(view) {
+				appendToStaticView(view) {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -331,7 +342,7 @@ AUI.add(
 					staticView.append(view);
 				},
 
-				convertScriptLanguagesToJSONArray: function(scriptLanguages) {
+				convertScriptLanguagesToJSONArray(scriptLanguages) {
 					var instance = this;
 
 					var scriptLanguagesJSONArray = [];
@@ -350,7 +361,7 @@ AUI.add(
 					return scriptLanguagesJSONArray;
 				},
 
-				getDynamicViews: function() {
+				getDynamicViews() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -362,7 +373,7 @@ AUI.add(
 					return dynamicView.get('childNodes');
 				},
 
-				getScriptLanguages: function(scriptLanguages) {
+				getScriptLanguages(scriptLanguages) {
 					KaleoDesignerRemoteServices.getScriptLanguages(function(
 						data
 					) {
@@ -374,13 +385,13 @@ AUI.add(
 					});
 				},
 
-				getStrings: function() {
+				getStrings() {
 					var instance = this;
 
 					return instance.get('strings');
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					return serializeForm(instance.get('bodyNode'));
@@ -388,7 +399,7 @@ AUI.add(
 
 				handleAddViewSection: emptyFn,
 
-				removeAllViews: function(viewId) {
+				removeAllViews(viewId) {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -402,7 +413,7 @@ AUI.add(
 
 				syncElementsFocus: emptyFn,
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -412,13 +423,13 @@ AUI.add(
 					}
 				},
 
-				syncViewsUI: function() {
+				syncViewsUI() {
 					var instance = this;
 
 					instance._uiSetValue(instance.get('value'));
 				},
 
-				_addRemoveDynamicViewButton: function(dynamicViewNode) {
+				_addRemoveDynamicViewButton(dynamicViewNode) {
 					var instance = this;
 
 					dynamicViewNode.append(
@@ -426,7 +437,7 @@ AUI.add(
 					);
 				},
 
-				_afterRender: function() {
+				_afterRender() {
 					var instance = this;
 
 					instance.addStaticViews();
@@ -436,7 +447,7 @@ AUI.add(
 					instance.syncViewsUI();
 				},
 
-				_onClickAddSectionButton: function(event) {
+				_onClickAddSectionButton(event) {
 					var instance = this;
 
 					instance.handleAddViewSection(event);
@@ -446,7 +457,7 @@ AUI.add(
 					instance._addRemoveDynamicViewButton(viewNodes.last());
 				},
 
-				_setViewTemplate: function(val) {
+				_setViewTemplate(val) {
 					var instance = this;
 
 					if (!A.instanceOf(val, A.Template)) {
@@ -456,7 +467,7 @@ AUI.add(
 					return val;
 				},
 
-				_uiSetValue: function(val) {
+				_uiSetValue(val) {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -502,7 +513,7 @@ AUI.add(
 					});
 				},
 
-				_valueAddSectionButton: function() {
+				_valueAddSectionButton() {
 					var instance = this;
 
 					if (instance.get('dynamicViewSingleton')) {
@@ -537,11 +548,7 @@ AUI.add(
 		var CompositeEditorFormBase = function() {};
 
 		CompositeEditorFormBase.prototype = {
-			getEmbeddedEditorForm: function(
-				editorFormClass,
-				container,
-				config
-			) {
+			getEmbeddedEditorForm(editorFormClass, container, config) {
 				var instance = this;
 
 				var editorFormName = editorFormClass.NAME;
@@ -568,18 +575,13 @@ AUI.add(
 				return editorForm;
 			},
 
-			showEditorForm: function(
-				editorFormClass,
-				container,
-				value,
-				config
-			) {
+			showEditorForm(editorFormClass, container, value, config) {
 				var instance = this;
 
 				config = A.merge(
 					{
 						render: container,
-						value: value
+						value
 					},
 					config
 				);
@@ -605,7 +607,7 @@ AUI.add(
 				},
 
 				roleTypes: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var strings = instance.getStrings();
@@ -628,7 +630,7 @@ AUI.add(
 				},
 
 				scriptLanguages: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var scriptLanguages = [];
@@ -644,7 +646,7 @@ AUI.add(
 				},
 
 				strings: {
-					valueFn: function() {
+					valueFn() {
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.assignmentType,
@@ -670,7 +672,7 @@ AUI.add(
 			NAME: 'assignments-editor-form',
 
 			prototype: {
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					Liferay.KaleoDesignerAutoCompleteUtil.destroyAll();
@@ -688,7 +690,7 @@ AUI.add(
 					}
 				},
 
-				addStaticViews: function() {
+				addStaticViews() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -800,7 +802,7 @@ AUI.add(
 					instance.appendToStaticView(buffer.join(STR_BLANK));
 				},
 
-				addViewRoleType: function(num) {
+				addViewRoleType(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -865,7 +867,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				addViewUser: function(num) {
+				addViewUser(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -941,7 +943,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				getViewNodes: function() {
+				getViewNodes() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -951,7 +953,7 @@ AUI.add(
 					);
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -969,7 +971,7 @@ AUI.add(
 					}
 				},
 
-				showView: function(viewId) {
+				showView(viewId) {
 					var instance = this;
 
 					instance.viewId = viewId;
@@ -985,7 +987,7 @@ AUI.add(
 					instance.syncToolbarUI();
 				},
 
-				syncElementsFocus: function() {
+				syncElementsFocus() {
 					var instance = this;
 
 					var typeSelect = instance.get('typeSelect');
@@ -993,7 +995,7 @@ AUI.add(
 					typeSelect.focus();
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var viewId = instance.viewId;
@@ -1007,7 +1009,7 @@ AUI.add(
 					}
 				},
 
-				syncViewsUI: function() {
+				syncViewsUI() {
 					var instance = this;
 
 					AssignmentsEditorForm.superclass.syncViewsUI.apply(
@@ -1020,7 +1022,7 @@ AUI.add(
 					instance.showView(typeSelect.val());
 				},
 
-				_countRoleTypeViews: function(val) {
+				_countRoleTypeViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -1034,7 +1036,7 @@ AUI.add(
 					return count;
 				},
 
-				_countUserViews: function(val) {
+				_countUserViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -1054,13 +1056,13 @@ AUI.add(
 					return count;
 				},
 
-				_onTypeValueChange: function(event) {
+				_onTypeValueChange(event) {
 					var instance = this;
 
 					instance.showView(event.currentTarget.val());
 				},
 
-				_valueAssignmentsType: function() {
+				_valueAssignmentsType() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -1121,7 +1123,7 @@ AUI.add(
 			NAME: 'form-editor-form',
 
 			prototype: {
-				addStaticViews: function() {
+				addStaticViews() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -1183,7 +1185,7 @@ AUI.add(
 		var ExecutionTypesEditorFormBase = function() {};
 
 		ExecutionTypesEditorFormBase.prototype = {
-			_executionTypesSetter: function(val) {
+			_executionTypesSetter(val) {
 				var instance = this;
 
 				var strings = instance.getStrings();
@@ -1227,7 +1229,7 @@ AUI.add(
 				},
 
 				strings: {
-					valueFn: function() {
+					valueFn() {
 						return A.merge(KaleoDesignerStrings, {
 							assignmentTypeLabel:
 								KaleoDesignerStrings.recipientType,
@@ -1243,7 +1245,7 @@ AUI.add(
 			NAME: 'notification-recipients-editor-form',
 
 			prototype: {
-				addStaticViews: function() {
+				addStaticViews() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -1348,7 +1350,7 @@ AUI.add(
 					instance.appendToStaticView(buffer.join(STR_BLANK));
 				},
 
-				_valueAssignmentsType: function() {
+				_valueAssignmentsType() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -1436,7 +1438,7 @@ AUI.add(
 		var NotificationsEditorFormConfig = {
 			ATTRS: {
 				notificationTypes: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var strings = instance.getStrings();
@@ -1468,7 +1470,7 @@ AUI.add(
 				},
 
 				templateLanguages: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var strings = instance.getStrings();
@@ -1507,7 +1509,7 @@ AUI.add(
 			NAME: 'notifications-editor-form',
 
 			prototype: {
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					instance.removeAllViews('notification');
@@ -1517,7 +1519,7 @@ AUI.add(
 					);
 				},
 
-				addNotificationView: function(num) {
+				addNotificationView(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -1605,7 +1607,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					var localRecipients = instance.get('recipients');
@@ -1641,12 +1643,12 @@ AUI.add(
 							arguments
 						),
 						{
-							recipients: recipients
+							recipients
 						}
 					);
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -1658,7 +1660,7 @@ AUI.add(
 					instance._appendRecipientsEditorToLastSection();
 				},
 
-				syncElementsFocus: function() {
+				syncElementsFocus() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -1666,7 +1668,7 @@ AUI.add(
 					bodyNode.one(':input').focus();
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -1676,7 +1678,7 @@ AUI.add(
 					}
 				},
 
-				syncViewsUI: function() {
+				syncViewsUI() {
 					var instance = this;
 
 					NotificationsEditorForm.superclass.syncViewsUI.apply(
@@ -1687,7 +1689,7 @@ AUI.add(
 					instance._renderRecipientsEditor();
 				},
 
-				_appendRecipientsEditorToLastSection: function() {
+				_appendRecipientsEditorToLastSection() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -1703,7 +1705,7 @@ AUI.add(
 					instance._showRecipientsEditor(lastDynamicView);
 				},
 
-				_countNotificationViews: function(val) {
+				_countNotificationViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -1717,13 +1719,13 @@ AUI.add(
 					return count;
 				},
 
-				_getRecipients: function(val) {
+				_getRecipients(val) {
 					var instance = this;
 
 					return instance.get('value.recipients') || val;
 				},
 
-				_renderRecipientsEditor: function() {
+				_renderRecipientsEditor() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -1737,7 +1739,7 @@ AUI.add(
 					);
 				},
 
-				_showRecipientsEditor: function(bodyContentNode, index) {
+				_showRecipientsEditor(bodyContentNode, index) {
 					var instance = this;
 
 					var executionTypeSelect = bodyContentNode.one(
@@ -1757,7 +1759,7 @@ AUI.add(
 						editorContainer,
 						value,
 						{
-							executionTypeSelect: executionTypeSelect
+							executionTypeSelect
 						}
 					);
 				}
@@ -1896,7 +1898,7 @@ AUI.add(
 					arguments
 				),
 				{
-					recipients: recipients
+					recipients
 				}
 			);
 		};
@@ -1924,7 +1926,7 @@ AUI.add(
 				editorContainer,
 				value,
 				{
-					executionTypeSelect: executionTypeSelect
+					executionTypeSelect
 				}
 			);
 		};
@@ -1936,7 +1938,7 @@ AUI.add(
 		var ActionsEditorFormConfig = {
 			ATTRS: {
 				scriptLanguages: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var scriptLanguages = [];
@@ -1967,7 +1969,7 @@ AUI.add(
 			NAME: 'actions-editor-form',
 
 			prototype: {
-				addActionView: function(num) {
+				addActionView(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -2054,7 +2056,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					instance.removeAllViews('action');
@@ -2062,7 +2064,7 @@ AUI.add(
 					instance.addActionView(instance._countActionViews(val));
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -2072,7 +2074,7 @@ AUI.add(
 					}
 				},
 
-				syncElementsFocus: function() {
+				syncElementsFocus() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2080,7 +2082,7 @@ AUI.add(
 					bodyNode.one(':input').focus();
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -2090,7 +2092,7 @@ AUI.add(
 					}
 				},
 
-				_countActionViews: function(val) {
+				_countActionViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -2209,7 +2211,7 @@ AUI.add(
 		var TaskTimerActionsEditorForm = A.Component.create({
 			ATTRS: {
 				actionTypes: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var strings = instance.getStrings();
@@ -2260,7 +2262,7 @@ AUI.add(
 			NAME: 'task-timer-actions-editor-form',
 
 			prototype: {
-				initializer: function() {
+				initializer() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2272,7 +2274,7 @@ AUI.add(
 					);
 				},
 
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					instance.removeAllViews('timerAction');
@@ -2282,7 +2284,7 @@ AUI.add(
 					);
 				},
 
-				addTimerActionView: function(num) {
+				addTimerActionView(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -2319,7 +2321,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					var value = {
@@ -2355,7 +2357,7 @@ AUI.add(
 					return value;
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -2369,7 +2371,7 @@ AUI.add(
 					instance._displayEditors();
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -2379,7 +2381,7 @@ AUI.add(
 					}
 				},
 
-				syncViewsUI: function() {
+				syncViewsUI() {
 					var instance = this;
 
 					TaskTimerActionsEditorForm.superclass.syncViewsUI.apply(
@@ -2392,7 +2394,7 @@ AUI.add(
 					instance._displayEditors();
 				},
 
-				_appendEditorToLastSection: function() {
+				_appendEditorToLastSection() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2408,7 +2410,7 @@ AUI.add(
 					instance._showEditor(lastDynamicView);
 				},
 
-				_countTimerActionViews: function(val) {
+				_countTimerActionViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -2422,7 +2424,7 @@ AUI.add(
 					return count;
 				},
 
-				_displayEditor: function(dynamicViewNode) {
+				_displayEditor(dynamicViewNode) {
 					var instance = this;
 
 					var actionTypeSelect = dynamicViewNode.one(
@@ -2438,7 +2440,7 @@ AUI.add(
 						.show();
 				},
 
-				_displayEditors: function() {
+				_displayEditors() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2452,7 +2454,7 @@ AUI.add(
 					);
 				},
 
-				_onActionTypeValueChange: function(event) {
+				_onActionTypeValueChange(event) {
 					var instance = this;
 
 					var actionTypeSelect = event.currentTarget;
@@ -2466,7 +2468,7 @@ AUI.add(
 					instance._displayEditor(dynamicViewNode);
 				},
 
-				_renderEditor: function() {
+				_renderEditor() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2478,7 +2480,7 @@ AUI.add(
 					dynamicViews.each(A.bind(instance._showEditor, instance));
 				},
 
-				_showEditor: function(bodyContentNode, index) {
+				_showEditor(bodyContentNode, index) {
 					var instance = this;
 
 					var actionType;
@@ -2518,7 +2520,7 @@ AUI.add(
 		var TaskTimerDelaysEditorForm = A.Component.create({
 			ATTRS: {
 				scales: {
-					valueFn: function() {
+					valueFn() {
 						var instance = this;
 
 						var strings = instance.getStrings();
@@ -2576,7 +2578,7 @@ AUI.add(
 			NAME: 'task-timer-delays-editor-form',
 
 			prototype: {
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					instance.removeAllViews('recurrence');
@@ -2586,7 +2588,7 @@ AUI.add(
 					);
 				},
 
-				addRecurrenceView: function(num) {
+				addRecurrenceView(num) {
 					var instance = this;
 
 					num = num || 0;
@@ -2609,7 +2611,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				addStaticViews: function(val) {
+				addStaticViews(val) {
 					var instance = this;
 
 					var delayContent = instance.getDelayContent();
@@ -2617,7 +2619,7 @@ AUI.add(
 					instance.appendToStaticView(delayContent);
 				},
 
-				getDelayContent: function() {
+				getDelayContent() {
 					var instance = this;
 
 					var strings = instance.getStrings();
@@ -2645,7 +2647,7 @@ AUI.add(
 					].join(STR_BLANK);
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -2655,7 +2657,7 @@ AUI.add(
 					}
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -2665,7 +2667,7 @@ AUI.add(
 					}
 				},
 
-				_countRecurrenceViews: function(val) {
+				_countRecurrenceViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -2709,7 +2711,7 @@ AUI.add(
 			NAME: 'task-timers-editor-form',
 
 			prototype: {
-				addDynamicViews: function(val) {
+				addDynamicViews(val) {
 					var instance = this;
 
 					instance.removeAllViews('timer');
@@ -2717,7 +2719,7 @@ AUI.add(
 					instance.addTaskTimerView(instance._countTimerViews(val));
 				},
 
-				addTaskTimerView: function(num) {
+				addTaskTimerView(num) {
 					var instance = this;
 
 					num = num || 1;
@@ -2780,7 +2782,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					var value = {
@@ -2868,7 +2870,7 @@ AUI.add(
 					return value;
 				},
 
-				handleAddViewSection: function(event) {
+				handleAddViewSection(event) {
 					var instance = this;
 
 					var button = event.target;
@@ -2882,7 +2884,7 @@ AUI.add(
 					instance._appendTimerActionsEditorToLastSection();
 				},
 
-				syncElementsFocus: function() {
+				syncElementsFocus() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2890,7 +2892,7 @@ AUI.add(
 					bodyNode.one(':input').focus();
 				},
 
-				syncToolbarUI: function() {
+				syncToolbarUI() {
 					var instance = this;
 
 					var addSectionButton = instance.get('addSectionButton');
@@ -2900,7 +2902,7 @@ AUI.add(
 					}
 				},
 
-				syncViewsUI: function() {
+				syncViewsUI() {
 					var instance = this;
 
 					TaskTimersEditorForm.superclass.syncViewsUI.apply(
@@ -2913,7 +2915,7 @@ AUI.add(
 					instance._renderTimerActionsEditor();
 				},
 
-				_appendDelaysEditorToLastSection: function() {
+				_appendDelaysEditorToLastSection() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2929,7 +2931,7 @@ AUI.add(
 					instance._showDelaysEditor(lastDynamicView);
 				},
 
-				_appendTimerActionsEditorToLastSection: function() {
+				_appendTimerActionsEditorToLastSection() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -2945,7 +2947,7 @@ AUI.add(
 					instance._showTimerActionsEditor(lastDynamicView);
 				},
 
-				_countTimerViews: function(val) {
+				_countTimerViews(val) {
 					var instance = this;
 
 					var count = 0;
@@ -2957,13 +2959,13 @@ AUI.add(
 					return count;
 				},
 
-				_getDelays: function(val) {
+				_getDelays(val) {
 					var instance = this;
 
 					return instance.get('value.delay') || val;
 				},
 
-				_getTimerActions: function(val) {
+				_getTimerActions(val) {
 					var instance = this;
 
 					var actions = instance.get('value.timerActions') || [];
@@ -3038,15 +3040,15 @@ AUI.add(
 						}
 
 						timerActions.push({
-							actionType: actionType,
-							timerAction: timerAction
+							actionType,
+							timerAction
 						});
 					}
 
 					return timerActions;
 				},
 
-				_put: function(obj, key, value) {
+				_put(obj, key, value) {
 					var instance = this;
 
 					obj[key] = obj[key] || [];
@@ -3054,7 +3056,7 @@ AUI.add(
 					obj[key].push(value);
 				},
 
-				_renderDelaysEditor: function() {
+				_renderDelaysEditor() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -3068,7 +3070,7 @@ AUI.add(
 					);
 				},
 
-				_renderTimerActionsEditor: function() {
+				_renderTimerActionsEditor() {
 					var instance = this;
 
 					var bodyNode = instance.get('bodyNode');
@@ -3082,7 +3084,7 @@ AUI.add(
 					);
 				},
 
-				_repeat: function(value, times) {
+				_repeat(value, times) {
 					var instance = this;
 
 					var array = [];
@@ -3094,7 +3096,7 @@ AUI.add(
 					return array;
 				},
 
-				_showDelaysEditor: function(bodyContentNode, index) {
+				_showDelaysEditor(bodyContentNode, index) {
 					var instance = this;
 
 					var editorContainer = bodyContentNode.one(
@@ -3112,7 +3114,7 @@ AUI.add(
 					);
 				},
 
-				_showTimerActionsEditor: function(bodyContentNode, index) {
+				_showTimerActionsEditor(bodyContentNode, index) {
 					var instance = this;
 
 					var editorContainer = bodyContentNode.one(
@@ -3130,7 +3132,7 @@ AUI.add(
 					);
 				},
 
-				_splitTimerActions: function(timerActions) {
+				_splitTimerActions(timerActions) {
 					var instance = this;
 
 					var splitTimerActions = [];
@@ -3177,7 +3179,7 @@ AUI.add(
 		var ScriptEditor = A.Component.create({
 			ATTRS: {
 				inputFormatter: {
-					value: function(val) {
+					value(val) {
 						return val;
 					}
 				}
@@ -3188,7 +3190,7 @@ AUI.add(
 			NAME: 'script-cell-editor',
 
 			prototype: {
-				initializer: function() {
+				initializer() {
 					var instance = this;
 
 					instance.editor = new A.AceEditor({
@@ -3197,13 +3199,13 @@ AUI.add(
 					});
 				},
 
-				getValue: function() {
+				getValue() {
 					var instance = this;
 
 					return instance.editor.get('value');
 				},
 
-				_afterRender: function() {
+				_afterRender() {
 					var instance = this;
 
 					var editor = instance.editor;
@@ -3223,7 +3225,7 @@ AUI.add(
 
 				_syncElementsFocus: emptyFn,
 
-				_uiSetValue: function(val) {
+				_uiSetValue(val) {
 					var instance = this;
 
 					var editor = instance.editor;
@@ -3236,15 +3238,15 @@ AUI.add(
 		});
 
 		Liferay.KaleoDesignerEditors = {
-			ActionsEditor: ActionsEditor,
-			AssignmentsEditor: AssignmentsEditor,
-			BaseAbstractEditor: BaseAbstractEditor,
-			CompositeEditorFormBase: CompositeEditorFormBase,
-			ExecutionTypesEditorFormBase: ExecutionTypesEditorFormBase,
-			FormsEditor: FormsEditor,
-			NotificationsEditor: NotificationsEditor,
-			ScriptEditor: ScriptEditor,
-			TaskTimersEditor: TaskTimersEditor
+			ActionsEditor,
+			AssignmentsEditor,
+			BaseAbstractEditor,
+			CompositeEditorFormBase,
+			ExecutionTypesEditorFormBase,
+			FormsEditor,
+			NotificationsEditor,
+			ScriptEditor,
+			TaskTimersEditor
 		};
 	},
 	'',

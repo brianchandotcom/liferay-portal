@@ -18,6 +18,15 @@
 		color: #0b5fff;
 	}
 
+	&.target-over {
+		border-color: #0b5fff;
+		border-style: solid;
+
+		p {
+			visibility: hidden;
+		}
+	}
+
 	@keyframes drop-color {
 		0% {
 			background-color: #f0f5ff;

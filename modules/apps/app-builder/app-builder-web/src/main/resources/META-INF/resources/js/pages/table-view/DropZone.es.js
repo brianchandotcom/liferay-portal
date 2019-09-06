@@ -53,13 +53,16 @@ const DropZone = ({columns, onAddColumn, onRemoveColumn}) => {
 		return (
 			<div
 				className={classNames('empty-drop-zone', {
-					'target-droppable': canDrop
+					'target-droppable': canDrop,
+					'target-over': overTarget
 				})}
 				ref={drop}
 			>
-				{Liferay.Language.get(
-					'drag-columns-from-the-sidebar-and-drop-here'
-				)}
+				<p className="m-0">
+					{Liferay.Language.get(
+						'drag-columns-from-the-sidebar-and-drop-here'
+					)}
+				</p>
 			</div>
 		);
 	}

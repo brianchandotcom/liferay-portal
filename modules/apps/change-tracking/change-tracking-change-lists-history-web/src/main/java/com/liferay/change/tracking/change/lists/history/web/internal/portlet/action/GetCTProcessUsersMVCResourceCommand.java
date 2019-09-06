@@ -18,25 +18,22 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -63,26 +60,8 @@ public class GetCTProcessUsersMVCResourceCommand
 
 	@Override
 	protected void doServeResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		try {
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(resourceResponse);
-
-			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
-
-			JSONArray jsonArray = _getProcessUsersJSONArray(resourceRequest);
-
-			ServletResponseUtil.write(
-				httpServletResponse, jsonArray.toString());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	private JSONArray _getProcessUsersJSONArray(ResourceRequest resourceRequest)
-		throws PortalException {
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
@@ -91,43 +70,43 @@ public class GetCTProcessUsersMVCResourceCommand
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		String keywords = ParamUtil.getString(
 			resourceRequest, "keywords", null);
-		String type = ParamUtil.getString(resourceRequest, "type");
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		String type = ParamUtil.getString(resourceRequest, "type", null);
 
 		List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
 			themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL, keywords,
 			getStatus(type), 0, 5, null);
 
-		Stream<CTProcess> stream = ctProcesses.stream();
+		long[] userIds = ListUtil.toLongArray(
+			ctProcesses, CTProcess::getUserId);
 
-		List<Long> userIds = stream.map(
-			CTProcess::getUserId
-		).distinct(
-		).collect(
-			Collectors.toList()
-		);
+		ArrayUtil.unique(userIds);
 
 		for (long userId : userIds) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			User user = _userLocalService.getUser(userId);
+			User user = _userLocalService.fetchUser(userId);
 
-			jsonArray.put(
-				jsonObject.put(
-					"userId", userId
-				).put(
-					"userName", user.getFullName()
-				));
+			if (user != null) {
+				jsonArray.put(
+					jsonObject.put(
+						"userId", userId
+					).put(
+						"userName", user.getFullName()
+					));
+			}
 		}
 
-		return jsonArray;
-	}
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		GetCTProcessUsersMVCResourceCommand.class);
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(httpServletResponse, jsonArray.toString());
+	}
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;

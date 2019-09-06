@@ -23,6 +23,7 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -103,13 +104,13 @@ public class GetCTProcessesMVCResourceCommand
 			return StringPool.BLANK;
 		}
 
-		String statusLabel = backgroundTask.getStatusLabel();
+		int status = backgroundTask.getStatus();
 
-		if (statusLabel.equals(TYPE_SUCCESSFUL)) {
-			statusLabel = TYPE_PUBLISHED;
+		if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+			return "published";
 		}
 
-		return statusLabel;
+		return BackgroundTaskConstants.getStatusLabel(status);
 	}
 
 	private OrderByComparator<CTProcess> _getOrderByComparator(String sort) {

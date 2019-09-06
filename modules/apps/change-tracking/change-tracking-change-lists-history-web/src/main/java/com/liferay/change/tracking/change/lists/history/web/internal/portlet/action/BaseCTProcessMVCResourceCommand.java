@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Samuel Trong Tran
  */
@@ -25,32 +28,17 @@ public abstract class BaseCTProcessMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	protected int getStatus(String type) {
-		int status = 0;
-
-		if (TYPE_ALL.equals(type)) {
-			status = WorkflowConstants.STATUS_ANY;
-		}
-		else if (TYPE_FAILED.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_FAILED;
-		}
-		else if (TYPE_IN_PROGRESS.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_IN_PROGRESS;
-		}
-		else if (TYPE_PUBLISHED.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
-		}
-
-		return status;
+		return _statusMap.getOrDefault(type, 0);
 	}
 
-	protected static final String TYPE_ALL = "all";
-
-	protected static final String TYPE_FAILED = "failed";
-
-	protected static final String TYPE_IN_PROGRESS = "in-progress";
-
-	protected static final String TYPE_PUBLISHED = "published";
-
-	protected static final String TYPE_SUCCESSFUL = "successful";
+	private static final Map<String, Integer> _statusMap =
+		new HashMap<String, Integer>() {
+			{
+				put("all", WorkflowConstants.STATUS_ANY);
+				put("failed", BackgroundTaskConstants.STATUS_FAILED);
+				put("in-progress", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+				put("published", BackgroundTaskConstants.STATUS_SUCCESSFUL);
+			}
+		};
 
 }

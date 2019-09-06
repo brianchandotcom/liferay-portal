@@ -367,15 +367,17 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			SearchHit::getDocument
 		).forEach(
 			document -> {
-				LocalDateTime createLocalDateTime = LocalDateTime.parse(
-					document.getString("createDate"), _dateTimeFormatter);
+				LocalDateTime completionDate = LocalDateTime.parse(
+					document.getString("completionDate"), _dateTimeFormatter);
 
 				List<WorkflowMetricsSLADefinitionVersion>
 					workflowMetricsSLADefinitionVersions =
 						workflowMetricsSLADefinitionVersionLocalService.
 							getWorkflowMetricsSLADefinitionVersions(
 								companyId,
-								Timestamp.valueOf(createLocalDateTime),
+								Timestamp.valueOf(
+									completionDate.withNano(
+										LocalDateTime.MAX.getNano())),
 								WorkflowConstants.STATUS_APPROVED);
 
 				workflowMetricsSLADefinitionVersions.forEach(
@@ -384,7 +386,9 @@ public class SLAProcessResultWorkflowMetricsIndexer
 							workflowMetricsSLAProcessor.process(
 								workflowMetricsSLADefinitionVersion.
 									getCompanyId(),
-								createLocalDateTime,
+								LocalDateTime.parse(
+									document.getString("createDate"),
+									_dateTimeFormatter),
 								document.getLong("instanceId"),
 								LocalDateTime.now(),
 								_getStartNodeId(

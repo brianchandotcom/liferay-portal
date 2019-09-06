@@ -122,8 +122,6 @@ class FragmentEditableField extends PortletBase {
 			state.activeItemId,
 			state.activeItemType,
 			state.fragmentEntryLinkId,
-			state.hoveredItemId,
-			state.hoveredItemType,
 			state.layoutData.structure
 		);
 		const itemId = this._getItemId();

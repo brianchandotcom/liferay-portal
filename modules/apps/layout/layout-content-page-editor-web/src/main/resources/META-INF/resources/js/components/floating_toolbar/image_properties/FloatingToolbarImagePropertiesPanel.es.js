@@ -27,11 +27,7 @@ import {
 } from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarImagePropertiesPanel.soy';
-import {
-	CLEAR_FRAGMENT_EDITOR,
-	ENABLE_FRAGMENT_EDITOR,
-	UPDATE_CONFIG_ATTRIBUTES
-} from '../../../actions/actions.es';
+import {UPDATE_CONFIG_ATTRIBUTES} from '../../../actions/actions.es';
 
 /**
  * FloatingToolbarImagePropertiesPanel
@@ -73,10 +69,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleClearImageButtonClick() {
-		this.store.dispatch({
-			type: CLEAR_FRAGMENT_EDITOR,
-			value: this.itemId
-		});
+		this.emit('clearEditor');
 	}
 
 	/**
@@ -109,10 +102,7 @@ class FloatingToolbarImagePropertiesPanel extends Component {
 	 * @review
 	 */
 	_handleSelectImageButtonClick() {
-		this.store.dispatch({
-			type: ENABLE_FRAGMENT_EDITOR,
-			value: this.itemId
-		});
+		this.emit('createProcessor');
 	}
 }
 

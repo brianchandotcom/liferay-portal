@@ -191,8 +191,8 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			status: STATUS_TERMINATED
 		};
 
-		APIService.discardExperiement(body).then(({segmentsExperiment}) => {
-			segmentsExperiment(segmentsExperiment);
+		APIService.discardExperiment(body).then(({segmentsExperiment}) => {
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
 		});
 	}
 }

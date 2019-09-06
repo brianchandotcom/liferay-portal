@@ -83,7 +83,7 @@ function APIService({endpoints, namespace, contentPageEditorNamespace}) {
 		});
 	}
 
-	function discardExperiement(body) {
+	function discardExperiment(body) {
 		return _fetchWithError(editSegmentsExperimentStatusURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
@@ -113,7 +113,7 @@ function APIService({endpoints, namespace, contentPageEditorNamespace}) {
 		createVariant,
 		deleteExperiment,
 		deleteVariant,
-		discardExperiement,
+		discardExperiment,
 		editExperiment,
 		editExperimentStatus,
 		editVariant,

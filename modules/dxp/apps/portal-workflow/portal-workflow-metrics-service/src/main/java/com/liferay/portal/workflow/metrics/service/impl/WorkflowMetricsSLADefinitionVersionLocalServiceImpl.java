@@ -34,8 +34,8 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceImpl
 				long workflowMetricsSLADefinitionId, String version)
 		throws NoSuchSLADefinitionVersionException {
 
-		return workflowMetricsSLADefinitionVersionPersistence.findByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version);
+		return workflowMetricsSLADefinitionVersionPersistence.findByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId);
 	}
 
 	@Override

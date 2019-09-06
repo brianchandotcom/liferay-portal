@@ -134,7 +134,7 @@ public class MailMessageListener extends BaseMessageListener {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Email ", emailAddress, " will be ignored as it",
+						"Email ", emailAddress, " will be ignored as it ",
 						"is included in ", PropsKeys.MAIL_SEND_BLACKLIST));
 			}
 

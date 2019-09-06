@@ -63,7 +63,8 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		try {
 			putValue("eventName", getEventName());
 			putValue("groupIds", ListUtil.toList(getGroupIds()));
-			putValue("id", _getNamespace() + "assetCategoriesSelector");
+			putValue(
+				"id", _getNamespace() + _getId() + "assetCategoriesSelector");
 			putValue("inputName", _getInputName());
 			putValue("portletURL", getPortletURL().toString());
 
@@ -144,6 +145,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		_classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 		_groupIds = null;
 		_hiddenInput = "assetCategoryIds";
+		_id = null;
 		_ignoreRequestValue = false;
 		_namespace = null;
 		_showRequiredLabel = true;
@@ -364,6 +366,17 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		return vocabularies;
 	}
 
+	private String _getId() {
+		if (Validator.isNotNull(_id)) {
+			return _id;
+		}
+
+		String randomKey = PortalUtil.generateRandomKey(
+			request, "taglib_ui_asset_categories_selector_page");
+
+		return randomKey + StringPool.UNDERLINE;
+	}
+
 	private String _getInputName() {
 		return _getNamespace() + _hiddenInput + StringPool.UNDERLINE;
 	}
@@ -398,6 +411,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 	private long _classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
+	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _namespace;
 	private boolean _showRequiredLabel = true;

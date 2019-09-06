@@ -1,0 +1,32 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "blue",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "headingAppliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "this-is-blue",
+								"value": "blue"
+							},
+							{
+								"label": "Green",
+								"value": "green"
+							},
+							{
+								"value": "red"
+							}
+						]
+					}
+				}
+			],
+			"label": "Heading"
+		}
+	]
+}

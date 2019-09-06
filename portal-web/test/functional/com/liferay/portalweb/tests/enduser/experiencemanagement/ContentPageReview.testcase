@@ -115,7 +115,7 @@ definition {
 			fragmentName = "Title",
 			position = "1");
 
-		PageEditor.changeExperience(changeExperienceName = "Default");
+		PageEditor.changeExperience(newExperience = "Default");
 
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
@@ -125,7 +125,7 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
 			value1 = "There are no comments yet.");
 
-		PageEditor.changeExperience(changeExperienceName = "New Experience Name");
+		PageEditor.changeExperience(newExperience = "New Experience Name");
 
 		PageEditor.viewCommentList(
 			commentCount = "1 Comment",

@@ -130,14 +130,14 @@ definition {
 		var key_experienceName = "${experienceName}";
 
 		AssertTextEquals(
-			locator1 = "PageEditor#EXPERIENCE_LABEL"),
+			locator1 = "PageEditor#EXPERIENCE_LABEL",
 			value1 = "Experience");
 
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
 		Click(
 			locator1 = "Button#ANY",
-			key_text = "Experience");
+			key_text = "New Experience");
 
 		Type(
 			locator1 = "PageEditor#EXPERIENCE_NAME",
@@ -155,9 +155,7 @@ definition {
 	}
 
 	macro changeExperience {
-		var key_experienceName = "${changeExperienceName}";
-
-		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_LABEL");
+		var key_experienceName = "${newExperience}";
 
 		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 

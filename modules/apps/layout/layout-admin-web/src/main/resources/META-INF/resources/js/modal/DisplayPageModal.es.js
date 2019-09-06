@@ -43,9 +43,7 @@ const DisplayPageModal = props => {
 					if (responseContent.error) {
 						setLoading(false);
 						setError(responseContent.error);
-					}
-
-					if (responseContent.redirectURL) {
+					} else if (responseContent.redirectURL) {
 						navigate(responseContent.redirectURL, {
 							beforeScreenFlip: onClose
 						});

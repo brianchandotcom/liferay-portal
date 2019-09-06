@@ -142,14 +142,14 @@ public class DefaultTransactionExecutor
 			throw t;
 		}
 		finally {
-			if (throwable != null) {
+			if (throwable == null) {
+				TransactionLifecycleManager.fireTransactionCommittedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter);
+			}
+			else {
 				TransactionLifecycleManager.fireTransactionRollbackedEvent(
 					transactionAttributeAdapter, transactionStatusAdapter,
 					throwable);
-			}
-			else {
-				TransactionLifecycleManager.fireTransactionCommittedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter);
 			}
 
 			TransactionExecutorThreadLocal.popTransactionExecutor();

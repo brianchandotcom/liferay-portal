@@ -11,7 +11,7 @@
 	<!--BLOGS-->
 <tr>
 	<td>BLOGS_CONTENT</td>
-	<td>//div[contains(@class,'widget-mode')]//p</td>
+	<td>//div[contains(@class,'widget-mode')]//div</td>
 	<td></td>
 </tr>
 <tr>

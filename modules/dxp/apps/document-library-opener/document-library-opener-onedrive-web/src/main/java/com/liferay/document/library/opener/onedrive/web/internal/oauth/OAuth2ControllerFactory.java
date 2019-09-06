@@ -15,7 +15,6 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -34,8 +33,7 @@ public class OAuth2ControllerFactory {
 	@Activate
 	public void activate() {
 		_oAuth2Controller = new OAuth2Controller(
-			_oAuth2Manager, _portal, _portletURLFactory,
-			_translationHelper);
+			_oAuth2Manager, _portal, _portletURLFactory, _translationHelper);
 	}
 
 	@Deactivate
@@ -46,9 +44,6 @@ public class OAuth2ControllerFactory {
 	public OAuth2Controller getOAuth2Controller() {
 		return _oAuth2Controller;
 	}
-
-	@Reference
-	private TranslationHelper _translationHelper;
 
 	private OAuth2Controller _oAuth2Controller;
 
@@ -65,5 +60,8 @@ public class OAuth2ControllerFactory {
 		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference
+	private TranslationHelper _translationHelper;
 
 }

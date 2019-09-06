@@ -35,6 +35,7 @@ import java.io.IOException;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -56,34 +57,33 @@ public class OAuth2Controller {
 		_translationHelper = translationHelper;
 	}
 
-	public void execute(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			UnsafeFunction<PortletRequest, JSONObject, PortalException>
-				unsafeFunction,
-			OAuth2Executor oAuth2ResultExecutor)
-		throws PortalException {
-
-		oAuth2ResultExecutor.execute(
-			portletRequest, portletResponse,
-			_getOAuth2Result(portletRequest, unsafeFunction));
-	}
-
 	public interface OAuth2Executor {
 
 		public void execute(
 				PortletRequest portletRequest, PortletResponse portletResponse,
-				OAuth2Result oAuth2Result)
+				UnsafeFunction<PortletRequest, JSONObject, PortalException>
+					unsafeFunction)
 			throws PortalException;
 
 	}
 
 	public class OAuth2ExecutorWithoutRedirect implements OAuth2Executor {
 
+		public OAuth2ExecutorWithoutRedirect(
+			Function<PortletRequest, String> function) {
+
+			_function = function;
+		}
+
 		@Override
 		public void execute(
 				PortletRequest portletRequest, PortletResponse portletResponse,
-				OAuth2Result oAuth2Result)
+				UnsafeFunction<PortletRequest, JSONObject, PortalException>
+					unsafeFunction)
 			throws PortalException {
+
+			OAuth2Result oAuth2Result = _getOAuth2Result(
+				portletRequest, unsafeFunction, _function);
 
 			PortalException portalException = oAuth2Result.getPortalException();
 
@@ -114,6 +114,8 @@ public class OAuth2Controller {
 			}
 		}
 
+		private final Function<PortletRequest, String> _function;
+
 	}
 
 	public class OAuth2ExecutorWithRedirect implements OAuth2Executor {
@@ -121,8 +123,12 @@ public class OAuth2Controller {
 		@Override
 		public void execute(
 				PortletRequest portletRequest, PortletResponse portletResponse,
-				OAuth2Result oAuth2Result)
+				UnsafeFunction<PortletRequest, JSONObject, PortalException>
+					unsafeFunction)
 			throws PortalException {
+
+			OAuth2Result oAuth2Result = _getOAuth2Result(
+				portletRequest, unsafeFunction, _function);
 
 			PortalException portalException = oAuth2Result.getPortalException();
 
@@ -148,6 +154,10 @@ public class OAuth2Controller {
 				));
 		}
 
+		private Function<PortletRequest, String> _function =
+			portletRequest -> _portal.getCurrentURL(
+				_portal.getHttpServletRequest(portletRequest));
+
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)
@@ -164,7 +174,8 @@ public class OAuth2Controller {
 	private OAuth2Result _getOAuth2Result(
 		PortletRequest portletRequest,
 		UnsafeFunction<PortletRequest, JSONObject, PortalException>
-			unsafeFunction) {
+			unsafeFunction,
+		Function<PortletRequest, String> function) {
 
 		try {
 			long companyId = _portal.getCompanyId(portletRequest);
@@ -180,7 +191,7 @@ public class OAuth2Controller {
 				_portal.getOriginalServletRequest(
 					_portal.getHttpServletRequest(portletRequest)),
 				new OAuth2State(
-					userId, _getSuccessURL(portletRequest),
+					userId, function.apply(portletRequest),
 					_getFailureURL(portletRequest), state));
 
 			return new OAuth2Result(
@@ -204,18 +215,6 @@ public class OAuth2Controller {
 			ParamUtil.getString(portletRequest, "repositoryId"));
 
 		return portletURL.toString();
-	}
-
-	private String _getSuccessURL(PortletRequest portletRequest) {
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			portletRequest, _portal.getPortletId(portletRequest),
-			PortletRequest.ACTION_PHASE);
-
-		liferayPortletURL.setParameters(portletRequest.getParameterMap());
-		liferayPortletURL.setParameter(
-			"redirect", String.valueOf(Boolean.TRUE));
-
-		return liferayPortletURL.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

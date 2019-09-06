@@ -15,18 +15,14 @@
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.EditInOneDriveHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"mvc.command.name=/document_library/cancel_check_out_in_office365"
+		"mvc.command.name=/document_library/edit_in_office365_and_redirect"
 	},
 	service = MVCActionCommand.class
 )
-public class CancelCheckOutInOneDriveMVCActionCommand
+public class EditInOneDriveAndRedirectMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -58,20 +54,12 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 			oAuth2Controller.new OAuth2ExecutorWithRedirect();
 
 		oAuth2ExecutorWithRedirect.execute(
-			actionRequest, actionResponse, this::_executeCommand);
-	}
-
-	private JSONObject _executeCommand(PortletRequest portletRequest)
-		throws PortalException {
-
-		_dlAppService.cancelCheckOut(
-			ParamUtil.getLong(portletRequest, "fileEntryId"));
-
-		return null;
+			actionRequest, actionResponse,
+			_editInOneDriveHelper::executeCommand);
 	}
 
 	@Reference
-	private DLAppService _dlAppService;
+	private EditInOneDriveHelper _editInOneDriveHelper;
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;

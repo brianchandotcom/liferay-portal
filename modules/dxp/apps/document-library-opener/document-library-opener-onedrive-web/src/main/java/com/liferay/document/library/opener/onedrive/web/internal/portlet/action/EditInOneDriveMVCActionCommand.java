@@ -15,28 +15,14 @@
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
-import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.OneDriveURLHelper;
-import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.EditInOneDriveHelper;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,120 +53,40 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		OAuth2Controller oAuth2Controller =
 			_oAuth2ControllerFactory.getOAuth2Controller();
 
-		if (ParamUtil.getBoolean(actionRequest, "redirect")) {
-			oAuth2Controller.execute(
-				actionRequest, actionResponse, this::_executeCommand,
-				oAuth2Controller.new OAuth2ExecutorWithRedirect());
-		}
-		else {
-			oAuth2Controller.execute(
-				actionRequest, actionResponse, this::_executeCommand,
-				oAuth2Controller.new OAuth2ExecutorWithoutRedirect());
-		}
+		OAuth2Controller.OAuth2ExecutorWithoutRedirect
+			oAuth2ExecutorWithoutRedirect =
+				oAuth2Controller.new OAuth2ExecutorWithoutRedirect(
+					this::_getSuccessURL);
+
+		oAuth2ExecutorWithoutRedirect.execute(
+			actionRequest, actionResponse,
+			_editInOneDriveHelper::executeCommand);
 	}
 
-	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
-			long fileEntryId, ServiceContext serviceContext)
-		throws PortalException {
+	private String _getSuccessURL(PortletRequest portletRequest) {
+		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
+			portletRequest, _portal.getPortletId(portletRequest),
+			PortletRequest.ACTION_PHASE);
 
-		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		liferayPortletURL.setParameters(portletRequest.getParameterMap());
 
-		return _dlOpenerOneDriveManager.checkOut(
-			serviceContext.getUserId(),
-			_dlAppService.getFileEntry(fileEntryId));
-	}
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/edit_in_office365_and_redirect");
 
-	private JSONObject _executeCommand(PortletRequest portletRequest)
-		throws PortalException {
-
-		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
-		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
-
-		if (cmd.equals(Constants.CHECKOUT)) {
-			try {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(portletRequest);
-
-				hideDefaultSuccessMessage(portletRequest);
-
-				DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
-					TransactionInvokerUtil.invoke(
-						_transactionConfig,
-						() -> _checkOutOneDriveFileEntry(
-							fileEntryId, serviceContext));
-
-				String oneDriveBackgroundTaskStatusURL =
-					_oneDriveURLHelper.getBackgroundTaskStatusURL(
-						portletRequest, dlOpenerOneDriveFileReference);
-
-				return JSONUtil.put(
-					"dialogMessage",
-					_translationHelper.translateKey(
-						_portal.getLocale(portletRequest),
-						"you-are-being-redirected-to-an-external-editor-to-" +
-							"edit-this-document")
-				).put(
-					"oneDriveBackgroundTaskStatusURL",
-					oneDriveBackgroundTaskStatusURL
-				);
-			}
-			catch (PortalException | RuntimeException e) {
-				throw e;
-			}
-			catch (Throwable throwable) {
-				throw new PortalException(throwable);
-			}
-		}
-		else if (cmd.equals(Constants.EDIT)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
-				_dlOpenerOneDriveManager.requestEditAccess(
-					themeDisplay.getUserId(),
-					_dlAppService.getFileEntry(fileEntryId));
-
-			String oneDriveBackgroundTaskStatusURL =
-				_oneDriveURLHelper.getBackgroundTaskStatusURL(
-					portletRequest, dlOpenerOneDriveFileReference);
-
-			return JSONUtil.put(
-				"dialogMessage",
-				_translationHelper.translateKey(
-					_portal.getLocale(portletRequest),
-					"you-are-being-redirected-to-an-external-editor-to-edit-" +
-						"this-document")
-			).put(
-				"oneDriveBackgroundTaskStatusURL",
-				oneDriveBackgroundTaskStatusURL
-			);
-		}
-		else {
-			throw new IllegalArgumentException();
-		}
+		return liferayPortletURL.toString();
 	}
 
 	@Reference
-	private DLAppService _dlAppService;
-
-	@Reference
-	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+	private EditInOneDriveHelper _editInOneDriveHelper;
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;
 
 	@Reference
-	private OneDriveURLHelper _oneDriveURLHelper;
-
-	@Reference
 	private Portal _portal;
 
-	private final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	@Reference
-	private TranslationHelper _translationHelper;
+	private PortletURLFactory _portletURLFactory;
 
 }

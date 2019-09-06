@@ -56,9 +56,11 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		OAuth2Controller oAuth2Controller =
 			_oAuth2ControllerFactory.getOAuth2Controller();
 
-		oAuth2Controller.execute(
-			actionRequest, actionResponse, this::_executeCommand,
-			oAuth2Controller.new OAuth2ExecutorWithRedirect());
+		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
+			oAuth2Controller.new OAuth2ExecutorWithRedirect();
+
+		oAuth2ExecutorWithRedirect.execute(
+			actionRequest, actionResponse, this::_executeCommand);
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)

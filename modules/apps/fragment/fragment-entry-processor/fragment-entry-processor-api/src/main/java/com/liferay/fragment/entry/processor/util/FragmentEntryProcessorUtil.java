@@ -25,7 +25,9 @@ import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Mueller (7.2.x), replaced by {@link FragmentEntryProcessorHelper}
  */
+@Deprecated
 @ProviderType
 public interface FragmentEntryProcessorUtil {
 

@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SPIDefinitionPersistence
 	extends BasePersistence<SPIDefinition> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionUtil} to access the spi definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

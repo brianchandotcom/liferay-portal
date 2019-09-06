@@ -33,7 +33,7 @@ public abstract class WorkflowMetricsSLADefinitionBaseImpl
 	extends WorkflowMetricsSLADefinitionModelImpl
 	implements WorkflowMetricsSLADefinition {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla definition model instance should use the <code>WorkflowMetricsSLADefinition</code> interface instead.

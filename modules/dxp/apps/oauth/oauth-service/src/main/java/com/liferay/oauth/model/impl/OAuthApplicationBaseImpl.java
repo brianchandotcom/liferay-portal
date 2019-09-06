@@ -32,7 +32,7 @@ import com.liferay.oauth.service.OAuthApplicationLocalServiceUtil;
 public abstract class OAuthApplicationBaseImpl
 	extends OAuthApplicationModelImpl implements OAuthApplication {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth application model instance should use the <code>OAuthApplication</code> interface instead.

@@ -232,6 +232,11 @@ public class OAuthUserWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. All methods that expect a o auth user model instance should use the <code>OAuthUser</code> interface instead.
+	 */
 	@Override
 	public void persist() {
 		model.persist();

@@ -62,7 +62,7 @@ public class SamlSpMessagePersistenceImpl
 	extends BasePersistenceImpl<SamlSpMessage>
 	implements SamlSpMessagePersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SamlSpMessageUtil</code> to access the saml sp message persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SamlSpSessionModel
 	extends AuditedModel, BaseModel<SamlSpSession>, ShardedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a saml sp session model instance should use the {@link SamlSpSession} interface instead.

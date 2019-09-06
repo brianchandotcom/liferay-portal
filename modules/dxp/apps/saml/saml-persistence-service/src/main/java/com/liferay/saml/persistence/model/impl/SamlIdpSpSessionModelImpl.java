@@ -59,7 +59,7 @@ import java.util.function.Function;
 public class SamlIdpSpSessionModelImpl
 	extends BaseModelImpl<SamlIdpSpSession> implements SamlIdpSpSessionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml idp sp session model instance should use the <code>SamlIdpSpSession</code> interface instead.

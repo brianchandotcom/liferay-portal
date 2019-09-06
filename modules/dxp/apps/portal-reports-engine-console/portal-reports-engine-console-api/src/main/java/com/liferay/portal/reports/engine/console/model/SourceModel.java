@@ -43,7 +43,7 @@ public interface SourceModel
 	extends BaseModel<Source>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a source model instance should use the {@link Source} interface instead.

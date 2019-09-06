@@ -437,6 +437,11 @@ public class SamlIdpSpConnectionWrapper
 		return model.isEncryptionForced();
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. All methods that expect a saml idp sp connection model instance should use the <code>SamlIdpSpConnection</code> interface instead.
+	 */
 	@Override
 	public void persist() {
 		model.persist();

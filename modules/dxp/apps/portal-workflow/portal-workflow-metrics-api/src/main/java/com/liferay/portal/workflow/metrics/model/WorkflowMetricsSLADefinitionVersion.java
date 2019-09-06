@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowMetricsSLADefinitionVersion
 	extends PersistedModel, WorkflowMetricsSLADefinitionVersionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

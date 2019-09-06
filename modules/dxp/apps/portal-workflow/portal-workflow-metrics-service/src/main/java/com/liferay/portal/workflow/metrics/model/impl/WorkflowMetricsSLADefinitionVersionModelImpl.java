@@ -64,7 +64,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	extends BaseModelImpl<WorkflowMetricsSLADefinitionVersion>
 	implements WorkflowMetricsSLADefinitionVersionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a workflow metrics sla definition version model instance should use the <code>WorkflowMetricsSLADefinitionVersion</code> interface instead.

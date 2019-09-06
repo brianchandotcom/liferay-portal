@@ -56,7 +56,7 @@ import java.util.function.Function;
 public class SamlSpAuthRequestModelImpl
 	extends BaseModelImpl<SamlSpAuthRequest> implements SamlSpAuthRequestModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp auth request model instance should use the <code>SamlSpAuthRequest</code> interface instead.

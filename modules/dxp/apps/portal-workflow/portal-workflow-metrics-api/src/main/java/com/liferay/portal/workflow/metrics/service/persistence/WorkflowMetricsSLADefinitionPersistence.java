@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowMetricsSLADefinitionPersistence
 	extends BasePersistence<WorkflowMetricsSLADefinition> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionUtil} to access the workflow metrics sla definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

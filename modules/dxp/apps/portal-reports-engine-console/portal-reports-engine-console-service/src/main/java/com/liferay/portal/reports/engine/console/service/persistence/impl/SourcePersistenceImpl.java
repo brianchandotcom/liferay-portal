@@ -67,7 +67,7 @@ import java.util.Set;
 public class SourcePersistenceImpl
 	extends BasePersistenceImpl<Source> implements SourcePersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SourceUtil</code> to access the source persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

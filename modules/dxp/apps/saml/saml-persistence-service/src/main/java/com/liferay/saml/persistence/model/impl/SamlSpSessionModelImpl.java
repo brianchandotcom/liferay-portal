@@ -59,7 +59,7 @@ import java.util.function.Function;
 public class SamlSpSessionModelImpl
 	extends BaseModelImpl<SamlSpSession> implements SamlSpSessionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp session model instance should use the <code>SamlSpSession</code> interface instead.

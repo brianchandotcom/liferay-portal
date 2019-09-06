@@ -32,7 +32,7 @@ import com.liferay.portal.reports.engine.console.service.DefinitionLocalServiceU
 public abstract class DefinitionBaseImpl
 	extends DefinitionModelImpl implements Definition {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a definition model instance should use the <code>Definition</code> interface instead.

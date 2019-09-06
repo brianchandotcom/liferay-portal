@@ -35,6 +35,11 @@ public class SharepointOAuth2TokenEntryLocalServiceWrapper
 			sharepointOAuth2TokenEntryLocalService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryLocalServiceUtil} to access the sharepoint o auth2 token entry local service. Add custom service methods to <code>com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry
 			addSharepointOAuth2TokenEntry(

@@ -33,7 +33,7 @@ public abstract class SharepointOAuth2TokenEntryBaseImpl
 	extends SharepointOAuth2TokenEntryModelImpl
 	implements SharepointOAuth2TokenEntry {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a sharepoint o auth2 token entry model instance should use the <code>SharepointOAuth2TokenEntry</code> interface instead.

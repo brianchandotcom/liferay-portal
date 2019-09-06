@@ -56,7 +56,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SamlIdpSsoSessionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SamlIdpSsoSessionLocalServiceUtil} to access the saml idp sso session local service. Add custom service methods to <code>com.liferay.saml.persistence.service.impl.SamlIdpSsoSessionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

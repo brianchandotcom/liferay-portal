@@ -70,7 +70,7 @@ public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SamlSpAuthRequestLocalService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SamlSpAuthRequestLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil</code>.

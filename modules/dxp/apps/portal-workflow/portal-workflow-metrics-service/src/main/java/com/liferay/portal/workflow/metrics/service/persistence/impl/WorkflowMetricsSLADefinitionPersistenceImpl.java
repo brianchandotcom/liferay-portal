@@ -67,7 +67,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	extends BasePersistenceImpl<WorkflowMetricsSLADefinition>
 	implements WorkflowMetricsSLADefinitionPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>WorkflowMetricsSLADefinitionUtil</code> to access the workflow metrics sla definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

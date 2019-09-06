@@ -64,7 +64,7 @@ import java.util.function.Function;
 public class OAuthApplicationModelImpl
 	extends BaseModelImpl<OAuthApplication> implements OAuthApplicationModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth application model instance should use the <code>OAuthApplication</code> interface instead.

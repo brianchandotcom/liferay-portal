@@ -32,7 +32,7 @@ import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalServiceUtil;
 public abstract class SamlIdpSpConnectionBaseImpl
 	extends SamlIdpSpConnectionModelImpl implements SamlIdpSpConnection {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml idp sp connection model instance should use the <code>SamlIdpSpConnection</code> interface instead.

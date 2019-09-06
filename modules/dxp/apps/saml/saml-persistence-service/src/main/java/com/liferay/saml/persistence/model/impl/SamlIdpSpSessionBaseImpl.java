@@ -32,7 +32,7 @@ import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalServiceUtil;
 public abstract class SamlIdpSpSessionBaseImpl
 	extends SamlIdpSpSessionModelImpl implements SamlIdpSpSession {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml idp sp session model instance should use the <code>SamlIdpSpSession</code> interface instead.

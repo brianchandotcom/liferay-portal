@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SPIDefinitionModel
 	extends AuditedModel, BaseModel<SPIDefinition>, ShardedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a spi definition model instance should use the {@link SPIDefinition} interface instead.

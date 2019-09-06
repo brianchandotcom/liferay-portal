@@ -60,7 +60,7 @@ import java.util.Objects;
 public class OAuthUserPersistenceImpl
 	extends BasePersistenceImpl<OAuthUser> implements OAuthUserPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>OAuthUserUtil</code> to access the o auth user persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

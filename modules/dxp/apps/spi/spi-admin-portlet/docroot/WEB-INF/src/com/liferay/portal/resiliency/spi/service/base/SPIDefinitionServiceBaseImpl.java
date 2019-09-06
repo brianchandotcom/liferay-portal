@@ -47,7 +47,7 @@ public abstract class SPIDefinitionServiceBaseImpl
 	extends BaseServiceImpl
 	implements SPIDefinitionService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SPIDefinitionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil</code>.

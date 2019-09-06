@@ -30,6 +30,11 @@ public class OAuthUserServiceWrapper
 		_oAuthUserService = oAuthUserService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link OAuthUserServiceUtil} to access the o auth user remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthUserServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.oauth.model.OAuthUser addOAuthUser(
 			String consumerKey,

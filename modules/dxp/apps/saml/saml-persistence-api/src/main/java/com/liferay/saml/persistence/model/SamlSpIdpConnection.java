@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SamlSpIdpConnection
 	extends PersistedModel, SamlSpIdpConnectionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

@@ -54,7 +54,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 public interface OAuthApplicationService extends BaseService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationServiceUtil} to access the o auth application remote service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

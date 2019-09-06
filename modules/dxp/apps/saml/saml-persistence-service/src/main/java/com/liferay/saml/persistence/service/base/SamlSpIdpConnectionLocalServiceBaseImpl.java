@@ -70,7 +70,7 @@ public abstract class SamlSpIdpConnectionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SamlSpIdpConnectionLocalService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SamlSpIdpConnectionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil</code>.

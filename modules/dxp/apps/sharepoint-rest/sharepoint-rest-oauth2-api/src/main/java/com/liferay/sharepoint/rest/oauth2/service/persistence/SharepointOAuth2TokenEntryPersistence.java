@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SharepointOAuth2TokenEntryPersistence
 	extends BasePersistence<SharepointOAuth2TokenEntry> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SharepointOAuth2TokenEntryUtil} to access the sharepoint o auth2 token entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

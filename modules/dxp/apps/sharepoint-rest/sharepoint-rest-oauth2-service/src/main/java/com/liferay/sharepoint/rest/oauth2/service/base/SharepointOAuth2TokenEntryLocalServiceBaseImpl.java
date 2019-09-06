@@ -64,7 +64,7 @@ public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SharepointOAuth2TokenEntryLocalService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SharepointOAuth2TokenEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil</code>.

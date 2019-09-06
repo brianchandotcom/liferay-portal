@@ -31,7 +31,7 @@ import com.liferay.portal.reports.engine.console.service.EntryLocalServiceUtil;
  */
 public abstract class EntryBaseImpl extends EntryModelImpl implements Entry {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a entry model instance should use the <code>Entry</code> interface instead.

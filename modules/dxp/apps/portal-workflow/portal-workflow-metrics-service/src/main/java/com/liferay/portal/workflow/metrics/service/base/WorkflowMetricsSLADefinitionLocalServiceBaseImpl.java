@@ -81,7 +81,7 @@ public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 	implements WorkflowMetricsSLADefinitionLocalService,
 			   IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>WorkflowMetricsSLADefinitionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalServiceUtil</code>.

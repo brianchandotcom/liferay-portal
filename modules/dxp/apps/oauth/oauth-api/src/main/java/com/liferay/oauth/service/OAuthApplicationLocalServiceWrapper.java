@@ -33,6 +33,11 @@ public class OAuthApplicationLocalServiceWrapper
 		_oAuthApplicationLocalService = oAuthApplicationLocalService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link OAuthApplicationLocalServiceUtil} to access the o auth application local service. Add custom service methods to <code>com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.oauth.model.OAuthApplication addOAuthApplication(
 			long userId, String name, String description, int accessLevel,

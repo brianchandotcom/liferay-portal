@@ -31,7 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface OAuthUser extends OAuthUserModel, PersistedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthUserImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

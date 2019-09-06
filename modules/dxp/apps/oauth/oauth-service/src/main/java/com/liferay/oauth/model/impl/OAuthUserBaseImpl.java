@@ -32,7 +32,7 @@ import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
 public abstract class OAuthUserBaseImpl
 	extends OAuthUserModelImpl implements OAuthUser {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth user model instance should use the <code>OAuthUser</code> interface instead.

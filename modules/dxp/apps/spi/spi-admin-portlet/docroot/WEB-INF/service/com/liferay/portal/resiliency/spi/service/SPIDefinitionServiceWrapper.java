@@ -32,6 +32,11 @@ public class SPIDefinitionServiceWrapper
 		_spiDefinitionService = spiDefinitionService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition
 			addSPIDefinition(

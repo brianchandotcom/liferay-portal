@@ -62,7 +62,7 @@ public class OAuthApplicationPersistenceImpl
 	extends BasePersistenceImpl<OAuthApplication>
 	implements OAuthApplicationPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>OAuthApplicationUtil</code> to access the o auth application persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

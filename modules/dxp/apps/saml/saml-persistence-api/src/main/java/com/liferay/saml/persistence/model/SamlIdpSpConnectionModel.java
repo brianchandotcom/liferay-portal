@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SamlIdpSpConnectionModel
 	extends AuditedModel, BaseModel<SamlIdpSpConnection>, ShardedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a saml idp sp connection model instance should use the {@link SamlIdpSpConnection} interface instead.

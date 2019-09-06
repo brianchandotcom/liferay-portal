@@ -74,7 +74,7 @@ import java.util.function.Function;
 public class DefinitionModelImpl
 	extends BaseModelImpl<Definition> implements DefinitionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a definition model instance should use the <code>Definition</code> interface instead.

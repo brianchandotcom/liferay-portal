@@ -69,7 +69,7 @@ public class KaleoProcessPersistenceImpl
 	extends BasePersistenceImpl<KaleoProcess>
 	implements KaleoProcessPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>KaleoProcessUtil</code> to access the kaleo process persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

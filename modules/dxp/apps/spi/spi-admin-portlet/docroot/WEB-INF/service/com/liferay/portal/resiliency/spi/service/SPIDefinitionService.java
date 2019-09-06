@@ -48,7 +48,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 public interface SPIDefinitionService extends BaseService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

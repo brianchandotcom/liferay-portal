@@ -30,6 +30,11 @@ public class DefinitionServiceWrapper
 		_definitionService = definitionService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link DefinitionServiceUtil} to access the definition remote service. Add custom service methods to <code>com.liferay.portal.reports.engine.console.service.impl.DefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.portal.reports.engine.console.model.Definition
 			addDefinition(

@@ -62,7 +62,7 @@ public class SamlSpAuthRequestPersistenceImpl
 	extends BasePersistenceImpl<SamlSpAuthRequest>
 	implements SamlSpAuthRequestPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SamlSpAuthRequestUtil</code> to access the saml sp auth request persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

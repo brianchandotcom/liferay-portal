@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface EntryModel
 	extends BaseModel<Entry>, GroupedModel, ShardedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a entry model instance should use the {@link Entry} interface instead.

@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface KaleoProcessLinkPersistence
 	extends BasePersistence<KaleoProcessLink> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoProcessLinkUtil} to access the kaleo process link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

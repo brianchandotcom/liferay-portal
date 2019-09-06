@@ -33,6 +33,11 @@ public class SamlIdpSpSessionLocalServiceWrapper
 		_samlIdpSpSessionLocalService = samlIdpSpSessionLocalService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SamlIdpSpSessionLocalServiceUtil} to access the saml idp sp session local service. Add custom service methods to <code>com.liferay.saml.persistence.service.impl.SamlIdpSpSessionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpSession
 			addSamlIdpSpSession(

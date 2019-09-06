@@ -60,7 +60,7 @@ public class SamlSpIdpConnectionModelImpl
 	extends BaseModelImpl<SamlSpIdpConnection>
 	implements SamlSpIdpConnectionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp idp connection model instance should use the <code>SamlSpIdpConnection</code> interface instead.

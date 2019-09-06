@@ -62,7 +62,7 @@ public class SamlIdpSpConnectionPersistenceImpl
 	extends BasePersistenceImpl<SamlIdpSpConnection>
 	implements SamlIdpSpConnectionPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SamlIdpSpConnectionUtil</code> to access the saml idp sp connection persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

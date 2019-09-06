@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SamlSpAuthRequest
 	extends PersistedModel, SamlSpAuthRequestModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpAuthRequestImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

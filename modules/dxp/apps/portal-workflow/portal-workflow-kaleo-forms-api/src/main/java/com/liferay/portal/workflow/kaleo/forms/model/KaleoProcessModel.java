@@ -40,7 +40,7 @@ public interface KaleoProcessModel
 	extends BaseModel<KaleoProcess>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a kaleo process model instance should use the {@link KaleoProcess} interface instead.

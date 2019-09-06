@@ -64,7 +64,7 @@ import java.util.function.Function;
 public class OAuthUserModelImpl
 	extends BaseModelImpl<OAuthUser> implements OAuthUserModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a o auth user model instance should use the <code>OAuthUser</code> interface instead.

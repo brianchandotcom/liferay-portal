@@ -57,7 +57,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	extends BasePersistenceImpl<SharepointOAuth2TokenEntry>
 	implements SharepointOAuth2TokenEntryPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SharepointOAuth2TokenEntryUtil</code> to access the sharepoint o auth2 token entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

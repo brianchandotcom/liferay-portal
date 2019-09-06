@@ -32,7 +32,7 @@ import com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil;
 public abstract class SamlSpSessionBaseImpl
 	extends SamlSpSessionModelImpl implements SamlSpSession {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp session model instance should use the <code>SamlSpSession</code> interface instead.

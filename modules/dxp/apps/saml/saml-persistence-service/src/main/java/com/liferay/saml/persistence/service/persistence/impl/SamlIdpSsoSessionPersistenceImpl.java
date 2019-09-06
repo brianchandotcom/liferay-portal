@@ -64,7 +64,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlIdpSsoSession>
 	implements SamlIdpSsoSessionPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SamlIdpSsoSessionUtil</code> to access the saml idp sso session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

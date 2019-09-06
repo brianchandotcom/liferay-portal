@@ -32,7 +32,7 @@ import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
 public abstract class SamlSpAuthRequestBaseImpl
 	extends SamlSpAuthRequestModelImpl implements SamlSpAuthRequest {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp auth request model instance should use the <code>SamlSpAuthRequest</code> interface instead.

@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Entry extends EntryModel, PersistedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.reports.engine.console.model.impl.EntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

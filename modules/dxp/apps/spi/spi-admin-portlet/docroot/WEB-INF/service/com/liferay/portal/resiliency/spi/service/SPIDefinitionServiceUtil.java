@@ -30,10 +30,16 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
  */
 public class SPIDefinitionServiceUtil {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionServiceUtil} to access the spi definition remote service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition
 			addSPIDefinition(

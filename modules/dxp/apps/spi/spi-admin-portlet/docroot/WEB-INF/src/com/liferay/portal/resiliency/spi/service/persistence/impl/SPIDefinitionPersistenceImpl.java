@@ -65,7 +65,7 @@ public class SPIDefinitionPersistenceImpl
 	extends BasePersistenceImpl<SPIDefinition>
 	implements SPIDefinitionPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SPIDefinitionUtil</code> to access the spi definition persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

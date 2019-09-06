@@ -31,7 +31,7 @@ import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
  */
 public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a source model instance should use the <code>Source</code> interface instead.

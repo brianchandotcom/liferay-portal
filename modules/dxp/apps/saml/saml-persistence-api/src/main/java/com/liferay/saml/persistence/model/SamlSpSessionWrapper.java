@@ -353,6 +353,11 @@ public class SamlSpSessionWrapper
 		return model.isTerminated();
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. All methods that expect a saml sp session model instance should use the <code>SamlSpSession</code> interface instead.
+	 */
 	@Override
 	public void persist() {
 		model.persist();

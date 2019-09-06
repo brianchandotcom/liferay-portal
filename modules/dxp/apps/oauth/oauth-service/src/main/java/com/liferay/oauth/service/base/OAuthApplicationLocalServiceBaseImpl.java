@@ -66,7 +66,7 @@ public abstract class OAuthApplicationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements OAuthApplicationLocalService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>OAuthApplicationLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.oauth.service.OAuthApplicationLocalServiceUtil</code>.

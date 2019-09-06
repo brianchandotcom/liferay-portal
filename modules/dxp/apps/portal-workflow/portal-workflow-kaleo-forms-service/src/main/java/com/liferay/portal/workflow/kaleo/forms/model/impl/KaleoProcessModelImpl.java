@@ -66,7 +66,7 @@ import java.util.function.Function;
 public class KaleoProcessModelImpl
 	extends BaseModelImpl<KaleoProcess> implements KaleoProcessModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo process model instance should use the <code>KaleoProcess</code> interface instead.

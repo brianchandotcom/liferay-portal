@@ -32,7 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OAuthApplication
 	extends OAuthApplicationModel, PersistedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.oauth.model.impl.OAuthApplicationImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

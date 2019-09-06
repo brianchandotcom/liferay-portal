@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SamlSpMessage extends PersistedModel, SamlSpMessageModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.saml.persistence.model.impl.SamlSpMessageImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

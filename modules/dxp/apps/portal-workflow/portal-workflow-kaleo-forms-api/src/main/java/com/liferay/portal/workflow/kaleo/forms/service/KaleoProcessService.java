@@ -59,7 +59,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 public interface KaleoProcessService extends BaseService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoProcessServiceUtil} to access the kaleo process remote service. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

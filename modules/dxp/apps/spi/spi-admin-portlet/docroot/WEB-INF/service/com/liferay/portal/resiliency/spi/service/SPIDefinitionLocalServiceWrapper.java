@@ -33,6 +33,11 @@ public class SPIDefinitionLocalServiceWrapper
 		_spiDefinitionLocalService = spiDefinitionLocalService;
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this interface directly. Always use {@link SPIDefinitionLocalServiceUtil} to access the spi definition local service. Add custom service methods to <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 */
 	@Override
 	public com.liferay.portal.resiliency.spi.model.SPIDefinition
 			addSPIDefinition(

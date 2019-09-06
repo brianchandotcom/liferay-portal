@@ -43,7 +43,7 @@ public interface DefinitionModel
 	extends BaseModel<Definition>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a definition model instance should use the {@link Definition} interface instead.

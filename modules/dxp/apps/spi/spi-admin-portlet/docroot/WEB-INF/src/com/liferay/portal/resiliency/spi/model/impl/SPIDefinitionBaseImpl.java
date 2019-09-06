@@ -32,7 +32,7 @@ import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
 public abstract class SPIDefinitionBaseImpl
 	extends SPIDefinitionModelImpl implements SPIDefinition {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a spi definition model instance should use the <code>SPIDefinition</code> interface instead.

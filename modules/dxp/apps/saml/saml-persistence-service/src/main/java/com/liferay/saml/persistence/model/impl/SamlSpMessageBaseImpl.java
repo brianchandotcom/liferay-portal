@@ -32,7 +32,7 @@ import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
 public abstract class SamlSpMessageBaseImpl
 	extends SamlSpMessageModelImpl implements SamlSpMessage {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a saml sp message model instance should use the <code>SamlSpMessage</code> interface instead.

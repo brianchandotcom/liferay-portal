@@ -73,7 +73,7 @@ import java.util.function.Function;
 public class SourceModelImpl
 	extends BaseModelImpl<Source> implements SourceModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a source model instance should use the <code>Source</code> interface instead.

@@ -58,7 +58,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WorkflowMetricsSLADefinitionLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WorkflowMetricsSLADefinitionLocalServiceUtil} to access the workflow metrics sla definition local service. Add custom service methods to <code>com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

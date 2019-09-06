@@ -32,7 +32,7 @@ import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServ
 public abstract class KaleoProcessLinkBaseImpl
 	extends KaleoProcessLinkModelImpl implements KaleoProcessLink {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a kaleo process link model instance should use the <code>KaleoProcessLink</code> interface instead.

@@ -70,7 +70,7 @@ public abstract class SamlSpSessionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SamlSpSessionLocalService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>SamlSpSessionLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil</code>.

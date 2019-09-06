@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SPIDefinition extends PersistedModel, SPIDefinitionModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

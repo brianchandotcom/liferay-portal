@@ -65,7 +65,7 @@ public class SamlSpSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlSpSession>
 	implements SamlSpSessionPersistence {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Always use <code>SamlSpSessionUtil</code> to access the saml sp session persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.

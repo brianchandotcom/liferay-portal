@@ -42,7 +42,7 @@ public interface WorkflowMetricsSLADefinitionVersionModel
 	extends BaseModel<WorkflowMetricsSLADefinitionVersion>, GroupedModel,
 			MVCCModel, ShardedModel, StagedAuditedModel, WorkflowedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a workflow metrics sla definition version model instance should use the {@link WorkflowMetricsSLADefinitionVersion} interface instead.

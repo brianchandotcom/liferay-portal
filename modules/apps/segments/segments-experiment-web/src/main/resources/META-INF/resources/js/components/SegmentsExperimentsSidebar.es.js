@@ -25,7 +25,7 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 import {navigateToExperience} from '../util/navigation.es';
-import {STATUS_RUNNING, STATUS_TERMINATED} from '../util/statuses.es';
+import {STATUS_TERMINATED} from '../util/statuses.es';
 import {reducer} from '../util/reducer.es';
 import {
 	closeCreationModal,
@@ -34,8 +34,7 @@ import {
 	openCreationModal,
 	addSegmentsExperiment,
 	updateSegmentsExperiment,
-	addVariant,
-	updateVariants
+	addVariant
 } from '../util/actions.es';
 
 const DEFAULT_STATE = {
@@ -85,12 +84,7 @@ function SegmentsExperimentsSidebar({
 		getInitialState
 	);
 
-	const {
-		createExperimentModal,
-		editExperimentModal,
-		experiment,
-		variants
-	} = state;
+	const {createExperimentModal, editExperimentModal, experiment} = state;
 
 	return page.type === 'content' ? (
 		<DispatchContext.Provider value={dispatch}>
@@ -108,7 +102,6 @@ function SegmentsExperimentsSidebar({
 							_handleEditSegmentExperimentStatus
 						}
 						onExperimentDiscard={_handleExperimentDiscard}
-						onRunExperiment={_handleRunExperiment}
 						onSelectSegmentsExperienceChange={
 							_handleSelectSegmentsExperience
 						}
@@ -248,26 +241,6 @@ function SegmentsExperimentsSidebar({
 					})
 				);
 			});
-	}
-
-	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
-		const body = {
-			confidenceLevel,
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			segmentsExperimentRels: JSON.stringify(splitVariantsMap),
-			status: STATUS_RUNNING
-		};
-
-		return APIService.runExperiment(body).then(function(response) {
-			const {segmentsExperiment} = response;
-			const updatedVariants = variants.map(variant => ({
-				...variant,
-				split: splitVariantsMap[variant.segmentsExperimentRelId]
-			}));
-
-			dispatch(updateSegmentsExperiment(segmentsExperiment));
-			dispatch(updateVariants(updatedVariants));
-		});
 	}
 
 	function _handleEditSegmentExperimentStatus(experimentData, status) {

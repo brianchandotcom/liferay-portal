@@ -27,7 +27,7 @@ import {
 	STATUS_FINISHED_WINNER
 } from '../util/statuses.es';
 import SegmentsExperimentsContext from '../context.es';
-import {updateSegmentsExperiment} from '../util/actions.es';
+import {updateSegmentsExperiment, updateVariants} from '../util/actions.es';
 import {StateContext, DispatchContext} from './SegmentsExperimentsSidebar.es';
 
 function _experimentReady(experiment, variants) {
@@ -39,8 +39,7 @@ function _experimentReady(experiment, variants) {
 
 function SegmentsExperimentsActions({
 	onEditSegmentsExperimentStatus,
-	onExperimentDiscard,
-	onRunExperiment
+	onExperimentDiscard
 }) {
 	const {variants, experiment, winnerVariant} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
@@ -137,7 +136,7 @@ function SegmentsExperimentsActions({
 
 			{reviewModalVisible && (
 				<ReviewExperimentModal
-					onRun={onRunExperiment}
+					onRun={_handleRunExperiment}
 					setVisible={setReviewModalVisible}
 					variants={variants}
 					visible={reviewModalVisible}
@@ -168,12 +167,31 @@ function SegmentsExperimentsActions({
 			dispatch(updateSegmentsExperiment(segmentsExperiment));
 		});
 	}
+
+	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
+		const body = {
+			confidenceLevel,
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			segmentsExperimentRels: JSON.stringify(splitVariantsMap),
+			status: STATUS_RUNNING
+		};
+
+		return APIService.runExperiment(body).then(function(response) {
+			const {segmentsExperiment} = response;
+			const updatedVariants = variants.map(variant => ({
+				...variant,
+				split: splitVariantsMap[variant.segmentsExperimentRelId]
+			}));
+
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
+			dispatch(updateVariants(updatedVariants));
+		});
+	}
 }
 
 SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
-	onExperimentDiscard: PropTypes.func.isRequired,
-	onRunExperiment: PropTypes.func.isRequired
+	onExperimentDiscard: PropTypes.func.isRequired
 };
 
 export default SegmentsExperimentsActions;

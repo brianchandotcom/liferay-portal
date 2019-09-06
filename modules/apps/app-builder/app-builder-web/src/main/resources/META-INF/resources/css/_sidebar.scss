@@ -34,6 +34,10 @@
 		margin-left: -1rem;
 		margin-right: -1rem;
 	}
+
+	.sidebar-body {
+		height: calc(100vh - 168px);
+	}
 }
 
 .app-builder-sidebar-content {

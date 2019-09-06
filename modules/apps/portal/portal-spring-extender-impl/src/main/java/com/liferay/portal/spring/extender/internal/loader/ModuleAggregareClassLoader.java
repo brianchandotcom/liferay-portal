@@ -102,7 +102,9 @@ public class ModuleAggregareClassLoader extends ClassLoader {
 	}
 
 	@Override
-	public Class<?> loadClass(String name) throws ClassNotFoundException {
+	public Class<?> loadClass(String name, boolean resolve)
+		throws ClassNotFoundException {
+
 		if (name.startsWith(_namespace)) {
 			return _moduleClassLoader.loadClass(name);
 		}

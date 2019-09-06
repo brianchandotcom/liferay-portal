@@ -55,7 +55,7 @@ public class DefaultTransactionExecutor
 			returnValue = unsafeSupplier.get();
 		}
 		catch (Throwable throwable) {
-			throw _rollback(
+			rollback(
 				throwable, transactionAttributeAdapter,
 				transactionStatusAdapter);
 		}
@@ -77,8 +77,31 @@ public class DefaultTransactionExecutor
 			TransactionStatusAdapter transactionStatusAdapter)
 		throws Throwable {
 
-		throw _rollback(
-			throwable, transactionAttributeAdapter, transactionStatusAdapter);
+		if (transactionAttributeAdapter.rollbackOn(throwable)) {
+			try {
+				_platformTransactionManager.rollback(
+					transactionStatusAdapter.getTransactionStatus());
+			}
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
+
+				throw t;
+			}
+			finally {
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter,
+					throwable);
+
+				TransactionExecutorThreadLocal.popTransactionExecutor();
+			}
+		}
+		else {
+			_commit(
+				transactionAttributeAdapter, transactionStatusAdapter,
+				throwable);
+		}
+
+		throw throwable;
 	}
 
 	@Override
@@ -131,38 +154,6 @@ public class DefaultTransactionExecutor
 
 			TransactionExecutorThreadLocal.popTransactionExecutor();
 		}
-	}
-
-	private Throwable _rollback(
-		Throwable throwable,
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		TransactionStatusAdapter transactionStatusAdapter) {
-
-		if (transactionAttributeAdapter.rollbackOn(throwable)) {
-			try {
-				_platformTransactionManager.rollback(
-					transactionStatusAdapter.getTransactionStatus());
-			}
-			catch (Throwable t) {
-				t.addSuppressed(throwable);
-
-				throw t;
-			}
-			finally {
-				TransactionLifecycleManager.fireTransactionRollbackedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter,
-					throwable);
-
-				TransactionExecutorThreadLocal.popTransactionExecutor();
-			}
-		}
-		else {
-			_commit(
-				transactionAttributeAdapter, transactionStatusAdapter,
-				throwable);
-		}
-
-		return throwable;
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

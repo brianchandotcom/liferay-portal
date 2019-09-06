@@ -105,10 +105,6 @@ function SegmentsExperimentsSidebar({
 						}
 						onTargetChange={_handleTargetChange}
 						segmentsExperiences={initialSegmentsExperiences}
-						segmentsExperiment={experiment}
-						selectedSegmentsExperienceId={
-							initialSelectedSegmentsExperienceId
-						}
 					/>
 					{createExperimentModal.active && (
 						<SegmentsExperimentsModal

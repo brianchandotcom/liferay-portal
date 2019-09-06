@@ -16,22 +16,31 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/main.es as DocumentLibraryOpener" %>'>
-	const openerOnedrive = new DocumentLibraryOpener.default({
-		namespace: '<portlet:namespace />'
-	});
+<liferay-frontend:component
+	componentId='<%= renderResponse.getNamespace() + "DocumentLibraryOpener" %>'
+	module="js/DocumentLibraryOpener.es"
+/>
 
+<aui:script>
 	window.<portlet:namespace />openCreateOfficeDocument = function(formSubmitURL, dialogTitle) {
-		openerOnedrive.createWithName({
-			dialogTitle: dialogTitle,
-			formSubmitURL: formSubmitURL
-		});
+		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
+			function(openerOnedrive) {
+				openerOnedrive.createWithName({
+					dialogTitle: dialogTitle,
+					formSubmitURL: formSubmitURL
+				});
+			}
+		);
 	}
 
-	window.<portlet:namespace />editOfficeDocument = function(formSubmitURL) {
-		openerOnedrive.edit({
-			formSubmitURL: formSubmitURL
-		});
+	window.<portlet:namespace />editOfficeDocument = function(formSubmitURL, dialogTitle) {
+		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
+			function(openerOnedrive) {
+				openerOnedrive.edit({
+					formSubmitURL: formSubmitURL
+				});
+			}
+		);
 	}
 
 	<%
@@ -40,7 +49,14 @@
 	%>
 
 	<c:if test="<%= oneDriveBackgroundTaskStatusURL != null %>">
-		openerOnedrive.open({pollingURL: '<%= oneDriveBackgroundTaskStatusURL %>', dialogMessage: '<%= dialogMessage %>'});
+		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
+			function(openerOnedrive) {
+				openerOnedrive.open({
+					dialogMessage: '<%= dialogMessage %>',
+					pollingURL: '<%= oneDriveBackgroundTaskStatusURL %>'
+				});
+			}
+		);
 	</c:if>
 </aui:script>
 

@@ -14,7 +14,7 @@
 
 'use strict';
 
-import DocumentLibraryOpener from '../../../src/main/resources/META-INF/resources/js/main.es.js';
+import DocumentLibraryOpener from '../../src/main/resources/META-INF/resources/js/DocumentLibraryOpener.es';
 
 const realSetTimeout = setTimeout;
 

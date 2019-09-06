@@ -22,6 +22,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -107,13 +109,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 				spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
 			},
 			props: {
-				cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
+				cancelUrl: '<%= HtmlUtil.escapeJS(redirect) %>',
 				fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
 				fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
 				fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
 				formName: '<portlet:namespace />editResultsRankingsFm',
-				initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
-				searchQuery: '<%= HtmlUtil.escape(keywords) %>'
+
+				<%
+				JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+				%>
+
+				initialAliases: <%= jsonSerializer.serialize(aliases) %>,
+				searchQuery: '<%= HtmlUtil.escapeJS(keywords) %>'
 			}
 		}
 	);

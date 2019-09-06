@@ -96,7 +96,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				name="aliases"
 			>
 				<div class="list-group-subtext">
-					<%= rankingEntryDisplayContext.getAliases() %>
+					<%= HtmlUtil.escape(rankingEntryDisplayContext.getAliases()) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 

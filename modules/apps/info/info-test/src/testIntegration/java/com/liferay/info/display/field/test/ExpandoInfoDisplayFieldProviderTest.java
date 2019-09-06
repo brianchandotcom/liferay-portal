@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -65,6 +66,49 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testGetStringArrayExpandoInfoDisplayFieldValue()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
+			_expandoTable, "test-string-array",
+			ExpandoColumnConstants.STRING_ARRAY);
+
+		String[] values = {"test-value-1", "test-value-2"};
+
+		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
+			_expandoTable, expandoColumn, _user.getPrimaryKey(), values);
+
+		Map<String, Object> infoDisplayFieldsValues =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					User.class.getName(), _user, LocaleUtil.getDefault());
+
+		List<InfoDisplayField> infoDisplayFields =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					User.class.getName(), LocaleUtil.getDefault());
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		infoDisplayFields = stream.filter(
+			infoDisplayField -> StringUtil.equals(
+				infoDisplayField.getLabel(), expandoColumn.getName())
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(
+			infoDisplayFields.toString(), 1, infoDisplayFields.size());
+
+		InfoDisplayField infoDisplayField = infoDisplayFields.get(0);
+
+		Assert.assertEquals(
+			StringUtil.merge(
+				expandoValue.getStringArray(), StringPool.COMMA_AND_SPACE),
+			infoDisplayFieldsValues.get(infoDisplayField.getKey()));
 	}
 
 	@Test

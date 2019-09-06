@@ -182,6 +182,10 @@ public class BasicRegistryImpl implements Registry {
 
 		List<ServiceReference<T>> serviceReferences = new ArrayList<>();
 
+		if ((filterString == null) || filterString.isEmpty()) {
+			filterString = "(objectClass=" + className + ")";
+		}
+
 		Filter filter = new BasicFilter(filterString);
 
 		for (Map.Entry<ServiceReference<?>, Object> entry :

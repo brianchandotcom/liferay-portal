@@ -464,6 +464,13 @@ public class FragmentEntryConfigUtil {
 	private static void _translateConfigurationField(
 		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
 
+		String fieldDescription = fieldJSONObject.getString("description");
+
+		fieldJSONObject.put(
+			"description",
+			LanguageUtil.get(
+				resourceBundle, fieldDescription, fieldDescription));
+
 		String fieldLabel = fieldJSONObject.getString("label");
 
 		fieldJSONObject.put(

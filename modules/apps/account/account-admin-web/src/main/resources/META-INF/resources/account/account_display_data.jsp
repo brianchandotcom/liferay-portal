@@ -28,7 +28,9 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 	<aui:row>
 		<aui:col width="<%= 50 %>">
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getName() %>" />
+				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getName() %>">
+					<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
+				</aui:input>
 			</aui:field-wrapper>
 		</aui:col>
 

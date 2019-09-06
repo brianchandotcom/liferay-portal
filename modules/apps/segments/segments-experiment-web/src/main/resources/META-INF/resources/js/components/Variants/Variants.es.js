@@ -18,8 +18,12 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import VariantList from './internal/VariantList.es';
 import VariantForm from './internal/VariantForm.es';
-import {addVariant, updateVariant, updateVariants} from '../../util/actions.es';
-import {DispatchContext, StateContext} from '../SegmentsExperimentsSidebar.es';
+import {
+	addVariant,
+	updateVariant,
+	updateVariants
+} from '../../state/actions.es';
+import {DispatchContext, StateContext} from '../../state/context.es';
 import SegmentsExperimentsContext from '../../context.es';
 import {navigateToExperience} from '../../util/navigation.es';
 

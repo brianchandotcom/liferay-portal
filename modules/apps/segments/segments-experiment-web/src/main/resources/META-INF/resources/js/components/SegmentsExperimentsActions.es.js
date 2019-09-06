@@ -27,8 +27,8 @@ import {
 	STATUS_FINISHED_WINNER
 } from '../util/statuses.es';
 import SegmentsExperimentsContext from '../context.es';
-import {updateSegmentsExperiment, updateVariants} from '../util/actions.es';
-import {StateContext, DispatchContext} from './SegmentsExperimentsSidebar.es';
+import {updateSegmentsExperiment, updateVariants} from '../state/actions.es';
+import {StateContext, DispatchContext} from './../state/context.es';
 
 function _experimentReady(experiment, variants) {
 	if (variants.length <= 1) return false;

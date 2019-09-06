@@ -25,7 +25,7 @@ import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import Variants from './Variants/Variants.es';
 import {statusToLabelDisplayType, STATUS_DRAFT} from '../util/statuses.es';
-import {StateContext} from './SegmentsExperimentsSidebar.es';
+import {StateContext} from '../state/context.es';
 
 function SegmentsExperiments({
 	onCreateSegmentsExperiment,

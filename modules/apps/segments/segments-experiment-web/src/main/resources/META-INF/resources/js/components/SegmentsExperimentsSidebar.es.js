@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useReducer, createContext} from 'react';
+import React, {useContext, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
@@ -25,7 +25,12 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 import {navigateToExperience} from '../util/navigation.es';
-import {reducer} from '../util/reducer.es';
+import {reducer} from '../state/reducer.es';
+import {
+	getInitialState,
+	DispatchContext,
+	StateContext
+} from '../state/context.es';
 import {
 	closeCreationModal,
 	closeEditionModal,
@@ -34,27 +39,7 @@ import {
 	addSegmentsExperiment,
 	updateSegmentsExperiment,
 	addVariant
-} from '../util/actions.es';
-
-const DEFAULT_STATE = {
-	createExperimentModal: {active: false},
-	editExperimentModal: {active: false},
-	experiences: [],
-	experiment: null,
-	selectedExperienceId: null,
-	variants: [],
-	winnerVariant: null
-};
-
-function getInitialState(state) {
-	return {
-		...DEFAULT_STATE,
-		...state
-	};
-}
-
-export const DispatchContext = createContext();
-export const StateContext = createContext(DEFAULT_STATE);
+} from '../state/actions.es';
 
 function SegmentsExperimentsSidebar({
 	initialGoals,
@@ -68,17 +53,10 @@ function SegmentsExperimentsSidebar({
 	const [state, dispatch] = useReducer(
 		reducer,
 		{
-			experiment: initialSegmentsExperiment,
-			selectedExperienceId: initialSelectedSegmentsExperienceId,
-			variants: initialSegmentsVariants.map(initialVariant => {
-				if (
-					winnerSegmentsVariantId ===
-					initialVariant.segmentsExperienceId
-				)
-					return {...initialVariant, winner: true};
-				return initialVariant;
-			}),
-			winnerVariant: winnerSegmentsVariantId
+			initialSegmentsExperiment,
+			initialSegmentsVariants,
+			initialSelectedSegmentsExperienceId,
+			winnerSegmentsVariantId
 		},
 		getInitialState
 	);

@@ -54,6 +54,21 @@ public class AccountEntryUserRelLocalServiceUtil {
 	}
 
 	/**
+	 * Creates an AccountEntryUserRel and adds it to the database. An
+	 * AccountEntryUserRel is essentially an "AccountEntry membership".
+	 *
+	 * @param accountEntryId the primary key of the AccountEntry
+	 * @param userId the primary key of the User
+	 * @return the AccountEntryUserRel
+	 * @review
+	 */
+	public static com.liferay.account.model.AccountEntryUserRel
+		addAccountEntryUserRel(long accountEntryId, long userId) {
+
+		return getService().addAccountEntryUserRel(accountEntryId, userId);
+	}
+
+	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
 	 * @param accountEntryUserRelPK the primary key for the new account entry user rel

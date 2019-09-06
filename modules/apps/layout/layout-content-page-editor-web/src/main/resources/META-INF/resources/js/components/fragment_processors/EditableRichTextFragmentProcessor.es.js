@@ -24,6 +24,13 @@ let _editor = null;
 let _editorEventHandler = null;
 
 /**
+ * @param {Event}
+ */
+function _stopEventPropagation(event) {
+	event.stopPropagation();
+}
+
+/**
  * Destroys, if any, an existing instance of AlloyEditor.
  */
 function destroy() {
@@ -34,6 +41,10 @@ function destroy() {
 		const editorData = _editor.get('nativeEditor').getData();
 
 		_editableElement.innerHTML = editorData;
+
+		_editableElement.removeEventListener('keydown', _stopEventPropagation);
+		_editableElement.removeEventListener('keyup', _stopEventPropagation);
+		_editableElement.removeEventListener('keypress', _stopEventPropagation);
 
 		_editor.destroy();
 
@@ -99,6 +110,10 @@ function init(
 	destroyedCallback
 ) {
 	destroy();
+
+	editableElement.addEventListener('keydown', _stopEventPropagation);
+	editableElement.addEventListener('keyup', _stopEventPropagation);
+	editableElement.addEventListener('keypress', _stopEventPropagation);
 
 	const {defaultEditorConfiguration} = options;
 	const editableContent = editableElement.innerHTML;

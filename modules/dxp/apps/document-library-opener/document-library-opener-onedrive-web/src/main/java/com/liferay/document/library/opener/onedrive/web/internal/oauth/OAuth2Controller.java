@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -62,42 +63,84 @@ public class OAuth2Controller {
 	public void execute(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			UnsafeFunction<PortletRequest, JSONObject, PortalException>
-				unsafeFunction)
+				unsafeFunction,
+			OAuth2Executor oAuth2ResultExecutor)
 		throws PortalException {
 
-		boolean redirect = ParamUtil.getBoolean(portletRequest, "redirect");
+		oAuth2ResultExecutor.execute(
+			portletRequest, portletResponse,
+			_getOAuth2Result(portletRequest, unsafeFunction));
+	}
 
-		try {
-			OAuth2Result oAuth2Result = _executeWithOAuth2(
-				portletRequest, unsafeFunction);
+	public static class OAuth2Result {
 
-			if (redirect) {
-				JSONObject jsonObject = oAuth2Result.getResponse();
-
-				for (String fieldName : jsonObject.keySet()) {
-					portletRequest.setAttribute(
-						fieldName, jsonObject.getString(fieldName));
-				}
-
-				portletRequest.setAttribute(
-					WebKeys.REDIRECT,
-					Optional.ofNullable(
-						oAuth2Result.getRedirectURL()
-					).orElseGet(
-						() -> _getRenderURL(portletRequest)
-					));
-			}
-			else {
-				JSONPortletResponseUtil.writeJSON(
-					portletRequest, portletResponse,
-					oAuth2Result.getResponse());
-			}
+		public OAuth2Result(JSONObject response) {
+			_portalException = null;
+			_response = response;
+			_redirectURL = null;
 		}
-		catch (PortalException pe) {
-			try {
-				_log.error(pe.getMessage(), pe);
 
-				if (!redirect) {
+		public OAuth2Result(PortalException portalException) {
+			_portalException = portalException;
+			_response = null;
+			_redirectURL = null;
+		}
+
+		public OAuth2Result(String redirectURL) {
+			_portalException = null;
+			_redirectURL = redirectURL;
+			_response = null;
+		}
+
+		public PortalException getPortalException() {
+			return _portalException;
+		}
+
+		public String getRedirectURL() {
+			return _redirectURL;
+		}
+
+		public JSONObject getResponse() {
+			if (_redirectURL != null) {
+				return JSONUtil.put("redirectURL", _redirectURL);
+			}
+
+			return Optional.ofNullable(
+				_response
+			).orElseGet(
+				JSONFactoryUtil::createJSONObject
+			);
+		}
+
+		private final PortalException _portalException;
+		private final String _redirectURL;
+		private final JSONObject _response;
+
+	}
+
+	public interface OAuth2Executor {
+
+		public void execute(
+				PortletRequest portletRequest, PortletResponse portletResponse,
+				OAuth2Result oAuth2Result)
+			throws PortalException;
+
+	}
+
+	public class OAuth2ExecutorWithoutRedirect implements OAuth2Executor {
+
+		@Override
+		public void execute(
+				PortletRequest portletRequest, PortletResponse portletResponse,
+				OAuth2Result oAuth2Result)
+			throws PortalException {
+
+			PortalException portalException = oAuth2Result.getPortalException();
+
+			if (!Objects.isNull(portalException)) {
+				try {
+					_log.error(portalException, portalException);
+
 					JSONPortletResponseUtil.writeJSON(
 						portletRequest, portletResponse,
 						JSONUtil.put(
@@ -106,39 +149,55 @@ public class OAuth2Controller {
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}
+				catch (IOException ioe) {
+					throw new PortalException(ioe);
+				}
+			}
 
-				throw pe;
+			try {
+				JSONPortletResponseUtil.writeJSON(
+					portletRequest, portletResponse,
+					oAuth2Result.getResponse());
 			}
 			catch (IOException ioe) {
 				throw new PortalException(ioe);
 			}
 		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
-		}
+
 	}
 
-	private <T extends PortletRequest> OAuth2Result _executeWithOAuth2(
-			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
-		throws PortalException {
+	public class OAuth2ExecutorWithRedirect implements OAuth2Executor {
 
-		long companyId = _portal.getCompanyId(t);
-		long userId = _portal.getUserId(t);
+		@Override
+		public void execute(
+				PortletRequest portletRequest, PortletResponse portletResponse,
+				OAuth2Result oAuth2Result)
+			throws PortalException {
 
-		if (_oAuth2Manager.hasAccessToken(companyId, userId)) {
-			return new OAuth2Result(unsafeFunction.apply(t));
+			PortalException portalException = oAuth2Result.getPortalException();
+
+			if (!Objects.isNull(portalException)) {
+				_log.error(portalException, portalException);
+
+				throw portalException;
+			}
+
+			JSONObject jsonObject = oAuth2Result.getResponse();
+
+			for (String fieldName : jsonObject.keySet()) {
+				portletRequest.setAttribute(
+					fieldName, jsonObject.getString(fieldName));
+			}
+
+			portletRequest.setAttribute(
+				WebKeys.REDIRECT,
+				Optional.ofNullable(
+					oAuth2Result.getRedirectURL()
+				).orElseGet(
+					() -> _getRenderURL(portletRequest)
+				));
 		}
 
-		String state = PwdGenerator.getPassword(5);
-
-		OAuth2StateUtil.save(
-			_portal.getOriginalServletRequest(_portal.getHttpServletRequest(t)),
-			new OAuth2State(
-				userId, _getSuccessURL(t), _getFailureURL(t), state));
-
-		return new OAuth2Result(
-			_oAuth2Manager.getAuthorizationURL(
-				companyId, _portal.getPortalURL(t), state));
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)
@@ -150,6 +209,37 @@ public class OAuth2Controller {
 			PortletRequest.RENDER_PHASE);
 
 		return liferayPortletURL.toString();
+	}
+
+	private OAuth2Result _getOAuth2Result(
+		PortletRequest portletRequest,
+		UnsafeFunction<PortletRequest, JSONObject, PortalException>
+			unsafeFunction) {
+
+		try {
+			long companyId = _portal.getCompanyId(portletRequest);
+			long userId = _portal.getUserId(portletRequest);
+
+			if (_oAuth2Manager.hasAccessToken(companyId, userId)) {
+				return new OAuth2Result(unsafeFunction.apply(portletRequest));
+			}
+
+			String state = PwdGenerator.getPassword(5);
+
+			OAuth2StateUtil.save(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(portletRequest)),
+				new OAuth2State(
+					userId, _getSuccessURL(portletRequest),
+					_getFailureURL(portletRequest), state));
+
+			return new OAuth2Result(
+				_oAuth2Manager.getAuthorizationURL(
+					companyId, _portal.getPortalURL(portletRequest), state));
+		}
+		catch (PortalException pe) {
+			return new OAuth2Result(pe);
+		}
 	}
 
 	private String _getRenderURL(PortletRequest portletRequest) {
@@ -193,38 +283,5 @@ public class OAuth2Controller {
 	private final Portal _portal;
 	private final PortletURLFactory _portletURLFactory;
 	private final ResourceBundleLoader _resourceBundleLoader;
-
-	private static class OAuth2Result {
-
-		public OAuth2Result(JSONObject response) {
-			_response = response;
-			_redirectURL = null;
-		}
-
-		public OAuth2Result(String redirectURL) {
-			_redirectURL = redirectURL;
-			_response = null;
-		}
-
-		public String getRedirectURL() {
-			return _redirectURL;
-		}
-
-		public JSONObject getResponse() {
-			if (_redirectURL != null) {
-				return JSONUtil.put("redirectURL", _redirectURL);
-			}
-
-			return Optional.ofNullable(
-				_response
-			).orElseGet(
-				JSONFactoryUtil::createJSONObject
-			);
-		}
-
-		private final String _redirectURL;
-		private final JSONObject _response;
-
-	}
 
 }

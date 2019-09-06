@@ -18,26 +18,20 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
-import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
+import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -54,25 +48,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
-	@Activate
-	public void activate() {
-		_oAuth2Controller = new OAuth2Controller(
-			_language, _oAuth2Manager, _portal, _portletURLFactory,
-			_resourceBundleLoader);
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_oAuth2Controller = null;
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_oAuth2Controller.execute(
-			actionRequest, actionResponse, this::_executeCommand);
+		OAuth2Controller oAuth2Controller =
+			_oAuth2ControllerFactory.getOAuth2Controller();
+
+		oAuth2Controller.execute(
+			actionRequest, actionResponse, this::_executeCommand,
+			oAuth2Controller.new OAuth2ExecutorWithRedirect());
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)
@@ -99,22 +85,6 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppService _dlAppService;
 
 	@Reference
-	private Language _language;
-
-	private OAuth2Controller _oAuth2Controller;
-
-	@Reference
-	private OAuth2Manager _oAuth2Manager;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
+	private OAuth2ControllerFactory _oAuth2ControllerFactory;
 
 }

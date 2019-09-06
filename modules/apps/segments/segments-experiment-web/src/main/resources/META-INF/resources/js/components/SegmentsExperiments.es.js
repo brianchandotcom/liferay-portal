@@ -32,7 +32,6 @@ function SegmentsExperiments({
 	onEditSegmentsExperiment,
 	onEditSegmentsExperimentStatus,
 	onSelectSegmentsExperienceChange,
-	onExperimentDiscard,
 	onTargetChange,
 	segmentsExperiences = [],
 	segmentsExperiment,
@@ -151,7 +150,6 @@ function SegmentsExperiments({
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
 						}
-						onExperimentDiscard={onExperimentDiscard}
 					/>
 				</>
 			)}
@@ -205,7 +203,6 @@ SegmentsExperiments.propTypes = {
 	onDeleteSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
-	onExperimentDiscard: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
 	onTargetChange: PropTypes.func.isRequired,
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),

@@ -37,10 +37,7 @@ function _experimentReady(experiment, variants) {
 	return true;
 }
 
-function SegmentsExperimentsActions({
-	onEditSegmentsExperimentStatus,
-	onExperimentDiscard
-}) {
+function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 	const {variants, experiment, winnerVariant} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
@@ -127,7 +124,7 @@ function SegmentsExperimentsActions({
 					<ClayButton
 						className="w-100 mb-3"
 						displayType="secondary"
-						onClick={onExperimentDiscard}
+						onClick={_handleDiscardExperiment}
 					>
 						{Liferay.Language.get('discard-experiment')}
 					</ClayButton>
@@ -187,11 +184,21 @@ function SegmentsExperimentsActions({
 			dispatch(updateVariants(updatedVariants));
 		});
 	}
+
+	function _handleDiscardExperiment() {
+		const body = {
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			status: STATUS_TERMINATED
+		};
+
+		APIService.discardExperiement(body).then(({segmentsExperiment}) => {
+			segmentsExperiment(segmentsExperiment);
+		});
+	}
 }
 
 SegmentsExperimentsActions.propTypes = {
-	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
-	onExperimentDiscard: PropTypes.func.isRequired
+	onEditSegmentsExperimentStatus: PropTypes.func.isRequired
 };
 
 export default SegmentsExperimentsActions;

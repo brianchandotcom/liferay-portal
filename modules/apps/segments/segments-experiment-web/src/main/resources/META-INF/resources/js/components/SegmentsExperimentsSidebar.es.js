@@ -25,7 +25,6 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 import {navigateToExperience} from '../util/navigation.es';
-import {STATUS_TERMINATED} from '../util/statuses.es';
 import {reducer} from '../util/reducer.es';
 import {
 	closeCreationModal,
@@ -101,7 +100,6 @@ function SegmentsExperimentsSidebar({
 						onEditSegmentsExperimentStatus={
 							_handleEditSegmentExperimentStatus
 						}
-						onExperimentDiscard={_handleExperimentDiscard}
 						onSelectSegmentsExperienceChange={
 							_handleSelectSegmentsExperience
 						}
@@ -342,17 +340,6 @@ function SegmentsExperimentsSidebar({
 
 	function _handleSelectSegmentsExperience(segmentsExperienceId) {
 		navigateToExperience(segmentsExperienceId);
-	}
-
-	function _handleExperimentDiscard() {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_TERMINATED
-		};
-
-		APIService.discardExperiement(body).then(({segmentsExperiment}) => {
-			segmentsExperiment(segmentsExperiment);
-		});
 	}
 
 	function _handleTargetChange(selector) {

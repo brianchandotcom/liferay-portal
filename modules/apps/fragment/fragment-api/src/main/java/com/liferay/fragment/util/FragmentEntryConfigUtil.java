@@ -488,12 +488,10 @@ public class FragmentEntryConfigUtil {
 			validValueJSONObject -> {
 				String value = validValueJSONObject.getString("value");
 
-				String key = value;
-
-				String label = validValueJSONObject.getString("label", key);
+				String label = validValueJSONObject.getString("label", value);
 
 				validValueJSONObject.put(
-					"label", LanguageUtil.get(resourceBundle, label, key));
+					"label", LanguageUtil.get(resourceBundle, label, label));
 			});
 	}
 

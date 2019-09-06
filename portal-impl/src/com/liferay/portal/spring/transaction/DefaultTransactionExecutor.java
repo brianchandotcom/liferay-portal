@@ -35,7 +35,30 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		_commit(transactionAttributeAdapter, transactionStatusAdapter, null);
+		Throwable commitThrowable = null;
+
+		try {
+			_platformTransactionManager.commit(
+				transactionStatusAdapter.getTransactionStatus());
+		}
+		catch (Throwable t) {
+			commitThrowable = t;
+
+			throw t;
+		}
+		finally {
+			if (commitThrowable == null) {
+				TransactionLifecycleManager.fireTransactionCommittedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter);
+			}
+			else {
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter,
+					commitThrowable);
+			}
+
+			TransactionExecutorThreadLocal.popTransactionExecutor();
+		}
 	}
 
 	@Override
@@ -69,9 +92,32 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			}
 		}
 		else {
-			_commit(
-				transactionAttributeAdapter, transactionStatusAdapter,
-				throwable);
+			Throwable commitThrowable = null;
+
+			try {
+				_platformTransactionManager.commit(
+					transactionStatusAdapter.getTransactionStatus());
+			}
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
+
+				commitThrowable = t;
+
+				throw t;
+			}
+			finally {
+				if (commitThrowable == null) {
+					TransactionLifecycleManager.fireTransactionCommittedEvent(
+						transactionAttributeAdapter, transactionStatusAdapter);
+				}
+				else {
+					TransactionLifecycleManager.fireTransactionRollbackedEvent(
+						transactionAttributeAdapter, transactionStatusAdapter,
+						commitThrowable);
+				}
+
+				TransactionExecutorThreadLocal.popTransactionExecutor();
+			}
 		}
 
 		throw throwable;
@@ -92,41 +138,6 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			transactionAttributeAdapter, transactionStatusAdapter);
 
 		return transactionStatusAdapter;
-	}
-
-	private void _commit(
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		TransactionStatusAdapter transactionStatusAdapter,
-		Throwable applicationThrowable) {
-
-		Throwable throwable = null;
-
-		try {
-			_platformTransactionManager.commit(
-				transactionStatusAdapter.getTransactionStatus());
-		}
-		catch (Throwable t) {
-			if (applicationThrowable != null) {
-				t.addSuppressed(applicationThrowable);
-			}
-
-			throwable = t;
-
-			throw t;
-		}
-		finally {
-			if (throwable == null) {
-				TransactionLifecycleManager.fireTransactionCommittedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter);
-			}
-			else {
-				TransactionLifecycleManager.fireTransactionRollbackedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter,
-					throwable);
-			}
-
-			TransactionExecutorThreadLocal.popTransactionExecutor();
-		}
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

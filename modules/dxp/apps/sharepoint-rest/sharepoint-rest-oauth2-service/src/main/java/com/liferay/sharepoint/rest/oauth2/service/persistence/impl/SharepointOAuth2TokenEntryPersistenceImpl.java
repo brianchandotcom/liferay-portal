@@ -43,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the sharepoint o auth2 token entry service.
  *
@@ -55,7 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Adolfo Pérez
  * @generated
  */
-@ProviderType
 public class SharepointOAuth2TokenEntryPersistenceImpl
 	extends BasePersistenceImpl<SharepointOAuth2TokenEntry>
 	implements SharepointOAuth2TokenEntryPersistence {

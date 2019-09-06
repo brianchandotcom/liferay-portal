@@ -17,8 +17,6 @@ package com.liferay.portal.reports.engine.console.model.impl;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Definition service. Represents a row in the &quot;Reports_Definition&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Definition
  * @generated
  */
-@ProviderType
 public abstract class DefinitionBaseImpl
 	extends DefinitionModelImpl implements Definition {
 

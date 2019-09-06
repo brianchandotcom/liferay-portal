@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.forms.model.impl;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLinkLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoProcessLink service. Represents a row in the &quot;KaleoProcessLink&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoProcessLink
  * @generated
  */
-@ProviderType
 public abstract class KaleoProcessLinkBaseImpl
 	extends KaleoProcessLinkModelImpl implements KaleoProcessLink {
 

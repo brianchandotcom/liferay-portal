@@ -45,8 +45,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the SharepointOAuth2TokenEntry service. Represents a row in the &quot;SharepointOAuth2TokenEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharepointOAuth2TokenEntryImpl
  * @generated
  */
-@ProviderType
 public class SharepointOAuth2TokenEntryModelImpl
 	extends BaseModelImpl<SharepointOAuth2TokenEntry>
 	implements SharepointOAuth2TokenEntryModel {

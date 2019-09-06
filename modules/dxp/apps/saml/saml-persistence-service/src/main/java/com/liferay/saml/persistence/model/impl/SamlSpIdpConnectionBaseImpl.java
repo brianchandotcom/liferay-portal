@@ -17,8 +17,6 @@ package com.liferay.saml.persistence.model.impl;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SamlSpIdpConnection service. Represents a row in the &quot;SamlSpIdpConnection&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlSpIdpConnection
  * @generated
  */
-@ProviderType
 public abstract class SamlSpIdpConnectionBaseImpl
 	extends SamlSpIdpConnectionModelImpl implements SamlSpIdpConnection {
 

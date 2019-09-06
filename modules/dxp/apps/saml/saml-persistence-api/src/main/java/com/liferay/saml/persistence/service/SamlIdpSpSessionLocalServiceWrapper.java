@@ -16,8 +16,6 @@ package com.liferay.saml.persistence.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SamlIdpSpSessionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlIdpSpSessionLocalService
  * @generated
  */
-@ProviderType
 public class SamlIdpSpSessionLocalServiceWrapper
 	implements SamlIdpSpSessionLocalService,
 			   ServiceWrapper<SamlIdpSpSessionLocalService> {

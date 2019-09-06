@@ -17,8 +17,6 @@ package com.liferay.portal.resiliency.spi.model.impl;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SPIDefinition service. Represents a row in the &quot;SPIDefinition&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SPIDefinition
  * @generated
  */
-@ProviderType
 public abstract class SPIDefinitionBaseImpl
 	extends SPIDefinitionModelImpl implements SPIDefinition {
 

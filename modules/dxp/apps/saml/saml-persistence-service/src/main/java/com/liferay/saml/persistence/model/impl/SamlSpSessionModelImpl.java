@@ -45,8 +45,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the SamlSpSession service. Represents a row in the &quot;SamlSpSession&quot; database table, with each column mapped to a property of this class.
  *
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlSpSessionImpl
  * @generated
  */
-@ProviderType
 public class SamlSpSessionModelImpl
 	extends BaseModelImpl<SamlSpSession> implements SamlSpSessionModel {
 

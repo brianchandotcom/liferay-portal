@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing SPIDefinition in entity cache.
  *
  * @author Michael C. Han
  * @generated
  */
-@ProviderType
 public class SPIDefinitionCacheModel
 	implements CacheModel<SPIDefinition>, Externalizable {
 

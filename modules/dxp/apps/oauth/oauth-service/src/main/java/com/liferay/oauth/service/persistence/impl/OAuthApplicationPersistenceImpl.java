@@ -48,8 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the o auth application service.
  *
@@ -60,7 +58,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Ivica Cardic
  * @generated
  */
-@ProviderType
 public class OAuthApplicationPersistenceImpl
 	extends BasePersistenceImpl<OAuthApplication>
 	implements OAuthApplicationPersistence {

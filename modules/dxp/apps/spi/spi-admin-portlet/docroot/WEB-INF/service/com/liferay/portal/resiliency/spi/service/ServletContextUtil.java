@@ -21,13 +21,10 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  * @generated
  */
-@ProviderType
 public class ServletContextUtil {
 
 	public static String getServletContextName() {

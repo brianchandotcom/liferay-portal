@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.forms.model.impl;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoProcess service. Represents a row in the &quot;KaleoProcess&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoProcess
  * @generated
  */
-@ProviderType
 public abstract class KaleoProcessBaseImpl
 	extends KaleoProcessModelImpl implements KaleoProcess {
 

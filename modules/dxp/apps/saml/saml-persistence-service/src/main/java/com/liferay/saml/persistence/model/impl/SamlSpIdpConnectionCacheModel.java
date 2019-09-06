@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing SamlSpIdpConnection in entity cache.
  *
  * @author Mika Koivisto
  * @generated
  */
-@ProviderType
 public class SamlSpIdpConnectionCacheModel
 	implements CacheModel<SamlSpIdpConnection>, Externalizable {
 

@@ -20,8 +20,6 @@ import com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SPIDefinitionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SPIDefinitionServiceHttp
  * @generated
  */
-@ProviderType
 public class SPIDefinitionServiceSoap {
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap

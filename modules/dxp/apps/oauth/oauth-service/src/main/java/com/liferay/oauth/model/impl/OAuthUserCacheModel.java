@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing OAuthUser in entity cache.
  *
  * @author Ivica Cardic
  * @generated
  */
-@ProviderType
 public class OAuthUserCacheModel
 	implements CacheModel<OAuthUser>, Externalizable {
 

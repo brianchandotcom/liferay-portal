@@ -51,8 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the spi definition service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  * @generated
  */
-@ProviderType
 public class SPIDefinitionPersistenceImpl
 	extends BasePersistenceImpl<SPIDefinition>
 	implements SPIDefinitionPersistence {

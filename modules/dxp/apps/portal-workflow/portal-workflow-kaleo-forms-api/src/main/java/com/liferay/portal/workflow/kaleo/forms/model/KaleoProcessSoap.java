@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.workflow.kaleo.forms.service.http.KaleoProcessServiceSoap}.
  *
  * @author Marcellus Tavares
  * @generated
  */
-@ProviderType
 public class KaleoProcessSoap implements Serializable {
 
 	public static KaleoProcessSoap toSoapModel(KaleoProcess model) {

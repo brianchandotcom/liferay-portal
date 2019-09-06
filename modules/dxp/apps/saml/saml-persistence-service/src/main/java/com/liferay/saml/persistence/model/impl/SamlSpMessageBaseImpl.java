@@ -17,8 +17,6 @@ package com.liferay.saml.persistence.model.impl;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.service.SamlSpMessageLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SamlSpMessage service. Represents a row in the &quot;SamlSpMessage&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlSpMessage
  * @generated
  */
-@ProviderType
 public abstract class SamlSpMessageBaseImpl
 	extends SamlSpMessageModelImpl implements SamlSpMessage {
 

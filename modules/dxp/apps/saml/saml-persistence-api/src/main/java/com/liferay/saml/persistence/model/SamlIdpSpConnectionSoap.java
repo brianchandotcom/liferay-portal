@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Mika Koivisto
  * @generated
  */
-@ProviderType
 public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public static SamlIdpSpConnectionSoap toSoapModel(

@@ -20,8 +20,6 @@ import com.liferay.portal.reports.engine.console.service.DefinitionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DefinitionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DefinitionServiceHttp
  * @generated
  */
-@ProviderType
 public class DefinitionServiceSoap {
 
 	public static com.liferay.portal.reports.engine.console.model.DefinitionSoap

@@ -17,8 +17,6 @@ package com.liferay.portal.reports.engine.console.model.impl;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.SourceLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Source service. Represents a row in the &quot;Reports_Source&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Source
  * @generated
  */
-@ProviderType
 public abstract class SourceBaseImpl extends SourceModelImpl implements Source {
 
 	/*

@@ -61,8 +61,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the kaleo process local service.
  *
@@ -74,7 +72,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.workflow.kaleo.forms.service.impl.KaleoProcessLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class KaleoProcessLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements KaleoProcessLocalService, IdentifiableOSGiService {

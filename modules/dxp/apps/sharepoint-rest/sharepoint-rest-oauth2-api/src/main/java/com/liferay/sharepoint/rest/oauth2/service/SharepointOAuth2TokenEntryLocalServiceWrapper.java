@@ -16,8 +16,6 @@ package com.liferay.sharepoint.rest.oauth2.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SharepointOAuth2TokenEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharepointOAuth2TokenEntryLocalService
  * @generated
  */
-@ProviderType
 public class SharepointOAuth2TokenEntryLocalServiceWrapper
 	implements SharepointOAuth2TokenEntryLocalService,
 			   ServiceWrapper<SharepointOAuth2TokenEntryLocalService> {

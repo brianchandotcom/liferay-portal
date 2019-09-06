@@ -49,8 +49,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the spi definition local service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SPIDefinitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SPIDefinitionLocalService, IdentifiableOSGiService {

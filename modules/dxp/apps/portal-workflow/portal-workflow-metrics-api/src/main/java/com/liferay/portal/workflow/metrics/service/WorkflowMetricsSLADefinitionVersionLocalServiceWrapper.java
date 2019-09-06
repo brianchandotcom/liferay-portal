@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.metrics.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link WorkflowMetricsSLADefinitionVersionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WorkflowMetricsSLADefinitionVersionLocalService
  * @generated
  */
-@ProviderType
 public class WorkflowMetricsSLADefinitionVersionLocalServiceWrapper
 	implements WorkflowMetricsSLADefinitionVersionLocalService,
 			   ServiceWrapper<WorkflowMetricsSLADefinitionVersionLocalService> {

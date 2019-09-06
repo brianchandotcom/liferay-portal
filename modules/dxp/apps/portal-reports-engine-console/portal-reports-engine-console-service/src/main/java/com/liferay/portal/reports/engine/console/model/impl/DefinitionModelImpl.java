@@ -59,8 +59,6 @@ import java.util.TreeSet;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the Definition service. Represents a row in the &quot;Reports_Definition&quot; database table, with each column mapped to a property of this class.
  *
@@ -73,7 +71,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class DefinitionModelImpl
 	extends BaseModelImpl<Definition> implements DefinitionModel {
 

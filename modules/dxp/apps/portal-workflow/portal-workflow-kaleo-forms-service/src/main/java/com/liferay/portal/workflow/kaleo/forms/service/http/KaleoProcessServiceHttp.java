@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>KaleoProcessServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoProcessServiceSoap
  * @generated
  */
-@ProviderType
 public class KaleoProcessServiceHttp {
 
 	public static com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess

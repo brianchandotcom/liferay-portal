@@ -16,8 +16,6 @@ package com.liferay.portal.resiliency.spi.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for SPIDefinition. This utility wraps
  * <code>com.liferay.portal.resiliency.spi.service.impl.SPIDefinitionLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SPIDefinitionLocalService
  * @generated
  */
-@ProviderType
 public class SPIDefinitionLocalServiceUtil {
 
 	/*

@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link SamlIdpSpConnection}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlIdpSpConnection
  * @generated
  */
-@ProviderType
 public class SamlIdpSpConnectionWrapper
 	extends BaseModelWrapper<SamlIdpSpConnection>
 	implements SamlIdpSpConnection, ModelWrapper<SamlIdpSpConnection> {

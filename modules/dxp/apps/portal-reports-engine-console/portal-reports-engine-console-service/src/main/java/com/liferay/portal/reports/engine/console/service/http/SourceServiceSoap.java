@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SourceServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SourceServiceHttp
  * @generated
  */
-@ProviderType
 public class SourceServiceSoap {
 
 	public static com.liferay.portal.reports.engine.console.model.SourceSoap

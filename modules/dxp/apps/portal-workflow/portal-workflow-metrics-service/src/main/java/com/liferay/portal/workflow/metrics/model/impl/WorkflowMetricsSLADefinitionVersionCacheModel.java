@@ -27,15 +27,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing WorkflowMetricsSLADefinitionVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class WorkflowMetricsSLADefinitionVersionCacheModel
 	implements CacheModel<WorkflowMetricsSLADefinitionVersion>, Externalizable,
 			   MVCCModel {

@@ -65,8 +65,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the workflow metrics sla definition version local service.
  *
@@ -78,7 +76,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.workflow.metrics.service.impl.WorkflowMetricsSLADefinitionVersionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class WorkflowMetricsSLADefinitionVersionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements WorkflowMetricsSLADefinitionVersionLocalService,

@@ -17,8 +17,6 @@ package com.liferay.oauth.model.impl;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.OAuthUserLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the OAuthUser service. Represents a row in the &quot;OAuth_OAuthUser&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthUser
  * @generated
  */
-@ProviderType
 public abstract class OAuthUserBaseImpl
 	extends OAuthUserModelImpl implements OAuthUser {
 

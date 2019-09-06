@@ -50,8 +50,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the saml idp sp session service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Mika Koivisto
  * @generated
  */
-@ProviderType
 public class SamlIdpSpSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlIdpSpSession>
 	implements SamlIdpSpSessionPersistence {

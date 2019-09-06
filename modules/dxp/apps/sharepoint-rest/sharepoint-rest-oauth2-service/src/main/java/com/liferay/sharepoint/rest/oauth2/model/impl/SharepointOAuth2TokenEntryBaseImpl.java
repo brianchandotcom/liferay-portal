@@ -17,8 +17,6 @@ package com.liferay.sharepoint.rest.oauth2.model.impl;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SharepointOAuth2TokenEntry service. Represents a row in the &quot;SharepointOAuth2TokenEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharepointOAuth2TokenEntry
  * @generated
  */
-@ProviderType
 public abstract class SharepointOAuth2TokenEntryBaseImpl
 	extends SharepointOAuth2TokenEntryModelImpl
 	implements SharepointOAuth2TokenEntry {

@@ -16,8 +16,6 @@ package com.liferay.portal.reports.engine.console.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DefinitionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DefinitionLocalService
  * @generated
  */
-@ProviderType
 public class DefinitionLocalServiceWrapper
 	implements DefinitionLocalService, ServiceWrapper<DefinitionLocalService> {
 

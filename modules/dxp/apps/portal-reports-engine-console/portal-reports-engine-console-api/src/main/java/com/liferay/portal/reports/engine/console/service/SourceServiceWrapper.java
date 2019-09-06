@@ -16,8 +16,6 @@ package com.liferay.portal.reports.engine.console.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SourceService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SourceService
  * @generated
  */
-@ProviderType
 public class SourceServiceWrapper
 	implements SourceService, ServiceWrapper<SourceService> {
 

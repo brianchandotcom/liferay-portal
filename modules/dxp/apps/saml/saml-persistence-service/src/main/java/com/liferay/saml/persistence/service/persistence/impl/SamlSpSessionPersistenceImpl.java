@@ -51,8 +51,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the saml sp session service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Mika Koivisto
  * @generated
  */
-@ProviderType
 public class SamlSpSessionPersistenceImpl
 	extends BasePersistenceImpl<SamlSpSession>
 	implements SamlSpSessionPersistence {

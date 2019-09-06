@@ -24,15 +24,12 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing KaleoProcessLink in entity cache.
  *
  * @author Marcellus Tavares
  * @generated
  */
-@ProviderType
 public class KaleoProcessLinkCacheModel
 	implements CacheModel<KaleoProcessLink>, Externalizable {
 

@@ -16,8 +16,6 @@ package com.liferay.oauth.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link OAuthUserService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthUserService
  * @generated
  */
-@ProviderType
 public class OAuthUserServiceWrapper
 	implements OAuthUserService, ServiceWrapper<OAuthUserService> {
 

@@ -20,8 +20,6 @@ import com.liferay.portal.reports.engine.console.service.EntryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>EntryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see EntryServiceHttp
  * @generated
  */
-@ProviderType
 public class EntryServiceSoap {
 
 	public static com.liferay.portal.reports.engine.console.model.EntrySoap

@@ -19,15 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Marcellus Tavares
  * @generated
  */
-@ProviderType
 public class KaleoProcessLinkSoap implements Serializable {
 
 	public static KaleoProcessLinkSoap toSoapModel(KaleoProcessLink model) {

@@ -51,8 +51,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the o auth application local service.
  *
@@ -64,7 +62,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.oauth.service.impl.OAuthApplicationLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class OAuthApplicationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements OAuthApplicationLocalService, IdentifiableOSGiService {

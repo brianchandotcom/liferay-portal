@@ -55,8 +55,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the entry local service.
  *
@@ -68,7 +66,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.reports.engine.console.service.impl.EntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class EntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements EntryLocalService, IdentifiableOSGiService {

@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link SamlIdpSpSession}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlIdpSpSession
  * @generated
  */
-@ProviderType
 public class SamlIdpSpSessionWrapper
 	extends BaseModelWrapper<SamlIdpSpSession>
 	implements SamlIdpSpSession, ModelWrapper<SamlIdpSpSession> {

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.resiliency.spi.service.SPIDefinitionServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SPIDefinitionServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SPIDefinitionServiceSoap
  * @generated
  */
-@ProviderType
 public class SPIDefinitionServiceHttp {
 
 	public static com.liferay.portal.resiliency.spi.model.SPIDefinition

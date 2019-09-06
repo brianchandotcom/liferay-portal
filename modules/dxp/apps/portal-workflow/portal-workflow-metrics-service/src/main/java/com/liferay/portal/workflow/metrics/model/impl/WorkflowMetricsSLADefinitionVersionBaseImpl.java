@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.metrics.model.impl;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the WorkflowMetricsSLADefinitionVersion service. Represents a row in the &quot;WMSLADefinitionVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WorkflowMetricsSLADefinitionVersion
  * @generated
  */
-@ProviderType
 public abstract class WorkflowMetricsSLADefinitionVersionBaseImpl
 	extends WorkflowMetricsSLADefinitionVersionModelImpl
 	implements WorkflowMetricsSLADefinitionVersion {

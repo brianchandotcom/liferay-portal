@@ -55,8 +55,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the saml idp sso session local service.
  *
@@ -68,7 +66,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.saml.persistence.service.impl.SamlIdpSsoSessionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SamlIdpSsoSessionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SamlIdpSsoSessionLocalService, IdentifiableOSGiService {

@@ -43,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the kaleo process link service.
  *
@@ -55,7 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Marcellus Tavares
  * @generated
  */
-@ProviderType
 public class KaleoProcessLinkPersistenceImpl
 	extends BasePersistenceImpl<KaleoProcessLink>
 	implements KaleoProcessLinkPersistence {

@@ -49,8 +49,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the sharepoint o auth2 token entry local service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SharepointOAuth2TokenEntryLocalService, IdentifiableOSGiService {

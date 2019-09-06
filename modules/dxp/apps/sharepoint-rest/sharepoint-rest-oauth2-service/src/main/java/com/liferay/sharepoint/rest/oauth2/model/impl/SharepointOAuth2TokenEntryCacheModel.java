@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing SharepointOAuth2TokenEntry in entity cache.
  *
  * @author Adolfo Pérez
  * @generated
  */
-@ProviderType
 public class SharepointOAuth2TokenEntryCacheModel
 	implements CacheModel<SharepointOAuth2TokenEntry>, Externalizable {
 

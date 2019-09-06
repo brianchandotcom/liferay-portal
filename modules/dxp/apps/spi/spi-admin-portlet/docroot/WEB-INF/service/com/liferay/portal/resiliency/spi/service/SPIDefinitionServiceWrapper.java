@@ -16,8 +16,6 @@ package com.liferay.portal.resiliency.spi.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SPIDefinitionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SPIDefinitionService
  * @generated
  */
-@ProviderType
 public class SPIDefinitionServiceWrapper
 	implements SPIDefinitionService, ServiceWrapper<SPIDefinitionService> {
 

@@ -20,13 +20,10 @@ import com.liferay.portal.kernel.configuration.Filter;
 
 import java.util.Properties;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  * @generated
  */
-@ProviderType
 public class ServiceProps {
 
 	public static void addProperties(Properties properties) {

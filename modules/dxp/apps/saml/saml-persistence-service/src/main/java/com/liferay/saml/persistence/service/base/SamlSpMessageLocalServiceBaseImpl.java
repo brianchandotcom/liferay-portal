@@ -55,8 +55,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the saml sp message local service.
  *
@@ -68,7 +66,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.saml.persistence.service.impl.SamlSpMessageLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SamlSpMessageLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SamlSpMessageLocalService, IdentifiableOSGiService {

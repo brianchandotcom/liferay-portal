@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.reports.engine.console.service.SourceServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SourceServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SourceServiceSoap
  * @generated
  */
-@ProviderType
 public class SourceServiceHttp {
 
 	public static com.liferay.portal.reports.engine.console.model.Source

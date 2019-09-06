@@ -55,8 +55,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the kaleo process service.
  *
@@ -67,7 +65,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Marcellus Tavares
  * @generated
  */
-@ProviderType
 public class KaleoProcessPersistenceImpl
 	extends BasePersistenceImpl<KaleoProcess>
 	implements KaleoProcessPersistence {

@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.kaleo.forms.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KaleoProcessLinkLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoProcessLinkLocalService
  * @generated
  */
-@ProviderType
 public class KaleoProcessLinkLocalServiceWrapper
 	implements KaleoProcessLinkLocalService,
 			   ServiceWrapper<KaleoProcessLinkLocalService> {

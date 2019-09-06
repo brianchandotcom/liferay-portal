@@ -17,8 +17,6 @@ package com.liferay.saml.persistence.model.impl;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.service.SamlSpAuthRequestLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SamlSpAuthRequest service. Represents a row in the &quot;SamlSpAuthRequest&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlSpAuthRequest
  * @generated
  */
-@ProviderType
 public abstract class SamlSpAuthRequestBaseImpl
 	extends SamlSpAuthRequestModelImpl implements SamlSpAuthRequest {
 

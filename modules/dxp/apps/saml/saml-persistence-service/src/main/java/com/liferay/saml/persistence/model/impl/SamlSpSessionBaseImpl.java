@@ -17,8 +17,6 @@ package com.liferay.saml.persistence.model.impl;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SamlSpSession service. Represents a row in the &quot;SamlSpSession&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SamlSpSession
  * @generated
  */
-@ProviderType
 public abstract class SamlSpSessionBaseImpl
 	extends SamlSpSessionModelImpl implements SamlSpSession {
 

@@ -35,6 +35,7 @@ import {
 } from '../../utils/utils.es';
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd';
 import {DragTypes} from '../../utils/drag-types.es';
+import {fetch} from 'frontend-js-web';
 import {PROPERTY_TYPES} from '../../utils/constants.es';
 import {PropTypes} from 'prop-types';
 

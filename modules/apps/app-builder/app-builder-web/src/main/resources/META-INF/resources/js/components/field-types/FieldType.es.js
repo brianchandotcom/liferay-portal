@@ -20,6 +20,14 @@ import classnames from 'classnames';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
 
+const ICONS = {
+	checkbox_multiple: 'select-from-list',
+	document_library: 'upload',
+	numeric: 'caret-double',
+	radio: 'radio-button',
+	select: 'list'
+};
+
 export default props => {
 	const {
 		description,
@@ -37,9 +45,7 @@ export default props => {
 		}),
 		item: {
 			...props,
-			preview: () => {
-				return <FieldTypeDragPreview {...props} />;
-			},
+			preview: () => <FieldTypeDragPreview {...props} />,
 			type: 'fieldType'
 		}
 	});
@@ -55,6 +61,8 @@ export default props => {
 
 		onAddColumn(label);
 	};
+
+	const fieldIcon = ICONS[icon] ? ICONS[icon] : icon;
 
 	return (
 		<div
@@ -83,7 +91,7 @@ export default props => {
 					displayType="light"
 					size="md"
 				>
-					<ClayIcon symbol={icon} />
+					<ClayIcon symbol={fieldIcon} />
 				</ClaySticker>
 			</div>
 			<div className="autofit-col autofit-col-expand pr-2">

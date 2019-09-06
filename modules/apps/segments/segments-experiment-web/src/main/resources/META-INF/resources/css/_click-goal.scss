@@ -3,12 +3,10 @@
 $target-overlay-background-color: rgba(128, 172, 255, 0.05);
 $target-overlay-border-color: rgba(128, 172, 255, 0.4);
 
-/**
- * You would think we could use Liferay.zIndex.OVERLAY (1000) here, but
- * we can't: see _variables.scss from layout-content-page-editor-web for
- * z-indices in the high 900s that apply to the top nav of the control
- * menu, and which we have to slide under while scrolling.
- */
+// You would think we could use Liferay.zIndex.OVERLAY (1000) here, but
+// we can't: see _variables.scss from layout-content-page-editor-web for
+// z-indices in the high 900s that apply to the top nav of the control
+// menu, and which we have to slide under while scrolling.
 $target-z-index: 900;
 
 .lfr-segments-experiment-click-goal-root {

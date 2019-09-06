@@ -46,7 +46,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testCommit() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
+			new RecordPlatformTransactionManager();
 
 		TransactionExecutor transactionExecutor = createTransactionExecutor(
 			recordPlatformTransactionManager);
@@ -63,7 +63,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testCommitWithAppException() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
+			new RecordPlatformTransactionManager();
 
 		TransactionExecutor transactionExecutor = createTransactionExecutor(
 			recordPlatformTransactionManager);
@@ -93,7 +93,7 @@ public class CounterTransactionExecutorTest {
 		throws Throwable {
 
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus) {
+			new RecordPlatformTransactionManager() {
 
 				@Override
 				public void commit(TransactionStatus transactionStatus) {
@@ -134,7 +134,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testCommitWithCommitException() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus) {
+			new RecordPlatformTransactionManager() {
 
 				@Override
 				public void commit(TransactionStatus transactionStatus) {
@@ -166,7 +166,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testGetPlatformTransactionManager() {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
+			new RecordPlatformTransactionManager();
 
 		TransactionExecutor transactionExecutor = createTransactionExecutor(
 			recordPlatformTransactionManager);
@@ -179,7 +179,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testRollbackOnAppException() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
+			new RecordPlatformTransactionManager();
 
 		TransactionExecutor transactionExecutor = createTransactionExecutor(
 			recordPlatformTransactionManager);
@@ -209,7 +209,7 @@ public class CounterTransactionExecutorTest {
 		throws Throwable {
 
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus) {
+			new RecordPlatformTransactionManager() {
 
 				@Override
 				public void rollback(TransactionStatus transactionStatus) {
@@ -250,7 +250,7 @@ public class CounterTransactionExecutorTest {
 	@Test
 	public void testTransactionHandlerMethods() throws Throwable {
 		RecordPlatformTransactionManager recordPlatformTransactionManager =
-			new RecordPlatformTransactionManager(_transactionStatus);
+			new RecordPlatformTransactionManager();
 
 		TransactionExecutor transactionExecutor = createTransactionExecutor(
 			recordPlatformTransactionManager);
@@ -320,52 +320,12 @@ public class CounterTransactionExecutorTest {
 	protected final Exception commitException = new Exception();
 	protected final Exception rollbackException = new Exception();
 
-	private static TransactionAttributeAdapter _newTransactionAttributeAdapter(
-		Predicate<Throwable> predicate) {
-
-		return new TransactionAttributeAdapter(
-			(TransactionAttribute)ProxyUtil.newProxyInstance(
-				TransactionAttribute.class.getClassLoader(),
-				new Class<?>[] {TransactionAttribute.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-						Object proxy, Method method, Object[] args) {
-
-						if (Objects.equals(method.getName(), "rollbackOn")) {
-							return predicate.test((Throwable)args[0]);
-						}
-
-						throw new UnsupportedOperationException(
-							method.toString());
-					}
-
-				}));
-	}
-
-	private final TransactionStatus _transactionStatus =
-		(TransactionStatus)ProxyUtil.newProxyInstance(
-			TransactionStatus.class.getClassLoader(),
-			new Class<?>[] {TransactionStatus.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(
-					Object proxy, Method method, Object[] args) {
-
-					throw new UnsupportedOperationException(method.toString());
-				}
-
-			});
-
-	private class RecordPlatformTransactionManager
+	protected class RecordPlatformTransactionManager
 		implements PlatformTransactionManager {
 
-		public RecordPlatformTransactionManager(
-			TransactionStatus transactionStatus) {
-
-			_transactionStatus = transactionStatus;
+		public RecordPlatformTransactionManager() {
+			_transactionStatus =
+				CounterTransactionExecutorTest._transactionStatus;
 		}
 
 		@Override
@@ -405,5 +365,44 @@ public class CounterTransactionExecutorTest {
 		private final TransactionStatus _transactionStatus;
 
 	}
+
+	private static TransactionAttributeAdapter _newTransactionAttributeAdapter(
+		Predicate<Throwable> predicate) {
+
+		return new TransactionAttributeAdapter(
+			(TransactionAttribute)ProxyUtil.newProxyInstance(
+				TransactionAttribute.class.getClassLoader(),
+				new Class<?>[] {TransactionAttribute.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+						Object proxy, Method method, Object[] args) {
+
+						if (Objects.equals(method.getName(), "rollbackOn")) {
+							return predicate.test((Throwable)args[0]);
+						}
+
+						throw new UnsupportedOperationException(
+							method.toString());
+					}
+
+				}));
+	}
+
+	private static final TransactionStatus _transactionStatus =
+		(TransactionStatus)ProxyUtil.newProxyInstance(
+			TransactionStatus.class.getClassLoader(),
+			new Class<?>[] {TransactionStatus.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					throw new UnsupportedOperationException(method.toString());
+				}
+
+			});
 
 }

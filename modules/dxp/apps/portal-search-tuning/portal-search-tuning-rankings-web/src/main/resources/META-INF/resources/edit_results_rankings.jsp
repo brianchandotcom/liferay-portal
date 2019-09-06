@@ -120,6 +120,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 				%>
 
 				initialAliases: <%= jsonSerializer.serialize(aliases) %>,
+
 				searchQuery: '<%= HtmlUtil.escapeJS(keywords) %>'
 			}
 		}

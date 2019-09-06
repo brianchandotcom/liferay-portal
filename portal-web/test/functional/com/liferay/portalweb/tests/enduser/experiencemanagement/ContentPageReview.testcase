@@ -93,46 +93,6 @@ definition {
 		PageEditor.viewComment(fragmentComment = '''& < > " Escape Characters Comment''');
 	}
 
-	@description = "This test covers LPS-100024. It ensures that the comment is different in different experience."
-	@priority = "4"
-	test CommentOnDifferentExperience {
-		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Title");
-
-		PageEditor.addExperience(experienceName = "New Experience Name");
-
-		PageEditor.addComment(
-			content = "Lorem ipsum dolor sit amet",
-			fragmentClass = "header",
-			fragmentComment = "This is a fragment comment.",
-			fragmentName = "Title",
-			position = "1");
-
-		PageEditor.changeExperience(newExperience = "Default");
-
-		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
-
-		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_DELETE");
-
-		AssertTextEquals(
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
-			value1 = "There are no comments yet.");
-
-		PageEditor.changeExperience(newExperience = "New Experience Name");
-
-		PageEditor.viewCommentList(
-			commentCount = "1 Comment",
-			fragmentName = "Title",
-			openComment = "true");
-	}
-
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
 	test DeleteComment {
@@ -584,6 +544,46 @@ definition {
 		}
 
 		PageEditor.viewComment(fragmentComment = "Title fragment comment");
+	}
+
+	@description = "This test covers LPS-100024. It ensures that comments from different experiences are independent from one another."
+	@priority = "4"
+	test ViewCommentOnDifferentExperience {
+		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addExperience(experienceName = "New Experience Name");
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "This is a fragment comment.",
+			fragmentName = "Title",
+			position = "1");
+
+		PageEditor.changeExperience(newExperience = "Default");
+
+		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
+
+		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_DELETE");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",
+			value1 = "There are no comments yet.");
+
+		PageEditor.changeExperience(newExperience = "New Experience Name");
+
+		PageEditor.viewCommentList(
+			commentCount = "1 Comment",
+			fragmentName = "Title",
+			openComment = "true");
 	}
 
 	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."

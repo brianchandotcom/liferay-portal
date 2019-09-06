@@ -16,54 +16,54 @@ import classNames from 'classnames';
 import React, {useState} from 'react';
 import Button from '../button/Button.es';
 
-const Sidebar = ({
-	children,
-	closeable = true,
-	onSearch = null,
-	onToggle = () => {}
-}) => {
-	const [isClosed, setClosed] = useState(false);
+const Sidebar = React.forwardRef(
+	(
+		{children, closeable = true, onSearch = null, onToggle = () => {}},
+		ref
+	) => {
+		const [isClosed, setClosed] = useState(false);
 
-	const handleToggle = () => {
-		const closed = !isClosed;
-		setClosed(closed);
-		onToggle(closed);
-	};
+		const handleToggle = () => {
+			const closed = !isClosed;
+			setClosed(closed);
+			onToggle(closed);
+		};
 
-	return (
-		<div>
-			<div
-				className={classNames('app-builder-sidebar', 'main', {
-					closed: isClosed
-				})}
-			>
-				<div className="sidebar sidebar-light">
-					{(closeable || onSearch) && (
-						<SidebarSearchInput
-							closeable={closeable}
-							onSearch={onSearch}
-							onToggle={handleToggle}
-						/>
-					)}
-					{children}
-				</div>
-			</div>
-			{closeable && (
+		return (
+			<div ref={ref}>
 				<div
-					className={classNames('app-builder-sidebar', 'mini', {
-						closed: !isClosed
+					className={classNames('app-builder-sidebar', 'main', {
+						closed: isClosed
 					})}
 				>
-					<Button
-						displayType="secondary"
-						onClick={handleToggle}
-						symbol="angle-left"
-					/>
+					<div className="sidebar sidebar-light">
+						{(closeable || onSearch) && (
+							<SidebarSearchInput
+								closeable={closeable}
+								onSearch={onSearch}
+								onToggle={handleToggle}
+							/>
+						)}
+						{children}
+					</div>
 				</div>
-			)}
-		</div>
-	);
-};
+				{closeable && (
+					<div
+						className={classNames('app-builder-sidebar', 'mini', {
+							closed: !isClosed
+						})}
+					>
+						<Button
+							displayType="secondary"
+							onClick={handleToggle}
+							symbol="angle-left"
+						/>
+					</div>
+				)}
+			</div>
+		);
+	}
+);
 
 const SidebarBody = ({children}) => {
 	return <div className="sidebar-body">{children}</div>;

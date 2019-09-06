@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "blue",
-					"description": "this-is-the-style-that-will-be-applied",
+					"description": "Este es el estilo que será aplicado",
 					"label": "Estilo aplicado",
 					"name": "headingAppliedStyle",
 					"type": "select",

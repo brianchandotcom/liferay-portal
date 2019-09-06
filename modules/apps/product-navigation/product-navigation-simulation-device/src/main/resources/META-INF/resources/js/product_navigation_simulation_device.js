@@ -368,7 +368,10 @@ AUI.add(
 								title: Liferay.Language.get(
 									'simulation-peview'
 								),
-								uri: WIN.location.href
+								uri: Liferay.Util.addParams(
+									'p_l_mode=preview',
+									WIN.location.href
+								)
 							},
 							function(dialogWindow) {
 								var dialogBoundingBox = dialogWindow.get(

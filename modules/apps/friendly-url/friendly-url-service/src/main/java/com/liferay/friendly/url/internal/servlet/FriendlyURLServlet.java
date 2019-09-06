@@ -393,10 +393,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
-							"Forward from ",
-							httpServletRequest.getRequestURI(),
-							" to ",
-							redirect.getPath()));
+							"Forward from ", httpServletRequest.getRequestURI(),
+							" to ", redirect.getPath()));
 				}
 
 				requestDispatcher.forward(
@@ -409,8 +407,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					_log.debug(
 						StringBundler.concat(
 							"Location moved permanently from ",
-							httpServletRequest.getRequestURI(),
-							" to ",
+							httpServletRequest.getRequestURI(), " to ",
 							redirect.getPath()));
 				}
 
@@ -423,8 +420,7 @@ public class FriendlyURLServlet extends HttpServlet {
 					_log.debug(
 						StringBundler.concat(
 							"Redirect from ",
-							httpServletRequest.getRequestURI(),
-							" to ",
+							httpServletRequest.getRequestURI(), " to ",
 							redirect.getPath()));
 				}
 

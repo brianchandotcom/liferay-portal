@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -47,7 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = WorkflowMetricsSLADefinitionTransformerMessageListener.class
+	service = {
+		MessageListener.class,
+		WorkflowMetricsSLADefinitionTransformerMessageListener.class
+	}
 )
 public class WorkflowMetricsSLADefinitionTransformerMessageListener
 	extends BaseMessageListener {

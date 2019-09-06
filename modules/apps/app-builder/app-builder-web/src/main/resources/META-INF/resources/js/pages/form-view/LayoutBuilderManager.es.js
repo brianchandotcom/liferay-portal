@@ -28,10 +28,11 @@ const getColumnKey = node => {
 };
 
 export default ({dataLayoutBuilder}) => {
-	const provider = dataLayoutBuilder.getProvider();
 	const [columns, setColumns] = useState(getColumns());
 
 	useEffect(() => {
+		const provider = dataLayoutBuilder.getProvider();
+
 		const eventHandler = provider.on('pagesChanged', () => {
 			provider.once('rendered', () => {
 				setColumns(getColumns());

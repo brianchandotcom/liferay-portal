@@ -24,6 +24,7 @@ import {
 	STATUS_PAUSED,
 	STATUS_RUNNING,
 	STATUS_TERMINATED,
+	STATUS_FINISHED_NO_WINNER,
 	STATUS_FINISHED_WINNER
 } from '../util/statuses.es';
 import SegmentsExperimentsContext from '../context.es';
@@ -126,9 +127,19 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 						displayType="secondary"
 						onClick={_handleDiscardExperiment}
 					>
-						{Liferay.Language.get('discard-experiment')}
+						{Liferay.Language.get('discard-test')}
 					</ClayButton>
 				</>
+			)}
+
+			{experiment.status.value === STATUS_FINISHED_NO_WINNER && (
+				<ClayButton
+					className="w-100 mb-3"
+					displayType="primary"
+					onClick={_handleDiscardExperiment}
+				>
+					{Liferay.Language.get('discard-test')}
+				</ClayButton>
 			)}
 
 			{reviewModalVisible && (
@@ -188,7 +199,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 	function _handleDiscardExperiment() {
 		const body = {
 			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_TERMINATED
+			status: STATUS_COMPLETED
 		};
 
 		APIService.discardExperiment(body).then(({segmentsExperiment}) => {

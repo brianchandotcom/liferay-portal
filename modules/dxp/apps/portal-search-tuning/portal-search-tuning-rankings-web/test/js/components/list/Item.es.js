@@ -67,14 +67,6 @@ describe('Item', () => {
 		jest.clearAllMocks();
 	});
 
-	it('shows the dropdown when clicked on', () => {
-		const {container, getByTitle} = renderTestItem();
-
-		fireEvent.click(getByTitle('toggle-dropdown'));
-
-		expect(container.querySelector('.dropdown-menu')).toHaveClass('show');
-	});
-
 	it('shows the appropriate subtext', () => {
 		const {container} = renderTestItem();
 

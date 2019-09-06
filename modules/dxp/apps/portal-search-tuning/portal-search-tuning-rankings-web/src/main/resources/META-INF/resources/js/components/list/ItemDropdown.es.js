@@ -10,8 +10,8 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import getCN from 'classnames';
 import React, {Component} from 'react';
 import {getPluralMessage} from '../../utils/language.es';
 import {PropTypes} from 'prop-types';
@@ -29,38 +29,8 @@ class ItemDropdown extends Component {
 		itemCount: 1
 	};
 
-	constructor(props) {
-		super(props);
-
-		this.setWrapperRef = this.setWrapperRef.bind(this);
-	}
-
 	state = {
 		show: false
-	};
-
-	componentDidMount() {
-		document.addEventListener('mousedown', this._handleClickOutside);
-	}
-
-	componentWillUnmount() {
-		document.removeEventListener('mousedown', this._handleClickOutside);
-	}
-
-	setWrapperRef(node) {
-		this.wrapperRef = node;
-	}
-
-	_handleClickOutside = event => {
-		if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-			this.setState({show: false});
-		}
-	};
-
-	_handleDropdownToggle = event => {
-		event.preventDefault();
-
-		this.setState(state => ({show: !state.show}));
 	};
 
 	_handleDropdownAction = actionFn => event => {
@@ -69,6 +39,10 @@ class ItemDropdown extends Component {
 		actionFn(event);
 
 		this.setState({show: false});
+	};
+
+	_handleSetShow = value => {
+		this.setState({show: value});
 	};
 
 	render() {
@@ -83,104 +57,63 @@ class ItemDropdown extends Component {
 
 		const {show} = this.state;
 
-		const classHidden = getCN(
-			'dropdown-menu',
-			'dropdown-menu-indicator-start',
-			'dropdown-menu-right',
-			{
-				show
-			}
-		);
-
 		return (
-			<div
-				className="dropdown dropdown-action result-dropdown"
-				ref={this.setWrapperRef}
+			<ClayDropDown
+				active={show}
+				hasLeftSymbols
+				onActiveChange={this._handleSetShow}
+				trigger={
+					<ClayButton
+						aria-expanded="false"
+						aria-haspopup="true"
+						className="btn-outline-borderless component-action"
+						title={Liferay.Language.get('toggle-dropdown')}
+					>
+						<ClayIcon symbol="ellipsis-v" />
+					</ClayButton>
+				}
 				{...otherProps}
 			>
-				<ClayButton
-					aria-expanded="false"
-					aria-haspopup="true"
-					className="btn-outline-borderless component-action dropdown-toggle"
-					data-toggle="dropdown"
-					onClick={this._handleDropdownToggle}
-					title={Liferay.Language.get('toggle-dropdown')}
-				>
-					<ClayIcon symbol="ellipsis-v" />
-				</ClayButton>
-
-				<ul className={classHidden}>
+				<ClayDropDown.ItemList>
 					{onClickPin && (
-						<li>
-							<ClayButton
-								className="dropdown-item"
-								displayType="link"
-								onClick={this._handleDropdownAction(onClickPin)}
-								small
-							>
-								<div className="dropdown-item-indicator">
-									{pinned ? (
-										<ClayIcon key="UNPIN" symbol="unpin" />
-									) : (
-										<ClayIcon key="PIN" symbol="pin" />
-									)}
-								</div>
-
-								{pinned
-									? getPluralMessage(
-											Liferay.Language.get(
-												'unpin-result'
-											),
-											Liferay.Language.get(
-												'unpin-results'
-											),
-											itemCount
-									  )
-									: getPluralMessage(
-											Liferay.Language.get('pin-result'),
-											Liferay.Language.get('pin-results'),
-											itemCount
-									  )}
-							</ClayButton>
-						</li>
+						<ClayDropDown.Item
+							key={pinned ? 'UNPIN' : 'PIN'}
+							onClick={this._handleDropdownAction(onClickPin)}
+							symbolLeft={pinned ? 'unpin' : 'pin'}
+						>
+							{pinned
+								? getPluralMessage(
+										Liferay.Language.get('unpin-result'),
+										Liferay.Language.get('unpin-results'),
+										itemCount
+								  )
+								: getPluralMessage(
+										Liferay.Language.get('pin-result'),
+										Liferay.Language.get('pin-results'),
+										itemCount
+								  )}
+						</ClayDropDown.Item>
 					)}
-
 					{onClickHide && (
-						<li>
-							<ClayButton
-								className="dropdown-item"
-								displayType="link"
-								onClick={this._handleDropdownAction(
-									onClickHide
-								)}
-								small
-							>
-								<div className="dropdown-item-indicator">
-									<ClayIcon
-										symbol={hidden ? 'view' : 'hidden'}
-									/>
-								</div>
-
-								{hidden
-									? getPluralMessage(
-											Liferay.Language.get('show-result'),
-											Liferay.Language.get(
-												'show-results'
-											),
-											itemCount
-									  )
-									: getPluralMessage(
-											Liferay.Language.get('hide-result'),
-											Liferay.Language.get(
-												'hide-results'
-											),
-											itemCount
-									  )}
-							</ClayButton>
-						</li>
+						<ClayDropDown.Item
+							onClick={this._handleDropdownAction(onClickHide)}
+							symbolLeft={hidden ? 'view' : 'hidden'}
+						>
+							{hidden
+								? getPluralMessage(
+										Liferay.Language.get('show-result'),
+										Liferay.Language.get('show-results'),
+										itemCount
+								  )
+								: getPluralMessage(
+										Liferay.Language.get('hide-result'),
+										Liferay.Language.get('hide-results'),
+										itemCount
+								  )}
+						</ClayDropDown.Item>
 					)}
-				</ul>
-			</div>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 		);
 	}
 }

@@ -11,7 +11,7 @@
 
 import React from 'react';
 import SearchBar from '../../../../src/main/resources/META-INF/resources/js/components/list/SearchBar.es';
-import {fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {
 	FETCH_SEARCH_DOCUMENTS_URL,
 	getMockResultsData
@@ -96,26 +96,6 @@ describe('SearchBar', () => {
 
 		expect(getByText('x-item-selected')).toBeInTheDocument();
 		expect(queryByText('add-result')).toBeNull();
-	});
-
-	it('shows the dropdown when clicked on', () => {
-		const {container, getByTitle} = render(
-			<SearchBar
-				dataMap={DATA_MAP}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onSelectAll={jest.fn()}
-				onSelectClear={jest.fn()}
-				resultIds={[102, 104, 103]}
-				selectedIds={[102, 103]}
-			/>
-		);
-
-		fireEvent.click(getByTitle('toggle-dropdown'));
-
-		expect(container.querySelector('.dropdown-menu')).toHaveClass('show');
 	});
 
 	it('shows no items selected with empty selectedIds', () => {

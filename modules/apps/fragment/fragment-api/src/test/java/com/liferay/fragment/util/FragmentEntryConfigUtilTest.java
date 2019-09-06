@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -43,6 +45,8 @@ public class FragmentEntryConfigUtilTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	@Test

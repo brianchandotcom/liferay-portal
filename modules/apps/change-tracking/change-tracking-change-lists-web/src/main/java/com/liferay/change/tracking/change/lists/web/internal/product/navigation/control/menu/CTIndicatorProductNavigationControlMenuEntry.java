@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.product.navigation.control.menu;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTProductNavigationControlMenuCategoryKeys;
 import com.liferay.change.tracking.model.CTCollection;
@@ -23,23 +22,18 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.taglib.aui.IconTag;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -54,7 +48,6 @@ import javax.portlet.WindowStateException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,44 +87,30 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, String> values = new HashMap<>();
-
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.fetchCTPreferences(
-				themeDisplay.getCompanyId(), 0);
-
-		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-
-		if (ctPreferences != null) {
-			ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId());
-
-			if (ctPreferences != null) {
-				ctCollectionId = ctPreferences.getCtCollectionId();
-			}
-		}
 
 		String ctCollectionName = StringPool.BLANK;
 
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+		if (ctPreferences == null) {
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
+				themeDisplay.getLocale(),
+				CTIndicatorProductNavigationControlMenuEntry.class);
 
 			ctCollectionName = _language.get(resourceBundle, "production");
 		}
 		else {
-			try {
-				CTCollection ctCollection =
-					_ctCollectionLocalService.getCTCollection(ctCollectionId);
+			CTCollection ctCollection =
+				_ctCollectionLocalService.fetchCTCollection(
+					ctPreferences.getCtCollectionId());
 
+			if (ctCollection != null) {
 				ctCollectionName = ctCollection.getName();
 			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
-			}
 		}
+
+		Map<String, String> values = new HashMap<>();
 
 		values.put("ctCollectionName", ctCollectionName);
 
@@ -143,9 +122,7 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			changeTrackingURL.setWindowState(WindowState.MAXIMIZED);
 		}
 		catch (WindowStateException wse) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(wse, wse);
-			}
+			ReflectionUtil.throwException(wse);
 		}
 
 		values.put("changeTrackingURL", changeTrackingURL.toString());
@@ -156,34 +133,31 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			iconTag.setCssClass("icon-monospaced");
 			iconTag.setMarkupView("lexicon");
 
-			if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			if (ctPreferences == null) {
 				iconTag.setImage("change-list-disabled");
 			}
 			else {
 				iconTag.setImage("change-list");
 			}
 
-			PageContext pageContext = PageContextFactoryUtil.create(
-				httpServletRequest, httpServletResponse);
-
 			values.put(
-				"changeTrackingIcon", iconTag.doTagAsString(pageContext));
+				"changeTrackingIcon",
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
 		}
 		catch (JspException je) {
 			ReflectionUtil.throwException(je);
 		}
 
-		Writer writer = httpServletResponse.getWriter();
+		StringBundler sb = StringUtil.replaceToStringBundler(
+			_TMPL_CONTENT, "${", "}", values);
 
-		writer.write(StringUtil.replace(_TMPL_CONTENT, "${", "}", values));
+		sb.writeTo(httpServletResponse.getWriter());
 
 		return true;
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	public boolean isShow(HttpServletRequest httpServletRequest) {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -203,17 +177,11 @@ public class CTIndicatorProductNavigationControlMenuEntry
 		CTIndicatorProductNavigationControlMenuEntry.class,
 		"/META-INF/resources/control/menu/change_tracking_indicator_icon.tmpl");
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTIndicatorProductNavigationControlMenuEntry.class);
-
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Reference
-	private Html _html;
 
 	@Reference
 	private Language _language;

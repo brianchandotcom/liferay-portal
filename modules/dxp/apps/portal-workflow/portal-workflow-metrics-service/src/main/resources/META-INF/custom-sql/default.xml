@@ -12,7 +12,7 @@
 					FROM
 						WMSLADefinitionVersion
 					WHERE
-						(WMSLADefinitionVersion.companyId <= ?) AND
+						(WMSLADefinitionVersion.companyId = ?) AND
 						(WMSLADefinitionVersion.createDate <= ?) AND
 						(WMSLADefinitionVersion.status = ? )
 					GROUP BY

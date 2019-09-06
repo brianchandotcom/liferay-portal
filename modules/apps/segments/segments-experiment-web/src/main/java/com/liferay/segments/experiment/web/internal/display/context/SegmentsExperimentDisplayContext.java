@@ -264,14 +264,14 @@ public class SegmentsExperimentDisplayContext {
 
 	public String getWinnerSegmentsExperienceId() {
 		if (_segmentsExperiment == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		long winnerSegmentsExperienceId =
 			_segmentsExperiment.getWinnerSegmentsExperienceId();
 
 		if (winnerSegmentsExperienceId == -1) {
-			return "";
+			return StringPool.BLANK;
 		}
 
 		return String.valueOf(winnerSegmentsExperienceId);

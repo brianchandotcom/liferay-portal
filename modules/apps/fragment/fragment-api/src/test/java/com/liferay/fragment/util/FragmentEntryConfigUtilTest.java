@@ -71,32 +71,12 @@ public class FragmentEntryConfigUtilTest {
 
 	@Test
 	public void testTranslateConfigurationEn() throws Exception {
-		JSONObject configurationJSONOjbect = JSONFactoryUtil.createJSONObject(
-			_read("configuration_untranslated.json"));
-
-		JSONObject expectedConfigurationTranslatedJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				_read("expected_configuration_translated_en.json"));
-
-		Assert.assertEquals(
-			expectedConfigurationTranslatedJSONObject.toJSONString(),
-			FragmentEntryConfigUtil.translateConfiguration(
-				configurationJSONOjbect, _getResourceBundle("en")));
+		_testTranslateConfiguration("en");
 	}
 
 	@Test
 	public void testTranslateConfigurationEs() throws Exception {
-		JSONObject configurationJSONOjbect = JSONFactoryUtil.createJSONObject(
-			_read("configuration_untranslated.json"));
-
-		JSONObject expectedConfigurationTranslatedJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				_read("expected_configuration_translated_es.json"));
-
-		Assert.assertEquals(
-			expectedConfigurationTranslatedJSONObject.toJSONString(),
-			FragmentEntryConfigUtil.translateConfiguration(
-				configurationJSONOjbect, _getResourceBundle("es")));
+		_testTranslateConfiguration("es");
 	}
 
 	private ResourceBundle _getResourceBundle(String language) {
@@ -112,6 +92,23 @@ public class FragmentEntryConfigUtilTest {
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _testTranslateConfiguration(String language) throws Exception {
+		JSONObject configurationJSONOjbect = JSONFactoryUtil.createJSONObject(
+			_read("configuration_untranslated.json"));
+
+		JSONObject expectedConfigurationTranslatedJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				_read(
+					String.format(
+						"expected_configuration_translated_%s.json",
+						language)));
+
+		Assert.assertEquals(
+			expectedConfigurationTranslatedJSONObject.toJSONString(),
+			FragmentEntryConfigUtil.translateConfiguration(
+				configurationJSONOjbect, _getResourceBundle(language)));
 	}
 
 }

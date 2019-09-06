@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -84,33 +83,25 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Task task1 = randomTask();
 
-		if (completed) {
-			task1.setDurationAvg(1000L);
-			task1.setOnTimeInstanceCount(0L);
-			task1.setOverdueInstanceCount(0L);
-		}
+		task1.setDurationAvg(1000L);
+		task1.setOnTimeInstanceCount(0L);
+		task1.setOverdueInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(processId, task1);
 
 		Task task2 = randomTask();
 
-		if (completed) {
-			task2.setDurationAvg(2000L);
-			task2.setOnTimeInstanceCount(0L);
-			task2.setOverdueInstanceCount(0L);
-		}
+		task2.setDurationAvg(2000L);
+		task2.setOnTimeInstanceCount(0L);
+		task2.setOverdueInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(processId, task2);
 
-		Page<Task> page =
-			page = taskResource.getProcessTasksPage(
-				processId, completed, null, null, Pagination.of(1, 2), null);
+		Page<Task> page = taskResource.getProcessTasksPage(
+			processId, true, null, null, Pagination.of(1, 2), null);
 
-		unsafeTriConsumer.accept(task1, task2, page);
-		_testGetProcessTasksPage(
-			true,
-			(task1, task2, page) -> assertEqualsIgnoringOrder(
-				Arrays.asList(task1, task2), (List<Task>)page.getItems()));
+		assertEqualsIgnoringOrder(
+			Arrays.asList(task1, task2), (List<Task>)page.getItems());
 	}
 
 	@Override

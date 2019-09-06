@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.util;
 
 import com.liferay.petra.function.UnsafeSupplier;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +39,9 @@ public class DLPortletConfigurationIconUtil {
 			return defaultValue;
 		}
 		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
+			_log.error(pe, pe);
+
+			return defaultValue;
 		}
 	}
 

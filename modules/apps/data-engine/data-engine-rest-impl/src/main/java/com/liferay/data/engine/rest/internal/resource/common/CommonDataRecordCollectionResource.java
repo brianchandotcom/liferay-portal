@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -38,10 +39,12 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,21 @@ public class CommonDataRecordCollectionResource<T> {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
+		if (Validator.isNull(keywords)) {
+			return Page.of(
+				TransformUtil.transform(
+					_ddlRecordSetLocalService.search(
+						ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
+						keywords, DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
+					_transformUnsafeFunction),
+				pagination,
+				_ddlRecordSetLocalService.searchCount(
+					ddmStructure.getCompanyId(), ddmStructure.getGroupId(),
+					keywords, DDLRecordSetConstants.SCOPE_DATA_ENGINE));
+		}
+
 		return SearchUtil.search(
 			booleanQuery -> {
 			},
@@ -153,6 +171,23 @@ public class CommonDataRecordCollectionResource<T> {
 				LanguageUtil.format(
 					acceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
+		}
+
+		Group group = _groupLocalService.getGroup(siteId);
+
+		if (Validator.isNull(keywords)) {
+			return Page.of(
+				TransformUtil.transform(
+					_ddlRecordSetLocalService.search(
+						group.getCompanyId(), siteId, keywords,
+						DDLRecordSetConstants.SCOPE_DATA_ENGINE,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
+					_transformUnsafeFunction),
+				pagination,
+				_ddlRecordSetLocalService.searchCount(
+					group.getCompanyId(), siteId, keywords,
+					DDLRecordSetConstants.SCOPE_DATA_ENGINE));
 		}
 
 		return SearchUtil.search(

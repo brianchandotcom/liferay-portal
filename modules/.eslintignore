@@ -1,21 +1,15 @@
 ##
-## Base Patterns
+## Deprecated or Archived modules
 ##
 
 	#
-	# Target "modern" JavaScript files only by first ignoring all ".js"
-	# files and then un-ignoring the ".es.js" subset.
+	# Ignore apps that are no longer under active development
 	#
 	apps/archived
 	apps/chat
-	apps/frontend-editor/frontend-editor-tinymce-web
-	apps/frontend-js/frontend-js-jquery-web
 	apps/google-maps
 	apps/mail-reader
 	apps/microblogs
-	swfobject.js
-	xp_progress.js
-	yarn-*.js
 
 ##
 ## Configuration Files
@@ -46,11 +40,18 @@
 	# not touch them.
 	#
 	*.soy.js
+	apps/frontend-editor/frontend-editor-tinymce-web
+	apps/frontend-js/frontend-js-jquery-web
 	build/**
 	classes/**
 	css/clay/**
 	node_modules/**
+	swfobject.js
+	xp_progress.js
+	yarn-*.js
 	zippableResources/**
+
+
 
 ##
 ## Sample Files

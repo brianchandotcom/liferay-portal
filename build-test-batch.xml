@@ -3952,7 +3952,7 @@ log.sanitizer.enabled=false</echo>
 									replace=":"
 								/>
 
-								<echo message="${js.project.path}:packageRunTest" />
+								<echo message="Executing Gradle task: ${js.project.path}:packageRunTest" />
 
 								<gradle-execute dir="modules" task="${js.project.path}:packageRunTest">
 									<arg value="--continue" />

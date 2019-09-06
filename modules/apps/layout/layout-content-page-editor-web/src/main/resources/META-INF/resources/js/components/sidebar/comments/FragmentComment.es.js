@@ -33,6 +33,7 @@ import ReplyCommentForm from './ReplyCommentForm.es';
 import ResolveButton from './ResolveButton.es';
 import UserIcon from '../../common/UserIcon.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import useIsMounted from '../../../store/hooks/useIsMounted.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
@@ -43,25 +44,15 @@ const FragmentComment = props => {
 	const [editing, setEditing] = useState(false);
 	const [hidden, setHidden] = useState(false);
 	const [highlighted, setHighlighted] = useState(false);
-	const [showDeleteMask, setShowDeleteMash] = useState(false);
+	const [showDeleteMask, setShowDeleteMask] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
 
 	const showResolvedComments = useSelector(
 		state => state.showResolvedComments
 	);
 
-	const dateDescriptionProps = {
-		className: 'm-0 text-secondary'
-	};
-
-	if (props.comment.edited && props.comment.modifiedDateDescription) {
-		dateDescriptionProps.className += ' lfr-portal-tooltip';
-
-		dateDescriptionProps['data-title'] = Liferay.Util.sub(
-			Liferay.Language.get('edited-x'),
-			props.comment.modifiedDateDescription
-		);
-	}
+	const showModifiedDateTooltip =
+		props.comment.edited && props.comment.modifiedDateDescription;
 
 	const commentClassname = classNames({
 		'fragments-editor__fragment-comment': true,
@@ -109,13 +100,17 @@ const FragmentComment = props => {
 			});
 	};
 
+	const isMounted = useIsMounted();
+
 	const hideComment = onHide => {
 		setHidden(true);
 
 		setTimeout(() => {
-			setShowDeleteMash(false);
-			setShowResolveMask(false);
-			onHide();
+			if (isMounted()) {
+				setShowDeleteMask(false);
+				setShowResolveMask(false);
+				onHide();
+			}
 		}, 1000);
 	};
 
@@ -146,7 +141,18 @@ const FragmentComment = props => {
 						</strong>
 					</p>
 
-					<p {...dateDescriptionProps}>
+					<p
+						className={classNames('m-0 text-secondary', {
+							'lfr-portal-tooltip': showModifiedDateTooltip
+						})}
+						data-title={
+							showModifiedDateTooltip &&
+							Liferay.Util.sub(
+								Liferay.Language.get('edited-x'),
+								props.comment.modifiedDateDescription
+							)
+						}
+					>
 						{props.comment.dateDescription}
 					</p>
 				</div>
@@ -192,7 +198,7 @@ const FragmentComment = props => {
 							<ClayDropDown.Item
 								onClick={() => {
 									setDropDownActive(false);
-									setShowDeleteMash(true);
+									setShowDeleteMask(true);
 								}}
 							>
 								{Liferay.Language.get('delete')}
@@ -254,7 +260,7 @@ const FragmentComment = props => {
 					message={Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-this-comment'
 					)}
-					onCancelButtonClick={() => setShowDeleteMash(false)}
+					onCancelButtonClick={() => setShowDeleteMask(false)}
 					onConfirmButtonClick={() =>
 						deleteFragmentEntryLinkComment(props.comment.commentId)
 							.then(() =>

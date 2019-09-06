@@ -18,7 +18,7 @@ import useDispatch from '../../../store/hooks/useDispatch.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
 
-const ShowResolvedCommentsToggle = () => {
+const ResolvedCommentsToggle = () => {
 	const dispatch = useDispatch();
 
 	const showResolvedComments = useSelector(
@@ -43,5 +43,5 @@ const ShowResolvedCommentsToggle = () => {
 	);
 };
 
-export {ShowResolvedCommentsToggle};
-export default ShowResolvedCommentsToggle;
+export {ResolvedCommentsToggle};
+export default ResolvedCommentsToggle;

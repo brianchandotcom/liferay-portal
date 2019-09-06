@@ -26,7 +26,7 @@ import FragmentComment from './FragmentComment.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
-import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
+import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 
 const FragmentComments = props => {
@@ -57,7 +57,7 @@ const FragmentComments = props => {
 				<span>{fragmentEntryLink.name}</span>
 			</SidebarHeader>
 
-			<ShowResolvedCommentsToggle />
+			<ResolvedCommentsToggle />
 
 			<div
 				data-fragments-editor-item-id={
@@ -71,18 +71,24 @@ const FragmentComments = props => {
 					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 				/>
 
-				{[...fragmentEntryLinkComments].reverse().map(comment => (
-					<FragmentComment
-						comment={comment}
-						fragmentEntryLinkId={
-							fragmentEntryLink.fragmentEntryLinkId
-						}
-						key={comment.commentId}
-						onDelete={deleteComment}
-						onEdit={editComment}
-						onEditReply={editCommentReply}
-					/>
-				))}
+				{fragmentEntryLinkComments.map((_, i) => {
+					const comment =
+						fragmentEntryLinkComments[
+							fragmentEntryLinkComments.length - 1 - i
+						];
+					return (
+						<FragmentComment
+							comment={comment}
+							fragmentEntryLinkId={
+								fragmentEntryLink.fragmentEntryLinkId
+							}
+							key={comment.commentId}
+							onDelete={deleteComment}
+							onEdit={editComment}
+							onEditReply={editCommentReply}
+						/>
+					);
+				})}
 			</div>
 		</>
 	);

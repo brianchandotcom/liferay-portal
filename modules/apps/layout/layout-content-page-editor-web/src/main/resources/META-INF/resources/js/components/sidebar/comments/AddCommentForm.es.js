@@ -14,7 +14,7 @@
 
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {addFragmentEntryLinkComment} from '../../../utils/FragmentsEditorFetchUtils.es';
 import CommentForm from './CommentForm.es';
@@ -65,11 +65,11 @@ const AddCommentForm = props => {
 			});
 	};
 
-	const _handleTextareaChange = content => {
+	const _handleTextareaChange = useCallback(content => {
 		if (content) {
 			setTextareaContent(content);
 		}
-	};
+	}, []);
 
 	return (
 		<div className="px-3">

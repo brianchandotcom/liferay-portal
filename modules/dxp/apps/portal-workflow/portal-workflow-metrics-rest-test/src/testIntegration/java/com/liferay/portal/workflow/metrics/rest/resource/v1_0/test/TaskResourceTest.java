@@ -78,6 +78,35 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	public void testGetProcessTasksPage() throws Exception {
 		super.testGetProcessTasksPage();
 
+		_deleteTasks();
+
+		Long processId = testGetProcessTasksPage_getProcessId();
+
+		Task task1 = randomTask();
+
+		if (completed) {
+			task1.setDurationAvg(1000L);
+			task1.setOnTimeInstanceCount(0L);
+			task1.setOverdueInstanceCount(0L);
+		}
+
+		testGetProcessTasksPage_addTask(processId, task1);
+
+		Task task2 = randomTask();
+
+		if (completed) {
+			task2.setDurationAvg(2000L);
+			task2.setOnTimeInstanceCount(0L);
+			task2.setOverdueInstanceCount(0L);
+		}
+
+		testGetProcessTasksPage_addTask(processId, task2);
+
+		Page<Task> page =
+			page = taskResource.getProcessTasksPage(
+				processId, completed, null, null, Pagination.of(1, 2), null);
+
+		unsafeTriConsumer.accept(task1, task2, page);
 		_testGetProcessTasksPage(
 			true,
 			(task1, task2, page) -> assertEqualsIgnoringOrder(
@@ -156,43 +185,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			_workflowMetricsRESTTestHelper.deleteTask(
 				testGroup.getCompanyId(), _process.getId(), task);
 		}
-	}
-
-	private void _testGetProcessTasksPage(
-			boolean completed,
-			UnsafeTriConsumer<Task, Task, Page<Task>, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		_deleteTasks();
-
-		Long processId = testGetProcessTasksPage_getProcessId();
-
-		Task task1 = randomTask();
-
-		if (completed) {
-			task1.setDurationAvg(1000L);
-			task1.setOnTimeInstanceCount(0L);
-			task1.setOverdueInstanceCount(0L);
-		}
-
-		testGetProcessTasksPage_addTask(processId, task1);
-
-		Task task2 = randomTask();
-
-		if (completed) {
-			task2.setDurationAvg(2000L);
-			task2.setOnTimeInstanceCount(0L);
-			task2.setOverdueInstanceCount(0L);
-		}
-
-		testGetProcessTasksPage_addTask(processId, task2);
-
-		Page<Task> page =
-			page = taskResource.getProcessTasksPage(
-				processId, completed, null, null, Pagination.of(1, 2), null);
-
-		unsafeTriConsumer.accept(task1, task2, page);
 	}
 
 	@Inject

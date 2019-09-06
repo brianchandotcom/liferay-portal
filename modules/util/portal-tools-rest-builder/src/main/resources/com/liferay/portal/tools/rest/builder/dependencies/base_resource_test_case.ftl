@@ -1291,6 +1291,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				List<GraphQLField> graphQLFields = getGraphQLFields();
 
+				<#if properties?keys?seq_contains("id")>
+					graphQLFields.add(new GraphQLField("id"));
+				</#if>
+
 				GraphQLField graphQLField = new GraphQLField(
 					"mutation",
 					new GraphQLField(

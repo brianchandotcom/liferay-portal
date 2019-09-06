@@ -3954,10 +3954,7 @@ log.sanitizer.enabled=false</echo>
 
 								<echo message="Executing Gradle task: ${js.project.path}:packageRunTest" />
 
-								<gradle-execute dir="modules" task="${js.project.path}:packageRunTest">
-									<arg value="--continue" />
-									<arg value="--parallel" />
-								</gradle-execute>
+								<gradle-execute dir="modules" task="${js.project.path}:packageRunTest" />
 							</then>
 						</if>
 					</sequential>

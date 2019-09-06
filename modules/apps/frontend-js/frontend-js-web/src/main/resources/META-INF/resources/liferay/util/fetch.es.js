@@ -39,5 +39,6 @@ export default function defaultFetch(resource, init = {}) {
 
 	mergedInit.headers = headers;
 
+	// eslint-disable-next-line liferay-portal/no-global-fetch
 	return fetch(resource, mergedInit);
 }

@@ -60,6 +60,7 @@ class PortletBase extends Component {
 	fetch(url, body) {
 		const requestBody = this.getRequestBody_(body);
 
+		// eslint-disable-next-line liferay-portal/no-global-fetch
 		return fetch(url, {
 			body: requestBody,
 			credentials: 'include',

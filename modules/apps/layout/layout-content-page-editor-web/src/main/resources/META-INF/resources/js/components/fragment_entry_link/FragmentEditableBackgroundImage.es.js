@@ -316,6 +316,11 @@ class FragmentEditableBackgroundImage extends Component {
 			'data-fragments-editor-item-type',
 			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
 		);
+
+		this.element.setAttribute(
+			'data-fragment-entry-link-id',
+			this.fragmentEntryLinkId
+		);
 	}
 
 	/**

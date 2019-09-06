@@ -20,11 +20,13 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
@@ -82,7 +84,12 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setUserName(user.getFullName());
 
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
-		accountEntry.setName(name);
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			AccountEntry.class.getName(), "name");
+
+		accountEntry.setName(StringUtil.shorten(name, nameMaxLength));
+
 		accountEntry.setDescription(description);
 
 		_portal.updateImageId(

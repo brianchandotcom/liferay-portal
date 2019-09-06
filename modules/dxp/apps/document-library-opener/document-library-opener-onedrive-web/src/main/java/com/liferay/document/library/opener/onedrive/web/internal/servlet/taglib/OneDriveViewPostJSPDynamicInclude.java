@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OneDriveViewJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class OneDriveViewPostJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -56,6 +56,6 @@ public class OneDriveViewJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OneDriveViewJSPDynamicInclude.class);
+		OneDriveViewPostJSPDynamicInclude.class);
 
 }

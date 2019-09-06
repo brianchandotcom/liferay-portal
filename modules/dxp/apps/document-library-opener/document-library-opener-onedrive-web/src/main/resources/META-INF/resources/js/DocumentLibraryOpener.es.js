@@ -38,8 +38,8 @@ class DocumentLibraryOpener {
 		}
 	}
 
-	_polling({pollingURL}) {
-		return fetch(pollingURL)
+	_polling({statusURL}) {
+		return fetch(statusURL)
 			.then(response => {
 				if (!response.ok) {
 					throw DEFAULT_ERROR;
@@ -57,7 +57,7 @@ class DocumentLibraryOpener {
 				} else {
 					return new Promise(resolve => {
 						setTimeout(() => {
-							this._polling({pollingURL}).then(resolve);
+							this._polling({statusURL}).then(resolve);
 						}, TIME_POLLING);
 					});
 				}
@@ -75,7 +75,7 @@ class DocumentLibraryOpener {
 		});
 	}
 
-	_showLoading({dialogMessage, pollingURL}) {
+	_showLoading({dialogMessage, statusURL}) {
 		return new Promise(resolve => {
 			Liferay.Util.openWindow(
 				{
@@ -97,8 +97,8 @@ class DocumentLibraryOpener {
 						resolve();
 					}, TIME_SHOW_MSG);
 
-					if (pollingURL) {
-						this._polling({pollingURL});
+					if (statusURL) {
+						this._polling({statusURL});
 					}
 				}
 			);
@@ -125,7 +125,7 @@ class DocumentLibraryOpener {
 			if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
 				this.open({
 					dialogMessage: serverResponseContent.dialogMessage,
-					pollingURL:
+					statusURL:
 						serverResponseContent.oneDriveBackgroundTaskStatusURL,
 					refresh: true
 				});
@@ -153,7 +153,7 @@ class DocumentLibraryOpener {
 					navigate(response.redirectURL);
 				} else if (response.oneDriveBackgroundTaskStatusURL) {
 					return this._polling({
-						pollingURL: response.oneDriveBackgroundTaskStatusURL
+						statusURL: response.oneDriveBackgroundTaskStatusURL
 					});
 				} else if (response.error) {
 					throw response.error.errorMessage || DEFAULT_ERROR;
@@ -170,12 +170,12 @@ class DocumentLibraryOpener {
 		dialogMessage = Liferay.Language.get(
 			'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
 		),
-		pollingURL,
+		statusURL,
 		refresh = false
 	}) {
 		this._refreshAfterNavigate = refresh;
 
-		return this._showLoading({dialogMessage, pollingURL});
+		return this._showLoading({dialogMessage, statusURL});
 	}
 }
 

@@ -53,7 +53,7 @@
 			function(openerOnedrive) {
 				openerOnedrive.open({
 					dialogMessage: '<%= dialogMessage %>',
-					pollingURL: '<%= oneDriveBackgroundTaskStatusURL %>'
+					statusURL: '<%= oneDriveBackgroundTaskStatusURL %>'
 				});
 			}
 		);

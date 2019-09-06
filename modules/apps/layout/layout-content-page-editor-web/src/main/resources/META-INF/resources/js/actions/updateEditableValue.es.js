@@ -146,7 +146,16 @@ const updateFragmentConfigurationAction = (
 		],
 		dispatch,
 		getState
-	);
+	).then(() => {
+		const state = getState();
+
+		return dispatch(
+			updateFragmentEntryLinkContent(
+				fragmentEntryLinkId,
+				state.segmentsExperienceId || state.defaultSegmentsExperienceId
+			)
+		);
+	});
 
 /**
  * @param {number} fragmentEntryLinkId
@@ -254,7 +263,7 @@ const _sendEditableValues = (
 
 	dispatch(enableSavingChangesStatusAction());
 
-	updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+	return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
 		.then(() => {
 			dispatch(_updateEditableValuesSuccessAction());
 			dispatch(disableSavingChangesStatusAction());

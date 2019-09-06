@@ -60,4 +60,5 @@ create unique index IX_285A6761 on WMSLADefinition (uuid_[$COLUMN_LENGTH:75$], g
 
 create index IX_F056686D on WMSLADefinitionVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DB48262F on WMSLADefinitionVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
-create index IX_7A303031 on WMSLADefinitionVersion (wmSLADefinitionId, version[$COLUMN_LENGTH:75$]);
+create index IX_A59DFB41 on WMSLADefinitionVersion (version[$COLUMN_LENGTH:75$], wmSLADefinitionId);
+create index IX_89A383B7 on WMSLADefinitionVersion (wmSLADefinitionId);

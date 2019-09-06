@@ -788,80 +788,80 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 	}
 
 	/**
-	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or throws a <code>NoSuchSLADefinitionVersionException</code> if it could not be found.
+	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or throws a <code>NoSuchSLADefinitionVersionException</code> if it could not be found.
 	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @return the matching workflow metrics sla definition version
 	 * @throws NoSuchSLADefinitionVersionException if a matching workflow metrics sla definition version could not be found
 	 */
-	public static WorkflowMetricsSLADefinitionVersion findByWMSLAD_V(
-			long workflowMetricsSLADefinitionId, String version)
+	public static WorkflowMetricsSLADefinitionVersion findByV_WMSLAD(
+			String version, long workflowMetricsSLADefinitionId)
 		throws com.liferay.portal.workflow.metrics.exception.
 			NoSuchSLADefinitionVersionException {
 
-		return getPersistence().findByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version);
+		return getPersistence().findByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId);
 	}
 
 	/**
-	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
-	public static WorkflowMetricsSLADefinitionVersion fetchByWMSLAD_V(
-		long workflowMetricsSLADefinitionId, String version) {
+	public static WorkflowMetricsSLADefinitionVersion fetchByV_WMSLAD(
+		String version, long workflowMetricsSLADefinitionId) {
 
-		return getPersistence().fetchByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version);
+		return getPersistence().fetchByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId);
 	}
 
 	/**
-	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
-	public static WorkflowMetricsSLADefinitionVersion fetchByWMSLAD_V(
-		long workflowMetricsSLADefinitionId, String version,
+	public static WorkflowMetricsSLADefinitionVersion fetchByV_WMSLAD(
+		String version, long workflowMetricsSLADefinitionId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version, useFinderCache);
+		return getPersistence().fetchByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId, useFinderCache);
 	}
 
 	/**
-	 * Removes the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; from the database.
+	 * Removes the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; from the database.
 	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @return the workflow metrics sla definition version that was removed
 	 */
-	public static WorkflowMetricsSLADefinitionVersion removeByWMSLAD_V(
-			long workflowMetricsSLADefinitionId, String version)
+	public static WorkflowMetricsSLADefinitionVersion removeByV_WMSLAD(
+			String version, long workflowMetricsSLADefinitionId)
 		throws com.liferay.portal.workflow.metrics.exception.
 			NoSuchSLADefinitionVersionException {
 
-		return getPersistence().removeByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version);
+		return getPersistence().removeByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId);
 	}
 
 	/**
-	 * Returns the number of workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63; and version = &#63;.
+	 * Returns the number of workflow metrics sla definition versions where version = &#63; and workflowMetricsSLADefinitionId = &#63;.
 	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @return the number of matching workflow metrics sla definition versions
 	 */
-	public static int countByWMSLAD_V(
-		long workflowMetricsSLADefinitionId, String version) {
+	public static int countByV_WMSLAD(
+		String version, long workflowMetricsSLADefinitionId) {
 
-		return getPersistence().countByWMSLAD_V(
-			workflowMetricsSLADefinitionId, version);
+		return getPersistence().countByV_WMSLAD(
+			version, workflowMetricsSLADefinitionId);
 	}
 
 	/**

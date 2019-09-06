@@ -330,12 +330,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByWMSLAD_V() throws Exception {
-		_persistence.countByWMSLAD_V(RandomTestUtil.nextLong(), "");
+	public void testCountByV_WMSLAD() throws Exception {
+		_persistence.countByV_WMSLAD("", RandomTestUtil.nextLong());
 
-		_persistence.countByWMSLAD_V(0L, "null");
+		_persistence.countByV_WMSLAD("null", 0L);
 
-		_persistence.countByWMSLAD_V(0L, (String)null);
+		_persistence.countByV_WMSLAD((String)null, 0L);
 	}
 
 	@Test
@@ -676,6 +676,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 				existingWorkflowMetricsSLADefinitionVersion,
 				"getOriginalGroupId", new Class<?>[0]));
 
+		Assert.assertTrue(
+			Objects.equals(
+				existingWorkflowMetricsSLADefinitionVersion.getVersion(),
+				ReflectionTestUtil.invoke(
+					existingWorkflowMetricsSLADefinitionVersion,
+					"getOriginalVersion", new Class<?>[0])));
 		Assert.assertEquals(
 			Long.valueOf(
 				existingWorkflowMetricsSLADefinitionVersion.
@@ -683,12 +689,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				existingWorkflowMetricsSLADefinitionVersion,
 				"getOriginalWorkflowMetricsSLADefinitionId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWorkflowMetricsSLADefinitionVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingWorkflowMetricsSLADefinitionVersion,
-					"getOriginalVersion", new Class<?>[0])));
 	}
 
 	protected WorkflowMetricsSLADefinitionVersion

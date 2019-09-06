@@ -12,22 +12,22 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {SegmentsVariantType} from '../../types.es';
 import VariantList from './internal/VariantList.es';
 import VariantForm from './internal/VariantForm.es';
+import {addVariant, updateVariant, updateVariants} from '../../util/actions.es';
+import {DispatchContext, StateContext} from '../SegmentsExperimentsSidebar.es';
+import SegmentsExperimentsContext from '../../context.es';
+import {navigateToExperience} from '../../util/navigation.es';
 
-function Variants({
-	editable,
-	onVariantCreation,
-	onVariantDeletion,
-	onVariantEdition,
-	selectedSegmentsExperienceId,
-	variants
-}) {
+function Variants({selectedSegmentsExperienceId}) {
+	const dispatch = useContext(DispatchContext);
+	const {experiment, variants} = useContext(StateContext);
+	const {APIService, page} = useContext(SegmentsExperimentsContext);
+
 	const {
 		observer: creatingVariantObserver,
 		onClose: creatingVariantOnClose
@@ -65,7 +65,7 @@ function Variants({
 				</>
 			)}
 
-			{editable && (
+			{experiment.editable && (
 				<ClayButton
 					className="mb-3"
 					data-testid="create-variant"
@@ -78,7 +78,7 @@ function Variants({
 			)}
 
 			<VariantList
-				editable={editable}
+				editable={experiment.editable}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
@@ -116,7 +116,28 @@ function Variants({
 	);
 
 	function _handleVariantDeletion(variantId) {
-		onVariantDeletion(variantId);
+		const body = {
+			classNameId: page.classNameId,
+			classPK: page.classPK,
+			segmentsExperimentRelId: variantId
+		};
+
+		return APIService.deleteVariant(body).then(() => {
+			let variantExperienceId = null;
+
+			const newVariants = variants.filter(variant => {
+				if (variant.segmentsExperimentRelId !== variantId) return true;
+
+				variantExperienceId = variant.segmentsExperienceId;
+				return false;
+			});
+
+			if (variantExperienceId === selectedSegmentsExperienceId) {
+				navigateToExperience(experiment.segmentsExperienceId);
+			} else {
+				dispatch(updateVariants(newVariants));
+			}
+		});
 	}
 
 	function _handleVariantEdition({name, variantId}) {
@@ -128,21 +149,60 @@ function Variants({
 	}
 
 	function _handleVariantEditionSave({name, variantId}) {
-		return onVariantEdition({name, variantId});
+		const body = {
+			classNameId: page.classNameId,
+			classPK: page.classPK,
+			name,
+			segmentsExperimentRelId: variantId
+		};
+
+		return APIService.editVariant(body).then(({segmentsExperimentRel}) => {
+			dispatch(
+				updateVariant({
+					changes: {
+						name: segmentsExperimentRel.name
+					},
+					variantId
+				})
+			);
+		});
 	}
 
 	function _handleVariantCreation({name}) {
-		return onVariantCreation(name);
+		const body = {
+			classNameId: page.classNameId,
+			classPK: page.classPK,
+			name,
+			segmentsExperimentId: experiment.segmentsExperimentId
+		};
+
+		return APIService.createVariant(body).then(
+			({segmentsExperimentRel}) => {
+				const {
+					name,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					segmentsExperimentRelId,
+					split
+				} = segmentsExperimentRel;
+
+				dispatch(
+					addVariant({
+						control: false,
+						name,
+						segmentsExperienceId,
+						segmentsExperimentId,
+						segmentsExperimentRelId,
+						split
+					})
+				);
+			}
+		);
 	}
 }
 
 Variants.propTypes = {
-	editable: PropTypes.bool.isRequired,
-	onVariantCreation: PropTypes.func.isRequired,
-	onVariantDeletion: PropTypes.func.isRequired,
-	onVariantEdition: PropTypes.func.isRequired,
-	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	variants: PropTypes.arrayOf(SegmentsVariantType)
+	selectedSegmentsExperienceId: PropTypes.string.isRequired
 };
 
 export default Variants;

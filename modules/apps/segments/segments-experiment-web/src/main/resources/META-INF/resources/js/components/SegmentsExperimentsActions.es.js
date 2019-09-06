@@ -16,7 +16,6 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
-import {SegmentsExperimentType, SegmentsVariantType} from '../types.es';
 import {
 	STATUS_DRAFT,
 	STATUS_PAUSED,
@@ -27,6 +26,7 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {StateContext} from './SegmentsExperimentsSidebar.es';
 
 function _experimentReady(experiment, variants) {
 	if (variants.length <= 1) return false;
@@ -39,20 +39,20 @@ function SegmentsExperimentsActions({
 	onEditSegmentsExperimentStatus,
 	onExperimentDiscard,
 	onWinnerExperiencePublishing,
-	onRunExperiment,
-	segmentsExperiment,
-	variants
+	onRunExperiment
 }) {
+	const {variants, experiment} = useContext(StateContext);
+
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
 	const {viewSegmentsExperimentDetailsURL} = useContext(
 		SegmentsExperimentsContext
 	);
 
-	const readyToRun = _experimentReady(segmentsExperiment, variants);
+	const readyToRun = _experimentReady(experiment, variants);
 
 	return (
 		<>
-			{segmentsExperiment.status.value === STATUS_DRAFT && (
+			{experiment.status.value === STATUS_DRAFT && (
 				<ClayButton
 					className="w-100"
 					disabled={!readyToRun}
@@ -62,14 +62,14 @@ function SegmentsExperimentsActions({
 				</ClayButton>
 			)}
 
-			{segmentsExperiment.status.value === STATUS_RUNNING && (
+			{experiment.status.value === STATUS_RUNNING && (
 				<>
 					<ClayButton
 						className="w-100 mb-3"
 						displayType="secondary"
 						onClick={() =>
 							onEditSegmentsExperimentStatus(
-								segmentsExperiment,
+								experiment,
 								STATUS_PAUSED
 							)
 						}
@@ -88,7 +88,7 @@ function SegmentsExperimentsActions({
 
 							if (confirmed)
 								onEditSegmentsExperimentStatus(
-									segmentsExperiment,
+									experiment,
 									STATUS_TERMINATED
 								);
 						}}
@@ -98,13 +98,13 @@ function SegmentsExperimentsActions({
 				</>
 			)}
 
-			{segmentsExperiment.status.value === STATUS_PAUSED && (
+			{experiment.status.value === STATUS_PAUSED && (
 				<>
 					<ClayButton
 						className="w-100"
 						onClick={() =>
 							onEditSegmentsExperimentStatus(
-								segmentsExperiment,
+								experiment,
 								STATUS_RUNNING
 							)
 						}
@@ -114,7 +114,7 @@ function SegmentsExperimentsActions({
 				</>
 			)}
 
-			{segmentsExperiment.status.value === STATUS_FINISHED_WINNER && (
+			{experiment.status.value === STATUS_FINISHED_WINNER && (
 				<>
 					<ClayButton
 						className="w-100 mb-3"
@@ -160,9 +160,7 @@ SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
 	onExperimentDiscard: PropTypes.func.isRequired,
 	onRunExperiment: PropTypes.func.isRequired,
-	onWinnerExperiencePublishing: PropTypes.func.isRequired,
-	segmentsExperiment: SegmentsExperimentType,
-	variants: PropTypes.arrayOf(SegmentsVariantType)
+	onWinnerExperiencePublishing: PropTypes.func.isRequired
 };
 
 export default SegmentsExperimentsActions;

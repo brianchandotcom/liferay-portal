@@ -20,11 +20,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClaySelect from '@clayui/select';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
-import {
-	SegmentsExperienceType,
-	SegmentsExperimentType,
-	SegmentsVariantType
-} from '../types.es';
+import {SegmentsExperienceType, SegmentsExperimentType} from '../types.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import Variants from './Variants/Variants.es';
@@ -37,22 +33,19 @@ function SegmentsExperiments({
 	onEditSegmentsExperimentStatus,
 	onRunExperiment,
 	onSelectSegmentsExperienceChange,
-	onVariantCreation,
-	onVariantDeletion,
-	onVariantEdition,
 	onWinnerExperiencePublishing,
 	onExperimentDiscard,
 	onTargetChange,
 	segmentsExperiences = [],
 	segmentsExperiment,
-	selectedSegmentsExperienceId,
-	variants
+	selectedSegmentsExperienceId
 }) {
 	const [dropdown, setDropdown] = useState(false);
 
 	const _selectedSegmentsExperienceId = segmentsExperiment
 		? segmentsExperiment.segmentsExperienceId
 		: selectedSegmentsExperienceId;
+	// TODO there's some trouble here
 
 	return (
 		<>
@@ -151,14 +144,9 @@ function SegmentsExperiments({
 					)}
 
 					<Variants
-						editable={segmentsExperiment.editable}
-						onVariantCreation={onVariantCreation}
-						onVariantDeletion={onVariantDeletion}
-						onVariantEdition={onVariantEdition}
 						selectedSegmentsExperienceId={
 							selectedSegmentsExperienceId
 						}
-						variants={variants}
 					/>
 
 					<SegmentsExperimentsActions
@@ -170,8 +158,6 @@ function SegmentsExperiments({
 						onWinnerExperiencePublishing={
 							onWinnerExperiencePublishing
 						}
-						segmentsExperiment={segmentsExperiment}
-						variants={variants}
 					/>
 				</>
 			)}
@@ -229,14 +215,10 @@ SegmentsExperiments.propTypes = {
 	onRunExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
 	onTargetChange: PropTypes.func.isRequired,
-	onVariantCreation: PropTypes.func.isRequired,
-	onVariantDeletion: PropTypes.func.isRequired,
-	onVariantEdition: PropTypes.func.isRequired,
 	onWinnerExperiencePublishing: PropTypes.func.isRequired,
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	segmentsExperiment: SegmentsExperimentType,
-	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	variants: PropTypes.arrayOf(SegmentsVariantType)
+	selectedSegmentsExperienceId: PropTypes.string.isRequired
 };
 
 export default SegmentsExperiments;

@@ -73,51 +73,44 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			TransactionStatusAdapter transactionStatusAdapter)
 		throws Throwable {
 
-		if (transactionAttributeAdapter.rollbackOn(throwable)) {
-			try {
+		boolean rollback = transactionAttributeAdapter.rollbackOn(throwable);
+
+		Throwable transactionManagerThrowable = null;
+
+		try {
+			if (rollback) {
 				_platformTransactionManager.rollback(
 					transactionStatusAdapter.getTransactionStatus());
 			}
-			catch (Throwable t) {
-				t.addSuppressed(throwable);
-
-				throw t;
-			}
-			finally {
-				TransactionLifecycleManager.fireTransactionRollbackedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter,
-					throwable);
-
-				TransactionExecutorThreadLocal.popTransactionExecutor();
-			}
-		}
-		else {
-			Throwable commitThrowable = null;
-
-			try {
+			else {
 				_platformTransactionManager.commit(
 					transactionStatusAdapter.getTransactionStatus());
 			}
-			catch (Throwable t) {
-				t.addSuppressed(throwable);
+		}
+		catch (Throwable t) {
+			t.addSuppressed(throwable);
 
-				commitThrowable = t;
+			transactionManagerThrowable = t;
 
-				throw t;
+			throw t;
+		}
+		finally {
+			if (rollback) {
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter,
+					throwable);
 			}
-			finally {
-				if (commitThrowable == null) {
-					TransactionLifecycleManager.fireTransactionCommittedEvent(
-						transactionAttributeAdapter, transactionStatusAdapter);
-				}
-				else {
-					TransactionLifecycleManager.fireTransactionRollbackedEvent(
-						transactionAttributeAdapter, transactionStatusAdapter,
-						commitThrowable);
-				}
-
-				TransactionExecutorThreadLocal.popTransactionExecutor();
+			else if (transactionManagerThrowable == null) {
+				TransactionLifecycleManager.fireTransactionCommittedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter);
 			}
+			else {
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter,
+					transactionManagerThrowable);
+			}
+
+			TransactionExecutorThreadLocal.popTransactionExecutor();
 		}
 
 		throw throwable;

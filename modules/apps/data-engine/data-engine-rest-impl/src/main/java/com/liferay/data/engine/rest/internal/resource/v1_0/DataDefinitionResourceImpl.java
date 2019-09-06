@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.internal.resource.v1_0;
 
+import com.liferay.data.engine.field.type.FieldType;
 import com.liferay.data.engine.field.type.FieldTypeTracker;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.dto.v1_0.DataDefinition;
@@ -30,6 +31,9 @@ import com.liferay.data.engine.rest.internal.resource.common.CommonDataRecordCol
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -38,6 +42,9 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -50,10 +57,12 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -63,7 +72,11 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import javax.validation.ValidationException;
 
@@ -115,6 +128,32 @@ public class DataDefinitionResourceImpl
 		return DataDefinitionUtil.toDataDefinition(
 			_ddmStructureLocalService.getStructure(dataDefinitionId),
 			_fieldTypeTracker);
+	}
+
+	@Override
+	public String getDataDefinitionDataDefinitionFieldFieldType()
+		throws Exception {
+
+		Collection<FieldType> fieldTypes = _fieldTypeTracker.getFieldTypes();
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		Stream<FieldType> stream = fieldTypes.stream();
+
+		stream.map(
+			fieldType -> DataDefinitionUtil.getFieldTypeMetadataJSONObject(
+				contextAcceptLanguage, _ddmFormFieldTypeServicesTracker,
+				_ddmFormTemplateContextFactory, _ddmFormValuesFactory,
+				fieldType, _fieldTypeTracker, contextHttpServletRequest,
+				_npmResolver,
+				_getResourceBundle(contextAcceptLanguage.getPreferredLocale()))
+		).filter(
+			jsonObject -> !jsonObject.getBoolean("system")
+		).forEach(
+			jsonArray::put
+		);
+
+		return jsonArray.toJSONString();
 	}
 
 	@Override
@@ -348,6 +387,13 @@ public class DataDefinitionResourceImpl
 		return _portal.getClassNameId(InternalDataDefinition.class);
 	}
 
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		return new AggregateResourceBundle(
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()),
+			_portal.getResourceBundle(locale));
+	}
+
 	private DataDefinition _toDataDefinition(DDMStructure ddmStructure)
 		throws Exception {
 
@@ -383,6 +429,15 @@ public class DataDefinitionResourceImpl
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Reference
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
+
+	@Reference
+	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -394,8 +449,14 @@ public class DataDefinitionResourceImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private ModelResourcePermission<InternalDataDefinition>
 		_modelResourcePermission;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

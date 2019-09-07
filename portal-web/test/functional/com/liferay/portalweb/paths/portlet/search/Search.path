@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_TYPE_FACET_TERM_COUNT</td>
+	<td>//li[@class='facet-value']//small[@class='term-count']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_PORTLET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>

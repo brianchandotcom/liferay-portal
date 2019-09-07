@@ -1,0 +1,95 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Upgrades Search";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all spell check indexes.");
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive704 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.4";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Search Web",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "classicSearchPortletInFrontPage");
+
+		SystemSettings.saveConfiguration();
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive720 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive7110 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive7210 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.2.10";
+		property test.run.environment = "EE";
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+	@priority = "5"
+	test ViewClassicSearchPortletConfigurationArchive70106 {
+		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.version = "7.0.10.6";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Search Web",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "classicSearchPortletInFrontPage");
+
+		SystemSettings.saveConfiguration();
+
+		Upgrade.viewClassicSearchPortletConfiguration();
+	}
+
+}

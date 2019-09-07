@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_SUGGESTED_SPELLING</td>
+	<td>//div[contains(@class,'search-suggested-spelling')]//li[contains(.,'Did you mean:')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SORT_PORTLET_DROPDOWN</td>
 	<td>//div/select[contains(@id, "SortPortlet")]</td>
 	<td></td>

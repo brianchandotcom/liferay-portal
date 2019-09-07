@@ -1331,6 +1331,53 @@ definition {
 		CalendarEvent.view(eventTitle = "Post Upgrade Calendar Event");
 	}
 
+	macro viewClassicSearchPortletConfiguration {
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		ClassicSearch.gotoOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertTextEquals(
+			key_scopeName = "Everything",
+			locator1 = "Select#SCOPE_SELECTED",
+			value1 = "Everything");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "UserSearchFacet");
+
+		Navigator.gotoNavTab(navTab = "Spell Check Settings");
+
+		FormFields.viewCheckboxChecked(fieldName = "collatedSpellCheckResultEnabled");
+
+		IFrame.closeFrame();
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		ClassicSearch.search(searchTerm = "WC Title");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "WC Title 1",
+			searchAssetType = "Web Content Article");
+
+		ClassicSearch.viewSearchResultPG(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
+
+		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
+
+		Navigator.gotoSitePage(
+			pageName = "Site Page",
+			siteName = "Site Name");
+
+		ClassicSearch.search(searchTerm = "Cotent");
+
+		AssertElementPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
+	}
+
 	macro viewDocument {
 		Navigator.gotoPage(pageName = "Document");
 

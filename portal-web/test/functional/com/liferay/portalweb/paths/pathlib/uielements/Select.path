@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE_SELECTED</td>
+	<td>//div[label[contains(.,'Scope')]]//option[contains(.,'${key_scopeName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TIME_ZONE</td>
 	<td>//select[contains(@id,'timeZoneId')]</td>
 	<td></td>

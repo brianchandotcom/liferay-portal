@@ -840,14 +840,16 @@ definition {
 		if (isSet(tagNameList)) {
 			for (var tagName : list "${tagNameList}") {
 				AssertElementNotPresent(
-					key_tagName = StringUtil.lowerCase("${tagName}"),
-					locator1 = "BlogsEntry#TAG");
+					key_tagName = "${tagName}",
+					locator1 = "BlogsEntry#TAG",
+					tagName = StringUtil.lowerCase("${tagName}"));
 			}
 		}
 		else {
 			AssertElementNotPresent(
-				key_tagName = StringUtil.lowerCase("${tagName}"),
-				locator1 = "BlogsEntry#TAG");
+				key_tagName = "${tagName}",
+				locator1 = "BlogsEntry#TAG",
+				tagName = StringUtil.lowerCase("${tagName}"));
 		}
 	}
 

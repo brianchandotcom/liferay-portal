@@ -465,12 +465,18 @@ public class ServiceProxyFactoryTest {
 
 					@Override
 					public boolean add(LogRecord e) {
-						Thread currentThread = Thread.currentThread();
+						if (_count > 0) {
+							Thread currentThread = Thread.currentThread();
 
-						currentThread.interrupt();
+							currentThread.interrupt();
+						}
+
+						_count++;
 
 						return super.add(e);
 					}
+
+					private int _count;
 
 				});
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -484,7 +490,7 @@ public class ServiceProxyFactoryTest {
 
 			thread.join();
 
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
+			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
 			LogRecord logRecord = logRecords.get(0);
 

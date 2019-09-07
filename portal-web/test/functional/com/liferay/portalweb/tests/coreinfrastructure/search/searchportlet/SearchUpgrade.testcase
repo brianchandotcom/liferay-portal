@@ -92,4 +92,30 @@ definition {
 		Upgrade.viewClassicSearchPortletConfiguration();
 	}
 
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive720 {
+		property data.archive.type = "data-archive-search-portlets";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.0";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive7110 {
+		property data.archive.type = "data-archive-search-portlets";
+		property portal.version = "7.1.10";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
+	@priority = "5"
+	test ViewSearchPortletsConfigurationArchive7210 {
+		property data.archive.type = "data-archive-search-portlets";
+		property portal.version = "7.2.10";
+		property test.run.environment = "EE";
+
+		Upgrade.viewSearchPortletsConfiguration();
+	}
+
 }

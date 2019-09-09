@@ -116,7 +116,7 @@ function Variant({
 				<ClayList.ItemField>
 					<span
 						aria-label={Liferay.Language.get('traffic-split')}
-						className="text-secondary font-weight-normal list-group-title"
+						className="text-secondary font-weight-normal list-group-title mr-1"
 					>
 						{indexToPercentageString(split)}
 					</span>

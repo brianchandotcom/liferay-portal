@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import client from '../../../shared/rest/fetch';
+import client from '../../../shared/rest/fetch.es';
 
 class CalendarStore {
 	constructor(client) {

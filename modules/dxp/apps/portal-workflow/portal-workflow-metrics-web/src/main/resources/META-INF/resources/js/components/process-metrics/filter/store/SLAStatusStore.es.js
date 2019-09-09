@@ -10,9 +10,9 @@
  */
 
 import React, {createContext, useEffect, useState} from 'react';
-import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
-import {compareArrays} from '../../../../shared/util/array';
-import {usePrevious} from '../../../../shared/util/hooks';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
+import {compareArrays} from '../../../../shared/util/array.es';
+import {usePrevious} from '../../../../shared/util/hooks.es';
 
 const slaStatusConstants = {
 	onTime: 'OnTime',

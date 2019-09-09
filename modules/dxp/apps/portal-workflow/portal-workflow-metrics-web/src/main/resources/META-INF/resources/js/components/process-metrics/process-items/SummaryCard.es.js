@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../AppContext';
-import {ChildLink} from '../../../shared/components/router/routerWrapper';
-import {filterConstants} from '../instance-list/store/InstanceListStore';
-import {formatNumber} from '../../../shared/util/numeral';
-import {formatQueryDate} from '../util/timeRangeUtil';
-import {getPercentage} from '../../../shared/util/util';
-import Icon from '../../../shared/components/Icon';
-import {processStatusConstants} from '../filter/store/ProcessStatusStore';
+import {AppContext} from '../../AppContext.es';
+import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
+import {filterConstants} from '../instance-list/store/InstanceListStore.es';
+import {formatNumber} from '../../../shared/util/numeral.es';
+import {formatQueryDate} from '../util/timeRangeUtil.es';
+import {getPercentage} from '../../../shared/util/util.es';
+import Icon from '../../../shared/components/Icon.es';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
 import React from 'react';
 
 class SummaryCard extends React.Component {

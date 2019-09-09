@@ -11,7 +11,7 @@
 
 import {Link, withRouter} from 'react-router-dom';
 import React, {Fragment} from 'react';
-import Icon from '../Icon';
+import Icon from '../Icon.es';
 import pathToRegexp from 'path-to-regexp';
 
 /**

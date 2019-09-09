@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {Filter} from '../../../../src/main/resources/META-INF/resources/js/shared/components/filter/Filter';
+import {Filter} from '../../../../src/main/resources/META-INF/resources/js/shared/components/filter/Filter.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
 
 function mockItems(count) {
 	const items = [];

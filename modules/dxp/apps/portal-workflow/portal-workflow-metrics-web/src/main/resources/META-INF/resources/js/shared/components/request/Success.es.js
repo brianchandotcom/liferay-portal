@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {ErrorContext} from './Error';
-import {LoadingContext} from './Loading';
+import {ErrorContext} from './Error.es';
+import {LoadingContext} from './Loading.es';
 import {useContext} from 'react';
 
 function Success({children}) {

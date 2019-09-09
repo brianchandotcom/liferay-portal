@@ -10,20 +10,20 @@
  */
 
 import {Redirect, Route, HashRouter as Router, Switch} from 'react-router-dom';
-import AlertMessage from './AlertMessage';
-import {AppContext} from '../AppContext';
-import {ChildLink} from '../../shared/components/router/routerWrapper';
-import CompletedItemsCard from './process-items/CompletedItemsCard';
-import CompletionVelocityCard from './completion-velocity/CompletionVelocityCard';
-import DropDownHeader from './DropDownHeader';
-import {getPathname} from '../../shared/components/tabs/TabItem';
-import {openErrorToast} from '../../shared/util/toast';
-import PendingItemsCard from './process-items/PendingItemsCard';
+import AlertMessage from './AlertMessage.es';
+import {AppContext} from '../AppContext.es';
+import {ChildLink} from '../../shared/components/router/routerWrapper.es';
+import CompletedItemsCard from './process-items/CompletedItemsCard.es';
+import CompletionVelocityCard from './completion-velocity/CompletionVelocityCard.es';
+import DropDownHeader from './DropDownHeader.es';
+import {getPathname} from '../../shared/components/tabs/TabItem.es';
+import {openErrorToast} from '../../shared/util/toast.es';
+import PendingItemsCard from './process-items/PendingItemsCard.es';
 import React from 'react';
-import {sub} from '../../shared/util/lang';
-import Tabs from '../../shared/components/tabs/Tabs';
-import {withParams} from '../../shared/components/router/routerUtil';
-import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard';
+import {sub} from '../../shared/util/lang.es';
+import Tabs from '../../shared/components/tabs/Tabs.es';
+import {withParams} from '../../shared/components/router/routerUtil.es';
+import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard.es';
 
 class ProcessMetrics extends React.Component {
 	constructor(props) {

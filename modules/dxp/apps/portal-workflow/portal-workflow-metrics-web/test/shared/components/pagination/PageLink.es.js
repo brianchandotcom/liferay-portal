@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import PageLink from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageLink';
+import PageLink from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageLink.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
 
 test('Should render component as type default', () => {
 	const component = renderer.create(

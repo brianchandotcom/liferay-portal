@@ -10,9 +10,9 @@
  */
 
 import getCN from 'classnames';
-import Icon from './Icon';
+import Icon from './Icon.es';
 import React from 'react';
-import Tooltip from './Tooltip';
+import Tooltip from './Tooltip.es';
 
 const Body = ({children, elementClasses}) => {
 	const classes = getCN('panel-body', elementClasses);

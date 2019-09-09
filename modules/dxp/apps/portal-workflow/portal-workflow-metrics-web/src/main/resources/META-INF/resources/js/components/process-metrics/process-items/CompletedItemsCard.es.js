@@ -13,11 +13,11 @@ import React, {useContext} from 'react';
 import {
 	TimeRangeContext,
 	TimeRangeProvider
-} from '../filter/store/TimeRangeStore';
-import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil';
-import ProcessItemsCard from './ProcessItemsCard';
-import Request from '../../../shared/components/request/Request';
-import {TimeRangeFilter} from '../filter/TimeRangeFilter';
+} from '../filter/store/TimeRangeStore.es';
+import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
+import ProcessItemsCard from './ProcessItemsCard.es';
+import Request from '../../../shared/components/request/Request.es';
+import {TimeRangeFilter} from '../filter/TimeRangeFilter.es';
 
 function CompletedItemsCard({processId, query}) {
 	const {timeRange = []} = getFiltersParam(query);

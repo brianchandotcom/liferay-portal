@@ -14,16 +14,16 @@ import {
 	formatQueryDate,
 	parseDateEnLocale,
 	parseDateMomentEnLocale
-} from '../../util/timeRangeUtil';
+} from '../../util/timeRangeUtil.es';
 import {
 	parse,
 	stringify
-} from '../../../../shared/components/router/queryString';
+} from '../../../../shared/components/router/queryString.es';
 import {useContext, useState} from 'react';
-import moment from '../../../../shared/util/moment';
-import {pushToHistory} from '../../../../shared/components/filter/util/filterUtil';
-import {TimeRangeContext} from './TimeRangeStore';
-import {useRouter} from '../../../../shared/components/router/useRouter';
+import moment from '../../../../shared/util/moment.es';
+import {pushToHistory} from '../../../../shared/components/filter/util/filterUtil.es';
+import {TimeRangeContext} from './TimeRangeStore.es';
+import {useRouter} from '../../../../shared/components/router/useRouter.es';
 
 const useCustomTimeRange = filterKey => {
 	const [errors, setErrors] = useState(undefined);

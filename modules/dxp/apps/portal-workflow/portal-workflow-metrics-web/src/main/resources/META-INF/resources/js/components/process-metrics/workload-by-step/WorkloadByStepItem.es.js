@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../AppContext';
-import {ChildLink} from '../../../shared/components/router/routerWrapper';
-import {filterConstants} from '../instance-list/store/InstanceListStore';
-import {processStatusConstants} from '../filter/store/ProcessStatusStore';
+import {AppContext} from '../../AppContext.es';
+import {ChildLink} from '../../../shared/components/router/routerWrapper.es';
+import {filterConstants} from '../instance-list/store/InstanceListStore.es';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore.es';
 import React from 'react';
 
 class WorkloadByStepItem extends React.Component {

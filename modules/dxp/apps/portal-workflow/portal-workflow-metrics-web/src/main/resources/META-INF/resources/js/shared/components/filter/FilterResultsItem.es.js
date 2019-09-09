@@ -12,8 +12,8 @@
 import {
 	pushToHistory,
 	removeItem
-} from '../../../shared/components/filter/util/filterUtil';
-import Icon from '../../../shared/components/Icon';
+} from '../../../shared/components/filter/util/filterUtil.es';
+import Icon from '../../../shared/components/Icon.es';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import InstanceListItem from './InstanceListItem';
+import InstanceListItem from './InstanceListItem.es';
 import React from 'react';
 
 const InstanceListTable = ({items}) => {

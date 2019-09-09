@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import {ProcessStatusProvider} from '../../filter/store/ProcessStatusStore';
-import {ProcessStepProvider} from '../../filter/store/ProcessStepStore';
+import {ProcessStatusProvider} from '../../filter/store/ProcessStatusStore.es';
+import {ProcessStepProvider} from '../../filter/store/ProcessStepStore.es';
 import React from 'react';
-import {SLAStatusProvider} from '../../filter/store/SLAStatusStore';
-import {TimeRangeProvider} from '../../filter/store/TimeRangeStore';
+import {SLAStatusProvider} from '../../filter/store/SLAStatusStore.es';
+import {TimeRangeProvider} from '../../filter/store/TimeRangeStore.es';
 
 const InstanceFiltersProvider = ({
 	children,

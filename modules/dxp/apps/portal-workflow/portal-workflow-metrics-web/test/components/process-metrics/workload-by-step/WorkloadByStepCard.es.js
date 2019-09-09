@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import fetch from '../../../mock/fetch';
-import fetchFailure from '../../../mock/fetchFailure';
+import fetch from '../../../mock/fetch.es';
+import fetchFailure from '../../../mock/fetchFailure.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../mock/MockRouter';
-import WorkloadByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import WorkloadByStepCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard.es';
 
 test('Should component receive props', () => {
 	const data = {

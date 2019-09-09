@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ListHeadItem from '../../../shared/components/list/ListHeadItem';
+import ListHeadItem from '../../../shared/components/list/ListHeadItem.es';
 import React from 'react';
-import WorkloadByStepItem from './WorkloadByStepItem';
+import WorkloadByStepItem from './WorkloadByStepItem.es';
 
 export default class WorkloadByStepTable extends React.Component {
 	constructor(props) {

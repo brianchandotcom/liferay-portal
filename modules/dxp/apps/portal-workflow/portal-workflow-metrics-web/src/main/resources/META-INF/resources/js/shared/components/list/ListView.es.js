@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import EmptyState from './EmptyState';
-import LoadingState from '../loading/LoadingState';
+import EmptyState from './EmptyState.es';
+import LoadingState from '../loading/LoadingState.es';
 import React from 'react';
 
 /**

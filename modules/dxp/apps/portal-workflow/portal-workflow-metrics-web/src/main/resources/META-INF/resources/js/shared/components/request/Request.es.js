@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {Error, ErrorContext, useError} from './Error';
-import {Loading, LoadingContext, useLoading} from './Loading';
+import {Error, ErrorContext, useError} from './Error.es';
+import {Loading, LoadingContext, useLoading} from './Loading.es';
 import React from 'react';
-import {Success} from './Success';
+import {Success} from './Success.es';
 
 export default function Request({children}) {
 	return (

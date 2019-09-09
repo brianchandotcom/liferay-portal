@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import PortalComponent from './PortalComponent';
+import PortalComponent from './PortalComponent.es';
 import React from 'react';
 
 export default class HeaderTitle extends React.Component {

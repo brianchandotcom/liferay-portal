@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import LoadingState from '../../../../src/main/resources/META-INF/resources/js/shared/components/loading/LoadingState';
+import LoadingState from '../../../../src/main/resources/META-INF/resources/js/shared/components/loading/LoadingState.es';
 import React from 'react';
 
 test('Should test component render', () => {

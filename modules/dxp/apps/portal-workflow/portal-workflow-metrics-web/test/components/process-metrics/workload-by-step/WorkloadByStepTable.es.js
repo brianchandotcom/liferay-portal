@@ -11,8 +11,8 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../mock/MockRouter';
-import WorkloadByStepTable from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepTable';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import WorkloadByStepTable from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepTable.es';
 
 beforeEach(() => {
 	fetch.mockResponse('');

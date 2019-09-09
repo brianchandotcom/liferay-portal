@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../../src/main/resources/META-INF/resources/js/components/AppContext';
-import {Errors} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/ErrorsStore';
-import fetch from '../../mock/fetch';
-import fetchFailure from '../../mock/fetchFailure';
-import {PAUSE_NODE_KEYS} from '../../../src/main/resources/META-INF/resources/js/components/sla/Constants';
+import {AppContext} from '../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
+import {Errors} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/ErrorsStore.es';
+import fetch from '../../mock/fetch.es';
+import fetchFailure from '../../mock/fetchFailure.es';
+import {PAUSE_NODE_KEYS} from '../../../src/main/resources/META-INF/resources/js/components/sla/Constants.es';
 import React from 'react';
-import {MockRouter as Router} from '../../mock/MockRouter';
-import {SLA} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLAStore';
-import SLAForm from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAForm';
-import {SLANodes} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
+import {SLA} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLAStore.es';
+import SLAForm from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAForm.es';
+import {SLANodes} from '../../../src/main/resources/META-INF/resources/js/components/sla/store/SLANodeStore.es';
 
 const errorState = {
 	errors: {},

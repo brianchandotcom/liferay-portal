@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {parse, stringify} from '../../router/queryString';
+import {parse, stringify} from '../../router/queryString.es';
 import pathToRegexp from 'path-to-regexp';
 
 export function getFiltersParam(queryString) {

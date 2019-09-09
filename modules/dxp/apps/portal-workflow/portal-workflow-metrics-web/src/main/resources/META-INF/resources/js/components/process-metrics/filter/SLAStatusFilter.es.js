@@ -10,8 +10,8 @@
  */
 
 import React, {useContext} from 'react';
-import Filter from '../../../shared/components/filter/Filter';
-import {SLAStatusContext} from './store/SLAStatusStore';
+import Filter from '../../../shared/components/filter/Filter.es';
+import {SLAStatusContext} from './store/SLAStatusStore.es';
 
 const SLAStatusFilter = ({
 	filterKey = 'slaStatuses',

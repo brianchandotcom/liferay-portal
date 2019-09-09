@@ -10,8 +10,8 @@
  */
 
 import React, {useContext} from 'react';
-import Filter from '../../../shared/components/filter/Filter';
-import {ProcessStatusContext} from './store/ProcessStatusStore';
+import Filter from '../../../shared/components/filter/Filter.es';
+import {ProcessStatusContext} from './store/ProcessStatusStore.es';
 
 const ProcessStatusFilter = ({
 	filterKey = 'statuses',

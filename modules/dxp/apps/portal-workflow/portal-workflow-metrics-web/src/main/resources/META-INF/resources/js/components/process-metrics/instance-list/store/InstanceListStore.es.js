@@ -10,14 +10,14 @@
  */
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {AppContext} from '../../../AppContext';
-import {ErrorContext} from '../../../../shared/components/request/Error';
-import {LoadingContext} from '../../../../shared/components/request/Loading';
-import {ProcessStatusContext} from '../../filter/store/ProcessStatusStore';
-import {ProcessStepContext} from '../../filter/store/ProcessStepStore';
-import {SLAStatusContext} from '../../filter/store/SLAStatusStore';
-import {TimeRangeContext} from '../../filter/store/TimeRangeStore';
-import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil';
+import {AppContext} from '../../../AppContext.es';
+import {ErrorContext} from '../../../../shared/components/request/Error.es';
+import {LoadingContext} from '../../../../shared/components/request/Loading.es';
+import {ProcessStatusContext} from '../../filter/store/ProcessStatusStore.es';
+import {ProcessStepContext} from '../../filter/store/ProcessStepStore.es';
+import {SLAStatusContext} from '../../filter/store/SLAStatusStore.es';
+import {TimeRangeContext} from '../../filter/store/TimeRangeStore.es';
+import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil.es';
 
 const filterConstants = {
 	processStatus: 'statuses',

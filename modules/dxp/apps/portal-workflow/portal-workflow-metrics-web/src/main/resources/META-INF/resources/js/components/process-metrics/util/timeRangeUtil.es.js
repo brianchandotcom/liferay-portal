@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {buildFallbackItems} from '../../../shared/components/filter/util/filterEvents';
-import moment from '../../../shared/util/moment';
+import {buildFallbackItems} from '../../../shared/components/filter/util/filterEvents.es';
+import moment from '../../../shared/util/moment.es';
 
 const buildFallbackTimeRange = (fallbackKeys, queryDateEnd, queryDateStart) => {
 	const fallbackItems = buildFallbackItems(fallbackKeys);

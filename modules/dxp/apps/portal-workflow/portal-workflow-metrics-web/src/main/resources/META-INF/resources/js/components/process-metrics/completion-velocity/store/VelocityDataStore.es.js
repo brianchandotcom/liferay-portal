@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../../AppContext';
+import {AppContext} from '../../../AppContext.es';
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {ErrorContext} from '../../../../shared/components/request/Error';
-import {LoadingContext} from '../../../../shared/components/request/Loading';
-import {TimeRangeContext} from '../../filter/store/TimeRangeStore';
-import {VelocityUnitContext} from '../../filter/store/VelocityUnitStore';
+import {ErrorContext} from '../../../../shared/components/request/Error.es';
+import {LoadingContext} from '../../../../shared/components/request/Loading.es';
+import {TimeRangeContext} from '../../filter/store/TimeRangeStore.es';
+import {VelocityUnitContext} from '../../filter/store/VelocityUnitStore.es';
 
 const useVelocityData = processId => {
 	const {client} = useContext(AppContext);

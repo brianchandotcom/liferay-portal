@@ -9,18 +9,18 @@
  * distribution rights of the Software.
  */
 
-import {AppContext, AppStatus} from '../AppContext';
-import {openErrorToast, openSuccessToast} from '../../shared/util/toast';
-import {ChildLink} from '../../shared/components/router/routerWrapper';
-import Icon from '../../shared/components/Icon';
-import ListView from '../../shared/components/list/ListView';
-import PaginationBar from '../../shared/components/pagination/PaginationBar';
+import {AppContext, AppStatus} from '../AppContext.es';
+import {openErrorToast, openSuccessToast} from '../../shared/util/toast.es';
+import {ChildLink} from '../../shared/components/router/routerWrapper.es';
+import Icon from '../../shared/components/Icon.es';
+import ListView from '../../shared/components/list/ListView.es';
+import PaginationBar from '../../shared/components/pagination/PaginationBar.es';
 import React from 'react';
-import {REQUEST_ORIGIN_TYPE_FETCH} from './Constants';
-import SLAConfirmDialog from './SLAConfirmDialog';
-import SLAListCardContext from './SLAListCardContext';
-import SLAListTable from './SLAListTable';
-import Tooltip from '../../shared/components/Tooltip';
+import {REQUEST_ORIGIN_TYPE_FETCH} from './Constants.es';
+import SLAConfirmDialog from './SLAConfirmDialog.es';
+import SLAListCardContext from './SLAListCardContext.es';
+import SLAListTable from './SLAListTable.es';
+import Tooltip from '../../shared/components/Tooltip.es';
 
 class SLAListCard extends React.Component {
 	constructor(props) {

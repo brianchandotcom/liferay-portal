@@ -19,32 +19,32 @@ import {
 	PAUSE_NODE_KEYS,
 	START_NODE_KEYS,
 	STOP_NODE_KEYS
-} from './Constants';
-import {AppContext, AppStatus} from '../AppContext';
+} from './Constants.es';
+import {AppContext, AppStatus} from '../AppContext.es';
 import {
 	BackLink,
 	BackRedirect
-} from '../../shared/components/router/routerWrapper';
-import {Errors, useErrors} from './store/ErrorsStore';
+} from '../../shared/components/router/routerWrapper.es';
+import {Errors, useErrors} from './store/ErrorsStore.es';
 import {
 	hasErrors,
 	validateDuration,
 	validateHours,
 	validateName,
 	validateNodeKeys
-} from './util/slaFormUtil';
-import {SLA, useSLA} from './store/SLAStore';
-import {SLANodes, useSLANodes} from './store/SLANodeStore';
+} from './util/slaFormUtil.es';
+import {SLA, useSLA} from './store/SLAStore.es';
+import {SLANodes, useSLANodes} from './store/SLANodeStore.es';
 import {useContext, useState} from 'react';
-import calendarStore from './store/calendarStore';
+import calendarStore from './store/calendarStore.es';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import FieldError from './form/fieldError';
-import FieldLabel from './form/fieldLabel';
-import Icon from '../../shared/components/Icon';
-import LoadingState from '../../shared/components/loading/LoadingState';
+import FieldError from './form/fieldError.es';
+import FieldLabel from './form/fieldLabel.es';
+import Icon from '../../shared/components/Icon.es';
+import LoadingState from '../../shared/components/loading/LoadingState.es';
 import MaskedInput from 'react-text-mask';
-import MultiSelect from '../../shared/components/MultiSelect';
-import {openErrorToast} from '../../shared/util/toast';
+import MultiSelect from '../../shared/components/MultiSelect.es';
+import {openErrorToast} from '../../shared/util/toast.es';
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 

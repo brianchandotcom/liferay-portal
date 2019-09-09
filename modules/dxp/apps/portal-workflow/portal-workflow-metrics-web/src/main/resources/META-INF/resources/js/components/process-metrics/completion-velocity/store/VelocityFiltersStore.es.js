@@ -10,8 +10,8 @@
  */
 
 import React from 'react';
-import {TimeRangeProvider} from '../../filter/store/TimeRangeStore';
-import {VelocityUnitProvider} from '../../filter/store/VelocityUnitStore';
+import {TimeRangeProvider} from '../../filter/store/TimeRangeStore.es';
+import {VelocityUnitProvider} from '../../filter/store/VelocityUnitStore.es';
 
 const VelocityFiltersProvider = ({
 	children,

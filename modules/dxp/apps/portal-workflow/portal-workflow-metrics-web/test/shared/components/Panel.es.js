@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import Panel from '../../../src/main/resources/META-INF/resources/js/shared/components/Panel';
+import Panel from '../../../src/main/resources/META-INF/resources/js/shared/components/Panel.es';
 import React from 'react';
 
 describe('Panel', () => {

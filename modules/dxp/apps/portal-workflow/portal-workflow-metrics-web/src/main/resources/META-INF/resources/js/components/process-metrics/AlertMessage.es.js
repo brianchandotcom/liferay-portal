@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import Icon from '../../shared/components/Icon';
+import Icon from '../../shared/components/Icon.es';
 import React from 'react';
 
 export default class AlertMessage extends React.Component {

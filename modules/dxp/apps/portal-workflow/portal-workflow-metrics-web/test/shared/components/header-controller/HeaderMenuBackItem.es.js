@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import HeaderMenuBackItem from '../../../../src/main/resources/META-INF/resources/js/shared/components/header-controller/HeaderMenuBackItem';
-import {MockRouter} from '../../../mock/MockRouter';
+import HeaderMenuBackItem from '../../../../src/main/resources/META-INF/resources/js/shared/components/header-controller/HeaderMenuBackItem.es';
+import {MockRouter} from '../../../mock/MockRouter.es';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';

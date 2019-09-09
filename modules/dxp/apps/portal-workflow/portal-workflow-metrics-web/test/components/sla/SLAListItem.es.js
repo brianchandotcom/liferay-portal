@@ -11,8 +11,8 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../mock/MockRouter';
-import SLAListItem from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListItem';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
+import SLAListItem from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListItem.es';
 
 test('Should render component', () => {
 	const component = renderer.create(

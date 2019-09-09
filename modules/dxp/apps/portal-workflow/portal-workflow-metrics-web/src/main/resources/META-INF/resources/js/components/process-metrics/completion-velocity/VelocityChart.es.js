@@ -16,21 +16,21 @@ import {
 	formatYearDate,
 	getAxisMeasuresFromData,
 	getXAxisIntervals
-} from '../../../shared/util/chart';
+} from '../../../shared/util/chart.es';
 import {
 	HOURS,
 	MONTHS,
 	WEEKS,
 	YEARS
-} from '../../../shared/util/chart-constants';
+} from '../../../shared/util/chart-constants.es';
 import React, {useContext} from 'react';
-import {AppContext} from '../../AppContext';
+import {AppContext} from '../../AppContext.es';
 import LineChart from '@clayui/charts';
-import moment from '../../../shared/util/moment';
-import {TimeRangeContext} from '../filter/store/TimeRangeStore';
-import TooltipChart from '../../../shared/components/chart/TooltipChart';
-import {VelocityDataContext} from './store/VelocityDataStore';
-import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
+import moment from '../../../shared/util/moment.es';
+import {TimeRangeContext} from '../filter/store/TimeRangeStore.es';
+import TooltipChart from '../../../shared/components/chart/TooltipChart.es';
+import {VelocityDataContext} from './store/VelocityDataStore.es';
+import {VelocityUnitContext} from '../filter/store/VelocityUnitStore.es';
 
 const VelocityChart = () => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);

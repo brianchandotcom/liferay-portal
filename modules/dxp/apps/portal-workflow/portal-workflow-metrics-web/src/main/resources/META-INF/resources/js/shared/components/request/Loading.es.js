@@ -10,7 +10,7 @@
  */
 
 import React, {useState, createContext, useContext} from 'react';
-import LoadingState from '../loading/LoadingState';
+import LoadingState from '../loading/LoadingState.es';
 
 function useLoading() {
 	const [loading, setLoading] = useState(false);

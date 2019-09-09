@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../../components/AppContext';
-import Icon from '../Icon';
-import PageSizeItem from './PageSizeItem';
+import {AppContext} from '../../../components/AppContext.es';
+import Icon from '../Icon.es';
+import PageSizeItem from './PageSizeItem.es';
 import React from 'react';
 
 /**

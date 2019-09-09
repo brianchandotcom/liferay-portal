@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {CalendarStore} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/calendarStore';
-import client from '../../../mock/fetch';
+import {CalendarStore} from '../../../../src/main/resources/META-INF/resources/js/components/sla/store/calendarStore.es';
+import client from '../../../mock/fetch.es';
 
 test('Should fetch calendars', () => {
 	const data = {

@@ -12,19 +12,19 @@
 import {
 	InstanceListProvider,
 	InstanceListContext
-} from './store/InstanceListStore';
+} from './store/InstanceListStore.es';
 import React, {useContext} from 'react';
-import {ErrorContext} from '../../../shared/components/request/Error';
-import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil';
-import {InstanceFiltersProvider} from './store/InstanceFiltersStore';
-import InstanceItemDetail from './InstanceItemDetail';
-import InstanceListFilters from './InstanceListFilters';
-import InstanceListTable from './InstanceListTable';
-import ListView from '../../../shared/components/list/ListView';
-import {LoadingContext} from '../../../shared/components/request/Loading';
-import PaginationBar from '../../../shared/components/pagination/PaginationBar';
-import ReloadButton from '../../../shared/components/list/ReloadButton';
-import Request from '../../../shared/components/request/Request';
+import {ErrorContext} from '../../../shared/components/request/Error.es';
+import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
+import {InstanceFiltersProvider} from './store/InstanceFiltersStore.es';
+import InstanceItemDetail from './InstanceItemDetail.es';
+import InstanceListFilters from './InstanceListFilters.es';
+import InstanceListTable from './InstanceListTable.es';
+import ListView from '../../../shared/components/list/ListView.es';
+import {LoadingContext} from '../../../shared/components/request/Loading.es';
+import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
+import ReloadButton from '../../../shared/components/list/ReloadButton.es';
+import Request from '../../../shared/components/request/Request.es';
 
 export function InstanceListCard({page, pageSize, processId, query}) {
 	const filters = getFiltersParam(query);

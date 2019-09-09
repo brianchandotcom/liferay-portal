@@ -10,8 +10,8 @@
  */
 
 import React, {useContext} from 'react';
-import Filter from '../../../shared/components/filter/Filter';
-import {VelocityUnitContext} from './store/VelocityUnitStore';
+import Filter from '../../../shared/components/filter/Filter.es';
+import {VelocityUnitContext} from './store/VelocityUnitStore.es';
 
 const VelocityUnitFilter = ({
 	filterKey = 'velocityUnit',

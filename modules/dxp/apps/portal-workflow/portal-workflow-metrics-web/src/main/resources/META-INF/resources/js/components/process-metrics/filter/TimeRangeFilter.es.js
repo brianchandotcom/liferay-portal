@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {getCustomTimeRangeName, TimeRangeContext} from './store/TimeRangeStore';
+import {getCustomTimeRangeName, TimeRangeContext} from './store/TimeRangeStore.es';
 import React, {useContext} from 'react';
-import {CustomTimeRangeForm} from './CustomTimeRangeForm';
-import Filter from '../../../shared/components/filter/Filter';
+import {CustomTimeRangeForm} from './CustomTimeRangeForm.es';
+import Filter from '../../../shared/components/filter/Filter.es';
 
 const TimeRangeFilter = ({
 	filterKey = 'timeRange',

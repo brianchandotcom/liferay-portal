@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,7 +10,7 @@
  * distribution rights of the Software.
  */
 
-import moment from '../../shared/util/moment';
+import moment from '../../shared/util/moment.es';
 import {
 	DAYS,
 	HOURS,
@@ -23,7 +24,7 @@ import {
 	WEEKS,
 	YEARS,
 	YESTERDAY
-} from './chart-constants';
+} from './chart-constants.es';
 
 export const formatMonthDate = (date, timeRange) => {
 	const currentDate = moment.utc(date);

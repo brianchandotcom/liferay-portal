@@ -10,8 +10,8 @@
  */
 
 import React from 'react';
-import {MockRouter as Router} from '../../../mock/MockRouter';
-import SummaryCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/SummaryCard';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
+import SummaryCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/SummaryCard.es';
 
 test('Should format percentage', () => {
 	const props = {

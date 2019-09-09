@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import Icon from './Icon';
+import Icon from './Icon.es';
 import React from 'react';
 
 /**

@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import ProcessListItem from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListItem';
+import ProcessListItem from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListItem.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../mock/MockRouter';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
 
 test('Should render component with one list item', () => {
 	const component = renderer.create(

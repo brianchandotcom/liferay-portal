@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-import fetch from '../../mock/fetch';
+import fetch from '../../mock/fetch.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../mock/MockRouter';
-import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
+import SLAListCard from '../../../src/main/resources/META-INF/resources/js/components/sla/SLAListCard.es';
 
 test('Should render component', () => {
 	const data = {

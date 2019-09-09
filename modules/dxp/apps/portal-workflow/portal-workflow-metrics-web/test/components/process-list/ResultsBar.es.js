@@ -11,8 +11,8 @@
 
 import React from 'react';
 import renderer from 'react-test-renderer';
-import ResultsBar from '../../../src/main/resources/META-INF/resources/js/components/process-list/ResultsBar';
-import {MockRouter as Router} from '../../mock/MockRouter';
+import ResultsBar from '../../../src/main/resources/META-INF/resources/js/components/process-list/ResultsBar.es';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
 
 test('Should render component with one item', () => {
 	const component = renderer.create(

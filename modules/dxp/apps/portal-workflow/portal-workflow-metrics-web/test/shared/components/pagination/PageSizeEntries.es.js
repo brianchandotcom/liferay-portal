@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import PageSizeEntries from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageSizeEntries';
+import PageSizeEntries from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PageSizeEntries.es';
 import React from 'react';
-import {MockRouter as Router} from '../../../mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
 
 test('Should change page size', () => {
 	const component = shallow(

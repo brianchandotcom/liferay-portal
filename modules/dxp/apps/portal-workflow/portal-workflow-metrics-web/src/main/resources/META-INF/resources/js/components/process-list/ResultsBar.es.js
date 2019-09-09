@@ -12,7 +12,7 @@
 import {Link, withRouter} from 'react-router-dom';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
-import {sub} from '../../shared/util/lang';
+import {sub} from '../../shared/util/lang.es';
 
 /**
  * Results bar component.

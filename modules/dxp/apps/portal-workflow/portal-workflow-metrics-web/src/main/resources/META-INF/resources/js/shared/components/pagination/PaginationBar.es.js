@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../../components/AppContext';
-import DisplayResult from './DisplayResult';
-import PageSizeEntries from './PageSizeEntries';
-import Pagination from './Pagination';
+import {AppContext} from '../../../components/AppContext.es';
+import DisplayResult from './DisplayResult.es';
+import PageSizeEntries from './PageSizeEntries.es';
+import Pagination from './Pagination.es';
 import React from 'react';
 
 /**

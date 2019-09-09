@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import {ChildLink} from '../../shared/components/router/routerWrapper';
-import {formatDuration} from '../../shared/util/duration';
-import Icon from '../../shared/components/Icon';
-import moment from '../../shared/util/moment';
+import {ChildLink} from '../../shared/components/router/routerWrapper.es';
+import {formatDuration} from '../../shared/util/duration.es';
+import Icon from '../../shared/components/Icon.es';
+import moment from '../../shared/util/moment.es';
 import React from 'react';
-import SLAListCardContext from './SLAListCardContext';
+import SLAListCardContext from './SLAListCardContext.es';
 
 class SLAListItem extends React.Component {
 	showConfirmDialog() {

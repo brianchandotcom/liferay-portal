@@ -14,8 +14,8 @@ import {
 	durationAsMilliseconds,
 	formatHours,
 	getDurationValues
-} from '../../../shared/util/duration';
-import {START_NODE_KEYS} from '../Constants';
+} from '../../../shared/util/duration.es';
+import {START_NODE_KEYS} from '../Constants.es';
 
 const useSLA = (fetchClient, slaId, processId) => {
 	const [sla, setSLA] = useState({

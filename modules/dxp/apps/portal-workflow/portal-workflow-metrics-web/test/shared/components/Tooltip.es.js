@@ -11,7 +11,7 @@
 
 import Tooltip, {
 	TooltipBase
-} from '../../../src/main/resources/META-INF/resources/js/shared/components/Tooltip';
+} from '../../../src/main/resources/META-INF/resources/js/shared/components/Tooltip.es';
 import React from 'react';
 
 describe('Tooltip', () => {

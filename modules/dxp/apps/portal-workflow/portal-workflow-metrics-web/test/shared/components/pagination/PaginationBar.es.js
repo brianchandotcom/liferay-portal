@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import PaginationBar from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PaginationBar';
+import PaginationBar from '../../../../src/main/resources/META-INF/resources/js/shared/components/pagination/PaginationBar.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../../mock/MockRouter';
+import {MockRouter as Router} from '../../../mock/MockRouter.es';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/components/AppContext'
+	'../../../../src/main/resources/META-INF/resources/js/components/AppContext.es'
 );
 
 test('Should render component', () => {

@@ -10,8 +10,8 @@
  */
 
 import React, {Fragment} from 'react';
-import HeaderMenuBackItem from './HeaderMenuBackItem';
-import HeaderTitle from './HeaderTitle';
+import HeaderMenuBackItem from './HeaderMenuBackItem.es';
+import HeaderTitle from './HeaderTitle.es';
 
 export default class HeaderController extends React.Component {
 	componentWillMount() {

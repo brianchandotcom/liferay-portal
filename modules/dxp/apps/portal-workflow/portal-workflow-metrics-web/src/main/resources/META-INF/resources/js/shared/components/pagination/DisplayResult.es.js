@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import {sub} from '../../util/lang';
+import {sub} from '../../util/lang.es';
 
 /**
  * @class

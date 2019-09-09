@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import App from '../../src/main/resources/META-INF/resources/js/components/App';
+import App from '../../src/main/resources/META-INF/resources/js/components/App.es';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';

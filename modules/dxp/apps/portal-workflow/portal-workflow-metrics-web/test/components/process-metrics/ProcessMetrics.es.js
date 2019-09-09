@@ -9,14 +9,14 @@
  * distribution rights of the Software.
  */
 
-import fetch from '../../mock/fetch';
-import fetchFailure from '../../mock/fetchFailure';
-import PendingItemsCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/PendingItemsCard';
-import ProcessMetrics from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/ProcessMetrics';
+import fetch from '../../mock/fetch.es';
+import fetchFailure from '../../mock/fetchFailure.es';
+import PendingItemsCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/PendingItemsCard.es';
+import ProcessMetrics from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/ProcessMetrics.es';
 import React from 'react';
-import {MockRouter as Router} from '../../mock/MockRouter';
-import {withParams} from '../../../src/main/resources/META-INF/resources/js/shared/components/router/routerUtil';
-import WorkloadByStepCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
+import {withParams} from '../../../src/main/resources/META-INF/resources/js/shared/components/router/routerUtil.es';
+import WorkloadByStepCard from '../../../src/main/resources/META-INF/resources/js/components/process-metrics/workload-by-step/WorkloadByStepCard.es';
 
 beforeAll(() => {
 	const vbody = document.createElement('div');

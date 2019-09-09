@@ -24,30 +24,30 @@
 	},
 	"jest": {
 		"collectCoverageFrom": [
-			"src/main/resources/META-INF/resources/js/**/components/**/*.js"
+			"src/main/resources/META-INF/resources/js/**/components/**/*.es.js"
 		],
 		"coverageDirectory": "build/coverage",
 		"moduleNameMapper": {
-			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/test/mock/openToast.js",
-			"react-text-mask": "<rootDir>/test/mock/reactTextMask.js"
+			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/test/mock/openToast.es.js",
+			"react-text-mask": "<rootDir>/test/mock/reactTextMask.es.js"
 		},
 		"setupFilesAfterEnv": [
-			"<rootDir>/test/setup.js"
+			"<rootDir>/test/setup.es.js"
 		],
 		"snapshotSerializers": [
 			"enzyme-to-json/serializer"
 		],
 		"testMatch": [
-			"<rootDir>/test/**/*.js"
+			"<rootDir>/test/**/*.es.js"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/mock",
-			"<rootDir>/test/setup.js"
+			"<rootDir>/test/setup.es.js"
 		],
 		"testURL": "http://liferay.com",
 		"timers": "fake"
 	},
-	"main": "js/index.js",
+	"main": "js/index.es.js",
 	"name": "portal-workflow-metrics-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

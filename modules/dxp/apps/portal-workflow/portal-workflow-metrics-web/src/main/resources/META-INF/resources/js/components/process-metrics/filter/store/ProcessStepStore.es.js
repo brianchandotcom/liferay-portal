@@ -10,12 +10,12 @@
  */
 
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {AppContext} from '../../../AppContext';
-import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
-import {compareArrays} from '../../../../shared/util/array';
-import {ErrorContext} from '../../../../shared/components/request/Error';
-import {LoadingContext} from '../../../../shared/components/request/Loading';
-import {usePrevious} from '../../../../shared/util/hooks';
+import {AppContext} from '../../../AppContext.es';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
+import {compareArrays} from '../../../../shared/util/array.es';
+import {ErrorContext} from '../../../../shared/components/request/Error.es';
+import {LoadingContext} from '../../../../shared/components/request/Loading.es';
+import {usePrevious} from '../../../../shared/util/hooks.es';
 
 const useProcessStep = (processId, processStepKeys) => {
 	const {client} = useContext(AppContext);

@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import SLAListCardContext from './SLAListCardContext';
+import SLAListCardContext from './SLAListCardContext.es';
 
 class SLAConfirmDialog extends React.Component {
 	cancel() {

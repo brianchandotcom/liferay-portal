@@ -15,14 +15,14 @@ import {
 	formatDescriptionDate,
 	formatTimeRange,
 	parseQueryDate
-} from '../../util/timeRangeUtil';
-import {AppContext} from '../../../AppContext';
-import {compareArrays} from '../../../../shared/util/array';
-import {ErrorContext} from '../../../../shared/components/request/Error';
-import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil';
-import {LoadingContext} from '../../../../shared/components/request/Loading';
-import {usePrevious} from '../../../../shared/util/hooks';
-import {useRouter} from '../../../../shared/components/router/useRouter';
+} from '../../util/timeRangeUtil.es';
+import {AppContext} from '../../../AppContext.es';
+import {compareArrays} from '../../../../shared/util/array.es';
+import {ErrorContext} from '../../../../shared/components/request/Error.es';
+import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil.es';
+import {LoadingContext} from '../../../../shared/components/request/Loading.es';
+import {usePrevious} from '../../../../shared/util/hooks.es';
+import {useRouter} from '../../../../shared/components/router/useRouter.es';
 
 const useTimeRange = timeRangeKeys => {
 	const {client, isAmPm} = useContext(AppContext);

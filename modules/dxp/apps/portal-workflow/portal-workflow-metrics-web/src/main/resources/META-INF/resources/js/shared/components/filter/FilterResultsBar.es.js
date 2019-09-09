@@ -12,10 +12,10 @@
 import {
 	pushToHistory,
 	removeFilters
-} from '../../../shared/components/filter/util/filterUtil';
-import FilterResultsItem from './FilterResultsItem';
+} from '../../../shared/components/filter/util/filterUtil.es';
+import FilterResultsItem from './FilterResultsItem.es';
 import React from 'react';
-import {sub} from '../../../shared/util/lang';
+import {sub} from '../../../shared/util/lang.es';
 import {withRouter} from 'react-router-dom';
 
 class FilterResultsBar extends React.Component {

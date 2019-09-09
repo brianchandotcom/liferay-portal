@@ -10,9 +10,9 @@
  */
 
 import {Link, withRouter} from 'react-router-dom';
-import Icon from '../Icon';
-import {parse} from '../router/queryString';
-import PortalComponent from './PortalComponent';
+import Icon from '../Icon.es';
+import {parse} from '../router/queryString.es';
+import PortalComponent from './PortalComponent.es';
 import React from 'react';
 
 class HeaderMenuBackItem extends React.Component {

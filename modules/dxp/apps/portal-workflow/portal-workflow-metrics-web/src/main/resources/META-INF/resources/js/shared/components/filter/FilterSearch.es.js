@@ -10,7 +10,7 @@
  */
 
 import React, {Fragment} from 'react';
-import Icon from '../Icon';
+import Icon from '../Icon.es';
 
 export default class FilterSearch extends React.Component {
 	render() {

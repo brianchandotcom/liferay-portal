@@ -10,8 +10,8 @@
  */
 
 import React, {useContext} from 'react';
-import Filter from '../../../shared/components/filter/Filter';
-import {ProcessStepContext} from './store/ProcessStepStore';
+import Filter from '../../../shared/components/filter/Filter.es';
+import {ProcessStepContext} from './store/ProcessStepStore.es';
 
 const ProcessStepFilter = ({
 	filterKey = 'taskKeys',

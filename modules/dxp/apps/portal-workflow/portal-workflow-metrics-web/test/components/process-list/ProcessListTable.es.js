@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import ProcessListTable from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListTable';
+import ProcessListTable from '../../../src/main/resources/META-INF/resources/js/components/process-list/ProcessListTable.es';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {MockRouter as Router} from '../../mock/MockRouter';
+import {MockRouter as Router} from '../../mock/MockRouter.es';
 
 test('Should render component', () => {
 	const data = [

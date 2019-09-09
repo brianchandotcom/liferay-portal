@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import MultiSelect from '../../../src/main/resources/META-INF/resources/js/shared/components/MultiSelect';
+import MultiSelect from '../../../src/main/resources/META-INF/resources/js/shared/components/MultiSelect.es';
 import React from 'react';
 
 const data = [

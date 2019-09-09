@@ -13,14 +13,14 @@ import {
 	addClickOutsideListener,
 	removeClickOutsideListener,
 	handleClickOutside
-} from '../../../shared/components/filter/util/filterEvents';
+} from '../../../shared/components/filter/util/filterEvents.es';
 import React, {useEffect, useRef} from 'react';
-import Icon from '../../../shared/components/Icon';
+import Icon from '../../../shared/components/Icon.es';
 import MaskedInput from 'react-text-mask';
-import {sub} from '../../../shared/util/lang';
-import {TimeRangeContext} from './store/TimeRangeStore';
+import {sub} from '../../../shared/util/lang.es';
+import {TimeRangeContext} from './store/TimeRangeStore.es';
 import {useContext} from 'react';
-import {useCustomTimeRange} from './store/CustomTimeRangeStore';
+import {useCustomTimeRange} from './store/CustomTimeRangeStore.es';
 
 const CustomTimeRangeForm = ({filterKey}) => {
 	const {

@@ -9,15 +9,15 @@
  * distribution rights of the Software.
  */
 
-import {AppContext} from '../../AppContext';
-import Icon from '../../../shared/components/Icon';
-import ListView from '../../../shared/components/list/ListView';
-import PaginationBar from '../../../shared/components/pagination/PaginationBar';
-import Panel from '../../../shared/components/Panel';
+import {AppContext} from '../../AppContext.es';
+import Icon from '../../../shared/components/Icon.es';
+import ListView from '../../../shared/components/list/ListView.es';
+import PaginationBar from '../../../shared/components/pagination/PaginationBar.es';
+import Panel from '../../../shared/components/Panel.es';
 import React from 'react';
-import ReloadButton from '../../../shared/components/list/ReloadButton';
-import Tooltip from '../../../shared/components/Tooltip';
-import WorkloadByStepTable from './WorkloadByStepTable';
+import ReloadButton from '../../../shared/components/list/ReloadButton.es';
+import Tooltip from '../../../shared/components/Tooltip.es';
+import WorkloadByStepTable from './WorkloadByStepTable.es';
 
 class WorkloadByStepCard extends React.Component {
 	constructor(props) {

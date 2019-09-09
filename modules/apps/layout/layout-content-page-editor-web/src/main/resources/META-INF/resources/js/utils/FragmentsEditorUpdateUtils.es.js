@@ -306,26 +306,6 @@ function updateIn(object, keyPath, updater, defaultValue) {
 }
 
 /**
- * Updates row
- * @param {!Object} store Store instance that dispatches the actions
- * @param {string} updateAction Update action name
- * @param {object} payload Row payload
- * @private
- * @review
- */
-function updateRow(store, updateAction, payload) {
-	store
-		.dispatch(enableSavingChangesStatusAction())
-		.dispatch(
-			Object.assign({}, payload, {
-				type: updateAction
-			})
-		)
-		.dispatch(updateLastSaveDateAction())
-		.dispatch(disableSavingChangesStatusAction());
-}
-
-/**
  * Sets used widgets based on the portletIds array
  * @param {!Array} widgets
  * @param {{!Array} portletIds
@@ -400,7 +380,6 @@ export {
 	setDraggingItemPosition,
 	setIn,
 	updateIn,
-	updateRow,
 	updateUsedWidgets,
 	updateWidgets
 };

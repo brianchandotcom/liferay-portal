@@ -21,11 +21,6 @@ import {
 	MAPPING_SOURCE_TYPE_IDS,
 	COMPATIBLE_TYPES
 } from '../../../utils/constants';
-import {
-	disableSavingChangesStatusAction,
-	enableSavingChangesStatusAction,
-	updateLastSaveDateAction
-} from '../../../actions/saveChanges.es';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import {
 	getAssetMappingFields,
@@ -39,10 +34,8 @@ import {
 } from '../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarLayoutBackgroundImagePanel.soy';
-import {
-	ADD_MAPPED_ASSET_ENTRY,
-	UPDATE_ROW_CONFIG
-} from '../../../actions/actions.es';
+import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 const IMAGE_SOURCE_TYPE_IDS = {
 	content: 'content_mapping',
@@ -234,17 +227,11 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_clearMappingValues() {
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				config: {
-					backgroundImage: ''
-				},
-				rowId: this.itemId,
-				type: UPDATE_ROW_CONFIG
+		this.store.dispatch(
+			updateRowConfigAction(this.itemId, {
+				backgroundImage: ''
 			})
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		);
 	}
 
 	/**
@@ -409,20 +396,14 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_selectAssetEntry(assetEntry) {
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				config: {
-					backgroundImage: {
-						classNameId: assetEntry.classNameId,
-						classPK: assetEntry.classPK
-					}
-				},
-				rowId: this.itemId,
-				type: UPDATE_ROW_CONFIG
+		this.store.dispatch(
+			updateRowConfigAction(this.itemId, {
+				backgroundImage: {
+					classNameId: assetEntry.classNameId,
+					classPK: assetEntry.classPK
+				}
 			})
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		);
 	}
 
 	/**
@@ -442,19 +423,13 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 				  }
 				: {mappedField: fieldId};
 
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				config: {
-					backgroundImage: {
-						...fieldData
-					}
-				},
-				rowId: this.itemId,
-				type: UPDATE_ROW_CONFIG
+		this.store.dispatch(
+			updateRowConfigAction(this.itemId, {
+				backgroundImage: {
+					...fieldData
+				}
 			})
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		);
 	}
 
 	/**
@@ -464,17 +439,11 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_updateRowBackgroundImage(backgroundImage) {
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				config: {
-					backgroundImage
-				},
-				rowId: this.itemId,
-				type: UPDATE_ROW_CONFIG
+		this.store.dispatch(
+			updateRowConfigAction(this.itemId, {
+				backgroundImage
 			})
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		);
 	}
 }
 

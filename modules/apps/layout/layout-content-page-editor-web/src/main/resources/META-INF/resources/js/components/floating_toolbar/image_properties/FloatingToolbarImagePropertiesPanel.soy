@@ -11,7 +11,7 @@
 
 	<div class="floating-toolbar-spacing-panel p-3">
 		{let $isMapped: (
-			(isNonnull($item.editableValues.classNameId)) and ($item.editableValues.classNameId != '') or
+			(isNonnull($item.editableValues.fieldId)) and ($item.editableValues.fieldId != '') or
 			(isNonnull($item.editableValues.mappedField)) and ($item.editableValues.mappedField != '')
 		) /}
 

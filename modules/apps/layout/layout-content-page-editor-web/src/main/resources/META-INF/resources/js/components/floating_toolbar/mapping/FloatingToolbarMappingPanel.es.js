@@ -19,17 +19,13 @@ import Soy, {Config} from 'metal-soy';
 import '../../common/AssetSelector.es';
 import '../common/FloatingToolbarDropdown.es';
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
-import {
-	ADD_MAPPED_ASSET_ENTRY,
-	CLEAR_FRAGMENT_EDITOR
-} from '../../../actions/actions.es';
+import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	COMPATIBLE_TYPES,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	MAPPING_SOURCE_TYPE_IDS,
-	DEFAULT_LANGUAGE_ID_KEY
+	MAPPING_SOURCE_TYPE_IDS
 } from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
@@ -38,11 +34,10 @@ import {
 	openAssetBrowser,
 	openCreateContentDialog
 } from '../../../utils/FragmentsEditorDialogUtils';
-import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {
-	updateEditableValueAction,
-	updateEditableValuesMappingAction
+	updateEditableValueFieldIdAction,
+	updateEditableValueMappedFieldAction
 } from '../../../actions/updateEditableValue.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
@@ -176,28 +171,11 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_clearEditableValues() {
 		this.store.dispatch(
-			updateEditableValuesMappingAction(
+			updateEditableValueFieldIdAction(
 				this.item.fragmentEntryLinkId,
+				this._getFragmentEntryProcessor(),
 				this.item.editableId,
-				[
-					{
-						content: '',
-						editableValueId: 'classNameId'
-					},
-					{
-						content: '',
-						editableValueId: 'classPK'
-					},
-					{
-						content: '',
-						editableValueId: 'fieldId'
-					},
-					{
-						content: '',
-						editableValueId: 'mappedField'
-					}
-				],
-				this._getFragmentEntryProcessor()
+				{}
 			)
 		);
 	}
@@ -209,26 +187,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_clearFields() {
 		this._fields = [];
-	}
-
-	/**
-	 * @private
-	 * @review
-	 */
-	_clearFragmentBackgroundImage() {
-		this.store.dispatch(
-			updateEditableValueAction({
-				editableId: this.item.editableId,
-				editableValueContent: '',
-				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-				segmentsExperienceId: prefixSegmentsExperienceId(
-					this.segmentsExperienceId ||
-						this.defaultSegmentsExperienceId
-				)
-			})
-		);
 	}
 
 	/**
@@ -310,39 +268,28 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		const fieldId = event.delegateTarget.value;
 
-		const editableValueId =
-			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
-				? 'fieldId'
-				: 'mappedField';
-
-		this.store.dispatch(
-			updateEditableValuesMappingAction(
-				this.item.fragmentEntryLinkId,
-				this.item.editableId,
-				[
+		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
+			this.store.dispatch(
+				updateEditableValueFieldIdAction(
+					this.item.fragmentEntryLinkId,
+					this._getFragmentEntryProcessor(),
+					this.item.editableId,
 					{
-						content: fieldId,
-						editableValueId
+						classNameId: this.item.editableValues.classNameId,
+						classPK: this.item.editableValues.classPK,
+						fieldId
 					}
-				],
-				this._getFragmentEntryProcessor()
-			)
-		);
-
-		if (
-			this.itemType ===
-			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
-		) {
-			requestAnimationFrame(() => {
-				this._clearFragmentBackgroundImage();
-			});
-		} else if (this.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
-			requestAnimationFrame(() => {
-				this.store.dispatch({
-					type: CLEAR_FRAGMENT_EDITOR,
-					value: this.itemId
-				});
-			});
+				)
+			);
+		} else {
+			this.store.dispatch(
+				updateEditableValueMappedFieldAction(
+					this.item.fragmentEntryLinkId,
+					this._getFragmentEntryProcessor(),
+					this.item.editableId,
+					fieldId
+				)
+			);
 		}
 	}
 
@@ -422,24 +369,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_selectAssetEntry(assetEntry) {
 		this.store.dispatch(
-			updateEditableValuesMappingAction(
+			updateEditableValueFieldIdAction(
 				this.item.fragmentEntryLinkId,
+				this._getFragmentEntryProcessor(),
 				this.item.editableId,
-				[
-					{
-						content: assetEntry.classNameId,
-						editableValueId: 'classNameId'
-					},
-					{
-						content: assetEntry.classPK,
-						editableValueId: 'classPK'
-					},
-					{
-						content: '',
-						editableValueId: 'fieldId'
-					}
-				],
-				this._getFragmentEntryProcessor()
+				{
+					classNameId: assetEntry.classNameId,
+					classPK: assetEntry.classPK,
+					fieldId: ''
+				}
 			)
 		);
 	}

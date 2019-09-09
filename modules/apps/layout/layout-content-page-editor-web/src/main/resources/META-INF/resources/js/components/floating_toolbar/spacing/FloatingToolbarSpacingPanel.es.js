@@ -25,9 +25,8 @@ import {
 } from '../../../utils/rowConstants';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarSpacingPanel.soy';
-import {updateRow} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import {updateRowColumnsNumberAction} from '../../../actions/updateRowColumnsNumber.es';
-import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 /**
  * FloatingToolbarSpacingPanel
@@ -131,10 +130,7 @@ class FloatingToolbarSpacingPanel extends Component {
 	 * @review
 	 */
 	_updateRowConfig(config) {
-		updateRow(this.store, UPDATE_ROW_CONFIG, {
-			config,
-			rowId: this.itemId
-		});
+		this.store.dispatch(updateRowConfigAction(this.itemId, config));
 	}
 }
 

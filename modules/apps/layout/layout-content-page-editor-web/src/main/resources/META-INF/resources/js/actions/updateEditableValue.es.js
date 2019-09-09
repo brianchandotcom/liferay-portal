@@ -17,15 +17,8 @@ import {
 	enableSavingChangesStatusAction,
 	updateLastSaveDateAction
 } from './saveChanges.es';
-import {
-	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-} from '../utils/constants';
-import {
-	deleteIn,
-	setIn,
-	updateIn
-} from '../utils/FragmentsEditorUpdateUtils.es';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../utils/constants';
+import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	UPDATE_EDITABLE_VALUE_ERROR,
 	UPDATE_EDITABLE_VALUE_LOADING,
@@ -33,337 +26,136 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
-import debouncedAlert from '../utils/debouncedAlert.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 import {updatePageContentsAction} from './updatePageContents.es';
 
 /**
- * @type {number}
+ * Sets the editable value content.
+ * @param {string} fragmentEntryLinkId
+ * @param {EDITABLE_FRAGMENT_ENTRY_PROCESSOR|BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} processor
+ * @param {string} editableId
+ * @param {string} content
  */
-const UPDATE_EDITABLE_VALUES_DELAY = 1500;
+const updateEditableValueContentAction = (
+	fragmentEntryLinkId,
+	processor,
+	editableId,
+	content
+) => (dispatch, getState) =>
+	_sendEditableValues(
+		fragmentEntryLinkId,
+		[
+			...['classNameId', 'classPK', 'fieldId', 'mappedField'].map(
+				field => ({
+					path: [processor, editableId, field]
+				})
+			),
+			{
+				content,
+				path: [
+					processor,
+					editableId,
+					_getSegmentsExperienceId(getState),
+					_getLanguageId(getState)
+				]
+			}
+		],
+		dispatch,
+		getState
+	);
 
 /**
- * @param {function} dispatch
+ * Sets the editable value mappedField.
  * @param {string} fragmentEntryLinkId
- * @param {object} previousEditableValues
- * @param {object} nextEditableValues
- * @review
+ * @param {EDITABLE_FRAGMENT_ENTRY_PROCESSOR|BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} processor
+ * @param {string} editableId
+ * @param {string} mappedField
  */
-const debouncedUpdateEditableValues = debouncedAlert(
-	/**
-	 * @param {function} dispatch
-	 * @param {string} fragmentEntryLinkId
-	 * @param {object} previousEditableValues
-	 * @param {object} nextEditableValues
-	 * @review
-	 */
-	(
-		dispatch,
-		fragmentEntryLinkId,
-		previousEditableValues,
-		nextEditableValues
-	) => {
-		_updateEditableValues(
-			dispatch,
-			fragmentEntryLinkId,
-			previousEditableValues,
-			nextEditableValues
-		);
-	},
-
-	UPDATE_EDITABLE_VALUES_DELAY
-);
-
-function _updateEditableValues(
-	dispatch,
+const updateEditableValueMappedFieldAction = (
 	fragmentEntryLinkId,
-	previousEditableValues,
-	nextEditableValues
-) {
-	return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
-		.then(() => {
-			dispatch(updateEditableValueSuccessAction());
-			dispatch(disableSavingChangesStatusAction());
-			dispatch(updateLastSaveDateAction());
-		})
-		.catch(() => {
-			dispatch(
-				updateEditableValueErrorAction(
-					fragmentEntryLinkId,
-					previousEditableValues
-				)
-			);
+	processor,
+	editableId,
+	mappedField
+) => (dispatch, getState) =>
+	_sendEditableValues(
+		fragmentEntryLinkId,
+		[
+			{
+				path: [processor, editableId]
+			},
+			{
+				content: mappedField,
+				path: [processor, editableId, 'mappedField']
+			}
+		],
+		dispatch,
+		getState
+	);
 
-			dispatch(disableSavingChangesStatusAction());
-		});
-}
+/**
+ * Sets the editable value classNameId, classPK and fieldId.
+ * @param {string} fragmentEntryLinkId
+ * @param {EDITABLE_FRAGMENT_ENTRY_PROCESSOR|BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} processor
+ * @param {string} editableId
+ * @param {object} mapData
+ * @param {string} mapData.classNameId
+ * @param {string} mapData.classPK
+ * @param {string} mapData.fieldId
+ */
+const updateEditableValueFieldIdAction = (
+	fragmentEntryLinkId,
+	processor,
+	editableId,
+	mapData
+) => (dispatch, getState) =>
+	_sendEditableValues(
+		fragmentEntryLinkId,
+		[
+			{
+				path: [processor, editableId]
+			},
+			...Object.entries(mapData).map(([key, value]) => ({
+				content: value,
+				path: [processor, editableId, key]
+			}))
+		],
+		dispatch,
+		getState
+	);
 
 /**
  * @param {number} fragmentEntryLinkId
- * @param {object} configurationValues
- * @param {number} segmentsExperienceId
+ * @param {object} configuration
  * @review
  */
-function updateConfigurationValueAction(
+const updateFragmentConfigurationAction = (
 	fragmentEntryLinkId,
-	configurationValues,
-	segmentsExperienceId
-) {
-	return function(dispatch, getState) {
-		const state = getState();
-
-		const prefixedSegmentsExperienceId = prefixSegmentsExperienceId(
-			segmentsExperienceId
-		);
-
-		const previousEditableValues =
-			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-
-		const keyPath = prefixedSegmentsExperienceId
-			? [
-					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					prefixedSegmentsExperienceId
-			  ]
-			: [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR];
-
-		const nextEditableValues = setIn(
-			previousEditableValues,
-			keyPath,
-			configurationValues
-		);
-
-		dispatch(
-			updateEditableValueLoadingAction(
-				fragmentEntryLinkId,
-				nextEditableValues
-			)
-		);
-
-		dispatch(enableSavingChangesStatusAction());
-
-		return _updateEditableValues(
-			dispatch,
-			fragmentEntryLinkId,
-			previousEditableValues,
-			nextEditableValues
-		).then(() => {
-			dispatch(
-				updateFragmentEntryLinkContent(
-					fragmentEntryLinkId,
-					segmentsExperienceId
-				)
-			);
-		});
-	};
-}
-
-/**
- * @param {!object} data
- * @param {!string} data.fragmentEntryLinkId
- * @param {!string} data.editableValueContent
- * @param {!string} data.processor
- * @param {string} data.editableId
- * @param {string} data.editableValueId
- * @param {string} data.segmentsExperienceId
- * @return {function}
- * @review
- */
-function updateEditableValueAction(data) {
-	return updateEditableValuesAction(
-		data.fragmentEntryLinkId,
-		data.editableId,
+	configuration
+) => (dispatch, getState) =>
+	_sendEditableValues(
+		fragmentEntryLinkId,
 		[
 			{
-				content: data.editableValueContent,
-				editableValueId: data.editableValueId
+				content: configuration,
+				path: [
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					_getSegmentsExperienceId(getState)
+				]
 			}
 		],
-		data.processor,
-		data.segmentsExperienceId,
-		data.debounced
-	);
-}
-
-/**
- * @param {string} fragmentEntryLinkId
- * @param {string} editableId
- * @param {Array<{editableValueId: string, content: string}>} editableValues
- * @param {string} [processor=EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
- * @param {string} [segmentsExperienceId='']
- * @return {function}
- * @review
- */
-function updateEditableValuesMappingAction(
-	fragmentEntryLinkId,
-	editableId,
-	editableValues,
-	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	segmentsExperienceId = ''
-) {
-	return function(dispatch) {
-		dispatch(
-			updateEditableValuesAction(
-				fragmentEntryLinkId,
-				editableId,
-				editableValues,
-				processor,
-				segmentsExperienceId,
-				false
-			)
-		).dispatch(updatePageContentsAction());
-	};
-}
-
-/**
- * @param {string} fragmentEntryLinkId
- * @param {string} editableId
- * @param {Array<{editableValueId: string, content: string}>} editableValues
- * @param {string} [editableValueSegmentsExperienceId='']
- * @return {function}
- * @review
- */
-function updateEditableValuesAction(
-	fragmentEntryLinkId,
-	editableId,
-	editableValues,
-	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	segmentsExperienceId = '',
-	debounced = true
-) {
-	return function(dispatch, getState) {
+		dispatch,
+		getState
+	).then(() => {
 		const state = getState();
 
-		const previousEditableValues =
-			state.fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-
-		let keysTreeArray = [processor];
-
-		if (editableId) {
-			keysTreeArray = [...keysTreeArray, editableId];
-		}
-
-		if (segmentsExperienceId) {
-			keysTreeArray = [...keysTreeArray, segmentsExperienceId];
-		}
-
-		let nextEditableValues = previousEditableValues;
-
-		editableValues.forEach(editableValue => {
-			if (!editableValue.content) {
-				nextEditableValues = deleteIn(
-					nextEditableValues,
-					editableValue.editableValueId
-						? [...keysTreeArray, editableValue.editableValueId]
-						: keysTreeArray
-				);
-			} else {
-				nextEditableValues = setIn(
-					nextEditableValues,
-					editableValue.editableValueId
-						? [...keysTreeArray, editableValue.editableValueId]
-						: keysTreeArray,
-					editableValue.content
-				);
-			}
-
-			if (editableValue.editableValueId === 'mappedField') {
-				nextEditableValues = updateIn(
-					nextEditableValues,
-					keysTreeArray,
-					previousEditableValue => {
-						const nextEditableValue = Object.assign(
-							{},
-							previousEditableValue
-						);
-
-						[
-							'config',
-							state.defaultSegmentsEntryId,
-							...Object.keys(state.availableLanguages),
-							...Object.keys(state.availableSegmentsEntries)
-						].forEach(key => {
-							delete nextEditableValue[key];
-						});
-
-						return nextEditableValue;
-					}
-				);
-			}
-		});
-
-		dispatch(
-			updateEditableValueLoadingAction(
+		return dispatch(
+			updateFragmentEntryLinkContent(
 				fragmentEntryLinkId,
-				nextEditableValues
+				state.segmentsExperienceId || state.defaultSegmentsExperienceId
 			)
 		);
-
-		dispatch(enableSavingChangesStatusAction());
-
-		if (debounced) {
-			debouncedUpdateEditableValues(
-				dispatch,
-				fragmentEntryLinkId,
-				previousEditableValues,
-				nextEditableValues
-			);
-		} else {
-			return _updateEditableValues(
-				dispatch,
-				fragmentEntryLinkId,
-				previousEditableValues,
-				nextEditableValues
-			);
-		}
-	};
-}
-
-/**
- * @param {string} fragmentEntryLinkId
- * @param {object} editableValues
- * @param {Date} [date=new Date()]
- * @return {object}
- * @review
- */
-function updateEditableValueErrorAction(
-	fragmentEntryLinkId,
-	editableValues,
-	date = new Date()
-) {
-	return {
-		date,
-		editableValues,
-		fragmentEntryLinkId,
-		type: UPDATE_EDITABLE_VALUE_ERROR
-	};
-}
-
-/**
- * @param {string} fragmentEntryLinkId
- * @param {object} editableValues
- * @return {object}
- * @review
- */
-function updateEditableValueLoadingAction(fragmentEntryLinkId, editableValues) {
-	return {
-		editableValues,
-		fragmentEntryLinkId,
-		type: UPDATE_EDITABLE_VALUE_LOADING
-	};
-}
-
-/**
- * @param {Date} [date=new Date()]
- * @return {object}
- * @review
- */
-function updateEditableValueSuccessAction(date = new Date()) {
-	return {
-		date,
-		type: UPDATE_EDITABLE_VALUE_SUCCESS
-	};
-}
+	});
 
 /**
  * @param {number} fragmentEntryLinkId
@@ -396,11 +188,163 @@ function updateFragmentEntryLinkContent(
 	};
 }
 
+/**
+ * @param {function} getState
+ */
+const _getLanguageId = getState => {
+	const state = getState();
+
+	return state.languageId || state.defaultLanguageId;
+};
+
+/**
+ * @param {function} getState
+ */
+const _getSegmentsExperienceId = getState => {
+	const state = getState();
+
+	return prefixSegmentsExperienceId(
+		state.segmentsExperienceId || state.defaultSegmentsExperienceId
+	);
+};
+
+/**
+ *
+ * @param {object} editableValues
+ * @param {{path: string[], content: any}} change
+ */
+const _mergeChange = (editableValues, change) => {
+	if (!change.content) {
+		return updateIn(editableValues, change.path, editable => {
+			let newEditable = undefined;
+
+			if (editable && (editable.defaultValue || editable.config)) {
+				newEditable = {
+					config: editable.config,
+					defaultValue: editable.defaultValue
+				};
+			}
+
+			return newEditable;
+		});
+	}
+
+	return setIn(editableValues, change.path, change.content);
+};
+
+/**
+ *
+ * @param {string} fragmentEntryLinkId
+ * @param {Array<{path: string[], content: any}>} changes
+ * @param {function} dispatch
+ * @param {function} getState
+ */
+const _sendEditableValues = (
+	fragmentEntryLinkId,
+	changes,
+	dispatch,
+	getState
+) => {
+	const previousEditableValues = getState().fragmentEntryLinks[
+		fragmentEntryLinkId
+	].editableValues;
+
+	const nextEditableValues = changes.reduce(
+		(editableValues, change) => _mergeChange(editableValues, change),
+		previousEditableValues
+	);
+
+	dispatch(
+		_updateEditableValuesLoadingAction(
+			fragmentEntryLinkId,
+			nextEditableValues
+		)
+	);
+
+	dispatch(enableSavingChangesStatusAction());
+
+	return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+		.then(() => {
+			dispatch(_updateEditableValuesSuccessAction());
+			dispatch(disableSavingChangesStatusAction());
+			dispatch(updateLastSaveDateAction());
+		})
+		.then(() => {
+			const hasContentChanges = changes.some(
+				change =>
+					change.path.includes('mappedField') ||
+					change.path.includes('fieldId')
+			);
+
+			if (hasContentChanges) {
+				return dispatch(updatePageContentsAction());
+			}
+		})
+		.catch(() => {
+			dispatch(
+				_updateEditableValuesErrorAction(
+					fragmentEntryLinkId,
+					previousEditableValues
+				)
+			);
+
+			dispatch(disableSavingChangesStatusAction());
+		});
+};
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {object} editableValues
+ * @param {Date} [date=new Date()]
+ * @return {object}
+ * @review
+ */
+function _updateEditableValuesErrorAction(
+	fragmentEntryLinkId,
+	editableValues,
+	date = new Date()
+) {
+	return {
+		date,
+		editableValues,
+		fragmentEntryLinkId,
+		type: UPDATE_EDITABLE_VALUE_ERROR
+	};
+}
+
+/**
+ * @param {string} fragmentEntryLinkId
+ * @param {object} editableValues
+ * @return {object}
+ * @review
+ */
+function _updateEditableValuesLoadingAction(
+	fragmentEntryLinkId,
+	editableValues
+) {
+	return {
+		editableValues,
+		fragmentEntryLinkId,
+		type: UPDATE_EDITABLE_VALUE_LOADING
+	};
+}
+
+/**
+ * @param {Date} [date=new Date()]
+ * @return {object}
+ * @review
+ */
+function _updateEditableValuesSuccessAction(date = new Date()) {
+	return {
+		date,
+		type: UPDATE_EDITABLE_VALUE_SUCCESS
+	};
+}
+
 export {
-	updateConfigurationValueAction,
-	updateFragmentEntryLinkContent,
-	updateEditableValueAction,
-	updateEditableValuesMappingAction,
-	updateEditableValuesAction,
-	updateEditableValueSuccessAction
+	updateEditableValueContentAction,
+	updateEditableValueMappedFieldAction,
+	updateEditableValueFieldIdAction,
+	updateFragmentConfigurationAction,
+	updateFragmentEntryLinkContent
 };

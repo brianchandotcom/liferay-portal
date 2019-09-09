@@ -30,7 +30,7 @@ public class LiferayRequestContentAggregatorSink extends LiferaySink {
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
-		return _doProcessRequest(resourceURL, jsonObject);
+		return _processRequest(resourceURL, jsonObject);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class LiferayRequestContentAggregatorSink extends LiferaySink {
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
-		return _doProcessRequest(resourceURL, jsonObject);
+		return _processRequest(resourceURL, jsonObject);
 	}
 
 	public JsonObject getOutputJsonObject() {
@@ -49,7 +49,7 @@ public class LiferayRequestContentAggregatorSink extends LiferaySink {
 		return _outputResourceURL;
 	}
 
-	private JsonObject _doProcessRequest(
+	private JsonObject _processRequest(
 		String resourceURL, JsonObject jsonObject) {
 
 		_outputResourceURL = resourceURL;

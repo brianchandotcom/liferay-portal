@@ -126,15 +126,38 @@ AUI.add(
 						)
 					);
 
-					icon.setAttribute('height', '34px');
-					icon.setAttribute('width', '34px');
-
 					instance
 						.get('contentBox')
 						.one('svg')
 						.prepend(icon);
 
-					instance.boundary.set('transform', 'matrix(1,0,0,1,0,0)');
+					if (
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types.condition
+						) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.fork) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.join) ||
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types['join-xor']
+						) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.task)
+					) {
+						icon.setAttribute('height', '60px');
+						icon.setAttribute('width', '60px');
+						instance.boundary.set(
+							'transform',
+							'matrix(1,0,0,1,2,2)'
+						);
+					} else {
+						icon.setAttribute('height', '34px');
+						icon.setAttribute('width', '34px');
+						instance.boundary.set(
+							'transform',
+							'matrix(1,0,0,1,0,0)'
+						);
+					}
 
 					if (
 						A.instanceOf(
@@ -280,7 +303,7 @@ AUI.add(
 		var DiagramNodeCondition = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 34
+					value: 60
 				},
 
 				iconClass: {
@@ -303,7 +326,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 34
+					value: 60
 				},
 
 				xmlType: {
@@ -320,8 +343,8 @@ AUI.add(
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
 
-					shape.width = 20;
-					shape.height = 20;
+					shape.width = 41;
+					shape.height = 41;
 
 					return shape;
 				},
@@ -421,7 +444,7 @@ AUI.add(
 		var DiagramNodeJoin = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 34
+					value: 60
 				},
 
 				iconClass: {
@@ -434,7 +457,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 34
+					value: 60
 				},
 
 				xmlType: {
@@ -451,8 +474,8 @@ AUI.add(
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
-					shape.width = 20;
-					shape.height = 20;
+					shape.width = 41;
+					shape.height = 41;
 
 					return shape;
 				},
@@ -490,8 +513,8 @@ AUI.add(
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
-					shape.width = 20;
-					shape.height = 20;
+					shape.width = 41;
+					shape.height = 41;
 
 					return shape;
 				},
@@ -505,7 +528,7 @@ AUI.add(
 		var DiagramNodeFork = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 34
+					value: 60
 				},
 
 				iconClass: {
@@ -518,7 +541,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 34
+					value: 60
 				},
 
 				xmlType: {
@@ -535,8 +558,8 @@ AUI.add(
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeFork.prototype._valueShapeBoundary();
 
-					shape.width = 20;
-					shape.height = 20;
+					shape.width = 41;
+					shape.height = 41;
 
 					return shape;
 				},
@@ -680,7 +703,7 @@ AUI.add(
 				},
 
 				height: {
-					value: 34
+					value: 70
 				},
 
 				iconClass: {
@@ -693,7 +716,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 34
+					value: 70
 				},
 
 				xmlType: {
@@ -710,8 +733,8 @@ AUI.add(
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeTask.prototype._valueShapeBoundary();
 
-					shape.width = 34;
-					shape.height = 34;
+					shape.width = 55;
+					shape.height = 55;
 
 					return shape;
 				},

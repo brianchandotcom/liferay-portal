@@ -76,11 +76,23 @@
 
 			<liferay-ui:icon
 				label="<%= true %>"
-				linkCssClass="btn btn-secondary btn-sm mb-4"
+				linkCssClass="btn btn-primary btn-sm mb-4"
 				markupView="lexicon"
 				message="start-free-trial"
 				target="_blank"
 				url="<%= SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
+			/>
+
+			<portlet:actionURL name="/hide_segments_experiment_panel" var="hideSegmentsExperimentPanelURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm mb-4"
+				markupView="lexicon"
+				message="hide-ab-test-panel"
+				url="<%= hideSegmentsExperimentPanelURL %>"
 			/>
 		</div>
 	</c:otherwise>

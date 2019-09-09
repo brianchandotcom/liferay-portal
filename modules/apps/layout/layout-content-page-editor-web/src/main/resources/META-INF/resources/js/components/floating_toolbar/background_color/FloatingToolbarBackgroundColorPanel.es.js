@@ -19,14 +19,9 @@ import Soy from 'metal-soy';
 import '../common/FloatingToolbarColorPicker.es';
 import './FloatingToolbarBackgroundColorPanelDelegateTemplate.soy';
 import {CONFIG_KEYS} from '../../../utils/rowConstants';
-import {
-	disableSavingChangesStatusAction,
-	enableSavingChangesStatusAction,
-	updateLastSaveDateAction
-} from '../../../actions/saveChanges.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import templates from './FloatingToolbarBackgroundColorPanel.soy';
-import {UPDATE_ROW_CONFIG} from '../../../actions/actions.es';
+import {updateRowConfigAction} from '../../../actions/updateRowConfig.es';
 
 /**
  * FloatingToolbarBackgroundColorPanel
@@ -62,15 +57,7 @@ class FloatingToolbarBackgroundColorPanel extends Component {
 	 * @review
 	 */
 	_updateRowConfig(config) {
-		this.store
-			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				config,
-				rowId: this.itemId,
-				type: UPDATE_ROW_CONFIG
-			})
-			.dispatch(updateLastSaveDateAction())
-			.dispatch(disableSavingChangesStatusAction());
+		this.store.dispatch(updateRowConfigAction(this.itemId, config));
 	}
 }
 

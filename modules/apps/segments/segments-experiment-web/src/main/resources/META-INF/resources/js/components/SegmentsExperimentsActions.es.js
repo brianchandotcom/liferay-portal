@@ -62,39 +62,25 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			)}
 
 			{experiment.status.value === STATUS_RUNNING && (
-				<>
-					<ClayButton
-						className="w-100 mb-3"
-						displayType="secondary"
-						onClick={() =>
+				<ClayButton
+					className="w-100"
+					displayType="secondary"
+					onClick={() => {
+						const confirmed = confirm(
+							Liferay.Language.get(
+								'are-you-sure-you-want-to-delete-this'
+							)
+						);
+
+						if (confirmed)
 							onEditSegmentsExperimentStatus(
 								experiment,
-								STATUS_PAUSED
-							)
-						}
-					>
-						{Liferay.Language.get('pause-test')}
-					</ClayButton>
-					<ClayButton
-						className="w-100"
-						displayType="secondary"
-						onClick={() => {
-							const confirmed = confirm(
-								Liferay.Language.get(
-									'are-you-sure-you-want-to-delete-this'
-								)
+								STATUS_TERMINATED
 							);
-
-							if (confirmed)
-								onEditSegmentsExperimentStatus(
-									experiment,
-									STATUS_TERMINATED
-								);
-						}}
-					>
-						{Liferay.Language.get('terminate-test')}
-					</ClayButton>
-				</>
+					}}
+				>
+					{Liferay.Language.get('terminate-test')}
+				</ClayButton>
 			)}
 
 			{experiment.status.value === STATUS_PAUSED && (

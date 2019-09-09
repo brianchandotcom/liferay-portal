@@ -32,6 +32,7 @@ function Variant({
 	onVariantPublish,
 	publishable = false,
 	segmentsExperienceId,
+	showSplit = true,
 	split,
 	variantId,
 	winner
@@ -116,7 +117,7 @@ function Variant({
 					</ClayList.ItemField>
 				</>
 			)}
-			{!editable && (
+			{showSplit && (
 				<ClayList.ItemField>
 					<span
 						aria-label={Liferay.Language.get('traffic-split')}
@@ -172,6 +173,7 @@ Variant.propTypes = {
 	onVariantPublish: PropTypes.func.isRequired,
 	publishable: PropTypes.bool,
 	segmentsExperienceId: PropTypes.string.isRequired,
+	showSplit: PropTypes.bool,
 	split: PropTypes.number,
 	variantId: PropTypes.string.isRequired,
 	winner: PropTypes.bool

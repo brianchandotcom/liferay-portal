@@ -45,6 +45,7 @@ function VariantList({
 						onVariantPublish={onVariantPublish}
 						publishable={publishable}
 						segmentsExperienceId={variant.segmentsExperienceId}
+						showSplit={!publishable && !editable}
 						split={variant.split}
 						variantId={variant.segmentsExperimentRelId}
 						winner={variant.winner}

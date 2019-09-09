@@ -20,6 +20,9 @@ export const KEY_CODES = {
 	TAB: 'Tab'
 };
 
+/**
+ * List of deltas in a shape compatible with ClayPaginationWithBar.
+ */
 export const DELTAS = [
 	{
 		label: 5
@@ -38,4 +41,7 @@ export const DELTAS = [
 	}
 ];
 
+/**
+ * Delta that will be initially selected.
+ */
 export const DEFAULT_DELTA = DELTAS[4];

@@ -1293,6 +1293,10 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
+		if (!layoutConverter.isConvertible(layout)) {
+			return false;
+		}
+
 		return true;
 	}
 

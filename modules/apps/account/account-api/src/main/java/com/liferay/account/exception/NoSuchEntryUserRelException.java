@@ -16,12 +16,9 @@ package com.liferay.account.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchEntryUserRelException extends NoSuchModelException {
 
 	public NoSuchEntryUserRelException() {

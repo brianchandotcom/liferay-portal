@@ -16,12 +16,9 @@ package com.liferay.batch.engine.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public class NoSuchTaskException extends NoSuchModelException {
 
 	public NoSuchTaskException() {

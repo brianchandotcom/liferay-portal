@@ -21,11 +21,17 @@ import VariantForm from './internal/VariantForm.es';
 import {
 	addVariant,
 	updateVariant,
-	updateVariants
+	updateVariants,
+	updateSegmentsExperiment
 } from '../../state/actions.es';
 import {DispatchContext, StateContext} from '../../state/context.es';
 import SegmentsExperimentsContext from '../../context.es';
 import {navigateToExperience} from '../../util/navigation.es';
+import {
+	STATUS_COMPLETED,
+	STATUS_FINISHED_NO_WINNER,
+	STATUS_FINISHED_WINNER
+} from '../../util/statuses.es';
 
 function Variants({selectedSegmentsExperienceId}) {
 	const dispatch = useContext(DispatchContext);
@@ -47,6 +53,9 @@ function Variants({selectedSegmentsExperienceId}) {
 	const [creatingVariant, setCreatingVariant] = useState(false);
 	const [editingVariant, setEditingVariant] = useState({active: false});
 
+	const publishable =
+		experiment.status.value === STATUS_FINISHED_WINNER ||
+		experiment.status.value === STATUS_FINISHED_NO_WINNER;
 	return (
 		<>
 			<h4 className="mb-3 mt-4 sheet-subtitle">
@@ -85,6 +94,8 @@ function Variants({selectedSegmentsExperienceId}) {
 				editable={experiment.editable}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
+				onVariantPublish={_handlePublishVariant}
+				publishable={publishable}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
 				variants={variants}
 			/>
@@ -169,6 +180,18 @@ function Variants({selectedSegmentsExperienceId}) {
 					variantId
 				})
 			);
+		});
+	}
+
+	function _handlePublishVariant(experienceId) {
+		const body = {
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: experienceId
+		};
+
+		APIService.publishExperience(body).then(({segmentsExperiment}) => {
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
 		});
 	}
 

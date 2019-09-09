@@ -22,6 +22,8 @@ function VariantList({
 	editable,
 	onVariantDeletion,
 	onVariantEdition,
+	onVariantPublish,
+	publishable,
 	selectedSegmentsExperienceId,
 	variants
 }) {
@@ -40,6 +42,8 @@ function VariantList({
 						name={variant.name}
 						onVariantDeletion={onVariantDeletion}
 						onVariantEdition={onVariantEdition}
+						onVariantPublish={onVariantPublish}
+						publishable={publishable}
 						segmentsExperienceId={variant.segmentsExperienceId}
 						split={variant.split}
 						variantId={variant.segmentsExperimentRelId}
@@ -55,6 +59,7 @@ VariantList.propTypes = {
 	editable: PropTypes.bool.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
+	publishable: PropTypes.bool,
 	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 

@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
-import static com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller.*;
-
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
 import com.liferay.petra.function.UnsafeFunction;
@@ -53,14 +51,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OAuth2ControllerFactory.class)
 public class OAuth2ControllerFactory {
 
-	public OAuth2Controller getOAuth2ControllerWithoutRedirect(
+	public OAuth2Controller getJSONOAuth2Controller(
 		Function<PortletRequest, String> function) {
 
-		return new OAuth2ExecutorWithoutRedirect(function);
+		return new JSONOAuth2Controller(function);
 	}
 
-	public OAuth2Controller getOAuth2ControllerWithRedirect() {
-		return new OAuth2ExecutorWithRedirect();
+	public OAuth2Controller getRedirectingOAuth2Controller() {
+		return new RedirectingOAuth2Controller();
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)
@@ -186,9 +184,9 @@ public class OAuth2ControllerFactory {
 
 	}
 
-	private class OAuth2ExecutorWithoutRedirect implements OAuth2Controller {
+	private class JSONOAuth2Controller implements OAuth2Controller {
 
-		public OAuth2ExecutorWithoutRedirect(
+		public JSONOAuth2Controller(
 			Function<PortletRequest, String> function) {
 
 			_function = function;
@@ -234,9 +232,9 @@ public class OAuth2ControllerFactory {
 
 	}
 
-	private class OAuth2ExecutorWithRedirect implements OAuth2Controller {
+	private class RedirectingOAuth2Controller implements OAuth2Controller {
 
-		public OAuth2ExecutorWithRedirect() {
+		public RedirectingOAuth2Controller() {
 			_function = portletRequest -> _portal.getCurrentURL(
 				_portal.getHttpServletRequest(portletRequest));
 		}

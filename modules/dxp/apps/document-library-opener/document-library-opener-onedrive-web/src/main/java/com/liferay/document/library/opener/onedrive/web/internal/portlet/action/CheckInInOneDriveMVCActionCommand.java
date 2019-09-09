@@ -54,7 +54,7 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getOAuth2ControllerWithRedirect();
+			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 
 		oAuth2Controller.execute(
 			actionRequest, actionResponse, this::_executeCommand);

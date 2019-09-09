@@ -48,7 +48,7 @@ public class EditInOneDriveAndRedirectMVCActionCommand
 		throws Exception {
 
 		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getOAuth2ControllerWithRedirect();
+			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 
 		oAuth2Controller.execute(
 			actionRequest, actionResponse,

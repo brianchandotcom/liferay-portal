@@ -96,8 +96,6 @@ public class SourceFormatter {
 				ExcludeSyntax.REGEX,
 				"^((?!/frontend-js-node-shims/src/).)*/node_modules/.*"),
 			new ExcludeSyntaxPattern(
-				ExcludeSyntax.REGEX, ".*/META-INF/maven/.+\\.xml"),
-			new ExcludeSyntaxPattern(
 				ExcludeSyntax.REGEX, ".*/([^/.]+\\.){2,}properties")
 		};
 

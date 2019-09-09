@@ -1,0 +1,150 @@
+{
+	"components": {
+		"schemas": {
+			"Price": {
+				"properties": {
+					"id": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
+					"priceBigDecimal1": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"priceBigDecimal2": {
+						"format": "bigdecimal",
+						"type": "number"
+					},
+					"priceDouble": {
+						"format": "double",
+						"type": "number"
+					},
+					"priceFloat": {
+						"format": "float",
+						"type": "number"
+					},
+					"priceNumber": {
+						"type": "number"
+					}
+				},
+				"required": [
+					"id",
+					"priceBigDecimal1",
+					"priceBigDecimal2"
+				],
+				"type": "object",
+				"xml": {
+					"name": "Price"
+				}
+			}
+		}
+	},
+	"info": {
+		"description": "Liferay Commerce Admin Catalog Test API",
+		"title": "Liferay Commerce Admin Catalog Test API",
+		"version": "v1.0"
+	},
+	"openapi": "3.0.1",
+	"paths": {
+		"/v1.0/price/{id}": {
+			"delete": {
+				"operationId": "deletePrice",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Price"
+				]
+			},
+			"get": {
+				"operationId": "getPrice",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Price"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Price"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Price"
+				]
+			},
+			"patch": {
+				"operationId": "patchPrice",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "integer"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Price"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Price"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Price"
+				]
+			}
+		}
+	}
+}

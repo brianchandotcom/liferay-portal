@@ -20,6 +20,8 @@ import com.liferay.talend.common.schema.SchemaUtils;
 import java.io.IOException;
 import java.io.StringReader;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -115,6 +117,11 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 
 				currentJsonObjectBuilder.add(
 					fieldName, (Long)indexedRecord.get(fieldPos));
+			}
+			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._decimal())) {
+				currentJsonObjectBuilder.add(
+					fieldName,
+					new BigDecimal((String)indexedRecord.get(fieldPos)));
 			}
 			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._double())) {
 				currentJsonObjectBuilder.add(

@@ -188,7 +188,12 @@ public class EndpointSchemaInferrer {
 		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
 			oasType, openAPIFormatDefinition);
 
-		if (oasFormat == OASFormat.BOOLEAN) {
+		if (oasFormat == OASFormat.BIGDECIMAL) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._decimal()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.BOOLEAN) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
 				(Object)null);

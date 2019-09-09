@@ -29,6 +29,39 @@ import org.junit.Test;
 public class AssetTagNamesFieldQueryBuilderTest
 	extends BaseAssetTagNamesFieldQueryBuilderTestCase {
 
+	@Override
+	@Test
+	public void testBasicWordMatches() throws Exception {
+		addDocument("name tag end");
+		addDocument("NA-META-G");
+		addDocument("Tag Name");
+		addDocument("TAG1");
+
+		assertSearch("end", Arrays.asList("name tag end"));
+		assertSearch("g", Arrays.asList("NA-META-G"));
+		assertSearch("META G", Arrays.asList("NA-META-G"));
+		assertSearch("meta", Arrays.asList("NA-META-G"));
+		assertSearch("META-G", Arrays.asList("NA-META-G"));
+		assertSearch("nA mEtA g", Arrays.asList("NA-META-G"));
+		assertSearch("NA-META-G", Arrays.asList("NA-META-G"));
+		assertSearch("na-meta-g", Arrays.asList("NA-META-G"));
+		assertSearch("name tag", Arrays.asList("name tag end", "Tag Name"));
+		assertSearch("name", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("NaMe*", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("name-tag", Arrays.asList("name tag end", "Tag Name"));
+		assertSearch("tag 1", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag name", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag", Arrays.asList("TAG1", "Tag Name", "name tag end"));
+		assertSearch("tag(142857)", Arrays.asList("Tag Name", "name tag end"));
+		assertSearch("tag1", Arrays.asList("TAG1"));
+
+		assertSearchNoHits("1");
+		assertSearchNoHits("ame");
+		assertSearchNoHits("METAG");
+		assertSearchNoHits("nameTAG");
+		assertSearchNoHits("tag2");
+	}
+
 	@Test
 	public void testMultiwordPhrasePrefixesElasticsearch() throws Exception {
 		addDocument("Name Tags");

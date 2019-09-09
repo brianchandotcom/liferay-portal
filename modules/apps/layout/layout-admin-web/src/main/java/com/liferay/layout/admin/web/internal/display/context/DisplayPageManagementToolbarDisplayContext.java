@@ -146,7 +146,9 @@ public class DisplayPageManagementToolbarDisplayContext
 							"addDisplayPageURL", addDisplayPageURL.toString());
 						dropDownItemData.put(
 							"mappingTypes", _getMappingTypesJSONArray());
+
 						dropdownItem.setData(dropDownItemData);
+
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});
 			}

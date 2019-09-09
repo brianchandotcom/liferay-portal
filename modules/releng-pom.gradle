@@ -183,7 +183,7 @@ generatePomRelease {
 					return FileVisitResult.CONTINUE
 				}
 
-				File artifactPropertiesFile = new File(it.toString().replace("/modules/", "/modules/.releng/") + "artifact.properties")
+				File artifactPropertiesFile = new File(it.toString().replace("/modules/", "/modules/.releng/"), "artifact.properties")
 
 				if (!artifactPropertiesFile.exists()) {
 					return FileVisitResult.CONTINUE

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -229,27 +230,39 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay)
 		throws IOException, PortalException {
 
-		byte[] bytes;
+		byte[] bytes = {};
 
 		if (url.startsWith("data:image/")) {
 			String[] urlParts = url.split(";base64,");
 
 			bytes = Base64.decode(urlParts[1]);
 		}
-		else {
+		else if (Validator.isUrl(url)) {
 			URL imageURL = new URL(url);
 
 			bytes = FileUtil.getBytes(imageURL.openStream());
 		}
 
-		ImageTool imageTool = ImageToolImpl.getInstance();
+		try {
+			ImageTool imageTool = ImageToolImpl.getInstance();
 
-		Image image = imageTool.getImage(bytes);
+			Image image = imageTool.getImage(bytes);
 
-		return _dlAppLocalService.addFileEntry(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, image.getType(),
-			bytes, serviceContext);
+			return _dlAppLocalService.addFileEntry(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
+				image.getType(), bytes, serviceContext);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			throw new StorageFieldValueException(
+				LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"invalid-image-content-for-the-field-x", name));
+		}
 	}
 
 	private void _handleException(

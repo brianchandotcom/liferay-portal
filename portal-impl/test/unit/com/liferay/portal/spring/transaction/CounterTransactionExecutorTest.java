@@ -30,7 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
@@ -57,7 +56,8 @@ public class CounterTransactionExecutorTest {
 		transactionExecutor.execute(transactionAttributeAdapter, () -> null);
 
 		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, _transactionStatus, null);
+			transactionAttributeAdapter,
+			RecordPlatformTransactionManager.TRANSACTION_STATUS, null);
 	}
 
 	@Test
@@ -85,7 +85,8 @@ public class CounterTransactionExecutorTest {
 		}
 
 		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, _transactionStatus, null);
+			transactionAttributeAdapter,
+			RecordPlatformTransactionManager.TRANSACTION_STATUS, null);
 	}
 
 	@Test
@@ -201,7 +202,8 @@ public class CounterTransactionExecutorTest {
 		}
 
 		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, null, _transactionStatus);
+			transactionAttributeAdapter, null,
+			RecordPlatformTransactionManager.TRANSACTION_STATUS);
 	}
 
 	@Test
@@ -285,9 +287,10 @@ public class CounterTransactionExecutorTest {
 		assertTransactionExecutorThreadLocal(transactionHandler, false);
 
 		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, null, _transactionStatus);
+			transactionAttributeAdapter, null,
+			RecordPlatformTransactionManager.TRANSACTION_STATUS);
 
-		recordPlatformTransactionManager._rollbackTransactionStatus = null;
+		recordPlatformTransactionManager.setRollbackTransactionStatus(null);
 
 		transactionStatusAdapter = transactionHandler.start(
 			transactionAttributeAdapter);
@@ -300,7 +303,8 @@ public class CounterTransactionExecutorTest {
 		assertTransactionExecutorThreadLocal(transactionHandler, false);
 
 		recordPlatformTransactionManager.verify(
-			transactionAttributeAdapter, _transactionStatus, null);
+			transactionAttributeAdapter,
+			RecordPlatformTransactionManager.TRANSACTION_STATUS, null);
 	}
 
 	protected void assertTransactionExecutorThreadLocal(
@@ -319,52 +323,6 @@ public class CounterTransactionExecutorTest {
 	protected final Exception appException = new Exception();
 	protected final Exception commitException = new Exception();
 	protected final Exception rollbackException = new Exception();
-
-	protected class RecordPlatformTransactionManager
-		implements PlatformTransactionManager {
-
-		public RecordPlatformTransactionManager() {
-			_transactionStatus =
-				CounterTransactionExecutorTest._transactionStatus;
-		}
-
-		@Override
-		public void commit(TransactionStatus transactionStatus) {
-			_commitTransactionStatus = transactionStatus;
-		}
-
-		@Override
-		public TransactionStatus getTransaction(
-			TransactionDefinition transactionDefinition) {
-
-			_transactionDefinition = transactionDefinition;
-
-			return _transactionStatus;
-		}
-
-		@Override
-		public void rollback(TransactionStatus transactionStatus) {
-			_rollbackTransactionStatus = transactionStatus;
-		}
-
-		public void verify(
-			TransactionDefinition transactionDefinition,
-			TransactionStatus commitTransactionStatus,
-			TransactionStatus rollbackTransactionStatus) {
-
-			Assert.assertSame(transactionDefinition, _transactionDefinition);
-			Assert.assertSame(
-				commitTransactionStatus, _commitTransactionStatus);
-			Assert.assertSame(
-				rollbackTransactionStatus, _rollbackTransactionStatus);
-		}
-
-		private TransactionStatus _commitTransactionStatus;
-		private TransactionStatus _rollbackTransactionStatus;
-		private TransactionDefinition _transactionDefinition;
-		private final TransactionStatus _transactionStatus;
-
-	}
 
 	private static TransactionAttributeAdapter _newTransactionAttributeAdapter(
 		Predicate<Throwable> predicate) {
@@ -389,20 +347,5 @@ public class CounterTransactionExecutorTest {
 
 				}));
 	}
-
-	private static final TransactionStatus _transactionStatus =
-		(TransactionStatus)ProxyUtil.newProxyInstance(
-			TransactionStatus.class.getClassLoader(),
-			new Class<?>[] {TransactionStatus.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(
-					Object proxy, Method method, Object[] args) {
-
-					throw new UnsupportedOperationException(method.toString());
-				}
-
-			});
 
 }

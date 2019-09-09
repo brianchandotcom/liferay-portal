@@ -87,8 +87,9 @@ public class TransactionStatusAdapter
 			if (throwable == null) {
 				ReflectionUtil.throwException(_lifecycleListenerThrowable);
 			}
-
-			throwable.addSuppressed(_lifecycleListenerThrowable);
+			else {
+				throwable.addSuppressed(_lifecycleListenerThrowable);
+			}
 		}
 	}
 

@@ -37,7 +37,7 @@ const CommentForm = props => (
 			</div>
 
 			{props.showButtons && (
-				<ClayButton.Group spaced>
+				<ClayButton.Group className="mb-3" spaced>
 					<Button
 						disabled={!props.textareaContent}
 						displayType="primary"

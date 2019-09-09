@@ -63,7 +63,7 @@ const ReplyCommentForm = props => {
 	};
 
 	return (
-		<div className="mb-2 mr-3">
+		<div className="mr-3 pb-2">
 			{showForm ? (
 				<CommentForm
 					autoFocus

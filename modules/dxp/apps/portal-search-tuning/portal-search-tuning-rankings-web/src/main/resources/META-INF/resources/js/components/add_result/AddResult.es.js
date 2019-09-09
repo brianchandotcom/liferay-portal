@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState, {DISPLAY_STATES} from '../shared/ClayEmptyState.es';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
-import {DEFAULT_DELTA, DELTAS} from '../../utils/constants.es';
+import {DEFAULT_DELTA} from '../../utils/constants.es';
 import {fetchDocuments} from '../../utils/api.es';
 import {PropTypes} from 'prop-types';
 import {resultsDataToMap} from '../../utils/util.es';
@@ -268,7 +268,6 @@ class AddResult extends Component {
 
 				{showModal && (
 					<AddResultModal
-						DELTAS={DELTAS}
 						addResultSearchQuery={addResultSearchQuery}
 						addResultSelectedIds={addResultSelectedIds}
 						dataLoading={dataLoading}

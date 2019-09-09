@@ -725,7 +725,7 @@ definition {
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 
-		MessageboardsPortlet.viewDefaultEmailFromCP();
+		MessageboardsPortlet.viewDefaultEmailFromCP(emailFromAddress = "testadmin@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
@@ -748,6 +748,8 @@ definition {
 		User.loginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
+
+		User.editEmailViaMyAccount(userEmailAddress = "testadmin@liferay.com");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

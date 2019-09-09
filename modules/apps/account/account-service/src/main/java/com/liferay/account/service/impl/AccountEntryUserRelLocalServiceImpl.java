@@ -19,6 +19,10 @@ import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author Brian Wing Shun Chan
+ * @see AccountEntryUserRelLocalServiceBaseImpl
+ */
 @Component(
 	property = "model.class.name=com.liferay.account.model.AccountEntryUserRel",
 	service = AopService.class

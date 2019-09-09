@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
+import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -82,6 +83,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private boolean _isSkipEvent(Layout layout) {
+		if (AsahUtil.isSkipAsahEvent(layout.getCompanyId())) {
+			return true;
+		}
+
 		Layout oldLayout = _layoutLocalService.fetchLayout(layout.getPlid());
 
 		if (!Objects.equals(

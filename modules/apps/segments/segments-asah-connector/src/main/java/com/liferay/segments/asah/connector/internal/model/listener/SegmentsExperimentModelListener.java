@@ -22,12 +22,10 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
+import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -48,7 +46,7 @@ public class SegmentsExperimentModelListener
 	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (_isSkipEvent()) {
+		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
 			return;
 		}
 
@@ -70,6 +68,10 @@ public class SegmentsExperimentModelListener
 	public void onBeforeCreate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
+		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
+			return;
+		}
+
 		try {
 			_asahSegmentsExperimentProcessor.processAddSegmentsExperiment(
 				segmentsExperiment);
@@ -88,7 +90,7 @@ public class SegmentsExperimentModelListener
 	public void onBeforeRemove(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		if (_isSkipEvent()) {
+		if (AsahUtil.isSkipAsahEvent(segmentsExperiment.getCompanyId())) {
 			return;
 		}
 
@@ -112,20 +114,6 @@ public class SegmentsExperimentModelListener
 			_asahFaroBackendClientFactory, _companyLocalService,
 			_groupLocalService, _layoutLocalService, _portal,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService);
-	}
-
-	private boolean _isSkipEvent() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			!GetterUtil.getBoolean(
-				serviceContext.getAttribute("updateAsah"), true)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

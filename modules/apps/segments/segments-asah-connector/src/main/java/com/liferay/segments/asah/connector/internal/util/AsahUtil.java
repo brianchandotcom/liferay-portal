@@ -14,6 +14,9 @@
 
 package com.liferay.segments.asah.connector.internal.util;
 
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -46,6 +49,24 @@ public class AsahUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isSkipAsahEvent(long companyId) {
+		if (!isAnalyticsEnabled(companyId)) {
+			return true;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			!GetterUtil.getBoolean(
+				serviceContext.getAttribute("updateAsah"), true)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private AsahUtil() {

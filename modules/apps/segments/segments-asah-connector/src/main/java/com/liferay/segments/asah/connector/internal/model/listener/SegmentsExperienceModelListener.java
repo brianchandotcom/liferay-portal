@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
+import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -48,6 +49,10 @@ public class SegmentsExperienceModelListener
 	@Override
 	public void onAfterUpdate(SegmentsExperience segmentsExperience)
 		throws ModelListenerException {
+
+		if (AsahUtil.isSkipAsahEvent(segmentsExperience.getCompanyId())) {
+			return;
+		}
 
 		try {
 			List<SegmentsExperiment> segmentsExperiments =

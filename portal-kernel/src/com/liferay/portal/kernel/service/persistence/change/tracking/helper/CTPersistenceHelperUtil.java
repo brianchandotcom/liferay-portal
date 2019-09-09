@@ -17,12 +17,9 @@ package com.liferay.portal.kernel.service.persistence.change.tracking.helper;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class CTPersistenceHelperUtil {
 
 	public static <T extends CTModel<T>> boolean isInsert(T ctModel) {

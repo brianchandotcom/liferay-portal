@@ -18,12 +18,9 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class CTCollectionThreadLocal {
 
 	public static long getCTCollectionId() {

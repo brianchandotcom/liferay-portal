@@ -140,47 +140,30 @@ function updateRowColumnsNumberReducer(state, action) {
  * @param {object} action
  * @param {object} action.config
  * @param {string} action.rowId
- * @param {string} action.type
  * @return {object}
  */
-const updateRowConfigReducer = (state, action) =>
-	new Promise(resolve => {
-		let nextState = state;
+const updateRowConfigReducer = (state, action) => {
+	let nextState = state;
+	const rowIndex = getRowIndex(nextState.layoutData.structure, action.rowId);
 
-		const rowIndex = getRowIndex(
-			nextState.layoutData.structure,
-			action.rowId
-		);
+	if (rowIndex !== -1) {
+		Object.entries(action.config).forEach(entry => {
+			const [key, value] = entry;
 
-		if (rowIndex === -1) {
-			resolve(nextState);
-		} else {
-			Object.entries(action.config).forEach(entry => {
-				const [key, value] = entry;
+			const configPath = [
+				'layoutData',
+				'structure',
+				rowIndex,
+				'config',
+				key
+			];
 
-				const configPath = [
-					'layoutData',
-					'structure',
-					rowIndex,
-					'config',
-					key
-				];
+			nextState = setIn(nextState, configPath, value);
+		});
+	}
 
-				nextState = setIn(nextState, configPath, value);
-			});
-
-			updatePageEditorLayoutData(
-				nextState.layoutData,
-				nextState.segmentsExperienceId
-			)
-				.then(() => {
-					resolve(nextState);
-				})
-				.catch(() => {
-					resolve(state);
-				});
-		}
-	});
+	return nextState;
+};
 
 /**
  * Returns a new layoutData with the given row moved to the position

@@ -15,8 +15,6 @@
 package com.liferay.segments.asah.connector.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -55,12 +53,10 @@ public class SegmentsExperimentModelListener
 				segmentsExperiment);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to update segments experiment " +
-						segmentsExperiment.getSegmentsExperimentId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to update segments experiment " +
+					segmentsExperiment.getSegmentsExperimentId(),
+				e);
 		}
 	}
 
@@ -77,12 +73,10 @@ public class SegmentsExperimentModelListener
 				segmentsExperiment);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add segments experiment " +
-						segmentsExperiment.getSegmentsExperimentId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to add segments experiment " +
+					segmentsExperiment.getSegmentsExperimentId(),
+				e);
 		}
 	}
 
@@ -99,12 +93,10 @@ public class SegmentsExperimentModelListener
 				segmentsExperiment);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to delete segments experiment " +
-						segmentsExperiment.getSegmentsExperimentId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to delete segments experiment " +
+					segmentsExperiment.getSegmentsExperimentId(),
+				e);
 		}
 	}
 
@@ -115,9 +107,6 @@ public class SegmentsExperimentModelListener
 			_groupLocalService, _layoutLocalService, _portal,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsExperimentModelListener.class);
 
 	@Reference
 	private AsahFaroBackendClientFactory _asahFaroBackendClientFactory;

@@ -16,8 +16,6 @@ package com.liferay.segments.asah.connector.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -55,12 +53,10 @@ public class SegmentsExperimentRelModelListener
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create segments experiment rel " +
-						segmentsExperimentRel.getSegmentsExperimentRelId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to create segments experiment rel " +
+					segmentsExperimentRel.getSegmentsExperimentRelId(),
+				e);
 		}
 	}
 
@@ -72,12 +68,10 @@ public class SegmentsExperimentRelModelListener
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove segments experiment rel " +
-						segmentsExperimentRel.getSegmentsExperimentRelId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to remove segments experiment rel " +
+					segmentsExperimentRel.getSegmentsExperimentRelId(),
+				e);
 		}
 	}
 
@@ -89,12 +83,10 @@ public class SegmentsExperimentRelModelListener
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to update segments experiment rel " +
-						segmentsExperimentRel.getSegmentsExperimentRelId(),
-					e);
-			}
+			throw new ModelListenerException(
+				"Unable to update segments experiment rel " +
+					segmentsExperimentRel.getSegmentsExperimentRelId(),
+				e);
 		}
 	}
 
@@ -119,9 +111,6 @@ public class SegmentsExperimentRelModelListener
 			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
 				segmentsExperimentRel.getSegmentsExperimentId()));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsExperimentRelModelListener.class);
 
 	@Reference
 	private AsahFaroBackendClientFactory _asahFaroBackendClientFactory;

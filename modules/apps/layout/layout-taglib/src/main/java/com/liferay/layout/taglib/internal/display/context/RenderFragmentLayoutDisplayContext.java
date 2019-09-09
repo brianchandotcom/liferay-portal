@@ -123,6 +123,12 @@ public class RenderFragmentLayoutDisplayContext {
 			}
 		}
 
+		String backgroundImageURL = backgroundImageJSONObject.getString("url");
+
+		if (Validator.isNotNull(backgroundImageURL)) {
+			return backgroundImageURL;
+		}
+
 		return StringPool.BLANK;
 	}
 

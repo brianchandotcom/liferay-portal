@@ -465,18 +465,18 @@ public class ServiceProxyFactoryTest {
 
 					@Override
 					public boolean add(LogRecord e) {
-						if (_count > 0) {
+						if (_logged) {
 							Thread currentThread = Thread.currentThread();
 
 							currentThread.interrupt();
 						}
 
-						_count++;
+						_logged = true;
 
 						return super.add(e);
 					}
 
-					private int _count;
+					private boolean _logged;
 
 				});
 			List<LogRecord> logRecords = captureHandler.getLogRecords();

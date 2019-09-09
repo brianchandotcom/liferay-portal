@@ -29,7 +29,6 @@
 							'aui-datatable',
 							'aui-datatype',
 							'aui-image-viewer',
-							'aui-io-request',
 							'aui-parse-content',
 							'aui-set',
 							'aui-sortable-list',

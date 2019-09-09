@@ -133,7 +133,6 @@ AUI.add(
 	'',
 	{
 		requires: [
-			'aui-io-request',
 			'event-key',
 			'event-mouseenter',
 			'liferay-product-navigation-control-menu',

@@ -22,11 +22,7 @@
 				modules: {
 					'liferay-blogs': {
 						path: 'blogs.js',
-						requires: [
-							'aui-base',
-							'aui-io-request',
-							'liferay-portlet-base'
-						]
+						requires: ['aui-base', 'liferay-form']
 					}
 				},
 				root: MODULE_PATH + '/blogs/js/'

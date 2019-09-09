@@ -24,7 +24,6 @@
 						path: 'main.js',
 						requires: [
 							'aui-base',
-							'aui-io-request',
 							'liferay-portlet-base'
 						]
 					}

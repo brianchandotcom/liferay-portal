@@ -128,7 +128,7 @@ if (groupIds.length == 1) {
 	</tbody>
 </table>
 
-<aui:script use="aui-base,aui-io-request">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />setPermissions',
@@ -145,6 +145,6 @@ if (groupIds.length == 1) {
 					}
 				);
 		},
-		['liferay-util']
+		['liferay-util-window']
 	);
 </aui:script>

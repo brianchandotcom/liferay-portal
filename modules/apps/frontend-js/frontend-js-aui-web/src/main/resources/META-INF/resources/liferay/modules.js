@@ -545,8 +545,7 @@
 						requires: ['aui-base', 'datatype-number-format']
 					},
 					'liferay-store': {
-						path: 'store.js',
-						requires: ['aui-io-request']
+						path: 'store.js'
 					},
 					'liferay-toggler-interaction': {
 						path: 'toggler_interaction.js',

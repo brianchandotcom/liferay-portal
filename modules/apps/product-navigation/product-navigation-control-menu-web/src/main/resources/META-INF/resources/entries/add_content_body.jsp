@@ -40,7 +40,7 @@
 		</div>
 	</div>
 
-	<aui:script use="io-request,liferay-store,parse-content">
+	<aui:script>
 		var addToggle = document.getElementById('<%= portletNamespace %>addToggleId');
 
 		Liferay.SideNavigation.initialize(addToggle);

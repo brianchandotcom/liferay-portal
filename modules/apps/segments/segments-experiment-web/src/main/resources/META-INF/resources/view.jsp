@@ -32,7 +32,7 @@
 	</div>
 </div>
 
-<aui:script use="io-request,parse-content">
+<aui:script>
 	var segmentsExperimentPanelToggle = document.getElementById('<portlet:namespace />segmentsExperimentPanelToggleId');
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);

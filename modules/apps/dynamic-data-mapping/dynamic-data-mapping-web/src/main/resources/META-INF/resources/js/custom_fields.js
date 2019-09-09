@@ -1990,7 +1990,6 @@ AUI.add(
 		requires: [
 			'aui-base',
 			'aui-color-picker-popover',
-			'aui-io-request',
 			'aui-url',
 			'liferay-item-selector-dialog',
 			'liferay-portlet-dynamic-data-mapping'

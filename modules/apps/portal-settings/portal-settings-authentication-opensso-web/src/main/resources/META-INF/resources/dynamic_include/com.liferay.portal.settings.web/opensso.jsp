@@ -92,6 +92,6 @@ String version = openSSOConfiguration.version();
 				}
 			);
 		},
-		['aui-io-plugin-deprecated', 'aui-io-request', 'liferay-util-window']
+		['aui-io-plugin-deprecated', 'liferay-util-window']
 	);
 </aui:script>

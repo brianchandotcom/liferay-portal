@@ -162,8 +162,5 @@ AUI.add(
 
 		Liferay.Store = Store;
 	},
-	'',
-	{
-		requires: ['aui-io-request']
-	}
+	''
 );

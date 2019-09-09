@@ -28,7 +28,7 @@
 	</div>
 
 	<c:if test="<%= persistState %>">
-		<aui:script position="auto" use="io-request,parse-content">
+		<aui:script position="auto">
 			var collapse = $('#<%= id %>');
 
 			collapse.on(

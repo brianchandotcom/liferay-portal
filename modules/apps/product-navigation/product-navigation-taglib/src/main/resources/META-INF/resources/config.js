@@ -29,7 +29,6 @@
 						path:
 							'control_menu/js/product_navigation_control_menu_add_application.js',
 						requires: [
-							'aui-io-request',
 							'event-key',
 							'event-mouseenter',
 							'liferay-panel-search',

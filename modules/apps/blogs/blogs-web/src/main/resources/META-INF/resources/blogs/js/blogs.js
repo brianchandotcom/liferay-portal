@@ -753,11 +753,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'aui-base',
-			'aui-io-request',
-			'liferay-form',
-			'liferay-portlet-base'
-		]
+		requires: ['aui-base', 'liferay-form']
 	}
 );

@@ -276,7 +276,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			jspWriter.write("segmentsExperimentPanelId\">");
 			jspWriter.write(
-				"<div class=\"sidebar sidebar-default sidenav-menu sidebar-sm\">");
+				"<div class=\"sidebar sidebar-default sidenav-menu " +
+					"sidebar-sm\">");
 
 			RuntimeTag runtimeTag = new RuntimeTag();
 

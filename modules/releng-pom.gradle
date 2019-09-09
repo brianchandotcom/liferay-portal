@@ -289,13 +289,13 @@ testPomCompileOnly {
 
 testPomRelease {
 	doLast {
-		_testPom(pomReleaseArtifactId, version, true)
+		_testPom(pomReleaseArtifactId, version, false)
 	}
 }
 
 testPomThirdParty {
 	doLast {
-		_testPom(pomThirdPartyArtifactId, version, false)
+		_testPom(pomThirdPartyArtifactId, version, true)
 	}
 }
 

@@ -14,6 +14,7 @@ com.liferay.calendar.web.internal.util.CalendarResourceUtil#getScopeGroupCalenda
 com.liferay.captcha.util.CaptchaUtil#check(HttpServletRequest)
 com.liferay.captcha.util.CaptchaUtil#isEnabled(HttpServletRequest)
 com.liferay.captcha.util.CaptchaUtil#serveImage(HttpServletRequest,HttpServletResponse)
+com.liferay.data.engine.rest.internal.dto.v1_0.util.DataDefinitionUtil#getFieldTypeMetadataJSONObject(AcceptLanguage,DDMFormFieldTypeServicesTracker,DDMFormTemplateContextFactory,DDMFormValuesFactory,FieldType,FieldTypeTracker,HttpServletRequest,NPMResolver,ResourceBundle)
 com.liferay.document.library.kernel.util.DL#getDownloadURL(FileEntry,FileVersion,ThemeDisplay,String)
 com.liferay.document.library.kernel.util.DL#getDownloadURL(FileEntry,FileVersion,ThemeDisplay,String,boolean,boolean)
 com.liferay.document.library.kernel.util.DL#getFileEntryImage(FileEntry,ThemeDisplay)

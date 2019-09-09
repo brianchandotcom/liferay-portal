@@ -80,17 +80,24 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 		}
 	}
 
-	private Void _commitItems(
+	private void _commitItems(
 			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter,
 			List<T> items, BatchEngineTaskOperation batchEngineTaskOperation)
-		throws Exception {
+		throws Throwable {
 
 		batchEngineTaskItemWriter.write(items, batchEngineTaskOperation);
 
-		return null;
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			() -> {
+				batchEngineTaskItemWriter.write(
+					items, batchEngineTaskOperation);
+
+				return null;
+			});
 	}
 
-	private Void _execute(BatchEngineTask batchEngineTask) throws Throwable {
+	private void _execute(BatchEngineTask batchEngineTask) throws Throwable {
 		List<T> items = new ArrayList<>();
 
 		T item = null;
@@ -115,11 +122,9 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 					items.add(item);
 				}
 				else {
-					TransactionInvokerUtil.invoke(
-						_transactionConfig,
-						() -> _commitItems(
-							batchEngineTaskItemWriter, items,
-							batchEngineTaskOperation));
+					_commitItems(
+						batchEngineTaskItemWriter, items,
+						batchEngineTaskOperation);
 
 					items.clear();
 				}
@@ -127,14 +132,9 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 		}
 
 		if (!items.isEmpty()) {
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> _commitItems(
-					batchEngineTaskItemWriter, items,
-					batchEngineTaskOperation));
+			_commitItems(
+				batchEngineTaskItemWriter, items, batchEngineTaskOperation);
 		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

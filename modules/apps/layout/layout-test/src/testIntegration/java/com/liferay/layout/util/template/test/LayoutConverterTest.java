@@ -21,7 +21,6 @@ import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -67,11 +66,9 @@ public class LayoutConverterTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), typeSettingsProperties.toString());
 
-		LayoutTemplate layoutTemplate = _getLayoutTemplate(layout);
-
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
-				layoutTemplate.getLayoutTemplateId());
+				_getLayoutTemplateId(layout));
 
 		Assert.assertEquals(false, layoutConverter.isConvertible(layout));
 	}
@@ -89,11 +86,9 @@ public class LayoutConverterTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), typeSettingsProperties.toString());
 
-		LayoutTemplate layoutTemplate = _getLayoutTemplate(layout);
-
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
-				layoutTemplate.getLayoutTemplateId());
+				_getLayoutTemplateId(layout));
 
 		Assert.assertEquals(false, layoutConverter.isConvertible(layout));
 	}
@@ -102,20 +97,18 @@ public class LayoutConverterTest {
 	public void testIsConvertibleTrue() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
 
-		LayoutTemplate layoutTemplate = _getLayoutTemplate(layout);
-
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(
-				layoutTemplate.getLayoutTemplateId());
+				_getLayoutTemplateId(layout));
 
 		Assert.assertEquals(true, layoutConverter.isConvertible(layout));
 	}
 
-	private LayoutTemplate _getLayoutTemplate(Layout layout) {
+	private String _getLayoutTemplateId(Layout layout) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		return layoutTypePortlet.getLayoutTemplate();
+		return layoutTypePortlet.getLayoutTemplateId();
 	}
 
 	@DeleteAfterTestRun

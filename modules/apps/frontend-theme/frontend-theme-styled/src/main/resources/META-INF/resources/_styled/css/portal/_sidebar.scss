@@ -54,21 +54,23 @@
 	}
 
 	.btn {
-		border-radius: 0.1875rem;
-		font-size: 0.875rem;
-		line-height: 1.15;
-		padding: 0.4375rem 0.75rem;
+		&:not(.btn-unstyled) {
+			border-radius: 0.1875rem;
+			font-size: 0.875rem;
+			line-height: 1.15;
+			padding: 0.4375rem 0.75rem;
 
-		&.close {
-			padding: 0.4375rem;
+			&.close {
+				padding: 0.4375rem;
+			}
 		}
-	}
 
-	.btn-monospaced,
-	.btn-monospaced.btn-sm {
-		height: 2rem;
-		padding: 0.1875rem 0;
-		width: 2rem;
+		&.btn-monospaced,
+		&.btn-monospaced.btn-sm {
+			height: 2rem;
+			padding: 0.1875rem 0;
+			width: 2rem;
+		}
 	}
 
 	.input-group-item {
@@ -82,6 +84,15 @@
 
 		.btn .btn-section {
 			font-size: 0.5625rem;
+		}
+	}
+
+	.list-group-item-flex {
+		padding: 0.5rem 0.25rem;
+
+		.autofit-col {
+			padding-left: 0.25rem;
+			padding-right: 0.25rem;
 		}
 	}
 }

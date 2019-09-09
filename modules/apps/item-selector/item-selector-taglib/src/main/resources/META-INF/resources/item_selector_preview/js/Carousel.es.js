@@ -16,6 +16,7 @@ import React, {Component} from 'react';
 import PropTypes from "prop-types";
 
 import ImageSlide from "./ImageSlide.es";
+import InfoPanel from "./InfoPanel.es";
 import Arrow from "./Arrow.es";
 
 class Carousel extends Component {
@@ -79,6 +80,7 @@ class Carousel extends Component {
 	render() {
 		const {currentItem} = this.state;
 		const showArrows = this.props.items.length > 1;
+		console.log(currentItem.dataset.metadata);
 
 		return (
 			<div className="carousel">
@@ -100,6 +102,8 @@ class Carousel extends Component {
 						clickFunction={this.nextSlide}
 					/>
 				)}
+
+				<InfoPanel imageData={currentItem.dataset.metadata} />
 			</div>
 		);
 	}

@@ -32,6 +32,10 @@ import {
 	segmentsVariants
 } from '../fixtures.es';
 import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/resources/js/util/percentages.es';
+import {
+	STATUS_FINISHED_WINNER,
+	STATUS_COMPLETED
+} from '../../../src/main/resources/META-INF/resources/js/util/statuses.es';
 
 function _renderSegmentsExperimentsSidebarComponent({
 	classNameId = '',
@@ -42,14 +46,17 @@ function _renderSegmentsExperimentsSidebarComponent({
 	initialSegmentsVariants = [],
 	APIService = {},
 	selectedSegmentsExperienceId,
-	type = 'content'
+	type = 'content',
+	winnerSegmentsVariantId = null
 } = {}) {
 	const {
 		createExperiment = () => {},
 		createVariant = () => {},
 		deleteVariant = () => {},
+		discardExperiment = () => {},
 		editExperiment = () => {},
-		editVariant = () => {}
+		editVariant = () => {},
+		publishExperience = () => {}
 	} = APIService;
 
 	return render(
@@ -59,8 +66,10 @@ function _renderSegmentsExperimentsSidebarComponent({
 					createExperiment,
 					createVariant,
 					deleteVariant,
+					discardExperiment,
 					editExperiment,
-					editVariant
+					editVariant,
+					publishExperience
 				},
 				page: {
 					classNameId,
@@ -75,6 +84,7 @@ function _renderSegmentsExperimentsSidebarComponent({
 				initialSegmentsExperiment={initialSegmentsExperiment}
 				initialSegmentsVariants={initialSegmentsVariants}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
+				winnerSegmentsVariantId={winnerSegmentsVariantId}
 			/>
 		</SegmentsExperimentsContext.Provider>,
 		{
@@ -350,5 +360,119 @@ describe('Run and review test', () => {
 			expect(splitSliders.length).toBe(2);
 			done();
 		});
+	});
+});
+
+describe('Winner declared', () => {
+	afterEach(cleanup);
+
+	test('experiment has basic Winner Declared basic elements', () => {
+		const {
+			getByText,
+			getAllByText
+		} = _renderSegmentsExperimentsSidebarComponent({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'Winner Declared',
+					value: STATUS_FINISHED_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: '1'
+		});
+
+		getByText('discard-test');
+		getByText('Winner Declared');
+		const allPublishButtons = getAllByText('publish');
+
+		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
+	});
+
+	test('variants publish action button action', async done => {
+		const mockPublish = jest.fn(({status}) => {
+			return Promise.resolve({
+				segmentsExperiment: {
+					...segmentsExperiment,
+					status: {
+						label: 'completed',
+						value: status
+					}
+				}
+			});
+		});
+		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+			APIService: {
+				publishExperience: mockPublish
+			},
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'Winner Declared',
+					value: STATUS_FINISHED_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: '1'
+		});
+
+		const publishButton = getByText('publish');
+
+		userEvent.click(publishButton);
+
+		expect(mockPublish).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
+		});
+		await waitForElement(() => getByText('completed'));
+		done();
+	});
+
+	test('discard button action', async done => {
+		const mockDiscard = jest.fn(({status}) => {
+			return Promise.resolve({
+				segmentsExperiment: {
+					...segmentsExperiment,
+					status: {
+						label: 'completed',
+						value: status
+					}
+				}
+			});
+		});
+
+		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+			APIService: {
+				discardExperiment: mockDiscard
+			},
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'Winner Declared',
+					value: STATUS_FINISHED_WINNER
+				}
+			},
+			initialSegmentsVariants: segmentsVariants,
+			winnerSegmentsVariantId: '1'
+		});
+
+		const publishButton = getByText('discard-test');
+
+		userEvent.click(publishButton);
+
+		expect(mockDiscard).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED
+		});
+
+		await waitForElement(() => getByText('completed'));
+		done();
 	});
 });

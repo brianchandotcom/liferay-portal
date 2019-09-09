@@ -12,6 +12,11 @@
 
 .navbar-blank {
 	flex-wrap: wrap;
+
+	.lexicon-icon {
+		font-size: 0.625rem;
+		margin: 0 0 0 0.25rem;
+	}
 }
 
 .navbar-classic {
@@ -19,11 +24,6 @@
 
 	&.navbar-light {
 		border-bottom: 1px solid $light-color;
-
-		.lexicon-icon {
-			font-size: 0.625rem;
-			margin: 0 0 0 0.25rem;
-		}
 	}
 
 	.navbar-blank {

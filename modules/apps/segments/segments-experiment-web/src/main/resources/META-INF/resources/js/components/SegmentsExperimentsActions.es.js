@@ -39,7 +39,7 @@ function _experimentReady(experiment, variants) {
 }
 
 function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
-	const {variants, experiment, winnerVariant} = useContext(StateContext);
+	const {variants, experiment} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
@@ -117,13 +117,6 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 				<>
 					<ClayButton
 						className="w-100 mb-3"
-						onClick={_handlePublishWinnerExperience}
-					>
-						{Liferay.Language.get('publish-winner-as-experience')}
-					</ClayButton>
-
-					<ClayButton
-						className="w-100 mb-3"
 						displayType="secondary"
 						onClick={_handleDiscardExperiment}
 					>
@@ -163,18 +156,6 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 			)}
 		</>
 	);
-
-	function _handlePublishWinnerExperience() {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: winnerVariant
-		};
-
-		APIService.publishExperience(body).then(({segmentsExperiment}) => {
-			dispatch(updateSegmentsExperiment(segmentsExperiment));
-		});
-	}
 
 	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
 		const body = {

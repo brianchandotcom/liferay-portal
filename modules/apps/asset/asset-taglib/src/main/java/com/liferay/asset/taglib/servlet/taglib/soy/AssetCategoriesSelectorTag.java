@@ -24,6 +24,7 @@ import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolverUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,8 +64,7 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		try {
 			putValue("eventName", getEventName());
 			putValue("groupIds", ListUtil.toList(getGroupIds()));
-			putValue(
-				"id", _getNamespace() + _getId() + "assetCategoriesSelector");
+			putValue("id", _getId());
 			putValue("inputName", _getInputName());
 			putValue("portletURL", getPortletURL().toString());
 
@@ -366,10 +366,15 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 	}
 
 	private String _getId() {
-		String randomKey = PortalUtil.generateRandomKey(
-			request, "taglib_ui_asset_categories_selector_page");
+		StringBundler sb = new StringBundler(3);
 
-		return randomKey + StringPool.UNDERLINE;
+		sb.append(_getNamespace());
+		sb.append(
+			PortalUtil.generateRandomKey(
+				request, "taglib_ui_asset_categories_selector_page"));
+		sb.append("_assetCategoriesSelector");
+
+		return sb.toString();
 	}
 
 	private String _getInputName() {

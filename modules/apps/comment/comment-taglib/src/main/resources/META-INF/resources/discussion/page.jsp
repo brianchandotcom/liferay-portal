@@ -131,7 +131,6 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<liferay-ui:input-editor
 													configKey="commentEditor"
 													contents=""
-													cssClass="form-control"
 													editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
 													name='<%= randomNamespace + "postReplyBody0" %>'
 													onChangeMethod='<%= randomNamespace + "0ReplyOnChange" %>'

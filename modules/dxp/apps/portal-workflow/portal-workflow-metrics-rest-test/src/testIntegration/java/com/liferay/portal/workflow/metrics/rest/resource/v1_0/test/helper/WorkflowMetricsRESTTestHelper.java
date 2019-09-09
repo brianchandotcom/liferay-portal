@@ -103,8 +103,7 @@ public class WorkflowMetricsRESTTestHelper {
 				instance.getAssetTitle(), instance.getAssetType(), companyId,
 				instance.getDateCompletion() != null,
 				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId(),
-				instance.getUserName()));
+				instance.getId(), instance.getProcessId()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -310,8 +309,7 @@ public class WorkflowMetricsRESTTestHelper {
 				instance.getAssetTitle(), instance.getAssetType(), companyId,
 				instance.getDateCompletion() != null,
 				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId(),
-				instance.getUserName()));
+				instance.getId(), instance.getProcessId()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -433,8 +431,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private Document _createWorkflowMetricsInstanceDocument(
 		String assetTitle, String assetType, long companyId, boolean completed,
-		Date completionDate, Date createDate, long instanceId, long processId,
-		String userName) {
+		Date completionDate, Date createDate, long instanceId, long processId) {
 
 		Document document = new DocumentImpl();
 
@@ -452,7 +449,6 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);
-		document.addKeyword("userName", userName);
 		document.addKeyword("version", "1.0");
 
 		return document;

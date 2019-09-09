@@ -45,11 +45,11 @@ const getStatusIcon = status => {
 const InstanceListItem = ({
 	assetTitle,
 	assetType,
+	creatorUser,
 	dateCreated,
 	id,
 	slaStatus,
-	taskNames = [],
-	userName
+	taskNames = []
 }) => {
 	const {setInstanceId} = useContext(InstanceListContext);
 	const statusIcon = getStatusIcon(slaStatus);
@@ -93,7 +93,7 @@ const InstanceListItem = ({
 					: Liferay.Language.get('completed')}
 			</td>
 
-			<td>{userName}</td>
+			<td>{creatorUser ? creatorUser.name : ''}</td>
 
 			<td className="pr-4 text-right">
 				{moment

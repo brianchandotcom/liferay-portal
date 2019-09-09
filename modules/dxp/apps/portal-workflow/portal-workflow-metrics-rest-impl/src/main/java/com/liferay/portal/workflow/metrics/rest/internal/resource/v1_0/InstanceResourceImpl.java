@@ -55,6 +55,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.CreatorUser;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
@@ -338,7 +339,18 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				processId = document.getLong("processId");
 				status = _getStatus(
 					GetterUtil.getBoolean(document.getString("completed")));
-				userName = document.getString("userName");
+
+				setCreatorUser(
+					() -> {
+						CreatorUser creatorUser = _toCreatorUser(
+							document.getLong("userId"));
+
+						if (creatorUser == null) {
+							return null;
+						}
+
+						return creatorUser;
+					});
 			}
 		};
 	}
@@ -358,7 +370,18 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				processId = GetterUtil.getLong(sourcesMap.get("processId"));
 				status = _getStatus(
 					GetterUtil.getBoolean(sourcesMap.get("completed")));
-				userName = GetterUtil.getString(sourcesMap.get("userName"));
+
+				setCreatorUser(
+					() -> {
+						CreatorUser creatorUser = _toCreatorUser(
+							GetterUtil.getLong(sourcesMap.get("userId")));
+
+						if (creatorUser == null) {
+							return null;
+						}
+
+						return creatorUser;
+					});
 			}
 		};
 	}
@@ -695,7 +718,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return;
 		}
 
-		instance.setAssigneeUser(assigneeUsers.toArray(new AssigneeUser[0]));
+		instance.setAssigneeUsers(assigneeUsers.toArray(new AssigneeUser[0]));
 	}
 
 	private void _setSLAResults(Bucket bucket, Instance instance) {
@@ -775,6 +798,30 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 							return user.getPortraitURL(themeDisplay);
 						});
+				}
+			};
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			return null;
+		}
+	}
+
+	private CreatorUser _toCreatorUser(Long userId) {
+		try {
+			if (Objects.isNull(userId)) {
+				return null;
+			}
+
+			User user = _userService.getUserById(userId);
+
+			return new CreatorUser() {
+				{
+					id = user.getUserId();
+					name = user.getFullName();
 				}
 			};
 		}

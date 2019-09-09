@@ -36,13 +36,13 @@ function InstanceItemDetail({processId}) {
 	const {
 		assetTitle,
 		assetType,
+		creatorUser,
 		dateCompletion,
 		dateCreated,
 		slaResults = [],
 		slaStatus,
 		status,
-		taskNames = [],
-		userName
+		taskNames = []
 	} = instance;
 
 	const completed = status === 'Completed';
@@ -155,7 +155,7 @@ function InstanceItemDetail({processId}) {
 
 						<InstanceItemDetail.SectionAttribute
 							description={Liferay.Language.get('created-by')}
-							detail={userName}
+							detail={creatorUser ? creatorUser.name : ''}
 						/>
 
 						{!!dateCreated && (

@@ -105,9 +105,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {
-			"assetTitle", "assetType", "processId", "userName"
-		};
+		return new String[] {"assetTitle", "assetType", "processId"};
 	}
 
 	@Override

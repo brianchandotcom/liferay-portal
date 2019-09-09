@@ -159,6 +159,8 @@ class CreateContentDialog extends Component {
 				})
 				.catch(error => {
 					this._errorMessage = error.message;
+
+					this.store.dispatch(disableSavingChangesStatusAction());
 				});
 		}
 	}

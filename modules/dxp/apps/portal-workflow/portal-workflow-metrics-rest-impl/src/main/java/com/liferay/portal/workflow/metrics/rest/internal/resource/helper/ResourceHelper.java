@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Activate;
@@ -118,8 +119,9 @@ public class ResourceHelper {
 
 	public ScriptedMetricAggregation
 		creatInstanceCountScriptedMetricAggregation(
-			Date dateEnd, Date dateStart, List<String> slaStatuses,
-			List<String> statuses, List<String> taskNames) {
+			List<Long> assigneeUserIds, Date dateEnd, Date dateStart,
+			List<String> slaStatuses, List<String> statuses,
+			List<String> taskNames) {
 
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -133,6 +135,20 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setParameters(
 			new HashMap<String, Object>() {
 				{
+					if (!assigneeUserIds.isEmpty()) {
+						put(
+							"assigneeUserIds",
+							Stream.of(
+								assigneeUserIds
+							).flatMap(
+								List::parallelStream
+							).map(
+								String::valueOf
+							).collect(
+								Collectors.toList()
+							));
+					}
+
 					if (dateEnd != null) {
 						put("endDate", dateEnd.getTime());
 					}

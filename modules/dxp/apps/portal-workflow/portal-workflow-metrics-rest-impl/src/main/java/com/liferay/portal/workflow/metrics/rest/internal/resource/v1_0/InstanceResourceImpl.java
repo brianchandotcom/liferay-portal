@@ -14,13 +14,19 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
@@ -48,6 +54,7 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
@@ -89,6 +96,11 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"instanceId", "instanceId");
 
+		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
+			"assigneeId", "assigneeId");
+
+		assigneeIdTermsAggregation.setSize(10000);
+
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
@@ -114,8 +126,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		taskNameTermsAggregation.setSize(10000);
 
 		termsAggregation.addChildrenAggregations(
-			onTimeFilterAggregation, overdueFilterAggregation,
-			slaDefinitionIdTermsAggregation, taskNameTermsAggregation);
+			assigneeIdTermsAggregation, onTimeFilterAggregation,
+			overdueFilterAggregation, slaDefinitionIdTermsAggregation,
+			taskNameTermsAggregation);
 
 		searchSearchRequest.addAggregation(termsAggregation);
 
@@ -167,9 +180,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				).findFirst(
 				).ifPresent(
 					bucket -> {
+						_setAssigneeUsers(bucket, instance);
 						_setSLAResults(bucket, instance);
 						_setSLAStatus(bucket, instance);
-						_setTaskNames(instance, _getTaskNames(bucket));
+						_setTaskNames(bucket, instance);
 					}
 				);
 
@@ -182,28 +196,65 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Override
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, Date dateEnd, Date dateStart, String[] slaStatuses,
-			String[] statuses, String[] taskKeys, Pagination pagination)
+			Long processId, Long[] assigneeUserIds, Date dateEnd,
+			Date dateStart, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception {
 
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
-			dateEnd, dateStart, processId, slaStatuses, statuses, taskKeys);
+			assigneeUserIds, dateEnd, dateStart, processId, slaStatuses,
+			statuses, taskKeys);
 
 		int instanceCount = _getInstanceCount(searchSearchResponse);
 
 		if (instanceCount > 0) {
 			return Page.of(
 				_getInstances(
-					dateEnd, dateStart, searchSearchResponse.getCount(),
-					pagination, processId, slaStatuses, statuses, taskKeys),
+					assigneeUserIds, dateEnd, dateStart,
+					searchSearchResponse.getCount(), pagination, processId,
+					slaStatuses, statuses, taskKeys),
 				pagination, instanceCount);
 		}
 
 		return Page.of(Collections.emptyList());
 	}
 
+	private BooleanQuery _createAssigneeUserIdExistsBooleanQuery(
+		Long[] assigneeUserIds) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (ArrayUtil.contains(assigneeUserIds, -1L)) {
+			booleanQuery.addMustNotQueryClauses(_queries.exists("assigneeId"));
+		}
+
+		return booleanQuery;
+	}
+
+	private BooleanQuery _createAssigneeUserIdTermsBooleanQuery(
+		Long[] assigneeUserIds) {
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		TermsQuery termsQuery = _queries.terms("assigneeId");
+
+		termsQuery.addValues(
+			Stream.of(
+				assigneeUserIds
+			).filter(
+				assigneeUserId -> assigneeUserId > 0
+			).map(
+				String::valueOf
+			).toArray(
+				Object[]::new
+			));
+
+		return booleanQuery.addMustQueryClauses(termsQuery);
+	}
+
 	private BooleanQuery _createBooleanQuery(
-		long processId, String[] statuses, String[] taskKeys) {
+		Long[] assigneeUserIds, long processId, String[] statuses,
+		String[] taskKeys) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
@@ -226,7 +277,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		tokensBooleanQuery.addFilterQueryClauses(
 			_queries.term("_index", "workflow-metrics-tokens"));
 		tokensBooleanQuery.addMustQueryClauses(
-			_createTokensBooleanQuery(processId, taskKeys));
+			_createTokensBooleanQuery(assigneeUserIds, processId, taskKeys));
 
 		return booleanQuery.addShouldQueryClauses(
 			instancesBooleanQuery, slaProcessResultsBooleanQuery,
@@ -370,11 +421,17 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private BooleanQuery _createTokensBooleanQuery(
-		long processId, String[] taskKeys) {
+		Long[] assigneeUserIds, long processId, String[] taskKeys) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
+
+		if (assigneeUserIds.length > 0) {
+			booleanQuery.addShouldQueryClauses(
+				_createAssigneeUserIdExistsBooleanQuery(assigneeUserIds),
+				_createAssigneeUserIdTermsBooleanQuery(assigneeUserIds));
+		}
 
 		if (taskKeys.length > 0) {
 			booleanQuery.addMustQueryClauses(
@@ -386,6 +443,28 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("completed", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));
+	}
+
+	private List<AssigneeUser> _getAssigneeUsers(Bucket bucket) {
+		TermsAggregationResult termsAggregationResult =
+			(TermsAggregationResult)bucket.getChildAggregationResult(
+				"assigneeId");
+
+		Collection<Bucket> buckets = termsAggregationResult.getBuckets();
+
+		Stream<Bucket> stream = buckets.stream();
+
+		return stream.map(
+			Bucket::getKey
+		).map(
+			GetterUtil::getLong
+		).map(
+			this::_toAssigneeUser
+		).filter(
+			Objects::nonNull
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private int _getInstanceCount(SearchSearchResponse searchSearchResponse) {
@@ -401,14 +480,19 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private List<Instance> _getInstances(
-		Date dateEnd, Date dateStart, long instanceCount, Pagination pagination,
-		long processId, String[] slaStatuses, String[] statuses,
-		String[] taskKeys) {
+		Long[] assigneeUserIds, Date dateEnd, Date dateStart,
+		long instanceCount, Pagination pagination, long processId,
+		String[] slaStatuses, String[] statuses, String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"instanceId", "instanceId");
+
+		TermsAggregation assigneeIdTermsAggregation = _aggregations.terms(
+			"assigneeId", "assigneeId");
+
+		assigneeIdTermsAggregation.setSize(10000);
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
@@ -428,11 +512,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		taskNameTermsAggregation.setSize(10000);
 
 		termsAggregation.addChildrenAggregations(
-			onTimeFilterAggregation, overdueFilterAggregation,
-			taskNameTermsAggregation, _aggregations.topHits("topHits"),
+			assigneeIdTermsAggregation, onTimeFilterAggregation,
+			overdueFilterAggregation, taskNameTermsAggregation,
+			_aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				dateEnd, dateStart, ListUtil.toList(slaStatuses),
-				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
+				ListUtil.toList(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
+				ListUtil.toList(taskKeys)));
 
 		termsAggregation.addOrders(Order.key(true));
 		termsAggregation.addPipelineAggregations(
@@ -448,7 +534,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
 
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(processId, statuses, taskKeys));
+			_createBooleanQuery(
+				assigneeUserIds, processId, statuses, taskKeys));
 
 		return Stream.of(
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
@@ -484,8 +571,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				this::_createInstance
 			).map(
 				instance -> {
+					_setAssigneeUsers(bucket, instance);
 					_setSLAStatus(bucket, instance);
-					_setTaskNames(instance, _getTaskNames(bucket));
+					_setTaskNames(bucket, instance);
 
 					return instance;
 				}
@@ -503,20 +591,22 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	}
 
 	private SearchSearchResponse _getSearchSearchResponse(
-		Date dateEnd, Date dateStart, long processId, String[] slaStatuses,
-		String[] statuses, String[] taskKeys) {
+		Long[] assigneeUserIds, Date dateEnd, Date dateStart, long processId,
+		String[] slaStatuses, String[] statuses, String[] taskKeys) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addAggregation(
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
-				dateEnd, dateStart, ListUtil.toList(slaStatuses),
-				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
+				ListUtil.toList(assigneeUserIds), dateEnd, dateStart,
+				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
+				ListUtil.toList(taskKeys)));
 		searchSearchRequest.setIndexNames(
 			"workflow-metrics-instances",
 			"workflow-metrics-sla-process-results", "workflow-metrics-tokens");
 		searchSearchRequest.setQuery(
-			_createBooleanQuery(processId, statuses, taskKeys));
+			_createBooleanQuery(
+				assigneeUserIds, processId, statuses, taskKeys));
 
 		return _searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 	}
@@ -598,6 +688,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return false;
 	}
 
+	private void _setAssigneeUsers(Bucket bucket, Instance instance) {
+		List<AssigneeUser> assigneeUsers = _getAssigneeUsers(bucket);
+
+		if (assigneeUsers == null) {
+			return;
+		}
+
+		instance.setAssigneeUser(assigneeUsers.toArray(new AssigneeUser[0]));
+	}
+
 	private void _setSLAResults(Bucket bucket, Instance instance) {
 		instance.setSlaResults(
 			Stream.of(
@@ -642,12 +742,49 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 	}
 
-	private void _setTaskNames(Instance instance, List<String> taskNames) {
+	private void _setTaskNames(Bucket bucket, Instance instance) {
+		List<String> taskNames = _getTaskNames(bucket);
+
 		if (taskNames == null) {
 			return;
 		}
 
 		instance.setTaskNames(taskNames.toArray(new String[0]));
+	}
+
+	private AssigneeUser _toAssigneeUser(long userId) {
+		try {
+			User user = _userService.getUserById(userId);
+
+			return new AssigneeUser() {
+				{
+					id = user.getUserId();
+					name = user.getFullName();
+
+					setImage(
+						() -> {
+							if (user.getPortraitId() == 0) {
+								return null;
+							}
+
+							ThemeDisplay themeDisplay = new ThemeDisplay() {
+								{
+									setPathImage(_portal.getPathImage());
+								}
+							};
+
+							return user.getPortraitURL(themeDisplay);
+						});
+				}
+			};
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			return null;
+		}
 	}
 
 	private Date _toDate(String dateString) {
@@ -679,6 +816,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private Language _language;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private Queries _queries;
 
 	@Reference
@@ -692,6 +832,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private UserService _userService;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

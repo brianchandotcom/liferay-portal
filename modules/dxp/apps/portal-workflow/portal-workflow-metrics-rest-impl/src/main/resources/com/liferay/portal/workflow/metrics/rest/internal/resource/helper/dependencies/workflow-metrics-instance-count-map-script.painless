@@ -1,5 +1,13 @@
 def instanceId = doc.instanceId.value;
 
+if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
+	((state.assigneeUserIds == null) ||
+	 (state.assigneeUserIds.contains(doc.assigneeId.value) || 
+	 (state.assigneeUserIds.contains("-1") && (doc.assigneeId.value == null))))) {
+
+	state.assigneeUserIdInstanceIds.add(instanceId);
+}
+
 if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult")) {
 	state.slaStatusMap.compute(
 		instanceId,

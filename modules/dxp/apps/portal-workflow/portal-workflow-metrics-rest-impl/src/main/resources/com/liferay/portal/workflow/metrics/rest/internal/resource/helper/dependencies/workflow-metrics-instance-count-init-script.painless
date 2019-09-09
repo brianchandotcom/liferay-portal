@@ -1,3 +1,5 @@
+state.assigneeUserIdInstanceIds = new HashSet();
+state.assigneeUserIds = params.assigneeUserIds;
 state.endDate = params.endDate;
 state.slaStatuses = params.slaStatuses;
 state.slaStatusMap = new HashMap();

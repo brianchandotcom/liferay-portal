@@ -176,4 +176,72 @@ definition {
 			rowStatus = "ACTIVE");
 	}
 
+	@priority = "4"
+	test UpdateAccount {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test",
+			accountStatus = "Inactive");
+
+		AssertElementPresent(locator1 = "Icon#BACK");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		Search.searchCP(searchTerm = "Accounts Name for Test");
+
+		Accounts.editCP(
+			accountDescriptionEdit = "Update Accounts Name Description for Test",
+			accountName = "Accounts Name for Test",
+			accountNameEdit = "Update Accounts Name for Test",
+			accountStatusEdit = "Active");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name for Test");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Update Accounts Name for Test",
+			rowStatus = "ACTIVE");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+
+		LexiconEntry.gotoEntry(rowEntry = "Update Accounts Name for Test");
+
+		PortletEntry.inputName(name = "Update Accounts Name via Name Link");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit Update Accounts Name via Name Link");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name via Name Link");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Update Accounts Name via Name Link",
+			rowStatus = "ACTIVE");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
+	}
+
 }

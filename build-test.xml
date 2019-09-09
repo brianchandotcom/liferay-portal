@@ -7109,6 +7109,12 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 liferay.home=${liferay.home}
 
+admin.email.from.address=test@liferay.com
+
+announcements.email.to.address=noreply@liferay.com
+
+mail.send.blacklist=
+
 plugin.notifications.enabled=false
 
 jdbc.default.jndi.name=

@@ -53,11 +53,11 @@ const VelocityChart = () => {
 	const CHART_DATA_ID_1 = 'data_1';
 
 	const data = {
-		x: 'x',
 		columns: [
 			['x', ...keys],
 			[CHART_DATA_ID_1, ...histograms.map(item => item.value)]
-		]
+		],
+		x: 'x'
 	};
 
 	let dataX = [];
@@ -82,7 +82,6 @@ const VelocityChart = () => {
 						tick: {
 							centered: false,
 							fit: true,
-							values: dataX,
 							format: date =>
 								formatXAxisDate(
 									date,
@@ -90,7 +89,8 @@ const VelocityChart = () => {
 									unitKey,
 									getSelectedTimeRange()
 								),
-							outer: false
+							outer: false,
+							values: dataX
 						},
 						type: 'timeseries'
 					},
@@ -105,8 +105,8 @@ const VelocityChart = () => {
 						},
 						show: true,
 						tick: {
-							values: intervals,
-							outer: false
+							outer: false,
+							values: intervals
 						}
 					}
 				}}

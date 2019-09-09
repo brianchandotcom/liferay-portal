@@ -44,10 +44,10 @@ test('Should render component with completed tab activated', () => {
 test('Should render component with default tab activated', () => {
 	const data = {
 		id: 35315,
-		totalCount: 1,
 		onTimeInstanceCount: 1,
 		overdueInstanceCount: 0,
-		title: 'Single Approver'
+		title: 'Single Approver',
+		totalCount: 1
 	};
 
 	const component = mount(

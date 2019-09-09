@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useCallback, useEffect, useState} from 'react';
 import {
 	durationAsMilliseconds,
 	formatHours,
@@ -68,45 +68,48 @@ const useSLA = (fetchClient, slaId, processId) => {
 		setSLA(oldSla => ({...oldSla, ...{[name]: value}}));
 	};
 
-	const fetchSLA = useCallback(slaId => {
-		fetchClient.get(`/slas/${slaId}`).then(({data}) => {
-			const {
-				calendarKey,
-				description = '',
-				duration,
-				name,
-				status
-			} = data;
+	const fetchSLA = useCallback(
+		slaId => {
+			fetchClient.get(`/slas/${slaId}`).then(({data}) => {
+				const {
+					calendarKey,
+					description = '',
+					duration,
+					name,
+					status
+				} = data;
 
-			const {days, hours, minutes} = getDurationValues(duration);
+				const {days, hours, minutes} = getDurationValues(duration);
 
-			const formattedHours = formatHours(hours, minutes);
+				const formattedHours = formatHours(hours, minutes);
 
-			const [pauseNodeKeys, startNodeKeys, stopNodeKeys] = [
-				data.pauseNodeKeys,
-				data.startNodeKeys,
-				data.stopNodeKeys
-			].map(node => {
-				if (!node || !node.nodeKeys) {
-					return {nodeKeys: []};
-				}
+				const [pauseNodeKeys, startNodeKeys, stopNodeKeys] = [
+					data.pauseNodeKeys,
+					data.startNodeKeys,
+					data.stopNodeKeys
+				].map(node => {
+					if (!node || !node.nodeKeys) {
+						return {nodeKeys: []};
+					}
 
-				return node;
+					return node;
+				});
+
+				setSLA({
+					calendarKey,
+					days,
+					description,
+					hours: formattedHours,
+					name,
+					pauseNodeKeys,
+					startNodeKeys,
+					status,
+					stopNodeKeys
+				});
 			});
-
-			setSLA({
-				calendarKey,
-				days,
-				description,
-				hours: formattedHours,
-				name,
-				pauseNodeKeys,
-				startNodeKeys,
-				status,
-				stopNodeKeys
-			});
-		});
-	});
+		},
+		[fetchClient]
+	);
 
 	const filterNodeTagIds = (nodes, nodeKeys = []) => {
 		return nodes

@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment} from 'react';
 import HeaderMenuBackItem from './HeaderMenuBackItem.es';
 import HeaderTitle from './HeaderTitle.es';
+import React from 'react';
 
 export default class HeaderController extends React.Component {
 	componentWillMount() {

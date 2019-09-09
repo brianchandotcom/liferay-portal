@@ -66,7 +66,7 @@ const useVelocityUnit = velocityUnitKeys => {
 		if (timeRange) {
 			fetchData(timeRange);
 		}
-	}, [fetchData, timeRange]);
+	}, [timeRange]);
 
 	const previousKeys = usePrevious(velocityUnitKeys);
 
@@ -76,7 +76,7 @@ const useVelocityUnit = velocityUnitKeys => {
 		if (filterChanged && velocityUnits.length) {
 			updateData();
 		}
-	}, [previousKeys, updateData, velocityUnitKeys, velocityUnits.length]);
+	}, [velocityUnitKeys]);
 
 	return {
 		defaultVelocityUnit,

@@ -66,7 +66,7 @@ export function InstanceListCard({page, pageSize, processId, query}) {
 	);
 }
 
-InstanceListCard.Body = ({page, pageSize, processId}) => {
+const Body = ({page, pageSize, processId}) => {
 	const {error} = useContext(ErrorContext);
 	const {items = [], searching, totalCount} = useContext(InstanceListContext);
 	const {loading} = useContext(LoadingContext);
@@ -110,7 +110,7 @@ InstanceListCard.Body = ({page, pageSize, processId}) => {
 	);
 };
 
-InstanceListCard.Header = () => {
+const Header = () => {
 	const {totalCount} = useContext(InstanceListContext);
 
 	return (
@@ -119,5 +119,8 @@ InstanceListCard.Header = () => {
 		</Request.Success>
 	);
 };
+
+InstanceListCard.Body = Body;
+InstanceListCard.Header = Header;
 
 export default InstanceListCard;

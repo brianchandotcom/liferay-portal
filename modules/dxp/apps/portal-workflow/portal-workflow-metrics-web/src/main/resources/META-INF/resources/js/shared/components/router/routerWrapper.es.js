@@ -17,7 +17,11 @@ class BackLinkWrapper extends React.Component {
 	render() {
 		const {backPath, children, className} = this.props;
 
-		return <Link children={children} className={className} to={backPath} />;
+		return (
+			<Link className={className} to={backPath}>
+				{children}
+			</Link>
+		);
 	}
 }
 
@@ -45,13 +49,14 @@ class ChildLinkWrapper extends React.Component {
 		return (
 			<Link
 				{...eventProps}
-				children={children}
 				className={className}
 				to={{
 					pathname: to,
 					search: stringify({backPath: currentPath, ...query})
 				}}
-			/>
+			>
+				{children}
+			</Link>
 		);
 	}
 }

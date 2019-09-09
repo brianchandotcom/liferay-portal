@@ -74,7 +74,7 @@ const useProcessStep = (processId, processStepKeys) => {
 		if (filterChanged && processSteps.length) {
 			updateData();
 		}
-	}, [previousKeys, processStepKeys, processSteps.length, updateData]);
+	}, [processStepKeys]);
 
 	return {
 		getSelectedProcessSteps,

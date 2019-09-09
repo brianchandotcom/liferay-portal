@@ -60,7 +60,7 @@ const useVelocityData = processId => {
 				velocityTimeRange.dateStart,
 				velocityUnit.key
 			);
-	}, [fetchData, processId, velocityTimeRange, velocityUnit]);
+	}, [processId, velocityUnit]);
 
 	return {
 		velocityData

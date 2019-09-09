@@ -76,7 +76,7 @@ const useSLAStatus = slaStatusKeys => {
 		if (filterChanged && slaStatuses.length) {
 			updateData();
 		}
-	}, [previousKeys, slaStatusKeys, slaStatuses.length, updateData]);
+	}, [slaStatusKeys]);
 
 	return {
 		getSelectedSLAStatuses,

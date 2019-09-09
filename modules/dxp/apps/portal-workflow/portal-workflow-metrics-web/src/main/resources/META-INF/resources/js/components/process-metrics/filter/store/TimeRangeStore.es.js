@@ -108,7 +108,7 @@ const useTimeRange = timeRangeKeys => {
 		if (filterChanged && timeRanges.length) {
 			updateData();
 		}
-	}, [previousKeys, timeRangeKeys, timeRanges.length, updateData]);
+	}, [timeRangeKeys]);
 
 	return {
 		defaultTimeRange,

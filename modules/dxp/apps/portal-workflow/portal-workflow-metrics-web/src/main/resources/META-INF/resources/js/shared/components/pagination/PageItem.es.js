@@ -10,9 +10,9 @@
  */
 
 import {Link, withRouter} from 'react-router-dom';
-import React, {Fragment} from 'react';
 import Icon from '../Icon.es';
 import pathToRegexp from 'path-to-regexp';
+import React from 'react';
 
 /**
  * @class

@@ -29,8 +29,8 @@ class SLAListCard extends React.Component {
 		this.requestOriginType = null;
 		this.state = {
 			blockedSLACount: 0,
-			items: [],
 			itemToRemove: null,
+			items: [],
 			showConfirmDialog: false,
 			showSLAsUpdatingAlert: false,
 			totalCount: 0

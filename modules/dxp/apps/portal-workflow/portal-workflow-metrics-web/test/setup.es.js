@@ -31,7 +31,6 @@ const languageMap = {
 };
 
 window.Liferay = {
-	authToken: 'auth',
 	Language: {
 		get: key => {
 			if (languageMap[key]) {
@@ -50,7 +49,8 @@ window.Liferay = {
 		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 		getUserId: () => '123',
 		getUserName: () => 'Test Test'
-	}
+	},
+	authToken: 'auth'
 };
 
 global.console = {error: jest.fn(), log: console.log, warn: console.warn};

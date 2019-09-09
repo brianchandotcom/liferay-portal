@@ -32,10 +32,11 @@ function ProcessItemsCard({
 		<Request>
 			<Panel>
 				<ProcessItemsCard.Header
-					children={children}
 					description={description}
 					title={title}
-				/>
+				>
+					{children}
+				</ProcessItemsCard.Header>
 
 				<ProcessItemsCard.Body
 					completed={completed}
@@ -47,7 +48,7 @@ function ProcessItemsCard({
 	);
 }
 
-ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
+const Body = ({completed = false, processId, timeRange}) => {
 	const {client, setTitle} = useContext(AppContext);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
@@ -88,7 +89,7 @@ ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
 
 	useEffect(() => {
 		fetchData();
-	}, [fetchData, timeRange]);
+	}, [timeRange]);
 
 	return (
 		<Panel.Body>
@@ -120,7 +121,7 @@ ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
 	);
 };
 
-ProcessItemsCard.Header = ({children, description, title}) => (
+const Header = ({children, description, title}) => (
 	<Panel.Header
 		elementClasses={['dashboard-panel-header', children && 'pb-0']}
 	>
@@ -143,5 +144,8 @@ ProcessItemsCard.Header = ({children, description, title}) => (
 		</div>
 	</Panel.Header>
 );
+
+ProcessItemsCard.Body = Body;
+ProcessItemsCard.Header = Header;
 
 export default ProcessItemsCard;

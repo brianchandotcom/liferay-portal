@@ -84,7 +84,7 @@ const useProcessStatus = processStatusKeys => {
 		if (filterChanged && processStatuses.length) {
 			updateData();
 		}
-	}, [previousKeys, processStatusKeys, processStatuses.length, updateData]);
+	}, [processStatusKeys]);
 
 	return {
 		getSelectedProcessStatuses,

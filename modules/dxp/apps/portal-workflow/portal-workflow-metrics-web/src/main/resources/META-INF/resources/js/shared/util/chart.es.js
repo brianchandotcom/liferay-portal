@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -193,8 +192,8 @@ export const getAxisMeasures = value => {
 	}
 	return {
 		intervalCount,
-		intervals,
 		intervalValue,
+		intervals,
 		maxValue
 	};
 };

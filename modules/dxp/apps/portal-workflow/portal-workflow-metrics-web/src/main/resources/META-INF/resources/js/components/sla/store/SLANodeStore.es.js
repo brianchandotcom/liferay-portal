@@ -9,75 +9,84 @@
  * distribution rights of the Software.
  */
 
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useCallback, useEffect, useState} from 'react';
 
 const useSLANodes = (processId, fetchClient) => {
 	const [nodes, setNodes] = useState([]);
 
-	const fetchNodes = useCallback(processId => {
-		fetchClient
-			.get(`/processes/${processId}/nodes`)
-			.then(({data: {items}}) => {
-				const entersTaskString = Liferay.Language.get('enters-task');
-				const leavesTaskString = Liferay.Language.get('leaves-task');
-				const nodeBegins = [];
-				const nodeEnds = [];
-				const nodeEnters = [];
-				const nodeLeaves = [];
-				const processBeginsString = Liferay.Language.get(
-					'process-begins'
-				);
-				const processEndsString = Liferay.Language.get('process-ends');
+	const fetchNodes = useCallback(
+		processId => {
+			fetchClient
+				.get(`/processes/${processId}/nodes`)
+				.then(({data: {items}}) => {
+					const entersTaskString = Liferay.Language.get(
+						'enters-task'
+					);
+					const leavesTaskString = Liferay.Language.get(
+						'leaves-task'
+					);
+					const nodeBegins = [];
+					const nodeEnds = [];
+					const nodeEnters = [];
+					const nodeLeaves = [];
+					const processBeginsString = Liferay.Language.get(
+						'process-begins'
+					);
+					const processEndsString = Liferay.Language.get(
+						'process-ends'
+					);
 
-				items.forEach(node => {
-					if (node.type === 'STATE') {
-						const newNode = {
-							...node,
-							desc: node.initial
-								? processBeginsString
-								: `${processEndsString} ${node.name}`,
-							executionType: node.initial ? 'begin' : 'end'
-						};
+					items.forEach(node => {
+						if (node.type === 'STATE') {
+							const newNode = {
+								...node,
+								desc: node.initial
+									? processBeginsString
+									: `${processEndsString} ${node.name}`,
+								executionType: node.initial ? 'begin' : 'end'
+							};
 
-						if (node.initial) {
-							nodeBegins.push(newNode);
-						} else {
-							nodeEnds.push(newNode);
+							if (node.initial) {
+								nodeBegins.push(newNode);
+							} else {
+								nodeEnds.push(newNode);
+							}
+						} else if (node.type === 'TASK') {
+							nodeEnters.push({
+								...node,
+								desc: `${entersTaskString} ${node.name}`,
+								executionType: 'enter'
+							});
+
+							nodeLeaves.push({
+								...node,
+								desc: `${leavesTaskString} ${node.name}`,
+								executionType: 'leave'
+							});
 						}
-					} else if (node.type === 'TASK') {
-						nodeEnters.push({
-							...node,
-							desc: `${entersTaskString} ${node.name}`,
-							executionType: 'enter'
-						});
+					});
 
-						nodeLeaves.push({
-							...node,
-							desc: `${leavesTaskString} ${node.name}`,
-							executionType: 'leave'
-						});
-					}
+					const compareToName = (curNode, nextNode) =>
+						curNode.name.localeCompare(nextNode.name);
+
+					nodeEnters.sort(compareToName);
+					nodeLeaves.sort(compareToName);
+
+					const nodes = [
+						...nodeBegins,
+						...nodeEnters,
+						...nodeLeaves,
+						...nodeEnds
+					].map(node => ({
+						...node,
+						compositeId: `${node.id}:${node.executionType}`
+					}));
+
+					setNodes(nodes);
 				});
-
-				const compareToName = (curNode, nextNode) =>
-					curNode.name.localeCompare(nextNode.name);
-
-				nodeEnters.sort(compareToName);
-				nodeLeaves.sort(compareToName);
-
-				const nodes = [
-					...nodeBegins,
-					...nodeEnters,
-					...nodeLeaves,
-					...nodeEnds
-				].map(node => ({
-					...node,
-					compositeId: `${node.id}:${node.executionType}`
-				}));
-
-				setNodes(nodes);
-			});
-	});
+		},
+		[fetchClient]
+	);
 
 	const getPauseNodes = (startNodeKeys, stopNodeKeys) => {
 		const selectedNodes = [...startNodeKeys, ...stopNodeKeys]

@@ -31,7 +31,7 @@ function CompletedItemsCard({processId, query}) {
 	);
 }
 
-CompletedItemsCard.Body = ({processId}) => {
+const Body = ({processId}) => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 
 	return (
@@ -53,5 +53,7 @@ CompletedItemsCard.Body = ({processId}) => {
 		</ProcessItemsCard>
 	);
 };
+
+CompletedItemsCard.Body = Body;
 
 export default CompletedItemsCard;

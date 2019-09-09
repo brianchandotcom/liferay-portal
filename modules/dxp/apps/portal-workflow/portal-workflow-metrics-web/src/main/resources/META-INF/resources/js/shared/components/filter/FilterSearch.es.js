@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment} from 'react';
 import Icon from '../Icon.es';
+import React from 'react';
 
 export default class FilterSearch extends React.Component {
 	render() {

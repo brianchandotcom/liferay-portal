@@ -28,6 +28,19 @@ components:
                 title:
                     type: string
             type: object
+        CreatorUser:
+            description: https://schema.org/CreatorUser
+            properties:
+                id:
+                    description: The user's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The user's full name.
+                    readOnly: true
+                    type: string
+            type: object
         GenericError:
             description: https://www.schema.org/GenericError
             properties:
@@ -56,6 +69,8 @@ components:
                     items:
                         $ref: "#/components/schemas/AssigneeUser"
                     type: array
+                creatorUser:
+                    $ref: "#/components/schemas/CreatorUser"
                 dateCompletion:
                     format: date-time
                     type: string
@@ -82,8 +97,6 @@ components:
                     items:
                         type: string
                     type: array
-                userName:
-                    type: string
             type: object
         Metric:
             description: https://www.schema.org/Metric

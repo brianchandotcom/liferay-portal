@@ -11,12 +11,7 @@
 
 import React from 'react';
 import List from '../../../../src/main/resources/META-INF/resources/js/components/list/List.es';
-import {
-	fireEvent,
-	getByLabelText,
-	getByText,
-	render
-} from '@testing-library/react';
+import {fireEvent, getByLabelText, render} from '@testing-library/react';
 import {getMockResultsData} from '../../mocks/data.es';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
 import '@testing-library/jest-dom/extend-expect';
@@ -109,7 +104,7 @@ describe('List', () => {
 	it('updates the selected ids', () => {
 		const mockLoad = jest.fn();
 
-		const {container, getByTestId} = render(
+		const {getByTestId, getByText} = render(
 			<List
 				dataLoading={false}
 				dataMap={DATA_MAP}
@@ -124,12 +119,7 @@ describe('List', () => {
 		fireEvent.click(getByLabelText(getByTestId('102'), 'select'));
 		fireEvent.click(getByLabelText(getByTestId('104'), 'select'));
 
-		const navbar = getByText(container, 'x-of-x-items-selected', {
-			exact: false
-		});
-
-		expect(getByText(navbar, '2', {exact: false})).toBeInTheDocument();
-		expect(getByText(navbar, '3', {exact: false})).toBeInTheDocument();
+		expect(getByText('x-items-selected')).toBeInTheDocument();
 	});
 
 	it('updates the selected ids back', () => {
@@ -154,7 +144,7 @@ describe('List', () => {
 			getByTestId('102').querySelector('.custom-control-input')
 		);
 
-		expect(queryByText('items-selected')).not.toBeInTheDocument();
+		expect(queryByText('items-selected')).toBeNull();
 	});
 
 	it('focuses on the id', () => {

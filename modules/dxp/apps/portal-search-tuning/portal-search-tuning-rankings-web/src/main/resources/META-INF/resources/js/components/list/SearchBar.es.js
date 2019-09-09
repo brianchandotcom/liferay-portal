@@ -11,13 +11,13 @@
 
 import AddResult from '../add_result/AddResult.es';
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import ItemDropdown from './ItemDropdown.es';
 import React, {Component} from 'react';
+import {ClayCheckbox} from '@clayui/form';
+import {getPluralMessage} from '../../utils/language.es';
 import {PropTypes} from 'prop-types';
-import {sub} from '../../utils/language.es';
 
 class SearchBar extends Component {
 	static propTypes = {
@@ -153,14 +153,14 @@ class SearchBar extends Component {
 										<li className="nav-item">
 											<span className="navbar-text">
 												<strong>
-													{sub(
+													{getPluralMessage(
 														Liferay.Language.get(
-															'x-of-x-items-selected'
+															'x-item-selected'
 														),
-														[
-															selectedIds.length,
-															resultIds.length
-														]
+														Liferay.Language.get(
+															'x-items-selected'
+														),
+														selectedIds.length
 													)}
 												</strong>
 											</span>

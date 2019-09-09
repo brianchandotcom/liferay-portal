@@ -25,7 +25,7 @@ const DATA_MAP = resultsDataToMap(
 
 describe('SearchBar', () => {
 	it('has an add result button when onAddResultSubmit is defined', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -39,7 +39,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('add-result')).not.toBeNull();
+		expect(getByText('add-result')).toBeInTheDocument();
 	});
 
 	it('does not have an add result button when onAddResultSubmit is not defined', () => {
@@ -61,7 +61,7 @@ describe('SearchBar', () => {
 	});
 
 	it('shows what is selected using selectedIds', () => {
-		const {queryByText} = render(
+		const {getByText, queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -75,8 +75,26 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('2', {exact: false})).not.toBeNull();
-		expect(queryByText('3', {exact: false})).not.toBeNull();
+		expect(getByText('x-items-selected')).toBeInTheDocument();
+		expect(queryByText('add-result')).toBeNull();
+	});
+
+	it('shows only one selected using selectedId', () => {
+		const {getByText, queryByText} = render(
+			<SearchBar
+				dataMap={DATA_MAP}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onClickHide={jest.fn()}
+				onClickPin={jest.fn()}
+				onSelectAll={jest.fn()}
+				onSelectClear={jest.fn()}
+				resultIds={[102, 104, 103]}
+				selectedIds={[102]}
+			/>
+		);
+
+		expect(getByText('x-item-selected')).toBeInTheDocument();
 		expect(queryByText('add-result')).toBeNull();
 	});
 
@@ -101,7 +119,7 @@ describe('SearchBar', () => {
 	});
 
 	it('shows no items selected with empty selectedIds', () => {
-		const {queryByText} = render(
+		const {getByText, queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -115,7 +133,8 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('Items Selected')).toBeNull();
-		expect(queryByText('add-result')).not.toBeNull();
+		expect(getByText('select-items')).toBeInTheDocument();
+		expect(queryByText('x-items-selected')).toBeNull();
+		expect(queryByText('x-item-selected')).toBeNull();
 	});
 });

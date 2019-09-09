@@ -18,7 +18,7 @@ import Item from '../list/Item.es';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {ClayCheckbox} from '@clayui/form';
-import {sub} from '../../utils/language.es';
+import {getPluralMessage} from '../../utils/language.es';
 
 function AddResultModal({
 	addResultSearchQuery,
@@ -33,10 +33,8 @@ function AddResultModal({
 	handleSearchKeyDown,
 	handleSelect,
 	handleSubmit,
-	page,
 	results,
 	renderEmptyState,
-	selectedDelta,
 	showModal
 }) {
 	const {observer, onClose} = useModal({
@@ -51,8 +49,6 @@ function AddResultModal({
 		'navbar',
 		'navbar-expand-md'
 	);
-
-	const start = page * selectedDelta;
 
 	return showModal ? (
 		<ClayModal
@@ -148,31 +144,22 @@ function AddResultModal({
 
 													<li className="nav-item">
 														<span className="navbar-text">
-															{addResultSelectedIds.length >
-															0
-																? sub(
-																		Liferay.Language.get(
-																			'x-items-selected'
-																		),
-																		[
-																			addResultSelectedIds.length
-																		]
-																  )
-																: sub(
-																		Liferay.Language.get(
-																			'x-x-of-x-results'
-																		),
-																		[
-																			start -
-																				selectedDelta +
-																				1,
-																			Math.min(
-																				start,
-																				results.total
+															<strong>
+																{addResultSelectedIds.length >
+																0
+																	? getPluralMessage(
+																			Liferay.Language.get(
+																				'x-item-selected'
 																			),
-																			results.total
-																		]
-																  )}
+																			Liferay.Language.get(
+																				'x-items-selected'
+																			),
+																			addResultSelectedIds.length
+																	  )
+																	: Liferay.Language.get(
+																			'select-items'
+																	  )}
+															</strong>
 														</span>
 													</li>
 

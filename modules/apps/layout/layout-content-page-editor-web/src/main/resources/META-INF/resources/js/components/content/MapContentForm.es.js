@@ -132,33 +132,35 @@ class MapContentForm extends PortletBase {
 		const fragmentEntryLinkId =
 			targetElement.dataset.itemFragmentEntryLinkId;
 
+		const newFields = this.fields.map(field => {
+			let newField = Object.assign({}, field);
+
+			if (fieldKey === '-' && field.editableId === editableId) {
+				newField = {
+					disabled: field.disabled,
+					key: field.key,
+					label: field.label,
+					type: field.type
+				};
+			} else if (field.key === fieldKey) {
+				newField.editableId = editableId;
+				newField.fragmentEntryLinkId = fragmentEntryLinkId;
+			}
+
+			return newField;
+		});
+
 		this.emit('fieldsChanged', {
-			fields: this.fields.map(field => {
-				let newField = Object.assign({}, field);
-
-				if (fieldKey === '-' && field.editableId === editableId) {
-					newField = {
-						disabled: field.disabled,
-						key: field.key,
-						label: field.label,
-						type: field.type
-					};
-				} else if (field.key === fieldKey) {
-					newField.editableId = editableId;
-					newField.fragmentEntryLinkId = fragmentEntryLinkId;
-				}
-
-				return newField;
-			}),
-			serializedFields: this._getSerializedFields()
+			fields: newFields,
+			serializedFields: this._getSerializedFields(newFields)
 		});
 	}
 
-	_getSerializedFields() {
+	_getSerializedFields(fields) {
 		const ddmForm = {
 			availableLanguagesIds: [this.languageId],
 			defaultLanguageId: this.languageId,
-			fieldValues: this.fields.map(field => {
+			fieldValues: fields.map(field => {
 				let itemValue = '';
 
 				this.selectedItems.forEach(selectedItem => {

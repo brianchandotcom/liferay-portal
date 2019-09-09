@@ -126,6 +126,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 		contextObjects.put("configuration", configurationValuesJSONObject);
 
+		contextObjects.put(
+			"fragmentEntryLinkUuid", fragmentEntryLink.getUuid());
+
 		contextObjects.putAll(
 			FragmentEntryConfigUtil.getContextObjects(
 				configurationValuesJSONObject,

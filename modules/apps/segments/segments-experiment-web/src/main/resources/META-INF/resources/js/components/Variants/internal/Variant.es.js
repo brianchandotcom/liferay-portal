@@ -74,6 +74,7 @@ function Variant({
 					<ClayList.ItemField>
 						<ClayButton
 							borderless
+							className="btn-monospaced"
 							displayType="secondary"
 							onClick={_handleEditVariantContent}
 						>
@@ -91,6 +92,7 @@ function Variant({
 										'show-actions'
 									)}
 									borderless
+									className="btn-monospaced"
 									displayType="secondary"
 								>
 									<ClayIcon symbol="ellipsis-v" />

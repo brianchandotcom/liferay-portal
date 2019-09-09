@@ -92,6 +92,7 @@ function SegmentsExperiments({
 											'show-actions'
 										)}
 										borderless
+										className="btn-monospaced"
 										displayType="secondary"
 									>
 										<ClayIcon symbol="ellipsis-v" />

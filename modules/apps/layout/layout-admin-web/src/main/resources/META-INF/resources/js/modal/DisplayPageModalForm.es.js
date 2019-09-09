@@ -19,6 +19,7 @@ import FormField from './FormField.es';
 const DisplayPageModalForm = React.forwardRef((props, ref) => {
 	const [subtypes, setSubtypes] = useState([]);
 	const nameInput = useRef(null);
+	const [error, setError] = useState(props.error);
 
 	useEffect(() => {
 		if (nameInput.current) {
@@ -26,8 +27,14 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		setError(props.error);
+	}, [props.error]);
+
 	const onChange = useCallback(
 		event => {
+			setError({...error, classNameId: null, classTypeId: null});
+
 			const select = event.target;
 			const selectedMappingId =
 				select.options[select.selectedIndex].value;
@@ -42,13 +49,13 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 				setSubtypes([]);
 			}
 		},
-		[props.mappingTypes]
+		[error, props.mappingTypes]
 	);
 
 	return (
 		<form onSubmit={props.onSubmit} ref={ref}>
 			<FormField
-				error={props.error && props.error.name}
+				error={error && error.name}
 				id={`${props.namespace}name`}
 				name={Liferay.Language.get('name')}
 			>
@@ -56,6 +63,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 					className={'form-control'}
 					defaultValue={props.displayPageName}
 					name={`${props.namespace}name`}
+					onChange={() => setError({...error, name: null})}
 					ref={nameInput}
 				/>
 			</FormField>
@@ -64,7 +72,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 				props.mappingTypes.length > 0 && (
 					<fieldset>
 						<FormField
-							error={props.error && props.error.classNameId}
+							error={error && error.classNameId}
 							id={`${props.namespace}classNameId`}
 							name={Liferay.Language.get('content-type')}
 						>
@@ -91,13 +99,16 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 
 						{Array.isArray(subtypes) && subtypes.length > 0 && (
 							<FormField
-								error={props.error && props.error.classTypeId}
+								error={error && error.classTypeId}
 								id={`${props.namespace}classTypeId`}
 								name={Liferay.Language.get('subtype')}
 							>
 								<select
 									className="form-control"
 									name={`${props.namespace}classTypeId`}
+									onChange={() =>
+										setError({...error, classTypeId: null})
+									}
 								>
 									<option value="">
 										{`-- ${Liferay.Language.get(

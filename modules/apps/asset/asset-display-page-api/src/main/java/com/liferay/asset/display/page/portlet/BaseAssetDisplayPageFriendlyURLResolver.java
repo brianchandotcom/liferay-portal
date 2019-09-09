@@ -231,9 +231,20 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	private String _getUrlTitle(String friendlyURL) {
-		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+		String infoURLSeparator = _getInfoURLSeparator(friendlyURL);
 
-		return http.encodePath(paths.get(1));
+		String urlTitle = friendlyURL.substring(infoURLSeparator.length());
+
+		long versionClassPK = _getVersionClassPK(friendlyURL);
+
+		if (versionClassPK > 0) {
+			String versionClassPKValue = String.valueOf(versionClassPK);
+
+			urlTitle = friendlyURL.substring(
+				0, friendlyURL.length() - versionClassPKValue.length() - 1);
+		}
+
+		return http.encodePath(urlTitle);
 	}
 
 	private long _getVersionClassPK(String friendlyURL) {
@@ -243,7 +254,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			return 0;
 		}
 
-		return GetterUtil.getLong(paths.get(2));
+		return GetterUtil.getLong(paths.get(paths.size() - 1));
 	}
 
 }

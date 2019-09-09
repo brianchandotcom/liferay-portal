@@ -21,6 +21,9 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
@@ -238,7 +241,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			namespace + "assetEntryId",
 			new String[] {String.valueOf(assetEntry.getEntryId())});
 
-		String ddmTemplateKey = _getDDMTemplateKey(friendlyURL);
+		String ddmTemplateKey = _getDDMTemplateKey(groupId, friendlyURL);
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			actualParams.put(
@@ -292,14 +295,30 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		return layoutActualURL;
 	}
 
-	private String _getDDMTemplateKey(String friendlyURL) {
+	private String _getDDMTemplateKey(long groupId, String friendlyURL) {
 		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
 		if (paths.size() <= 2) {
 			return StringPool.BLANK;
 		}
 
-		return paths.get(2);
+		String ddmTemplateKey = paths.get(paths.size() - 1);
+
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			groupId, _portal.getClassNameId(DDMStructure.class), ddmTemplateKey,
+			true);
+
+		if (ddmTemplate != null) {
+			return ddmTemplateKey;
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getFullURLTitle(String friendlyURL) {
+		String urlSeparator = getURLSeparator();
+
+		return friendlyURL.substring(urlSeparator.length());
 	}
 
 	private InfoDisplayObjectProvider _getInfoDisplayObjectProvider(
@@ -317,23 +336,53 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	private JournalArticle _getJournalArticle(long groupId, String friendlyURL)
 		throws PortalException {
 
-		String normalizedUrlTitle =
-			FriendlyURLNormalizerUtil.normalizeWithEncoding(
-				_getURLTitle(friendlyURL));
-
 		JournalArticle journalArticle = null;
 
-		double version = _getVersion(friendlyURL);
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				_getFullURLTitle(friendlyURL));
 
-		if (version > 0) {
-			journalArticle = _journalArticleLocalService.fetchArticleByUrlTitle(
-				groupId, normalizedUrlTitle, version);
-		}
-		else {
+		journalArticle =
+			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
+
+		if (journalArticle == null) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
 			journalArticle =
-				_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+				_journalArticleLocalService.getLatestArticleByUrlTitle(
 					groupId, normalizedUrlTitle,
-					WorkflowConstants.STATUS_APPROVED);
+					WorkflowConstants.STATUS_PENDING);
+
+			if ((journalArticle != null) &&
+				!WorkflowPermissionUtil.hasPermission(
+					permissionChecker, groupId,
+					"com.liferay.journal.model.JournalArticle",
+					journalArticle.getId(), ActionKeys.VIEW)) {
+
+				throw new PrincipalException();
+			}
+		}
+
+		if (journalArticle == null) {
+			normalizedUrlTitle =
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					_getURLTitle(friendlyURL));
+
+			double version = _getVersion(friendlyURL);
+
+			if (version > 0) {
+				journalArticle =
+					_journalArticleLocalService.fetchArticleByUrlTitle(
+						groupId, normalizedUrlTitle, version);
+			}
+			else {
+				journalArticle =
+					_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+						groupId, normalizedUrlTitle,
+						WorkflowConstants.STATUS_APPROVED);
+			}
 		}
 
 		if (journalArticle == null) {
@@ -345,7 +394,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					groupId, normalizedUrlTitle,
 					WorkflowConstants.STATUS_PENDING);
 
-			if (!WorkflowPermissionUtil.hasPermission(
+			if ((journalArticle != null) &&
+				!WorkflowPermissionUtil.hasPermission(
 					permissionChecker, groupId,
 					"com.liferay.journal.model.JournalArticle",
 					journalArticle.getId(), ActionKeys.VIEW)) {
@@ -354,9 +404,15 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			}
 		}
 
-		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
+		Map<Locale, String> friendlyURLMap = null;
 
-		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
+		if (journalArticle != null) {
+			friendlyURLMap = journalArticle.getFriendlyURLMap();
+		}
+
+		if ((friendlyURLMap == null) ||
+			!friendlyURLMap.containsValue(normalizedUrlTitle)) {
+
 			throw new NoSuchArticleException(
 				StringBundler.concat(
 					"No latest version of a JournalArticle exists with the key",
@@ -369,16 +425,27 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	}
 
 	private String _getURLTitle(String friendlyURL) {
-		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+		String urlSeparator = getURLSeparator();
 
-		return paths.get(1);
+		return friendlyURL.substring(
+			urlSeparator.length(), friendlyURL.lastIndexOf(StringPool.SLASH));
 	}
 
 	private double _getVersion(String friendlyURL) {
 		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
-		if (paths.size() == 3) {
-			return Double.valueOf(paths.get(2));
+		if (paths.size() <= 2) {
+			return 0;
+		}
+
+		String lastPath = paths.get(paths.size() - 1);
+
+		List<String> numbers = StringUtil.split(friendlyURL, CharPool.PERIOD);
+
+		if ((numbers.size() == 2) && Validator.isDigit(numbers.get(0)) &&
+			Validator.isDigit(numbers.get(1))) {
+
+			return Double.valueOf(lastPath);
 		}
 
 		return 0;
@@ -389,6 +456,9 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

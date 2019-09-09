@@ -64,6 +64,10 @@ public class SegmentsExperimentRelModelListener
 	public void onAfterRemove(SegmentsExperimentRel segmentsExperimentRel)
 		throws ModelListenerException {
 
+		if (segmentsExperimentRel == null) {
+			return;
+		}
+
 		try {
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}

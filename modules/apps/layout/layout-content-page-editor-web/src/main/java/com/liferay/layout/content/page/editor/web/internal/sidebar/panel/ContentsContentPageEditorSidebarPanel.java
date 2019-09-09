@@ -15,18 +15,24 @@
 package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
+import com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
+	configurationPid = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration",
 	immediate = true, property = "service.ranking:Integer=400",
 	service = ContentPageEditorSidebarPanel.class
 )
@@ -58,14 +64,23 @@ public class ContentsContentPageEditorSidebarPanel
 
 	@Override
 	public boolean isVisible(boolean pageIsDisplayPage) {
-
-		// LPS-100647
-
-		if (true) {
+		if (!_contentsContentPageEditorSidebarPanelConfiguration.enabled()) {
 			return false;
 		}
 
 		return !pageIsDisplayPage;
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_contentsContentPageEditorSidebarPanelConfiguration =
+			ConfigurableUtil.createConfigurable(
+				ContentsContentPageEditorSidebarPanelConfiguration.class,
+				properties);
+	}
+
+	private volatile ContentsContentPageEditorSidebarPanelConfiguration
+		_contentsContentPageEditorSidebarPanelConfiguration;
 
 }

@@ -107,7 +107,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
 				</liferay-portlet:actionURL>
 
-				<aui:button href="<%= nextStatusURL.toString() %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
+				<aui:button href="<%= nextStatusURL.toString() %>" name="nextStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
 			</c:if>
 		</c:if>
 
@@ -117,7 +117,22 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<aui:button href="<%= deleteURL.toString() %>" name="previousStatusButton" value="<%= Constants.DELETE %>" />
+			<aui:button href="<%= deleteURL.toString() %>" name="deleteButton" value="<%= Constants.DELETE %>" />
 		</c:if>
 	</aui:button-row>
 </c:if>
+
+<aui:script sandbox="<%= true %>">
+	var deleteButtonElement = document.getElementById('<portlet:namespace />deleteButton');
+
+	if (deleteButtonElement) {
+		deleteButtonElement.addEventListener(
+			'click',
+			function(event) {
+				if (!confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					event.preventDefault();
+				}
+			}
+		);
+	}
+</aui:script>

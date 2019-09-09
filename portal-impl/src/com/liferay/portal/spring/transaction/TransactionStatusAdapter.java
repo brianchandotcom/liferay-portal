@@ -82,7 +82,7 @@ public class TransactionStatusAdapter
 		_transactionStatus.releaseSavepoint(savepoint);
 	}
 
-	public void reportLifecycleListenerThrowables(Throwable throwable) {
+	void reportLifecycleListenerThrowables(Throwable throwable) {
 		if (_lifecycleListenerThrowable != null) {
 			if (throwable == null) {
 				ReflectionUtil.throwException(_lifecycleListenerThrowable);

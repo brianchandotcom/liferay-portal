@@ -15,6 +15,8 @@
 package com.liferay.layout.util.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,9 +28,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -45,6 +49,19 @@ public class LayoutConverterTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testIsConvertibleTrue() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+
+		LayoutTemplate layoutTemplate = _getLayoutTemplate(layout);
+
+		LayoutConverter layoutConverter =
+			_layoutConverterRegistry.getLayoutConverter(
+				layoutTemplate.getLayoutTemplateId());
+
+		Assert.assertEquals(true, layoutConverter.isConvertible(layout));
 	}
 
 	private LayoutTemplate _getLayoutTemplate(Layout layout) {

@@ -141,7 +141,7 @@ class CreateContentDialog extends Component {
 							([fragmentEntryLinkId, fragmentEntryLink], index) =>
 								updateEditableValues(
 									fragmentEntryLinkId,
-									fragmentEntryLink,
+									fragmentEntryLink.editableValues,
 									index ===
 										updatedFragmentEntryLinks.length - 1
 								)

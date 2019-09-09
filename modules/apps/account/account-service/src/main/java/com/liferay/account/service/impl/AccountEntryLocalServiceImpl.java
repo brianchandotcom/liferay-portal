@@ -14,8 +14,10 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
@@ -67,7 +70,7 @@ public class AccountEntryLocalServiceImpl
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, byte[] logoBytes, int status)
+			String description, String[] domains, byte[] logoBytes, int status)
 		throws PortalException {
 
 		// Account entry
@@ -91,6 +94,10 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setName(StringUtil.shorten(name, nameMaxLength));
 
 		accountEntry.setDescription(description);
+
+		domains = _validateDomains(domains);
+
+		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
 		_portal.updateImageId(
 			accountEntry, true, logoBytes, "logoId",
@@ -179,8 +186,8 @@ public class AccountEntryLocalServiceImpl
 	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
-			String description, boolean deleteLogo, byte[] logoBytes,
-			int status)
+			String description, boolean deleteLogo, String[] domains,
+			byte[] logoBytes, int status)
 		throws PortalException {
 
 		AccountEntry accountEntry = accountEntryPersistence.fetchByPrimaryKey(
@@ -189,6 +196,10 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setParentAccountEntryId(parentAccountEntryId);
 		accountEntry.setName(name);
 		accountEntry.setDescription(description);
+
+		domains = _validateDomains(domains);
+
+		accountEntry.setDomains(StringUtil.merge(domains, StringPool.COMMA));
 
 		_portal.updateImageId(
 			accountEntry, !deleteLogo, logoBytes, "logoId",
@@ -226,6 +237,20 @@ public class AccountEntryLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
 
 		actionableDynamicQuery.performActions();
+	}
+
+	private String[] _validateDomains(String[] domains) throws PortalException {
+		if (ArrayUtil.isEmpty(domains)) {
+			return domains;
+		}
+
+		for (String domain : domains) {
+			if (!Validator.isDomain(domain)) {
+				throw new AccountEntryDomainsException();
+			}
+		}
+
+		return ArrayUtil.distinct(domains);
 	}
 
 	@Reference

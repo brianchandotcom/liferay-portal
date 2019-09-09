@@ -27,10 +27,9 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.io.IOException;
@@ -119,17 +118,7 @@ public class AsahInterestTermFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, AssetListEntry assetListEntry) {
-		if (Validator.isNull(
-				PrefsPropsUtil.getString(
-					user.getCompanyId(), "liferayAnalyticsDataSourceId")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					user.getCompanyId(),
-					"liferayAnalyticsFaroBackendSecuritySignature")) ||
-			Validator.isNull(
-				PrefsPropsUtil.getString(
-					user.getCompanyId(), "liferayAnalyticsFaroBackendURL"))) {
-
+		if (!AsahUtil.isAnalyticsEnabled(user.getCompanyId())) {
 			return false;
 		}
 

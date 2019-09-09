@@ -19,14 +19,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.asah.connector.internal.util.AsahUtil;
 
 import java.util.Optional;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,23 +37,7 @@ public class AsahFaroBackendClientFactory {
 		Company company = _companyLocalService.fetchCompany(
 			_portal.getDefaultCompanyId());
 
-		PortletPreferences portletPreferences =
-			_portalPreferencesLocalService.getPreferences(
-				company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-		String asahFaroBackendDataSourceId = GetterUtil.getString(
-			portletPreferences.getValue("liferayAnalyticsDataSourceId", null));
-		String asahFaroBackendSecuritySignature = GetterUtil.getString(
-			portletPreferences.getValue(
-				"liferayAnalyticsFaroBackendSecuritySignature", null));
-		String asahFaroBackendURL = GetterUtil.getString(
-			portletPreferences.getValue(
-				"liferayAnalyticsFaroBackendURL", null));
-
-		if (Validator.isNull(asahFaroBackendDataSourceId) ||
-			Validator.isNull(asahFaroBackendSecuritySignature) ||
-			Validator.isNull(asahFaroBackendURL)) {
-
+		if (!AsahUtil.isAnalyticsEnabled(company.getCompanyId())) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Unable to configure Asah Faro backend client");
 			}
@@ -67,8 +47,11 @@ public class AsahFaroBackendClientFactory {
 
 		return Optional.of(
 			new AsahFaroBackendClientImpl(
-				_jsonWebServiceClient, asahFaroBackendDataSourceId,
-				asahFaroBackendSecuritySignature, asahFaroBackendURL));
+				_jsonWebServiceClient,
+				AsahUtil.getAsahFaroBackendDataSourceId(company.getCompanyId()),
+				AsahUtil.getAsahFaroBackendSecuritySignature(
+					company.getCompanyId()),
+				AsahUtil.getAsahFaroBackendURL(company.getCompanyId())));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

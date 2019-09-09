@@ -212,7 +212,7 @@ gradle.beforeProject {
 		}
 
 		pluginManager.withPlugin("com.liferay.baseline") {
-			if (!project.path.endsWith("-api") && !project.path.endsWith("-spi")) {
+			if (!project.path.endsWith("-api") && !project.path.endsWith("-spi") && !project.path.endsWith("-test-util")) {
 				baseline {
 					enabled = false
 				}

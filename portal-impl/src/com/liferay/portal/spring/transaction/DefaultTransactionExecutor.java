@@ -35,32 +35,32 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		Throwable commitThrowable = null;
+		Throwable transactionManagerThrowable = null;
 
 		try {
 			_platformTransactionManager.commit(
 				transactionStatusAdapter.getTransactionStatus());
 		}
 		catch (Throwable t) {
-			commitThrowable = t;
+			transactionManagerThrowable = t;
 
 			throw t;
 		}
 		finally {
-			if (commitThrowable == null) {
+			if (transactionManagerThrowable == null) {
 				TransactionLifecycleManager.fireTransactionCommittedEvent(
 					transactionAttributeAdapter, transactionStatusAdapter);
 			}
 			else {
 				TransactionLifecycleManager.fireTransactionRollbackedEvent(
 					transactionAttributeAdapter, transactionStatusAdapter,
-					commitThrowable);
+					transactionManagerThrowable);
 			}
 
 			TransactionExecutorThreadLocal.popTransactionExecutor();
 
 			transactionStatusAdapter.flushLifecycleListenerThrowables(
-				commitThrowable);
+				transactionManagerThrowable);
 		}
 	}
 

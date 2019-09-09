@@ -28,6 +28,59 @@ import org.junit.Test;
 public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 
 	@Test
+	public void testToIndexedRecordIfBigDecimalPropertyPresent() {
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/price/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi_bigdecimal.json"));
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("price_content.json"));
+
+		Assert.assertNotNull(
+			"Attachment is converted to indexed record", indexedRecord);
+
+		Object priceBigDecimal1 = indexedRecord.get(1);
+
+		Assert.assertEquals(
+			"Price 1 field type", String.class, priceBigDecimal1.getClass());
+
+		Assert.assertEquals("Price 1 field value", "1.97797", priceBigDecimal1);
+
+		Object priceBigDecimal2 = indexedRecord.get(2);
+
+		Assert.assertEquals(
+			"Price 2 field type", String.class, priceBigDecimal2.getClass());
+
+		Assert.assertEquals(
+			"Price 2 field value", "1.97797E-17", priceBigDecimal2);
+
+		Object priceDouble = indexedRecord.get(3);
+
+		Assert.assertEquals(
+			"Price 3 field type", Double.class, priceDouble.getClass());
+
+		Assert.assertEquals(
+			"Price 3 field value", Double.valueOf("19779.7"), priceDouble);
+
+		Object priceFloat = indexedRecord.get(4);
+
+		Assert.assertEquals(
+			"Price 4 field type", Float.class, priceFloat.getClass());
+
+		Assert.assertEquals(
+			"Price 4 field value", Float.valueOf("19.7797"), priceFloat);
+
+		Object priceNumber = indexedRecord.get(5);
+
+		Assert.assertEquals(
+			"Price 4 field type", String.class, priceNumber.getClass());
+
+		Assert.assertEquals("Price 4 field value", "1977.97", priceNumber);
+	}
+
+	@Test
 	public void testToIndexedRecordIfDateTimeStringPropertyPresent() {
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			getJsonObjectIndexedRecordConverter(

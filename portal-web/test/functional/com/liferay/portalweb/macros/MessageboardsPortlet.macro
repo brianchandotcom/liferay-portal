@@ -300,7 +300,15 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_FROM_ADDRESS",
-			value1 = "test@liferay.com");
+			value1 = "test@domain.invalid");
+
+		if (isSet(emailFromAddress)) {
+			Type(
+				locator1 = "TextInput#EMAIL_FROM_ADDRESS",
+				value1 = "${emailFromAddress}");
+
+			PortletEntry.save();
+		}
 	}
 
 	macro viewNoPermissionCP {

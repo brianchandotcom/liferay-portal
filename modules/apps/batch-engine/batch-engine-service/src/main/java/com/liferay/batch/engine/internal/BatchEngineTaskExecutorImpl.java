@@ -121,8 +121,7 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 				if (items.size() < batchEngineTask.getBatchSize()) {
 					items.add(item);
 				}
-
-				if (items.size() == batchEngineTask.getBatchSize()) {
+				else {
 					_commitItems(
 						batchEngineTaskItemWriter, items,
 						batchEngineTaskOperation);

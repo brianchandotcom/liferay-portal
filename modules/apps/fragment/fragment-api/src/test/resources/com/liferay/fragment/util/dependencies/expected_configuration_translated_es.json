@@ -5,14 +5,14 @@
 				{
 					"dataType": "string",
 					"defaultValue": "blue",
-					"description": "Este es el estilo que será aplicado",
-					"label": "Estilo aplicado",
+					"description": "Éste es el estilo que será aplicado.",
+					"label": "Estilo Aplicado",
 					"name": "headingAppliedStyle",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "Esto es azul",
+								"label": "Esto es azul.",
 								"value": "blue"
 							},
 							{

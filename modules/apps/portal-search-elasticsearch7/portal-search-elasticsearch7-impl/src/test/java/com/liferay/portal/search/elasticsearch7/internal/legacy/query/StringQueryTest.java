@@ -42,10 +42,10 @@ public class StringQueryTest extends BaseStringQueryTestCase {
 
 		assertSearch(
 			"(-bravo) OR (alpha)",
-			Arrays.asList("alpha charlie", "charlie delta", "alpha bravo"));
+			Arrays.asList("alpha bravo", "alpha charlie", "charlie delta"));
 		assertSearch(
 			"(-bravo) OR alpha",
-			Arrays.asList("alpha charlie", "charlie delta", "alpha bravo"));
+			Arrays.asList("alpha bravo", "alpha charlie", "charlie delta"));
 	}
 
 	@Override

@@ -14,17 +14,19 @@
 
 package com.liferay.change.tracking.change.lists.configuration.web.internal.display.context;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.template.soy.util.SoyContext;
-import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
-import javax.portlet.PortletRequest;
+import java.util.List;
+import java.util.Objects;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -32,101 +34,120 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Máté Thurzó
+ * @author Samuel Trong Tran
  */
 public class ChangeListsConfigurationDisplayContext {
 
 	public ChangeListsConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
+		CTPreferencesLocalService ctPreferencesLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+		_ctPreferencesLocalService = ctPreferencesLocalService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				_themeDisplay.getCompanyId(), 0);
+
+		if (ctPreferences == null) {
+			_changeListsEnabled = false;
+		}
+		else {
+			_changeListsEnabled = true;
+		}
 	}
 
-	public SoyContext getChangeListsConfigurationContext() {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+	public String getActionURL() {
+		PortletURL actionURL = _renderResponse.createActionURL();
 
-		soyContext.put(
-			"navigationItem",
-			JSONUtil.put(
-				JSONUtil.put(
-					"active", true
-				).put(
-					"href", "#1"
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "global-settings")
-				).put(
-					"visible", true
-				))
-		).put(
-			"navigationItems",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"active", true
-				).put(
-					"href", "#1"
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "global-settings")
-				),
-				JSONUtil.put(
-					"active", false
-				).put(
-					"href", "#2"
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "user-settings")
-				))
-		).put(
-			"portalURL", _themeDisplay.getPortalURL()
-		).put(
-			"portletNamespace", _renderResponse.getNamespace()
-		).put(
-			"spritemap",
-			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		).put(
-			"urlChangeTrackingConfiguration",
-			_themeDisplay.getPortalURL() +
-				"/o/change-tracking-legacy/configurations/" +
-					_themeDisplay.getCompanyId()
-		).put(
-			"urlChangeTrackingUserConfiguration",
-			_getUserConfigurationURL(_themeDisplay)
-		);
+		if (Objects.equals(getNavigation(), "global-settings")) {
+			actionURL.setParameter(
+				ActionRequest.ACTION_NAME,
+				"/change_lists/update_global_change_lists_configuration");
+		}
+		else {
+			actionURL.setParameter(
+				ActionRequest.ACTION_NAME,
+				"/change_lists/update_user_change_lists_configuration");
+		}
 
-		PortletURL configurationPortletURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, CTPortletKeys.CHANGE_LISTS_CONFIGURATION,
-			PortletRequest.RENDER_PHASE);
-
-		configurationPortletURL.setParameter("configurationSaved", "true");
-
-		soyContext.put("urlConfiguration", configurationPortletURL.toString());
-
-		PortletURL overviewPortletURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
-			PortletRequest.RENDER_PHASE);
-
-		soyContext.put("urlOverview", overviewPortletURL.toString());
-
-		return soyContext;
+		return actionURL.toString();
 	}
 
-	private String _getUserConfigurationURL(ThemeDisplay themeDisplay) {
-		StringBundler sb = new StringBundler(5);
+	public String getNavigation() {
+		if (_navigation != null) {
+			return _navigation;
+		}
 
-		sb.append(themeDisplay.getPortalURL());
-		sb.append("/o/change-tracking-legacy/configurations/");
-		sb.append(themeDisplay.getCompanyId());
-		sb.append("/user/");
-		sb.append(themeDisplay.getUserId());
+		if (!isChangeListsEnabled()) {
+			_navigation = "global-settings";
+		}
+		else {
+			_navigation = ParamUtil.getString(
+				_httpServletRequest, "navigation", "global-settings");
+		}
 
-		return sb.toString();
+		return _navigation;
 	}
 
+	public List<NavigationItem> getViewNavigationItems() {
+		return new NavigationItemList() {
+			{
+				String navigation = getNavigation();
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							navigation.equals("global-settings"));
+						navigationItem.setHref(
+							_renderResponse.createRenderURL(), "navigation",
+							"global-settings");
+						navigationItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "global-settings"));
+					});
+
+				if (isChangeListsEnabled()) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								navigation.equals("user-settings"));
+							navigationItem.setHref(
+								_renderResponse.createRenderURL(), "navigation",
+								"user-settings");
+							navigationItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "user-settings"));
+						});
+				}
+			}
+		};
+	}
+
+	public boolean isChangeListsEnabled() {
+		return _changeListsEnabled;
+	}
+
+	public boolean isRequireConfirmationEnabled() {
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
+
+		if (ctPreferences == null) {
+			return false;
+		}
+
+		return ctPreferences.isConfirmationEnabled();
+	}
+
+	private final boolean _changeListsEnabled;
+	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private String _navigation;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 

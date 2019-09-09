@@ -102,6 +102,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 
 		nextState = setIn(
 			nextState,
+			['_backgroundImage'],
+			this._getBackgroundImage()
+		);
+
+		nextState = setIn(
+			nextState,
 			['_imageSourceTypeIds'],
 			IMAGE_SOURCE_TYPE_IDS
 		);
@@ -245,6 +251,28 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			})
 			.dispatch(updateLastSaveDateAction())
 			.dispatch(disableSavingChangesStatusAction());
+	}
+
+	/**
+	 * Takes the string of the background image
+	 * @private
+	 */
+	_getBackgroundImage() {
+		const {config} = this.item;
+
+		if (!config) {
+			return '';
+		}
+
+		if (typeof config.backgroundImage === 'string') {
+			return config.backgroundImage;
+		}
+
+		if (typeof config.backgroundImage === 'object') {
+			return config.backgroundImage.title || '';
+		}
+
+		return '';
 	}
 
 	/**

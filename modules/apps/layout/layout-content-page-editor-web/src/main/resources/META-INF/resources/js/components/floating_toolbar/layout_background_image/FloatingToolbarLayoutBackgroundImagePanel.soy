@@ -10,6 +10,7 @@
 			title: string
 		]
 	]}
+	{@param? _backgroundImage: string}
 	{@param? _fields: ?}
 	{@param? _handleAssetBrowserLinkClick: any}
 	{@param? _handleAssetEntryLinkClick: any}
@@ -60,7 +61,7 @@
 			{call .manualImageSelect}
 				{param handleClearButtonClick: $_handleClearButtonClick /}
 				{param handleSelectButtonClick: $_handleSelectButtonClick /}
-				{param item: $item /}
+				{param backgroundImage: $_backgroundImage ?: '' /}
 			{/call}
 		{/if}
 
@@ -187,11 +188,7 @@
 {template .manualImageSelect}
 	{@param? handleClearButtonClick: any}
 	{@param? handleSelectButtonClick: any}
-	{@param item: [
-		config: [
-			backgroundImage: ?
-		]
-	]}
+	{@param backgroundImage: string}
 
 	<div class="form-group">
 		<label for="floatingToolbarLayoutBackgroundImagePanelOption">
@@ -202,20 +199,14 @@
 			{msg desc=""}none{/msg}
 		{/let}
 
-		{let $inputValue kind="text"}
-			{if $item.config and $item.config.backgroundImage}
-				{$item.config.backgroundImage}
-			{/if}
-		{/let}
-
 		<input
 			class="form-control form-control-sm"
 			id="floatingToolbarLayoutBackgroundImagePanelOption"
 			placeholder="{$inputPlaceholder}"
 			readonly
-			title="{$inputValue}"
+			title="{$backgroundImage}"
 			type="text"
-			value="{$inputValue}"
+			value="{$backgroundImage}"
 		>
 	</div>
 
@@ -236,7 +227,7 @@
 				data-onclick="{$handleClearButtonClick}"
 				type="button"
 
-				{if (not $item.config) or (not $item.config.backgroundImage)}
+				{if $backgroundImage == ''}
 					disabled
 				{/if}
 			{/let}

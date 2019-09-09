@@ -319,7 +319,6 @@ class FragmentEntryLinkListRow extends Component {
 	}
 
 	/**
-	 * Disposes of an existing floating toolbar instance.
 	 * @private
 	 */
 	_getBackgroundImageValue() {
@@ -327,11 +326,18 @@ class FragmentEntryLinkListRow extends Component {
 			return this._mappedBackgroundFieldValue;
 		}
 
-		if (
-			this.row.config &&
-			typeof this.row.config.backgroundImage === 'string'
-		) {
-			return this.row.config.backgroundImage;
+		const {config} = this.row;
+
+		if (!config) {
+			return '';
+		}
+
+		if (typeof config.backgroundImage === 'string') {
+			return config.backgroundImage;
+		}
+
+		if (typeof config.backgroundImage === 'object') {
+			return config.backgroundImage.url;
 		}
 
 		return '';

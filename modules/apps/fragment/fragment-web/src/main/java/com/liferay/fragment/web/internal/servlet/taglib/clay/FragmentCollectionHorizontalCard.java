@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -50,7 +51,7 @@ public class FragmentCollectionHorizontalCard implements HorizontalCard {
 
 	@Override
 	public String getHref() {
-		return "javascript:;";
+		return StringPool.POUND;
 	}
 
 	@Override

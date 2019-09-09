@@ -53,8 +53,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 	public void testDate() throws Exception {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(
-			"Invalid format: \"1970-01-18T12:08:26.556Z\" is malformed at " +
-				"\"-01-18T12:08:26.556Z\"");
+			"failed to parse date field [1970-01-18T12:08:26.556Z] with " +
+				"format [yyyyMMddHHmmss]");
 
 		index(new Date(1512506556L));
 	}
@@ -70,7 +70,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 	public void testLongMalformed() throws Exception {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(
-			"Invalid format: \"1512506556\" is too short");
+			"failed to parse date field [1512506556] with format " +
+				"[yyyyMMddHHmmss]");
 
 		index(1512506556L);
 	}
@@ -86,8 +87,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 	public void testStringMalformed() throws Exception {
 		expectedException.expect(IllegalArgumentException.class);
 		expectedException.expectMessage(
-			"Invalid format: \"2017-11-15 05:04:02\" is malformed at " +
-				"\"-11-15 05:04:02\"");
+			"failed to parse date field [2017-11-15 05:04:02] with format " +
+				"[yyyyMMddHHmmss]");
 
 		index("2017-11-15 05:04:02");
 	}

@@ -197,6 +197,15 @@ public class ProjectTemplates {
 		File templateFile = ProjectTemplatesUtil.getTemplateFile(
 			projectTemplatesArgs);
 
+		Thread thread = Thread.currentThread();
+
+		ClassLoader oldContextClassLoader = thread.getContextClassLoader();
+
+		URI uri = templateFile.toURI();
+
+		thread.setContextClassLoader(
+			new URLClassLoader(new URL[] {uri.toURL()}));
+
 		ProjectTemplatesArgsExt projectTemplatesArgsExt =
 			_getProjectTemplateArgsExt(
 				projectTemplatesArgs.getTemplate(), templateFile);
@@ -250,6 +259,9 @@ public class ProjectTemplates {
 			System.err.println(pe.getMessage());
 
 			_printHelp(jCommander, projectTemplatesArgs);
+		}
+		finally {
+			thread.setContextClassLoader(oldContextClassLoader);
 		}
 	}
 
@@ -318,13 +330,8 @@ public class ProjectTemplates {
 			return null;
 		}
 
-		URI uri = archetypeFile.toURI();
-
-		URLClassLoader urlClassLoader = new URLClassLoader(
-			new URL[] {uri.toURL()});
-
 		ServiceLoader<ProjectTemplatesArgsExt> serviceLoader =
-			ServiceLoader.load(ProjectTemplatesArgsExt.class, urlClassLoader);
+			ServiceLoader.load(ProjectTemplatesArgsExt.class);
 
 		Iterator<ProjectTemplatesArgsExt> iterator = serviceLoader.iterator();
 

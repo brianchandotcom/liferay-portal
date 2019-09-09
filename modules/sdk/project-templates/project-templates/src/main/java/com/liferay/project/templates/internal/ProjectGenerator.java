@@ -28,9 +28,6 @@ import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import java.io.File;
 
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.Iterator;
 import java.util.List;
@@ -196,13 +193,8 @@ public class ProjectGenerator {
 			String templateName, File archetypeFile)
 		throws MalformedURLException {
 
-		URI uri = archetypeFile.toURI();
-
-		URLClassLoader urlClassLoader = new URLClassLoader(
-			new URL[] {uri.toURL()});
-
 		ServiceLoader<ProjectTemplateCustomizer> serviceLoader =
-			ServiceLoader.load(ProjectTemplateCustomizer.class, urlClassLoader);
+			ServiceLoader.load(ProjectTemplateCustomizer.class);
 
 		Iterator<ProjectTemplateCustomizer> iterator = serviceLoader.iterator();
 

@@ -60,7 +60,7 @@ VariantList.propTypes = {
 	editable: PropTypes.bool.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
-	publishable: PropTypes.bool,
+	publishable: PropTypes.bool.isRequired,
 	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 

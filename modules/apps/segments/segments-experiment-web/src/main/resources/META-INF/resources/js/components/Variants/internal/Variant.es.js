@@ -30,9 +30,9 @@ function Variant({
 	onVariantDeletion,
 	onVariantEdition,
 	onVariantPublish,
-	publishable = false,
+	publishable,
 	segmentsExperienceId,
-	showSplit = true,
+	showSplit,
 	split,
 	variantId,
 	winner
@@ -133,7 +133,7 @@ function Variant({
 					<ClayButton
 						displayType={winner ? 'primary' : 'secondary'}
 						onClick={() => onVariantPublish(segmentsExperienceId)}
-						small={true}
+						small
 					>
 						{Liferay.Language.get('publish')}
 					</ClayButton>
@@ -171,9 +171,9 @@ Variant.propTypes = {
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
 	onVariantPublish: PropTypes.func.isRequired,
-	publishable: PropTypes.bool,
+	publishable: PropTypes.bool.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
-	showSplit: PropTypes.bool,
+	showSplit: PropTypes.bool.isRequired,
 	split: PropTypes.number,
 	variantId: PropTypes.string.isRequired,
 	winner: PropTypes.bool

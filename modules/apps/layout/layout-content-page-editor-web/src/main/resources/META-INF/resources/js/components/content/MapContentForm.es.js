@@ -105,7 +105,18 @@ class MapContentForm extends PortletBase {
 					  ]
 					: editableValues[editableId].defaultValue.trim();
 
-				selectedItem.displayValue = stripHTML(selectedItem.itemValue);
+				if (selectedItem.itemValue.url) {
+					selectedItem.itemValue = selectedItem.itemValue.url;
+					selectedItem.displayValue = stripHTML(
+						selectedItem.itemValue.title
+							? selectedItem.itemValue.title
+							: selectedItem.itemValue
+					);
+				} else {
+					selectedItem.displayValue = stripHTML(
+						selectedItem.itemValue
+					);
+				}
 
 				return selectedItem;
 			});

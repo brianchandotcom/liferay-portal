@@ -117,7 +117,15 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<aui:button href="<%= deleteURL.toString() %>" name="previousStatusButton" value="<%= Constants.DELETE %>" />
+			<aui:button href="<%= deleteURL.toString() %>" name="previousStatusButton" onClick="javascript:deleteKBComment(window.event);" value="<%= Constants.DELETE %>" />
 		</c:if>
 	</aui:button-row>
 </c:if>
+
+<aui:script>
+	var deleteKBComment = function(event) {
+		if (!confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			event.preventDefault();
+		}
+	};
+</aui:script>

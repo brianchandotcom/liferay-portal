@@ -154,6 +154,10 @@ public class MBDiscussionStagedModelDataHandler
 				portletDataContext.getScopeGroupId(), className, newClassPK,
 				WorkflowConstants.ACTION_PUBLISH);
 
+			rootMessage.setCreateDate(discussion.getCreateDate());
+
+			_mbMessageLocalService.updateMBMessage(rootMessage);
+
 			existingDiscussion = _mbDiscussionLocalService.getThreadDiscussion(
 				rootMessage.getThreadId());
 		}

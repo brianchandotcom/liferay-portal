@@ -243,22 +243,17 @@ describe('Variants', () => {
 		expect(variant).not.toBe(null);
 	});
 
-	it('create variant button', done => {
-		const createVariantMock = jest.fn(
-			variant =>
-				new Promise(resolve => {
-					return resolve({
-						segmentsExperimentRel: {
-							name: variant.name,
-							segmentsExperienceId: JSON.stringify(Math.random()),
-							segmentsExperimentId: JSON.stringify(Math.random()),
-							segmentsExperimentRelId: JSON.stringify(
-								Math.random()
-							),
-							split: 0.0
-						}
-					});
-				})
+	it('create variant button', async done => {
+		const createVariantMock = jest.fn(variant =>
+			Promise.resolve({
+				segmentsExperimentRel: {
+					name: variant.name,
+					segmentsExperienceId: JSON.stringify(Math.random()),
+					segmentsExperimentId: JSON.stringify(Math.random()),
+					segmentsExperimentRelId: JSON.stringify(Math.random()),
+					split: 0.0
+				}
+			})
 		);
 		const {
 			getByText,
@@ -279,36 +274,29 @@ describe('Variants', () => {
 
 		userEvent.click(button);
 
-		waitForElement(() => getByText('create-new-variant')).then(() => {
-			const variantNameInput = getByLabelText('name');
-			expect(variantNameInput.value).toBe('');
+		await waitForElement(() => getByText('create-new-variant'));
 
-			userEvent.type(variantNameInput, 'Variant Name').then(() => {
-				const saveButton = getByText('save');
+		const variantNameInput = getByLabelText('name');
+		expect(variantNameInput.value).toBe('');
 
-				userEvent.click(saveButton);
+		await userEvent.type(variantNameInput, 'Variant Name');
 
-				waitForElementToBeRemoved(() => getByLabelText('name')).then(
-					() => {
-						wait(() => expect(getByText('Variant Name'))).then(
-							() => {
-								expect(createVariantMock).toHaveBeenCalledWith(
-									expect.objectContaining({
-										name: 'Variant Name'
-									})
-								);
+		const saveButton = getByText('save');
 
-								expect(getByText('Variant Name')).not.toBe(
-									null
-								);
+		userEvent.click(saveButton);
 
-								done();
-							}
-						);
-					}
-				);
-			});
-		});
+		await waitForElementToBeRemoved(() => getByLabelText('name'));
+		await wait(() => getByText('Variant Name'));
+
+		expect(createVariantMock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				name: 'Variant Name'
+			})
+		);
+
+		expect(getByText('Variant Name')).not.toBe(null);
+
+		done();
 	});
 
 	it("renders variants without create variant button when it's not editable", () => {
@@ -325,7 +313,7 @@ describe('Variants', () => {
 });
 
 describe('Run and review test', () => {
-	it('can view review Experiment Modal', done => {
+	it('can view review Experiment Modal', async done => {
 		const {
 			getByText,
 			getByDisplayValue,
@@ -350,16 +338,16 @@ describe('Run and review test', () => {
 
 		userEvent.click(createTestHelpMessage);
 
-		waitForElement(() => getByText('review-and-run-test')).then(() => {
-			const confidenceSlider = getAllByDisplayValue(
-				INITIAL_CONFIDENCE_LEVEL.toString()
-			);
-			const splitSliders = getAllByDisplayValue('50');
+		await waitForElement(() => getByText('review-and-run-test'));
 
-			expect(confidenceSlider.length).toBe(1);
-			expect(splitSliders.length).toBe(2);
-			done();
-		});
+		const confidenceSlider = getAllByDisplayValue(
+			INITIAL_CONFIDENCE_LEVEL.toString()
+		);
+		const splitSliders = getAllByDisplayValue('50');
+
+		expect(confidenceSlider.length).toBe(1);
+		expect(splitSliders.length).toBe(2);
+		done();
 	});
 });
 
@@ -430,6 +418,7 @@ describe('Winner declared', () => {
 			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
 		});
 		await waitForElement(() => getByText('completed'));
+
 		done();
 	});
 
@@ -473,6 +462,7 @@ describe('Winner declared', () => {
 		});
 
 		await waitForElement(() => getByText('completed'));
+
 		done();
 	});
 });

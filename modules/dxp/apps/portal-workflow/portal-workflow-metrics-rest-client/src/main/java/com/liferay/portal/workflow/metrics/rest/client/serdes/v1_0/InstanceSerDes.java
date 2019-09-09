@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
@@ -87,6 +88,36 @@ public class InstanceSerDes {
 			sb.append(_escape(instance.getAssetType()));
 
 			sb.append("\"");
+		}
+
+		if (instance.getAssigneeUsers() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assigneeUsers\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < instance.getAssigneeUsers().length; i++) {
+				sb.append(String.valueOf(instance.getAssigneeUsers()[i]));
+
+				if ((i + 1) < instance.getAssigneeUsers().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (instance.getCreatorUser() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorUser\": ");
+
+			sb.append(String.valueOf(instance.getCreatorUser()));
 		}
 
 		if (instance.getDateCompletion() != null) {
@@ -211,20 +242,6 @@ public class InstanceSerDes {
 			sb.append("]");
 		}
 
-		if (instance.getUserName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(instance.getUserName()));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -258,6 +275,21 @@ public class InstanceSerDes {
 		}
 		else {
 			map.put("assetType", String.valueOf(instance.getAssetType()));
+		}
+
+		if (instance.getAssigneeUsers() == null) {
+			map.put("assigneeUsers", null);
+		}
+		else {
+			map.put(
+				"assigneeUsers", String.valueOf(instance.getAssigneeUsers()));
+		}
+
+		if (instance.getCreatorUser() == null) {
+			map.put("creatorUser", null);
+		}
+		else {
+			map.put("creatorUser", String.valueOf(instance.getCreatorUser()));
 		}
 
 		map.put(
@@ -310,13 +342,6 @@ public class InstanceSerDes {
 			map.put("taskNames", String.valueOf(instance.getTaskNames()));
 		}
 
-		if (instance.getUserName() == null) {
-			map.put("userName", null);
-		}
-		else {
-			map.put("userName", String.valueOf(instance.getUserName()));
-		}
-
 		return map;
 	}
 
@@ -345,6 +370,24 @@ public class InstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "assetType")) {
 				if (jsonParserFieldValue != null) {
 					instance.setAssetType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assigneeUsers")) {
+				if (jsonParserFieldValue != null) {
+					instance.setAssigneeUsers(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> AssigneeUserSerDes.toDTO((String)object)
+						).toArray(
+							size -> new AssigneeUser[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creatorUser")) {
+				if (jsonParserFieldValue != null) {
+					instance.setCreatorUser(
+						CreatorUserSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
@@ -399,11 +442,6 @@ public class InstanceSerDes {
 				if (jsonParserFieldValue != null) {
 					instance.setTaskNames(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "userName")) {
-				if (jsonParserFieldValue != null) {
-					instance.setUserName((String)jsonParserFieldValue);
 				}
 			}
 			else {

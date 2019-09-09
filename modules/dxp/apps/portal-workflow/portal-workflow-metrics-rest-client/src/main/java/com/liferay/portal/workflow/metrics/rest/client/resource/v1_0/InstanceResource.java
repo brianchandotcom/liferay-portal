@@ -43,15 +43,15 @@ public interface InstanceResource {
 	}
 
 	public Page<Instance> getProcessInstancesPage(
-			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] statuses, String[] taskKeys,
-			Pagination pagination)
+			Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+			java.util.Date dateStart, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-			Long processId, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] statuses, String[] taskKeys,
-			Pagination pagination)
+			Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
+			java.util.Date dateStart, String[] slaStatuses, String[] statuses,
+			String[] taskKeys, Pagination pagination)
 		throws Exception;
 
 	public Instance getProcessInstance(Long processId, Long instanceId)
@@ -117,15 +117,15 @@ public interface InstanceResource {
 	public static class InstanceResourceImpl implements InstanceResource {
 
 		public Page<Instance> getProcessInstancesPage(
-				Long processId, java.util.Date dateEnd,
+				Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
 				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
-					processId, dateEnd, dateStart, slaStatuses, statuses,
-					taskKeys, pagination);
+					processId, assigneeUserIds, dateEnd, dateStart, slaStatuses,
+					statuses, taskKeys, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -139,7 +139,7 @@ public interface InstanceResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
-				Long processId, java.util.Date dateEnd,
+				Long processId, Long[] assigneeUserIds, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
 				String[] statuses, String[] taskKeys, Pagination pagination)
 			throws Exception {
@@ -167,6 +167,13 @@ public interface InstanceResource {
 
 			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			if (assigneeUserIds != null) {
+				for (int i = 0; i < assigneeUserIds.length; i++) {
+					httpInvoker.parameter(
+						"assigneeUserIds", String.valueOf(assigneeUserIds[i]));
+				}
+			}
 
 			if (dateEnd != null) {
 				httpInvoker.parameter(

@@ -133,6 +133,48 @@ public class Instance {
 
 	protected String assetType;
 
+	public AssigneeUser[] getAssigneeUsers() {
+		return assigneeUsers;
+	}
+
+	public void setAssigneeUsers(AssigneeUser[] assigneeUsers) {
+		this.assigneeUsers = assigneeUsers;
+	}
+
+	public void setAssigneeUsers(
+		UnsafeSupplier<AssigneeUser[], Exception> assigneeUsersUnsafeSupplier) {
+
+		try {
+			assigneeUsers = assigneeUsersUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AssigneeUser[] assigneeUsers;
+
+	public CreatorUser getCreatorUser() {
+		return creatorUser;
+	}
+
+	public void setCreatorUser(CreatorUser creatorUser) {
+		this.creatorUser = creatorUser;
+	}
+
+	public void setCreatorUser(
+		UnsafeSupplier<CreatorUser, Exception> creatorUserUnsafeSupplier) {
+
+		try {
+			creatorUser = creatorUserUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CreatorUser creatorUser;
+
 	public Date getDateCompletion() {
 		return dateCompletion;
 	}
@@ -314,27 +356,6 @@ public class Instance {
 	}
 
 	protected String[] taskNames;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String userName;
 
 	@Override
 	public boolean equals(Object object) {

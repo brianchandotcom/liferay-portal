@@ -179,7 +179,6 @@ public abstract class BaseInstanceResourceTestCase {
 
 		instance.setAssetTitle(regex);
 		instance.setAssetType(regex);
-		instance.setUserName(regex);
 
 		String json = InstanceSerDes.toJSON(instance);
 
@@ -189,13 +188,12 @@ public abstract class BaseInstanceResourceTestCase {
 
 		Assert.assertEquals(regex, instance.getAssetTitle());
 		Assert.assertEquals(regex, instance.getAssetType());
-		Assert.assertEquals(regex, instance.getUserName());
 	}
 
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			testGetProcessInstancesPage_getProcessId(),
+			testGetProcessInstancesPage_getProcessId(), null,
 			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null, null,
 			null, Pagination.of(1, 2));
 
@@ -211,7 +209,7 @@ public abstract class BaseInstanceResourceTestCase {
 					irrelevantProcessId, randomIrrelevantInstance());
 
 			page = instanceResource.getProcessInstancesPage(
-				irrelevantProcessId, null, null, null, null, null,
+				irrelevantProcessId, null, null, null, null, null, null,
 				Pagination.of(1, 2));
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -229,7 +227,7 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		page = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, Pagination.of(1, 2));
+			processId, null, null, null, null, null, null, Pagination.of(1, 2));
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -253,14 +251,14 @@ public abstract class BaseInstanceResourceTestCase {
 			processId, randomInstance());
 
 		Page<Instance> page1 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, Pagination.of(1, 2));
+			processId, null, null, null, null, null, null, Pagination.of(1, 2));
 
 		List<Instance> instances1 = (List<Instance>)page1.getItems();
 
 		Assert.assertEquals(instances1.toString(), 2, instances1.size());
 
 		Page<Instance> page2 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, Pagination.of(2, 2));
+			processId, null, null, null, null, null, null, Pagination.of(2, 2));
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -269,7 +267,7 @@ public abstract class BaseInstanceResourceTestCase {
 		Assert.assertEquals(instances2.toString(), 1, instances2.size());
 
 		Page<Instance> page3 = instanceResource.getProcessInstancesPage(
-			processId, null, null, null, null, null, Pagination.of(1, 3));
+			processId, null, null, null, null, null, null, Pagination.of(1, 3));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(instance1, instance2, instance3),
@@ -441,6 +439,22 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("assigneeUsers", additionalAssertFieldName)) {
+				if (instance.getAssigneeUsers() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creatorUser", additionalAssertFieldName)) {
+				if (instance.getCreatorUser() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateCompletion", additionalAssertFieldName)) {
 				if (instance.getDateCompletion() == null) {
 					valid = false;
@@ -483,14 +497,6 @@ public abstract class BaseInstanceResourceTestCase {
 
 			if (Objects.equals("taskNames", additionalAssertFieldName)) {
 				if (instance.getTaskNames() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (instance.getUserName() == null) {
 					valid = false;
 				}
 
@@ -563,6 +569,28 @@ public abstract class BaseInstanceResourceTestCase {
 			if (Objects.equals("assetType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						instance1.getAssetType(), instance2.getAssetType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assigneeUsers", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getAssigneeUsers(),
+						instance2.getAssigneeUsers())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creatorUser", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						instance1.getCreatorUser(),
+						instance2.getCreatorUser())) {
 
 					return false;
 				}
@@ -650,16 +678,6 @@ public abstract class BaseInstanceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("userName", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						instance1.getUserName(), instance2.getUserName())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -708,17 +726,6 @@ public abstract class BaseInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						instance.getProcessId(),
 						jsonObject.getLong("processId"))) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("userName", fieldName)) {
-				if (!Objects.deepEquals(
-						instance.getUserName(),
-						jsonObject.getString("userName"))) {
 
 					return false;
 				}
@@ -797,6 +804,16 @@ public abstract class BaseInstanceResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("assigneeUsers")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("creatorUser")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("dateCompletion")) {
@@ -892,14 +909,6 @@ public abstract class BaseInstanceResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("userName")) {
-			sb.append("'");
-			sb.append(String.valueOf(instance.getUserName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -930,7 +939,6 @@ public abstract class BaseInstanceResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
 				processId = RandomTestUtil.randomLong();
-				userName = RandomTestUtil.randomString();
 			}
 		};
 	}

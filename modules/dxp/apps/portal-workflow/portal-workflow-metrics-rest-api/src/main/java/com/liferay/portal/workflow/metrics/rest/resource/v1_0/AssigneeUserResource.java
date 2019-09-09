@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
-
-import java.util.Date;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
 
 import javax.annotation.Generated;
 
@@ -42,15 +39,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface InstanceResource {
+public interface AssigneeUserResource {
 
-	public Page<Instance> getProcessInstancesPage(
-			Long processId, Long[] assigneeUserIds, Date dateEnd,
-			Date dateStart, String[] slaStatuses, String[] statuses,
-			String[] taskKeys, Pagination pagination)
-		throws Exception;
-
-	public Instance getProcessInstance(Long processId, Long instanceId)
+	public Page<AssigneeUser> getProcessAssigneeUsersPage(Long processId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

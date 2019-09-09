@@ -26,6 +26,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Metric;
@@ -34,6 +35,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.CalendarResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.MetricResource;
@@ -61,6 +63,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setAssigneeUserResourceComponentServiceObjects(
+		ComponentServiceObjects<AssigneeUserResource>
+			assigneeUserResourceComponentServiceObjects) {
+
+		_assigneeUserResourceComponentServiceObjects =
+			assigneeUserResourceComponentServiceObjects;
+	}
 
 	public static void setCalendarResourceComponentServiceObjects(
 		ComponentServiceObjects<CalendarResource>
@@ -129,6 +139,23 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processAssigneeUsers(processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AssigneeUserPage processAssigneeUsers(
+			@GraphQLName("processId") Long processId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_assigneeUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assigneeUserResource -> new AssigneeUserPage(
+				assigneeUserResource.getProcessAssigneeUsersPage(processId)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {calendars{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -143,11 +170,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeUserIds: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, statuses: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InstancePage processInstances(
 			@GraphQLName("processId") Long processId,
+			@GraphQLName("assigneeUserIds") Long[] assigneeUserIds,
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
@@ -162,14 +190,14 @@ public class Query {
 			this::_populateResourceContext,
 			instanceResource -> new InstancePage(
 				instanceResource.getProcessInstancesPage(
-					processId, dateEnd, dateStart, slaStatuses, statuses,
-					taskKeys, Pagination.of(page, pageSize))));
+					processId, assigneeUserIds, dateEnd, dateStart, slaStatuses,
+					statuses, taskKeys, Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames, userName}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstance(instanceId: ___, processId: ___){assetTitle, assetType, assigneeUsers, creatorUser, dateCompletion, dateCreated, id, processId, slaResults, slaStatus, status, taskNames}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Instance processInstance(
@@ -372,6 +400,30 @@ public class Query {
 		}
 
 		private SLA _sLA;
+
+	}
+
+	@GraphQLName("AssigneeUserPage")
+	public class AssigneeUserPage {
+
+		public AssigneeUserPage(Page assigneeUserPage) {
+			items = assigneeUserPage.getItems();
+			page = assigneeUserPage.getPage();
+			pageSize = assigneeUserPage.getPageSize();
+			totalCount = assigneeUserPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<AssigneeUser> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
 
 	}
 
@@ -586,6 +638,19 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(
+			AssigneeUserResource assigneeUserResource)
+		throws Exception {
+
+		assigneeUserResource.setContextAcceptLanguage(_acceptLanguage);
+		assigneeUserResource.setContextCompany(_company);
+		assigneeUserResource.setContextHttpServletRequest(_httpServletRequest);
+		assigneeUserResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assigneeUserResource.setContextUriInfo(_uriInfo);
+		assigneeUserResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(CalendarResource calendarResource)
 		throws Exception {
 
@@ -674,6 +739,8 @@ public class Query {
 		timeRangeResource.setContextUser(_user);
 	}
 
+	private static ComponentServiceObjects<AssigneeUserResource>
+		_assigneeUserResourceComponentServiceObjects;
 	private static ComponentServiceObjects<CalendarResource>
 		_calendarResourceComponentServiceObjects;
 	private static ComponentServiceObjects<InstanceResource>

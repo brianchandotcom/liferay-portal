@@ -64,6 +64,8 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AssigneeUserResourceImpl.class);
+
 			add(CalendarResourceImpl.class);
 
 			add(InstanceResourceImpl.class);

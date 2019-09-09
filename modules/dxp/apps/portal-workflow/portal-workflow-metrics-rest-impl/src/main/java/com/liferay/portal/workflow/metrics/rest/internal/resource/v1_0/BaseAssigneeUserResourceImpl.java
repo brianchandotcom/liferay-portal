@@ -19,10 +19,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
-import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -44,8 +43,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -54,74 +51,26 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseInstanceResourceImpl implements InstanceResource {
+public abstract class BaseAssigneeUserResourceImpl
+	implements AssigneeUserResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/assignee-users'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.QUERY, name = "assigneeUserIds"),
-			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
-			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
-			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
-			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
-			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
-		}
-	)
-	@Path("/processes/{processId}/instances")
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
+	@Path("/processes/{processId}/assignee-users")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Instance")})
-	public Page<Instance> getProcessInstancesPage(
+	@Tags(value = {@Tag(name = "AssigneeUser")})
+	public Page<AssigneeUser> getProcessAssigneeUsersPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@Parameter(hidden = true) @QueryParam("assigneeUserIds") Long[]
-				assigneeUserIds,
-			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
-				dateEnd,
-			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
-				dateStart,
-			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
-				slaStatuses,
-			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
-			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
-			@Context Pagination pagination)
+				processId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/portal-workflow-metrics/v1.0/processes/{processId}/instances/{instanceId}'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "processId"),
-			@Parameter(in = ParameterIn.PATH, name = "instanceId")
-		}
-	)
-	@Path("/processes/{processId}/instances/{instanceId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Instance")})
-	public Instance getProcessInstance(
-			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId,
-			@NotNull @Parameter(hidden = true) @PathParam("instanceId") Long
-				instanceId)
-		throws Exception {
-
-		return new Instance();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -152,7 +101,8 @@ public abstract class BaseInstanceResourceImpl implements InstanceResource {
 		this.contextUser = contextUser;
 	}
 
-	protected void preparePatch(Instance instance, Instance existingInstance) {
+	protected void preparePatch(
+		AssigneeUser assigneeUser, AssigneeUser existingAssigneeUser) {
 	}
 
 	protected <T, R> List<R> transform(

@@ -175,6 +175,62 @@ public class Instance {
 	protected String assetType;
 
 	@Schema
+	public AssigneeUser[] getAssigneeUsers() {
+		return assigneeUsers;
+	}
+
+	public void setAssigneeUsers(AssigneeUser[] assigneeUsers) {
+		this.assigneeUsers = assigneeUsers;
+	}
+
+	@JsonIgnore
+	public void setAssigneeUsers(
+		UnsafeSupplier<AssigneeUser[], Exception> assigneeUsersUnsafeSupplier) {
+
+		try {
+			assigneeUsers = assigneeUsersUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AssigneeUser[] assigneeUsers;
+
+	@Schema
+	public CreatorUser getCreatorUser() {
+		return creatorUser;
+	}
+
+	public void setCreatorUser(CreatorUser creatorUser) {
+		this.creatorUser = creatorUser;
+	}
+
+	@JsonIgnore
+	public void setCreatorUser(
+		UnsafeSupplier<CreatorUser, Exception> creatorUserUnsafeSupplier) {
+
+		try {
+			creatorUser = creatorUserUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CreatorUser creatorUser;
+
+	@Schema
 	public Date getDateCompletion() {
 		return dateCompletion;
 	}
@@ -414,34 +470,6 @@ public class Instance {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] taskNames;
 
-	@Schema
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	@JsonIgnore
-	public void setUserName(
-		UnsafeSupplier<String, Exception> userNameUnsafeSupplier) {
-
-		try {
-			userName = userNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String userName;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -498,6 +526,36 @@ public class Instance {
 			sb.append(_escape(assetType));
 
 			sb.append("\"");
+		}
+
+		if (assigneeUsers != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assigneeUsers\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < assigneeUsers.length; i++) {
+				sb.append(String.valueOf(assigneeUsers[i]));
+
+				if ((i + 1) < assigneeUsers.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (creatorUser != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creatorUser\": ");
+
+			sb.append(String.valueOf(creatorUser));
 		}
 
 		if (dateCompletion != null) {
@@ -618,20 +676,6 @@ public class Instance {
 			}
 
 			sb.append("]");
-		}
-
-		if (userName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"userName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(userName));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");

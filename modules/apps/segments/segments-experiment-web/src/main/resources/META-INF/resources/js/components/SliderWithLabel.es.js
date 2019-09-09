@@ -42,10 +42,7 @@ function SliderWithLabel({
 					type="range"
 					value={value}
 				/>
-				<small
-					className="form-text font-weight-normal py-1 ml-3"
-					style={{width: '3em'}}
-				>
+				<small className="form-text font-weight-normal ml-3">
 					{value + '%'}
 				</small>
 			</div>

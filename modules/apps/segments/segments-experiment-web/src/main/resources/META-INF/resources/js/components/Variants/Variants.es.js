@@ -55,7 +55,7 @@ function Variants({selectedSegmentsExperienceId}) {
 
 			{variants.length === 1 && (
 				<>
-					<p className="mb-2 small">
+					<p className="mb-2">
 						<b>
 							{Liferay.Language.get(
 								'no-variants-have-been-created-for-this-test'
@@ -63,7 +63,7 @@ function Variants({selectedSegmentsExperienceId}) {
 						</b>
 					</p>
 
-					<p className="mb-2 text-secondary small">
+					<p className="mb-2 text-secondary">
 						{Liferay.Language.get('variants-help')}
 					</p>
 				</>
@@ -75,7 +75,6 @@ function Variants({selectedSegmentsExperienceId}) {
 					data-testid="create-variant"
 					displayType="secondary"
 					onClick={() => setCreatingVariant(!creatingVariant)}
-					small
 				>
 					{Liferay.Language.get('create-variant')}
 				</ClayButton>

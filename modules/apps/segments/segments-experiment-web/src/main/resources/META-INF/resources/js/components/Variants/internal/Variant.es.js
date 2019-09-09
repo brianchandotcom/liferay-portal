@@ -74,10 +74,8 @@ function Variant({
 					<ClayList.ItemField>
 						<ClayButton
 							borderless
-							className="component-action"
 							displayType="secondary"
 							onClick={_handleEditVariantContent}
-							small
 						>
 							<ClayIcon symbol="pencil" />
 						</ClayButton>
@@ -93,9 +91,7 @@ function Variant({
 										'show-actions'
 									)}
 									borderless
-									className="component-action"
 									displayType="secondary"
-									small
 								>
 									<ClayIcon symbol="ellipsis-v" />
 								</ClayButton>

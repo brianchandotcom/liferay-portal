@@ -77,9 +77,9 @@ function SegmentsExperiments({
 			{experiment && (
 				<>
 					<div className="d-flex justify-content-between align-items-center">
-						<h3 className="mb-0 text-dark text-truncate">
+						<h4 className="mb-0 text-dark text-truncate">
 							{experiment.name}
-						</h3>
+						</h4>
 
 						{experiment.editable && (
 							<ClayDropDown
@@ -93,7 +93,6 @@ function SegmentsExperiments({
 										)}
 										borderless
 										displayType="secondary"
-										small={true}
 									>
 										<ClayIcon symbol="ellipsis-v" />
 									</ClayButton>
@@ -150,15 +149,13 @@ function SegmentsExperiments({
 			)}
 
 			{!experiment && (
-				<div className="text-center">
+				<div className="text-center mt-2">
 					<h4 className="text-dark">
 						{Liferay.Language.get(
 							'no-active-tests-were-found-for-the-selected-experience'
 						)}
 					</h4>
-					<p className="small">
-						{Liferay.Language.get('create-test-help-message')}
-					</p>
+					<p>{Liferay.Language.get('create-test-help-message')}</p>
 					<ClayButton
 						displayType="secondary"
 						onClick={() =>

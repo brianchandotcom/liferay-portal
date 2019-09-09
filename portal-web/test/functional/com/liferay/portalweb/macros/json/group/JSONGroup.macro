@@ -10,7 +10,7 @@ definition {
 		var groupNameMap = JSONGroupSetter.setGroupNameMap(
 			groupName = "${groupName}");
 
-		var parentGroupId = JSONGroupSetter.setParentGroupId(groupName = "${parentGroupName}");
+		var parentGroupId = JSONGroupSetter.setParentGroupId(parentGroupName = "${parentGroupName}");
 
 		JSONGroupAPI._addGroup(
 			groupDescriptionMap = "${groupDescriptionMap}",

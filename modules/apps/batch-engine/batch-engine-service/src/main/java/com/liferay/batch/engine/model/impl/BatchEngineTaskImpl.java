@@ -14,12 +14,9 @@
 
 package com.liferay.batch.engine.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public class BatchEngineTaskImpl extends BatchEngineTaskBaseImpl {
 
 	public BatchEngineTaskImpl() {

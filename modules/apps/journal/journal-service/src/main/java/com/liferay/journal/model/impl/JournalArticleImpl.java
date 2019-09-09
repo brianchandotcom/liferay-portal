@@ -79,7 +79,6 @@ import java.util.TreeSet;
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-@JSON(strict = true)
 public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	public static String getContentByLocale(
@@ -230,6 +229,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			getDDMTemplateKey(), true);
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		String description =
@@ -286,14 +286,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return StringPool.BLANK;
 	}
 
-	@JSON
-	@Override
-	public String getDescriptionCurrentValue() {
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		return getDescription(locale, true);
-	}
-
 	@Override
 	public Map<Locale, String> getDescriptionMap() {
 		if (_descriptionMap != null) {
@@ -306,7 +298,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return _descriptionMap;
 	}
 
-	@JSON(name = "description")
 	@Override
 	public String getDescriptionMapAsXML() {
 		return LocalizationUtil.updateLocalization(
@@ -554,6 +545,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return getDDMTemplateKey();
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		String title = JournalArticleLocalServiceUtil.getArticleTitle(
@@ -626,7 +618,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return _titleMap;
 	}
 
-	@JSON(name = "title")
 	@Override
 	public String getTitleMapAsXML() {
 		return LocalizationUtil.updateLocalization(

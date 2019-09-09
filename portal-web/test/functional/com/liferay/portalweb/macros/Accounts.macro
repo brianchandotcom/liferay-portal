@@ -98,6 +98,41 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "${accountName}");
 	}
 
+	macro editCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${accountName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit ${accountName}");
+
+		PortletEntry.inputName(name = "${accountNameEdit}");
+
+		if (isSet(accountDescriptionEdit)) {
+			PortletEntry.inputDescription(description = "${accountDescriptionEdit}");
+		}
+
+		if (isSet(accountLogoEdit)) {
+			User.changeProfileImage(imageName = "${accountLogoEdit}");
+		}
+
+		if ("${accountStatusEdit}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+		}
+		else if ("${accountStatusEdit}" == "Active") {
+			Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+		}
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit ${accountNameEdit}");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro tearDownCP {
 		ProductMenu.gotoPortlet(
 			category = "Accounts",

@@ -65,7 +65,7 @@ definition {
 		User.openUsersAdmin(siteURLKey = "test-site-name");
 
 		User.assignSiteRoleCP(
-			siteRoleName = "Site Administrator",
+			siteRoleName = "Administrator",
 			userScreenName = "usersn");
 
 		User.openUsersAdmin(siteURLKey = "test-site-name");

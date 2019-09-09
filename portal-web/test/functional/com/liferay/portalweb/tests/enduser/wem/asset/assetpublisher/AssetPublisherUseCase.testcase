@@ -969,7 +969,7 @@ definition {
 			User.openUsersAdmin();
 
 			User.assignSiteRoleCP(
-				siteRoleName = "Site Administrator",
+				siteRoleName = "Administrator",
 				userScreenName = "usersn");
 		}
 

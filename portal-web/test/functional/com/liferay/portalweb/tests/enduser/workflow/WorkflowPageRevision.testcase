@@ -278,7 +278,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
-			siteRoleName = "Site Administrator",
+			siteRoleName = "Administrator",
 			userScreenName = "usersn");
 
 		User.logoutAndLoginPG(

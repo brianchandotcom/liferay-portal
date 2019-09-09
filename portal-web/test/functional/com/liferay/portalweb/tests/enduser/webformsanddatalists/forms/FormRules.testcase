@@ -562,7 +562,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
-			siteRoleName = "Site Administrator",
+			siteRoleName = "Administrator",
 			userScreenName = "test");
 
 		Navigator.gotoPage(pageName = "Form Page");

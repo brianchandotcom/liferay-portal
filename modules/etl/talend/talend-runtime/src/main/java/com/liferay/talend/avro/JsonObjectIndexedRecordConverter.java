@@ -111,6 +111,14 @@ public class JsonObjectIndexedRecordConverter {
 		return jsonNumber.doubleValue();
 	}
 
+	private Float _asFloat(JsonValue jsonValue) {
+		JsonNumber jsonNumber = _asJsonNumber(jsonValue);
+
+		Number number = jsonNumber.numberValue();
+
+		return number.floatValue();
+	}
+
 	private Integer _asInteger(JsonValue jsonValue) {
 		JsonNumber jsonNumber = _asJsonNumber(jsonValue);
 
@@ -147,6 +155,9 @@ public class JsonObjectIndexedRecordConverter {
 		}
 		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._double())) {
 			return _asDouble(jsonValue);
+		}
+		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._float())) {
+			return _asFloat(jsonValue);
 		}
 		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
 			if (fieldSchema.getLogicalType() ==

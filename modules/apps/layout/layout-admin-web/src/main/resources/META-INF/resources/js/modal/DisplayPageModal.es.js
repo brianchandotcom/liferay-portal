@@ -28,9 +28,46 @@ const DisplayPageModal = props => {
 	const [loading, setLoading] = useState(false);
 	const {observer} = useModal({onClose});
 
+	const validateForm = useCallback(
+		form => {
+			const {elements} = form;
+			const error = {};
+
+			const errorMessage = Liferay.Language.get('this-field-is-required');
+
+			const nameField = elements[`${props.namespace}name`];
+
+			if (!nameField.value) {
+				error.name = errorMessage;
+			}
+
+			const classNameIdField = elements[`${props.namespace}classNameId`];
+
+			if (classNameIdField.selectedIndex === 0) {
+				error.classNameId = errorMessage;
+			}
+
+			const classTypeIdField = elements[`${props.namespace}classTypeId`];
+
+			if (classTypeIdField && classTypeIdField.selectedIndex === 0) {
+				error.classTypeId = errorMessage;
+			}
+
+			return error;
+		},
+		[props.namespace]
+	);
+
 	const handleSubmit = useCallback(
 		event => {
 			event.preventDefault();
+
+			const error = validateForm(form.current);
+
+			if (Object.keys(error).length !== 0) {
+				setError(error);
+				return;
+			}
 
 			setLoading(true);
 
@@ -57,7 +94,7 @@ const DisplayPageModal = props => {
 					})
 				);
 		},
-		[form, formSubmitURL, onClose]
+		[formSubmitURL, onClose, validateForm]
 	);
 
 	const visible = observer.mutation;

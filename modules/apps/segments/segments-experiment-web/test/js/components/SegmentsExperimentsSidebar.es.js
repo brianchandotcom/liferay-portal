@@ -354,7 +354,7 @@ describe('Run and review test', () => {
 describe('Winner declared', () => {
 	afterEach(cleanup);
 
-	test('experiment has basic Winner Declared basic elements', () => {
+	it('experiment has basic Winner Declared basic elements', () => {
 		const {
 			getByText,
 			getAllByText
@@ -379,7 +379,7 @@ describe('Winner declared', () => {
 		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
 	});
 
-	test('variants publish action button action', async done => {
+	it('variants publish action button action', async done => {
 		const mockPublish = jest.fn(({status}) => {
 			return Promise.resolve({
 				segmentsExperiment: {
@@ -422,7 +422,7 @@ describe('Winner declared', () => {
 		done();
 	});
 
-	test('discard button action', async done => {
+	it('discard button action', async done => {
 		const mockDiscard = jest.fn(({status}) => {
 			return Promise.resolve({
 				segmentsExperiment: {

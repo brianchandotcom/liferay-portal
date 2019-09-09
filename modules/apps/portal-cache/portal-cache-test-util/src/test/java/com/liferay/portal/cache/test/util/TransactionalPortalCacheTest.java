@@ -1444,11 +1444,6 @@ public class TransactionalPortalCacheTest {
 	private static class TestTrasactionStatus implements TransactionStatus {
 
 		@Override
-		public void bufferLifecycleListenerThrowable(
-			Throwable lifecycleThrowable) {
-		}
-
-		@Override
 		public Object getPlatformTransactionManager() {
 			return null;
 		}
@@ -1466,6 +1461,11 @@ public class TransactionalPortalCacheTest {
 		@Override
 		public boolean isRollbackOnly() {
 			return _rollbackOnly;
+		}
+
+		@Override
+		public void suppressLifecycleListenerThrowable(
+			Throwable lifecycleThrowable) {
 		}
 
 		private TestTrasactionStatus(

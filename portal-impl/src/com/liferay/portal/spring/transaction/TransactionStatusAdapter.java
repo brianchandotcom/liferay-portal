@@ -35,16 +35,6 @@ public class TransactionStatusAdapter
 	}
 
 	@Override
-	public void bufferLifecycleListenerThrowable(Throwable lifecycleThrowable) {
-		if (_lifecycleThrowable == null) {
-			_lifecycleThrowable = lifecycleThrowable;
-		}
-		else {
-			_lifecycleThrowable.addSuppressed(lifecycleThrowable);
-		}
-	}
-
-	@Override
 	public Object createSavepoint() throws TransactionException {
 		return _transactionStatus.createSavepoint();
 	}
@@ -52,16 +42,6 @@ public class TransactionStatusAdapter
 	@Override
 	public void flush() {
 		_transactionStatus.flush();
-	}
-
-	public void flushLifecycleListenerThrowables(Throwable throwable) {
-		if (_lifecycleThrowable != null) {
-			if (throwable == null) {
-				ReflectionUtil.throwException(_lifecycleThrowable);
-			}
-
-			throwable.addSuppressed(_lifecycleThrowable);
-		}
 	}
 
 	/**
@@ -102,6 +82,16 @@ public class TransactionStatusAdapter
 		_transactionStatus.releaseSavepoint(savepoint);
 	}
 
+	public void reportLifecycleListenerThrowables(Throwable throwable) {
+		if (_lifecycleListenerThrowable != null) {
+			if (throwable == null) {
+				ReflectionUtil.throwException(_lifecycleListenerThrowable);
+			}
+
+			throwable.addSuppressed(_lifecycleListenerThrowable);
+		}
+	}
+
 	@Override
 	public void rollbackToSavepoint(Object savepoint)
 		throws TransactionException {
@@ -114,7 +104,20 @@ public class TransactionStatusAdapter
 		_transactionStatus.setRollbackOnly();
 	}
 
-	private Throwable _lifecycleThrowable;
+	@Override
+	public void suppressLifecycleListenerThrowable(
+		Throwable lifecycleListenerThrowable) {
+
+		if (_lifecycleListenerThrowable == null) {
+			_lifecycleListenerThrowable = lifecycleListenerThrowable;
+		}
+		else {
+			_lifecycleListenerThrowable.addSuppressed(
+				lifecycleListenerThrowable);
+		}
+	}
+
+	private Throwable _lifecycleListenerThrowable;
 	private final TransactionStatus _transactionStatus;
 
 }

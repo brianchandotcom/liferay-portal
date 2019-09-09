@@ -59,7 +59,7 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 
 			TransactionExecutorThreadLocal.popTransactionExecutor();
 
-			transactionStatusAdapter.flushLifecycleListenerThrowables(
+			transactionStatusAdapter.reportLifecycleListenerThrowables(
 				transactionManagerThrowable);
 		}
 	}
@@ -120,11 +120,11 @@ public class DefaultTransactionExecutor extends BaseTransactionExecutor {
 			TransactionExecutorThreadLocal.popTransactionExecutor();
 
 			if (transactionManagerThrowable == null) {
-				transactionStatusAdapter.flushLifecycleListenerThrowables(
+				transactionStatusAdapter.reportLifecycleListenerThrowables(
 					throwable);
 			}
 			else {
-				transactionStatusAdapter.flushLifecycleListenerThrowables(
+				transactionStatusAdapter.reportLifecycleListenerThrowables(
 					transactionManagerThrowable);
 			}
 		}

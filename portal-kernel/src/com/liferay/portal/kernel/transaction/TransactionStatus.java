@@ -22,8 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TransactionStatus {
 
-	public void bufferLifecycleListenerThrowable(Throwable lifecycleThrowable);
-
 	/**
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
@@ -35,5 +33,8 @@ public interface TransactionStatus {
 	public boolean isNewTransaction();
 
 	public boolean isRollbackOnly();
+
+	public void suppressLifecycleListenerThrowable(
+		Throwable lifecycleThrowable);
 
 }

@@ -35,7 +35,7 @@ public class TransactionLifecycleManager {
 					transactionAttribute, transactionStatus);
 			}
 			catch (Throwable t) {
-				transactionStatus.bufferLifecycleListenerThrowable(t);
+				transactionStatus.suppressLifecycleListenerThrowable(t);
 			}
 		}
 	}
@@ -52,7 +52,7 @@ public class TransactionLifecycleManager {
 					transactionAttribute, transactionStatus);
 			}
 			catch (Throwable t) {
-				transactionStatus.bufferLifecycleListenerThrowable(t);
+				transactionStatus.suppressLifecycleListenerThrowable(t);
 			}
 		}
 	}
@@ -69,7 +69,7 @@ public class TransactionLifecycleManager {
 					transactionAttribute, transactionStatus, throwable);
 			}
 			catch (Throwable t) {
-				transactionStatus.bufferLifecycleListenerThrowable(t);
+				transactionStatus.suppressLifecycleListenerThrowable(t);
 			}
 		}
 	}

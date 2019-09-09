@@ -36,7 +36,10 @@ import {
 	enableSavingChangesStatusAction
 } from '../../actions/saveChanges.es';
 import {updatePageContentsAction} from '../../actions/updatePageContents.es';
-import {ADD_MAPPED_ASSET_ENTRY} from '../../actions/actions.es';
+import {
+	ADD_MAPPED_ASSET_ENTRY,
+	UPDATE_EDITABLE_VALUE_LOADING
+} from '../../actions/actions.es';
 
 /**
  * CreateContentDialog
@@ -147,6 +150,16 @@ class CreateContentDialog extends Component {
 								)
 						)
 					).then(() => {
+						Object.entries(updatedFragmentEntryLinks).forEach(
+							([fragmentEntryLinkId, fragmentEntryLink]) =>
+								this.store.dispatch({
+									editableValues:
+										fragmentEntryLink.editableValues,
+									fragmentEntryLinkId,
+									type: UPDATE_EDITABLE_VALUE_LOADING
+								})
+						);
+
 						this.store
 							.dispatch(updatePageContentsAction())
 							.dispatch({

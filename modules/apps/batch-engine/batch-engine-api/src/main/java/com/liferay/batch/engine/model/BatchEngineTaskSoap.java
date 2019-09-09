@@ -37,6 +37,7 @@ public class BatchEngineTaskSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setBatchEngineTaskId(model.getBatchEngineTaskId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBatchSize(model.getBatchSize());
@@ -140,6 +141,14 @@ public class BatchEngineTaskSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -240,6 +249,7 @@ public class BatchEngineTaskSoap implements Serializable {
 	private String _uuid;
 	private long _batchEngineTaskId;
 	private long _companyId;
+	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _batchSize;

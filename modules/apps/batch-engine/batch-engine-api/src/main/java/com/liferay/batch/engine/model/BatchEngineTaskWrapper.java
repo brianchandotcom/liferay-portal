@@ -49,6 +49,7 @@ public class BatchEngineTaskWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put("batchEngineTaskId", getBatchEngineTaskId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("batchSize", getBatchSize());
@@ -89,6 +90,12 @@ public class BatchEngineTaskWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -315,6 +322,26 @@ public class BatchEngineTaskWrapper
 	}
 
 	/**
+	 * Returns the user ID of this batch engine task.
+	 *
+	 * @return the user ID of this batch engine task
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user uuid of this batch engine task.
+	 *
+	 * @return the user uuid of this batch engine task
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
+	}
+
+	/**
 	 * Returns the uuid of this batch engine task.
 	 *
 	 * @return the uuid of this batch engine task
@@ -492,6 +519,26 @@ public class BatchEngineTaskWrapper
 	@Override
 	public void setStartTime(Date startTime) {
 		model.setStartTime(startTime);
+	}
+
+	/**
+	 * Sets the user ID of this batch engine task.
+	 *
+	 * @param userId the user ID of this batch engine task
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user uuid of this batch engine task.
+	 *
+	 * @param userUuid the user uuid of this batch engine task
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	/**

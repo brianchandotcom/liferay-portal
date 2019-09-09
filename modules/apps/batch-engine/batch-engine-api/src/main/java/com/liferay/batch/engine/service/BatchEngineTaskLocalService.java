@@ -76,7 +76,8 @@ public interface BatchEngineTaskLocalService
 	public BatchEngineTask addBatchEngineTask(BatchEngineTask batchEngineTask);
 
 	public BatchEngineTask addBatchEngineTask(
-		long companyId, BatchEngineTaskContentType batchEngineTaskContentType,
+		long companyId, long userId,
+		BatchEngineTaskContentType batchEngineTaskContentType,
 		BatchEngineTaskOperation batchEngineTaskOperation, long batchSize,
 		String className, byte[] content, String version);
 

@@ -37,7 +37,8 @@ public class BatchEngineTaskLocalServiceImpl
 
 	@Override
 	public BatchEngineTask addBatchEngineTask(
-		long companyId, BatchEngineTaskContentType batchEngineTaskContentType,
+		long companyId, long userId,
+		BatchEngineTaskContentType batchEngineTaskContentType,
 		BatchEngineTaskOperation batchEngineTaskOperation, long batchSize,
 		String className, byte[] content, String version) {
 
@@ -45,6 +46,7 @@ public class BatchEngineTaskLocalServiceImpl
 			counterLocalService.increment(BatchEngineTask.class.getName()));
 
 		batchEngineTask.setCompanyId(companyId);
+		batchEngineTask.setUserId(userId);
 		batchEngineTask.setBatchSize(batchSize);
 		batchEngineTask.setClassName(className);
 		batchEngineTask.setContent(

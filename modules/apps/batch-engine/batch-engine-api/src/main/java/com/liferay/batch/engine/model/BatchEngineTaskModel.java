@@ -125,6 +125,34 @@ public interface BatchEngineTaskModel
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the user ID of this batch engine task.
+	 *
+	 * @return the user ID of this batch engine task
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this batch engine task.
+	 *
+	 * @param userId the user ID of this batch engine task
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this batch engine task.
+	 *
+	 * @return the user uuid of this batch engine task
+	 */
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this batch engine task.
+	 *
+	 * @param userUuid the user uuid of this batch engine task
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
 	 * Returns the create date of this batch engine task.
 	 *
 	 * @return the create date of this batch engine task

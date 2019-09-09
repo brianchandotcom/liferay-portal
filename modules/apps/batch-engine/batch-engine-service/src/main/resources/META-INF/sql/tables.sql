@@ -3,6 +3,7 @@ create table BatchEngineTask (
 	uuid_ VARCHAR(75) null,
 	batchEngineTaskId LONG not null primary key,
 	companyId LONG,
+	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	batchSize LONG,

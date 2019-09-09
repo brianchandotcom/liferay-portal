@@ -23,10 +23,13 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -71,12 +74,13 @@ public class BatchEngineTaskModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"batchEngineTaskId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"batchSize", Types.BIGINT}, {"className", Types.VARCHAR},
-		{"content", Types.BLOB}, {"contentType", Types.VARCHAR},
-		{"endTime", Types.TIMESTAMP}, {"errorMessage", Types.VARCHAR},
-		{"executeStatus", Types.VARCHAR}, {"operation", Types.VARCHAR},
-		{"startTime", Types.TIMESTAMP}, {"version", Types.VARCHAR}
+		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"batchSize", Types.BIGINT},
+		{"className", Types.VARCHAR}, {"content", Types.BLOB},
+		{"contentType", Types.VARCHAR}, {"endTime", Types.TIMESTAMP},
+		{"errorMessage", Types.VARCHAR}, {"executeStatus", Types.VARCHAR},
+		{"operation", Types.VARCHAR}, {"startTime", Types.TIMESTAMP},
+		{"version", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +91,7 @@ public class BatchEngineTaskModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("batchEngineTaskId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("batchSize", Types.BIGINT);
@@ -102,7 +107,7 @@ public class BatchEngineTaskModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
+		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchEngineTask";
 
@@ -278,6 +283,10 @@ public class BatchEngineTaskModelImpl
 		attributeSetterBiConsumers.put(
 			"companyId",
 			(BiConsumer<BatchEngineTask, Long>)BatchEngineTask::setCompanyId);
+		attributeGetterFunctions.put("userId", BatchEngineTask::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<BatchEngineTask, Long>)BatchEngineTask::setUserId);
 		attributeGetterFunctions.put(
 			"createDate", BatchEngineTask::getCreateDate);
 		attributeSetterBiConsumers.put(
@@ -411,6 +420,32 @@ public class BatchEngineTaskModelImpl
 
 	public long getOriginalCompanyId() {
 		return _originalCompanyId;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	@Override
+	public String getUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
 	}
 
 	@Override
@@ -637,6 +672,7 @@ public class BatchEngineTaskModelImpl
 		batchEngineTaskImpl.setUuid(getUuid());
 		batchEngineTaskImpl.setBatchEngineTaskId(getBatchEngineTaskId());
 		batchEngineTaskImpl.setCompanyId(getCompanyId());
+		batchEngineTaskImpl.setUserId(getUserId());
 		batchEngineTaskImpl.setCreateDate(getCreateDate());
 		batchEngineTaskImpl.setModifiedDate(getModifiedDate());
 		batchEngineTaskImpl.setBatchSize(getBatchSize());
@@ -743,6 +779,8 @@ public class BatchEngineTaskModelImpl
 
 		batchEngineTaskCacheModel.companyId = getCompanyId();
 
+		batchEngineTaskCacheModel.userId = getUserId();
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -834,7 +872,7 @@ public class BatchEngineTaskModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -844,6 +882,8 @@ public class BatchEngineTaskModelImpl
 		sb.append(getBatchEngineTaskId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
+		sb.append(", userId=");
+		sb.append(getUserId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -873,7 +913,7 @@ public class BatchEngineTaskModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.batch.engine.model.BatchEngineTask");
@@ -894,6 +934,10 @@ public class BatchEngineTaskModelImpl
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
 		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>userId</column-name><column-value><![CDATA[");
+		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -962,6 +1006,7 @@ public class BatchEngineTaskModelImpl
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
+	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

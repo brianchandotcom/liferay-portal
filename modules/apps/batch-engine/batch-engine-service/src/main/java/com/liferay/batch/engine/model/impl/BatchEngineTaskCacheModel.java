@@ -78,7 +78,7 @@ public class BatchEngineTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,8 @@ public class BatchEngineTaskCacheModel
 		sb.append(batchEngineTaskId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -130,6 +132,7 @@ public class BatchEngineTaskCacheModel
 
 		batchEngineTaskImpl.setBatchEngineTaskId(batchEngineTaskId);
 		batchEngineTaskImpl.setCompanyId(companyId);
+		batchEngineTaskImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
 			batchEngineTaskImpl.setCreateDate(null);
@@ -216,6 +219,8 @@ public class BatchEngineTaskCacheModel
 		batchEngineTaskId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -244,6 +249,8 @@ public class BatchEngineTaskCacheModel
 		objectOutput.writeLong(batchEngineTaskId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -300,6 +307,7 @@ public class BatchEngineTaskCacheModel
 	public String uuid;
 	public long batchEngineTaskId;
 	public long companyId;
+	public long userId;
 	public long createDate;
 	public long modifiedDate;
 	public long batchSize;

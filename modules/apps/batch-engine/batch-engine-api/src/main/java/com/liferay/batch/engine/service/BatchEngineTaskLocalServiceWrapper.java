@@ -48,7 +48,7 @@ public class BatchEngineTaskLocalServiceWrapper
 
 	@Override
 	public com.liferay.batch.engine.model.BatchEngineTask addBatchEngineTask(
-		long companyId,
+		long companyId, long userId,
 		com.liferay.batch.engine.BatchEngineTaskContentType
 			batchEngineTaskContentType,
 		com.liferay.batch.engine.BatchEngineTaskOperation
@@ -56,8 +56,8 @@ public class BatchEngineTaskLocalServiceWrapper
 		long batchSize, String className, byte[] content, String version) {
 
 		return _batchEngineTaskLocalService.addBatchEngineTask(
-			companyId, batchEngineTaskContentType, batchEngineTaskOperation,
-			batchSize, className, content, version);
+			companyId, userId, batchEngineTaskContentType,
+			batchEngineTaskOperation, batchSize, className, content, version);
 	}
 
 	/**

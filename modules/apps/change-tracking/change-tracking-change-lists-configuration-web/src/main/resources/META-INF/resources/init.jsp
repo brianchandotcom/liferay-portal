@@ -14,14 +14,21 @@
  */
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.change.tracking.change.lists.configuration.web.internal.display.context.ChangeListsConfigurationDisplayContext" %>
+<%@ page import="com.liferay.change.tracking.change.lists.configuration.web.internal.constants.CTConfigurationConstants" %><%@
+page import="com.liferay.change.tracking.change.lists.configuration.web.internal.display.context.ChangeListsConfigurationDisplayContext" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
@@ -30,9 +37,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%
-ChangeListsConfigurationDisplayContext changeListsConfigurationDisplayContext = new ChangeListsConfigurationDisplayContext(request, renderResponse);
+ChangeListsConfigurationDisplayContext changeListsConfigurationDisplayContext = (ChangeListsConfigurationDisplayContext)request.getAttribute(CTConfigurationConstants.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT);
 
 portletDisplay.setShowStagingIcon(false);
 %>
-
-<%@ include file="/init-ext.jsp" %>

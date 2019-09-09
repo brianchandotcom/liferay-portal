@@ -284,8 +284,8 @@ describe('DocumentLibraryOpener', () => {
 				return opener.open({
 					dialogMessage:
 						'you-are-being-redirected-to-an-external-editor-to-create-this-document',
-					statusURL: STATUS_URL,
-					refresh: true
+					refresh: true,
+					statusURL: STATUS_URL
 				});
 			});
 

@@ -14,27 +14,20 @@ class DocumentLibraryOpener {
 		this._namespace = namespace;
 
 		this._dialogLoadingId = `${namespace}OneDriveLoadingDialog`;
-		this._documentURL = '';
-		this._isTimeConsumed = false;
 		this._refreshAfterNavigate = false;
 	}
 
 	_hideLoading() {
-		this._documentURL = '';
-		this._isTimeConsumed = false;
-
 		Liferay.Util.getWindow(this._dialogLoadingId).hide();
 	}
 
-	_navigate() {
-		if (this._documentURL && this._isTimeConsumed) {
-			window.open(this._documentURL);
-			this._hideLoading();
+	_openExternal({externalURL}) {
+		window.open(externalURL);
+		this._hideLoading();
 
-			if (this._refreshAfterNavigate) {
-				this._refreshAfterNavigate = false;
-				Liferay.Portlet.refresh(`#p_p_id${this._namespace}`);
-			}
+		if (this._refreshAfterNavigate) {
+			this._refreshAfterNavigate = false;
+			Liferay.Portlet.refresh(`#p_p_id${this._namespace}`);
 		}
 	}
 
@@ -49,9 +42,9 @@ class DocumentLibraryOpener {
 			})
 			.then(response => {
 				if (response.complete) {
-					this._documentURL = response.office365EditURL;
-
-					this._navigate();
+					this._openExternal({
+						externalURL: response.office365EditURL
+					});
 				} else if (response.error) {
 					throw DEFAULT_ERROR;
 				} else {
@@ -75,7 +68,7 @@ class DocumentLibraryOpener {
 		});
 	}
 
-	_showLoading({dialogMessage, statusURL}) {
+	_showLoading({dialogMessage}) {
 		return new Promise(resolve => {
 			Liferay.Util.openWindow(
 				{
@@ -91,15 +84,7 @@ class DocumentLibraryOpener {
 					id: this._dialogLoadingId
 				},
 				() => {
-					setTimeout(() => {
-						this._isTimeConsumed = true;
-						this._navigate();
-						resolve();
-					}, TIME_SHOW_MSG);
-
-					if (statusURL) {
-						this._polling({statusURL});
-					}
+					setTimeout(resolve, TIME_SHOW_MSG);
 				}
 			);
 		});
@@ -125,9 +110,9 @@ class DocumentLibraryOpener {
 			if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
 				this.open({
 					dialogMessage: serverResponseContent.dialogMessage,
+					refresh: true,
 					statusURL:
-						serverResponseContent.oneDriveBackgroundTaskStatusURL,
-					refresh: true
+						serverResponseContent.oneDriveBackgroundTaskStatusURL
 				});
 			}
 		});
@@ -175,7 +160,12 @@ class DocumentLibraryOpener {
 	}) {
 		this._refreshAfterNavigate = refresh;
 
-		return this._showLoading({dialogMessage, statusURL});
+		const loadingPromise = this._showLoading({
+			dialogMessage
+		});
+		const pollingPromise = this._polling({statusURL});
+
+		return Promise.all([loadingPromise, pollingPromise]);
 	}
 }
 

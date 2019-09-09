@@ -82,13 +82,14 @@ public class OAuth2Controller {
 					unsafeFunction)
 			throws PortalException {
 
-			OAuth2Result oAuth2Result = _getOAuth2Result(
-				portletRequest, unsafeFunction, _function);
+			try {
+				OAuth2Result oAuth2Result = _getOAuth2Result(
+					portletRequest, unsafeFunction, _function);
 
-			PortalException portalException = oAuth2Result.getPortalException();
+				PortalException portalException =
+					oAuth2Result.getPortalException();
 
-			if (!Objects.isNull(portalException)) {
-				try {
+				if (Objects.nonNull(portalException)) {
 					_log.error(portalException, portalException);
 
 					JSONPortletResponseUtil.writeJSON(
@@ -99,15 +100,11 @@ public class OAuth2Controller {
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}
-				catch (IOException ioe) {
-					throw new PortalException(ioe);
+				else {
+					JSONPortletResponseUtil.writeJSON(
+						portletRequest, portletResponse,
+						oAuth2Result.getResponse());
 				}
-			}
-
-			try {
-				JSONPortletResponseUtil.writeJSON(
-					portletRequest, portletResponse,
-					oAuth2Result.getResponse());
 			}
 			catch (IOException ioe) {
 				throw new PortalException(ioe);
@@ -132,7 +129,7 @@ public class OAuth2Controller {
 
 			PortalException portalException = oAuth2Result.getPortalException();
 
-			if (!Objects.isNull(portalException)) {
+			if (Objects.nonNull(portalException)) {
 				_log.error(portalException, portalException);
 
 				throw portalException;

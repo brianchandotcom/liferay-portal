@@ -141,8 +141,8 @@ public class OAuth2ControllerTest {
 
 		OAuth2Controller.OAuth2ExecutorWithoutRedirect
 			oAuth2ExecutorWithoutRedirect =
-				_oAuth2Controller.new OAuth2ExecutorWithoutRedirect(
-					portletRequest -> "sucessURL");
+				new OAuth2Controller.OAuth2ExecutorWithoutRedirect(
+					_oAuth2Controller, portletRequest -> "sucessURL");
 
 		oAuth2ExecutorWithoutRedirect.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
@@ -180,7 +180,7 @@ public class OAuth2ControllerTest {
 		JSONObject jsonObject = JSONUtil.put("key", "value");
 
 		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
-			_oAuth2Controller.new OAuth2ExecutorWithRedirect();
+			new OAuth2Controller.OAuth2ExecutorWithRedirect(_oAuth2Controller);
 
 		oAuth2ExecutorWithRedirect.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
@@ -214,7 +214,8 @@ public class OAuth2ControllerTest {
 
 		OAuth2Controller.OAuth2ExecutorWithoutRedirect
 			oAuth2ExecutorWithoutRedirect =
-				_oAuth2Controller.new OAuth2ExecutorWithoutRedirect(
+				new OAuth2Controller.OAuth2ExecutorWithoutRedirect(
+					_oAuth2Controller,
 					portletRequest -> RandomTestUtil.randomString());
 
 		oAuth2ExecutorWithoutRedirect.execute(
@@ -250,7 +251,7 @@ public class OAuth2ControllerTest {
 			new MockHttpServletResponse();
 
 		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
-			_oAuth2Controller.new OAuth2ExecutorWithRedirect();
+			new OAuth2Controller.OAuth2ExecutorWithRedirect(_oAuth2Controller);
 
 		oAuth2ExecutorWithRedirect.execute(
 			_getMockPortletRequest(mockHttpServletRequest),

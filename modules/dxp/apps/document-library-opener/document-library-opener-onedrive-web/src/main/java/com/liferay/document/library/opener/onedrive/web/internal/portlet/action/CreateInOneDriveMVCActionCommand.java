@@ -51,14 +51,10 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getOAuth2Controller();
+			_oAuth2ControllerFactory.getOAuth2ControllerWithoutRedirect(
+				this::_getSuccessURL);
 
-		OAuth2Controller.OAuth2ExecutorWithoutRedirect
-			oAuth2ExecutorWithoutRedirect =
-				oAuth2Controller.new OAuth2ExecutorWithoutRedirect(
-					this::_getSuccessURL);
-
-		oAuth2ExecutorWithoutRedirect.execute(
+		oAuth2Controller.execute(
 			actionRequest, actionResponse,
 			_createInOneDriveHelper::executeCommand);
 	}

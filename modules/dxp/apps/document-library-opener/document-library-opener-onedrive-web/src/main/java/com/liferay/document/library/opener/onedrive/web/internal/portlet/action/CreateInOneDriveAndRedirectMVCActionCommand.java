@@ -48,12 +48,9 @@ public class CreateInOneDriveAndRedirectMVCActionCommand
 		throws Exception {
 
 		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getOAuth2Controller();
+			_oAuth2ControllerFactory.getOAuth2ControllerWithRedirect();
 
-		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
-			oAuth2Controller.new OAuth2ExecutorWithRedirect();
-
-		oAuth2ExecutorWithRedirect.execute(
+		oAuth2Controller.execute(
 			actionRequest, actionResponse,
 			_createInOneDriveHelper::executeCommand);
 	}

@@ -151,36 +151,6 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return value;
 	}
 
-	private boolean _checkNestedFieldsMethod(
-		Object item, Method method, NestedFieldsContext nestedFieldsContext,
-		Class<?> resourceClass) {
-
-		if (method == null) {
-			return false;
-		}
-
-		if (!Objects.equals(
-				nestedFieldsContext.getResourceVersion(),
-				_getResourceVersion(resourceClass.getSuperclass()))) {
-
-			return false;
-		}
-
-		NestedField nestedField = method.getAnnotation(NestedField.class);
-
-		Class<?> parentClass = nestedField.parentClass();
-
-		if (nestedField.parentClass() != Void.class) {
-			if (item.getClass() == parentClass) {
-				return true;
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private Object _convert(String value, Class<?> type) {
 		if (value == null) {
 			return null;
@@ -232,15 +202,31 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		}
 	}
 
-	private Method _getAnnotatedMethod(Class<?> clazz, String fieldName) {
-		Method[] methods = clazz.getDeclaredMethods();
+	private Method _getAnnotatedMethod(
+		Object item, Class<?> resourceClass, String fieldName) {
+
+		Method[] methods = resourceClass.getDeclaredMethods();
 
 		for (Method method : methods) {
 			if (method.isAnnotationPresent(NestedField.class)) {
 				NestedField nestedField = method.getAnnotation(
 					NestedField.class);
 
-				if (Objects.equals(fieldName, nestedField.value())) {
+				if (!Objects.equals(fieldName, nestedField.value())) {
+					continue;
+				}
+
+				Class<?> parentClass = nestedField.parentClass();
+
+				if (parentClass == Void.class) {
+					return method;
+				}
+
+				Class<?> itemClass = item.getClass();
+
+				if ((itemClass == parentClass) ||
+					(itemClass.getSuperclass() == parentClass)) {
+
 					return method;
 				}
 			}
@@ -500,11 +486,18 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		throws Exception {
 
 		for (Object resource : getResources()) {
-			Method method = _getAnnotatedMethod(resource.getClass(), fieldName);
+			Class<?> resourceClass = resource.getClass();
 
-			if (!_checkNestedFieldsMethod(
-					item, method, nestedFieldsContext, resource.getClass())) {
+			if (!Objects.equals(
+					nestedFieldsContext.getResourceVersion(),
+					_getResourceVersion(resourceClass.getSuperclass()))) {
 
+				continue;
+			}
+
+			Method method = _getAnnotatedMethod(item, resourceClass, fieldName);
+
+			if (method == null) {
 				continue;
 			}
 
@@ -545,8 +538,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			}
 		}
 
-		throw new IllegalStateException(
-			"No defined version for resource " + resourceBaseClass);
+		return null;
 	}
 
 	private boolean _isArray(Object object) {

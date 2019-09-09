@@ -1,19 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should change page 1`] = `
-<li
-  className="page-item"
-  onClick={[Function]}
->
-  <a
-    className="page-link"
-    href="#2"
-  >
-    2
-  </a>
-</li>
-`;
-
 exports[`Should render component as active 1`] = `
 <li
   className="page-item"
@@ -94,20 +80,6 @@ exports[`Should render component as type default 1`] = `
     onClick={[Function]}
   >
     1
-  </a>
-</li>
-`;
-
-exports[`Should test change page when disabled 1`] = `
-<li
-  className="page-item disabled"
-  onClick={[Function]}
->
-  <a
-    className="page-link"
-    href="#2"
-  >
-    2
   </a>
 </li>
 `;

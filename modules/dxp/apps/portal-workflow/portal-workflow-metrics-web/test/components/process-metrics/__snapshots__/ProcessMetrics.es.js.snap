@@ -2038,7 +2038,7 @@ exports[`Should render dashboard route children 1`] = `
                 <div
                   className="panel panel-secondary"
                 >
-                  <Component
+                  <Header
                     description="pending-items-description"
                     title="pending-items"
                   >
@@ -2100,8 +2100,8 @@ exports[`Should render dashboard route children 1`] = `
                         </div>
                       </div>
                     </Header>
-                  </Component>
-                  <Component
+                  </Header>
+                  <Body
                     processId={35315}
                   >
                     <Body>
@@ -2124,7 +2124,7 @@ exports[`Should render dashboard route children 1`] = `
                         <Success />
                       </div>
                     </Body>
-                  </Component>
+                  </Body>
                 </div>
               </div>
             </Panel>

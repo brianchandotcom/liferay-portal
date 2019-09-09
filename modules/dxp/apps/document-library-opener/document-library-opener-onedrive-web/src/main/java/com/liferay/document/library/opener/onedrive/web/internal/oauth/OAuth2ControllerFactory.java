@@ -186,9 +186,7 @@ public class OAuth2ControllerFactory {
 
 	private class JSONOAuth2Controller implements OAuth2Controller {
 
-		public JSONOAuth2Controller(
-			Function<PortletRequest, String> function) {
-
+		public JSONOAuth2Controller(Function<PortletRequest, String> function) {
 			_function = function;
 		}
 

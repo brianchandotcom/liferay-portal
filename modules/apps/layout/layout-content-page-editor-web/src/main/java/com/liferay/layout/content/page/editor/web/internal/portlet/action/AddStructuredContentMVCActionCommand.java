@@ -16,6 +16,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -104,11 +106,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 				_log.warn(t, t);
 			}
 
-			jsonObject.put(
-				"errorMessage",
-				LanguageUtil.get(
-					themeDisplay.getRequest(),
-					"the-web-content-article-could-not-be-created"));
+			_handleException(themeDisplay, t, jsonObject);
 		}
 
 		return jsonObject;
@@ -252,6 +250,23 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, image.getType(),
 			bytes, serviceContext);
+	}
+
+	private void _handleException(
+		ThemeDisplay themeDisplay, Throwable throwable, JSONObject jsonObject) {
+
+		if (throwable instanceof StorageFieldRequiredException ||
+			throwable instanceof StorageFieldValueException) {
+
+			jsonObject.put("errorMessage", throwable.getLocalizedMessage());
+		}
+		else {
+			jsonObject.put(
+				"errorMessage",
+				LanguageUtil.get(
+					themeDisplay.getRequest(),
+					"the-web-content-article-could-not-be-created"));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

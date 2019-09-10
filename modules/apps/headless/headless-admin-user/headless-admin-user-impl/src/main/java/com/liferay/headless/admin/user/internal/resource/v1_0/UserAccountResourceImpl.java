@@ -116,6 +116,24 @@ public class UserAccountResourceImpl
 	}
 
 	@Override
+	public Page<UserAccount> getSiteUserAccountsPage(
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return _getUserAccountsPage(
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("groupId", String.valueOf(siteId)),
+					BooleanClauseOccur.MUST);
+			},
+			search, filter, pagination, sorts);
+	}
+
+	@Override
 	public UserAccount getUserAccount(Long userAccountId) throws Exception {
 		return _toUserAccount(_userService.getUserById(userAccountId));
 	}
@@ -140,24 +158,6 @@ public class UserAccountResourceImpl
 				booleanFilter.add(
 					new TermFilter("userName", StringPool.BLANK),
 					BooleanClauseOccur.MUST_NOT);
-			},
-			search, filter, pagination, sorts);
-	}
-
-	@Override
-	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		return _getUserAccountsPage(
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new TermFilter("groupId", String.valueOf(webSiteId)),
-					BooleanClauseOccur.MUST);
 			},
 			search, filter, pagination, sorts);
 	}

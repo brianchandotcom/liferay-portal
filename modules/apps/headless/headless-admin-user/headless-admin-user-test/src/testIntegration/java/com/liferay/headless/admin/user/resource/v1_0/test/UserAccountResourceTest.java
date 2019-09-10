@@ -258,20 +258,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
-		return _addUserAccount(randomUserAccount());
-	}
-
-	@Override
-	protected UserAccount testGetUserAccountsPage_addUserAccount(
-			UserAccount userAccount)
-		throws Exception {
-
-		return _addUserAccount(userAccount);
-	}
-
-	@Override
-	protected UserAccount testGetWebSiteUserAccountsPage_addUserAccount(
+	protected UserAccount testGetSiteUserAccountsPage_addUserAccount(
 			Long webSiteId, UserAccount userAccount)
 		throws Exception {
 
@@ -283,8 +270,21 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetWebSiteUserAccountsPage_getWebSiteId() {
+	protected Long testGetSiteUserAccountsPage_getSiteId() {
 		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
+		return _addUserAccount(randomUserAccount());
+	}
+
+	@Override
+	protected UserAccount testGetUserAccountsPage_addUserAccount(
+			UserAccount userAccount)
+		throws Exception {
+
+		return _addUserAccount(userAccount);
 	}
 
 	@Override

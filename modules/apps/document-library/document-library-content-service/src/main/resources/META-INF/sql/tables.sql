@@ -1,4 +1,5 @@
 create table DLContent (
+	mvccVersion LONG default 0 not null,
 	contentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

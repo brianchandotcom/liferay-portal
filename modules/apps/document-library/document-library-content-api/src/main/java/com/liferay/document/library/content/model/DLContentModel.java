@@ -16,6 +16,7 @@ package com.liferay.document.library.content.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.sql.Blob;
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
+public interface DLContentModel
+	extends BaseModel<DLContent>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +57,22 @@ public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
 	 * @param primaryKey the primary key of this document library content
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this document library content.
+	 *
+	 * @return the mvcc version of this document library content
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this document library content.
+	 *
+	 * @param mvccVersion the mvcc version of this document library content
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the content ID of this document library content.

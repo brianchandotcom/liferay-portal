@@ -18,6 +18,7 @@ import com.liferay.document.library.content.model.DLContent;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class DLContentCacheModel
-	implements CacheModel<DLContent>, Externalizable {
+	implements CacheModel<DLContent>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -45,7 +46,9 @@ public class DLContentCacheModel
 
 		DLContentCacheModel dlContentCacheModel = (DLContentCacheModel)obj;
 
-		if (contentId == dlContentCacheModel.contentId) {
+		if ((contentId == dlContentCacheModel.contentId) &&
+			(mvccVersion == dlContentCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -54,14 +57,28 @@ public class DLContentCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, contentId);
+		int hashCode = HashUtil.hash(0, contentId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{contentId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", contentId=");
 		sb.append(contentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -84,6 +101,7 @@ public class DLContentCacheModel
 	public DLContent toEntityModel() {
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
+		dlContentImpl.setMvccVersion(mvccVersion);
 		dlContentImpl.setContentId(contentId);
 		dlContentImpl.setGroupId(groupId);
 		dlContentImpl.setCompanyId(companyId);
@@ -112,6 +130,8 @@ public class DLContentCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		contentId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -127,6 +147,8 @@ public class DLContentCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(contentId);
 
 		objectOutput.writeLong(groupId);
@@ -152,6 +174,7 @@ public class DLContentCacheModel
 		objectOutput.writeLong(size);
 	}
 
+	public long mvccVersion;
 	public long contentId;
 	public long groupId;
 	public long companyId;

@@ -66,16 +66,18 @@ public class DLContentModelImpl
 	public static final String TABLE_NAME = "DLContent";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"contentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"repositoryId", Types.BIGINT},
-		{"path_", Types.VARCHAR}, {"version", Types.VARCHAR},
-		{"data_", Types.BLOB}, {"size_", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"contentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"repositoryId", Types.BIGINT}, {"path_", Types.VARCHAR},
+		{"version", Types.VARCHAR}, {"data_", Types.BLOB},
+		{"size_", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -87,7 +89,7 @@ public class DLContentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
+		"create table DLContent (mvccVersion LONG default 0 not null,contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 
@@ -243,6 +245,10 @@ public class DLContentModelImpl
 		Map<String, BiConsumer<DLContent, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<DLContent, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", DLContent::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DLContent, Long>)DLContent::setMvccVersion);
 		attributeGetterFunctions.put("contentId", DLContent::getContentId);
 		attributeSetterBiConsumers.put(
 			"contentId", (BiConsumer<DLContent, Long>)DLContent::setContentId);
@@ -274,6 +280,16 @@ public class DLContentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -466,6 +482,7 @@ public class DLContentModelImpl
 	public Object clone() {
 		DLContentImpl dlContentImpl = new DLContentImpl();
 
+		dlContentImpl.setMvccVersion(getMvccVersion());
 		dlContentImpl.setContentId(getContentId());
 		dlContentImpl.setGroupId(getGroupId());
 		dlContentImpl.setCompanyId(getCompanyId());
@@ -557,6 +574,8 @@ public class DLContentModelImpl
 	public CacheModel<DLContent> toCacheModel() {
 		DLContentCacheModel dlContentCacheModel = new DLContentCacheModel();
 
+		dlContentCacheModel.mvccVersion = getMvccVersion();
+
 		dlContentCacheModel.contentId = getContentId();
 
 		dlContentCacheModel.groupId = getGroupId();
@@ -588,9 +607,11 @@ public class DLContentModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{contentId=");
+		sb.append("{mvccVersion=");
+		sb.append(getMvccVersion());
+		sb.append(", contentId=");
 		sb.append(getContentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -611,12 +632,16 @@ public class DLContentModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.document.library.content.model.DLContent");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>mvccVersion</column-name><column-value><![CDATA[");
+		sb.append(getMvccVersion());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>contentId</column-name><column-value><![CDATA[");
 		sb.append(getContentId());
@@ -661,6 +686,7 @@ public class DLContentModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _contentId;
 	private long _groupId;
 	private long _companyId;

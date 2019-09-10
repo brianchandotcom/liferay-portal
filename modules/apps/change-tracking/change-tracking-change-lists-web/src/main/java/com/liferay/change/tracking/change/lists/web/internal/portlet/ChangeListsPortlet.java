@@ -18,7 +18,6 @@ import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebCons
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
@@ -106,8 +105,8 @@ public class ChangeListsPortlet extends MVCPortlet {
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
 				_classNameLocalService, _ctCollectionLocalService,
-				_ctEntryLocalService, _ctEngineManager,
-				_ctPreferencesLocalService, _ctProcessLocalService,
+				_ctEntryLocalService, _ctPreferencesLocalService,
+				_ctProcessLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse, _resourceActions, _userLocalService);
 
@@ -163,9 +162,6 @@ public class ChangeListsPortlet extends MVCPortlet {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTEngineManager _ctEngineManager;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

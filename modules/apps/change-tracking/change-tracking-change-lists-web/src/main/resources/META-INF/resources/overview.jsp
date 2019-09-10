@@ -21,3 +21,5 @@
 	module="js/Overview.es"
 	templateNamespace="com.liferay.change.tracking.change.lists.web.Overview.render"
 />
+
+<%@ include file="/error_messages.jspf" %>

@@ -18,8 +18,8 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.change.tracking.constants.CTPanelCategoryKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -46,10 +46,16 @@ public class ChangeListsPanelApp extends BasePanelApp {
 	}
 
 	@Override
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
+	public boolean isShow(PermissionChecker permissionChecker, Group group) {
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				group.getCompanyId(), 0);
 
-		return _ctEngineManager.isChangeTrackingEnabled(group.getCompanyId());
+		if (ctPreferences == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -62,6 +68,6 @@ public class ChangeListsPanelApp extends BasePanelApp {
 	}
 
 	@Reference
-	private CTEngineManager _ctEngineManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 }

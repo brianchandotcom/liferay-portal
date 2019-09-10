@@ -15,16 +15,11 @@
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -47,30 +42,22 @@ public class EditCTCollectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
-		Optional<CTCollection> ctCollectionOptional =
-			_ctEngineManager.getCTCollectionOptional(
-				themeDisplay.getCompanyId(), ctCollectionId);
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ctCollectionId);
 
-		ctCollectionOptional.filter(
-			ctCollection -> !ctCollection.isProduction()
-		).ifPresent(
-			ctCollection -> renderRequest.setAttribute(
-				"ctCollection", ctCollection)
-		);
+		if (ctCollection != null) {
+			renderRequest.setAttribute("ctCollection", ctCollection);
+		}
 
 		return "/edit_ct_collection.jsp";
 	}
 
 	@Reference
-	private CTEngineManager _ctEngineManager;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

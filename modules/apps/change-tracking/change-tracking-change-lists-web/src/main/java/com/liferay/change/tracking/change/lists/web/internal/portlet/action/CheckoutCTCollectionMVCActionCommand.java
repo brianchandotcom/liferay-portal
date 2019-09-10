@@ -16,9 +16,13 @@ package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -46,17 +50,38 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		long ctCollectionId = ParamUtil.getLong(
+			actionRequest, "ctCollectionId");
+		String ctCollectionName = ParamUtil.getString(actionRequest, "name");
+
+		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			CTCollection ctCollection =
+				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
+
+			if (ctCollection == null) {
+				SessionErrors.add(
+					actionRequest,
+					_portal.getPortletId(actionRequest) + "checkoutFailure",
+					ctCollectionName);
+
+				hideDefaultErrorMessage(actionRequest);
+
+				return;
+			}
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long ctCollectionId = ParamUtil.getLong(
-			actionRequest, "ctCollectionId");
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
-		_ctEngineManager.checkoutCTCollection(
-			themeDisplay.getUserId(), ctCollectionId);
+		ctPreferences.setCtCollectionId(ctCollectionId);
+
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			SessionMessages.add(
@@ -67,7 +92,10 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CTEngineManager _ctEngineManager;
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private Portal _portal;

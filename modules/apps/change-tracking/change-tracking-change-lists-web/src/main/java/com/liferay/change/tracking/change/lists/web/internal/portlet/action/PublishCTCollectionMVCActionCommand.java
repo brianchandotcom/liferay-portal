@@ -14,20 +14,25 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
-import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,23 +62,30 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long ctCollectionId = ParamUtil.getLong(
+			actionRequest, "ctCollectionId");
+		String ctCollectionName = ParamUtil.getString(actionRequest, "name");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long ctCollectionId = ParamUtil.getLong(
-			actionRequest, "ctCollectionId");
-		String name = ParamUtil.getString(actionRequest, "name");
+		try {
+			_ctProcessLocalService.addCTProcess(
+				themeDisplay.getUserId(), ctCollectionId, true,
+				new ServiceContext());
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(actionRequest, pe.getClass());
+		}
 
-		_ctEngineManager.publishCTCollection(
-			themeDisplay.getUserId(), ctCollectionId, true);
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.getCTPreferences(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
-		Optional<CTCollection> productionCTCollectionOptional =
-			_ctEngineManager.getProductionCTCollectionOptional(
-				themeDisplay.getCompanyId());
+		ctPreferences.setCtCollectionId(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
 
-		productionCTCollectionOptional.ifPresent(
-			ctCollection -> _ctEngineManager.checkoutCTCollection(
-				themeDisplay.getUserId(), ctCollection.getCtCollectionId()));
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -84,7 +96,7 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			httpServletRequest, "requestProcessed",
 			LanguageUtil.format(
 				httpServletRequest, "publishing-x-has-started-successfully",
-				new Object[] {name}, false));
+				new Object[] {ctCollectionName}, false));
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,
@@ -94,7 +106,10 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private CTEngineManager _ctEngineManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private CTProcessLocalService _ctProcessLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -14,17 +14,15 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTManager;
-import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -46,8 +44,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		boolean select = ParamUtil.getBoolean(renderRequest, "select");
 
@@ -58,24 +55,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Optional<CTCollection> activeCTCollectionOptional =
-			_ctManager.getActiveCTCollectionOptional(
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
-		if (!activeCTCollectionOptional.isPresent()) {
-			return "/view.jsp";
+		if ((ctPreferences != null) &&
+			(ctPreferences.getCtCollectionId() !=
+				CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
+			return "/overview.jsp";
 		}
 
-		CTCollection activeCTCollection = activeCTCollectionOptional.get();
-
-		if (activeCTCollection.isProduction()) {
-			return "/view.jsp";
-		}
-
-		return "/overview.jsp";
+		return "/view.jsp";
 	}
 
 	@Reference
-	private CTManager _ctManager;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 }

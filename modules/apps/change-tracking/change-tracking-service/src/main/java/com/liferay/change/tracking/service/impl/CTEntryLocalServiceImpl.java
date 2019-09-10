@@ -210,6 +210,15 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public int getCTCollectionCTEntriesCount(long ctCollectionId) {
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return 0;
+		}
+
+		return ctEntryPersistence.countByCTCollectionId(ctCollectionId);
+	}
+
+	@Override
 	public List<CTEntry> getCTEntries(
 		long ctCollectionId, long modelClassNameId) {
 

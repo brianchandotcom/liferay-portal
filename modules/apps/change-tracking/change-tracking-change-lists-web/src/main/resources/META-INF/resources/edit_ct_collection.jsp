@@ -30,8 +30,11 @@ if (ctCollection != null) {
 	description = ctCollection.getDescription();
 	name = ctCollection.getName();
 }
+else {
+	ctCollectionId = ParamUtil.getLong(request, "ctCollectionId");
+}
 
-portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setURLBack(backURL);
 portletDisplay.setShowBackIcon(true);
 %>
 
@@ -40,16 +43,15 @@ portletDisplay.setShowBackIcon(true);
 <liferay-portlet:actionURL name="/change_lists/edit_ct_collection" var="actionURL">
 	<liferay-portlet:param name="mvcRenderCommandName" value="/change_lists/view" />
 	<liferay-portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-	<liferay-portlet:param name="backURL" value="<%= backURL.toString() %>" />
+	<liferay-portlet:param name="backURL" value="<%= backURL %>" />
 </liferay-portlet:actionURL>
 
-<liferay-ui:error exception="<%= CTCollectionDescriptionCTEngineException.class %>" message="the-change-list-description-is-too-long" />
-<liferay-ui:error exception="<%= CTCollectionNameCTEngineException.class %>" message="the-change-list-name-is-too-long" />
+<liferay-ui:error exception="<%= CTCollectionDescriptionException.class %>" message="the-change-list-description-is-too-long" />
+<liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="the-change-list-name-is-too-long" />
 <liferay-ui:error key="ctCollectionDuplicate" message="name-is-already-used-by-another-change-list" />
-<liferay-ui:error key="ctCollectionName" message="the-change-list-name-is-too-short" />
 
 <div class="custom-sheet sheet sheet-lg">
-	<aui:form action='<%= actionURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="addChangeListFm">
+	<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="addChangeListFm">
 		<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
 
 		<aui:input label="name" name="name" placeholder="change-list-name-placeholder" value="<%= name %>">

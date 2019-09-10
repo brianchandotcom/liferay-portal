@@ -16,7 +16,6 @@ package com.liferay.change.tracking.change.lists.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
@@ -30,8 +29,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -65,7 +69,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -86,7 +89,6 @@ public class ChangeListsDisplayContext {
 		ClassNameLocalService classNameLocalService,
 		CTCollectionLocalService ctCollectionLocalService,
 		CTEntryLocalService ctEntryLocalService,
-		CTEngineManager ctEngineManager,
 		CTPreferencesLocalService ctPreferencesLocalService,
 		CTProcessLocalService ctProcessLocalService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
@@ -96,7 +98,6 @@ public class ChangeListsDisplayContext {
 		_classNameLocalService = classNameLocalService;
 		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctEntryLocalService = ctEntryLocalService;
-		_ctEngineManager = ctEngineManager;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
 		_ctProcessLocalService = ctProcessLocalService;
 		_httpServletRequest = httpServletRequest;
@@ -176,6 +177,15 @@ public class ChangeListsDisplayContext {
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
 
+		String ctCollectionName = confirmationMessageArg;
+
+		if (translateArg) {
+			ctCollectionName = LanguageUtil.get(
+				_httpServletRequest, confirmationMessageArg);
+		}
+
+		checkoutURL.setParameter("name", ctCollectionName);
+
 		if (_confirmationEnabled) {
 			return StringBundler.concat(
 				"javascript:confirm('",
@@ -252,6 +262,7 @@ public class ChangeListsDisplayContext {
 
 		deleteURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
+		deleteURL.setParameter("name", name);
 
 		return StringBundler.concat(
 			"javascript:confirm('",
@@ -318,11 +329,28 @@ public class ChangeListsDisplayContext {
 	}
 
 	public CTCollection getProductionCTCollection() {
-		Optional<CTCollection> productionCTCollectionOptional =
-			_ctEngineManager.getProductionCTCollectionOptional(
-				_themeDisplay.getCompanyId());
+		if (_productionCTCollection != null) {
+			return _productionCTCollection;
+		}
 
-		return productionCTCollectionOptional.orElse(null);
+		_productionCTCollection = _ctCollectionLocalService.createCTCollection(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+		_productionCTCollection.setCompanyId(_themeDisplay.getCompanyId());
+		_productionCTCollection.setName(
+			LanguageUtil.get(_httpServletRequest, "production"));
+		_productionCTCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		try {
+			_productionCTCollection.setUserId(
+				_userLocalService.getDefaultUserId(
+					_themeDisplay.getCompanyId()));
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+
+		return _productionCTCollection;
 	}
 
 	public String getPublishURL(long ctCollectionId, String name) {
@@ -353,53 +381,48 @@ public class ChangeListsDisplayContext {
 			SearchContainer.DEFAULT_CUR_PARAM, 0, SearchContainer.DEFAULT_DELTA,
 			_getIteratorURL(), null, "there-are-no-change-lists");
 
-		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
-
 		DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 		String keywords = displayTerms.getKeywords();
 
-		queryDefinition.setAttribute("keywords", keywords);
-
-		int count = (int)_ctEngineManager.countByKeywords(
-			_themeDisplay.getCompanyId(), queryDefinition);
+		int count = (int)_ctCollectionLocalService.dynamicQueryCount(
+			_getSearchDynamicQuery(
+				_themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL,
+				WorkflowConstants.STATUS_APPROVED, true, keywords));
 
 		List<CTCollection> ctCollections = new ArrayList<>();
 
-		Optional<CTCollection> productionCTCollection =
-			_ctEngineManager.getProductionCTCollectionOptional(
-				_themeDisplay.getCompanyId());
-
-		if (productionCTCollection.isPresent() && Validator.isNull(keywords)) {
+		if (Validator.isNull(keywords)) {
 			if (searchContainer.getCur() == 1) {
-				ctCollections.add(productionCTCollection.get());
+				ctCollections.add(getProductionCTCollection());
 			}
 
 			count += 1;
 		}
 
-		if (searchContainer.getEnd() < count) {
-			queryDefinition.setEnd(searchContainer.getEnd() - 1);
-		}
-		else {
-			queryDefinition.setEnd(searchContainer.getEnd());
+		int end = searchContainer.getEnd();
+
+		if (end < count) {
+			end = searchContainer.getEnd() - 1;
 		}
 
-		queryDefinition.setOrderByComparator(
+		OrderByComparator<CTCollection> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", _getOrderByCol(),
-				getOrderByType().equals("asc")));
+				getOrderByType().equals("asc"));
 
-		if (searchContainer.getStart() > 0) {
-			queryDefinition.setStart(searchContainer.getStart() - 1);
-		}
-		else {
-			queryDefinition.setStart(searchContainer.getStart());
+		int start = searchContainer.getStart();
+
+		if (start > 0) {
+			start = searchContainer.getStart() - 1;
 		}
 
 		ctCollections.addAll(
-			_ctEngineManager.searchByKeywords(
-				_themeDisplay.getCompanyId(), queryDefinition));
+			_ctCollectionLocalService.dynamicQuery(
+				_getSearchDynamicQuery(
+					_themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL,
+					WorkflowConstants.STATUS_APPROVED, true, keywords),
+				start, end, orderByComparator));
 
 		searchContainer.setResults(ctCollections);
 
@@ -413,7 +436,7 @@ public class ChangeListsDisplayContext {
 
 		sortingURL.setParameter(
 			"orderByType",
-			Objects.equals(getOrderByType(), "desc") ? "desc" : "asc");
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
 	}
@@ -438,12 +461,8 @@ public class ChangeListsDisplayContext {
 	}
 
 	public boolean hasCTEntries(long ctCollectionId) {
-		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		int ctEntriesCount = _ctEngineManager.getCTEntriesCount(
-			ctCollectionId, queryDefinition);
+		int ctEntriesCount = _ctEntryLocalService.getCTCollectionCTEntriesCount(
+			ctCollectionId);
 
 		if (ctEntriesCount > 0) {
 			return true;
@@ -453,10 +472,7 @@ public class ChangeListsDisplayContext {
 	}
 
 	public boolean isChangeListActive(long ctCollectionId) {
-		long recentCTCollectionId = _ctEngineManager.getRecentCTCollectionId(
-			_themeDisplay.getUserId());
-
-		if (recentCTCollectionId == ctCollectionId) {
+		if (_ctCollectionId == ctCollectionId) {
 			return true;
 		}
 
@@ -739,6 +755,44 @@ public class ChangeListsDisplayContext {
 		return portletURL;
 	}
 
+	private DynamicQuery _getSearchDynamicQuery(
+		long companyId, long userId, int status, boolean excludeStatus,
+		String keywords) {
+
+		DynamicQuery dynamicQuery = _ctCollectionLocalService.dynamicQuery();
+
+		if (companyId > 0) {
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId));
+		}
+
+		if (userId > CTConstants.USER_FILTER_ALL) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", userId));
+		}
+
+		if (excludeStatus) {
+			dynamicQuery.add(RestrictionsFactoryUtil.ne("status", status));
+		}
+		else if (status == WorkflowConstants.STATUS_ANY) {
+			dynamicQuery.add(RestrictionsFactoryUtil.eq("status", status));
+		}
+
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		for (String keyword : StringUtil.split(keywords, CharPool.SPACE)) {
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"name", StringUtil.quote(keyword, StringPool.PERCENT)));
+
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"description",
+					StringUtil.quote(keyword, StringPool.PERCENT)));
+		}
+
+		return dynamicQuery.add(disjunction);
+	}
+
 	private static final OrderByComparator<CTCollection>
 		_modifiedDateDescendingOrderByComparator =
 			OrderByComparatorFactoryUtil.create(
@@ -748,7 +802,6 @@ public class ChangeListsDisplayContext {
 	private final boolean _confirmationEnabled;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
-	private final CTEngineManager _ctEngineManager;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;
 	private final CTProcessLocalService _ctProcessLocalService;
@@ -757,6 +810,7 @@ public class ChangeListsDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;
+	private CTCollection _productionCTCollection;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ResourceActions _resourceActions;

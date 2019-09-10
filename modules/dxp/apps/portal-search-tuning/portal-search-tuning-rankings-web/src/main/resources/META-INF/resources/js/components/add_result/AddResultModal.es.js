@@ -144,22 +144,20 @@ function AddResultModal({
 
 													<li className="nav-item">
 														<span className="navbar-text">
-															<strong>
-																{addResultSelectedIds.length >
-																0
-																	? getPluralMessage(
-																			Liferay.Language.get(
-																				'x-item-selected'
-																			),
-																			Liferay.Language.get(
-																				'x-items-selected'
-																			),
-																			addResultSelectedIds.length
-																	  )
-																	: Liferay.Language.get(
-																			'select-items'
-																	  )}
-															</strong>
+															{addResultSelectedIds.length >
+															0
+																? getPluralMessage(
+																		Liferay.Language.get(
+																			'x-item-selected'
+																		),
+																		Liferay.Language.get(
+																			'x-items-selected'
+																		),
+																		addResultSelectedIds.length
+																  )
+																: Liferay.Language.get(
+																		'select-items'
+																  )}
 														</span>
 													</li>
 

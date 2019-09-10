@@ -732,7 +732,7 @@ class ResultsRankingForm extends Component {
 
 					<div className="sheet sheet-lg form-section-body">
 						<div className="sheet-text results-title">
-							<strong>{Liferay.Language.get('results')}</strong>
+							{Liferay.Language.get('results')}
 						</div>
 
 						<ErrorBoundary>

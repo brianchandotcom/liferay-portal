@@ -35,6 +35,10 @@
 			border-bottom: 1px solid $mainLighten74;
 			border-top: 1px solid $mainLighten74;
 			margin-bottom: 0;
+
+			.navbar-text {
+				font-weight: 600;
+			}
 		}
 
 		.tbar {

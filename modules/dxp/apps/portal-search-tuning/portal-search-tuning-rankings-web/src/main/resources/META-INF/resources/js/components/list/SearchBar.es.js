@@ -152,17 +152,15 @@ class SearchBar extends Component {
 									<ul className="navbar-nav navbar-nav-expand">
 										<li className="nav-item">
 											<span className="navbar-text">
-												<strong>
-													{getPluralMessage(
-														Liferay.Language.get(
-															'x-item-selected'
-														),
-														Liferay.Language.get(
-															'x-items-selected'
-														),
-														selectedIds.length
-													)}
-												</strong>
+												{getPluralMessage(
+													Liferay.Language.get(
+														'x-item-selected'
+													),
+													Liferay.Language.get(
+														'x-items-selected'
+													),
+													selectedIds.length
+												)}
 											</span>
 										</li>
 									</ul>
@@ -259,11 +257,9 @@ class SearchBar extends Component {
 										{!!resultIds.length && (
 											<li className="nav-item">
 												<span className="navbar-text">
-													<strong>
-														{Liferay.Language.get(
-															'select-items'
-														)}
-													</strong>
+													{Liferay.Language.get(
+														'select-items'
+													)}
 												</span>
 											</li>
 										)}

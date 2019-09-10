@@ -57,8 +57,8 @@
 				background-color: $multi-step-progress-bar-active-color;
 				color: $multi-step-progress-bar-active-color;
 
-				&:after {
-					content: $multi-step-progress-bar-active-icon;
+				.lexicon-icon:not(.lexicon-icon-circle) {
+					display: none;
 				}
 			}
 		}
@@ -76,15 +76,15 @@
 					margin-left: 15px;
 				}
 
-				&:after {
-					content: $multi-step-progress-bar-complete-icon;
-
-					@if (variable-exists(atlas-theme)) {
-						left: -16px;
-					} @else {
-						left: -14px;
-					}
+				.lexicon-icon:not(.lexicon-icon-check) {
+					display: none;
 				}
+			}
+		}
+
+		> :not(.active):not(.complete) {
+			.divider .lexicon-icon:not(.lexicon-icon-oauth) {
+				display: none;
 			}
 		}
 
@@ -101,16 +101,19 @@
 
 			position: relative;
 
-			&:after {
-				content: $multi-step-progress-bar-icon;
-				display: block;
-				font-family: 'fontawesome-alloy';
+			.lexicon-icon {
+				font-size: 12px;
 				left: -12px;
 				position: absolute;
-				top: 50%;
+				top: -2px;
 
-				-ms-transform: translateY(-50%);
-				transform: translateY(-50%);
+				&.lexicon-icon-check {
+					left: -16px;
+				}
+
+				.oauth-2-a {
+					display: none;
+				}
 			}
 		}
 

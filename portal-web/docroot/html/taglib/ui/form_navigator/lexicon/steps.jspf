@@ -144,7 +144,17 @@
 						<li class="<%= cssClass %>" data-sectionId="<%= sectionId %>" id="<%= sectionId %>Tab">
 							<div class="progress-bar-title"><%= sectionLabel %></div>
 
-							<div class="divider"></div>
+							<div class="divider">
+								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-circle">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#circle"></use>
+								</svg>
+								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#check"></use>
+								</svg>
+								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-oauth">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#oauth"></use>
+								</svg>
+							</div>
 
 							<div class="progress-bar-step"><liferay-ui:message key="<%= String.valueOf(step) %>" /></div>
 						</li>

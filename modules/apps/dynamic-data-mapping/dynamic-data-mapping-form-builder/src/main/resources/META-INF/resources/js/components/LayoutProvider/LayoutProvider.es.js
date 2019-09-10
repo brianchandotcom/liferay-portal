@@ -258,6 +258,7 @@ class LayoutProvider extends Component {
 		const {
 			children,
 			defaultLanguageId,
+			fieldActions,
 			editingLanguageId,
 			spritemap
 		} = this.props;
@@ -277,6 +278,7 @@ class LayoutProvider extends Component {
 					activePage,
 					defaultLanguageId,
 					editingLanguageId,
+					fieldActions,
 					focusedField: this.getFocusedField(),
 					pages: this.getPages(),
 					paginationMode,
@@ -288,6 +290,19 @@ class LayoutProvider extends Component {
 		}
 
 		return <span>{children}</span>;
+	}
+
+	_fieldActionsValueFn() {
+		return [
+			{
+				action: indexes => this.dispatch('fieldDuplicated', {indexes}),
+				label: Liferay.Language.get('duplicate')
+			},
+			{
+				action: indexes => this.dispatch('fieldDeleted', {indexes}),
+				label: Liferay.Language.get('delete')
+			}
+		];
 	}
 
 	_handleActivePageUpdated(activePage) {
@@ -636,6 +651,15 @@ LayoutProvider.PROPS = {
 	 */
 
 	events: Config.setter('_setEvents').value({}),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?string}
+	 */
+
+	fieldActions: Config.array().valueFn('_fieldActionsValueFn'),
 
 	/**
 	 * @default undefined

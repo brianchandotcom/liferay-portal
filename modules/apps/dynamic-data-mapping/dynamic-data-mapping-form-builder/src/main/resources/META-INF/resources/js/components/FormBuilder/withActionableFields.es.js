@@ -12,64 +12,141 @@
  * details.
  */
 
-import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import ClayButton from 'clay-button';
-import ClayModal from 'clay-modal';
-import Component from 'metal-jsx';
-import dom from 'metal-dom';
+import {ClayActionsDropdown} from 'clay-dropdown';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
+import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import Component, {Fragment} from 'metal-jsx';
+import dom from 'metal-dom';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+
+const getFieldIndexes = (pages, fieldName) => {
+	const visitor = new PagesVisitor(pages);
+	let indexes = {};
+
+	visitor.mapFields((field, fieldIndex, columnIndex, rowIndex, pageIndex) => {
+		if (field.fieldName === fieldName) {
+			indexes = {columnIndex, pageIndex, rowIndex};
+		}
+	});
+
+	return indexes;
+};
+
+const getFieldContainer = (pages, fieldName) => {
+	const {columnIndex, pageIndex, rowIndex} = getFieldIndexes(
+		pages,
+		fieldName
+	);
+
+	return document.querySelector(
+		[
+			'.col-ddm',
+			`[data-ddm-field-column="${columnIndex}"]`,
+			`[data-ddm-field-page="${pageIndex}"]`,
+			`[data-ddm-field-row="${rowIndex}"]`,
+			' .ddm-field-container'
+		].join('')
+	);
+};
 
 class Actions extends Component {
+	created() {
+		this.on('fieldNameChanged', this._handleFieldNameChanged);
+
+		this.expanded = false;
+	}
+
 	render() {
-		const {spritemap} = this.props;
+		const {expanded} = this;
+		const {items, label, spritemap} = this.props;
 
 		return (
-			<div class="ddm-field-actions-container" ref="actionsContainer">
-				<ClayButton
-					editable={true}
-					events={{
-						click: this._handleDuplicateButtonClicked.bind(this)
-					}}
-					icon="paste"
-					monospaced={true}
-					size="sm"
-					spritemap={spritemap}
-					style="secondary"
-				/>
+			<div
+				class="ddm-field-actions-container"
+				onMouseDown={this._handleElementClicked.bind(this)}
+			>
+				<span class="actions-label">{label}</span>
 
-				<ClayButton
-					editable={true}
+				<ClayActionsDropdown
 					events={{
-						click: this._handleDeleteButtonClicked.bind(this)
+						expandedChanged: this._handleExpandedChanged.bind(this),
+						itemClicked: this._handleItemClicked.bind(this)
 					}}
-					icon="trash"
-					monospaced={true}
-					size="sm"
+					expanded={expanded}
+					items={items}
+					ref="dropdown"
 					spritemap={spritemap}
-					style="secondary"
 				/>
 			</div>
 		);
 	}
 
-	_handleDeleteButtonClicked(event) {
-		const indexes = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
+	syncExpanded(expanded) {
+		const {pages} = this.props;
+		const {fieldName} = this.state;
+		const fieldContainer = getFieldContainer(pages, fieldName);
 
-		this.emit('fieldDeleted', {indexes});
+		if (!fieldContainer) {
+			return;
+		}
+
+		if (expanded) {
+			fieldContainer.classList.add('expanded');
+		} else {
+			fieldContainer.classList.remove('expanded');
+		}
 	}
 
-	_handleDuplicateButtonClicked(event) {
-		const indexes = FormSupport.getIndexes(
-			dom.closest(event.target, '.col-ddm')
-		);
+	_handleElementClicked({target}) {
+		const {dropdown} = this.refs;
 
-		this.emit('fieldDuplicated', {
-			indexes
-		});
+		if (!dropdown.element.contains(target)) {
+			const {dispatch} = this.context;
+			const {fieldName} = this.state;
+			const {pages} = this.props;
+			const indexes = getFieldIndexes(pages, fieldName);
+
+			dispatch('fieldClicked', indexes);
+		} else if (!this.expanded) {
+			this.expanded = true;
+		}
+	}
+
+	_handleExpandedChanged({newVal}) {
+		this.expanded = newVal;
+
+		this.syncExpanded(newVal);
+	}
+
+	_handleFieldNameChanged({newVal, prevVal}) {
+		const {pages} = this.props;
+		const {expanded} = this.state;
+		const newFieldContainer = getFieldContainer(pages, newVal);
+		const prevFieldContainer = getFieldContainer(pages, prevVal);
+
+		if (prevFieldContainer && newFieldContainer !== prevFieldContainer) {
+			prevFieldContainer.classList.remove('expanded');
+
+			if (expanded && newFieldContainer) {
+				newFieldContainer.classList.add('expanded');
+			}
+		}
+	}
+
+	_handleItemClicked({
+		data: {
+			item: {action}
+		}
+	}) {
+		const {fieldName} = this.state;
+		const {pages} = this.props;
+		const indexes = getFieldIndexes(pages, fieldName);
+
+		action(indexes);
+
+		this.refs.dropdown.expanded = false;
 	}
 }
 
@@ -81,7 +158,36 @@ Actions.PROPS = {
 	 * @type {!string}
 	 */
 
+	label: Config.string(),
+
+	/**
+	 * @default []
+	 * @instance
+	 * @memberof Actions
+	 * @type {?array<object>}
+	 */
+
+	pages: Config.arrayOf(pageStructure).value([]),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Actions
+	 * @type {!string}
+	 */
+
 	spritemap: Config.string().required()
+};
+
+Actions.STATE = {
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof Actions
+	 * @type {!Object}
+	 */
+
+	fieldName: Config.string()
 };
 
 const withActionableFields = ChildComponent => {
@@ -104,13 +210,6 @@ const withActionableFields = ChildComponent => {
 			this._eventHandler.removeAllListeners();
 		}
 
-		getEvents() {
-			return {
-				fieldDeleted: this._handleDeleteRequest.bind(this),
-				fieldDuplicated: this._handleDuplicateRequest.bind(this)
-			};
-		}
-
 		isActionsEnabled() {
 			const {defaultLanguageId, editingLanguageId} = this.props;
 
@@ -118,111 +217,135 @@ const withActionableFields = ChildComponent => {
 		}
 
 		render() {
-			const {spritemap} = this.props;
+			const {fieldActions, pages, spritemap} = this.props;
 
 			return (
 				<div>
-					<ClayModal
-						body={Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this-field'
-						)}
-						events={{
-							clickButton: this._handleDeleteConfirmationModalButtonClicked.bind(
-								this
-							)
-						}}
-						footerButtons={[
-							{
-								alignment: 'right',
-								label: Liferay.Language.get('dismiss'),
-								style: 'primary',
-								type: 'close'
-							},
-							{
-								alignment: 'right',
-								label: Liferay.Language.get('delete'),
-								style: 'primary',
-								type: 'button'
-							}
-						]}
-						ref="deleteModal"
-						size="sm"
-						spritemap={spritemap}
-						title={Liferay.Language.get(
-							'delete-field-dialog-title'
-						)}
-					/>
-
-					<ChildComponent {...this.props} events={this.getEvents()} />
+					<ChildComponent {...this.props} />
 
 					{this.isActionsEnabled() && (
-						<Actions
-							events={this.getEvents()}
-							portalElement={this.element}
-							ref="actions"
-							spritemap={spritemap}
-						/>
+						<Fragment>
+							<Actions
+								items={fieldActions}
+								pages={pages}
+								portalElement={document.body}
+								ref="selectedFieldActions"
+								spritemap={spritemap}
+								visible={false}
+							/>
+
+							<Actions
+								items={fieldActions}
+								pages={pages}
+								portalElement={document.body}
+								ref="hoveredFieldActions"
+								spritemap={spritemap}
+								visible={false}
+							/>
+						</Fragment>
 					)}
 				</div>
 			);
 		}
 
-		showDeleteConfirmationModal() {
-			const {deleteModal} = this.refs;
+		rendered() {
+			const {focusedField} = this.props;
+			const {hoveredFieldActions, selectedFieldActions} = this.refs;
 
-			deleteModal.show();
-		}
+			if (Object.keys(focusedField).length > 0) {
+				const {fieldName} = focusedField;
 
-		_handleDeleteConfirmationModalButtonClicked(event) {
-			const {store} = this.context;
-			const {target} = event;
-			const {deleteModal} = this.refs;
-			const {indexes} = this.state;
+				this.showActions(selectedFieldActions, fieldName);
+			} else {
+				selectedFieldActions.props.visible = false;
+			}
 
-			event.stopPropagation();
-
-			deleteModal.emit('hide');
-
-			if (!target.classList.contains('close-modal')) {
-				store.emit('fieldDeleted', {indexes});
+			if (hoveredFieldActions.state.fieldName) {
+				this.showActions(
+					hoveredFieldActions,
+					hoveredFieldActions.state.fieldName
+				);
 			}
 		}
 
-		_handleDeleteRequest({indexes}) {
-			this.setState({
-				indexes
+		showActions(actions, fieldName) {
+			actions.props.label = this._getFieldType(fieldName);
+			actions.props.visible = true;
+
+			if (fieldName !== actions.state.fieldName) {
+				actions.setState({fieldName});
+
+				actions.refs.dropdown.expanded = false;
+			}
+
+			actions.forceUpdate(() => {
+				window.requestAnimationFrame(() => {
+					const {pages} = this.props;
+					const fieldContainer = getFieldContainer(pages, fieldName);
+
+					if (fieldContainer) {
+						fieldContainer.appendChild(actions.element);
+					}
+				});
 			});
-
-			this.showDeleteConfirmationModal();
 		}
 
-		_handleDuplicateRequest(indexes) {
-			this._handleFieldDuplicated(indexes);
+		_getColumnField(indexes) {
+			const {pages} = this.props;
+			const visitor = new PagesVisitor(pages);
+			let field;
+
+			visitor.mapFields(
+				(
+					currentField,
+					fieldIndex,
+					columnIndex,
+					rowIndex,
+					pageIndex
+				) => {
+					if (
+						indexes.pageIndex === pageIndex &&
+						indexes.rowIndex === rowIndex &&
+						indexes.columnIndex === columnIndex
+					) {
+						field = currentField;
+					}
+				}
+			);
+
+			return field;
 		}
 
-		_handleFieldDuplicated(indexes) {
-			const {store} = this.context;
+		_getFieldType(fieldName) {
+			const {fieldTypes, pages} = this.props;
+			const visitor = new PagesVisitor(pages);
+			const field = visitor.findField(
+				field => field.fieldName === fieldName
+			);
 
-			store.emit('fieldDuplicated', indexes);
+			return (
+				field &&
+				fieldTypes.find(fieldType => {
+					return fieldType.name === field.type;
+				}).label
+			);
 		}
 
 		_handleMouseEnterField({delegateTarget}) {
-			if (this.isActionsEnabled()) {
-				dom.append(delegateTarget, this.refs.actions.element);
+			if (
+				this.isActionsEnabled() &&
+				!delegateTarget.classList.contains('selected')
+			) {
+				const {hoveredFieldActions} = this.refs;
+				const indexes = FormSupport.getIndexes(
+					dom.closest(delegateTarget, '.col-ddm')
+				);
+				const {fieldName} = this._getColumnField(indexes);
+
+				this.showActions(hoveredFieldActions, fieldName);
 			}
 		}
 	}
-
-	ActionableFields.STATE = {
-		/**
-		 * @default undefined
-		 * @instance
-		 * @memberof ActionableFields
-		 * @type {?array<string>}
-		 */
-
-		indexes: Config.object()
-	};
 
 	ActionableFields.PROPS = {
 		/**
@@ -251,6 +374,15 @@ const withActionableFields = ChildComponent => {
 		 */
 
 		editingLanguageId: Config.string(),
+
+		/**
+		 * @default []
+		 * @instance
+		 * @memberof FormBuilder
+		 * @type {?(array|undefined)}
+		 */
+
+		fieldActions: Config.array().value([]),
 
 		/**
 		 * @default undefined

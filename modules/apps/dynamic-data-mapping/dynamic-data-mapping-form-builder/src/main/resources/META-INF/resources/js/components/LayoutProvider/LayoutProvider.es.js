@@ -172,6 +172,7 @@ class LayoutProvider extends Component {
 
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
+		const {focusedField} = this.state;
 		let {pages} = this.state;
 
 		const visitor = new PagesVisitor(pages);
@@ -186,6 +187,7 @@ class LayoutProvider extends Component {
 					editingLanguageId
 				),
 				options,
+				selected: focusedField.fieldName === field.fieldName,
 				settingsContext: {
 					...settingsContext,
 					availableLanguageIds: [editingLanguageId],

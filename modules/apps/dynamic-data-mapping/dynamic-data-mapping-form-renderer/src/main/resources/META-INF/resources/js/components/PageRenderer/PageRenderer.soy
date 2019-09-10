@@ -201,7 +201,9 @@
 			{/let}
 
 			{if $editable}
-				<div class="ddm-field-container h-100">
+				{let $selected: $column.fields[0].selected /}
+
+				<div class="ddm-field-container h-100 {if $selected}selected{/if}">
 					<div class="ddm-resize-handle ddm-resize-handle-left" {$indexes}></div>
 
 					{let $attributesDrag kind="attributes"}

@@ -42,10 +42,10 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-98324, It ensures that AutoTagging can be added and removed via gogoshell."
+	@description = "This test covers LPS-98324. It ensures that Auto tags can be added and removed via Gogo Shell."
 	@priority = "4"
-	test AddAndRemoveAutoTagViaGoGoShell {
-		property test.name.skip.portal.instance = "BlogsAutoTagging#AddOrRemoveAutoTagViaGoGoShell";
+	test AddAndRemoveAutoTagViaGogoShell {
+		property test.name.skip.portal.instance = "BlogsAutoTagging#AddOrRemoveAutoTagViaGogoShell";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 

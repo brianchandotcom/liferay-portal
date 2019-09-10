@@ -81,6 +81,13 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			fileName, absolutePath, javaClass.getName(), annotation,
 			javaClass.getImplementedClassNames());
 
+		List<String> extendedClassNames = javaClass.getExtendedClassNames(
+			false);
+
+		if (extendedClassNames.contains("MVCPortlet")) {
+			annotation = _formatMVCPortletProperties(annotation);
+		}
+
 		return annotation;
 	}
 
@@ -135,10 +142,10 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 			annotation);
 
 		while (matcher.find()) {
-			int x = matcher.end();
+			int x = matcher.end() - 1;
 
 			while (true) {
-				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x);
+				x = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, x + 1);
 
 				if (!ToolsUtil.isInsideQuotes(annotation, x)) {
 					break;
@@ -257,6 +264,44 @@ public class JavaComponentAnnotationsCheck extends JavaAnnotationsCheck {
 
 		return _addAttribute(
 			annotation, "configurationPolicy", "ConfigurationPolicy.IGNORE");
+	}
+
+	private String _formatMVCPortletProperties(String annotation) {
+		int x = annotation.indexOf("property = {");
+
+		if (x == -1) {
+			return annotation;
+		}
+
+		int y = x;
+
+		while (true) {
+			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
+
+			if (!ToolsUtil.isInsideQuotes(annotation, y)) {
+				break;
+			}
+		}
+
+		String properties = annotation.substring(x, y);
+
+		String newProperties = StringUtil.replace(
+			properties,
+			new String[] {
+				"\"javax.portlet.supports.mime-type=text/html\",",
+				"\"javax.portlet.supports.mime-type=text/html\""
+			},
+			new String[] {StringPool.BLANK, StringPool.BLANK});
+
+		if (newProperties.contains(
+				"\"javax.portlet.init-param.config-template=") &&
+			!newProperties.contains("javax.portlet.portlet-mode=")) {
+
+			newProperties +=
+				", \"javax.portlet.portlet-mode=text/html;config\"";
+		}
+
+		return StringUtil.replace(annotation, properties, newProperties);
 	}
 
 	private String _formatServiceAttribute(

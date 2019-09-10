@@ -552,6 +552,322 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteUserAccountsPage() throws Exception {
+		Page<UserAccount> page = userAccountResource.getSiteUserAccountsPage(
+			testGetSiteUserAccountsPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteUserAccountsPage_getIrrelevantSiteId();
+
+		if ((irrelevantSiteId != null)) {
+			UserAccount irrelevantUserAccount =
+				testGetSiteUserAccountsPage_addUserAccount(
+					irrelevantSiteId, randomIrrelevantUserAccount());
+
+			page = userAccountResource.getSiteUserAccountsPage(
+				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantUserAccount),
+				(List<UserAccount>)page.getItems());
+			assertValid(page);
+		}
+
+		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		UserAccount userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		page = userAccountResource.getSiteUserAccountsPage(
+			siteId, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2),
+			(List<UserAccount>)page.getItems());
+		assertValid(page);
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+
+		UserAccount userAccount1 = randomUserAccount();
+
+		userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, userAccount1);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null,
+					getFilterString(entityField, "between", userAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithFilterStringEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+
+		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null,
+					getFilterString(entityField, "eq", userAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithPagination() throws Exception {
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+
+		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		UserAccount userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		UserAccount userAccount3 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		Page<UserAccount> page1 = userAccountResource.getSiteUserAccountsPage(
+			siteId, null, null, Pagination.of(1, 2), null);
+
+		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+
+		Assert.assertEquals(userAccounts1.toString(), 2, userAccounts1.size());
+
+		Page<UserAccount> page2 = userAccountResource.getSiteUserAccountsPage(
+			siteId, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+
+		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+
+		Page<UserAccount> page3 = userAccountResource.getSiteUserAccountsPage(
+			siteId, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2, userAccount3),
+			(List<UserAccount>)page3.getItems());
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithSortDateTime() throws Exception {
+		testGetSiteUserAccountsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanUtils.setProperty(
+					userAccount1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithSortInteger() throws Exception {
+		testGetSiteUserAccountsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanUtils.setProperty(userAccount1, entityField.getName(), 0);
+				BeanUtils.setProperty(userAccount2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetSiteUserAccountsPageWithSortString() throws Exception {
+		testGetSiteUserAccountsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, userAccount1, userAccount2) -> {
+				Class<?> clazz = userAccount1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						userAccount1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						userAccount2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						userAccount1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						userAccount2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetSiteUserAccountsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+
+		UserAccount userAccount1 = randomUserAccount();
+		UserAccount userAccount2 = randomUserAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
+		}
+
+		userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, userAccount1);
+
+		userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, userAccount2);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> ascPage =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(userAccount1, userAccount2),
+				(List<UserAccount>)ascPage.getItems());
+
+			Page<UserAccount> descPage =
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(userAccount2, userAccount1),
+				(List<UserAccount>)descPage.getItems());
+		}
+	}
+
+	protected UserAccount testGetSiteUserAccountsPage_addUserAccount(
+			Long siteId, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetSiteUserAccountsPage_getSiteId() throws Exception {
+		return testGroup.getGroupId();
+	}
+
+	protected Long testGetSiteUserAccountsPage_getIrrelevantSiteId()
+		throws Exception {
+
+		return irrelevantGroup.getGroupId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteUserAccountsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"userAccounts",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
+			"userAccounts");
+
+		Assert.assertEquals(0, userAccountsJSONObject.get("totalCount"));
+
+		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
+		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		userAccountsJSONObject = dataJSONObject.getJSONObject("userAccounts");
+
+		Assert.assertEquals(2, userAccountsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(userAccount1, userAccount2),
+			userAccountsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
@@ -860,290 +1176,6 @@ public abstract class BaseUserAccountResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				userAccount, dataJSONObject.getJSONObject("userAccount")));
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPage() throws Exception {
-		Page<UserAccount> page = userAccountResource.getWebSiteUserAccountsPage(
-			testGetWebSiteUserAccountsPage_getWebSiteId(),
-			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
-		Long irrelevantWebSiteId =
-			testGetWebSiteUserAccountsPage_getIrrelevantWebSiteId();
-
-		if ((irrelevantWebSiteId != null)) {
-			UserAccount irrelevantUserAccount =
-				testGetWebSiteUserAccountsPage_addUserAccount(
-					irrelevantWebSiteId, randomIrrelevantUserAccount());
-
-			page = userAccountResource.getWebSiteUserAccountsPage(
-				irrelevantWebSiteId, null, null, Pagination.of(1, 2), null);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantUserAccount),
-				(List<UserAccount>)page.getItems());
-			assertValid(page);
-		}
-
-		UserAccount userAccount1 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		UserAccount userAccount2 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		page = userAccountResource.getWebSiteUserAccountsPage(
-			webSiteId, null, null, Pagination.of(1, 2), null);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1, userAccount2),
-			(List<UserAccount>)page.getItems());
-		assertValid(page);
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithFilterDateTimeEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.DATE_TIME);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
-
-		UserAccount userAccount1 = randomUserAccount();
-
-		userAccount1 = testGetWebSiteUserAccountsPage_addUserAccount(
-			webSiteId, userAccount1);
-
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> page =
-				userAccountResource.getWebSiteUserAccountsPage(
-					webSiteId, null,
-					getFilterString(entityField, "between", userAccount1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(userAccount1),
-				(List<UserAccount>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithFilterStringEquals()
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(
-			EntityField.Type.STRING);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
-
-		UserAccount userAccount1 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		UserAccount userAccount2 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> page =
-				userAccountResource.getWebSiteUserAccountsPage(
-					webSiteId, null,
-					getFilterString(entityField, "eq", userAccount1),
-					Pagination.of(1, 2), null);
-
-			assertEquals(
-				Collections.singletonList(userAccount1),
-				(List<UserAccount>)page.getItems());
-		}
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithPagination()
-		throws Exception {
-
-		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
-
-		UserAccount userAccount1 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		UserAccount userAccount2 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		UserAccount userAccount3 =
-			testGetWebSiteUserAccountsPage_addUserAccount(
-				webSiteId, randomUserAccount());
-
-		Page<UserAccount> page1 =
-			userAccountResource.getWebSiteUserAccountsPage(
-				webSiteId, null, null, Pagination.of(1, 2), null);
-
-		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
-
-		Assert.assertEquals(userAccounts1.toString(), 2, userAccounts1.size());
-
-		Page<UserAccount> page2 =
-			userAccountResource.getWebSiteUserAccountsPage(
-				webSiteId, null, null, Pagination.of(2, 2), null);
-
-		Assert.assertEquals(3, page2.getTotalCount());
-
-		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
-
-		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
-
-		Page<UserAccount> page3 =
-			userAccountResource.getWebSiteUserAccountsPage(
-				webSiteId, null, null, Pagination.of(1, 3), null);
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userAccount1, userAccount2, userAccount3),
-			(List<UserAccount>)page3.getItems());
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithSortDateTime()
-		throws Exception {
-
-		testGetWebSiteUserAccountsPageWithSort(
-			EntityField.Type.DATE_TIME,
-			(entityField, userAccount1, userAccount2) -> {
-				BeanUtils.setProperty(
-					userAccount1, entityField.getName(),
-					DateUtils.addMinutes(new Date(), -2));
-			});
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithSortInteger()
-		throws Exception {
-
-		testGetWebSiteUserAccountsPageWithSort(
-			EntityField.Type.INTEGER,
-			(entityField, userAccount1, userAccount2) -> {
-				BeanUtils.setProperty(userAccount1, entityField.getName(), 0);
-				BeanUtils.setProperty(userAccount2, entityField.getName(), 1);
-			});
-	}
-
-	@Test
-	public void testGetWebSiteUserAccountsPageWithSortString()
-		throws Exception {
-
-		testGetWebSiteUserAccountsPageWithSort(
-			EntityField.Type.STRING,
-			(entityField, userAccount1, userAccount2) -> {
-				Class<?> clazz = userAccount1.getClass();
-
-				Method method = clazz.getMethod(
-					"get" +
-						StringUtil.upperCaseFirstLetter(entityField.getName()));
-
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
-						userAccount1, entityField.getName(),
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
-						userAccount2, entityField.getName(),
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else {
-					BeanUtils.setProperty(
-						userAccount1, entityField.getName(), "Aaa");
-					BeanUtils.setProperty(
-						userAccount2, entityField.getName(), "Bbb");
-				}
-			});
-	}
-
-	protected void testGetWebSiteUserAccountsPageWithSort(
-			EntityField.Type type,
-			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
-				unsafeTriConsumer)
-		throws Exception {
-
-		List<EntityField> entityFields = getEntityFields(type);
-
-		if (entityFields.isEmpty()) {
-			return;
-		}
-
-		Long webSiteId = testGetWebSiteUserAccountsPage_getWebSiteId();
-
-		UserAccount userAccount1 = randomUserAccount();
-		UserAccount userAccount2 = randomUserAccount();
-
-		for (EntityField entityField : entityFields) {
-			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
-		}
-
-		userAccount1 = testGetWebSiteUserAccountsPage_addUserAccount(
-			webSiteId, userAccount1);
-
-		userAccount2 = testGetWebSiteUserAccountsPage_addUserAccount(
-			webSiteId, userAccount2);
-
-		for (EntityField entityField : entityFields) {
-			Page<UserAccount> ascPage =
-				userAccountResource.getWebSiteUserAccountsPage(
-					webSiteId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
-
-			assertEquals(
-				Arrays.asList(userAccount1, userAccount2),
-				(List<UserAccount>)ascPage.getItems());
-
-			Page<UserAccount> descPage =
-				userAccountResource.getWebSiteUserAccountsPage(
-					webSiteId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
-
-			assertEquals(
-				Arrays.asList(userAccount2, userAccount1),
-				(List<UserAccount>)descPage.getItems());
-		}
-	}
-
-	protected UserAccount testGetWebSiteUserAccountsPage_addUserAccount(
-			Long webSiteId, UserAccount userAccount)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWebSiteUserAccountsPage_getWebSiteId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWebSiteUserAccountsPage_getIrrelevantWebSiteId()
-		throws Exception {
-
-		return null;
 	}
 
 	protected UserAccount testGraphQLUserAccount_addUserAccount()

@@ -497,19 +497,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {byKey(key: ___){availableLanguages, creator, description, friendlyUrlPath, id, key, membershipType, name, sites}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Site byKey(@GraphQLName("key") String key) throws Exception {
-		return _applyComponentServiceObjects(
-			_siteResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			siteResource -> siteResource.getSiteByKey(key));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {site(siteId: ___){availableLanguages, creator, description, friendlyUrlPath, id, key, membershipType, name, sites}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -562,6 +549,32 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccounts(filter: ___, page: ___, pageSize: ___, search: ___, siteId: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public UserAccountPage userAccounts(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_userAccountResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			userAccountResource -> new UserAccountPage(
+				userAccountResource.getSiteUserAccountsPage(
+					siteId, search,
+					_filterBiFunction.apply(userAccountResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(userAccountResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {userAccounts(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -599,32 +612,6 @@ public class Query {
 			this::_populateResourceContext,
 			userAccountResource -> userAccountResource.getUserAccount(
 				userAccountId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {webUserAccounts(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___, webSiteId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public UserAccountPage webUserAccounts(
-			@GraphQLName("webSiteId") Long webSiteId,
-			@GraphQLName("search") String search,
-			@GraphQLName("filter") String filterString,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_userAccountResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			userAccountResource -> new UserAccountPage(
-				userAccountResource.getWebSiteUserAccountsPage(
-					webSiteId, search,
-					_filterBiFunction.apply(userAccountResource, filterString),
-					Pagination.of(page, pageSize),
-					_sortsBiFunction.apply(userAccountResource, sortsString))));
 	}
 
 	/**
@@ -694,6 +681,39 @@ public class Query {
 		}
 
 		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(Site.class)
+	public class GetSiteUserAccountsPageTypeExtension {
+
+		public GetSiteUserAccountsPageTypeExtension(Site site) {
+			_site = site;
+		}
+
+		@GraphQLField
+		public UserAccountPage userAccounts(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_userAccountResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				userAccountResource -> new UserAccountPage(
+					userAccountResource.getSiteUserAccountsPage(
+						_site.getId(), search,
+						_filterBiFunction.apply(
+							userAccountResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							userAccountResource, sortsString))));
+		}
+
+		private Site _site;
 
 	}
 

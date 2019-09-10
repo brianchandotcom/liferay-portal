@@ -53,11 +53,6 @@ public interface SiteResource {
 			String friendlyUrlPath)
 		throws Exception;
 
-	public Site getSiteByKey(String key) throws Exception;
-
-	public HttpInvoker.HttpResponse getSiteByKeyHttpResponse(String key)
-		throws Exception;
-
 	public Site getSite(Long siteId) throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteHttpResponse(Long siteId)
@@ -234,66 +229,6 @@ public interface SiteResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/sites/by-friendly-url-path/{friendlyUrlPath}",
 				friendlyUrlPath);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public Site getSiteByKey(String key) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getSiteByKeyHttpResponse(
-				key);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			try {
-				return SiteSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw e;
-			}
-		}
-
-		public HttpInvoker.HttpResponse getSiteByKeyHttpResponse(String key)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-user/v1.0/sites/by-key/{key}",
-				key);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

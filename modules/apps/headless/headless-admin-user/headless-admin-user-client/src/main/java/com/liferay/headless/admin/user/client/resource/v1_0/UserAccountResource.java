@@ -54,6 +54,16 @@ public interface UserAccountResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
+	public Page<UserAccount> getSiteUserAccountsPage(
+			Long siteId, String search, String filterString,
+			Pagination pagination, String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getSiteUserAccountsPageHttpResponse(
+			Long siteId, String search, String filterString,
+			Pagination pagination, String sortString)
+		throws Exception;
+
 	public Page<UserAccount> getUserAccountsPage(
 			String search, String filterString, Pagination pagination,
 			String sortString)
@@ -68,16 +78,6 @@ public interface UserAccountResource {
 
 	public HttpInvoker.HttpResponse getUserAccountHttpResponse(
 			Long userAccountId)
-		throws Exception;
-
-	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, String search, String filterString,
-			Pagination pagination, String sortString)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getWebSiteUserAccountsPageHttpResponse(
-			Long webSiteId, String search, String filterString,
-			Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -273,6 +273,83 @@ public interface UserAccountResource {
 			return httpInvoker.invoke();
 		}
 
+		public Page<UserAccount> getSiteUserAccountsPage(
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteUserAccountsPageHttpResponse(
+					siteId, search, filterString, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, UserAccountSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getSiteUserAccountsPageHttpResponse(
+				Long siteId, String search, String filterString,
+				Pagination pagination, String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts",
+				siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public Page<UserAccount> getUserAccountsPage(
 				String search, String filterString, Pagination pagination,
 				String sortString)
@@ -403,83 +480,6 @@ public interface UserAccountResource {
 					_builder._port +
 						"/o/headless-admin-user/v1.0/user-accounts/{userAccountId}",
 				userAccountId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<UserAccount> getWebSiteUserAccountsPage(
-				Long webSiteId, String search, String filterString,
-				Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWebSiteUserAccountsPageHttpResponse(
-					webSiteId, search, filterString, pagination, sortString);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			return Page.of(content, UserAccountSerDes::toDTO);
-		}
-
-		public HttpInvoker.HttpResponse getWebSiteUserAccountsPageHttpResponse(
-				Long webSiteId, String search, String filterString,
-				Pagination pagination, String sortString)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (search != null) {
-				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if (filterString != null) {
-				httpInvoker.parameter("filter", filterString);
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-user/v1.0/web-sites/{webSiteId}/user-accounts",
-				webSiteId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

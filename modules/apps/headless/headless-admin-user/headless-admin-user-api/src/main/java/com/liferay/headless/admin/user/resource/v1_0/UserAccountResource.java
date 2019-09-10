@@ -51,16 +51,16 @@ public interface UserAccountResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Page<UserAccount> getSiteUserAccountsPage(
+			Long siteId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
 	public Page<UserAccount> getUserAccountsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public UserAccount getUserAccount(Long userAccountId) throws Exception;
-
-	public Page<UserAccount> getWebSiteUserAccountsPage(
-			Long webSiteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

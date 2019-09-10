@@ -242,47 +242,6 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteByKey() throws Exception {
-		Site postSite = testGetSiteByKey_addSite();
-
-		Site getSite = siteResource.getSiteByKey(postSite.getKey());
-
-		assertEquals(postSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected Site testGetSiteByKey_addSite() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetSiteByKey() throws Exception {
-		Site site = testGraphQLSite_addSite();
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"byKey",
-				new HashMap<String, Object>() {
-					{
-						put("key", site.getKey());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		Assert.assertTrue(
-			equalsJSONObject(site, dataJSONObject.getJSONObject("byKey")));
-	}
-
-	@Test
 	public void testGetSite() throws Exception {
 		Site postSite = testGetSite_addSite();
 

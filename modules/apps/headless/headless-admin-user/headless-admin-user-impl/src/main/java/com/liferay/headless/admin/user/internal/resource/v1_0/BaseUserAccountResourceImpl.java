@@ -114,6 +114,39 @@ public abstract class BaseUserAccountResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/sites/{siteId}/user-accounts'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Operation(
+		description = "Retrieves the Site members' user accounts. Results can be paginated, filtered, searched, and sorted."
+	)
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.QUERY, name = "search"),
+			@Parameter(in = ParameterIn.QUERY, name = "filter"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/sites/{siteId}/user-accounts")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "UserAccount")})
+	public Page<UserAccount> getSiteUserAccountsPage(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@Parameter(hidden = true) @QueryParam("search") String search,
+			@Context Filter filter, @Context Pagination pagination,
+			@Context Sort[] sorts)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/user-accounts'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -162,40 +195,6 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return new UserAccount();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/web-sites/{webSiteId}/user-accounts'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@GET
-	@Operation(
-		description = "Retrieves the Site members' user accounts. Results can be paginated, filtered, searched, and sorted."
-	)
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "webSiteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "search"),
-			@Parameter(in = ParameterIn.QUERY, name = "filter"),
-			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
-			@Parameter(in = ParameterIn.QUERY, name = "sort")
-		}
-	)
-	@Path("/web-sites/{webSiteId}/user-accounts")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "UserAccount")})
-	public Page<UserAccount> getWebSiteUserAccountsPage(
-			@NotNull @Parameter(hidden = true) @PathParam("webSiteId") Long
-				webSiteId,
-			@Parameter(hidden = true) @QueryParam("search") String search,
-			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

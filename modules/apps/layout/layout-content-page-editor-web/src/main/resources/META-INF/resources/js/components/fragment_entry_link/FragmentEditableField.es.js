@@ -42,7 +42,8 @@ import {
 import {
 	editableIsMapped,
 	editableIsMappedToAssetEntry,
-	editableShouldBeHighlighted
+	editableShouldBeHighlighted,
+	getItemPath
 } from '../../utils/FragmentsEditorGetUtils.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
@@ -89,6 +90,8 @@ class FragmentEditableField extends PortletBase {
 	 * @returns {object}
 	 */
 	prepareStateForRender(state) {
+		const activable = this._editableIsActivable();
+
 		const defaultSegmentsExperienceId = prefixSegmentsExperienceId(
 			this.defaultSegmentsExperienceId
 		);
@@ -130,6 +133,7 @@ class FragmentEditableField extends PortletBase {
 
 		let nextState = state;
 
+		nextState = setIn(nextState, ['_activable'], activable);
 		nextState = setIn(nextState, ['_highlighted'], highlighted);
 		nextState = setIn(nextState, ['_mapped'], mapped);
 		nextState = setIn(
@@ -316,6 +320,31 @@ class FragmentEditableField extends PortletBase {
 
 			this._floatingToolbar = null;
 		}
+	}
+
+	/**
+	 * Checks whether an editable is activable or not
+	 * @private
+	 * @review
+	 */
+	_editableIsActivable() {
+		const fragmentEntryLinkIsActive =
+			this.fragmentEntryLinkId === this.activeItemId &&
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+
+		const isMapped = editableIsMapped(this.editableValues);
+
+		const siblingIsActive = getItemPath(
+			this.activeItemId,
+			this.activeItemType,
+			this.layoutData.structure
+		).some(
+			item =>
+				item.itemId === this.fragmentEntryLinkId &&
+				item.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		);
+
+		return fragmentEntryLinkIsActive || isMapped || siblingIsActive;
 	}
 
 	/**

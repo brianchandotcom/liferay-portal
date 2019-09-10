@@ -3,39 +3,63 @@ definition {
 	macro addOrganizationRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
+
+		var name = JSONRoleSetter.setName(name = "${roleTitle}");
+
+		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+
+		var type = JSONRoleSetter.setType(roleType ="organization");
+
 		JSONRoleAPI._addRole(
-			roleDescription = "${roleDescription}",
-			roleKey = "${roleKey}",
-			roleTitle = "${roleTitle}",
-			roleType = "organization");
+			descriptionMap = "${descriptionMap}",
+			name = "${name}",
+			titleMap = "${titleMap}",
+			type = "${type}");
 	}
 
 	macro addRegularRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
+
+		var name = JSONRoleSetter.setName(name = "${roleTitle}");
+
+		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+
+		var type = JSONRoleSetter.setType(roleType ="regular");
+
 		JSONRoleAPI._addRole(
-			roleDescription = "${roleDescription}",
-			roleKey = "${roleKey}",
-			roleTitle = "${roleTitle}",
-			roleType = "regular");
+			descriptionMap = "${descriptionMap}",
+			name = "${name}",
+			titleMap = "${titleMap}",
+			type = "${type}");
 	}
 
 	macro addSiteRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 
+		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = "${roleDescription}");
+
+		var name = JSONRoleSetter.setName(name = "${roleTitle}");
+
+		var titleMap = JSONRoleSetter.setTitleMap(title = "${roleKey}");
+
+		var type = JSONRoleSetter.setType(roleType ="site");
+
 		JSONRoleAPI._addRole(
-			roleDescription = "${roleDescription}",
-			roleKey = "${roleKey}",
-			roleTitle = "${roleTitle}",
-			roleType = "site");
+			descriptionMap = "${descriptionMap}",
+			name = "${name}",
+			titleMap = "${titleMap}",
+			type = "${type}");
 	}
 
 	macro assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
-		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleSetter.setRoleId(roleTitle = "${roleTitle}");
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 
 		JSONRoleAPI._assignRoleToUser(
 			roleId = "${roleId}",

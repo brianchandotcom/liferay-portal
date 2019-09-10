@@ -1,40 +1,7 @@
 definition {
 
 	macro _addRole {
-		Variables.assertDefined(parameterList = "${roleTitle}");
-
-		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
-
-		if (isSet(roleDescription)) {
-			var roleDescriptionEncoded = URLUtil.encodeUTF8("${roleDescription}");
-
-			var roleDescriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
-		}
-		else {
-			var roleDescriptionMap = "{}";
-		}
-
-		if (isSet(roleKey)) {
-			var roleKeyEncoded = URLUtil.encodeUTF8("${roleKey}");
-
-			var roleKeyMap = '''{"en_US":"${roleKeyEncoded}"}''';
-		}
-		else {
-			var roleKeyMap = "{}";
-		}
-
-		if ("${roleType}" == "regular") {
-			var roleTypeId = "1";
-		}
-		else if ("${roleType}" == "site") {
-			var roleTypeId = "2";
-		}
-		else if ("${roleType}" == "organization") {
-			var roleTypeId = "3";
-		}
-		else {
-			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
-		}
+		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -43,10 +10,10 @@ definition {
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
-				-d name=${roleTitleEncoded} \
-				-d titleMap=${roleKeyMap} \
-				-d descriptionMap=${roleDescriptionMap} \
-				-d type=${roleTypeId} \
+				-d name=${name} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d type=${type} \
 				-d subtype=
 		''';
 

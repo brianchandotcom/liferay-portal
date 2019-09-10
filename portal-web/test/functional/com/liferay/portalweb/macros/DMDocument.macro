@@ -1997,6 +1997,24 @@ definition {
 			value1 = "${dmDocumentTitle}");
 	}
 
+	macro viewStagingDetailsManagementBar {
+		var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.viewPresent(menuItem = "Download");
+
+		MenuItem.viewPresent(menuItem = "Edit Tags");
+
+		MenuItem.viewPresent(menuItem = "Move");
+
+		MenuItem.viewPresent(menuItem = "Checkout");
+
+		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
+	}
+
 	macro viewStagingDetailsPG {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 

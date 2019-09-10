@@ -91,6 +91,8 @@ definition {
 			pageName = "Home",
 			siteName = "${siteName}");
 
+		ProductMenuHelper.closeProductMenu();
+
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		Portlet.viewTitle(portletName = "My Workflow Tasks");

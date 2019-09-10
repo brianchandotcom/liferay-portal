@@ -201,6 +201,8 @@ public class JspServlet extends HttpServlet {
 			"logVerbosityLevel", "NONE"
 		).put(
 			"saveBytecode", "true"
+		).put(
+			"strictQuoteEscaping", "false"
 		).build();
 
 		if (_fragmentHosts.contains(_bundle.getSymbolicName())) {

@@ -123,6 +123,10 @@ public class AssetCategoriesSelectorTag extends ComponentRendererTag {
 		_hiddenInput = hiddenInput;
 	}
 
+	public void setId(String id) {
+		_id = id;
+	}
+
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
 	}

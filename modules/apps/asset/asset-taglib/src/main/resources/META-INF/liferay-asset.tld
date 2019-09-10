@@ -170,6 +170,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The component instance's ID.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>ignoreRequestValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

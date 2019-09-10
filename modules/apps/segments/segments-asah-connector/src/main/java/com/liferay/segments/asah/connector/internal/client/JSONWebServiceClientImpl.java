@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.List;
 import java.util.Map;
 
@@ -175,7 +177,10 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 			(status >= HttpServletResponse.SC_MULTIPLE_CHOICES)) {
 
 			throw new ClientErrorException(
-				"Unexpected response status: " + status, status);
+				StringBundler.concat(
+					"Unexpected response status: ", status,
+					". Response message: ", response.readEntity(String.class)),
+				status);
 		}
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
-import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -115,13 +115,20 @@ public class OAuth2ControllerTest {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		_oAuth2Controller = new OAuth2Controller(
-			_oAuth2Manager, _portal, _portletURLFactory,
-			Mockito.mock(TranslationHelper.class));
+		_oAuth2ControllerFactory = new OAuth2ControllerFactory();
+
+		ReflectionTestUtil.setFieldValue(
+			_oAuth2ControllerFactory, "_oAuth2Manager", _oAuth2Manager);
+
+		ReflectionTestUtil.setFieldValue(
+			_oAuth2ControllerFactory, "_portal", _portal);
+
+		ReflectionTestUtil.setFieldValue(
+			_oAuth2ControllerFactory, "_portletURLFactory", _portletURLFactory);
 	}
 
 	@Test
-	public void testExecuteWithAccessTokenAndWithoutRedirect()
+	public void testJSONOAuth2ControllerWithAccessToken()
 		throws PortalException, UnsupportedEncodingException {
 
 		Mockito.when(
@@ -139,12 +146,10 @@ public class OAuth2ControllerTest {
 
 		JSONObject jsonObject = JSONUtil.put("key", "value");
 
-		OAuth2Controller.OAuth2ExecutorWithoutRedirect
-			oAuth2ExecutorWithoutRedirect =
-				new OAuth2Controller.OAuth2ExecutorWithoutRedirect(
-					_oAuth2Controller, portletRequest -> "sucessURL");
+		OAuth2Controller oAuth2Controller =
+			_oAuth2ControllerFactory.getJSONOAuth2Controller(null);
 
-		oAuth2ExecutorWithoutRedirect.execute(
+		oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
 			_getMockPortletResponse(mockHttpServletResponse),
 			portletRequest -> jsonObject);
@@ -158,7 +163,40 @@ public class OAuth2ControllerTest {
 	}
 
 	@Test
-	public void testExecuteWithAccessTokenAndWithRedirect()
+	public void testJSONOAuth2ControllerWithoutAccessToken()
+		throws PortalException, UnsupportedEncodingException {
+
+		Mockito.when(
+			_oAuth2Manager.hasAccessToken(
+				Matchers.anyLong(), Matchers.anyLong())
+		).thenReturn(
+			false
+		);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		OAuth2Controller oAuth2Controller =
+			_oAuth2ControllerFactory.getJSONOAuth2Controller(
+				portalResquest -> RandomTestUtil.randomString());
+
+		oAuth2Controller.execute(
+			_getMockPortletRequest(mockHttpServletRequest),
+			_getMockPortletResponse(mockHttpServletResponse),
+			portletRequest -> JSONFactoryUtil.createJSONObject());
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
+		Assert.assertEquals(
+			String.valueOf(JSONUtil.put("redirectURL", "authorizationURL")),
+			mockHttpServletResponse.getContentAsString());
+	}
+
+	@Test
+	public void testRedirectingOAuth2ControllerWithAccessToken()
 		throws PortalException {
 
 		Mockito.when(
@@ -179,10 +217,10 @@ public class OAuth2ControllerTest {
 
 		JSONObject jsonObject = JSONUtil.put("key", "value");
 
-		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
-			new OAuth2Controller.OAuth2ExecutorWithRedirect(_oAuth2Controller);
+		OAuth2Controller oAuth2Controller =
+			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 
-		oAuth2ExecutorWithRedirect.execute(
+		oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
 			_getMockPortletResponse(mockHttpServletResponse),
 			portletRequest -> jsonObject);
@@ -196,42 +234,7 @@ public class OAuth2ControllerTest {
 	}
 
 	@Test
-	public void testExecuteWithoutAccessTokenAndWithoutRedirectParam()
-		throws PortalException, UnsupportedEncodingException {
-
-		Mockito.when(
-			_oAuth2Manager.hasAccessToken(
-				Matchers.anyLong(), Matchers.anyLong())
-		).thenReturn(
-			false
-		);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		OAuth2Controller.OAuth2ExecutorWithoutRedirect
-			oAuth2ExecutorWithoutRedirect =
-				new OAuth2Controller.OAuth2ExecutorWithoutRedirect(
-					_oAuth2Controller,
-					portletRequest -> RandomTestUtil.randomString());
-
-		oAuth2ExecutorWithoutRedirect.execute(
-			_getMockPortletRequest(mockHttpServletRequest),
-			_getMockPortletResponse(mockHttpServletResponse),
-			portletRequest -> JSONFactoryUtil.createJSONObject());
-
-		Assert.assertNull(
-			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
-		Assert.assertEquals(
-			String.valueOf(JSONUtil.put("redirectURL", "authorizationURL")),
-			mockHttpServletResponse.getContentAsString());
-	}
-
-	@Test
-	public void testExecuteWithoutAccessTokenAndWithRedirect()
+	public void testRedirectingOAuth2ControllerWithoutAccessToken()
 		throws PortalException {
 
 		Mockito.when(
@@ -250,10 +253,10 @@ public class OAuth2ControllerTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		OAuth2Controller.OAuth2ExecutorWithRedirect oAuth2ExecutorWithRedirect =
-			new OAuth2Controller.OAuth2ExecutorWithRedirect(_oAuth2Controller);
+		OAuth2Controller oAuth2Controller =
+			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 
-		oAuth2ExecutorWithRedirect.execute(
+		oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
 			_getMockPortletResponse(mockHttpServletResponse),
 			portletRequest -> JSONFactoryUtil.createJSONObject());
@@ -350,7 +353,7 @@ public class OAuth2ControllerTest {
 	}
 
 	private static LiferayPortletURL _liferayPortletURL;
-	private static OAuth2Controller _oAuth2Controller;
+	private static OAuth2ControllerFactory _oAuth2ControllerFactory;
 	private static OAuth2Manager _oAuth2Manager;
 	private static Portal _portal;
 	private static PortletURLFactory _portletURLFactory;

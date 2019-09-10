@@ -288,7 +288,7 @@ class SegmentEdit extends Component {
 			},
 			id: 'segment-members-dialog',
 			title: sub(Liferay.Language.get('x-members'), [
-				segmentLocalizedName
+				Liferay.Util.escape(segmentLocalizedName)
 			]),
 			uri: previewMembersURL
 		});

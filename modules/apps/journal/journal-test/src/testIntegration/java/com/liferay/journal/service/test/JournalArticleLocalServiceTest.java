@@ -142,9 +142,9 @@ public class JournalArticleLocalServiceTest {
 		JournalArticle journalArticle = (JournalArticle)tuple.getObject(0);
 		DDMStructure ddmStructure = (DDMStructure)tuple.getObject(1);
 
-		DDMStructure actualDDMStrucure = journalArticle.getDDMStructure();
+		DDMStructure actualDDMStructure = journalArticle.getDDMStructure();
 
-		List<DDMFormField> ddmFormFields = actualDDMStrucure.getDDMFormFields(
+		List<DDMFormField> ddmFormFields = actualDDMStructure.getDDMFormFields(
 			false);
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
@@ -158,7 +158,7 @@ public class JournalArticleLocalServiceTest {
 		}
 
 		Assert.assertEquals(
-			actualDDMStrucure.getStructureId(), ddmStructure.getStructureId());
+			actualDDMStructure.getStructureId(), ddmStructure.getStructureId());
 
 		JournalArticle defaultJournalArticle =
 			_journalArticleLocalService.getArticle(
@@ -179,10 +179,10 @@ public class JournalArticleLocalServiceTest {
 			_journalArticleLocalService.fetchLatestArticle(
 				defaultJournalArticle.getResourcePrimKey()));
 
-		actualDDMStrucure = _ddmStructureLocalService.getDDMStructure(
-			actualDDMStrucure.getStructureId());
+		actualDDMStructure = _ddmStructureLocalService.getDDMStructure(
+			actualDDMStructure.getStructureId());
 
-		ddmFormFields = actualDDMStrucure.getDDMFormFields(false);
+		ddmFormFields = actualDDMStructure.getDDMFormFields(false);
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			LocalizedValue localizedValue = ddmFormField.getPredefinedValue();
@@ -282,12 +282,12 @@ public class JournalArticleLocalServiceTest {
 		JournalArticle journalArticle = (JournalArticle)tuple.getObject(0);
 		DDMStructure ddmStructure = (DDMStructure)tuple.getObject(1);
 
-		DDMStructure actualDDMStrucure = journalArticle.getDDMStructure();
+		DDMStructure actualDDMStructure = journalArticle.getDDMStructure();
 
 		Assert.assertEquals(
-			actualDDMStrucure.getStructureId(), ddmStructure.getStructureId());
+			actualDDMStructure.getStructureId(), ddmStructure.getStructureId());
 
-		DDMFormField actualDDMFormField = actualDDMStrucure.getDDMFormField(
+		DDMFormField actualDDMFormField = actualDDMStructure.getDDMFormField(
 			"name");
 
 		Assert.assertNotNull(actualDDMFormField);

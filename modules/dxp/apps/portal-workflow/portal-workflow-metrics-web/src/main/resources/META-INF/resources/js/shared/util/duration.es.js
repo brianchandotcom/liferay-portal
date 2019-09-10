@@ -62,6 +62,7 @@ export function getDurationValues(durationValue) {
 	const fullDuration = moment.duration(durationValue);
 
 	return {
+		// eslint-disable-next-line radix
 		days: parseInt(fullDuration.asDays()) || null,
 		hours: fullDuration.hours() || null,
 		minutes: fullDuration.minutes() || null

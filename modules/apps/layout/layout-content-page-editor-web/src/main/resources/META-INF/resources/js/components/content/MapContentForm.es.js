@@ -137,12 +137,13 @@ class MapContentForm extends PortletBase {
 
 			if (fieldKey === '-' && field.editableId === editableId) {
 				newField = {
-					disabled: field.disabled,
+					disabled: false,
 					key: field.key,
 					label: field.label,
 					type: field.type
 				};
-			} else if (field.key === fieldKey) {
+			} else if (fieldKey !== '-' && field.key === fieldKey) {
+				newField.disabled = true;
 				newField.editableId = editableId;
 				newField.fragmentEntryLinkId = fragmentEntryLinkId;
 			}

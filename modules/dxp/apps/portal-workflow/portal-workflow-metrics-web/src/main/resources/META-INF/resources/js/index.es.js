@@ -18,6 +18,7 @@ export default function(defaultDelta, deltas, isAmPm, maxPages, namespace) {
 	const container = document.getElementById(`${namespace}root`);
 
 	const buildContainer = () => {
+		// eslint-disable-next-line liferay-portal/no-react-dom-render
 		ReactDOM.render(
 			<AppComponent
 				companyId={Liferay.ThemeDisplay.getCompanyId()}

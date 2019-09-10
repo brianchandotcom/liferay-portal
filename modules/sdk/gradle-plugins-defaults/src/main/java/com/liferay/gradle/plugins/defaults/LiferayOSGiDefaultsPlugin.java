@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.FindSecurityBugsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.JSDocDefaultsPlugin;
@@ -302,6 +303,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
+	public static final String WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME =
+		"writeIncludedSourcesDigest";
+
 	public static final String ZIP_ZIPPABLE_RESOURCES_TASK_NAME =
 		"zipZippableResources";
 
@@ -444,10 +448,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, privateProject, testProject);
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
+		WriteDigestTask writeIncludedSourcesDigestTask =
+			_addTaskWriteIncludedSourcesDigest(project);
+
 		final ReplaceRegexTask updateFileVersionsTask =
 			_addTaskUpdateFileVersions(project);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
-			project);
+			project, writeIncludedSourcesDigestTask);
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
@@ -1567,10 +1574,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateVersion(Project project) {
+	private ReplaceRegexTask _addTaskUpdateVersion(
+		Project project, WriteDigestTask writeIncludedSourcesDigestTask) {
+
 		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
+
+		replaceRegexTask.finalizedBy(writeIncludedSourcesDigestTask);
 
 		_configureTaskReplaceRegexJSMatches(replaceRegexTask);
 
@@ -1602,6 +1613,126 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			IncrementVersionClosure.MICRO_INCREMENT);
 
 		return replaceRegexTask;
+	}
+
+	private WriteDigestTask _addTaskWriteIncludedSourcesDigest(
+		Project project) {
+
+		WriteDigestTask writeDigestTask = GradleUtil.addTask(
+			project, WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME,
+			WriteDigestTask.class);
+
+		writeDigestTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					WriteDigestTask writeDigestTask = (WriteDigestTask)task;
+
+					FileCollection source = writeDigestTask.getSource();
+
+					if (source.isEmpty()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		writeDigestTask.source(
+			new Callable<List<String>>() {
+
+				@Override
+				public List<String> call() throws Exception {
+					List<String> fileNames = new ArrayList<>();
+
+					if (FileUtil.exists(project, "bnd.bnd")) {
+						File bndBndFile = project.file("bnd.bnd");
+
+						List<String> lines = null;
+
+						try {
+							lines = Files.readAllLines(
+								bndBndFile.toPath(), StandardCharsets.UTF_8);
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+
+						for (String line : lines) {
+							int x = line.indexOf("=../");
+
+							if (x != -1) {
+								if (line.endsWith(",\\")) {
+									int y = line.length() - 2;
+
+									fileNames.add(line.substring(x + 1, y));
+								}
+								else {
+									fileNames.add(line.substring(x + 1));
+								}
+							}
+						}
+					}
+
+					if (FileUtil.exists(project, "build.gradle")) {
+						File buildGradleFile = project.file("build.gradle");
+
+						List<String> lines = null;
+
+						try {
+							lines = Files.readAllLines(
+								buildGradleFile.toPath(),
+								StandardCharsets.UTF_8);
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+
+						for (String line : lines) {
+							int x = line.indexOf("from \"..");
+							int y = line.lastIndexOf("\"");
+
+							if ((x != -1) && (y > (x + 6))) {
+								fileNames.add(line.substring(x + 6, y));
+							}
+						}
+
+						if (FileUtil.contains(buildGradleFile, "mergeLang")) {
+							boolean sourceDirs = false;
+
+							for (String line : lines) {
+								int x = line.indexOf("sourceDirs");
+
+								if ((x != -1) || sourceDirs) {
+									sourceDirs = true;
+
+									int y = line.indexOf("\"");
+									int z = line.lastIndexOf("\"");
+
+									if ((y != -1) || (z > (y + 1))) {
+										fileNames.add(line.substring(y + 1, z));
+									}
+
+									if (line.indexOf(']') != -1) {
+										sourceDirs = false;
+									}
+								}
+							}
+						}
+					}
+
+					return fileNames;
+				}
+
+			});
+
+		writeDigestTask.setDescription(
+			"Writes a digest file to keep track of files from other projects " +
+				"used by this project.");
+
+		return writeDigestTask;
 	}
 
 	private Zip _addTaskZipDirectory(

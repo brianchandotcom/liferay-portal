@@ -47,6 +47,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + BladeMessagePortletKeys.BLADE_MESSAGE_PORTLET,
+		"javax.portlet.portlet-mode=text/html;config",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

@@ -43,7 +43,7 @@ public interface LayoutSEOEntryModel
 	extends BaseModel<LayoutSEOEntry>, LocalizedModel, ShardedModel,
 			StagedGroupedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a layout seo entry model instance should use the {@link LayoutSEOEntry} interface instead.

@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LayoutSEOEntryPersistence
 	extends BasePersistence<LayoutSEOEntry> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSEOEntryUtil} to access the layout seo entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

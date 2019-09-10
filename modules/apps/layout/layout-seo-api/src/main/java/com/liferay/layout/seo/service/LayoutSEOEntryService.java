@@ -47,7 +47,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 public interface LayoutSEOEntryService extends BaseService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSEOEntryServiceUtil} to access the layout seo entry remote service. Add custom service methods to <code>com.liferay.layout.seo.service.impl.LayoutSEOEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

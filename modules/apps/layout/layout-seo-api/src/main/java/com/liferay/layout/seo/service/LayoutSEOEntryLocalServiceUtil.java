@@ -14,7 +14,6 @@
 
 package com.liferay.layout.seo.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -31,10 +30,9 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see LayoutSEOEntryLocalService
  * @generated
  */
-@ProviderType
 public class LayoutSEOEntryLocalServiceUtil {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.layout.seo.service.impl.LayoutSEOEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.

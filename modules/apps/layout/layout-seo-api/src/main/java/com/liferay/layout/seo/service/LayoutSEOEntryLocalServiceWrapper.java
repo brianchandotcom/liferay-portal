@@ -16,8 +16,6 @@ package com.liferay.layout.seo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link LayoutSEOEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutSEOEntryLocalService
  * @generated
  */
-@ProviderType
 public class LayoutSEOEntryLocalServiceWrapper
 	implements LayoutSEOEntryLocalService,
 			   ServiceWrapper<LayoutSEOEntryLocalService> {

@@ -52,7 +52,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -66,12 +65,11 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.layout.seo.service.impl.LayoutSEOEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class LayoutSEOEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements LayoutSEOEntryLocalService, AopService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>LayoutSEOEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil</code>.

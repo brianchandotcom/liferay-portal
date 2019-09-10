@@ -61,7 +61,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface LayoutSEOEntryLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSEOEntryLocalServiceUtil} to access the layout seo entry local service. Add custom service methods to <code>com.liferay.layout.seo.service.impl.LayoutSEOEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

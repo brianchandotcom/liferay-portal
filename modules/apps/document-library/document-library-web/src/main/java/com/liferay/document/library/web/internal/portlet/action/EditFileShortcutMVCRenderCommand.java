@@ -19,7 +19,10 @@ import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -27,6 +30,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -52,6 +56,13 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			FileShortcut fileShortcut = ActionUtil.getFileShortcut(
 				renderRequest);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_fileShortcutModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), fileShortcut,
+				ActionKeys.UPDATE);
+
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);
 		}
@@ -69,5 +80,11 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 
 		return "/document_library/edit_file_shortcut.jsp";
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut)"
+	)
+	private volatile ModelResourcePermission<FileShortcut>
+		_fileShortcutModelResourcePermission;
 
 }

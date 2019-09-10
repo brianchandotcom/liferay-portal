@@ -17,9 +17,13 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -37,9 +41,17 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FOLDER,
-				ActionUtil.getFolder(renderRequest));
+			Folder folder = ActionUtil.getFolder(renderRequest);
+
+			if (folder != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				checkPermissions(themeDisplay.getPermissionChecker(), folder);
+			}
+
+			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());
@@ -57,6 +69,11 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return getPath();
+	}
+
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, Folder folder)
+		throws PortalException {
 	}
 
 	protected abstract DLTrashUtil getDLTrashUtil();

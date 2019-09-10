@@ -22,7 +22,7 @@ String selectEventName = ParamUtil.getString(request, "selectEventName");
 %>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace /><%= searchContainerId %>');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace /><%= HtmlUtil.escape(searchContainerId) %>');
 
 	searchContainer.on(
 		'rowToggled',

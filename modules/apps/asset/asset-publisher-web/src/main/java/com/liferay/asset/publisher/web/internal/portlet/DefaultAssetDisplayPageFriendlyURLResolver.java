@@ -351,7 +351,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 				PermissionThreadLocal.getPermissionChecker();
 
 			journalArticle =
-				_journalArticleLocalService.getLatestArticleByUrlTitle(
+				_journalArticleLocalService.fetchLatestArticleByUrlTitle(
 					groupId, normalizedUrlTitle,
 					WorkflowConstants.STATUS_PENDING);
 
@@ -394,8 +394,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					groupId, normalizedUrlTitle,
 					WorkflowConstants.STATUS_PENDING);
 
-			if ((journalArticle != null) &&
-				!WorkflowPermissionUtil.hasPermission(
+			if (!WorkflowPermissionUtil.hasPermission(
 					permissionChecker, groupId,
 					"com.liferay.journal.model.JournalArticle",
 					journalArticle.getId(), ActionKeys.VIEW)) {
@@ -404,15 +403,9 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			}
 		}
 
-		Map<Locale, String> friendlyURLMap = null;
+		Map<Locale, String> friendlyURLMap = journalArticle.getFriendlyURLMap();
 
-		if (journalArticle != null) {
-			friendlyURLMap = journalArticle.getFriendlyURLMap();
-		}
-
-		if ((friendlyURLMap == null) ||
-			!friendlyURLMap.containsValue(normalizedUrlTitle)) {
-
+		if (!friendlyURLMap.containsValue(normalizedUrlTitle)) {
 			throw new NoSuchArticleException(
 				StringBundler.concat(
 					"No latest version of a JournalArticle exists with the key",

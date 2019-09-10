@@ -68,7 +68,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 					onClick={() => {
 						const confirmed = confirm(
 							Liferay.Language.get(
-								'are-you-sure-you-want-to-delete-this'
+								'are-you-sure-you-want-to-terminate-this-test'
 							)
 						);
 

@@ -1474,7 +1474,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
-			siteRoleName = "Administrator",
+			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

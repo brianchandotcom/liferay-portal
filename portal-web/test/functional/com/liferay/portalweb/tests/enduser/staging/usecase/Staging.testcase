@@ -3124,7 +3124,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.assignSiteRoleCP(
-			siteRoleName = "Administrator",
+			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
 		Navigator.openSiteURL(siteName = "Site Name");

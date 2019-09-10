@@ -425,8 +425,6 @@ definition {
 			kbArticleTitle = "Knowledge Base Article1 Title",
 			kbSuggestionBody = "Knowledge Base Article1 Suggestion");
 
-		KBArticle.gotoSuggestionsNavigationPG();
-
 		KBArticleSuggestion.gotoSuggestionStatusNew(
 			kbSuggestionBody = "Knowledge Base Article1 Suggestion",
 			suggestionCount = "1");

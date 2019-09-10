@@ -47,6 +47,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

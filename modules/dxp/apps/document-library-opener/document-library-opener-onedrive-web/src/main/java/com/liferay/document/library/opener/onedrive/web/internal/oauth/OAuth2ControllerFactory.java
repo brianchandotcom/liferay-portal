@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -129,11 +128,6 @@ public class OAuth2ControllerFactory {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference
 	private TranslationHelper _translationHelper;

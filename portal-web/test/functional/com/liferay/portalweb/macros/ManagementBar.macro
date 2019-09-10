@@ -73,4 +73,12 @@ definition {
 			locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE");
 	}
 
+	macro viewFilterAndOrder {
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertElementPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ACTIVE_ITEM");
+	}
+
 }

@@ -36,7 +36,7 @@ const Table = ({actions, columns, forwardRef, items}) => {
 								{column.value}
 							</Cell>
 						))}
-						{actions && <Cell>{''}</Cell>}
+						{actions && <Cell headingCell></Cell>}
 					</Row>
 				</Head>
 				<Body>

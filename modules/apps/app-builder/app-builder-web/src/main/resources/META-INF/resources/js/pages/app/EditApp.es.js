@@ -15,7 +15,7 @@
 import React, {useState} from 'react';
 import EditAppFooter from './EditAppFooter.es';
 import MultiStepNav from './MultiStepNav.es';
-import SelectFormView from './SelectFormView.es';
+import EditAppBody from './EditAppBody.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {UpperToolbarInput} from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, updateItem} from '../../utils/client.es';
@@ -71,14 +71,15 @@ export default ({
 		}
 	};
 
-	const onFormViewSelect = formViewId => {
+	const onDataLayoutIdChange = dataLayoutId => {
 		setApp(prevApp => ({
 			...prevApp,
-			dataLayoutId: formViewId
+			dataLayoutId
 		}));
 	};
 
 	const {
+		dataLayoutId,
 		name: {en_US: appName}
 	} = app;
 
@@ -106,9 +107,13 @@ export default ({
 						</div>
 
 						{currentStep == 0 && (
-							<SelectFormView
-								dataLayoutId={app.dataLayoutId}
-								onFormViewSelect={onFormViewSelect}
+							<EditAppBody
+								endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
+								itemId={dataLayoutId}
+								onItemIdChange={onDataLayoutIdChange}
+								title={Liferay.Language.get(
+									'select-a-form-view'
+								)}
 							/>
 						)}
 						{currentStep == 1 && (

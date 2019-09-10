@@ -750,12 +750,6 @@ definition {
 			value1 = "Suggestions");
 	}
 
-	macro gotoSuggestionsNavigationPG {
-		if (IsElementNotPresent(locator1 = "KnowledgeBaseSuggestions#NAVIGATION_BAR")) {
-			Click(locator1 = "KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS");
-		}
-	}
-
 	macro gotoViaKBAdminCP {
 		var key_kbArticleTitle = "${kbArticleTitle}";
 

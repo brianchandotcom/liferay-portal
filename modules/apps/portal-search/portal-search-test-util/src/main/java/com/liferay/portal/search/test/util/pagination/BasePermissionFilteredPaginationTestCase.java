@@ -285,8 +285,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 		searchContext.setStart(start);
 
 		searchContext.setSorts(
-			new Sort(null, Sort.SCORE_TYPE, false),
-			new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
+			new Sort(Field.PRIORITY, Sort.DOUBLE_TYPE, false));
 
 		return searchContext;
 	}
@@ -429,8 +428,9 @@ public abstract class BasePermissionFilteredPaginationTestCase
 			}
 
 			addDocument(
-				DocumentCreationHelpers.singleKeyword(
-					Field.ENTRY_CLASS_PK, String.valueOf(entryClassPK)));
+				DocumentCreationHelpers.twoKeywords(
+					Field.ENTRY_CLASS_PK, String.valueOf(entryClassPK),
+					Field.PRIORITY, String.valueOf(entry)));
 		}
 	}
 

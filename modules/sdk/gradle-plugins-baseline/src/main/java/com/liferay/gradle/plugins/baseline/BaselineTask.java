@@ -87,6 +87,17 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 		boolean match = baseline.execute();
 
+		if (logger.isInfoEnabled()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Comparing ");
+			sb.append(getNewJarFile());
+			sb.append(" against ");
+			sb.append(getOldJarFile());
+
+			logger.info(sb.toString());
+		}
+
 		if (!match) {
 			StringBuilder sb = new StringBuilder();
 

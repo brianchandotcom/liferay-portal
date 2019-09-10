@@ -17,11 +17,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		//SitePages.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		SitePages.addPublicPage(pageName = "Dynamic Data Lists Display Page");
 
-		//Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		//Portlet.addPG(portletName = "Dynamic Data Lists Display");
+		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 	}
 
 	tearDown {

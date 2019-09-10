@@ -966,54 +966,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private boolean _isStale(
-		final Project project, Properties artifactProperties) {
-
-		Logger logger = project.getLogger();
-
-		final String artifactGitId = artifactProperties.getProperty(
-			"artifact.git.id");
-
-		if (Validator.isNull(artifactGitId)) {
-			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", project);
-			}
-
-			return true;
-		}
-
-		String result = GitUtil.getGitResult(
-			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
-
-		String[] lines = result.split("\\r?\\n");
-
-		for (String line : lines) {
-			if (logger.isInfoEnabled()) {
-				logger.info(line);
-			}
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if (!line.contains(
-					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
-
-				if (logger.isLifecycleEnabled()) {
-					logger.lifecycle("{} has new commits", project);
-				}
-
-				return true;
-			}
-		}
-
-		if (_hasStaleDigestFile(project)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasStaleDigestFile(Project project) {
 		Logger logger = project.getLogger();
 
@@ -1084,6 +1036,54 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isStale(
+		final Project project, Properties artifactProperties) {
+
+		Logger logger = project.getLogger();
+
+		final String artifactGitId = artifactProperties.getProperty(
+			"artifact.git.id");
+
+		if (Validator.isNull(artifactGitId)) {
+			if (logger.isInfoEnabled()) {
+				logger.info("{} has never been published", project);
+			}
+
+			return true;
+		}
+
+		String result = GitUtil.getGitResult(
+			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
+
+		String[] lines = result.split("\\r?\\n");
+
+		for (String line : lines) {
+			if (logger.isInfoEnabled()) {
+				logger.info(line);
+			}
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			if (!line.contains(
+					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle("{} has new commits", project);
+				}
+
+				return true;
+			}
+		}
+
+		if (_hasStaleDigestFile(project)) {
+			return true;
 		}
 
 		return false;

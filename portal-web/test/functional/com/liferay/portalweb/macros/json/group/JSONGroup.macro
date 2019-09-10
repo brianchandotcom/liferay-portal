@@ -41,7 +41,7 @@ definition {
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
-		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(roleTitle = "${roleTitle}");
 
 		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 

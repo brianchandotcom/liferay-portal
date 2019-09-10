@@ -32,11 +32,27 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
-
-		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _getRoleIdByName {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+
+		var roleTitleEncoded = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/get-role/company-id/${companyId}/name/${roleTitleEncoded} \
+				-u test@liferay.com:test
+		''';
+		var roleId = JSONCurlUtil.get("${curl}", "$['roleId']");
+
+		return "${roleId}";
 	}
 
 }

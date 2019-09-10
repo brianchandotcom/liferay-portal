@@ -24,7 +24,7 @@ definition {
 	macro setRoleId {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 
-		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(roleTitle = "${roleTitle}");
 
 		return "${roleId}";
 	}

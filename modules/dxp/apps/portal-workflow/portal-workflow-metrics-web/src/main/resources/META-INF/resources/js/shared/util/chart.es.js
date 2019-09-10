@@ -267,6 +267,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				padRight: 0
 			};
 		},
+		// eslint-disable-next-line sort-keys
 		[LAST_7_DAYS]: () => {
 			return {
 				offset: 1,

@@ -173,7 +173,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 				String imageName = title + " - " + fieldName;
 
 				FileEntry fileEntry = _addImage(
-					imageName, fieldValue, serviceContext, themeDisplay);
+					fieldName, imageName, fieldValue, serviceContext,
+					themeDisplay);
 
 				JSONObject imageFieldValueJSONObject = JSONUtil.put(
 					"groupId", fileEntry.getGroupId()
@@ -232,8 +233,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private FileEntry _addImage(
-			String name, String url, ServiceContext serviceContext,
-			ThemeDisplay themeDisplay)
+			String fieldName, String imageName, String url,
+			ServiceContext serviceContext, ThemeDisplay themeDisplay)
 		throws IOException, PortalException {
 
 		byte[] bytes = {};
@@ -256,7 +257,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 			return _dlAppLocalService.addFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, imageName,
 				image.getType(), bytes, serviceContext);
 		}
 		catch (Exception e) {
@@ -267,7 +268,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			throw new StorageFieldValueException(
 				LanguageUtil.format(
 					themeDisplay.getRequest(),
-					"invalid-image-content-for-the-field-x", name));
+					"invalid-image-content-for-the-field-x", fieldName));
 		}
 	}
 

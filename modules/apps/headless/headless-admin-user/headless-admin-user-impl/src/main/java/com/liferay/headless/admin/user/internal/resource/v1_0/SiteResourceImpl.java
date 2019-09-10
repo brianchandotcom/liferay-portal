@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import javax.validation.ValidationException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -54,8 +56,13 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site getSiteByFriendlyUrlPath(String url) throws Exception {
-		Group group = _groupLocalService.getFriendlyURLGroup(
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
 			contextCompany.getCompanyId(), "/" + url);
+
+		if (group == null) {
+			throw new ValidationException(
+				"No Site exists with friendly URL " + url);
+		}
 
 		GroupPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(), group,

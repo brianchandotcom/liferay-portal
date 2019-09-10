@@ -425,7 +425,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This use case covers sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him. "
+	@description = "This test covers LPS-94294. It ensures sharing a document to a user, and changing its sharing permissions via Manage Collaborators. This test also covers permissions and making sure users only have access to sharing permissions assigned to him."
 	@priority = "5"
 	test ManageCollaborators {
 		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(

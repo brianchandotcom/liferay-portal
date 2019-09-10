@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,15 +50,11 @@ public class UpdateUserChangeListsConfigurationMVCActionCommand
 	protected void doProcessAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
 		boolean requireConfirmation = ParamUtil.getBoolean(
 			actionRequest, "requireConfirmation");
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.getCTPreferences(
@@ -73,7 +67,7 @@ public class UpdateUserChangeListsConfigurationMVCActionCommand
 		SessionMessages.add(
 			actionRequest, "requestProcessed",
 			LanguageUtil.get(
-				httpServletRequest, "the-configuration-has-been-saved"));
+				themeDisplay.getLocale(), "the-configuration-has-been-saved"));
 	}
 
 	@Reference

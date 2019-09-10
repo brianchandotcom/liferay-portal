@@ -37,7 +37,7 @@ long accountEntryId = accountDisplay.getAccountId();
 		<portlet:renderURL var="editAccountURL">
 			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />
-			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
+			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -45,6 +45,18 @@ long accountEntryId = accountDisplay.getAccountId();
 			url="<%= editAccountURL %>"
 		/>
 	</c:if>
+
+	<portlet:renderURL var="manageUsersURL">
+		<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
+		<portlet:param name="screenNavigationCategoryKey" value="<%= AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS %>" />
+	</portlet:renderURL>
+
+	<liferay-ui:icon
+		message="manage-users"
+		url="<%= manageUsersURL %>"
+	/>
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">

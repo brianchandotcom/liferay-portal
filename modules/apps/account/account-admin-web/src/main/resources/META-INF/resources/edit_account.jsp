@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-frontend:screen-navigation
+	headerContainerCssClass=""
+	inverted="<%= true %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT %>"
 	portletURL="<%= renderResponse.createRenderURL() %>"
 />

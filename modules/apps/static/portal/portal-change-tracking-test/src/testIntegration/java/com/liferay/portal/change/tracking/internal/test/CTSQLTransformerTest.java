@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.test;
+package com.liferay.portal.change.tracking.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
@@ -67,7 +67,7 @@ import org.junit.runner.RunWith;
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class CTSQLHelperImplTest {
+public class CTSQLTransformerTest {
 
 	@ClassRule
 	@Rule
@@ -1060,12 +1060,12 @@ public class CTSQLHelperImplTest {
 		throws Exception {
 
 		String inputSQL = StringUtil.read(
-			CTSQLHelperImplTest.class.getResourceAsStream(
+			CTSQLTransformerTest.class.getResourceAsStream(
 				"dependencies/" + inputSQLFile));
 
 		String expectedOutputSQL = _normalizeSQL(
 			StringUtil.read(
-				CTSQLHelperImplTest.class.getResourceAsStream(
+				CTSQLTransformerTest.class.getResourceAsStream(
 					"dependencies/" + expectedOutputSQLFile)));
 
 		Map<String, String> replaceMap = new HashMap<>();

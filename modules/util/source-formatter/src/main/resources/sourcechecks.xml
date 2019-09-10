@@ -228,7 +228,9 @@
 		<check name="JavaLogLevelCheck" />
 		<check name="JavaLogParametersCheck" />
 		<check name="JavaMultiPlusConcatCheck" />
-		<check name="JavaProviderTypeAnnotationCheck" />
+		<check name="JavaProviderTypeAnnotationCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaReleaseInfoCheck" />
 		<check name="JavaServiceObjectCheck" />
 		<check name="JavaServiceTrackerFactoryCheck" />

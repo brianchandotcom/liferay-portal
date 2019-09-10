@@ -22,9 +22,13 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.message.boards.model.MBMessage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,6 +70,13 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 			DLFileEntryType dlFileEntryType =
 				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			_dlFileEntryTypeModelResourcePermission.check(
+				themeDisplay.getPermissionChecker(), dlFileEntryType,
+				ActionKeys.UPDATE);
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
@@ -110,6 +121,12 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 			_portal.getClassNameId(DLFileEntryMetadata.class),
 			dlFileEntryType.getFileEntryTypeKey());
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"
+	)
+	private volatile ModelResourcePermission<DLFileEntryType>
+		_dlFileEntryTypeModelResourcePermission;
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;

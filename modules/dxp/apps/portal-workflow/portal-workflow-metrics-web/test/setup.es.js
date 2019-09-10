@@ -53,6 +53,7 @@ window.Liferay = {
 	authToken: 'auth'
 };
 
+// eslint-disable-next-line no-console
 global.console = {error: jest.fn(), log: console.log, warn: console.warn};
 
 global.localStorage = (() => {

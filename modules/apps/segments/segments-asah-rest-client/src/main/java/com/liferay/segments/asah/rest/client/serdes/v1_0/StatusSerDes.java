@@ -74,7 +74,11 @@ public class StatusSerDes {
 
 			sb.append("\"winnerVariantId\": ");
 
-			sb.append(status.getWinnerVariantId());
+			sb.append("\"");
+
+			sb.append(_escape(status.getWinnerVariantId()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -137,8 +141,7 @@ public class StatusSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "winnerVariantId")) {
 				if (jsonParserFieldValue != null) {
-					status.setWinnerVariantId(
-						Long.valueOf((String)jsonParserFieldValue));
+					status.setWinnerVariantId((String)jsonParserFieldValue);
 				}
 			}
 			else {

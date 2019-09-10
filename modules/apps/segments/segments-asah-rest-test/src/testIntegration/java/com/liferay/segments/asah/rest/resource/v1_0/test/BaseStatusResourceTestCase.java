@@ -175,6 +175,7 @@ public abstract class BaseStatusResourceTestCase {
 		Status status = randomStatus();
 
 		status.setStatus(regex);
+		status.setWinnerVariantId(regex);
 
 		String json = StatusSerDes.toJSON(status);
 
@@ -183,6 +184,7 @@ public abstract class BaseStatusResourceTestCase {
 		status = StatusSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, status.getStatus());
+		Assert.assertEquals(regex, status.getWinnerVariantId());
 	}
 
 	@Test
@@ -549,7 +551,7 @@ public abstract class BaseStatusResourceTestCase {
 			if (Objects.equals("winnerVariantId", fieldName)) {
 				if (!Objects.deepEquals(
 						status.getWinnerVariantId(),
-						jsonObject.getLong("winnerVariantId"))) {
+						jsonObject.getString("winnerVariantId"))) {
 
 					return false;
 				}
@@ -623,8 +625,11 @@ public abstract class BaseStatusResourceTestCase {
 		}
 
 		if (entityFieldName.equals("winnerVariantId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append("'");
+			sb.append(String.valueOf(status.getWinnerVariantId()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -652,7 +657,7 @@ public abstract class BaseStatusResourceTestCase {
 		return new Status() {
 			{
 				status = RandomTestUtil.randomString();
-				winnerVariantId = RandomTestUtil.randomLong();
+				winnerVariantId = RandomTestUtil.randomString();
 			}
 		};
 	}

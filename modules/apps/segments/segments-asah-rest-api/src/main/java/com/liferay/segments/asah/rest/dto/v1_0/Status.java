@@ -77,17 +77,17 @@ public class Status {
 	protected String status;
 
 	@Schema
-	public Long getWinnerVariantId() {
+	public String getWinnerVariantId() {
 		return winnerVariantId;
 	}
 
-	public void setWinnerVariantId(Long winnerVariantId) {
+	public void setWinnerVariantId(String winnerVariantId) {
 		this.winnerVariantId = winnerVariantId;
 	}
 
 	@JsonIgnore
 	public void setWinnerVariantId(
-		UnsafeSupplier<Long, Exception> winnerVariantIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> winnerVariantIdUnsafeSupplier) {
 
 		try {
 			winnerVariantId = winnerVariantIdUnsafeSupplier.get();
@@ -102,7 +102,7 @@ public class Status {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long winnerVariantId;
+	protected String winnerVariantId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -152,7 +152,11 @@ public class Status {
 
 			sb.append("\"winnerVariantId\": ");
 
-			sb.append(winnerVariantId);
+			sb.append("\"");
+
+			sb.append(_escape(winnerVariantId));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

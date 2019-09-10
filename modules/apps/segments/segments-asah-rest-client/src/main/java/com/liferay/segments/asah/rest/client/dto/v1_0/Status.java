@@ -49,16 +49,16 @@ public class Status {
 
 	protected String status;
 
-	public Long getWinnerVariantId() {
+	public String getWinnerVariantId() {
 		return winnerVariantId;
 	}
 
-	public void setWinnerVariantId(Long winnerVariantId) {
+	public void setWinnerVariantId(String winnerVariantId) {
 		this.winnerVariantId = winnerVariantId;
 	}
 
 	public void setWinnerVariantId(
-		UnsafeSupplier<Long, Exception> winnerVariantIdUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> winnerVariantIdUnsafeSupplier) {
 
 		try {
 			winnerVariantId = winnerVariantIdUnsafeSupplier.get();
@@ -68,7 +68,7 @@ public class Status {
 		}
 	}
 
-	protected Long winnerVariantId;
+	protected String winnerVariantId;
 
 	@Override
 	public boolean equals(Object object) {

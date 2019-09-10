@@ -14,10 +14,14 @@
 
 package com.liferay.mule.internal.connection;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.mule.internal.connection.authentication.BasicAuthentication;
 import com.liferay.mule.internal.connection.authentication.HttpAuthentication;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,6 +36,7 @@ import org.mule.runtime.http.api.HttpService;
 import org.mule.runtime.http.api.client.HttpClient;
 import org.mule.runtime.http.api.client.HttpClientConfiguration;
 import org.mule.runtime.http.api.client.HttpClientFactory;
+import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.request.HttpRequest;
 import org.mule.runtime.http.api.domain.message.request.HttpRequestBuilder;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -90,6 +95,20 @@ public final class LiferayConnection {
 				"Authorization", _httpAuthentication.getAuthorizationHeader()
 			).build(),
 			5000, true, null);
+	}
+
+	public JsonNode getOpenAPISpecJsonNode()
+		throws IOException, TimeoutException {
+
+		HttpResponse httpResponse = getOpenAPISpec();
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		InputStream inputStream = httpEntity.getContent();
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		return objectMapper.readTree(inputStream);
 	}
 
 	public void invalidate() {

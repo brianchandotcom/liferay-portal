@@ -17,11 +17,11 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
-		SitePages.addPublicPage(pageName = "Dynamic Data Lists Display Page");
+		//SitePages.addPublicPage(pageName = "Dynamic Data Lists Display Page");
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+		//Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		Portlet.addPG(portletName = "Dynamic Data Lists Display");
+		//Portlet.addPG(portletName = "Dynamic Data Lists Display");
 	}
 
 	tearDown {
@@ -787,10 +787,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Entry for List DDL List Name",
+			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for List DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -802,10 +802,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "123");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Entry for List DDL List Name",
+			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for List DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
 
 		DDLRecord.viewSecondRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -919,10 +919,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Entry for List DDL List Name",
+			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for List DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",

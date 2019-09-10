@@ -209,19 +209,21 @@ generatePomRelease {
 		)
 
 		["portal-kernel", "portal-impl", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
-			File portalBndFile = new File("../${it}/bnd.bnd")
+			File artifactPropertiesFile = new File(".releng", "${it}.properties")
 
-			Properties portalBndProperties = new Properties()
+			Properties artifactProperties = new Properties()
 
-			portalBndFile.withInputStream {
-				portalBndProperties.load(it)
+			artifactPropertiesFile.withInputStream {
+				artifactProperties.load(it)
 			}
 
 			Dependency dependency = new Dependency()
 
-			dependency.setArtifactId("com.liferay." + it.replace("-", "."))
+			String[] artifactURLSplit = artifactProperties["artifact.url"].split("/")
+
+			dependency.setArtifactId(artifactURLSplit[artifactURLSplit.length - 3])
 			dependency.setGroupId("com.liferay.portal")
-			dependency.setVersion(portalBndProperties["Bundle-Version"])
+			dependency.setVersion(artifactURLSplit[artifactURLSplit.length - 2])
 
 			dependencyManagement.addDependency(dependency)
 		}

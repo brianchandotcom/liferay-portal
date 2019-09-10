@@ -69,7 +69,7 @@ definition {
 
 		OneDrive.goToOneDrive();
 
-		for (var documentTitle : list "Excel Sheet Title,PowerPoint Presentation Title,Word Doc Title") {
+		for (var documentTitle : list "Document_2,Excel Sheet Title,PowerPoint Presentation Title,Word Doc Title") {
 			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
 		}
 

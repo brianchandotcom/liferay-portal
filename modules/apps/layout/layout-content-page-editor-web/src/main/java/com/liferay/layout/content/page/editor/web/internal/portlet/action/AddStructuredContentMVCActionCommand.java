@@ -238,18 +238,18 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 		byte[] bytes = {};
 
-		if (url.startsWith("data:image/")) {
-			String[] urlParts = url.split(";base64,");
-
-			bytes = Base64.decode(urlParts[1]);
-		}
-		else if (Validator.isUrl(url)) {
-			URL imageURL = new URL(url);
-
-			bytes = FileUtil.getBytes(imageURL.openStream());
-		}
-
 		try {
+			if (url.startsWith("data:image/")) {
+				String[] urlParts = url.split(";base64,");
+
+				bytes = Base64.decode(urlParts[1]);
+			}
+			else if (Validator.isUrl(url)) {
+				URL imageURL = new URL(url);
+
+				bytes = FileUtil.getBytes(imageURL.openStream());
+			}
+
 			ImageTool imageTool = ImageToolImpl.getInstance();
 
 			Image image = imageTool.getImage(bytes);

@@ -15,6 +15,7 @@
 import Component from 'metal-jsx';
 import Position from 'metal-position';
 import {Config} from 'metal-state';
+import dom from 'metal-dom';
 import {Drag} from 'metal-drag-drop';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 
@@ -69,21 +70,45 @@ const withResizeableColumns = ChildComponent => {
 			});
 
 			this._resizeDrag.on(
-				Drag.Events.START,
-				this._handleResizeDragStartEvent.bind(this)
+				Drag.Events.END,
+				this._handleDragEnd.bind(this)
 			);
+
 			this._resizeDrag.on(
 				Drag.Events.DRAG,
-				this._handleResizeDragEvent.bind(this)
+				this._handleDragMove.bind(this)
+			);
+
+			this._resizeDrag.on(
+				Drag.Events.START,
+				this._handleDragStart.bind(this)
 			);
 		}
 
-		_handleResizeDragEvent(event) {
+		_handleDragEnd({source}) {
+			const {parentElement} = source;
+
+			if (parentElement) {
+				parentElement.classList.remove('dragging');
+			}
+		}
+
+		_handleDragStart() {
+			this._lastResizeColumn = -1;
+		}
+
+		_handleDragMove(event) {
 			const columnNodes = Object.keys(this.refs)
 				.filter(key => key.indexOf('resizeColumn') === 0)
 				.map(key => this.refs[key]);
 			const {source, x} = event;
 			const {store} = this.context;
+
+			const container = dom.closest(source, '.ddm-field-container');
+
+			if (container) {
+				container.classList.add('dragging');
+			}
 
 			let distance = Infinity;
 			let nearest;
@@ -117,10 +142,6 @@ const withResizeableColumns = ChildComponent => {
 					});
 				}
 			}
-		}
-
-		_handleResizeDragStartEvent() {
-			this._lastResizeColumn = -1;
 		}
 	}
 

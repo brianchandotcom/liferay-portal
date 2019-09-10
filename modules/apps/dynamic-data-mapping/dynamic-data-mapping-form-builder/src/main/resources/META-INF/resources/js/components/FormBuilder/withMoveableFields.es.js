@@ -73,10 +73,10 @@ const withMoveableFields = ChildComponent => {
 		}
 
 		_handleDragAndDropEnd({source, target}) {
-			const lastParent = document.querySelector('.ddm-parent-dragging');
+			const lastParent = document.querySelector('.dragging');
 
 			if (lastParent) {
-				lastParent.classList.remove('ddm-parent-dragging');
+				lastParent.classList.remove('dragging');
 				lastParent.removeAttribute('style');
 			}
 
@@ -118,7 +118,7 @@ const withMoveableFields = ChildComponent => {
 				'style',
 				`height: ${height}px !important;`
 			);
-			parentElement.classList.add('ddm-parent-dragging');
+			parentElement.classList.add('dragging');
 		}
 
 		_handleFieldMoved(event) {

@@ -153,6 +153,33 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-101315."
+	@priority = "4"
+	test DeleteDeactivateAccount {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test",
+			accountStatus = "Inactive");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		Accounts.deleteAccount(accountName = "Accounts Name for Test");
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Inactive");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

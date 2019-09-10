@@ -91,7 +91,9 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		Assert.assertEquals(
 			"LiferayElasticsearchCluster",
 			jsonObject.getString("cluster_name"));
-		Assert.assertEquals("5", jsonObject.getString("active_shards"));
+		Assert.assertEquals(
+			_ELASTICSEARCH_DEFAULT_NUMBER_OF_SHARDS,
+			jsonObject.getString("active_shards"));
 	}
 
 	@Test
@@ -190,6 +192,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 		deleteIndexRequestBuilder.get();
 	}
+
+	private static final String _ELASTICSEARCH_DEFAULT_NUMBER_OF_SHARDS = "1";
 
 	private static final String _INDEX_NAME = "test_request_index";
 

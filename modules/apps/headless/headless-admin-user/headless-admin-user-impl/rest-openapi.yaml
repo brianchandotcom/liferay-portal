@@ -1100,26 +1100,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Site"
                     description: ""
-    "/sites/by-key/{key}":
-        get:
-            operationId: getSiteByKey
-            parameters:
-                - in: path
-                  name: key
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-                    description: ""
-            tags: ["Site"]
     "/sites/{siteId}":
         get:
             operationId: getSite

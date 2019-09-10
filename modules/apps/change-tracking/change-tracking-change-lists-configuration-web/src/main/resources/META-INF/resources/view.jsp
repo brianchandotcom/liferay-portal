@@ -29,10 +29,10 @@
 		<div class="sheet sheet-lg">
 			<c:choose>
 				<c:when test='<%= Objects.equals(changeListsConfigurationDisplayContext.getNavigation(), "global-settings") %>'>
-					<liferay-util:include page="/global_settings.jsp" servletContext="<%= application %>" />
+					<%@ include file="/global_settings.jspf" %>
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/user_settings.jsp" servletContext="<%= application %>" />
+					<%@ include file="/user_settings.jspf" %>
 				</c:otherwise>
 			</c:choose>
 		</div>

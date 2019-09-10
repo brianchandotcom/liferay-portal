@@ -83,12 +83,12 @@ public class ChangeListsConfigurationDisplayContext {
 			return _navigation;
 		}
 
-		if (!isChangeListsEnabled()) {
-			_navigation = "global-settings";
-		}
-		else {
+		if (isChangeListsEnabled()) {
 			_navigation = ParamUtil.getString(
 				_httpServletRequest, "navigation", "global-settings");
+		}
+		else {
+			_navigation = "global-settings";
 		}
 
 		return _navigation;

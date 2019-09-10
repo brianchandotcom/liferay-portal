@@ -107,10 +107,18 @@ class ResultsRankingForm extends Component {
 		},
 
 		/**
-		 * Display a loading spinner while data is fetching.
+		 * Display a loading spinner under the hidden results tab while data
+		 * is fetching.
 		 * @type {boolean}
 		 */
-		dataLoading: false,
+		dataLoadingHidden: false,
+
+		/**
+		 * Display a loading spinner under the visible results tab while data
+		 * is fetching.
+		 * @type {boolean}
+		 */
+		dataLoadingVisible: false,
 
 		/**
 		 * Map of all the data. Key is the ID and value is the data object.
@@ -305,7 +313,7 @@ class ResultsRankingForm extends Component {
 	 */
 	_handleFetchResultsDataVisible = () => {
 		this.setState({
-			dataLoading: true,
+			dataLoadingVisible: true,
 			displayError: false
 		});
 
@@ -358,7 +366,7 @@ class ResultsRankingForm extends Component {
 
 				this.setState(
 					state => ({
-						dataLoading: false,
+						dataLoadingVisible: false,
 						dataMap: {
 							// In the case when a previously added result
 							// is actually one of the results that loads in,
@@ -396,7 +404,7 @@ class ResultsRankingForm extends Component {
 				setTimeout(
 					() =>
 						this.setState({
-							dataLoading: false,
+							dataLoadingVisible: false,
 							displayError: true
 						}),
 					1000
@@ -410,7 +418,7 @@ class ResultsRankingForm extends Component {
 	 */
 	_handleFetchResultsDataHidden = () => {
 		this.setState({
-			dataLoading: true,
+			dataLoadingHidden: true,
 			displayError: false
 		});
 
@@ -460,7 +468,7 @@ class ResultsRankingForm extends Component {
 				];
 
 				this.setState(state => ({
-					dataLoading: false,
+					dataLoadingHidden: false,
 
 					dataMap: {
 						// In the case when a previously added result
@@ -488,7 +496,7 @@ class ResultsRankingForm extends Component {
 				setTimeout(
 					() =>
 						this.setState({
-							dataLoading: false,
+							dataLoadingHidden: false,
 							displayErrorHidden: true
 						}),
 					1000
@@ -656,7 +664,8 @@ class ResultsRankingForm extends Component {
 		const {
 			aliases,
 			dataLoadIndex,
-			dataLoading,
+			dataLoadingHidden,
+			dataLoadingVisible,
 			dataMap,
 			displayError,
 			displayErrorHidden,
@@ -741,7 +750,7 @@ class ResultsRankingForm extends Component {
 
 									<ClayTabPanel>
 										<List
-											dataLoading={dataLoading}
+											dataLoading={dataLoadingVisible}
 											dataMap={dataMap}
 											displayError={displayError}
 											fetchDocumentsSearchUrl={
@@ -770,7 +779,7 @@ class ResultsRankingForm extends Component {
 
 									<ClayTabPanel>
 										<List
-											dataLoading={dataLoading}
+											dataLoading={dataLoadingHidden}
 											dataMap={dataMap}
 											displayError={displayErrorHidden}
 											onClickHide={this._handleClickHide}

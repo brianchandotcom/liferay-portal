@@ -417,7 +417,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 								selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 								selectOrganizationRoleURL.setParameter("step", "1");
-								selectOrganizationRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+								selectOrganizationRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
 								selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
 								selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
 								selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
@@ -614,7 +614,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 								selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 								selectSiteRoleURL.setParameter("step", "1");
-								selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
+								selectSiteRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
 								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
 								selectSiteRoleURL.setParameter("syncEntitiesEventName", siteRoleSyncEntitiesEventName);
 								selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);

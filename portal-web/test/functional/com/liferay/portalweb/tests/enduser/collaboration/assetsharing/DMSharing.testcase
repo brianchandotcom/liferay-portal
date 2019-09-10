@@ -299,6 +299,16 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		Gmail.login(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"));
+
+		Gmail.gotoHtmlMode();
+
+		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test has shared DM Document Title with you for viewing.,Your New Account,Your New Password");
+
+		Navigator.openSpecificURL(url = "${portalURL}");
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -360,10 +370,6 @@ definition {
 			userEmailAddress = PropsUtil.get("email.address.3"));
 
 		Pause(locator1 = "30000");
-
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"));
 
 		Gmail.gotoHtmlMode();
 

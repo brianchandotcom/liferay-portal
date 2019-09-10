@@ -67,6 +67,7 @@ class Search extends React.Component {
 				Object.assign({}, params, values)
 			);
 
+			// eslint-disable-next-line react/no-direct-mutation-state
 			this.state.redirect = false;
 
 			return <Redirect to={{pathname, search}} />;

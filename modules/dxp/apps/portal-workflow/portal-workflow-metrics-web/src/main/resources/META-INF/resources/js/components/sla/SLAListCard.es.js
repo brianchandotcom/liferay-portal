@@ -123,6 +123,7 @@ class SLAListCard extends React.Component {
 				openSuccessToast(Liferay.Language.get('sla-was-saved'));
 			}
 
+			// eslint-disable-next-line react/no-direct-mutation-state
 			this.state.showSLAsUpdatingAlert = true;
 			this.context.setStatus(null);
 		}

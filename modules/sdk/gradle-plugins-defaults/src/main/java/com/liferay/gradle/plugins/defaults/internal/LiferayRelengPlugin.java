@@ -324,8 +324,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public boolean isSatisfiedBy(Task task) {
 					Project project = task.getProject();
 
-					if (!GradlePluginsDefaultsUtil.isTestProject(project) &&
-						_hasProjectDependencies(project)) {
+					if (GradlePluginsDefaultsUtil.isTestProject(project)) {
+						return false;
+					}
+
+					if (_hasProjectDependencies(project) ||
+						_hasStaleDigestFile(task.getProject())) {
 
 						return true;
 					}

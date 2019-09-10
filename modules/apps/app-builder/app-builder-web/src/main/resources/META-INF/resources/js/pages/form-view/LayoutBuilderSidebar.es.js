@@ -22,12 +22,7 @@ import renderSettingsForm from './renderSettingsForm.es';
 const DefaultSidebarBody = ({dataLayoutBuilder, keywords}) => {
 	return (
 		<>
-			<Sidebar.Tab
-				tabs={[
-					Liferay.Language.get('fields'),
-					Liferay.Language.get('object')
-				]}
-			/>
+			<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
 
 			<Sidebar.TabContent>
 				<FieldTypeList

@@ -7,6 +7,7 @@
 	{@param? activeSegmentsExperienceName: string }
 	{@param? availableSegmentsExperiences: list<[
 		segmentsExperienceId: string,
+		hasSegmentsExperiment: bool,
 		name: string,
 		priority: int,
 		segmentsEntryName: string,
@@ -195,7 +196,7 @@
 									</button>
 								</span>
 
-								{if $defaultSegmentsExperienceId != $experience.segmentsExperienceId }
+								{if ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasSegmentsExperiment}
 									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
 										{let $disbledMoveUp: (isFirst($experience)) /}
 										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}

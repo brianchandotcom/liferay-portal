@@ -153,6 +153,16 @@ public class SegmentsExperimentConstants {
 			).toArray();
 		}
 
+		public static int[] getLockedStatusValues() {
+			Stream<Status> stream = Arrays.stream(Status.values());
+
+			return stream.filter(
+				status -> !status.isEditable()
+			).mapToInt(
+				Status::getValue
+			).toArray();
+		}
+
 		public static int[] getSplitStatusValues() {
 			Stream<Status> stream = Arrays.stream(Status.values());
 

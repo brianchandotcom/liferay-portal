@@ -192,6 +192,9 @@ public class ContentPageLayoutEditorDisplayContext
 				SoyContextFactoryUtil.createSoyContext();
 
 			segmentsExperienceSoyContext.put(
+				"hasSegmentsExperiment",
+				segmentsExperience.hasSegmentsExperiment()
+			).put(
 				"name", segmentsExperience.getName(themeDisplay.getLocale())
 			).put(
 				"priority", segmentsExperience.getPriority()
@@ -212,6 +215,8 @@ public class ContentPageLayoutEditorDisplayContext
 			SoyContextFactoryUtil.createSoyContext();
 
 		defaultSegmentsExperienceSoyContext.put(
+			"hasSegmentsExperiment", false
+		).put(
 			"name",
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
 				themeDisplay.getLocale())

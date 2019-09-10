@@ -67,6 +67,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 			classTypeId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long groupId, long layoutPageTemplateCollectionId, String name,
@@ -79,6 +85,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long groupId, long layoutPageTemplateCollectionId, String name,

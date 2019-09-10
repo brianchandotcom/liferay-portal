@@ -73,6 +73,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService().addLayoutPageTemplateEntry(layoutPrototype);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int,
+	 ServiceContext)}}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -128,6 +135,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -140,6 +153,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			layoutPrototypeId, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -153,6 +172,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			layoutPrototypeId, previewFileEntryId, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -165,6 +190,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
 				long userId, long groupId, long layoutPageTemplateCollectionId,

@@ -64,11 +64,23 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
 			int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
 			ServiceContext serviceContext)

@@ -82,6 +82,13 @@ public interface LayoutPageTemplateEntryLocalService
 			LayoutPrototype layoutPrototype)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int,
+	 ServiceContext)}}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			long classNameId, long classTypeId, String name, int type,
@@ -108,23 +115,47 @@ public interface LayoutPageTemplateEntryLocalService
 			String name, int type, int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, int type, long layoutPrototypeId, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, int type, long layoutPrototypeId,
 			long previewFileEntryId, int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, int type, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, ServiceContext serviceContext)

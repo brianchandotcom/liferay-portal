@@ -76,6 +76,13 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			layoutPrototype);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int,
+	 ServiceContext)}}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
@@ -135,6 +142,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
@@ -148,6 +161,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			layoutPrototypeId, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
@@ -162,6 +181,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			layoutPrototypeId, previewFileEntryId, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(
@@ -175,6 +200,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			addLayoutPageTemplateEntry(

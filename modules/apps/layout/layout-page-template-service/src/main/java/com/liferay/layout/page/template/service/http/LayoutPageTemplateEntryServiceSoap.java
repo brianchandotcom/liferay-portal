@@ -115,6 +115,12 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				addLayoutPageTemplateEntry(
@@ -142,6 +148,12 @@ public class LayoutPageTemplateEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 ServiceContext)} ()}
+	 */
+	@Deprecated
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap
 				addLayoutPageTemplateEntry(

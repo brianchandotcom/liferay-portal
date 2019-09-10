@@ -50,8 +50,8 @@ public class EntrySoap implements Serializable {
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setPageURL(model.getPageURL());
 		soapModel.setReportParameters(model.getReportParameters());
-		soapModel.setStatus(model.getStatus());
 		soapModel.setErrorMessage(model.getErrorMessage());
+		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
 	}
@@ -264,20 +264,20 @@ public class EntrySoap implements Serializable {
 		_reportParameters = reportParameters;
 	}
 
-	public String getStatus() {
-		return _status;
-	}
-
-	public void setStatus(String status) {
-		_status = status;
-	}
-
 	public String getErrorMessage() {
 		return _errorMessage;
 	}
 
 	public void setErrorMessage(String errorMessage) {
 		_errorMessage = errorMessage;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	public void setStatus(String status) {
+		_status = status;
 	}
 
 	private long _entryId;
@@ -299,7 +299,7 @@ public class EntrySoap implements Serializable {
 	private String _portletId;
 	private String _pageURL;
 	private String _reportParameters;
-	private String _status;
 	private String _errorMessage;
+	private String _status;
 
 }

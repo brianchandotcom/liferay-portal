@@ -35,8 +35,8 @@ create table Reports_Entry (
 	portletId VARCHAR(75) null,
 	pageURL STRING null,
 	reportParameters TEXT null,
-	status VARCHAR(75) null,
-	errorMessage STRING null
+	errorMessage STRING null,
+	status VARCHAR(75) null
 );
 
 create table Reports_Source (

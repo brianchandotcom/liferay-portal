@@ -100,10 +100,10 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		sb.append(pageURL);
 		sb.append(", reportParameters=");
 		sb.append(reportParameters);
-		sb.append(", status=");
-		sb.append(status);
 		sb.append(", errorMessage=");
 		sb.append(errorMessage);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -208,18 +208,18 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 			entryImpl.setReportParameters(reportParameters);
 		}
 
-		if (status == null) {
-			entryImpl.setStatus("");
-		}
-		else {
-			entryImpl.setStatus(status);
-		}
-
 		if (errorMessage == null) {
 			entryImpl.setErrorMessage("");
 		}
 		else {
 			entryImpl.setErrorMessage(errorMessage);
+		}
+
+		if (status == null) {
+			entryImpl.setStatus("");
+		}
+		else {
+			entryImpl.setStatus(status);
 		}
 
 		entryImpl.resetOriginalValues();
@@ -254,8 +254,8 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 		portletId = objectInput.readUTF();
 		pageURL = objectInput.readUTF();
 		reportParameters = objectInput.readUTF();
-		status = objectInput.readUTF();
 		errorMessage = objectInput.readUTF();
+		status = objectInput.readUTF();
 	}
 
 	@Override
@@ -335,18 +335,18 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 			objectOutput.writeUTF(reportParameters);
 		}
 
-		if (status == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(status);
-		}
-
 		if (errorMessage == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(errorMessage);
+		}
+
+		if (status == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(status);
 		}
 	}
 
@@ -369,7 +369,7 @@ public class EntryCacheModel implements CacheModel<Entry>, Externalizable {
 	public String portletId;
 	public String pageURL;
 	public String reportParameters;
-	public String status;
 	public String errorMessage;
+	public String status;
 
 }

@@ -49,10 +49,10 @@
 		<field name="reportParameters" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="status" type="String" />
 		<field name="errorMessage" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="status" type="String" />
 	</model>
 	<model name="com.liferay.portal.reports.engine.console.model.Source">
 		<field name="uuid" type="String" />

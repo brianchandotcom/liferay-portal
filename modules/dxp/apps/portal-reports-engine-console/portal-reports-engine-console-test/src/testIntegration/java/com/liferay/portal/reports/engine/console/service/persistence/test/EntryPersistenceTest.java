@@ -159,9 +159,9 @@ public class EntryPersistenceTest {
 
 		newEntry.setReportParameters(RandomTestUtil.randomString());
 
-		newEntry.setStatus(RandomTestUtil.randomString());
-
 		newEntry.setErrorMessage(RandomTestUtil.randomString());
+
+		newEntry.setStatus(RandomTestUtil.randomString());
 
 		_entries.add(_persistence.update(newEntry));
 
@@ -207,9 +207,9 @@ public class EntryPersistenceTest {
 		Assert.assertEquals(
 			existingEntry.getReportParameters(),
 			newEntry.getReportParameters());
-		Assert.assertEquals(existingEntry.getStatus(), newEntry.getStatus());
 		Assert.assertEquals(
 			existingEntry.getErrorMessage(), newEntry.getErrorMessage());
+		Assert.assertEquals(existingEntry.getStatus(), newEntry.getStatus());
 	}
 
 	@Test
@@ -242,8 +242,8 @@ public class EntryPersistenceTest {
 			"modifiedDate", true, "definitionId", true, "format", true,
 			"scheduleRequest", true, "startDate", true, "endDate", true,
 			"repeating", true, "recurrence", true, "emailNotifications", true,
-			"emailDelivery", true, "portletId", true, "pageURL", true, "status",
-			true, "errorMessage", true);
+			"emailDelivery", true, "portletId", true, "pageURL", true,
+			"errorMessage", true, "status", true);
 	}
 
 	@Test
@@ -485,9 +485,9 @@ public class EntryPersistenceTest {
 
 		entry.setReportParameters(RandomTestUtil.randomString());
 
-		entry.setStatus(RandomTestUtil.randomString());
-
 		entry.setErrorMessage(RandomTestUtil.randomString());
+
+		entry.setStatus(RandomTestUtil.randomString());
 
 		_entries.add(_persistence.update(entry));
 

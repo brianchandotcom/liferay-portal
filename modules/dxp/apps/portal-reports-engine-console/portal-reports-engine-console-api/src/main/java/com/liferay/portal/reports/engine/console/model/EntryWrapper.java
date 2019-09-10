@@ -60,8 +60,8 @@ public class EntryWrapper
 		attributes.put("portletId", getPortletId());
 		attributes.put("pageURL", getPageURL());
 		attributes.put("reportParameters", getReportParameters());
-		attributes.put("status", getStatus());
 		attributes.put("errorMessage", getErrorMessage());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -183,16 +183,16 @@ public class EntryWrapper
 			setReportParameters(reportParameters);
 		}
 
-		String status = (String)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
 		String errorMessage = (String)attributes.get("errorMessage");
 
 		if (errorMessage != null) {
 			setErrorMessage(errorMessage);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 

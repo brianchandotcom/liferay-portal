@@ -375,21 +375,6 @@ public interface EntryModel
 	public void setReportParameters(String reportParameters);
 
 	/**
-	 * Returns the status of this entry.
-	 *
-	 * @return the status of this entry
-	 */
-	@AutoEscape
-	public String getStatus();
-
-	/**
-	 * Sets the status of this entry.
-	 *
-	 * @param status the status of this entry
-	 */
-	public void setStatus(String status);
-
-	/**
 	 * Returns the error message of this entry.
 	 *
 	 * @return the error message of this entry
@@ -403,5 +388,20 @@ public interface EntryModel
 	 * @param errorMessage the error message of this entry
 	 */
 	public void setErrorMessage(String errorMessage);
+
+	/**
+	 * Returns the status of this entry.
+	 *
+	 * @return the status of this entry
+	 */
+	@AutoEscape
+	public String getStatus();
+
+	/**
+	 * Sets the status of this entry.
+	 *
+	 * @param status the status of this entry
+	 */
+	public void setStatus(String status);
 
 }

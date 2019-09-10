@@ -180,7 +180,7 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
-	@description = "This test covers LPS-92488. It asserts replaced image displays in remote live"
+	@description = "This test covers LPS-83426 and LPS-92488. It views details from management bar in staging site and asserts replaced image displays in remote site."
 	@priority = "5"
 	test StagingRemoteLiveChangeBlogsEntryCoverImage {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";

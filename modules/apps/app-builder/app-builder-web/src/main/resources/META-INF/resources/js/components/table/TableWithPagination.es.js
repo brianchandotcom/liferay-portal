@@ -38,6 +38,8 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 			{totalCount > 5 && (
 				<div className="taglib-search-iterator-page-iterator-bottom">
 					<ClayPaginationWithBar
+						activeDelta={pageSize}
+						activePage={page}
 						deltas={deltas}
 						ellipsisBuffer={3}
 						initialActivePage={page}

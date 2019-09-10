@@ -36,43 +36,6 @@ AUI.add(
 			NAME: 'liferay-kaleo-form-wizard',
 
 			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					instance.form = instance.get('form');
-
-					instance.form.addTarget(instance);
-
-					instance.tabView = instance.get('tabView');
-
-					instance.tabView.addTarget(instance);
-
-					instance.validator = instance.form.formValidator;
-
-					instance.validator.set('validateOnBlur', false);
-
-					instance.validator.set('validateOnInput', true);
-
-					instance.validator.addTarget(instance);
-
-					instance.bindUI();
-				},
-
-				bindUI() {
-					var instance = this;
-
-					instance.after(
-						'tab:selectedChange',
-						instance._afterTabSelectedChange,
-						instance
-					);
-					instance.on(
-						'tab:selectedChange',
-						instance._onTabSelectedChange,
-						instance
-					);
-				},
-
 				_afterTabSelectedChange(event) {
 					var instance = this;
 
@@ -113,6 +76,21 @@ AUI.add(
 					return activeTabIndex + 1;
 				},
 
+				bindUI() {
+					var instance = this;
+
+					instance.after(
+						'tab:selectedChange',
+						instance._afterTabSelectedChange,
+						instance
+					);
+					instance.on(
+						'tab:selectedChange',
+						instance._onTabSelectedChange,
+						instance
+					);
+				},
+
 				getTabViewPanels() {
 					var instance = this;
 
@@ -121,6 +99,28 @@ AUI.add(
 					return instance.tabView
 						.get('contentBox')
 						.all(queries.tabPanel);
+				},
+
+				initializer() {
+					var instance = this;
+
+					instance.form = instance.get('form');
+
+					instance.form.addTarget(instance);
+
+					instance.tabView = instance.get('tabView');
+
+					instance.tabView.addTarget(instance);
+
+					instance.validator = instance.form.formValidator;
+
+					instance.validator.set('validateOnBlur', false);
+
+					instance.validator.set('validateOnInput', true);
+
+					instance.validator.addTarget(instance);
+
+					instance.bindUI();
 				},
 
 				navigate(offset) {
@@ -166,7 +166,7 @@ AUI.add(
 
 					instance.validator.resetAllFields();
 
-					tabViewPanels.each(function(item, index, collection) {
+					tabViewPanels.each(function(item, index) {
 						if (index <= step - 1) {
 							instance.validatePanel(item);
 
@@ -203,28 +203,6 @@ AUI.add(
 		};
 
 		A.mix(ReadOnlyFormBuilderSupport.prototype, {
-			initializer() {
-				var instance = this;
-
-				var formBuilder = instance.get('formBuilder');
-
-				formBuilder.after(
-					'render',
-					instance._afterRenderReadOnlyFormBuilder
-				);
-
-				formBuilder.after(
-					'*:focusedChange',
-					instance._afterFieldFocusedChangeReadOnlyFormBuilder
-				);
-
-				formBuilder.dropContainer.delegate(
-					'mouseover',
-					instance._onMouseOverFieldReadOnlyFormBuilder,
-					'.form-builder-field'
-				);
-			},
-
 			_afterFieldFocusedChangeReadOnlyFormBuilder() {
 				var instance = this;
 
@@ -266,6 +244,28 @@ AUI.add(
 					},
 					visible: false
 				};
+			},
+
+			initializer() {
+				var instance = this;
+
+				var formBuilder = instance.get('formBuilder');
+
+				formBuilder.after(
+					'render',
+					instance._afterRenderReadOnlyFormBuilder
+				);
+
+				formBuilder.after(
+					'*:focusedChange',
+					instance._afterFieldFocusedChangeReadOnlyFormBuilder
+				);
+
+				formBuilder.dropContainer.delegate(
+					'mouseover',
+					instance._onMouseOverFieldReadOnlyFormBuilder,
+					'.form-builder-field'
+				);
 			}
 		});
 
@@ -296,22 +296,6 @@ AUI.add(
 			NAME: 'liferay-kaleo-definition-preview',
 
 			prototype: {
-				initializer() {
-					var instance = this;
-
-					var dialog = instance.get('dialog');
-
-					dialog.bodyNode.prepend(
-						Lang.sub(TPL_MESSAGE, {
-							message: Liferay.Language.get(
-								'press-enter-to-choose-this-field-set-or-use-arrow-keys-to-navigate-through-the-available-field-sets.-press-esc-at-anytime-to-close-this-dialog'
-							)
-						})
-					);
-
-					dialog.on('keyup', instance._onDialogKeyUp, instance);
-				},
-
 				_onDialogKeyUp(event) {
 					var instance = this;
 
@@ -453,7 +437,7 @@ AUI.add(
 
 					var definition;
 
-					availableDefinitions.forEach(function(item, index) {
+					availableDefinitions.forEach(function(item) {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)
@@ -464,6 +448,22 @@ AUI.add(
 					});
 
 					return definition;
+				},
+
+				initializer() {
+					var instance = this;
+
+					var dialog = instance.get('dialog');
+
+					dialog.bodyNode.prepend(
+						Lang.sub(TPL_MESSAGE, {
+							message: Liferay.Language.get(
+								'press-enter-to-choose-this-field-set-or-use-arrow-keys-to-navigate-through-the-available-field-sets.-press-esc-at-anytime-to-close-this-dialog'
+							)
+						})
+					);
+
+					dialog.on('keyup', instance._onDialogKeyUp, instance);
 				},
 
 				preview() {
@@ -491,7 +491,7 @@ AUI.add(
 
 					var selectedDefinitionId = -1;
 
-					availableDefinitions.forEach(function(item, index) {
+					availableDefinitions.forEach(function(item) {
 						if (
 							Lang.toInt(item.definitionId) ===
 							Lang.toInt(definitionId)

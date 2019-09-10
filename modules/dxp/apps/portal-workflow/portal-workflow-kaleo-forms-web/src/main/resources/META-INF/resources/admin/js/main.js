@@ -12,8 +12,6 @@
 AUI.add(
 	'liferay-kaleo-forms-admin',
 	function(A) {
-		var AArray = A.Array;
-
 		var Lang = A.Lang;
 
 		var STEPS_MAP = {
@@ -57,67 +55,6 @@ AUI.add(
 			NAME: 'liferay-kaleo-forms-admin',
 
 			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					instance.nextBtn = instance.one('.kaleo-process-next');
-					instance.prevBtn = instance.one('.kaleo-process-previous');
-					instance.submitBtn = instance.one('.kaleo-process-submit');
-
-					var formWizard = (instance.formWizard = new Liferay.KaleoFormWizard(
-						{
-							form: instance.get('form'),
-							tabView: instance.get('tabView')
-						}
-					));
-
-					instance.bindUI();
-					instance.syncUI();
-				},
-
-				bindUI() {
-					var instance = this;
-
-					var form = instance.get('form');
-
-					form.formNode.on(
-						'submit',
-						instance._onSubmitForm,
-						instance
-					);
-
-					instance.formWizard.after(
-						'currentStepChange',
-						instance._afterCurrentStepChange,
-						instance
-					);
-
-					instance.formWizard.validator.after(
-						['errorField', 'validField'],
-						instance._afterValidateField,
-						instance
-					);
-
-					instance.nextBtn.on(
-						'click',
-						instance._onClickNext,
-						instance
-					);
-					instance.prevBtn.on(
-						'click',
-						instance._onClickPrev,
-						instance
-					);
-				},
-
-				syncUI() {
-					var instance = this;
-
-					instance.updateNavigationControls();
-
-					instance.formWizard.validator.resetAllFields();
-				},
-
 				_afterCurrentStepChange(event) {
 					var instance = this;
 
@@ -180,8 +117,6 @@ AUI.add(
 				},
 
 				_getInputLocalizedValuesMap(inputLocalized, name) {
-					var instance = this;
-
 					var localizedValuesMap = {};
 
 					var translatedLanguages = inputLocalized
@@ -192,11 +127,7 @@ AUI.add(
 						'translatedLanguages' + Lang.String.capitalize(name)
 					] = translatedLanguages.join();
 
-					translatedLanguages.forEach(function(
-						item,
-						index,
-						collection
-					) {
+					translatedLanguages.forEach(function(item) {
 						localizedValuesMap[
 							name + item
 						] = inputLocalized.getValue(item);
@@ -319,7 +250,7 @@ AUI.add(
 									formsSearchContainer +
 										' .lfr-icon-menu .dropdown-toggle'
 								),
-								function(item, index) {
+								function(item) {
 									Liferay.Menu.register(item.get('id'));
 								}
 							);
@@ -329,13 +260,13 @@ AUI.add(
 					);
 				},
 
-				_onClickNext(event) {
+				_onClickNext() {
 					var instance = this;
 
 					instance.formWizard.navigate(1);
 				},
 
-				_onClickPrev(event) {
+				_onClickPrev() {
 					var instance = this;
 
 					instance.formWizard.navigate(-1);
@@ -351,12 +282,66 @@ AUI.add(
 					}
 				},
 
-				saveInPortletSession(data, dialogId) {
+				bindUI() {
+					var instance = this;
+
+					var form = instance.get('form');
+
+					form.formNode.on(
+						'submit',
+						instance._onSubmitForm,
+						instance
+					);
+
+					instance.formWizard.after(
+						'currentStepChange',
+						instance._afterCurrentStepChange,
+						instance
+					);
+
+					instance.formWizard.validator.after(
+						['errorField', 'validField'],
+						instance._afterValidateField,
+						instance
+					);
+
+					instance.nextBtn.on(
+						'click',
+						instance._onClickNext,
+						instance
+					);
+					instance.prevBtn.on(
+						'click',
+						instance._onClickPrev,
+						instance
+					);
+				},
+
+				initializer() {
+					var instance = this;
+
+					instance.nextBtn = instance.one('.kaleo-process-next');
+					instance.prevBtn = instance.one('.kaleo-process-previous');
+					instance.submitBtn = instance.one('.kaleo-process-submit');
+
+					instance.bindUI();
+					instance.syncUI();
+				},
+
+				saveInPortletSession(data) {
 					var instance = this;
 
 					A.io.request(instance.get('saveInPortletSessionURL'), {
 						data: instance.ns(data)
 					});
+				},
+
+				syncUI() {
+					var instance = this;
+
+					instance.updateNavigationControls();
+
+					instance.formWizard.validator.resetAllFields();
 				},
 
 				updateNavigationControls(currentStepValid) {

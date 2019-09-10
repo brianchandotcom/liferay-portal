@@ -759,7 +759,7 @@ public class EditAssetListDisplayContext {
 
 		_referencedModelsGroupIds =
 			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				_themeDisplay.getScopeGroupId(), true);
+				getSelectedGroupIds(), true);
 
 		return _referencedModelsGroupIds;
 	}

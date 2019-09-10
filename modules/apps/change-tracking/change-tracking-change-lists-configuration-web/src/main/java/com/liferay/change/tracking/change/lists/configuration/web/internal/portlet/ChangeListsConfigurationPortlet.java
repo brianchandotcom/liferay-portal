@@ -77,8 +77,9 @@ public class ChangeListsConfigurationPortlet extends MVCPortlet {
 			ChangeListsConfigurationDisplayContext
 				changeListsConfigurationDisplayContext =
 					new ChangeListsConfigurationDisplayContext(
+						_ctPreferencesLocalService,
 						_portal.getHttpServletRequest(renderRequest),
-						renderResponse, _ctPreferencesLocalService);
+						renderResponse);
 
 			renderRequest.setAttribute(
 				CTConfigurationConstants.

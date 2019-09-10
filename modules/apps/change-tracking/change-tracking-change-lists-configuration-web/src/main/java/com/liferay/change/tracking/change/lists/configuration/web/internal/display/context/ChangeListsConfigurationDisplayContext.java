@@ -39,12 +39,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsConfigurationDisplayContext {
 
 	public ChangeListsConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		CTPreferencesLocalService ctPreferencesLocalService) {
+		CTPreferencesLocalService ctPreferencesLocalService,
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
+		_ctPreferencesLocalService = ctPreferencesLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
-		_ctPreferencesLocalService = ctPreferencesLocalService;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.0-milestone.3",
-		"@clayui/css": "3.0.0-milestone.3",
-		"@clayui/icon": "3.0.0-milestone.3",
-		"@clayui/modal": "3.0.0-milestone.3",
-		"clay-button": "2.18.0",
-		"clay-icon": "2.18.0",
+		"@clayui/button": "3.0.0-alpha.1",
+		"@clayui/css": "3.0.0-alpha.1",
+		"@clayui/icon": "3.0.0-alpha.1",
+		"@clayui/modal": "3.0.0-alpha.1",
+		"clay-button": "2.18.1",
+		"clay-icon": "2.18.1",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal-soy": "2.16.8",

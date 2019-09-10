@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"clay-button": "2.18.0",
-		"clay-multi-select": "2.18.0",
-		"clay-radio": "2.18.0",
+		"clay-button": "2.18.1",
+		"clay-multi-select": "2.18.1",
+		"clay-radio": "2.18.1",
 		"clipboard": "2.0.4",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",

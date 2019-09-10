@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"clay-dropdown": "2.18.0",
-		"clay-label": "2.18.0",
+		"clay-dropdown": "2.18.1",
+		"clay-label": "2.18.1",
 		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",

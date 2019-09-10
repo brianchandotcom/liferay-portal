@@ -12,12 +12,36 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 
-import ImageSlide from "./ImageSlide.es";
 import InfoPanel from "./InfoPanel.es";
-import Arrow from "./Arrow.es";
+
+const Arrow = ({ direction, handleClick }) => (
+	<div className={`pull-${direction}`}>
+		<ClayButton
+			borderless
+			className="icon-arrow"
+			displayType="secondary"
+			monospaced
+			onClick={handleClick}
+			size="lg"
+		>
+			<ClayIcon symbol={`angle-${direction}`} />
+		</ClayButton>
+	</div>
+);
+
+const ImageSlide = ({ url }) => {
+	const styles = {
+		cursor: "pointer",
+		maxHeight: `100%`
+	};
+
+	return <img alt="alt" src={url} style={styles} />;
+};
 
 class Carousel extends Component {
 	static propTypes = {

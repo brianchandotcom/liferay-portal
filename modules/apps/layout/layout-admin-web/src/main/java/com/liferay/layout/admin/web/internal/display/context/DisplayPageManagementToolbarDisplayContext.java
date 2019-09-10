@@ -127,8 +127,6 @@ public class DisplayPageManagementToolbarDisplayContext
 		addDisplayPageURL.setParameter(
 			ActionRequest.ACTION_NAME, "/layout/add_display_page");
 		addDisplayPageURL.setParameter(
-			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
-		addDisplayPageURL.setParameter(
 			"backURL", _themeDisplay.getURLCurrent());
 		addDisplayPageURL.setParameter(
 			"type",

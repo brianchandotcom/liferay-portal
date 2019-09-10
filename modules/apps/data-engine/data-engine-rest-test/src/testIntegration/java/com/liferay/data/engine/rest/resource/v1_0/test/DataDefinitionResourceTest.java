@@ -44,6 +44,18 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@Override
+	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+		throws Exception {
+
+		String fieldTypes =
+			dataDefinitionResource.
+				getDataDefinitionDataDefinitionFieldFieldType();
+
+		Assert.assertNotNull(fieldTypes);
+		Assert.assertFalse(fieldTypes.isEmpty());
+	}
+
+	@Override
 	@Test
 	public void testGetSiteDataDefinitionsPage() throws Exception {
 		super.testGetSiteDataDefinitionsPage();

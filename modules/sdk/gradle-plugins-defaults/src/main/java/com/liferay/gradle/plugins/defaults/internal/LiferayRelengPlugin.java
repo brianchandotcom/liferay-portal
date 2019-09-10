@@ -999,6 +999,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			if (!line.contains(
 					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
 
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle("{} has new commits", project);
+				}
+
 				return true;
 			}
 		}
@@ -1030,6 +1034,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle(
+						"Parent theme for {} has new commits", project);
+				}
+
 				return true;
 			}
 		}
@@ -1058,6 +1067,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isLifecycleEnabled()) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Included source files for ");
+					sb.append(project.getPath());
+					sb.append(" have new commits");
+
+					for (File file : source.getFiles()) {
+						sb.append("\n- ");
+						sb.append(file);
+					}
+
+					logger.lifecycle(sb.toString());
+				}
+
 				return true;
 			}
 		}

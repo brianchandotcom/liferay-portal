@@ -161,6 +161,12 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 			String fieldValue = fieldValueJSONObject.getString("value");
 
+			if (ddmStructure.getFieldRequired(fieldName) &&
+				Validator.isBlank(fieldValue)) {
+
+				throw new StorageFieldValueException.RequiredValue(fieldName);
+			}
+
 			String fieldType = ddmStructure.getFieldType(fieldName);
 
 			if (fieldType.equals("ddm-image")) {

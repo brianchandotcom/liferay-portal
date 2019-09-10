@@ -18,7 +18,7 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.change.tracking.sql.CTSQLHelper;
+import com.liferay.portal.change.tracking.sql.CTSQLContextFactory;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersisten
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,26 +38,30 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(immediate = true, service = CTSQLHelper.class)
-public class CTSQLHelperImpl implements CTSQLHelper {
+@Component(immediate = true, service = CTSQLContextFactory.class)
+public class CTSQLContextFactoryImpl implements CTSQLContextFactory {
 
 	@Override
-	public boolean visitExcludes(
+	public CTSQLContext createCTSQLContext(
 		long ctCollectionId, String tableName, String primaryColumnName,
-		long classNameId, ExcludeVisitor excludeVisitor) {
+		long classNameId) {
 
 		if (ctCollectionId < 0) {
-			return true;
+			return new CTSQLContextImpl(Collections.emptyList(), true, false);
 		}
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTEntries(
 			ctCollectionId, classNameId);
 
 		if (ctEntries.isEmpty()) {
-			return false;
+			return new CTSQLContextImpl(Collections.emptyList(), false, false);
 		}
 
+		List<Long> excludePKs = new ArrayList<>();
+
 		boolean added = false;
+
+		boolean modified = false;
 
 		for (CTEntry ctEntry : ctEntries) {
 			int changeType = ctEntry.getChangeType();
@@ -63,13 +69,12 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 			if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
 				added = true;
 			}
-			else if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
-				excludeVisitor.acceptExclude(
-					ctEntry.getModelClassPK(), ExcludeType.DELETE);
-			}
 			else {
-				excludeVisitor.acceptExclude(
-					ctEntry.getModelClassPK(), ExcludeType.MODIFY);
+				excludePKs.add(ctEntry.getModelClassPK());
+
+				if (changeType == CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
+					modified = true;
+				}
 			}
 		}
 
@@ -80,7 +85,7 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 				_log.warn("No CTService found for classNameId " + classNameId);
 			}
 
-			return added;
+			return new CTSQLContextImpl(excludePKs, added, modified);
 		}
 
 		CTPersistence<?> ctPersistence = ctService.getCTPersistence();
@@ -89,13 +94,15 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 			ctPersistence.getUniqueIndexColumnNames();
 
 		if (uniqueIndexColumnNames.isEmpty()) {
-			return added;
+			return new CTSQLContextImpl(excludePKs, added, modified);
 		}
 
 		Session session = ctPersistence.getCurrentSession();
 
 		org.hibernate.Session wrappedSession =
 			(org.hibernate.Session)session.getWrappedSession();
+
+		boolean[] modifiedMarker = new boolean[1];
 
 		wrappedSession.doWork(
 			connection -> {
@@ -129,23 +136,56 @@ public class CTSQLHelperImpl implements CTSQLHelper {
 						ResultSet rs = ps.executeQuery()) {
 
 						while (rs.next()) {
-							excludeVisitor.acceptExclude(
-								rs.getLong(1), ExcludeType.CONFLICT);
+							excludePKs.add(rs.getLong(1));
+
+							modifiedMarker[0] = true;
 						}
 					}
 				}
 			});
 
-		return added;
+		return new CTSQLContextImpl(
+			excludePKs, added, modified || modifiedMarker[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CTSQLHelperImpl.class);
+		CTSQLContextFactoryImpl.class);
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTServiceRegistry _ctServiceRegistry;
+
+	private static class CTSQLContextImpl implements CTSQLContext {
+
+		@Override
+		public List<Long> getExcludePKs() {
+			return _excludePKs;
+		}
+
+		@Override
+		public boolean hasAdded() {
+			return _added;
+		}
+
+		@Override
+		public boolean hasModified() {
+			return _modified;
+		}
+
+		private CTSQLContextImpl(
+			List<Long> excludePKs, boolean added, boolean modified) {
+
+			_excludePKs = excludePKs;
+			_added = added;
+			_modified = modified;
+		}
+
+		private final boolean _added;
+		private final List<Long> _excludePKs;
+		private final boolean _modified;
+
+	}
 
 }

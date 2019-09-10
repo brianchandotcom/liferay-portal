@@ -17,7 +17,7 @@ package com.liferay.portal.change.tracking.internal;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
-import com.liferay.portal.change.tracking.sql.CTSQLHelper;
+import com.liferay.portal.change.tracking.sql.CTSQLContextFactory;
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
@@ -262,7 +262,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile CTSQLHelper _ctSQLHelper;
+	private volatile CTSQLContextFactory _ctSQLContextFactory;
 
 	private PortalCache<String, String> _portalCache;
 
@@ -1062,31 +1062,23 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 				return equalsToCTCollectionIdZero;
 			}
 
-			CTSQLHelper ctSQLHelper = _ctSQLHelper;
+			CTSQLContextFactory ctSQLContextFactory = _ctSQLContextFactory;
 
-			if (ctSQLHelper == null) {
+			if (ctSQLContextFactory == null) {
 				return equalsToCTCollectionIdZero;
 			}
 
-			List<Expression> notInExpressions = new ArrayList<>();
+			CTSQLContextFactory.CTSQLContext ctSQLContext =
+				ctSQLContextFactory.createCTSQLContext(
+					ctCollectionId, tableName,
+					ctModelRegistration.getPrimaryColumnName(),
+					_classNameLocalService.getClassNameId(
+						ctModelRegistration.getModelClass()));
 
-			boolean[] modified = new boolean[1];
+			List<Long> excludePKs = ctSQLContext.getExcludePKs();
 
-			boolean added = ctSQLHelper.visitExcludes(
-				ctCollectionId, tableName,
-				ctModelRegistration.getPrimaryColumnName(),
-				_classNameLocalService.getClassNameId(
-					ctModelRegistration.getModelClass()),
-				(primaryKey, excludeType) -> {
-					notInExpressions.add(new LongValue(primaryKey));
-
-					if (excludeType != CTSQLHelper.ExcludeType.DELETE) {
-						modified[0] = true;
-					}
-				});
-
-			if (notInExpressions.isEmpty()) {
-				if (added) {
+			if (excludePKs.isEmpty()) {
+				if (ctSQLContext.hasAdded()) {
 					EqualsTo equalsToCTCollectionIdCurrent = new EqualsTo();
 
 					equalsToCTCollectionIdCurrent.setLeftExpression(
@@ -1103,7 +1095,14 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 				return equalsToCTCollectionIdZero;
 			}
 
-			if (added || modified[0]) {
+			List<Expression> notInExpressions = new ArrayList<>(
+				excludePKs.size());
+
+			for (Long excludePK : excludePKs) {
+				notInExpressions.add(new LongValue(excludePK));
+			}
+
+			if (ctSQLContext.hasAdded() || ctSQLContext.hasModified()) {
 				InExpression inExpression = new InExpression(
 					new Column(
 						table, ctModelRegistration.getPrimaryColumnName()),

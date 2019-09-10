@@ -14,25 +14,24 @@
 
 package com.liferay.portal.change.tracking.sql;
 
+import java.util.List;
+
 /**
  * @author Preston Crary
  */
-public interface CTSQLHelper {
+public interface CTSQLContextFactory {
 
-	public boolean visitExcludes(
+	public CTSQLContext createCTSQLContext(
 		long ctCollectionId, String tableName, String primaryColumnName,
-		long classNameId, ExcludeVisitor excludeVisitor);
+		long classNameId);
 
-	public enum ExcludeType {
+	public interface CTSQLContext {
 
-		CONFLICT, DELETE, MODIFY
+		public List<Long> getExcludePKs();
 
-	}
+		public boolean hasAdded();
 
-	@FunctionalInterface
-	public interface ExcludeVisitor {
-
-		public void acceptExclude(long primaryKey, ExcludeType excludeType);
+		public boolean hasModified();
 
 	}
 

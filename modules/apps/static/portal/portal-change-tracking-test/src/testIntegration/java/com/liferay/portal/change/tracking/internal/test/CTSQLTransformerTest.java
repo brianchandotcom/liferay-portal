@@ -1075,7 +1075,8 @@ public class CTSQLTransformerTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.change.tracking.internal.CTSQLHelperImpl",
+					"com.liferay.change.tracking.internal." +
+						"CTSQLContextFactoryImpl",
 					Level.WARN)) {
 
 			String newSQL = _ctSQLTransformer.transform(inputSQL);

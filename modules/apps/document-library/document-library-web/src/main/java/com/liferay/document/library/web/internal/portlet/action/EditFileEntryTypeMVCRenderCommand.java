@@ -56,66 +56,62 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		DLFileEntryType dlFileEntryType = null;
-
 		try {
 			long fileEntryTypeId = ParamUtil.getLong(
 				renderRequest, "fileEntryTypeId");
 
-			if (fileEntryTypeId > 0) {
-				dlFileEntryType = _dlFileEntryTypeService.getFileEntryType(
-					fileEntryTypeId);
-
-				renderRequest.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
-
-				DDMStructure ddmStructure =
-					DDMStructureManagerUtil.fetchStructure(
-						dlFileEntryType.getGroupId(),
-						_portal.getClassNameId(DLFileEntryMetadata.class),
-						DLUtil.getDDMStructureKey(dlFileEntryType));
-
-				if (ddmStructure == null) {
-					ddmStructure = DDMStructureManagerUtil.fetchStructure(
-						dlFileEntryType.getGroupId(),
-						_portal.getClassNameId(DLFileEntryMetadata.class),
-						DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
-				}
-
-				if (ddmStructure == null) {
-					ddmStructure = DDMStructureManagerUtil.fetchStructure(
-						dlFileEntryType.getGroupId(),
-						_portal.getClassNameId(DLFileEntryMetadata.class),
-						dlFileEntryType.getFileEntryTypeKey());
-				}
-
-				renderRequest.setAttribute(
-					WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-					ddmStructure);
+			if (fileEntryTypeId <= 0) {
+				return "/document_library/edit_file_entry_type.jsp";
 			}
+
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
+
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
+				_getDDMStructure(dlFileEntryType));
+
+			return "/document_library/edit_file_entry_type.jsp";
+		}
+		catch (NoSuchFileEntryTypeException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/document_library/error.jsp";
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryTypeException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
 			throw new PortletException(e);
 		}
-
-		return "/document_library/edit_file_entry_type.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeService(
-		DLFileEntryTypeService dlFileEntryTypeService) {
+	private DDMStructure _getDDMStructure(DLFileEntryType dlFileEntryType) {
+		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
+			dlFileEntryType.getGroupId(),
+			_portal.getClassNameId(DLFileEntryMetadata.class),
+			DLUtil.getDDMStructureKey(dlFileEntryType));
 
-		_dlFileEntryTypeService = dlFileEntryTypeService;
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
+		ddmStructure = DDMStructureManagerUtil.fetchStructure(
+			dlFileEntryType.getGroupId(),
+			_portal.getClassNameId(DLFileEntryMetadata.class),
+			DLUtil.getDeprecatedDDMStructureKey(dlFileEntryType));
+
+		if (ddmStructure != null) {
+			return ddmStructure;
+		}
+
+		return DDMStructureManagerUtil.fetchStructure(
+			dlFileEntryType.getGroupId(),
+			_portal.getClassNameId(DLFileEntryMetadata.class),
+			dlFileEntryType.getFileEntryTypeKey());
 	}
 
+	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Reference

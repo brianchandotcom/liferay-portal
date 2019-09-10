@@ -18,7 +18,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = ({handleClose, handleDone, headerTitle}) => (
+const Header = ({handleClickClose, handleClickDone, headerTitle}) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
 			<ClayNavigationBar>
@@ -27,7 +27,7 @@ const Header = ({handleClose, handleDone, headerTitle}) => (
 						borderless
 						displayType="secondary"
 						monospaced
-						onClick={handleClose}
+						onClick={handleClickClose}
 					>
 						<ClayIcon symbol="angle-left"  />
 					</ClayButton>
@@ -62,7 +62,7 @@ const Header = ({handleClose, handleDone, headerTitle}) => (
 
 				<ClayButton
 					displayType="primary"
-					onClick={handleDone}
+					onClick={handleClickDone}
 				>
 					{Liferay.Language.get('done')}
 				</ClayButton>
@@ -73,8 +73,8 @@ const Header = ({handleClose, handleDone, headerTitle}) => (
 );
 
 Header.propTypes = {
-	handleAdd: PropTypes.func.isRequired,
-	handleClose: PropTypes.func.isRequired,
+	handleClickClose: PropTypes.func.isRequired,
+	handleClickDone: PropTypes.func.isRequired,
 	headerTitle: PropTypes.string.isRequired
 };
 

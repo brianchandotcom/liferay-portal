@@ -40,18 +40,21 @@ class ItemSelectorPreview extends Component {
 			items: items,
 			openViewer: false
 		};
+	}
 
+	componentDidMount() {
+		const items = this.state.items;
 		const selector = this.props.selector;
 
 		items.forEach((item, index) => {
-			let cliclableItem = item;
+			let clicableItem = item;
 
 			if (selector) {
-				cliclableItem = item.querySelector(selector);
+				clicableItem = item.querySelector(selector);
 			}
 
-			if (cliclableItem) {
-				cliclableItem.addEventListener('click', e => {
+			if (clicableItem) {
+				clicableItem.addEventListener('click', e => {
 					e.preventDefault();
 					e.stopPropagation();
 
@@ -61,21 +64,18 @@ class ItemSelectorPreview extends Component {
 						openViewer: true
 					});
 				});
-
 			}
 		});
 	}
 
-	handleClose = () => {
+	handleClickClose = () => {
 		this.setState({openViewer: false});
 	};
 
-	handleDone = () => {
+	handleClickDone = () => {
 		this.setState({openViewer: false});
 
 		const selectedItem = this.state.currentItem;
-
-		console.log(selectedItem);
 
 		this.props.handleSelectedItem(selectedItem);
 	};
@@ -101,8 +101,8 @@ class ItemSelectorPreview extends Component {
 					<div className="fullscreen item-selector-preview">
 						<ClayIconSpriteContext.Provider value={spritemap}>
 							<Header
-								handleClose={this.handleClose}
-								handleDone={this.handleDone}
+								handleClickClose={this.handleClickClose}
+								handleClickDone={this.handleClickDone}
 								headerTitle={this.props.headerTitle}
 							/>
 							<Carousel

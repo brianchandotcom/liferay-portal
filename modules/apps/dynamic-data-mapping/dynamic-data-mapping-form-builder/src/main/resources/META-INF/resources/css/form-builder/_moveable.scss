@@ -51,7 +51,7 @@ $c: '.ddm-form-builder';
 	}
 
 	.col.col-empty.lfr-initial-col .ddm-target,
-	.ddm-parent-dragging {
+	.dragging {
 		background-color: #f7f8f9;
 		border: 2px dashed #a7a9bc;
 		border-radius: 4px;
@@ -71,14 +71,14 @@ $c: '.ddm-form-builder';
 				animation-iteration-count: infinite;
 				animation-name: drop-color;
 				animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-				background-color: $light-blue-500;
+				background-color: $strong-blue;
 				border-color: $active-blue;
 				color: $active-blue;
 			}
 
 			&.targetOver,
 			&.target-over {
-				color: $light-blue-500;
+				color: $strong-blue;
 
 				.ddm-empty-page-message {
 					display: none;
@@ -91,7 +91,7 @@ $c: '.ddm-form-builder';
 				}
 
 				100% {
-					background-color: $dark-blue-100;
+					background-color: $dark-blue;
 				}
 			}
 		}

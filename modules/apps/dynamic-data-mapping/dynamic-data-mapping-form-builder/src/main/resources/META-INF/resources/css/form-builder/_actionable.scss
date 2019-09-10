@@ -1,0 +1,42 @@
+.ddm-field-actions-container {
+	background-color: $active-blue;
+	border: 2px solid $active-blue;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	color: #fff;
+	display: none;
+	height: 28px;
+	justify-content: space-between;
+	left: -2px;
+	padding: 2px 0 2px 8px;
+	position: absolute;
+	top: -30px;
+	width: auto;
+	z-index: 11;
+
+	.actions-label {
+		font-size: 14px;
+		text-transform: capitalize;
+	}
+
+	.dropdown-action button {
+		color: #fff;
+		margin-right: -8px;
+		margin-top: -4px;
+	}
+}
+
+.ddm-field-container {
+	&:hover,
+	&.dragging,
+	&.expanded,
+	&.selected {
+		.ddm-field-actions-container {
+			background-color: $active-blue;
+			border-color: $active-blue;
+			display: flex;
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+}

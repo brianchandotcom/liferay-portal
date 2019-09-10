@@ -20,13 +20,6 @@ $c: '.ddm-form-builder';
 		}
 	}
 
-	.ddm-parent-dragging {
-		.ddm-resize-handle-right,
-		.ddm-resize-handle-left {
-			display: none;
-		}
-	}
-
 	.ddm-field-container {
 		margin: 0 1px;
 
@@ -58,7 +51,9 @@ $c: '.ddm-form-builder';
 
 	.resizeable .ddm-field-container {
 		&:hover,
-		&:active {
+		&.dragging,
+		&.expanded,
+		&.selected {
 			.ddm-resize-handle-left,
 			.ddm-resize-handle-right {
 				background-color: #1c67fb;

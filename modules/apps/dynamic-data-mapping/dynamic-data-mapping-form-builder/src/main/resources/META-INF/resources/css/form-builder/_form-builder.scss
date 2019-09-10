@@ -1,3 +1,4 @@
+@import './actionable';
 @import './field-settings';
 @import './field-types-dropdown';
 @import './field-types-panel';
@@ -26,19 +27,13 @@ $c: '.ddm-form-builder';
 		display: none;
 	}
 
-	.ddm-parent-dragging {
-		border: none;
-
-		.ddm-field-actions-container {
-			display: none;
-		}
-	}
-
 	.ddm-field-container {
 		border: 2px solid transparent;
 
 		&:hover,
-		&:active {
+		&.dragging,
+		&.expanded,
+		&.selected {
 			border-color: $active-blue;
 		}
 	}

@@ -10,6 +10,24 @@
  */
 
 /**
+ * Sets parameters on a url.
+ * @param {String} baseUrl The base url to modify
+ * @param {Object} params Key-value pairs for parameters to set.
+ * @return {String} The complete url string.
+ */
+export function buildUrl(baseUrl, params) {
+	const url = new URL(baseUrl);
+
+	const searchParams = url.searchParams;
+
+	if (params) {
+		Object.keys(params).forEach(key => searchParams.set(key, params[key]));
+	}
+
+	return url.href;
+}
+
+/**
  * Inserts an item into a list at the specified index.
  * @param {Array} list The list where the item will be inserted into.
  * @param {number} index The position where the item will be inserted.

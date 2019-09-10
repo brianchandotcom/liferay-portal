@@ -19,6 +19,7 @@ import {
 
 import '../../src/main/resources/META-INF/resources/css/main.scss';
 
+import AddResult from '../../src/main/resources/META-INF/resources/js/components/add_result/AddResult.es';
 import Alias from '../../src/main/resources/META-INF/resources/js/components/alias/Alias.es';
 import ClayEmptyState from '../../src/main/resources/META-INF/resources/js/components/shared/ClayEmptyState.es';
 import FilterDisplay from '../../src/main/resources/META-INF/resources/js/components/list/FilterDisplay.es';
@@ -75,6 +76,13 @@ storiesOf('Pages|ResultsRankingForm', module).add('default', () => (
 		initialAliases={['one', 'two', 'three']}
 		saveActionUrl="#"
 		searchQuery={text('Search Term', 'example')}
+	/>
+));
+
+storiesOf('Components|AddResult', module).add('default', () => (
+	<AddResult
+		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"
+		onAddResultSubmit={action('onAddResultSubmit')}
 	/>
 ));
 

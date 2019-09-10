@@ -24,8 +24,6 @@ LanguageUtil.sub = (key, args) => [key, args];
  * Mocks fetchDocuments for consistent data to test. Uses the getMockResultsData
  * in order to mock the fetch formula
  */
-
-// eslint-disable-next-line no-undef
 APIUtil.fetchDocuments = jest.fn((url, config) => {
 	const {from, keywords, size} = config;
 

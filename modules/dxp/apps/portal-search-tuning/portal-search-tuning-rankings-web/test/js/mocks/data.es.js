@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-export const FETCH_HIDDEN_DOCUMENTS_URL = '/getHidden';
+export const FETCH_HIDDEN_DOCUMENTS_URL = 'https://getHidden';
 
-export const FETCH_SEARCH_DOCUMENTS_URL = '/getSearch';
+export const FETCH_SEARCH_DOCUMENTS_URL = 'https://getSearch';
 
-export const FETCH_VISIBLE_DOCUMENTS_URL = '/getVisible';
+export const FETCH_VISIBLE_DOCUMENTS_URL = 'https://getVisible';
 
 export function getMockResultsData(
 	size = 10,

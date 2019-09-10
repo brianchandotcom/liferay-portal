@@ -22,13 +22,6 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-/* eslint-disable no-unused-vars */
-jest.mock('react-dnd', () => ({
-	DragSource: el => el => el,
-	DropTarget: el => el => el
-}));
-/* eslint-enable no-unused-vars */
-
 const MODAL_ID = 'add-result-modal';
 const RESULTS_LIST_ID = 'add-result-items';
 

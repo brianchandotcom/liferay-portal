@@ -9,39 +9,19 @@
  * distribution rights of the Software.
  */
 
-/**
- * List of deltas in a shape compatible with ClayPaginationWithBar.
- */
-export const DELTAS = [
-	{
-		label: 5
-	},
-	{
-		label: 10
-	},
-	{
-		label: 20
-	},
-	{
-		label: 40
-	},
-	{
-		label: 50
-	}
-];
+import {useEffect, useRef} from 'react';
 
 /**
- * Delta that will be initially selected.
+ * Stores a previous prop or state.
+ * @see {@link https://reactjs.org/docs/hooks-faq.html#how-to-get-the-previous-props-or-state}
+ * @param {*} value
  */
-export const DEFAULT_DELTA = DELTAS[4];
+export function usePrevious(value) {
+	const ref = useRef();
 
-export const KEY_CODES = {
-	ARROW_DOWN: 'ArrowDown',
-	ARROW_UP: 'ArrowUp',
-	ENTER: 'Enter',
-	H: 'h',
-	P: 'p',
-	S: 's',
-	SPACE: ' ',
-	TAB: 'Tab'
-};
+	useEffect(() => {
+		ref.current = value;
+	});
+
+	return ref.current;
+}

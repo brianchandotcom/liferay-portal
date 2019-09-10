@@ -969,6 +969,15 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
+"@clayui/data-provider@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/data-provider/-/data-provider-3.0.0-milestone.3.tgz#adf121b086eafc15d2dd865c3da1503759ac9ee2"
+  integrity sha512-DFP9rcnjXqYKOkL0V8VQ+IbnqfvA11nVs3U+TkM3CiomUhJrwhFYmBYHxcXqXeUmQOq8+K982yLJj/KxP8PGwg==
+  dependencies:
+    "@clayui/shared" "^3.0.0-milestone.3"
+    fast-json-stable-stringify "^2.0.0"
+    warning "^4.0.3"
+
 "@clayui/drop-down@3.0.0-milestone.3":
   version "3.0.0-milestone.3"
   resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.0.0-milestone.3.tgz#a80db3224877d8d3689013b55b5a45ee3d61c3cb"
@@ -1061,6 +1070,17 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
+"@clayui/pagination@3.0.0-alpha.1":
+  version "3.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0-alpha.1.tgz#18908d4d951a3d516ab631b2824a1fc8be3026eb"
+  integrity sha512-bHHMuj2/UFb/r52V+n3uxYbyDKTbYUn4TcfMCWK3xTukbLWiOAViVIaCYuZmP9RxSLSFgpdiqgpvcc5foNKjqQ==
+  dependencies:
+    "@clayui/button" "^3.0.0-alpha.1"
+    "@clayui/drop-down" "^3.0.0-alpha.1"
+    "@clayui/icon" "^3.0.0-alpha.1"
+    "@clayui/shared" "^3.0.0-alpha.1"
+    classnames "^2.2.6"
+
 "@clayui/shared@^3.0.0-alpha.1":
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-alpha.1.tgz#d638ecab5685a32a382dbbb7e5e3de2d8fd3d07c"
@@ -1068,17 +1088,6 @@
   dependencies:
     "@clayui/button" "^3.0.0-alpha.1"
     "@clayui/link" "^3.0.0-alpha.1"
-    classnames "^2.2.6"
-
-"@clayui/pagination@3.0.0-milestone.3":
-  version "3.0.0-milestone.3"
-  resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0-milestone.3.tgz#db18efea14dae794399c13a16bd372ddcdd4859e"
-  integrity sha512-H5icARgTFZlQIZJj6dg3pk6yntPeNKFKUv8+qYH3broKioU09G6UZJKVs/YuLB7A/XEWJPsIafaIUkzalT3oGg==
-  dependencies:
-    "@clayui/button" "^3.0.0-milestone.3"
-    "@clayui/drop-down" "^3.0.0-milestone.3"
-    "@clayui/icon" "^3.0.0-milestone.3"
-    "@clayui/shared" "^3.0.0-milestone.3"
     classnames "^2.2.6"
 
 "@clayui/shared@^3.0.0-milestone.3":

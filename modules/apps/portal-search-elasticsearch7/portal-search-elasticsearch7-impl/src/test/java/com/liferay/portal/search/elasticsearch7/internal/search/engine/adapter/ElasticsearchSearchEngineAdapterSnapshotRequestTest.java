@@ -116,7 +116,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		Assert.assertEquals(
 			SnapshotState.SUCCESS, snapshotDetails.getSnapshotState());
 
-		Assert.assertTrue(snapshotDetails.getSuccessfulShards() > 1);
+		Assert.assertTrue(snapshotDetails.getSuccessfulShards() > 0);
 
 		List<SnapshotInfo> snapshotInfos = getSnapshotInfo(
 			"test_create_snapshot");

@@ -19,6 +19,7 @@
 		hovered: bool,
 		key: string,
 		label: string,
+		parentId: string,
 		removable: bool,
 		selected: bool
 	]}
@@ -67,6 +68,7 @@
 		hovered: bool,
 		key: string,
 		label: string,
+		parentId: string,
 		removable: bool,
 		selected: bool
 	]}
@@ -163,7 +165,8 @@
 		elementType: string,
 		expanded: bool,
 		key: string,
-		label: string
+		label: string,
+		parentId: string
 	]}
 	{@param? handleElementClick: any}
 	{@param? spritemap: string}
@@ -189,6 +192,10 @@
 			data-element-type="{$node.elementType}"
 			data-fragments-editor-item-id="{$node.elementId}"
 			data-fragments-editor-item-type="{$node.elementType}"
+		{/if}
+
+		{if $node.parentId}
+			data-fragment-entry-link-id="{$node.parentId}"
 		{/if}
 
 		{if $node.children and length($node.children) > 0}

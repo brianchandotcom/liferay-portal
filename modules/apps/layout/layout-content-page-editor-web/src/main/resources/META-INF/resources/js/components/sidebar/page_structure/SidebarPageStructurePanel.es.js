@@ -104,7 +104,8 @@ class SidebarPageStructurePanel extends Component {
 						elementId: `${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
 						elementType: FRAGMENTS_EDITOR_ITEM_TYPES.editable,
 						key: `${FRAGMENTS_EDITOR_ITEM_TYPES.editable}-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
-						label: editableValueKey
+						label: editableValueKey,
+						parentId: fragmentEntryLink.fragmentEntryLinkId
 					})
 				),
 				...Object.keys(
@@ -117,7 +118,8 @@ class SidebarPageStructurePanel extends Component {
 						elementType:
 							FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable,
 						key: `${FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable}-${fragmentEntryLink.fragmentEntryLinkId}-${editableValueKey}`,
-						label: editableValueKey
+						label: editableValueKey,
+						parentId: fragmentEntryLink.fragmentEntryLinkId
 					})
 				)
 			],
@@ -204,6 +206,7 @@ class SidebarPageStructurePanel extends Component {
 				state.hoveredItemType === data.elementType,
 			key: data.key,
 			label: data.label,
+			parentId: data.parentId,
 			removable: data.removable || false,
 			selected: state.selectedItems.some(
 				selectedItem =>

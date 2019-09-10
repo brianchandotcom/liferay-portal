@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Segments Experiment",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.supports.mime-type=text/html"
+		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = {Portlet.class, SegmentsExperimentPortlet.class}
 )

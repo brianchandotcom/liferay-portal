@@ -68,7 +68,7 @@ public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 			"url",
 			_dlURLHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK)
+				StringPool.BLANK, true, false)
 		).put(
 			"uuid", fileEntry.getUuid()
 		);

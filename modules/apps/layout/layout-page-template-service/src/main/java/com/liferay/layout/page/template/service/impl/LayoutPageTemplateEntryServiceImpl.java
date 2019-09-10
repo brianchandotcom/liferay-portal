@@ -81,6 +81,12 @@ public class LayoutPageTemplateEntryServiceImpl
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 *             ServiceContext)} ()}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
@@ -96,6 +102,12 @@ public class LayoutPageTemplateEntryServiceImpl
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, String, int, int,
+	 *             ServiceContext)} ()}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
@@ -108,7 +120,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId, name,
-			serviceContext);
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	@Override

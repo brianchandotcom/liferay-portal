@@ -108,6 +108,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(groupId, layoutPrototype);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int,
+	 *             ServiceContext)}}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -225,10 +232,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name, type, 0,
-			status, serviceContext);
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
+			false, 0, 0, 0, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -237,10 +250,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			layoutPrototypeId, 0, status, serviceContext);
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
+			false, 0, 0, 0, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -250,10 +269,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
-			false, layoutPrototypeId, previewFileEntryId, status,
-			serviceContext);
+			false, 0, 0, 0, status, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -261,10 +285,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name, type,
+			false, 0, 0, 0, WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #addLayoutPageTemplateEntry(long, long, long, long, long,
+	 *             String, int, boolean, long, long, long, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
@@ -272,8 +302,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			userId, groupId, layoutPageTemplateCollectionId, 0, 0, name,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, false, 0, 0, 0,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 

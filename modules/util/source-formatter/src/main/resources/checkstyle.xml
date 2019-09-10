@@ -93,6 +93,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AnnotationParameterOrderCheck">
 			<message key="annotation.unsortedParameter" value="Annotation parameter ''{0}'' is not sorted alphabetically" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.AnonymousClassCheck">
+			<message key="anonymous.class.incorrect" value="Do not use anonymous class for variable ''{0}''. This causes (de)serialization issues when passed to method call ''{1}''." />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.AppendCheck">
 			<message key="end.character.invalid" value="When appending multiple literal strings, only the last literal string can end with ''{0}''" />
 			<message key="line.break.incorrect" value="Avoid using line break when appending multiple literal strings" />

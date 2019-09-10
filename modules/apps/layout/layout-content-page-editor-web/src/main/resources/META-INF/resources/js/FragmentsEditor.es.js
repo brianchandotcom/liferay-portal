@@ -132,26 +132,25 @@ class FragmentsEditor extends Component {
 	 * @private
 	 * @review
 	 */
-	static _getItemTarget(event) {
-		let {fragmentsEditorItemId = null, fragmentsEditorItemType = null} =
+	static _getTargetItem(event) {
+		let {targetItemId = null, targetItemType = null} =
 			event.target.dataset || {};
 
-		if (!fragmentsEditorItemId || !fragmentsEditorItemType) {
+		if (!targetItemId || !targetItemType) {
 			const parent = dom.closest(
 				event.target,
 				'[data-fragments-editor-item-id]'
 			);
 
 			if (parent) {
-				fragmentsEditorItemId = parent.dataset.fragmentsEditorItemId;
-				fragmentsEditorItemType =
-					parent.dataset.fragmentsEditorItemType;
+				targetItemId = parent.dataset.fragmentsEditorItemId;
+				targetItemType = parent.dataset.fragmentsEditorItemType;
 			}
 		}
 
 		return {
-			fragmentsEditorItemId,
-			fragmentsEditorItemType
+			targetItemId,
+			targetItemType
 		};
 	}
 
@@ -235,15 +234,14 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_handleDocumentMouseOver(event) {
-		const {
-			fragmentsEditorItemId,
-			fragmentsEditorItemType
-		} = FragmentsEditor._getItemTarget(event);
+		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
+			event
+		);
 
-		if (fragmentsEditorItemId && fragmentsEditorItemType && this.store) {
+		if (targetItemId && targetItemType && this.store) {
 			this.store.dispatch({
-				hoveredItemId: fragmentsEditorItemId,
-				hoveredItemType: fragmentsEditorItemType,
+				hoveredItemId: targetItemId,
+				hoveredItemType: targetItemType,
 				type: UPDATE_HOVERED_ITEM
 			});
 		} else if (this.store) {
@@ -259,23 +257,20 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updateActiveItem(event) {
-		const {
-			fragmentsEditorItemId,
-			fragmentsEditorItemType
-		} = FragmentsEditor._getItemTarget(
+		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
 			event,
 			this.activeItemId,
 			this.activeItemType
 		);
 
-		if (fragmentsEditorItemId && fragmentsEditorItemType) {
+		if (targetItemId && targetItemType) {
 			const {
 				activeItemId,
 				activeItemType
 			} = FragmentsEditor.getBackgroundEditableTarget(
 				event.target,
-				fragmentsEditorItemId,
-				fragmentsEditorItemType,
+				targetItemId,
+				targetItemType,
 				this.activeItemId,
 				this.activeItemType
 			);

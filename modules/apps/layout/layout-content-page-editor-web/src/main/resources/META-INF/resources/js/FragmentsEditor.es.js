@@ -175,9 +175,7 @@ class FragmentsEditor extends Component {
 	 */
 	_updateActiveItem(event) {
 		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
-			event,
-			this.activeItemId,
-			this.activeItemType
+			event
 		);
 
 		if (targetItemId && targetItemType) {

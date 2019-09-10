@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class LayoutPageTemplateStructureCacheModel
-	implements CacheModel<LayoutPageTemplateStructure>, Externalizable {
+	implements CacheModel<LayoutPageTemplateStructure>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class LayoutPageTemplateStructureCacheModel
 			layoutPageTemplateStructureCacheModel =
 				(LayoutPageTemplateStructureCacheModel)obj;
 
-		if (layoutPageTemplateStructureId ==
+		if ((layoutPageTemplateStructureId ==
 				layoutPageTemplateStructureCacheModel.
-					layoutPageTemplateStructureId) {
+					layoutPageTemplateStructureId) &&
+			(mvccVersion ==
+				layoutPageTemplateStructureCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, layoutPageTemplateStructureId);
+		int hashCode = HashUtil.hash(0, layoutPageTemplateStructureId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutPageTemplateStructureId=");
 		sb.append(layoutPageTemplateStructureId);
@@ -97,6 +115,8 @@ public class LayoutPageTemplateStructureCacheModel
 	public LayoutPageTemplateStructure toEntityModel() {
 		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl =
 			new LayoutPageTemplateStructureImpl();
+
+		layoutPageTemplateStructureImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			layoutPageTemplateStructureImpl.setUuid("");
@@ -143,6 +163,7 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutPageTemplateStructureId = objectInput.readLong();
@@ -163,6 +184,8 @@ public class LayoutPageTemplateStructureCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -193,6 +216,7 @@ public class LayoutPageTemplateStructureCacheModel
 		objectOutput.writeLong(classPK);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long layoutPageTemplateStructureId;
 	public long groupId;

@@ -76,7 +76,7 @@ public class LayoutPageTemplateStructureModelImpl
 	public static final String TABLE_NAME = "LayoutPageTemplateStructure";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"layoutPageTemplateStructureId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -88,6 +88,7 @@ public class LayoutPageTemplateStructureModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +102,7 @@ public class LayoutPageTemplateStructureModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateStructure (uuid_ VARCHAR(75) null,layoutPageTemplateStructureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG)";
+		"create table LayoutPageTemplateStructure (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateStructureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateStructure";
@@ -154,6 +155,7 @@ public class LayoutPageTemplateStructureModelImpl
 		LayoutPageTemplateStructure model =
 			new LayoutPageTemplateStructureImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setLayoutPageTemplateStructureId(
 			soapModel.getLayoutPageTemplateStructureId());
@@ -326,6 +328,12 @@ public class LayoutPageTemplateStructureModelImpl
 					<String, BiConsumer<LayoutPageTemplateStructure, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", LayoutPageTemplateStructure::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<LayoutPageTemplateStructure, Long>)
+				LayoutPageTemplateStructure::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", LayoutPageTemplateStructure::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -391,6 +399,17 @@ public class LayoutPageTemplateStructureModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -661,6 +680,7 @@ public class LayoutPageTemplateStructureModelImpl
 		LayoutPageTemplateStructureImpl layoutPageTemplateStructureImpl =
 			new LayoutPageTemplateStructureImpl();
 
+		layoutPageTemplateStructureImpl.setMvccVersion(getMvccVersion());
 		layoutPageTemplateStructureImpl.setUuid(getUuid());
 		layoutPageTemplateStructureImpl.setLayoutPageTemplateStructureId(
 			getLayoutPageTemplateStructureId());
@@ -771,6 +791,8 @@ public class LayoutPageTemplateStructureModelImpl
 		LayoutPageTemplateStructureCacheModel
 			layoutPageTemplateStructureCacheModel =
 				new LayoutPageTemplateStructureCacheModel();
+
+		layoutPageTemplateStructureCacheModel.mvccVersion = getMvccVersion();
 
 		layoutPageTemplateStructureCacheModel.uuid = getUuid();
 
@@ -903,6 +925,7 @@ public class LayoutPageTemplateStructureModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _layoutPageTemplateStructureId;

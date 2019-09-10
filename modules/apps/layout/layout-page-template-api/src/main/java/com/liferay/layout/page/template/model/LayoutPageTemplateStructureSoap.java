@@ -34,6 +34,7 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 		LayoutPageTemplateStructureSoap soapModel =
 			new LayoutPageTemplateStructureSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutPageTemplateStructureId(
 			model.getLayoutPageTemplateStructureId());
@@ -105,6 +106,14 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setLayoutPageTemplateStructureId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -189,6 +198,7 @@ public class LayoutPageTemplateStructureSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutPageTemplateStructureId;
 	private long _groupId;

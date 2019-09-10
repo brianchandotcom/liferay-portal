@@ -130,6 +130,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		LayoutPageTemplateEntry newLayoutPageTemplateEntry =
 			_persistence.create(pk);
 
+		newLayoutPageTemplateEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateEntry.setUuid(RandomTestUtil.randomString());
 
 		newLayoutPageTemplateEntry.setGroupId(RandomTestUtil.nextLong());
@@ -185,6 +187,9 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newLayoutPageTemplateEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingLayoutPageTemplateEntry.getMvccVersion(),
+			newLayoutPageTemplateEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingLayoutPageTemplateEntry.getUuid(),
 			newLayoutPageTemplateEntry.getUuid());
@@ -508,7 +513,7 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutPageTemplateEntry", "uuid", true,
+			"LayoutPageTemplateEntry", "mvccVersion", true, "uuid", true,
 			"layoutPageTemplateEntryId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
@@ -804,6 +809,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry = _persistence.create(
 			pk);
+
+		layoutPageTemplateEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutPageTemplateEntry.setUuid(RandomTestUtil.randomString());
 

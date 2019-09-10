@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TypedModel;
@@ -38,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface LayoutPageTemplateEntryModel
-	extends BaseModel<LayoutPageTemplateEntry>, ShardedModel,
+	extends BaseModel<LayoutPageTemplateEntry>, MVCCModel, ShardedModel,
 			StagedGroupedModel, TypedModel, WorkflowedModel {
 
 	/**
@@ -60,6 +61,22 @@ public interface LayoutPageTemplateEntryModel
 	 * @param primaryKey the primary key of this layout page template entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this layout page template entry.
+	 *
+	 * @return the mvcc version of this layout page template entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this layout page template entry.
+	 *
+	 * @param mvccVersion the mvcc version of this layout page template entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this layout page template entry.

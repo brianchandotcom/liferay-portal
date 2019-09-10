@@ -1,4 +1,5 @@
 create table LayoutPageTemplateCollection (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	layoutPageTemplateCollectionId LONG not null primary key,
 	groupId LONG,
@@ -13,6 +14,7 @@ create table LayoutPageTemplateCollection (
 );
 
 create table LayoutPageTemplateEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	layoutPageTemplateEntryId LONG not null primary key,
 	groupId LONG,
@@ -38,6 +40,7 @@ create table LayoutPageTemplateEntry (
 );
 
 create table LayoutPageTemplateStructure (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	layoutPageTemplateStructureId LONG not null primary key,
 	groupId LONG,
@@ -51,6 +54,7 @@ create table LayoutPageTemplateStructure (
 );
 
 create table LayoutPageTemplateStructureRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	lPageTemplateStructureRelId LONG not null primary key,
 	groupId LONG,

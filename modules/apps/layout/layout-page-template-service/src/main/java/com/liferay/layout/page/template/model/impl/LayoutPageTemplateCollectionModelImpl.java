@@ -75,7 +75,7 @@ public class LayoutPageTemplateCollectionModelImpl
 	public static final String TABLE_NAME = "LayoutPageTemplateCollection";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"layoutPageTemplateCollectionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -88,6 +88,7 @@ public class LayoutPageTemplateCollectionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -102,7 +103,7 @@ public class LayoutPageTemplateCollectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutPageTemplateCollection (uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+		"create table LayoutPageTemplateCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateCollection";
@@ -151,6 +152,7 @@ public class LayoutPageTemplateCollectionModelImpl
 		LayoutPageTemplateCollection model =
 			new LayoutPageTemplateCollectionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setLayoutPageTemplateCollectionId(
 			soapModel.getLayoutPageTemplateCollectionId());
@@ -324,6 +326,12 @@ public class LayoutPageTemplateCollectionModelImpl
 					<String, BiConsumer<LayoutPageTemplateCollection, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", LayoutPageTemplateCollection::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<LayoutPageTemplateCollection, Long>)
+				LayoutPageTemplateCollection::setMvccVersion);
+		attributeGetterFunctions.put(
 			"uuid", LayoutPageTemplateCollection::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -397,6 +405,17 @@ public class LayoutPageTemplateCollectionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -653,6 +672,7 @@ public class LayoutPageTemplateCollectionModelImpl
 		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl =
 			new LayoutPageTemplateCollectionImpl();
 
+		layoutPageTemplateCollectionImpl.setMvccVersion(getMvccVersion());
 		layoutPageTemplateCollectionImpl.setUuid(getUuid());
 		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(
 			getLayoutPageTemplateCollectionId());
@@ -756,6 +776,8 @@ public class LayoutPageTemplateCollectionModelImpl
 		LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionCacheModel =
 				new LayoutPageTemplateCollectionCacheModel();
+
+		layoutPageTemplateCollectionCacheModel.mvccVersion = getMvccVersion();
 
 		layoutPageTemplateCollectionCacheModel.uuid = getUuid();
 
@@ -912,6 +934,7 @@ public class LayoutPageTemplateCollectionModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _layoutPageTemplateCollectionId;

@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class LayoutPageTemplateCollectionCacheModel
-	implements CacheModel<LayoutPageTemplateCollection>, Externalizable {
+	implements CacheModel<LayoutPageTemplateCollection>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionCacheModel =
 				(LayoutPageTemplateCollectionCacheModel)obj;
 
-		if (layoutPageTemplateCollectionId ==
+		if ((layoutPageTemplateCollectionId ==
 				layoutPageTemplateCollectionCacheModel.
-					layoutPageTemplateCollectionId) {
+					layoutPageTemplateCollectionId) &&
+			(mvccVersion ==
+				layoutPageTemplateCollectionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, layoutPageTemplateCollectionId);
+		int hashCode = HashUtil.hash(0, layoutPageTemplateCollectionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutPageTemplateCollectionId=");
 		sb.append(layoutPageTemplateCollectionId);
@@ -99,6 +117,8 @@ public class LayoutPageTemplateCollectionCacheModel
 	public LayoutPageTemplateCollection toEntityModel() {
 		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl =
 			new LayoutPageTemplateCollectionImpl();
+
+		layoutPageTemplateCollectionImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			layoutPageTemplateCollectionImpl.setUuid("");
@@ -165,6 +185,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutPageTemplateCollectionId = objectInput.readLong();
@@ -184,6 +205,8 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -226,6 +249,7 @@ public class LayoutPageTemplateCollectionCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long layoutPageTemplateCollectionId;
 	public long groupId;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
@@ -82,6 +83,22 @@ public class LayoutPageTemplateServiceUpgrade
 			UpgradeStepFactory.alterColumnTypes(
 				LayoutPageTemplateStructureRelTable.class, "TEXT null",
 				"data_"));
+
+		registry.register(
+			"3.0.1", "3.1.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"LayoutPageTemplateCollection",
+						"LayoutPageTemplateEntry",
+						"LayoutPageTemplateStructure",
+						"LayoutPageTemplateStructureRel"
+					};
+				}
+
+			});
 	}
 
 	@Reference

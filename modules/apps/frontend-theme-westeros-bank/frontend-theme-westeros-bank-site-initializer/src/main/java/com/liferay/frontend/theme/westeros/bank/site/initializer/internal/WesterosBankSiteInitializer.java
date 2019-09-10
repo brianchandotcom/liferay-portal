@@ -438,7 +438,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				name, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		long previewFileEntryId = _getPreviewFileEntryId(

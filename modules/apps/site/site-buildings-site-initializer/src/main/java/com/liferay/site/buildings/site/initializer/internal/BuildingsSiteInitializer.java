@@ -411,7 +411,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Main Template", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+			"Main Template", LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 

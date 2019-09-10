@@ -108,7 +108,7 @@ public class AssetDisplayPageFormProcessorTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				classNameId, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true, 0,
-				0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 
 		_withAndWithoutAssetEntry(
 			fileEntry -> {
@@ -222,7 +222,7 @@ public class AssetDisplayPageFormProcessorTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				classNameId, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true, 0,
-				0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 
 		_withAndWithoutAssetEntry(
 			fileEntry -> {
@@ -293,7 +293,7 @@ public class AssetDisplayPageFormProcessorTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				classNameId, 0, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, true, 0,
-				0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+				0, 0, WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 
 		_withAndWithoutAssetEntry(
 			fileEntry -> {

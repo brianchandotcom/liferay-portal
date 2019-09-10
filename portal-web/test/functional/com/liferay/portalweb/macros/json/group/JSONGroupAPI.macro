@@ -109,6 +109,7 @@ definition {
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
 				-u test@liferay.com:test
 		''';
+
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
 		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
 		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");

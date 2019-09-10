@@ -7,6 +7,7 @@ definition {
 			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u test@liferay.com:test
 		''';
+
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
 
 		return "${companyId}";

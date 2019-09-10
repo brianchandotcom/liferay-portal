@@ -82,6 +82,7 @@ definition {
 			-d <CURL_DATA[end=-1]CURL_DATA> \
 			-d -orderByComparator=
 		''';
+
 		var collectionNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${collectionName}')]");
 
 		return "${collectionNameResult}";

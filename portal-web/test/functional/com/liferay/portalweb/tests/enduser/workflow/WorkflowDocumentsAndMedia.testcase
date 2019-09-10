@@ -291,6 +291,86 @@ definition {
 			workflowRestriction = "Default Workflow");
 	}
 
+	@description = "This test covers LPS-90346. This test ensures that the document preview displays correct after editing."
+	@priority = "4"
+	test EditDocumentAfterApproved {
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMFolder.addCP(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.addWithWorkflowCP(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Document",
+			user = "Test Test");
+
+		Workflow.gotoPreviewView();
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg') and contains(@src,'version=1.0')]");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Assign to Me");
+
+		Workflow.confirmWorkflowAction();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewTaskAssignedToMeDetails(
+			workflowAssetContent = "Document_1.jpg",
+			workflowAssetTitle = "Document_1.jpg",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
+
+		Workflow.confirmWorkflowAction();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Document_1.jpg");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
+
+		Button.clickSubmitForPublication();
+
+		Navigator.openURL();
+
+		Notifications.viewBadgeCount(notificationCount = "1");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Document",
+			user = "Test Test");
+
+		Workflow.gotoPreviewView();
+
+		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg') and contains(@src,'version=2.0')]");
+	}
+
 	@description = "This is a use case for LPS-60870."
 	@priority = "5"
 	test SaveAsDraftAndViewCategories {

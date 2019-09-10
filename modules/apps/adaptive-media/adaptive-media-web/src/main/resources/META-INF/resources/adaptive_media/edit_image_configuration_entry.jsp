@@ -69,13 +69,13 @@ if (amImageConfigurationEntry != null) {
 
 		<aui:input name="description" type="textarea" value="<%= (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getDescription() : StringPool.BLANK %>" />
 
-		<h4>
+		<div class="sheet-subtitle">
 			<liferay-ui:message key="size" />
 
 			<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
 			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-		</h4>
+		</div>
 
 		<label class="control-label form-group">
 			<liferay-ui:message key="please-enter-at-least-one-of-the-following-fields" />
@@ -140,9 +140,9 @@ if (amImageConfigurationEntry != null) {
 		automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
 		%>
 
-		<h4>
+		<div class="sheet-subtitle">
 			<liferay-ui:message key="identifier" />
-		</h4>
+		</div>
 
 		<div class="form-group" id="<portlet:namespace />idOptions">
 			<aui:input checked="<%= automaticUuid %>" disabled="<%= !configurationEntryEditable %>" helpMessage="the-id-is-based-on-the-name-field" label="automatic" name="automaticUuid" type="radio" value="<%= true %>" />

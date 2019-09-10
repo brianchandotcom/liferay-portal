@@ -130,6 +130,11 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
+	}
+
+	@Override
 	protected Segment randomSegment() throws Exception {
 		Segment segment = super.randomSegment();
 

@@ -430,6 +430,11 @@ public class SegmentsExperienceWrapper
 		return model.getUuid();
 	}
 
+	@Override
+	public boolean hasSegmentsExperiment() {
+		return model.hasSegmentsExperiment();
+	}
+
 	/**
 	 * Returns <code>true</code> if this segments experience is active.
 	 *

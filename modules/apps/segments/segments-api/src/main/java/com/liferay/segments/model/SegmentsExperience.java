@@ -60,4 +60,6 @@ public interface SegmentsExperience
 
 			};
 
+	public boolean hasSegmentsExperiment();
+
 }

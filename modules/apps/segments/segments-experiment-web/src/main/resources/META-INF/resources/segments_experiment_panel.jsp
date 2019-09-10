@@ -49,7 +49,8 @@
 							classPK: '<%= themeDisplay.getPlid() %>',
 							classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
 							type: '<%= layout.getType() %>'
-						}
+						},
+						viewSegmentsExperimentDetailsURL: '<%= segmentsExperimentDisplayContext.getViewSegmentsExperimentDetailsURL() %>'
 					},
 					props: {
 						initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,

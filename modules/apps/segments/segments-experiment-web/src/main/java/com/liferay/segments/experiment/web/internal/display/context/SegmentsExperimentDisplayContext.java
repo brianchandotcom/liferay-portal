@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -260,6 +261,24 @@ public class SegmentsExperimentDisplayContext {
 		}
 
 		return _segmentsExperienceId;
+	}
+
+	public String getViewSegmentsExperimentDetailsURL() throws PortalException {
+		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment();
+
+		if (segmentsExperiment == null) {
+			return StringPool.BLANK;
+		}
+
+		String asahFaroURL = PrefsPropsUtil.getString(
+			segmentsExperiment.getCompanyId(), "liferayAnalyticsURL");
+
+		if (Validator.isNull(asahFaroURL)) {
+			return StringPool.BLANK;
+		}
+
+		return asahFaroURL + "/tests/overview/" +
+			segmentsExperiment.getSegmentsExperimentKey();
 	}
 
 	public String getWinnerSegmentsExperienceId() {

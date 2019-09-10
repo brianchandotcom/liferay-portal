@@ -11682,10 +11682,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.12.0:
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.8.0.tgz#dadce207beff662abed15b2670b2a7a1fc4c7e66"
-  integrity sha512-if0SJxTyyaMroTYWiNQHKIqu6ggGjpArE23jKOLmWG4m1YWbehbvTluuSwCGVll22vE0GynWu7hvyGNDdCuSAA==
+liferay-npm-bundler-preset-liferay-dev@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.9.0.tgz#ab2b2542f447213fcd79d55b56cecd354152ab73"
+  integrity sha512-gdjojLwRMqKsygRr8scg4MITMrnnWvbo+m0SUt9Yc8WH9F05+nb9cmiGX8+TtqYHctsl+qUzCDhCVxm9//8RuQ==
   dependencies:
     babel-preset-liferay-standard "2.12.0"
     liferay-npm-bundler-plugin-exclude-imports "2.12.0"
@@ -11730,10 +11730,10 @@ liferay-npm-bundler@2.12.0:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-9.0.0.tgz#6b77c86c32983d57d430c06dcbe91a193b31a21d"
-  integrity sha512-4J38ISUZ0dMJctPkpyKCZyODOSnRXDqYCbsRPG3w3DV/LmfbzCjPMLpjYJRTaVn9aIyHnDpAKgVbH4BqL6ph/g==
+liferay-npm-scripts@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-9.1.0.tgz#bd15205f1794c1f1ba23cf8248bd8fea6bf829f0"
+  integrity sha512-S9MTiw+TclfuU3/snu0ImEQElKkIgl0QIWjhAj8wip0GZhrvXWyXd1F9zX/JbV45RJnqBov5ZDSLEf4oyOCmow==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11766,7 +11766,7 @@ liferay-npm-scripts@9.0.0:
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.12.0"
     liferay-npm-bundler "2.12.0"
-    liferay-npm-bundler-preset-liferay-dev "1.8.0"
+    liferay-npm-bundler-preset-liferay-dev "1.9.0"
     liferay-theme-tasks "9.4.0"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"

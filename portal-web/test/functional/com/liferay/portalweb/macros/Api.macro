@@ -69,7 +69,7 @@ definition {
 			value1 = "${userBirthdayYear}");
 
 		for (var userRoleTitle : list "${userRoleTitles}") {
-			var roleId = JSONRoleAPI._getRoleIdByName(roleTitle = "${userRoleTitle}");
+			var roleId = JSONRoleAPI._getRoleIdByName(name = "${userRoleTitle}");
 
 			Type.sendKeys(
 				locator1 = "JSONWSUser#API_EXECUTE_ROLE_IDS_FIELD",

@@ -3,7 +3,7 @@ definition {
 	macro editPermission {
 		var portalURL = JSONCompany.getPortalURL();
 
-		var roleId = JSONRoleAPI._getRoleIdByName(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
 
 		var companyId = JSONCompany.getCompanyId();
 

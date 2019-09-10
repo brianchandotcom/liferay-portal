@@ -57,7 +57,7 @@ definition {
 	macro assignRoleToUser {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
-		var roleId = JSONRoleSetter.setRoleId(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleSetter.setRoleId(name = "${roleTitle}");
 
 		var userId = JSONRoleSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 

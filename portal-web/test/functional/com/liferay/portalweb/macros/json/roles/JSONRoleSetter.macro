@@ -18,13 +18,15 @@ definition {
 
 		var name = URLUtil.encodeUTF8("${name}");
 
+		var name = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
+
 		return "${name}";
 	}
 
 	macro setRoleId {
-		Variables.assertDefined(parameterList = "${roleTitle}");
+		Variables.assertDefined(parameterList = "${name}");
 
-		var roleId = JSONRoleAPI._getRoleIdByName(roleTitle = "${roleTitle}");
+		var roleId = JSONRoleAPI._getRoleIdByName(name = "${name}");
 
 		return "${roleId}";
 	}

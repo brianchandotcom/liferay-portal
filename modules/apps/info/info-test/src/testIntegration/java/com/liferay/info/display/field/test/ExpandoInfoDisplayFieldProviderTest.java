@@ -105,19 +105,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 				getContributorExpandoInfoDisplayFieldsValues(
 					User.class.getName(), _user, LocaleUtil.getDefault());
 
-		List<InfoDisplayField> infoDisplayFields =
-			_expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(
-					User.class.getName(), LocaleUtil.getDefault());
-
-		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
-
-		infoDisplayFields = stream.filter(
-			infoDisplayField -> StringUtil.equals(
-				infoDisplayField.getLabel(), expandoColumn.getName())
-		).collect(
-			Collectors.toList()
-		);
+		List<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
+			expandoColumn.getName());
 
 		Assert.assertEquals(
 			infoDisplayFields.toString(), 1, infoDisplayFields.size());
@@ -147,19 +136,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, values);
 
-		List<InfoDisplayField> infoDisplayFields =
-			_expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(
-					User.class.getName(), LocaleUtil.getDefault());
-
-		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
-
-		infoDisplayFields = stream.filter(
-			infoDisplayField -> StringUtil.equals(
-				infoDisplayField.getLabel(), expandoColumn.getName())
-		).collect(
-			Collectors.toList()
-		);
+		List<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
+			expandoColumn.getName());
 
 		Assert.assertEquals(
 			infoDisplayFields.toString(), 1, infoDisplayFields.size());
@@ -206,19 +184,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 				getContributorExpandoInfoDisplayFieldsValues(
 					User.class.getName(), _user, LocaleUtil.getDefault());
 
-		List<InfoDisplayField> infoDisplayFields =
-			_expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(
-					User.class.getName(), LocaleUtil.getDefault());
-
-		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
-
-		infoDisplayFields = stream.filter(
-			infoDisplayField -> StringUtil.equals(
-				infoDisplayField.getLabel(), expandoColumn.getName())
-		).collect(
-			Collectors.toList()
-		);
+		List<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
+			expandoColumn.getName());
 
 		Assert.assertEquals(
 			infoDisplayFields.toString(), 1, infoDisplayFields.size());
@@ -244,19 +211,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 				getContributorExpandoInfoDisplayFieldsValues(
 					User.class.getName(), _user, LocaleUtil.getDefault());
 
-		List<InfoDisplayField> infoDisplayFields =
-			_expandoInfoDisplayFieldProvider.
-				getContributorExpandoInfoDisplayFields(
-					User.class.getName(), LocaleUtil.getDefault());
-
-		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
-
-		infoDisplayFields = stream.filter(
-			infoDisplayField -> StringUtil.equals(
-				infoDisplayField.getLabel(), expandoColumn.getName())
-		).collect(
-			Collectors.toList()
-		);
+		List<InfoDisplayField> infoDisplayFields = _getInfoDisplayFields(
+			expandoColumn.getName());
 
 		Assert.assertEquals(
 			infoDisplayFields.toString(), 1, infoDisplayFields.size());
@@ -277,6 +233,24 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			PortalUtil.getClassName(_expandoTable.getClassNameId()),
 			_expandoTable.getName(), expandoColumn.getName(),
 			_user.getPrimaryKey(), data);
+	}
+
+	private List<InfoDisplayField> _getInfoDisplayFields(
+		String expandoColumnName) {
+
+		List<InfoDisplayField> infoDisplayFields =
+			_expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					User.class.getName(), LocaleUtil.getDefault());
+
+		Stream<InfoDisplayField> stream = infoDisplayFields.stream();
+
+		return stream.filter(
+			infoDisplayField -> StringUtil.equals(
+				infoDisplayField.getLabel(), expandoColumnName)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@DeleteAfterTestRun

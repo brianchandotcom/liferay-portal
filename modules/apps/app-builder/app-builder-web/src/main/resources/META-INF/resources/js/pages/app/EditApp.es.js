@@ -28,6 +28,7 @@ export default ({
 }) => {
 	const [app, setApp] = useState({
 		dataLayoutId: null,
+		dataListViewId: null,
 		name: {
 			en_US: ''
 		}
@@ -78,8 +79,16 @@ export default ({
 		}));
 	};
 
+	const onDataListViewIdChange = dataListViewId => {
+		setApp(prevApp => ({
+			...prevApp,
+			dataListViewId
+		}));
+	};
+
 	const {
 		dataLayoutId,
+		dataListViewId,
 		name: {en_US: appName}
 	} = app;
 
@@ -116,13 +125,18 @@ export default ({
 								)}
 							/>
 						)}
+
 						{currentStep == 1 && (
-							<div className="autofit-row">
-								<div className="col-md-12">
-									Choose Table View
-								</div>
-							</div>
+							<EditAppBody
+								endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-list-views`}
+								itemId={dataListViewId}
+								onItemIdChange={onDataListViewIdChange}
+								title={Liferay.Language.get(
+									'select-a-table-view'
+								)}
+							/>
 						)}
+
 						{currentStep == 2 && (
 							<div className="autofit-row">
 								<div className="col-md-12">Deploy</div>

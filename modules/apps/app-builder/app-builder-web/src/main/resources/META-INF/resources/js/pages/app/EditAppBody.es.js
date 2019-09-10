@@ -79,46 +79,50 @@ export default ({endpoint, itemId, onItemIdChange, title}) => {
 							</Row>
 						</Head>
 						<Body>
-							{items.map((item, index) => {
-								return (
-									<Row
-										className={classNames(
-											'selectable-row',
-											{
-												'selectable-active':
-													item.id === itemId
-											}
-										)}
-										key={index}
-										onClick={() => onItemIdChange(item.id)}
-									>
-										<Cell align="left">
-											{item.name.en_US}
-										</Cell>
-										<Cell>
-											{moment(item.dateCreated).fromNow()}
-										</Cell>
-										<Cell>
-											{moment(
-												item.dateModified
-											).fromNow()}
-										</Cell>
-										<Cell align={'right'}>
-											<ClayRadioGroup
-												inline
-												onSelectedValueChange={() =>
-													onItemIdChange(item.id)
+							{items.map(
+								(
+									{
+										dateCreated,
+										dateModified,
+										id,
+										name: {en_US: itemName}
+									},
+									index
+								) => {
+									return (
+										<Row
+											className={classNames(
+												'selectable-row',
+												{
+													'selectable-active':
+														id === itemId
 												}
-												selectedValue={itemId}
-											>
-												<ClayRadio
-													value={item.id}
-												></ClayRadio>
-											</ClayRadioGroup>
-										</Cell>
-									</Row>
-								);
-							})}
+											)}
+											key={index}
+											onClick={() => onItemIdChange(id)}
+										>
+											<Cell align="left">{itemName}</Cell>
+											<Cell>
+												{moment(dateCreated).fromNow()}
+											</Cell>
+											<Cell>
+												{moment(dateModified).fromNow()}
+											</Cell>
+											<Cell align={'right'}>
+												<ClayRadioGroup
+													inline
+													onSelectedValueChange={() =>
+														onItemIdChange(id)
+													}
+													selectedValue={itemId}
+												>
+													<ClayRadio value={id} />
+												</ClayRadioGroup>
+											</Cell>
+										</Row>
+									);
+								}
+							)}
 						</Body>
 					</table>
 				</div>

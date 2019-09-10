@@ -1174,6 +1174,52 @@ paths:
                                 type: array
                     description: ""
             tags: ["Segment"]
+    "/sites/{siteId}/user-accounts":
+        get:
+            description: Retrieves the Site members' user accounts. Results can be paginated, filtered, searched, and sorted.
+            operationId: getSiteUserAccountsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                    description: ""
+            tags: ["UserAccount"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
             description: Gets a user's segments.
@@ -1372,52 +1418,6 @@ paths:
                                 type: array
                     description: ""
             tags: ["WebUrl"]
-    "/web-sites/{webSiteId}/user-accounts":
-        get:
-            description: Retrieves the Site members' user accounts. Results can be paginated, filtered, searched, and sorted.
-            operationId: getWebSiteUserAccountsPage
-            parameters:
-                - in: path
-                  name: webSiteId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/UserAccount"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/UserAccount"
-                                type: array
-                    description: ""
-            tags: ["UserAccount"]
     "/web-urls/{webUrlId}":
         get:
             description: Retrieves the web URL.

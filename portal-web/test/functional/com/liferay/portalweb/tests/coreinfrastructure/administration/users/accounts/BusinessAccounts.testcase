@@ -154,6 +154,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101315."
+	@ignore = "true"
 	@priority = "4"
 	test DeleteDeactivateAccount {
 		ProductMenu.gotoPortlet(

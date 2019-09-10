@@ -247,18 +247,14 @@ public class DLOpenerOneDriveManager {
 	private BackgroundTask _addBackgroundTask(FileEntry fileEntry, long userId)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>() {
-				{
-					put(
-						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
-						true);
-					put(
-						OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-						fileEntry.getFileEntryId());
-					put(OneDriveBackgroundTaskConstants.USER_ID, userId);
-				}
-			};
+		Map<String, Serializable> taskContextMap = new HashMap<>(3);
+
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+		taskContextMap.put(
+			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
+		taskContextMap.put(OneDriveBackgroundTaskConstants.USER_ID, userId);
 
 		return _backgroundTaskManager.addBackgroundTask(
 			userId, CompanyConstants.SYSTEM,

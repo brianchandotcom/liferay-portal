@@ -157,9 +157,6 @@ public class CTSQLTransformerTest {
 		_db.runSQL(
 			"insert into ReferenceTable values (1, " + _getCTCollectionId(5) +
 				" , 2, 'rt1 modify2');");
-
-		_companyCTPreferences = _ctPreferencesLocalService.getCTPreferences(
-			TestPropsValues.getCompanyId(), 0);
 	}
 
 	@AfterClass
@@ -171,8 +168,6 @@ public class CTSQLTransformerTest {
 			_ctPreferencesLocalService.getCTPreferences(companyId, userId);
 
 		_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
-
-		_ctPreferencesLocalService.deleteCTPreferences(_companyCTPreferences);
 
 		_db.runSQL("drop table MainTable;");
 
@@ -1108,8 +1103,6 @@ public class CTSQLTransformerTest {
 
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
-
-	private static CTPreferences _companyCTPreferences;
 
 	@Inject
 	private static CounterLocalService _counterLocalService;

@@ -1,9 +1,9 @@
-.selectable-row:hover {
-	cursor: pointer;
-}
-
 .selectable-active {
 	font-weight: bold;
+}
+
+.selectable-row:hover {
+	cursor: pointer;
 }
 
 .scrollable-container {
@@ -12,14 +12,14 @@
 }
 
 .scrollable-container::-webkit-scrollbar {
-	width: 8px;
 	background-color: transparent;
+	width: 8px;
 }
 
 .scrollable-container::-webkit-scrollbar-thumb {
+	background-color: #a7a9bc;
 	border-radius: 8px;
 	border-radius: 11px;
-	background-color: #a7a9bc;
 }
 
 .scrollable-container::-webkit-scrollbar-track {

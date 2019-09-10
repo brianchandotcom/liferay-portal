@@ -268,7 +268,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			throw new StorageFieldValueException(
 				LanguageUtil.format(
 					themeDisplay.getRequest(),
-					"invalid-image-content-for-the-field-x", fieldName));
+					"image-content-is-invalid-for-field-x", fieldName));
 		}
 	}
 

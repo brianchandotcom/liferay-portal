@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from "react";
 
-const Arrow = ({ direction, clickFunction }) => (
+const Arrow = ({ direction, handleClick }) => (
 
 	<div className={`pull-${direction}`}>
 		<ClayButton
@@ -24,7 +24,7 @@ const Arrow = ({ direction, clickFunction }) => (
 			className="icon-arrow"
 			displayType="secondary"
 			monospaced
-			onClick={clickFunction}
+			onClick={handleClick}
 			size="lg"
 		>
 			<ClayIcon symbol={`angle-${direction}`} />

@@ -41,25 +41,7 @@ class Carousel extends Component {
 		};
   	};
 
-	previousSlide = () => {
-		const items = this.props.items;
-
-		const lastIndex = items.length - 1;
-		const { currentIndex } = this.state;
-		const shouldResetIndex = currentIndex === 0;
-		const index = shouldResetIndex ? lastIndex : currentIndex - 1;
-
-		const currentItem = items[index];
-
-		this.setState({
-			currentIndex: index,
-			currentItem: currentItem
-		});
-
-		this.props.onItemChange(currentItem, index);
-	};
-
-	nextSlide = () => {
+	showNextSlide = () => {
 		const items = this.props.items;
 
 		const lastIndex = items.length - 1;
@@ -77,10 +59,27 @@ class Carousel extends Component {
 		this.props.onItemChange(currentItem, index);
 	};
 
+	showPreviousSlide = () => {
+		const items = this.props.items;
+
+		const lastIndex = items.length - 1;
+		const { currentIndex } = this.state;
+		const shouldResetIndex = currentIndex === 0;
+		const index = shouldResetIndex ? lastIndex : currentIndex - 1;
+
+		const currentItem = items[index];
+
+		this.setState({
+			currentIndex: index,
+			currentItem: currentItem
+		});
+
+		this.props.onItemChange(currentItem, index);
+	};
+
 	render() {
 		const {currentItem} = this.state;
 		const showArrows = this.props.items.length > 1;
-		console.log(currentItem.dataset.metadata);
 
 		return (
 			<div className="carousel">
@@ -88,7 +87,7 @@ class Carousel extends Component {
 				{showArrows && (
 					<Arrow
 						direction="left"
-						clickFunction={this.previousSlide}
+						handleClick={this.showPreviousSlide}
 					/>
 				)}
 
@@ -99,7 +98,7 @@ class Carousel extends Component {
 				{showArrows && (
 					<Arrow
 						direction="right"
-						clickFunction={this.nextSlide}
+						handleClick={this.showNextSlide}
 					/>
 				)}
 

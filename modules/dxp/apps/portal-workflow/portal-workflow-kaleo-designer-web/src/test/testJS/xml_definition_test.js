@@ -13,14 +13,14 @@
 
 describe('Liferay.KaleoDesignerXMLDefinition', function() {
 	before(function(done) {
-		AUI().use('liferay-kaleo-designer-xml-definition', function(A) {
+		AUI().use('liferay-kaleo-designer-xml-definition', function() {
 			done();
 		});
 	});
 
 	describe('unit', function() {
 		describe('.getDefinitionMetadata()', function() {
-			it('should have name', function(done) {
+			it('test should have name', function(done) {
 				Liferay.Test.loadResource('metadata-only-definition.xml').then(
 					function(definition) {
 						var xmlDefinition = new Liferay.KaleoDesignerXMLDefinition(
@@ -47,7 +47,7 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 
 	describe('regression', function() {
 		describe('.forEachField()', function() {
-			it('should retrieve "receptionType" attribute value', function(done) {
+			it('test should retrieve "receptionType" attribute value', function(done) {
 				Liferay.Test.loadResource(
 					'recipients-with-reception-type-bcc-definition.xml'
 				).then(function(definition) {
@@ -69,7 +69,7 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('should not have a "receptionType" attribute if not present in definition', function(done) {
+			it('test should not have a "receptionType" attribute if not present in definition', function(done) {
 				Liferay.Test.loadResource(
 					'recipients-with-no-reception-type-definition.xml'
 				).then(function(definition) {
@@ -91,7 +91,7 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('should have "users" as recipient.', function(done) {
+			it('test should have "users" as recipient.', function(done) {
 				Liferay.Test.loadResource(
 					'recipients-with-user-definition.xml'
 				).then(function(definition) {
@@ -113,7 +113,7 @@ describe('Liferay.KaleoDesignerXMLDefinition', function() {
 				});
 			});
 
-			it('should have "assignees" as recipient.', function(done) {
+			it('test should have "assignees" as recipient.', function(done) {
 				Liferay.Test.loadResource(
 					'recipients-with-assignees-definition.xml'
 				).then(function(definition) {

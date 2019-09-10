@@ -14,12 +14,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var KaleoDesignerStrings = Liferay.KaleoDesignerStrings;
-
 		var isNumber = Lang.isNumber;
 		var isString = Lang.isString;
-
-		var uniformRandomInt = Liferay.KaleoDesignerUtils.uniformRandomInt;
 
 		var COL_TYPES_FIELD = [
 			'condition',
@@ -66,82 +62,7 @@ AUI.add(
 			NAME: 'kaleo-designer-xml-definition',
 
 			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					var val = instance._sanitizeDefinitionXML(config.value);
-
-					instance.definitionDoc = A.DataType.XML.parse(val);
-
-					var metadata = instance.getDefinitionMetadata();
-
-					if (metadata) {
-						instance.setAttrs(metadata);
-					}
-				},
-
-				forEachField(fn) {
-					var instance = this;
-
-					COL_TYPES_FIELD.forEach(function(item, index, collection) {
-						var fieldData = instance.translate(item);
-
-						if (fn && !fieldData.error) {
-							fn.call(instance, item, fieldData);
-						}
-					});
-				},
-
-				getDefinitionMetadata() {
-					var instance = this;
-
-					var output = A.DataSchema.XML.apply(
-						{
-							metaFields: {
-								description:
-									'//workflow-definition/description',
-								name: '//workflow-definition/name',
-								version: '//workflow-definition/version'
-							}
-						},
-						instance.definitionDoc
-					);
-
-					return output.meta;
-				},
-
-				translate(tagName) {
-					var instance = this;
-
-					var schema = {
-						resultFields: [
-							'description',
-							'initial',
-							'metadata',
-							'name',
-							'script',
-							{
-								key: 'scriptLanguage',
-								locator: 'script-language'
-							},
-							instance._getSchemaActions(),
-							instance._getSchemaAssignments(),
-							instance._getSchemaNotifications(),
-							instance._getSchemaTaskTimers(),
-							instance._getSchemaTransitions()
-						],
-						resultListLocator: tagName
-					};
-
-					return A.DataSchema.XML.apply(
-						schema,
-						instance.definitionDoc
-					);
-				},
-
 				_getSchemaActions(key, tagName) {
-					var instance = this;
-
 					return {
 						key: key || 'actions',
 						schema: {
@@ -177,8 +98,6 @@ AUI.add(
 				},
 
 				_getSchemaAssignments(key, tagName) {
-					var instance = this;
-
 					return {
 						key: key || 'assignments',
 						schema: {
@@ -432,8 +351,6 @@ AUI.add(
 				},
 
 				_getSchemaTransitions(key, tagName) {
-					var instance = this;
-
 					return {
 						key: key || 'transitions',
 						schema: {
@@ -496,6 +413,79 @@ AUI.add(
 							});
 						}
 					}
+				},
+
+				forEachField(fn) {
+					var instance = this;
+
+					COL_TYPES_FIELD.forEach(function(item) {
+						var fieldData = instance.translate(item);
+
+						if (fn && !fieldData.error) {
+							fn.call(instance, item, fieldData);
+						}
+					});
+				},
+
+				getDefinitionMetadata() {
+					var instance = this;
+
+					var output = A.DataSchema.XML.apply(
+						{
+							metaFields: {
+								description:
+									'//workflow-definition/description',
+								name: '//workflow-definition/name',
+								version: '//workflow-definition/version'
+							}
+						},
+						instance.definitionDoc
+					);
+
+					return output.meta;
+				},
+
+				initializer(config) {
+					var instance = this;
+
+					var val = instance._sanitizeDefinitionXML(config.value);
+
+					instance.definitionDoc = A.DataType.XML.parse(val);
+
+					var metadata = instance.getDefinitionMetadata();
+
+					if (metadata) {
+						instance.setAttrs(metadata);
+					}
+				},
+
+				translate(tagName) {
+					var instance = this;
+
+					var schema = {
+						resultFields: [
+							'description',
+							'initial',
+							'metadata',
+							'name',
+							'script',
+							{
+								key: 'scriptLanguage',
+								locator: 'script-language'
+							},
+							instance._getSchemaActions(),
+							instance._getSchemaAssignments(),
+							instance._getSchemaNotifications(),
+							instance._getSchemaTaskTimers(),
+							instance._getSchemaTransitions()
+						],
+						resultListLocator: tagName
+					};
+
+					return A.DataSchema.XML.apply(
+						schema,
+						instance.definitionDoc
+					);
 				}
 			}
 		});

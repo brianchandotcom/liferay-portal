@@ -61,8 +61,6 @@ AUI.add(
 				),
 
 				getPropertyModel() {
-					var instance = this;
-
 					var parentModel = A.Connector.superclass.getPropertyModel.apply(
 						this,
 						arguments
@@ -119,6 +117,58 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
+				_afterNodeRender() {
+					var instance = this;
+
+					var icon = A.Node.create(
+						Liferay.Util.getLexiconIconTpl(
+							instance.get('iconClass')
+						)
+					);
+
+					icon.setAttribute('height', '34px');
+					icon.setAttribute('width', '34px');
+
+					instance
+						.get('contentBox')
+						.one('svg')
+						.prepend(icon);
+
+					instance.boundary.set('transform', 'matrix(1,0,0,1,0,0)');
+
+					if (
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types.condition
+						) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.fork) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.join) ||
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types['join-xor']
+						)
+					) {
+						instance.boundary.rotate(45);
+						instance.boundary.translate(10, 0);
+					}
+				},
+
+				_uiSetXY(val) {
+					var instance = this;
+
+					DiagramNodeState.superclass._uiSetXY.apply(this, arguments);
+
+					instance.updateMetadata('xy', val);
+				},
+
+				_valueShapeBoundary() {
+					var shape = A.DiagramNodeState.prototype._valueShapeBoundary();
+
+					shape.radius = 17;
+
+					return shape;
+				},
+
 				SERIALIZABLE_ATTRS: A.DiagramNode.prototype.SERIALIZABLE_ATTRS.concat(
 					[
 						'actions',
@@ -133,15 +183,7 @@ AUI.add(
 					]
 				),
 
-				initializer() {
-					var instance = this;
-
-					instance.after('render', instance._afterNodeRender);
-				},
-
 				getConnectionNode() {
-					var instance = this;
-
 					var node = new Liferay.KaleoDesignerNodes.DiagramNodeTask({
 						xy: [100, 100]
 					});
@@ -213,6 +255,12 @@ AUI.add(
 					return returnValue;
 				},
 
+				initializer() {
+					var instance = this;
+
+					instance.after('render', instance._afterNodeRender);
+				},
+
 				renderShapeBoundary,
 
 				updateMetadata(key, value) {
@@ -223,58 +271,6 @@ AUI.add(
 					metadata[key] = value;
 
 					instance.set('metadata', metadata);
-				},
-
-				_afterNodeRender() {
-					var instance = this;
-
-					var icon = A.Node.create(
-						Liferay.Util.getLexiconIconTpl(
-							instance.get('iconClass')
-						)
-					);
-
-					icon.setAttribute('height', '34px');
-					icon.setAttribute('width', '34px');
-
-					instance
-						.get('contentBox')
-						.one('svg')
-						.prepend(icon);
-
-					instance.boundary.set('transform', 'matrix(1,0,0,1,0,0)');
-
-					if (
-						A.instanceOf(
-							instance,
-							A.DiagramBuilder.types.condition
-						) ||
-						A.instanceOf(instance, A.DiagramBuilder.types.fork) ||
-						A.instanceOf(instance, A.DiagramBuilder.types.join) ||
-						A.instanceOf(
-							instance,
-							A.DiagramBuilder.types['join-xor']
-						)
-					) {
-						instance.boundary.rotate(45);
-						instance.boundary.translate(10, 0);
-					}
-				},
-
-				_uiSetXY(val) {
-					var instance = this;
-
-					DiagramNodeState.superclass._uiSetXY.apply(this, arguments);
-
-					instance.updateMetadata('xy', val);
-				},
-
-				_valueShapeBoundary() {
-					var shape = A.DiagramNodeState.prototype._valueShapeBoundary();
-
-					shape.radius = 17;
-
-					return shape;
 				}
 			}
 		});
@@ -321,7 +317,14 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				hotPoints: A.DiagramNode.DIAMOND_POINTS,
+				_valueShapeBoundary() {
+					var shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
+
+					shape.width = 20;
+					shape.height = 20;
+
+					return shape;
+				},
 
 				getPropertyModel() {
 					var instance = this;
@@ -407,16 +410,9 @@ AUI.add(
 					});
 				},
 
-				renderShapeBoundary,
+				hotPoints: A.DiagramNode.DIAMOND_POINTS,
 
-				_valueShapeBoundary() {
-					var shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
-
-					shape.width = 20;
-					shape.height = 20;
-
-					return shape;
-				}
+				renderShapeBoundary
 			}
 		});
 
@@ -452,10 +448,6 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				hotPoints: A.DiagramNode.DIAMOND_POINTS,
-
-				renderShapeBoundary,
-
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
@@ -463,7 +455,11 @@ AUI.add(
 					shape.height = 20;
 
 					return shape;
-				}
+				},
+
+				hotPoints: A.DiagramNode.DIAMOND_POINTS,
+
+				renderShapeBoundary
 			}
 		});
 
@@ -491,8 +487,6 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				renderShapeBoundary,
-
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
 
@@ -500,7 +494,9 @@ AUI.add(
 					shape.height = 20;
 
 					return shape;
-				}
+				},
+
+				renderShapeBoundary
 			}
 		});
 
@@ -536,20 +532,6 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				hotPoints: A.DiagramNode.DIAMOND_POINTS,
-
-				getConnectionNode() {
-					var instance = this;
-
-					var node = new DiagramNodeJoin({
-						xy: [100, 100]
-					});
-
-					return node;
-				},
-
-				renderShapeBoundary,
-
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeFork.prototype._valueShapeBoundary();
 
@@ -557,7 +539,19 @@ AUI.add(
 					shape.height = 20;
 
 					return shape;
-				}
+				},
+
+				getConnectionNode() {
+					var node = new DiagramNodeJoin({
+						xy: [100, 100]
+					});
+
+					return node;
+				},
+
+				hotPoints: A.DiagramNode.DIAMOND_POINTS,
+
+				renderShapeBoundary
 			}
 		});
 
@@ -589,9 +583,15 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				getConnectionNode() {
-					var instance = this;
+				_valueShapeBoundary() {
+					var shape = A.DiagramNodeStart.prototype._valueShapeBoundary();
 
+					shape.radius = 17;
+
+					return shape;
+				},
+
+				getConnectionNode() {
 					var node = new DiagramNodeCondition({
 						xy: [100, 100]
 					});
@@ -599,15 +599,7 @@ AUI.add(
 					return node;
 				},
 
-				renderShapeBoundary,
-
-				_valueShapeBoundary() {
-					var shape = A.DiagramNodeStart.prototype._valueShapeBoundary();
-
-					shape.radius = 17;
-
-					return shape;
-				}
+				renderShapeBoundary
 			}
 		});
 
@@ -636,9 +628,7 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				renderShapeBoundary,
-
-				_handleAddAnchorEvent(event) {
+				_handleAddAnchorEvent() {
 					var instance = this;
 
 					instance.addField({
@@ -646,7 +636,7 @@ AUI.add(
 					});
 				},
 
-				_handleAddNodeEvent(event) {
+				_handleAddNodeEvent() {
 					var instance = this;
 
 					var builder = instance.get('builder');
@@ -667,7 +657,9 @@ AUI.add(
 					shape.radius = 17;
 
 					return shape;
-				}
+				},
+
+				renderShapeBoundary
 			}
 		});
 
@@ -715,14 +707,6 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
-				SERIALIZABLE_ATTRS: DiagramNodeState.prototype.SERIALIZABLE_ATTRS.concat(
-					['assignments']
-				),
-
-				hotPoints: A.DiagramNode.SQUARE_POINTS,
-
-				renderShapeBoundary,
-
 				_valueShapeBoundary() {
 					var shape = A.DiagramNodeTask.prototype._valueShapeBoundary();
 
@@ -730,7 +714,15 @@ AUI.add(
 					shape.height = 34;
 
 					return shape;
-				}
+				},
+
+				SERIALIZABLE_ATTRS: DiagramNodeState.prototype.SERIALIZABLE_ATTRS.concat(
+					['assignments']
+				),
+
+				hotPoints: A.DiagramNode.SQUARE_POINTS,
+
+				renderShapeBoundary
 			}
 		});
 

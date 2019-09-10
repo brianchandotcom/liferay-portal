@@ -122,180 +122,6 @@ AUI.add(
 			UI_ATTRS: ['definition'],
 
 			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					instance.definitionController = new DefinitionDiagramController(
-						encodeURIComponent(config.definition),
-						instance.canvas
-					);
-
-					instance.after(
-						'render',
-						instance._afterRenderKaleoDesigner
-					);
-
-					instance.after(
-						instance._renderContentTabs,
-						instance,
-						'_renderTabs'
-					);
-
-					instance.after(
-						instance._afterRenderSettings,
-						instance,
-						'_renderSettings'
-					);
-
-					instance.destroyPortletHandler = Liferay.on(
-						'destroyPortlet',
-						A.bind(instance._onDestroyPortlet, instance)
-					);
-				},
-
-				destructor() {
-					var instance = this;
-
-					var dataTable = instance.propertyList;
-
-					if (dataTable) {
-						var data = dataTable.get('data');
-
-						for (var i = 0; i < data.size(); i++) {
-							var editor = data.item(i).get('editor');
-
-							if (editor) {
-								editor.destroy();
-							}
-						}
-					}
-				},
-
-				connectDefinitionFields() {
-					var instance = this;
-
-					var connectors = instance.definitionController.getConnectors();
-
-					instance.connectAll(connectors);
-				},
-
-				createField(val) {
-					var instance = this;
-
-					var field = KaleoDesigner.superclass.createField.call(
-						instance,
-						val
-					);
-
-					var controlsToolbar = field.get('controlsToolbar');
-
-					controlsToolbar.children[0].icon = 'times';
-
-					field.set('controlsToolbar', controlsToolbar);
-
-					return field;
-				},
-
-				editNode(diagramNode) {
-					var instance = this;
-
-					if (diagramNode.getProperties()) {
-						KaleoDesigner.superclass.editNode.apply(
-							this,
-							arguments
-						);
-					} else {
-						instance.closeEditProperties();
-					}
-
-					instance._fixTableWidth();
-				},
-
-				getContent() {
-					var instance = this;
-
-					var json = instance.toJSON();
-
-					return instance.definitionController.serializeDefinition(
-						json
-					);
-				},
-
-				getEditorContent() {
-					var instance = this;
-
-					var editor = instance.editor;
-
-					return editor.get('value');
-				},
-
-				setEditorContent(content) {
-					var instance = this;
-
-					var editor = instance.editor;
-
-					editor.set('value', content);
-				},
-
-				showEditor() {
-					var instance = this;
-
-					var editor = instance.editor;
-
-					if (!editor) {
-						editor = new A.AceEditor(
-							instance.get('aceEditorConfig')
-						).render();
-
-						instance.editor = editor;
-					}
-
-					var content = instance.get('definition');
-
-					if (!content || XMLUtil.validateDefinition(content)) {
-						content = instance.getContent();
-					}
-
-					editor.set('value', content);
-
-					if (instance.get('readOnly')) {
-						editor.set('readOnly', true);
-					}
-				},
-
-				showSuccessMessage() {
-					var instance = this;
-
-					var successMessage = Liferay.Language.get(
-						'definition-imported-sucessfully'
-					);
-
-					var alert = instance._alert;
-
-					if (alert) {
-						alert.destroy();
-					}
-
-					alert = new Liferay.Alert({
-						closeable: true,
-						delay: {
-							hide: 3000,
-							show: 0
-						},
-						icon: 'check',
-						message: successMessage,
-						type: 'success'
-					});
-
-					if (!alert.get('rendered')) {
-						alert.render('.portlet-column');
-					}
-
-					alert.show();
-
-					instance._alert = alert;
-				},
-
 				_afterRenderKaleoDesigner() {
 					var instance = this;
 
@@ -492,7 +318,7 @@ AUI.add(
 					return val;
 				},
 
-				_uiSetAvailableFields(val) {
+				_uiSetAvailableFields() {
 					var instance = this;
 
 					var disabled = instance.get('disabled');
@@ -514,7 +340,7 @@ AUI.add(
 					}
 				},
 
-				_uiSetDefinition(val) {
+				_uiSetDefinition() {
 					var instance = this;
 
 					instance.clearFields();
@@ -527,6 +353,180 @@ AUI.add(
 					if (instance.get('rendered')) {
 						instance.connectDefinitionFields();
 					}
+				},
+
+				connectDefinitionFields() {
+					var instance = this;
+
+					var connectors = instance.definitionController.getConnectors();
+
+					instance.connectAll(connectors);
+				},
+
+				createField(val) {
+					var instance = this;
+
+					var field = KaleoDesigner.superclass.createField.call(
+						instance,
+						val
+					);
+
+					var controlsToolbar = field.get('controlsToolbar');
+
+					controlsToolbar.children[0].icon = 'times';
+
+					field.set('controlsToolbar', controlsToolbar);
+
+					return field;
+				},
+
+				destructor() {
+					var instance = this;
+
+					var dataTable = instance.propertyList;
+
+					if (dataTable) {
+						var data = dataTable.get('data');
+
+						for (var i = 0; i < data.size(); i++) {
+							var editor = data.item(i).get('editor');
+
+							if (editor) {
+								editor.destroy();
+							}
+						}
+					}
+				},
+
+				editNode(diagramNode) {
+					var instance = this;
+
+					if (diagramNode.getProperties()) {
+						KaleoDesigner.superclass.editNode.apply(
+							this,
+							arguments
+						);
+					} else {
+						instance.closeEditProperties();
+					}
+
+					instance._fixTableWidth();
+				},
+
+				getContent() {
+					var instance = this;
+
+					var json = instance.toJSON();
+
+					return instance.definitionController.serializeDefinition(
+						json
+					);
+				},
+
+				getEditorContent() {
+					var instance = this;
+
+					var editor = instance.editor;
+
+					return editor.get('value');
+				},
+
+				initializer(config) {
+					var instance = this;
+
+					instance.definitionController = new DefinitionDiagramController(
+						encodeURIComponent(config.definition),
+						instance.canvas
+					);
+
+					instance.after(
+						'render',
+						instance._afterRenderKaleoDesigner
+					);
+
+					instance.after(
+						instance._renderContentTabs,
+						instance,
+						'_renderTabs'
+					);
+
+					instance.after(
+						instance._afterRenderSettings,
+						instance,
+						'_renderSettings'
+					);
+
+					instance.destroyPortletHandler = Liferay.on(
+						'destroyPortlet',
+						A.bind(instance._onDestroyPortlet, instance)
+					);
+				},
+
+				setEditorContent(content) {
+					var instance = this;
+
+					var editor = instance.editor;
+
+					editor.set('value', content);
+				},
+
+				showEditor() {
+					var instance = this;
+
+					var editor = instance.editor;
+
+					if (!editor) {
+						editor = new A.AceEditor(
+							instance.get('aceEditorConfig')
+						).render();
+
+						instance.editor = editor;
+					}
+
+					var content = instance.get('definition');
+
+					if (!content || XMLUtil.validateDefinition(content)) {
+						content = instance.getContent();
+					}
+
+					editor.set('value', content);
+
+					if (instance.get('readOnly')) {
+						editor.set('readOnly', true);
+					}
+				},
+
+				showSuccessMessage() {
+					var instance = this;
+
+					var successMessage = Liferay.Language.get(
+						'definition-imported-sucessfully'
+					);
+
+					var alert = instance._alert;
+
+					if (alert) {
+						alert.destroy();
+					}
+
+					alert = new Liferay.Alert({
+						closeable: true,
+						delay: {
+							hide: 3000,
+							show: 0
+						},
+						icon: 'check',
+						message: successMessage,
+						type: 'success'
+					});
+
+					if (!alert.get('rendered')) {
+						alert.render('.portlet-column');
+					}
+
+					alert.show();
+
+					instance._alert = alert;
 				}
 			}
 		});

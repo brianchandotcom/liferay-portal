@@ -42,7 +42,7 @@ AUI.add(
 			REGEX_TOKEN_1: /(>)(<)(\/*)/g,
 			REGEX_TOKEN_2: /.+<\/\w[^>]*>$/,
 			REGEX_TOKEN_3: /^<\/\w/,
-			REGEX_TOKEN_4: /^<\w[^>]*[^\/]>.*$/,
+			REGEX_TOKEN_4: /^<\w[^>]*[^/]>.*$/,
 
 			create(name, content, attrs) {
 				var instance = this;
@@ -57,15 +57,13 @@ AUI.add(
 			},
 
 			createObj(name, attrs) {
-				var instance = this;
-
 				var attrBuffer = [STR_SPACE];
 				var normalizedName = LString.uncamelize(
 					name,
 					STR_DASH
 				).toLowerCase();
 
-				A.each(attrs, function(item, index, collection) {
+				A.each(attrs, function(item, index) {
 					if (item !== undefined) {
 						BUFFER_ATTR[0] = index;
 						BUFFER_ATTR[2] = item;
@@ -101,7 +99,7 @@ AUI.add(
 					)
 					.split(/\r?\n/g);
 
-				lines.forEach(function(item, index, collection) {
+				lines.forEach(function(item) {
 					var indent = 0;
 
 					if (!inCDATA) {

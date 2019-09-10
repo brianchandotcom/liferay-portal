@@ -79,64 +79,6 @@ AUI.add(
 			NAME: 'base-abstract-multi-section-editor',
 
 			prototype: {
-				initializer(config) {
-					var instance = this;
-
-					instance.set('editorForm', instance._getEditorForm(config));
-
-					instance
-						.get('boundingBox')
-						.delegate(
-							'click',
-							A.bind(instance._onClickViewMenu, instance),
-							'.celleditor-view-menu a'
-						);
-
-					instance.after('valueChange', instance._onValueChange);
-
-					instance.after(
-						'visibleChange',
-						instance._afterEditorVisibleChange
-					);
-
-					instance.destroyPortletHandler = Liferay.on(
-						'destroyPortlet',
-						A.bind(instance._onDestroyPortlet, instance)
-					);
-				},
-
-				destructor() {
-					var instance = this;
-
-					var editorForm = instance.get('editorForm');
-
-					if (editorForm) {
-						editorForm.destroy(true);
-					}
-				},
-
-				customizeToolbar() {
-					var instance = this;
-
-					var editorForm = instance.get('editorForm');
-
-					instance.addSectionButton = editorForm.get(
-						'addSectionButton'
-					);
-
-					if (instance.addSectionButton) {
-						instance.toolbar.add([instance.addSectionButton]);
-					}
-				},
-
-				getValue() {
-					var instance = this;
-
-					var editorForm = instance.get('editorForm');
-
-					return editorForm.getValue();
-				},
-
 				_afterEditorVisibleChange(event) {
 					var instance = this;
 
@@ -205,8 +147,6 @@ AUI.add(
 				},
 
 				_setViewTemplate(val) {
-					var instance = this;
-
 					if (!A.instanceOf(val, A.Template)) {
 						val = new Template(val);
 					}
@@ -220,6 +160,64 @@ AUI.add(
 					var editorForm = instance.get('editorForm');
 
 					editorForm.syncElementsFocus();
+				},
+
+				customizeToolbar() {
+					var instance = this;
+
+					var editorForm = instance.get('editorForm');
+
+					instance.addSectionButton = editorForm.get(
+						'addSectionButton'
+					);
+
+					if (instance.addSectionButton) {
+						instance.toolbar.add([instance.addSectionButton]);
+					}
+				},
+
+				destructor() {
+					var instance = this;
+
+					var editorForm = instance.get('editorForm');
+
+					if (editorForm) {
+						editorForm.destroy(true);
+					}
+				},
+
+				getValue() {
+					var instance = this;
+
+					var editorForm = instance.get('editorForm');
+
+					return editorForm.getValue();
+				},
+
+				initializer(config) {
+					var instance = this;
+
+					instance.set('editorForm', instance._getEditorForm(config));
+
+					instance
+						.get('boundingBox')
+						.delegate(
+							'click',
+							A.bind(instance._onClickViewMenu, instance),
+							'.celleditor-view-menu a'
+						);
+
+					instance.after('valueChange', instance._onValueChange);
+
+					instance.after(
+						'visibleChange',
+						instance._afterEditorVisibleChange
+					);
+
+					instance.destroyPortletHandler = Liferay.on(
+						'destroyPortlet',
+						A.bind(instance._onDestroyPortlet, instance)
+					);
 				}
 			}
 		});
@@ -283,16 +281,114 @@ AUI.add(
 			UI_ATTRS: ['value'],
 
 			prototype: {
-				initializer() {
-					var instance = this;
-
-					instance.after('render', instance._afterRender);
+				_addRemoveDynamicViewButton(dynamicViewNode) {
+					dynamicViewNode.append(
+						A.Node.create(STR_REMOVE_DYNAMIC_VIEW_BUTTON)
+					);
 				},
 
-				destructor() {
+				_afterRender() {
 					var instance = this;
 
-					instance.bodyNode.remove(true);
+					instance.addStaticViews();
+
+					instance.syncToolbarUI();
+
+					instance.syncViewsUI();
+				},
+
+				_onClickAddSectionButton(event) {
+					var instance = this;
+
+					instance.handleAddViewSection(event);
+
+					var viewNodes = instance.getDynamicViews();
+
+					instance._addRemoveDynamicViewButton(viewNodes.last());
+				},
+
+				_setViewTemplate(val) {
+					if (!A.instanceOf(val, A.Template)) {
+						val = new Template(val);
+					}
+
+					return val;
+				},
+
+				_uiSetValue(val) {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					instance.addDynamicViews(val);
+
+					A.each(val, function(item1, index1) {
+						var fields = bodyNode.all('[name="' + index1 + '"]');
+
+						item1 = AArray(item1);
+
+						fields.each(function(item2, index2) {
+							var value = item1[index2];
+
+							if (
+								item2.test(
+									'input[type=checkbox],input[type=radio]'
+								)
+							) {
+								item2.set(
+									'checked',
+									A.DataType.Boolean.parse(value)
+								);
+							} else if (
+								item2.test('select[multiple]') &&
+								Lang.isArray(value)
+							) {
+								value.forEach(function(option) {
+									for (var key in option) {
+										item2
+											.one(
+												'option[value=' +
+													option[key] +
+													']'
+											)
+											.set('selected', true);
+									}
+								});
+							} else {
+								item2.val(value);
+							}
+						});
+					});
+				},
+
+				_valueAddSectionButton() {
+					var instance = this;
+
+					if (instance.get('dynamicViewSingleton')) {
+						instance._addSectionButton = null;
+					} else if (!instance._addSectionButton) {
+						var strings = instance.get('strings');
+
+						var addSectionButton = new A.Button({
+							disabled: true,
+							id: 'addSectionButton',
+							label: strings.addSection,
+							on: {
+								click: A.bind(
+									instance._onClickAddSectionButton,
+									instance
+								)
+							}
+						}).render();
+
+						var bodyNode = instance.get('bodyNode');
+
+						bodyNode.append(addSectionButton.get('boundingBox'));
+
+						instance._addSectionButton = addSectionButton;
+					}
+
+					return instance._addSectionButton;
 				},
 
 				addDynamicViews: emptyFn,
@@ -361,6 +457,12 @@ AUI.add(
 					return scriptLanguagesJSONArray;
 				},
 
+				destructor() {
+					var instance = this;
+
+					instance.bodyNode.remove(true);
+				},
+
 				getDynamicViews() {
 					var instance = this;
 
@@ -399,6 +501,12 @@ AUI.add(
 
 				handleAddViewSection: emptyFn,
 
+				initializer() {
+					var instance = this;
+
+					instance.after('render', instance._afterRender);
+				},
+
 				removeAllViews(viewId) {
 					var instance = this;
 
@@ -427,120 +535,6 @@ AUI.add(
 					var instance = this;
 
 					instance._uiSetValue(instance.get('value'));
-				},
-
-				_addRemoveDynamicViewButton(dynamicViewNode) {
-					var instance = this;
-
-					dynamicViewNode.append(
-						A.Node.create(STR_REMOVE_DYNAMIC_VIEW_BUTTON)
-					);
-				},
-
-				_afterRender() {
-					var instance = this;
-
-					instance.addStaticViews();
-
-					instance.syncToolbarUI();
-
-					instance.syncViewsUI();
-				},
-
-				_onClickAddSectionButton(event) {
-					var instance = this;
-
-					instance.handleAddViewSection(event);
-
-					var viewNodes = instance.getDynamicViews();
-
-					instance._addRemoveDynamicViewButton(viewNodes.last());
-				},
-
-				_setViewTemplate(val) {
-					var instance = this;
-
-					if (!A.instanceOf(val, A.Template)) {
-						val = new Template(val);
-					}
-
-					return val;
-				},
-
-				_uiSetValue(val) {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					instance.addDynamicViews(val);
-
-					A.each(val, function(item1, index1, collection1) {
-						var fields = bodyNode.all('[name="' + index1 + '"]');
-
-						item1 = AArray(item1);
-
-						fields.each(function(item2, index2, collection) {
-							var value = item1[index2];
-
-							if (
-								item2.test(
-									'input[type=checkbox],input[type=radio]'
-								)
-							) {
-								item2.set(
-									'checked',
-									A.DataType.Boolean.parse(value)
-								);
-							} else if (
-								item2.test('select[multiple]') &&
-								Lang.isArray(value)
-							) {
-								value.forEach(function(option) {
-									for (var key in option) {
-										item2
-											.one(
-												'option[value=' +
-													option[key] +
-													']'
-											)
-											.set('selected', true);
-									}
-								});
-							} else {
-								item2.val(value);
-							}
-						});
-					});
-				},
-
-				_valueAddSectionButton() {
-					var instance = this;
-
-					if (instance.get('dynamicViewSingleton')) {
-						instance._addSectionButton = null;
-					} else if (!instance._addSectionButton) {
-						var strings = instance.get('strings');
-
-						var addSectionButton = new A.Button({
-							disabled: true,
-							id: 'addSectionButton',
-							label: strings.addSection,
-							on: {
-								click: A.bind(
-									instance._onClickAddSectionButton,
-									instance
-								)
-							}
-						}).render();
-
-						var bodyNode = instance.get('bodyNode');
-
-						bodyNode.append(addSectionButton.get('boundingBox'));
-
-						instance._addSectionButton = addSectionButton;
-					}
-
-					return instance._addSectionButton;
 				}
 			}
 		});
@@ -672,6 +666,75 @@ AUI.add(
 			NAME: 'assignments-editor-form',
 
 			prototype: {
+				_countRoleTypeViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = val.roleType
+							? val.roleType.filter(isValue).length
+							: 1;
+					}
+
+					return count;
+				},
+
+				_countUserViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = Math.max(
+							val.emailAddress
+								? val.emailAddress.filter(isValue).length
+								: 1,
+							val.screenName
+								? val.screenName.filter(isValue).length
+								: 1,
+							val.userId ? val.userId.filter(isValue).length : 1
+						);
+					}
+
+					return count;
+				},
+
+				_onTypeValueChange(event) {
+					var instance = this;
+
+					instance.showView(event.currentTarget.val());
+				},
+
+				_valueAssignmentsType() {
+					var instance = this;
+
+					var strings = instance.getStrings();
+
+					return [
+						{
+							label: strings.defaultAssignmentLabel,
+							value: STR_BLANK
+						},
+						{
+							label: strings.resourceActions,
+							value: 'resourceActions'
+						},
+						{
+							label: strings.role,
+							value: 'roleId'
+						},
+						{
+							label: strings.roleType,
+							value: 'roleType'
+						},
+						{
+							label: strings.scriptedAssignment,
+							value: 'scriptedAssignment'
+						},
+						{
+							label: strings.user,
+							value: 'user'
+						}
+					];
+				},
+
 				addDynamicViews(val) {
 					var instance = this;
 
@@ -1020,79 +1083,6 @@ AUI.add(
 					var typeSelect = instance.get('typeSelect');
 
 					instance.showView(typeSelect.val());
-				},
-
-				_countRoleTypeViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = val.roleType
-							? val.roleType.filter(isValue).length
-							: 1;
-					}
-
-					return count;
-				},
-
-				_countUserViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = Math.max(
-							val.emailAddress
-								? val.emailAddress.filter(isValue).length
-								: 1,
-							val.screenName
-								? val.screenName.filter(isValue).length
-								: 1,
-							val.userId ? val.userId.filter(isValue).length : 1
-						);
-					}
-
-					return count;
-				},
-
-				_onTypeValueChange(event) {
-					var instance = this;
-
-					instance.showView(event.currentTarget.val());
-				},
-
-				_valueAssignmentsType() {
-					var instance = this;
-
-					var strings = instance.getStrings();
-
-					return [
-						{
-							label: strings.defaultAssignmentLabel,
-							value: STR_BLANK
-						},
-						{
-							label: strings.resourceActions,
-							value: 'resourceActions'
-						},
-						{
-							label: strings.role,
-							value: 'roleId'
-						},
-						{
-							label: strings.roleType,
-							value: 'roleType'
-						},
-						{
-							label: strings.scriptedAssignment,
-							value: 'scriptedAssignment'
-						},
-						{
-							label: strings.user,
-							value: 'user'
-						}
-					];
 				}
 			}
 		});
@@ -1245,6 +1235,50 @@ AUI.add(
 			NAME: 'notification-recipients-editor-form',
 
 			prototype: {
+				_valueAssignmentsType() {
+					var instance = this;
+
+					var strings = instance.getStrings();
+
+					var assignmentsTypes = [
+						{
+							label: strings.defaultAssignmentLabel,
+							value: STR_BLANK
+						},
+						{
+							label: strings.role,
+							value: 'roleId'
+						},
+						{
+							label: strings.roleType,
+							value: 'roleType'
+						},
+						{
+							label: strings.scriptedRecipient,
+							value: 'scriptedRecipient'
+						},
+						{
+							label: strings.user,
+							value: 'user'
+						}
+					];
+
+					var executionTypeSelect = instance.get(
+						'executionTypeSelect'
+					);
+
+					var executionType = executionTypeSelect.val();
+
+					if (executionType === 'onAssignment') {
+						assignmentsTypes.push({
+							label: KaleoDesignerStrings.taskAssignees,
+							value: 'taskAssignees'
+						});
+					}
+
+					return assignmentsTypes;
+				},
+
 				addStaticViews() {
 					var instance = this;
 
@@ -1348,50 +1382,6 @@ AUI.add(
 					);
 
 					instance.appendToStaticView(buffer.join(STR_BLANK));
-				},
-
-				_valueAssignmentsType() {
-					var instance = this;
-
-					var strings = instance.getStrings();
-
-					var assignmentsTypes = [
-						{
-							label: strings.defaultAssignmentLabel,
-							value: STR_BLANK
-						},
-						{
-							label: strings.role,
-							value: 'roleId'
-						},
-						{
-							label: strings.roleType,
-							value: 'roleType'
-						},
-						{
-							label: strings.scriptedRecipient,
-							value: 'scriptedRecipient'
-						},
-						{
-							label: strings.user,
-							value: 'user'
-						}
-					];
-
-					var executionTypeSelect = instance.get(
-						'executionTypeSelect'
-					);
-
-					var executionType = executionTypeSelect.val();
-
-					if (executionType === 'onAssignment') {
-						assignmentsTypes.push({
-							label: KaleoDesignerStrings.taskAssignees,
-							value: 'taskAssignees'
-						});
-					}
-
-					return assignmentsTypes;
 				}
 			}
 		};
@@ -1509,6 +1499,79 @@ AUI.add(
 			NAME: 'notifications-editor-form',
 
 			prototype: {
+				_appendRecipientsEditorToLastSection() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification'
+					);
+
+					var lastDynamicView = dynamicViews.item(
+						dynamicViews.size() - 1
+					);
+
+					instance._showRecipientsEditor(lastDynamicView);
+				},
+
+				_countNotificationViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = val.notificationTypes
+							? val.notificationTypes.filter(isValue).length
+							: 1;
+					}
+
+					return count;
+				},
+
+				_getRecipients(val) {
+					var instance = this;
+
+					return instance.get('value.recipients') || val;
+				},
+
+				_renderRecipientsEditor() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification'
+					);
+
+					dynamicViews.each(
+						A.bind(instance._showRecipientsEditor, instance)
+					);
+				},
+
+				_showRecipientsEditor(bodyContentNode, index) {
+					var instance = this;
+
+					var executionTypeSelect = bodyContentNode.one(
+						'.execution-type-select'
+					);
+
+					var editorContainer = bodyContentNode.one(
+						'.recipients-editor-container'
+					);
+
+					var recipients = instance.get('recipients');
+
+					var value = recipients[index];
+
+					instance.showEditorForm(
+						NotificationRecipientsEditorForm,
+						editorContainer,
+						value,
+						{
+							executionTypeSelect
+						}
+					);
+				},
+
 				addDynamicViews(val) {
 					var instance = this;
 
@@ -1614,26 +1677,22 @@ AUI.add(
 
 					var recipients = [];
 
-					instance
-						.getDynamicViews()
-						.each(function(item, index, collection) {
-							var editorContainer = item.one(
-								'.recipients-editor-container'
-							);
+					instance.getDynamicViews().each(function(item, index) {
+						var editorContainer = item.one(
+							'.recipients-editor-container'
+						);
 
-							var recipientsEditor = instance.getEmbeddedEditorForm(
-								NotificationRecipientsEditorForm,
-								editorContainer
-							);
+						var recipientsEditor = instance.getEmbeddedEditorForm(
+							NotificationRecipientsEditorForm,
+							editorContainer
+						);
 
-							if (recipientsEditor) {
-								recipients.push(recipientsEditor.getValue());
-							}
+						if (recipientsEditor) {
+							recipients.push(recipientsEditor.getValue());
+						}
 
-							localRecipients[
-								index
-							] = recipientsEditor.getValue();
-						});
+						localRecipients[index] = recipientsEditor.getValue();
+					});
 
 					instance.set('recipients', localRecipients);
 
@@ -1687,81 +1746,6 @@ AUI.add(
 					);
 
 					instance._renderRecipientsEditor();
-				},
-
-				_appendRecipientsEditorToLastSection() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification'
-					);
-
-					var lastDynamicView = dynamicViews.item(
-						dynamicViews.size() - 1
-					);
-
-					instance._showRecipientsEditor(lastDynamicView);
-				},
-
-				_countNotificationViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = val.notificationTypes
-							? val.notificationTypes.filter(isValue).length
-							: 1;
-					}
-
-					return count;
-				},
-
-				_getRecipients(val) {
-					var instance = this;
-
-					return instance.get('value.recipients') || val;
-				},
-
-				_renderRecipientsEditor() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'notification'
-					);
-
-					dynamicViews.each(
-						A.bind(instance._showRecipientsEditor, instance)
-					);
-				},
-
-				_showRecipientsEditor(bodyContentNode, index) {
-					var instance = this;
-
-					var executionTypeSelect = bodyContentNode.one(
-						'.execution-type-select'
-					);
-
-					var editorContainer = bodyContentNode.one(
-						'.recipients-editor-container'
-					);
-
-					var recipients = instance.get('recipients');
-
-					var value = recipients[index];
-
-					instance.showEditorForm(
-						NotificationRecipientsEditorForm,
-						editorContainer,
-						value,
-						{
-							executionTypeSelect
-						}
-					);
 				}
 			}
 		};
@@ -1875,7 +1859,7 @@ AUI.add(
 
 			var recipients = [];
 
-			instance.getDynamicViews().each(function(item, index, collection) {
+			instance.getDynamicViews().each(function(item, index) {
 				var editorContainer = item.one('.recipients-editor-container');
 
 				var recipientsEditor = instance.getEmbeddedEditorForm(
@@ -1969,6 +1953,16 @@ AUI.add(
 			NAME: 'actions-editor-form',
 
 			prototype: {
+				_countActionViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = val.name ? val.name.filter(isValue).length : 1;
+					}
+
+					return count;
+				},
+
 				addActionView(num) {
 					var instance = this;
 
@@ -2090,18 +2084,6 @@ AUI.add(
 					if (addSectionButton) {
 						addSectionButton.set('disabled', false);
 					}
-				},
-
-				_countActionViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = val.name ? val.name.filter(isValue).length : 1;
-					}
-
-					return count;
 				}
 			}
 		};
@@ -2262,138 +2244,6 @@ AUI.add(
 			NAME: 'task-timer-actions-editor-form',
 
 			prototype: {
-				initializer() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					bodyNode.delegate(
-						['change', 'keyup'],
-						A.bind(instance._onActionTypeValueChange, instance),
-						'.select-action-type'
-					);
-				},
-
-				addDynamicViews(val) {
-					var instance = this;
-
-					instance.removeAllViews('timerAction');
-
-					instance.addTimerActionView(
-						instance._countTimerActionViews(val)
-					);
-				},
-
-				addTimerActionView(num) {
-					var instance = this;
-
-					num = num || 1;
-
-					var strings = instance.getStrings();
-
-					var timerActionViewTpl = instance.get('viewTemplate');
-
-					var selectTpl = Template.get('select');
-
-					var buffer = [];
-
-					for (var i = 0; i < num; i++) {
-						var timerActionContent = [
-							selectTpl.parse({
-								auiCssClass:
-									'form-control input-sm select-action-type',
-								auiLabelCssClass: 'celleditor-label',
-								id: A.guid(),
-								label: strings.type,
-								name: 'actionType',
-								options: instance.get('actionTypes')
-							})
-						].join(STR_BLANK);
-
-						buffer.push(
-							timerActionViewTpl.parse({
-								content: timerActionContent,
-								viewId: 'timerAction'
-							})
-						);
-					}
-
-					instance.appendToDynamicView(buffer.join(STR_BLANK));
-				},
-
-				getValue() {
-					var instance = this;
-
-					var value = {
-						actionType: [],
-						timerAction: []
-					};
-
-					var dynamicViews = instance.getDynamicViews();
-
-					dynamicViews.each(function(item, index) {
-						var actionTypeSelect = item.one('.select-action-type');
-
-						var actionType = actionTypeSelect.val();
-
-						value.actionType.push(actionType);
-
-						var editorContainer = item.one(
-							'.editor-container-' + actionType
-						);
-
-						var editorFormClass = instance.get(
-							'editorFormClasses.' + actionType
-						);
-
-						var editor = instance.getEmbeddedEditorForm(
-							editorFormClass,
-							editorContainer
-						);
-
-						value.timerAction.push(editor.getValue());
-					});
-
-					return value;
-				},
-
-				handleAddViewSection(event) {
-					var instance = this;
-
-					var button = event.target;
-
-					if (!button.get('disabled')) {
-						instance.addTimerActionView();
-					}
-
-					instance._appendEditorToLastSection();
-
-					instance._displayEditors();
-				},
-
-				syncToolbarUI() {
-					var instance = this;
-
-					var addSectionButton = instance.get('addSectionButton');
-
-					if (addSectionButton) {
-						addSectionButton.set('disabled', false);
-					}
-				},
-
-				syncViewsUI() {
-					var instance = this;
-
-					TaskTimerActionsEditorForm.superclass.syncViewsUI.apply(
-						this,
-						arguments
-					);
-
-					instance._renderEditor();
-
-					instance._displayEditors();
-				},
-
 				_appendEditorToLastSection() {
 					var instance = this;
 
@@ -2411,8 +2261,6 @@ AUI.add(
 				},
 
 				_countTimerActionViews(val) {
-					var instance = this;
-
 					var count = 0;
 
 					if (val) {
@@ -2425,8 +2273,6 @@ AUI.add(
 				},
 
 				_displayEditor(dynamicViewNode) {
-					var instance = this;
-
 					var actionTypeSelect = dynamicViewNode.one(
 						'.select-action-type'
 					);
@@ -2513,6 +2359,138 @@ AUI.add(
 						editorContainer,
 						timerAction
 					);
+				},
+
+				addDynamicViews(val) {
+					var instance = this;
+
+					instance.removeAllViews('timerAction');
+
+					instance.addTimerActionView(
+						instance._countTimerActionViews(val)
+					);
+				},
+
+				addTimerActionView(num) {
+					var instance = this;
+
+					num = num || 1;
+
+					var strings = instance.getStrings();
+
+					var timerActionViewTpl = instance.get('viewTemplate');
+
+					var selectTpl = Template.get('select');
+
+					var buffer = [];
+
+					for (var i = 0; i < num; i++) {
+						var timerActionContent = [
+							selectTpl.parse({
+								auiCssClass:
+									'form-control input-sm select-action-type',
+								auiLabelCssClass: 'celleditor-label',
+								id: A.guid(),
+								label: strings.type,
+								name: 'actionType',
+								options: instance.get('actionTypes')
+							})
+						].join(STR_BLANK);
+
+						buffer.push(
+							timerActionViewTpl.parse({
+								content: timerActionContent,
+								viewId: 'timerAction'
+							})
+						);
+					}
+
+					instance.appendToDynamicView(buffer.join(STR_BLANK));
+				},
+
+				getValue() {
+					var instance = this;
+
+					var value = {
+						actionType: [],
+						timerAction: []
+					};
+
+					var dynamicViews = instance.getDynamicViews();
+
+					dynamicViews.each(function(item) {
+						var actionTypeSelect = item.one('.select-action-type');
+
+						var actionType = actionTypeSelect.val();
+
+						value.actionType.push(actionType);
+
+						var editorContainer = item.one(
+							'.editor-container-' + actionType
+						);
+
+						var editorFormClass = instance.get(
+							'editorFormClasses.' + actionType
+						);
+
+						var editor = instance.getEmbeddedEditorForm(
+							editorFormClass,
+							editorContainer
+						);
+
+						value.timerAction.push(editor.getValue());
+					});
+
+					return value;
+				},
+
+				handleAddViewSection(event) {
+					var instance = this;
+
+					var button = event.target;
+
+					if (!button.get('disabled')) {
+						instance.addTimerActionView();
+					}
+
+					instance._appendEditorToLastSection();
+
+					instance._displayEditors();
+				},
+
+				initializer() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					bodyNode.delegate(
+						['change', 'keyup'],
+						A.bind(instance._onActionTypeValueChange, instance),
+						'.select-action-type'
+					);
+				},
+
+				syncToolbarUI() {
+					var instance = this;
+
+					var addSectionButton = instance.get('addSectionButton');
+
+					if (addSectionButton) {
+						addSectionButton.set('disabled', false);
+					}
+				},
+
+				syncViewsUI() {
+					var instance = this;
+
+					TaskTimerActionsEditorForm.superclass.syncViewsUI.apply(
+						this,
+						arguments
+					);
+
+					instance._renderEditor();
+
+					instance._displayEditors();
 				}
 			}
 		});
@@ -2578,6 +2556,18 @@ AUI.add(
 			NAME: 'task-timer-delays-editor-form',
 
 			prototype: {
+				_countRecurrenceViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = val.duration
+							? val.duration.filter(isValue).length - 1
+							: 0;
+					}
+
+					return count;
+				},
+
 				addDynamicViews(val) {
 					var instance = this;
 
@@ -2611,7 +2601,7 @@ AUI.add(
 					instance.appendToDynamicView(buffer.join(STR_BLANK));
 				},
 
-				addStaticViews(val) {
+				addStaticViews() {
 					var instance = this;
 
 					var delayContent = instance.getDelayContent();
@@ -2665,20 +2655,6 @@ AUI.add(
 					if (addSectionButton) {
 						addSectionButton.set('disabled', false);
 					}
-				},
-
-				_countRecurrenceViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = val.duration
-							? val.duration.filter(isValue).length - 1
-							: 0;
-					}
-
-					return count;
 				}
 			}
 		});
@@ -2711,6 +2687,239 @@ AUI.add(
 			NAME: 'task-timers-editor-form',
 
 			prototype: {
+				_appendDelaysEditorToLastSection() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
+					);
+
+					var lastDynamicView = dynamicViews.item(
+						dynamicViews.size() - 1
+					);
+
+					instance._showDelaysEditor(lastDynamicView);
+				},
+
+				_appendTimerActionsEditorToLastSection() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
+					);
+
+					var lastDynamicView = dynamicViews.item(
+						dynamicViews.size() - 1
+					);
+
+					instance._showTimerActionsEditor(lastDynamicView);
+				},
+
+				_countTimerViews(val) {
+					var count = 0;
+
+					if (val) {
+						count = val.name ? val.name.filter(isValue).length : 1;
+					}
+
+					return count;
+				},
+
+				_getDelays(val) {
+					var instance = this;
+
+					return instance.get('value.delay') || val;
+				},
+
+				_getTimerActions() {
+					var instance = this;
+
+					var actions = instance.get('value.timerActions') || [];
+
+					var notifications =
+						instance.get('value.timerNotifications') || [];
+
+					var reassignments =
+						instance.get('value.reassignments') || [];
+
+					var count = Math.max(
+						actions.length,
+						notifications.length,
+						reassignments.length
+					);
+
+					var timerActions = [];
+
+					for (var i = 0; i < count; i++) {
+						var actionType = [];
+
+						var splitTimerActions;
+
+						var timerAction = [];
+
+						if (reassignments[i]) {
+							splitTimerActions = instance._splitTimerActions(
+								reassignments[i]
+							);
+
+							actionType = actionType.concat(
+								instance._repeat(
+									'reassignment',
+									splitTimerActions.length
+								)
+							);
+
+							timerAction = timerAction.concat(splitTimerActions);
+						}
+
+						if (
+							notifications[i] &&
+							notifications[i].notificationTypes
+						) {
+							splitTimerActions = instance._splitTimerActions(
+								notifications[i]
+							);
+
+							actionType = actionType.concat(
+								instance._repeat(
+									'notification',
+									splitTimerActions.length
+								)
+							);
+
+							timerAction = timerAction.concat(splitTimerActions);
+						}
+
+						if (actions[i] && actions[i].name) {
+							splitTimerActions = instance._splitTimerActions(
+								actions[i]
+							);
+
+							actionType = actionType.concat(
+								instance._repeat(
+									'action',
+									splitTimerActions.length
+								)
+							);
+
+							timerAction = timerAction.concat(splitTimerActions);
+						}
+
+						timerActions.push({
+							actionType,
+							timerAction
+						});
+					}
+
+					return timerActions;
+				},
+
+				_put(obj, key, value) {
+					obj[key] = obj[key] || [];
+
+					obj[key].push(value);
+				},
+
+				_renderDelaysEditor() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
+					);
+
+					dynamicViews.each(
+						A.bind(instance._showDelaysEditor, instance)
+					);
+				},
+
+				_renderTimerActionsEditor() {
+					var instance = this;
+
+					var bodyNode = instance.get('bodyNode');
+
+					var dynamicViews = bodyNode.all(
+						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
+					);
+
+					dynamicViews.each(
+						A.bind(instance._showTimerActionsEditor, instance)
+					);
+				},
+
+				_repeat(value, times) {
+					var array = [];
+
+					for (var i = 0; i < times; i++) {
+						array.push(value);
+					}
+
+					return array;
+				},
+
+				_showDelaysEditor(bodyContentNode, index) {
+					var instance = this;
+
+					var editorContainer = bodyContentNode.one(
+						'.delays-editor-container'
+					);
+
+					var delays = instance.get('delays');
+
+					var value = delays[index];
+
+					instance.showEditorForm(
+						TaskTimerDelaysEditorForm,
+						editorContainer,
+						value
+					);
+				},
+
+				_showTimerActionsEditor(bodyContentNode, index) {
+					var instance = this;
+
+					var editorContainer = bodyContentNode.one(
+						'.timer-actions-editor-container'
+					);
+
+					var timerActions = instance.get('timerActions');
+
+					var value = timerActions[index];
+
+					instance.showEditorForm(
+						TaskTimerActionsEditorForm,
+						editorContainer,
+						value
+					);
+				},
+
+				_splitTimerActions(timerActions) {
+					var splitTimerActions = [];
+
+					A.each(timerActions, function(item1, index1) {
+						item1.forEach(function(item2, index2) {
+							if (!splitTimerActions[index2]) {
+								splitTimerActions[index2] = {};
+							}
+
+							var timerAction = splitTimerActions[index2];
+
+							if (!timerAction[index1]) {
+								timerAction[index1] = [];
+							}
+
+							timerAction[index1][0] = item2;
+						});
+					});
+
+					return splitTimerActions;
+				},
+
 				addDynamicViews(val) {
 					var instance = this;
 
@@ -2801,7 +3010,7 @@ AUI.add(
 						'.task-timers-cell-editor-input'
 					);
 
-					taskTimerInputs.each(function(item, index, collection) {
+					taskTimerInputs.each(function(item) {
 						if (
 							item.get('type') &&
 							item.get('type') === 'checkbox'
@@ -2845,8 +3054,7 @@ AUI.add(
 
 						timerActionValue.actionType.forEach(function(
 							actionType,
-							index2,
-							collection2
+							index2
 						) {
 							var timerAction =
 								timerActionValue.timerAction[index2];
@@ -2913,247 +3121,6 @@ AUI.add(
 					instance._renderDelaysEditor();
 
 					instance._renderTimerActionsEditor();
-				},
-
-				_appendDelaysEditorToLastSection() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
-					);
-
-					var lastDynamicView = dynamicViews.item(
-						dynamicViews.size() - 1
-					);
-
-					instance._showDelaysEditor(lastDynamicView);
-				},
-
-				_appendTimerActionsEditorToLastSection() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
-					);
-
-					var lastDynamicView = dynamicViews.item(
-						dynamicViews.size() - 1
-					);
-
-					instance._showTimerActionsEditor(lastDynamicView);
-				},
-
-				_countTimerViews(val) {
-					var instance = this;
-
-					var count = 0;
-
-					if (val) {
-						count = val.name ? val.name.filter(isValue).length : 1;
-					}
-
-					return count;
-				},
-
-				_getDelays(val) {
-					var instance = this;
-
-					return instance.get('value.delay') || val;
-				},
-
-				_getTimerActions(val) {
-					var instance = this;
-
-					var actions = instance.get('value.timerActions') || [];
-
-					var notifications =
-						instance.get('value.timerNotifications') || [];
-
-					var reassignments =
-						instance.get('value.reassignments') || [];
-
-					var count = Math.max(
-						actions.length,
-						notifications.length,
-						reassignments.length
-					);
-
-					var timerActions = [];
-
-					for (var i = 0; i < count; i++) {
-						var actionType = [];
-
-						var splitTimerActions;
-
-						var timerAction = [];
-
-						if (reassignments[i]) {
-							splitTimerActions = instance._splitTimerActions(
-								reassignments[i]
-							);
-
-							actionType = actionType.concat(
-								instance._repeat(
-									'reassignment',
-									splitTimerActions.length
-								)
-							);
-
-							timerAction = timerAction.concat(splitTimerActions);
-						}
-
-						if (
-							notifications[i] &&
-							notifications[i].notificationTypes
-						) {
-							splitTimerActions = instance._splitTimerActions(
-								notifications[i]
-							);
-
-							actionType = actionType.concat(
-								instance._repeat(
-									'notification',
-									splitTimerActions.length
-								)
-							);
-
-							timerAction = timerAction.concat(splitTimerActions);
-						}
-
-						if (actions[i] && actions[i].name) {
-							splitTimerActions = instance._splitTimerActions(
-								actions[i]
-							);
-
-							actionType = actionType.concat(
-								instance._repeat(
-									'action',
-									splitTimerActions.length
-								)
-							);
-
-							timerAction = timerAction.concat(splitTimerActions);
-						}
-
-						timerActions.push({
-							actionType,
-							timerAction
-						});
-					}
-
-					return timerActions;
-				},
-
-				_put(obj, key, value) {
-					var instance = this;
-
-					obj[key] = obj[key] || [];
-
-					obj[key].push(value);
-				},
-
-				_renderDelaysEditor() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
-					);
-
-					dynamicViews.each(
-						A.bind(instance._showDelaysEditor, instance)
-					);
-				},
-
-				_renderTimerActionsEditor() {
-					var instance = this;
-
-					var bodyNode = instance.get('bodyNode');
-
-					var dynamicViews = bodyNode.all(
-						SELECTOR_PREFIX_CELLEDITOR_VIEW_TYPE + 'timer'
-					);
-
-					dynamicViews.each(
-						A.bind(instance._showTimerActionsEditor, instance)
-					);
-				},
-
-				_repeat(value, times) {
-					var instance = this;
-
-					var array = [];
-
-					for (var i = 0; i < times; i++) {
-						array.push(value);
-					}
-
-					return array;
-				},
-
-				_showDelaysEditor(bodyContentNode, index) {
-					var instance = this;
-
-					var editorContainer = bodyContentNode.one(
-						'.delays-editor-container'
-					);
-
-					var delays = instance.get('delays');
-
-					var value = delays[index];
-
-					instance.showEditorForm(
-						TaskTimerDelaysEditorForm,
-						editorContainer,
-						value
-					);
-				},
-
-				_showTimerActionsEditor(bodyContentNode, index) {
-					var instance = this;
-
-					var editorContainer = bodyContentNode.one(
-						'.timer-actions-editor-container'
-					);
-
-					var timerActions = instance.get('timerActions');
-
-					var value = timerActions[index];
-
-					instance.showEditorForm(
-						TaskTimerActionsEditorForm,
-						editorContainer,
-						value
-					);
-				},
-
-				_splitTimerActions(timerActions) {
-					var instance = this;
-
-					var splitTimerActions = [];
-
-					A.each(timerActions, function(item1, index1, collection1) {
-						item1.forEach(function(item2, index2, collection2) {
-							if (!splitTimerActions[index2]) {
-								splitTimerActions[index2] = {};
-							}
-
-							var timerAction = splitTimerActions[index2];
-
-							if (!timerAction[index1]) {
-								timerAction[index1] = [];
-							}
-
-							timerAction[index1][0] = item2;
-						});
-					});
-
-					return splitTimerActions;
 				}
 			}
 		});
@@ -3190,21 +3157,6 @@ AUI.add(
 			NAME: 'script-cell-editor',
 
 			prototype: {
-				initializer() {
-					var instance = this;
-
-					instance.editor = new A.AceEditor({
-						height: 300,
-						width: 550
-					});
-				},
-
-				getValue() {
-					var instance = this;
-
-					return instance.editor.get('value');
-				},
-
 				_afterRender() {
 					var instance = this;
 
@@ -3233,6 +3185,21 @@ AUI.add(
 					if (editor && isValue(val)) {
 						editor.set('value', val);
 					}
+				},
+
+				getValue() {
+					var instance = this;
+
+					return instance.editor.get('value');
+				},
+
+				initializer() {
+					var instance = this;
+
+					instance.editor = new A.AceEditor({
+						height: 300,
+						width: 550
+					});
 				}
 			}
 		});

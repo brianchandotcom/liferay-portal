@@ -60,7 +60,7 @@ AUI.add(
 				return AArray(names).join(', ');
 			},
 
-			script(data) {
+			script() {
 				return STR_ELLIPSIS;
 			}
 		};
@@ -105,11 +105,7 @@ AUI.add(
 			var data = {};
 
 			if (form) {
-				form.all(':input:not(:button)').each(function(
-					item,
-					index,
-					collection
-				) {
+				form.all(':input:not(:button)').each(function(item) {
 					var checked = item.get('checked');
 					var name = item.get('name');
 					var type = item.get('type');
@@ -155,9 +151,7 @@ AUI.add(
 
 		KaleoDesignerUtils.uniformRandomInt = uniformRandomInt;
 
-		var previewBeforeRevert = function(event, renderUrl, actionUrl, title) {
-			var instance = this;
-
+		var previewBeforeRevert = function(_, renderUrl, actionUrl, title) {
 			var dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					destroyOnHide: true,
@@ -221,8 +215,8 @@ AUI.add(
 			addSection: Liferay.Language.get('add-section'),
 			approve: Liferay.Language.get('approve'),
 			assetCreator: Liferay.Language.get('asset-creator'),
-			assignments: Liferay.Language.get('assignments'),
 			assignmentType: Liferay.Language.get('assignment-type'),
+			assignments: Liferay.Language.get('assignments'),
 			autoCreate: Liferay.Language.get('auto-create'),
 			beanshell: Liferay.Language.get('beanshell'),
 			blocking: Liferay.Language.get('blocking'),
@@ -241,8 +235,8 @@ AUI.add(
 			email: Liferay.Language.get('email'),
 			emailAddress: Liferay.Language.get('email-address'),
 			executionType: Liferay.Language.get('execution-type'),
-			forms: Liferay.Language.get('forms'),
 			formTemplate: Liferay.Language.get('form-template'),
+			forms: Liferay.Language.get('forms'),
 			freemarker: Liferay.Language.get('freemarker'),
 			groovy: Liferay.Language.get('groovy'),
 			hour: Liferay.Language.get('hour'),
@@ -261,8 +255,8 @@ AUI.add(
 			notificationRecipients: Liferay.Language.get(
 				'notification-recipients'
 			),
-			notifications: Liferay.Language.get('notifications'),
 			notificationType: Liferay.Language.get('notification-type'),
+			notifications: Liferay.Language.get('notifications'),
 			onAssignment: Liferay.Language.get('on-assignment'),
 			onEntry: Liferay.Language.get('on-entry'),
 			onExit: Liferay.Language.get('on-exit'),
@@ -284,9 +278,9 @@ AUI.add(
 			scale: Liferay.Language.get('scale'),
 			screenName: Liferay.Language.get('screen-name'),
 			script: Liferay.Language.get('script'),
+			scriptLanguage: Liferay.Language.get('script-language'),
 			scriptedAssignment: Liferay.Language.get('scripted-assignment'),
 			scriptedRecipient: Liferay.Language.get('scripted-recipient'),
-			scriptLanguage: Liferay.Language.get('script-language'),
 			search: Liferay.Language.get('search'),
 			second: Liferay.Language.get('second'),
 			site: Liferay.Language.get('site'),

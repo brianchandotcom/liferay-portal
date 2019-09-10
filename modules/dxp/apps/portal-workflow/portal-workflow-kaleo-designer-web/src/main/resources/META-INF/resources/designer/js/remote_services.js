@@ -13,6 +13,26 @@ AUI.add(
 	'liferay-kaleo-designer-remote-services',
 	function(A) {
 		var KaleoDesignerRemoteServices = {
+			_invokeResourceURL(params) {
+				var url = Liferay.PortletURL.createResourceURL();
+
+				url.setParameters(params.queryParameters);
+				url.setPortletId(
+					'com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet'
+				);
+				url.setResourceId(params.resourceId);
+
+				A.io.request(url.toString(), {
+					dataType: 'JSON',
+					on: {
+						success() {
+							params.callback(this.get('responseData'));
+						}
+					},
+					sync: params.sync
+				});
+			},
+
 			getRole(roleId, callback) {
 				var instance = this;
 
@@ -47,28 +67,6 @@ AUI.add(
 					},
 					resourceId: 'users',
 					sync: false
-				});
-			},
-
-			_invokeResourceURL(params) {
-				var instance = this;
-
-				var url = Liferay.PortletURL.createResourceURL();
-
-				url.setParameters(params.queryParameters);
-				url.setPortletId(
-					'com_liferay_portal_workflow_kaleo_designer_web_portlet_KaleoDesignerPortlet'
-				);
-				url.setResourceId(params.resourceId);
-
-				A.io.request(url.toString(), {
-					dataType: 'JSON',
-					on: {
-						success() {
-							params.callback(this.get('responseData'));
-						}
-					},
-					sync: params.sync
 				});
 			}
 		};

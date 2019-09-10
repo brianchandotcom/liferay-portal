@@ -11,7 +11,7 @@
 
 AUI.add(
 	'liferay-kaleo-designer-definition-diagram-controller',
-	function(A) {
+	function() {
 		var XMLDefinition = Liferay.KaleoDesignerXMLDefinition;
 
 		var jsonParse = Liferay.KaleoDesignerUtils.jsonParse;
@@ -33,22 +33,25 @@ AUI.add(
 		};
 
 		DefinitionDiagramController.prototype = {
+			_getRandomXY() {
+				var instance = this;
+
+				var region = instance.canvas.get('region');
+
+				return [
+					uniformRandomInt(0, region.width - 100),
+					uniformRandomInt(0, region.height - 100)
+				];
+			},
+
 			getConnectors() {
 				var instance = this;
 
 				var connectors = [];
 
 				instance.definition.forEachField(function(tagName, fieldData) {
-					fieldData.results.forEach(function(
-						item1,
-						index1,
-						collection1
-					) {
-						item1.transitions.forEach(function(
-							item2,
-							index2,
-							collection2
-						) {
+					fieldData.results.forEach(function(item1) {
+						item1.transitions.forEach(function(item2) {
 							connectors.push({
 								connector: {
 									default: item2.default,
@@ -70,11 +73,7 @@ AUI.add(
 				var fields = [];
 
 				instance.definition.forEachField(function(tagName, fieldData) {
-					fieldData.results.forEach(function(
-						item,
-						index,
-						collection
-					) {
+					fieldData.results.forEach(function(item) {
 						var type = tagName;
 
 						if (item.initial) {
@@ -135,17 +134,6 @@ AUI.add(
 					]),
 					json
 				);
-			},
-
-			_getRandomXY() {
-				var instance = this;
-
-				var region = instance.canvas.get('region');
-
-				return [
-					uniformRandomInt(0, region.width - 100),
-					uniformRandomInt(0, region.height - 100)
-				];
 			}
 		};
 

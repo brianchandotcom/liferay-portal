@@ -15,6 +15,8 @@ AUI.add(
 		var AArray = A.Array;
 
 		var AutoCompleteUtil = {
+			_INSTANCES: [],
+
 			create(
 				portletNamespace,
 				inputNode,
@@ -54,9 +56,7 @@ AUI.add(
 				AArray.invoke(INSTANCES, 'destroy');
 
 				INSTANCES.length = 0;
-			},
-
-			_INSTANCES: []
+			}
 		};
 
 		Liferay.KaleoDesignerAutoCompleteUtil = AutoCompleteUtil;

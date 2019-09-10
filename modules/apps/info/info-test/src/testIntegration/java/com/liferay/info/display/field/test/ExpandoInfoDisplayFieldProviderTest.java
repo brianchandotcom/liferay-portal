@@ -20,18 +20,20 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -44,6 +46,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -64,12 +67,21 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_defaultCompanyId = CompanyThreadLocal.getCompanyId();
+
+		_company = CompanyTestUtil.addCompany();
+
+		CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+
 		_expandoTable = _expandoTableLocalService.addDefaultTable(
-			CompanyThreadLocal.getCompanyId(), User.class.getName());
+			_company.getCompanyId(), User.class.getName());
 
-		_group = GroupTestUtil.addGroup();
+		_user = UserTestUtil.addUser(_company);
+	}
 
-		_user = UserTestUtil.addUser();
+	@After
+	public void tearDown() {
+		CompanyThreadLocal.setCompanyId(_defaultCompanyId);
 	}
 
 	@Test
@@ -86,9 +98,7 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			"longitude", "0.5"
 		);
 
-		ExpandoTestUtil.addValue(
-			_expandoTable, expandoColumn, _user.getPrimaryKey(),
-			valueJSONObject.toString());
+		_addExpandoValue(expandoColumn, valueJSONObject.toString());
 
 		Map<String, Object> infoDisplayFieldsValues =
 			_expandoInfoDisplayFieldProvider.
@@ -135,8 +145,7 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		values.put(
 			LocaleUtil.FRENCH, new String[] {"fr-value-1", "fr-value-2"});
 
-		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
-			_expandoTable, expandoColumn, _user.getPrimaryKey(), values);
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, values);
 
 		List<InfoDisplayField> infoDisplayFields =
 			_expandoInfoDisplayFieldProvider.
@@ -190,8 +199,7 @@ public class ExpandoInfoDisplayFieldProviderTest {
 
 		String[] values = {"test-value-1", "test-value-2"};
 
-		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
-			_expandoTable, expandoColumn, _user.getPrimaryKey(), values);
+		ExpandoValue expandoValue = _addExpandoValue(expandoColumn, values);
 
 		Map<String, Object> infoDisplayFieldsValues =
 			_expandoInfoDisplayFieldProvider.
@@ -228,8 +236,8 @@ public class ExpandoInfoDisplayFieldProviderTest {
 		ExpandoColumn expandoColumn = ExpandoTestUtil.addColumn(
 			_expandoTable, "test-string", ExpandoColumnConstants.STRING);
 
-		ExpandoValue expandoValue = ExpandoTestUtil.addValue(
-			_expandoTable, expandoColumn, _user.getPrimaryKey(), "test-value");
+		ExpandoValue expandoValue = _addExpandoValue(
+			expandoColumn, "test-value");
 
 		Map<String, Object> infoDisplayFieldsValues =
 			_expandoInfoDisplayFieldProvider.
@@ -260,19 +268,33 @@ public class ExpandoInfoDisplayFieldProviderTest {
 			infoDisplayFieldsValues.get(infoDisplayField.getKey()));
 	}
 
+	private ExpandoValue _addExpandoValue(
+			ExpandoColumn expandoColumn, Object data)
+		throws Exception {
+
+		return _expandoValueLocalService.addValue(
+			_company.getCompanyId(),
+			PortalUtil.getClassName(_expandoTable.getClassNameId()),
+			_expandoTable.getName(), expandoColumn.getName(),
+			_user.getPrimaryKey(), data);
+	}
+
+	@DeleteAfterTestRun
+	private Company _company;
+
+	private long _defaultCompanyId;
+
 	@Inject
 	private ExpandoInfoDisplayFieldProvider _expandoInfoDisplayFieldProvider;
 
-	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
 
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;
 
-	@DeleteAfterTestRun
-	private Group _group;
+	@Inject
+	private ExpandoValueLocalService _expandoValueLocalService;
 
-	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
 	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-io")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

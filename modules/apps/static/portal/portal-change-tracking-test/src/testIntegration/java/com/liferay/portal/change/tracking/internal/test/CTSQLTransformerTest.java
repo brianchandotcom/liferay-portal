@@ -24,6 +24,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.change.tracking.registry.CTModelRegistration;
 import com.liferay.portal.change.tracking.registry.CTModelRegistry;
@@ -1046,12 +1047,12 @@ public class CTSQLTransformerTest {
 			long ctCollectionId)
 		throws Exception {
 
-		String inputSQL = StringUtil.read(
+		String inputSQL = StreamUtil.toString(
 			CTSQLTransformerTest.class.getResourceAsStream(
 				"dependencies/" + inputSQLFile));
 
 		String expectedOutputSQL = _normalizeSQL(
-			StringUtil.read(
+			StreamUtil.toString(
 				CTSQLTransformerTest.class.getResourceAsStream(
 					"dependencies/" + expectedOutputSQLFile)));
 

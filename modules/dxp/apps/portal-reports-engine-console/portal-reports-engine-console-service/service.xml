@@ -77,8 +77,8 @@
 		<column name="portletId" type="String" />
 		<column name="pageURL" type="String" />
 		<column name="reportParameters" type="String" />
-		<column name="status" type="String" />
 		<column name="errorMessage" type="String" />
+		<column name="status" type="String" />
 
 		<!-- Order -->
 

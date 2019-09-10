@@ -1,3 +1,0 @@
-com.liferay.portal.reports.engine.console.configuration
-com.liferay.portal.reports.engine.console.service.permission
-com.liferay.portal.reports.engine.console.util

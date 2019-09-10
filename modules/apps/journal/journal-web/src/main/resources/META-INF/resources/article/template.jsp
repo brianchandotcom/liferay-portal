@@ -39,11 +39,10 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 			<c:if test="<%= (article != null) && !article.isNew() && (journalEditArticleDisplayContext.getClassNameId() == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 				<div class="input-group-item input-group-item-shrink">
 					<clay:button
-						elementClasses="btn-outline-secondary"
+						elementClasses="btn-secondary"
 						icon="view"
 						id='<%= liferayPortletResponse.getNamespace() + "previewWithTemplate" %>'
 						monospaced="<%= true %>"
-						style="secondary"
 					/>
 				</div>
 			</c:if>

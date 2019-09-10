@@ -62,11 +62,10 @@
 		<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 			<div class="input-group-item input-group-item-shrink">
 				<clay:button
-					elementClasses="btn-outline-secondary"
+					elementClasses="btn-secondary"
 					icon="view"
 					id='<%= liferayPortletResponse.getNamespace() + "previewSpecificDisplayPageButton" %>'
 					monospaced="<%= true %>"
-					style="secondary"
 				/>
 			</div>
 		</c:if>

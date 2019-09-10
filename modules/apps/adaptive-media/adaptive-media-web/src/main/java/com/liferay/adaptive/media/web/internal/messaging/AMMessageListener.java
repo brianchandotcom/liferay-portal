@@ -17,6 +17,7 @@ package com.liferay.adaptive.media.web.internal.messaging;
 import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.adaptive.media.web.internal.constants.AMDestinationNames;
 import com.liferay.adaptive.media.web.internal.processor.AMAsyncProcessorImpl;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -75,6 +76,11 @@ public class AMMessageListener extends BaseMessageListener {
 		for (AMProcessor amProcessor : amProcessors) {
 			try {
 				amProcessorCommand.execute(amProcessor, model, modelId);
+			}
+			catch (NoSuchFileEntryException nsfee) {
+				if (_log.isInfoEnabled()) {
+					_log.info(nsfee, nsfee);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

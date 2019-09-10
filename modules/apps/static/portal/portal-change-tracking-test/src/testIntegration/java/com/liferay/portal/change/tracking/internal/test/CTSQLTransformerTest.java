@@ -82,12 +82,11 @@ public class CTSQLTransformerTest {
 			"MainTable",
 			new CTModelRegistration(MainTable.class, "mainTableId"));
 
-		_createCTEntries(1, MainTable.class, new long[] {6}, null, null);
-		_createCTEntries(2, MainTable.class, null, new long[] {1}, null);
-		_createCTEntries(3, MainTable.class, null, new long[] {1}, null);
-		_createCTEntries(4, MainTable.class, null, null, new long[] {4});
-		_createCTEntries(
-			5, MainTable.class, new long[] {7}, null, new long[] {4});
+		_createCTEntries(1, MainTable.class, 6L, null, null);
+		_createCTEntries(2, MainTable.class, null, 1L, null);
+		_createCTEntries(3, MainTable.class, null, 1L, null);
+		_createCTEntries(4, MainTable.class, null, null, 4L);
+		_createCTEntries(5, MainTable.class, 7L, null, 4L);
 		_createCTEntries(6, MainTable.class, null, null, null);
 
 		_db.runSQL(
@@ -123,12 +122,11 @@ public class CTSQLTransformerTest {
 			"ReferenceTable",
 			new CTModelRegistration(ReferenceTable.class, "referenceTableId"));
 
-		_createCTEntries(1, ReferenceTable.class, new long[] {6}, null, null);
-		_createCTEntries(2, ReferenceTable.class, null, new long[] {1}, null);
-		_createCTEntries(3, ReferenceTable.class, null, new long[] {1}, null);
-		_createCTEntries(4, ReferenceTable.class, null, null, new long[] {5});
-		_createCTEntries(
-			5, ReferenceTable.class, null, new long[] {1}, new long[] {4});
+		_createCTEntries(1, ReferenceTable.class, 6L, null, null);
+		_createCTEntries(2, ReferenceTable.class, null, 1L, null);
+		_createCTEntries(3, ReferenceTable.class, null, 1L, null);
+		_createCTEntries(4, ReferenceTable.class, null, null, 5L);
+		_createCTEntries(5, ReferenceTable.class, null, 1L, 4L);
 		_createCTEntries(6, ReferenceTable.class, null, null, null);
 
 		_db.runSQL(
@@ -857,8 +855,8 @@ public class CTSQLTransformerTest {
 	}
 
 	private static long _createCTEntries(
-			int ctCollectionIndex, Class<?> modelClass, long[] added,
-			long[] modified, long[] removed)
+			int ctCollectionIndex, Class<?> modelClass, Long addedPK,
+			Long modifiedPK, Long removedPK)
 		throws Exception {
 
 		CTCollection ctCollection = null;
@@ -883,34 +881,28 @@ public class CTSQLTransformerTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		if (added != null) {
-			for (long modelClassPK : added) {
-				_ctEntryLocalService.addCTEntry(
-					TestPropsValues.getUserId(),
-					_classNameLocalService.getClassNameId(modelClass),
-					modelClassPK, 0, CTConstants.CT_CHANGE_TYPE_ADDITION,
-					ctCollection.getCtCollectionId(), serviceContext);
-			}
+		if (addedPK != null) {
+			_ctEntryLocalService.addCTEntry(
+				TestPropsValues.getUserId(),
+				_classNameLocalService.getClassNameId(modelClass), addedPK, 0,
+				CTConstants.CT_CHANGE_TYPE_ADDITION,
+				ctCollection.getCtCollectionId(), serviceContext);
 		}
 
-		if (modified != null) {
-			for (long modelClassPK : modified) {
-				_ctEntryLocalService.addCTEntry(
-					TestPropsValues.getUserId(),
-					_classNameLocalService.getClassNameId(modelClass),
-					modelClassPK, 0, CTConstants.CT_CHANGE_TYPE_MODIFICATION,
-					ctCollection.getCtCollectionId(), serviceContext);
-			}
+		if (modifiedPK != null) {
+			_ctEntryLocalService.addCTEntry(
+				TestPropsValues.getUserId(),
+				_classNameLocalService.getClassNameId(modelClass), modifiedPK,
+				0, CTConstants.CT_CHANGE_TYPE_MODIFICATION,
+				ctCollection.getCtCollectionId(), serviceContext);
 		}
 
-		if (removed != null) {
-			for (long modelClassPK : removed) {
-				_ctEntryLocalService.addCTEntry(
-					TestPropsValues.getUserId(),
-					_classNameLocalService.getClassNameId(modelClass),
-					modelClassPK, 0, CTConstants.CT_CHANGE_TYPE_DELETION,
-					ctCollection.getCtCollectionId(), serviceContext);
-			}
+		if (removedPK != null) {
+			_ctEntryLocalService.addCTEntry(
+				TestPropsValues.getUserId(),
+				_classNameLocalService.getClassNameId(modelClass), removedPK, 0,
+				CTConstants.CT_CHANGE_TYPE_DELETION,
+				ctCollection.getCtCollectionId(), serviceContext);
 		}
 
 		return ctCollection.getCtCollectionId();

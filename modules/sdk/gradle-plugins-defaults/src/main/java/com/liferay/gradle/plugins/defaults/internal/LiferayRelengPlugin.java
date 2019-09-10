@@ -1030,6 +1030,34 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 		}
 
+		if (GradleUtil.hasPlugin(project, LiferayOSGiDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayOSGiDefaultsPlugin.
+						WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME);
+
+			FileCollection source = writeDigestTask.getSource();
+
+			String digest = null;
+
+			if (!source.isEmpty()) {
+				digest = writeDigestTask.getDigest();
+			}
+
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

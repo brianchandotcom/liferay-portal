@@ -28,6 +28,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-84223."
+	@priority = "3"
+	test DLLinkValidationInWebContent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.expandInfo();
+
+		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "${editDocumentURL}",
+			webContentTitle = "WC WebContent Title");
+
+		AlloyEditor.addEntryExternalURL(entryExternalURL = "${editDocumentURL}");
+
+		Button.clickPublish();
+
+		AssertTextPresent(
+			locator1 = "Message#ERROR",
+			value1 = "Your request failed to complete.");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_DISMISSIBLE",
+			value1 = "Unable to validate referenced file entry because it cannot be found with the following parameters");
+	}
+
 	@priority = "4"
 	test EditExportTemplate {
 		Navigator.openURL();

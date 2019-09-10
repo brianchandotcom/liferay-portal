@@ -54,11 +54,11 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		boolean enableChangeLists = ParamUtil.getBoolean(
-			actionRequest, "enableChangeLists");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		boolean enableChangeLists = ParamUtil.getBoolean(
+			actionRequest, "enableChangeLists");
 
 		if (enableChangeLists) {
 			_ctPreferencesLocalService.getCTPreferences(

@@ -50,11 +50,11 @@ public class UpdateUserChangeListsConfigurationMVCActionCommand
 	protected void doProcessAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		boolean requireConfirmation = ParamUtil.getBoolean(
-			actionRequest, "requireConfirmation");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		boolean requireConfirmation = ParamUtil.getBoolean(
+			actionRequest, "requireConfirmation");
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.getCTPreferences(

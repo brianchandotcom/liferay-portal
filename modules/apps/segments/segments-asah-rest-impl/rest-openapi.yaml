@@ -62,8 +62,7 @@ components:
                 status:
                     type: string
                 winnerVariantId:
-                    format: int64
-                    type: integer
+                    type: string
             required:
                 - status
             type: object

@@ -19,9 +19,12 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.mappings.BaseMaxExpansionsTestCase;
 
+import org.junit.Ignore;
+
 /**
  * @author Wade Cao
  */
+@Ignore
 public class MaxExpansionsTest extends BaseMaxExpansionsTestCase {
 
 	@Override

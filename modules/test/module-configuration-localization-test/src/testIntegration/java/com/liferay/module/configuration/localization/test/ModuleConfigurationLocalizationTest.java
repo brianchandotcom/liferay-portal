@@ -158,8 +158,6 @@ public class ModuleConfigurationLocalizationTest {
 		String pid, ExtendedMetaTypeInformation extendedMetaTypeInformation,
 		ResourceBundle resourceBundle) {
 
-		StringBundler sb = new StringBundler();
-
 		Locale locale = LocaleUtil.getDefault();
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
@@ -173,17 +171,15 @@ public class ModuleConfigurationLocalizationTest {
 				extendedObjectClassDefinition.getExtensionAttributes(
 					extensionUri);
 
-			if (!extensionAttributes.containsKey("generateUI")) {
-				continue;
-			}
-
 			boolean generateUI = GetterUtil.getBoolean(
-				extensionAttributes.get("generateUI"));
+				extensionAttributes.get("generateUI"), true);
 
 			if (!generateUI) {
-				return sb.toString();
+				return StringPool.BLANK;
 			}
 		}
+
+		StringBundler sb = new StringBundler();
 
 		String extendedObjectClassDefinitionName = ResourceBundleUtil.getString(
 			resourceBundle, extendedObjectClassDefinition.getName());

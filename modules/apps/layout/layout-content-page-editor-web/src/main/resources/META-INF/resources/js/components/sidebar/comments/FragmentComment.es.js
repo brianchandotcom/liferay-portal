@@ -128,7 +128,7 @@ const FragmentComment = props => {
 
 	return (
 		<article className={commentClassname}>
-			<div className="d-flex mb-2 pr-3">
+			<div className="d-flex mb-2">
 				<UserIcon {...props.comment.author} />
 
 				<div className="flex-grow-1 overflow-hidden pl-2">

@@ -26,6 +26,7 @@
 .fragments-editor__fragment-comment {
 	min-height: 4.5rem;
 	padding-left: 1rem;
+	padding-right: 1rem;
 	padding-top: 1rem;
 	position: relative;
 	transition: min-height ease 0.3s;
@@ -48,6 +49,7 @@
 
 	&--reply {
 		padding-left: 1rem;
+		padding-right: 0;
 		padding-top: 0.5rem;
 	}
 

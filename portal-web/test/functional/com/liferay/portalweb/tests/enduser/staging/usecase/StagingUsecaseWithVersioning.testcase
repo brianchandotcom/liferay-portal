@@ -886,4 +886,50 @@ definition {
 		Staging.publishToLive();
 	}
 
+	@description = "This is a use case for LPS-84809."
+	@priority = "3"
+	test ViewChildPageNameViaLocalizedPage {
+		property test.name.skip.portal.instance = "StagingUsecaseWithVersioning#ViewChildPageNameViaLocalizedPage";
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.addPublicPage(pageName = "Page1");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Page1");
+
+		Page.addPageTranslations(
+			page = "Page1",
+			pageTranslation = "es_ES",
+			pageTranslationName = "Página1");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.addPublicChildPage(
+			childPageName = "Page2",
+			parentPageName = "Page1");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Page2",
+			parentPagesHierarchy = "Page1");
+
+		Page.addPageTranslations(
+			page = "Page2",
+			pageTranslation = "es_ES",
+			pageTranslationName = "Página2");
+
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Page.viewTranslationsPG(
+			defaultLanguageLocalizationMessage = "Display the page in English (United States).",
+			pageName = "Página2",
+			preferredLanguageLocalizationMessage = "Establecer español (España) como su idioma preferido.",
+			sitePageURL = "${portalURL}/es/web/site-name-staging/page-2",
+			translationLanguageLocalizationMessage = "This page is displayed in Spanish (Spain).");
+	}
+
 }

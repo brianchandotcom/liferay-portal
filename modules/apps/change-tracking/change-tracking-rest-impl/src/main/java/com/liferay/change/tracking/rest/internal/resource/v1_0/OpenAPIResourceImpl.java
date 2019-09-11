@@ -66,8 +66,6 @@ public class OpenAPIResourceImpl {
 		{
 			add(CollectionResourceImpl.class);
 
-			add(EntryResourceImpl.class);
-
 			add(ProcessResourceImpl.class);
 
 			add(ProcessUserResourceImpl.class);

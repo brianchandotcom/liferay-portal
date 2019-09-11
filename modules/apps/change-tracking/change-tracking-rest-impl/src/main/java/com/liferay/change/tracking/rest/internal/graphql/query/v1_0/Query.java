@@ -15,12 +15,10 @@
 package com.liferay.change.tracking.rest.internal.graphql.query.v1_0;
 
 import com.liferay.change.tracking.rest.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.dto.v1_0.Process;
 import com.liferay.change.tracking.rest.dto.v1_0.ProcessUser;
 import com.liferay.change.tracking.rest.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.resource.v1_0.CollectionResource;
-import com.liferay.change.tracking.rest.resource.v1_0.EntryResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessResource;
 import com.liferay.change.tracking.rest.resource.v1_0.ProcessUserResource;
 import com.liferay.change.tracking.rest.resource.v1_0.SettingsResource;
@@ -60,14 +58,6 @@ public class Query {
 
 		_collectionResourceComponentServiceObjects =
 			collectionResourceComponentServiceObjects;
-	}
-
-	public static void setEntryResourceComponentServiceObjects(
-		ComponentServiceObjects<EntryResource>
-			entryResourceComponentServiceObjects) {
-
-		_entryResourceComponentServiceObjects =
-			entryResourceComponentServiceObjects;
 	}
 
 	public static void setProcessResourceComponentServiceObjects(
@@ -137,19 +127,6 @@ public class Query {
 			this::_populateResourceContext,
 			collectionResource -> collectionResource.getCollection(
 				collectionId, companyId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {entry(entryId: ___){affectedByEntriesCount, changeType, classNameId, classPK, collision, contentType, dateModified, id, key, siteName, title, userName, version}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public Entry entry(@GraphQLName("entryId") Long entryId) throws Exception {
-		return _applyComponentServiceObjects(
-			_entryResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			entryResource -> entryResource.getEntry(entryId));
 	}
 
 	/**
@@ -250,30 +227,6 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Collection> items;
-
-		@GraphQLField
-		protected long page;
-
-		@GraphQLField
-		protected long pageSize;
-
-		@GraphQLField
-		protected long totalCount;
-
-	}
-
-	@GraphQLName("EntryPage")
-	public class EntryPage {
-
-		public EntryPage(Page entryPage) {
-			items = entryPage.getItems();
-			page = entryPage.getPage();
-			pageSize = entryPage.getPageSize();
-			totalCount = entryPage.getTotalCount();
-		}
-
-		@GraphQLField
-		protected java.util.Collection<Entry> items;
 
 		@GraphQLField
 		protected long page;
@@ -388,17 +341,6 @@ public class Query {
 		collectionResource.setContextUser(_user);
 	}
 
-	private void _populateResourceContext(EntryResource entryResource)
-		throws Exception {
-
-		entryResource.setContextAcceptLanguage(_acceptLanguage);
-		entryResource.setContextCompany(_company);
-		entryResource.setContextHttpServletRequest(_httpServletRequest);
-		entryResource.setContextHttpServletResponse(_httpServletResponse);
-		entryResource.setContextUriInfo(_uriInfo);
-		entryResource.setContextUser(_user);
-	}
-
 	private void _populateResourceContext(ProcessResource processResource)
 		throws Exception {
 
@@ -435,8 +377,6 @@ public class Query {
 
 	private static ComponentServiceObjects<CollectionResource>
 		_collectionResourceComponentServiceObjects;
-	private static ComponentServiceObjects<EntryResource>
-		_entryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessResource>
 		_processResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProcessUserResource>

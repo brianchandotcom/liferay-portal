@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.rest.client.serdes.v1_0;
 
 import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;

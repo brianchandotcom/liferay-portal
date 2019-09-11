@@ -23,7 +23,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
-import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;

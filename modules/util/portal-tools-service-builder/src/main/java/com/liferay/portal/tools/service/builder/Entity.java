@@ -96,7 +96,7 @@ public class Entity implements Comparable<Entity> {
 			serviceBuilder, null, null, null, name, null, null, null, false,
 			false, false, false, true, true, null, null, null, null, null, true,
 			false, false, false, false, null, false, null, null, false, null,
-			null, null, null, null, null, null, null, null, null, false);
+			null, null, null, null, null, null, null, null, null, false, false);
 	}
 
 	public Entity(
@@ -117,7 +117,8 @@ public class Entity implements Comparable<Entity> {
 		List<EntityColumn> entityColumns, EntityOrder entityOrder,
 		List<EntityFinder> entityFinders, List<Entity> referenceEntities,
 		List<String> unresolvedReferenceEntityNames,
-		List<String> txRequiredMethodNames, boolean resourceActionModel) {
+		List<String> txRequiredMethodNames, boolean resourceActionModel,
+		boolean changeTrackingEnabled) {
 
 		_serviceBuilder = serviceBuilder;
 		_packagePath = packagePath;
@@ -154,6 +155,7 @@ public class Entity implements Comparable<Entity> {
 		_unresolvedReferenceEntityNames = unresolvedReferenceEntityNames;
 		_txRequiredMethodNames = txRequiredMethodNames;
 		_resourceActionModel = resourceActionModel;
+		_changeTrackingEnabled = changeTrackingEnabled;
 
 		_humanName = GetterUtil.getString(
 			humanName, ServiceBuilder.toHumanName(name));
@@ -366,6 +368,10 @@ public class Entity implements Comparable<Entity> {
 
 		interfaceNames.add("BaseModel<" + _name + ">");
 
+		if (isChangeTrackingEnabled()) {
+			interfaceNames.add("CTModel<" + _name + ">");
+		}
+
 		if (isContainerModel()) {
 			interfaceNames.add("ContainerModel");
 		}
@@ -459,6 +465,11 @@ public class Entity implements Comparable<Entity> {
 			overrideColumnName.add("userId");
 			overrideColumnName.add("userName");
 			overrideColumnName.add("userUuid");
+		}
+
+		if (isChangeTrackingEnabled()) {
+			overrideColumnName.add("ctCollectionId");
+			overrideColumnName.add("primaryKey");
 		}
 
 		if (isGroupedModel()) {
@@ -874,7 +885,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasPrimitivePK(boolean includeWrappers) {
-		if (hasCompoundPK()) {
+		if (_pkEntityColumns.size() != 1) {
 			return false;
 		}
 
@@ -931,6 +942,10 @@ public class Entity implements Comparable<Entity> {
 
 	public boolean isCacheEnabled() {
 		return _cacheEnabled;
+	}
+
+	public boolean isChangeTrackingEnabled() {
+		return _changeTrackingEnabled;
 	}
 
 	public boolean isContainerModel() {
@@ -1259,6 +1274,7 @@ public class Entity implements Comparable<Entity> {
 	private String _apiPackagePath;
 	private List<EntityColumn> _blobEntityColumns;
 	private final boolean _cacheEnabled;
+	private boolean _changeTrackingEnabled;
 	private final List<EntityColumn> _collectionEntityColumns;
 	private final boolean _containerModel;
 	private final List<EntityColumn> _databaseRegularEntityColumns;

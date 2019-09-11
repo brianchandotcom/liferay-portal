@@ -282,4 +282,54 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
 
+	@description = "This is a use case for LPS-101221."
+	@priority = "4"
+	test UpdateDeactivateAccountViaNameLink {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "Accounts Name Description for Test",
+			accountName = "Accounts Name for Test",
+			accountStatus = "Inactive");
+
+		Navigator.gotoBack();
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Accounts Name for Test",
+			rowStatus = "INACTIVE");
+
+		LexiconEntry.gotoEntry(rowEntry = "Accounts Name for Test");
+
+		PortletEntry.inputName(name = "Update Accounts Name via Name Link");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Edit Update Accounts Name via Name Link");
+
+		Navigator.gotoBack();
+
+		ManagementBar.viewFilterAndOrder(menuItem = "Inactive");
+
+		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name via Name Link");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Update Accounts Name via Name Link",
+			rowStatus = "INACTIVE");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+	}
+
 }

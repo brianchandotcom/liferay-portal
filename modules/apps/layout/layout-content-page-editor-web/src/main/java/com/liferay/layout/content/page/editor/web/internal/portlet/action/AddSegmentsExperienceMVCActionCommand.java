@@ -29,10 +29,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -51,6 +56,7 @@ import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
+import com.liferay.segments.util.SegmentsExperiencePortletUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -188,6 +194,10 @@ public class AddSegmentsExperienceMVCActionCommand
 				baseSegmentsExperienceId);
 		}
 
+		_copyPortletPreferences(
+			classPK, baseSegmentsExperienceId,
+			segmentsExperience.getSegmentsExperienceId());
+
 		return jsonObject;
 	}
 
@@ -239,6 +249,56 @@ public class AddSegmentsExperienceMVCActionCommand
 			ServiceContextFactory.getInstance(actionRequest));
 	}
 
+	private void _copyPortletPreferences(
+		long plid, long sourceSegmentsExperienceId,
+		long targetSegmentsExperienceId) {
+
+		List<PortletPreferences> portletPreferencesList =
+			_portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			Portlet portlet = _portletLocalService.getPortletById(
+				portletPreferences.getPortletId());
+
+			if ((portlet == null) || portlet.isUndeployedPortlet()) {
+				continue;
+			}
+
+			long segmentsExperienceId =
+				SegmentsExperiencePortletUtil.getSegmentsExperienceId(
+					portletPreferences.getPortletId());
+
+			if (segmentsExperienceId == sourceSegmentsExperienceId) {
+				String newPortletId =
+					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+						portletPreferences.getPortletId(),
+						targetSegmentsExperienceId);
+
+				PortletPreferences existingPortletPreferences =
+					_portletPreferencesLocalService.fetchPortletPreferences(
+						portletPreferences.getOwnerId(),
+						portletPreferences.getOwnerType(), plid, newPortletId);
+
+				if (existingPortletPreferences == null) {
+					_portletPreferencesLocalService.addPortletPreferences(
+						portletPreferences.getCompanyId(),
+						portletPreferences.getOwnerId(),
+						portletPreferences.getOwnerType(), plid, newPortletId,
+						portlet, portletPreferences.getPreferences());
+				}
+				else {
+					existingPortletPreferences.setPreferences(
+						portletPreferences.getPreferences());
+
+					_portletPreferencesLocalService.updatePortletPreferences(
+						existingPortletPreferences);
+				}
+			}
+		}
+	}
+
 	private long _getBaseSegmentsExperienceId(
 		SegmentsExperiment segmentsExperiment) {
 
@@ -285,6 +345,10 @@ public class AddSegmentsExperienceMVCActionCommand
 				groupId, draftLayout.getClassNameId(), draftLayout.getPlid(),
 				segmentsExperience.getSegmentsExperienceId(),
 				baseSegmentsExperienceId);
+
+			_copyPortletPreferences(
+				draftLayout.getPlid(), baseSegmentsExperienceId,
+				segmentsExperience.getSegmentsExperienceId());
 		}
 	}
 
@@ -479,6 +543,12 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

@@ -190,12 +190,12 @@ public class AddSchedulerMVCActionCommand extends BaseMVCActionCommand {
 		Calendar calendar = null;
 
 		if (timeZoneSensitive) {
-			calendar = (Calendar)startCalendar.clone();
-		}
-		else {
 			calendar = CalendarFactoryUtil.getCalendar();
 
 			calendar.setTime(startCalendar.getTime());
+		}
+		else {
+			calendar = (Calendar)startCalendar.clone();
 		}
 
 		Recurrence recurrence = new Recurrence(

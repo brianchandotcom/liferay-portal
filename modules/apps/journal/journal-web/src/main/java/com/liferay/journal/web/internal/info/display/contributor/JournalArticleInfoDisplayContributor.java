@@ -150,7 +150,7 @@ public class JournalArticleInfoDisplayContributor
 		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
 			classPK);
 
-		if (article.isInTrash()) {
+		if ((article == null) || article.isInTrash()) {
 			return null;
 		}
 
@@ -166,7 +166,7 @@ public class JournalArticleInfoDisplayContributor
 			journalArticleLocalService.fetchArticleByUrlTitle(
 				groupId, urlTitle);
 
-		if (article.isInTrash()) {
+		if ((article == null) || article.isInTrash()) {
 			return null;
 		}
 

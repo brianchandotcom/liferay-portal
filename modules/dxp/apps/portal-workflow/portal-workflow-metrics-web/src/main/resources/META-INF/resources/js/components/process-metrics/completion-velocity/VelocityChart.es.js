@@ -66,85 +66,83 @@ const VelocityChart = () => {
 		dataX = getXAxisIntervals(getSelectedTimeRange(), keys, unitKey);
 	}
 
-	if (histograms.length === 0) {
-		return null;
-	}
-
 	return (
-		<div className="velocity-chart">
-			<LineChart
-				axis={{
-					x: {
-						padding: {
-							left: 0,
-							right: 0
+		<div className="velocity-chart" data-testid="velocity-chart">
+			{histograms.length && (
+				<LineChart
+					axis={{
+						x: {
+							padding: {
+								left: 0,
+								right: 0
+							},
+							tick: {
+								centered: false,
+								fit: true,
+								format: date =>
+									formatXAxisDate(
+										date,
+										isAmPm,
+										unitKey,
+										getSelectedTimeRange()
+									),
+								outer: false,
+								values: dataX
+							},
+							type: 'timeseries'
 						},
-						tick: {
-							centered: false,
-							fit: true,
-							format: date =>
-								formatXAxisDate(
-									date,
-									isAmPm,
-									unitKey,
-									getSelectedTimeRange()
-								),
-							outer: false,
-							values: dataX
-						},
-						type: 'timeseries'
-					},
-					y: {
-						inner: false,
-						inverted: false,
-						max: maxValue,
-						min: 0,
-						padding: {
-							bottom: 0,
-							top: 0
-						},
-						show: true,
-						tick: {
-							outer: false,
-							values: intervals
+						y: {
+							inner: false,
+							inverted: false,
+							max: maxValue,
+							min: 0,
+							padding: {
+								bottom: 0,
+								top: 0
+							},
+							show: true,
+							tick: {
+								outer: false,
+								values: intervals
+							}
 						}
-					}
-				}}
-				data={data}
-				grid={{
-					lines: {
-						front: false
-					},
-					x: {
-						lines: dataX.map(key => ({value: key}))
-					}
-				}}
-				height={190}
-				legend={{show: false}}
-				line={{
-					classes: ['bb-line', 'bb-line-dashed-4-4']
-				}}
-				padding={{
-					top: 0
-				}}
-				point={{
-					focus: {expand: {enabled: true, r: 5}},
-					pattern: ['circle'],
-					r: 0.01,
-					select: {r: 5}
-				}}
-				resize={{
-					auto: true
-				}}
-				tooltip={{
-					contents: VelocityChart.Tooltip(
-						isAmPm,
-						getSelectedTimeRange(),
-						unitKey,
-						unitName
-					)
-				}}
-			></LineChart>
+					}}
+					data={data}
+					grid={{
+						lines: {
+							front: false
+						},
+						x: {
+							lines: dataX.map(key => ({value: key}))
+						}
+					}}
+					height={190}
+					legend={{show: false}}
+					line={{
+						classes: ['bb-line', 'bb-line-dashed-4-4']
+					}}
+					padding={{
+						top: 0
+					}}
+					point={{
+						focus: {expand: {enabled: true, r: 5}},
+						pattern: ['circle'],
+						r: 0.01,
+						select: {r: 5}
+					}}
+					resize={{
+						auto: true
+					}}
+					tooltip={{
+						contents: VelocityChart.Tooltip(
+							isAmPm,
+							getSelectedTimeRange(),
+							unitKey,
+							unitName
+						)
+					}}
+				/>
+			)}
 		</div>
 	);
 };

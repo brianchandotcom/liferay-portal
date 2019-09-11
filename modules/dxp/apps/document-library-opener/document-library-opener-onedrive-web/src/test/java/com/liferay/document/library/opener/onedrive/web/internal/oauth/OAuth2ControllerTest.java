@@ -209,9 +209,6 @@ public class OAuth2ControllerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.addParameter(
-			"redirect", String.valueOf(Boolean.TRUE));
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -246,9 +243,6 @@ public class OAuth2ControllerTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
-		mockHttpServletRequest.addParameter(
-			"redirect", String.valueOf(Boolean.TRUE));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

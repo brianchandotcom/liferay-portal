@@ -210,9 +210,6 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(
 			"folderId", String.valueOf(fileEntry.getFolderId()));
 
-		liferayPortletURL.setParameter(
-			"redirect", String.valueOf(Boolean.TRUE));
-
 		return liferayPortletURL.toString();
 	}
 

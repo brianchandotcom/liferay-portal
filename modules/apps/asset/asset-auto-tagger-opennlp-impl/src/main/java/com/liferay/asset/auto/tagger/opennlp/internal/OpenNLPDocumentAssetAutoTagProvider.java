@@ -62,7 +62,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 						assetEntry.getCompanyId(),
 						textExtractor.extract(
 							_getAssetObject(assetEntry), locale),
-						locale, ContentTypes.TEXT_PLAIN);
+						locale, assetEntry.getMimeType());
 				}
 			}
 		}

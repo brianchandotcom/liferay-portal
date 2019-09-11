@@ -63,7 +63,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 							assetEntry.getCompanyId(),
 							textExtractor.extract(
 								_getAssetObject(assetEntry), locale),
-							locale, ContentTypes.TEXT_PLAIN);
+							locale, assetEntry.getMimeType());
 				}
 			}
 		}

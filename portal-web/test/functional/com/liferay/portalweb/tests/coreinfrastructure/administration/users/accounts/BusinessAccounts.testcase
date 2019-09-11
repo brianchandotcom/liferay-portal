@@ -213,8 +213,7 @@ definition {
 
 		Accounts.addCP(
 			accountDescription = "Accounts Name Description for Test",
-			accountName = "Accounts Name for Test",
-			accountStatus = "Inactive");
+			accountName = "Accounts Name for Test");
 
 		AssertElementPresent(locator1 = "Icon#BACK");
 
@@ -223,32 +222,43 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-
 		Search.searchCP(searchTerm = "Accounts Name for Test");
 
 		Accounts.editCP(
 			accountDescriptionEdit = "Update Accounts Name Description for Test",
 			accountName = "Accounts Name for Test",
 			accountNameEdit = "Update Accounts Name for Test",
-			accountStatusEdit = "Active");
+			accountStatusEdit = "Inactive");
 
 		ProductMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
 
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
 		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name for Test");
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Update Accounts Name for Test",
-			rowStatus = "ACTIVE");
+			rowStatus = "INACTIVE");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		LexiconEntry.gotoEntry(rowEntry = "Update Accounts Name for Test");
 
 		PortletEntry.inputName(name = "Update Accounts Name via Name Link");
+
+		Check.checkToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
 
 		Button.clickSave();
 

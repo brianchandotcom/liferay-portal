@@ -75,18 +75,20 @@ public class SiteNavigationMenuModelImpl
 	public static final String TABLE_NAME = "SiteNavigationMenu";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"siteNavigationMenuId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"auto_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"siteNavigationMenuId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"auto_", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -102,7 +104,7 @@ public class SiteNavigationMenuModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SiteNavigationMenu (uuid_ VARCHAR(75) null,siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null)";
+		"create table SiteNavigationMenu (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 
@@ -153,6 +155,7 @@ public class SiteNavigationMenuModelImpl
 
 		SiteNavigationMenu model = new SiteNavigationMenuImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setSiteNavigationMenuId(soapModel.getSiteNavigationMenuId());
 		model.setGroupId(soapModel.getGroupId());
@@ -320,6 +323,12 @@ public class SiteNavigationMenuModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<SiteNavigationMenu, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", SiteNavigationMenu::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SiteNavigationMenu, Long>)
+				SiteNavigationMenu::setMvccVersion);
 		attributeGetterFunctions.put("uuid", SiteNavigationMenu::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -392,6 +401,17 @@ public class SiteNavigationMenuModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -681,6 +701,7 @@ public class SiteNavigationMenuModelImpl
 		SiteNavigationMenuImpl siteNavigationMenuImpl =
 			new SiteNavigationMenuImpl();
 
+		siteNavigationMenuImpl.setMvccVersion(getMvccVersion());
 		siteNavigationMenuImpl.setUuid(getUuid());
 		siteNavigationMenuImpl.setSiteNavigationMenuId(
 			getSiteNavigationMenuId());
@@ -791,6 +812,8 @@ public class SiteNavigationMenuModelImpl
 	public CacheModel<SiteNavigationMenu> toCacheModel() {
 		SiteNavigationMenuCacheModel siteNavigationMenuCacheModel =
 			new SiteNavigationMenuCacheModel();
+
+		siteNavigationMenuCacheModel.mvccVersion = getMvccVersion();
 
 		siteNavigationMenuCacheModel.uuid = getUuid();
 
@@ -933,6 +956,7 @@ public class SiteNavigationMenuModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _siteNavigationMenuId;

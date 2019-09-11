@@ -125,6 +125,8 @@ public class SiteNavigationMenuPersistenceTest {
 
 		SiteNavigationMenu newSiteNavigationMenu = _persistence.create(pk);
 
+		newSiteNavigationMenu.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSiteNavigationMenu.setUuid(RandomTestUtil.randomString());
 
 		newSiteNavigationMenu.setGroupId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class SiteNavigationMenuPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newSiteNavigationMenu.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSiteNavigationMenu.getMvccVersion(),
+			newSiteNavigationMenu.getMvccVersion());
 		Assert.assertEquals(
 			existingSiteNavigationMenu.getUuid(),
 			newSiteNavigationMenu.getUuid());
@@ -293,10 +298,11 @@ public class SiteNavigationMenuPersistenceTest {
 
 	protected OrderByComparator<SiteNavigationMenu> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SiteNavigationMenu", "uuid", true, "siteNavigationMenuId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"type", true, "auto", true, "lastPublishDate", true);
+			"SiteNavigationMenu", "mvccVersion", true, "uuid", true,
+			"siteNavigationMenuId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "type", true, "auto", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -561,6 +567,8 @@ public class SiteNavigationMenuPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SiteNavigationMenu siteNavigationMenu = _persistence.create(pk);
+
+		siteNavigationMenu.setMvccVersion(RandomTestUtil.nextLong());
 
 		siteNavigationMenu.setUuid(RandomTestUtil.randomString());
 

@@ -1,4 +1,5 @@
 create table SiteNavigationMenu (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	siteNavigationMenuId LONG not null primary key,
 	groupId LONG,
@@ -14,6 +15,7 @@ create table SiteNavigationMenu (
 );
 
 create table SiteNavigationMenuItem (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	siteNavigationMenuItemId LONG not null primary key,
 	groupId LONG,

@@ -16,6 +16,7 @@ package com.liferay.site.navigation.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SiteNavigationMenuItemModel
-	extends BaseModel<SiteNavigationMenuItem>, ShardedModel,
+	extends BaseModel<SiteNavigationMenuItem>, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
 	/**
@@ -58,6 +59,22 @@ public interface SiteNavigationMenuItemModel
 	 * @param primaryKey the primary key of this site navigation menu item
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this site navigation menu item.
+	 *
+	 * @return the mvcc version of this site navigation menu item
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this site navigation menu item.
+	 *
+	 * @param mvccVersion the mvcc version of this site navigation menu item
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this site navigation menu item.

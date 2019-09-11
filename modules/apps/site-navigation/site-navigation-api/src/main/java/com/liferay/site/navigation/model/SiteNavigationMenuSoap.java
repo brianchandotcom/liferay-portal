@@ -31,6 +31,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 	public static SiteNavigationMenuSoap toSoapModel(SiteNavigationMenu model) {
 		SiteNavigationMenuSoap soapModel = new SiteNavigationMenuSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSiteNavigationMenuId(model.getSiteNavigationMenuId());
 		soapModel.setGroupId(model.getGroupId());
@@ -103,6 +104,14 @@ public class SiteNavigationMenuSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSiteNavigationMenuId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -205,6 +214,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _siteNavigationMenuId;
 	private long _groupId;

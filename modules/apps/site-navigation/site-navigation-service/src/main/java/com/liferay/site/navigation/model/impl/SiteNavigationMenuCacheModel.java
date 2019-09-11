@@ -17,6 +17,7 @@ package com.liferay.site.navigation.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class SiteNavigationMenuCacheModel
-	implements CacheModel<SiteNavigationMenu>, Externalizable {
+	implements CacheModel<SiteNavigationMenu>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,8 +49,9 @@ public class SiteNavigationMenuCacheModel
 		SiteNavigationMenuCacheModel siteNavigationMenuCacheModel =
 			(SiteNavigationMenuCacheModel)obj;
 
-		if (siteNavigationMenuId ==
-				siteNavigationMenuCacheModel.siteNavigationMenuId) {
+		if ((siteNavigationMenuId ==
+				siteNavigationMenuCacheModel.siteNavigationMenuId) &&
+			(mvccVersion == siteNavigationMenuCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class SiteNavigationMenuCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, siteNavigationMenuId);
+		int hashCode = HashUtil.hash(0, siteNavigationMenuId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", siteNavigationMenuId=");
 		sb.append(siteNavigationMenuId);
@@ -99,6 +115,8 @@ public class SiteNavigationMenuCacheModel
 	public SiteNavigationMenu toEntityModel() {
 		SiteNavigationMenuImpl siteNavigationMenuImpl =
 			new SiteNavigationMenuImpl();
+
+		siteNavigationMenuImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			siteNavigationMenuImpl.setUuid("");
@@ -158,6 +176,7 @@ public class SiteNavigationMenuCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		siteNavigationMenuId = objectInput.readLong();
@@ -180,6 +199,8 @@ public class SiteNavigationMenuCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -218,6 +239,7 @@ public class SiteNavigationMenuCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long siteNavigationMenuId;
 	public long groupId;

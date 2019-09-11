@@ -38,6 +38,16 @@ public class JsonNodeReader {
 		return _objectMapper.readTree(inputStream);
 	}
 
+	public JsonNode getDescendantJsonNode(JsonNode jsonNode, String path) {
+		String[] pathParts = path.split(">");
+
+		for (String pathPart : pathParts) {
+			jsonNode = jsonNode.get(pathPart);
+		}
+
+		return jsonNode;
+	}
+
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 
 }

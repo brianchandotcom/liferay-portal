@@ -18,8 +18,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.json.JsonNodeReader;
+import com.liferay.mule.internal.oas.OASConstants;
 import com.liferay.mule.internal.oas.OASFormat;
 import com.liferay.mule.internal.oas.OASType;
+import com.liferay.mule.internal.util.StringUtil;
 
 import java.io.IOException;
 
@@ -83,29 +85,27 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 			JsonNode schemaJsonNode = _getSchemaJsonNode(
 				openAPISpecJsonNode, schemaName);
 
-			JsonNode propertiesJsonNode = schemaJsonNode.get("properties");
+			JsonNode propertiesJsonNode = schemaJsonNode.get(
+				OASConstants.PROPERTIES);
 
 			if (schemaName.startsWith("Page")) {
-				referenceJsonNode = propertiesJsonNode.get(
-					"items"
-				).get(
-					"items"
-				).get(
-					"$ref"
-				);
+				referenceJsonNode = _jsonNodeReader.getDescendantJsonNode(
+					propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF);
 
 				schemaName = _getSchemaName(referenceJsonNode.textValue());
 
 				schemaJsonNode = _getSchemaJsonNode(
 					openAPISpecJsonNode, schemaName);
 
-				propertiesJsonNode = schemaJsonNode.get("properties");
+				propertiesJsonNode = schemaJsonNode.get(
+					OASConstants.PROPERTIES);
 			}
 
-			JsonNode required = schemaJsonNode.get("required");
+			JsonNode requiredJsonNode = schemaJsonNode.get(
+				OASConstants.REQUIRED);
 
 			return _resolveMetadataType(
-				objectTypeBuilder, propertiesJsonNode, required);
+				objectTypeBuilder, propertiesJsonNode, requiredJsonNode);
 		}
 		catch (IOException ioe) {
 			throw new MetadataResolvingException(
@@ -145,7 +145,7 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 
 		JsonNode propertyJsonNode = propertyEntry.getValue();
 
-		JsonNode typeJsonNode = propertyJsonNode.get("type");
+		JsonNode typeJsonNode = propertyJsonNode.get(OASConstants.TYPE);
 
 		if (typeJsonNode == null) {
 			objectFieldTypeBuilder.value(
@@ -153,7 +153,7 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 
 			return;
 		}
-		else if (Objects.equals(typeJsonNode.textValue(), "array")) {
+		else if (Objects.equals(typeJsonNode.textValue(), OASConstants.ARRAY)) {
 			objectFieldTypeBuilder.value(
 			).arrayType(
 			).of(
@@ -164,7 +164,7 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 
 		OASType oasType = OASType.fromDefinition(typeJsonNode.textValue());
 
-		JsonNode formatJsonNode = propertyJsonNode.get("format");
+		JsonNode formatJsonNode = propertyJsonNode.get(OASConstants.FORMAT);
 
 		String oasFormatValue = null;
 
@@ -232,41 +232,26 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 	private JsonNode _getReferenceJsonNode(
 		JsonNode openAPISpecJsonNode, String endpoint) {
 
-		return openAPISpecJsonNode.get(
-			"paths"
-		).get(
-			endpoint
-		).get(
-			"get"
-		).get(
-			"responses"
-		).get(
-			"default"
-		).get(
-			"content"
-		).get(
-			"application/json"
-		).get(
-			"schema"
-		).get(
-			"$ref"
-		);
+		String path = StringUtil.replace(
+			OASConstants.
+				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+			"ENDPOINT_TPL", endpoint);
+
+		return _jsonNodeReader.getDescendantJsonNode(openAPISpecJsonNode, path);
 	}
 
 	private JsonNode _getSchemaJsonNode(
 		JsonNode openAPISpecJsonNode, String schemaName) {
 
-		return openAPISpecJsonNode.get(
-			"components"
-		).get(
-			"schemas"
-		).get(
-			schemaName
-		);
+		String path = StringUtil.replace(
+			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
+			schemaName);
+
+		return _jsonNodeReader.getDescendantJsonNode(openAPISpecJsonNode, path);
 	}
 
 	private String _getSchemaName(String reference) {
-		return reference.replaceAll("#/components/schemas/", "");
+		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
 	private MetadataType _resolveMetadataType(

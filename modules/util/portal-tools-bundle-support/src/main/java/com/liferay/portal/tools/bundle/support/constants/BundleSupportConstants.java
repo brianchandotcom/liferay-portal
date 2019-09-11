@@ -37,9 +37,14 @@ public class BundleSupportConstants {
 
 	public static final String DEFAULT_CONFIGS_DIR_NAME = "configs";
 
+	public static final String DEFAULT_DEV_OPS_DIR_NAME =
+		"devops/liferay/config";
+
 	public static final String DEFAULT_ENVIRONMENT = "local";
 
 	public static final boolean DEFAULT_INCLUDE_FOLDER = true;
+
+	public static final String DEFAULT_LCP_DIR_NAME = "lcp/liferay/config";
 
 	public static final String DEFAULT_LIFERAY_HOME_DIR_NAME = "bundles";
 

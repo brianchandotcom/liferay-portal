@@ -33,6 +33,7 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.nio.file.attribute.PosixFilePermissions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -63,7 +64,13 @@ public class InitBundleCommand extends DownloadCommand {
 	}
 
 	public File getConfigsDir() {
-		return _configsDir;
+		File file = null;
+
+		if (!_configsDirs.isEmpty()) {
+			file = _configsDirs.get(_configsDirs.size() - 1);
+		}
+
+		return file;
 	}
 
 	public String getEnvironment() {
@@ -79,7 +86,11 @@ public class InitBundleCommand extends DownloadCommand {
 	}
 
 	public void setConfigsDir(File configsDir) {
-		_configsDir = configsDir;
+		_configsDirs = Arrays.asList(configsDir);
+	}
+
+	public void setConfigsDirs(List<File> configsDirs) {
+		_configsDirs = configsDirs;
 	}
 
 	public void setEnvironment(String environment) {
@@ -95,11 +106,17 @@ public class InitBundleCommand extends DownloadCommand {
 	}
 
 	private void _copyConfigs() throws IOException {
-		if ((_configsDir == null) || !_configsDir.exists()) {
+		for (File configDir : _configsDirs) {
+			_copyConfigs(configDir);
+		}
+	}
+
+	private void _copyConfigs(File configsDir) throws IOException {
+		if ((configsDir == null) || !configsDir.exists()) {
 			return;
 		}
 
-		Path configsDirPath = _configsDir.toPath();
+		Path configsDirPath = configsDir.toPath();
 
 		Path configsCommonDirPath = configsDirPath.resolve("common");
 
@@ -174,10 +191,14 @@ public class InitBundleCommand extends DownloadCommand {
 		PosixFilePermissions.fromString("rwxr-x---");
 
 	@Parameter(
-		description = "The directory that contains the configuration files.",
+		converter = FileConverter.class,
+		description = "The directories that contains the configuration files.",
 		names = "--configs"
 	)
-	private File _configsDir;
+	private List<File> _configsDirs = Arrays.asList(
+		new File(BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME),
+		new File(BundleSupportConstants.DEFAULT_LCP_DIR_NAME),
+		new File(BundleSupportConstants.DEFAULT_DEV_OPS_DIR_NAME));
 
 	@Parameter(
 		description = "The environment of your Liferay home deployment.",

@@ -152,7 +152,13 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 									<c:choose>
 										<c:when test="<%= stagingGroupHelper.isLocalStagingGroup(siteGroup) || stagingGroupHelper.isRemoteStagingGroup(siteGroup) %>">
 											<div class="alert alert-info">
-												<liferay-ui:message key="comments-are-read-only-in-staging" />
+												<span class="alert-indicator">
+													<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
+														<use href="/images/icons/icons.svg#info-circle"></use>
+													</svg>
+												</span>
+
+												<strong class="lead">INFO:</strong><liferay-ui:message key="comments-are-unable-to-show-in-staged-sites" />
 											</div>
 										</c:when>
 										<c:otherwise>

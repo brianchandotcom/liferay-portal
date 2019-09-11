@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.metadata;
 
+import com.liferay.mule.internal.oas.OASConstants;
+
 import java.util.Set;
 
 import org.mule.runtime.api.connection.ConnectionException;
@@ -35,7 +37,7 @@ public class GETEndpointTypeKeysResolver extends BaseTypeKeysResolver {
 	public Set<MetadataKey> getKeys(MetadataContext metadataContext)
 		throws ConnectionException, MetadataResolvingException {
 
-		return getEndpointKeys(metadataContext, "get");
+		return getEndpointKeys(metadataContext, OASConstants.OPERATION_GET);
 	}
 
 }

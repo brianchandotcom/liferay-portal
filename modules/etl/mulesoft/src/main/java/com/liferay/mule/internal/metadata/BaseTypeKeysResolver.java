@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.json.JsonNodeReader;
+import com.liferay.mule.internal.oas.OASConstants;
 
 import java.io.IOException;
 
@@ -61,7 +62,8 @@ public abstract class BaseTypeKeysResolver implements TypeKeysResolver {
 			JsonNode openAPISpecJsonNode = _jsonNodeReader.fromHttpResponse(
 				openAPISpecHttpResponse);
 
-			JsonNode pathsJsonNode = openAPISpecJsonNode.get("paths");
+			JsonNode pathsJsonNode = openAPISpecJsonNode.get(
+				OASConstants.PATHS);
 
 			Iterator<Map.Entry<String, JsonNode>> pathsIterator =
 				pathsJsonNode.fields();

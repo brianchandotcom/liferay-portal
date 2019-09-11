@@ -15,6 +15,7 @@
 package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.impl.SegmentsExperimentImpl;
@@ -59,7 +61,8 @@ public class SegmentsExperimentFinderImpl
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_S_C_C_S);
 
-			sql = _replaceSegmentsExperimentStatus(sql, statuses);
+			sql = StringUtil.replace(
+				sql, "[$STATUSES$]", getStatusesSQL(statuses));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -103,7 +106,8 @@ public class SegmentsExperimentFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_S_C_C_S);
 
-			sql = _replaceSegmentsExperimentStatus(sql, statuses);
+			sql = StringUtil.replace(
+				sql, "[$STATUSES$]", getStatusesSQL(statuses));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -126,20 +130,26 @@ public class SegmentsExperimentFinderImpl
 		}
 	}
 
-	private String _replaceSegmentsExperimentStatus(
-		String sql, int[] statuses) {
-
-		StringBundler sb = new StringBundler(statuses.length);
-
-		for (int i = 0; i < statuses.length; i++) {
-			sb.append(statuses[i]);
-
-			if (i != (statuses.length - 1)) {
-				sb.append(", ");
-			}
+	protected String getStatusesSQL(int[] statuses) {
+		if (ArrayUtil.isEmpty(statuses)) {
+			return StringPool.BLANK;
 		}
 
-		return StringUtil.replace(sql, "[$STATUSES$]", sb.toString());
+		StringBundler sb = new StringBundler();
+
+		sb.append("AND SegmentsExperiment.status IN ");
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int status : statuses) {
+			sb.append(status);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	@Reference

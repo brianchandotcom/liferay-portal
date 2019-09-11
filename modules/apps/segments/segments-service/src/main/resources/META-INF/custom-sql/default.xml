@@ -13,8 +13,8 @@
 			WHERE
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
-				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status IN ([$STATUSES$]))
+				(SegmentsExperiment.classPK = ?)
+				[$STATUSES$]
 
 		]]>
 	</sql>
@@ -30,8 +30,8 @@
 			WHERE
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
-				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status IN ([$STATUSES$]))
+				(SegmentsExperiment.classPK = ?)
+				[$STATUSES$]
 		]]>
 	</sql>
 </custom-sql>

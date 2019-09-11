@@ -25,9 +25,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
+import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.view.count.model.ViewCountEntry;
@@ -87,9 +88,13 @@ public class ViewCountEntryFinderTest {
 
 		Assert.assertNotNull(aopInvocationHandler);
 
-		TransactionExecutor transactionExecutor =
+		TransactionInterceptor transactionInterceptor =
 			ReflectionTestUtil.getFieldValue(
-				aopInvocationHandler, "_transactionExecutor");
+				aopInvocationHandler, "_transactionInterceptor");
+
+		DefaultTransactionExecutor transactionExecutor =
+			ReflectionTestUtil.getFieldValue(
+				transactionInterceptor, "_transactionHandler");
 
 		List<Callable<Void>> callables = new ArrayList<>(_INCREMENTS_COUNT);
 

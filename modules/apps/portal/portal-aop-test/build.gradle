@@ -4,7 +4,6 @@ dependencies {
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.log", version: "1.4.0"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
 	testIntegrationCompile project(":apps:portal:portal-aop-api")
 	testIntegrationCompile project(":core:petra:petra-concurrent")
 	testIntegrationCompile project(":core:petra:petra-function")

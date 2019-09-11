@@ -73,8 +73,12 @@ const SidebarFooter = ({children}) => {
 	return <div className="sidebar-footer">{children}</div>;
 };
 
-const SidebarHeader = ({children}) => {
-	return <div className="pb-0 sidebar-header">{children}</div>;
+const SidebarHeader = ({children, className}) => {
+	return (
+		<div className={classNames(className, 'pb-0 sidebar-header')}>
+			{children}
+		</div>
+	);
 };
 
 const SidebarSearchInput = ({closeable, onSearch, onToggle}) => {

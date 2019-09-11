@@ -88,7 +88,7 @@ renderResponse.setTitle(definition.getName(locale));
 							sb.append(StringPool.BLANK);
 							sb.append(StringPool.COLON);
 							sb.append(StringPool.BLANK);
-							sb.append(dateFormatDateTime.format(entry.getStartDate()));
+							sb.append(entry.getStartDate());
 
 							if (entry.getEndDate() != null) {
 								sb.append("<br />");
@@ -96,7 +96,7 @@ renderResponse.setTitle(definition.getName(locale));
 								sb.append(StringPool.BLANK);
 								sb.append(StringPool.COLON);
 								sb.append(StringPool.BLANK);
-								sb.append(dateFormatDateTime.format(entry.getEndDate()));
+								sb.append(entry.getEndDate());
 							}
 
 							sb.append("<br />");

@@ -70,41 +70,21 @@ portletDisplay.setShowBackIcon(true);
 			modelVar="curCTEntry"
 		>
 			<liferay-ui:search-container-column-text
-				name="name"
-				orderable="<%= true %>"
-				orderableProperty="title"
-			>
-				<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntityTitle(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="user"
-			>
-				<%= HtmlUtil.escape(curCTEntry.getUserName()) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="site"
-			>
-				<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntitySiteName(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK())) %>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="content-type"
-			>
-				<liferay-ui:message key="<%= HtmlUtil.escape(CTDefinitionRegistryUtil.getVersionEntityContentTypeLanguageKey(curCTEntry.getModelClassNameId())) %>" />
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
 				name="change-type"
 			>
 				<liferay-ui:message key="<%= changeListsHistoryDetailsDisplayContext.getChangeType(curCTEntry.getChangeType()) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name="version"
+				name="content-type"
 			>
-				<%= HtmlUtil.escape(String.valueOf(CTDefinitionRegistryUtil.getVersionEntityVersion(curCTEntry.getModelClassNameId(), curCTEntry.getModelClassPK()))) %>
+				<liferay-ui:message key="<%= ResourceActionsUtil.getModelResource(request, PortalUtil.getClassName(curCTEntry.getModelClassNameId())) %>" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				name="user"
+			>
+				<%= HtmlUtil.escape(curCTEntry.getUserName()) %>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

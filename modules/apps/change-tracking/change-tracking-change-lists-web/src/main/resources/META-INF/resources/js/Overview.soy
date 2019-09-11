@@ -18,13 +18,10 @@
 		publishURL: string
 	]}
 	{@param? changeEntries: list<[
-		title: string,
 		userName: string,
-		site: string,
 		contentType: string,
 		lastEdited: string,
-		changeType: string,
-		version: string
+		changeType: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
@@ -156,13 +153,10 @@
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
-		title: string,
 		userName: string,
-		site: string,
 		contentType: string,
 		lastEdited: string,
-		changeType: string,
-		version: string
+		changeType: string
 	]>}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
@@ -343,13 +337,10 @@
 
 {template .overviewCardBody}
 	{@param? changeEntries: list<[
-		title: string,
 		userName: string,
-		site: string,
 		contentType: string,
 		lastEdited: string,
-		changeType: string,
-		version: string
+		changeType: string
 	]>}
 	{@param? changesLabel: string}
 	{@param? changes: [
@@ -460,19 +451,13 @@
 								<thead>
 								<tr>
 									<th class="table-cell-expand">{msg desc=""}
-										title{/msg}</th>
-									<th class="table-cell-expand">{msg desc=""}
 										user-name{/msg}</th>
-									<th class="table-cell-expand">{msg desc=""}
-										site{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
 										content-type{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
 										last-edited{/msg}</th>
 									<th class="table-cell-expand">{msg desc=""}
 										change-type{/msg}</th>
-									<th class="table-cell-expand">{msg desc=""}
-										version{/msg}</th>
 								</tr>
 								</thead>
 
@@ -483,10 +468,7 @@
 											{param contentType: $changeEntry.contentType /}
 											{param index: index($changeEntry) /}
 											{param lastEdited: $changeEntry.lastEdited /}
-											{param site: $changeEntry.site /}
-											{param title: $changeEntry.title /}
 											{param userName: $changeEntry.userName /}
-											{param version: $changeEntry.version /}
 										{/call}
 									{/foreach}
 								</tbody>
@@ -504,20 +486,11 @@
 	{@param contentType: string}
 	{@param index: number}
 	{@param lastEdited: string}
-	{@param site: string}
-	{@param title: string}
 	{@param userName: string}
-	{@param version: string}
 
 	<tr>
 		<td class="table-cell-expand">
-			<div id="change-entry-title-{$index}">{$title}</div>
-		</td>
-		<td class="table-cell-expand">
 			<div id="change-entry-user-name-{$index}">{$userName}</div>
-		</td>
-		<td class="table-cell-expand">
-			<div id="change-entry-site-{$index}">{$site}</div>
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-content-type-{$index}">{$contentType}</div>
@@ -527,9 +500,6 @@
 		</td>
 		<td class="table-cell-expand">
 			<div id="change-entry-change-type-{$index}">{$changeType}</div>
-		</td>
-		<td class="table-cell-expand">
-			<div id="change-entry-version-{$index}">{$version}</div>
 		</td>
 	</tr>
 {/template}

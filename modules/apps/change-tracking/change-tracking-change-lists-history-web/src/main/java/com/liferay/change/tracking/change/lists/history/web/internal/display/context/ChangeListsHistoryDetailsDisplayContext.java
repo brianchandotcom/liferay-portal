@@ -16,8 +16,6 @@ package com.liferay.change.tracking.change.lists.history.web.internal.display.co
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.engine.CTEngineManager;
-import com.liferay.change.tracking.engine.CTManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
@@ -47,10 +45,6 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Máté Thurzó
  */
@@ -63,9 +57,6 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_ctEngineManager = _ctEngineManagerServiceTracker.getService();
-		_ctManager = _ctManagerServiceTracker.getService();
 	}
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries(String ctCollectionName) {
@@ -267,33 +258,6 @@ public class ChangeListsHistoryDetailsDisplayContext {
 		};
 	}
 
-	private static ServiceTracker<CTEngineManager, CTEngineManager>
-		_ctEngineManagerServiceTracker;
-	private static ServiceTracker<CTManager, CTManager>
-		_ctManagerServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CTEngineManager.class);
-
-		ServiceTracker<CTEngineManager, CTEngineManager>
-			ctEngineManagerServiceTracker = new ServiceTracker<>(
-				bundle.getBundleContext(), CTEngineManager.class, null);
-
-		ctEngineManagerServiceTracker.open();
-
-		_ctEngineManagerServiceTracker = ctEngineManagerServiceTracker;
-
-		ServiceTracker<CTManager, CTManager> ctManagerServiceTracker =
-			new ServiceTracker<>(
-				bundle.getBundleContext(), CTManager.class, null);
-
-		ctManagerServiceTracker.open();
-
-		_ctManagerServiceTracker = ctManagerServiceTracker;
-	}
-
-	private final CTEngineManager _ctEngineManager;
-	private final CTManager _ctManager;
 	private final HttpServletRequest _httpServletRequest;
 	private String _orderByCol;
 	private String _orderByType;

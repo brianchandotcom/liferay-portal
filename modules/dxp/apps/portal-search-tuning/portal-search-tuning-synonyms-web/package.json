@@ -9,13 +9,20 @@
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"@testing-library/react/cleanup-after-each"
+		]
+	},
 	"main": "js/index-synonym-sets.es.js",
 	"name": "portal-search-synonyms-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix"
+		"format": "liferay-npm-scripts fix",
+		"storybook": "liferay-npm-scripts storybook",
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "2.0.0"
 }

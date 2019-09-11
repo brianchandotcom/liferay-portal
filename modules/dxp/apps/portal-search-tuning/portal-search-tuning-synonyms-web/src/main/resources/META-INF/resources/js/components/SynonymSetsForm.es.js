@@ -28,7 +28,6 @@ class SynonymSetsForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string,
 		inputName: PropTypes.string,
-		onClickSubmit: PropTypes.func,
 		originalInputName: PropTypes.string,
 		synonymSets: PropTypes.string
 	};
@@ -102,11 +101,14 @@ class SynonymSetsForm extends Component {
 						</div>
 
 						<ClayForm.Group>
-							<label>{Liferay.Language.get('synonyms')}</label>
+							<label htmlFor="synonym-sets-input">
+								{Liferay.Language.get('synonyms')}
+							</label>
 
 							<ClayInput.Group>
 								<ClayInput.GroupItem>
 									<ClayMultiSelect
+										id="synonym-sets-input"
 										inputValue={inputValue}
 										items={synonyms}
 										onInputChange={this._handleInputChange}

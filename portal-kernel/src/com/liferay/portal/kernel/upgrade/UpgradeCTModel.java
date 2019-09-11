@@ -40,23 +40,26 @@ public class UpgradeCTModel extends UpgradeProcess {
 		String tableName = dbInspector.normalizeName(
 			getTableName(_tableClass), databaseMetaData);
 
-		String primaryKeyColumnName = null;
-
-		try (ResultSet rs1 = databaseMetaData.getColumns(
+		try (ResultSet rs = databaseMetaData.getColumns(
 				dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
-				dbInspector.normalizeName("ctCollectionId", databaseMetaData));
-			ResultSet rs2 = databaseMetaData.getPrimaryKeys(
-				dbInspector.getCatalog(), dbInspector.getSchema(), tableName)) {
+				dbInspector.normalizeName(
+					"ctCollectionId", databaseMetaData))) {
 
-			if (rs1.next()) {
+			if (rs.next()) {
 				return;
 			}
+		}
 
-			if (rs2.next()) {
-				primaryKeyColumnName = rs2.getString("COLUMN_NAME");
+		String primaryKeyColumnName = null;
+
+		try (ResultSet rs = databaseMetaData.getPrimaryKeys(
+				dbInspector.getCatalog(), dbInspector.getSchema(), tableName)) {
+
+			if (rs.next()) {
+				primaryKeyColumnName = rs.getString("COLUMN_NAME");
 			}
 
-			if (rs2.next()) {
+			if (rs.next()) {
 				throw new UpgradeException(
 					"Single column primary key is required to upgrade " +
 						tableName);

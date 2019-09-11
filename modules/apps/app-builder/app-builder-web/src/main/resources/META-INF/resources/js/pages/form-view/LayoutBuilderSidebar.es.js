@@ -12,12 +12,29 @@
  * details.
  */
 
-import React, {useState, useRef, useEffect} from 'react';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import renderSettingsForm from './renderSettingsForm.es';
 import {useSidebarContent} from '../../hooks/index.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
+import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import renderSettingsForm from './renderSettingsForm.es';
+
+const findFieldType = (dataLayoutBuilder, fieldName) => {
+	const store = dataLayoutBuilder.getStore();
+	const visitor = new PagesVisitor(store.pages);
+	const field = visitor.findField(field => field.fieldName === fieldName);
+
+	return (
+		field &&
+		dataLayoutBuilder.getFieldTypes().find(fieldType => {
+			return fieldType.name === field.type;
+		})
+	);
+};
 
 const DefaultSidebarBody = ({dataLayoutBuilder, keywords}) => {
 	return (
@@ -57,6 +74,56 @@ const SettingsSidebarBody = ({dataLayoutBuilder, focusedField}) => {
 	return <div ref={formRef}></div>;
 };
 
+const SettingsSidebarHeader = ({dataLayoutBuilder, focusedField}) => {
+	const handleFocusedFieldBlur = () => {
+		dataLayoutBuilder.dispatch('sidebarFieldBlurred');
+	};
+
+	const {fieldName} = focusedField;
+
+	const fieldType = useMemo(
+		() => findFieldType(dataLayoutBuilder, fieldName),
+		[dataLayoutBuilder, fieldName]
+	);
+
+	return (
+		<Sidebar.Header className="d-flex">
+			<Button
+				className="mr-2"
+				displayType="secondary"
+				monospaced={false}
+				onClick={handleFocusedFieldBlur}
+				symbol="angle-left"
+			/>
+
+			<ClayDropDown
+				className="d-inline-flex flex-grow-1"
+				trigger={
+					<Button
+						className="d-inline-flex flex-grow-1"
+						disabled={true}
+						displayType="secondary"
+					>
+						<ClayIcon
+							className="mr-2 mt-1"
+							symbol={fieldType.icon}
+						/>
+
+						{fieldType.label}
+
+						<span className="d-inline-flex ml-auto navbar-breakpoint-down-d-none pt-2">
+							<ClayIcon
+								className="inline-item inline-item-after"
+								symbol="caret-bottom"
+							/>
+						</span>
+					</Button>
+				}
+			></ClayDropDown>
+		</Sidebar.Header>
+	);
+};
+
 export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
 	const store = dataLayoutBuilder.getStore();
 
@@ -94,25 +161,37 @@ export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
 		return () => window.removeEventListener('click', eventHandler);
 	}, [dataLayoutBuilder, sidebarRef]);
 
+	const hasFocusedField = Object.keys(focusedField).length > 0;
+
 	return (
 		<Sidebar
-			onSearch={setKeywords}
+			closeable={!hasFocusedField}
+			onSearch={hasFocusedField ? false : setKeywords}
 			onToggle={closed => setSidebarClosed(closed)}
 			ref={sidebarRef}
 		>
-			<Sidebar.Body>
-				{Object.keys(focusedField).length > 0 ? (
-					<SettingsSidebarBody
+			<>
+				{hasFocusedField && (
+					<SettingsSidebarHeader
 						dataLayoutBuilder={dataLayoutBuilder}
 						focusedField={focusedField}
 					/>
-				) : (
-					<DefaultSidebarBody
-						dataLayoutBuilder={dataLayoutBuilder}
-						keywords={keywords}
-					/>
 				)}
-			</Sidebar.Body>
+
+				<Sidebar.Body>
+					{hasFocusedField ? (
+						<SettingsSidebarBody
+							dataLayoutBuilder={dataLayoutBuilder}
+							focusedField={focusedField}
+						/>
+					) : (
+						<DefaultSidebarBody
+							dataLayoutBuilder={dataLayoutBuilder}
+							keywords={keywords}
+						/>
+					)}
+				</Sidebar.Body>
+			</>
 		</Sidebar>
 	);
 };

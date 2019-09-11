@@ -442,6 +442,7 @@ definition {
 			locator1 = "DocumentsAndMedia#DOCUMENT_VERSION_ANY");
 	}
 
+	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "5"
 	test MoveDocumentToFolder {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -455,7 +456,9 @@ definition {
 
 		DMDocument.viewCP(
 			dmDocumentSize = "259 B",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "Home",
+			locationFieldName = "true");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -474,6 +477,14 @@ definition {
 		DMDocument.viewMovedToFolderCP(
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(
+			dmDocumentSize = "259 B",
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder Name",
+			locationFieldName = "true");
 	}
 
 	@description = "This is a use case for LPS-60405."

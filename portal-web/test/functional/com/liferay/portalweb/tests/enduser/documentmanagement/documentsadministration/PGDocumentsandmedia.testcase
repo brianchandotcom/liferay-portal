@@ -1002,6 +1002,7 @@ definition {
 			dmFolderName = "DM Folder2 Name");
 	}
 
+	@description = "This case covers the folder name of a document can be viewed in the info panel and navigate to it."
 	@priority = "4"
 	test MoveFolderDocumentToFolder {
 		JSONDocument.addFolder(
@@ -1023,6 +1024,12 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Title");
 
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder1 Name",
+			locationFieldName = "true");
+
 		DMDocument.moveToFolderPG(
 			dmDocumentTitle = "DM Document Title",
 			dmFolderName = "DM Folder2 Name");
@@ -1033,7 +1040,9 @@ definition {
 
 		DMDocument.viewPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title");
+			dmDocumentTitle = "DM Document Title",
+			dmFolderName = "DM Folder2 Name",
+			locationFieldName = "true");
 	}
 
 	@ignore = "true"

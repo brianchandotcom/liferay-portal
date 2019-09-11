@@ -1163,7 +1163,7 @@
     "@clayui/shared" "^3.0.0-milestone.3"
     classnames "^2.2.6"
 
-"@clayui/multi-step-nav@3.0.0-milestone.3", "@clayui/multi-step-nav@^3.0.0-milestone.3":
+"@clayui/multi-step-nav@3.0.0-milestone.3":
   version "3.0.0-milestone.3"
   resolved "https://registry.yarnpkg.com/@clayui/multi-step-nav/-/multi-step-nav-3.0.0-milestone.3.tgz#bb7d22387f52c81f7b09903288bcb5e65282cb34"
   integrity sha512-QGar2ANma16EdW7qoBbawc8u0/j05QllopeneQhtiAtJTeXh/eGmnVYnmNxO6drPq3RSNh/nACg3cyde3vG/jg==

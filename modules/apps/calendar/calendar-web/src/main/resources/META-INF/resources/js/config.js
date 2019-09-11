@@ -81,8 +81,7 @@
 							'aui-base',
 							'aui-component',
 							'liferay-calendar-util',
-							'liferay-portlet-base',
-							'liferay-portlet-url'
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-calendar-session-listener': {
@@ -116,8 +115,7 @@
 							'aui-scheduler',
 							'aui-toolbar',
 							'autocomplete',
-							'autocomplete-highlighters',
-							'liferay-portlet-url'
+							'autocomplete-highlighters'
 						]
 					},
 					'liferay-scheduler': {

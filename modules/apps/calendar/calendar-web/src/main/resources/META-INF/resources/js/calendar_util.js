@@ -275,8 +275,7 @@ AUI.add(
 			'aui-scheduler',
 			'aui-toolbar',
 			'autocomplete',
-			'autocomplete-highlighters',
-			'liferay-portlet-url'
+			'autocomplete-highlighters'
 		]
 	}
 );

@@ -408,6 +408,37 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	@Test
+	public void testGetNestedFieldsWithSubitem() throws Exception {
+		Subproduct subproduct = _toSubproduct(1L, null);
+
+		Mockito.when(
+			_writerInterceptorContext.getEntity()
+		).thenReturn(
+			subproduct
+		);
+
+		Mockito.doReturn(
+			new NestedFieldsHttpServletRequestWrapperTest.
+				MockHttpServletRequest()
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getHttpServletRequest(
+			Mockito.any(Message.class)
+		);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				Collections.singletonList("skus"), new MessageImpl(),
+				_getPathParameters(), "v2.0", new MultivaluedHashMap<>()));
+
+		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
+
+		Sku[] skus = subproduct.getSkus();
+
+		Assert.assertEquals(Arrays.toString(skus), 6, skus.length);
+	}
+
+	@Test
 	public void testInjectResourceContexts() throws Exception {
 		Product product = _toProduct(1L, null);
 
@@ -478,6 +509,15 @@ public class NestedFieldsWriterInterceptorTest {
 		sku.setId(id);
 
 		return sku;
+	}
+
+	private static Subproduct _toSubproduct(long id, String externalCode) {
+		Subproduct product = new Subproduct();
+
+		product.setExternalCode(externalCode);
+		product.setId(id);
+
+		return product;
 	}
 
 	private MultivaluedHashMap<String, String> _getPathParameters() {
@@ -907,6 +947,9 @@ public class NestedFieldsWriterInterceptorTest {
 
 		protected Long id;
 
+	}
+
+	private static class Subproduct extends Product {
 	}
 
 	private static class ThemeDisplayContextProvider

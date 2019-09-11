@@ -357,22 +357,24 @@ class Form extends Component {
 		return (
 			<div class={'ddm-form-builder'}>
 				<LayoutProviderTag {...storeProps}>
-					<RuleBuilder
-						dataProviderInstanceParameterSettingsURL={
-							dataProviderInstanceParameterSettingsURL
-						}
-						dataProviderInstancesURL={dataProviderInstancesURL}
-						fieldTypes={fieldTypes}
-						functionsMetadata={functionsMetadata}
-						functionsURL={functionsURL}
-						groupId={groupId}
-						portletNamespace={namespace}
-						ref="ruleBuilder"
-						rolesURL={rolesURL}
-						rules={rules}
-						spritemap={spritemap}
-						visible={this.isShowRuleBuilder()}
-					/>
+					{this.isFormBuilderView() && (
+						<RuleBuilder
+							dataProviderInstanceParameterSettingsURL={
+								dataProviderInstanceParameterSettingsURL
+							}
+							dataProviderInstancesURL={dataProviderInstancesURL}
+							fieldTypes={fieldTypes}
+							functionsMetadata={functionsMetadata}
+							functionsURL={functionsURL}
+							groupId={groupId}
+							portletNamespace={namespace}
+							ref="ruleBuilder"
+							rolesURL={rolesURL}
+							rules={rules}
+							spritemap={spritemap}
+							visible={this.isShowRuleBuilder()}
+						/>
+					)}
 
 					<ComposedFormBuilder
 						fieldSets={fieldSets}

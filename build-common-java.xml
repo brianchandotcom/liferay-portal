@@ -123,10 +123,7 @@
 
 				<if>
 					<not>
-						<or>
-							<equals arg1="${baseline.jar.report.level}" arg2="off" />
-							<equals arg1="${jar.file}" arg2="portal-test-integration" />
-						</or>
+						<equals arg1="${baseline.jar.report.level}" arg2="off" />
 					</not>
 					<then>
 						<gradle-execute forcedcacheenabled="false" task="baseline" />

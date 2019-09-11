@@ -26,6 +26,9 @@ import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import Variants from './Variants/Variants.es';
 import {statusToLabelDisplayType, STATUS_DRAFT} from '../util/statuses.es';
 import {StateContext} from '../state/context.es';
+import SegmentsExperimentsContext from '../context.es';
+
+const NO_EXPERIMENT_ILLUSTRATION_FILENAME = '/no-experiment.svg';
 
 function SegmentsExperiments({
 	onCreateSegmentsExperiment,
@@ -38,10 +41,12 @@ function SegmentsExperiments({
 }) {
 	const [dropdown, setDropdown] = useState(false);
 	const {experiment, selectedExperienceId} = useContext(StateContext);
+	const {assetsPath} = useContext(SegmentsExperimentsContext);
 
 	const _selectedExperienceId = experiment
 		? experiment.segmentsExperienceId
 		: selectedExperienceId;
+	const noExperimentIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILENAME}`;
 
 	return (
 		<>
@@ -151,6 +156,12 @@ function SegmentsExperiments({
 
 			{!experiment && (
 				<div className="text-center mt-2">
+					<img
+						alt=""
+						className="my-3"
+						src={noExperimentIllustration}
+						width="120px"
+					/>
 					<h4 className="text-dark">
 						{Liferay.Language.get(
 							'no-active-tests-were-found-for-the-selected-experience'

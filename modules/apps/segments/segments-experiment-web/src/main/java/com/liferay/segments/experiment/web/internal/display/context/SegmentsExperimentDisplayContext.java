@@ -81,6 +81,10 @@ public class SegmentsExperimentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAssetsPath() {
+		return PortalUtil.getPathContext(_httpServletRequest) + "/assets";
+	}
+
 	public String getContentPageEditorPortletNamespace() {
 		return _portal.getPortletNamespace(
 			ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET);

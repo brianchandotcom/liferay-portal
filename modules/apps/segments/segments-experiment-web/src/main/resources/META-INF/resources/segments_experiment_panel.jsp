@@ -32,6 +32,7 @@
 				'<%= segmentsExperimentRootId %>',
 				{
 					context: {
+						assetsPath: '<%= segmentsExperimentDisplayContext.getAssetsPath() %>',
 						contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
 						endpoints: {
 							createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',

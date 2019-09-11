@@ -15,7 +15,6 @@
 package com.liferay.asset.auto.tagger.opennlp.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.asset.auto.tagger.opennlp.OpenNLPDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collection;
@@ -60,7 +58,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 
 					return _openNLPDocumentAssetAutoTagger.getTagNames(
 						assetEntry.getCompanyId(),
-						textExtractor.extract(
+						() -> textExtractor.extract(
 							_getAssetObject(assetEntry), locale),
 						locale, assetEntry.getMimeType());
 				}
@@ -104,6 +102,6 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	private TextExtractorTracker _infoTextExtractorTracker;
 
 	@Reference
-	private OpenNLPDocumentAssetAutoTagger _openNLPDocumentAssetAutoTagger;
+	private OpenNLPDocumentAssetAutoTaggerImpl _openNLPDocumentAssetAutoTagger;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.asset.auto.tagger.google.cloud.natural.language.internal;
 
 import com.liferay.asset.auto.tagger.AssetAutoTagProvider;
-import com.liferay.asset.auto.tagger.google.cloud.natural.language.GCloudNaturalLanguageDocumentAssetAutoTagger;
 import com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractor;
 import com.liferay.asset.auto.tagger.text.extractor.TextExtractorTracker;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collection;
@@ -61,7 +59,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 					return _gCloudNaturalLanguageDocumentAssetAutoTagger.
 						getTagNames(
 							assetEntry.getCompanyId(),
-							textExtractor.extract(
+							() -> textExtractor.extract(
 								_getAssetObject(assetEntry), locale),
 							locale, assetEntry.getMimeType());
 				}
@@ -103,7 +101,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private GCloudNaturalLanguageDocumentAssetAutoTagger
+	private GCloudNaturalLanguageDocumentAssetAutoTaggerImpl
 		_gCloudNaturalLanguageDocumentAssetAutoTagger;
 
 	@Reference

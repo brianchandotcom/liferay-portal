@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,13 +51,34 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = OpenNLPDocumentAssetAutoTagger.class)
+@Component(
+	service = {
+		OpenNLPDocumentAssetAutoTagger.class,
+		OpenNLPDocumentAssetAutoTaggerImpl.class
+	}
+)
 public class OpenNLPDocumentAssetAutoTaggerImpl
 	implements OpenNLPDocumentAssetAutoTagger {
 
 	@Override
 	public Collection<String> getTagNames(
 			long companyId, String content, Locale locale, String mimeType)
+		throws Exception {
+
+		return getTagNames(companyId, () -> content, locale, mimeType);
+	}
+
+	@Override
+	public Collection<String> getTagNames(
+			long companyId, String content, String mimeType)
+		throws Exception {
+
+		return getTagNames(companyId, content, null, mimeType);
+	}
+
+	public Collection<String> getTagNames(
+			long companyId, Supplier<String> textSupplier, Locale locale,
+			String mimeType)
 		throws Exception {
 
 		if (Objects.nonNull(locale) &&
@@ -86,7 +108,7 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 					companyId);
 
 		return Stream.of(
-			sentenceDetectorME.sentDetect(content)
+			sentenceDetectorME.sentDetect(textSupplier.get())
 		).map(
 			tokenizerME::tokenize
 		).map(
@@ -99,14 +121,6 @@ public class OpenNLPDocumentAssetAutoTaggerImpl
 		).collect(
 			Collectors.toSet()
 		);
-	}
-
-	@Override
-	public Collection<String> getTagNames(
-			long companyId, String content, String mimeType)
-		throws Exception {
-
-		return getTagNames(companyId, content, null, mimeType);
 	}
 
 	@Activate

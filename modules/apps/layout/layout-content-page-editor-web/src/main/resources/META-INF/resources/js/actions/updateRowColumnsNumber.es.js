@@ -25,7 +25,6 @@ import {MAX_COLUMNS} from '../utils/rowConstants';
 import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 import {setIn, updateIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
-	UPDATE_ROW_COLUMNS_NUMBER_ERROR,
 	UPDATE_ROW_COLUMNS_NUMBER_LOADING,
 	UPDATE_ROW_COLUMNS_NUMBER_SUCCESS
 } from './actions.es';
@@ -92,19 +91,8 @@ function updateRowColumnsNumberAction(numberOfColumns, rowId) {
 				dispatch(disableSavingChangesStatusAction());
 			})
 			.catch(() => {
-				dispatch(updateRowColumnsNumberErrorAction());
 				dispatch(disableSavingChangesStatusAction());
 			});
-	};
-}
-
-/**
- * @return {object}
- * @review
- */
-function updateRowColumnsNumberErrorAction() {
-	return {
-		type: UPDATE_ROW_COLUMNS_NUMBER_ERROR
 	};
 }
 

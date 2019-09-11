@@ -2,12 +2,12 @@ definition {
 
 	macro setDescriptionMap {
 		if (isSet(description)) {
-			var roleDescriptionEncoded = URLUtil.encodeUTF8("${description}");
+			var descriptionEncoded = URLUtil.encodeUTF8("${description}");
 
-			var roleDescriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
+			var descriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
 		}
 		else {
-			var roleDescriptionMap = "{}";
+			var descriptionMap = "{}";
 		}
 
 		return "${descriptionMap}";

@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverter;
@@ -105,10 +106,25 @@ public class ConvertLayoutMVCActionCommand
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				layout.getGroupId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid(), layoutDataJSONObject.toString());
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid());
+
+		if (layoutPageTemplateStructure == null) {
+			_layoutPageTemplateStructureLocalService.
+				addLayoutPageTemplateStructure(
+					serviceContext.getUserId(), layout.getGroupId(),
+					_portal.getClassNameId(Layout.class), layout.getPlid(),
+					layoutDataJSONObject.toString(), serviceContext);
+		}
+		else {
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructure(
+					layout.getGroupId(), _portal.getClassNameId(Layout.class),
+					layout.getPlid(), layoutDataJSONObject.toString());
+		}
 
 		_layoutCopyHelper.copyLayout(layout, draftLayout);
 

@@ -14,34 +14,37 @@
 
 package com.liferay.change.tracking.internal.background.task;
 
-import com.liferay.change.tracking.engine.exception.CTEntryCollisionCTEngineException;
+import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.engine.CTEngineManager;
+import com.liferay.change.tracking.internal.CTPersistenceHelperThreadLocal;
+import com.liferay.change.tracking.internal.CTServiceRegistry;
 import com.liferay.change.tracking.internal.background.task.display.CTPublishBackgroundTaskDisplay;
-import com.liferay.change.tracking.internal.process.log.CTProcessLog;
-import com.liferay.change.tracking.internal.process.util.CTProcessMessageUtil;
-import com.liferay.change.tracking.internal.util.CTEntryCollisionUtil;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.petra.lang.SafeClosable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +75,9 @@ public class CTPublishBackgroundTaskExecutor
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(
+		propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class
+	)
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
@@ -90,52 +95,53 @@ public class CTPublishBackgroundTaskExecutor
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
 			ctCollectionId);
 
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			CTProcessMessageUtil.getCTProcessStartedMessage(ctEntries.size()));
+		Map<Long, CTPublisher> ctPublishers = new HashMap<>();
 
 		for (CTEntry ctEntry : ctEntries) {
-			if (ctEntry.isCollision()) {
-				_backgroundTaskStatusMessageSender.
-					sendBackgroundTaskStatusMessage(
-						CTProcessMessageUtil.getCTEntryCollisionMessage(
-							ctEntry, ignoreCollision));
+			ctPublishers.compute(
+				ctEntry.getModelClassNameId(),
+				(modelClassNameId, ctPublisher) -> {
+					if (ctPublisher == null) {
+						CTService<?> ctService =
+							_ctServiceRegistry.getCTService(modelClassNameId);
 
-				if (!ignoreCollision) {
-					throw new CTEntryCollisionCTEngineException(
-						ctEntry.getCompanyId(), ctEntry.getCtEntryId());
-				}
+						if (ctService != null) {
+							ctPublisher = new CTServicePublisher<>(
+								_ctEntryLocalService, ctService, ctCollectionId,
+								CTConstants.CT_COLLECTION_ID_PRODUCTION);
+						}
+						else if (_ctEngineManager.isChangeTrackingSupported(
+									ctCollection.getCompanyId(),
+									modelClassNameId)) {
+
+							ctPublisher = new CTDefinitionPublisher(
+								_ctEntryLocalService, ignoreCollision);
+						}
+						else {
+							throw new SystemException(
+								StringBundler.concat(
+									"Unable to publish ", ctCollectionId,
+									" missing service for ", modelClassNameId));
+						}
+					}
+
+					ctPublisher.addCTEntry(ctEntry);
+
+					return ctPublisher;
+				});
+		}
+
+		try (SafeClosable safeClosable =
+				CTPersistenceHelperThreadLocal.setEnabled(false)) {
+
+			for (CTPublisher ctPublisher : ctPublishers.values()) {
+				ctPublisher.publish();
 			}
-
-			_ctEntryLocalService.updateStatus(
-				ctEntry.getCtEntryId(), WorkflowConstants.STATUS_APPROVED);
-
-			CTEntryCollisionUtil.checkCollidingCTEntries(
-				_ctEntryLocalService, ctEntry.getCompanyId(),
-				ctEntry.getModelClassPK(), ctEntry.getModelResourcePrimKey());
-
-			_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-				CTProcessMessageUtil.getCTEntryPublishedMessage(ctEntry));
 		}
 
 		_ctCollectionLocalService.updateStatus(
 			backgroundTask.getUserId(), ctCollection,
 			WorkflowConstants.STATUS_APPROVED);
-
-		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
-			CTProcessMessageUtil.getCTProcessFinishedMessage());
-
-		BackgroundTaskStatus backgroundTaskStatus =
-			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
-				backgroundTask.getBackgroundTaskId());
-
-		CTProcessLog ctProcessLog =
-			(CTProcessLog)backgroundTaskStatus.getAttribute("ctProcessLog");
-
-		String ctProcessLogJSON = ctProcessLog.toString();
-
-		_backgroundTaskManager.addBackgroundTaskAttachment(
-			backgroundTask.getUserId(), backgroundTask.getBackgroundTaskId(),
-			"log", FileUtil.createTempFile(ctProcessLogJSON.getBytes()));
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -163,19 +169,21 @@ public class CTPublishBackgroundTaskExecutor
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
-	private BackgroundTaskStatusMessageSender
-		_backgroundTaskStatusMessageSender;
-
-	@Reference
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
+	private CTEngineManager _ctEngineManager;
+
+	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
+	private CTServiceRegistry _ctServiceRegistry;
 
 }

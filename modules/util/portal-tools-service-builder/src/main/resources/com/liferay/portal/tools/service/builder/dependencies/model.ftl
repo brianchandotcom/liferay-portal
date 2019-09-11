@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.model.version.VersionModel;
 import com.liferay.portal.kernel.model.version.VersionedModel;
 import com.liferay.portal.kernel.service.ServiceContext;

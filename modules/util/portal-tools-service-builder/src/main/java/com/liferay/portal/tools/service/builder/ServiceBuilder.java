@@ -671,6 +671,9 @@ public class ServiceBuilder {
 				rootElement.attributeValue("auto-namespace-tables"),
 				_autoNamespaceTables);
 
+			_changeTrackingEnabled = GetterUtil.getBoolean(
+				rootElement.attributeValue("change-tracking-enabled"));
+
 			String dependencyInjector = rootElement.attributeValue(
 				"dependency-injector");
 
@@ -1694,13 +1697,21 @@ public class ServiceBuilder {
 			methodName.equals("deactivate") || methodName.equals("destroy") ||
 			methodName.equals("equals") ||
 			methodName.equals("getAopInterfaces") ||
-			methodName.equals("getClass") || methodName.equals("getService") ||
+			methodName.equals("getCTPersistence") ||
+			methodName.equals("getClass") ||
+			methodName.equals("getModelClass") ||
+			methodName.equals("getService") ||
+			methodName.equals("getUniqueIndexColumnNames") ||
 			methodName.equals("getWrappedService") ||
 			methodName.equals("hashCode") || methodName.equals("notify") ||
 			methodName.equals("notifyAll") ||
+			methodName.equals("removeCTModel") ||
 			methodName.equals("setAopProxy") ||
 			methodName.equals("setWrappedService") ||
-			methodName.equals("toString") || methodName.equals("wait")) {
+			methodName.equals("toString") ||
+			methodName.equals("updateCTModel") ||
+			methodName.equals("updateWithUnsafeFunction") ||
+			methodName.equals("wait")) {
 
 			return false;
 		}
@@ -3669,6 +3680,9 @@ public class ServiceBuilder {
 
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
+			List<IndexMetadata> indexMetadatas = indexMetadatasMap.get(
+				entity.getTable());
+
 			for (EntityFinder entityFinder : entityFinders) {
 				if (!entityFinder.isDBIndex()) {
 					continue;
@@ -3689,6 +3703,31 @@ public class ServiceBuilder {
 
 				if (dbNames.isEmpty()) {
 					continue;
+				}
+
+				if (entity.isChangeTrackingEnabled() &&
+					!dbNames.contains("ctCollectionId")) {
+
+					if (indexMetadatas != null) {
+						Iterator<IndexMetadata> iterator =
+							indexMetadatas.iterator();
+
+						while (iterator.hasNext()) {
+							IndexMetadata indexMetadata = iterator.next();
+
+							if (indexMetadata.isUnique() &&
+								dbNames.equals(
+									Arrays.asList(
+										indexMetadata.getColumnNames()))) {
+
+								iterator.remove();
+
+								break;
+							}
+						}
+					}
+
+					dbNames.add("ctCollectionId");
 				}
 
 				IndexMetadata indexMetadata =
@@ -4765,7 +4804,9 @@ public class ServiceBuilder {
 			if (entityColumn.isPrimary()) {
 				sb.append(" not null");
 
-				if (!entity.hasCompoundPK()) {
+				if (!entity.hasCompoundPK() &&
+					!entity.isChangeTrackingEnabled()) {
+
 					sb.append(" primary key");
 				}
 			}
@@ -4779,12 +4820,18 @@ public class ServiceBuilder {
 				sb.append(" IDENTITY");
 			}
 
+			if (entity.isChangeTrackingEnabled() &&
+				Objects.equals(entityColumn.getName(), "ctCollectionId")) {
+
+				sb.append(" default 0 not null");
+			}
+
 			if (Objects.equals(entityColumn.getName(), "mvccVersion")) {
 				sb.append(" default 0 not null");
 			}
 
 			if (((i + 1) != databaseRegularEntityColumns.size()) ||
-				entity.hasCompoundPK()) {
+				entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
 
 				sb.append(",");
 			}
@@ -4792,7 +4839,7 @@ public class ServiceBuilder {
 			sb.append("\n");
 		}
 
-		if (entity.hasCompoundPK()) {
+		if (entity.hasCompoundPK() || entity.isChangeTrackingEnabled()) {
 			sb.append("\tprimary key (");
 
 			List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
@@ -4805,6 +4852,10 @@ public class ServiceBuilder {
 				if ((j + 1) != pkEntityColumns.size()) {
 					sb.append(", ");
 				}
+			}
+
+			if (entity.isChangeTrackingEnabled()) {
+				sb.append(", ctCollectionId");
 			}
 
 			sb.append(")\n");
@@ -5571,6 +5622,10 @@ public class ServiceBuilder {
 		boolean cacheEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("cache-enabled"), true);
 
+		boolean changeTrackingEnabled = GetterUtil.getBoolean(
+			entityElement.attributeValue("change-tracking-enabled"),
+			_changeTrackingEnabled);
+
 		boolean mvccEnabled = GetterUtil.getBoolean(
 			entityElement.attributeValue("mvcc-enabled"), _mvccEnabled);
 
@@ -5641,6 +5696,15 @@ public class ServiceBuilder {
 			Element columnElement = DocumentHelper.createElement("column");
 
 			columnElement.addAttribute("name", "mvccVersion");
+			columnElement.addAttribute("type", "long");
+
+			derivedColumnElements.add(columnElement);
+		}
+
+		if (changeTrackingEnabled) {
+			Element columnElement = DocumentHelper.createElement("column");
+
+			columnElement.addAttribute("name", "ctCollectionId");
 			columnElement.addAttribute("type", "long");
 
 			derivedColumnElements.add(columnElement);
@@ -5877,6 +5941,20 @@ public class ServiceBuilder {
 		List<EntityFinder> entityFinders = new ArrayList<>();
 
 		List<Element> finderElements = entityElement.elements("finder");
+
+		if (changeTrackingEnabled) {
+			Element finderElement = DocumentHelper.createElement("finder");
+
+			finderElement.addAttribute("name", "CTCollectionId");
+			finderElement.addAttribute("return-type", "Collection");
+
+			Element finderColumnElement = finderElement.addElement(
+				"finder-column");
+
+			finderColumnElement.addAttribute("name", "ctCollectionId");
+
+			finderElements.add(0, finderElement);
+		}
 
 		if (uuid) {
 			if (entityColumns.contains(new EntityColumn("companyId"))) {
@@ -6166,7 +6244,35 @@ public class ServiceBuilder {
 			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
 			entityColumns, entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
-			resourceActionModel);
+			resourceActionModel, changeTrackingEnabled);
+
+		if (changeTrackingEnabled) {
+			if (!mvccEnabled) {
+				throw new ServiceBuilderException(
+					"MVCC must be enabled to use change tracking for " +
+						entityName);
+			}
+
+			if (entity.isHierarchicalTree()) {
+				throw new ServiceBuilderException(
+					"Change tracking with Hierarchical Tree is not yet " +
+						"supported for " + entityName);
+			}
+
+			if (pkEntityColumns.size() > 1) {
+				throw new ServiceBuilderException(
+					"Compound primary key with change tracked columns is not " +
+						"supported for " + entityName);
+			}
+
+			EntityColumn pkEntityColumn = pkEntityColumns.get(0);
+
+			if (!Objects.equals("long", pkEntityColumn.getType())) {
+				throw new ServiceBuilderException(
+					"Primary key must be of type long to enable change " +
+						"tracking for " + entityName);
+			}
+		}
 
 		_entities.add(entity);
 
@@ -7228,6 +7334,7 @@ public class ServiceBuilder {
 	private boolean _build;
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
+	private boolean _changeTrackingEnabled;
 	private boolean _commercialPlugin;
 	private Properties _compatProperties;
 	private String _currentTplName;

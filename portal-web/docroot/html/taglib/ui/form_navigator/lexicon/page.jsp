@@ -91,47 +91,42 @@ for (int i = 0; i < categoryKeys.length; i++) {
 </c:if>
 
 <aui:script require="metal-dom/src/dom">
-	AUI().use(
-		'liferay-store',
-		function(A) {
-			var dom = metalDomSrcDom.default;
+	var dom = metalDomSrcDom.default;
 
-			var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
-			var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
+	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+	var tabs1Param = '<portlet:namespace /><%= tabs1Param %>';
 
-			var updateRedirectField = function(event) {
-				var redirectURL = new URL(redirectField.value, window.location.origin);
+	var updateRedirectField = function(event) {
+		var redirectURL = new URL(redirectField.value, window.location.origin);
 
-				redirectURL.searchParams.set(tabs1Param, event.id);
+		redirectURL.searchParams.set(tabs1Param, event.id);
 
-				redirectField.value = redirectURL.toString();
+		redirectField.value = redirectURL.toString();
 
-				Liferay.Store('<portlet:namespace /><%= id %>', event.id);
-			};
+		Liferay.Util.Session.set('<portlet:namespace /><%= id %>', event.id);
+	};
 
-			var clearFormNavigatorHandles = function(event) {
-				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-					Liferay.detach('showTab', updateRedirectField);
-					Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
-				}
-			};
-
-			if (redirectField) {
-				var currentURL = new URL(document.location.href);
-
-				var tabs1Value = currentURL.searchParams.get(tabs1Param);
-
-				if (tabs1Value) {
-					updateRedirectField(
-						{
-							id: tabs1Value
-						}
-					);
-				}
-
-				Liferay.on('showTab', updateRedirectField);
-				Liferay.on('destroyPortlet', clearFormNavigatorHandles);
-			}
+	var clearFormNavigatorHandles = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.detach('showTab', updateRedirectField);
+			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
 		}
-	);
+	};
+
+	if (redirectField) {
+		var currentURL = new URL(document.location.href);
+
+		var tabs1Value = currentURL.searchParams.get(tabs1Param);
+
+		if (tabs1Value) {
+			updateRedirectField(
+				{
+					id: tabs1Value
+				}
+			);
+		}
+
+		Liferay.on('showTab', updateRedirectField);
+		Liferay.on('destroyPortlet', clearFormNavigatorHandles);
+	}
 </aui:script>

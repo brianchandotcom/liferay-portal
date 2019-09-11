@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:script use="aui-toggler,liferay-store">
+<aui:script use="aui-toggler">
 	var togglerDelegate;
 
 	Liferay.component(
@@ -25,7 +25,9 @@
 
 				var sendData = A.debounce(
 					function() {
-						Liferay.Store(data);
+						Object.entries(data).forEach((key, value) => {
+							Liferay.Util.Session.set(key, value);
+						});
 
 						data = {};
 					},

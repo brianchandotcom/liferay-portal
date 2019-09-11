@@ -361,14 +361,14 @@ boolean choiceField = checkboxField || radioField;
 				</c:if>
 
 				<c:if test="<%= resizable %>">
-					<aui:script use="liferay-store,resize-base">
+					<aui:script use="resize-base">
 						var textareaNode = A.one('#<%= namespace + id %>');
 
 						var resizeInstance = new A.Resize(
 							{
 								after: {
 									'end': function(event) {
-										Liferay.Store('<%= _TEXTAREA_WIDTH_HEIGHT_PREFIX %><%= namespace + id %>', textareaNode.getStyle('height') + ',' + textareaNode.getStyle('width'));
+										Liferay.Util.Session.set('<%= _TEXTAREA_WIDTH_HEIGHT_PREFIX %><%= namespace + id %>', textareaNode.getStyle('height') + ',' + textareaNode.getStyle('width'));
 									}
 								},
 								autoHide: true,

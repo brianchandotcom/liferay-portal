@@ -23,6 +23,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeSer
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
@@ -163,6 +165,25 @@ public class ModuleConfigurationLocalizationTest {
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
 			extendedMetaTypeInformation.getObjectClassDefinition(
 				pid, locale.getLanguage());
+
+		for (String extensionUri :
+				extendedObjectClassDefinition.getExtensionUris()) {
+
+			Map<String, String> extensionAttributes =
+				extendedObjectClassDefinition.getExtensionAttributes(
+					extensionUri);
+
+			if (!extensionAttributes.containsKey("generateUI")) {
+				continue;
+			}
+
+			boolean generateUI = GetterUtil.getBoolean(
+				extensionAttributes.get("generateUI"));
+
+			if (!generateUI) {
+				return sb.toString();
+			}
+		}
 
 		String extendedObjectClassDefinitionName = ResourceBundleUtil.getString(
 			resourceBundle, extendedObjectClassDefinition.getName());

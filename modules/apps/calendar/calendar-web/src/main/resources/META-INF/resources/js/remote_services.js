@@ -24,26 +24,33 @@ AUI.add(
 		var CalendarUtil = Liferay.CalendarUtil;
 		var MessageUtil = Liferay.CalendarMessageUtil;
 
+		var STR_BLANK = '';
+
 		var CalendarRemoteServices = A.Base.create(
 			'calendar-remote-services',
 			A.Base,
 			[Liferay.PortletBase],
 			{
-				_invokeActionURL(params) {
+				_invokeActionURL(config) {
 					var instance = this;
 
-					var url = Liferay.PortletURL.createActionURL();
+					var actionParameters = {
+						'javax.portlet.action': config.actionName
+					};
 
-					url.setName(params.actionName);
-					url.setParameters(params.queryParameters);
-					url.setPortletId(instance.ID);
+					A.mix(actionParameters, config.queryParameters);
+
+					var url = Liferay.Util.PortletURL.createActionURL(
+						instance.get('baseActionURL'),
+						actionParameters
+					);
 
 					var payload;
 
-					if (params.payload) {
+					if (config.payload) {
 						payload = Liferay.Util.ns(
 							instance.get('namespace'),
-							params.payload
+							config.payload
 						);
 					}
 
@@ -61,28 +68,31 @@ AUI.add(
 							return response.json();
 						})
 						.then(data => {
-							params.callback(data);
+							config.callback(data);
 						});
 				},
 
-				_invokeResourceURL(params) {
+				_invokeResourceURL(config) {
 					var instance = this;
 
-					var url = Liferay.PortletURL.createResourceURL();
+					var resourceParameters = {
+						doAsUserId: Liferay.ThemeDisplay.getDoAsUserIdEncoded(),
+						p_p_resource_id: config.resourceId
+					};
 
-					url.setDoAsUserId(
-						Liferay.ThemeDisplay.getDoAsUserIdEncoded()
+					A.mix(resourceParameters, config.queryParameters);
+
+					var url = Liferay.Util.PortletURL.createResourceURL(
+						instance.get('baseResourceURL'),
+						resourceParameters
 					);
-					url.setParameters(params.queryParameters);
-					url.setPortletId(instance.ID);
-					url.setResourceId(params.resourceId);
 
 					var payload;
 
-					if (params.payload) {
+					if (config.payload) {
 						payload = Liferay.Util.ns(
 							instance.get('namespace'),
-							params.payload
+							config.payload
 						);
 					}
 
@@ -103,7 +113,7 @@ AUI.add(
 						})
 						.then(data => {
 							if (data.length) {
-								params.callback(JSON.parse(data));
+								config.callback(JSON.parse(data));
 							}
 						});
 				},
@@ -510,9 +520,17 @@ AUI.add(
 			},
 			{
 				ATTRS: {
+					baseActionURL: {
+						validator: isString,
+						value: STR_BLANK
+					},
+					baseResourceURL: {
+						validator: isString,
+						value: STR_BLANK
+					},
 					invokerURL: {
 						validator: isString,
-						value: ''
+						value: STR_BLANK
 					},
 					userId: {
 						setter: toInt

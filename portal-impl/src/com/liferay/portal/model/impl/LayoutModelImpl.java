@@ -81,22 +81,22 @@ public class LayoutModelImpl
 	public static final String TABLE_NAME = "Layout";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"plid", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"parentPlid", Types.BIGINT},
-		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
-		{"parentLayoutId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
-		{"hidden_", Types.BOOLEAN}, {"system_", Types.BOOLEAN},
-		{"friendlyURL", Types.VARCHAR}, {"iconImageId", Types.BIGINT},
-		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"css", Types.CLOB}, {"priority", Types.INTEGER},
-		{"layoutPrototypeUuid", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"plid", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"parentPlid", Types.BIGINT}, {"privateLayout", Types.BOOLEAN},
+		{"layoutId", Types.BIGINT}, {"parentLayoutId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"keywords", Types.VARCHAR},
+		{"robots", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"typeSettings", Types.CLOB}, {"hidden_", Types.BOOLEAN},
+		{"system_", Types.BOOLEAN}, {"friendlyURL", Types.VARCHAR},
+		{"iconImageId", Types.BIGINT}, {"themeId", Types.VARCHAR},
+		{"colorSchemeId", Types.VARCHAR}, {"css", Types.CLOB},
+		{"priority", Types.INTEGER}, {"layoutPrototypeUuid", Types.VARCHAR},
 		{"layoutPrototypeLinkEnabled", Types.BOOLEAN},
 		{"sourcePrototypeLayoutUuid", Types.VARCHAR},
 		{"publishDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP}
@@ -107,6 +107,7 @@ public class LayoutModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -144,7 +145,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null)";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -181,31 +182,33 @@ public class LayoutModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long FRIENDLYURL_COLUMN_BITMASK = 8L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 8L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long FRIENDLYURL_COLUMN_BITMASK = 16L;
 
-	public static final long HIDDEN_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
-	public static final long ICONIMAGEID_COLUMN_BITMASK = 64L;
+	public static final long HIDDEN_COLUMN_BITMASK = 64L;
 
-	public static final long LAYOUTID_COLUMN_BITMASK = 128L;
+	public static final long ICONIMAGEID_COLUMN_BITMASK = 128L;
 
-	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 256L;
+	public static final long LAYOUTID_COLUMN_BITMASK = 256L;
 
-	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 512L;
+	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 512L;
 
-	public static final long PARENTPLID_COLUMN_BITMASK = 1024L;
+	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 1024L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 2048L;
+	public static final long PARENTPLID_COLUMN_BITMASK = 2048L;
 
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 4096L;
+	public static final long PRIORITY_COLUMN_BITMASK = 4096L;
 
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 8192L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8192L;
 
-	public static final long TYPE_COLUMN_BITMASK = 16384L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 16384L;
 
-	public static final long UUID_COLUMN_BITMASK = 32768L;
+	public static final long TYPE_COLUMN_BITMASK = 32768L;
+
+	public static final long UUID_COLUMN_BITMASK = 65536L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -221,6 +224,7 @@ public class LayoutModelImpl
 		Layout model = new LayoutImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setPlid(soapModel.getPlid());
 		model.setGroupId(soapModel.getGroupId());
@@ -408,6 +412,11 @@ public class LayoutModelImpl
 		attributeGetterFunctions.put("mvccVersion", Layout::getMvccVersion);
 		attributeSetterBiConsumers.put(
 			"mvccVersion", (BiConsumer<Layout, Long>)Layout::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", Layout::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<Layout, Long>)Layout::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", Layout::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<Layout, String>)Layout::setUuid);
@@ -540,6 +549,29 @@ public class LayoutModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1884,6 +1916,7 @@ public class LayoutModelImpl
 		LayoutImpl layoutImpl = new LayoutImpl();
 
 		layoutImpl.setMvccVersion(getMvccVersion());
+		layoutImpl.setCtCollectionId(getCtCollectionId());
 		layoutImpl.setUuid(getUuid());
 		layoutImpl.setPlid(getPlid());
 		layoutImpl.setGroupId(getGroupId());
@@ -2001,6 +2034,11 @@ public class LayoutModelImpl
 	public void resetOriginalValues() {
 		LayoutModelImpl layoutModelImpl = this;
 
+		layoutModelImpl._originalCtCollectionId =
+			layoutModelImpl._ctCollectionId;
+
+		layoutModelImpl._setOriginalCtCollectionId = false;
+
 		layoutModelImpl._originalUuid = layoutModelImpl._uuid;
 
 		layoutModelImpl._originalGroupId = layoutModelImpl._groupId;
@@ -2068,6 +2106,8 @@ public class LayoutModelImpl
 		LayoutCacheModel layoutCacheModel = new LayoutCacheModel();
 
 		layoutCacheModel.mvccVersion = getMvccVersion();
+
+		layoutCacheModel.ctCollectionId = getCtCollectionId();
 
 		layoutCacheModel.uuid = getUuid();
 
@@ -2334,6 +2374,9 @@ public class LayoutModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _plid;

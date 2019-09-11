@@ -291,9 +291,9 @@ definition {
 			workflowRestriction = "Default Workflow");
 	}
 
-	@description = "This test covers LPS-90346. This test ensures that the document preview displays correct after editing."
+	@description = "This test covers LPS-90346. It ensures that the document preview displays correctly after submitting an edit."
 	@priority = "4"
-	test EditDocumentAfterApproved {
+	test PreviewSubmittedEdit {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

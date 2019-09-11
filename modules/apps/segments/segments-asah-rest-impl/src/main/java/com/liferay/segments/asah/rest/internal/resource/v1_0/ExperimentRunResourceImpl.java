@@ -17,6 +17,7 @@ package com.liferay.segments.asah.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
@@ -25,6 +26,8 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
+
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +60,9 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 		for (ExperimentVariant experimentVariant : experimentVariants) {
 			segmentsExperienceKeySplitMap.put(
 				String.valueOf(experimentVariant.getId()),
-				experimentVariant.getTrafficSplit());
+				BigDecimalUtil.divide(
+					experimentVariant.getTrafficSplit(), 100, 2,
+					RoundingMode.HALF_DOWN));
 		}
 
 		ServiceContext serviceContext =
@@ -74,7 +79,9 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 		return _toRunExperiment(
 			_segmentsExperimentService.runSegmentsExperiment(
 				String.valueOf(segmentsExperimentKey),
-				experimentRun.getConfidenceLevel(),
+				BigDecimalUtil.divide(
+					experimentRun.getConfidenceLevel(), 100, 2,
+					RoundingMode.HALF_DOWN),
 				segmentsExperienceKeySplitMap));
 	}
 

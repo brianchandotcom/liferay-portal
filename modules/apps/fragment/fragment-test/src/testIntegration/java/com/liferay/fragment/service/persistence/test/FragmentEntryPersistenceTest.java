@@ -124,6 +124,8 @@ public class FragmentEntryPersistenceTest {
 
 		FragmentEntry newFragmentEntry = _persistence.create(pk);
 
+		newFragmentEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newFragmentEntry.setUuid(RandomTestUtil.randomString());
 
 		newFragmentEntry.setGroupId(RandomTestUtil.nextLong());
@@ -171,6 +173,9 @@ public class FragmentEntryPersistenceTest {
 		FragmentEntry existingFragmentEntry = _persistence.findByPrimaryKey(
 			newFragmentEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingFragmentEntry.getMvccVersion(),
+			newFragmentEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingFragmentEntry.getUuid(), newFragmentEntry.getUuid());
 		Assert.assertEquals(
@@ -367,11 +372,12 @@ public class FragmentEntryPersistenceTest {
 
 	protected OrderByComparator<FragmentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"FragmentEntry", "uuid", true, "fragmentEntryId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "fragmentCollectionId",
-			true, "fragmentEntryKey", true, "name", true, "previewFileEntryId",
-			true, "type", true, "lastPublishDate", true, "status", true,
+			"FragmentEntry", "mvccVersion", true, "uuid", true,
+			"fragmentEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "fragmentCollectionId", true,
+			"fragmentEntryKey", true, "name", true, "previewFileEntryId", true,
+			"type", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
@@ -625,6 +631,8 @@ public class FragmentEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		FragmentEntry fragmentEntry = _persistence.create(pk);
+
+		fragmentEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		fragmentEntry.setUuid(RandomTestUtil.randomString());
 

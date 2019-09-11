@@ -5,10 +5,11 @@
 	<import class="com.liferay.fragment.model.FragmentCollection" />
 	<import class="com.liferay.fragment.model.FragmentEntry" />
 	<import class="com.liferay.fragment.model.FragmentEntryLink" />
-	<class name="com.liferay.fragment.model.impl.FragmentCollectionImpl" table="FragmentCollection">
+	<class dynamic-update="true" name="com.liferay.fragment.model.impl.FragmentCollectionImpl" table="FragmentCollection">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fragmentCollectionId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -21,10 +22,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.fragment.model.impl.FragmentEntryImpl" table="FragmentEntry">
+	<class dynamic-update="true" name="com.liferay.fragment.model.impl.FragmentEntryImpl" table="FragmentEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fragmentEntryId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -47,10 +49,11 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.fragment.model.impl.FragmentEntryLinkImpl" table="FragmentEntryLink">
+	<class dynamic-update="true" name="com.liferay.fragment.model.impl.FragmentEntryLinkImpl" table="FragmentEntryLink">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fragmentEntryLinkId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

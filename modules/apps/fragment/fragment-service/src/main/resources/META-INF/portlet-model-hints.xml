@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.fragment.model.FragmentCollection">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="groupId" type="long" />
@@ -20,6 +21,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -54,6 +56,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryLink">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="fragmentEntryLinkId" type="long" />
 		<field name="groupId" type="long" />

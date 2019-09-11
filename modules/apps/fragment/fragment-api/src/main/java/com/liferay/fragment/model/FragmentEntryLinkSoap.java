@@ -31,6 +31,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 	public static FragmentEntryLinkSoap toSoapModel(FragmentEntryLink model) {
 		FragmentEntryLinkSoap soapModel = new FragmentEntryLinkSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setFragmentEntryLinkId(model.getFragmentEntryLinkId());
 		soapModel.setGroupId(model.getGroupId());
@@ -113,6 +114,14 @@ public class FragmentEntryLinkSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFragmentEntryLinkId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -293,6 +302,7 @@ public class FragmentEntryLinkSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _fragmentEntryLinkId;
 	private long _groupId;

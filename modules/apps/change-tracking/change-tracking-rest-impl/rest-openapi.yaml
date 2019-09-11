@@ -45,41 +45,6 @@ components:
                 name:
                     type: string
             type: object
-        Entry:
-            properties:
-                affectedByEntriesCount:
-                    type: integer
-                changeType:
-                    type: integer
-                classNameId:
-                    format: int64
-                    type: integer
-                classPK:
-                    format: int64
-                    type: integer
-                collision:
-                    type: boolean
-                contentType:
-                    type: string
-                dateModified:
-                    format: date-time
-                    readOnly: true
-                    type: string
-                id:
-                    format: int64
-                    type: integer
-                key:
-                    format: int64
-                    type: integer
-                siteName:
-                    type: string
-                title:
-                    type: string
-                userName:
-                    type: string
-                version:
-                    type: string
-            type: object
         Process:
             properties:
                 collection:
@@ -375,27 +340,6 @@ paths:
                                 type: string
                     description: ""
             tags: ["Collection"]
-    "/entries/{entryId}":
-        get:
-            operationId: getEntry
-            parameters:
-                - in: path
-                  name: entryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Entry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Entry"
-                    description: ""
-            tags: ["Entry"]
     "/processes":
         get:
             operationId: getProcessesPage

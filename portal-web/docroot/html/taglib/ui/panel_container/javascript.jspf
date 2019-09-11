@@ -25,9 +25,11 @@
 
 				var sendData = A.debounce(
 					function() {
-						Object.entries(data).forEach((key, value) => {
-							Liferay.Util.Session.set(key, value);
-						});
+						Object.entries(data).forEach(
+							function(key, value) {
+								Liferay.Util.Session.set(key, value);
+							}
+						);
 
 						data = {};
 					},

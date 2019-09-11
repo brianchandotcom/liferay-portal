@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.felix.dm.Component;
 import org.apache.felix.dm.ComponentDeclaration;
 import org.apache.felix.dm.ComponentDependencyDeclaration;
 import org.apache.felix.dm.DependencyManager;
@@ -37,15 +38,14 @@ public class UnavailableComponentUtil {
 		StringBundler sb = new StringBundler();
 
 		for (DependencyManager dependencyManager :
-				(List<DependencyManager>)
-					DependencyManager.getDependencyManagers()) {
+				DependencyManager.getDependencyManagers()) {
 
 			Map<ComponentDeclaration, List<ComponentDependencyDeclaration>>
 				unavailableComponentDeclarations = new HashMap<>();
 
-			for (ComponentDeclaration componentDeclaration :
-					(List<ComponentDeclaration>)
-						dependencyManager.getComponents()) {
+			for (Component component : dependencyManager.getComponents()) {
+				ComponentDeclaration componentDeclaration =
+					(ComponentDeclaration)component;
 
 				if (componentDeclaration.getState() !=
 						ComponentDeclaration.STATE_UNREGISTERED) {

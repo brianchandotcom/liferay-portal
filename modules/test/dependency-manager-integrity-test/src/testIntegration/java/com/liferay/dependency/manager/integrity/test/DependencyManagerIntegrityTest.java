@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.felix.dm.Component;
 import org.apache.felix.dm.ComponentDeclaration;
 import org.apache.felix.dm.ComponentDependencyDeclaration;
 import org.apache.felix.dm.DependencyManager;
@@ -41,12 +42,11 @@ public class DependencyManagerIntegrityTest {
 			missingComponentDependencyDeclarations = new ArrayList<>();
 
 		for (DependencyManager dependencyManager :
-				(List<DependencyManager>)
-					DependencyManager.getDependencyManagers()) {
+				DependencyManager.getDependencyManagers()) {
 
-			for (ComponentDeclaration componentDeclaration :
-					(List<ComponentDeclaration>)
-						dependencyManager.getComponents()) {
+			for (Component component : dependencyManager.getComponents()) {
+				ComponentDeclaration componentDeclaration =
+					(ComponentDeclaration)component;
 
 				if (componentDeclaration.getState() !=
 						ComponentDeclaration.STATE_UNREGISTERED) {

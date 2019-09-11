@@ -18,8 +18,6 @@ definition {
 
 		var name = URLUtil.encodeUTF8("${name}");
 
-		var name = StringUtil.replace("${name}", "+", "%20");
-
 		return "${name}";
 	}
 

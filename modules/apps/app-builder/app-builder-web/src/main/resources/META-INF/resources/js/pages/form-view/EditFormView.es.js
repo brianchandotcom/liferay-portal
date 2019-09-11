@@ -19,6 +19,12 @@ import {addItem, getItem, updateItem} from '../../utils/client.es';
 import LayoutBuilderManager from './LayoutBuilderManager.es';
 import LayoutBuilderSidebar from './LayoutBuilderSidebar.es';
 
+const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
+	...props,
+	dataDefinitionId: Number(dataDefinitionId),
+	dataLayoutId: Number(dataLayoutId)
+});
+
 const saveDataLayoutBuilder = ({
 	dataDefinition,
 	dataDefinitionId,
@@ -66,13 +72,14 @@ const saveDataLayoutBuilder = ({
 	}
 };
 
-const EditFormView = ({
-	dataDefinitionId,
-	dataLayoutBuilder,
-	dataLayoutBuilderElementId,
-	dataLayoutId,
-	newCustomObject
-}) => {
+const EditFormView = props => {
+	const {
+		dataDefinitionId,
+		dataLayoutBuilder,
+		dataLayoutBuilderElementId,
+		dataLayoutId,
+		newCustomObject
+	} = parseProps(props);
 	const [dataDefinition, setDataDefinition] = useState({});
 	const [dataLayout, setDataLayout] = useState({name: {}});
 

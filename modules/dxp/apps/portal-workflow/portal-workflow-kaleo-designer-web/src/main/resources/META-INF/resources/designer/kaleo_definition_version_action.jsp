@@ -65,7 +65,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		</c:otherwise>
 	</c:choose>
 
-	<c:if test="<%= kaleoDesignerDisplayContext.canPublishWorkflowDefinition() %>">
+	<c:if test="<%= (kaleoDefinition != null) && kaleoDesignerDisplayContext.canPublishWorkflowDefinition() %>">
 		<liferay-ui:icon
 			id='<%= "duplicate" + kaleoDefinition.getKaleoDefinitionId() %>'
 			message="duplicate"
@@ -123,32 +123,34 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 	</c:choose>
 </liferay-ui:icon-menu>
 
-<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
-	<aui:form name='<%= randomNamespace + "form" %>' portletNamespace="<%= kaleoNamespace %>">
-		<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
-		<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
-		<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
-		<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
-		<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
+<c:if test="<%= kaleoDefinition != null %>">
+	<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
+		<aui:form name='<%= randomNamespace + "form" %>' portletNamespace="<%= kaleoNamespace %>">
+			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
+			<aui:input name="content" type="hidden" value="<%= kaleoDefinition.getContent() %>" />
+			<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= kaleoDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+			<aui:input name="defaultDuplicationTitle" type="hidden" value="<%= duplicateTitle %>" />
+			<aui:input name="duplicatedDefinitionName" type="hidden" value="<%= kaleoDefinition.getName() %>" />
 
-		<aui:fieldset>
-			<aui:col>
-				<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
-			</aui:col>
+			<aui:fieldset>
+				<aui:col>
+					<aui:input label="title" name='<%= randomNamespace + "title" %>' placeholder="<%= duplicateTitle %>" type="text" />
+				</aui:col>
 
-			<aui:col>
-				<liferay-ui:message key="copy-does-not-include-revisions" />
-			</aui:col>
-		</aui:fieldset>
-	</aui:form>
-</div>
+				<aui:col>
+					<liferay-ui:message key="copy-does-not-include-revisions" />
+				</aui:col>
+			</aui:fieldset>
+		</aui:form>
+	</div>
 
-<aui:script use="liferay-kaleo-designer-dialogs">
-	var title = '<liferay-ui:message key="duplicate-workflow" />';
+	<aui:script use="liferay-kaleo-designer-dialogs">
+		var title = '<liferay-ui:message key="duplicate-workflow" />';
 
-	var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.KaleoDesignerDialogs, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>', "<%= kaleoNamespace %>");
+		var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.KaleoDesignerDialogs, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>', "<%= kaleoNamespace %>");
 
-	Liferay.delegateClick('<portlet:namespace />duplicate<%= kaleoDefinition.getKaleoDefinitionId() %>', confirmBeforeDuplicateDialog);
-</aui:script>
+		Liferay.delegateClick('<portlet:namespace />duplicate<%= kaleoDefinition.getKaleoDefinitionId() %>', confirmBeforeDuplicateDialog);
+	</aui:script>
+</c:if>

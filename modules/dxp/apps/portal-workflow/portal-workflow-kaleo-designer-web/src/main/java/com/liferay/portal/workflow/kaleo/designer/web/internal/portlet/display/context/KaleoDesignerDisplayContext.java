@@ -62,9 +62,11 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDefinit
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionActiveComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -301,7 +303,7 @@ public class KaleoDesignerDisplayContext {
 		kaleoDefinitionVersionSearch.setOrderByComparator(orderByComparator);
 		kaleoDefinitionVersionSearch.setOrderByType(orderByType);
 
-		setKaleoDefinitionVersionSearchResults(kaleoDefinitionVersionSearch);
+		_setKaleoDefinitionVersionSearchResults(kaleoDefinitionVersionSearch);
 
 		return kaleoDefinitionVersionSearch;
 	}
@@ -788,7 +790,16 @@ public class KaleoDesignerDisplayContext {
 		return false;
 	}
 
-	protected void setKaleoDefinitionVersionSearchResults(
+	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
+		return StringUtil.replace(
+			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
+			new String[] {
+				portletURL.toString(),
+				LanguageUtil.get(getResourceBundle(), messageKey)
+			});
+	}
+
+	private void _setKaleoDefinitionVersionSearchResults(
 		SearchContainer<KaleoDefinitionVersion> searchContainer) {
 
 		String definitionsNavigation = getDefinitionsNavigation();
@@ -820,6 +831,10 @@ public class KaleoDesignerDisplayContext {
 				_kaleoDesignerRequestHelper.getPermissionChecker(),
 				_themeDisplay.getCompanyGroupId()));
 
+		Collections.sort(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionActiveComparator());
+
 		searchContainer.setTotal(kaleoDefinitionVersions.size());
 
 		if (kaleoDefinitionVersions.size() >
@@ -831,15 +846,6 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		searchContainer.setResults(kaleoDefinitionVersions);
-	}
-
-	private String _buildErrorLink(String messageKey, PortletURL portletURL) {
-		return StringUtil.replace(
-			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
-			new String[] {
-				portletURL.toString(),
-				LanguageUtil.get(getResourceBundle(), messageKey)
-			});
 	}
 
 	private static final String _HTML =

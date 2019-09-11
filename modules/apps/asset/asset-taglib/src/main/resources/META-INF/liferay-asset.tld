@@ -181,6 +181,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showOnlyRequiredVocabularies</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showRequiredLabel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

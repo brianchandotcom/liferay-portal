@@ -241,7 +241,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			String versionClassPKValue = String.valueOf(versionClassPK);
 
 			urlTitle = friendlyURL.substring(
-				0, friendlyURL.length() - versionClassPKValue.length() - 1);
+				infoURLSeparator.length(),
+				friendlyURL.length() - versionClassPKValue.length() - 1);
 		}
 
 		return http.encodePath(urlTitle);

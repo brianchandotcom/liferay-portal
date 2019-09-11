@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayButton from '@clayui/button';
@@ -26,9 +26,13 @@ import {
 	percentageNumberToIndex
 } from '../util/percentages.es';
 import BusyButton from './BusyButton/BusyButton.es';
+import SegmentsExperimentContext from '../context.es';
+
+const SUCCESS_ANIMATION_PATH = '/success.gif';
 
 function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	const [busy, setBusy] = useState(false);
+	const [success, setSuccess] = useState(false);
 	const [confidenceLevel, setConfidenceLevel] = useState(
 		INITIAL_CONFIDENCE_LEVEL
 	);
@@ -47,6 +51,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 			return {...variant, split};
 		})
 	);
+	const {assetsPath} = useContext(SegmentsExperimentContext);
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false)
@@ -61,59 +66,90 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		};
 	});
 
+	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_PATH}`;
+
 	return (
 		visible && (
 			<ClayModal observer={observer} size="lg">
 				<ClayModal.Header>
-					{Liferay.Language.get('review-and-run-test')}
+					{success
+						? Liferay.Language.get('test-successfully-started')
+						: Liferay.Language.get('review-and-run-test')}
 				</ClayModal.Header>
 				<ClayModal.Body>
-					<h3 className="sheet-subtitle border-bottom-0 text-secondary">
-						{Liferay.Language.get('traffic-split')}
-					</h3>
+					{success ? (
+						<div className="text-center">
+							<img
+								alt=""
+								className="mb-4 mt-3"
+								src={successAnimationPath}
+								width="250px"
+							/>
+							<h3>
+								{Liferay.Language.get('test-running-message')}
+							</h3>
+						</div>
+					) : (
+						<>
+							<h3 className="sheet-subtitle border-bottom-0 text-secondary">
+								{Liferay.Language.get('traffic-split')}
+							</h3>
 
-					<SplitPicker
-						onChange={variants => {
-							setDraftVariants(variants);
-						}}
-						variants={draftVariants}
-					/>
+							<SplitPicker
+								onChange={variants => {
+									setDraftVariants(variants);
+								}}
+								variants={draftVariants}
+							/>
 
-					<hr />
+							<hr />
 
-					<h3 className="sheet-subtitle border-bottom-0 text-secondary">
-						{Liferay.Language.get('confidence-level')}
-					</h3>
+							<h3 className="sheet-subtitle border-bottom-0 text-secondary">
+								{Liferay.Language.get('confidence-level')}
+							</h3>
 
-					<SliderWithLabel
-						label={Liferay.Language.get(
-							'confidence-level-required'
-						)}
-						max={MAX_CONFIDENCE_LEVEL}
-						min={MIN_CONFIDENCE_LEVEL}
-						onValueChange={setConfidenceLevel}
-						value={confidenceLevel}
-					/>
+							<SliderWithLabel
+								label={Liferay.Language.get(
+									'confidence-level-required'
+								)}
+								max={MAX_CONFIDENCE_LEVEL}
+								min={MIN_CONFIDENCE_LEVEL}
+								onValueChange={setConfidenceLevel}
+								value={confidenceLevel}
+							/>
+						</>
+					)}
 				</ClayModal.Body>
 
 				<ClayModal.Footer
 					last={
-						<ClayButton.Group spaced>
-							<ClayButton
-								displayType="secondary"
-								onClick={onClose}
-							>
-								{Liferay.Language.get('Cancel')}
-							</ClayButton>
+						success ? (
+							<ClayButton.Group>
+								<ClayButton
+									displayType="primary"
+									onClick={() => setVisible(false)}
+								>
+									{Liferay.Language.get('ok')}
+								</ClayButton>
+							</ClayButton.Group>
+						) : (
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('Cancel')}
+								</ClayButton>
 
-							<BusyButton
-								busy={busy}
-								disabled={busy}
-								onClick={_handleRun}
-							>
-								{Liferay.Language.get('Run')}
-							</BusyButton>
-						</ClayButton.Group>
+								<BusyButton
+									busy={busy}
+									disabled={busy}
+									onClick={_handleRun}
+								>
+									{Liferay.Language.get('Run')}
+								</BusyButton>
+							</ClayButton.Group>
+						)
 					}
 				/>
 			</ClayModal>
@@ -140,7 +176,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		}).then(() => {
 			if (mounted.current) {
 				setBusy(false);
-				setVisible(false);
+				setSuccess(true);
 			}
 		});
 	}

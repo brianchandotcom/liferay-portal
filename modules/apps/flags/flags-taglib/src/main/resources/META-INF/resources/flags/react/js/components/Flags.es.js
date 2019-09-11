@@ -28,6 +28,7 @@ import {
 
 import ThemeContext from '../ThemeContext.es';
 import FlagsModal from './FlagsModal.es';
+import './flags.scss';
 
 class Flags extends React.PureComponent {
 	static contextType = ThemeContext;
@@ -145,7 +146,7 @@ class Flags extends React.PureComponent {
 		return (
 			<>
 				<ClayButton
-					className={`btn-outline-borderless btn-outline-secondary ${
+					className={`a-red-border btn-outline-borderless btn-outline-secondary ${
 						onlyIcon ? 'lfr-portal-tooltip' : ''
 					}`}
 					data-title={onlyIcon ? message : undefined}

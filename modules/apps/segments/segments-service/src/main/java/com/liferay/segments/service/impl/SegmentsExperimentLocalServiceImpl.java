@@ -268,6 +268,15 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsExperiment> getSegmentsExperiments(
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] statuses, int start, int end) {
+
+		return segmentsExperimentFinder.findByS_C_C_S(
+			segmentsExperienceId, classNameId, classPK, statuses, start, end);
+	}
+
+	@Override
 	public boolean hasSegmentsExperiment(
 		long segmentsExperienceId, long classNameId, long classPK,
 		int[] statuses) {

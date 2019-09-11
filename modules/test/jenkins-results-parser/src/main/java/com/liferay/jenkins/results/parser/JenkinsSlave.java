@@ -56,11 +56,9 @@ public class JenkinsSlave {
 
 	private void _setSlaveStatus(String offlineReason, boolean offlineStatus) {
 		try {
-			String script = "script=";
-
 			Class<?> clazz = JenkinsSlave.class;
 
-			script += JenkinsResultsParserUtil.readInputStream(
+			String script = JenkinsResultsParserUtil.readInputStream(
 				clazz.getResourceAsStream(
 					"dependencies/set-slave-status.groovy"));
 

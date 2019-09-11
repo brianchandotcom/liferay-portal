@@ -430,6 +430,8 @@ public class JenkinsResultsParserUtil {
 			try (OutputStream outputStream =
 					httpURLConnection.getOutputStream()) {
 
+				script = "script=" + script;
+
 				outputStream.write(script.getBytes("UTF-8"));
 
 				outputStream.flush();
@@ -1817,7 +1819,7 @@ public class JenkinsResultsParserUtil {
 		sb.append(keepBuildLogs);
 		sb.append(");");
 
-		executeJenkinsScript(masterHostname, "script=" + sb.toString());
+		executeJenkinsScript(masterHostname, sb.toString());
 	}
 
 	public static void move(File sourceFile, File targetFile)
@@ -2598,7 +2600,7 @@ public class JenkinsResultsParserUtil {
 			String.valueOf(buildNumber), "); build.description = \"",
 			buildDescription, "\";");
 
-		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
+		executeJenkinsScript(masterHostname, jenkinsScript);
 	}
 
 	public static void updateBuildResult(
@@ -2610,7 +2612,7 @@ public class JenkinsResultsParserUtil {
 			"def build = job.getBuildByNumber(", String.valueOf(buildNumber),
 			"); build.@result = hudson.model.Result.", buildResult, ";");
 
-		executeJenkinsScript(masterHostname, "script=" + jenkinsScript);
+		executeJenkinsScript(masterHostname, jenkinsScript);
 	}
 
 	public static void write(File file, String content) throws IOException {

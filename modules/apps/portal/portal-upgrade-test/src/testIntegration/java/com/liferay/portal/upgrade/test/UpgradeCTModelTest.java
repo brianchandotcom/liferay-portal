@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -24,9 +25,13 @@ import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -78,20 +83,45 @@ public class UpgradeCTModelTest {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement ps = connection.prepareStatement(
 				"select * from UpgradeCTModelTest");
-			ResultSet rs = ps.executeQuery()) {
+			ResultSet rs1 = ps.executeQuery()) {
 
-			Assert.assertTrue(rs.next());
+			Assert.assertTrue(rs1.next());
 
-			Assert.assertEquals(0, rs.getLong("mvccVersion"));
-			Assert.assertEquals("uuid", rs.getString("uuid_"));
-			Assert.assertEquals(1, rs.getLong("upgradeCTModelId"));
-			Assert.assertEquals(0, rs.getLong("ctCollectionId"));
-			Assert.assertEquals(2, rs.getLong("companyId"));
-			Assert.assertNull(rs.getTimestamp("createDate"));
-			Assert.assertNull(rs.getTimestamp("modifiedDate"));
-			Assert.assertEquals("name", rs.getString("name"));
+			Assert.assertEquals(0, rs1.getLong("mvccVersion"));
+			Assert.assertEquals("uuid", rs1.getString("uuid_"));
+			Assert.assertEquals(1, rs1.getLong("upgradeCTModelId"));
+			Assert.assertEquals(0, rs1.getLong("ctCollectionId"));
+			Assert.assertEquals(2, rs1.getLong("companyId"));
+			Assert.assertNull(rs1.getTimestamp("createDate"));
+			Assert.assertNull(rs1.getTimestamp("modifiedDate"));
+			Assert.assertEquals("name", rs1.getString("name"));
 
-			Assert.assertFalse(rs.next());
+			Assert.assertFalse(rs1.next());
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			List<String> pkNames = new ArrayList<>();
+
+			try (ResultSet rs2 = databaseMetaData.getPrimaryKeys(
+					dbInspector.getCatalog(), dbInspector.getSchema(),
+					TestTableClass.TABLE_NAME)) {
+
+				Assert.assertTrue("Missing PK", rs2.next());
+
+				pkNames.add(rs2.getString("COLUMN_NAME"));
+
+				Assert.assertTrue("Missing PK", rs2.next());
+
+				pkNames.add(rs2.getString("COLUMN_NAME"));
+			}
+
+			pkNames.sort(null);
+
+			Assert.assertArrayEquals(
+				new String[] {"ctCollectionId", "upgradeCTModelId"},
+				pkNames.toArray(new String[0]));
 		}
 	}
 

@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_LOCATION</td>
+	<td>//dd[contains(@class,'sidebar-dd')]//a[contains(.,'${key_dmFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_INFO_TITLE</td>
 	<td>//div[contains(@class,'tbar-section')]/h2[contains(@title,'${key_dmDocumentTitle}')] | //h3[contains(@class,'header-title')]/span[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>

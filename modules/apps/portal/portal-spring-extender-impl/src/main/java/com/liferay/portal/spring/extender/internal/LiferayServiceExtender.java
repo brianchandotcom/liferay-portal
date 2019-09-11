@@ -28,6 +28,7 @@ import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
 import java.util.ArrayList;
@@ -161,12 +162,16 @@ public class LiferayServiceExtender
 						"origin.bundle.symbolic.name",
 						_extendeeBundle.getSymbolicName())));
 
-			TransactionExecutor transactionExecutor = _getTransactionExecutor(
-				dataSource, _sessionFactoryImplementor);
+			DefaultTransactionExecutor defaultTransactionExecutor =
+				_getTransactionExecutor(dataSource, _sessionFactoryImplementor);
 
 			_serviceRegistrations.add(
 				extendeeBundleContext.registerService(
-					TransactionExecutor.class, transactionExecutor,
+					new String[] {
+						TransactionExecutor.class.getName(),
+						TransactionHandler.class.getName()
+					},
+					defaultTransactionExecutor,
 					MapUtil.singletonDictionary(
 						"origin.bundle.symbolic.name",
 						_extendeeBundle.getSymbolicName())));
@@ -176,7 +181,7 @@ public class LiferayServiceExtender
 			_extendeeBundle = bundle;
 		}
 
-		private TransactionExecutor _getTransactionExecutor(
+		private DefaultTransactionExecutor _getTransactionExecutor(
 			DataSource liferayDataSource,
 			SessionFactoryImplementor sessionFactoryImplementor) {
 

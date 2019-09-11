@@ -14,35 +14,35 @@
 
 package com.liferay.portal.aop.internal;
 
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 
 import org.osgi.framework.ServiceReference;
 
 /**
  * @author Preston Crary
  */
-public class TransactionExecutorHolder
-	implements Comparable<TransactionExecutorHolder> {
+public class TransactionHandlerHolder
+	implements Comparable<TransactionHandlerHolder> {
 
-	public TransactionExecutorHolder(
-		ServiceReference<TransactionExecutor> serviceReference,
-		TransactionExecutor transactionExecutor) {
+	public TransactionHandlerHolder(
+		ServiceReference<TransactionHandler> serviceReference,
+		TransactionHandler transactionHandler) {
 
 		_serviceReference = serviceReference;
-		_transactionExecutor = transactionExecutor;
+		_transactionHandler = transactionHandler;
 	}
 
 	@Override
-	public int compareTo(TransactionExecutorHolder transactionExecutorHolder) {
+	public int compareTo(TransactionHandlerHolder transactionHandlerHolder) {
 		return _serviceReference.compareTo(
-			transactionExecutorHolder._serviceReference);
+			transactionHandlerHolder._serviceReference);
 	}
 
-	public TransactionExecutor getTransactionExecutor() {
-		return _transactionExecutor;
+	public TransactionHandler getTransactionHandler() {
+		return _transactionHandler;
 	}
 
-	private final ServiceReference<TransactionExecutor> _serviceReference;
-	private final TransactionExecutor _transactionExecutor;
+	private final ServiceReference<TransactionHandler> _serviceReference;
+	private final TransactionHandler _transactionHandler;
 
 }

@@ -27,7 +27,7 @@ import com.liferay.portal.resiliency.service.PortalResiliencyAdvice;
 import com.liferay.portal.search.IndexableAdvice;
 import com.liferay.portal.security.access.control.AccessControlAdvice;
 import com.liferay.portal.service.ServiceContextAdvice;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.systemevent.SystemEventAdvice;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -49,12 +49,12 @@ import java.util.Set;
 public class AopCacheManager {
 
 	public static synchronized AopInvocationHandler create(
-		Object target, TransactionExecutor transactionExecutor) {
+		Object target, TransactionHandler transactionHandler) {
 
 		AopInvocationHandler aopInvocationHandler = new AopInvocationHandler(
 			target,
 			_chainableMethodAdvices.toArray(new ChainableMethodAdvice[0]),
-			transactionExecutor);
+			transactionHandler);
 
 		_aopInvocationHandlers.add(aopInvocationHandler);
 

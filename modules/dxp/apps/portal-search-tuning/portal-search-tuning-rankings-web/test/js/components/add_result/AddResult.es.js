@@ -69,7 +69,9 @@ describe('AddResult', () => {
 
 		fireEvent.click(getByText('add-result'));
 
-		expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
+		});
 
 		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('cancel'));
 
@@ -78,7 +80,7 @@ describe('AddResult', () => {
 		});
 	});
 
-	it('prompts a message to search in the modal', () => {
+	it('prompts a message to search in the modal', async () => {
 		const {getByTestId, getByText} = render(
 			<AddResult
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -87,6 +89,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -104,6 +108,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -127,6 +133,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -153,6 +161,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -188,6 +198,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -226,6 +238,8 @@ describe('AddResult', () => {
 		);
 
 		fireEvent.click(getByText('add-result'));
+
+		await waitForElement(() => getByTestId(MODAL_ID));
 
 		const modal = getByTestId(MODAL_ID);
 

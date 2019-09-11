@@ -18,7 +18,7 @@ import com.liferay.petra.reflect.AnnotationLocator;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
 import com.liferay.portal.kernel.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.transaction.TransactionAttributeAdapter;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.transaction.TransactionsUtil;
 
@@ -57,11 +57,12 @@ public class AopInvocationHandler implements InvocationHandler {
 
 	protected AopInvocationHandler(
 		Object target, ChainableMethodAdvice[] chainableMethodAdvices,
-		TransactionExecutor transactionExecutor) {
+		TransactionHandler transactionHandler) {
 
 		_target = target;
 		_chainableMethodAdvices = chainableMethodAdvices;
-		_transactionExecutor = transactionExecutor;
+		_transactionInterceptor = new TransactionInterceptor(
+			transactionHandler);
 	}
 
 	protected synchronized void reset() {
@@ -79,7 +80,7 @@ public class AopInvocationHandler implements InvocationHandler {
 	private static AopMethodInvocation _createAopMethodInvocation(
 		Object target, Method method,
 		ChainableMethodAdvice[] chainableMethodAdvices,
-		TransactionExecutor transactionExecutor) {
+		TransactionInterceptor transactionInterceptor) {
 
 		AopMethodInvocation aopMethodInvocation = null;
 
@@ -91,18 +92,15 @@ public class AopInvocationHandler implements InvocationHandler {
 			AnnotationLocator.index(method, targetClass);
 
 		TransactionAttributeAdapter transactionAttributeAdapter =
-			_transactionInterceptor.createMethodContext(
+			transactionInterceptor.createMethodContext(
 				targetClass, method, annotations);
 
 		if (transactionAttributeAdapter != null) {
-			transactionAttributeAdapter.setTransactionExecutor(
-				transactionExecutor);
-
 			aopMethodInvocation = new AopMethodInvocationImpl(
 				target, method, transactionAttributeAdapter,
 				nextChainableMethodAdvice, aopMethodInvocation);
 
-			nextChainableMethodAdvice = _transactionInterceptor;
+			nextChainableMethodAdvice = transactionInterceptor;
 		}
 
 		for (int i = chainableMethodAdvices.length - 1; i >= 0; i--) {
@@ -137,7 +135,7 @@ public class AopInvocationHandler implements InvocationHandler {
 				synchronized (this) {
 					aopMethodInvocation = _createAopMethodInvocation(
 						_target, method, _chainableMethodAdvices,
-						_transactionExecutor);
+						_transactionInterceptor);
 
 					previousAopMethodInvocation =
 						_aopMethodInvocations.putIfAbsent(
@@ -155,13 +153,10 @@ public class AopInvocationHandler implements InvocationHandler {
 		return new AopMethodInvocationImpl(_target, method, null, null, null);
 	}
 
-	private static final TransactionInterceptor _transactionInterceptor =
-		new TransactionInterceptor();
-
 	private final Map<Method, AopMethodInvocation> _aopMethodInvocations =
 		new ConcurrentHashMap<>();
 	private ChainableMethodAdvice[] _chainableMethodAdvices;
 	private volatile Object _target;
-	private final TransactionExecutor _transactionExecutor;
+	private final TransactionInterceptor _transactionInterceptor;
 
 }

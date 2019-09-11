@@ -27,8 +27,9 @@ import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
+import com.liferay.portal.spring.transaction.CounterTransactionExecutor;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
@@ -117,13 +118,13 @@ public class AopConfigurableApplicationContextConfigurator
 			DefaultSingletonBeanRegistry defaultSingletonBeanRegistry =
 				(DefaultSingletonBeanRegistry)configurableListableBeanFactory;
 
-			TransactionExecutor transactionExecutor =
+			DefaultTransactionExecutor defaultTransactionExecutor =
 				new DefaultTransactionExecutor(
 					_getPlatformTransactionManager(
 						configurableListableBeanFactory));
 
 			configurableListableBeanFactory.registerSingleton(
-				"transactionExecutor", transactionExecutor);
+				"transactionExecutor", defaultTransactionExecutor);
 
 			// Portal Spring context only
 
@@ -132,7 +133,7 @@ public class AopConfigurableApplicationContextConfigurator
 					new TransactionInvokerImpl();
 
 				transactionInvokerImpl.setTransactionExecutor(
-					transactionExecutor);
+					defaultTransactionExecutor);
 
 				TransactionInvokerUtil transactionInvokerUtil =
 					new TransactionInvokerUtil();
@@ -146,7 +147,7 @@ public class AopConfigurableApplicationContextConfigurator
 							_classLoader,
 							configurableListableBeanFactory.getBean(
 								"counterTransactionExecutor",
-								TransactionExecutor.class));
+								CounterTransactionExecutor.class));
 
 				configurableListableBeanFactory.addBeanPostProcessor(
 					counterServiceBeanAutoProxyCreator);
@@ -156,7 +157,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 			ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
 				new ServiceBeanAutoProxyCreator(
-					_classLoader, transactionExecutor);
+					_classLoader, defaultTransactionExecutor);
 
 			defaultSingletonBeanRegistry.registerDisposableBean(
 				"serviceBeanAutoProxyCreatorDestroyer",
@@ -308,7 +309,7 @@ public class AopConfigurableApplicationContextConfigurator
 
 		private CounterServiceBeanAutoProxyCreator(
 			ClassLoader classLoader,
-			TransactionExecutor counterTransactionExecutor) {
+			CounterTransactionExecutor counterTransactionExecutor) {
 
 			super(new ServiceBeanMatcher(true), classLoader);
 
@@ -318,7 +319,7 @@ public class AopConfigurableApplicationContextConfigurator
 		private static final ChainableMethodAdvice[]
 			_emptyChainableMethodAdvices = new ChainableMethodAdvice[0];
 
-		private final TransactionExecutor _counterTransactionExecutor;
+		private final CounterTransactionExecutor _counterTransactionExecutor;
 
 	}
 
@@ -336,7 +337,7 @@ public class AopConfigurableApplicationContextConfigurator
 		@Override
 		protected AopInvocationHandler createAopInvocationHandler(Object bean) {
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				bean, _transactionExecutor);
+				bean, _transactionHandler);
 
 			_aopInvocationHandlers.add(aopInvocationHandler);
 
@@ -344,16 +345,16 @@ public class AopConfigurableApplicationContextConfigurator
 		}
 
 		private ServiceBeanAutoProxyCreator(
-			ClassLoader classLoader, TransactionExecutor transactionExecutor) {
+			ClassLoader classLoader, TransactionHandler transactionHandler) {
 
 			super(new ServiceBeanMatcher(false), classLoader);
 
-			_transactionExecutor = transactionExecutor;
+			_transactionHandler = transactionHandler;
 		}
 
 		private final List<AopInvocationHandler> _aopInvocationHandlers =
 			new ArrayList<>();
-		private final TransactionExecutor _transactionExecutor;
+		private final TransactionHandler _transactionHandler;
 
 	}
 

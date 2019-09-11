@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -70,7 +70,7 @@ public class AopServiceRegistrar {
 		return _liferayService;
 	}
 
-	public void register(TransactionExecutor transactionExecutor) {
+	public void register(TransactionHandler transactionHandler) {
 		Bundle bundle = _serviceReference.getBundle();
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -82,7 +82,7 @@ public class AopServiceRegistrar {
 		}
 
 		_serviceRegistration = bundleContext.registerService(
-			aopServiceNames, _getService(bundleContext, transactionExecutor),
+			aopServiceNames, _getService(bundleContext, transactionHandler),
 			_getProperties(_serviceReference));
 	}
 
@@ -128,7 +128,7 @@ public class AopServiceRegistrar {
 	}
 
 	private Object _getService(
-		BundleContext bundleContext, TransactionExecutor transactionExecutor) {
+		BundleContext bundleContext, TransactionHandler transactionHandler) {
 
 		Object serviceScope = _serviceReference.getProperty(
 			Constants.SERVICE_SCOPE);
@@ -136,11 +136,11 @@ public class AopServiceRegistrar {
 		if (Constants.SCOPE_PROTOTYPE.equals(serviceScope)) {
 			return new AopServicePrototypeServiceFactory(
 				bundleContext.getServiceObjects(_serviceReference),
-				transactionExecutor);
+				transactionHandler);
 		}
 
 		_aopInvocationHandler = AopCacheManager.create(
-			_aopService, transactionExecutor);
+			_aopService, transactionHandler);
 
 		Class<? extends AopService> aopServiceClass = _aopService.getClass();
 
@@ -194,7 +194,7 @@ public class AopServiceRegistrar {
 			}
 
 			AopInvocationHandler aopInvocationHandler = AopCacheManager.create(
-				aopService, _transactionExecutor);
+				aopService, _transactionHandler);
 
 			_aopServices.put(aopInvocationHandler, aopService);
 
@@ -224,16 +224,16 @@ public class AopServiceRegistrar {
 
 		private AopServicePrototypeServiceFactory(
 			ServiceObjects<AopService> serviceObjects,
-			TransactionExecutor transactionExecutor) {
+			TransactionHandler transactionHandler) {
 
 			_serviceObjects = serviceObjects;
-			_transactionExecutor = transactionExecutor;
+			_transactionHandler = transactionHandler;
 		}
 
 		private final Map<AopInvocationHandler, AopService> _aopServices =
 			new ConcurrentHashMap<>();
 		private final ServiceObjects<AopService> _serviceObjects;
-		private final TransactionExecutor _transactionExecutor;
+		private final TransactionHandler _transactionHandler;
 
 	}
 

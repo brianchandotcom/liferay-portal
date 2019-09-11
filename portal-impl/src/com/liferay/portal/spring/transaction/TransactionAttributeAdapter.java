@@ -69,10 +69,6 @@ public class TransactionAttributeAdapter
 		return _transactionAttribute.getTimeout();
 	}
 
-	public TransactionExecutor getTransactionExecutor() {
-		return _transactionExecutor;
-	}
-
 	@Override
 	public boolean isReadOnly() {
 		return _transactionAttribute.isReadOnly();
@@ -83,13 +79,6 @@ public class TransactionAttributeAdapter
 		return _transactionAttribute.rollbackOn(throwable);
 	}
 
-	public void setTransactionExecutor(
-		TransactionExecutor transactionExecutor) {
-
-		_transactionExecutor = transactionExecutor;
-	}
-
 	private final TransactionAttribute _transactionAttribute;
-	private TransactionExecutor _transactionExecutor;
 
 }

@@ -31,20 +31,20 @@ public class AopServiceResolver {
 
 		_aopServiceRegistrars.add(aopServiceRegistrar);
 
-		if (!_transactionExecutorHolders.isEmpty()) {
-			TransactionExecutorHolder topRankingTransactionExecutorHolder =
-				_transactionExecutorHolders.get(0);
+		if (!_transactionHandlerHolders.isEmpty()) {
+			TransactionHandlerHolder topRankingTransactionHandlerHolder =
+				_transactionHandlerHolders.get(0);
 
 			aopServiceRegistrar.register(
-				topRankingTransactionExecutorHolder.getTransactionExecutor());
+				topRankingTransactionHandlerHolder.getTransactionHandler());
 		}
 	}
 
-	public synchronized void addTransactionExecutorHolder(
-		TransactionExecutorHolder transactionExecutorHolder) {
+	public synchronized void addTransactionHandlerHolder(
+		TransactionHandlerHolder transactionHandlerHolder) {
 
 		int index = Collections.binarySearch(
-			_transactionExecutorHolders, transactionExecutorHolder,
+			_transactionHandlerHolders, transactionHandlerHolder,
 			Comparator.reverseOrder());
 
 		if (index >= 0) {
@@ -53,7 +53,7 @@ public class AopServiceResolver {
 
 		index = -index - 1;
 
-		_transactionExecutorHolders.add(index, transactionExecutorHolder);
+		_transactionHandlerHolders.add(index, transactionHandlerHolder);
 
 		if (index > 0) {
 			return;
@@ -65,7 +65,7 @@ public class AopServiceResolver {
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.register(
-				transactionExecutorHolder.getTransactionExecutor());
+				transactionHandlerHolder.getTransactionHandler());
 		}
 	}
 
@@ -75,17 +75,17 @@ public class AopServiceResolver {
 		_aopServiceRegistrars.remove(aopServiceRegistrar);
 	}
 
-	public synchronized void removeTransactionExecutorHolder(
-		TransactionExecutorHolder transactionExecutorHolder) {
+	public synchronized void removeTransactionHandlerHolder(
+		TransactionHandlerHolder transactionHandlerHolder) {
 
-		int index = _transactionExecutorHolders.indexOf(
-			transactionExecutorHolder);
+		int index = _transactionHandlerHolders.indexOf(
+			transactionHandlerHolder);
 
 		if (index < 0) {
 			return;
 		}
 
-		_transactionExecutorHolders.remove(index);
+		_transactionHandlerHolders.remove(index);
 
 		if (index > 0) {
 			return;
@@ -95,22 +95,22 @@ public class AopServiceResolver {
 			aopServiceRegistrar.unregister();
 		}
 
-		if (_transactionExecutorHolders.isEmpty()) {
+		if (_transactionHandlerHolders.isEmpty()) {
 			return;
 		}
 
-		TransactionExecutorHolder topRankingTransactionExecutorHolder =
-			_transactionExecutorHolders.get(0);
+		TransactionHandlerHolder topRankingTransactionHandlerHolder =
+			_transactionHandlerHolders.get(0);
 
 		for (AopServiceRegistrar aopServiceRegistrar : _aopServiceRegistrars) {
 			aopServiceRegistrar.register(
-				topRankingTransactionExecutorHolder.getTransactionExecutor());
+				topRankingTransactionHandlerHolder.getTransactionHandler());
 		}
 	}
 
 	private final Set<AopServiceRegistrar> _aopServiceRegistrars =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
-	private final List<TransactionExecutorHolder> _transactionExecutorHolders =
+	private final List<TransactionHandlerHolder> _transactionHandlerHolders =
 		new CopyOnWriteArrayList<>();
 
 }

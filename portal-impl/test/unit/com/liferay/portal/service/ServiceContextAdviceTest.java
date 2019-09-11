@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.spring.transaction.TransactionExecutor;
+import com.liferay.portal.spring.transaction.TransactionHandler;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -45,7 +45,7 @@ public class ServiceContextAdviceTest {
 		Constructor<AopInvocationHandler> constructor =
 			AopInvocationHandler.class.getDeclaredConstructor(
 				Object.class, ChainableMethodAdvice[].class,
-				TransactionExecutor.class);
+				TransactionHandler.class);
 
 		constructor.setAccessible(true);
 

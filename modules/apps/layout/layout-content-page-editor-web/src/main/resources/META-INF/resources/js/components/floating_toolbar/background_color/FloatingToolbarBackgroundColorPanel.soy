@@ -13,30 +13,32 @@
 	{@param? _handleBackgroundColorButtonClick: any}
 	{@param? _handleClearButtonClick: any}
 
-	<div class="form-group p-3">
-		<label for="floatingToolbarBackgroundColorPanelPalette">
-			{msg desc=""}background-color{/msg}
-		</label>
+	<div class="popover p-3">
+		<div class="form-group">
+			<label for="floatingToolbarBackgroundColorPanelPalette">
+				{msg desc=""}background-color{/msg}
+			</label>
 
-		{let $selectedBackgroundColorCssClass kind="text"}
-			{if $item.config and $item.config.backgroundColorCssClass}
-				{$item.config.backgroundColorCssClass}
-			{/if}
-		{/let}
+			{let $selectedBackgroundColorCssClass kind="text"}
+				{if $item.config and $item.config.backgroundColorCssClass}
+					{$item.config.backgroundColorCssClass}
+				{/if}
+			{/let}
 
-		{call com.liferay.layout.content.page.editor.web.FloatingToolbarColorPicker.render}
-			{param colors: $themeColorsCssClasses /}
-			{param events: ['colorClicked': $_handleBackgroundColorButtonClick ] /}
-			{param id: 'floatingToolbarBackgroundColorPanelPalette' /}
-			{param selectedColor: $selectedBackgroundColorCssClass /}
-		{/call}
+			{call com.liferay.layout.content.page.editor.web.FloatingToolbarColorPicker.render}
+				{param colors: $themeColorsCssClasses /}
+				{param events: ['colorClicked': $_handleBackgroundColorButtonClick ] /}
+				{param id: 'floatingToolbarBackgroundColorPanelPalette' /}
+				{param selectedColor: $selectedBackgroundColorCssClass /}
+			{/call}
 
-		<button
-			class="btn btn-secondary btn-sm"
-			data-onclick="{$_handleClearButtonClick}"
-			type="button"
-		>
-			{msg desc=""}clear{/msg}
-		</button>
+			<button
+				class="btn btn-secondary btn-sm"
+				data-onclick="{$_handleClearButtonClick}"
+				type="button"
+			>
+				{msg desc=""}clear{/msg}
+			</button>
+		</div>
 	</div>
 {/template}

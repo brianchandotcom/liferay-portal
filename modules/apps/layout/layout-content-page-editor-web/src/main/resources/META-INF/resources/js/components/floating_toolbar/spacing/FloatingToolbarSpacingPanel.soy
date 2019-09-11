@@ -17,60 +17,62 @@
 		paddingSize: string
 	]>}
 
-	<div class="floating-toolbar-spacing-panel p-3">
-		<div class="form-group">
-			{call .numberOfColumnsOptions}
-				{param handleNumberOfColumnsOptionChange: $_handleNumberOfColumnsOptionChange /}
-				{param numberOfColumnsOptions: $_numberOfColumnsOptions /}
-				{param item: $item /}
-			{/call}
-		</div>
-
-		<div class="form-group">
-			{call .containerTypeOptions}
-				{param containerTypes: $_containerTypes /}
-				{param handleContainerTypeOptionChange: $_handleContainerTypeOptionChange /}
-				{param item: $item /}
-			{/call}
-		</div>
-
-		{if $_paddingOptions}
-			<div class="form-group-autofit">
-				{let $verticalContainerPaddingLabel kind="text"}
-					{msg desc=""}padding-vertical{/msg}
-				{/let}
-
-				{call .containerPaddingOptions}
-					{param label: $verticalContainerPaddingLabel /}
-					{param paddingDirectionId: 'Vertical' /}
-					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
-					{param paddingOptions: $_paddingOptions /}
-					{param selectedPaddingSize: $item.config.paddingVertical /}
-				{/call}
-
-				{let $horizontalContainerPaddingLabel kind="text"}
-					{msg desc=""}padding-horizontal{/msg}
-				{/let}
-
-				{call .containerPaddingOptions}
-					{param label: $horizontalContainerPaddingLabel /}
-					{param paddingDirectionId: 'Horizontal' /}
-					{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
-					{param paddingOptions: $_paddingOptions /}
-					{param selectedPaddingSize: $item.config.paddingHorizontal /}
-				{/call}
-			</div>
-		{/if}
-
-		{if length($item.columns) > 1}
+	<div class="popover popover-scrollable pt-3">
+		<div class="floating-toolbar-spacing-panel pb-3 pl-3 pr-3">
 			<div class="form-group">
-				{call .columnSpacingOptions}
-					{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}
-					{param handleColumnSpacingOptionMousedown: $_handleColumnSpacingOptionMousedown /}
+				{call .numberOfColumnsOptions}
+					{param handleNumberOfColumnsOptionChange: $_handleNumberOfColumnsOptionChange /}
+					{param numberOfColumnsOptions: $_numberOfColumnsOptions /}
 					{param item: $item /}
 				{/call}
 			</div>
-		{/if}
+
+			<div class="form-group">
+				{call .containerTypeOptions}
+					{param containerTypes: $_containerTypes /}
+					{param handleContainerTypeOptionChange: $_handleContainerTypeOptionChange /}
+					{param item: $item /}
+				{/call}
+			</div>
+
+			{if $_paddingOptions}
+				<div class="form-group-autofit">
+					{let $verticalContainerPaddingLabel kind="text"}
+						{msg desc=""}padding-vertical{/msg}
+					{/let}
+
+					{call .containerPaddingOptions}
+						{param label: $verticalContainerPaddingLabel /}
+						{param paddingDirectionId: 'Vertical' /}
+						{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
+						{param paddingOptions: $_paddingOptions /}
+						{param selectedPaddingSize: $item.config.paddingVertical /}
+					{/call}
+
+					{let $horizontalContainerPaddingLabel kind="text"}
+						{msg desc=""}padding-horizontal{/msg}
+					{/let}
+
+					{call .containerPaddingOptions}
+						{param label: $horizontalContainerPaddingLabel /}
+						{param paddingDirectionId: 'Horizontal' /}
+						{param handleContainerPaddingOptionChange: $_handleContainerPaddingOptionChange /}
+						{param paddingOptions: $_paddingOptions /}
+						{param selectedPaddingSize: $item.config.paddingHorizontal /}
+					{/call}
+				</div>
+			{/if}
+
+			{if length($item.columns) > 1}
+				<div class="form-group">
+					{call .columnSpacingOptions}
+						{param handleColumnSpacingOptionChange: $_handleColumnSpacingOptionChange /}
+						{param handleColumnSpacingOptionMousedown: $_handleColumnSpacingOptionMousedown /}
+						{param item: $item /}
+					{/call}
+				</div>
+			{/if}
+		</div>
 	</div>
 {/template}
 

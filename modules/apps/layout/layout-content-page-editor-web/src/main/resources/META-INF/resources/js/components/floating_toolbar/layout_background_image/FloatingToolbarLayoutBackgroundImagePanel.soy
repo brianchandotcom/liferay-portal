@@ -50,60 +50,61 @@
 	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
-	<div class="floating-toolbar-layout-background-image-panel p-3">
-		{call .imageSourceTypeSelect}
-			{param handleImageSourceTypeSelect: $_handleImageSourceTypeSelect /}
-			{param imageSourceTypes: $_imageSourceTypes /}
-			{param selectedImageSourceTypeId: $_selectedImageSourceTypeId /}
-		{/call}
-
-		{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.selection}
-			{call .manualImageSelect}
-				{param handleClearButtonClick: $_handleClearButtonClick /}
-				{param handleSelectButtonClick: $_handleSelectButtonClick /}
-				{param backgroundImage: $_backgroundImage ?: '' /}
+	<div class="popover p-3">
+		<div class="floating-toolbar-layout-background-image-panel">
+			{call .imageSourceTypeSelect}
+				{param handleImageSourceTypeSelect: $_handleImageSourceTypeSelect /}
+				{param imageSourceTypes: $_imageSourceTypes /}
+				{param selectedImageSourceTypeId: $_selectedImageSourceTypeId /}
 			{/call}
-		{/if}
 
-		{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.content}
-			{if $mappingFieldsURL}
-				{call .mappingSourceTypeSelect}
-					{param handleMappingSourceTypeSelect: $_handleMappingSourceTypeSelect /}
-					{param mappingSourceTypes: $_mappingSourceTypes /}
-					{param selectedMappingSourceTypeId: $_selectedMappingSourceTypeId /}
+			{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.selection}
+				{call .manualImageSelect}
+					{param handleClearButtonClick: $_handleClearButtonClick /}
+					{param handleSelectButtonClick: $_handleSelectButtonClick /}
+					{param backgroundImage: $_backgroundImage ?: '' /}
 				{/call}
 			{/if}
 
-			{if not $mappingFieldsURL or $_selectedMappingSourceTypeId == $_mappingSourceTypeIds.content}
-				<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
-					{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-						{param assetBrowserLinks: $assetBrowserLinks /}
-						{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
-						{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
-						{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-						{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
-						{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-						{param selectedAssetEntryTitle: $item.config.title /}
-						{param store: $store /}
+			{if $_selectedImageSourceTypeId == $_imageSourceTypeIds.content}
+				{if $mappingFieldsURL}
+					{call .mappingSourceTypeSelect}
+						{param handleMappingSourceTypeSelect: $_handleMappingSourceTypeSelect /}
+						{param mappingSourceTypes: $_mappingSourceTypes /}
+						{param selectedMappingSourceTypeId: $_selectedMappingSourceTypeId /}
+					{/call}
+				{/if}
+
+				{if not $mappingFieldsURL or $_selectedMappingSourceTypeId == $_mappingSourceTypeIds.content}
+					<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
+						{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+							{param assetBrowserLinks: $assetBrowserLinks /}
+							{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
+							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
+							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+							{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+							{param recentlyUsedAssetEntries: $mappedAssetEntries /}
+							{param selectedAssetEntryTitle: $item.config.title /}
+							{param store: $store /}
+						{/call}
+					</div>
+				{/if}
+
+				{let $mappedFieldId kind="text"}
+					{if $item.config.backgroundImage}
+						{$item.config.backgroundImage.mappedField or $item.config.backgroundImage.fieldId}
+					{/if}
+				{/let}
+
+				<div class="form-group">
+					{call .fieldSelect}
+						{param fields: $_fields /}
+						{param handleFieldOptionChange: $_handleFieldOptionChange /}
+						{param mappedFieldId: $mappedFieldId /}
 					{/call}
 				</div>
 			{/if}
-
-			{let $mappedFieldId kind="text"}
-				{if $item.config.backgroundImage}
-					{$item.config.backgroundImage.mappedField or $item.config.backgroundImage.fieldId}
-				{/if}
-			{/let}
-
-			<div class="form-group">
-				{call .fieldSelect}
-					{param fields: $_fields /}
-					{param handleFieldOptionChange: $_handleFieldOptionChange /}
-					{param mappedFieldId: $mappedFieldId /}
-				{/call}
-			</div>
-		{/if}
-
+		</div>
 	</div>
 {/template}
 

@@ -50,27 +50,16 @@
 
 		& > .popover {
 			min-width: $floatingToolbarPanelMinWidth;
-			padding: $fragmentsEditorSpacing * 2;
 			position: static;
 		}
 
-		& > .dropdown-menu {
-			min-width: $floatingToolbarPanelMinWidth;
-		}
+		& > .popover-scrollable {
+			height: 250px;
+			overflow-y: hidden;
 
-		&--fixed {
-			padding: $fragmentsEditorSpacing;
-
-			.dropdown-menu {
-				max-width: none;
-
-				&:after {
-					padding: 0;
-				}
-
-				.inline-scroller {
-					max-height: 320px;
-				}
+			& > div {
+				height: 100%;
+				overflow-y: auto;
 			}
 		}
 

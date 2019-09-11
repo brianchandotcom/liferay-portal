@@ -44,17 +44,15 @@
 
 		{if $selectedPanelId}
 			<div class="fragments-editor__floating-toolbar-panel" ref="panel">
-				<div class="dropdown-menu position-relative p-0 show">
-					{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
-						{param item: $item /}
-						{param itemId: $itemId /}
-						{param itemType: $itemType /}
-						{param portalElement: null /}
-						{param ref: 'selectedPanel' /}
-						{param selectedPanelId: $selectedPanelId /}
-						{param store: $store /}
-					{/delcall}
-				</div>
+				{delcall com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="$selectedPanelId"}
+					{param item: $item /}
+					{param itemId: $itemId /}
+					{param itemType: $itemType /}
+					{param portalElement: null /}
+					{param ref: 'selectedPanel' /}
+					{param selectedPanelId: $selectedPanelId /}
+					{param store: $store /}
+				{/delcall}
 			</div>
 		{/if}
 	</div>

@@ -45,64 +45,66 @@
 	]>}
 	{@param? store: ?}
 
-	<div
-		class="floating-toolbar-mapping-panel p-3"
-		ref="panel"
-		tabindex="-1"
-	>
-		{if $selectedItems and length($selectedItems) == 1}
-			{if $mappingFieldsURL}
+	<div class="popover p-3">
+		<div
+			class="floating-toolbar-mapping-panel"
+			ref="panel"
+			tabindex="-1"
+		>
+			{if $selectedItems and length($selectedItems) == 1}
+				{if $mappingFieldsURL}
+					<div class="form-group">
+						{call .sourceTypeSelect}
+							{param handleSourceTypeChange: $_handleSourceTypeChange /}
+							{param sourceTypes: $_sourceTypes /}
+							{param selectedSourceTypeId: $_selectedSourceTypeId /}
+						{/call}
+					</div>
+				{/if}
+
+				{if not $mappingFieldsURL or $_selectedSourceTypeId == $_sourceTypeIds.content}
+					<div class="floating-toolbar-mapping-panel__asset-select form-group">
+						{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+							{param assetBrowserLinks: $assetBrowserLinks /}
+							{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
+							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
+							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
+							{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
+							{param recentlyUsedAssetEntries: $mappedAssetEntries /}
+							{param selectedAssetEntryTitle: $item.editableValues.title /}
+							{param store: $store /}
+						{/call}
+					</div>
+				{/if}
+
 				<div class="form-group">
-					{call .sourceTypeSelect}
-						{param handleSourceTypeChange: $_handleSourceTypeChange /}
-						{param sourceTypes: $_sourceTypes /}
-						{param selectedSourceTypeId: $_selectedSourceTypeId /}
+					{call .fieldSelect}
+						{param fields: $_fields /}
+						{param handleFieldOptionChange: $_handleFieldOptionChange /}
+						{param mappedFieldId: $item.editableValues.mappedField or $item.editableValues.fieldId /}
 					{/call}
 				</div>
 			{/if}
 
-			{if not $mappingFieldsURL or $_selectedSourceTypeId == $_sourceTypeIds.content}
-				<div class="floating-toolbar-mapping-panel__asset-select form-group">
-					{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-						{param assetBrowserLinks: $assetBrowserLinks /}
-						{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
-						{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
-						{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
-						{param handleAssetEntryLinkClick: $_handleAssetEntryLinkClick /}
-						{param recentlyUsedAssetEntries: $mappedAssetEntries /}
-						{param selectedAssetEntryTitle: $item.editableValues.title /}
-						{param store: $store /}
-					{/call}
+			{if $contentCreationEnabled}
+				<div class="form-group">
+					<button
+						class="btn btn-block btn-secondary btn-sm"
+						data-onclick="{$_handleCreateContentClick}"
+
+						{if $item.editableValues.mappedField or $item.editableValues.fieldId}
+						disabled
+						{/if}
+					>
+						{msg desc=""}create-new-content{/msg}
+
+						{if $selectedItems}
+							<span class="badge badge-primary ml-2">{length($selectedItems)}</span>
+						{/if}
+					</button>
 				</div>
 			{/if}
-
-			<div class="form-group">
-				{call .fieldSelect}
-					{param fields: $_fields /}
-					{param handleFieldOptionChange: $_handleFieldOptionChange /}
-					{param mappedFieldId: $item.editableValues.mappedField or $item.editableValues.fieldId /}
-				{/call}
-			</div>
-		{/if}
-
-		{if $contentCreationEnabled}
-			<div class="form-group">
-				<button
-					class="btn btn-block btn-secondary btn-sm"
-					data-onclick="{$_handleCreateContentClick}"
-
-					{if $item.editableValues.mappedField or $item.editableValues.fieldId}
-					disabled
-					{/if}
-				>
-					{msg desc=""}create-new-content{/msg}
-
-					{if $selectedItems}
-						<span class="badge badge-primary ml-2">{length($selectedItems)}</span>
-					{/if}
-				</button>
-			</div>
-		{/if}
+		</div>
 	</div>
 {/template}
 

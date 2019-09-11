@@ -4,7 +4,7 @@ definition {
 		if (isSet(description)) {
 			var descriptionEncoded = URLUtil.encodeUTF8("${description}");
 
-			var descriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
+			var descriptionMap = '''{"en_US":"${descriptionEncoded}"}''';
 		}
 		else {
 			var descriptionMap = "{}";
@@ -18,7 +18,7 @@ definition {
 
 		var name = URLUtil.encodeUTF8("${name}");
 
-		var name = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
+		var name = StringUtil.replace("${name}", "+", "%20");
 
 		return "${name}";
 	}

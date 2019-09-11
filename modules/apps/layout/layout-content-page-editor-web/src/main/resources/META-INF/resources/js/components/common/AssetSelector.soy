@@ -47,6 +47,7 @@
 					aria-expanded="false"
 					aria-haspopup="true"
 					class="btn btn-monospaced btn-secondary btn-sm dropdown-toggle"
+					data-toggle="dropdown"
 					id="{$buttonId}"
 					type="button"
 				>
@@ -55,50 +56,42 @@
 					</svg>
 				</button>
 
-				{call com.liferay.layout.content.page.editor.web.FloatingToolbarDropdown.render}
-					{param body kind="html"}
-						<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-							{if $assetBrowserLinks}
-								{foreach $assetBrowserLink in $assetBrowserLinks}
-									<button
-										class="dropdown-item"
-										data-onclick="{$handleAssetBrowserLinkClick}"
-										data-asset-browser-url="{$assetBrowserLink.href}"
-										data-asset-browser-window-title="{$assetBrowserLink.typeName}"
-										key="{$assetBrowserLink.href}"
-										type="button"
-									>
-										{$assetBrowserLink.typeName}
-									</button>
-								{/foreach}
-							{/if}
-							{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
-								<div
-									aria-hidden="true"
-									class="dropdown-divider"
-									role="presentation"
-								></div>
+				<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
+					{if $assetBrowserLinks}
+						{foreach $assetBrowserLink in $assetBrowserLinks}
+							<button
+								class="dropdown-item"
+								data-onclick="{$handleAssetBrowserLinkClick}"
+								data-asset-browser-url="{$assetBrowserLink.href}"
+								data-asset-browser-window-title="{$assetBrowserLink.typeName}"
+								key="{$assetBrowserLink.href}"
+								type="button"
+							>
+								{$assetBrowserLink.typeName}
+							</button>
+						{/foreach}
+					{/if}
+					{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
+						<div
+							aria-hidden="true"
+							class="dropdown-divider"
+							role="presentation"
+						></div>
 
-								{foreach $assetEntry in $recentlyUsedAssetEntries}
-									<button
-										class="dropdown-item"
-										data-class-name-id="{$assetEntry.classNameId}"
-										data-class-pk="{$assetEntry.classPK}"
-										data-onclick="{$handleAssetEntryLinkClick}"
-										key="{$assetEntry.encodedId}"
-										type="button"
-									>
-										{$assetEntry.title}
-									</button>
-								{/foreach}
-							{/if}
-						</div>
-					{/param}
-					{param buttonId: $buttonId /}
-					{param dropdownId: $dropdownId /}
-					{param portalElement: 'body' /}
-				{/call}
-
+						{foreach $assetEntry in $recentlyUsedAssetEntries}
+							<button
+								class="dropdown-item"
+								data-class-name-id="{$assetEntry.classNameId}"
+								data-class-pk="{$assetEntry.classPK}"
+								data-onclick="{$handleAssetEntryLinkClick}"
+								key="{$assetEntry.encodedId}"
+								type="button"
+							>
+								{$assetEntry.title}
+							</button>
+						{/foreach}
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>

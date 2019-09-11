@@ -405,7 +405,7 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 	pomNode.dependencyManagement.dependencies.dependency.each {
 		assert it.artifactId.text().matches(dependencyArtifactIdPattern)
 		assert it.groupId.text().matches(dependencyGroupIdPattern)
-		assert it.version.text().matches(/\d(?:[a-z\d.-]*[a-z\d])?/)
+		assert it.version.text().matches(/\d(?:[A-Za-z\d.-]*[A-Za-z\d])?/)
 	}
 
 	pomNode.developers.developer.each {

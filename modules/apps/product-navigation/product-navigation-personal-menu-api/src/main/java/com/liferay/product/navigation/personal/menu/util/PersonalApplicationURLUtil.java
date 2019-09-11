@@ -62,6 +62,7 @@ public class PersonalApplicationURLUtil {
 
 		Group group = user.getGroup();
 
+		boolean controlPanelLayout = false;
 		boolean privateLayout = true;
 
 		ThemeDisplay themeDisplay =
@@ -86,6 +87,10 @@ public class PersonalApplicationURLUtil {
 
 			Layout currentLayout = themeDisplay.getLayout();
 
+			if (currentLayout.isTypeControlPanel()) {
+				controlPanelLayout = true;
+			}
+
 			if (currentLayout.isPublicLayout()) {
 				privateLayout = false;
 			}
@@ -101,7 +106,8 @@ public class PersonalApplicationURLUtil {
 				group.getGroupId(), privateLayout,
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
-			if (!LayoutPermissionUtil.contains(
+			if ((controlPanelLayout && !group.isControlPanel()) ||
+				!LayoutPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), layout, true,
 					ActionKeys.VIEW)) {
 

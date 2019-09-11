@@ -57,7 +57,7 @@ class FragmentsEditor extends Component {
 	 * @private
 	 * @review
 	 */
-	static _getTargetItem(event) {
+	static _getTargetItemData(event) {
 		let {targetItemId = null, targetItemType = null} =
 			event.target.dataset || {};
 
@@ -174,9 +174,10 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updateActiveItem(event) {
-		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
-			event
-		);
+		const {
+			targetItemId,
+			targetItemType
+		} = FragmentsEditor._getTargetItemData(event);
 
 		if (targetItemId && targetItemType) {
 			this.store.dispatch(
@@ -202,9 +203,10 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 	_updateHoveredItem(event) {
-		const {targetItemId, targetItemType} = FragmentsEditor._getTargetItem(
-			event
-		);
+		const {
+			targetItemId,
+			targetItemType
+		} = FragmentsEditor._getTargetItemData(event);
 
 		let hoveredItemId = targetItemId;
 		let hoveredItemType = targetItemType;

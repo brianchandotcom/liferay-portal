@@ -45,13 +45,18 @@ public class WorkflowDefinitionModifiedDateComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		Date modifiedDate1 = workflowDefinition1.getModifiedDate();
-		Date modifiedDate2 = workflowDefinition2.getModifiedDate();
+		int value = Boolean.compare(
+			workflowDefinition1.isActive(), workflowDefinition2.isActive());
 
-		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+		if (value == 0) {
+			Date modifiedDate1 = workflowDefinition1.getModifiedDate();
+			Date modifiedDate2 = workflowDefinition2.getModifiedDate();
 
-		if (_ascending) {
-			return value;
+			value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+			if (_ascending) {
+				return value;
+			}
 		}
 
 		return -value;

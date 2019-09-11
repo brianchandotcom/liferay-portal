@@ -53,16 +53,21 @@ public class WorkflowDefinitionTitleComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		String workflowDefinitionTitle1 = workflowDefinition1.getTitle(
-			_languageId);
-		String workflowDefinitionTitle2 = workflowDefinition2.getTitle(
-			_languageId);
+		int value = Boolean.compare(
+			workflowDefinition1.isActive(), workflowDefinition2.isActive());
 
-		int value = _collator.compare(
-			workflowDefinitionTitle1, workflowDefinitionTitle2);
+		if (value == 0) {
+			String workflowDefinitionTitle1 = workflowDefinition1.getTitle(
+				_languageId);
+			String workflowDefinitionTitle2 = workflowDefinition2.getTitle(
+				_languageId);
 
-		if (_ascending) {
-			return value;
+			value = _collator.compare(
+				workflowDefinitionTitle1, workflowDefinitionTitle2);
+
+			if (_ascending) {
+				return value;
+			}
 		}
 
 		return -value;

@@ -42,13 +42,18 @@ public class WorkflowDefinitionNameComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		String workflowDefinitionName1 = workflowDefinition1.getName();
-		String workflowDefinitionName2 = workflowDefinition2.getName();
+		int value = Boolean.compare(
+			workflowDefinition1.isActive(), workflowDefinition2.isActive());
 
-		int value = workflowDefinitionName1.compareTo(workflowDefinitionName2);
+		if (value == 0) {
+			String workflowDefinitionName1 = workflowDefinition1.getName();
+			String workflowDefinitionName2 = workflowDefinition2.getName();
 
-		if (_ascending) {
-			return value;
+			value = workflowDefinitionName1.compareTo(workflowDefinitionName2);
+
+			if (_ascending) {
+				return value;
+			}
 		}
 
 		return -value;

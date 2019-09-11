@@ -203,6 +203,13 @@ public abstract class BaseExperimentRunResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected ExperimentRun testGraphQLExperimentRun_addExperimentRun()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -339,6 +346,8 @@ public abstract class BaseExperimentRunResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("id"));
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -410,9 +419,9 @@ public abstract class BaseExperimentRunResourceTestCase {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("confidenceLevel", fieldName)) {
-				if (!Objects.deepEquals(
+				if (!Objects.equals(
 						experimentRun.getConfidenceLevel(),
-						jsonObject.getDouble("confidenceLevel"))) {
+						(Double)jsonObject.getDouble("confidenceLevel"))) {
 
 					return false;
 				}
@@ -421,9 +430,9 @@ public abstract class BaseExperimentRunResourceTestCase {
 			}
 
 			if (Objects.equals("status", fieldName)) {
-				if (!Objects.deepEquals(
+				if (!Objects.equals(
 						experimentRun.getStatus(),
-						jsonObject.getString("status"))) {
+						(String)jsonObject.getString("status"))) {
 
 					return false;
 				}
@@ -582,8 +591,6 @@ public abstract class BaseExperimentRunResourceTestCase {
 					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 1);
-
 				sb.append(")");
 			}
 
@@ -594,8 +601,6 @@ public abstract class BaseExperimentRunResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
-
-				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

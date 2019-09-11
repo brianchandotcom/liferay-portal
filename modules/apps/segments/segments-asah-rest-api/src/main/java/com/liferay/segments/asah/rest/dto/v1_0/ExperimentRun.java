@@ -49,8 +49,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "ExperimentRun")
 public class ExperimentRun {
 
-	@DecimalMax("0.99")
-	@DecimalMin("0.8")
+	@DecimalMax("99")
+	@DecimalMin("80")
 	@Schema
 	public Double getConfidenceLevel() {
 		return confidenceLevel;

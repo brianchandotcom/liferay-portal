@@ -192,6 +192,11 @@ public abstract class BaseStatusResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
+	protected Status testGraphQLStatus_addStatus() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -386,6 +391,8 @@ public abstract class BaseStatusResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("id"));
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -539,8 +546,9 @@ public abstract class BaseStatusResourceTestCase {
 	protected boolean equalsJSONObject(Status status, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("status", fieldName)) {
-				if (!Objects.deepEquals(
-						status.getStatus(), jsonObject.getString("status"))) {
+				if (!Objects.equals(
+						status.getStatus(),
+						(String)jsonObject.getString("status"))) {
 
 					return false;
 				}
@@ -549,9 +557,9 @@ public abstract class BaseStatusResourceTestCase {
 			}
 
 			if (Objects.equals("winnerVariantId", fieldName)) {
-				if (!Objects.deepEquals(
+				if (!Objects.equals(
 						status.getWinnerVariantId(),
-						jsonObject.getString("winnerVariantId"))) {
+						(String)jsonObject.getString("winnerVariantId"))) {
 
 					return false;
 				}
@@ -723,8 +731,6 @@ public abstract class BaseStatusResourceTestCase {
 					sb.append(",");
 				}
 
-				sb.setLength(sb.length() - 1);
-
 				sb.append(")");
 			}
 
@@ -735,8 +741,6 @@ public abstract class BaseStatusResourceTestCase {
 					sb.append(graphQLField.toString());
 					sb.append(",");
 				}
-
-				sb.setLength(sb.length() - 1);
 
 				sb.append("}");
 			}

@@ -73,7 +73,7 @@ public class ExperimentVariant {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String id;
 
-	@DecimalMax("1")
+	@DecimalMax("100")
 	@DecimalMin("0")
 	@Schema
 	public Double getTrafficSplit() {

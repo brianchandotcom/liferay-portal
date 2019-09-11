@@ -21,8 +21,7 @@ import {getRowIndex} from '../utils/FragmentsEditorGetUtils.es';
 import {setIn} from '../utils/FragmentsEditorUpdateUtils.es';
 import {
 	UPDATE_ROW_COLUMNS_ERROR,
-	UPDATE_ROW_COLUMNS_LOADING,
-	UPDATE_ROW_COLUMNS_SUCCESS
+	UPDATE_ROW_COLUMNS_LOADING
 } from './actions.es';
 import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
@@ -55,7 +54,6 @@ function updateRowColumnsAction(columns, rowId) {
 
 		updatePageEditorLayoutData(nextData, state.segmentsExperienceId)
 			.then(() => {
-				dispatch(updateRowColumnsSuccessAction());
 				dispatch(disableSavingChangesStatusAction());
 				dispatch(updateLastSaveDateAction());
 			})
@@ -87,16 +85,6 @@ function updateRowColumnsLoadingAction(layoutData) {
 	return {
 		type: UPDATE_ROW_COLUMNS_LOADING,
 		value: layoutData
-	};
-}
-
-/**
- * @return {object}
- * @review
- */
-function updateRowColumnsSuccessAction() {
-	return {
-		type: UPDATE_ROW_COLUMNS_SUCCESS
 	};
 }
 

@@ -15,19 +15,21 @@
 package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
-import com.liferay.mule.internal.valueprovider.EndpointValueProvider;
+import com.liferay.mule.internal.metadata.GETEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.LiferayOutputTypeResolver;
 
 import java.io.InputStream;
 
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.extension.api.annotation.Expression;
+import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
+import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.param.Connection;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
-import org.mule.runtime.extension.api.annotation.values.OfValues;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -42,10 +44,11 @@ public class LiferayOperations {
 		throw new UnsupportedOperationException();
 	}
 
-	@MediaType(strict = false, value = MediaType.ANY)
+	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@OutputResolver(output = LiferayOutputTypeResolver.class)
 	public Result<InputStream, Void> get(
 			@Connection LiferayConnection connection,
-			@OfValues(EndpointValueProvider.class) @Optional String endpoint)
+			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
 		throws Exception {
 
 		HttpResponse httpResponse = connection.get(
@@ -62,7 +65,12 @@ public class LiferayOperations {
 	}
 
 	@MediaType(strict = false, value = MediaType.ANY)
-	public String upsert() {
+	public String patch() {
+		throw new UnsupportedOperationException();
+	}
+
+	@MediaType(strict = false, value = MediaType.ANY)
+	public String post() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -133,6 +133,30 @@ const EditFormView = ({
 		).then(dataDefinition => setDataDefinition(dataDefinition));
 	}, [dataDefinitionId]);
 
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getProvider();
+
+		provider.props.fieldActions = [
+			{
+				action: indexes =>
+					dataLayoutBuilder.dispatch('fieldDuplicated', {indexes}),
+				label: Liferay.Language.get('duplicate')
+			},
+			{
+				action: indexes =>
+					dataLayoutBuilder.dispatch('fieldDeleted', {indexes}),
+				label: Liferay.Language.get('remove'),
+				separator: true
+			},
+			{
+				action: indexes =>
+					dataLayoutBuilder.dispatch('fieldDeleted', {indexes}),
+				label: Liferay.Language.get('delete-from-object'),
+				style: 'danger'
+			}
+		];
+	}, [dataLayoutBuilder]);
+
 	const {
 		name: {en_US: dataLayoutName = ''}
 	} = dataLayout;

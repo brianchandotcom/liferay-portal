@@ -92,7 +92,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = {
 		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro", "**/*.pom",
-		"**/*.testcase", "**/*.toggle", "**/*.xml",
+		"**/*.testcase", "**/*.toggle", "**/*.wsdl", "**/*.xml",
 		"**/definitions/liferay-*.xsd"
 	};
 

@@ -215,7 +215,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 	}
 
-	public static void write(File file, byte[] bytes) throws Exception {
+	public static void write(File file, byte[] bytes) throws IOException {
 		File dir = file.getParentFile();
 
 		if (dir != null) {

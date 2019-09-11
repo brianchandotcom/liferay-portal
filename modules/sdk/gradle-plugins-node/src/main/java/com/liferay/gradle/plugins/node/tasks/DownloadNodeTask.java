@@ -25,17 +25,20 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.gradle.api.Action;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
@@ -56,9 +59,25 @@ public class DownloadNodeTask extends DefaultTask {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					File nodeDir = getNodeDir();
+					File digestFile = new File(getNodeDir(), ".digest");
 
-					if ((nodeDir != null) && nodeDir.exists()) {
+					if (!digestFile.exists()) {
+						return true;
+					}
+
+					byte[] bytes = null;
+
+					try {
+						bytes = Files.readAllBytes(digestFile.toPath());
+					}
+					catch (IOException ioe) {
+						throw new UncheckedIOException(ioe);
+					}
+
+					if (Objects.equals(
+							new String(bytes, StandardCharsets.UTF_8),
+							_getDigest())) {
+
 						return false;
 					}
 
@@ -140,6 +159,12 @@ public class DownloadNodeTask extends DefaultTask {
 
 			Files.createSymbolicLink(linkPath, linkTargetFile.toPath());
 		}
+
+		String digest = _getDigest();
+
+		FileUtil.write(
+			new File(getNodeDir(), ".digest"),
+			digest.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@OutputDirectory
@@ -202,6 +227,14 @@ public class DownloadNodeTask extends DefaultTask {
 		}
 
 		return FileUtil.get(getProject(), url, destinationFile);
+	}
+
+	private String _getDigest() {
+		String nodeUrl = getNodeUrl();
+		String npmUrl = getNpmUrl();
+
+		return Integer.toHexString(nodeUrl.hashCode()) + "-" +
+			Integer.toHexString(npmUrl.hashCode());
 	}
 
 	private final NodeExecutor _nodeExecutor;

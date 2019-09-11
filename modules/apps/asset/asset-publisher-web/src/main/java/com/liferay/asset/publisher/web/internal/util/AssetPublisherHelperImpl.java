@@ -838,14 +838,18 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				continue;
 			}
 
+			List<AssetCategory> childAssetCategories =
+				_assetCategoryLocalService.getChildCategories(assetCategoryId);
+
+			long[] childAssetCategoryIds = ListUtil.toLongArray(
+				childAssetCategories, AssetCategoryModel::getCategoryId);
+
+			long[] filteredChildAssetCategoryIds = _filterAssetCategoryIds(
+				childAssetCategoryIds);
+
 			Collections.addAll(
 				assetCategoryIdsList,
-				ArrayUtil.toLongArray(
-					_filterAssetCategoryIds(
-						ListUtil.toLongArray(
-							_assetCategoryLocalService.getChildCategories(
-								assetCategoryId),
-							AssetCategoryModel::getCategoryId))));
+				ArrayUtil.toLongArray(filteredChildAssetCategoryIds));
 
 			assetCategoryIdsList.add(assetCategoryId);
 		}

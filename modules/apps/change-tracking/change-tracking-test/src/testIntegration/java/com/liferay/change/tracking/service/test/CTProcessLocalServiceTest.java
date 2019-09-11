@@ -27,9 +27,8 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.change.tracking.service.test.model.TestResourceModelClass;
 import com.liferay.change.tracking.service.test.model.TestVersionModelClass;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -153,13 +152,13 @@ public class CTProcessLocalServiceTest {
 		Assert.assertEquals(
 			BackgroundTaskConstants.STATUS_SUCCESSFUL, ctProcess.getStatus());
 
-		BackgroundTask backgroundTask =
-			BackgroundTaskManagerUtil.getBackgroundTask(
-				ctProcess.getBackgroundTaskId());
-
-		Assert.assertNotNull(backgroundTask);
-		Assert.assertEquals(1, backgroundTask.getAttachmentsFileEntriesCount());
+		Assert.assertNotNull(
+			_backgroundTaskManager.getBackgroundTask(
+				ctProcess.getBackgroundTaskId()));
 	}
+
+	@Inject
+	private BackgroundTaskManager _backgroundTaskManager;
 
 	@DeleteAfterTestRun
 	private ClassName _className;

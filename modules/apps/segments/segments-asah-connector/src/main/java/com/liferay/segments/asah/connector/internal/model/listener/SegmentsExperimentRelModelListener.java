@@ -79,21 +79,6 @@ public class SegmentsExperimentRelModelListener
 		}
 	}
 
-	@Override
-	public void onAfterUpdate(SegmentsExperimentRel segmentsExperimentRel)
-		throws ModelListenerException {
-
-		try {
-			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(
-				"Unable to update segments experiment rel " +
-					segmentsExperimentRel.getSegmentsExperimentRelId(),
-				e);
-		}
-	}
-
 	@Activate
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(

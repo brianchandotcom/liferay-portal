@@ -14,7 +14,9 @@
 
 package com.liferay.segments.asah.connector.internal.model.listener;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -31,6 +33,7 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
+import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
 import java.util.List;
 
@@ -56,15 +59,15 @@ public class SegmentsExperienceModelListener
 
 		try {
 			List<SegmentsExperiment> segmentsExperiments =
-				_segmentsExperimentLocalService.
-					getSegmentsExperienceSegmentsExperiments(
-						segmentsExperience.getSegmentsExperienceId(),
-						segmentsExperience.getClassNameId(),
-						segmentsExperience.getClassPK());
+				_segmentsExperimentLocalService.getSegmentsExperiments(
+					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperience.getClassNameId(),
+					segmentsExperience.getClassPK(), new int[0],
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
-				_asahSegmentsExperimentProcessor.
-					processUpdateSegmentsExperiment(segmentsExperiment);
+				_processUpdateSegmentsExperience(
+					segmentsExperience, segmentsExperiment);
 			}
 		}
 		catch (Exception e) {
@@ -83,6 +86,26 @@ public class SegmentsExperienceModelListener
 			_asahFaroBackendClientFactory, _companyLocalService,
 			_groupLocalService, _layoutLocalService, _portal,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService);
+	}
+
+	private void _processUpdateSegmentsExperience(
+			SegmentsExperience segmentsExperience,
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		if (segmentsExperience.getSegmentsExperienceId() ==
+				segmentsExperiment.getSegmentsExperienceId()) {
+
+			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperiment(
+				segmentsExperiment);
+
+			return;
+		}
+
+		_asahSegmentsExperimentProcessor.processUpdateSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
+				segmentsExperiment.getSegmentsExperimentId()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -113,5 +136,9 @@ public class SegmentsExperienceModelListener
 
 	@Reference
 	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
+
+	@Reference
+	private SegmentsExperimentRelLocalService
+		_segmentsExperimentRelLocalService;
 
 }

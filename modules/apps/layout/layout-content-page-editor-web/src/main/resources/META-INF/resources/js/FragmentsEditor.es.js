@@ -161,10 +161,6 @@ class FragmentsEditor extends Component {
 	_handleDocumentMouseOver(event) {
 		if (this.store) {
 			this._updateHoveredItem(event);
-		} else if (this.store) {
-			this.store.dispatch({
-				type: CLEAR_HOVERED_ITEM
-			});
 		}
 	}
 
@@ -208,40 +204,46 @@ class FragmentsEditor extends Component {
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
-		let hoveredItemId = targetItemId;
-		let hoveredItemType = targetItemType;
+		const targetItem = getFragmentEntryLinkListElement(
+			targetItemId,
+			targetItemType
+		);
 
-		const itemIsEditable =
-			targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
-			targetItemType ===
-				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
+		if (targetItem) {
+			const targetItemIsEditable =
+				targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
+				targetItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
 
-		if (itemIsEditable) {
-			const editable = getFragmentEntryLinkListElement(
-				targetItemId,
-				targetItemType
-			);
+			let hoveredItemId = targetItemId;
+			let hoveredItemType = targetItemType;
 
-			const fragment = getFragmentEntryLinkListElement(
-				editable.dataset.fragmentEntryLinkId,
-				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-			);
+			if (targetItemIsEditable) {
+				const fragment = getFragmentEntryLinkListElement(
+					targetItem.dataset.fragmentEntryLinkId,
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				);
 
-			if (
-				!editable.classList.contains(
-					'fragments-editor__editable--highlighted'
-				)
-			) {
-				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
-				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+				if (
+					!targetItem.classList.contains(
+						'fragments-editor__editable--highlighted'
+					)
+				) {
+					hoveredItemId = fragment.dataset.fragmentsEditorItemId;
+					hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+				}
 			}
-		}
 
-		this.store.dispatch({
-			hoveredItemId,
-			hoveredItemType,
-			type: UPDATE_HOVERED_ITEM
-		});
+			this.store.dispatch({
+				hoveredItemId,
+				hoveredItemType,
+				type: UPDATE_HOVERED_ITEM
+			});
+		} else {
+			this.store.dispatch({
+				type: CLEAR_HOVERED_ITEM
+			});
+		}
 	}
 }
 

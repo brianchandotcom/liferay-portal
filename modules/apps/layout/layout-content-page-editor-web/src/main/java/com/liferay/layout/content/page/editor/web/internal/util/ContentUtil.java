@@ -74,12 +74,10 @@ public class ContentUtil {
 			fragmentEntryLink, new HashSet<>());
 	}
 
-	public static Set<AssetEntry> getLayoutMappedAssetEntries(
-			LayoutPageTemplateStructure layoutPageTemplateStructure)
+	public static Set<AssetEntry> getLayoutMappedAssetEntries(String layoutData)
 		throws PortalException {
 
-		return _getLayoutMappedAssetEntries(
-			layoutPageTemplateStructure, new HashSet<>());
+		return _getLayoutMappedAssetEntries(layoutData, new HashSet<>());
 	}
 
 	public static Set<AssetEntry> getMappedAssetEntries(long groupId, long plid)
@@ -326,13 +324,27 @@ public class ContentUtil {
 	}
 
 	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
-			LayoutPageTemplateStructure layoutPageTemplateStructure,
-			Set<Long> mappedClassPKs)
+			long groupId, long plid, Set<Long> mappedClassPKs)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, false);
+
+		return _getLayoutMappedAssetEntries(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT),
+			mappedClassPKs);
+	}
+
+	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
+			String layoutData, Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
+			layoutData);
 
 		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
 			"structure");
@@ -366,20 +378,6 @@ public class ContentUtil {
 			});
 
 		return assetEntries;
-	}
-
-	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
-			long groupId, long plid, Set<Long> mappedClassPKs)
-		throws PortalException {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-					plid, false);
-
-		return _getLayoutMappedAssetEntries(
-			layoutPageTemplateStructure, mappedClassPKs);
 	}
 
 	private static JSONObject _getPageContentJSONObject(

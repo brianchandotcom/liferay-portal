@@ -115,7 +115,8 @@ public class InstanceWorkflowMetricsIndexerTest
 
 		assertReindex(
 			_instanceWorkflowMetricsIndexer,
-			new String[] {"workflow-metrics-instances"}, "companyId",
+			new String[] {"workflow-metrics-instances"},
+			new String[] {"WorkflowMetricsInstanceType"}, "companyId",
 			kaleoInstance.getCompanyId(), "instanceId",
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());

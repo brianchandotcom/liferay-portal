@@ -105,11 +105,11 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 				countSearchRequest.setIndexNames(indexName);
 
-				BooleanQuery booleanQuery = _queries.booleanQuery();
+				BooleanQuery booleanQuery = queries.booleanQuery();
 
 				for (int i = 0; i < parameters.length; i = i + 2) {
 					booleanQuery.addMustQueryClauses(
-						_queries.term(
+						queries.term(
 							String.valueOf(parameters[i]), parameters[i + 1]));
 				}
 
@@ -119,7 +119,8 @@ public abstract class BaseWorkflowMetricsTestCase {
 					searchEngineAdapter.execute(countSearchRequest);
 
 				Assert.assertEquals(
-					expectedCount, countSearchResponse.getCount());
+					countSearchResponse.getSearchRequestString(), expectedCount,
+					countSearchResponse.getCount());
 
 				return null;
 			});
@@ -131,6 +132,9 @@ public abstract class BaseWorkflowMetricsTestCase {
 		retryAssertCount(1, indexName, parameters);
 	}
 
+	@Inject
+	protected Queries queries;
+
 	@Inject(blocking = false, filter = "search.engine.impl=Elasticsearch")
 	protected SearchEngineAdapter searchEngineAdapter;
 
@@ -140,8 +144,5 @@ public abstract class BaseWorkflowMetricsTestCase {
 
 	@Inject
 	private KaleoNodeLocalService _kaleoNodeLocalService;
-
-	@Inject
-	private Queries _queries;
 
 }

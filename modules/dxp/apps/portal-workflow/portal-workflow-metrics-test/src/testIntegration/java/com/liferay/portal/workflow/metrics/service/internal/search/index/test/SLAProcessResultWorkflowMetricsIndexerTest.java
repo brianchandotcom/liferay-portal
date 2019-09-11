@@ -84,7 +84,8 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 
 		assertReindex(
 			_slaProcessResultWorkflowMetricsIndexer,
-			new String[] {"workflow-metrics-sla-process-results"}, "companyId",
+			new String[] {"workflow-metrics-sla-process-results"},
+			new String[] {"WorkflowMetricsSLAProcessResultType"}, "companyId",
 			kaleoDefinition.getCompanyId(), "instanceId",
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId",

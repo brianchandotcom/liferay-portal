@@ -19,9 +19,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -31,7 +29,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -219,7 +222,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	protected void assertReindex(
 			Indexer<?> indexer, Map<String, Integer> indexNamesMap,
-			Object... parameters)
+			String[] indexTypes, Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
@@ -228,7 +231,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
-		clearIndices(indexNames, parameters);
+		clearIndices(indexNames, indexTypes, parameters);
 
 		for (String indexName : indexNames) {
 			retryAssertCount(0, indexName, parameters);
@@ -243,7 +246,8 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 	}
 
 	protected void assertReindex(
-			Indexer<?> indexer, String[] indexNames, Object... parameters)
+			Indexer<?> indexer, String[] indexNames, String[] indexTypes,
+			Object... parameters)
 		throws Exception {
 
 		Stream<String> stream = Stream.of(indexNames);
@@ -252,7 +256,7 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			indexer,
 			stream.collect(
 				Collectors.toMap(indexName -> indexName, indexName -> 1)),
-			parameters);
+			indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -268,24 +272,50 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	protected void clearIndices(String[] indexNames, Object... parameters) {
+	protected void clearIndices(
+		String[] indexNames, String[] indexTypes, Object... parameters) {
+
 		if (searchEngineAdapter == null) {
 			return;
 		}
 
-		searchEngineAdapter.execute(
-			new DeleteByQueryDocumentRequest(
-				new BooleanQueryImpl() {
-					{
-						for (int i = 0; i < parameters.length; i = i + 2) {
-							addTerm(
-								String.valueOf(parameters[i]),
-								String.valueOf(parameters[i + 1]), false,
-								BooleanClauseOccur.MUST);
-						}
-					}
-				},
-				indexNames));
+		for (int i = 0; i < indexNames.length; i++) {
+			SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+			searchSearchRequest.setIndexNames(indexNames[i]);
+
+			BooleanQuery booleanQuery = queries.booleanQuery();
+
+			for (int j = 0; j < parameters.length; j = j + 2) {
+				booleanQuery.addMustQueryClauses(
+					queries.term(
+						String.valueOf(parameters[j]), parameters[j + 1]));
+			}
+
+			searchSearchRequest.setQuery(booleanQuery);
+
+			List<String> uids = Stream.of(
+				searchEngineAdapter.execute(searchSearchRequest)
+			).map(
+				SearchSearchResponse::getSearchHits
+			).map(
+				SearchHits::getSearchHits
+			).flatMap(
+				List::stream
+			).map(
+				SearchHit::getDocument
+			).map(
+				document -> document.getString("uid")
+			).collect(
+				Collectors.toList()
+			);
+
+			for (String uid : uids) {
+				searchEngineAdapter.execute(
+					new DeleteDocumentRequest(
+						indexNames[i], indexTypes[i], uid));
+			}
+		}
 	}
 
 	protected KaleoInstance completeKaleoInstance(KaleoInstance kaleoInstance)

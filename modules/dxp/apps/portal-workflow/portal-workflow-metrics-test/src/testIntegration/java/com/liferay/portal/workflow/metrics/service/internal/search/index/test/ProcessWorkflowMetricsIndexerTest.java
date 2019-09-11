@@ -79,6 +79,10 @@ public class ProcessWorkflowMetricsIndexerTest
 				"workflow-metrics-processes", "workflow-metrics-instances",
 				"workflow-metrics-sla-process-results"
 			},
+			new String[] {
+				"WorkflowMetricsProcessType", "WorkflowMetricsInstanceType",
+				"WorkflowMetricsSLAProcessResultType"
+			},
 			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 	}

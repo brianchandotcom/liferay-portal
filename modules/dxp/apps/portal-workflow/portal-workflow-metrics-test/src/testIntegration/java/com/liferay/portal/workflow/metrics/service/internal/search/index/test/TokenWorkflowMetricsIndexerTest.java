@@ -152,7 +152,8 @@ public class TokenWorkflowMetricsIndexerTest
 
 		assertReindex(
 			_tokenWorkflowMetricsIndexer,
-			new String[] {"workflow-metrics-tokens"}, "companyId",
+			new String[] {"workflow-metrics-tokens"},
+			new String[] {"WorkflowMetricsTokenType"}, "companyId",
 			kaleoDefinition.getCompanyId(), "completed", false, "deleted",
 			false, "processId", kaleoDefinition.getKaleoDefinitionId(),
 			"taskId", kaleoTaskInstanceToken.getKaleoTaskId(), "taskName",

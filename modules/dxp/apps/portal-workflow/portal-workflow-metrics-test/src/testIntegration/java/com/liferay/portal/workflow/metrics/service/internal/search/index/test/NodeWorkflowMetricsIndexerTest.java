@@ -168,6 +168,10 @@ public class NodeWorkflowMetricsIndexerTest
 					put("workflow-metrics-tokens", 2);
 				}
 			},
+			new String[] {
+				"WorkflowMetricsNodeType", "WorkflowMetricsSLATaskResultType",
+				"WorkflowMetricsTokenType"
+			},
 			"companyId", kaleoDefinition.getCompanyId(), "deleted", false,
 			"processId", kaleoDefinition.getKaleoDefinitionId());
 	}

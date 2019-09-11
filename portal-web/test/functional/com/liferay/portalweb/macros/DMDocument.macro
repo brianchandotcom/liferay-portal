@@ -1421,6 +1421,11 @@ definition {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#CUSTOM_FIELD_VALUE",
 				value1 = "${customFieldValue}");
+
+		}
+
+		if (isSet(locationFieldName)) {
+			DMDocument.viewLocation(dmFolderName = "${dmFolderName}");
 		}
 	}
 
@@ -1706,6 +1711,21 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED");
 	}
 
+	macro viewLocation {
+		AssertElementPresent(
+			key_dmFolderName = "${dmFolderName}",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
+
+		Click(
+			key_dmFolderName = "${dmFolderName}",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
+
+		AssertTextEquals(
+			key_dmFolderName = "${dmFolderName}",
+			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
+			value1 = "${dmFolderName}");
+	}
+
 	macro viewMovedToFolderCP {
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 		var key_dmFolderName = "${dmFolderName}";
@@ -1828,6 +1848,10 @@ definition {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_CATEGORIES",
 				value1 = "${categoryName}");
+		}
+
+		if (isSet(locationFieldName)) {
+			DMDocument.viewLocation(dmFolderName = "${dmFolderName}");
 		}
 	}
 

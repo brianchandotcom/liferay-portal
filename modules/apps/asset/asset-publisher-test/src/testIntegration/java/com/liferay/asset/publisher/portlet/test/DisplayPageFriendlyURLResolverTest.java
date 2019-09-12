@@ -138,6 +138,17 @@ public class DisplayPageFriendlyURLResolverTest {
 	}
 
 	@Test
+	public void testJournalArticleFriendlyURLWithEndingSlash()
+		throws Exception {
+
+		String actualURL = PortalUtil.getActualURL(
+			_group.getGroupId(), false, Portal.PATH_MAIN,
+			"/-/test-journal-article/", new HashMap<>(), _getRequestContext());
+
+		Assert.assertNotNull(actualURL);
+	}
+
+	@Test
 	public void testJournalArticleFriendlyURLWithExpiredArticle()
 		throws Exception {
 

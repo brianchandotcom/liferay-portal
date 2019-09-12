@@ -67,11 +67,7 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		OneDrive.goToOneDrive();
-
-		for (var documentTitle : list "Excel Sheet Title,PowerPoint Presentation Title,Word Doc Title") {
-			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
-		}
+		OneDrive.deleteDocument(dmDocumentTitle = "Untitled.");
 
 		Navigator.openURL();
 	}

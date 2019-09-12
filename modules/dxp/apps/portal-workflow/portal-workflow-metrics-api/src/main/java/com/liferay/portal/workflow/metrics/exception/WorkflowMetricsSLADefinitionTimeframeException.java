@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class WorkflowMetricsSLADefinitionTimeframeException
 	extends PortalException {
 

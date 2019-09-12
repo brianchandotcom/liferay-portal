@@ -14,12 +14,9 @@
 
 package com.liferay.portal.workflow.metrics.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class WorkflowMetricsSLADefinitionImpl
 	extends WorkflowMetricsSLADefinitionBaseImpl {
 

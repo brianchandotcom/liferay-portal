@@ -463,8 +463,15 @@ public class AddStructuredContentMVCActionCommandTest {
 			String fieldValue, String expectedFieldValue)
 		throws Exception {
 
-		String fieldName = StringUtil.randomString(10);
-		String title = StringUtil.randomString(10);
+		_testAddStructuredContentValidStructureWithFieldImage(
+			fieldValue, expectedFieldValue, StringUtil.randomString(10),
+			StringUtil.randomString(10));
+	}
+
+	private void _testAddStructuredContentValidStructureWithFieldImage(
+			String fieldValue, String expectedFieldValue, String fieldName,
+			String title)
+		throws Exception {
 
 		_testAddStructuredContentValidStructureWithField(
 			DDMFormFieldType.IMAGE, fieldName, fieldValue, title,

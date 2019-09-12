@@ -48,6 +48,7 @@ public class UnicastSettingsContributor extends BaseSettingsContributor {
 			return;
 		}
 
+		clientSettingsHelper.put("cluster.initial_master_nodes", "127.0.0.1");
 		clientSettingsHelper.put("discovery.type", "zen");
 		clientSettingsHelper.putArray(
 			"discovery.zen.ping.unicast.hosts", _getHosts());

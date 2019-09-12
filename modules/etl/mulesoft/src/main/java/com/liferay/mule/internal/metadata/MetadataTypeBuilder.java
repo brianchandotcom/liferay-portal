@@ -40,27 +40,20 @@ import org.mule.runtime.api.connection.ConnectionException;
 import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
-import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
 
 /**
  * @author Matija Petanjek
  */
-public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
+public class MetadataTypeBuilder {
 
-	@Override
-	public String getCategoryName() {
-		return "Liferay";
-	}
-
-	@Override
-	public MetadataType getOutputType(
-			MetadataContext metadataContext, String endpoint)
+	public MetadataType buildMetadataType(
+			MetadataContext metadataContext, String endpoint, String operation)
 		throws ConnectionException, MetadataResolvingException {
 
 		JsonNode oasJsonNode = _getOASJsonNode(metadataContext.getConnection());
 
 		JsonNode referenceJsonNode = _getReferenceJsonNode(
-			oasJsonNode, endpoint);
+			oasJsonNode, endpoint, operation);
 
 		String schemaName = _getSchemaName(referenceJsonNode.textValue());
 
@@ -221,12 +214,12 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 	}
 
 	private JsonNode _getReferenceJsonNode(
-		JsonNode openAPISpecJsonNode, String endpoint) {
+		JsonNode openAPISpecJsonNode, String endpoint, String operation) {
 
 		String path = StringUtil.replace(
 			OASConstants.
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-			"ENDPOINT_TPL", endpoint);
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 		return _jsonNodeReader.getDescendantJsonNode(openAPISpecJsonNode, path);
 	}

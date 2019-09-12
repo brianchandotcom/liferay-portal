@@ -18,6 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class BlogsEntryCacheModel
-	implements CacheModel<BlogsEntry>, Externalizable {
+	implements CacheModel<BlogsEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -47,7 +48,9 @@ public class BlogsEntryCacheModel
 
 		BlogsEntryCacheModel blogsEntryCacheModel = (BlogsEntryCacheModel)obj;
 
-		if (entryId == blogsEntryCacheModel.entryId) {
+		if ((entryId == blogsEntryCacheModel.entryId) &&
+			(mvccVersion == blogsEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -56,14 +59,28 @@ public class BlogsEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, entryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
@@ -129,6 +146,8 @@ public class BlogsEntryCacheModel
 	@Override
 	public BlogsEntry toEntityModel() {
 		BlogsEntryImpl blogsEntryImpl = new BlogsEntryImpl();
+
+		blogsEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			blogsEntryImpl.setUuid("");
@@ -273,6 +292,7 @@ public class BlogsEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		entryId = objectInput.readLong();
@@ -318,6 +338,8 @@ public class BlogsEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -436,6 +458,7 @@ public class BlogsEntryCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long entryId;
 	public long groupId;

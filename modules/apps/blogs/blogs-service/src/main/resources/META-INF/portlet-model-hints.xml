@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.blogs.model.BlogsEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
@@ -57,6 +58,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.blogs.model.BlogsStatsUser">
+		<field name="mvccVersion" type="long" />
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

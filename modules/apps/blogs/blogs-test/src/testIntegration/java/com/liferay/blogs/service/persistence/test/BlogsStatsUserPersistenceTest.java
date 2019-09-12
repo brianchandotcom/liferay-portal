@@ -124,6 +124,8 @@ public class BlogsStatsUserPersistenceTest {
 
 		BlogsStatsUser newBlogsStatsUser = _persistence.create(pk);
 
+		newBlogsStatsUser.setMvccVersion(RandomTestUtil.nextLong());
+
 		newBlogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 
 		newBlogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +147,9 @@ public class BlogsStatsUserPersistenceTest {
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(
 			newBlogsStatsUser.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingBlogsStatsUser.getMvccVersion(),
+			newBlogsStatsUser.getMvccVersion());
 		Assert.assertEquals(
 			existingBlogsStatsUser.getStatsUserId(),
 			newBlogsStatsUser.getStatsUserId());
@@ -244,10 +249,10 @@ public class BlogsStatsUserPersistenceTest {
 
 	protected OrderByComparator<BlogsStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BlogsStatsUser", "statsUserId", true, "groupId", true, "companyId",
-			true, "userId", true, "entryCount", true, "lastPostDate", true,
-			"ratingsTotalEntries", true, "ratingsTotalScore", true,
-			"ratingsAverageScore", true);
+			"BlogsStatsUser", "mvccVersion", true, "statsUserId", true,
+			"groupId", true, "companyId", true, "userId", true, "entryCount",
+			true, "lastPostDate", true, "ratingsTotalEntries", true,
+			"ratingsTotalScore", true, "ratingsAverageScore", true);
 	}
 
 	@Test
@@ -487,6 +492,8 @@ public class BlogsStatsUserPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		BlogsStatsUser blogsStatsUser = _persistence.create(pk);
+
+		blogsStatsUser.setMvccVersion(RandomTestUtil.nextLong());
 
 		blogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 

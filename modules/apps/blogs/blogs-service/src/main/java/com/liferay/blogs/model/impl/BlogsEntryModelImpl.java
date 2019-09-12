@@ -80,15 +80,16 @@ public class BlogsEntryModelImpl
 	public static final String TABLE_NAME = "BlogsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"title", Types.VARCHAR}, {"subtitle", Types.VARCHAR},
-		{"urlTitle", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"content", Types.CLOB}, {"displayDate", Types.TIMESTAMP},
-		{"allowPingbacks", Types.BOOLEAN}, {"allowTrackbacks", Types.BOOLEAN},
-		{"trackbacks", Types.CLOB}, {"coverImageCaption", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
+		{"subtitle", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"content", Types.CLOB},
+		{"displayDate", Types.TIMESTAMP}, {"allowPingbacks", Types.BOOLEAN},
+		{"allowTrackbacks", Types.BOOLEAN}, {"trackbacks", Types.CLOB},
+		{"coverImageCaption", Types.VARCHAR},
 		{"coverImageFileEntryId", Types.BIGINT},
 		{"coverImageURL", Types.VARCHAR}, {"smallImage", Types.BOOLEAN},
 		{"smallImageFileEntryId", Types.BIGINT}, {"smallImageId", Types.BIGINT},
@@ -101,6 +102,7 @@ public class BlogsEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -133,7 +135,7 @@ public class BlogsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table BlogsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(255) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 
@@ -186,6 +188,7 @@ public class BlogsEntryModelImpl
 
 		BlogsEntry model = new BlogsEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -363,6 +366,10 @@ public class BlogsEntryModelImpl
 		Map<String, BiConsumer<BlogsEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<BlogsEntry, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", BlogsEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<BlogsEntry, Long>)BlogsEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", BlogsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<BlogsEntry, String>)BlogsEntry::setUuid);
@@ -489,6 +496,17 @@ public class BlogsEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1273,6 +1291,7 @@ public class BlogsEntryModelImpl
 	public Object clone() {
 		BlogsEntryImpl blogsEntryImpl = new BlogsEntryImpl();
 
+		blogsEntryImpl.setMvccVersion(getMvccVersion());
 		blogsEntryImpl.setUuid(getUuid());
 		blogsEntryImpl.setEntryId(getEntryId());
 		blogsEntryImpl.setGroupId(getGroupId());
@@ -1404,6 +1423,8 @@ public class BlogsEntryModelImpl
 	@Override
 	public CacheModel<BlogsEntry> toCacheModel() {
 		BlogsEntryCacheModel blogsEntryCacheModel = new BlogsEntryCacheModel();
+
+		blogsEntryCacheModel.mvccVersion = getMvccVersion();
 
 		blogsEntryCacheModel.uuid = getUuid();
 
@@ -1646,6 +1667,7 @@ public class BlogsEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;

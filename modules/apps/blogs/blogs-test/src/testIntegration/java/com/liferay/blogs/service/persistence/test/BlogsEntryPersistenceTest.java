@@ -124,6 +124,8 @@ public class BlogsEntryPersistenceTest {
 
 		BlogsEntry newBlogsEntry = _persistence.create(pk);
 
+		newBlogsEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setUuid(RandomTestUtil.randomString());
 
 		newBlogsEntry.setGroupId(RandomTestUtil.nextLong());
@@ -185,6 +187,9 @@ public class BlogsEntryPersistenceTest {
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(
 			newBlogsEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingBlogsEntry.getMvccVersion(),
+			newBlogsEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingBlogsEntry.getUuid(), newBlogsEntry.getUuid());
 		Assert.assertEquals(
@@ -530,12 +535,12 @@ public class BlogsEntryPersistenceTest {
 
 	protected OrderByComparator<BlogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BlogsEntry", "uuid", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "title", true, "subtitle", true,
-			"urlTitle", true, "description", true, "displayDate", true,
-			"allowPingbacks", true, "allowTrackbacks", true,
-			"coverImageCaption", true, "coverImageFileEntryId", true,
+			"BlogsEntry", "mvccVersion", true, "uuid", true, "entryId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "title", true,
+			"subtitle", true, "urlTitle", true, "description", true,
+			"displayDate", true, "allowPingbacks", true, "allowTrackbacks",
+			true, "coverImageCaption", true, "coverImageFileEntryId", true,
 			"coverImageURL", true, "smallImage", true, "smallImageFileEntryId",
 			true, "smallImageId", true, "smallImageURL", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
@@ -781,6 +786,8 @@ public class BlogsEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		BlogsEntry blogsEntry = _persistence.create(pk);
+
+		blogsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		blogsEntry.setUuid(RandomTestUtil.randomString());
 

@@ -18,6 +18,7 @@ import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class BlogsStatsUserCacheModel
-	implements CacheModel<BlogsStatsUser>, Externalizable {
+	implements CacheModel<BlogsStatsUser>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class BlogsStatsUserCacheModel
 		BlogsStatsUserCacheModel blogsStatsUserCacheModel =
 			(BlogsStatsUserCacheModel)obj;
 
-		if (statsUserId == blogsStatsUserCacheModel.statsUserId) {
+		if ((statsUserId == blogsStatsUserCacheModel.statsUserId) &&
+			(mvccVersion == blogsStatsUserCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class BlogsStatsUserCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, statsUserId);
+		int hashCode = HashUtil.hash(0, statsUserId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{statsUserId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", statsUserId=");
 		sb.append(statsUserId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -91,6 +108,7 @@ public class BlogsStatsUserCacheModel
 	public BlogsStatsUser toEntityModel() {
 		BlogsStatsUserImpl blogsStatsUserImpl = new BlogsStatsUserImpl();
 
+		blogsStatsUserImpl.setMvccVersion(mvccVersion);
 		blogsStatsUserImpl.setStatsUserId(statsUserId);
 		blogsStatsUserImpl.setGroupId(groupId);
 		blogsStatsUserImpl.setCompanyId(companyId);
@@ -115,6 +133,8 @@ public class BlogsStatsUserCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		statsUserId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -135,6 +155,8 @@ public class BlogsStatsUserCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(statsUserId);
 
 		objectOutput.writeLong(groupId);
@@ -153,6 +175,7 @@ public class BlogsStatsUserCacheModel
 		objectOutput.writeDouble(ratingsAverageScore);
 	}
 
+	public long mvccVersion;
 	public long statsUserId;
 	public long groupId;
 	public long companyId;

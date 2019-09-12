@@ -42,6 +42,7 @@ public class BlogsStatsUserWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -57,6 +58,12 @@ public class BlogsStatsUserWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long statsUserId = (Long)attributes.get("statsUserId");
 
 		if (statsUserId != null) {
@@ -152,6 +159,16 @@ public class BlogsStatsUserWrapper
 	@Override
 	public Date getLastPostDate() {
 		return model.getLastPostDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this blogs stats user.
+	 *
+	 * @return the mvcc version of this blogs stats user
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -282,6 +299,16 @@ public class BlogsStatsUserWrapper
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		model.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this blogs stats user.
+	 *
+	 * @param mvccVersion the mvcc version of this blogs stats user
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

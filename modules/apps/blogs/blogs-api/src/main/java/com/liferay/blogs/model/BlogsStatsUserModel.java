@@ -15,6 +15,7 @@
 package com.liferay.blogs.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BlogsStatsUserModel
-	extends BaseModel<BlogsStatsUser>, ShardedModel {
+	extends BaseModel<BlogsStatsUser>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,22 @@ public interface BlogsStatsUserModel
 	 * @param primaryKey the primary key of this blogs stats user
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this blogs stats user.
+	 *
+	 * @return the mvcc version of this blogs stats user
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this blogs stats user.
+	 *
+	 * @param mvccVersion the mvcc version of this blogs stats user
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the stats user ID of this blogs stats user.

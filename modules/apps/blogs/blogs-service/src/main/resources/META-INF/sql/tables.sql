@@ -1,4 +1,5 @@
 create table BlogsEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,
 	groupId LONG,
@@ -31,6 +32,7 @@ create table BlogsEntry (
 );
 
 create table BlogsStatsUser (
+	mvccVersion LONG default 0 not null,
 	statsUserId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

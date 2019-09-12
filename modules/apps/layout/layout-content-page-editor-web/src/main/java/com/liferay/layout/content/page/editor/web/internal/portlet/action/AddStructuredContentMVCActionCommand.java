@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.IOException;
 
@@ -317,5 +318,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

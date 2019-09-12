@@ -27,6 +27,7 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageTool;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -245,7 +247,11 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 				bytes = Base64.decode(urlParts[1]);
 			}
-			else if (Validator.isUrl(url)) {
+			else if (Validator.isUrl(url, true)) {
+				if (StringUtil.startsWith(url, StringPool.SLASH)) {
+					url = _portal.getPortalURL(themeDisplay) + url;
+				}
+
 				URL imageURL = new URL(url);
 
 				bytes = FileUtil.getBytes(imageURL.openStream());

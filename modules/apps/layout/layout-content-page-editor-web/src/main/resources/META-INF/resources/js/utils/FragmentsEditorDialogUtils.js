@@ -25,11 +25,8 @@ let _widgetConfigurationChangeHandler = null;
 /**
  * Possible types that can be returned by the image selector
  */
-const IMAGE_SELECTOR_RETURN_TYPES = {
-	downloadFileEntryItemSelector:
-		'com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType',
-	url: 'URL'
-};
+const DOWNLOAD_FILE_ENTRY_IMAGE_SELECTOR_RETURN_TYPE =
+	'com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType';
 
 /**
  * @param {object} options
@@ -105,14 +102,14 @@ function openImageSelector({
 					const {returnType, value} = selectedItem;
 					const selectedImage = {};
 
-					if (returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
+					if (returnType === 'URL') {
 						selectedImage.title = value;
 						selectedImage.url = value;
 					}
 
 					if (
 						returnType ===
-							IMAGE_SELECTOR_RETURN_TYPES.downloadFileEntryItemSelector
+						DOWNLOAD_FILE_ENTRY_IMAGE_SELECTOR_RETURN_TYPE
 					) {
 						const fileEntry = JSON.parse(value);
 

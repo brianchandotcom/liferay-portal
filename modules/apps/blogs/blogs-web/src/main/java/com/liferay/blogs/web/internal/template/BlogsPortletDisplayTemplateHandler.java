@@ -160,7 +160,7 @@ public class BlogsPortletDisplayTemplateHandler
 	private Portal _portal;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.service)(&(release.schema.version>=2.0.0)(!(release.schema.version>=2.1.0))))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.service)(&(release.schema.version>=2.1.0)(!(release.schema.version>=2.2.0))))"
 	)
 	private Release _release;
 

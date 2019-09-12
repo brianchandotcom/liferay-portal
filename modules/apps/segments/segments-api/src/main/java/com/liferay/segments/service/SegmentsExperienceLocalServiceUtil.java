@@ -485,6 +485,15 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperience
+			updateSegmentsExperienceActive(
+				long segmentsExperienceId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSegmentsExperienceActive(
+			segmentsExperienceId, active);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperience
 			updateSegmentsExperiencePriority(
 				long segmentsExperienceId, int newPriority)
 		throws com.liferay.portal.kernel.exception.PortalException {

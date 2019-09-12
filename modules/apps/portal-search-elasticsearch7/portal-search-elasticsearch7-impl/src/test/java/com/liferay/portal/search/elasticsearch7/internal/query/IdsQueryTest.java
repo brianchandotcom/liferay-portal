@@ -18,9 +18,12 @@ import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchInd
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.query.BaseIdsQueryTestCase;
 
+import org.junit.Ignore;
+
 /**
  * @author Michael C. Han
  */
+@Ignore
 public class IdsQueryTest extends BaseIdsQueryTestCase {
 
 	@Override

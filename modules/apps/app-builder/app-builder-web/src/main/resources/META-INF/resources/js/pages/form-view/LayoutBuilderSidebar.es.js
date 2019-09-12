@@ -91,6 +91,7 @@ const SettingsSidebarHeader = ({dataLayoutBuilder}) => {
 
 			<ClayDropDown
 				className="d-inline-flex flex-grow-1"
+				onActiveChange={() => {}}
 				trigger={
 					<Button
 						className="d-inline-flex flex-grow-1"

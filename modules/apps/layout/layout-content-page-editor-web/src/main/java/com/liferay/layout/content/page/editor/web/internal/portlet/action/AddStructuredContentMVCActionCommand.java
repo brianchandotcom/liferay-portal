@@ -175,8 +175,12 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 			if (fieldType.equals("ddm-image")) {
 				String imageName = title + " - " + fieldName;
 
+				String uniqueImageName = _uniqueFileNameProvider.provide(
+					imageName,
+					curImageName -> _exists(themeDisplay, curImageName));
+
 				FileEntry fileEntry = _addImage(
-					fieldName, imageName, fieldValue, serviceContext,
+					fieldName, uniqueImageName, fieldValue, serviceContext,
 					themeDisplay);
 
 				JSONObject imageFieldValueJSONObject = JSONUtil.put(
@@ -184,7 +188,7 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"groupId", fileEntry.getGroupId()
 				).put(
-					"title", imageName
+					"title", uniqueImageName
 				).put(
 					"uuid", fileEntry.getUuid()
 				);

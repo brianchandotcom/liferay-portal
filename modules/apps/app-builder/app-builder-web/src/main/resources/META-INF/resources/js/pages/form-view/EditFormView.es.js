@@ -93,7 +93,7 @@ const EditFormView = props => {
 		if (newCustomObject) {
 			Liferay.Util.navigate(basePortletURL);
 		} else {
-			window.location.href = `${listUrl}`;
+			Liferay.Util.navigate(listUrl);
 		}
 	};
 
@@ -125,7 +125,7 @@ const EditFormView = props => {
 			dataLayoutBuilder,
 			dataLayoutId
 		}).then(() => {
-			window.location.href = `${listUrl}`;
+			Liferay.Util.navigate(listUrl);
 		});
 	};
 

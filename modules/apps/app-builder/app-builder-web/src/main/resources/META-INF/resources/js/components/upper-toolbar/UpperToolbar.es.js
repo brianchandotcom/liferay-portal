@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayInput} from '@clayui/form';
 import React from 'react';
 import Button from '../button/Button.es';
 
@@ -27,11 +28,11 @@ const UpperToolbar = ({children}) => {
 
 const UpperToolbarButton = ({children, ...otherProps}) => {
 	return (
-		<div className="input-group-item">
+		<ClayInput.GroupItem>
 			<Button className="ml-3" small {...otherProps}>
 				{children}
 			</Button>
-		</div>
+		</ClayInput.GroupItem>
 	);
 };
 
@@ -42,18 +43,18 @@ const UpperToolbarInput = ({
 }) => {
 	return (
 		<UpperToolbarItem expand={true}>
-			<div className="input-group">
-				<div className="input-group-item">
-					<input
+			<ClayInput.Group>
+				<ClayInput.GroupItem>
+					<ClayInput
 						aria-label={placeholder}
-						className="form-control form-control-inline"
+						className="form-control-inline"
 						onChange={onChange}
 						placeholder={placeholder}
 						type="text"
 						{...otherProps}
 					/>
-				</div>
-			</div>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</UpperToolbarItem>
 	);
 };
@@ -69,7 +70,7 @@ const UpperToolbarItem = ({children, expand}) => {
 const UpperToolbarGroup = ({children}) => {
 	return (
 		<UpperToolbarItem>
-			<div className="input-group">{children}</div>
+			<ClayInput.Group>{children}</ClayInput.Group>
 		</UpperToolbarItem>
 	);
 };

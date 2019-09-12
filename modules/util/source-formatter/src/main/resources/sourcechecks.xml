@@ -469,7 +469,9 @@
 		<check name="XMLProjectElementCheck" />
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceEntityNameCheck" />
-		<check name="XMLServiceFileCheck" />
+		<check name="XMLServiceFileCheck">
+			<property name="checkMVCCEnabled" value="false" />
+		</check>
 		<check name="XMLSolrSchemaFileCheck" />
 		<check name="XMLStylingCheck" />
 		<check name="XMLSuppressionsFileCheck" />

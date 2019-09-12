@@ -58,6 +58,15 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
+		if (isAttributeValue(_CHECK_MVCC_ENABLED_KEY, absolutePath) &&
+			(rootElement.attributeValue("mvcc-enabled") == null)) {
+
+			addMessage(
+				fileName,
+				"Missing attribute 'mvcc-enabled'. When in doubt, set " +
+					"'mvcc-enabled=\"true\"'");
+		}
+
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
 			new ServiceReferenceElementComparator("entity");
 
@@ -178,6 +187,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String _CHECK_MVCC_ENABLED_KEY = "checkMVCCEnabled";
 
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";

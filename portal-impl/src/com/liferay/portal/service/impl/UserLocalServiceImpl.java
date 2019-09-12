@@ -4795,7 +4795,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordModifiedDate(new Date());
 		}
 
-		user.setDigest(StringPool.BLANK);
+		user.setDigest(user.getDigest(password1));
 		user.setGraceLoginCount(0);
 
 		if (!silentUpdate) {

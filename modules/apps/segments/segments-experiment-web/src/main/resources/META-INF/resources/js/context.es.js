@@ -35,24 +35,26 @@ const SegmentsExperimentsContext = React.createContext({
 });
 
 SegmentsExperimentsContext.Provider.propTypes = {
-	APIService: PropTypes.shape({
-		createExperiment: PropTypes.func.isRequired,
-		createVariant: PropTypes.func.isRequired,
-		deleteExperiment: PropTypes.func.isRequired,
-		deleteVariant: PropTypes.func.isRequired,
-		editExperiment: PropTypes.func.isRequired,
-		editExperimentStatus: PropTypes.func.isRequired,
-		editVariant: PropTypes.func.isRequired,
-		runExperiment: PropTypes.func.isRequired
-	}),
-	assetsPath: PropTypes.string.isRequired,
-	editVariantLayoutURL: PropTypes.string,
-	page: PropTypes.shape({
-		classNameId: PropTypes.string.isRequired,
-		classPK: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired
-	}),
-	viewSegmentsExperimentDetailsURL: PropTypes.string
+	value: PropTypes.shape({
+		APIService: PropTypes.shape({
+			createExperiment: PropTypes.func,
+			createVariant: PropTypes.func,
+			deleteExperiment: PropTypes.func,
+			deleteVariant: PropTypes.func,
+			editExperiment: PropTypes.func,
+			editExperimentStatus: PropTypes.func,
+			editVariant: PropTypes.func,
+			runExperiment: PropTypes.func
+		}),
+		assetsPath: PropTypes.string.isRequired,
+		editVariantLayoutURL: PropTypes.string,
+		page: PropTypes.shape({
+			classNameId: PropTypes.string.isRequired,
+			classPK: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired
+		}),
+		viewSegmentsExperimentDetailsURL: PropTypes.string
+	})
 };
 
 export default SegmentsExperimentsContext;

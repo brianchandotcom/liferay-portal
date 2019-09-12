@@ -71,6 +71,7 @@ function _renderSegmentsExperimentsSidebarComponent({
 					editVariant,
 					publishExperience
 				},
+				assetsPath: '',
 				page: {
 					classNameId,
 					classPK,

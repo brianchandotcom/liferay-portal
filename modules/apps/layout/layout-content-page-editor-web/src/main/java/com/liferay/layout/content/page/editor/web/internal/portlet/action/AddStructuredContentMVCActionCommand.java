@@ -179,6 +179,8 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay);
 
 				JSONObject imageFieldValueJSONObject = JSONUtil.put(
+					"alt", StringPool.BLANK
+				).put(
 					"groupId", fileEntry.getGroupId()
 				).put(
 					"title", imageName

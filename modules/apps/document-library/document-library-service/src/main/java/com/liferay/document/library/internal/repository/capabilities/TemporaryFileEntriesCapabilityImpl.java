@@ -362,9 +362,9 @@ public class TemporaryFileEntriesCapabilityImpl
 					break;
 				}
 
-				folder = folder.getParentFolder();
-
 				_documentRepository.deleteFolder(folderId);
+
+				folder = folder.getParentFolder();
 			}
 		}
 

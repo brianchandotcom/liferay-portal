@@ -2763,6 +2763,10 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public boolean isReady() {
+		if (_undeployedPortlet) {
+			return true;
+		}
+
 		Readiness readiness = _readinessMap.get(getRootPortletId());
 
 		if (readiness == null) {
@@ -3873,7 +3877,7 @@ public class PortletImpl extends PortletBaseImpl {
 			ServiceRegistrar<Portlet> serviceRegistrar =
 				readiness._serviceRegistrar;
 
-			if (ready) {
+			if (ready && !_undeployedPortlet) {
 				if (serviceRegistrar.isDestroyed()) {
 					serviceRegistrar = registry.getServiceRegistrar(
 						Portlet.class);

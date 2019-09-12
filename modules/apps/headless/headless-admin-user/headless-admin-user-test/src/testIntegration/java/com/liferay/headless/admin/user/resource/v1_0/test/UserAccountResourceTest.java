@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -125,6 +126,34 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetSiteUserAccountsPage() throws Exception {
+		Page<UserAccount> page = userAccountResource.getSiteUserAccountsPage(
+			testGetSiteUserAccountsPage_getSiteId(),
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long siteId = testGetSiteUserAccountsPage_getSiteId();
+
+		UserAccount userAccount1 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		UserAccount userAccount2 = testGetSiteUserAccountsPage_addUserAccount(
+			siteId, randomUserAccount());
+
+		page = userAccountResource.getSiteUserAccountsPage(
+			siteId, null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2),
+			(List<UserAccount>)page.getItems());
+		assertValid(page);
+	}
+
+	@Override
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());
@@ -168,6 +197,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGraphQLGetMyUserAccount() {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteUserAccountsPage() {
+	}
+
 	@Override
 	@Test
 	public void testGraphQLGetUserAccountsPage() throws Exception {
@@ -193,6 +228,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					{
 						put("page", 1);
 						put("pageSize", 3);
+						put("siteId", testGroup.getGroupId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -205,7 +241,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
 			"userAccounts");
 
-		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
+		Assert.assertEquals(2, userAccountsJSONObject.get("totalCount"));
 
 		assertEqualsJSONArray(
 			Arrays.asList(userAccount1, userAccount2),
@@ -236,7 +272,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	protected UserAccount testGetMyUserAccount_addUserAccount()
 		throws Exception {
 
-		return _addUserAccount(randomUserAccount());
+		return _addUserAccount(
+			randomUserAccount(), testGetSiteUserAccountsPage_getSiteId());
 	}
 
 	@Override
@@ -244,7 +281,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Long organizationId, UserAccount userAccount)
 		throws Exception {
 
-		userAccount = _addUserAccount(userAccount);
+		userAccount = _addUserAccount(
+			userAccount, testGetSiteUserAccountsPage_getSiteId());
 
 		UserLocalServiceUtil.addOrganizationUser(
 			organizationId, userAccount.getId());
@@ -262,11 +300,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			Long siteId, UserAccount userAccount)
 		throws Exception {
 
-		userAccount = _addUserAccount(userAccount);
-
-		UserLocalServiceUtil.addGroupUser(siteId, userAccount.getId());
-
-		return userAccount;
+		return _addUserAccount(userAccount, siteId);
 	}
 
 	@Override
@@ -276,7 +310,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
-		return _addUserAccount(randomUserAccount());
+		return _addUserAccount(
+			randomUserAccount(), testGetSiteUserAccountsPage_getSiteId());
 	}
 
 	@Override
@@ -284,7 +319,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			UserAccount userAccount)
 		throws Exception {
 
-		return _addUserAccount(userAccount);
+		return _addUserAccount(userAccount, testGroup.getGroupId());
 	}
 
 	@Override
@@ -294,7 +329,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		return testGetMyUserAccount_addUserAccount();
 	}
 
-	private UserAccount _addUserAccount(UserAccount userAccount)
+	private UserAccount _addUserAccount(UserAccount userAccount, long groupId)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.addUser(
@@ -316,6 +351,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		userAccount.setId(user.getUserId());
 
 		_users.add(UserLocalServiceUtil.getUser(user.getUserId()));
+
+		UserLocalServiceUtil.addGroupUser(groupId, userAccount.getId());
 
 		return userAccount;
 	}

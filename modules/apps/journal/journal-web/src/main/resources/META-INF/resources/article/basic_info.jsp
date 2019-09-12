@@ -30,6 +30,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<soy:component-renderer
 		context="<%= journalEditArticleDisplayContext.getChangeDefaultLanguageSoyContext() %>"
 		module="js/ChangeDefaultLanguage.es"
+		servletContext="<%= application %>"
 		templateNamespace="com.liferay.journal.web.ChangeDefaultLanguage.render"
 	/>
 </c:if>

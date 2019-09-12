@@ -38,8 +38,6 @@ public class OneDriveURLHelper {
 			portletRequest, _portal.getPortletId(portletRequest),
 			PortletRequest.RESOURCE_PHASE);
 
-		resourceURL.setResourceID(
-			"/document_library/onedrive_background_task_status");
 		resourceURL.setParameter(
 			"backgroundTaskId",
 			String.valueOf(
@@ -47,6 +45,8 @@ public class OneDriveURLHelper {
 		resourceURL.setParameter(
 			"fileEntryId",
 			String.valueOf(dlOpenerOneDriveFileReference.getFileEntryId()));
+		resourceURL.setResourceID(
+			"/document_library/onedrive_background_task_status");
 
 		return resourceURL.toString();
 	}

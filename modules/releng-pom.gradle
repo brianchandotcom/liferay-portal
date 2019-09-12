@@ -404,11 +404,29 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 	String dependencyArtifactIdPattern = excludeLiferayDependencies ? /^(?!com\.liferay)[a-z][a-z\d.-]*[a-z\d]/ : /[a-z][a-z\d.-]*[a-z\d]/
 	String dependencyGroupIdPattern = excludeLiferayDependencies ? /^(?!com\.liferay)[a-z][a-z\d.-]*[a-z\d]/ : /[a-z][a-z\d.-]*[a-z\d]/
 
+	String[] failedDependencies = []
+
 	pomNode.dependencyManagement.dependencies.dependency.each {
 		assert it.artifactId.text().matches(dependencyArtifactIdPattern)
 		assert it.groupId.text().matches(dependencyGroupIdPattern)
 		assert it.version.text().matches(/\d(?:[A-Za-z\d.-]*[A-Za-z\d])?/)
+
+		String groupPath = it.groupId.text().replaceAll(/\./, "/")
+
+		String dependencyURL = "https://repository-cdn.liferay.com/nexus/content/groups/public/${groupPath}/${it.artifactId.text()}/${it.version.text()}/${it.artifactId.text()}-${it.version.text()}.jar"
+
+		try {
+			exec {
+				args dependencyURL, "--spider"
+				executable "wget"
+			}
+		}
+		catch(Exception e) {
+			failedDependencies += "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}"
+		}
 	}
+
+	assert failedDependencies == []
 
 	pomNode.developers.developer.each {
 		assert it.name.text().matches(/[A-Za-z]+(?: [A-Za-z]+)*/)

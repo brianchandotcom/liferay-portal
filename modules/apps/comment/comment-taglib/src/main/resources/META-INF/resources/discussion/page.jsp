@@ -154,7 +154,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 											<div class="alert alert-info">
 												<span class="alert-indicator">
 													<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-														<use href="/images/icons/icons.svg#info-circle"></use>
+														<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#info-circle" />
 													</svg>
 												</span>
 

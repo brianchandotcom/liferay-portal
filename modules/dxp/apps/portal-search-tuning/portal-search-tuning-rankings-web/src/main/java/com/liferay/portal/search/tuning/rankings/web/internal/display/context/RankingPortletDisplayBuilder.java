@@ -34,6 +34,7 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
 import com.liferay.portal.search.tuning.rankings.web.internal.request.SearchRankingRequest;
 import com.liferay.portal.search.tuning.rankings.web.internal.request.SearchRankingResponse;
 
@@ -269,7 +270,7 @@ public class RankingPortletDisplayBuilder {
 
 	private String _getOrderByCol() {
 		return ParamUtil.getString(
-			_renderRequest, "orderByCol", "modified-date");
+			_renderRequest, "orderByCol", _DEFAULT_SORT_COLUMN);
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems(String keywords) {
@@ -290,12 +291,13 @@ public class RankingPortletDisplayBuilder {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "modified-date"));
+							Objects.equals(
+								_getOrderByCol(), _DEFAULT_SORT_COLUMN));
 						dropdownItem.setHref(
-							portletURL, "orderByCol", "modified-date");
+							portletURL, "orderByCol", _DEFAULT_SORT_COLUMN);
 						dropdownItem.setLabel(
 							LanguageUtil.get(
-								_httpServletRequest, "modified-date"));
+								_httpServletRequest, _DEFAULT_SORT_COLUMN));
 					});
 			}
 		};
@@ -357,6 +359,9 @@ public class RankingPortletDisplayBuilder {
 
 		return searchContainer;
 	}
+
+	private static final String _DEFAULT_SORT_COLUMN =
+		RankingFields.QUERY_STRING_KEYWORD;
 
 	private final DocumentToRankingTranslator _documentToRankingTranslator;
 	private final HttpServletRequest _httpServletRequest;

@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -33,9 +32,7 @@ public class JsonNodeReader {
 
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		InputStream inputStream = httpEntity.getContent();
-
-		return _objectMapper.readTree(inputStream);
+		return _objectMapper.readTree(httpEntity.getContent());
 	}
 
 	public JsonNode getDescendantJsonNode(JsonNode jsonNode, String path) {

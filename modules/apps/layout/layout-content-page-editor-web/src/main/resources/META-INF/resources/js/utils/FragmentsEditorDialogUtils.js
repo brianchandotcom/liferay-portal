@@ -28,10 +28,6 @@ let _widgetConfigurationChangeHandler = null;
 const IMAGE_SELECTOR_RETURN_TYPES = {
 	downloadFileEntryItemSelector:
 		'com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType',
-	downloadUrl:
-		'com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType',
-	fileEntryItemSelector:
-		'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 	url: 'URL'
 };
 
@@ -109,18 +105,12 @@ function openImageSelector({
 					const {returnType, value} = selectedItem;
 					const selectedImage = {};
 
-					if (
-						returnType ===
-							IMAGE_SELECTOR_RETURN_TYPES.downloadUrl ||
-						returnType === IMAGE_SELECTOR_RETURN_TYPES.url
-					) {
+					if (returnType === IMAGE_SELECTOR_RETURN_TYPES.url) {
 						selectedImage.title = value;
 						selectedImage.url = value;
 					}
 
 					if (
-						returnType ===
-							IMAGE_SELECTOR_RETURN_TYPES.fileEntryItemSelector ||
 						returnType ===
 							IMAGE_SELECTOR_RETURN_TYPES.downloadFileEntryItemSelector
 					) {

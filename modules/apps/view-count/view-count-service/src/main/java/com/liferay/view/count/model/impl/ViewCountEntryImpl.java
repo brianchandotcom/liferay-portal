@@ -14,12 +14,9 @@
 
 package com.liferay.view.count.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class ViewCountEntryImpl extends ViewCountEntryBaseImpl {
 
 	public ViewCountEntryImpl() {

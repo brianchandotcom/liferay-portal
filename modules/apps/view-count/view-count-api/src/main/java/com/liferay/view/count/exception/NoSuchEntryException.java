@@ -16,12 +16,9 @@ package com.liferay.view.count.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class NoSuchEntryException extends NoSuchModelException {
 
 	public NoSuchEntryException() {

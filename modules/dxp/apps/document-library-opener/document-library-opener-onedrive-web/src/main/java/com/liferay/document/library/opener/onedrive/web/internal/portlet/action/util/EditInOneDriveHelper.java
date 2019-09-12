@@ -17,7 +17,7 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
-import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -66,7 +66,7 @@ public class EditInOneDriveHelper {
 
 				return JSONUtil.put(
 					"dialogMessage",
-					_translationHelper.translateKey(
+					_translator.translateKey(
 						_portal.getLocale(portletRequest),
 						"you-are-being-redirected-to-an-external-editor-to-" +
 							"edit-this-document")
@@ -98,7 +98,7 @@ public class EditInOneDriveHelper {
 
 			return JSONUtil.put(
 				"dialogMessage",
-				_translationHelper.translateKey(
+				_translator.translateKey(
 					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-edit-" +
 						"this-document")
@@ -140,6 +140,6 @@ public class EditInOneDriveHelper {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private TranslationHelper _translationHelper;
+	private Translator _translator;
 
 }

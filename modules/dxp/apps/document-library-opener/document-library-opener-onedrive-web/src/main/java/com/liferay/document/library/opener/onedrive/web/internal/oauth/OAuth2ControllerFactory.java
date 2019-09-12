@@ -15,7 +15,7 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
-import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -130,7 +130,7 @@ public class OAuth2ControllerFactory {
 	private PortletURLFactory _portletURLFactory;
 
 	@Reference
-	private TranslationHelper _translationHelper;
+	private Translator _translator;
 
 	private static class OAuth2Result {
 
@@ -205,7 +205,7 @@ public class OAuth2ControllerFactory {
 						portletRequest, portletResponse,
 						JSONUtil.put(
 							"error",
-							_translationHelper.translateKey(
+							_translator.translateKey(
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}

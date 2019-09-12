@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.util;
+package com.liferay.document.library.opener.onedrive.web.internal.translator;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = TranslationHelper.class)
-public class TranslationHelper {
+@Component(service = Translator.class)
+public class Translator {
 
 	public String translateKey(Locale locale, String key) {
 		ResourceBundle resourceBundle =

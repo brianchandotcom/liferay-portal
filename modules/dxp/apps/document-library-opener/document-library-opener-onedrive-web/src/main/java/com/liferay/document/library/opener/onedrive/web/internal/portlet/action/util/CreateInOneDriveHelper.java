@@ -19,7 +19,7 @@ import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
-import com.liferay.document.library.opener.onedrive.web.internal.util.TranslationHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +66,7 @@ public class CreateInOneDriveHelper {
 				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 			String title = ParamUtil.getString(
 				portletRequest, "title",
-				_translationHelper.translateKey(
+				_translator.translateKey(
 					_portal.getLocale(portletRequest), "untitled"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -86,7 +86,7 @@ public class CreateInOneDriveHelper {
 
 			return JSONUtil.put(
 				"dialogMessage",
-				_translationHelper.translateKey(
+				_translator.translateKey(
 					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-" +
 						"create-this-document")
@@ -123,8 +123,7 @@ public class CreateInOneDriveHelper {
 			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 
 			xssfWorkbook.createSheet(
-				_translationHelper.translateKey(
-					locale, "onedrive-excel-sheet"));
+				_translator.translateKey(locale, "onedrive-excel-sheet"));
 
 			try {
 				xssfWorkbook.write(byteArrayOutputStream);
@@ -164,7 +163,7 @@ public class CreateInOneDriveHelper {
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
-	private TranslationHelper _translationHelper;
+	private Translator _translator;
 
 	@Reference
 	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;

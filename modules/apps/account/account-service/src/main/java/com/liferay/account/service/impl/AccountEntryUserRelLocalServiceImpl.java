@@ -14,10 +14,15 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,4 +33,43 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AccountEntryUserRelLocalServiceImpl
 	extends AccountEntryUserRelLocalServiceBaseImpl {
+
+	/**
+	 * Creates an AccountEntryUserRel and adds it to the database. An
+	 * AccountEntryUserRel is essentially an "AccountEntry membership".
+	 *
+	 * @param accountEntryId the primary key of the AccountEntry
+	 * @param userId the primary key of the User
+	 * @return the AccountEntryUserRel
+	 * @review
+	 */
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long userId)
+		throws PortalException {
+
+		if (accountEntryUserRelPersistence.fetchByA_U(accountEntryId, userId) !=
+				null) {
+
+			throw new DuplicateAccountEntryUserRelException();
+		}
+
+		accountEntryLocalService.getAccountEntry(accountEntryId);
+		userLocalService.getUser(userId);
+
+		long accountEntryUserRelId = counterLocalService.increment();
+
+		AccountEntryUserRel accountEntryUserRel = createAccountEntryUserRel(
+			accountEntryUserRelId);
+
+		accountEntryUserRel.setAccountEntryUserRelId(accountEntryUserRelId);
+		accountEntryUserRel.setUserId(userId);
+		accountEntryUserRel.setAccountEntryId(accountEntryId);
+
+		return addAccountEntryUserRel(accountEntryUserRel);
+	}
+
+	@Reference
+	protected AccountEntryLocalService accountEntryLocalService;
+
 }

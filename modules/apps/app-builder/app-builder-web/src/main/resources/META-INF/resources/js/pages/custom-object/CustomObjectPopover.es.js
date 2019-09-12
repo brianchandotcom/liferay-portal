@@ -13,7 +13,7 @@
  */
 
 import React, {useEffect, useRef, useState} from 'react';
-import {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import Button from '../../components/button/Button.es';
 import Popover from '../../components/popover/Popover.es';
@@ -67,7 +67,7 @@ const CustomObjectPopover = ({
 			alignElement={alignElement}
 			className={`${className} mw-100`}
 			content={() => (
-				<form
+				<ClayForm
 					onSubmit={event => {
 						event.preventDefault();
 
@@ -87,7 +87,7 @@ const CustomObjectPopover = ({
 							</span>
 						</label>
 
-						<input
+						<ClayInput
 							className="form-control"
 							id="customObjectNameInput"
 							onInput={({currentTarget}) =>
@@ -98,19 +98,20 @@ const CustomObjectPopover = ({
 						/>
 
 						{hasError && (
-							<div className="form-feedback-group">
-								<div className="form-feedback-item">
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
 									<strong>
-										<span className="form-feedback-indicator mr-1">
-											<ClayIcon symbol="exclamation-full" />
-										</span>
+										<ClayForm.FeedbackIndicator
+											className="mr-1"
+											symbol="exclamation-full"
+										></ClayForm.FeedbackIndicator>
 
 										{Liferay.Language.get(
 											'this-field-is-required'
 										)}
 									</strong>
-								</div>
-							</div>
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
 						)}
 					</div>
 
@@ -124,7 +125,7 @@ const CustomObjectPopover = ({
 						)}
 						onChange={() => setAddFormView(!isAddFormView)}
 					/>
-				</form>
+				</ClayForm>
 			)}
 			footer={() => (
 				<div className="border-top p-3" style={{width: 450}}>

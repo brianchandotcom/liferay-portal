@@ -1,27 +1,5 @@
 definition {
 
-	macro AddDocument {
-		Type(
-			locator1 = "TextInput#TITLE",
-			value1 = "${dmDocumentTitle}");
-
-		Click(locator1 = "Button#SAVE");
-
-		Pause(locator1 = "10000");
-
-		SelectWindow(locator1 = "OneDrive#DOCUMENTS_PAGE_TITLE");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
-
-		AssertTextPresent(
-			locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
-			value1 = "Saved");
-
-		Navigator.closeWindow();
-
-		SelectFrameTop();
-	}
-
 	macro deleteDocument {
 		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx");
 

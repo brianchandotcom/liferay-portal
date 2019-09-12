@@ -1625,6 +1625,14 @@ definition {
 		}
 	}
 
+	macro viewFriendlyURLCP {
+		Panel.expandPanel(panel = "Friendly URL");
+
+		AssertTextEquals(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "${friendlyUrl}");
+	}
+
 	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
 			key_assetTitle = "${webContentTitle}",

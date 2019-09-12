@@ -15,6 +15,7 @@
 package com.liferay.portal.tools;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -341,28 +342,18 @@ public class ToolsUtil {
 					continue;
 				}
 
-				while (true) {
-					x = afterImportsContent.indexOf(
-						importPackageAndClassName, x + 1);
+				Pattern pattern = Pattern.compile(
+					StringBundler.concat(
+						"[^\\w.](",
+						StringUtil.replace(
+							importPackageAndClassName, CharPool.PERIOD,
+							"\\.\\s*"),
+						")\\W"));
 
-					if (x == -1) {
-						break;
-					}
+				Matcher matcher = pattern.matcher(afterImportsContent);
 
-					char previousChar = afterImportsContent.charAt(x - 1);
-
-					if (Character.isLetterOrDigit(previousChar) ||
-						(previousChar == CharPool.PERIOD)) {
-
-						continue;
-					}
-
-					char nextChar = afterImportsContent.charAt(
-						x + importPackageAndClassName.length());
-
-					if (Character.isLetterOrDigit(nextChar)) {
-						continue;
-					}
+				while (matcher.find()) {
+					x = matcher.start();
 
 					int y = afterImportsContent.lastIndexOf(
 						CharPool.NEW_LINE, x);
@@ -386,12 +377,9 @@ public class ToolsUtil {
 					int z = importPackageAndClassName.lastIndexOf(
 						StringPool.PERIOD);
 
-					String importClassName =
-						importPackageAndClassName.substring(z + 1);
-
 					afterImportsContent = StringUtil.replaceFirst(
-						afterImportsContent, importPackageAndClassName,
-						importClassName, x);
+						afterImportsContent, matcher.group(1),
+						importPackageAndClassName.substring(z + 1), x);
 				}
 			}
 
@@ -716,8 +704,10 @@ public class ToolsUtil {
 		String imports, String afterImportsContent, String packagePath) {
 
 		Pattern pattern1 = Pattern.compile(
-			"\n(.*)" + StringUtil.replace(packagePath, CharPool.PERIOD, "\\.") +
-				"\\.([A-Z]\\w+)\\W");
+			StringBundler.concat(
+				"\n(.*)",
+				StringUtil.replace(packagePath, CharPool.PERIOD, "\\.\\s*"),
+				"\\.\\s*([A-Z]\\w+)\\W"));
 
 		outerLoop:
 		while (true) {

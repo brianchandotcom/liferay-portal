@@ -80,7 +80,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= role == null %>">
-					<aui:select name="roleType">
+					<aui:select label="type" name="roleType">
 
 						<%
 						List<RoleTypeContributor> roleTypeContributors = RoleTypeContributorRetrieverUtil.getRoleTypeContributors(request);
@@ -97,7 +97,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</aui:select>
 				</c:when>
 				<c:otherwise>
-					<aui:input label="roleType" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
+					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
 
 					<c:if test="<%= role == null %>">
 						<aui:input name="roleType" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />

@@ -380,7 +380,12 @@ public class SLAProcessResultWorkflowMetricsIndexer
 										LocalDateTime.MAX.getNano())),
 								WorkflowConstants.STATUS_APPROVED);
 
-				workflowMetricsSLADefinitionVersions.forEach(
+				Stream<WorkflowMetricsSLADefinitionVersion> stream =
+					workflowMetricsSLADefinitionVersions.stream();
+
+				stream.filter(
+					WorkflowMetricsSLADefinitionVersion::isActive
+				).forEach(
 					workflowMetricsSLADefinitionVersion -> {
 						Optional<WorkflowMetricsSLAProcessResult> optional =
 							workflowMetricsSLAProcessor.process(
@@ -413,7 +418,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 										}
 									});
 							});
-					});
+					}
+				);
 			}
 		);
 

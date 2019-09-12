@@ -59,12 +59,12 @@ class DataLayoutBuilder extends Component {
 
 	getDefinitionAndLayout(pages) {
 		const {availableLanguageIds, defaultLanguageId} = this.props;
-		const columnDefinitions = [];
+		const fieldDefinitions = [];
 		const pagesVisitor = new PagesVisitor(pages);
 
 		const newPages = pagesVisitor.mapFields(
 			({fieldName, settingsContext}) => {
-				const columnConfig = {
+				const fieldConfig = {
 					customProperties: {}
 				};
 				const settingsContextVisitor = new PagesVisitor(
@@ -81,26 +81,24 @@ class DataLayoutBuilder extends Component {
 
 						if (localizable) {
 							if (this._isCustomProperty(fieldName)) {
-								columnConfig.customProperties[
+								fieldConfig.customProperties[
 									fieldName
 								] = localizedValue;
 							} else {
-								columnConfig[fieldName] = localizedValue;
+								fieldConfig[fieldName] = localizedValue;
 							}
 						} else {
 							if (this._isCustomProperty(fieldName)) {
-								columnConfig.customProperties[
-									fieldName
-								] = value;
+								fieldConfig.customProperties[fieldName] = value;
 							} else {
-								columnConfig[fieldName] = value;
+								fieldConfig[fieldName] = value;
 							}
 						}
 					},
 					false
 				);
 
-				columnDefinitions.push(columnConfig);
+				fieldDefinitions.push(fieldConfig);
 
 				return fieldName;
 			},
@@ -110,7 +108,7 @@ class DataLayoutBuilder extends Component {
 		return {
 			definition: {
 				availableLanguageIds,
-				dataDefinitionFields: columnDefinitions,
+				dataDefinitionFields: fieldDefinitions,
 				defaultLanguageId
 			},
 			layout: {

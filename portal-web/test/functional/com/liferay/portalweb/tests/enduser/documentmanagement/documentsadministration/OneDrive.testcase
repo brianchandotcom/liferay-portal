@@ -81,19 +81,19 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
-		OneDrive.AddDocument(
+		OneDrive.editTitle(
 			dmDocumentTitle = "Excel Sheet Title",
-			key_documentTitle = "Excel Sheet Title.xlsx");
+			key_documentTitle = "Untitled.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Excel Sheet Title",
+			dmDocumentTitle = "Untitled",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Excel Sheet Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -112,19 +112,19 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
-		OneDrive.AddDocument(
+		OneDrive.editTitle(
 			dmDocumentTitle = "PowerPoint Presentation Title",
-			key_documentTitle = "PowerPoint Presentation Title.pptx");
+			key_documentTitle = "Untitled.pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "PowerPoint Presentation Title",
+			dmDocumentTitle = "Untitled",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "PowerPoint Presentation Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -143,19 +143,19 @@ definition {
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
-		OneDrive.AddDocument(
+		OneDrive.editTitle(
 			dmDocumentTitle = "Word Doc Title",
-			key_documentTitle = "Word Doc Title.docx");
+			key_documentTitle = "Untitled.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Word Doc Title",
+			dmDocumentTitle = "Untitled",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

@@ -359,6 +359,20 @@ public class SegmentsExperienceLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience updateSegmentsExperienceActive(
+			long segmentsExperienceId, boolean active)
+		throws PortalException {
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperiencePersistence.findByPrimaryKey(
+				segmentsExperienceId);
+
+		segmentsExperience.setActive(active);
+
+		return segmentsExperiencePersistence.update(segmentsExperience);
+	}
+
+	@Override
 	public SegmentsExperience updateSegmentsExperiencePriority(
 			long segmentsExperienceId, int newPriority)
 		throws PortalException {

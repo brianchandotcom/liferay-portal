@@ -356,6 +356,8 @@ public class AddStructuredContentMVCActionCommandTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setServerName("localhost");
+		themeDisplay.setServerPort(8080);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 

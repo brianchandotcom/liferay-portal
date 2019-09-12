@@ -59,9 +59,11 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			FileShortcut fileShortcut = ActionUtil.getFileShortcut(
 				renderRequest);
 
-			_fileShortcutModelResourcePermission.check(
-				themeDisplay.getPermissionChecker(), fileShortcut,
-				ActionKeys.UPDATE);
+			if (fileShortcut != null) {
+				_fileShortcutModelResourcePermission.check(
+					themeDisplay.getPermissionChecker(), fileShortcut,
+					ActionKeys.UPDATE);
+			}
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);

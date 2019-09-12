@@ -36,6 +36,16 @@ $c: '.ddm-form-builder';
 		&.selected {
 			border-color: $active-blue;
 		}
+
+		&:hover {
+			border-width: 1px;
+			margin: 1px 2px;
+		}
+
+		&.selected {
+			border-width: 2px;
+			margin: 0 1px;
+		}
 	}
 
 	.form-builder-layout {

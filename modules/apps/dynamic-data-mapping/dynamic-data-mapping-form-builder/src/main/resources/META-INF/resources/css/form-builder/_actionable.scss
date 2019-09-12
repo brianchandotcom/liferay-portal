@@ -39,4 +39,16 @@
 			visibility: visible;
 		}
 	}
+
+	&:hover .ddm-field-actions-container {
+		border-width: 1px;
+		left: -1px;
+		top: -29px;
+	}
+
+	&.selected .ddm-field-actions-container {
+		border-width: 2px;
+		left: -2px;
+		top: -30px;
+	}
 }

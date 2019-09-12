@@ -86,8 +86,7 @@ public class AsahSegmentsExperimentProcessor {
 	}
 
 	public void processDeleteSegmentsExperiment(
-			SegmentsExperiment segmentsExperiment)
-		throws PortalException {
+		SegmentsExperiment segmentsExperiment) {
 
 		if (segmentsExperiment == null) {
 			return;
@@ -103,12 +102,7 @@ public class AsahSegmentsExperimentProcessor {
 		_asahFaroBackendClient = asahFaroBackendClientOptional.get();
 
 		_asahFaroBackendClient.deleteExperiment(
-			ExperimentUtil.toExperiment(
-				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
-				_groupLocalService, _layoutLocalService,
-				LocaleUtil.getSiteDefault(), _portal,
-				_segmentsEntryLocalService, _segmentsExperienceLocalService,
-				segmentsExperiment));
+			segmentsExperiment.getSegmentsExperimentKey());
 	}
 
 	public void processUpdateSegmentsExperiment(

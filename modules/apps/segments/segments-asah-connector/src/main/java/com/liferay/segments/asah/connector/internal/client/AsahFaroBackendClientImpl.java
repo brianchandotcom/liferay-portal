@@ -75,17 +75,14 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 	}
 
 	@Override
-	public void deleteExperiment(Experiment experiment) {
-		String segmentsExperimentKey = experiment.getId();
-
-		if (segmentsExperimentKey == null) {
+	public void deleteExperiment(String experimentId) {
+		if (experimentId == null) {
 			return;
 		}
 
 		_jsonWebServiceClient.doDelete(
 			StringUtil.replace(
-				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
-				segmentsExperimentKey),
+				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}", experimentId),
 			new HashMap<>(), _headers);
 	}
 

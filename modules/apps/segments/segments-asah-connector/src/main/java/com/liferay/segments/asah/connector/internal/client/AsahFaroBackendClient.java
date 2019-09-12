@@ -43,10 +43,10 @@ public interface AsahFaroBackendClient {
 	/**
 	 * Deletes an {@link Experiment}.
 	 *
-	 * @param  experiment experiment to be removed
+	 * @param  experimentId the ID of the experiment to be removed
 	 * @review
 	 */
-	public void deleteExperiment(Experiment experiment);
+	public void deleteExperiment(String experimentId);
 
 	/**
 	 * Returns the ID of the data source connected to the client.

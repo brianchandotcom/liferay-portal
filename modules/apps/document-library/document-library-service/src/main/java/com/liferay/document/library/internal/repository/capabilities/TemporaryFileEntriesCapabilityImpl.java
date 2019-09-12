@@ -347,6 +347,8 @@ public class TemporaryFileEntriesCapabilityImpl
 		public void execute(FileEntry fileEntry) throws PortalException {
 			Folder folder = fileEntry.getFolder();
 
+			DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
+
 			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());
 
 			Folder mountFolder = _documentRepository.getFolder(
@@ -361,6 +363,8 @@ public class TemporaryFileEntriesCapabilityImpl
 				if (count != 0) {
 					break;
 				}
+
+				DLAppHelperLocalServiceUtil.deleteFolder(folder);
 
 				_documentRepository.deleteFolder(folderId);
 

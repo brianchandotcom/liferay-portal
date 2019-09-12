@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:portal-security:portal-security-permission-test-util")
+	testIntegrationCompile project(":apps:portal:portal-local-service-tree-test-util")
 	testIntegrationCompile project(":apps:portal:portal-notifications-test-util")
 	testIntegrationCompile project(":apps:portal:portal-verify-test-util")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")

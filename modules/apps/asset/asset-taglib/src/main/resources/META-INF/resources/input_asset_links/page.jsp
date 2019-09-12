@@ -159,6 +159,7 @@
 						}
 					},
 					selectedData: searchContainerData,
+					'strings.add': '<liferay-ui:message key="done" />',
 					title: event.currentTarget.attr('data-title'),
 					url: event.currentTarget.attr('data-href')
 				}

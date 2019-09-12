@@ -1524,7 +1524,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.setUrlTitle(friendlyURLEntry.getUrlTitle());
 		}
 
-		blogsEntryPersistence.update(entry);
+		entry = blogsEntryPersistence.update(entry);
 
 		// Statistics
 

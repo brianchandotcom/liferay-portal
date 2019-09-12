@@ -182,7 +182,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setDisplayDate(displayDate.getTime());
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		BlogsEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), entry.getEntryId(),
@@ -218,7 +218,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setDisplayDate(displayDate.getTime());
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		BlogsEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), entry.getEntryId(),
@@ -255,7 +255,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setDisplayDate(displayDate.getTime());
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		entry = BlogsEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), entry.getEntryId(),
@@ -266,7 +266,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setDisplayDate(displayDate.getTime());
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		BlogsEntryLocalServiceUtil.checkEntries();
 
@@ -289,7 +289,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		entry = BlogsEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), entry.getEntryId(),
@@ -302,7 +302,7 @@ public class BlogsEntryStatusTransitionTest {
 
 		entry.setDisplayDate(displayDate.getTime());
 
-		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+		entry = BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
 
 		BlogsEntryLocalServiceUtil.checkEntries();
 

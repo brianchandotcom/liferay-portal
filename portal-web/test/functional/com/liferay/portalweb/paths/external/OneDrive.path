@@ -49,6 +49,11 @@
 	<td>//div[@id='BreadcrumbTitle']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DOCUMENTS_CONTENT</td>
+	<td>//div[@id='WACViewPanel_EditingElement']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

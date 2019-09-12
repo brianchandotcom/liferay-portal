@@ -15,7 +15,7 @@
 /**
  * The History HTML5 Component.
  *
- * @deprecated since 7.2, unused
+ * @deprecated As of Mueller (7.2.x), replaced by senna.js
  * @module liferay-history-html5
  */
 

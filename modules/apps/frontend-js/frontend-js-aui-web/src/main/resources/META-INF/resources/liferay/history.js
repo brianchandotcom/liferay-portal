@@ -15,7 +15,7 @@
 /**
  * The History Utility, a utility for SPA.
  *
- * @deprecated since 7.2, unused, replaced by senna.js
+ * @deprecated As of Mueller (7.2.x), replaced by senna.js
  * @module liferay-history
  */
 

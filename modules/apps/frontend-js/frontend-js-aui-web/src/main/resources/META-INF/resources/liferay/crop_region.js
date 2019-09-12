@@ -12,6 +12,13 @@
  * details.
  */
 
+/**
+ * The Crop Region Utility
+ *
+ * @deprecated As of Athanasius(7.3.x), replaced by Liferay.Util.getCropRegion
+ * @module liferay-crop-region
+ */
+
 AUI.add(
 	'liferay-crop-region',
 	function(A) {

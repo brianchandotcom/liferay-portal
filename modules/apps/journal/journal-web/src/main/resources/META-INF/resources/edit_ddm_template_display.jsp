@@ -400,8 +400,9 @@ JournalDDMTemplateUtil journalDDMTemplateUtil = (JournalDDMTemplateUtil)request.
 				.hasUndo()
 		) {
 			Liferay.fire('<portlet:namespace />saveTemplate');
-		} else {
+		}
 		<c:if test="<%= journalEditDDMTemplateDisplayContext.getDDMTemplate() == null %>">
+			else {
 				editorContentElement.val('');
 			}
 		</c:if>

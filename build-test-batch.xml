@@ -2233,7 +2233,10 @@ log.sanitizer.enabled=false</echo>
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
 
-							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
+							<setup-test-batch-testable-tomcat
+								setup.proxy="false"
+								test.portal.bundle.version="@{test.portal.bundle.version}"
+							/>
 
 							<antcall target="start-app-server-preserve-liferay-home" />
 

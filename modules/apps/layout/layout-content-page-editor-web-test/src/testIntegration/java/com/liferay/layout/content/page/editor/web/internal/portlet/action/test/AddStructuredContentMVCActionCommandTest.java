@@ -484,8 +484,9 @@ public class AddStructuredContentMVCActionCommandTest {
 
 				String expectedTitle = title + " - " + fieldName;
 
-				Assert.assertEquals(
-					expectedTitle, jsonObject.getString("title"));
+				String actualTitle = jsonObject.getString("title");
+
+				Assert.assertTrue(actualTitle.startsWith(expectedTitle));
 
 				Assert.assertEquals(
 					_group.getGroupId(), jsonObject.getLong("groupId"));
@@ -495,7 +496,9 @@ public class AddStructuredContentMVCActionCommandTest {
 						jsonObject.getString("uuid"),
 						jsonObject.getLong("groupId"));
 
-				Assert.assertEquals(expectedTitle, fileEntry.getTitle());
+				String fileEntryTitle = fileEntry.getTitle();
+
+				Assert.assertTrue(fileEntryTitle.startsWith(expectedTitle));
 
 				Assert.assertEquals(
 					expectedFieldValue,

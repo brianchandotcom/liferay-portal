@@ -48,6 +48,22 @@ definition {
 			locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
 			value1 = "Saved");
 
+		if (isSet(dmDocumentContent)) {
+			Pause(locator1 = "10000");
+
+			Click(locator1 = "OneDrive#DOCUMENTS_CONTENT");
+
+			Pause(locator1 = "10000");
+
+			Type(
+				locator1 = "OneDrive#DOCUMENTS_CONTENT",
+				value1 = "${dmDocumentContent}");
+
+			AssertTextPresent(
+				locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
+				value1 = "Saved");
+		}
+
 		Navigator.closeWindow();
 
 		SelectFrameTop();

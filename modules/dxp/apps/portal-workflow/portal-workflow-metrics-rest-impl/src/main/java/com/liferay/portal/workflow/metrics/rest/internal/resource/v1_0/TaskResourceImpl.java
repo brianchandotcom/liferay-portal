@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -91,7 +92,7 @@ public class TaskResourceImpl
 	@Override
 	public Page<Task> getProcessTasksPage(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			Pagination pagination, Sort[] sorts)
+			String key, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		String latestProcessVersion = _resourceHelper.getLatestProcessVersion(
@@ -101,10 +102,10 @@ public class TaskResourceImpl
 
 		Map<String, Bucket> taskBuckets = _getTaskBuckets(
 			GetterUtil.getBoolean(completed), dateEnd, dateStart, fieldSort,
-			pagination, processId, latestProcessVersion);
+			key, pagination, processId, latestProcessVersion);
 
 		Map<String, Task> tasksMap = _getTasksMap(
-			processId, taskBuckets.keySet(), latestProcessVersion);
+			key, processId, taskBuckets.keySet(), latestProcessVersion);
 
 		long count = tasksMap.size();
 
@@ -115,20 +116,24 @@ public class TaskResourceImpl
 
 			return Page.of(
 				_getTasks(
-					GetterUtil.getBoolean(completed), fieldSort, taskBuckets,
-					pagination, processId, tasksMap),
+					GetterUtil.getBoolean(completed), fieldSort, pagination,
+					processId, taskBuckets, tasksMap),
 				pagination, count);
 		}
 
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createBooleanQuery(long processId) {
+	private BooleanQuery _createBooleanQuery(
+		boolean completed, long processId) {
+
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("tokenId", 0));
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("completed", completed),
+			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId));
 	}
 
@@ -136,33 +141,37 @@ public class TaskResourceImpl
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		return booleanQuery.addMustQueryClauses(
+			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("processId", processId),
 			_queries.term("version", version));
 	}
 
 	private BooleanQuery _createFilterBooleanQuery(
-		boolean completed, Date dateEnd, Date dateStart, long processId,
-		String version) {
+		boolean completed, String key, long processId, String version) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		if (completed && (dateEnd != null) && (dateStart != null)) {
+		if (Validator.isNotNull(key)) {
 			booleanQuery.addMustQueryClauses(
-				_queries.rangeTerm(
-					"completionDate", true, true, _format(dateStart),
-					_format(dateEnd)));
+				_queries.wildcard("taskName", "*" + key + "*"));
 		}
 
-		booleanQuery.addShouldQueryClauses(_createBooleanQuery(processId));
+		booleanQuery.addShouldQueryClauses(
+			_createBooleanQuery(completed, processId));
 
 		return booleanQuery.addShouldQueryClauses(
 			_createBooleanQuery(processId, version));
 	}
 
 	private BooleanQuery _createFilterBooleanQuery(
-		long processId, Set<String> taskNames, String version) {
+		String key, long processId, Set<String> taskNames, String version) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		if (Validator.isNotNull(key)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.wildcard("name", "*" + key + "*"));
+		}
 
 		if (!taskNames.isEmpty()) {
 			TermsQuery termsQuery = _queries.terms("name");
@@ -177,16 +186,15 @@ public class TaskResourceImpl
 	}
 
 	private BooleanQuery _createNodesBooleanQuery(
-		long processId, Set<String> taskNames, String version) {
+		String key, long processId, Set<String> taskNames, String version) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_createFilterBooleanQuery(processId, taskNames, version));
+			_createFilterBooleanQuery(key, processId, taskNames, version));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("deleted", Boolean.FALSE),
 			_queries.term("type", "TASK"));
 	}
 
@@ -226,18 +234,15 @@ public class TaskResourceImpl
 	}
 
 	private BooleanQuery _createTokensBooleanQuery(
-		boolean completed, Date dateEnd, Date dateStart, long processId,
-		String version) {
+		boolean completed, String key, long processId, String version) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addFilterQueryClauses(
-			_createFilterBooleanQuery(
-				completed, dateEnd, dateStart, processId, version));
+			_createFilterBooleanQuery(completed, key, processId, version));
 
 		return booleanQuery.addMustQueryClauses(
 			_queries.term("companyId", contextCompany.getCompanyId()),
-			_queries.term("completed", completed),
 			_queries.term("deleted", Boolean.FALSE));
 	}
 
@@ -281,9 +286,9 @@ public class TaskResourceImpl
 		termsAggregation.addChildrenAggregations(
 			onTimeFilterAggregation, overdueFilterAggregation);
 
-		if ((fieldSort != null) &&
-			!_isOrderByDurationAvg(fieldSort.getField()) &&
-			!_isOrderByInstanceCount(fieldSort.getField())) {
+		if ((fieldSort != null) && (pagination != null) &&
+			(_isOrderByOnTimeInstanceCount(fieldSort.getField()) ||
+			 _isOrderByOverdueInstanceCount(fieldSort.getField()))) {
 
 			termsAggregation.addPipelineAggregation(
 				_resourceHelper.createBucketSortPipelineAggregation(
@@ -309,7 +314,7 @@ public class TaskResourceImpl
 
 	private Map<String, Bucket> _getTaskBuckets(
 		boolean completed, Date dateEnd, Date dateStart, FieldSort fieldSort,
-		Pagination pagination, long processId, String version) {
+		String key, Pagination pagination, long processId, String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -317,6 +322,15 @@ public class TaskResourceImpl
 			"taskName", "taskName");
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		booleanQuery.addMustQueryClauses(_queries.term("completed", completed));
+
+		if (completed && (dateEnd != null) && (dateStart != null)) {
+			booleanQuery.addMustQueryClauses(
+				_queries.rangeTerm(
+					"completionDate", true, true, _format(dateStart),
+					_format(dateEnd)));
+		}
 
 		FilterAggregation filterAggregation = _aggregations.filter(
 			"countFilter",
@@ -344,8 +358,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 		searchSearchRequest.setQuery(
-			_createTokensBooleanQuery(
-				completed, dateEnd, dateStart, processId, version));
+			_createTokensBooleanQuery(completed, key, processId, version));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -366,8 +379,9 @@ public class TaskResourceImpl
 	}
 
 	private Collection<Task> _getTasks(
-		boolean completed, FieldSort fieldSort, Map<String, Bucket> taskBuckets,
-		Pagination pagination, long processId, Map<String, Task> tasksMap) {
+		boolean completed, FieldSort fieldSort, Pagination pagination,
+		long processId, Map<String, Bucket> taskBuckets,
+		Map<String, Task> tasksMap) {
 
 		List<Task> tasks = new LinkedList<>();
 
@@ -393,9 +407,7 @@ public class TaskResourceImpl
 						Task task = tasksMap.remove(key);
 
 						_populateTaskWithSLAMetrics(
-							slaTermsAggregationResult.getBucket(
-								bucket.getKey()),
-							task);
+							slaTermsAggregationResult.getBucket(key), task);
 						_setDurationAvg(bucket, task);
 						_setInstanceCount(bucket, task);
 
@@ -423,7 +435,7 @@ public class TaskResourceImpl
 	}
 
 	private Map<String, Task> _getTasksMap(
-		long processId, Set<String> taskNames, String version) {
+		String key, long processId, Set<String> taskNames, String version) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -435,7 +447,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-nodes");
 		searchSearchRequest.setQuery(
-			_createNodesBooleanQuery(processId, taskNames, version));
+			_createNodesBooleanQuery(key, processId, taskNames, version));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -488,6 +500,34 @@ public class TaskResourceImpl
 		return false;
 	}
 
+	private boolean _isOrderByOnTimeInstanceCount(String fieldName) {
+		if (StringUtil.equals(fieldName, "onTimeInstanceCount") ||
+			StringUtil.equals(
+				fieldName,
+				StringBundler.concat(
+					"onTime", StringPool.GREATER_THAN,
+					"instanceCount.value"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isOrderByOverdueInstanceCount(String fieldName) {
+		if (StringUtil.equals(fieldName, "overdueInstanceCount") ||
+			StringUtil.equals(
+				fieldName,
+				StringBundler.concat(
+					"overdue", StringPool.GREATER_THAN,
+					"instanceCount.value"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _populateTaskWithSLAMetrics(Bucket bucket, Task task) {
 		_setOnTimeInstanceCount(bucket, task);
 		_setOverdueInstanceCount(bucket, task);
@@ -507,7 +547,8 @@ public class TaskResourceImpl
 				filterAggregationResult.getChildAggregationResult(
 					"durationAvg");
 
-		task.setDurationAvg((long)avgAggregationResult.getValue());
+		task.setDurationAvg(
+			GetterUtil.getLong(avgAggregationResult.getValue()));
 	}
 
 	private void _setInstanceCount(Bucket bucket, Task task) {
@@ -524,7 +565,8 @@ public class TaskResourceImpl
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-		task.setInstanceCount(valueCountAggregationResult.getValue());
+		task.setInstanceCount(
+			GetterUtil.getLong(valueCountAggregationResult.getValue()));
 	}
 
 	private void _setOnTimeInstanceCount(Bucket bucket, Task task) {
@@ -554,15 +596,17 @@ public class TaskResourceImpl
 
 		String fieldName = sort.getFieldName();
 
-		if (_isOrderByInstanceCount(fieldName)) {
-			fieldName = StringBundler.concat(
-				"countFilter", StringPool.GREATER_THAN, "instanceCount");
-		}
-		else if (_isOrderByDurationAvg(fieldName)) {
+		if (_isOrderByDurationAvg(fieldName)) {
 			fieldName = StringBundler.concat(
 				"countFilter", StringPool.GREATER_THAN, "durationAvg");
 		}
-		else {
+		else if (_isOrderByInstanceCount(fieldName)) {
+			fieldName = StringBundler.concat(
+				"countFilter", StringPool.GREATER_THAN, "instanceCount");
+		}
+		else if (_isOrderByOnTimeInstanceCount(fieldName) ||
+				 _isOrderByOverdueInstanceCount(fieldName)) {
+
 			fieldName = StringBundler.concat(
 				StringUtil.extractFirst(fieldName, "InstanceCount"),
 				StringPool.GREATER_THAN, "instanceCount.value");

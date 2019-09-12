@@ -56,50 +56,40 @@ function _renderFlagsModalComponent({
 describe('FlagsModal', () => {
 	afterEach(cleanup);
 
-	it('renders', async done => {
+	it('renders', async () => {
 		const {getByText, getByRole} = _renderFlagsModalComponent();
 
 		await waitForElement(() => getByText('report-inappropriate-content'));
 		await waitForElement(() => getByRole('form'));
-
-		done();
 	});
 
-	it('renders as guess and render email field', async done => {
+	it('renders as guess and render email field', async () => {
 		const {getByLabelText} = _renderFlagsModalComponent({
 			signedIn: false
 		});
 
 		await waitForElement(() => getByLabelText('email', {exact: false}));
-
-		done();
 	});
 
-	it('renders error', async done => {
+	it('renders error', async () => {
 		const {getByText} = _renderFlagsModalComponent({status: STATUS_ERROR});
 
 		await waitForElement(() =>
 			getByText('an-error-occurred', {exact: false})
 		);
-
-		done();
 	});
 
-	it('renders login', async done => {
+	it('renders login', async () => {
 		const {getByText} = _renderFlagsModalComponent({status: STATUS_LOGIN});
 
 		await waitForElement(() => getByText('please-sign-in', {exact: false}));
-
-		done();
 	});
 
-	it('renders success', async done => {
+	it('renders success', async () => {
 		const {getByText} = _renderFlagsModalComponent({
 			status: STATUS_SUCCESS
 		});
 
 		await waitForElement(() => getByText('thank-you', {exact: false}));
-
-		done();
 	});
 });

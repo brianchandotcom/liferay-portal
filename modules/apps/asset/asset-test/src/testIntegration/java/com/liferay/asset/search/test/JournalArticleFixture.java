@@ -56,7 +56,8 @@ public class JournalArticleFixture {
 
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0, titleMap,
-			descriptionMap, DDMStructureTestUtil.getSampleStructuredContent(),
+			descriptionMap,
+			DDMStructureTestUtil.getSampleStructuredContent("content", "title"),
 			ddmStructureKey, ddmTemplateKey, serviceContext);
 
 		_journalArticles.add(journalArticle);

@@ -12,6 +12,7 @@
  * details.
  */
 
+import dom from 'metal-dom';
 import React, {useEffect, useState} from 'react';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import LayoutBuilderColumn from './LayoutBuilderColumn.es';
@@ -23,8 +24,9 @@ const getColumns = () => [
 
 const getColumnKey = node => {
 	const {columnIndex, pageIndex, rowIndex} = getIndexes(node.parentElement);
+	const placeholder = !!dom.closest(node, '.placeholder');
 
-	return `column_${pageIndex}_${rowIndex}_${columnIndex}`;
+	return `column_${pageIndex}_${rowIndex}_${columnIndex}_${placeholder}`;
 };
 
 export default ({dataLayoutBuilder}) => {

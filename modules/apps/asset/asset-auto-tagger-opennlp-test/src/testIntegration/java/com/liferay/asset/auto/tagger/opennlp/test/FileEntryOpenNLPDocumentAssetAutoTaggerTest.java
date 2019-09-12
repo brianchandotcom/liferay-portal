@@ -28,6 +28,11 @@ import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.ByteArrayInputStream;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -38,25 +43,48 @@ import org.junit.runner.RunWith;
 public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 	extends BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 
+	@Test
+	public void testDoesNotAutoTagAFileEntryWithAnUnsupportedContentType()
+		throws Exception {
+
+		testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
+			getClassName(),
+			() -> {
+				AssetEntry assetEntry = _getAssetEntry(
+					getTaggableText(), ContentTypes.APPLICATION_GZIP);
+
+				Collection<String> tagNames = Arrays.asList(
+					assetEntry.getTagNames());
+
+				Assert.assertEquals(tagNames.toString(), 0, tagNames.size());
+			});
+	}
+
 	@Override
 	protected AssetEntry getAssetEntry(String text) throws Exception {
+		return _getAssetEntry(text, ContentTypes.TEXT_PLAIN);
+	}
+
+	@Override
+	protected String getClassName() {
+		return DLFileEntryConstants.getClassName();
+	}
+
+	private AssetEntry _getAssetEntry(String text, String mimeType)
+		throws Exception {
+
 		byte[] bytes = text.getBytes();
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), mimeType,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			new ByteArrayInputStream(bytes), bytes.length,
 			ServiceContextTestUtil.getServiceContext());
 
 		return assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-	}
-
-	@Override
-	protected String getClassName() {
-		return DLFileEntryConstants.getClassName();
 	}
 
 }

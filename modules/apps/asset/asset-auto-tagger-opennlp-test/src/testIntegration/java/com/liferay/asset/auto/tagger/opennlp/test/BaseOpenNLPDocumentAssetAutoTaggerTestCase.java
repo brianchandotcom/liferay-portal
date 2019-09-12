@@ -57,10 +57,7 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 		testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
 			getClassName(),
 			() -> {
-				AssetEntry assetEntry = getAssetEntry(
-					new String(
-						FileUtil.getBytes(
-							getClass(), "dependencies/" + _FILE_NAME)));
+				AssetEntry assetEntry = getAssetEntry(getTaggableText());
 
 				Collection<String> actualTagNames = Arrays.asList(
 					assetEntry.getTagNames());
@@ -115,10 +112,7 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 	public void testDoesNotAutoTagAnAssetWhenNotEnabled() throws Exception {
 		testWithOpenNLPDocumentAssetAutoTagProviderDisabled(
 			() -> {
-				AssetEntry assetEntry = getAssetEntry(
-					new String(
-						FileUtil.getBytes(
-							getClass(), "dependencies/" + _FILE_NAME)));
+				AssetEntry assetEntry = getAssetEntry(getTaggableText());
 
 				Collection<String> tagNames = Arrays.asList(
 					assetEntry.getTagNames());
@@ -130,6 +124,11 @@ public abstract class BaseOpenNLPDocumentAssetAutoTaggerTestCase {
 	protected abstract AssetEntry getAssetEntry(String text) throws Exception;
 
 	protected abstract String getClassName();
+
+	protected final String getTaggableText() throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + _FILE_NAME));
+	}
 
 	protected void testWithOpenNLPDocumentAssetAutoTagProviderDisabled(
 			UnsafeRunnable<Exception> unsafeRunnable)

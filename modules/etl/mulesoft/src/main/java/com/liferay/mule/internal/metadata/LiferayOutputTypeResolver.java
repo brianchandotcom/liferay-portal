@@ -41,7 +41,6 @@ import org.mule.runtime.api.metadata.MetadataContext;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
 import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
-import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
 /**
  * @author Matija Petanjek
@@ -58,54 +57,36 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 			MetadataContext metadataContext, String endpoint)
 		throws ConnectionException, MetadataResolvingException {
 
-		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+		JsonNode oasJsonNode = _getOASJsonNode(metadataContext.getConnection());
 
-		ObjectTypeBuilder objectTypeBuilder = baseTypeBuilder.create(
-			MetadataFormat.JSON
-		).objectType();
+		JsonNode referenceJsonNode = _getReferenceJsonNode(
+			oasJsonNode, endpoint);
+
+		String schemaName = _getSchemaName(referenceJsonNode.textValue());
+
+		JsonNode schemaJsonNode = _getSchemaJsonNode(oasJsonNode, schemaName);
+
+		if (schemaName.startsWith("Page")) {
+			return _getSingleResultMetadataType(
+				metadataContext, oasJsonNode,
+				schemaJsonNode.get(OASConstants.PROPERTIES));
+		}
+
+		return _resolveMetadataType(
+			metadataContext, schemaJsonNode.get(OASConstants.PROPERTIES),
+			schemaJsonNode.get(OASConstants.REQUIRED));
+	}
+
+	private JsonNode _getOASJsonNode(
+			Optional<LiferayConnection> liferayConnectionOptional)
+		throws MetadataResolvingException {
 
 		try {
-			Optional<LiferayConnection> liferayConnectionOptional =
-				metadataContext.getConnection();
-
 			LiferayConnection liferayConnection =
 				liferayConnectionOptional.get();
 
-			HttpResponse openAPISpecHttpResponse =
-				liferayConnection.getOpenAPISpec();
-
-			JsonNode openAPISpecJsonNode = _jsonNodeReader.fromHttpResponse(
-				openAPISpecHttpResponse);
-
-			JsonNode referenceJsonNode = _getReferenceJsonNode(
-				openAPISpecJsonNode, endpoint);
-
-			String schemaName = _getSchemaName(referenceJsonNode.textValue());
-
-			JsonNode schemaJsonNode = _getSchemaJsonNode(
-				openAPISpecJsonNode, schemaName);
-
-			JsonNode propertiesJsonNode = schemaJsonNode.get(
-				OASConstants.PROPERTIES);
-
-			if (schemaName.startsWith("Page")) {
-				referenceJsonNode = _jsonNodeReader.getDescendantJsonNode(
-					propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF);
-
-				schemaName = _getSchemaName(referenceJsonNode.textValue());
-
-				schemaJsonNode = _getSchemaJsonNode(
-					openAPISpecJsonNode, schemaName);
-
-				propertiesJsonNode = schemaJsonNode.get(
-					OASConstants.PROPERTIES);
-			}
-
-			JsonNode requiredJsonNode = schemaJsonNode.get(
-				OASConstants.REQUIRED);
-
-			return _resolveMetadataType(
-				objectTypeBuilder, propertiesJsonNode, requiredJsonNode);
+			return _jsonNodeReader.fromHttpResponse(
+				liferayConnection.getOpenAPISpec());
 		}
 		catch (IOException ioe) {
 			throw new MetadataResolvingException(
@@ -229,6 +210,16 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 		}
 	}
 
+	private ObjectTypeBuilder _getObjectTypeBuilder(
+		MetadataContext metadataContext) {
+
+		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+
+		return baseTypeBuilder.create(
+			MetadataFormat.JSON
+		).objectType();
+	}
+
 	private JsonNode _getReferenceJsonNode(
 		JsonNode openAPISpecJsonNode, String endpoint) {
 
@@ -254,9 +245,29 @@ public class LiferayOutputTypeResolver implements OutputTypeResolver<String> {
 		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
+	private MetadataType _getSingleResultMetadataType(
+		MetadataContext metadataContext, JsonNode oasJsonNode,
+		JsonNode propertiesJsonNode) {
+
+		JsonNode referenceJsonNode = _jsonNodeReader.getDescendantJsonNode(
+			propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF);
+
+		JsonNode schemaJsonNode = _getSchemaJsonNode(
+			oasJsonNode, referenceJsonNode.textValue());
+
+		propertiesJsonNode = schemaJsonNode.get(OASConstants.PROPERTIES);
+
+		return _resolveMetadataType(
+			metadataContext, propertiesJsonNode,
+			schemaJsonNode.get(OASConstants.REQUIRED));
+	}
+
 	private MetadataType _resolveMetadataType(
-		ObjectTypeBuilder objectTypeBuilder, JsonNode propertiesJsonNode,
+		MetadataContext metadataContext, JsonNode propertiesJsonNode,
 		JsonNode requiredJsonNode) {
+
+		ObjectTypeBuilder objectTypeBuilder = _getObjectTypeBuilder(
+			metadataContext);
 
 		Iterator<Map.Entry<String, JsonNode>> propertiesIterator =
 			propertiesJsonNode.fields();

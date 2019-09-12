@@ -19,7 +19,6 @@ import com.liferay.mule.internal.config.BasicAuthenticationConfig;
 import javax.inject.Inject;
 
 import org.mule.runtime.api.connection.ConnectionException;
-import org.mule.runtime.api.connection.ConnectionValidationResult;
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.extension.api.annotation.Alias;
 import org.mule.runtime.extension.api.annotation.Expression;
@@ -47,13 +46,6 @@ public class BasicConnectionProvider extends BaseConnectionProvider {
 	@Override
 	public void disconnect(LiferayConnection liferayConnection) {
 		liferayConnection.invalidate();
-	}
-
-	@Override
-	public ConnectionValidationResult validate(
-		LiferayConnection liferayConnection) {
-
-		return ConnectionValidationResult.success();
 	}
 
 	@ParameterGroup(name = "Connection config")

@@ -73,7 +73,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 			<ClayModal observer={observer} size="lg">
 				<ClayModal.Header>
 					{success
-						? Liferay.Language.get('test-successfully-started')
+						? Liferay.Language.get('test-started-successfully')
 						: Liferay.Language.get('review-and-run-test')}
 				</ClayModal.Header>
 				<ClayModal.Body>

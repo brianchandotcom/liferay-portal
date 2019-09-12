@@ -14,7 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
-import Flags from '../../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
+import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
 import React from 'react';
 
 function _renderFlagsComponent({
@@ -43,9 +43,10 @@ describe('Flags', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		const {asFragment} = _renderFlagsComponent();
+		const {getByText, getByRole} = _renderFlagsComponent();
 
-		expect(asFragment()).toMatchSnapshot();
+		expect(getByText('report'));
+		expect(getByRole('button'));
 	});
 
 	it('renders with only icon visible (text visually hidden)', () => {

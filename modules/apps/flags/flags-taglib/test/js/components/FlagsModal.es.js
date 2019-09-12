@@ -13,14 +13,14 @@
  */
 
 import {cleanup, render, waitForElement} from '@testing-library/react';
-import FlagsModal from '../../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal.es';
+import FlagsModal from '../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal.es';
 import React from 'react';
 import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS
-} from '../../../../src/main/resources/META-INF/resources/flags/js/constants.es';
+} from '../../../src/main/resources/META-INF/resources/flags/js/constants.es';
 
 function _renderFlagsModalComponent({
 	companyName = 'Liferay',

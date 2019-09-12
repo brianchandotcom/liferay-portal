@@ -283,6 +283,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		List<ScreenNavigationEntry> screenNavigationEntries =
 			_getScreenNavigationEntries();
 
+		if (ListUtil.isEmpty(screenNavigationEntries)) {
+			return null;
+		}
+
 		ScreenNavigationEntry screenNavigationEntry =
 			screenNavigationEntries.get(0);
 
@@ -298,6 +302,10 @@ public class ScreenNavigationTag extends IncludeTag {
 
 		ScreenNavigationCategory selectedScreenNavigationCategory =
 			_getSelectedScreenNavigationCategory();
+
+		if (selectedScreenNavigationCategory == null) {
+			return null;
+		}
 
 		return screenNavigationRegistry.getScreenNavigationEntries(
 			selectedScreenNavigationCategory, themeDisplay.getUser(),
@@ -333,6 +341,10 @@ public class ScreenNavigationTag extends IncludeTag {
 
 		List<ScreenNavigationEntry> screenNavigationEntries =
 			_getScreenNavigationEntries();
+
+		if (ListUtil.isEmpty(screenNavigationEntries)) {
+			return null;
+		}
 
 		for (ScreenNavigationEntry screenNavigationEntry :
 				screenNavigationEntries) {

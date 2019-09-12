@@ -79,7 +79,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		_deleteTasks();
 
-		Long processId = testGetProcessTasksPage_getProcessId();
+		_workflowMetricsRESTTestHelper.updateProcess(
+			testGroup.getCompanyId(), _process.getId(), "2.0");
 
 		Task task1 = randomTask();
 
@@ -87,7 +88,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		task1.setOnTimeInstanceCount(0L);
 		task1.setOverdueInstanceCount(0L);
 
-		testGetProcessTasksPage_addTask(processId, task1);
+		testGetProcessTasksPage_addTask(_process.getId(), task1, "2.0");
 
 		Task task2 = randomTask();
 
@@ -95,10 +96,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		task2.setOnTimeInstanceCount(0L);
 		task2.setOverdueInstanceCount(0L);
 
-		testGetProcessTasksPage_addTask(processId, task2);
+		testGetProcessTasksPage_addTask(_process.getId(), task2, "2.0");
 
 		Page<Task> page = taskResource.getProcessTasksPage(
-			processId, true, null, null, Pagination.of(1, 2), null);
+			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2), (List<Task>)page.getItems());
@@ -158,8 +160,15 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	protected Task testGetProcessTasksPage_addTask(Long processId, Task task)
 		throws Exception {
 
+		return testGetProcessTasksPage_addTask(processId, task, "1.0");
+	}
+
+	protected Task testGetProcessTasksPage_addTask(
+			Long processId, Task task, String version)
+		throws Exception {
+
 		task = _workflowMetricsRESTTestHelper.addTask(
-			testGroup.getCompanyId(), processId, task);
+			testGroup.getCompanyId(), processId, task, version);
 
 		_tasks.add(task);
 

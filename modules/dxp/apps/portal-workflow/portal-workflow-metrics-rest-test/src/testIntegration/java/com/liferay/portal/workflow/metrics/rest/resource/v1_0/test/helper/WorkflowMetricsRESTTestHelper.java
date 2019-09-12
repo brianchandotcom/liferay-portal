@@ -143,27 +143,22 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public Process addProcess(long companyId) throws Exception {
-		Process process = new Process() {
-			{
-				id = RandomTestUtil.randomLong();
-				instanceCount = 0L;
-				onTimeInstanceCount = 0L;
-				overdueInstanceCount = 0L;
-				title = RandomTestUtil.randomString();
-				untrackedInstanceCount = 0L;
-			}
-		};
-
-		return addProcess(companyId, process);
+		return addProcess(companyId, "1.0");
 	}
 
 	public Process addProcess(long companyId, Process process)
 		throws Exception {
 
+		return addProcess(companyId, process, "1.0");
+	}
+
+	public Process addProcess(long companyId, Process process, String version)
+		throws Exception {
+
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_PROCESS_INDEXER),
 			_createWorkflowMetricsProcessDocument(
-				companyId, process.getId(), process.getTitle(), "1.0"));
+				companyId, process.getId(), process.getTitle(), version));
 
 		Long onTimeInstanceCount = process.getOnTimeInstanceCount();
 		Long overdueInstanceCount = process.getOverdueInstanceCount();
@@ -188,6 +183,21 @@ public class WorkflowMetricsRESTTestHelper {
 			false, "processId", process.getId());
 
 		return process;
+	}
+
+	public Process addProcess(long companyId, String version) throws Exception {
+		Process process = new Process() {
+			{
+				id = RandomTestUtil.randomLong();
+				instanceCount = 0L;
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+				title = RandomTestUtil.randomString();
+				untrackedInstanceCount = 0L;
+			}
+		};
+
+		return addProcess(companyId, process, version);
 	}
 
 	public void addSLAProcessResult(
@@ -229,7 +239,8 @@ public class WorkflowMetricsRESTTestHelper {
 			slaDefinitionId, "taskId", taskId, "taskName", taskName);
 	}
 
-	public Task addTask(long companyId, long processId, Task task)
+	public Task addTask(
+			long companyId, long processId, Task task, String version)
 		throws Exception {
 
 		long taskId = RandomTestUtil.randomLong();
@@ -237,7 +248,7 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_NODE_INDEXER),
 			_createWorkflowMetricsNodeDocument(
-				companyId, task.getKey(), taskId, processId, "TASK", "1.0"));
+				companyId, task.getKey(), taskId, processId, "TASK", version));
 
 		Long onTimeInstanceCount = task.getOnTimeInstanceCount();
 		Long overdueInstanceCount = task.getOverdueInstanceCount();

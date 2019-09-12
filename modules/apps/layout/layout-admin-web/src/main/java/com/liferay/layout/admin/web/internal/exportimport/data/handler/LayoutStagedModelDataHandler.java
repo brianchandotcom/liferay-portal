@@ -805,12 +805,12 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutSEOEntrys(portletDataContext, layout);
-
 		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		importLayoutPageTemplateStructures(
 			portletDataContext, layout, importedLayout);
+
+		importLayoutSEOEntrys(portletDataContext, layout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}

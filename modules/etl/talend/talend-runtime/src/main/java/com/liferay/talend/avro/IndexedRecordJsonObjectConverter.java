@@ -120,8 +120,7 @@ public class IndexedRecordJsonObjectConverter extends RejectHandler {
 			}
 			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._decimal())) {
 				currentJsonObjectBuilder.add(
-					fieldName,
-					new BigDecimal((String)indexedRecord.get(fieldPos)));
+					fieldName, (BigDecimal)indexedRecord.get(fieldPos));
 			}
 			else if (AvroUtils.isSameType(fieldSchema, AvroUtils._double())) {
 				currentJsonObjectBuilder.add(

@@ -31,7 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ViewCountEntry extends PersistedModel, ViewCountEntryModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.view.count.model.impl.ViewCountEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

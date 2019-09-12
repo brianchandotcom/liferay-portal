@@ -48,7 +48,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,12 +61,11 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.view.count.service.impl.ViewCountEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class ViewCountEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ViewCountEntryLocalService, AopService, IdentifiableOSGiService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.view.count.service.ViewCountEntryLocalServiceUtil</code>.

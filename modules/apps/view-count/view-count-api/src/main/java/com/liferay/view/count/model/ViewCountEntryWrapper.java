@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link ViewCountEntry}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ViewCountEntry
  * @generated
  */
-@ProviderType
 public class ViewCountEntryWrapper
 	extends BaseModelWrapper<ViewCountEntry>
 	implements ViewCountEntry, ModelWrapper<ViewCountEntry> {
@@ -141,6 +138,11 @@ public class ViewCountEntryWrapper
 		return model.getViewCount();
 	}
 
+	/**
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. All methods that expect a view count entry model instance should use the <code>ViewCountEntry</code> interface instead.
+	 */
 	@Override
 	public void persist() {
 		model.persist();

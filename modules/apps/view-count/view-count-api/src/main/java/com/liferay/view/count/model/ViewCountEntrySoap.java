@@ -21,15 +21,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Preston Crary
  * @generated
  */
-@ProviderType
 public class ViewCountEntrySoap implements Serializable {
 
 	public static ViewCountEntrySoap toSoapModel(ViewCountEntry model) {

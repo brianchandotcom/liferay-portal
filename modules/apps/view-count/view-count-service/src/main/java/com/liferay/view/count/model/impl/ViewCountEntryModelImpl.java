@@ -40,8 +40,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the ViewCountEntry service. Represents a row in the &quot;ViewCountEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -53,11 +51,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ViewCountEntryImpl
  * @generated
  */
-@ProviderType
 public class ViewCountEntryModelImpl
 	extends BaseModelImpl<ViewCountEntry> implements ViewCountEntryModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a view count entry model instance should use the <code>ViewCountEntry</code> interface instead.

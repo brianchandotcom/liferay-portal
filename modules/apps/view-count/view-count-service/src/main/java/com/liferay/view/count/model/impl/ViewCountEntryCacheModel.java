@@ -25,15 +25,12 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing ViewCountEntry in entity cache.
  *
  * @author Preston Crary
  * @generated
  */
-@ProviderType
 public class ViewCountEntryCacheModel
 	implements CacheModel<ViewCountEntry>, Externalizable {
 

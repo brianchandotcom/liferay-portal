@@ -37,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ViewCountEntryPersistence
 	extends BasePersistence<ViewCountEntry> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ViewCountEntryUtil} to access the view count entry persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

@@ -36,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ViewCountEntryModel
 	extends AttachedModel, BaseModel<ViewCountEntry>, ShardedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a view count entry model instance should use the {@link ViewCountEntry} interface instead.

@@ -19,13 +19,10 @@ import com.liferay.petra.string.StringBundler;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  * @generated
  */
-@ProviderType
 public class ViewCountEntryPK
 	implements Comparable<ViewCountEntryPK>, Serializable {
 

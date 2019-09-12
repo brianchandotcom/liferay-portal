@@ -52,7 +52,6 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -81,7 +80,6 @@ public class AssetSearcherStagingTest {
 		_journalArticles = _journalArticleFixture.getJournalArticles();
 	}
 
-	@Ignore
 	@Test
 	public void testSiteRolePermissions() throws Exception {
 		Role role = addRole(RoleConstants.TYPE_SITE);

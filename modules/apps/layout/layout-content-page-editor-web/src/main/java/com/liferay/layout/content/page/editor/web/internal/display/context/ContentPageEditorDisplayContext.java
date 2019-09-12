@@ -236,7 +236,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
-				"/content_layout/edit_fragment_entry_link_comment")
+				"/content_layout/edit_fragment_entry_link_comment",
+				Constants.UPDATE)
 		).put(
 			"editFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
@@ -351,9 +352,17 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected String getFragmentEntryActionURL(String action) {
+		return getFragmentEntryActionURL(action, null);
+	}
+
+	protected String getFragmentEntryActionURL(String action, String command) {
 		PortletURL actionURL = _renderResponse.createActionURL();
 
 		actionURL.setParameter(ActionRequest.ACTION_NAME, action);
+
+		if (Validator.isNotNull(command)) {
+			actionURL.setParameter(Constants.CMD, command);
+		}
 
 		return HttpUtil.addParameter(
 			actionURL.toString(), "p_l_mode", Constants.EDIT);

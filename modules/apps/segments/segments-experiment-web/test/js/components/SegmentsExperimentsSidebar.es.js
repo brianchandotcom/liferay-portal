@@ -116,21 +116,10 @@ describe('SegmentsExperimentsSidebar', () => {
 			initialSegmentsExperiences: segmentsExperiences
 		});
 
-		const defaultExperience = getByDisplayValue(
-			segmentsExperiences[0].name
-		);
-		expect(defaultExperience).not.toBe(null);
-
-		const reviewAndRunExperimentButton = getByText(
-			'no-active-tests-were-found-for-the-selected-experience'
-		);
-		expect(reviewAndRunExperimentButton).not.toBe(null);
-
-		const createTestHelpMessage = getByText('create-test-help-message');
-		expect(createTestHelpMessage).not.toBe(null);
-
-		const createTestButton = getByText('create-test');
-		expect(createTestButton).not.toBe(null);
+		getByDisplayValue(segmentsExperiences[0].name);
+		getByText('no-active-tests-were-found-for-the-selected-experience');
+		getByText('create-test-help-message');
+		getByText('create-test');
 	});
 
 	it('renders ab testing panel with experience selected and an experiment', () => {
@@ -147,41 +136,30 @@ describe('SegmentsExperimentsSidebar', () => {
 		);
 		expect(defaultExperience).not.toBe(null);
 
-		const experiment = getByText(segmentsExperiment.name);
-		expect(experiment).not.toBe(null);
+		getByText(segmentsExperiment.name);
 
 		const createTestHelpMessage = getByText('review-and-run-test');
 		expect(createTestHelpMessage).toHaveAttribute('disabled');
-		expect(createTestHelpMessage).not.toBe(null);
 
-		const createTestButton = getByText('edit');
-		expect(createTestButton).not.toBe(null);
+		getByText('edit');
 	});
 
-	it('renders modal to create experiment when the user clicks on create test button', () => {
+	it('renders modal to create experiment when the user clicks on create test button', async done => {
 		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
 			initialSegmentsExperiences: segmentsExperiences
 		});
 
 		const createTestButton = getByText('create-test');
-		expect(createTestButton).not.toBe(null);
 
 		fireEvent.click(createTestButton);
 
-		const createNewTestTitle = getByText('create-new-test');
-		expect(createNewTestTitle).not.toBe(null);
+		await waitForElement(() => getByText('create-new-test'));
 
-		const testNameField = getByText('test-name');
-		expect(testNameField).not.toBe(null);
-
-		const descriptionField = getByText('description');
-		expect(descriptionField).not.toBe(null);
-
-		const saveButton = getByText('save');
-		expect(saveButton).not.toBe(null);
-
-		const cancelButton = getByText('cancel');
-		expect(cancelButton).not.toBe(null);
+		getByText('test-name');
+		getByText('description');
+		getByText('save');
+		getByText('cancel');
+		done();
 	});
 
 	it('renders experiment status label', () => {
@@ -338,7 +316,7 @@ describe('Run and review test', () => {
 
 		userEvent.click(createTestHelpMessage);
 
-		await waitForElement(() => getByText('review-and-run-test'));
+		await waitForElement(() => getByText('traffic-split'));
 
 		const confidenceSlider = getAllByDisplayValue(
 			INITIAL_CONFIDENCE_LEVEL.toString()

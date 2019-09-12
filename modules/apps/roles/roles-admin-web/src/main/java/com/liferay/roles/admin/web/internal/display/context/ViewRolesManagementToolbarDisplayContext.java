@@ -97,7 +97,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_role.jsp", "redirect", getPortletURL(),
-							"tabs1", "details", "type",
+							"tabs1", "details", "roleType",
 							String.valueOf(
 								_currentRoleTypeContributor.getType()));
 
@@ -165,7 +165,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter(
-			"type", String.valueOf(_currentRoleTypeContributor.getType()));
+			"roleType", String.valueOf(_currentRoleTypeContributor.getType()));
 
 		portletURL.setParameter("displayStyle", _displayStyle);
 

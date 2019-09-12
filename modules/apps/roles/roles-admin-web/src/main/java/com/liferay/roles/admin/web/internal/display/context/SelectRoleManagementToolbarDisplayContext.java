@@ -79,7 +79,7 @@ public class SelectRoleManagementToolbarDisplayContext {
 		portletURL.setParameter("mvcPath", "/select_role.jsp");
 
 		portletURL.setParameter(
-			"type", String.valueOf(_currentRoleTypeContributor.getType()));
+			"roleType", String.valueOf(_currentRoleTypeContributor.getType()));
 
 		User selUser = _getSelectedUser();
 

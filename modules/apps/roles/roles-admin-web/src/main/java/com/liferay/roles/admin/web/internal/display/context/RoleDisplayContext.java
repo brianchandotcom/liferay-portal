@@ -196,7 +196,7 @@ public class RoleDisplayContext {
 							portletURL, liferayPortletResponse);
 
 					navigationItem.setHref(
-						viewRegularRoleNavigationURL, "type",
+						viewRegularRoleNavigationURL, "roleType",
 						roleTypeContributor.getType());
 
 					navigationItem.setLabel(

@@ -210,7 +210,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 			// Add role
 
 			int type = ParamUtil.getInteger(
-				actionRequest, "type", RoleConstants.TYPE_REGULAR);
+				actionRequest, "roleType", RoleConstants.TYPE_REGULAR);
 
 			RoleTypeContributor roleTypeContributor =
 				_roleTypeContributorProvider.getRoleTypeContributor(type);
@@ -556,7 +556,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(portletRequest, "roleId");
 		int type = ParamUtil.getInteger(
-			portletRequest, "type", RoleConstants.TYPE_REGULAR);
+			portletRequest, "roleType", RoleConstants.TYPE_REGULAR);
 
 		Role role = _roleLocalService.fetchRole(roleId);
 

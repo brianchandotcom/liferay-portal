@@ -64,7 +64,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="tabs1" value="details" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
-	<portlet:param name="type" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+	<portlet:param name="roleType" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editRoleURL %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
@@ -80,7 +80,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 		<aui:fieldset>
 			<c:choose>
 				<c:when test="<%= role == null %>">
-					<aui:select name="type">
+					<aui:select name="roleType">
 
 						<%
 						List<RoleTypeContributor> roleTypeContributors = RoleTypeContributorRetrieverUtil.getRoleTypeContributors(request);
@@ -97,10 +97,10 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</aui:select>
 				</c:when>
 				<c:otherwise>
-					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
+					<aui:input label="roleType" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
 
 					<c:if test="<%= role == null %>">
-						<aui:input name="type" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+						<aui:input name="roleType" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
 					</c:if>
 				</c:otherwise>
 			</c:choose>

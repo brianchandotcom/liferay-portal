@@ -14,14 +14,11 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alicia García García
  */
-@ProviderType
 public class GraphServicePortalException extends PortalException {
 
 	public GraphServicePortalException(String msg, Throwable cause) {

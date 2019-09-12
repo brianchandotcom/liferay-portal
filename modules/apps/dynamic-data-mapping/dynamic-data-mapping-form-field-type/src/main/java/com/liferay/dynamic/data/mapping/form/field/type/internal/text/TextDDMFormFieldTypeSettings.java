@@ -147,11 +147,10 @@ public interface TextDDMFormFieldTypeSettings
 	public String ddmDataProviderInstanceOutput();
 
 	@DDMFormField(
-		label = "%my-text-field-has",
-		optionLabels = {"%a-single-line", "%multiple-lines"},
+		label = "%field-type",
+		optionLabels = {"%single-line", "%multiple-lines"},
 		optionValues = {"singleline", "multiline"},
-		predefinedValue = "singleline", properties = "inline=true",
-		type = "radio"
+		predefinedValue = "singleline", type = "radio"
 	)
 	public String displayStyle();
 

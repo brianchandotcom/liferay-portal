@@ -181,6 +181,14 @@ public class AddStructuredContentMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddStructuredContentValidStructureWithFieldImageDocumentLibraryBmpAbsoluteURL()
+		throws Exception {
+
+		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
+			"bmp", ContentTypes.IMAGE_BMP, false);
+	}
+
+	@Test
 	public void testAddStructuredContentValidStructureWithFieldImageDocumentLibraryGif()
 		throws Exception {
 

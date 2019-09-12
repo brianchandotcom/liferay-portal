@@ -124,6 +124,8 @@ public class SiteFriendlyURLPersistenceTest {
 
 		SiteFriendlyURL newSiteFriendlyURL = _persistence.create(pk);
 
+		newSiteFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSiteFriendlyURL.setUuid(RandomTestUtil.randomString());
 
 		newSiteFriendlyURL.setCompanyId(RandomTestUtil.nextLong());
@@ -149,6 +151,9 @@ public class SiteFriendlyURLPersistenceTest {
 		SiteFriendlyURL existingSiteFriendlyURL = _persistence.findByPrimaryKey(
 			newSiteFriendlyURL.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSiteFriendlyURL.getMvccVersion(),
+			newSiteFriendlyURL.getMvccVersion());
 		Assert.assertEquals(
 			existingSiteFriendlyURL.getUuid(), newSiteFriendlyURL.getUuid());
 		Assert.assertEquals(
@@ -272,10 +277,11 @@ public class SiteFriendlyURLPersistenceTest {
 
 	protected OrderByComparator<SiteFriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SiteFriendlyURL", "uuid", true, "siteFriendlyURLId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "groupId", true, "friendlyURL", true,
-			"languageId", true, "lastPublishDate", true);
+			"SiteFriendlyURL", "mvccVersion", true, "uuid", true,
+			"siteFriendlyURLId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"groupId", true, "friendlyURL", true, "languageId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -566,6 +572,8 @@ public class SiteFriendlyURLPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SiteFriendlyURL siteFriendlyURL = _persistence.create(pk);
+
+		siteFriendlyURL.setMvccVersion(RandomTestUtil.nextLong());
 
 		siteFriendlyURL.setUuid(RandomTestUtil.randomString());
 

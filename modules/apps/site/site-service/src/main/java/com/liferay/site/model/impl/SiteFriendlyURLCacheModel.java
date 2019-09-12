@@ -17,6 +17,7 @@ package com.liferay.site.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.site.model.SiteFriendlyURL;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class SiteFriendlyURLCacheModel
-	implements CacheModel<SiteFriendlyURL>, Externalizable {
+	implements CacheModel<SiteFriendlyURL>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,10 @@ public class SiteFriendlyURLCacheModel
 		SiteFriendlyURLCacheModel siteFriendlyURLCacheModel =
 			(SiteFriendlyURLCacheModel)obj;
 
-		if (siteFriendlyURLId == siteFriendlyURLCacheModel.siteFriendlyURLId) {
+		if ((siteFriendlyURLId ==
+				siteFriendlyURLCacheModel.siteFriendlyURLId) &&
+			(mvccVersion == siteFriendlyURLCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +61,28 @@ public class SiteFriendlyURLCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, siteFriendlyURLId);
+		int hashCode = HashUtil.hash(0, siteFriendlyURLId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", siteFriendlyURLId=");
 		sb.append(siteFriendlyURLId);
@@ -94,6 +112,8 @@ public class SiteFriendlyURLCacheModel
 	@Override
 	public SiteFriendlyURL toEntityModel() {
 		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
+
+		siteFriendlyURLImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			siteFriendlyURLImpl.setUuid("");
@@ -157,6 +177,7 @@ public class SiteFriendlyURLCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		siteFriendlyURLId = objectInput.readLong();
@@ -176,6 +197,8 @@ public class SiteFriendlyURLCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -218,6 +241,7 @@ public class SiteFriendlyURLCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long siteFriendlyURLId;
 	public long companyId;

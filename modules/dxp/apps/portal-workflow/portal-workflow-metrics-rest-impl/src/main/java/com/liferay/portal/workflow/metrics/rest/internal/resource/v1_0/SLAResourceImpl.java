@@ -55,7 +55,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	@Override
 	public void deleteSLA(Long slaId) throws Exception {
 		_workflowMetricsSLADefinitionLocalService.
-			deactivateWorkflowMetricsSLADefinition(slaId);
+			deactivateWorkflowMetricsSLADefinition(
+				slaId, _createServiceContext());
 	}
 
 	@Override

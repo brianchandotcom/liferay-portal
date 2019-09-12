@@ -131,7 +131,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public void deactivateWorkflowMetricsSLADefinition(
-			long workflowMetricsSLADefinitionId)
+			long workflowMetricsSLADefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
@@ -142,6 +142,11 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);
+
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+
+		addWorkflowMetricsSLADefinitionVersion(
+			user, workflowMetricsSLADefinition);
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
@@ -308,6 +313,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinitionVersion.setCreateDate(now);
 		workflowMetricsSLADefinitionVersion.setModifiedDate(now);
 
+		workflowMetricsSLADefinitionVersion.setActive(
+			workflowMetricsSLADefinition.getActive());
 		workflowMetricsSLADefinitionVersion.setCalendarKey(
 			workflowMetricsSLADefinition.getCalendarKey());
 		workflowMetricsSLADefinitionVersion.setDescription(

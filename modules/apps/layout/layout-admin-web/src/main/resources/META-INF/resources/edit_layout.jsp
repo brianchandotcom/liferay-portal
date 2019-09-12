@@ -194,6 +194,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 					</c:if>
 				</liferay-ui:error>
 
+				<liferay-ui:error exception="<%= RequiredSegmentsExperienceException.MustNotDeleteSegmentsExperienceReferencedBySegmentsExperiments.class %>" message="this-page-cannot-be-deleted-because-it-has-ab-tests-in-progress" />
+
 				<c:if test="<%= layoutRevision != null %>">
 					<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
 				</c:if>

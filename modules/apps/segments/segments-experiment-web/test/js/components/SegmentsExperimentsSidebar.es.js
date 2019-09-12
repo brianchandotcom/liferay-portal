@@ -145,7 +145,7 @@ describe('SegmentsExperimentsSidebar', () => {
 		getByText('edit');
 	});
 
-	it('renders modal to create experiment when the user clicks on create test button', async done => {
+	it('renders modal to create experiment when the user clicks on create test button', async () => {
 		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
 			initialSegmentsExperiences: segmentsExperiences
 		});
@@ -160,7 +160,6 @@ describe('SegmentsExperimentsSidebar', () => {
 		getByText('description');
 		getByText('save');
 		getByText('cancel');
-		done();
 	});
 
 	it('renders experiment status label', () => {
@@ -222,7 +221,7 @@ describe('Variants', () => {
 		expect(variant).not.toBe(null);
 	});
 
-	it('create variant button', async done => {
+	it('create variant button', async () => {
 		const createVariantMock = jest.fn(variant =>
 			Promise.resolve({
 				segmentsExperimentRel: {
@@ -272,10 +271,6 @@ describe('Variants', () => {
 				name: 'Variant Name'
 			})
 		);
-
-		expect(getByText('Variant Name')).not.toBe(null);
-
-		done();
 	});
 
 	it("renders variants without create variant button when it's not editable", () => {
@@ -292,7 +287,7 @@ describe('Variants', () => {
 });
 
 describe('Run and review test', () => {
-	it('can view review Experiment Modal', async done => {
+	it('can view review Experiment Modal', async () => {
 		const {
 			getByText,
 			getByDisplayValue,
@@ -326,7 +321,6 @@ describe('Run and review test', () => {
 
 		expect(confidenceSlider.length).toBe(1);
 		expect(splitSliders.length).toBe(2);
-		done();
 	});
 });
 
@@ -358,7 +352,7 @@ describe('Winner declared', () => {
 		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
 	});
 
-	it('variants publish action button action', async done => {
+	it('variants publish action button action', async () => {
 		const mockPublish = jest.fn(({status}) => {
 			return Promise.resolve({
 				segmentsExperiment: {
@@ -397,11 +391,9 @@ describe('Winner declared', () => {
 			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
 		});
 		await waitForElement(() => getByText('completed'));
-
-		done();
 	});
 
-	it('discard button action', async done => {
+	it('discard button action', async () => {
 		const mockDiscard = jest.fn(({status}) => {
 			return Promise.resolve({
 				segmentsExperiment: {
@@ -441,7 +433,5 @@ describe('Winner declared', () => {
 		});
 
 		await waitForElement(() => getByText('completed'));
-
-		done();
 	});
 });

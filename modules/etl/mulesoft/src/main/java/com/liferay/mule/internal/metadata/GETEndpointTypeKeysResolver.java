@@ -31,7 +31,7 @@ public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "Liferay";
+		return "liferay-get";
 	}
 
 	@Override

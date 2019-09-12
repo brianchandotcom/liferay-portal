@@ -31,7 +31,7 @@ public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "Liferay";
+		return "liferay-post";
 	}
 
 	@Override

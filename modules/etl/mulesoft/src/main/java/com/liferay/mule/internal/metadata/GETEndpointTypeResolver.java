@@ -29,7 +29,7 @@ public class GETEndpointTypeResolver implements OutputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
-		return "Liferay";
+		return "liferay-get";
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class POSTEndpointTypeResolver implements InputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {
-		return "Liferay";
+		return "liferay-post";
 	}
 
 	@Override

@@ -152,6 +152,7 @@
 
 		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />
 		<suppress checks="GradleDependencyVersionCheck" files="modules/util/.*" />
+		<suppress checks="JavaProviderTypeAnnotationCheck" files="modules/private/.*" />
 
 		<!-- Temporary suppressions for project-templates (Chema) -->
 

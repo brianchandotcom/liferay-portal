@@ -14,7 +14,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
-import Flags from '../../../../src/main/resources/META-INF/resources/flags/react/js/components/Flags.es';
+import Flags from '../../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
 import React from 'react';
 
 function _renderFlagsComponent({

@@ -12,26 +12,15 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
-import FlagsModal from '../../../../src/main/resources/META-INF/resources/flags/react/js/components/FlagsModal.es';
+import {cleanup, render, waitForElement} from '@testing-library/react';
+import FlagsModal from '../../../../src/main/resources/META-INF/resources/flags/js/components/FlagsModal.es';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
 	STATUS_ERROR,
 	STATUS_LOGIN,
 	STATUS_REPORT,
 	STATUS_SUCCESS
-} from '../../../../src/main/resources/META-INF/resources/flags/react/js/constants.es';
-
-beforeAll(() => {
-	ReactDOM.createPortal = jest.fn(element => {
-		return element;
-	});
-});
-
-afterEach(() => {
-	jest.restoreAllMocks();
-});
+} from '../../../../src/main/resources/META-INF/resources/flags/js/constants.es';
 
 function _renderFlagsModalComponent({
 	companyName = 'Liferay',
@@ -57,44 +46,60 @@ function _renderFlagsModalComponent({
 			selectedReason={selectedReason}
 			signedIn={signedIn}
 			status={status}
-		/>
+		/>,
+		{
+			baseElement: document.body
+		}
 	);
 }
 
 describe('FlagsModal', () => {
 	afterEach(cleanup);
 
-	it('renders', () => {
-		const {asFragment} = _renderFlagsModalComponent();
+	it('renders', async done => {
+		const {getByText, getByRole} = _renderFlagsModalComponent();
 
-		expect(asFragment()).toMatchSnapshot();
+		await waitForElement(() => getByText('report-inappropriate-content'));
+		await waitForElement(() => getByRole('form'));
+
+		done();
 	});
 
-	it('renders as guess and render email field', () => {
+	it('renders as guess and render email field', async done => {
 		const {getByLabelText} = _renderFlagsModalComponent({
 			signedIn: false
 		});
 
-		expect(getByLabelText('email', {exact: false})).not.toBe(null);
+		await waitForElement(() => getByLabelText('email', {exact: false}));
+
+		done();
 	});
 
-	it('renders error', () => {
-		const {asFragment} = _renderFlagsModalComponent({status: STATUS_ERROR});
+	it('renders error', async done => {
+		const {getByText} = _renderFlagsModalComponent({status: STATUS_ERROR});
 
-		expect(asFragment()).toMatchSnapshot();
+		await waitForElement(() =>
+			getByText('an-error-occurred', {exact: false})
+		);
+
+		done();
 	});
 
-	it('renders login', () => {
-		const {asFragment} = _renderFlagsModalComponent({status: STATUS_LOGIN});
+	it('renders login', async done => {
+		const {getByText} = _renderFlagsModalComponent({status: STATUS_LOGIN});
 
-		expect(asFragment()).toMatchSnapshot();
+		await waitForElement(() => getByText('please-sign-in', {exact: false}));
+
+		done();
 	});
 
-	it('renders success', () => {
-		const {asFragment} = _renderFlagsModalComponent({
+	it('renders success', async done => {
+		const {getByText} = _renderFlagsModalComponent({
 			status: STATUS_SUCCESS
 		});
 
-		expect(asFragment()).toMatchSnapshot();
+		await waitForElement(() => getByText('thank-you', {exact: false}));
+
+		done();
 	});
 });

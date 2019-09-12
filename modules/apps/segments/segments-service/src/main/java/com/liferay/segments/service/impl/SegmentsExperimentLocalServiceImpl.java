@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
@@ -45,7 +46,6 @@ import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.exception.WinnerSegmentsExperienceException;
-import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -497,19 +497,14 @@ public class SegmentsExperimentLocalServiceImpl
 				segmentsExperiment.getSegmentsExperienceId()) &&
 			(statusObject == SegmentsExperimentConstants.Status.COMPLETED)) {
 
-			List<SegmentsExperience> segmentsExperiences =
-				_segmentsExperienceLocalService.getSegmentsExperiences(
-					segmentsExperiment.getGroupId(),
-					segmentsExperiment.getClassNameId(),
-					segmentsExperiment.getClassPK());
+			_segmentsExperienceLocalService.updateSegmentsExperienceActive(
+				winnerSegmentsExperienceId, true);
 
-			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-				segmentsExperience.setActive(
-					segmentsExperience.getSegmentsExperienceId() ==
-						winnerSegmentsExperienceId);
+			if (segmentsExperiment.getSegmentsExperienceId() !=
+					SegmentsExperienceConstants.ID_DEFAULT) {
 
-				_segmentsExperienceLocalService.updateSegmentsExperience(
-					segmentsExperience);
+				_segmentsExperienceLocalService.updateSegmentsExperienceActive(
+					segmentsExperiment.getSegmentsExperienceId(), false);
 			}
 		}
 

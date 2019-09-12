@@ -577,6 +577,10 @@ paths:
                       format: date-time
                       type: string
                 - in: query
+                  name: key
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer

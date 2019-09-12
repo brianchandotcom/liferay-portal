@@ -22,8 +22,12 @@
 		padding: 3.5rem;
 		text-align: center;
 
-		> div {
+		.sidenav-content{
 			height: 100%;
+
+			> div {
+				height: 100%;
+			}
 		}
 
 		.icon-arrow {
@@ -34,8 +38,12 @@
 			&:active,
 			&:hover,
 			&:focus {
-				color: #fff;
+				color: #FFF;
 			}
+		}
+
+		.info-panel {
+			color: #FFF;
 		}
 	}
 

@@ -16,7 +16,7 @@ import {fetch, objectToFormData} from 'frontend-js-web';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext, useState} from 'react';
 
 import {
 	OTHER_REASON_VALUE,
@@ -29,162 +29,144 @@ import {
 import ThemeContext from '../ThemeContext.es';
 import FlagsModal from './FlagsModal.es';
 
-class Flags extends React.PureComponent {
-	static contextType = ThemeContext;
+const Flags = ({
+	baseData,
+	companyName,
+	disabled = false,
+	forceLogin = false,
+	message = Liferay.Language.get('report'),
+	onlyIcon = false,
+	pathTermsOfUse,
+	reasons,
+	signedIn = false,
+	uri
+}) => {
+	const [isSending, setIsSending] = useState(false);
+	const [reportDialogOpen, setReportDialogOpen] = useState(false);
+	const [status, setStatus] = useState(
+		forceLogin ? STATUS_LOGIN : STATUS_REPORT
+	);
 
-	static propTypes = {
-		baseData: PropTypes.object.isRequired,
-		companyName: PropTypes.string.isRequired,
-		disabled: PropTypes.bool,
-		forceLogin: PropTypes.bool,
-		message: PropTypes.string,
-		onlyIcon: PropTypes.bool,
-		pathTermsOfUse: PropTypes.string.isRequired,
-		reasons: PropTypes.object.isRequired,
-		signedIn: PropTypes.bool,
-		uri: PropTypes.string.isRequired
-	};
+	const [otherReason, setOtherReason] = useState('');
+	const [reporterEmailAddress, setReporterEmailAddress] = useState('');
+	const [selectedReason, setSelectedReason] = useState(
+		Object.keys(reasons)[0]
+	);
 
-	static defaultProps = {
-		disabled: false,
-		forceLogin: false,
-		message: Liferay.Language.get('report'),
-		onlyIcon: false,
-		signedIn: false
-	};
+	const {namespace} = useContext(ThemeContext);
 
-	constructor(props) {
-		super(props);
-
-		const {forceLogin, reasons} = this.props;
-
-		this.state = {
-			isSending: false,
-			otherReason: '',
-			reportDialogOpen: false,
-			reporterEmailAddress: '',
-			selectedReason: Object.keys(reasons)[0],
-			status: forceLogin ? STATUS_LOGIN : STATUS_REPORT
-		};
-	}
-
-	getReason() {
-		const {selectedReason, otherReason} = this.state;
-
+	const getReason = () => {
 		if (selectedReason === OTHER_REASON_VALUE) {
 			return otherReason || Liferay.Language.get('no-reason-specified');
 		}
 		return selectedReason;
-	}
-
-	handleClickClose = () => {
-		this.setState({reportDialogOpen: false});
 	};
 
-	handleClickShow = () => {
-		this.setState({reportDialogOpen: true});
+	const handleClickShow = () => {
+		setReportDialogOpen(true);
 	};
 
-	handleInputChange = event => {
+	const handleClickClose = () => {
+		setReportDialogOpen(false);
+	};
+
+	const handleInputChange = event => {
 		const target = event.target;
 		const value =
 			target.type === 'checkbox' ? target.checked : target.value.trim();
 		const name = target.name;
 
-		this.setState({
-			[name]: value
-		});
+		if (name === 'otherReason') {
+			setOtherReason(value);
+		} else if (name === 'reporterEmailAddress') {
+			setReporterEmailAddress(value);
+		} else if (name === 'selectedReason') {
+			setSelectedReason(value);
+		}
 	};
 
-	handleSubmitReport = event => {
+	const handleSubmitReport = event => {
 		event.preventDefault();
 
-		const {baseData, uri, signedIn} = this.props;
-		const {reporterEmailAddress} = this.state;
-		const {namespace} = this.context;
+		setIsSending(true);
 
-		this.setState({isSending: true}, () => {
-			const formDataObj = {
-				...baseData,
-				[`${namespace}reason`]: this.getReason()
-			};
+		const formDataObj = {
+			...baseData,
+			[`${namespace}reason`]: getReason()
+		};
 
-			if (!signedIn) {
-				formDataObj[
-					`${namespace}reporterEmailAddress`
-				] = reporterEmailAddress;
-			}
+		if (!signedIn) {
+			formDataObj[
+				`${namespace}reporterEmailAddress`
+			] = reporterEmailAddress;
+		}
 
-			fetch(uri, {
-				body: objectToFormData(formDataObj),
-				method: 'post'
+		fetch(uri, {
+			body: objectToFormData(formDataObj),
+			method: 'post'
+		})
+			.then(({status}) => {
+				if (status === Liferay.STATUS_CODE.OK) {
+					setStatus(STATUS_SUCCESS);
+				} else {
+					setStatus(STATUS_ERROR);
+				}
 			})
-				.then(({status}) => {
-					if (status === Liferay.STATUS_CODE.OK) {
-						this.setState({status: STATUS_SUCCESS});
-					} else {
-						this.setState({status: STATUS_ERROR});
-					}
-				})
-				.catch(() => this.setState({status: STATUS_ERROR}));
-		});
+			.catch(() => setStatus(STATUS_ERROR));
 	};
 
-	render() {
-		const {
-			companyName,
-			disabled,
-			message,
-			onlyIcon,
-			pathTermsOfUse,
-			reasons,
-			signedIn
-		} = this.props;
-		const {isSending, reportDialogOpen, status} = this.state;
-
-		return (
-			<>
-				<ClayButton
-					className={`btn-outline-borderless btn-outline-secondary ${
-						onlyIcon ? 'lfr-portal-tooltip' : ''
-					}`}
-					data-title={onlyIcon ? message : undefined}
-					disabled={disabled}
-					displayType="secondary"
-					monospaced={onlyIcon}
-					onClick={this.handleClickShow}
-					small
+	return (
+		<>
+			<ClayButton
+				className={`btn-outline-borderless btn-outline-secondary ${
+					onlyIcon ? 'lfr-portal-tooltip' : ''
+				}`}
+				data-title={onlyIcon ? message : undefined}
+				disabled={disabled}
+				displayType="secondary"
+				monospaced={onlyIcon}
+				onClick={handleClickShow}
+				small
+			>
+				<span
+					className={
+						!onlyIcon ? 'inline-item inline-item-before' : undefined
+					}
 				>
-					<span
-						className={
-							!onlyIcon
-								? 'inline-item inline-item-before'
-								: undefined
-						}
-					>
-						<ClayIcon symbol="flag-empty" />
-					</span>
-					<span className={onlyIcon ? 'sr-only' : undefined}>
-						{message}
-					</span>
-				</ClayButton>
-				{reportDialogOpen && (
-					<FlagsModal
-						companyName={companyName}
-						handleClose={this.handleClickClose}
-						handleInputChange={this.handleInputChange}
-						handleSubmit={this.handleSubmitReport}
-						isSending={isSending}
-						pathTermsOfUse={pathTermsOfUse}
-						reasons={reasons}
-						selectedReason={this.state.selectedReason}
-						signedIn={signedIn}
-						status={status}
-					/>
-				)}
-			</>
-		);
-	}
-}
+					<ClayIcon symbol="flag-empty" />
+				</span>
+				<span className={onlyIcon ? 'sr-only' : undefined}>
+					{message}
+				</span>
+			</ClayButton>
+			{reportDialogOpen && (
+				<FlagsModal
+					companyName={companyName}
+					handleClose={handleClickClose}
+					handleInputChange={handleInputChange}
+					handleSubmit={handleSubmitReport}
+					isSending={isSending}
+					pathTermsOfUse={pathTermsOfUse}
+					reasons={reasons}
+					selectedReason={selectedReason}
+					signedIn={signedIn}
+					status={status}
+				/>
+			)}
+		</>
+	);
+};
+Flags.propTypes = {
+	baseData: PropTypes.object.isRequired,
+	companyName: PropTypes.string.isRequired,
+	disabled: PropTypes.bool,
+	forceLogin: PropTypes.bool,
+	message: PropTypes.string,
+	onlyIcon: PropTypes.bool,
+	pathTermsOfUse: PropTypes.string.isRequired,
+	reasons: PropTypes.object.isRequired,
+	signedIn: PropTypes.bool,
+	uri: PropTypes.string.isRequired
+};
 
 export default Flags;

@@ -63,32 +63,18 @@ public final class LiferayConnection {
 			MultiMap<String, String> queryParams, String endpoint)
 		throws IOException, TimeoutException {
 
-		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
-
 		return _httpClient.send(
-			httpRequestBuilder.method(
-				HttpConstants.Method.GET
-			).uri(
-				_serverURL + _resolvePathParams(endpoint, pathParams)
-			).queryParams(
-				queryParams
-			).addHeader(
-				"Authorization", _httpAuthentication.getAuthorizationHeader()
-			).build(),
+			_getHttpRequest(
+				HttpConstants.Method.GET,
+				_serverURL + _resolvePathParams(endpoint, pathParams),
+				queryParams),
 			10000, true, null);
 	}
 
 	public HttpResponse getOpenAPISpec() throws IOException, TimeoutException {
-		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
-
 		return _httpClient.send(
-			httpRequestBuilder.method(
-				HttpConstants.Method.GET
-			).uri(
-				_openAPISpecPath
-			).addHeader(
-				"Authorization", _httpAuthentication.getAuthorizationHeader()
-			).build(),
+			_getHttpRequest(
+				HttpConstants.Method.GET, _openAPISpecPath, new MultiMap<>()),
 			5000, true, null);
 	}
 
@@ -106,6 +92,25 @@ public final class LiferayConnection {
 		_httpAuthentication = httpAuthentication;
 
 		_initHttpClient(httpService);
+	}
+
+	private HttpRequest _getHttpRequest(
+		HttpConstants.Method method, String uri,
+		MultiMap<String, String> queryParams) {
+
+		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
+
+		httpRequestBuilder.method(
+			method
+		).uri(
+			uri
+		).queryParams(
+			queryParams
+		).addHeader(
+			"Authorization", _httpAuthentication.getAuthorizationHeader()
+		);
+
+		return httpRequestBuilder.build();
 	}
 
 	private String _getServerURL(String openApiSpecPath)

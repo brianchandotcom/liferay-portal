@@ -113,9 +113,7 @@ public class AccountEntryUserRelWrapper
 	 * @return the primary key of this account entry user rel
 	 */
 	@Override
-	public com.liferay.account.service.persistence.AccountEntryUserRelPK
-		getPrimaryKey() {
-
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -185,10 +183,7 @@ public class AccountEntryUserRelWrapper
 	 * @param primaryKey the primary key of this account entry user rel
 	 */
 	@Override
-	public void setPrimaryKey(
-		com.liferay.account.service.persistence.AccountEntryUserRelPK
-			primaryKey) {
-
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 

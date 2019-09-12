@@ -15,7 +15,6 @@
 package com.liferay.account.model.impl;
 
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -47,8 +46,8 @@ public class AccountEntryUserRelCacheModel
 		AccountEntryUserRelCacheModel accountEntryUserRelCacheModel =
 			(AccountEntryUserRelCacheModel)obj;
 
-		if (accountEntryUserRelPK.equals(
-				accountEntryUserRelCacheModel.accountEntryUserRelPK)) {
+		if (accountEntryUserRelId ==
+				accountEntryUserRelCacheModel.accountEntryUserRelId) {
 
 			return true;
 		}
@@ -58,7 +57,7 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, accountEntryUserRelPK);
+		return HashUtil.hash(0, accountEntryUserRelId);
 	}
 
 	@Override
@@ -102,9 +101,6 @@ public class AccountEntryUserRelCacheModel
 		userId = objectInput.readLong();
 
 		accountEntryId = objectInput.readLong();
-
-		accountEntryUserRelPK = new AccountEntryUserRelPK(
-			accountEntryUserRelId, userId, accountEntryId);
 	}
 
 	@Override
@@ -122,6 +118,5 @@ public class AccountEntryUserRelCacheModel
 	public long companyId;
 	public long userId;
 	public long accountEntryId;
-	public transient AccountEntryUserRelPK accountEntryUserRelPK;
 
 }

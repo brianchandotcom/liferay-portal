@@ -14,8 +14,6 @@
 
 package com.liferay.account.model;
 
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -92,15 +90,12 @@ public class AccountEntryUserRelSoap implements Serializable {
 	public AccountEntryUserRelSoap() {
 	}
 
-	public AccountEntryUserRelPK getPrimaryKey() {
-		return new AccountEntryUserRelPK(
-			_accountEntryUserRelId, _userId, _accountEntryId);
+	public long getPrimaryKey() {
+		return _accountEntryUserRelId;
 	}
 
-	public void setPrimaryKey(AccountEntryUserRelPK pk) {
-		setAccountEntryUserRelId(pk.accountEntryUserRelId);
-		setUserId(pk.userId);
-		setAccountEntryId(pk.accountEntryId);
+	public void setPrimaryKey(long pk) {
+		setAccountEntryUserRelId(pk);
 	}
 
 	public long getAccountEntryUserRelId() {

@@ -137,7 +137,7 @@ public class MySitesPortlet extends MVCPortlet {
 	protected long[] filterAddUserIds(long groupId, long[] userIds)
 		throws Exception {
 
-		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {
 			if (!_userLocalService.hasGroupUser(groupId, userId)) {
@@ -151,7 +151,7 @@ public class MySitesPortlet extends MVCPortlet {
 	protected long[] filterRemoveUserIds(long groupId, long[] userIds)
 		throws Exception {
 
-		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {
 			if (_userLocalService.hasGroupUser(groupId, userId)) {

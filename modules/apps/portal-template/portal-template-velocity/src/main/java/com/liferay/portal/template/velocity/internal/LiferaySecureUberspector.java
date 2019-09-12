@@ -91,8 +91,7 @@ public class LiferaySecureUberspector extends SecureUberspector {
 			_restrictedMethodNames = Collections.emptyMap();
 		}
 		else {
-			_restrictedMethodNames = new HashMap<>(
-				restrictedMethodNames.length);
+			_restrictedMethodNames = new HashMap<>();
 
 			for (String restrictedMethodName : restrictedMethodNames) {
 				int index = restrictedMethodName.indexOf(CharPool.POUND);

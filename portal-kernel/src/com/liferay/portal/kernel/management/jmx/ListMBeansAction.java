@@ -41,7 +41,7 @@ public class ListMBeansAction extends BaseJMXManageAction<Set<MBean>> {
 			Set<ObjectName> objectNames = mBeanServer.queryNames(
 				null, new ObjectName(_domainName.concat(":*")));
 
-			Set<MBean> mBeans = new HashSet<>(objectNames.size());
+			Set<MBean> mBeans = new HashSet<>();
 
 			for (ObjectName objectName : objectNames) {
 				mBeans.add(new MBean(objectName));

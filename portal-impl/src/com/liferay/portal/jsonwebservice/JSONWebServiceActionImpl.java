@@ -432,7 +432,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return map;
 		}
 
-		Map<Object, Object> newMap = new HashMap<>(map.size());
+		Map<Object, Object> newMap = new HashMap<>();
 
 		for (Map.Entry<?, ?> entry : map.entrySet()) {
 			Object key = _convertType(entry.getKey(), types[0]);

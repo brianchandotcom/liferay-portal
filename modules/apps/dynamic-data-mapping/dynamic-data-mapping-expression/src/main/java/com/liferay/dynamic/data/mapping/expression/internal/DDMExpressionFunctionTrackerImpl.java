@@ -53,8 +53,7 @@ public class DDMExpressionFunctionTrackerImpl
 		}
 
 		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactoriesMap = new HashMap<>(
-				functionNames.size());
+			ddmExpressionFunctionFactoriesMap = new HashMap<>();
 
 		for (String functionName : functionNames) {
 			DDMExpressionFunctionFactory ddmExpressionFunctionFactory =

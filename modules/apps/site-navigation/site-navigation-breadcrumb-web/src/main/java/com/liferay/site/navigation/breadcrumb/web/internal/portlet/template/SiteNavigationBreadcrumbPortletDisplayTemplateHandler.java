@@ -57,7 +57,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public Map<String, Object> getCustomContextObjects() {
-		Map<String, Object> customContextObjects = new HashMap<>(1);
+		Map<String, Object> customContextObjects = new HashMap<>();
 
 		customContextObjects.put("breadcrumbUtil", BreadcrumbUtil.class);
 

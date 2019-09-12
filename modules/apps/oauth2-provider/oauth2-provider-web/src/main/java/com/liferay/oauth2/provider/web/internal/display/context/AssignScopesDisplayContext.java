@@ -482,7 +482,7 @@ public class AssignScopesDisplayContext
 	}
 
 	private static <K, V> Map<V, K> _invertMap(Map<K, V> map) {
-		Map<V, K> ret = new HashMap<>(map.size());
+		Map<V, K> ret = new HashMap<>();
 
 		for (Map.Entry<K, V> entry : map.entrySet()) {
 			ret.put(entry.getValue(), entry.getKey());

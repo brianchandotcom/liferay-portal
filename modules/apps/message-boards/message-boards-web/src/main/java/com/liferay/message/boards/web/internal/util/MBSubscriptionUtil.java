@@ -33,7 +33,7 @@ public class MBSubscriptionUtil {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, MBCategory.class.getName());
 
-		Set<Long> classPKs = new HashSet<>(subscriptions.size());
+		Set<Long> classPKs = new HashSet<>();
 
 		for (Subscription subscription : subscriptions) {
 			classPKs.add(subscription.getClassPK());
@@ -47,7 +47,7 @@ public class MBSubscriptionUtil {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, MBThread.class.getName());
 
-		Set<Long> classPKs = new HashSet<>(subscriptions.size());
+		Set<Long> classPKs = new HashSet<>();
 
 		for (Subscription subscription : subscriptions) {
 			classPKs.add(subscription.getClassPK());

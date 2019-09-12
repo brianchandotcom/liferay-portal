@@ -494,7 +494,7 @@ public class DLImpl implements DL {
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
 				userId, DLFileEntryType.class.getName());
 
-		Set<Long> classPKs = new HashSet<>(subscriptions.size());
+		Set<Long> classPKs = new HashSet<>();
 
 		for (Subscription subscription : subscriptions) {
 			classPKs.add(subscription.getClassPK());

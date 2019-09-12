@@ -88,7 +88,7 @@ public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 	protected Collection<OpenIdProvider> initOpenIdProviders(
 		Map<String, Object> properties) {
 
-		Map<String, OpenIdProvider> openIdProviders = new HashMap<>(2);
+		Map<String, OpenIdProvider> openIdProviders = new HashMap<>();
 
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			String key = entry.getKey();

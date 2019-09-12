@@ -161,7 +161,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 			kaleoActionLocalService.getKaleoActions(
 				kaleoClassName, kaleoClassPK);
 
-		Set<Action> actions = new HashSet<>(kaleoActions.size());
+		Set<Action> actions = new HashSet<>();
 
 		for (KaleoAction kaleoAction : kaleoActions) {
 			Action action = new Action(
@@ -185,8 +185,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 			kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
 				kaleoClassName, kaleoClassPK);
 
-		Set<Assignment> assignments = new HashSet<>(
-			kaleoTaskAssignments.size());
+		Set<Assignment> assignments = new HashSet<>();
 
 		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
 			String assigneeClassName =
@@ -239,8 +238,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 			kaleoNotificationLocalService.getKaleoNotifications(
 				kaleoClassName, kaleoClassPK);
 
-		Set<Notification> notifications = new HashSet<>(
-			kaleoNotifications.size());
+		Set<Notification> notifications = new HashSet<>();
 
 		for (KaleoNotification kaleoNotification : kaleoNotifications) {
 			Notification notification = new Notification(
@@ -270,7 +268,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 		List<KaleoTimer> kaleoTimers = kaleoTimerLocalService.getKaleoTimers(
 			kaleoClassName, kaleoClassPK);
 
-		Set<Timer> timers = new HashSet<>(kaleoTimers.size());
+		Set<Timer> timers = new HashSet<>();
 
 		for (KaleoTimer kaleoTimer : kaleoTimers) {
 			Timer timer = new Timer(

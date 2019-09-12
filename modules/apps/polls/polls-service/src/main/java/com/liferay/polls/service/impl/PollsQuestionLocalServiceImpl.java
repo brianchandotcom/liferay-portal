@@ -543,7 +543,7 @@ public class PollsQuestionLocalServiceImpl
 		}
 
 		if (choices != null) {
-			Set<String> choiceDescriptions = new HashSet<>(choices.size());
+			Set<String> choiceDescriptions = new HashSet<>();
 
 			for (PollsChoice choice : choices) {
 				String choiceDescription = choice.getDescription(locale);

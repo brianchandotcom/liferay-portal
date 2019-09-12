@@ -131,7 +131,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 															{
 																ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
 
-																Map<String, Object> data = new HashMap<>(1);
+																Map<String, Object> data = new HashMap<>();
 
 																data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -174,7 +174,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 										<c:otherwise>
 
 											<%
-											Map<String, String> data = new HashMap<>(1);
+											Map<String, String> data = new HashMap<>();
 
 											data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
 											%>

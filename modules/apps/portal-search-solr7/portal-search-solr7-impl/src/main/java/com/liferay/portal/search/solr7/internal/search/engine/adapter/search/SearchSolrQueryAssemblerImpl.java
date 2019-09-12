@@ -236,7 +236,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 			return;
 		}
 
-		Set<String> sortFieldNames = new HashSet<>(sorts71.length);
+		Set<String> sortFieldNames = new HashSet<>();
 
 		for (com.liferay.portal.kernel.search.Sort sort : sorts71) {
 			if (sort == null) {

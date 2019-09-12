@@ -2297,7 +2297,7 @@ public abstract class BaseBuild implements Build {
 
 		List<Element> elements = parallelExecutor.execute();
 
-		Map<Build, Element> elementsMap = new LinkedHashMap<>(elements.size());
+		Map<Build, Element> elementsMap = new LinkedHashMap<>();
 
 		for (int i = 0; i < elements.size(); i++) {
 			elementsMap.put(matchingBuilds.get(i), elements.get(i));
@@ -2360,8 +2360,7 @@ public abstract class BaseBuild implements Build {
 
 		Set<String> envMapJSONObjectKeySet = envMapJSONObject.keySet();
 
-		injectedEnvironmentVariablesMap = new HashMap<>(
-			envMapJSONObjectKeySet.size());
+		injectedEnvironmentVariablesMap = new HashMap<>();
 
 		for (String key : envMapJSONObjectKeySet) {
 			injectedEnvironmentVariablesMap.put(
@@ -2932,7 +2931,7 @@ public abstract class BaseBuild implements Build {
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 
 		if (actionsJSONArray.length() == 0) {
-			_parameters = new HashMap<>(0);
+			_parameters = new HashMap<>();
 
 			return;
 		}

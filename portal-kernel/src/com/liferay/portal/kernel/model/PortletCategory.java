@@ -141,7 +141,7 @@ public class PortletCategory implements Serializable {
 	}
 
 	public void separate(String portletId) {
-		Set<String> portletIds = new HashSet<>(1);
+		Set<String> portletIds = new HashSet<>();
 
 		portletIds.add(portletId);
 

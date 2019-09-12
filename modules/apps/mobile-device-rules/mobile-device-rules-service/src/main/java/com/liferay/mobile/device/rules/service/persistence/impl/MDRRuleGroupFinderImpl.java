@@ -275,7 +275,7 @@ public class MDRRuleGroupFinderImpl
 	private CustomSQL _customSQL;
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
-		new LinkedHashMap<>(0);
+		new LinkedHashMap<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;

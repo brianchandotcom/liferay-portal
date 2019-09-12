@@ -151,7 +151,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		Bundle bundle = getBundle(serviceReference);
 
-		Set<LiferayOAuth2Scope> locatedScopes = new HashSet<>(scopes.size());
+		Set<LiferayOAuth2Scope> locatedScopes = new HashSet<>();
 
 		Map<String, Set<String>> mappedScopeToUnmappedScopes = new HashMap<>();
 		Map<String, Boolean> matchCache = new HashMap<>();
@@ -190,7 +190,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		ScopeLocatorConfiguration scopeLocatorConfiguration =
 			scopeLocatorConfigurationProvider.getScopeLocatorConfiguration();
 
-		Set<String> processedScopes = new HashSet<>(queue.size());
+		Set<String> processedScopes = new HashSet<>();
 
 		for (String scope = queue.poll(); scope != null; scope = queue.poll()) {
 			processedScopes.add(scope);

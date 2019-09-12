@@ -52,7 +52,7 @@ public class DefaultSortTranslator implements SortTranslator {
 			return;
 		}
 
-		Set<String> sortFieldNames = new HashSet<>(sorts.length);
+		Set<String> sortFieldNames = new HashSet<>();
 
 		for (Sort sort : sorts) {
 			if (sort == null) {

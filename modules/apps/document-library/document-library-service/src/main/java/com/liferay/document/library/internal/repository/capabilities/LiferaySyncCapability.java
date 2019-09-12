@@ -162,7 +162,7 @@ public class LiferaySyncCapability
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					Map<String, Object> values = new HashMap<>(4);
+					Map<String, Object> values = new HashMap<>();
 
 					values.put("event", event);
 					values.put("modifiedTime", modifiedTime);

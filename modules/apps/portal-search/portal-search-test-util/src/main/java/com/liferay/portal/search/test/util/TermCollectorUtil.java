@@ -28,7 +28,7 @@ public class TermCollectorUtil {
 	public static Map<String, Integer> toMap(
 		List<TermCollector> termCollectors) {
 
-		Map<String, Integer> map = new HashMap<>(termCollectors.size());
+		Map<String, Integer> map = new HashMap<>();
 
 		for (TermCollector termCollector : termCollectors) {
 			map.put(termCollector.getTerm(), termCollector.getFrequency());

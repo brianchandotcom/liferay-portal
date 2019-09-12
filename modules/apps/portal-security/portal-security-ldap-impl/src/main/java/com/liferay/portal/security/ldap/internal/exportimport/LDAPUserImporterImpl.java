@@ -1197,7 +1197,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					ldapImportContext.getCompanyId()));
 		}
 
-		Set<Long> newUserIds = new LinkedHashSet<>(usersLdapAttribute.size());
+		Set<Long> newUserIds = new LinkedHashSet<>();
 
 		for (int i = 0; i < usersLdapAttribute.size(); i++) {
 			String fullUserDN = (String)usersLdapAttribute.get(i);

@@ -183,8 +183,7 @@ public class FriendlyURLEntryStagedModelRepository
 			LocalizationUtil.getLocalizationMap(
 				portletDataContext.getZipEntryAsString(modelPath));
 
-		Map<String, String> languageIdLocalizationMap = new HashMap<>(
-			localeLocalizationMap.size());
+		Map<String, String> languageIdLocalizationMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry :
 				localeLocalizationMap.entrySet()) {

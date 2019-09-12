@@ -458,7 +458,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Map<String, Object> map = _convertObjectToMap(statement, result, null);
 
-		Map<String, Object> whitelistMap = new HashMap<>(whitelist.length);
+		Map<String, Object> whitelistMap = new HashMap<>();
 
 		for (String key : whitelist) {
 			Object value = map.get(key);
@@ -507,8 +507,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			statement.setMethod(StringUtil.trim(assignment.substring(x + 1)));
 		}
 
-		HashMap<String, Object> parameterMap = new HashMap<>(
-			statementBody.size());
+		HashMap<String, Object> parameterMap = new HashMap<>();
 
 		statement.setParameterMap(parameterMap);
 

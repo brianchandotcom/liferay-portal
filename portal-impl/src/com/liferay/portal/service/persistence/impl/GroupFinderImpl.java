@@ -1574,7 +1574,7 @@ public class GroupFinderImpl
 	}
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
-		new LinkedHashMap<>(0);
+		new LinkedHashMap<>();
 	private final Map<String, String> _findByCompanyIdSQLCache =
 		new ConcurrentHashMap<>();
 	private final Map<String, String> _findByC_C_PG_N_DSQLCache =

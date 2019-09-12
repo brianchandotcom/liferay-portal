@@ -54,7 +54,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 
 			Collection<Organization> userOrgs = getUserOrgs(userId);
 
-			Set<Long> userOrgGroupIds = new HashSet<>(userOrgs.size());
+			Set<Long> userOrgGroupIds = new HashSet<>();
 
 			for (Organization organization : userOrgs) {
 				userOrgGroupIds.add(organization.getGroupId());

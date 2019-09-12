@@ -317,7 +317,7 @@ public class GitWorkingDirectory {
 	public void configure(
 		String configName, String configValue, String options) {
 
-		Map<String, String> configMap = new HashMap<>(1);
+		Map<String, String> configMap = new HashMap<>();
 
 		configMap.put(configName, configValue);
 
@@ -1972,8 +1972,7 @@ public class GitWorkingDirectory {
 
 		String[] inputLines = input.split("\n");
 
-		Map<String, String> localGitBranchesShaMap = new HashMap<>(
-			inputLines.length);
+		Map<String, String> localGitBranchesShaMap = new HashMap<>();
 
 		for (String line : inputLines) {
 			Matcher matcher = GitRemote.gitLsRemotePattern.matcher(line);

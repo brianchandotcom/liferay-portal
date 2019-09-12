@@ -104,7 +104,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			return;
 		}
 
-		Set<String> sortFieldNames = new HashSet<>(sorts.length);
+		Set<String> sortFieldNames = new HashSet<>();
 
 		for (Sort sort : sorts) {
 			if (sort == null) {
@@ -237,7 +237,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			return;
 		}
 
-		Set<String> sortFieldNames = new HashSet<>(sorts.length);
+		Set<String> sortFieldNames = new HashSet<>();
 
 		List<BucketOrder> bucketOrders = new ArrayList<>(sorts.length);
 

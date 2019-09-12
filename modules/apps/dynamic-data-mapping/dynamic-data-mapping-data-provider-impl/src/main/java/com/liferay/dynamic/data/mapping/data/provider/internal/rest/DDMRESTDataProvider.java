@@ -389,7 +389,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	}
 
 	protected Map<String, Object> getProxySettings() {
-		Map<String, Object> proxySettings = new HashMap<>(2);
+		Map<String, Object> proxySettings = new HashMap<>();
 
 		try {
 			String nonProxyHosts = SystemProperties.get("http.nonProxyHosts");

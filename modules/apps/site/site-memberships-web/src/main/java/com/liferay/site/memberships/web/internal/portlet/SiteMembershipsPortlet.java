@@ -411,7 +411,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	}
 
 	private long[] _filterAddUserIds(long groupId, long[] userIds) {
-		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {
 			if (!_userLocalService.hasGroupUser(groupId, userId)) {
@@ -423,7 +423,7 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 	}
 
 	private long[] _filterRemoveUserIds(long groupId, long[] userIds) {
-		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {
 			if (_userLocalService.hasGroupUser(groupId, userId)) {

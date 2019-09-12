@@ -559,7 +559,7 @@ public class IconTag extends IncludeTag {
 			data = new HashMap<>(_data);
 		}
 		else {
-			data = new HashMap<>(1);
+			data = new HashMap<>();
 		}
 
 		if (_useDialog && Validator.isNull(data.get("title"))) {

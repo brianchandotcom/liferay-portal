@@ -652,7 +652,7 @@ public class JournalConverterUtilTest {
 	}
 
 	protected Map<String, Layout> getLayoutsMap() throws Exception {
-		Map<String, Layout> layouts = new LinkedHashMap<>(4);
+		Map<String, Layout> layouts = new LinkedHashMap<>();
 
 		User user = TestPropsValues.getUser();
 

@@ -672,8 +672,7 @@ public class RuntimePageImpl implements RuntimePage {
 			_portalExecutorManager.getPortalExecutor(
 				RuntimePageImpl.class.getName());
 
-		Map<Future<StringBundler>, PortletRenderer> futures = new HashMap<>(
-			portletRenderers.size());
+		Map<Future<StringBundler>, PortletRenderer> futures = new HashMap<>();
 
 		for (PortletRenderer portletRenderer : portletRenderers) {
 			Portlet portlet = portletRenderer.getPortlet();

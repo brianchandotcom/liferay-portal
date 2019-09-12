@@ -1733,6 +1733,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
-		new LinkedHashMap<>(0);
+		new LinkedHashMap<>();
 
 }

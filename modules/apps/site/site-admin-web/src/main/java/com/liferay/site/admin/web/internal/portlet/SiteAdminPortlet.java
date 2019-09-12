@@ -399,7 +399,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected long[] filterRemoveUserIds(long groupId, long[] userIds)
 		throws Exception {
 
-		Set<Long> filteredUserIds = new HashSet<>(userIds.length);
+		Set<Long> filteredUserIds = new HashSet<>();
 
 		for (long userId : userIds) {
 			if (userLocalService.hasGroupUser(groupId, userId)) {

@@ -359,7 +359,7 @@ public class SharedAssetsViewDisplayContext {
 
 			URLMenuItem urlMenuItem = new URLMenuItem();
 
-			Map<String, Object> data = new HashMap<>(3);
+			Map<String, Object> data = new HashMap<>();
 
 			data.put("destroyOnHide", true);
 			data.put(

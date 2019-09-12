@@ -1951,7 +1951,7 @@ public class DDMStructureLocalServiceImpl
 			return Collections.emptySet();
 		}
 
-		Set<Long> dataProviderInstanceIds = new HashSet<>(actions.size());
+		Set<Long> dataProviderInstanceIds = new HashSet<>();
 
 		for (String action : actions) {
 			Matcher matcher = _callFunctionPattern.matcher(action);
@@ -2021,7 +2021,7 @@ public class DDMStructureLocalServiceImpl
 			return Collections.emptySet();
 		}
 
-		Set<String> ddmFormFieldsNames = new HashSet<>(ddmFormFieldsMap.size());
+		Set<String> ddmFormFieldsNames = new HashSet<>();
 
 		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
 			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));

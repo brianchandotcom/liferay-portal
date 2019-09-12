@@ -339,7 +339,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 	protected Set<QName> toJavaxQNames(
 		Set<com.liferay.portal.kernel.xml.QName> liferayQNames) {
 
-		Set<QName> javaxQNames = new HashSet<>(liferayQNames.size());
+		Set<QName> javaxQNames = new HashSet<>();
 
 		for (com.liferay.portal.kernel.xml.QName liferayQName : liferayQNames) {
 			QName javaxQName = new QName(

@@ -323,7 +323,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		Map<Locale, String> stringMap = LocalizationUtil.getLocalizationMap(
 			getData());
 
-		Map<Locale, String[]> stringArrayMap = new HashMap<>(stringMap.size());
+		Map<Locale, String[]> stringArrayMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : stringMap.entrySet()) {
 			stringArrayMap.put(entry.getKey(), split(entry.getValue()));

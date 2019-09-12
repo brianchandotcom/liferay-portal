@@ -330,7 +330,7 @@ public class UserSearchFixture {
 	}
 
 	public Map<String, String> toMap(List<Document> list) {
-		Map<String, String> map = new HashMap<>(list.size());
+		Map<String, String> map = new HashMap<>();
 
 		for (Document document : list) {
 			String[] values = document.getValues(Field.ASSET_TAG_NAMES);

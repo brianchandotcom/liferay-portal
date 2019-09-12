@@ -395,7 +395,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		Set<String> ddmFormFieldsNames = new HashSet<>(ddmFormFieldsMap.size());
+		Set<String> ddmFormFieldsNames = new HashSet<>();
 
 		for (String ddmFormFieldName : ddmFormFieldsMap.keySet()) {
 			ddmFormFieldsNames.add(StringUtil.toLowerCase(ddmFormFieldName));

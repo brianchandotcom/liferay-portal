@@ -61,7 +61,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	public Map<String, Object> getCustomContextObjects() {
-		Map<String, Object> contextObjects = new HashMap<>(1);
+		Map<String, Object> contextObjects = new HashMap<>();
 
 		contextObjects.put("assetPublisherHelper", assetPublisherHelper);
 

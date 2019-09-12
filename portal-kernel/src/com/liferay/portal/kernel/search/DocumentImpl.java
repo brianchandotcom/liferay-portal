@@ -454,7 +454,7 @@ public class DocumentImpl implements Document {
 		}
 
 		if (lowerCase) {
-			Map<Locale, String> lowerCaseValues = new HashMap<>(values.size());
+			Map<Locale, String> lowerCaseValues = new HashMap<>();
 
 			for (Map.Entry<Locale, String> entry : values.entrySet()) {
 				String value = GetterUtil.getString(entry.getValue());
@@ -479,7 +479,7 @@ public class DocumentImpl implements Document {
 		}
 
 		if (lowerCase) {
-			Map<Locale, String> lowerCaseValues = new HashMap<>(values.size());
+			Map<Locale, String> lowerCaseValues = new HashMap<>();
 
 			for (Map.Entry<Locale, String> entry : values.entrySet()) {
 				String value = GetterUtil.getString(entry.getValue());

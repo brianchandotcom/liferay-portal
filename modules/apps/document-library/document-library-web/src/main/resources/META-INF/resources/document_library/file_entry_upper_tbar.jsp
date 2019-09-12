@@ -65,7 +65,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute("file_entry_upper_tb
 					<li class="d-none d-sm-flex tbar-item">
 
 						<%
-						Map<String, String> data = new HashMap<>(1);
+						Map<String, String> data = new HashMap<>();
 
 						data.put("analytics-file-entry-id", String.valueOf(fileEntry.getFileEntryId()));
 						%>

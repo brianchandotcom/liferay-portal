@@ -193,7 +193,12 @@ public class ExperimentUtil {
 
 		sb.append(portalURL);
 
-		sb.append(portal.getPathFriendlyURLPublic());
+		if (layout.isPrivateLayout()) {
+			sb.append(portal.getPathFriendlyURLPrivateGroup());
+		}
+		else {
+			sb.append(portal.getPathFriendlyURLPublic());
+		}
 
 		sb.append(group.getFriendlyURL());
 		sb.append(layout.getFriendlyURL());

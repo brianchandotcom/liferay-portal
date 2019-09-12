@@ -281,6 +281,27 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				themeDisplay.getScopeGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, curFileName);
+
+			if (fileEntry != null) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return false;
+		}
+	}
+
 	private void _handleException(
 		ThemeDisplay themeDisplay, Throwable throwable, JSONObject jsonObject) {
 

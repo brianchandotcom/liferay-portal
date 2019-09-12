@@ -165,6 +165,35 @@ definition {
 			value1 = "Word Doc Title");
 	}
 
+	@description = "This test ensures that a Word Document is autotagged once checked in."
+	@priority = "4"
+	test AutoTagWordDocument {
+		property test.name.skip.portal.instance = "OneDrive#AutoTagWordDocument";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.editTitle(
+			dmDocumentContent = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "Word Doc Title",
+			key_documentTitle = "Untitled.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(
+			dmDocumentTitle = "Word Doc Title",
+			tagNameList = "adventures");
+	}
+
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
 	@priority = "4"
 	test EditExcelSheet {

@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -266,6 +267,23 @@ public class SegmentsExperimentLocalServiceTest {
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
+	public void testDeleteLayoutWithSegmentsExperiments() throws Exception {
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
+			segmentsExperience);
+
+		_layoutLocalService.deleteLayout(segmentsExperiment.getClassPK());
+
+		Assert.assertTrue(
+			ListUtil.isNull(
+				_segmentsExperimentLocalService.getSegmentsExperiments(
+					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperience.getClassNameId(),
+					segmentsExperience.getClassPK())));
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)
@@ -975,6 +993,9 @@ public class SegmentsExperimentLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

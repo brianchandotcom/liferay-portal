@@ -94,6 +94,16 @@ public class ResponseHandler {
 		return statusType.getFamily();
 	}
 
+	public boolean isApplicationJsonContentType(Response response) {
+		List<String> strings = getContentType(response);
+
+		if (strings.contains("application/json")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isRedirect(Response response) {
 		if (getResponseStatusFamily(response) ==
 				Response.Status.Family.REDIRECTION) {

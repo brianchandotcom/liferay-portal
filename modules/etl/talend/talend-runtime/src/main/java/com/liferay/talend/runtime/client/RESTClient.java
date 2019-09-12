@@ -296,16 +296,6 @@ public class RESTClient {
 		return null;
 	}
 
-	private boolean _isApplicationJsonContentType(Response response) {
-		List<String> strings = _responseHandler.getContentType(response);
-
-		if (strings.contains("application/json")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private String _jsonObjectToPrettyString(JsonObject jsonObject) {
 		StringWriter stringWriter = new StringWriter();
 
@@ -378,7 +368,7 @@ public class RESTClient {
 				response.getStatus());
 		}
 
-		if (_isApplicationJsonContentType(response)) {
+		if (_responseHandler.isApplicationJsonContentType(response)) {
 			return _responseHandler.asJsonObject(response);
 		}
 

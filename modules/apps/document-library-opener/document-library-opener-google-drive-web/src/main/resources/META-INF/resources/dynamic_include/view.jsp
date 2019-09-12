@@ -53,10 +53,9 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			}
 
 			function polling() {
-				fetch(
+				Liferay.Util.fetch(
 					'<%= googleDriveBackgroundTaskStatusURL %>',
 					{
-						credentials: 'include',
 						method: 'POST'
 					}
 				)

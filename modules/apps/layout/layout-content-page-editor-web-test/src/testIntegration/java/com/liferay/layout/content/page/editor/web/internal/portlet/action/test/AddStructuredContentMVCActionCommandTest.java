@@ -177,7 +177,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		throws Exception {
 
 		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-			"bmp", ContentTypes.IMAGE_BMP);
+			"bmp", ContentTypes.IMAGE_BMP, true);
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		throws Exception {
 
 		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-			"gif", ContentTypes.IMAGE_GIF);
+			"gif", ContentTypes.IMAGE_GIF, true);
 	}
 
 	@Test
@@ -193,7 +193,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		throws Exception {
 
 		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-			"jpeg", ContentTypes.IMAGE_JPEG);
+			"jpeg", ContentTypes.IMAGE_JPEG, true);
 	}
 
 	@Test
@@ -201,7 +201,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		throws Exception {
 
 		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-			"jpg", ContentTypes.IMAGE_JPEG);
+			"jpg", ContentTypes.IMAGE_JPEG, true);
 	}
 
 	@Test
@@ -209,7 +209,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		throws Exception {
 
 		_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-			"png", ContentTypes.IMAGE_PNG);
+			"png", ContentTypes.IMAGE_PNG, true);
 	}
 
 	@Test
@@ -490,7 +490,7 @@ public class AddStructuredContentMVCActionCommandTest {
 
 	private void
 			_testAddStructuredContentValidStructureWithFieldImageDocumentLibrary(
-				String imageType, String contentType)
+				String imageType, String contentType, boolean useRootRelative)
 		throws Exception {
 
 		User user = UserTestUtil.getAdminUser(_company.getCompanyId());
@@ -513,7 +513,11 @@ public class AddStructuredContentMVCActionCommandTest {
 
 		String fieldValue = portalURL + previewURL;
 
-		URL url = new URL(fieldValue);
+		if (useRootRelative) {
+			fieldValue = previewURL;
+		}
+
+		URL url = new URL(portalURL + previewURL);
 
 		_testAddStructuredContentValidStructureWithFieldImage(
 			fieldValue, Base64.encode(FileUtil.getBytes(url.openStream())));

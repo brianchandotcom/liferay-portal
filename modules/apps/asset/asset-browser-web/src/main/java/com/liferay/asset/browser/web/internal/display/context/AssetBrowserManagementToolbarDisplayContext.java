@@ -104,6 +104,12 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 	@Override
 	public List<DropdownItem> getFilterNavigationDropdownItems() {
+		long[] groupIds = _assetBrowserDisplayContext.getSelectedGroupIds();
+
+		if (groupIds.length <= 1) {
+			return null;
+		}
+
 		return new DropdownItemList() {
 			{
 				add(
@@ -113,9 +119,6 @@ public class AssetBrowserManagementToolbarDisplayContext
 						dropdownItem.setHref(getPortletURL(), "groupId", 0);
 						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 					});
-
-				long[] groupIds =
-					_assetBrowserDisplayContext.getSelectedGroupIds();
 
 				for (long groupId : groupIds) {
 					Group group = GroupLocalServiceUtil.fetchGroup(groupId);

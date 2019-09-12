@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.repository.capabilities;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -352,14 +353,14 @@ public class TemporaryFileEntriesCapabilityImpl
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 			while (folder.getFolderId() != mountFolder.getFolderId()) {
+				long folderId = folder.getFolderId();
+
 				int count = _documentRepository.getFileEntriesCount(
-					folder.getFolderId(), WorkflowConstants.STATUS_ANY);
+					folderId, WorkflowConstants.STATUS_ANY);
 
 				if (count != 0) {
 					break;
 				}
-
-				long folderId = folder.getFolderId();
 
 				folder = folder.getParentFolder();
 

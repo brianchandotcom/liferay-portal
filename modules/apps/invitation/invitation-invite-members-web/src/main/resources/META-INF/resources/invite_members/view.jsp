@@ -32,27 +32,26 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<aui:a cssClass="btn btn-default" href="javascript:;" id="inviteMembersButton" label="invite-members" />
 
 		<aui:script position="inline">
-			var <portlet:namespace />inviteMembersButton = document.getElementById('<portlet:namespace />inviteMembersButton');
-
-			<portlet:namespace />inviteMembersButton.addEventListener(
-				'click',
-				function(event) {
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								cssClass: 'so-portlet-invite-members',
-								destroyOnHide: true,
-								width: 700
-							},
-							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
-							},
-							title: '<%= portletDisplay.getTitle() %>',
-							uri: '<%= HtmlUtil.escapeJS(inviteURL) %>'
-						}
-					);
-				}
+			var <portlet:namespace />inviteMembersButton = document.getElementById(
+				'<portlet:namespace />inviteMembersButton'
 			);
+
+			<portlet:namespace />inviteMembersButton.addEventListener('click', function(
+				event
+			) {
+				Liferay.Util.openWindow({
+					dialog: {
+						cssClass: 'so-portlet-invite-members',
+						destroyOnHide: true,
+						width: 700
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					title: '<%= portletDisplay.getTitle() %>',
+					uri: '<%= HtmlUtil.escapeJS(inviteURL) %>'
+				});
+			});
 		</aui:script>
 	</c:when>
 	<c:otherwise>

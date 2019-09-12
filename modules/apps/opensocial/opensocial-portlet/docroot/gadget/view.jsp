@@ -60,34 +60,31 @@ if (userPrefsJSONObject != null) {
 <div class="gadgets-gadget-chrome" id="<portlet:namespace />gadget"></div>
 
 <aui:script use="liferay-open-social-gadget">
-	new Liferay.OpenSocial.Gadget(
-		{
-			appId: '<%= gadget.getUrl() %>',
-			baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-			checksum: '<%= gadgetSpec.getChecksum() %>',
-			country: '<%= locale.getCountry() %>',
-			debug: <%= PortletPropsValues.SHINDIG_JS_DEBUG %>,
-			height: <%= modulePrefs.getHeight() %>,
-			language: '<%= _getLanguage(locale) %>',
-			moduleId: '<%= moduleId %>',
-			nocache: <%= PortletPropsValues.SHINDIG_NO_CACHE %>,
-			portletId: '<%= portletDisplay.getId() %>',
-			pubsubURILoadTimeout: <%= PortletPropsValues.PUBSUB_URI_LOAD_TIMEOUT %>,
-			requiresPubsub: <%= requiresPubsub %>,
-			scrolling: <%= modulePrefs.getScrolling() %>,
-			secureToken: '<%= secureToken %>',
-			serverBase: '<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
-			specUrl: '<%= gadget.getUrl() %>',
-			store: new Liferay.OpenSocial.Store.Expando(
-				{
-					userPrefsKey: '<%= userPrefsKey %>'
-				}
-			),
-			userPrefs: JSON.parse('<%= userPrefsJSON %>'),
-			view: '<%= view %>',
-			viewParams: '<%= ParamUtil.getString(renderRequest, "viewParams") %>'
-		}
-	).render('#<portlet:namespace />gadget');
+	new Liferay.OpenSocial.Gadget({
+		appId: '<%= gadget.getUrl() %>',
+		baseRenderURL:
+			'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+		checksum: '<%= gadgetSpec.getChecksum() %>',
+		country: '<%= locale.getCountry() %>',
+		debug: <%= PortletPropsValues.SHINDIG_JS_DEBUG %>,
+		height: <%= modulePrefs.getHeight() %>,
+		language: '<%= _getLanguage(locale) %>',
+		moduleId: '<%= moduleId %>',
+		nocache: <%= PortletPropsValues.SHINDIG_NO_CACHE %>,
+		portletId: '<%= portletDisplay.getId() %>',
+		pubsubURILoadTimeout: <%= PortletPropsValues.PUBSUB_URI_LOAD_TIMEOUT %>,
+		requiresPubsub: <%= requiresPubsub %>,
+		scrolling: <%= modulePrefs.getScrolling() %>,
+		secureToken: '<%= secureToken %>',
+		serverBase: '<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
+		specUrl: '<%= gadget.getUrl() %>',
+		store: new Liferay.OpenSocial.Store.Expando({
+			userPrefsKey: '<%= userPrefsKey %>'
+		}),
+		userPrefs: JSON.parse('<%= userPrefsJSON %>'),
+		view: '<%= view %>',
+		viewParams: '<%= ParamUtil.getString(renderRequest, "viewParams") %>'
+	}).render('#<portlet:namespace />gadget');
 </aui:script>
 
 <%!

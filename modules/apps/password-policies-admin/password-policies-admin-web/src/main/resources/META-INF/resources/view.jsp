@@ -128,16 +128,28 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 
 <aui:script>
 	function <portlet:namespace />deletePasswordPolicies() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
+			)
+		) {
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');
 
-				var passwordPolicyIdsInput = form.querySelector('#<portlet:namespace />passwordPolicyIds');
+				var passwordPolicyIdsInput = form.querySelector(
+					'#<portlet:namespace />passwordPolicyIds'
+				);
 
 				if (passwordPolicyIdsInput) {
-					passwordPolicyIdsInput.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+					passwordPolicyIdsInput.setAttribute(
+						'value',
+						Liferay.Util.listCheckedExcept(
+							form,
+							'<portlet:namespace />allRowIds'
+						)
+					);
 				}
 
 				var lifecycleInput = form.querySelector('#p_p_lifecycle');
@@ -146,7 +158,10 @@ PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getP
 					lifecycleInput.setAttribute('value', '1');
 				}
 
-				submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
+				submitForm(
+					form,
+					'<portlet:actionURL name="deletePasswordPolicies" />'
+				);
 			}
 		}
 	}

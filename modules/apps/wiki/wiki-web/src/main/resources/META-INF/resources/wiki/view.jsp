@@ -149,18 +149,19 @@ if (portletTitleBasedNavigation) {
 							<aui:script>
 								print();
 
-								setTimeout(
-									function() {
-										window.close();
-									},
-									100
-								);
+								setTimeout(function() {
+									window.close();
+								}, 100);
 							</aui:script>
 						</c:when>
 						<c:otherwise>
 							<aui:script>
 								function <portlet:namespace />printPage() {
-									window.open('<%= printPageURL %>', '', 'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640');
+									window.open(
+										'<%= printPageURL %>',
+										'',
+										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
+									);
 								}
 							</aui:script>
 						</c:otherwise>

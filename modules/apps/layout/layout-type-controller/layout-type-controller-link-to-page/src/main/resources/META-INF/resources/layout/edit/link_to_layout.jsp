@@ -26,39 +26,42 @@
 	<aui:button name="selectLayoutButton" value="select" />
 
 	<aui:script use="liferay-item-selector-dialog">
-		var selectLayoutButton = document.getElementById('<portlet:namespace />selectLayoutButton');
+		var selectLayoutButton = document.getElementById(
+			'<portlet:namespace />selectLayoutButton'
+		);
 
 		if (selectLayoutButton) {
-			selectLayoutButton.addEventListener(
-				'click',
-				function(event) {
-					event.preventDefault();
+			selectLayoutButton.addEventListener('click', function(event) {
+				event.preventDefault();
 
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-						{
-							eventName: '<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
-							on: {
-								selectedItemChange: function(event) {
-									var selectedItem = event.newVal;
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName:
+						'<%= linkToPageLayoutTypeControllerDisplayContext.getEventName() %>',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
 
-									var linkToLayoutName = document.getElementById('<portlet:namespace />linkToLayoutName');
-									var linkToLayoutUuid = document.getElementById('<portlet:namespace />linkToLayoutUuid');
+							var linkToLayoutName = document.getElementById(
+								'<portlet:namespace />linkToLayoutName'
+							);
+							var linkToLayoutUuid = document.getElementById(
+								'<portlet:namespace />linkToLayoutUuid'
+							);
 
-									if (selectedItem && linkToLayoutName && linkToLayoutUuid) {
-										linkToLayoutName.value = selectedItem.name;
-										linkToLayoutUuid.value = selectedItem.id;
-									}
-								}
-							},
-							'strings.add': '<liferay-ui:message key="done" />',
-							title: '<liferay-ui:message key="select-layout" />',
-							url: '<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
+							if (selectedItem && linkToLayoutName && linkToLayoutUuid) {
+								linkToLayoutName.value = selectedItem.name;
+								linkToLayoutUuid.value = selectedItem.id;
+							}
 						}
-					);
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-layout" />',
+					url:
+						'<%= linkToPageLayoutTypeControllerDisplayContext.getItemSelectorURL() %>'
+				});
 
-					itemSelectorDialog.open();
-				}
-			);
+				itemSelectorDialog.open();
+			});
 		}
 	</aui:script>
 </div>

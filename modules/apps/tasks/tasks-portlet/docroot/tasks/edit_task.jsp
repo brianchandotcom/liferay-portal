@@ -176,13 +176,18 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 			var form = document.querySelector('#<portlet:namespace />fm1');
 
 			if (form) {
-				var addDueDate = form.querySelector('#<portlet:namespace />addDueDate');
-				var dueDateToggle = form.querySelector('#<portlet:namespace />toggleDueDate');
+				var addDueDate = form.querySelector(
+					'#<portlet:namespace />addDueDate'
+				);
+				var dueDateToggle = form.querySelector(
+					'#<portlet:namespace />toggleDueDate'
+				);
 
 				if (addDueDate && dueDateToggle) {
 					var addDueDateVal = 'true';
 
-					var dueDateLabel = '<liferay-ui:message key="remove-due-date" />';
+					var dueDateLabel =
+						'<liferay-ui:message key="remove-due-date" />';
 
 					if (addDueDate.value == 'true') {
 						addDueDateVal = 'false';
@@ -195,7 +200,9 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 					dueDateToggle.textContent = dueDateLabel;
 				}
 
-				var dueDate = document.querySelector('.<%= dueDateControlGroupCssClass %>');
+				var dueDate = document.querySelector(
+					'.<%= dueDateControlGroupCssClass %>'
+				);
 
 				dom.toggleClasses(dueDate, 'hide');
 			}

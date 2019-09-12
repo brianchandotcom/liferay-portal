@@ -128,7 +128,9 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 <aui:script use="aui-base">
 	var Util = Liferay.Util;
 
-	var structureFormContainer = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
+	var structureFormContainer = A.one(
+		'#<portlet:namespace />selectDDMStructureFieldForm'
+	);
 
 	var fieldSubtypeForms = structureFormContainer.all('form');
 
@@ -141,40 +143,46 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 		var fieldsnamespace = result.fieldsnamespace;
 
-		var ddmForm = Liferay.component('<portlet:namespace />' + fieldsnamespace + 'ddmForm');
+		var ddmForm = Liferay.component(
+			'<portlet:namespace />' + fieldsnamespace + 'ddmForm'
+		);
 
 		ddmForm.updateDDMFormInputValue();
 
 		var form = A.one('#' + result.form);
 
-		var data = new URLSearchParams(new FormData(document.querySelector('#'+result.form)));
+		var data = new URLSearchParams(
+			new FormData(document.querySelector('#' + result.form))
+		);
 
-		Liferay.Util.fetch(
-			form.attr('action'),
-			{
-				body: data,
-				method: 'POST'
-			}
-		).then(function(response) {
-			return response.json();
-		}).then(function(response) {
-			var message = A.one('#<portlet:namespace />message');
+		Liferay.Util.fetch(form.attr('action'), {
+			body: data,
+			method: 'POST'
+		})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(response) {
+				var message = A.one('#<portlet:namespace />message');
 
-			if (response.success) {
-				result.className = '<%= assetPublisherWebUtil.getClassName(assetRendererFactory) %>';
-				result.displayValue = response.displayValue;
-				result.value = response.value;
+				if (response.success) {
+					result.className =
+						'<%= assetPublisherWebUtil.getClassName(assetRendererFactory) %>';
+					result.displayValue = response.displayValue;
+					result.value = response.value;
 
-				message.hide();
+					message.hide();
 
-				Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+					Util.getOpener().Liferay.fire(
+						'<%= HtmlUtil.escapeJS(eventName) %>',
+						result
+					);
 
-				Util.getWindow().destroy();
-			}
-			else {
-				message.show();
-			}
-		});
+					Util.getWindow().destroy();
+				} else {
+					message.show();
+				}
+			});
 	};
 
 	structureFormContainer.delegate(
@@ -188,7 +196,9 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 	structureFormContainer.delegate(
 		'submit',
 		function(event) {
-			var buttonId = event.currentTarget.one('#<portlet:namespace />buttonId').attr('value');
+			var buttonId = event.currentTarget
+				.one('#<portlet:namespace />buttonId')
+				.attr('value');
 
 			submitForm(structureFormContainer.one('#' + buttonId));
 		},
@@ -203,7 +213,10 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			var buttonId = target.attr('data-button-id');
 			var formId = target.attr('data-form-id');
 
-			Util.toggleDisabled(structureFormContainer.all('.selector-button'), true);
+			Util.toggleDisabled(
+				structureFormContainer.all('.selector-button'),
+				true
+			);
 
 			Util.toggleDisabled('#' + buttonId, false);
 

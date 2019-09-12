@@ -162,10 +162,16 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var deleteRecords = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
+			)
+		) {
 			var form = document.<portlet:namespace />fm;
 
-			var searchContainer = form.querySelector('#<portlet:namespace />ddlRecord');
+			var searchContainer = form.querySelector(
+				'#<portlet:namespace />ddlRecord'
+			);
 
 			if (searchContainer) {
 				<portlet:actionURL name="deleteRecord" var="deleteRecordURL">
@@ -173,35 +179,32 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
-				Liferay.Util.postForm(
-					form,
-					{
-						data: {
-							recordIds: Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds')
-						},
-						url: '<%= deleteRecordURL %>'
-					}
-				);
+				Liferay.Util.postForm(form, {
+					data: {
+						recordIds: Liferay.Util.listCheckedExcept(
+							searchContainer,
+							'<portlet:namespace />allRowIds'
+						)
+					},
+					url: '<%= deleteRecordURL %>'
+				});
 			}
 		}
 	};
 
 	var ACTIONS = {
-		'deleteRecords': deleteRecords
+		deleteRecords: deleteRecords
 	};
 
-	Liferay.componentReady('ddlViewRecordsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('ddlViewRecordsManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

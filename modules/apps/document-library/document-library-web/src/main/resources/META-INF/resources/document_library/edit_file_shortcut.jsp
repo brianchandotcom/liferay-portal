@@ -144,84 +144,95 @@ if (portletTitleBasedNavigation) {
 <script>
 	var form = document.<portlet:namespace />fm;
 
-	var selectGroupButton = document.getElementById('<portlet:namespace />selectGroupButton');
+	var selectGroupButton = document.getElementById(
+		'<portlet:namespace />selectGroupButton'
+	);
 
 	if (selectGroupButton) {
-		selectGroupButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						id: '<portlet:namespace />selectGroup',
-						title: '<liferay-ui:message arguments="site" key="select-x" />',
+		selectGroupButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					id: '<portlet:namespace />selectGroup',
+					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
-						<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/document_library/select_group.jsp" />
 						</portlet:renderURL>
 
-						uri: '<%= selectGroupURL.toString() %>'
-					},
-					function(event) {
-						var toGroupIdElement = Liferay.Util.getFormElement(form, 'toGroupId');
+					uri: '<%= selectGroupURL.toString() %>'
+				},
+				function(event) {
+					var toGroupIdElement = Liferay.Util.getFormElement(
+						form,
+						'toGroupId'
+					);
 
-						if (toGroupIdElement && toGroupIdElement.value != event.groupid) {
-							<portlet:namespace />selectFileEntry('', '');
-						}
-
-						Liferay.Util.setFormValues(
-							form,
-							{
-								toGroupId: event.groupid,
-								toFileEntryId: 0
-							}
-						);
-
-						var toGroupNameElement = document.getElementById('<portlet:namespace />toGroupName');
-
-						if (toGroupNameElement) {
-							toGroupNameElement.value = event.groupdescriptivename;
-						}
-
-						Liferay.Util.toggleDisabled('#<portlet:namespace />selectToFileEntryButton', false);
+					if (
+						toGroupIdElement &&
+						toGroupIdElement.value != event.groupid
+					) {
+						<portlet:namespace />selectFileEntry('', '');
 					}
-				);
-			}
-		);
+
+					Liferay.Util.setFormValues(form, {
+						toGroupId: event.groupid,
+						toFileEntryId: 0
+					});
+
+					var toGroupNameElement = document.getElementById(
+						'<portlet:namespace />toGroupName'
+					);
+
+					if (toGroupNameElement) {
+						toGroupNameElement.value = event.groupdescriptivename;
+					}
+
+					Liferay.Util.toggleDisabled(
+						'#<portlet:namespace />selectToFileEntryButton',
+						false
+					);
+				}
+			);
+		});
 	}
 
-	var selectToFileEntryButton = document.getElementById('<portlet:namespace />selectToFileEntryButton');
+	var selectToFileEntryButton = document.getElementById(
+		'<portlet:namespace />selectToFileEntryButton'
+	);
 
 	if (selectToFileEntryButton) {
-		selectToFileEntryButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						id: <portlet:namespace />createSelectFileEntryId(),
-						title: '<liferay-ui:message arguments="file" key="select-x" />',
+		selectToFileEntryButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					id: <portlet:namespace />createSelectFileEntryId(),
+					title: '<liferay-ui:message arguments="file" key="select-x" />',
 
-						<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
 						</portlet:renderURL>
 
-						uri: <portlet:namespace />createSelectFileEntryURL('<%= selectFileEntryURL.toString() %>')
-					},
-					function(event) {
-						<portlet:namespace />selectFileEntry(event.entryid, event.entryname);
-					}
-				);
-			}
-		);
+					uri: <portlet:namespace />createSelectFileEntryURL(
+						'<%= selectFileEntryURL.toString() %>'
+					)
+				},
+				function(event) {
+					<portlet:namespace />selectFileEntry(
+						event.entryid,
+						event.entryname
+					);
+				}
+			);
+		});
 	}
 
 	function <portlet:namespace />createSelectFileEntryId() {
@@ -230,7 +241,8 @@ if (portletTitleBasedNavigation) {
 		var toGroupIdElement = Liferay.Util.getFormElement(form, 'toGroupId');
 
 		if (toGroupIdElement) {
-			selectFileEntryId = '<portlet:namespace />selectFileEntry_' + toGroupIdElement.value;
+			selectFileEntryId =
+				'<portlet:namespace />selectFileEntry_' + toGroupIdElement.value;
 		}
 
 		return selectFileEntryId;
@@ -243,34 +255,42 @@ if (portletTitleBasedNavigation) {
 			url += '&<portlet:namespace />groupId=' + toGroupIdElement.value;
 		}
 
-		var toFileEntryIdElement = Liferay.Util.getFormElement(form, 'toFileEntryId');
+		var toFileEntryIdElement = Liferay.Util.getFormElement(
+			form,
+			'toFileEntryId'
+		);
 
 		if (toFileEntryIdElement) {
-			url += '&<portlet:namespace />fileEntryId=' + toFileEntryIdElement.value;
+			url +=
+				'&<portlet:namespace />fileEntryId=' + toFileEntryIdElement.value;
 		}
 
 		return url;
 	}
 
 	function <portlet:namespace />saveFileShortcut() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>'
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>:
+					'<%= (fileShortcut == null) ? Constants.ADD : Constants.UPDATE %>'
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />selectFileEntry(fileEntryId, title) {
-		var toFileEntryIdElement = Liferay.Util.getFormElement(form, 'toFileEntryId');
+		var toFileEntryIdElement = Liferay.Util.getFormElement(
+			form,
+			'toFileEntryId'
+		);
 
 		if (toFileEntryIdElement) {
 			toFileEntryIdElement.value = fileEntryId;
 		}
 
-		var toFileEntryTitleElement = Liferay.Util.getFormElement(form, 'toFileEntryTitle');
+		var toFileEntryTitleElement = Liferay.Util.getFormElement(
+			form,
+			'toFileEntryTitle'
+		);
 
 		if (toFileEntryTitleElement) {
 			toFileEntryTitleElement.value = title;

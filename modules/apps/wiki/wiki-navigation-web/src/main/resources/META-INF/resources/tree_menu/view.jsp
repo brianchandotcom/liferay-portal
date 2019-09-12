@@ -35,11 +35,9 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 		<aui:script use="aui-tree-view">
 			var wikiPageList = A.one('.wiki-navigation-portlet-tree-menu .tree-menu');
 
-			var treeView = new A.TreeView(
-				{
-					contentBox: wikiPageList
-				}
-			).render();
+			var treeView = new A.TreeView({
+				contentBox: wikiPageList
+			}).render();
 
 			var selected = wikiPageList.one('.tree-node .tag-selected');
 
@@ -48,13 +46,11 @@ List<MenuItem> menuItems = MenuItem.fromWikiNode(selNodeId, depth, viewURL);
 
 				selectedChild.expand();
 
-				selectedChild.eachParent(
-					function(node) {
-						if (node instanceof A.TreeNode) {
-							node.expand();
-						}
+				selectedChild.eachParent(function(node) {
+					if (node instanceof A.TreeNode) {
+						node.expand();
 					}
-				);
+				});
 			}
 		</aui:script>
 	</c:when>

@@ -70,13 +70,14 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	<aui:script>
 		window.<portlet:namespace />search = function() {
-			var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
+			var keywords =
+				document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
 
 			keywords = keywords.replace(/^\s+|\s+$/, '');
 
 			if (keywords != '') {
 				submitForm(document.<portlet:namespace />fm);
 			}
-		}
+		};
 	</aui:script>
 </aui:form>

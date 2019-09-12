@@ -305,60 +305,57 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 <aui:script use="aui-ace-editor,liferay-workflow-web">
 	var STR_VALUE = 'value';
 
-	var contentEditor = new A.AceEditor(
-		{
-			boundingBox: '#<portlet:namespace />contentEditor',
-			height: 600,
-			mode: 'xml',
-			tabSize: 4,
-			width: '100%'
-		}
-	).render();
+	var contentEditor = new A.AceEditor({
+		boundingBox: '#<portlet:namespace />contentEditor',
+		height: 600,
+		mode: 'xml',
+		tabSize: 4,
+		width: '100%'
+	}).render();
 
-	contentEditor.set(STR_VALUE, Liferay.Util.formatXML('<%= HtmlUtil.escapeJS(content) %>'));
+	contentEditor.set(
+		STR_VALUE,
+		Liferay.Util.formatXML('<%= HtmlUtil.escapeJS(content) %>')
+	);
 
 	var uploadFile = document.getElementById('<portlet:namespace />upload');
 
 	var previousContent = '';
 
 	if (uploadFile) {
-		uploadFile.addEventListener(
-			'change',
-			function(evt) {
-				var files = evt.target.files;
+		uploadFile.addEventListener('change', function(evt) {
+			var files = evt.target.files;
 
-				if (files) {
-					var reader = new FileReader();
+			if (files) {
+				var reader = new FileReader();
 
-					reader.onloadend = function(evt) {
-						if (evt.target.readyState == FileReader.DONE) {
-							previousContent = contentEditor.get(STR_VALUE);
+				reader.onloadend = function(evt) {
+					if (evt.target.readyState == FileReader.DONE) {
+						previousContent = contentEditor.get(STR_VALUE);
 
-							contentEditor.set(STR_VALUE, evt.target.result);
+						contentEditor.set(STR_VALUE, evt.target.result);
 
-							uploadFile.value = '';
+						uploadFile.value = '';
 
-							Liferay.WorkflowWeb.showDefinitionImportSuccessMessage('<portlet:namespace />');
-						}
-					};
+						Liferay.WorkflowWeb.showDefinitionImportSuccessMessage(
+							'<portlet:namespace />'
+						);
+					}
+				};
 
-					reader.readAsText(files[0]);
-				}
+				reader.readAsText(files[0]);
 			}
-		);
+		});
 	}
 
 	var uploadLink = document.getElementById('<portlet:namespace />uploadLink');
 
 	if (uploadLink) {
-		uploadLink.addEventListener(
-			'click',
-			function(event) {
-				event.preventDefault();
+		uploadLink.addEventListener('click', function(event) {
+			event.preventDefault();
 
-				uploadFile.click();
-			}
-		);
+			uploadFile.click();
+		});
 	}
 
 	var untitledWorkflowTitle = '<liferay-ui:message key="untitled-workflow" />';
@@ -367,92 +364,77 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var form = document.<portlet:namespace />fm;
 
-	Liferay.on(
-		'<portlet:namespace />publishDefinition',
-		function(event) {
-			var titleElement = Liferay.Util.getFormElement(form, 'title_' + defaultLanguageId);
+	Liferay.on('<portlet:namespace />publishDefinition', function(event) {
+		var titleElement = Liferay.Util.getFormElement(
+			form,
+			'title_' + defaultLanguageId
+		);
 
-			if (!titleElement) {
-				Liferay.Util.setFormValues(
-					form,
-					{
-						titleElement: ''
-					}
-				);
-			}
-
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						content: contentEditor.get(STR_VALUE),
-						titleValue: untitledWorkflowTitle
-					},
-					url: '<%= deployWorkflowDefinitionURL %>'
-				}
-			);
+		if (!titleElement) {
+			Liferay.Util.setFormValues(form, {
+				titleElement: ''
+			});
 		}
-	);
 
-	Liferay.on(
-		'<portlet:namespace />saveDefinition',
-		function(event) {
-			var titleElement = Liferay.Util.getFormElement(form, 'title_' + defaultLanguageId);
+		Liferay.Util.postForm(form, {
+			data: {
+				content: contentEditor.get(STR_VALUE),
+				titleValue: untitledWorkflowTitle
+			},
+			url: '<%= deployWorkflowDefinitionURL %>'
+		});
+	});
 
-			if (!titleElement) {
-				Liferay.Util.setFormValues(
-					form,
-					{
-						titleElement: ''
-					}
-				);
-			}
+	Liferay.on('<portlet:namespace />saveDefinition', function(event) {
+		var titleElement = Liferay.Util.getFormElement(
+			form,
+			'title_' + defaultLanguageId
+		);
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						content: contentEditor.get(STR_VALUE),
-						titleValue: untitledWorkflowTitle
-					},
-					url: '<%= saveWorkflowDefinitionURL %>'
-				}
-			);
+		if (!titleElement) {
+			Liferay.Util.setFormValues(form, {
+				titleElement: ''
+			});
 		}
-	);
 
-	Liferay.on(
-		'<portlet:namespace />undoDefinition',
-		function(event) {
-			if (contentEditor) {
-				contentEditor.set(STR_VALUE, previousContent);
+		Liferay.Util.postForm(form, {
+			data: {
+				content: contentEditor.get(STR_VALUE),
+				titleValue: untitledWorkflowTitle
+			},
+			url: '<%= saveWorkflowDefinitionURL %>'
+		});
+	});
 
-				Liferay.WorkflowWeb.showActionUndoneSuccessMessage();
-			}
+	Liferay.on('<portlet:namespace />undoDefinition', function(event) {
+		if (contentEditor) {
+			contentEditor.set(STR_VALUE, previousContent);
+
+			Liferay.WorkflowWeb.showActionUndoneSuccessMessage();
 		}
-	);
+	});
 
 	var duplicateWorkflowTitle = '<liferay-ui:message key="duplicate-workflow" />';
 
-	Liferay.on(
-		'<portlet:namespace />duplicateDefinition',
-		function(event) {
-			Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(this, '<%= duplicateWorkflowDefinition %>', duplicateWorkflowTitle, '<%= randomNamespace %>', '<portlet:namespace />');
-		}
-	);
+	Liferay.on('<portlet:namespace />duplicateDefinition', function(event) {
+		Liferay.WorkflowWeb.confirmBeforeDuplicateDialog(
+			this,
+			'<%= duplicateWorkflowDefinition %>',
+			duplicateWorkflowTitle,
+			'<%= randomNamespace %>',
+			'<portlet:namespace />'
+		);
+	});
 
 	var title = document.getElementById('<portlet:namespace />title');
 
 	if (title) {
-		title.addEventListener(
-			'keypress',
-			function(event) {
-				var keycode = (event.keyCode ? event.keyCode : event.which);
+		title.addEventListener('keypress', function(event) {
+			var keycode = event.keyCode ? event.keyCode : event.which;
 
-				if (keycode == '13') {
-					event.preventDefault();
-				}
+			if (keycode == '13') {
+				event.preventDefault();
 			}
-		);
+		});
 	}
 </aui:script>

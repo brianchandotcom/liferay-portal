@@ -41,21 +41,23 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 	</div>
 
 	<aui:script>
-		var refreshCaptcha = document.getElementById('<portlet:namespace />refreshCaptcha');
+		var refreshCaptcha = document.getElementById(
+			'<portlet:namespace />refreshCaptcha'
+		);
 
 		if (refreshCaptcha) {
-			refreshCaptcha.addEventListener(
-				'click',
-				function() {
-					var url = Liferay.Util.addParams('t=' + Date.now(), '<%= HtmlUtil.escapeJS(url) %>');
+			refreshCaptcha.addEventListener('click', function() {
+				var url = Liferay.Util.addParams(
+					't=' + Date.now(),
+					'<%= HtmlUtil.escapeJS(url) %>'
+				);
 
-					var captcha = document.getElementById('<portlet:namespace />captcha');
+				var captcha = document.getElementById('<portlet:namespace />captcha');
 
-					if (captcha) {
-						captcha.setAttribute('src', url);
-					}
+				if (captcha) {
+					captcha.setAttribute('src', url);
 				}
-			);
+			});
 		}
 	</aui:script>
 </c:if>

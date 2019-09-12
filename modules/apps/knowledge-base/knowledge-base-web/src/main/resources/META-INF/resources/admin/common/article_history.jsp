@@ -118,34 +118,35 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 </portlet:renderURL>
 
 <aui:script require="metal-dom/src/dom as dom">
-	dom.delegate(
-		document.body,
-		'click',
-		'.compare-to-link > a',
-		function(event) {
-			var currentTarget = event.delegateTarget;
+	dom.delegate(document.body, 'click', '.compare-to-link > a', function(event) {
+		var currentTarget = event.delegateTarget;
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectVersionFm',
-					id: '<portlet:namespace />compareVersions' + currentTarget.id,
-					title: '<liferay-ui:message key="compare-versions" />',
-					uri: currentTarget.dataset.uri
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
 				},
-				function(event) {
-					var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
+				eventName: '<portlet:namespace />selectVersionFm',
+				id: '<portlet:namespace />compareVersions' + currentTarget.id,
+				title: '<liferay-ui:message key="compare-versions" />',
+				uri: currentTarget.dataset.uri
+			},
+			function(event) {
+				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
 
-					uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + event.sourceversion, uri);
-					uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + event.targetversion, uri);
+				uri = Liferay.Util.addParams(
+					'<portlet:namespace />sourceVersion=' + event.sourceversion,
+					uri
+				);
+				uri = Liferay.Util.addParams(
+					'<portlet:namespace />targetVersion=' + event.targetversion,
+					uri
+				);
 
-					location.href = uri;
-				}
-			);
-		}
-	);
+				location.href = uri;
+			}
+		);
+	});
 </aui:script>

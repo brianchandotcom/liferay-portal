@@ -61,8 +61,7 @@
 				dom.addClasses(success, 'show');
 
 				dom.removeClasses(success, 'hide');
-			}
-			else {
+			} else {
 				var paragraph = error.querySelector('p');
 
 				if (paragraph) {
@@ -79,24 +78,21 @@
 	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
-		form.addEventListener(
-			'submit',
-			function(event) {
-				event.preventDefault();
+		form.addEventListener('submit', function(event) {
+			event.preventDefault();
 
-				var message = form.querySelector('#<portlet:namespace />message');
+			var message = form.querySelector('#<portlet:namespace />message');
 
-				if (message) {
-					Liferay.Service(
-						'/pushnotifications.pushnotificationsdevice/send-push-notification',
-						{
-							payload: message.value,
-							toUserIds: []
-						},
-						onSendPushNotification
-					);
-				}
+			if (message) {
+				Liferay.Service(
+					'/pushnotifications.pushnotificationsdevice/send-push-notification',
+					{
+						payload: message.value,
+						toUserIds: []
+					},
+					onSendPushNotification
+				);
 			}
-		);
+		});
 	}
 </aui:script>

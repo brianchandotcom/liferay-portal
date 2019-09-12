@@ -128,7 +128,17 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 <aui:script use="liferay-workflow-web">
 	var title = '<liferay-ui:message key="duplicate-workflow" />';
 
-	var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.WorkflowWeb, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>', '<portlet:namespace />');
+	var confirmBeforeDuplicateDialog = A.rbind(
+		'confirmBeforeDuplicateDialog',
+		Liferay.WorkflowWeb,
+		'<%= duplicateWorkflowDefinition %>',
+		title,
+		'<%= randomNamespace %>',
+		'<portlet:namespace />'
+	);
 
-	Liferay.delegateClick('<portlet:namespace />duplicate<%= HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>', confirmBeforeDuplicateDialog);
+	Liferay.delegateClick(
+		'<portlet:namespace />duplicate<%= HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>',
+		confirmBeforeDuplicateDialog
+	);
 </aui:script>

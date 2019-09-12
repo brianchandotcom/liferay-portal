@@ -53,20 +53,17 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 
 	var tooltip = document.getElementById('<%= randomNamespace %>tooltip');
 
-	var resourceTooltip = document.getElementById('<%= randomNamespace %>resourceTooltip');
+	var resourceTooltip = document.getElementById(
+		'<%= randomNamespace %>resourceTooltip'
+	);
 
 	if (resourceTooltip) {
-		resourceTooltip.addEventListener(
-			'mouseover',
-			function() {
-				dom.toggleClasses(tooltip,'show');
-			});
+		resourceTooltip.addEventListener('mouseover', function() {
+			dom.toggleClasses(tooltip, 'show');
+		});
 
-		resourceTooltip.addEventListener(
-			'mouseout',
-			function() {
-				dom.toggleClasses(tooltip,'show');
-			});
-
+		resourceTooltip.addEventListener('mouseout', function() {
+			dom.toggleClasses(tooltip, 'show');
+		});
 	}
 </aui:script>

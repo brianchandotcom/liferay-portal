@@ -224,12 +224,10 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 					}
 				];
 
-				new A.Toolbar(
-					{
-						boundingBox: '#<portlet:namespace />structureHistoryToolbar',
-						children: toolbarChildren
-					}
-				).render();
+				new A.Toolbar({
+					boundingBox: '#<portlet:namespace />structureHistoryToolbar',
+					children: toolbarChildren
+				}).render();
 			</aui:script>
 		</c:if>
 
@@ -349,7 +347,8 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
+				basePortletURL:
+					'<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true
@@ -363,15 +362,15 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			function(event) {
 				var form = document.<portlet:namespace />fm;
 
-				Liferay.Util.setFormValues(
-					form,
-					{
-						parentStructureId: event.ddmstructureid,
-						parentStructureName: Liferay.Util.unescape(event.name)
-					}
-				);
+				Liferay.Util.setFormValues(form, {
+					parentStructureId: event.ddmstructureid,
+					parentStructureName: Liferay.Util.unescape(event.name)
+				});
 
-				var removeParentStructureButton = Liferay.Util.getFormElement(form, 'removeParentStructureButton');
+				var removeParentStructureButton = Liferay.Util.getFormElement(
+					form,
+					'removeParentStructureButton'
+				);
 
 				if (removeParentStructureButton) {
 					Liferay.Util.toggleDisabled(removeParentStructureButton, false);
@@ -383,15 +382,15 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	function <portlet:namespace />removeParentStructure() {
 		var form = document.<portlet:namespace />fm;
 
-		Liferay.Util.setFormValues(
-			form,
-			{
-				parentStructureId: '',
-				parentStructureName: ''
-			}
-		);
+		Liferay.Util.setFormValues(form, {
+			parentStructureId: '',
+			parentStructureName: ''
+		});
 
-		var removeParentStructureButton = Liferay.Util.getFormElement(form, 'removeParentStructureButton');
+		var removeParentStructureButton = Liferay.Util.getFormElement(
+			form,
+			'removeParentStructureButton'
+		);
 
 		if (removeParentStructureButton) {
 			Liferay.Util.toggleDisabled(removeParentStructureButton, true);
@@ -399,14 +398,13 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	}
 
 	function <portlet:namespace />saveStructure(draft) {
-		Liferay.Util.postForm(
-			document.<portlet:namespace />fm,
-			{
-				data: {
-					definition: <portlet:namespace />formBuilder.getContentValue(),
-					status: draft ? <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %> : <%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>
-				}
+		Liferay.Util.postForm(document.<portlet:namespace />fm, {
+			data: {
+				definition: <portlet:namespace />formBuilder.getContentValue(),
+				status: draft
+					? <%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>
+					: <%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>
 			}
-		);
+		});
 	}
 </aui:script>

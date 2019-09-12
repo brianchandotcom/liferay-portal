@@ -23,11 +23,8 @@ boolean unpublishPermission = ParamUtil.getBoolean(request, "unpublishPermission
 %>
 
 <aui:script use="aui-base">
-	Liferay.Util.getOpener().Liferay.fire(
-		'publishGadgetSuccess',
-		{
-			gadgetId: <%= gadgetId %>,
-			unpublishPermission: <%= unpublishPermission %>
-		}
-	);
+	Liferay.Util.getOpener().Liferay.fire('publishGadgetSuccess', {
+		gadgetId: <%= gadgetId %>,
+		unpublishPermission: <%= unpublishPermission %>
+	});
 </aui:script>

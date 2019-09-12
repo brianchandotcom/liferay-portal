@@ -32,22 +32,22 @@ PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, liveGroup,
 
 <aui:script>
 	function <portlet:namespace />openStagingConfigurationPortlet() {
-		var configurationDialog = Liferay.Util.openWindow(
-			{
-				dialog: {
-					destroyOnHide: true,
-					on: {
-						visibleChange: function(event) {
-							if (!event.newVal) {
-								document.location.href = '<%= HtmlUtil.escapeJS(portletURL.toString()) %>';
-							}
+		var configurationDialog = Liferay.Util.openWindow({
+			dialog: {
+				destroyOnHide: true,
+				on: {
+					visibleChange: function(event) {
+						if (!event.newVal) {
+							document.location.href =
+								'<%= HtmlUtil.escapeJS(portletURL.toString()) %>';
 						}
 					}
-				},
-				id: 'stagingConfiguration',
-				title: '<liferay-ui:message key="staging-configuration" />',
-				uri: '<%= HtmlUtil.escapeJS(stagingConfigurationPortletURL.toString()) %>'
-			}
-		);
+				}
+			},
+			id: 'stagingConfiguration',
+			title: '<liferay-ui:message key="staging-configuration" />',
+			uri:
+				'<%= HtmlUtil.escapeJS(stagingConfigurationPortletURL.toString()) %>'
+		});
 	}
 </aui:script>

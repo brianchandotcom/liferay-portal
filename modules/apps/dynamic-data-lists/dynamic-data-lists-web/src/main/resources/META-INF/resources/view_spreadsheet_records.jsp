@@ -55,32 +55,35 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
 
-	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= ddlDisplayContext.getRecordSetJSONArray(recordSet, locale) %>, '<%= LocaleUtil.toLanguageId(locale) %>', structure, <%= editable %>);
+	var columns = Liferay.SpreadSheet.buildDataTableColumns(
+		<%= ddlDisplayContext.getRecordSetJSONArray(recordSet, locale) %>,
+		'<%= LocaleUtil.toLanguageId(locale) %>',
+		structure,
+		<%= editable %>
+	);
 
 	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {
 		var a = recA.get(field);
 		var b = recB.get(field);
 
-		return A.ArraySort.compareIgnoreWhiteSpace(
+		return A.ArraySort.compareIgnoreWhiteSpace(a, b, desc, function(
 			a,
 			b,
-			desc,
-			function(a, b, desc) {
-				var num1 = parseFloat(a);
-				var num2 = parseFloat(b);
+			desc
+		) {
+			var num1 = parseFloat(a);
+			var num2 = parseFloat(b);
 
-				var result;
+			var result;
 
-				if (isNaN(num1) || isNaN(num2)) {
-					result = A.ArraySort.compare(a, b, desc);
-				}
-				else {
-					result = desc ? num2 - num1 : num1 - num2;
-				}
-
-				return result;
+			if (isNaN(num1) || isNaN(num2)) {
+				result = A.ArraySort.compare(a, b, desc);
+			} else {
+				result = desc ? num2 - num1 : num1 - num2;
 			}
-		);
+
+			return result;
+		});
 	};
 
 	var ignoreEmptyRecordsStringSort = function(recA, recB, desc, field) {
@@ -91,27 +94,24 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	};
 
 	var numericData = {
-		'double': 1,
+		double: 1,
 		integer: 1,
 		number: 1
 	};
 
-	var keys = columns.map(
-		function(item, index) {
-			var key = item.key;
+	var keys = columns.map(function(item, index) {
+		var key = item.key;
 
-			if (!item.sortFn) {
-				if (numericData[item.dataType]) {
-					item.sortFn = A.rbind(ignoreEmptyRecordsNumericSort, item, key);
-				}
-				else {
-					item.sortFn = A.rbind(ignoreEmptyRecordsStringSort, item, key);
-				}
+		if (!item.sortFn) {
+			if (numericData[item.dataType]) {
+				item.sortFn = A.rbind(ignoreEmptyRecordsNumericSort, item, key);
+			} else {
+				item.sortFn = A.rbind(ignoreEmptyRecordsStringSort, item, key);
 			}
-
-			return key;
 		}
-	);
+
+		return key;
+	});
 
 	<%
 	int status = WorkflowConstants.STATUS_APPROVED;
@@ -125,47 +125,45 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var records = <%= ddlDisplayContext.getRecordsJSONArray(records, !editable, locale) %>;
 
-	records.sort(
-		function(a, b) {
-			return a.displayIndex - b.displayIndex;
-		}
+	records.sort(function(a, b) {
+		return a.displayIndex - b.displayIndex;
+	});
+
+	var data = Liferay.SpreadSheet.buildEmptyRecords(
+		<%= Math.max(recordSet.getMinDisplayRows() - records.size(), 0) %>,
+		keys
 	);
 
-	var data = Liferay.SpreadSheet.buildEmptyRecords(<%= Math.max(recordSet.getMinDisplayRows() - records.size(), 0) %>, keys);
+	records.forEach(function(item, index) {
+		data.splice(item.displayIndex, 0, item);
+	});
 
-	records.forEach(
-		function(item, index) {
-			data.splice(item.displayIndex, 0, item);
-		}
-	);
-
-	var spreadSheet = new Liferay.SpreadSheet(
-		{
-			boundingBox: '#<portlet:namespace />dataTable',
-			columns: columns,
-			contentBox: '#<portlet:namespace />dataTableContent',
-			data: data,
-			editEvent: 'dblclick',
-			plugins: [
-				{
-					cfg: {
-						highlightRange: false
-					},
-					fn: A.Plugin.DataTableHighlight
-				}
-			],
-			portletNamespace: '<portlet:namespace />',
-			recordsetId: <%= recordSet.getRecordSetId() %>,
-			strings: {
-				asc: '<liferay-ui:message key="ascending" />',
-				desc: '<liferay-ui:message key="descending" />',
-				reverseSortBy: '<liferay-ui:message arguments="{column}" key="reverse-sort-by-x" />',
-				sortBy: '<liferay-ui:message arguments="{column}" key="sort-by-x" />'
-			},
-			structure: structure,
-			width: '100%'
-		}
-	);
+	var spreadSheet = new Liferay.SpreadSheet({
+		boundingBox: '#<portlet:namespace />dataTable',
+		columns: columns,
+		contentBox: '#<portlet:namespace />dataTableContent',
+		data: data,
+		editEvent: 'dblclick',
+		plugins: [
+			{
+				cfg: {
+					highlightRange: false
+				},
+				fn: A.Plugin.DataTableHighlight
+			}
+		],
+		portletNamespace: '<portlet:namespace />',
+		recordsetId: <%= recordSet.getRecordSetId() %>,
+		strings: {
+			asc: '<liferay-ui:message key="ascending" />',
+			desc: '<liferay-ui:message key="descending" />',
+			reverseSortBy:
+				'<liferay-ui:message arguments="{column}" key="reverse-sort-by-x" />',
+			sortBy: '<liferay-ui:message arguments="{column}" key="sort-by-x" />'
+		},
+		structure: structure,
+		width: '100%'
+	});
 
 	spreadSheet.render('#<portlet:namespace />spreadsheet');
 
@@ -174,16 +172,13 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	<c:if test="<%= editable %>">
 		var numberOfRecordsNode = A.one('#<portlet:namespace />numberOfRecords');
 
-		A.one('#<portlet:namespace />addRecords').on(
-			'click',
-			function(event) {
-				var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
+		A.one('#<portlet:namespace />addRecords').on('click', function(event) {
+			var numberOfRecords = parseInt(numberOfRecordsNode.val(), 10) || 0;
 
-				spreadSheet.addEmptyRows(numberOfRecords);
+			spreadSheet.addEmptyRows(numberOfRecords);
 
-				spreadSheet.updateMinDisplayRows(spreadSheet.get('data').size());
-			}
-		);
+			spreadSheet.updateMinDisplayRows(spreadSheet.get('data').size());
+		});
 	</c:if>
 
 	window.<portlet:namespace />spreadSheet = spreadSheet;

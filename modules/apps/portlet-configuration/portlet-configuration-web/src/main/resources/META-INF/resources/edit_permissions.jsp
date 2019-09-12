@@ -186,28 +186,32 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 		function(event) {
 			var target = event.target;
 
-			Liferay.Portal.ToolTip.show(target, target.getAttribute('data-message'));
+			Liferay.Portal.ToolTip.show(
+				target,
+				target.getAttribute('data-message')
+			);
 		}
 	);
 </aui:script>
 
 <aui:script>
-	var <portlet:namespace />saveButton = document.getElementById('<portlet:namespace />saveButton');
+	var <portlet:namespace />saveButton = document.getElementById(
+		'<portlet:namespace />saveButton'
+	);
 
 	if (<portlet:namespace />saveButton) {
-		<portlet:namespace />saveButton.addEventListener(
-			'click',
-			function(event) {
-				event.preventDefault();
+		<portlet:namespace />saveButton.addEventListener('click', function(event) {
+			event.preventDefault();
 
-				if (<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer().getTotal() != 0 %>) {
-					var form = document.getElementById('<portlet:namespace />fm');
+			if (
+				<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer().getTotal() != 0 %>
+			) {
+				var form = document.getElementById('<portlet:namespace />fm');
 
-					if (form) {
-						submitForm(form);
-					}
+				if (form) {
+					submitForm(form);
 				}
 			}
-		);
+		});
 	}
 </aui:script>

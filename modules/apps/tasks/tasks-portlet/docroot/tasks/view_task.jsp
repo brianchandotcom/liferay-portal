@@ -211,29 +211,33 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 				<aui:button name="deleteTasksEntry" value="delete" />
 
 				<aui:script use="aui-io-deprecated">
-					var <portlet:namespace />deleteTasksEntry = document.querySelector('#<portlet:namespace />deleteTasksEntry');
+					var <portlet:namespace />deleteTasksEntry = document.querySelector(
+						'#<portlet:namespace />deleteTasksEntry'
+					);
 
 					if (<portlet:namespace />deleteTasksEntry) {
-						<portlet:namespace />deleteTasksEntry.addEventListener(
-							'click',
-							function(event) {
-								if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this-entry" />')) {
-									A.io.request(
-										'<portlet:actionURL name="deleteTasksEntry" />',
-										{
-											after: {
-												success: function() {
-													Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
-												}
-											},
-											data: {
-												<portlet:namespace />tasksEntryId: <%= tasksEntry.getTasksEntryId() %>
-											}
+						<portlet:namespace />deleteTasksEntry.addEventListener('click', function(
+							event
+						) {
+							if (
+								confirm(
+									'<liferay-ui:message key="are-you-sure-you-want-to-delete-this-entry" />'
+								)
+							) {
+								A.io.request('<portlet:actionURL name="deleteTasksEntry" />', {
+									after: {
+										success: function() {
+											Liferay.Util.getWindow(
+												'<portlet:namespace />Dialog'
+											).hide();
 										}
-									);
-								}
+									},
+									data: {
+										<portlet:namespace />tasksEntryId: <%= tasksEntry.getTasksEntryId() %>
+									}
+								});
 							}
-						);
+						});
 					}
 				</aui:script>
 			</c:if>

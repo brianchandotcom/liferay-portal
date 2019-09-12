@@ -83,14 +83,11 @@ PortalUtil.setPageKeywords(pageKeywords, request);
 	var keywordsInput = document.getElementById('<portlet:namespace />keywords');
 
 	if (keywordsInput) {
-		keywordsInput.addEventListener(
-			'keydown',
-			function(event) {
-				if (event.keyCode === 13) {
-					<portlet:namespace />search();
-				}
+		keywordsInput.addEventListener('keydown', function(event) {
+			if (event.keyCode === 13) {
+				<portlet:namespace />search();
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />addSearchProvider() {
@@ -99,18 +96,17 @@ PortalUtil.setPageKeywords(pageKeywords, request);
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:resourceURL>
 
-		window.external.AddSearchProvider('<%= openSearchDescriptionXMLURL.toString() %>');
+		window.external.AddSearchProvider(
+			'<%= openSearchDescriptionXMLURL.toString() %>'
+		);
 	}
 
 	function <portlet:namespace />search() {
 		var form = document.<portlet:namespace />fm;
 
-		Liferay.Util.setFormValues(
-			form,
-			{
-				'<%= SearchContainer.DEFAULT_CUR_PARAM %>': 1
-			}
-		);
+		Liferay.Util.setFormValues(form, {
+			<%= SearchContainer.DEFAULT_CUR_PARAM %>: 1
+		});
 
 		var keywordsInput = Liferay.Util.getFormElement(form, 'keywords');
 

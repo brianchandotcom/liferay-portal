@@ -88,17 +88,15 @@ PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetc
 </c:if>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />displayError',
-		function(message) {
-			var errorMessage = AUI().one('#<portlet:namespace />errorMessage');
+	Liferay.provide(window, '<portlet:namespace />displayError', function(message) {
+		var errorMessage = AUI().one('#<portlet:namespace />errorMessage');
 
-			if (message) {
-				errorMessage.html('<div class="alert alert-error">' + message + '</div>');
-			}
+		if (message) {
+			errorMessage.html(
+				'<div class="alert alert-error">' + message + '</div>'
+			);
 		}
-	);
+	});
 
 	Liferay.provide(
 		window,
@@ -106,30 +104,36 @@ PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetc
 		function(meetingId) {
 			var A = AUI();
 
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-meeting") %>')) {
-				var uri = '<portlet:actionURL name="deletePowwowMeeting"></portlet:actionURL>';
+			if (
+				confirm(
+					'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-meeting") %>'
+				)
+			) {
+				var uri =
+					'<portlet:actionURL name="deletePowwowMeeting"></portlet:actionURL>';
 
-				uri = Liferay.Util.addParams('<portlet:namespace />powwowMeetingId=' + meetingId, uri);
-
-				A.io.request(
-					uri,
-					{
-						after: {
-							success: function() {
-								var responseData = this.get('responseData');
-
-								if (responseData.success) {
-									document.location.href = '<portlet:renderURL><portlet:param name="mvcPath" value="/meetings/view.jsp" /></portlet:renderURL>';
-								}
-								else {
-									<portlet:namespace />displayError(responseData.message);
-								}
-
-							}
-						},
-						dataType: 'JSON'
-					}
+				uri = Liferay.Util.addParams(
+					'<portlet:namespace />powwowMeetingId=' + meetingId,
+					uri
 				);
+
+				A.io.request(uri, {
+					after: {
+						success: function() {
+							var responseData = this.get('responseData');
+
+							if (responseData.success) {
+								document.location.href =
+									'<portlet:renderURL><portlet:param name="mvcPath" value="/meetings/view.jsp" /></portlet:renderURL>';
+							} else {
+								<portlet:namespace />displayError(
+									responseData.message
+								);
+							}
+						}
+					},
+					dataType: 'JSON'
+				});
 			}
 		},
 		['aui-io-request']
@@ -149,24 +153,25 @@ PowwowParticipant userPowwowParticipant = PowwowParticipantLocalServiceUtil.fetc
 							var responseData = this.get('responseData');
 
 							if (responseData.success) {
-								Liferay.Util.openWindow(
-									{
-										cache: false,
-										dialog: {
-											align: Liferay.Util.Window.ALIGN_CENTER,
-											bodyContent: '<div class="email-body-container">' + responseData.emailBody + '</div>',
-											modal: true,
-											width: 600
-										},
-										id: '<portlet:namespace />dialog',
-										title: responseData.emailSubject
-									}
+								Liferay.Util.openWindow({
+									cache: false,
+									dialog: {
+										align: Liferay.Util.Window.ALIGN_CENTER,
+										bodyContent:
+											'<div class="email-body-container">' +
+											responseData.emailBody +
+											'</div>',
+										modal: true,
+										width: 600
+									},
+									id: '<portlet:namespace />dialog',
+									title: responseData.emailSubject
+								});
+							} else {
+								<portlet:namespace />displayError(
+									responseData.message
 								);
 							}
-							else {
-								<portlet:namespace />displayError(responseData.message);
-							}
-
 						}
 					},
 					data: {

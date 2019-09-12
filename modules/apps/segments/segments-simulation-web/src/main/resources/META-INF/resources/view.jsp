@@ -59,13 +59,13 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 			</aui:form>
 
 			<aui:script use="liferay-portlet-segments-simulation">
-				new Liferay.Portlet.SegmentsSimulation(
-					{
-						deactivateSimulationUrl: '<%= segmentsSimulationDisplayContext.getDeactivateSimulationURL() %>',
-						form: document.<portlet:namespace />segmentsSimulationFm,
-						simulateSegmentsEntriesUrl: '<%= segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL() %>'
-					}
-				);
+				new Liferay.Portlet.SegmentsSimulation({
+					deactivateSimulationUrl:
+						'<%= segmentsSimulationDisplayContext.getDeactivateSimulationURL() %>',
+					form: document.<portlet:namespace />segmentsSimulationFm,
+					simulateSegmentsEntriesUrl:
+						'<%= segmentsSimulationDisplayContext.getSimulateSegmentsEntriesURL() %>'
+				});
 			</aui:script>
 		</c:otherwise>
 	</c:choose>

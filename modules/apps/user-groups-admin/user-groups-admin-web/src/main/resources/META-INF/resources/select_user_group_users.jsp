@@ -100,25 +100,24 @@ SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDispl
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectUsers');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var selectedItems = event.elements.allSelectedElements;
-
-			var data = [];
-
-			if (selectedItems.size() > 0) {
-				data = selectedItems.attr('value');
-			}
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
-				{
-					data: data.join(',')
-				}
-			);
-		}
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />selectUsers'
 	);
+
+	searchContainer.on('rowToggled', function(event) {
+		var selectedItems = event.elements.allSelectedElements;
+
+		var data = [];
+
+		if (selectedItems.size() > 0) {
+			data = selectedItems.attr('value');
+		}
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(eventName) %>',
+			{
+				data: data.join(',')
+			}
+		);
+	});
 </aui:script>

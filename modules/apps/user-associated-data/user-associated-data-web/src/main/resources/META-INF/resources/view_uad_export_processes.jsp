@@ -68,11 +68,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 	</portlet:resourceURL>
 
-	new Liferay.UADExport(
-		{
-			exportProcessesNode: '#exportProcesses',
-			exportProcessesResourceURL: '<%= exportProcessesURL.toString() %>',
-			namespace: '<portlet:namespace />'
-		}
-	);
+	new Liferay.UADExport({
+		exportProcessesNode: '#exportProcesses',
+		exportProcessesResourceURL: '<%= exportProcessesURL.toString() %>',
+		namespace: '<portlet:namespace />'
+	});
 </aui:script>

@@ -69,14 +69,18 @@ if (mbMessageIterator != null) {
 		index.value = '<%= String.valueOf(index) %>';
 	}
 
-	var rootIndexPage = document.getElementById('<portlet:namespace />rootIndexPage');
+	var rootIndexPage = document.getElementById(
+		'<portlet:namespace />rootIndexPage'
+	);
 
 	if (rootIndexPage) {
 		rootIndexPage.value = '<%= String.valueOf(rootIndexPage) %>';
 	}
 
 	<c:if test="<%= treeWalker.getMessages().size() <= (index + 1) %>">
-		var moreMessagesLink = document.getElementById('<portlet:namespace />moreMessages');
+		var moreMessagesLink = document.getElementById(
+			'<portlet:namespace />moreMessages'
+		);
 
 		if (moreMessagesLink) {
 			moreMessagesLink.classList.add('hide');

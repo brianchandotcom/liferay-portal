@@ -234,5 +234,8 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 </aui:form>
 
 <aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectGroupFm', '<%= HtmlUtil.escapeJS(siteItemSelectorViewDisplayContext.getItemSelectedEventName()) %>');
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectGroupFm',
+		'<%= HtmlUtil.escapeJS(siteItemSelectorViewDisplayContext.getItemSelectedEventName()) %>'
+	);
 </aui:script>

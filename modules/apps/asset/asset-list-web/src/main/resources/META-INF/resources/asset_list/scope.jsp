@@ -109,7 +109,9 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 </liferay-ui:icon-menu>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />groupsSearchContainer'
+	);
 
 	searchContainer.get('contentBox').delegate(
 		'click',
@@ -127,67 +129,69 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		'.modify-link'
 	);
 
-	var selectManageableGroupIcon = document.getElementById('<portlet:namespace />selectManageableGroup');
+	var selectManageableGroupIcon = document.getElementById(
+		'<portlet:namespace />selectManageableGroup'
+	);
 
 	if (selectManageableGroupIcon) {
-		selectManageableGroupIcon.addEventListener(
-			'click',
-			function(event) {
-				event.preventDefault();
+		selectManageableGroupIcon.addEventListener('click', function(event) {
+			event.preventDefault();
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							destroyOnHide: true
-						},
-						eventName: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-						id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-						title: '<liferay-ui:message key="scopes" />',
-						uri: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						destroyOnHide: true
 					},
-					function(event) {
-						var entityId = event.groupid;
+					eventName:
+						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+					id:
+						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+					title: '<liferay-ui:message key="scopes" />',
+					uri:
+						'<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>'
+				},
+				function(event) {
+					var entityId = event.groupid;
 
-						var searchContainerData = searchContainer.getData();
+					var searchContainerData = searchContainer.getData();
 
-						if (searchContainerData.indexOf(entityId) == -1) {
-							addRow(entityId, event.groupdescriptivename, event.groupscopelabel);
-						}
+					if (searchContainerData.indexOf(entityId) == -1) {
+						addRow(
+							entityId,
+							event.groupdescriptivename,
+							event.groupscopelabel
+						);
 					}
-				);
-			}
-		);
+				}
+			);
+		});
 	}
 
-	Liferay.provide(
-		window,
-		'addRow',
-		function(groupId, name, scopeLabel) {
-			var rowColumns = [];
+	Liferay.provide(window, 'addRow', function(groupId, name, scopeLabel) {
+		var rowColumns = [];
 
-			rowColumns.push('<span class="truncate-text">' + name + '</span>');
-			rowColumns.push(scopeLabel);
-			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>');
+		rowColumns.push('<span class="truncate-text">' + name + '</span>');
+		rowColumns.push(scopeLabel);
+		rowColumns.push(
+			'<a class="modify-link" data-rowId="' +
+				groupId +
+				'" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>'
+		);
 
-			searchContainer.addRow(rowColumns, groupId);
+		searchContainer.addRow(rowColumns, groupId);
 
-			searchContainer.updateDataStore();
+		searchContainer.updateDataStore();
 
-			updateGroupIds();
+		updateGroupIds();
+	});
+
+	Liferay.provide(window, 'updateGroupIds', function() {
+		var groupIds = document.getElementById('<portlet:namespace />groupIds');
+
+		if (groupIds) {
+			var searchContainerData = searchContainer.getData();
+
+			groupIds.setAttribute('value', searchContainerData.split(','));
 		}
-	);
-
-	Liferay.provide(
-		window,
-		'updateGroupIds',
-		function() {
-			var groupIds = document.getElementById('<portlet:namespace />groupIds');
-
-			if (groupIds) {
-				var searchContainerData = searchContainer.getData();
-
-				groupIds.setAttribute('value', searchContainerData.split(','));
-			}
-		}
-	);
+	});
 </aui:script>

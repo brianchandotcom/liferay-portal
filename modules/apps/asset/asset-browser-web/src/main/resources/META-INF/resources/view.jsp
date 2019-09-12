@@ -180,44 +180,44 @@
 <c:choose>
 	<c:when test="<%= assetBrowserDisplayContext.isMultipleSelection() %>">
 		<aui:script use="liferay-search-container">
-			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectAssetEntries');
-
-			searchContainer.on(
-				'rowToggled',
-				function(event) {
-					var selectedItems = event.elements.allSelectedElements;
-
-					var arr = [];
-
-					selectedItems.each(
-						function() {
-							var domElement = this.ancestor('tr');
-
-							if (domElement == null) {
-								domElement = this.ancestor('li');
-							}
-
-							if (domElement != null) {
-								var data = domElement.getDOM().dataset;
-
-								arr.push(data);
-							}
-						}
-					);
-
-					Liferay.Util.getOpener().Liferay.fire(
-						'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
-						{
-							data: arr
-						}
-					);
-				}
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />selectAssetEntries'
 			);
+
+			searchContainer.on('rowToggled', function(event) {
+				var selectedItems = event.elements.allSelectedElements;
+
+				var arr = [];
+
+				selectedItems.each(function() {
+					var domElement = this.ancestor('tr');
+
+					if (domElement == null) {
+						domElement = this.ancestor('li');
+					}
+
+					if (domElement != null) {
+						var data = domElement.getDOM().dataset;
+
+						arr.push(data);
+					}
+				});
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>',
+					{
+						data: arr
+					}
+				);
+			});
 		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<aui:script>
-			Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');
+			Liferay.Util.selectEntityHandler(
+				'#<portlet:namespace />selectAssetFm',
+				'<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>'
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

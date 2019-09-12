@@ -60,18 +60,17 @@
 
 	<script>
 		(function() {
-			var publishProcessesLink = document.getElementById('<portlet:namespace />publishProcessesLink');
+			var publishProcessesLink = document.getElementById(
+				'<portlet:namespace />publishProcessesLink'
+			);
 
 			if (publishProcessesLink) {
-				publishProcessesLink.addEventListener(
-					'click',
-					function(event) {
-						Liferay.Util.openWindow(
-							{
-								id: 'publishProcesses',
-								title: '<liferay-ui:message key="initial-publication" />',
+				publishProcessesLink.addEventListener('click', function(event) {
+					Liferay.Util.openWindow({
+						id: 'publishProcesses',
+						title: '<liferay-ui:message key="initial-publication" />',
 
-								<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishProcessesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 									<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 									<portlet:param name="<%= Constants.CMD %>" value="view_processes" />
 									<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
@@ -81,11 +80,9 @@
 									<portlet:param name="localPublishing" value="<%= String.valueOf(stagedLocally) %>" />
 								</liferay-portlet:renderURL>
 
-								uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
-							}
-						);
-					}
-				);
+						uri: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>'
+					});
+				});
 			}
 		})();
 	</script>

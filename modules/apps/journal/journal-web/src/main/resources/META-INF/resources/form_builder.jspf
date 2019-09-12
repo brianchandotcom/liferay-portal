@@ -87,19 +87,17 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var STR_VALUE = 'value';
 
 	var displayWarning = function(message) {
-		new Liferay.Notification(
-			{
-				closeable: true,
-				delay: {
-					hide: 5000,
-					show: 0
-				},
-				duration: 500,
-				message: message,
-				title: '<liferay-ui:message key="warning" />',
-				type: 'warning'
-			}
-		).render('body');
+		new Liferay.Notification({
+			closeable: true,
+			delay: {
+				hide: 5000,
+				show: 0
+			},
+			duration: 500,
+			message: message,
+			title: '<liferay-ui:message key="warning" />',
+			type: 'warning'
+		}).render('body');
 	};
 
 	var formEditor;
@@ -109,8 +107,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 		if (formEditor && !checkViewTabActive()) {
 			content = formEditor.get(STR_VALUE);
-		}
-		else {
+		} else {
 			content = formBuilder.getContent();
 		}
 
@@ -119,15 +116,13 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	var getFormEditor = function() {
 		if (!formEditor) {
-			formEditor = new A.AceEditor(
-				{
-					boundingBox: '#<portlet:namespace />formBuilderEditor',
-					height: 600,
-					mode: 'xml',
-					tabSize: 4,
-					width: 600
-				}
-			).render();
+			formEditor = new A.AceEditor({
+				boundingBox: '#<portlet:namespace />formBuilderEditor',
+				height: 600,
+				mode: 'xml',
+				tabSize: 4,
+				width: 600
+			}).render();
 		}
 
 		return formEditor;
@@ -154,20 +149,29 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 		content = content.replace(/nestedFields/g, 'fields');
 
-		if (content.indexOf('availableLanguageIds') === -1 || content.indexOf('defaultLanguageId') === -1 || content.indexOf('fields') === -1) {
-			displayWarning('<liferay-ui:message key="you-cannot-remove-default-attributes" />');
-		}
-		else {
+		if (
+			content.indexOf('availableLanguageIds') === -1 ||
+			content.indexOf('defaultLanguageId') === -1 ||
+			content.indexOf('fields') === -1
+		) {
+			displayWarning(
+				'<liferay-ui:message key="you-cannot-remove-default-attributes" />'
+			);
+		} else {
 			try {
 				content = JSON.parse(content);
-			}
-			catch (e) {
-				displayWarning('<liferay-ui:message key="you-have-entered-invalid-json" />');
+			} catch (e) {
+				displayWarning(
+					'<liferay-ui:message key="you-have-entered-invalid-json" />'
+				);
 
 				return;
 			}
 
-			formBuilder.translationManager.set('availableLocales', content.availableLanguageIds);
+			formBuilder.translationManager.set(
+				'availableLocales',
+				content.availableLanguageIds
+			);
 
 			content = formBuilder.deserializeDefinitionFields(content);
 
@@ -177,7 +181,12 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	var setEditorSize = function() {
 		if (!checkViewTabActive()) {
-			getFormEditor().set('width', A.one('#<portlet:namespace />formBuilderSourceWrapper').get('clientWidth'));
+			getFormEditor().set(
+				'width',
+				A.one('#<portlet:namespace />formBuilderSourceWrapper').get(
+					'clientWidth'
+				)
+			);
 		}
 	};
 
@@ -192,48 +201,50 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var switchToView = function() {
 		if (formEditor) {
 			reloadFormBuilderData(formEditor.get(STR_VALUE));
-		}
-		else if (formBuilder) {
+		} else if (formBuilder) {
 			reloadFormBuilderData(formBuilder.getContent());
 		}
 	};
 
-	var availableFields = A.Object.getValue(window, '<%= HtmlUtil.escapeJS(journalEditDDMStructuresDisplayContext.getAvailableFields()) %>'.split('.'));
+	var availableFields = A.Object.getValue(
+		window,
+		'<%= HtmlUtil.escapeJS(journalEditDDMStructuresDisplayContext.getAvailableFields()) %>'.split(
+			'.'
+		)
+	);
 
 	if (A.Lang.isFunction(availableFields)) {
 		availableFields = availableFields(A, Liferay.FormBuilder);
 	}
 
-	var formBuilder = new Liferay.FormBuilder(
-		{
-			allowRemoveRequiredFields: true,
-			availableFields: availableFields,
-			boundingBox: '#<portlet:namespace />formBuilder',
-			enableEditing: false,
-			fieldNameEditionDisabled: <%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getStructureId()) > 0) %>,
+	var formBuilder = new Liferay.FormBuilder({
+		allowRemoveRequiredFields: true,
+		availableFields: availableFields,
+		boundingBox: '#<portlet:namespace />formBuilder',
+		enableEditing: false,
+		fieldNameEditionDisabled: <%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getStructureId()) > 0) %>,
 
-			<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getFields()) %>">
-				fields: <%= journalEditDDMStructuresDisplayContext.getFields() %>,
+		<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getFields()) %>">
+			fields: <%= journalEditDDMStructuresDisplayContext.getFields() %>,
+		</c:if>
+
+		portletNamespace: '<portlet:namespace />',
+		portletResourceNamespace: '<portlet:namespace />',
+		readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
+		srcNode: '#<portlet:namespace />formBuilderContent',
+		translationManager: {
+			<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString()) %>">
+				availableLocales: <%= journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString() %>,
 			</c:if>
 
-			portletNamespace: '<portlet:namespace />',
-			portletResourceNamespace: '<portlet:namespace />',
-			readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
-			srcNode: '#<portlet:namespace />formBuilderContent',
-			translationManager: {
-
-				<c:if test="<%= Validator.isNotNull(journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString()) %>">
-					availableLocales: <%= journalEditDDMStructuresDisplayContext.getAvailableLocalesJSONArrayString() %>,
-				</c:if>
-
-				boundingBox: '#<portlet:namespace />translationManager',
-				changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
-				defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
-				localesMap: <%= journalEditDDMStructuresDisplayContext.getLocalesMap() %>,
-				srcNode: '#<portlet:namespace />translationManager .lfr-translation-manager-content'
-			}
+			boundingBox: '#<portlet:namespace />translationManager',
+			changeableDefaultLanguage: <%= changeableDefaultLanguage %>,
+			defaultLocale: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
+			localesMap: <%= journalEditDDMStructuresDisplayContext.getLocalesMap() %>,
+			srcNode:
+				'#<portlet:namespace />translationManager .lfr-translation-manager-content'
 		}
-	).render();
+	}).render();
 
 	var dialog = Liferay.Util.getWindow();
 
@@ -244,8 +255,7 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var afterShowTab = function(event) {
 		if (checkViewTabActive()) {
 			switchToView();
-		}
-		else {
+		} else {
 			switchToSource();
 		}
 	};
@@ -260,15 +270,13 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 			var propertyList = formBuilder.propertyList;
 
 			if (propertyList) {
-				propertyList.get('data').each(
-					function(model) {
-						var editor = model.get('editor');
+				propertyList.get('data').each(function(model) {
+					var editor = model.get('editor');
 
-						if (editor) {
-							editor.destroy();
-						}
+					if (editor) {
+						editor.destroy();
 					}
-				);
+				});
 			}
 
 			formBuilder.destroy();
@@ -281,17 +289,11 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 
 	window.<portlet:namespace />getContentValue = getContentValue;
 
-	Liferay.on(
-		'<portlet:namespace />saveTemplate',
-		function(event) {
-			A.one('#<portlet:namespace />scriptContent').val(getContentValue());
-		}
-	);
+	Liferay.on('<portlet:namespace />saveTemplate', function(event) {
+		A.one('#<portlet:namespace />scriptContent').val(getContentValue());
+	});
 
-	Liferay.fire(
-		'<portlet:namespace />formBuilderLoaded',
-		{
-			formBuilder: formBuilder
-		}
-	);
+	Liferay.fire('<portlet:namespace />formBuilderLoaded', {
+		formBuilder: formBuilder
+	});
 </aui:script>

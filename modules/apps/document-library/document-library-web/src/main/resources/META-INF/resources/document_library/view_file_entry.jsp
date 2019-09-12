@@ -254,7 +254,11 @@ if (portletTitleBasedNavigation) {
 <portlet:actionURL name="/document_library/edit_entry" var="editEntryURL" />
 
 <aui:script>
-	function <portlet:namespace />move(selectedItems, parameterName, parameterValue) {
+	function <portlet:namespace />move(
+		selectedItems,
+		parameterName,
+		parameterValue
+	) {
 		var namespace = '<portlet:namespace />';
 
 		Liferay.Util.selectEntity(
@@ -266,7 +270,8 @@ if (portletTitleBasedNavigation) {
 					width: 680
 				},
 				id: namespace + 'selectFolder',
-				title: '<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
+				title:
+					'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
 				uri: '<%= selectFolderURL.toString() %>'
 			},
 			function(event) {
@@ -300,21 +305,20 @@ if (addPortletBreadcrumbEntries) {
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<aui:script>
-		var openContextualSidebarButton = document.getElementById('<portlet:namespace />OpenContextualSidebar');
+		var openContextualSidebarButton = document.getElementById(
+			'<portlet:namespace />OpenContextualSidebar'
+		);
 
 		if (openContextualSidebarButton) {
-			openContextualSidebarButton.addEventListener(
-				'click',
-				function(event) {
-					event.currentTarget.classList.toggle('active');
+			openContextualSidebarButton.addEventListener('click', function(event) {
+				event.currentTarget.classList.toggle('active');
 
-					document.querySelector(
+				document
+					.querySelector(
 						'#<portlet:namespace />FileEntry .contextual-sidebar'
-					).classList.toggle(
-						'contextual-sidebar-visible'
-					);
-				}
-			);
+					)
+					.classList.toggle('contextual-sidebar-visible');
+			});
 		}
 	</aui:script>
 </c:if>

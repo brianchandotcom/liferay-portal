@@ -32,7 +32,8 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			var TIME_POLLING = 500;
 			var TIME_SHOW_MSG = 2000;
 
-			var defaultError = '<liferay-ui:message key="an-unexpected-error-occurred" />';
+			var defaultError =
+				'<liferay-ui:message key="an-unexpected-error-occurred" />';
 			var dialogId = '<portlet:namespace />LoadingDialog';
 
 			var isTimeConsumed = false;
@@ -53,57 +54,44 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			}
 
 			function polling() {
-				fetch(
-					'<%= googleDriveBackgroundTaskStatusURL %>',
-					{
-						credentials: 'include',
-						method: 'POST'
-					}
-				)
-				.then(
-					function(response) {
+				fetch('<%= googleDriveBackgroundTaskStatusURL %>', {
+					credentials: 'include',
+					method: 'POST'
+				})
+					.then(function(response) {
 						if (!response.ok) {
 							throw defaultError;
 						}
 
 						return response.json();
-					}
-				)
-				.then(
-					function(response) {
+					})
+					.then(function(response) {
 						if (response.complete) {
-								url = response.googleDocsEditURL;
+							url = response.googleDocsEditURL;
 
-								navigate();
-						}
-						else if (response.error) {
+							navigate();
+						} else if (response.error) {
 							throw defaultError;
-						}
-						else {
+						} else {
 							setTimeout(polling, TIME_POLLING);
 						}
-					}
-				)
-				.catch(
-					function(error) {
+					})
+					.catch(function(error) {
 						showError(error);
 
 						Liferay.Util.getWindow(dialogId).hide();
-					}
-				);
+					});
 			}
 
 			function showError(message) {
-				showStatusMessage(
-					{
-						message: message,
-						title: '<liferay-ui:message key="error" />:',
-						type: 'danger'
-					}
-				);
+				showStatusMessage({
+					message: message,
+					title: '<liferay-ui:message key="error" />:',
+					type: 'danger'
+				});
 			}
 
-		<%
+			<%
 		String messageKey = "you-are-being-redirected-to-an-external-editor-to-edit-this-document";
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
@@ -117,7 +105,8 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 				{
 					id: dialogId,
 					dialog: {
-						bodyContent: '<p><liferay-ui:message key="<%= messageKey %>" /></p><div aria-hidden="true" class="loading-animation"></div>',
+						bodyContent:
+							'<p><liferay-ui:message key="<%= messageKey %>" /></p><div aria-hidden="true" class="loading-animation"></div>',
 						cssClass: 'google-docs-redirect-modal',
 						height: 172,
 						modal: true,
@@ -129,17 +118,13 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 				function() {
 					setTimeout(polling, TIME_POLLING);
 
-					setTimeout(
-						function() {
-							isTimeConsumed = true;
+					setTimeout(function() {
+						isTimeConsumed = true;
 
-							navigate();
-						},
-						TIME_SHOW_MSG
-					);
+						navigate();
+					}, TIME_SHOW_MSG);
 				}
 			);
-
 		})();
 	</aui:script>
 </c:if>

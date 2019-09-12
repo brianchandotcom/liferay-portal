@@ -88,13 +88,11 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 </liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
-	var autoFields = new Liferay.AutoFields(
-		{
-			contentBox: 'fieldset#<portlet:namespace />fieldsId',
-			fieldIndexes: '<portlet:namespace />fieldsIndexes',
-			namespace: '<portlet:namespace />'
-		}
-	).render();
+	var autoFields = new Liferay.AutoFields({
+		contentBox: 'fieldset#<portlet:namespace />fieldsId',
+		fieldIndexes: '<portlet:namespace />fieldsIndexes',
+		namespace: '<portlet:namespace />'
+	}).render();
 </aui:script>
 
 <aui:script use="liferay-search-sort-configuration">

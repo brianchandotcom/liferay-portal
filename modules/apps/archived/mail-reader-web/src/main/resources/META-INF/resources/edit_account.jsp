@@ -91,98 +91,103 @@ Account mailAccount = AccountLocalServiceUtil.getAccount(accountId);
 <aui:script use="aui-io-deprecated">
 	var form = A.one('#<portlet:namespace />dialogFm');
 
-	form.on(
-		'submit',
-		function(event) {
-			event.preventDefault();
+	form.on('submit', function(event) {
+		event.preventDefault();
 
-			Liferay.Mail.setStatus('info', '<liferay-ui:message key="updating-account" />', true);
+		Liferay.Mail.setStatus(
+			'info',
+			'<liferay-ui:message key="updating-account" />',
+			true
+		);
 
-			A.io.request(
-				themeDisplay.getLayoutURL() + '/-/mail/update_account',
-				{
-					dataType: 'JSON',
-					form: {
-						id: form.getDOMNode()
-					},
-					on: {
-						failure: function(event, id, obj) {
-							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
-						},
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/update_account', {
+			dataType: 'JSON',
+			form: {
+				id: form.getDOMNode()
+			},
+			on: {
+				failure: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'error',
+						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+					);
+				},
+				success: function(event, id, obj) {
+					var responseData = this.get('responseData');
 
-							Liferay.Mail.setStatus(responseData.status, responseData.message);
-						}
-					}
+					Liferay.Mail.setStatus(
+						responseData.status,
+						responseData.message
+					);
 				}
-			);
-		}
-	);
-
-	A.one('.mail-dialog .delete-account').on(
-		'click',
-		function(event) {
-			if (!confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this-account" />')) {
-				return;
 			}
+		});
+	});
 
-			Liferay.Mail.setStatus('info', '<liferay-ui:message key="deleting-account" />');
+	A.one('.mail-dialog .delete-account').on('click', function(event) {
+		if (
+			!confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this-account" />'
+			)
+		) {
+			return;
+		}
 
-			A.io.request(
-				themeDisplay.getLayoutURL() + '/-/mail/delete_account',
-				{
-					data: Liferay.Util.ns(
-						'<portlet:namespace />',
-						{
-							accountId: <%= accountId %>
-						}
-					),
-					dataType: 'JSON',
-					method: 'POST',
-					on: {
-						failure: function(event, id, obj) {
-							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
-						},
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+		Liferay.Mail.setStatus(
+			'info',
+			'<liferay-ui:message key="deleting-account" />'
+		);
 
-							Liferay.Mail.setStatus(responseData.status, responseData.message);
+		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/delete_account', {
+			data: Liferay.Util.ns('<portlet:namespace />', {
+				accountId: <%= accountId %>
+			}),
+			dataType: 'JSON',
+			method: 'POST',
+			on: {
+				failure: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'error',
+						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+					);
+				},
+				success: function(event, id, obj) {
+					var responseData = this.get('responseData');
 
-							if (responseData.status == 'success') {
-								Liferay.Mail.reset();
-							}
-						}
+					Liferay.Mail.setStatus(
+						responseData.status,
+						responseData.message
+					);
+
+					if (responseData.status == 'success') {
+						Liferay.Mail.reset();
 					}
 				}
-			);
-		}
-	);
+			}
+		});
+	});
 
-	A.one('.mail-dialog .synchronize-account').on(
-		'click',
-		function(event) {
-			A.io.request(
-				themeDisplay.getLayoutURL() + '/-/mail/synchronize_account',
-				{
-					data: Liferay.Util.ns(
-						'<portlet:namespace />',
-						{
-							accountId: <%= accountId %>
-						}
-					),
-					dataType: 'JSON',
-					method: 'POST',
-					on: {
-						failure: function(event, id, obj) {
-							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
-						},
-						success: function(event, id, obj) {
-							Liferay.Mail.setStatus('success', '<liferay-ui:message key="synchronizing-messages-in-the-background" />');
-						}
-					}
+	A.one('.mail-dialog .synchronize-account').on('click', function(event) {
+		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/synchronize_account', {
+			data: Liferay.Util.ns('<portlet:namespace />', {
+				accountId: <%= accountId %>
+			}),
+			dataType: 'JSON',
+			method: 'POST',
+			on: {
+				failure: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'error',
+						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+					);
+				},
+				success: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'success',
+						'<liferay-ui:message key="synchronizing-messages-in-the-background" />'
+					);
 				}
-			);
-		}
-	);
+			}
+		});
+	});
 </aui:script>

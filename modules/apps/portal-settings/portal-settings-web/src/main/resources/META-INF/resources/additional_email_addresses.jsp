@@ -110,13 +110,11 @@
 		</aui:fieldset>
 
 		<aui:script use="liferay-auto-fields">
-			new Liferay.AutoFields(
-				{
-					contentBox: '#<portlet:namespace />additionalEmailAddresses',
-					fieldIndexes: '<portlet:namespace />emailAddressesIndexes',
-					namespace: '<portlet:namespace />'
-				}
-			).render();
+			new Liferay.AutoFields({
+				contentBox: '#<portlet:namespace />additionalEmailAddresses',
+				fieldIndexes: '<portlet:namespace />emailAddressesIndexes',
+				namespace: '<portlet:namespace />'
+			}).render();
 		</aui:script>
 	</c:when>
 	<c:otherwise>

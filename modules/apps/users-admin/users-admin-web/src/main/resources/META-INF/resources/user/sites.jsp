@@ -132,7 +132,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		var addGroupIds = [];
 		var deleteGroupIds = [];
 
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+		var searchContainer = Liferay.SearchContainer.get(
+			'<portlet:namespace />groupsSearchContainer'
+		);
 
 		var searchContainerContentBox = searchContainer.get('contentBox');
 
@@ -143,8 +145,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				if (!searchContainerData.length) {
 					searchContainerData = [];
-				}
-				else {
+				} else {
 					searchContainerData = searchContainerData.split(',');
 				}
 
@@ -183,7 +184,11 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 						rowColumns.push(event.entityname);
 						rowColumns.push('');
-						rowColumns.push('<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
+						rowColumns.push(
+							'<a class="modify-link" data-rowId="' +
+								entityId +
+								'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
+						);
 
 						searchContainer.addRow(rowColumns, entityId);
 
@@ -193,8 +198,12 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 						AArray.removeItem(deleteGroupIds, entityId);
 
-						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
-						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
+						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
+							','
+						);
+						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
+							','
+						);
 					}
 				);
 			}
@@ -211,7 +220,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 				var selectGroup = Util.getWindow('<portlet:namespace />selectGroup');
 
 				if (selectGroup) {
-					var selectButton = selectGroup.iframe.node.get('contentWindow.document').one('.selector-button[data-entityid="' + rowId + '"]');
+					var selectButton = selectGroup.iframe.node
+						.get('contentWindow.document')
+						.one('.selector-button[data-entityid="' + rowId + '"]');
 
 					Util.toggleDisabled(selectButton, false);
 				}
@@ -222,8 +233,12 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 
 				deleteGroupIds.push(rowId);
 
-				document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
-				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');
+				document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
+					','
+				);
+				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(
+					','
+				);
 			},
 			'.modify-link'
 		);
@@ -231,15 +246,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		var handleEnableRemoveSite = Liferay.on(
 			'<portlet:namespace />enableRemovedSites',
 			function(event) {
-				event.selectors.each(
-					function(item, index, collection) {
-						var groupId = item.attr('data-entityid');
+				event.selectors.each(function(item, index, collection) {
+					var groupId = item.attr('data-entityid');
 
-						if (deleteGroupIds.indexOf(groupId) != -1) {
-							Util.toggleDisabled(item, false);
-						}
+					if (deleteGroupIds.indexOf(groupId) != -1) {
+						Util.toggleDisabled(item, false);
 					}
-				);
+				});
 			}
 		);
 

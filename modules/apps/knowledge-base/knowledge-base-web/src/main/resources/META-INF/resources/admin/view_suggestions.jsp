@@ -93,7 +93,11 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 
 <aui:script>
 	var deleteKBComments = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />'
+			)
+		) {
 			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
@@ -103,21 +107,18 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 	};
 
 	var ACTIONS = {
-		'deleteKBComments': deleteKBComments
+		deleteKBComments: deleteKBComments
 	};
 
-	Liferay.componentReady('kbSuggestionListManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('kbSuggestionListManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

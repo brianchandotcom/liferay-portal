@@ -207,19 +207,13 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					let value = event.target.value;
 
 					if (nameInput.hasAttribute('maxLength')) {
-						value = value.substring(
-							0,
-							nameInput.getAttribute('maxLength')
-						);
+						value = value.substring(0, nameInput.getAttribute('maxLength'));
 					}
 
 					nameInput.value = value;
 				};
 
-				titleInput.addEventListener(
-					'input',
-					debounce(handleOnTitleInput, 200)
-				);
+				titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
 			}
 		}
 	</aui:script>

@@ -108,16 +108,20 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 	var data = [];
 
 	for (var i = 0; i < categories.length; i++) {
-		data.push(
-			{
-				category: categories[i],
-				values: values[i]
-			}
-		);
+		data.push({
+			category: categories[i],
+			values: values[i]
+		});
 	}
 
 	var tooltip = {
-		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
+		markerLabelFunction: function(
+			categoryItem,
+			valueItem,
+			itemIndex,
+			series,
+			seriesIndex
+		) {
 			return valueItem.value;
 		},
 
@@ -173,13 +177,14 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 		</c:otherwise>
 	</c:choose>
 
-	var chartContainer = A.one('#groupStatisticsChart<%= displayActivityCounterNameIndex %>');
+	var chartContainer = A.one(
+		'#groupStatisticsChart<%= displayActivityCounterNameIndex %>'
+	);
 
 	var defaultConfig = {
 		axes: {
 			category: {
-				styles:
-				{
+				styles: {
 					label: {
 						display: 'none'
 					}
@@ -205,16 +210,18 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d");
 
 	var chart = new A.Chart(defaultConfig).render(chartContainer);
 
-	Liferay.after(
-		['portletMoved', 'liferaypanel:collapse'],
-		function(event) {
-			var width = chartContainer.width();
+	Liferay.after(['portletMoved', 'liferaypanel:collapse'], function(event) {
+		var width = chartContainer.width();
 
-			if (width && (event.type == 'portletMoved' && event.portletId == '<%= portletDisplay.getId() %>') ||
-				(event.type == 'liferaypanel:collapse' && event.panelId == 'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')) {
-
-				chart.set('width', width);
-			}
+		if (
+			(width &&
+				(event.type == 'portletMoved' &&
+					event.portletId == '<%= portletDisplay.getId() %>')) ||
+			(event.type == 'liferaypanel:collapse' &&
+				event.panelId ==
+					'groupStatisticsPanel<%= displayActivityCounterNameIndex %>')
+		) {
+			chart.set('width', width);
 		}
-	);
+	});
 </aui:script>

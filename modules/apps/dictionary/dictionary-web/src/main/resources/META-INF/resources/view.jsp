@@ -34,6 +34,8 @@
 		var type = form.<portlet:namespace />type.selectedIndex;
 		var word = form.<portlet:namespace />word.value;
 
-		window.open(form.<portlet:namespace />type[type].value + encodeURIComponent(word));
+		window.open(
+			form.<portlet:namespace />type[type].value + encodeURIComponent(word)
+		);
 	}
 </aui:script>

@@ -110,24 +110,24 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	var selectKBObjectButton = document.getElementById('<portlet:namespace />selectKBObjectButton');
+	var selectKBObjectButton = document.getElementById(
+		'<portlet:namespace />selectKBObjectButton'
+	);
 
 	if (selectKBObjectButton) {
-		selectKBObjectButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true,
-							width: 680
-						},
-						id: '<portlet:namespace />selectKBObject',
-						title: '<liferay-ui:message key="select-parent" />',
+		selectKBObjectButton.addEventListener('click', function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true,
+						width: 680
+					},
+					id: '<portlet:namespace />selectKBObject',
+					title: '<liferay-ui:message key="select-parent" />',
 
-						<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
 							<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 							<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
@@ -139,28 +139,24 @@ if (portletTitleBasedNavigation) {
 							<portlet:param name="targetStatus" value="<%= String.valueOf(targetStatus) %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
-					},
-					function(event) {
-						Liferay.Util.setFormValues(
-							document.<portlet:namespace />fm,
-							{
-								parentPriority: event.priority,
-								parentResourceClassNameId: event.resourceclassnameid
-							}
-						);
+					uri: '<%= HtmlUtil.escapeJS(selectKBObjectURL) %>'
+				},
+				function(event) {
+					Liferay.Util.setFormValues(document.<portlet:namespace />fm, {
+						parentPriority: event.priority,
+						parentResourceClassNameId: event.resourceclassnameid
+					});
 
-						var folderData = {
-							idString: 'parentResourcePrimKey',
-							idValue: event.resourceprimkey,
-							nameString: 'parentTitle',
-							nameValue: event.title
-						};
+					var folderData = {
+						idString: 'parentResourcePrimKey',
+						idValue: event.resourceprimkey,
+						nameString: 'parentTitle',
+						nameValue: event.title
+					};
 
-						Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-					}
-				);
-			}
-		);
+					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+				}
+			);
+		});
 	}
 </aui:script>

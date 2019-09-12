@@ -46,59 +46,74 @@
 	</portlet:renderURL>
 
 	function <portlet:namespace />schedulePublishEvent() {
-		var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
+		var exportImport = Liferay.component(
+			'<portlet:namespace />ExportImportComponent'
+		);
 
 		var dateChecker = exportImport.getDateRangeChecker();
 
 		var rangeEndsLater = false;
 
-		var schedulerEndBy = document.getElementById("<portlet:namespace/>schedulerEndBy");
+		var schedulerEndBy = document.getElementById(
+			'<portlet:namespace/>schedulerEndBy'
+		);
 
 		if (schedulerEndBy && schedulerEndBy.checked) {
-			var endDate = Liferay.component("<portlet:namespace />schedulerEndDateDatePicker");
-			var endTime = Liferay.component("<portlet:namespace />schedulerEndTimeTimePicker");
-			var startDate = Liferay.component("<portlet:namespace />schedulerStartDateDatePicker");
-			var startTime = Liferay.component("<portlet:namespace />schedulerStartTimeTimePicker");
+			var endDate = Liferay.component(
+				'<portlet:namespace />schedulerEndDateDatePicker'
+			);
+			var endTime = Liferay.component(
+				'<portlet:namespace />schedulerEndTimeTimePicker'
+			);
+			var startDate = Liferay.component(
+				'<portlet:namespace />schedulerStartDateDatePicker'
+			);
+			var startTime = Liferay.component(
+				'<portlet:namespace />schedulerStartTimeTimePicker'
+			);
 
 			if (endDate && endTime && startDate && startTime) {
-				if (endDate.getDate().toISOString() < startDate.getDate().toISOString()) {
+				if (
+					endDate.getDate().toISOString() <
+					startDate.getDate().toISOString()
+				) {
 					rangeEndsLater = true;
 				}
 
-				if (endTime.getTime().toISOString() < startTime.getTime().toISOString()) {
+				if (
+					endTime.getTime().toISOString() <
+					startTime.getTime().toISOString()
+				) {
 					rangeEndsLater = true;
 				}
 			}
 		}
 
 		if (!rangeEndsLater) {
-			Liferay.Util.postForm(
-				document.<portlet:namespace />publishPagesFm,
-				{
-					data: {
-						'<%= Constants.CMD %>': '<%= scheduleCMD %>',
-						'redirect': '<%= scheduledEventsURL %>'
-					}
+			Liferay.Util.postForm(document.<portlet:namespace />publishPagesFm, {
+				data: {
+					<%= Constants.CMD %>: '<%= scheduleCMD %>',
+					redirect: '<%= scheduledEventsURL %>'
 				}
-			);
-		}
-		else {
+			});
+		} else {
 			exportImport.showNotification(dateChecker, rangeEndsLater);
 		}
 	}
 
 	function <portlet:namespace />unschedulePublishEvent(jobName) {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
-			Liferay.Util.postForm(
-				document.<portlet:namespace />exportPagesFm,
-				{
-					data: {
-						'<%= Constants.CMD %>': '<%= unscheduleCMD %>',
-						'jobName': jobName,
-						'redirect': '<%= scheduledEventsURL %>'
-					}
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-scheduled-event") %>'
+			)
+		) {
+			Liferay.Util.postForm(document.<portlet:namespace />exportPagesFm, {
+				data: {
+					<%= Constants.CMD %>: '<%= unscheduleCMD %>',
+					jobName: jobName,
+					redirect: '<%= scheduledEventsURL %>'
 				}
-			);
+			});
 		}
 	}
 </script>

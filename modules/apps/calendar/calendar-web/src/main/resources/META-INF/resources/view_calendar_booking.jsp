@@ -190,7 +190,11 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					<c:when test="<%= untilJCalendar != null %>">
 						endValue = 'on';
 
-						untilDate = new Date(<%= untilJCalendar.get(java.util.Calendar.YEAR) %>, <%= untilJCalendar.get(java.util.Calendar.MONTH) %>, <%= untilJCalendar.get(java.util.Calendar.DATE) %>);
+						untilDate = new Date(
+							<%= untilJCalendar.get(java.util.Calendar.YEAR) %>,
+							<%= untilJCalendar.get(java.util.Calendar.MONTH) %>,
+							<%= untilJCalendar.get(java.util.Calendar.DATE) %>
+						);
 					</c:when>
 					<c:when test="<%= recurrence.getCount() > 0 %>">
 						endValue = 'after';
@@ -279,21 +283,24 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 				Liferay.RecurrenceUtil.openConfirmationPanel(
 					'invokeTransition',
 					function() {
-						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value = 'true';
-						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value = 'false';
+						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value =
+							'true';
+						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value =
+							'false';
 						submitForm(document.<portlet:namespace />fm);
 					},
 					function() {
-						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value = 'true';
-						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value = 'true';
+						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value =
+							'true';
+						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value =
+							'true';
 						submitForm(document.<portlet:namespace />fm);
 					},
 					function() {
 						submitForm(document.<portlet:namespace />fm);
 					}
 				);
-			}
-			else {
+			} else {
 				submitForm(document.<portlet:namespace />fm);
 			}
 		}

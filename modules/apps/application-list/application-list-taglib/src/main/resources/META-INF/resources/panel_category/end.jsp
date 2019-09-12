@@ -31,19 +31,19 @@
 		<aui:script position="auto">
 			var collapse = $('#<%= id %>');
 
-			collapse.on(
-				'hidden.bs.collapse',
-				function(event) {
-					Liferay.Util.Session.set('<%= PanelCategory.class.getName() %><%= id %>', 'closed');
-				}
-			);
+			collapse.on('hidden.bs.collapse', function(event) {
+				Liferay.Util.Session.set(
+					'<%= PanelCategory.class.getName() %><%= id %>',
+					'closed'
+				);
+			});
 
-			collapse.on(
-				'shown.bs.collapse',
-				function(event) {
-					Liferay.Util.Session.set('<%= PanelCategory.class.getName() %><%= id %>', 'open');
-				}
-			);
+			collapse.on('shown.bs.collapse', function(event) {
+				Liferay.Util.Session.set(
+					'<%= PanelCategory.class.getName() %><%= id %>',
+					'open'
+				);
+			});
 		</aui:script>
 	</c:if>
 </c:if>

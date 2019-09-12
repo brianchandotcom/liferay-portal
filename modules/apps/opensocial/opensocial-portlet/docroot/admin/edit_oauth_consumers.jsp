@@ -123,42 +123,43 @@ int oAuthServiceCount = 0;
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keyType);
+	Liferay.Util.focusFormField(
+		document.<portlet:namespace />fm.<portlet:namespace />keyType
+	);
 </aui:script>
 
 <aui:script use="aui-base">
 	function <portlet:namespace />renderConsumerSecretRow(rowCount) {
 		var consumerSecretField = A.one('#consumerSecretField' + rowCount);
 
-		A.one('#<portlet:namespace />keyType' + rowCount).get('options').each(
-			function() {
-				if (this.get('selected') && (this.get('value') == '<%= OAuthConsumerConstants.KEY_TYPE_RSA_PRIVATE %>')) {
+		A.one('#<portlet:namespace />keyType' + rowCount)
+			.get('options')
+			.each(function() {
+				if (
+					this.get('selected') &&
+					this.get('value') ==
+						'<%= OAuthConsumerConstants.KEY_TYPE_RSA_PRIVATE %>'
+				) {
 					consumerSecretField.hide();
-				}
-				else {
+				} else {
 					consumerSecretField.show();
 				}
-			}
-		)
-	};
+			});
+	}
 
 	<%
 	for (int rowCount = 0; rowCount < oAuthServiceCount; rowCount++) {
 	%>
 
-		A.one('#<portlet:namespace />keyType<%= rowCount %>').on(
-			'change',
-			function() {
-				<portlet:namespace />renderConsumerSecretRow(<%= rowCount %>);
-			}
-		);
-
+	A.one('#<portlet:namespace />keyType<%= rowCount %>').on('change', function() {
 		<portlet:namespace />renderConsumerSecretRow(<%= rowCount %>);
+	});
+
+	<portlet:namespace />renderConsumerSecretRow(<%= rowCount %>);
 
 	<%
 	}
 	%>
-
 </aui:script>
 
 <%

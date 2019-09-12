@@ -272,7 +272,9 @@ if (powwowMeeting != null) {
 		window,
 		'<portlet:namespace />toggleRequirePassword',
 		function(checked) {
-			var passwordContainer = AUI().one('#<portlet:namespace />passwordContainer');
+			var passwordContainer = AUI().one(
+				'#<portlet:namespace />passwordContainer'
+			);
 
 			if (passwordContainer) {
 				passwordContainer.toggle(checked);
@@ -283,20 +285,20 @@ if (powwowMeeting != null) {
 </aui:script>
 
 <aui:script use="aui-base,aui-form-validator,aui-io-request,aui-tooltip,autocomplete-filters,autocomplete-highlighters,autocomplete-list,liferay-plugin-meeting-scheduler,liferay-plugin-meeting-util">
-	new A.Tooltip(
-		{
-			cssClass: 'tooltip-help',
-			html: true,
-			opacity: 1,
-			position: 'right',
-			trigger: '#<portlet:namespace />providerBrandingFeaturesIcon',
-			visible: false,
-			zIndex: 10000
-		}
-	).render();
+	new A.Tooltip({
+		cssClass: 'tooltip-help',
+		html: true,
+		opacity: 1,
+		position: 'right',
+		trigger: '#<portlet:namespace />providerBrandingFeaturesIcon',
+		visible: false,
+		zIndex: 10000
+	}).render();
 
 	function <portlet:namespace />loadFeatures(providerType) {
-		A.all('.optional-field').get('parentNode').hide();
+		A.all('.optional-field')
+			.get('parentNode')
+			.hide();
 
 		A.one('#<portlet:namespace />optionPassword').hide();
 
@@ -318,54 +320,56 @@ if (powwowMeeting != null) {
 			sb.append("</ul>");
 		%>
 
-			if (providerType == '<%= providerType %>') {
-				A.one('#<portlet:namespace />providerBrandingFeaturesIcon').attr('data-title', '<%= sb %>');
+		if (providerType == '<%= providerType %>') {
+			A.one('#<portlet:namespace />providerBrandingFeaturesIcon').attr(
+				'data-title',
+				'<%= sb %>'
+			);
 
-				<%
+			<%
 				if (PowwowServiceProviderUtil.isSupportsOptionAutoStartVideo(providerType)) {
 				%>
 
-					A.one('#<portlet:namespace />autoStartVideo').get('parentNode').show();
+			A.one('#<portlet:namespace />autoStartVideo')
+				.get('parentNode')
+				.show();
 
-				<%
+			<%
 				}
 				%>
 
-				<%
+			<%
 				if (PowwowServiceProviderUtil.isSupportsOptionPassword(providerType)) {
 				%>
 
-					A.one('#<portlet:namespace />optionPassword').show();
+			A.one('#<portlet:namespace />optionPassword').show();
 
-				<%
+			<%
 				}
 				%>
-
-			}
+		}
 
 		<%
 		}
 		%>
-
 	}
 
 	var selection = A.one('#<portlet:namespace />providerType');
 
-	selection.on(
-		'change',
-		function() {
-			var providerTypeSelected = A.one('#<portlet:namespace />providerType').val();
+	selection.on('change', function() {
+		var providerTypeSelected = A.one(
+			'#<portlet:namespace />providerType'
+		).val();
 
-			<portlet:namespace />loadFeatures(providerTypeSelected);
-		}
-	);
+		<portlet:namespace />loadFeatures(providerTypeSelected);
+	});
 
 	<%
 	for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 		if (PowwowServerLocalServiceUtil.getPowwowServersCount(providerType, true) > 0) {
 	%>
 
-			<portlet:namespace />loadFeatures('<%= providerType %>');
+	<portlet:namespace />loadFeatures('<%= providerType %>');
 
 	<%
 			break;
@@ -373,55 +377,52 @@ if (powwowMeeting != null) {
 	}
 	%>
 
-	new A.FormValidator(
-		{
-			boundingBox: '#<portlet:namespace />fm',
-			rules: {
-				'<portlet:namespace />password': {
-					alphanum: true,
-					rangeLength: [1, 10]
-				}
+	new A.FormValidator({
+		boundingBox: '#<portlet:namespace />fm',
+		rules: {
+			<portlet:namespace />password: {
+				alphanum: true,
+				rangeLength: [1, 10]
 			}
 		}
-	);
+	});
 
-	new Liferay.MeetingScheduler(
-		{
-			containerId: 'meetingEventDate',
-			endDatePickerName: 'endDate',
-			endTimePickerName: 'endTime',
-			namespace: '<portlet:namespace />',
-			startDatePickerName: 'startDate',
-			startTimePickerName: 'startTime',
-			submitButtonId: 'submit'
-		}
-	);
+	new Liferay.MeetingScheduler({
+		containerId: 'meetingEventDate',
+		endDatePickerName: 'endDate',
+		endTimePickerName: 'endTime',
+		namespace: '<portlet:namespace />',
+		startDatePickerName: 'startDate',
+		startTimePickerName: 'startTime',
+		submitButtonId: 'submit'
+	});
 
-	var meetingUtil = new Liferay.MeetingUtil(
-		{
-			baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
-			baseResourceURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE) %>',
-			creatorEmailAddress: '<%= user.getEmailAddress() %>',
-			creatorName: '<%= user.getFullName() %>',
-			creatorUserId: <%= user.getUserId() %>,
-			formName: 'fm',
-			meetingId: <%= (powwowMeeting != null) ? powwowMeeting.getPowwowMeetingId() : -1 %>,
-			namespace: '<portlet:namespace />',
-			participantDataField: 'participantsJSON',
-			participantInvitedSelector: '#<portlet:namespace />powwowParticipantList .participant-invited',
-			participantKeywords: 'powwowParticipantInput',
-			participantList: 'powwowParticipantList',
-			participantName: 'powwowParticipantName',
-			portletKey: '<%= portletDisplay.getId() %>',
-			prefixParticipantEmailAddress: 'powwowParticipantEmailAddress',
-			prefixParticipantInvited: 'powwowParticipantInvited',
-			prefixParticipantName: 'powwowParticipantName',
-			prefixParticipantParticipantUserId: 'powwowParticipantParticipantUserId',
-			prefixParticipantType: 'powwowParticipantType',
-			redirect: '<%= HtmlUtil.escapeJS(redirect) %>',
-			rowFieldsSelector: '#<portlet:namespace />participants .row-fields'
-		}
-	);
+	var meetingUtil = new Liferay.MeetingUtil({
+		baseActionURL:
+			'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
+		baseResourceURL:
+			'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE) %>',
+		creatorEmailAddress: '<%= user.getEmailAddress() %>',
+		creatorName: '<%= user.getFullName() %>',
+		creatorUserId: <%= user.getUserId() %>,
+		formName: 'fm',
+		meetingId: <%= (powwowMeeting != null) ? powwowMeeting.getPowwowMeetingId() : -1 %>,
+		namespace: '<portlet:namespace />',
+		participantDataField: 'participantsJSON',
+		participantInvitedSelector:
+			'#<portlet:namespace />powwowParticipantList .participant-invited',
+		participantKeywords: 'powwowParticipantInput',
+		participantList: 'powwowParticipantList',
+		participantName: 'powwowParticipantName',
+		portletKey: '<%= portletDisplay.getId() %>',
+		prefixParticipantEmailAddress: 'powwowParticipantEmailAddress',
+		prefixParticipantInvited: 'powwowParticipantInvited',
+		prefixParticipantName: 'powwowParticipantName',
+		prefixParticipantParticipantUserId: 'powwowParticipantParticipantUserId',
+		prefixParticipantType: 'powwowParticipantType',
+		redirect: '<%= HtmlUtil.escapeJS(redirect) %>',
+		rowFieldsSelector: '#<portlet:namespace />participants .row-fields'
+	});
 
 	<%
 	for (PowwowParticipant powwowParticipant : powwowParticipants) {
@@ -432,10 +433,16 @@ if (powwowMeeting != null) {
 		}
 	%>
 
-		meetingUtil.addParticipantToList('<%= powwowParticipant.getName() %>', <%= powwowParticipant.getParticipantUserId() %>, '<%= powwowParticipant.getEmailAddress() %>', '<%= cssClass %>', true, <%= powwowParticipant.getType() %>);
+	meetingUtil.addParticipantToList(
+		'<%= powwowParticipant.getName() %>',
+		<%= powwowParticipant.getParticipantUserId() %>,
+		'<%= powwowParticipant.getEmailAddress() %>',
+		'<%= cssClass %>',
+		true,
+		<%= powwowParticipant.getType() %>
+	);
 
 	<%
 	}
 	%>
-
 </aui:script>

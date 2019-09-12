@@ -74,7 +74,8 @@ else {
 
 <aui:script use="liferay-workflow-web">
 	window.<portlet:namespace/>confirmDeleteDefinition = function(deleteURL) {
-		var message = '<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>';
+		var message =
+			'<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>';
 		var title = '<%= LanguageUtil.get(request, "delete-workflow-question") %>';
 
 		Liferay.WorkflowWeb.openConfirmDeleteDialog(title, message, deleteURL);

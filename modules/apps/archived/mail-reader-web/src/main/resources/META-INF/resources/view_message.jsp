@@ -147,19 +147,13 @@ MailManager mailManager = MailManager.getInstance(request);
 
 	<c:if test="<%= Validator.isNull(message.getBody()) %>">
 		<aui:script use="aui-io-plugin-deprecated">
-			A.one('#messageContentContainer').plug(
-				A.Plugin.IO,
-				{
-					data: Liferay.Util.ns(
-						'<portlet:namespace />',
-						{
-							messageId: <%= message.getMessageId() %>
-						}
-					),
-					method: 'POST',
-					uri: themeDisplay.getLayoutURL() + '/-/mail/view_message_content'
-				}
-			);
+			A.one('#messageContentContainer').plug(A.Plugin.IO, {
+				data: Liferay.Util.ns('<portlet:namespace />', {
+					messageId: <%= message.getMessageId() %>
+				}),
+				method: 'POST',
+				uri: themeDisplay.getLayoutURL() + '/-/mail/view_message_content'
+			});
 		</aui:script>
 	</c:if>
 </c:if>

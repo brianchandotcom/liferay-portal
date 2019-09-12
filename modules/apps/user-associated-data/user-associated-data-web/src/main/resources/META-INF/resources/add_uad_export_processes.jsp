@@ -136,16 +136,25 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			var applicationKeys = form.querySelector('#<portlet:namespace />applicationKeys');
+			var applicationKeys = form.querySelector(
+				'#<portlet:namespace />applicationKeys'
+			);
 
 			if (applicationKeys) {
 				applicationKeys.setAttribute(
 					'value',
-					Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds')
+					Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds',
+						'<portlet:namespace />rowIds'
+					)
 				);
 			}
 
-			submitForm(form, '<portlet:actionURL name="/export_application_data" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="/export_application_data" />'
+			);
 		}
 	}
 </aui:script>

@@ -58,14 +58,18 @@ if (discussionCommentIterator != null) {
 		indexInput.value = '<%= String.valueOf(index) %>';
 	}
 
-	var rootIndexPageInput = document.getElementById('<%= namespace %>rootIndexPage');
+	var rootIndexPageInput = document.getElementById(
+		'<%= namespace %>rootIndexPage'
+	);
 
 	if (rootIndexPageInput) {
 		rootIndexPageInput.value = '<%= String.valueOf(rootIndexPage) %>';
 	}
 
 	<c:if test="<%= (rootDiscussionComment != null) && (discussion.getDiscussionCommentsCount() <= index) %>">
-		var moreCommentsContainer = document.getElementById('<%= namespace %>moreCommentsContainer');
+		var moreCommentsContainer = document.getElementById(
+			'<%= namespace %>moreCommentsContainer'
+		);
 
 		if (moreCommentsContainer) {
 			moreCommentsContainer.classList.add('hide');

@@ -36,28 +36,26 @@
 	</span>
 
 	<aui:script use="aui-base">
-		A.ready("aui-base", function(A)
-			{
-				var popoverNode = A.one("#<%= domId %>");
+		A.ready('aui-base', function(A) {
+			var popoverNode = A.one('#<%= domId %>');
 
-				var popover = popoverNode.one(".popover");
+			var popover = popoverNode.one('.popover');
 
-				var arrow = popover.one(".arrow");
+			var arrow = popover.one('.arrow');
 
-				var dx = arrow.width();
-				var dy = arrow.height() / 2;
+			var dx = arrow.width();
+			var dy = arrow.height() / 2;
 
-				var iconHolderNode = popoverNode.one(".staging-taglib-popover-icon-holder");
+			var iconHolderNode = popoverNode.one('.staging-taglib-popover-icon-holder');
 
-				iconHolderNode.on("hover", function alignPopoverToIcon(event)
-					{
-						if ("visible" !== popover.get('visibility')) {
-							popover.setXY([iconHolderNode.getX() + iconHolderNode.width() + dx, iconHolderNode.getY() - dy]);
-						}
-					}
-				);
-
-			}
-		);
+			iconHolderNode.on('hover', function alignPopoverToIcon(event) {
+				if ('visible' !== popover.get('visibility')) {
+					popover.setXY([
+						iconHolderNode.getX() + iconHolderNode.width() + dx,
+						iconHolderNode.getY() - dy
+					]);
+				}
+			});
+		});
 	</aui:script>
 </c:if>

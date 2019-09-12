@@ -104,5 +104,9 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 		return currentValue != '';
 	}
 
-	Liferay.Util.toggleSelectBox('<portlet:namespace />rootLayoutUuid', <portlet:namespace />isVisible, '<portlet:namespace />includeRootInTreeContainer');
+	Liferay.Util.toggleSelectBox(
+		'<portlet:namespace />rootLayoutUuid',
+		<portlet:namespace />isVisible,
+		'<portlet:namespace />includeRootInTreeContainer'
+	);
 </aui:script>

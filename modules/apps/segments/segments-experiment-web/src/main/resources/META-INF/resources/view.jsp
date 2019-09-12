@@ -33,28 +33,29 @@
 </div>
 
 <aui:script>
-	var segmentsExperimentPanelToggle = document.getElementById('<portlet:namespace />segmentsExperimentPanelToggleId');
-
-	var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);
-
-	sidenavInstance.on(
-		'open.lexicon.sidenav',
-		function(event) {
-			Liferay.Util.Session.set('com.liferay.segments.experiment.web_panelState', 'open');
-		}
+	var segmentsExperimentPanelToggle = document.getElementById(
+		'<portlet:namespace />segmentsExperimentPanelToggleId'
 	);
 
-	sidenavInstance.on(
-		'closed.lexicon.sidenav',
-		function(event) {
-			Liferay.Util.Session.set('com.liferay.segments.experiment.web_panelState', 'closed');
-		}
+	var sidenavInstance = Liferay.SideNavigation.initialize(
+		segmentsExperimentPanelToggle
 	);
 
-	Liferay.once(
-		'screenLoad',
-		function() {
-			Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
-		}
-	);
+	sidenavInstance.on('open.lexicon.sidenav', function(event) {
+		Liferay.Util.Session.set(
+			'com.liferay.segments.experiment.web_panelState',
+			'open'
+		);
+	});
+
+	sidenavInstance.on('closed.lexicon.sidenav', function(event) {
+		Liferay.Util.Session.set(
+			'com.liferay.segments.experiment.web_panelState',
+			'closed'
+		);
+	});
+
+	Liferay.once('screenLoad', function() {
+		Liferay.SideNavigation.destroy(segmentsExperimentPanelToggle);
+	});
 </aui:script>

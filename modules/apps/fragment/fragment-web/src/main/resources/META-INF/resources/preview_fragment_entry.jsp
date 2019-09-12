@@ -26,7 +26,8 @@
 			var virtualBody = virtualDocument.querySelector('.portlet-body');
 
 			if (virtualBody) {
-				document.querySelector('.portlet-body').innerHTML = virtualBody.innerHTML;
+				document.querySelector('.portlet-body').innerHTML =
+					virtualBody.innerHTML;
 			}
 
 			dom.globalEval.runScriptsInElement(virtualBody);

@@ -427,28 +427,28 @@
 
 		<script>
 			(function() {
-				var tables = document.querySelectorAll('#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable');
-				var recurrenceTypeSelect = document.getElementById('<portlet:namespace />recurrenceType');
+				var tables = document.querySelectorAll(
+					'#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable'
+				);
+				var recurrenceTypeSelect = document.getElementById(
+					'<portlet:namespace />recurrenceType'
+				);
 
 				if (recurrenceTypeSelect) {
-					recurrenceTypeSelect.addEventListener(
-						'change',
-						function(event) {
-							var selectedTableId = '<portlet:namespace />' + recurrenceTypeSelect[recurrenceTypeSelect.selectedIndex].id + 'Table';
+					recurrenceTypeSelect.addEventListener('change', function(event) {
+						var selectedTableId =
+							'<portlet:namespace />' +
+							recurrenceTypeSelect[recurrenceTypeSelect.selectedIndex].id +
+							'Table';
 
-							Array.prototype.forEach.call(
-								tables,
-								function(table) {
-									if (table.id !== selectedTableId) {
-										table.classList.add('hide');
-									}
-									else {
-										table.classList.remove('hide');
-									}
-								}
-							);
-						}
-					);
+						Array.prototype.forEach.call(tables, function(table) {
+							if (table.id !== selectedTableId) {
+								table.classList.add('hide');
+							} else {
+								table.classList.remove('hide');
+							}
+						});
+					});
 				}
 			})();
 		</script>
@@ -464,24 +464,77 @@
 
 <aui:script>
 	function <portlet:namespace />showTable(id) {
-		document.getElementById('<portlet:namespace />neverTable').style.display = 'none';
-		document.getElementById('<portlet:namespace />dailyTable').style.display = 'none';
-		document.getElementById('<portlet:namespace />weeklyTable').style.display = 'none';
-		document.getElementById('<portlet:namespace />monthlyTable').style.display = 'none';
-		document.getElementById('<portlet:namespace />yearlyTable').style.display = 'none';
+		document.getElementById('<portlet:namespace />neverTable').style.display =
+			'none';
+		document.getElementById('<portlet:namespace />dailyTable').style.display =
+			'none';
+		document.getElementById('<portlet:namespace />weeklyTable').style.display =
+			'none';
+		document.getElementById('<portlet:namespace />monthlyTable').style.display =
+			'none';
+		document.getElementById('<portlet:namespace />yearlyTable').style.display =
+			'none';
 
 		document.getElementById(id).style.display = 'block';
 	}
 
-	Liferay.Util.toggleRadio('<portlet:namespace />schedulerEndBy', '<portlet:namespace />schedulerEndDateType');
-	Liferay.Util.toggleRadio('<portlet:namespace />schedulerNoEndDate', '', ['<portlet:namespace />schedulerEndDateType']);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />schedulerEndBy',
+		'<portlet:namespace />schedulerEndDateType'
+	);
+	Liferay.Util.toggleRadio('<portlet:namespace />schedulerNoEndDate', '', [
+		'<portlet:namespace />schedulerEndDateType'
+	]);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />monthlyTypeDayOfMonth', ['<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay','<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth'], ['<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay','<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth']);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />monthlyTypeDayOfMonth',
+		[
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay',
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth'
+		],
+		[
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay',
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth'
+		]
+	);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />monthlyTypeDayOfWeek', ['<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay','<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth'], ['<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay','<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth']);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />monthlyTypeDayOfWeek',
+		[
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeDay',
+			'<portlet:namespace />schedulerMonthlyDayOfWeekTypeMonth'
+		],
+		[
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeDay',
+			'<portlet:namespace />schedulerMonthlyDayOfMonthTypeMonth'
+		]
+	);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />yearlyTypeDayOfMonth', ['<portlet:namespace />schedulerYearlyDayOfMonthTypeDay','<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth','<portlet:namespace />schedulerYearlyDayOfMonthTypeYear'], ['<portlet:namespace />schedulerYearlyDayOfWeekTypeDay', '<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth','<portlet:namespace />schedulerYearlyDayOfWeekTypeYear']);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />yearlyTypeDayOfMonth',
+		[
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeDay',
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth',
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear'
+		],
+		[
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeDay',
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth',
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'
+		]
+	);
 
-	Liferay.Util.toggleRadio('<portlet:namespace />yearlyTypeDayOfWeek', ['<portlet:namespace />schedulerYearlyDayOfWeekTypeDay', '<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth','<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'], ['<portlet:namespace />schedulerYearlyDayOfMonthTypeDay','<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth','<portlet:namespace />schedulerYearlyDayOfMonthTypeYear']);
-
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />yearlyTypeDayOfWeek',
+		[
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeDay',
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeMonth',
+			'<portlet:namespace />schedulerYearlyDayOfWeekTypeYear'
+		],
+		[
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeDay',
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeMonth',
+			'<portlet:namespace />schedulerYearlyDayOfMonthTypeYear'
+		]
+	);
 </aui:script>

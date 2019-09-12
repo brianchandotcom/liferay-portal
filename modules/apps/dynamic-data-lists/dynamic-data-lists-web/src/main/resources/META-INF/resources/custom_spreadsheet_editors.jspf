@@ -25,15 +25,18 @@
 		var activeColumn = spreadSheet.getColumn(activeCell);
 		var activeRecord = spreadSheet.getRecord(activeCell);
 
-		return !window.<portlet:namespace />structure.some(
-			function(item, index) {
-				var fieldName = item.name;
-				var fieldValue = activeRecord.get(fieldName);
+		return !window.<portlet:namespace />structure.some(function(item, index) {
+			var fieldName = item.name;
+			var fieldValue = activeRecord.get(fieldName);
 
-				return !fieldValue && activeColumn.key !== fieldName && item.required === 'true';
-			}
-		);
+			return (
+				!fieldValue &&
+				activeColumn.key !== fieldName &&
+				item.required === 'true'
+			);
+		});
 	};
 
-	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields = '<%= UnicodeLanguageUtil.get(request, "please-fill-out-all-required-fields") %>';
+	DEFAULTS_FORM_VALIDATOR.STRINGS.requiredFields =
+		'<%= UnicodeLanguageUtil.get(request, "please-fill-out-all-required-fields") %>';
 </aui:script>

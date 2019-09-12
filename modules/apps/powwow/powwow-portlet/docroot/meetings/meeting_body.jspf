@@ -69,15 +69,13 @@
 </div>
 
 <aui:script use="aui-tooltip">
-	new A.Tooltip(
-		{
-			cssClass: 'tooltip-help',
-			html: true,
-			opacity: 1,
-			position: 'right',
-			trigger: '#<portlet:namespace />autoStartVideo',
-			visible: false,
-			zIndex: 10000
-		}
-	).render();
+	new A.Tooltip({
+		cssClass: 'tooltip-help',
+		html: true,
+		opacity: 1,
+		position: 'right',
+		trigger: '#<portlet:namespace />autoStartVideo',
+		visible: false,
+		zIndex: 10000
+	}).render();
 </aui:script>

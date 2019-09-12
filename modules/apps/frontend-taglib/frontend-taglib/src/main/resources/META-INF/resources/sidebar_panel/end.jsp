@@ -22,13 +22,11 @@
 
 <c:if test="<%= (resourceURL != null) && Validator.isNotNull(searchContainerId) %>">
 	<aui:script use="liferay-sidebar-panel">
-		new Liferay.SidebarPanel(
-			{
-				namespace: '<%= namespace %>',
-				resourceUrl: '<%= resourceURL %>',
-				searchContainerId: '<%= namespace + searchContainerId %>',
-				targetNode: '#<%= namespace %>sidebarPanel'
-			}
-		);
+		new Liferay.SidebarPanel({
+			namespace: '<%= namespace %>',
+			resourceUrl: '<%= resourceURL %>',
+			searchContainerId: '<%= namespace + searchContainerId %>',
+			targetNode: '#<%= namespace %>sidebarPanel'
+		});
 	</aui:script>
 </c:if>

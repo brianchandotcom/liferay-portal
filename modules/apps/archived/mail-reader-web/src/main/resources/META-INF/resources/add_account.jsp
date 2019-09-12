@@ -156,40 +156,44 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 </liferay-ui:tabs>
 
 <aui:script use="aui-io-deprecated">
-	A.all('.mail-dialog form.account-form').on(
-		'submit',
-		function(event) {
-			event.preventDefault();
+	A.all('.mail-dialog form.account-form').on('submit', function(event) {
+		event.preventDefault();
 
-			Liferay.Mail.setStatus('info', '<liferay-ui:message key="adding-account" />', true);
+		Liferay.Mail.setStatus(
+			'info',
+			'<liferay-ui:message key="adding-account" />',
+			true
+		);
 
-			var form = event.currentTarget;
+		var form = event.currentTarget;
 
-			A.io.request(
-				themeDisplay.getLayoutURL() + '/-/mail/update_account',
-				{
-					dataType: 'JSON',
-					form: {
-						id: form.getDOMNode()
-					},
-					method: 'POST',
-					on: {
-						failure: function(event, id, obj) {
-							Liferay.Mail.setStatus('error', '<liferay-ui:message key="unable-to-connect-with-mail-server" />');
-						},
+		A.io.request(themeDisplay.getLayoutURL() + '/-/mail/update_account', {
+			dataType: 'JSON',
+			form: {
+				id: form.getDOMNode()
+			},
+			method: 'POST',
+			on: {
+				failure: function(event, id, obj) {
+					Liferay.Mail.setStatus(
+						'error',
+						'<liferay-ui:message key="unable-to-connect-with-mail-server" />'
+					);
+				},
 
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+				success: function(event, id, obj) {
+					var responseData = this.get('responseData');
 
-							Liferay.Mail.setStatus(responseData.status, responseData.message);
+					Liferay.Mail.setStatus(
+						responseData.status,
+						responseData.message
+					);
 
-							if (responseData.status == 'success') {
-								Liferay.Mail.loadAccounts(Liferay.Mail.accountId);
-							}
-						}
+					if (responseData.status == 'success') {
+						Liferay.Mail.loadAccounts(Liferay.Mail.accountId);
 					}
 				}
-			);
-		}
-	);
+			}
+		});
+	});
 </aui:script>

@@ -84,45 +84,55 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 
 <aui:script use="aui-base">
 	function showProviderTypeFields() {
-		A.all('.optional-field').get('parentNode').hide();
+		A.all('.optional-field')
+			.get('parentNode')
+			.hide();
 
-		var selectedProviderType = A.one('#<portlet:namespace />providerType option:selected').val();
+		var selectedProviderType = A.one(
+			'#<portlet:namespace />providerType option:selected'
+		).val();
 
 		<%
 		for (String providerType : PortletPropsValues.POWWOW_PROVIDER_TYPES) {
 		%>
 
-			if (selectedProviderType == '<%= providerType %>') {
-				if (<%= PowwowServiceProviderUtil.isFieldURLRequired(providerType) %>) {
-					A.one('#<portlet:namespace />url').get('parentNode').show();
-				}
-
-				if (<%= PowwowServiceProviderUtil.isFieldAPIKeyRequired(providerType) %>) {
-					A.one('#<portlet:namespace />apiKey').get('parentNode').show();
-				}
-
-				if (<%= PowwowServiceProviderUtil.isFieldSecretRequired(providerType) %>) {
-					A.one('#<portlet:namespace />secret').get('parentNode').show();
-				}
+		if (selectedProviderType == '<%= providerType %>') {
+			if (<%= PowwowServiceProviderUtil.isFieldURLRequired(providerType) %>) {
+				A.one('#<portlet:namespace />url')
+					.get('parentNode')
+					.show();
 			}
+
+			if (
+				<%= PowwowServiceProviderUtil.isFieldAPIKeyRequired(providerType) %>
+			) {
+				A.one('#<portlet:namespace />apiKey')
+					.get('parentNode')
+					.show();
+			}
+
+			if (
+				<%= PowwowServiceProviderUtil.isFieldSecretRequired(providerType) %>
+			) {
+				A.one('#<portlet:namespace />secret')
+					.get('parentNode')
+					.show();
+			}
+		}
 
 		<%
 		}
 		%>
-
 	}
 
 	var providerType = A.one('#<portlet:namespace />providerType');
 
 	if (providerType) {
-		providerType.on(
-			'change',
-			function(event) {
-				A.all('.optional-field').val('');
+		providerType.on('change', function(event) {
+			A.all('.optional-field').val('');
 
-				showProviderTypeFields();
-			}
-		);
+			showProviderTypeFields();
+		});
 	}
 
 	showProviderTypeFields();

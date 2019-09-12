@@ -23,12 +23,9 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 %>
 
 <aui:script>
-	Liferay.fire(
-		'closeWindow',
-		{
-			id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
-			portletAjaxable: <%= selPortlet.isAjaxable() %>,
-			refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
-		}
-	);
+	Liferay.fire('closeWindow', {
+		id: '_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',
+		portletAjaxable: <%= selPortlet.isAjaxable() %>,
+		refresh: '<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>'
+	});
 </aui:script>

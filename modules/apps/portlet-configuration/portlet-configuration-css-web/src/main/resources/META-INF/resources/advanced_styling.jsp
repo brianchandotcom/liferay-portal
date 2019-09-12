@@ -59,29 +59,31 @@
 		}
 	}
 
-	var <portlet:namespace />addId = document.getElementById('<portlet:namespace />addId');
+	var <portlet:namespace />addId = document.getElementById(
+		'<portlet:namespace />addId'
+	);
 
 	if (<portlet:namespace />addId) {
-		<portlet:namespace />addId.addEventListener(
-			'click',
-			function() {
-				<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>');
-			}
-		);
+		<portlet:namespace />addId.addEventListener('click', function() {
+			<portlet:namespace />insertCustomCSSValue(
+				'#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'
+			);
+		});
 	}
 
-	var <portlet:namespace />addClass = document.getElementById('<portlet:namespace />addClass');
+	var <portlet:namespace />addClass = document.getElementById(
+		'<portlet:namespace />addClass'
+	);
 
 	if (<portlet:namespace />addClass) {
-		<portlet:namespace />addClass.addEventListener(
-			'click',
-			function() {
-				<portlet:namespace />insertCustomCSSValue(portletClasses);
-			}
-		);
+		<portlet:namespace />addClass.addEventListener('click', function() {
+			<portlet:namespace />insertCustomCSSValue(portletClasses);
+		});
 	}
 
-	var portlet = Liferay.Util.getOpener()['portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'];
+	var portlet = Liferay.Util.getOpener()[
+		'portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'
+	];
 
 	if (portlet) {
 		var portletContent = portlet.querySelector('.portlet-content');
@@ -90,7 +92,9 @@
 			var portletClasses;
 
 			if (portlet != portletContent) {
-				portletClasses = portlet.getAttribute('class').replace(/(?:^|\s)portlet(?=\s|$)/g, '');
+				portletClasses = portlet
+					.getAttribute('class')
+					.replace(/(?:^|\s)portlet(?=\s|$)/g, '');
 
 				portletClasses = portletClasses.replace(/\s+/g, '.').trim();
 
@@ -101,20 +105,25 @@
 
 			var boundaryClasses = [];
 
-			portletContent.getAttribute('class').replace(
-				/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g,
-				function(match, subMatch1, subMatch2) {
+			portletContent
+				.getAttribute('class')
+				.replace(/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g, function(
+					match,
+					subMatch1,
+					subMatch2
+				) {
 					var regexIgnoredClasses = /boundary|draggable/;
 
 					if (!regexIgnoredClasses.test(subMatch2)) {
 						boundaryClasses.push(match);
 					}
-				}
-			);
+				});
 
 			portletClasses = '.' + boundaryClasses.join('.') + portletClasses;
 
-			var portletClassesNode = document.getElementById('<portlet:namespace />portletClasses');
+			var portletClassesNode = document.getElementById(
+				'<portlet:namespace />portletClasses'
+			);
 
 			if (portletClassesNode) {
 				portletClassesNode.innerHTML = portletClasses;

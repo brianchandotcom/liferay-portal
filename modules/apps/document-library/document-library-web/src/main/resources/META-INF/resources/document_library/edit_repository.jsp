@@ -184,12 +184,18 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var settingsParametersContainer = document.getElementById('<portlet:namespace />settingsParameters');
-	var settingsSupported = document.getElementById('<portlet:namespace />settingsSupported');
+	var settingsParametersContainer = document.getElementById(
+		'<portlet:namespace />settingsParameters'
+	);
+	var settingsSupported = document.getElementById(
+		'<portlet:namespace />settingsSupported'
+	);
 
 	function showConfiguration(select) {
 		if (settingsParametersContainer && settingsSupported) {
-			var settingsParametersElement = settingsParametersContainer.querySelector('.settings-parameters');
+			var settingsParametersElement = settingsParametersContainer.querySelector(
+				'.settings-parameters'
+			);
 
 			if (settingsParametersElement) {
 				dom.append(settingsSupported, settingsParametersElement);
@@ -199,23 +205,26 @@ if (portletTitleBasedNavigation) {
 
 			var repositoryClassDefinitionId = className.replace(/\W/g, '-');
 
-			var repositoryParameters = document.getElementById('<portlet:namespace />repository-' + repositoryClassDefinitionId + '-configuration');
+			var repositoryParameters = document.getElementById(
+				'<portlet:namespace />repository-' +
+					repositoryClassDefinitionId +
+					'-configuration'
+			);
 
 			if (repositoryParameters) {
 				dom.append(settingsParametersContainer, repositoryParameters);
 			}
 		}
-	};
+	}
 
-	var repositoryTypesSelect = document.getElementById('<portlet:namespace />repositoryTypes');
+	var repositoryTypesSelect = document.getElementById(
+		'<portlet:namespace />repositoryTypes'
+	);
 
 	if (repositoryTypesSelect) {
-		repositoryTypesSelect.addEventListener(
-			'change',
-			function(event) {
-				showConfiguration(repositoryTypesSelect);
-			}
-		);
+		repositoryTypesSelect.addEventListener('change', function(event) {
+			showConfiguration(repositoryTypesSelect);
+		});
 
 		showConfiguration(repositoryTypesSelect);
 	}

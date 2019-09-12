@@ -134,16 +134,14 @@ if (groupIds.length == 1) {
 		'<portlet:namespace />setPermissions',
 		function(uri) {
 			Liferay.Util.fetch(uri, {method: 'POST'})
-				.then(
-					function(response) {
-						return response.text();
-					}
-				)
-				.then(
-					function() {
-						Liferay.Util.getWindow('<portlet:namespace />editDefaultFilePermissionsDialog').destroy();
-					}
-				);
+				.then(function(response) {
+					return response.text();
+				})
+				.then(function() {
+					Liferay.Util.getWindow(
+						'<portlet:namespace />editDefaultFilePermissionsDialog'
+					).destroy();
+				});
 		},
 		['liferay-util-window']
 	);

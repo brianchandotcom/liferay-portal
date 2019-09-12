@@ -178,21 +178,31 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 </aui:fieldset>
 
 <script>
-	Liferay.Util.toggleRadio('<portlet:namespace />customLocales', '<portlet:namespace />customLocalesFieldset', '<portlet:namespace />inheritLocalesFieldset');
-	Liferay.Util.toggleRadio('<portlet:namespace />inheritLocales', '<portlet:namespace />inheritLocalesFieldset', '<portlet:namespace />customLocalesFieldset');
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />customLocales',
+		'<portlet:namespace />customLocalesFieldset',
+		'<portlet:namespace />inheritLocalesFieldset'
+	);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />inheritLocales',
+		'<portlet:namespace />inheritLocalesFieldset',
+		'<portlet:namespace />customLocalesFieldset'
+	);
 
 	function <portlet:namespace />saveLocales() {
 		var form = document.<portlet:namespace />fm;
 
-		var currentLanguageIds = Liferay.Util.getFormElement(form, 'currentLanguageIds');
+		var currentLanguageIds = Liferay.Util.getFormElement(
+			form,
+			'currentLanguageIds'
+		);
 
 		if (currentLanguageIds) {
-			Liferay.Util.setFormValues(
-				form,
-				{
-					'<%= PropsKeys.LOCALES %>': Liferay.Util.listSelect(currentLanguageIds)
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				<%= PropsKeys.LOCALES %>: Liferay.Util.listSelect(
+					currentLanguageIds
+				)
+			});
 		}
 	}
 </script>
@@ -203,55 +213,47 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 	if (languageSelectInput) {
 		const nameInput = Liferay.component('<portlet:namespace />name');
 
-		languageSelectInput.on(
-			'change',
-			function(event) {
-				const select = event.currentTarget.getDOMNode();
+		languageSelectInput.on('change', function(event) {
+			const select = event.currentTarget.getDOMNode();
 
-				const selectedOption = select.options[select.selectedIndex];
+			const selectedOption = select.options[select.selectedIndex];
 
-				Liferay.fire(
-					'inputLocalized:defaultLocaleChanged',
-					{
-						item: selectedOption
-					}
-				);
+			Liferay.fire('inputLocalized:defaultLocaleChanged', {
+				item: selectedOption
+			});
 
-				const defaultLanguage = languageSelectInput.val();
+			const defaultLanguage = languageSelectInput.val();
 
-				var defaultLanguageSiteName = null;
+			var defaultLanguageSiteName = null;
 
-				if (nameInput) {
-					defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
-				}
-
-				new A.Alert(
-					{
-						bodyContent: '<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
-						boundingBox: '#<portlet:namespace />languageWarning',
-						closeable: true,
-						cssClass: 'alert-warning',
-						destroyOnHide: false,
-						render: true
-					}
-				);
-
-				if (!defaultLanguageSiteName && <%= !liveGroup.isGuest() %>) {
-					new A.Alert(
-						{
-							bodyContent: '<liferay-ui:message key="site-name-will-display-a-generic-text-until-a-translation-is-added" />',
-							boundingBox: '#<portlet:namespace />defaultLanguageSiteNameWarning',
-							closeable: true,
-							cssClass: 'alert-warning',
-							destroyOnHide: false,
-							render: true
-						}
-					);
-
-					nameInput.updateInput('<liferay-ui:message key="unnamed-site" />');
-				}
-
+			if (nameInput) {
+				defaultLanguageSiteName = nameInput.getValue(defaultLanguage);
 			}
-		);
+
+			new A.Alert({
+				bodyContent:
+					'<liferay-ui:message key="this-change-will-only-affect-the-newly-created-localized-content" />',
+				boundingBox: '#<portlet:namespace />languageWarning',
+				closeable: true,
+				cssClass: 'alert-warning',
+				destroyOnHide: false,
+				render: true
+			});
+
+			if (!defaultLanguageSiteName && <%= !liveGroup.isGuest() %>) {
+				new A.Alert({
+					bodyContent:
+						'<liferay-ui:message key="site-name-will-display-a-generic-text-until-a-translation-is-added" />',
+					boundingBox:
+						'#<portlet:namespace />defaultLanguageSiteNameWarning',
+					closeable: true,
+					cssClass: 'alert-warning',
+					destroyOnHide: false,
+					render: true
+				});
+
+				nameInput.updateInput('<liferay-ui:message key="unnamed-site" />');
+			}
+		});
 	}
 </aui:script>

@@ -275,11 +275,26 @@ renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />changeable', '<portlet:namespace />changeableSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />checkSyntax', '<portlet:namespace />syntaxSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />expireable', '<portlet:namespace />expirationSettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />history', '<portlet:namespace />historySettings');
-	Liferay.Util.toggleBoxes('<portlet:namespace />lockout', '<portlet:namespace />lockoutSettings');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />changeable',
+		'<portlet:namespace />changeableSettings'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />checkSyntax',
+		'<portlet:namespace />syntaxSettings'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />expireable',
+		'<portlet:namespace />expirationSettings'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />history',
+		'<portlet:namespace />historySettings'
+	);
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />lockout',
+		'<portlet:namespace />lockoutSettings'
+	);
 </aui:script>
 
 <%

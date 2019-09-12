@@ -88,13 +88,11 @@
 
 <c:if test="<%= Validator.isNotNull(actionButtons) || includeCheckBox %>">
 	<aui:script use="liferay-management-bar">
-		var managementBar = new Liferay.ManagementBar(
-			{
-				namespace: '<%= namespace %>',
-				searchContainerId: '<%= namespace + searchContainerId %>',
-				secondaryBar: '#actionButtons'
-			}
-		);
+		var managementBar = new Liferay.ManagementBar({
+			namespace: '<%= namespace %>',
+			searchContainerId: '<%= namespace + searchContainerId %>',
+			secondaryBar: '#actionButtons'
+		});
 
 		var clearManagementBarHandles = function(event) {
 			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {

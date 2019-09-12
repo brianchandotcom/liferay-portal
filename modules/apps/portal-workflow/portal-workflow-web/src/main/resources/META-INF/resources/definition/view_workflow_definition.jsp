@@ -116,20 +116,23 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 </div>
 
 <aui:script use="aui-ace-editor">
-	var contentEditor = new A.AceEditor(
-		{
-			boundingBox: '#<portlet:namespace />contentEditor',
-			height: 600,
-			mode: 'xml',
-			readOnly: 'true',
-			tabSize: 4,
-			width: '100%'
-		}
-	).render();
+	var contentEditor = new A.AceEditor({
+		boundingBox: '#<portlet:namespace />contentEditor',
+		height: 600,
+		mode: 'xml',
+		readOnly: 'true',
+		tabSize: 4,
+		width: '100%'
+	}).render();
 
-	var editorContentElement = document.getElementById('<portlet:namespace />content');
+	var editorContentElement = document.getElementById(
+		'<portlet:namespace />content'
+	);
 
 	if (editorContentElement) {
-		contentEditor.set('value', Liferay.Util.formatXML(editorContentElement.value));
+		contentEditor.set(
+			'value',
+			Liferay.Util.formatXML(editorContentElement.value)
+		);
 	}
 </aui:script>

@@ -100,31 +100,30 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 	%>
 
 	<aui:script>
-		var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
-
-		button.addEventListener(
-			'click',
-			function() {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							destroyOnHide: true,
-							height: 470,
-							width: 600,
-							on: {
-								visibleChange: function(event) {
-									if (!event.newVal) {
-										Liferay.Util.getOpener().Liferay.fire('refreshInfoPanel');
-									}
-								}
-							}
-						},
-						id: '<portlet:namespace />manageCollaboratorsDialog',
-						title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
-						uri: '<%= manageCollaboratorsRenderURL.toString() %>'
-					}
-				);
-			}
+		var button = document.getElementById(
+			'<portlet:namespace/>manageCollaboratorsButton'
 		);
+
+		button.addEventListener('click', function() {
+			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+					height: 470,
+					width: 600,
+					on: {
+						visibleChange: function(event) {
+							if (!event.newVal) {
+								Liferay.Util.getOpener().Liferay.fire(
+									'refreshInfoPanel'
+								);
+							}
+						}
+					}
+				},
+				id: '<portlet:namespace />manageCollaboratorsDialog',
+				title: '<%= LanguageUtil.get(resourceBundle, "collaborators") %>',
+				uri: '<%= manageCollaboratorsRenderURL.toString() %>'
+			});
+		});
 	</aui:script>
 </c:if>

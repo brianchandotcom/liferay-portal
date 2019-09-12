@@ -365,36 +365,39 @@ int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasks
 
 <script>
 	function <portlet:namespace />deleteEntries() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>'
+			)
+		) {
 			var form = document.<portlet:namespace />fm;
 
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						'<%= Constants.CMD %>': '<%= Constants.DELETE %>',
-						'deleteBackgroundTaskIds': Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds')
-					}
+			Liferay.Util.postForm(form, {
+				data: {
+					<%= Constants.CMD %>: '<%= Constants.DELETE %>',
+					deleteBackgroundTaskIds: Liferay.Util.listCheckedExcept(
+						form,
+						'<portlet:namespace />allRowIds'
+					)
 				}
-			);
+			});
 		}
 	}
 
 	function <portlet:namespace />viewBackgroundTaskDetails(backgroundTaskId) {
 		var title = '';
 
-		var backgroundTaskNameElement = document.getElementById('<portlet:namespace />backgroundTaskName' + backgroundTaskId);
+		var backgroundTaskNameElement = document.getElementById(
+			'<portlet:namespace />backgroundTaskName' + backgroundTaskId
+		);
 
 		if (backgroundTaskNameElement) {
 			title = backgroundTaskNameElement.textContent;
 		}
 
-		Liferay.fire(
-			'<portlet:namespace />viewBackgroundTaskDetails',
-			{
-				nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
-				title: title
-			}
-		);
+		Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {
+			nodeId: 'backgroundTaskStatusMessage' + backgroundTaskId,
+			title: title
+		});
 	}
 </script>

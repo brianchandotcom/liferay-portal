@@ -49,32 +49,31 @@ String productMenuState = SessionClicks.get(request, "com.liferay.product.naviga
 </div>
 
 <aui:script>
-	var sidenavToggle = document.getElementById('<portlet:namespace />sidenavToggleId');
+	var sidenavToggle = document.getElementById(
+		'<portlet:namespace />sidenavToggleId'
+	);
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(sidenavToggle);
 
-	Liferay.once(
-		'screenLoad',
-		function() {
-			Liferay.SideNavigation.destroy(sidenavToggle);
-		}
-	);
+	Liferay.once('screenLoad', function() {
+		Liferay.SideNavigation.destroy(sidenavToggle);
+	});
 
-	sidenavInstance.on(
-		'closed.lexicon.sidenav',
-		function(event) {
-			Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState', 'closed');
-		}
-	);
+	sidenavInstance.on('closed.lexicon.sidenav', function(event) {
+		Liferay.Util.Session.set(
+			'com.liferay.product.navigation.product.menu.web_productMenuState',
+			'closed'
+		);
+	});
 
-	sidenavInstance.on(
-		'open.lexicon.sidenav',
-		function(event) {
-			Liferay.Util.Session.set('com.liferay.product.navigation.product.menu.web_productMenuState', 'open');
-		}
-	);
+	sidenavInstance.on('open.lexicon.sidenav', function(event) {
+		Liferay.Util.Session.set(
+			'com.liferay.product.navigation.product.menu.web_productMenuState',
+			'open'
+		);
+	});
 
-	if (Liferay.Util.isPhone() && (document.body.classList.contains('open'))) {
+	if (Liferay.Util.isPhone() && document.body.classList.contains('open')) {
 		Liferay.SideNavigation.hide(sidenavToggle);
 	}
 </aui:script>

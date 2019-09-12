@@ -212,17 +212,20 @@ else {
 
 		var form = document.<portlet:namespace />fm;
 
-		Util.postForm(
-			form,
-			{
-				data: {
-					'redirect': redirect,
-					'addUserGroupIds': Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
-					'removeUserGroupIds': Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
-				},
-				url: '<portlet:actionURL name="editUserGroupGroupRoleUsers" />'
-			}
-		);
+		Util.postForm(form, {
+			data: {
+				redirect: redirect,
+				addUserGroupIds: Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				),
+				removeUserGroupIds: Util.listUncheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			},
+			url: '<portlet:actionURL name="editUserGroupGroupRoleUsers" />'
+		});
 	}
 
 	function <portlet:namespace />updateUserGroupRoleUsers(redirect) {
@@ -230,16 +233,19 @@ else {
 
 		var form = document.<portlet:namespace />fm;
 
-		Util.postForm(
-			form,
-			{
-				data: {
-					'redirect': redirect,
-					'addUserIds': Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'),
-					'removeUserIds': Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds')
-				},
-				url: '<portlet:actionURL name="editUserGroupRoleUsers" />'
-			}
-		);
+		Util.postForm(form, {
+			data: {
+				redirect: redirect,
+				addUserIds: Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				),
+				removeUserIds: Util.listUncheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			},
+			url: '<portlet:actionURL name="editUserGroupRoleUsers" />'
+		});
 	}
 </script>

@@ -79,17 +79,17 @@
 	function <portlet:namespace />saveConfiguration() {
 		var form = document.<portlet:namespace />fm;
 
-		var currentLanguageIdsInput = Liferay.Util.getFormElement(form, 'currentLanguageIds');
+		var currentLanguageIdsInput = Liferay.Util.getFormElement(
+			form,
+			'currentLanguageIds'
+		);
 
 		if (currentLanguageIdsInput) {
-			Liferay.Util.postForm(
-				form,
-				{
-					data: {
-						languageIds: Liferay.Util.listSelect(currentLanguageIdsInput)
-					}
+			Liferay.Util.postForm(form, {
+				data: {
+					languageIds: Liferay.Util.listSelect(currentLanguageIdsInput)
 				}
-			);
+			});
 		}
 	}
 </script>

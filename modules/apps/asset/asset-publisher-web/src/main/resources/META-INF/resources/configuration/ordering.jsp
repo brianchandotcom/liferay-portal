@@ -121,7 +121,9 @@
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var orderByTypeContainer = currentTarget.ancestor('.order-by-type-container');
+			var orderByTypeContainer = currentTarget.ancestor(
+				'.order-by-type-container'
+			);
 
 			orderByTypeContainer.all('.icon').toggleClass('hide');
 

@@ -91,31 +91,31 @@ PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPo
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />assigneesSearch');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
-
-			var <portlet:namespace />assigneeIds = nodes.map(
-				function(node) {
-					return node.value;
-				}
-			);
-
-			var result = {};
-
-			if (<portlet:namespace />assigneeIds.length > 0) {
-				result = {
-					data: {
-						type: '<%= HtmlUtil.escapeJS(tabs2) %>',
-						value: <portlet:namespace />assigneeIds.join(',')
-					}
-				};
-			}
-
-			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-		}
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />assigneesSearch'
 	);
+
+	searchContainer.on('rowToggled', function(event) {
+		var nodes = event.elements.currentPageSelectedElements.getDOMNodes();
+
+		var <portlet:namespace />assigneeIds = nodes.map(function(node) {
+			return node.value;
+		});
+
+		var result = {};
+
+		if (<portlet:namespace />assigneeIds.length > 0) {
+			result = {
+				data: {
+					type: '<%= HtmlUtil.escapeJS(tabs2) %>',
+					value: <portlet:namespace />assigneeIds.join(',')
+				}
+			};
+		}
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(eventName) %>',
+			result
+		);
+	});
 </aui:script>

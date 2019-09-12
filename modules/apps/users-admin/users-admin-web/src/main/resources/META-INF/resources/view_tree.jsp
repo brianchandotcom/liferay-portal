@@ -182,28 +182,30 @@ if (organization != null) {
 		<portlet:namespace />deleteOrganizations(organizationsRedirect);
 	}
 
-	<portlet:namespace />doDeleteOrganizations = function(organizationIds, organizationsRedirect) {
+	<portlet:namespace />doDeleteOrganizations = function(
+		organizationIds,
+		organizationsRedirect
+	) {
 		var form = document.<portlet:namespace />fm;
 
 		if (organizationsRedirect) {
-			Liferay.Util.setFormValues(
-				form,
-				{
-					redirect: organizationsRedirect
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				redirect: organizationsRedirect
+			});
 		}
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					deleteOrganizationIds: organizationIds,
-					deleteUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
-				},
-				url: '<portlet:actionURL name="/users_admin/delete_organizations_and_users" />'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: {
+				deleteOrganizationIds: organizationIds,
+				deleteUserIds: Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds',
+					'<portlet:namespace />rowIdsUser'
+				)
+			},
+			url:
+				'<portlet:actionURL name="/users_admin/delete_organizations_and_users" />'
+		});
 	};
 
 	<portlet:actionURL name="/users_admin/edit_organization_assignments" var="removeOrganizationsAndUsersURL">
@@ -214,16 +216,21 @@ if (organization != null) {
 	function <portlet:namespace />removeOrganizationsAndUsers() {
 		var form = document.<portlet:namespace />fm;
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					removeOrganizationIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsOrganization'),
-					removeUserIds: Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser')
-				},
-				url: '<%= removeOrganizationsAndUsersURL.toString() %>'
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: {
+				removeOrganizationIds: Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds',
+					'<portlet:namespace />rowIdsOrganization'
+				),
+				removeUserIds: Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds',
+					'<portlet:namespace />rowIdsUser'
+				)
+			},
+			url: '<%= removeOrganizationsAndUsersURL.toString() %>'
+		});
 	}
 
 	var selectUsers = function(organizationId) {
@@ -231,21 +238,18 @@ if (organization != null) {
 	};
 
 	var ACTIONS = {
-		'selectUsers': selectUsers
+		selectUsers: selectUsers
 	};
 
-	Liferay.componentReady('viewTreeManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'creationMenuItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('viewTreeManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('creationMenuItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action](itemData.organizationId);
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action](itemData.organizationId);
+			}
+		});
+	});
 </aui:script>

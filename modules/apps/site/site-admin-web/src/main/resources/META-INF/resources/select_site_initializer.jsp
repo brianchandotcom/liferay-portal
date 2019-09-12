@@ -65,25 +65,25 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			function(event) {
 				var data = event.delegateTarget.dataset;
 
-				modalCommands.openSimpleInputModal(
-					{
-						checkboxFieldLabel: '<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
-						checkboxFieldName: data.checkboxFieldName,
-						checkboxFieldValue: false,
-						dialogTitle: '<liferay-ui:message key="add-site" />',
-						formSubmitURL: data.addSiteUrl,
-						idFieldName: 'layoutSetPrototypeId',
-						idFieldValue: data.layoutSetPrototypeId,
-						mainFieldName: 'name',
-						mainFieldLabel: '<liferay-ui:message key="name" />',
-						namespace: '<portlet:namespace />',
-						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-					}
-				);
+				modalCommands.openSimpleInputModal({
+					checkboxFieldLabel:
+						'<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
+					checkboxFieldName: data.checkboxFieldName,
+					checkboxFieldValue: false,
+					dialogTitle: '<liferay-ui:message key="add-site" />',
+					formSubmitURL: data.addSiteUrl,
+					idFieldName: 'layoutSetPrototypeId',
+					idFieldValue: data.layoutSetPrototypeId,
+					mainFieldName: 'name',
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					namespace: '<portlet:namespace />',
+					spritemap:
+						'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				});
 			}
 		);
 
-		function handleDestroyPortlet () {
+		function handleDestroyPortlet() {
 			addSiteActionOptionQueryClickHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);

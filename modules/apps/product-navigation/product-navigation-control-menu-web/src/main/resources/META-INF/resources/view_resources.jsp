@@ -256,12 +256,9 @@ if (Validator.isNotNull(keywords)) {
 		function(event) {
 			var delta = event.currentTarget.attr('data-delta');
 
-			Liferay.fire(
-				'AddContent:refreshContentList',
-				{
-					delta: delta
-				}
-			);
+			Liferay.fire('AddContent:refreshContentList', {
+				delta: delta
+			});
 		},
 		'.num-item'
 	);
@@ -271,12 +268,9 @@ if (Validator.isNotNull(keywords)) {
 		function(event) {
 			var displayStyle = event.currentTarget.attr('data-displaystyle');
 
-			Liferay.fire(
-				'AddContent:refreshContentList',
-				{
-					displayStyle: displayStyle
-				}
-			);
+			Liferay.fire('AddContent:refreshContentList', {
+				displayStyle: displayStyle
+			});
 		},
 		'.display-style'
 	);

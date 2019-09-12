@@ -30,17 +30,17 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 	function handleCreateAssetListLinkClick(event) {
 		event.preventDefault();
 
-		modalCommands.openSimpleInputModal(
-			{
-				dialogTitle: '<liferay-ui:message key="content-set-title" />',
-				formSubmitURL: '<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
-				mainFieldLabel: '<liferay-ui:message key="title" />',
-				mainFieldName: 'title',
-				mainFieldPlaceholder: '<liferay-ui:message key="title" />',
-				namespace: '<%= PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource)) %>',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		);
+		modalCommands.openSimpleInputModal({
+			dialogTitle: '<liferay-ui:message key="content-set-title" />',
+			formSubmitURL:
+				'<liferay-portlet:actionURL name="/asset_publisher/add_asset_list" portletName="<%= portletResource %>"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:actionURL>',
+			mainFieldLabel: '<liferay-ui:message key="title" />',
+			mainFieldName: 'title',
+			mainFieldPlaceholder: '<liferay-ui:message key="title" />',
+			namespace:
+				'<%= PortalUtil.getPortletNamespace(HtmlUtil.escape(portletResource)) %>',
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+		});
 	}
 
 	var createAssetListLinkClickHandler = dom.delegate(

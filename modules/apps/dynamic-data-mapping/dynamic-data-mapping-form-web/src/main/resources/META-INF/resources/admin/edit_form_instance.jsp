@@ -147,7 +147,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		autosaveURL: '<%= autoSaveFormInstanceURL.toString() %>',
 		portletNamespace: '<portlet:namespace />',
 		publishFormInstanceURL: '<%= publishFormInstanceURL.toString() %>',
-		restrictedFormURL: '<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
+		restrictedFormURL:
+			'<%= ddmFormAdminDisplayContext.getRestrictedFormURL() %>',
 		sharedFormURL: '<%= ddmFormAdminDisplayContext.getSharedFormURL() %>',
 		showPagination: true,
 		spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
@@ -183,10 +184,14 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					Liferay.Forms.instance = new packageName.Form(
 						{
 							context: context,
-							dataProviderInstanceParameterSettingsURL: '<%= dataProviderInstanceParameterSettingsURL %>',
-							dataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
-							defaultLanguageId: '<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							fieldSetDefinitionURL: '<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
+							dataProviderInstanceParameterSettingsURL:
+								'<%= dataProviderInstanceParameterSettingsURL %>',
+							dataProviderInstancesURL:
+								'<%= dataProviderInstancesURL %>',
+							defaultLanguageId:
+								'<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
+							fieldSetDefinitionURL:
+								'<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
 							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
 							fieldTypes: <%= ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>,
 							formInstanceId: <%= formInstanceId %>,
@@ -219,19 +224,19 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.Forms.App.dispose();
 
-			var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-			Liferay.destroyComponents(
-				function(component) {
-					var destroy = false;
-
-					if (component === translationManager) {
-						destroy = true;
-					}
-
-					return destroy;
-				}
+			var translationManager = Liferay.component(
+				'<portlet:namespace />translationManager'
 			);
+
+			Liferay.destroyComponents(function(component) {
+				var destroy = false;
+
+				if (component === translationManager) {
+					destroy = true;
+				}
+
+				return destroy;
+			});
 
 			Liferay.detach('destroyPortlet', clearPortletHandlers);
 		}
@@ -241,14 +246,10 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 	if (Liferay.DMMFieldTypesReady) {
 		Liferay.Forms.App.start();
-	}
-	else {
-		Liferay.onceAfter(
-			'DMMFieldTypesReady',
-			function() {
-				Liferay.Forms.App.start();
-			}
-		);
+	} else {
+		Liferay.onceAfter('DMMFieldTypesReady', function() {
+			Liferay.Forms.App.start();
+		});
 	}
 </aui:script>
 
@@ -274,7 +275,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							label: '<liferay-ui:message key="cancel" />',
 							on: {
 								click: function() {
-									Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
+									Liferay.Util.getWindow(
+										'<portlet:namespace />settingsModal'
+									).hide();
 								}
 							}
 						},
@@ -283,7 +286,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							label: '<liferay-ui:message key="done" />',
 							on: {
 								click: function() {
-									Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
+									Liferay.Util.getWindow(
+										'<portlet:namespace />settingsModal'
+									).hide();
 								}
 							}
 						}

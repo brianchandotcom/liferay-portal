@@ -435,17 +435,25 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		var ranksTempTextarea = Liferay.Util.getFormElement(form, 'ranks_temp');
 
 		if (ranksTempTextarea) {
-			if (<portlet:namespace />ranksChanged && (<portlet:namespace />ranksLastLanguageId != '<%= defaultLanguageId %>')) {
+			if (
+				<portlet:namespace />ranksChanged &&
+				<portlet:namespace />ranksLastLanguageId !=
+					'<%= defaultLanguageId %>'
+			) {
 				var data = {};
 
-				data['ranks_' + <portlet:namespace />ranksLastLanguageId] = ranksTempTextarea.value;
+				data['ranks_' + <portlet:namespace />ranksLastLanguageId] =
+					ranksTempTextarea.value;
 
 				Liferay.Util.setFormValues(form, data);
 
 				<portlet:namespace />ranksChanged = false;
 			}
 
-			var selLanguageInput = Liferay.Util.getFormElement(form, 'ranksLanguageId');
+			var selLanguageInput = Liferay.Util.getFormElement(
+				form,
+				'ranksLanguageId'
+			);
 
 			if (selLanguageInput) {
 				var selLanguageId = selLanguageInput.value;
@@ -456,8 +464,7 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					ranksTempTextarea.classList.remove('hide');
 
 					<portlet:namespace />ranksLastLanguageId = selLanguageId;
-				}
-				else {
+				} else {
 					ranksTempTextarea.classList.add('hide');
 				}
 			}
@@ -468,7 +475,10 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		var form = document.<portlet:namespace />fm;
 
 		if (lang != '<%= defaultLanguageId %>') {
-			var defaultRanksInput = Liferay.Util.getFormElement(form, 'ranks_<%= defaultLanguageId %>');
+			var defaultRanksInput = Liferay.Util.getFormElement(
+				form,
+				'ranks_<%= defaultLanguageId %>'
+			);
 
 			if (defaultRanksInput) {
 				var defaultRanksValue = defaultRanksInput.value;
@@ -482,12 +492,9 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 			var value = ranksValue || defaultRanksValue;
 
-			Liferay.Util.setFormValues(
-				form,
-				{
-					ranks_temp: value
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				ranks_temp: value
+			});
 		}
 	}
 
@@ -501,17 +508,45 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 	function <portlet:namespace />updatePrioritiesLanguage() {
 		var form = document.<portlet:namespace />fm;
 
-		if (<portlet:namespace />prioritiesChanged && (<portlet:namespace />prioritiesLastLanguageId != '<%= defaultLanguageId %>')) {
+		if (
+			<portlet:namespace />prioritiesChanged &&
+			<portlet:namespace />prioritiesLastLanguageId !=
+				'<%= defaultLanguageId %>'
+		) {
 			for (var i = 0; i < 10; i++) {
-				var priorityImage = Liferay.Util.getFormElement(form, 'priorityImage' + i + '_temp').value;
-				var priorityName = Liferay.Util.getFormElement(form, 'priorityName' + i + '_temp').value;
-				var priorityValue = Liferay.Util.getFormElement(form, 'priorityValue' + i + '_temp').value;
+				var priorityImage = Liferay.Util.getFormElement(
+					form,
+					'priorityImage' + i + '_temp'
+				).value;
+				var priorityName = Liferay.Util.getFormElement(
+					form,
+					'priorityName' + i + '_temp'
+				).value;
+				var priorityValue = Liferay.Util.getFormElement(
+					form,
+					'priorityValue' + i + '_temp'
+				).value;
 
 				var data = {};
 
-				data['priorityImage' + i + '_' + <portlet:namespace />prioritiesLastLanguageId] = priorityImage;
-				data['priorityName' + i + '_' + <portlet:namespace />prioritiesLastLanguageId] = priorityName;
-				data['priorityValue' + i + '_' + <portlet:namespace />prioritiesLastLanguageId] = priorityValue;
+				data[
+					'priorityImage' +
+						i +
+						'_' +
+						<portlet:namespace />prioritiesLastLanguageId
+				] = priorityImage;
+				data[
+					'priorityName' +
+						i +
+						'_' +
+						<portlet:namespace />prioritiesLastLanguageId
+				] = priorityName;
+				data[
+					'priorityValue' +
+						i +
+						'_' +
+						<portlet:namespace />prioritiesLastLanguageId
+				] = priorityValue;
 
 				Liferay.Util.setFormValues(form, data);
 			}
@@ -519,7 +554,10 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 			<portlet:namespace />prioritiesChanged = false;
 		}
 
-		var selLanguageInput = Liferay.Util.getFormElement(form, 'prioritiesLanguageId');
+		var selLanguageInput = Liferay.Util.getFormElement(
+			form,
+			'prioritiesLanguageId'
+		);
 
 		if (selLanguageInput) {
 			var selLanguageId = selLanguageInput.value;
@@ -528,13 +566,14 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 				<portlet:namespace />updatePrioritiesLanguageTemps(selLanguageId);
 			}
 
-			var localizedPrioritiesTable = document.getElementById('<portlet:namespace />localized-priorities-table');
+			var localizedPrioritiesTable = document.getElementById(
+				'<portlet:namespace />localized-priorities-table'
+			);
 
 			if (localizedPrioritiesTable) {
 				if (selLanguageId) {
 					localizedPrioritiesTable.classList.remove('hide');
-				}
-				else {
+				} else {
 					localizedPrioritiesTable.classList.add('hide');
 				}
 			}
@@ -548,8 +587,14 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 		if (lang != '<%= defaultLanguageId %>') {
 			for (var i = 0; i < 10; i++) {
-				var defaultImageInput = Liferay.Util.getFormElement(form, 'priorityImage' + i + '_<%= defaultLanguageId %>');
-				var priorityImageInput = Liferay.Util.getFormElement(form, 'priorityImage' + i + '_' + lang);
+				var defaultImageInput = Liferay.Util.getFormElement(
+					form,
+					'priorityImage' + i + '_<%= defaultLanguageId %>'
+				);
+				var priorityImageInput = Liferay.Util.getFormElement(
+					form,
+					'priorityImage' + i + '_' + lang
+				);
 
 				if (defaultImageInput && priorityImageInput) {
 					var defaultImage = defaultImageInput.value;
@@ -558,8 +603,14 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					var image = priorityImage || defaultImage;
 				}
 
-				var defaultNameInput = Liferay.Util.getFormElement(form, 'priorityName' + i + '_<%= defaultLanguageId %>');
-				var priorityNameInput = Liferay.Util.getFormElement(form, 'priorityName' + i + '_' + lang);
+				var defaultNameInput = Liferay.Util.getFormElement(
+					form,
+					'priorityName' + i + '_<%= defaultLanguageId %>'
+				);
+				var priorityNameInput = Liferay.Util.getFormElement(
+					form,
+					'priorityName' + i + '_' + lang
+				);
 
 				if (defaultNameInput && priorityNameInput) {
 					var defaultName = defaultNameInput.value;
@@ -568,8 +619,14 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 					var name = priorityName || defaultName;
 				}
 
-				var defaultValueInput = Liferay.Util.getFormElement(form, 'priorityValue' + i + '_<%= defaultLanguageId %>');
-				var priorityValueInput = Liferay.Util.getFormElement(form, 'priorityValue' + i + '_' + lang);
+				var defaultValueInput = Liferay.Util.getFormElement(
+					form,
+					'priorityValue' + i + '_<%= defaultLanguageId %>'
+				);
+				var priorityValueInput = Liferay.Util.getFormElement(
+					form,
+					'priorityValue' + i + '_' + lang
+				);
 
 				if (defaultValueInput && priorityValueInput) {
 					var defaultValue = defaultValueInput.value;
@@ -591,9 +648,13 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		}
 	}
 
-	<portlet:namespace />updatePrioritiesLanguageTemps(<portlet:namespace />prioritiesLastLanguageId);
+	<portlet:namespace />updatePrioritiesLanguageTemps(
+		<portlet:namespace />prioritiesLastLanguageId
+	);
 
-	<portlet:namespace />updateRanksLanguageTemps(<portlet:namespace />ranksLastLanguageId);
+	<portlet:namespace />updateRanksLanguageTemps(
+		<portlet:namespace />ranksLastLanguageId
+	);
 
 	function <portlet:namespace />saveConfiguration() {
 		<portlet:namespace />saveEmails();
@@ -609,23 +670,18 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 		var emailMessageAdded = window['<portlet:namespace />emailMessageAdded'];
 
 		if (emailMessageAdded) {
-			Liferay.Util.setFormValues(
-				form,
-				{
-					'preferences--emailMessageAddedBody--': emailMessageAdded.getHTML()
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				'preferences--emailMessageAddedBody--': emailMessageAdded.getHTML()
+			});
 		}
 
-		var emailMessageUpdated = window['<portlet:namespace />emailMessageUpdated'];
+		var emailMessageUpdated =
+			window['<portlet:namespace />emailMessageUpdated'];
 
 		if (emailMessageUpdated) {
-			Liferay.Util.setFormValues(
-				form,
-				{
-					'preferences--emailMessageUpdatedBody--': emailMessageUpdated.getHTML()
-				}
-			);
+			Liferay.Util.setFormValues(form, {
+				'preferences--emailMessageUpdatedBody--': emailMessageUpdated.getHTML()
+			});
 		}
 	}
 </script>

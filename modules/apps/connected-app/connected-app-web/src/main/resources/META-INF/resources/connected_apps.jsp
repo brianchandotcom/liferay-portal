@@ -87,7 +87,9 @@
 </div>
 
 <aui:script require="metal-dom/src/dom as dom">
-	var connectedAppKeyInput = document.querySelector('[name=<portlet:namespace/>connectedAppKey]');
+	var connectedAppKeyInput = document.querySelector(
+		'[name=<portlet:namespace/>connectedAppKey]'
+	);
 
 	dom.delegate(
 		document.getElementById('<portlet:namespace/>connectedApp'),

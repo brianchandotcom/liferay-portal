@@ -110,11 +110,15 @@ if (Validator.isNotNull(editorGadgetURL)) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />url);
+	Liferay.Util.focusFormField(
+		document.<portlet:namespace />fm.<portlet:namespace />url
+	);
 </aui:script>
 
 <aui:script use="aui-tree-view">
-	var selectedPortletCategoryNamesNode = A.one('#<portlet:namespace />portletCategoryNames');
+	var selectedPortletCategoryNamesNode = A.one(
+		'#<portlet:namespace />portletCategoryNames'
+	);
 
 	var portletCategoryNames = selectedPortletCategoryNamesNode.val();
 
@@ -124,19 +128,17 @@ if (Validator.isNotNull(editorGadgetURL)) {
 		selectedPortletCategoryNames = portletCategoryNames.split(',');
 	}
 
-	var CategoryTreeNode = A.Component.create(
-		{
-			ATTRS: {
-				category: {
-					value: ''
-				}
-			},
+	var CategoryTreeNode = A.Component.create({
+		ATTRS: {
+			category: {
+				value: ''
+			}
+		},
 
-			EXTENDS: A.TreeNodeCheck,
+		EXTENDS: A.TreeNodeCheck,
 
-			NAME: 'CategoryTreeNode'
-		}
-	);
+		NAME: 'CategoryTreeNode'
+	});
 
 	var onCheckedChange = function(event) {
 		var category = event.target.get('category');
@@ -145,25 +147,26 @@ if (Validator.isNotNull(editorGadgetURL)) {
 			if (selectedPortletCategoryNames.indexOf(category) == -1) {
 				selectedPortletCategoryNames.push(category);
 
-				selectedPortletCategoryNamesNode.val(selectedPortletCategoryNames.join());
+				selectedPortletCategoryNamesNode.val(
+					selectedPortletCategoryNames.join()
+				);
 			}
-		}
-		else {
+		} else {
 			A.Array.removeItem(selectedPortletCategoryNames, category);
 
-			selectedPortletCategoryNamesNode.val(selectedPortletCategoryNames.join());
+			selectedPortletCategoryNamesNode.val(
+				selectedPortletCategoryNames.join()
+			);
 		}
 	};
 
-	var treeView = new A.TreeView(
-		{
-			boundingBox: '#<portlet:namespace />categoryTreeView',
-			on: {
-				'*:checkedChange': onCheckedChange
-			},
-			type: 'normal'
-		}
-	).render();
+	var treeView = new A.TreeView({
+		boundingBox: '#<portlet:namespace />categoryTreeView',
+		on: {
+			'*:checkedChange': onCheckedChange
+		},
+		type: 'normal'
+	}).render();
 
 	<%
 	PortletLister portletLister = PortletListerFactoryUtil.getPortletLister();
@@ -177,24 +180,26 @@ if (Validator.isNotNull(editorGadgetURL)) {
 	for (TreeNodeView treeNodeView : treeView.getList()) {
 	%>
 
-		var category = '<%= treeNodeView.getObjId() %>';
+	var category = '<%= treeNodeView.getObjId() %>';
 
-		var checked = <%= gadget == null %> && category == 'root//category.gadgets' || selectedPortletCategoryNames.indexOf(category) > -1;
+	var checked =
+		(<%= gadget == null %> && category == 'root//category.gadgets') ||
+		selectedPortletCategoryNames.indexOf(category) > -1;
 
-		var categoryTreeNode = new CategoryTreeNode(
-			{
-				alwaysShowHitArea: false,
-				category: category,
-				checked: checked,
-				id: '<%= treeNodeView.getId() %>',
-				label: '<%= UnicodeFormatter.toString(LanguageUtil.get(request, treeNodeView.getName())) %>',
-				leaf: false
-			}
-		);
+	var categoryTreeNode = new CategoryTreeNode({
+		alwaysShowHitArea: false,
+		category: category,
+		checked: checked,
+		id: '<%= treeNodeView.getId() %>',
+		label:
+			'<%= UnicodeFormatter.toString(LanguageUtil.get(request, treeNodeView.getName())) %>',
+		leaf: false
+	});
 
-		var parentNode = treeView.getNodeById('<%= treeNodeView.getParentId() %>') || treeView;
+	var parentNode =
+		treeView.getNodeById('<%= treeNodeView.getParentId() %>') || treeView;
 
-		parentNode.appendChild(categoryTreeNode);
+	parentNode.appendChild(categoryTreeNode);
 
 	<%
 	}

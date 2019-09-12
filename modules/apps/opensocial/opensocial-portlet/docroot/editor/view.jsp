@@ -29,25 +29,25 @@
 			<div id="<portlet:namespace />editor"></div>
 
 			<aui:script use="opensocial-editor">
-				new Liferay.OpenSocial.Editor(
-					{
-						baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				new Liferay.OpenSocial.Editor({
+					baseRenderURL:
+						'<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 
-						<portlet:renderURL var="editorGadgetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:renderURL var="editorGadgetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/admin/edit_gadget.jsp" />
 							<portlet:param name="editorGadgetURL" value="editorGadgetURLPlaceholder" />
 						</portlet:renderURL>
 
-						editorGadgetURL: '<%= editorGadgetURL %>',
-						gadgetPortletId: '<%= portletDisplay.getId() %>',
-						gadgetServerBase: '<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
-						namespace: '<portlet:namespace />',
-						publishGadgetPermission: <%= GadgetPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>,
-						repositoryId: '<%= repositoryId %>',
-						resourceURL: '<portlet:resourceURL />',
-						rootFolderId: '<%= rootFolder.getFolderId() %>'
-					}
-				).render('#<portlet:namespace />editor');
+					editorGadgetURL: '<%= editorGadgetURL %>',
+					gadgetPortletId: '<%= portletDisplay.getId() %>',
+					gadgetServerBase:
+						'<%= PortalUtil.getPathContext(renderRequest) %>/gadgets/',
+					namespace: '<portlet:namespace />',
+					publishGadgetPermission: <%= GadgetPermission.contains(themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(), ActionKeys.PUBLISH_GADGET) %>,
+					repositoryId: '<%= repositoryId %>',
+					resourceURL: '<portlet:resourceURL />',
+					rootFolderId: '<%= rootFolder.getFolderId() %>'
+				}).render('#<portlet:namespace />editor');
 			</aui:script>
 		</div>
 	</div>

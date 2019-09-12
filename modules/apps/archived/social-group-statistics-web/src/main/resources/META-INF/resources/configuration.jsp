@@ -81,15 +81,15 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
 
 				<aui:script use="liferay-auto-fields">
-					new Liferay.AutoFields(
-						{
-							contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
-							fieldIndexes: '<portlet:namespace/>displayActivityCounterNameIndexes',
-							namespace: '<portlet:namespace />',
-							url: '<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>',
-							urlNamespace: '<%= "_" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS + "_" %>'
-						}
-					).render();
+					new Liferay.AutoFields({
+						contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
+						fieldIndexes: '<portlet:namespace/>displayActivityCounterNameIndexes',
+						namespace: '<portlet:namespace />',
+						url:
+							'<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>',
+						urlNamespace:
+							'<%= "_" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS + "_" %>'
+					}).render();
 				</aui:script>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>

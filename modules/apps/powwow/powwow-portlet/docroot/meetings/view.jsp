@@ -124,65 +124,59 @@ else {
 		var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
 		if (form) {
-			form.on(
-				'submit',
-				function(event) {
-					<c:if test="<%= PowwowServiceProviderUtil.isSupportsPresettingParticipantName(powwowMeeting.getProviderType()) %>">
-						var name = A.one('#<portlet:namespace />name');
+			form.on('submit', function(event) {
+				<c:if test="<%= PowwowServiceProviderUtil.isSupportsPresettingParticipantName(powwowMeeting.getProviderType()) %>">
+					var name = A.one('#<portlet:namespace />name');
 
-						if (name && !name.val()) {
-							name.focus();
+					if (name && !name.val()) {
+						name.focus();
 
-							return false;
-						}
-					</c:if>
+						return false;
+					}
+				</c:if>
 
-					var loadingMask = new A.LoadingMask(
-						{
-							'strings.loading': '<%= UnicodeLanguageUtil.get(request, "the-meeting-has-not-yet-started.-you-will-be-automatically-connected-once-the-host-arrives.-please-wait") %>',
-							target: A.one('.powwow-portlet')
-						}
-					);
+				var loadingMask = new A.LoadingMask({
+					'strings.loading':
+						'<%= UnicodeLanguageUtil.get(request, "the-meeting-has-not-yet-started.-you-will-be-automatically-connected-once-the-host-arrives.-please-wait") %>',
+					target: A.one('.powwow-portlet')
+				});
 
-					loadingMask.show();
+				loadingMask.show();
 
-					var io = A.io.request(
-						'<liferay-portlet:actionURL name="joinPowwowMeeting" />',
-						{
-							dataType: 'JSON',
-							form: {
-								id: form
-							},
-							on: {
-								complete: function(event, id, obj) {
-									var responseText = obj.responseText;
+				var io = A.io.request(
+					'<liferay-portlet:actionURL name="joinPowwowMeeting" />',
+					{
+						dataType: 'JSON',
+						form: {
+							id: form
+						},
+						on: {
+							complete: function(event, id, obj) {
+								var responseText = obj.responseText;
 
-									var responseData = A.JSON.parse(responseText);
+								var responseData = A.JSON.parse(responseText);
 
-									if (responseData.success) {
-										loadingMask.hide();
+								if (responseData.success) {
+									loadingMask.hide();
 
-										window.location.href = responseData.joinPowwowMeetingURL;
-									}
-									else if (responseData.retry) {
-										setTimeout(
-											function() {
-												io.start();
-											},
-											5000
-										);
-									}
-									else {
-										loadingMask.hide();
+									window.location.href =
+										responseData.joinPowwowMeetingURL;
+								} else if (responseData.retry) {
+									setTimeout(function() {
+										io.start();
+									}, 5000);
+								} else {
+									loadingMask.hide();
 
-										messageContainer.html('<span class="alert alert-error"><liferay-ui:message key="the-meeting-you-have-requested-no-longer-exists" /></span>');
-									}
+									messageContainer.html(
+										'<span class="alert alert-error"><liferay-ui:message key="the-meeting-you-have-requested-no-longer-exists" /></span>'
+									);
 								}
 							}
 						}
-					);
-				}
-			);
+					}
+				);
+			});
 		}
 	</aui:script>
 

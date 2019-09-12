@@ -42,7 +42,6 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 <aui:script>
 	function <portlet:namespace />getSuggestionsContent() {
-
 		<%
 		StringBundler sb = new StringBundler();
 
@@ -56,6 +55,6 @@ User selUser = (User)request.getAttribute("user.selUser");
 		}
 		%>
 
-		return '<%= HtmlUtil.escape(HtmlUtil.replaceNewLine(sb.toString())) %>'
+		return '<%= HtmlUtil.escape(HtmlUtil.replaceNewLine(sb.toString())) %>';
 	}
 </aui:script>

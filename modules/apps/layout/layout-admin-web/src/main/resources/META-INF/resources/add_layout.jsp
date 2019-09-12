@@ -80,68 +80,55 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 <aui:script>
 	var form = document.<portlet:namespace />fm;
 
-	form.addEventListener(
-		'submit',
-		function(event) {
-			event.stopPropagation();
+	form.addEventListener('submit', function(event) {
+		event.stopPropagation();
 
-			var formData = new FormData();
+		var formData = new FormData();
 
-			Array.prototype.slice.call(
-				form.querySelectorAll('input')
-			).forEach(
-				function(input) {
-					if (input.type == 'checkbox' && !input.checked) {
-						return;
-					}
-
-					if (input.name && input.value) {
-						formData.append(input.name, input.value);
-					}
+		Array.prototype.slice
+			.call(form.querySelectorAll('input'))
+			.forEach(function(input) {
+				if (input.type == 'checkbox' && !input.checked) {
+					return;
 				}
-			);
 
-			Liferay.Util.fetch(
-				form.action,
-				{
-					body: formData,
-					method: 'POST'
+				if (input.name && input.value) {
+					formData.append(input.name, input.value);
 				}
-			).then(
-				function(response) {
-					return response.json();
-				}
-			).then(
-				function(response) {
-					if (response.redirectURL) {
-						var redirectURL = new URL(response.redirectURL, window.location.origin);
+			});
 
-						redirectURL.searchParams.set('p_p_state', 'normal');
+		Liferay.Util.fetch(form.action, {
+			body: formData,
+			method: 'POST'
+		})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(response) {
+				if (response.redirectURL) {
+					var redirectURL = new URL(
+						response.redirectURL,
+						window.location.origin
+					);
 
-						Liferay.fire(
-							'closeWindow',
-							{
-								id: '<portlet:namespace />addLayoutDialog',
-								redirect: redirectURL.toString()
-							}
-						);
-					}
-					else {
-						new Liferay.Alert(
-							{
-								delay: {
-									hide: 3000,
-									show: 0
-								},
-								duration: 500,
-								icon: 'exclamation-circle',
-								message: response.errorMessage,
-								type: 'danger'
-							}
-						).render();
-					}
+					redirectURL.searchParams.set('p_p_state', 'normal');
+
+					Liferay.fire('closeWindow', {
+						id: '<portlet:namespace />addLayoutDialog',
+						redirect: redirectURL.toString()
+					});
+				} else {
+					new Liferay.Alert({
+						delay: {
+							hide: 3000,
+							show: 0
+						},
+						duration: 500,
+						icon: 'exclamation-circle',
+						message: response.errorMessage,
+						type: 'danger'
+					}).render();
 				}
-			);
-		}
-	);
+			});
+	});
 </aui:script>

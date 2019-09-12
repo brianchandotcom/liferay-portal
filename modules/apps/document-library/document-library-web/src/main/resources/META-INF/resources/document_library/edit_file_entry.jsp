@@ -287,42 +287,42 @@ if (portletTitleBasedNavigation) {
 							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 
 							<script>
-								var selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
+								var selectFolderButton = document.getElementById(
+									'<portlet:namespace />selectFolderButton'
+								);
 
 								if (selectFolderButton) {
-									selectFolderButton.addEventListener(
-										'click',
-										function(event) {
-											Liferay.Util.selectEntity(
-												{
-													dialog: {
-														constrain: true,
-														destroyOnHide: true,
-														modal: true,
-														width: 680
-													},
-													id: '<portlet:namespace />selectFolder',
-													title: '<liferay-ui:message arguments="folder" key="select-x" />',
+									selectFolderButton.addEventListener('click', function(event) {
+										Liferay.Util.selectEntity(
+											{
+												dialog: {
+													constrain: true,
+													destroyOnHide: true,
+													modal: true,
+													width: 680
+												},
+												id: '<portlet:namespace />selectFolder',
+												title:
+													'<liferay-ui:message arguments="folder" key="select-x" />',
 
-													<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+												<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 														<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
 													</liferay-portlet:renderURL>
 
-													uri: '<%= selectFolderURL.toString() %>'
-												},
-												function(event) {
-													var folderData = {
-														idString: 'folderId',
-														idValue: event.folderid,
-														nameString: 'folderName',
-														nameValue: event.foldername
-													};
+												uri: '<%= selectFolderURL.toString() %>'
+											},
+											function(event) {
+												var folderData = {
+													idString: 'folderId',
+													idValue: event.folderid,
+													nameString: 'folderName',
+													nameValue: event.foldername
+												};
 
-													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-												}
-											);
-										}
-									);
+												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+											}
+										);
+									});
 								}
 							</script>
 						</c:if>
@@ -560,52 +560,39 @@ if (portletTitleBasedNavigation) {
 	var form = document.<portlet:namespace />fm;
 
 	function <portlet:namespace />changeFileEntryType() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.PREVIEW %>'
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>: '<%= Constants.PREVIEW %>'
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />cancelCheckOut() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.CANCEL_CHECKOUT %>'
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>: '<%= Constants.CANCEL_CHECKOUT %>'
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />checkIn() {
-		Liferay.Util.setFormValues(
-			form,
-			{
-				'<%= Constants.CMD %>': '<%= Constants.UPDATE_AND_CHECKIN %>'
-			}
-		)
+		Liferay.Util.setFormValues(form, {
+			<%= Constants.CMD %>: '<%= Constants.UPDATE_AND_CHECKIN %>'
+		});
 
 		if (<%= dlAdminDisplayContext.isVersioningStrategyOverridable() %>) {
 			<portlet:namespace />showVersionDetailsDialog(form);
-		}
-		else {
+		} else {
 			submitForm(form);
 		}
 	}
 
 	function <portlet:namespace />checkOut() {
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.CHECKOUT %>'
-				}
+		Liferay.Util.postForm(form, {
+			data: {
+				<%= Constants.CMD %>: '<%= Constants.CHECKOUT %>'
 			}
-		);
+		});
 	}
 
 	function <portlet:namespace />saveFileEntry(draft) {
@@ -616,19 +603,17 @@ if (portletTitleBasedNavigation) {
 		}
 
 		var data = {
-			'<%= Constants.CMD %>': '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>'
+			<%= Constants.CMD %>:
+				'<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>'
 		};
 
 		if (draft) {
 			data.workflowAction = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 		}
 
-		Liferay.Util.postForm(
-			form,
-			{
-				data: data
-			}
-		);
+		Liferay.Util.postForm(form, {
+			data: data
+		});
 	}
 
 	Liferay.provide(
@@ -638,16 +623,13 @@ if (portletTitleBasedNavigation) {
 			Liferay.DocumentLibraryCheckin.showDialog(
 				'<portlet:namespace />',
 				function(versionIncrease, changeLog) {
-					Liferay.Util.postForm(
-						form,
-						{
-							data: {
-								changeLog: changeLog,
-								updateVersionDetails: true,
-								versionIncrease: versionIncrease
-							}
+					Liferay.Util.postForm(form, {
+						data: {
+							changeLog: changeLog,
+							updateVersionDetails: true,
+							versionIncrease: versionIncrease
 						}
-					);
+					});
 				}
 			);
 		},
@@ -673,16 +655,17 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= (fileEntry != null) && !checkedOut && dlAdminDisplayContext.isVersioningStrategyOverridable() %>">
 	<aui:script require="metal-dom/src/dom as dom">
-		var updateVersionDetailsElement = document.getElementById('<portlet:namespace />updateVersionDetails');
-		var versionDetailsElement = document.getElementById('<portlet:namespace />versionDetails');
+		var updateVersionDetailsElement = document.getElementById(
+			'<portlet:namespace />updateVersionDetails'
+		);
+		var versionDetailsElement = document.getElementById(
+			'<portlet:namespace />versionDetails'
+		);
 
 		if (updateVersionDetailsElement && versionDetailsElement) {
-			updateVersionDetailsElement.addEventListener(
-				'click',
-				function(event) {
-					dom.toggleClasses(versionDetailsElement, 'hide');
-				}
-			);
+			updateVersionDetailsElement.addEventListener('click', function(event) {
+				dom.toggleClasses(versionDetailsElement, 'hide');
+			});
 		}
 	</aui:script>
 </c:if>

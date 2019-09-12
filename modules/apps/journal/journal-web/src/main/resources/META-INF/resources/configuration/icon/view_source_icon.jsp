@@ -27,26 +27,25 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 %>
 
 <script>
-	var viewResourcesButton = document.getElementById('<portlet:namespace />viewResourcesButton');
+	var viewResourcesButton = document.getElementById(
+		'<portlet:namespace />viewResourcesButton'
+	);
 
 	if (viewResourcesButton) {
-		viewResourcesButton.addEventListener(
-			'click',
-			function(event) {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							destroyOnHide: true,
-							modal: true
-						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						},
-						title: '<%= HtmlUtil.escapeJS(HtmlUtil.escape(article.getTitle(themeDisplay.getLocale()))) %>',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/configuration/icon/view_source.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= article.getArticleId() %>" /><portlet:param name="status" value="<%= String.valueOf(article.getStatus()) %>" /></portlet:renderURL>'
-					}
-				);
-			}
-		);
+		viewResourcesButton.addEventListener('click', function(event) {
+			Liferay.Util.openWindow({
+				dialog: {
+					destroyOnHide: true,
+					modal: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
+				title:
+					'<%= HtmlUtil.escapeJS(HtmlUtil.escape(article.getTitle(themeDisplay.getLocale()))) %>',
+				uri:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/configuration/icon/view_source.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" /><portlet:param name="articleId" value="<%= article.getArticleId() %>" /><portlet:param name="status" value="<%= String.valueOf(article.getStatus()) %>" /></portlet:renderURL>'
+			});
+		});
 	}
 </script>

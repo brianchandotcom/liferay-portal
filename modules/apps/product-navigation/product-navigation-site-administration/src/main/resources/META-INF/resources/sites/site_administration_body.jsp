@@ -61,15 +61,15 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 						<aui:a data="<%= data %>" href="" id="remoteLiveLink" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
 
 						<aui:script use="aui-tooltip">
-							new A.Tooltip(
-								{
-									bodyContent: Liferay.Language.get('the-connection-to-the-remote-live-site-cannot-be-established-due-to-a-network-problem'),
-									position: 'right',
-									trigger: A.one('#<portlet:namespace />remoteLiveLink'),
-									visible: false,
-									zIndex: Liferay.zIndex.TOOLTIP
-								}
-							).render();
+							new A.Tooltip({
+								bodyContent: Liferay.Language.get(
+									'the-connection-to-the-remote-live-site-cannot-be-established-due-to-a-network-problem'
+								),
+								position: 'right',
+								trigger: A.one('#<portlet:namespace />remoteLiveLink'),
+								visible: false,
+								zIndex: Liferay.zIndex.TOOLTIP
+							}).render();
 						</aui:script>
 
 					<%

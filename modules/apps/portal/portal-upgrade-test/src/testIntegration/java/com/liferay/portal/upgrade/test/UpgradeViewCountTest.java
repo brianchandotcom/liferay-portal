@@ -31,7 +31,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Types;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -59,7 +58,9 @@ public class UpgradeViewCountTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_db.runSQL(TestClass.TABLE_SQL_CREATE);
+		_db.runSQL(
+			"create table UpgradeViewCount (primaryKey LONG not null primary " +
+				"key, companyId LONG not null, readCount LONG);");
 
 		_db.runSQL("insert into UpgradeViewCount values (1, 2, 3);");
 	}
@@ -69,7 +70,8 @@ public class UpgradeViewCountTest {
 		_db.runSQL(
 			"delete from ViewCountEntry where classNameId = " +
 				_className.getClassNameId());
-		_db.runSQL(TestClass.TABLE_SQL_DROP);
+
+		_db.runSQL("drop table UpgradeViewCount");
 	}
 
 	@Test
@@ -83,9 +85,9 @@ public class UpgradeViewCountTest {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement ps = connection.prepareStatement(
 				StringBundler.concat(
-					"select * from ViewCountEntry where (classNameId = ",
-					_className.getClassNameId(),
-					" AND classPK = 1 AND companyId = 2)"));
+					"select * from ViewCountEntry where companyId = 2 AND ",
+					"classNameId = ", _className.getClassNameId(),
+					" AND classPK = 1"));
 			ResultSet rs = ps.executeQuery()) {
 
 			Assert.assertTrue(rs.next());
@@ -101,25 +103,6 @@ public class UpgradeViewCountTest {
 			Assert.assertFalse(
 				dbInspector.hasColumn("UpgradeViewCount", "readCount"));
 		}
-	}
-
-	@SuppressWarnings("unused")
-	public static class TestClass {
-
-		public static final Object[][] TABLE_COLUMNS = {
-			{"primaryKey", Types.BIGINT}, {"companyId", Types.BIGINT},
-			{"readCount", Types.BIGINT}
-		};
-
-		public static final String TABLE_NAME = "UpgradeViewCount";
-
-		public static final String TABLE_SQL_CREATE =
-			"create table UpgradeViewCount (primaryKey LONG not null primary " +
-				"key, companyId LONG not null, readCount LONG)";
-
-		public static final String TABLE_SQL_DROP =
-			"drop table UpgradeViewCount";
-
 	}
 
 	@Inject

@@ -17,8 +17,6 @@ import ClayIcon from '@clayui/icon';
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 
-import InfoPanel from "./InfoPanel.es";
-
 const Arrow = ({ direction, handleClick }) => (
 	<div className={`pull-${direction}`}>
 		<ClayButton
@@ -41,6 +39,10 @@ const ImageSlide = ({ url }) => {
 	};
 
 	return <img alt="alt" src={url} style={styles} />;
+};
+
+const InfoPanel = ({ imageData }) => {
+	return <h1>Info Panel</h1>;
 };
 
 class Carousel extends Component {
@@ -106,27 +108,31 @@ class Carousel extends Component {
 		const showArrows = this.props.items.length > 1;
 
 		return (
-			<div className="carousel">
+			<div className="carousel sidenav-container">
 
-				{showArrows && (
-					<Arrow
-						direction="left"
-						handleClick={this.showPreviousSlide}
+				<div className="info-panel sidenav-menu-slider">
+					<InfoPanel imageData={currentItem.dataset.metadata} />
+				</div>
+
+				<div className="sidenav-content">
+					{showArrows && (
+						<Arrow
+							direction="left"
+							handleClick={this.showPreviousSlide}
+						/>
+					)}
+
+					<ImageSlide
+						url={currentItem.dataset.url}
 					/>
-				)}
 
-				<ImageSlide
-					url={currentItem.dataset.url}
-				/>
-
-				{showArrows && (
-					<Arrow
-						direction="right"
-						handleClick={this.showNextSlide}
-					/>
-				)}
-
-				<InfoPanel imageData={currentItem.dataset.metadata} />
+					{showArrows && (
+						<Arrow
+							direction="right"
+							handleClick={this.showNextSlide}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	}

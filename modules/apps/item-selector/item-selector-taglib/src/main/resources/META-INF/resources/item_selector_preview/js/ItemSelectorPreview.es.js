@@ -68,6 +68,23 @@ class ItemSelectorPreview extends Component {
 		});
 	}
 
+	componentDidUpdate() {
+		console.log('componentDidUpdate');
+		console.log(this.refs);
+
+		const sidenavToggle = this.refs.test;
+
+		if (sidenavToggle) {
+			Liferay.SideNavigation.initialize(sidenavToggle, {
+				container: '.sidenav-container',
+				position: 'right',
+				type: 'relative',
+				typeMobile: 'fixed',
+				width: '320px'
+			});
+		}
+	}
+
 	handleClickClose = () => {
 		this.setState({openViewer: false});
 	};
@@ -87,7 +104,7 @@ class ItemSelectorPreview extends Component {
 		});
 	};
 
-	render() {
+	render() {console.log('render');
 		const {openViewer, currentItemIndex, currentItem, items} = this.state;
 
 		const spritemap =
@@ -105,6 +122,7 @@ class ItemSelectorPreview extends Component {
 								handleClickDone={this.handleClickDone}
 								headerTitle={this.props.headerTitle}
 							/>
+							<button type="button" ref="test">TEST</button>
 							<Carousel
 								currentItemIndex={currentItemIndex}
 								items={items}

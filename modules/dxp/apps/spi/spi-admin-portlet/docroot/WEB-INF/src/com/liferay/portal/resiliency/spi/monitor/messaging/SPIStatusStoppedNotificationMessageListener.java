@@ -129,8 +129,7 @@ public class SPIStatusStoppedNotificationMessageListener
 		String[] notificationRecipientsArray = StringUtil.split(
 			notificationRecipients);
 
-		Set<InternetAddress> recipientInternetAddresses = new HashSet<>(
-			notificationRecipientsArray.length);
+		Set<InternetAddress> recipientInternetAddresses = new HashSet<>();
 
 		for (String notificationRecipient : notificationRecipientsArray) {
 			InternetAddress recipientInternetAddress = new InternetAddress(

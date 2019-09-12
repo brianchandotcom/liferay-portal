@@ -477,7 +477,7 @@ public class WorkflowMetricsSLAProcessor {
 	}
 
 	private Map<Long, String> _getTimeMarkers(List<String> nodeKeys) {
-		Map<Long, String> map = new HashMap<>(nodeKeys.size());
+		Map<Long, String> map = new HashMap<>();
 
 		for (String nodeKey : nodeKeys) {
 			List<String> parts = StringUtil.split(nodeKey, CharPool.COLON);

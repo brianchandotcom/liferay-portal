@@ -426,7 +426,7 @@ definition {
 
 		Page.viewURLLocale(
 			localizationOption = "Display the page in English (United States).",
-			localizationPageURL = "${portalURL}/web/site2-name");
+			localizationPageURL = "${portalURL}/web/site2-name/");
 	}
 
 	@priority = "4"

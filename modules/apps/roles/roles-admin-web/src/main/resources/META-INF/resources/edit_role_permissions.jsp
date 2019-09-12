@@ -273,9 +273,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 				permissionContentContainerNode.unplug(AParseContent);
 
-				Liferay.Util.fetch(
-					href,
-					).then(
+				Liferay.Util.fetch(href).then(
 					function(response) {
 						if (response.status === 401) {
 							window.location.reload();

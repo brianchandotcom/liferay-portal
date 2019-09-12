@@ -14,7 +14,7 @@ definition {
 			description = "${description}");
 
 		var folderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${folderName}".
+			folderName = "${folderName}",
 			groupId = "${groupId}");
 
 		var serviceContext = JSONWebcontentSetter.setServiceContext(

@@ -92,17 +92,19 @@ definition {
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
-			layoutName = "${layoutName}");
+			layoutName = "${layoutName}",
+			privateLayout = "true");
 
 		var typeSettings = JSONLayoutSetter.setTypeSettings(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
+			privateLayout = "true",
 			widgetName = "${widgetName}");
 
 		JSONLayoutUtil._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
-			privateLayout = "false",
+			privateLayout = "true",
 			typeSettings = "${typeSettings}");
 	}
 
@@ -114,12 +116,14 @@ definition {
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
-			layoutName = "${layoutName}");
+			layoutName = "${layoutName}",
+			privateLayout = "false");
 
 		var typeSettings = JSONLayoutSetter.setTypeSettings(
 			column = "${column}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
+			privateLayout = "false",
 			widgetName = "${widgetName}");
 
 		JSONLayoutUtil._updateTypeSettings(
@@ -138,13 +142,15 @@ definition {
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
-			layoutName = "${layoutName}");
+			layoutName = "${layoutName}",
+			privateLayout = "false");
 
 		var typeSettings = JSONLayoutSetter.setTypeSettings(
 			column = "${column}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			layoutTemplate = "${layoutTemplate}");
+			layoutTemplate = "${layoutTemplate}",
+			privateLayout = "false");
 
 		JSONLayoutUtil._updateTypeSettings(
 			groupId = "${groupId}",

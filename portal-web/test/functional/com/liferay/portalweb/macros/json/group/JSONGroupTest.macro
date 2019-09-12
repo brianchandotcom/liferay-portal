@@ -9,7 +9,8 @@ definition {
 
 		JSONGroup.addGroup(groupName = "group name 2");
 
-		JSONGroup.addChildSite(groupName = "child group name",
+		JSONGroup.addChildSite(
+			groupName = "child group name",
 			parentGroupName = "group name");
 
 		//user
@@ -35,8 +36,7 @@ definition {
 
 		//delete
 
-		JSONGroup.deleteGroupByName(
-			groupName = "group name 2");
+		JSONGroup.deleteGroupByName(groupName = "group name 2");
 	}
 
 }

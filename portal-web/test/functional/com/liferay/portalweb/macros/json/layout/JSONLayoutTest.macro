@@ -40,11 +40,6 @@ definition {
 			groupName = "${groupName}",
 			layoutName = "public 1",
 			layoutTemplate = "1 Column");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "${groupName}",
-			layoutName = "private 1",
-			layoutTemplate = "1 Column");
 	}
 
 }

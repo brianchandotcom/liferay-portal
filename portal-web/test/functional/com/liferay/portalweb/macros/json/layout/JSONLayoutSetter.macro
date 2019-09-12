@@ -27,9 +27,7 @@ definition {
 	}
 
 	macro setLayoutId {
-		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
-
-		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var layoutId = JSONLayoutAPI._getLayoutIdByName(
 			groupId = "${groupId}",
@@ -82,9 +80,7 @@ definition {
 	}
 
 	macro setTypeSettings {
-		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
-
-		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
 			groupId = "${groupId}",

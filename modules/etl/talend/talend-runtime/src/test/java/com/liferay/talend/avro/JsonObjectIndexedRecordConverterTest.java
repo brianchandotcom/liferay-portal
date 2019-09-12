@@ -17,6 +17,8 @@ package com.liferay.talend.avro;
 import com.liferay.talend.avro.exception.ConverterException;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
+import java.math.BigDecimal;
+
 import org.apache.avro.generic.IndexedRecord;
 
 import org.junit.Assert;
@@ -44,17 +46,21 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 		Object priceBigDecimal1 = indexedRecord.get(1);
 
 		Assert.assertEquals(
-			"Price 1 field type", String.class, priceBigDecimal1.getClass());
+			"Price 1 field type", BigDecimal.class,
+			priceBigDecimal1.getClass());
 
-		Assert.assertEquals("Price 1 field value", "1.97797", priceBigDecimal1);
+		Assert.assertEquals(
+			"Price 1 field value", new BigDecimal("1.97797"), priceBigDecimal1);
 
 		Object priceBigDecimal2 = indexedRecord.get(2);
 
 		Assert.assertEquals(
-			"Price 2 field type", String.class, priceBigDecimal2.getClass());
+			"Price 2 field type", BigDecimal.class,
+			priceBigDecimal2.getClass());
 
 		Assert.assertEquals(
-			"Price 2 field value", "1.97797E-17", priceBigDecimal2);
+			"Price 2 field value", new BigDecimal("1.97797E-17"),
+			priceBigDecimal2);
 
 		Object priceDouble = indexedRecord.get(3);
 
@@ -75,9 +81,10 @@ public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 		Object priceNumber = indexedRecord.get(5);
 
 		Assert.assertEquals(
-			"Price 4 field type", String.class, priceNumber.getClass());
+			"Price 4 field type", BigDecimal.class, priceNumber.getClass());
 
-		Assert.assertEquals("Price 4 field value", "1977.97", priceNumber);
+		Assert.assertEquals(
+			"Price 4 field value", new BigDecimal("1977.97"), priceNumber);
 	}
 
 	@Test

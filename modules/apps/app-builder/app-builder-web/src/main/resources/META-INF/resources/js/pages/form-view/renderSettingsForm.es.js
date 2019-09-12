@@ -39,7 +39,7 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 		}
 	};
 
-	const handleFormAttached = () => {
+	const handleFormAttached = function() {
 		const firstInput = container.querySelector('input');
 
 		if (firstInput && !container.contains(document.activeElement)) {
@@ -49,6 +49,8 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 				firstInput.select();
 			}
 		}
+
+		this.evaluate();
 	};
 
 	return new Form(

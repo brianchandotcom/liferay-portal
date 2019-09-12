@@ -67,7 +67,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
-							value = {"label", "tip", "displayStyle", "required"}
+							value = {
+								"label", "placeholder", "tip", "displayStyle",
+								"required"
+							}
 						)
 					}
 				)
@@ -81,14 +84,28 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"predefinedValue", "placeholder",
-								"visibilityExpression", "fieldNamespace",
-								"indexType", "localizable", "readOnly",
-								"dataType", "type", "name", "showLabel",
-								"repeatable", "validation", "autocomplete",
-								"dataSourceType", "ddmDataProviderInstanceId",
-								"ddmDataProviderInstanceOutput", "options",
+								"predefinedValue", "visibilityExpression",
+								"fieldNamespace", "indexType", "localizable",
+								"readOnly", "dataType", "type", "name",
+								"showLabel", "repeatable", "validation",
 								"tooltip"
+							}
+						)
+					}
+				)
+			}
+		),
+		@DDMFormLayoutPage(
+			title = "%autocomplete",
+			value = {
+				@DDMFormLayoutRow(
+					{
+						@DDMFormLayoutColumn(
+							size = 12,
+							value = {
+								"autocomplete", "dataSourceType",
+								"ddmDataProviderInstanceId",
+								"ddmDataProviderInstanceOutput", "options"
 							}
 						)
 					}

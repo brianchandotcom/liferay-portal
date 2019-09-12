@@ -61,7 +61,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "%properties",
+			title = "%advanced",
 			value = {
 				@DDMFormLayoutRow(
 					{

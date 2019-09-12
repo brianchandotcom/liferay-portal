@@ -53,7 +53,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "%properties",
+			title = "%advanced",
 			value = {
 				@DDMFormLayoutRow(
 					{

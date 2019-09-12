@@ -2,24 +2,17 @@ Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 7.0.0
 Export-Package:\
-	com.liferay.portal.lar.test,\
-	com.liferay.portal.module.framework.test,\
-	com.liferay.portal.osgi.util.test,\
 	com.liferay.portal.service.test,\
 	com.liferay.portal.test.log,\
 	com.liferay.portal.test.mail,\
 	com.liferay.portal.test.randomizerbumpers,\
 	com.liferay.portal.test.rule,\
-	com.liferay.portal.test.rule.callback,\
-	com.liferay.portal.util.test,\
-	com.liferay.portal.verify.test,\
 	com.liferay.portal.webserver.test,\
 	com.liferay.portlet.documentlibrary.service.test,\
 	com.liferay.portlet.documentlibrary.store.test,\
 	com.liferay.portlet.documentlibrary.util.test,\
 	com.liferay.portlet.notifications.test,\
-	com.liferay.portlet.social.test,\
-	com.liferay.portlet.trash.test
+	com.liferay.portlet.social.test
 Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\

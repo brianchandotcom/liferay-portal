@@ -71,8 +71,6 @@ public class RESTExtender {
 		addJaxRsServiceDependencies();
 
 		_dependencyManager.add(_component);
-
-		_component.start();
 	}
 
 	protected void addBusDependencies() {

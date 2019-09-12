@@ -213,8 +213,6 @@ public class SoapExtender {
 		addSoapDescriptorBuilderServiceDependency(component);
 
 		_dependencyManager.add(component);
-
-		component.start();
 	}
 
 	private DependencyManager _dependencyManager;

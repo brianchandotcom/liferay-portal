@@ -324,6 +324,11 @@ AUI.add(
 					instance.prevBtn = instance.one('.kaleo-process-previous');
 					instance.submitBtn = instance.one('.kaleo-process-submit');
 
+					instance.formWizard = new Liferay.KaleoFormWizard({
+						form: instance.get('form'),
+						tabView: instance.get('tabView')
+					});
+
 					instance.bindUI();
 					instance.syncUI();
 				},

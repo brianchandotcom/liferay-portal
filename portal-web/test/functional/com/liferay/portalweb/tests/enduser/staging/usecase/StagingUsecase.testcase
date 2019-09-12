@@ -690,14 +690,14 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithFriendlyURL(
-			friendlyUrl = "disclaimer-f%25c3%25bcr-fonds",
+			friendlyUrl = '''disclaimer-f%25c3%25bcr-fonds''',
 			webContentContent = "Web Content Content1",
 			webContentTitle = "Web Content Title1");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addWithFriendlyURL(
-			friendlyUrl = "disclaimer-f%25c3%25bcr-fonds",
+			friendlyUrl = '''disclaimer-f%C3%BCr-fonds''',
 			webContentContent = "Web Content Content2",
 			webContentTitle = "Web Content Title2");
 

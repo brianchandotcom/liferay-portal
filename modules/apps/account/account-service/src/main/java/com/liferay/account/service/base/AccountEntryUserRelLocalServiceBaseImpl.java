@@ -16,7 +16,7 @@ package com.liferay.account.service.base;
 
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
+import com.liferay.account.service.persistence.AccountEntryPersistence;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -90,31 +90,31 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
-	 * @param accountEntryUserRelPK the primary key for the new account entry user rel
+	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
 	@Override
 	@Transactional(enabled = false)
 	public AccountEntryUserRel createAccountEntryUserRel(
-		AccountEntryUserRelPK accountEntryUserRelPK) {
+		long accountEntryUserRelId) {
 
-		return accountEntryUserRelPersistence.create(accountEntryUserRelPK);
+		return accountEntryUserRelPersistence.create(accountEntryUserRelId);
 	}
 
 	/**
 	 * Deletes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel that was removed
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AccountEntryUserRel deleteAccountEntryUserRel(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws PortalException {
 
-		return accountEntryUserRelPersistence.remove(accountEntryUserRelPK);
+		return accountEntryUserRelPersistence.remove(accountEntryUserRelId);
 	}
 
 	/**
@@ -222,26 +222,26 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 
 	@Override
 	public AccountEntryUserRel fetchAccountEntryUserRel(
-		AccountEntryUserRelPK accountEntryUserRelPK) {
+		long accountEntryUserRelId) {
 
 		return accountEntryUserRelPersistence.fetchByPrimaryKey(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	/**
 	 * Returns the account entry user rel with the primary key.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Override
 	public AccountEntryUserRel getAccountEntryUserRel(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws PortalException {
 
 		return accountEntryUserRelPersistence.findByPrimaryKey(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	@Override
@@ -255,7 +255,7 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(AccountEntryUserRel.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.accountEntryUserRelId");
+			"accountEntryUserRelId");
 
 		return actionableDynamicQuery;
 	}
@@ -274,7 +274,7 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 			AccountEntryUserRel.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.accountEntryUserRelId");
+			"accountEntryUserRelId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -288,7 +288,7 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(AccountEntryUserRel.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"primaryKey.accountEntryUserRelId");
+			"accountEntryUserRelId");
 	}
 
 	/**
@@ -414,7 +414,14 @@ public abstract class AccountEntryUserRelLocalServiceBaseImpl
 	protected AccountEntryUserRelPersistence accountEntryUserRelPersistence;
 
 	@Reference
+	protected AccountEntryPersistence accountEntryPersistence;
+
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
+
+	@Reference
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
 
 }

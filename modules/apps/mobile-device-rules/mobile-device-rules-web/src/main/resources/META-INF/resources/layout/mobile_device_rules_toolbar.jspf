@@ -32,7 +32,7 @@
 	}
 
 	function <portlet:namespace />updateRuleGroupInstances() {
-		fetch(
+		Liferay.Util.fetch(
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/rule_group_instances" var="viewRuleGroupInstancesURL">
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
@@ -42,9 +42,6 @@
 			</liferay-portlet:resourceURL>
 
 			'<%= HtmlUtil.escapeJS(viewRuleGroupInstancesURL.toString()) %>',
-			{
-				credentials: 'include'
-			}
 		).then(
 			function(response) {
 				return response.text();

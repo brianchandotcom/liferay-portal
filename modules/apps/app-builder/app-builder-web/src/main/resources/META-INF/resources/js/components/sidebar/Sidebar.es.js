@@ -14,6 +14,8 @@
 
 import classNames from 'classnames';
 import React, {useState} from 'react';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput} from '@clayui/form';
 import Button from '../button/Button.es';
 
 const Sidebar = React.forwardRef(
@@ -98,12 +100,12 @@ const SidebarSearchInput = ({closeable, onSearch, onToggle}) => {
 		<SidebarHeader>
 			<div className="autofit-row sidebar-section">
 				<div className="autofit-col autofit-col-expand">
-					<div className="input-group">
+					<ClayInput.Group>
 						{onSearch && (
-							<div className="input-group-item">
-								<input
+							<ClayInput.GroupItem>
+								<ClayInput
 									aria-label={Liferay.Language.get('search')}
-									className="form-control input-group-inset input-group-inset-after"
+									className="input-group-inset input-group-inset-after"
 									onChange={onChange}
 									placeholder={`${Liferay.Language.get(
 										'search'
@@ -112,24 +114,24 @@ const SidebarSearchInput = ({closeable, onSearch, onToggle}) => {
 									value={keywords}
 								/>
 
-								<div className="input-group-inset-item input-group-inset-item-after">
-									<Button
+								<ClayInput.GroupInsetItem after>
+									<ClayButtonWithIcon
 										displayType="unstyled"
 										symbol="search"
 									/>
-								</div>
-							</div>
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
 						)}
 						{closeable && (
-							<div className="input-group-item input-group-item-shrink">
-								<Button
+							<ClayInput.GroupItem shrink>
+								<ClayButtonWithIcon
 									displayType="secondary"
 									onClick={onToggle}
 									symbol="angle-right"
 								/>
-							</div>
+							</ClayInput.GroupItem>
 						)}
-					</div>
+					</ClayInput.Group>
 				</div>
 			</div>
 		</SidebarHeader>

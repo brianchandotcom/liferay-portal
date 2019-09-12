@@ -12,9 +12,10 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 import SearchContext from './SearchContext.es';
-import Button from '../../../components/button/Button.es';
 
 export default ({disabled}) => {
 	const {
@@ -39,36 +40,35 @@ export default ({disabled}) => {
 	return (
 		<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
 			<div className="container-fluid container-fluid-max-xl">
-				<form
+				<ClayForm
 					onSubmit={event => {
 						event.preventDefault();
 
 						handleSubmit();
 					}}
 				>
-					<div className="input-group">
-						<div className="input-group-item">
-							<input
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayInput
 								aria-label={Liferay.Language.get('search-for')}
-								className="form-control input-group-inset input-group-inset-after"
+								className="input-group-inset input-group-inset-after"
 								disabled={disabled}
 								onChange={onChange}
 								placeholder={Liferay.Language.get('search-for')}
 								type="text"
 								value={keywords}
 							/>
-
-							<div className="input-group-inset-item input-group-inset-item-after">
-								<Button
+							<ClayInput.GroupInsetItem after>
+								<ClayButtonWithIcon
 									disabled={disabled}
 									displayType="unstyled"
 									onClick={handleSubmit}
 									symbol="search"
 								/>
-							</div>
-						</div>
-					</div>
-				</form>
+							</ClayInput.GroupInsetItem>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm>
 			</div>
 		</div>
 	);

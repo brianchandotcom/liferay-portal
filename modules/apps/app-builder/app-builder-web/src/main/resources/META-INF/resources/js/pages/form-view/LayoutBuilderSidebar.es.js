@@ -145,7 +145,7 @@ export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
 
 	useEffect(() => {
 		const eventHandler = ({target}) => {
-			if (isClickOutside(target, sidebarRef.current)) {
+			if (isClickOutside(target, sidebarRef.current, '.dropdown-menu')) {
 				dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 			}
 		};

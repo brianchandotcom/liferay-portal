@@ -15,7 +15,6 @@
 package com.liferay.account.service;
 
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -73,14 +72,27 @@ public interface AccountEntryUserRelLocalService
 		AccountEntryUserRel accountEntryUserRel);
 
 	/**
+	 * Creates an AccountEntryUserRel and adds it to the database. An
+	 * AccountEntryUserRel is essentially an "AccountEntry membership".
+	 *
+	 * @param accountEntryId the primary key of the AccountEntry
+	 * @param userId the primary key of the User
+	 * @return the AccountEntryUserRel
+	 * @review
+	 */
+	public AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long userId)
+		throws PortalException;
+
+	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
-	 * @param accountEntryUserRelPK the primary key for the new account entry user rel
+	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
 	@Transactional(enabled = false)
 	public AccountEntryUserRel createAccountEntryUserRel(
-		AccountEntryUserRelPK accountEntryUserRelPK);
+		long accountEntryUserRelId);
 
 	/**
 	 * Deletes the account entry user rel from the database. Also notifies the appropriate model listeners.
@@ -95,13 +107,13 @@ public interface AccountEntryUserRelLocalService
 	/**
 	 * Deletes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel that was removed
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public AccountEntryUserRel deleteAccountEntryUserRel(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws PortalException;
 
 	/**
@@ -179,18 +191,18 @@ public interface AccountEntryUserRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntryUserRel fetchAccountEntryUserRel(
-		AccountEntryUserRelPK accountEntryUserRelPK);
+		long accountEntryUserRelId);
 
 	/**
 	 * Returns the account entry user rel with the primary key.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntryUserRel getAccountEntryUserRel(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws PortalException;
 
 	/**

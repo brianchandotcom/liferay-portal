@@ -48,19 +48,35 @@ public class AccountEntryUserRelLocalServiceWrapper
 	}
 
 	/**
+	 * Creates an AccountEntryUserRel and adds it to the database. An
+	 * AccountEntryUserRel is essentially an "AccountEntry membership".
+	 *
+	 * @param accountEntryId the primary key of the AccountEntry
+	 * @param userId the primary key of the User
+	 * @return the AccountEntryUserRel
+	 * @review
+	 */
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel addAccountEntryUserRel(
+			long accountEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntryId, userId);
+	}
+
+	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
-	 * @param accountEntryUserRelPK the primary key for the new account entry user rel
+	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntryUserRel
-		createAccountEntryUserRel(
-			com.liferay.account.service.persistence.AccountEntryUserRelPK
-				accountEntryUserRelPK) {
+		createAccountEntryUserRel(long accountEntryUserRelId) {
 
 		return _accountEntryUserRelLocalService.createAccountEntryUserRel(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	/**
@@ -81,19 +97,17 @@ public class AccountEntryUserRelLocalServiceWrapper
 	/**
 	 * Deletes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel that was removed
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntryUserRel
-			deleteAccountEntryUserRel(
-				com.liferay.account.service.persistence.AccountEntryUserRelPK
-					accountEntryUserRelPK)
+			deleteAccountEntryUserRel(long accountEntryUserRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryUserRelLocalService.deleteAccountEntryUserRel(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	/**
@@ -201,29 +215,26 @@ public class AccountEntryUserRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountEntryUserRel
-		fetchAccountEntryUserRel(
-			com.liferay.account.service.persistence.AccountEntryUserRelPK
-				accountEntryUserRelPK) {
+		fetchAccountEntryUserRel(long accountEntryUserRelId) {
 
 		return _accountEntryUserRelLocalService.fetchAccountEntryUserRel(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	/**
 	 * Returns the account entry user rel with the primary key.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel
 	 * @throws PortalException if a account entry user rel with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntryUserRel getAccountEntryUserRel(
-			com.liferay.account.service.persistence.AccountEntryUserRelPK
-				accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryUserRelLocalService.getAccountEntryUserRel(
-			accountEntryUserRelPK);
+			accountEntryUserRelId);
 	}
 
 	/**

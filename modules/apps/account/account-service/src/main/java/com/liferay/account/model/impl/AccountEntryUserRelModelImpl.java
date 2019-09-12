@@ -17,7 +17,8 @@ package com.liferay.account.model.impl;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.model.AccountEntryUserRelSoap;
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -84,22 +86,28 @@ public class AccountEntryUserRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntryUserRel (accountEntryUserRelId LONG not null,companyId LONG,userId LONG not null,accountEntryId LONG not null,primary key (accountEntryUserRelId, userId, accountEntryId))";
+		"create table AccountEntryUserRel (accountEntryUserRelId LONG not null primary key,companyId LONG,userId LONG,accountEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY accountEntryUserRel.id.accountEntryUserRelId ASC, accountEntryUserRel.id.userId ASC, accountEntryUserRel.id.accountEntryId ASC";
+		" ORDER BY accountEntryUserRel.accountEntryUserRelId ASC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY AccountEntryUserRel.accountEntryUserRelId ASC, AccountEntryUserRel.userId ASC, AccountEntryUserRel.accountEntryId ASC";
+		" ORDER BY AccountEntryUserRel.accountEntryUserRelId ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
+
+	public static final long ACCOUNTENTRYID_COLUMN_BITMASK = 1L;
+
+	public static final long USERID_COLUMN_BITMASK = 2L;
+
+	public static final long ACCOUNTENTRYUSERRELID_COLUMN_BITMASK = 4L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -159,27 +167,23 @@ public class AccountEntryUserRelModelImpl
 	}
 
 	@Override
-	public AccountEntryUserRelPK getPrimaryKey() {
-		return new AccountEntryUserRelPK(
-			_accountEntryUserRelId, _userId, _accountEntryId);
+	public long getPrimaryKey() {
+		return _accountEntryUserRelId;
 	}
 
 	@Override
-	public void setPrimaryKey(AccountEntryUserRelPK primaryKey) {
-		setAccountEntryUserRelId(primaryKey.accountEntryUserRelId);
-		setUserId(primaryKey.userId);
-		setAccountEntryId(primaryKey.accountEntryId);
+	public void setPrimaryKey(long primaryKey) {
+		setAccountEntryUserRelId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return new AccountEntryUserRelPK(
-			_accountEntryUserRelId, _userId, _accountEntryId);
+		return _accountEntryUserRelId;
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey((AccountEntryUserRelPK)primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -348,6 +352,14 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -367,6 +379,10 @@ public class AccountEntryUserRelModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	public long getOriginalUserId() {
+		return _originalUserId;
+	}
+
 	@JSON
 	@Override
 	public long getAccountEntryId() {
@@ -375,7 +391,37 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setAccountEntryId(long accountEntryId) {
+		_columnBitmask |= ACCOUNTENTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalAccountEntryId) {
+			_setOriginalAccountEntryId = true;
+
+			_originalAccountEntryId = _accountEntryId;
+		}
+
 		_accountEntryId = accountEntryId;
+	}
+
+	public long getOriginalAccountEntryId() {
+		return _originalAccountEntryId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), AccountEntryUserRel.class.getName(),
+			getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
 	}
 
 	@Override
@@ -411,9 +457,17 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public int compareTo(AccountEntryUserRel accountEntryUserRel) {
-		AccountEntryUserRelPK primaryKey = accountEntryUserRel.getPrimaryKey();
+		long primaryKey = accountEntryUserRel.getPrimaryKey();
 
-		return getPrimaryKey().compareTo(primaryKey);
+		if (getPrimaryKey() < primaryKey) {
+			return -1;
+		}
+		else if (getPrimaryKey() > primaryKey) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -428,9 +482,9 @@ public class AccountEntryUserRelModelImpl
 
 		AccountEntryUserRel accountEntryUserRel = (AccountEntryUserRel)obj;
 
-		AccountEntryUserRelPK primaryKey = accountEntryUserRel.getPrimaryKey();
+		long primaryKey = accountEntryUserRel.getPrimaryKey();
 
-		if (getPrimaryKey().equals(primaryKey)) {
+		if (getPrimaryKey() == primaryKey) {
 			return true;
 		}
 		else {
@@ -440,7 +494,7 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey().hashCode();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -455,14 +509,25 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		AccountEntryUserRelModelImpl accountEntryUserRelModelImpl = this;
+
+		accountEntryUserRelModelImpl._originalUserId =
+			accountEntryUserRelModelImpl._userId;
+
+		accountEntryUserRelModelImpl._setOriginalUserId = false;
+
+		accountEntryUserRelModelImpl._originalAccountEntryId =
+			accountEntryUserRelModelImpl._accountEntryId;
+
+		accountEntryUserRelModelImpl._setOriginalAccountEntryId = false;
+
+		accountEntryUserRelModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<AccountEntryUserRel> toCacheModel() {
 		AccountEntryUserRelCacheModel accountEntryUserRelCacheModel =
 			new AccountEntryUserRelCacheModel();
-
-		accountEntryUserRelCacheModel.accountEntryUserRelPK = getPrimaryKey();
 
 		accountEntryUserRelCacheModel.accountEntryUserRelId =
 			getAccountEntryUserRelId();
@@ -552,7 +617,12 @@ public class AccountEntryUserRelModelImpl
 	private long _accountEntryUserRelId;
 	private long _companyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _accountEntryId;
+	private long _originalAccountEntryId;
+	private boolean _setOriginalAccountEntryId;
+	private long _columnBitmask;
 	private AccountEntryUserRel _escapedModel;
 
 }

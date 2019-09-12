@@ -17,7 +17,6 @@ package com.liferay.account.service.persistence.test;
 import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
 import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.account.service.persistence.AccountEntryUserRelUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -25,11 +24,15 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -88,9 +91,7 @@ public class AccountEntryUserRelPersistenceTest {
 
 	@Test
 	public void testCreate() throws Exception {
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		AccountEntryUserRel accountEntryUserRel = _persistence.create(pk);
 
@@ -119,13 +120,15 @@ public class AccountEntryUserRelPersistenceTest {
 
 	@Test
 	public void testUpdateExisting() throws Exception {
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		AccountEntryUserRel newAccountEntryUserRel = _persistence.create(pk);
 
 		newAccountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
+
+		newAccountEntryUserRel.setUserId(RandomTestUtil.nextLong());
+
+		newAccountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(newAccountEntryUserRel));
 
@@ -148,6 +151,14 @@ public class AccountEntryUserRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByA_U() throws Exception {
+		_persistence.countByA_U(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByA_U(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AccountEntryUserRel newAccountEntryUserRel = addAccountEntryUserRel();
 
@@ -161,11 +172,21 @@ public class AccountEntryUserRelPersistenceTest {
 
 	@Test(expected = NoSuchEntryUserRelException.class)
 	public void testFindByPrimaryKeyMissing() throws Exception {
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		_persistence.findByPrimaryKey(pk);
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
+	protected OrderByComparator<AccountEntryUserRel> getOrderByComparator() {
+		return OrderByComparatorFactoryUtil.create(
+			"AccountEntryUserRel", "accountEntryUserRelId", true, "companyId",
+			true, "userId", true, "accountEntryId", true);
 	}
 
 	@Test
@@ -182,9 +203,7 @@ public class AccountEntryUserRelPersistenceTest {
 
 	@Test
 	public void testFetchByPrimaryKeyMissing() throws Exception {
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		AccountEntryUserRel missingAccountEntryUserRel =
 			_persistence.fetchByPrimaryKey(pk);
@@ -220,13 +239,9 @@ public class AccountEntryUserRelPersistenceTest {
 	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
 		throws Exception {
 
-		AccountEntryUserRelPK pk1 = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk1 = RandomTestUtil.nextLong();
 
-		AccountEntryUserRelPK pk2 = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk2 = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -245,9 +260,7 @@ public class AccountEntryUserRelPersistenceTest {
 
 		AccountEntryUserRel newAccountEntryUserRel = addAccountEntryUserRel();
 
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		Set<Serializable> primaryKeys = new HashSet<Serializable>();
 
@@ -326,15 +339,8 @@ public class AccountEntryUserRelPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"id.accountEntryUserRelId",
+				"accountEntryUserRelId",
 				newAccountEntryUserRel.getAccountEntryUserRelId()));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"id.userId", newAccountEntryUserRel.getUserId()));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"id.accountEntryId",
-				newAccountEntryUserRel.getAccountEntryId()));
 
 		List<AccountEntryUserRel> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -354,12 +360,7 @@ public class AccountEntryUserRelPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"id.accountEntryUserRelId", RandomTestUtil.nextLong()));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("id.userId", RandomTestUtil.nextLong()));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"id.accountEntryId", RandomTestUtil.nextLong()));
+				"accountEntryUserRelId", RandomTestUtil.nextLong()));
 
 		List<AccountEntryUserRel> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -375,14 +376,14 @@ public class AccountEntryUserRelPersistenceTest {
 			AccountEntryUserRel.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("id.accountEntryUserRelId"));
+			ProjectionFactoryUtil.property("accountEntryUserRelId"));
 
 		Object newAccountEntryUserRelId =
 			newAccountEntryUserRel.getAccountEntryUserRelId();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"id.accountEntryUserRelId",
+				"accountEntryUserRelId",
 				new Object[] {newAccountEntryUserRelId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -401,11 +402,11 @@ public class AccountEntryUserRelPersistenceTest {
 			AccountEntryUserRel.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("id.accountEntryUserRelId"));
+			ProjectionFactoryUtil.property("accountEntryUserRelId"));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"id.accountEntryUserRelId",
+				"accountEntryUserRelId",
 				new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -413,14 +414,38 @@ public class AccountEntryUserRelPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		AccountEntryUserRel newAccountEntryUserRel = addAccountEntryUserRel();
+
+		_persistence.clearCache();
+
+		AccountEntryUserRel existingAccountEntryUserRel =
+			_persistence.findByPrimaryKey(
+				newAccountEntryUserRel.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingAccountEntryUserRel.getAccountEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAccountEntryUserRel, "getOriginalAccountEntryId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingAccountEntryUserRel.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAccountEntryUserRel, "getOriginalUserId",
+				new Class<?>[0]));
+	}
+
 	protected AccountEntryUserRel addAccountEntryUserRel() throws Exception {
-		AccountEntryUserRelPK pk = new AccountEntryUserRelPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+		long pk = RandomTestUtil.nextLong();
 
 		AccountEntryUserRel accountEntryUserRel = _persistence.create(pk);
 
 		accountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
+
+		accountEntryUserRel.setUserId(RandomTestUtil.nextLong());
+
+		accountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(accountEntryUserRel));
 

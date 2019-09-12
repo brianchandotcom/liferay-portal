@@ -49,7 +49,7 @@ public class OpenNLPDocumentAssetAutoTagProvider
 		try {
 			if (_isEnabled(assetEntry)) {
 				TextExtractor textExtractor =
-					_infoTextExtractorTracker.getTextExtractor(
+					_textExtractorTracker.getTextExtractor(
 						assetEntry.getClassName());
 
 				if (textExtractor != null) {
@@ -99,9 +99,9 @@ public class OpenNLPDocumentAssetAutoTagProvider
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private TextExtractorTracker _infoTextExtractorTracker;
+	private OpenNLPDocumentAssetAutoTaggerImpl _openNLPDocumentAssetAutoTagger;
 
 	@Reference
-	private OpenNLPDocumentAssetAutoTaggerImpl _openNLPDocumentAssetAutoTagger;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

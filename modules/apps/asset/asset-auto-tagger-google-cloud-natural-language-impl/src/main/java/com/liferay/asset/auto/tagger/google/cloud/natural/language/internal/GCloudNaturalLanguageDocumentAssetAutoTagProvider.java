@@ -49,7 +49,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		try {
 			if (_isEnabled(assetEntry)) {
 				TextExtractor textExtractor =
-					_infoTextExtractorTracker.getTextExtractor(
+					_textExtractorTracker.getTextExtractor(
 						assetEntry.getClassName());
 
 				if (textExtractor != null) {
@@ -105,6 +105,6 @@ public class GCloudNaturalLanguageDocumentAssetAutoTagProvider
 		_gCloudNaturalLanguageDocumentAssetAutoTagger;
 
 	@Reference
-	private TextExtractorTracker _infoTextExtractorTracker;
+	private TextExtractorTracker _textExtractorTracker;
 
 }

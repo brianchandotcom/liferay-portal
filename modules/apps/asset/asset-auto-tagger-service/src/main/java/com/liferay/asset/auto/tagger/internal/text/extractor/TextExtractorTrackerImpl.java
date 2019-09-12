@@ -50,8 +50,8 @@ public class TextExtractorTrackerImpl implements TextExtractorTracker {
 					bundleContext, TextExtractor.class, null,
 					ServiceReferenceMapperFactory.create(
 						bundleContext,
-						(infoTextExtractor, emitter) -> emitter.emit(
-							infoTextExtractor.getClassName())));
+						(textExtractor, emitter) -> emitter.emit(
+							textExtractor.getClassName())));
 	}
 
 	@Deactivate

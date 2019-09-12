@@ -63,6 +63,8 @@ definition {
 
 	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
 	macro _getFolderIdByFolderName {
+		Variables.assertDefined(parameterList = "${groupId},${folderName}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

@@ -18,13 +18,13 @@ definition {
 		JSONFragment.addSection(
 			collectionName = "Collection 1",
 			configuration = "${jsonSnippet}",
-			groupName = "{groupName}",
+			groupName = "${groupName}",
 			html = "${htmlSnippet}",
 			name = "Fragment 1");
 
 		JSONFragment.addSection(
 			collectionName = "Collection 1",
-			groupName = "{groupName}",
+			groupName = "${groupName}",
 			html = "${htmlSnippet}",
 			name = "Fragment 2");
 
@@ -45,7 +45,7 @@ definition {
 
 		JSONFragment.assertFragmentNotInGroup(
 			collectionName = "Collection 1",
-			fragmentName = "Fragment 2",
+			fragmentName = "Fragment 3",
 			groupName = "${groupName}");
 	}
 

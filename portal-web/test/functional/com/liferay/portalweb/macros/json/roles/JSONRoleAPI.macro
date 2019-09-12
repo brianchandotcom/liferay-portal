@@ -49,7 +49,7 @@ definition {
 				-d name=${name}
 		''';
 
-		var roleId = JSONCurlUtil.get("${curl}", "$['roleId']");
+		var roleId = JSONCurlUtil.post("${curl}", "$['roleId']");
 
 		return "${roleId}";
 	}

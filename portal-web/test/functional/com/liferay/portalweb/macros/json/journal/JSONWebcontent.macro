@@ -14,7 +14,8 @@ definition {
 			description = "${description}");
 
 		var folderId = JSONWebcontentSetter.setFolderId(
-			folderName = "${folderName}");
+			folderName = "${folderName}".
+			groupId = "${groupId}");
 
 		var serviceContext = JSONWebcontentSetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",
@@ -41,7 +42,9 @@ definition {
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
 
-		var parentFolderId = JSONWebcontentSetter.setFolderId(folderName = "${parentFolderName}");
+		var parentFolderId = JSONWebcontentSetter.setFolderId(
+			folderName = "${parentFolderName}",
+			groupId = "${groupId}");
 
 		JSONWebcontentAPI._addFolder(
 			folderName = "${folderName}",

@@ -29,6 +29,8 @@ definition {
 
 	macro setFolderId {
 		if (isSet(folderName)) {
+			Variables.assertDefined(parameterList = "${groupId}");
+
 			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
 				folderName = "${folderName}",
 				groupId = "${groupId}");

@@ -1056,7 +1056,6 @@ AUI.add(
 			'liferay-calendar-util',
 			'liferay-scheduler-event-recorder',
 			'liferay-scheduler-models',
-			'liferay-store',
 			'promise',
 			'resize-plugin'
 		]

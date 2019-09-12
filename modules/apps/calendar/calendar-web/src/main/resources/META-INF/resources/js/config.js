@@ -131,7 +131,6 @@
 							'liferay-calendar-util',
 							'liferay-scheduler-event-recorder',
 							'liferay-scheduler-models',
-							'liferay-store',
 							'promise',
 							'resize-plugin'
 						]
@@ -149,8 +148,7 @@
 						requires: [
 							'aui-datatype',
 							'dd-plugin',
-							'liferay-calendar-util',
-							'liferay-store'
+							'liferay-calendar-util'
 						]
 					}
 				},

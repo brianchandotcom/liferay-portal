@@ -1182,7 +1182,6 @@ AUI.add(
 			'aui-tree-view',
 			'liferay-notice',
 			'liferay-portlet-base',
-			'liferay-store',
 			'liferay-util-window'
 		]
 	}

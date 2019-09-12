@@ -186,7 +186,6 @@
 							'aui-base',
 							'dd-constrain',
 							'dd-drag',
-							'liferay-crop-region',
 							'plugin'
 						]
 					},
@@ -344,7 +343,6 @@
 						requires: [
 							'aui-image-cropper',
 							'liferay-alert',
-							'liferay-crop-region',
 							'liferay-portlet-base'
 						]
 					},
@@ -370,13 +368,12 @@
 							'aui-node',
 							'event-outside',
 							'event-tap',
-							'liferay-menu-filter',
-							'liferay-store'
+							'liferay-menu-filter'
 						]
 					},
 					'liferay-message': {
 						path: 'message.js',
-						requires: ['aui-base', 'liferay-store']
+						requires: ['aui-base']
 					},
 					'liferay-navigation': {
 						path: 'navigation.js',

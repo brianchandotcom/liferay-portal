@@ -59,8 +59,7 @@
 							'liferay-portlet-base',
 							'liferay-product-navigation-control-menu',
 							'liferay-product-navigation-control-menu-add-base',
-							'liferay-product-navigation-control-menu-add-content-search',
-							'liferay-store'
+							'liferay-product-navigation-control-menu-add-content-search'
 						]
 					},
 					'liferay-product-navigation-control-menu-add-content-drag-drop': {

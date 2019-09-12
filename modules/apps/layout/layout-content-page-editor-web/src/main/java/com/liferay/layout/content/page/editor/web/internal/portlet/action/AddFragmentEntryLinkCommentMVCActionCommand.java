@@ -100,13 +100,13 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 						return serviceContext;
 					});
 
+				_commentManager.subscribeDiscussion(
+					user.getUserId(), themeDisplay.getScopeGroupId(),
+					FragmentEntryLink.class.getName(), fragmentEntryLinkId);
+
 				if (parentCommentId == 0) {
 					_commentManager.subscribeDiscussion(
 						layout.getUserId(), themeDisplay.getScopeGroupId(),
-						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
-
-					_commentManager.subscribeDiscussion(
-						user.getUserId(), themeDisplay.getScopeGroupId(),
 						FragmentEntryLink.class.getName(), fragmentEntryLinkId);
 
 					commentId = _commentManager.addComment(

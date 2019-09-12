@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
@@ -106,21 +107,26 @@ public class UpgradeCTModelTest {
 
 			try (ResultSet rs2 = databaseMetaData.getPrimaryKeys(
 					dbInspector.getCatalog(), dbInspector.getSchema(),
-					TestTableClass.TABLE_NAME)) {
+					dbInspector.normalizeName(
+						TestTableClass.TABLE_NAME, databaseMetaData))) {
 
 				Assert.assertTrue("Missing PK", rs2.next());
 
-				pkNames.add(rs2.getString("COLUMN_NAME"));
+				pkNames.add(
+					StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
 
 				Assert.assertTrue("Missing PK", rs2.next());
 
-				pkNames.add(rs2.getString("COLUMN_NAME"));
+				pkNames.add(
+					StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
+
+				Assert.assertFalse(pkNames.toString(), rs2.next());
 			}
 
 			pkNames.sort(null);
 
 			Assert.assertArrayEquals(
-				new String[] {"ctCollectionId", "upgradeCTModelId"},
+				new String[] {"CTCOLLECTIONID", "UPGRADECTMODELID"},
 				pkNames.toArray(new String[0]));
 		}
 	}

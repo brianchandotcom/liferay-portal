@@ -243,23 +243,29 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 		'<liferay-ui:message key="reaumure" />'
 	];
 
-	var unitConverterTypes = [lengthArray, areaArray, volumeArray, massArray, temperatureArray];
+	var unitConverterTypes = [
+		lengthArray,
+		areaArray,
+		volumeArray,
+		massArray,
+		temperatureArray
+	];
 
 	var changeUnitType = function(unitTypeSelect, newUnitTypes) {
 		var newUnitTypesList = Array.prototype.slice.call(newUnitTypes);
 
-		var newUnitTypesOptions = newUnitTypesList.map(
-			function(unitType, index) {
-				return '<option value="' + index + '">' + unitType + '</option>';
-			}
-		);
+		var newUnitTypesOptions = newUnitTypesList.map(function(unitType, index) {
+			return '<option value="' + index + '">' + unitType + '</option>';
+		});
 
 		unitTypeSelect.innerHTML = newUnitTypesOptions.join('');
 	};
 
 	var form = document.<portlet:namespace />fm;
 
-	var unitConverterPortlet = document.getElementById('p_p_id<portlet:namespace />');
+	var unitConverterPortlet = document.getElementById(
+		'p_p_id<portlet:namespace />'
+	);
 
 	if (unitConverterPortlet) {
 		dom.delegate(
@@ -291,23 +297,16 @@ UnitConverter unitConverter = UnitConverterUtil.getUnitConverter(type, fromId, t
 			function(event) {
 				event.preventDefault();
 
-				Liferay.Util.fetch(
-					'<%= unitURL.toString() %>',
-					{
-						body: new FormData(form),
-						method: 'POST'
-					}
-				)
-				.then(
-					function(response) {
+				Liferay.Util.fetch('<%= unitURL.toString() %>', {
+					body: new FormData(form),
+					method: 'POST'
+				})
+					.then(function(response) {
 						return response.text();
-					}
-				)
-				.then(
-					function(response) {
+					})
+					.then(function(response) {
 						form.innerHTML = response;
-					}
-				);
+					});
 			}
 		);
 	}

@@ -28,40 +28,51 @@
 		<div id="<%= segmentsExperimentRootId %>"></div>
 
 		<aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
-			segmentsExperimentsApp.default(
-				'<%= segmentsExperimentRootId %>',
-				{
-					context: {
-						contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
-						endpoints: {
-							createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
-							createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
-							deleteSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsExperimentURL() %>',
-							deleteSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>',
-							editSegmentsExperimentStatusURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
-							editSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
-							editSegmentsVariantLayoutURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
-							editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
-							runSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
-						},
-						namespace: '<portlet:namespace />',
-						page: {
-							classPK: '<%= themeDisplay.getPlid() %>',
-							classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
-							type: '<%= layout.getType() %>'
-						},
-						viewSegmentsExperimentDetailsURL: '<%= segmentsExperimentDisplayContext.getViewSegmentsExperimentDetailsURL() %>'
+			segmentsExperimentsApp.default('<%= segmentsExperimentRootId %>', {
+				context: {
+					contentPageEditorNamespace:
+						'<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
+					endpoints: {
+						createSegmentsExperimentURL:
+							'<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
+						createSegmentsVariantURL:
+							'<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
+						deleteSegmentsExperimentURL:
+							'<%= segmentsExperimentDisplayContext.getDeleteSegmentsExperimentURL() %>',
+						deleteSegmentsVariantURL:
+							'<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>',
+						editSegmentsExperimentStatusURL:
+							'<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
+						editSegmentsExperimentURL:
+							'<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
+						editSegmentsVariantLayoutURL:
+							'<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
+						editSegmentsVariantURL:
+							'<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
+						runSegmentsExperimentURL:
+							'<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
 					},
-					props: {
-						initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
-						segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
-						segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject(locale) %>,
-						segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoalsJSONArray(locale) %>,
-						selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>',
-						winnerSegmentsVariantId: '<%= segmentsExperimentDisplayContext.getWinnerSegmentsExperienceId() %>'
-					}
+					namespace: '<portlet:namespace />',
+					page: {
+						classPK: '<%= themeDisplay.getPlid() %>',
+						classNameId:
+							'<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
+						type: '<%= layout.getType() %>'
+					},
+					viewSegmentsExperimentDetailsURL:
+						'<%= segmentsExperimentDisplayContext.getViewSegmentsExperimentDetailsURL() %>'
+				},
+				props: {
+					initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
+					segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
+					segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject(locale) %>,
+					segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoalsJSONArray(locale) %>,
+					selectedSegmentsExperienceId:
+						'<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>',
+					winnerSegmentsVariantId:
+						'<%= segmentsExperimentDisplayContext.getWinnerSegmentsExperienceId() %>'
 				}
-			);
+			});
 		</aui:script>
 	</c:when>
 	<c:otherwise>

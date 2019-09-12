@@ -130,28 +130,21 @@ List<FormNavigatorEntry<Object>> formNavigatorEntries = (List<FormNavigatorEntry
 				</c:otherwise>
 			</c:choose>
 
-			Liferay.once(
-				'<portlet:namespace />formReady',
-				function(event) {
-					var hasFocusField = focusField.length;
+			Liferay.once('<portlet:namespace />formReady', function(event) {
+				var hasFocusField = focusField.length;
 
-					if (!sectionContent.hasClass('in')) {
-						if (hasFocusField) {
-							sectionContent.one(
-								'shown.bs.collapse',
-								function() {
-									Liferay.Util.focusFormField(focusField);
-								}
-							);
-						}
+				if (!sectionContent.hasClass('in')) {
+					if (hasFocusField) {
+						sectionContent.one('shown.bs.collapse', function() {
+							Liferay.Util.focusFormField(focusField);
+						});
+					}
 
-						sectionContent.collapse('show');
-					}
-					else if (hasFocusField) {
-						Liferay.Util.focusFormField(focusField);
-					}
+					sectionContent.collapse('show');
+				} else if (hasFocusField) {
+					Liferay.Util.focusFormField(focusField);
 				}
-			);
+			});
 		</aui:script>
 
 	<%

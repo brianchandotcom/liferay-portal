@@ -141,27 +141,30 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 
 <aui:script sandbox="<%= true %>">
 	var deleteSegmentsEntries = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			submitForm(document.querySelector('#<portlet:namespace />fmSegmentsEntries'));
+		if (
+			confirm(
+				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>'
+			)
+		) {
+			submitForm(
+				document.querySelector('#<portlet:namespace />fmSegmentsEntries')
+			);
 		}
 	};
 
 	var ACTIONS = {
-		'deleteSegmentsEntries': deleteSegmentsEntries
+		deleteSegmentsEntries: deleteSegmentsEntries
 	};
 
-	Liferay.componentReady('segmentsEntriesManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('segmentsEntriesManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>

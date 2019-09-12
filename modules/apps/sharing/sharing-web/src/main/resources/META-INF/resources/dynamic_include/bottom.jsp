@@ -28,29 +28,27 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 
 <aui:script sandbox="<%= true %>">
 	function showDialog(uri, title, namespace, refreshOnClose) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					centered: true,
-					constrain: true,
-					cssClass: 'sharing-dialog',
-					destroyOnHide: true,
-					modal: true,
-					height: 540,
-					width: 600,
-					on: {
-						visibleChange: function(event) {
-							if (refreshOnClose && !event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id' + namespace);
-							}
+		Liferay.Util.openWindow({
+			dialog: {
+				centered: true,
+				constrain: true,
+				cssClass: 'sharing-dialog',
+				destroyOnHide: true,
+				modal: true,
+				height: 540,
+				width: 600,
+				on: {
+					visibleChange: function(event) {
+						if (refreshOnClose && !event.newVal) {
+							Liferay.Portlet.refresh('#p_p_id' + namespace);
 						}
 					}
-				},
-				id: 'sharingDialog',
-				title: title,
-				uri: uri
-			}
-		);
+				}
+			},
+			id: 'sharingDialog',
+			title: title,
+			uri: uri
+		});
 	}
 
 	var Sharing = {};
@@ -88,7 +86,12 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 				manageCollaboratorsParameters
 			);
 
-			showDialog(manageCollaboratorsURL.toString(), '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>', namespace, refreshOnClose);
+			showDialog(
+				manageCollaboratorsURL.toString(),
+				'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>',
+				namespace,
+				refreshOnClose
+			);
 		},
 		['liferay-util-window']
 	);

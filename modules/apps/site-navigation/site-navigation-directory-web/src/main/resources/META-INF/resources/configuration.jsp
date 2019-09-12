@@ -76,15 +76,15 @@
 
 <aui:script sandbox="<%= true %>">
 	function refreshPreview(displayStyle, sites) {
-		var data = Liferay.Util.ns(
-			'_<%= HtmlUtil.escapeJS(portletResource) %>_',
-			{
-				displayStyle: displayStyle,
-				sites: sites
-			}
-		);
+		var data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', {
+			displayStyle: displayStyle,
+			sites: sites
+		});
 
-		Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
+		Liferay.Portlet.refresh(
+			'#p_p_id_<%= HtmlUtil.escapeJS(portletResource) %>_',
+			data
+		);
 	}
 
 	var form = document.<portlet:namespace />fm;
@@ -93,18 +93,12 @@
 	var sitesSelect = Liferay.Util.getFormElement(form, 'sites');
 
 	if (displayStyleSelect && sitesSelect) {
-		form.addEventListener(
-			'change',
-			function() {
-				refreshPreview(displayStyleSelect.value, sitesSelect.value);
-			}
-		);
+		form.addEventListener('change', function() {
+			refreshPreview(displayStyleSelect.value, sitesSelect.value);
+		});
 
-		form.addEventListener(
-			'select',
-			function() {
-				refreshPreview(displayStyleSelect.value, sitesSelect.value);
-			}
-		);
+		form.addEventListener('select', function() {
+			refreshPreview(displayStyleSelect.value, sitesSelect.value);
+		});
 	}
 </aui:script>

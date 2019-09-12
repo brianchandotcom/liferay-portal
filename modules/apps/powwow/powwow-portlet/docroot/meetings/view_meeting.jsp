@@ -169,35 +169,24 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 	var copyButton = A.one('#<portlet:namespace />copyButton');
 
 	if (A.SWFDetect.isFlashVersionAtLeast(11, 0, 0) && copyButton) {
-		var client = new ZeroClipboard(document.getElementById('<portlet:namespace />copyButton'));
-
-		client.on(
-			'error',
-			function(event) {
-				ZeroClipboard.destroy();
-			}
+		var client = new ZeroClipboard(
+			document.getElementById('<portlet:namespace />copyButton')
 		);
 
-		client.on(
-			'ready',
-			function(readyEvent) {
-				client.on(
-					'aftercopy',
-					function(event) {
-						copyButton.addClass('copied');
-					}
-				);
-			}
-		);
+		client.on('error', function(event) {
+			ZeroClipboard.destroy();
+		});
 
-		copyButton.on(
-			'mouseout',
-			function() {
-				copyButton.removeClass('copied');
-			}
-		);
-	}
-	else {
+		client.on('ready', function(readyEvent) {
+			client.on('aftercopy', function(event) {
+				copyButton.addClass('copied');
+			});
+		});
+
+		copyButton.on('mouseout', function() {
+			copyButton.removeClass('copied');
+		});
+	} else {
 		if (copyButton) {
 			copyButton.hide();
 		}
@@ -212,15 +201,13 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 	}
 
 	<c:if test="<%= PowwowServiceProviderUtil.isSupportsJoinByPhone(powwowMeeting.getProviderType()) %>">
-		new A.Toggler(
-			{
-				animated: true,
-				container: '#<portlet:namespace />internationalNumbersToggler',
-				content: '.international-numbers-content',
-				expanded: false,
-				header: '.international-numbers-header'
-			}
-		);
+		new A.Toggler({
+			animated: true,
+			container: '#<portlet:namespace />internationalNumbersToggler',
+			content: '.international-numbers-content',
+			expanded: false,
+			header: '.international-numbers-header'
+		});
 
 		//Load global phone numbers
 
@@ -253,12 +240,10 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 				for (String number : internationalNumbers.get(country)) {
 		%>
 
-					interationalNumbersDisplay.push(
-						{
-							country: '<%= country %>',
-							number: '<%= number %>'
-						}
-					);
+		interationalNumbersDisplay.push({
+			country: '<%= country %>',
+			number: '<%= number %>'
+		});
 
 		<%
 				}
@@ -266,10 +251,17 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 		}
 		%>
 
-		var halfInterationalNumbersDisplay = Math.round(interationalNumbersDisplay.length / 2);
+		var halfInterationalNumbersDisplay = Math.round(
+			interationalNumbersDisplay.length / 2
+		);
 
-		var dataLeft = interationalNumbersDisplay.slice(0, halfInterationalNumbersDisplay);
-		var dataRight = interationalNumbersDisplay.slice(halfInterationalNumbersDisplay);
+		var dataLeft = interationalNumbersDisplay.slice(
+			0,
+			halfInterationalNumbersDisplay
+		);
+		var dataRight = interationalNumbersDisplay.slice(
+			halfInterationalNumbersDisplay
+		);
 
 		var data = [];
 
@@ -282,22 +274,18 @@ PowwowMeeting powwowMeeting = PowwowMeetingLocalServiceUtil.fetchPowwowMeeting(p
 				rphone = dataRight[i].number;
 			}
 
-			data.push(
-				{
-					lcountry: dataLeft[i].country,
-					lphone: dataLeft[i].number,
-					rcountry: rcountry,
-					rphone: rphone
-				}
-			);
+			data.push({
+				lcountry: dataLeft[i].country,
+				lphone: dataLeft[i].number,
+				rcountry: rcountry,
+				rphone: rphone
+			});
 		}
 
-		new A.DataTable(
-			{
-				className: 'table table-bordered',
-				columns: columns,
-				data: data
-			}
-		).render('#<portlet:namespace />internationalNumbersTable');
+		new A.DataTable({
+			className: 'table table-bordered',
+			columns: columns,
+			data: data
+		}).render('#<portlet:namespace />internationalNumbersTable');
 	</c:if>
 </aui:script>

@@ -46,23 +46,26 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	</div>
 
 	<aui:script sandbox="<%= true %>">
-		var showStatusMessage = Liferay.lazyLoad(
-			'metal-dom/src/dom',
-			function(dom, type, message) {
-				var messageContainer = document.getElementById('<portlet:namespace />login-status-messages');
+		var showStatusMessage = Liferay.lazyLoad('metal-dom/src/dom', function(
+			dom,
+			type,
+			message
+		) {
+			var messageContainer = document.getElementById(
+				'<portlet:namespace />login-status-messages'
+			);
 
-				if (messageContainer) {
-					dom.removeClasses(messageContainer, 'alert-danger');
-					dom.removeClasses(messageContainer, 'alert-success');
+			if (messageContainer) {
+				dom.removeClasses(messageContainer, 'alert-danger');
+				dom.removeClasses(messageContainer, 'alert-success');
 
-					dom.addClasses(messageContainer, 'alert alert-' + type);
+				dom.addClasses(messageContainer, 'alert alert-' + type);
 
-					messageContainer.innerHTML = message;
+				messageContainer.innerHTML = message;
 
-					dom.removeClasses(messageContainer, 'hide');
-				}
+				dom.removeClasses(messageContainer, 'hide');
 			}
-		);
+		});
 
 		window.<portlet:namespace />activateAccount = Liferay.lazyLoad(
 			'metal-dom/src/dom',
@@ -70,7 +73,8 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				var form = document.getElementById('<portlet:namespace />fm');
 
 				function onError() {
-					var message = '<liferay-ui:message key="your-request-failed-to-complete" />';
+					var message =
+						'<liferay-ui:message key="your-request-failed-to-complete" />';
 
 					showStatusMessage('danger', message);
 
@@ -83,63 +87,53 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 					}
 				}
 
-				Liferay.Util.fetch(
-					'<%= updateIncompleteUserURL %>',
-					{
-						body: new FormData(form),
-						headers: new Headers(
-							{
-								'Content-Type': 'application/json'
-							}
-						),
-						method: 'POST'
-					}
-				).then(
-					function(response) {
+				Liferay.Util.fetch('<%= updateIncompleteUserURL %>', {
+					body: new FormData(form),
+					headers: new Headers({
+						'Content-Type': 'application/json'
+					}),
+					method: 'POST'
+				})
+					.then(function(response) {
 						return response.ok ? response.json() : Promise.reject();
-					}
-				).then(
-					function(data) {
+					})
+					.then(function(data) {
 						return !data.exception ? data.userStatus : Promise.reject();
-					}
-				).then(
-					function(userStatus) {
+					})
+					.then(function(userStatus) {
 						var message = '';
 
 						if (userStatus == 'user_added') {
-							message = '<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message arguments="<%= emailAddress %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />';
-						}
-						else if (userStatus == 'user_pending') {
-							message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
+							message =
+								'<liferay-ui:message key="thank-you-for-creating-an-account" /> <liferay-ui:message arguments="<%= emailAddress %>" key="you-can-set-your-password-following-instructions-sent-to-x" translateArguments="<%= false %>" />';
+						} else if (userStatus == 'user_pending') {
+							message =
+								'<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
 						}
 
 						showStatusMessage('success', message);
 
-						var anonymousAccount = document.querySelector('.anonymous-account');
+						var anonymousAccount = document.querySelector(
+							'.anonymous-account'
+						);
 
 						if (anonymousAccount) {
 							dom.addClasses(anonymousAccount, 'hide');
 
 							dom.removeClasses(anonymousAccount, 'show');
 						}
-					}
-				).catch(
-					onError
-				);
+					})
+					.catch(onError);
 			}
 		);
-
 	</aui:script>
 </c:if>
 
 <aui:script sandbox="<%= true %>">
 	window.<portlet:namespace />closeDialog = function(namespace) {
-		Liferay.fire(
-			'closeWindow',
-			{
-				id: namespace + 'signInDialog'
-			}
-		);
+		Liferay.fire('closeWindow', {
+			id: namespace + 'signInDialog'
+		});
 	};
 
 	var parentWindow = window.opener ? window.opener.parent : window.parent;
@@ -150,18 +144,22 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	var afterLogin = parentWindow[randomNamespace + 'afterLogin'];
 
 	if (typeof afterLogin === 'function') {
-		parentWindow.document.getElementsByName('p_auth')[0].value = '<%= AuthTokenUtil.getToken(request) %>';
+		parentWindow.document.getElementsByName('p_auth')[0].value =
+			'<%= AuthTokenUtil.getToken(request) %>';
 
-		afterLogin('<%= HtmlUtil.escapeJS(emailAddress) %>', <%= anonymousAccount %>);
+		afterLogin(
+			'<%= HtmlUtil.escapeJS(emailAddress) %>',
+			<%= anonymousAccount %>
+		);
 
 		if (<%= !anonymousAccount || !company.isStrangers() %>) {
 			window.<portlet:namespace />closeDialog(namespace);
 
 			window.close();
 		}
-	}
-	else {
-		window.opener.parent.location.href = '<%= HtmlUtil.escapeJS(themeDisplay.getURLSignIn()) %>';
+	} else {
+		window.opener.parent.location.href =
+			'<%= HtmlUtil.escapeJS(themeDisplay.getURLSignIn()) %>';
 
 		window.close();
 	}

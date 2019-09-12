@@ -25,9 +25,9 @@ if (displayStyle.equals("vertical")) {
 %>
 
 <aui:script>
-	slashdot_title='<%= HtmlUtil.escapeJS(title) %>';
-	slashdot_url='<%= url %>';
-	<%= slashdotDisplayStyle %>
+	slashdot_title = '<%= HtmlUtil.escapeJS(title) %>';
+	slashdot_url = '<%= url %>';
+	<%= slashdotDisplayStyle %>;
 </aui:script>
 
 <script src="<%= HttpUtil.getProtocol(request) %>://slashdot.org/slashdot-it.js" type="text/javascript"></script>

@@ -23,17 +23,18 @@ String segmentsExperimentSegmentsExperienceKey = GetterUtil.getString(request.ge
 
 <aui:script sandbox="<%= true %>">
 	if (window.Analytics) {
-		Analytics.registerMiddleware(
-			function(request) {
-				request.context.experienceId = '<%= (segmentsExperiment == null) ? segmentsExperimentSegmentsExperienceKey : segmentsExperiment.getSegmentsExperienceKey() %>';
+		Analytics.registerMiddleware(function(request) {
+			request.context.experienceId =
+				'<%= (segmentsExperiment == null) ? segmentsExperimentSegmentsExperienceKey : segmentsExperiment.getSegmentsExperienceKey() %>';
 
-				<c:if test="<%= segmentsExperiment != null %>">
-					request.context.experimentId = '<%= segmentsExperiment.getSegmentsExperimentKey() %>';
-					request.context.variantId = '<%= segmentsExperimentSegmentsExperienceKey %>';
-				</c:if>
+			<c:if test="<%= segmentsExperiment != null %>">
+				request.context.experimentId =
+					'<%= segmentsExperiment.getSegmentsExperimentKey() %>';
+				request.context.variantId =
+					'<%= segmentsExperimentSegmentsExperienceKey %>';
+			</c:if>
 
-				return request;
-			}
-		);
+			return request;
+		});
 	}
 </aui:script>

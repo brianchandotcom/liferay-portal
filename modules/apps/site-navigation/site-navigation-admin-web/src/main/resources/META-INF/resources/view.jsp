@@ -152,20 +152,20 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 
 			event.preventDefault();
 
-			modalCommands.openSimpleInputModal(
-				{
-					dialogTitle: '<liferay-ui:message key="rename-site-navigation-menu" />',
-					formSubmitURL: data.formSubmitUrl,
-					idFieldName: 'id',
-					idFieldValue: data.idFieldValue,
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					mainFieldValue: data.mainFieldValue,
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
+			modalCommands.openSimpleInputModal({
+				dialogTitle:
+					'<liferay-ui:message key="rename-site-navigation-menu" />',
+				formSubmitURL: data.formSubmitUrl,
+				idFieldName: 'id',
+				idFieldValue: data.idFieldValue,
+				mainFieldLabel: '<liferay-ui:message key="name" />',
+				mainFieldName: 'name',
+				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+				mainFieldValue: data.mainFieldValue,
+				namespace: '<portlet:namespace />',
+				spritemap:
+					'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			});
 		}
 	);
 

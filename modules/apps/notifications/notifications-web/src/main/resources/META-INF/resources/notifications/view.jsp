@@ -127,7 +127,10 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.setAttribute('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="deleteNotifications"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		submitForm(
+			form,
+			'<portlet:actionURL name="deleteNotifications"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
+		);
 	};
 
 	var markNotificationsAsRead = function() {
@@ -135,7 +138,10 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.setAttribute('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markNotificationsAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		submitForm(
+			form,
+			'<portlet:actionURL name="markNotificationsAsRead"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
+		);
 	};
 
 	var markNotificationsAsUnread = function() {
@@ -143,29 +149,29 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		form.setAttribute('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="markNotificationsAsUnread"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		submitForm(
+			form,
+			'<portlet:actionURL name="markNotificationsAsUnread"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>'
+		);
 	};
 
 	var ACTIONS = {
-		'deleteNotifications': deleteNotifications,
-		'markNotificationsAsRead': markNotificationsAsRead,
-		'markNotificationsAsUnread': markNotificationsAsUnread
+		deleteNotifications: deleteNotifications,
+		markNotificationsAsRead: markNotificationsAsRead,
+		markNotificationsAsUnread: markNotificationsAsUnread
 	};
 
-	Liferay.componentReady('notificationsManagementToolbar').then(
-		function(managementToolbar) {
-			managementToolbar.on(
-				'actionItemClicked',
-				function(event) {
-					var itemData = event.data.item.data;
+	Liferay.componentReady('notificationsManagementToolbar').then(function(
+		managementToolbar
+	) {
+		managementToolbar.on('actionItemClicked', function(event) {
+			var itemData = event.data.item.data;
 
-					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
-					}
-				}
-			);
-		}
-	);
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
 </aui:script>
 
 <aui:script use="aui-base,liferay-notice">
@@ -178,31 +184,33 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 			var currentTarget = event.currentTarget;
 
-			Liferay.Util.fetch(
-				currentTarget.attr('href'),
-				{
-					method: 'POST'
-				}
-			).then(function(response) {
-				return response.json();
-			}).then(function(response) {
-				if (response.success) {
-					var notificationContainer = currentTarget.ancestor('li.list-group-item');
+			Liferay.Util.fetch(currentTarget.attr('href'), {
+				method: 'POST'
+			})
+				.then(function(response) {
+					return response.json();
+				})
+				.then(function(response) {
+					if (response.success) {
+						var notificationContainer = currentTarget.ancestor(
+							'li.list-group-item'
+						);
 
-					if (notificationContainer) {
-						var markAsReadURL = notificationContainer.one('a').attr('href');
+						if (notificationContainer) {
+							var markAsReadURL = notificationContainer
+								.one('a')
+								.attr('href');
 
-						form.attr('method', 'post');
+							form.attr('method', 'post');
 
-						submitForm(form, markAsReadURL);
+							submitForm(form, markAsReadURL);
 
-						notificationContainer.remove();
+							notificationContainer.remove();
+						}
+					} else {
+						getNotice().show();
 					}
-				}
-				else {
-					getNotice().show();
-				}
-			});
+				});
 		},
 		'.user-notification-action'
 	);
@@ -211,16 +219,17 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 	function getNotice() {
 		if (!notice) {
-			notice = new Liferay.Notice(
-				{
-					closeText: false,
-					content: '<liferay-ui:message key="an-unexpected-error-occurred" /><button aria-label="' + Liferay.Language.get("close") + '" class="close" type="button">&times;</button>',
-					timeout: 5000,
-					toggleText: false,
-					type: 'warning',
-					useAnimation: false
-				}
-			);
+			notice = new Liferay.Notice({
+				closeText: false,
+				content:
+					'<liferay-ui:message key="an-unexpected-error-occurred" /><button aria-label="' +
+					Liferay.Language.get('close') +
+					'" class="close" type="button">&times;</button>',
+				timeout: 5000,
+				toggleText: false,
+				type: 'warning',
+				useAnimation: false
+			});
 		}
 
 		return notice;

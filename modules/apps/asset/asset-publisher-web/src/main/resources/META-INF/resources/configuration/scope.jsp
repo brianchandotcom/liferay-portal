@@ -138,51 +138,48 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 <aui:script sandbox="<%= true %>">
 	var form = document.<portlet:namespace />fm;
 
-	var scopeSelect = document.getElementById('<portlet:namespace />selectManageableGroup');
+	var scopeSelect = document.getElementById(
+		'<portlet:namespace />selectManageableGroup'
+	);
 
 	if (scopeSelect) {
-		scopeSelect.addEventListener(
-			'click',
-			function(event) {
-				event.preventDefault();
+		scopeSelect.addEventListener('click', function(event) {
+			event.preventDefault();
 
-				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />groupsSearchContainer');
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />groupsSearchContainer'
+			);
 
-				var searchContainerData = searchContainer.getData();
+			var searchContainerData = searchContainer.getData();
 
-				if (!searchContainerData.length) {
-					searchContainerData = [];
-				}
-				else {
-					searchContainerData = searchContainerData.split(',');
-				}
-
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						eventName: '<%= eventName %>',
-						id: '<%= eventName %>' + event.currentTarget.id,
-						selectedData: searchContainerData,
-						title: '<liferay-ui:message key="scopes" />',
-						uri: '<%= itemSelectorURL.toString() %>'
-					},
-					function(event) {
-						Liferay.Util.postForm(
-							form,
-							{
-								data: {
-									cmd: 'add-scope',
-									groupId: event.groupid
-								}
-							}
-						);
-					}
-				);
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			} else {
+				searchContainerData = searchContainerData.split(',');
 			}
-		);
+
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true
+					},
+					eventName: '<%= eventName %>',
+					id: '<%= eventName %>' + event.currentTarget.id,
+					selectedData: searchContainerData,
+					title: '<liferay-ui:message key="scopes" />',
+					uri: '<%= itemSelectorURL.toString() %>'
+				},
+				function(event) {
+					Liferay.Util.postForm(form, {
+						data: {
+							cmd: 'add-scope',
+							groupId: event.groupid
+						}
+					});
+				}
+			);
+		});
 	}
 </aui:script>

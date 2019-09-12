@@ -30,5 +30,5 @@
 	var addthis_share = {
 		title: '<%= HtmlUtil.escapeJS(title) %>',
 		url: '<%= url %>'
-	}
+	};
 </aui:script>

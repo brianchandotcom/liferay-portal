@@ -78,65 +78,67 @@
 
 <aui:script sandbox="<%= true %>">
 	var data = {
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle': '<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>',
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showCurrentGroup': <%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>,
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showGuestGroup': <%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>,
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showLayout': <%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>,
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showParentGroups': <%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>,
-		'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb': <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle:
+			'<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyle() %>',
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showCurrentGroup: <%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>,
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showGuestGroup: <%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>,
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showLayout: <%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>,
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showParentGroups: <%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>,
+		_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_showPortletBreadcrumb: <%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>
 	};
 
-	var selectDisplayStyle = document.getElementById('<portlet:namespace />displayStyle');
+	var selectDisplayStyle = document.getElementById(
+		'<portlet:namespace />displayStyle'
+	);
 
 	if (selectDisplayStyle) {
-		selectDisplayStyle.addEventListener(
-			'change',
-			function(event) {
-				if (selectDisplayStyle.selectedIndex > -1) {
-					data['_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'] = selectDisplayStyle.value;
+		selectDisplayStyle.addEventListener('change', function(event) {
+			if (selectDisplayStyle.selectedIndex > -1) {
+				data[
+					'_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_displayStyle'
+				] = selectDisplayStyle.value;
 
-					Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
-				}
+				Liferay.Portlet.refresh(
+					'#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_',
+					data
+				);
 			}
-		);
+		});
 	}
 
 	var checkBoxes = document.getElementById('<portlet:namespace />checkBoxes');
 
 	if (checkBoxes) {
-		checkBoxes.addEventListener(
-			'change',
-			function(event) {
-				if (event.target.classList.contains('toggle-switch')) {
-					var target = event.target;
+		checkBoxes.addEventListener('change', function(event) {
+			if (event.target.classList.contains('toggle-switch')) {
+				var target = event.target;
 
-					data[target.dataset.key] = target.checked;
+				data[target.dataset.key] = target.checked;
 
-					Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
-				}
+				Liferay.Portlet.refresh(
+					'#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_',
+					data
+				);
 			}
-		);
+		});
 	}
 
-	var handler = Liferay.on(
-		'portletReady',
-		function(event) {
-			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_', data);
+	var handler = Liferay.on('portletReady', function(event) {
+		Liferay.Portlet.refresh(
+			'#p_p_id_<%= HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) %>_',
+			data
+		);
 
+		handler.detach();
+
+		handler = null;
+	});
+
+	var destroyHandler = Liferay.on('destroyHandler', function(event) {
+		if (handler) {
 			handler.detach();
 
 			handler = null;
 		}
-	);
-
-	var destroyHandler = Liferay.on(
-		'destroyHandler',
-		function(event) {
-			if (handler) {
-				handler.detach();
-
-				handler = null;
-			}
-		}
-	);
+	});
 </aui:script>

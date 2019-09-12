@@ -46,5 +46,8 @@ boolean emailAssetEntryAddedEnabled = ParamUtil.getBoolean(request, "preferences
 </div>
 
 <aui:script sandbox="<%= true %>">
-	Liferay.Util.toggleBoxes('<portlet:namespace />enableEmailSubscription', '<portlet:namespace />emailSubscriptionSettings');
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />enableEmailSubscription',
+		'<portlet:namespace />emailSubscriptionSettings'
+	);
 </aui:script>

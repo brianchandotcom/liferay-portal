@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.BaseAssetRenderer;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -123,8 +124,8 @@ public class OpenNLPDocumentAssetAutoTaggerTest
 		return assetEntryLocalService.updateEntry(
 			TestPropsValues.getUserId(), group.getGroupId(), null, null,
 			getClassName(), classPK, null, 0, assetCategoryIds, assetTagNames,
-			true, true, null, null, new Date(), null, null, null, null, null,
-			null, null, 0, 0, (Double)null);
+			true, true, null, null, new Date(), null, ContentTypes.TEXT_PLAIN,
+			null, null, null, null, null, 0, 0, (Double)null);
 	}
 
 	@Override

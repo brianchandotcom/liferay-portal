@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
+import com.liferay.document.library.opener.onedrive.web.internal.exception.GraphServicePortalException;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -104,11 +105,16 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 		if (complete && (dlOpenerFileEntryReference != null) &&
 			Validator.isNotNull(dlOpenerFileEntryReference.getReferenceKey())) {
 
-			String office365EditURL =
-				_dlOpenerOneDriveManager.getOneDriveFileURL(
-					_portal.getUserId(resourceRequest), fileEntry);
+			try {
+				String office365EditURL =
+					_dlOpenerOneDriveManager.getOneDriveFileURL(
+						_portal.getUserId(resourceRequest), fileEntry);
 
-			jsonObject.put("office365EditURL", office365EditURL);
+				jsonObject.put("office365EditURL", office365EditURL);
+			}
+			catch (GraphServicePortalException gspe) {
+				jsonObject.put("error", true);
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(

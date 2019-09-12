@@ -752,6 +752,10 @@ definition {
 	}
 
 	macro resetTestUserPassword {
+		Type(
+			locator1 = "TextInput#EMAIL",
+			value1 = "${administratorEmail}");
+
 		SetupWizard.finishConfigurationPG();
 
 		Portlet.shutdownServer();

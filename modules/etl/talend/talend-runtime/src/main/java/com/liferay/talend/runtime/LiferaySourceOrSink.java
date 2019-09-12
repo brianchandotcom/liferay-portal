@@ -26,6 +26,7 @@ import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.client.RESTClient;
 import com.liferay.talend.runtime.client.ResponseHandler;
+import com.liferay.talend.runtime.client.exception.ResponseContentClientException;
 
 import java.io.IOException;
 
@@ -41,6 +42,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 import javax.ws.rs.ProcessingException;
+import javax.ws.rs.core.Response;
 
 import org.apache.avro.Schema;
 
@@ -101,26 +103,26 @@ public class LiferaySourceOrSink
 	}
 
 	public JsonObject doPatchRequest(
-			RuntimeContainer runtimeContainer, JsonObject jsonObject)
-		throws IOException {
-
-		return doPatchRequest(runtimeContainer, null, jsonObject);
-	}
-
-	public JsonObject doPatchRequest(
 		RuntimeContainer runtimeContainer, String resourceURL,
 		JsonObject jsonObject) {
 
 		RESTClient restClient = getRestClient(runtimeContainer, resourceURL);
 
-		return _responseHandler.asJsonObject(
-			restClient.executePatchRequest(jsonObject));
-	}
+		Response response = restClient.executePatchRequest(jsonObject);
 
-	public JsonObject doPatchRequest(
-		String resourceURL, JsonObject jsonObject) {
+		if (!_responseHandler.isSuccess(response)) {
+			throw new ResponseContentClientException(
+				"Request did not succeed", response.getStatus(), null);
+		}
 
-		return doPatchRequest(null, resourceURL, jsonObject);
+		if (!_responseHandler.isApplicationJsonContentType(response)) {
+			throw new ResponseContentClientException(
+				"Unable to decode response content type " +
+					_responseHandler.getContentType(response),
+				response.getStatus(), null);
+		}
+
+		return _responseHandler.asJsonObject(response);
 	}
 
 	public JsonObject doPostRequest(

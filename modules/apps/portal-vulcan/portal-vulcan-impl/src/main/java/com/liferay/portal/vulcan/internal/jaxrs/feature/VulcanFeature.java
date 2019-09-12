@@ -17,13 +17,17 @@ package com.liferay.portal.vulcan.internal.jaxrs.feature;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.fasterxml.jackson.jaxrs.xml.JacksonXMLProvider;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.LogContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
@@ -58,11 +62,15 @@ import com.liferay.portal.vulcan.internal.jaxrs.validation.BeanValidationInterce
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
 
+import java.util.Dictionary;
+import java.util.Map;
+
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -87,6 +95,13 @@ public class VulcanFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext featureContext) {
+		try {
+			_registerConfiguration(featureContext);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 		featureContext.register(BeanValidationInterceptor.class);
 		featureContext.register(ExceptionMapper.class);
 		featureContext.register(DateParamConverterProvider.class);
@@ -135,12 +150,46 @@ public class VulcanFeature implements Feature {
 		return false;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	private void _registerConfiguration(FeatureContext featureContext)
+		throws Exception {
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				VulcanConfiguration.class.getName(), StringPool.QUESTION);
+
+		javax.ws.rs.core.Configuration jaxRSConfiguration =
+			featureContext.getConfiguration();
+
+		if (jaxRSConfiguration != null) {
+			Map property = (Map)jaxRSConfiguration.getProperty(
+				"osgi.jaxrs.application.serviceProperties");
+
+			String name = (String)property.get("osgi.jaxrs.application.base");
+
+			String filterString = String.format(
+				"(&(service.factoryPid=%s)(name=%s))",
+				VulcanConfiguration.class.getName(), name);
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (ArrayUtil.isEmpty(configurations)) {
+				Dictionary<String, Object> dictionary =
+					new HashMapDictionary<>();
+
+				dictionary.put("graphQLEnabled", true);
+				dictionary.put("path", name);
+				dictionary.put("restEnabled", true);
+
+				configuration.update(dictionary);
+			}
+		}
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"

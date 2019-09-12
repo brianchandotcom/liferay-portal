@@ -110,7 +110,9 @@
 
 						{if ($field.editableId and $field.editableId != $selectedItem.editableId) or $field.disabled}
 							disabled
-						{elseif $field.editableId and $field.editableId == $selectedItem.editableId and $selectedItem.fragmentEntryLinkId == $field.fragmentEntryLinkId}
+						{/if}
+
+						{if $field.editableId and $field.editableId == $selectedItem.editableId and $selectedItem.fragmentEntryLinkId == $field.fragmentEntryLinkId}
 							selected
 						{/if}
 					>

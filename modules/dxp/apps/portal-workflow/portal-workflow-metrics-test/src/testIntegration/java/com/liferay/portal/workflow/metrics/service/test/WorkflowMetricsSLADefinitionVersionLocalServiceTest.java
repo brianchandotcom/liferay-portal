@@ -16,9 +16,10 @@ package com.liferay.portal.workflow.metrics.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +46,11 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
 
 	@Test
 	public void testGetWorkflowMetricsSLADefinitionVersions1()
@@ -62,7 +69,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						TestPropsValues.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(),
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
@@ -93,7 +100,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						TestPropsValues.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(),
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
@@ -125,7 +132,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 			workflowMetricsSLADefinitionVersions =
 				WorkflowMetricsSLADefinitionVersionLocalServiceUtil.
 					getWorkflowMetricsSLADefinitionVersions(
-						TestPropsValues.getCompanyId(), new Date(),
+						_company.getCompanyId(), new Date(),
 						WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
@@ -157,7 +164,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 		workflowMetricsSLADefinitionVersion.setModifiedDate(now);
 
 		workflowMetricsSLADefinitionVersion.setCompanyId(
-			TestPropsValues.getCompanyId());
+			_company.getCompanyId());
 		workflowMetricsSLADefinitionVersion.setName(name);
 		workflowMetricsSLADefinitionVersion.setCreateDate(now);
 		workflowMetricsSLADefinitionVersion.setModifiedDate(now);
@@ -176,6 +183,9 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest {
 
 		return workflowMetricsSLADefinitionVersion;
 	}
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private final List<WorkflowMetricsSLADefinitionVersion>

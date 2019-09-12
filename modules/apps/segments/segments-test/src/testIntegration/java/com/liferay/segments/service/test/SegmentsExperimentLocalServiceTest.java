@@ -629,21 +629,25 @@ public class SegmentsExperimentLocalServiceTest {
 	public void testUpdateSegmentsExperimentStatusToCompletedWithWinnerSegmentsExperience()
 		throws Exception {
 
-		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+		SegmentsExperience segmentsExperience1 = _addSegmentsExperience();
+
+		SegmentsExperience segmentsExperience2 =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperience1.getGroupId(),
+				segmentsExperience1.getClassNameId(),
+				segmentsExperience1.getClassPK());
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment(
-			segmentsExperience);
+			segmentsExperience1);
 
 		SegmentsExperience variantSegmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				segmentsExperience.getGroupId(),
-				segmentsExperience.getClassNameId(),
-				segmentsExperience.getClassPK());
+				segmentsExperience1.getGroupId(),
+				segmentsExperience1.getClassNameId(),
+				segmentsExperience1.getClassPK());
 
-		variantSegmentsExperience.setActive(false);
-
-		_segmentsExperienceLocalService.updateSegmentsExperience(
-			variantSegmentsExperience);
+		_segmentsExperienceLocalService.updateSegmentsExperienceActive(
+			variantSegmentsExperience.getSegmentsExperienceId(), false);
 
 		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -664,11 +668,16 @@ public class SegmentsExperimentLocalServiceTest {
 			variantSegmentsExperience.getSegmentsExperienceId(),
 			SegmentsExperimentConstants.STATUS_COMPLETED);
 
-		segmentsExperience =
+		segmentsExperience1 =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId());
+				segmentsExperience1.getSegmentsExperienceId());
+		segmentsExperience2 =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience2.getSegmentsExperienceId());
 
-		Assert.assertFalse(segmentsExperience.isActive());
+		Assert.assertFalse(segmentsExperience1.isActive());
+
+		Assert.assertTrue(segmentsExperience2.isActive());
 
 		variantSegmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(

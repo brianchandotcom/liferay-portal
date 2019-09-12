@@ -259,6 +259,20 @@ public class AddStructuredContentMVCActionCommandTest {
 				fieldValue, actualFieldValue));
 	}
 
+	@Test
+	public void testAddTwoStructuredContentsValidStructureWithFieldImageSameFieldNameSameTitle()
+		throws Exception {
+
+		String fieldName = StringUtil.randomString(10);
+		String fieldValue = _read("liferay_base_64_bmp.txt");
+		String title = StringUtil.randomString(10);
+
+		_testAddStructuredContentValidStructureWithFieldImage(
+			fieldValue, fieldValue.split("base64,")[1], fieldName, title);
+		_testAddStructuredContentValidStructureWithFieldImage(
+			fieldValue, fieldValue.split("base64,")[1], fieldName, title);
+	}
+
 	private DDMStructure _addDDMStructure(DDMFormField... ddmFormFields)
 		throws Exception {
 

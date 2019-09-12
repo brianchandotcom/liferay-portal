@@ -1822,10 +1822,6 @@ rerun your task.
 					<propertyref name="liferay.releng.product.display.name" />
 					<propertyref name="liferay.releng.public" />
 					<propertyref name="liferay.releng.supported" />
-					<propertyref name="org.gradle.console" />
-					<propertyref name="org.gradle.daemon" />
-					<propertyref name="org.gradle.internal.launcher.welcomeMessageEnabled" />
-					<propertyref name="org.gradle.warning.mode" />
 					<propertyref name="project.templates.test.builds" />
 					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="release.versions.test.other.dir.names" />
@@ -1840,6 +1836,7 @@ rerun your task.
 					<propertyref prefix="ivy.pom." />
 					<propertyref prefix="microsoft.translator." />
 					<propertyref prefix="nodejs." />
+					<propertyref prefix="org.gradle." />
 					<propertyref prefix="sonatype." />
 					<propertyref prefix="source.formatter." />
 					<propertyref regex=".+\.ignore\.local$" />

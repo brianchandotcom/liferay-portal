@@ -418,6 +418,12 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 	}
 
 	private String _getURLTitle(String friendlyURL) {
+		String fullURLTitle = _getFullURLTitle(friendlyURL);
+
+		if (!fullURLTitle.contains(StringPool.SLASH)) {
+			return fullURLTitle;
+		}
+
 		String urlSeparator = getURLSeparator();
 
 		return friendlyURL.substring(

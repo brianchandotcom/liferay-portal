@@ -1712,16 +1712,13 @@ definition {
 	}
 
 	macro viewLocation {
-		AssertElementPresent(
-			key_dmFolderName = "${dmFolderName}",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
+		var key_dmFolderName = "${dmFolderName}";
 
-		Click(
-			key_dmFolderName = "${dmFolderName}",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
+		AssertElementPresent(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
+
+		Click(locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_LOCATION");
 
 		AssertTextEquals(
-			key_dmFolderName = "${dmFolderName}",
 			locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME",
 			value1 = "${dmFolderName}");
 	}

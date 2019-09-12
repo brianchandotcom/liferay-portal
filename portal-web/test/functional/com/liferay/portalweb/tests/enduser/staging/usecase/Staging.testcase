@@ -3086,6 +3086,42 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This is a use case for LPS-89116."
+	@priority = "3"
+	test ValidateFriendlyURLWithSpecialCharacters {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "Web Content Content",
+			webContentTitle = '''Special Char aŐb''');
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = '''Special Char aŐb''');
+
+		WebContentNavigator.gotoEditCP(webContentTitle = '''Special Char aŐb''');
+
+		WebContent.viewFriendlyURLCP(friendlyUrl = '''special-char-aŐb''');
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithFriendlyURL(
+			friendlyUrl = "special-char-a-c5-90b",
+			webContentContent = "Web Content Content2",
+			webContentTitle = "Web Content Title");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name");
+	}
+
 	@priority = "4"
 	test ViewHistoryVersionWithDeletedUser {
 		JSONUser.addUser(

@@ -40,8 +40,15 @@ public class ScreenNavigationRegistry {
 	public <T> List<ScreenNavigationCategory> getScreenNavigationCategories(
 		String screenNavigationId, User user, T context) {
 
+		List<ScreenNavigationCategory> screenNavigationCategories =
+			_screenNavigationCategoriesMap.getService(screenNavigationId);
+
+		if (screenNavigationCategories == null) {
+			return Collections.emptyList();
+		}
+
 		return ListUtil.filter(
-			_screenNavigationCategoriesMap.getService(screenNavigationId),
+			screenNavigationCategories,
 			screenNavigationCategory -> {
 				List<ScreenNavigationEntry> screenNavigationEntries =
 					getScreenNavigationEntries(
@@ -59,8 +66,15 @@ public class ScreenNavigationRegistry {
 			screenNavigationCategory.getScreenNavigationKey(),
 			screenNavigationCategory.getCategoryKey());
 
+		List<ScreenNavigationEntry> screenNavigationEntries =
+			_screenNavigationEntriesMap.getService(key);
+
+		if (screenNavigationEntries == null) {
+			return Collections.emptyList();
+		}
+
 		return ListUtil.filter(
-			_screenNavigationEntriesMap.getService(key),
+			screenNavigationEntries,
 			screenNavigationEntry -> screenNavigationEntry.isVisible(
 				user, context));
 	}

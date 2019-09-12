@@ -528,6 +528,16 @@ public class SegmentsExperienceLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperience
+			updateSegmentsExperienceActive(
+				long segmentsExperienceId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.updateSegmentsExperienceActive(
+			segmentsExperienceId, active);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperience
 			updateSegmentsExperiencePriority(
 				long segmentsExperienceId, int newPriority)
 		throws com.liferay.portal.kernel.exception.PortalException {

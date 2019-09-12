@@ -67,15 +67,38 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			}
 		);
 
-		ReactDOM.render(
-			<ItemSelectorPreview
-				handleSelectedItem = {this._onItemSelected.bind(this)}
-				headerTitle = {this.closeCaption}
-				links = ".item-preview"
-				selector = ".icon-view"
-			/>,
-			this.rootNode.appendChild(document.createElement('div'))
-		);
+
+		this.attachItemSelectorPreviewComponent();
+	}
+
+	attachItemSelectorPreviewComponent() {
+		const itemsNodes = Array.from(this.all('.item-preview'));
+
+		const items = itemsNodes.map(node => node.dataset);
+
+		const clicableItems = Array.from(this.all('.icon-view'));
+
+		if (items.length === clicableItems.length) {
+			clicableItems.forEach((clicableItem, index) => {
+				clicableItem.addEventListener('click', e => {
+					e.preventDefault();
+					e.stopPropagation();
+
+					const container = this.one('.item-selector-preview-container');
+
+					ReactDOM.render(
+						<ItemSelectorPreview
+							container = {container}
+							currentIndex = {index}
+							handleSelectedItem = {this._onItemSelected.bind(this)}
+							headerTitle = {this.closeCaption}
+							items = {items}
+						/>,
+						container
+					);
+				});
+			});
+		}
 	}
 
 	/**
@@ -98,7 +121,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	_bindEvents() {
 		this._eventHandler.add(
 			dom.delegate(this.rootNode, 'click', '.item-preview', event =>
-				this._onItemSelected(event.delegateTarget)
+				this._onItemSelected(event.delegateTarget.dataset)
 			)
 		);
 
@@ -125,12 +148,10 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						itemData
 					);
 
-					const domNode = document.createElement('div');
-
-					domNode.dataset.returntype = this.uploadItemReturnType;
-					domNode.dataset.value = updatedImage.getData('value');
-
-					this._onItemSelected(domNode);
+					this._onItemSelected({
+						returntype: this.uploadItemReturnType,
+						value: updatedImage.getData('value')
+					});
 				}),
 				itemSelectorUploader.after(
 					'itemUploadError',
@@ -327,8 +348,8 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	_onItemSelected(item) {
 		this.emit('selectedItem', {
 			data: {
-				returnType: item.dataset.returntype,
-				value: item.dataset.value
+				returnType: item.returntype,
+				value: item.value
 			}
 		});
 	}

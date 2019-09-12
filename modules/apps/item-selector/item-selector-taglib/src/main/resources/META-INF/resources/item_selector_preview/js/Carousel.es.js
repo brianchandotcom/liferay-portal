@@ -45,96 +45,32 @@ const InfoPanel = ({ imageData }) => {
 	return <h1>Info Panel</h1>;
 };
 
-class Carousel extends Component {
-	static propTypes = {
-		currentItemIndex: PropTypes.number,
-		items: PropTypes.array.isRequired,
-		onItemChange: PropTypes.func,
-  	};
+const Carousel = ({currentItem, handleClickNext, handleClickPrevious, showArrows}) => (
+	<div className="carousel sidenav-container">
+		<div className="info-panel sidenav-menu-slider">
+			<InfoPanel imageData={currentItem.metadata} />
+		</div>
 
-  	static defaultProps = {
-  		onItemChange: () => {}
-  	};
+		<div className="sidenav-content">
+			{showArrows && (
+				<Arrow
+					direction="left"
+					handleClick={handleClickPrevious}
+				/>
+			)}
 
-	constructor(props) {
-		super(props);
+			<ImageSlide
+				url={currentItem.url}
+			/>
 
-		const currentIndex = this.props.currentItemIndex;
+			{showArrows && (
+				<Arrow
+					direction="right"
+					handleClick={handleClickNext}
+				/>
+			)}
+		</div>
+	</div>
+);
 
-		this.state = {
-			currentIndex: currentIndex,
-			currentItem: this.props.items[currentIndex]
-		};
-  	};
-
-	showNextSlide = () => {
-		const items = this.props.items;
-
-		const lastIndex = items.length - 1;
-		const { currentIndex } = this.state;
-		const shouldResetIndex = currentIndex === lastIndex;
-		const index = shouldResetIndex ? 0 : currentIndex + 1;
-
-		const currentItem = items[index];
-
-		this.setState({
-			currentIndex: index,
-			currentItem: currentItem
-		});
-
-		this.props.onItemChange(currentItem, index);
-	};
-
-	showPreviousSlide = () => {
-		const items = this.props.items;
-
-		const lastIndex = items.length - 1;
-		const { currentIndex } = this.state;
-		const shouldResetIndex = currentIndex === 0;
-		const index = shouldResetIndex ? lastIndex : currentIndex - 1;
-
-		const currentItem = items[index];
-
-		this.setState({
-			currentIndex: index,
-			currentItem: currentItem
-		});
-
-		this.props.onItemChange(currentItem, index);
-	};
-
-	render() {
-		const {currentItem} = this.state;
-		const showArrows = this.props.items.length > 1;
-
-		return (
-			<div className="carousel sidenav-container">
-
-				<div className="info-panel sidenav-menu-slider">
-					<InfoPanel imageData={currentItem.dataset.metadata} />
-				</div>
-
-				<div className="sidenav-content">
-					{showArrows && (
-						<Arrow
-							direction="left"
-							handleClick={this.showPreviousSlide}
-						/>
-					)}
-
-					<ImageSlide
-						url={currentItem.dataset.url}
-					/>
-
-					{showArrows && (
-						<Arrow
-							direction="right"
-							handleClick={this.showNextSlide}
-						/>
-					)}
-				</div>
-			</div>
-		);
-	}
-}
 export default Carousel;

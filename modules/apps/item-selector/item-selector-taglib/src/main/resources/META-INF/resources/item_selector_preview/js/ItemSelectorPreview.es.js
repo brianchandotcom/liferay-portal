@@ -16,6 +16,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 
 import Header from './Header.es';
 import Carousel from './Carousel.es';
@@ -23,49 +24,23 @@ import Footer from './Footer.es';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
+		container: PropTypes.node,
+		currentIndex: PropTypes.number.isRequired,
 		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
-		links: PropTypes.string.isRequired,
-		selector: PropTypes.string
+		items: PropTypes.array.isRequired,
 	};
 
 	constructor(props) {
 		super(props);
 
-		let items = Array.from(document.querySelectorAll(this.props.links));
+		const {currentIndex, items} = props;
+		const currentItem = items[currentIndex];
 
 		this.state = {
-			currentItem: null,
-			currentItemIndex: 0,
-			items: items,
-			openViewer: false
-		};
-	}
-
-	componentDidMount() {
-		const items = this.state.items;
-		const selector = this.props.selector;
-
-		items.forEach((item, index) => {
-			let clicableItem = item;
-
-			if (selector) {
-				clicableItem = item.querySelector(selector);
-			}
-
-			if (clicableItem) {
-				clicableItem.addEventListener('click', e => {
-					e.preventDefault();
-					e.stopPropagation();
-
-					this.setState({
-						currentItem: item,
-						currentItemIndex: index,
-						openViewer: true
-					});
-				});
-			}
-		});
+			currentItem: currentItem,
+			currentItemIndex: currentIndex
+		}
 	}
 
 	componentDidUpdate() {
@@ -85,59 +60,84 @@ class ItemSelectorPreview extends Component {
 		}
 	}
 
+	close = () => {
+		ReactDOM.unmountComponentAtNode(this.props.container);
+	};
+
 	handleClickClose = () => {
-		this.setState({openViewer: false});
+		this.close();
 	};
 
 	handleClickDone = () => {
-		this.setState({openViewer: false});
-
 		const selectedItem = this.state.currentItem;
 
 		this.props.handleSelectedItem(selectedItem);
+
+		this.close();
 	};
 
-	handleOnItemChange = (item, index) => {
+	handleClickNext = () => {
+		const items = this.props.items;
+
+		const lastIndex = items.length - 1;
+		const { currentItemIndex } = this.state;
+		const shouldResetIndex = currentItemIndex === lastIndex;
+		const index = shouldResetIndex ? 0 : currentItemIndex + 1;
+
+		const currentItem = items[index];
+
 		this.setState({
-			currentItem: item,
-			currentItemIndex: index
+			currentItemIndex: index,
+			currentItem: currentItem
 		});
 	};
 
-	render() {console.log('render');
-		const {openViewer, currentItemIndex, currentItem, items} = this.state;
+	handleClickPrevious = () => {
+		const items = this.props.items;
+
+		const lastIndex = items.length - 1;
+		const { currentItemIndex } = this.state;
+		const shouldResetIndex = currentItemIndex === 0;
+		const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
+
+		const currentItem = items[index];
+
+		this.setState({
+			currentItemIndex: index,
+			currentItem: currentItem
+		});
+	};
+
+	render() {
+		const {currentItemIndex, currentItem} = this.state;
+		const {items} = this.props;
 
 		const spritemap =
 			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-		const itemName = currentItem ? currentItem.dataset.title : '';
-
 		return (
-			<>
-				{openViewer && (
-					<div className="fullscreen item-selector-preview">
-						<ClayIconSpriteContext.Provider value={spritemap}>
-							<Header
-								handleClickClose={this.handleClickClose}
-								handleClickDone={this.handleClickDone}
-								headerTitle={this.props.headerTitle}
-							/>
-							<button type="button" ref="test">TEST</button>
-							<Carousel
-								currentItemIndex={currentItemIndex}
-								items={items}
-								onItemChange={this.handleOnItemChange}
-							/>
+			<div className="fullscreen item-selector-preview">
+				<ClayIconSpriteContext.Provider value={spritemap}>
+					<Header
+						handleClickClose={this.handleClickClose}
+						handleClickDone={this.handleClickDone}
+						headerTitle={this.props.headerTitle}
+					/>
 
-							<Footer
-								title={itemName}
-								currentIndex={currentItemIndex}
-								totalItems={items.length}
-							/>
-						</ClayIconSpriteContext.Provider>
-					</div>
-				)}
-			</>
+					<Carousel
+						currentItem = {currentItem}
+						handleClickNext = {this.handleClickNext}
+						handleClickPrevious = {this.handleClickPrevious}
+						showArrows = {items.length > 1}
+					/>
+
+					<Footer
+						title={currentItem.title}
+						currentIndex={currentItemIndex}
+						totalItems={items.length}
+					/>
+				</ClayIconSpriteContext.Provider>
+			</div>
 		);
 	}
 }

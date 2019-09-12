@@ -6,7 +6,7 @@
 		"clay-alert": "2.18.1",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
-		"metal-dom": "2.16.8",
+		"metal-dom": "^2.16.8",
 		"metal-events": "2.16.8",
 		"metal-state": "2.16.8",
 		"prop-types": "^15.7.2",

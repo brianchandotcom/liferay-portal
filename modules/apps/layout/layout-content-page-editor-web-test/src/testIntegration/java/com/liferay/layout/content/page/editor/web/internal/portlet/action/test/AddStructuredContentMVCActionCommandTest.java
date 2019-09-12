@@ -363,6 +363,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRequest(new MockHttpServletRequest());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");
 		themeDisplay.setServerPort(8080);
@@ -416,7 +417,7 @@ public class AddStructuredContentMVCActionCommandTest {
 		_testAddStructuredContentInvalidStructureWithField(
 			DDMFormFieldType.IMAGE, fieldName, fieldValue, title,
 			jsonObject -> Assert.assertEquals(
-				"the-web-content-article-could-not-be-created",
+				"image-content-is-invalid-for-field-x",
 				jsonObject.getString("errorMessage")));
 	}
 

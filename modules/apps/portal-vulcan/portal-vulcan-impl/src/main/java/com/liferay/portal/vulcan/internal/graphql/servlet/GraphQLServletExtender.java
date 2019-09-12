@@ -954,7 +954,7 @@ public class GraphQLServletExtender {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
 
-		if (ArrayUtil.isEmpty(configurations)) {
+		if (!ArrayUtil.isEmpty(configurations)) {
 			Dictionary<String, Object> dictionary =
 				configurations[0].getProperties();
 

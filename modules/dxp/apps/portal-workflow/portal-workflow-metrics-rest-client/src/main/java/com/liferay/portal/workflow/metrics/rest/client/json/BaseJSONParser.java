@@ -142,9 +142,9 @@ public abstract class BaseJSONParser<T> {
 
 		_readNextChar();
 
-		_readWhileLastCharIsWhiteSpace();
-
 		_readNextChar();
+
+		_readWhileLastCharIsWhiteSpace();
 
 		if (_isLastChar('}')) {
 			return map;

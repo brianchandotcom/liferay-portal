@@ -200,7 +200,7 @@ public abstract class BaseTaskResourceTestCase {
 		Page<Task> page = taskResource.getProcessTasksPage(
 			testGetProcessTasksPage_getProcessId(), null,
 			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
-			Pagination.of(1, 2), null);
+			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -213,8 +213,8 @@ public abstract class BaseTaskResourceTestCase {
 				irrelevantProcessId, randomIrrelevantTask());
 
 			page = taskResource.getProcessTasksPage(
-				irrelevantProcessId, null, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantProcessId, null, null, null, null,
+				Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -228,7 +228,7 @@ public abstract class BaseTaskResourceTestCase {
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		page = taskResource.getProcessTasksPage(
-			processId, null, null, null, Pagination.of(1, 2), null);
+			processId, null, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -248,14 +248,14 @@ public abstract class BaseTaskResourceTestCase {
 		Task task3 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		Page<Task> page1 = taskResource.getProcessTasksPage(
-			processId, null, null, null, Pagination.of(1, 2), null);
+			processId, null, null, null, null, Pagination.of(1, 2), null);
 
 		List<Task> tasks1 = (List<Task>)page1.getItems();
 
 		Assert.assertEquals(tasks1.toString(), 2, tasks1.size());
 
 		Page<Task> page2 = taskResource.getProcessTasksPage(
-			processId, null, null, null, Pagination.of(2, 2), null);
+			processId, null, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -264,7 +264,7 @@ public abstract class BaseTaskResourceTestCase {
 		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
 
 		Page<Task> page3 = taskResource.getProcessTasksPage(
-			processId, null, null, null, Pagination.of(1, 3), null);
+			processId, null, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page3.getItems());
@@ -346,14 +346,14 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Task> ascPage = taskResource.getProcessTasksPage(
-				processId, null, null, null, Pagination.of(1, 2),
+				processId, null, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(task1, task2), (List<Task>)ascPage.getItems());
 
 			Page<Task> descPage = taskResource.getProcessTasksPage(
-				processId, null, null, null, Pagination.of(1, 2),
+				processId, null, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(

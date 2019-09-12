@@ -312,7 +312,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processTasks(completed: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processTasks(completed: ___, dateEnd: ___, dateStart: ___, key: ___, page: ___, pageSize: ___, processId: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public TaskPage processTasks(
@@ -320,6 +320,7 @@ public class Query {
 			@GraphQLName("completed") Boolean completed,
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
+			@GraphQLName("key") String key,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
 			@GraphQLName("sort") String sortsString)
@@ -330,7 +331,7 @@ public class Query {
 			this::_populateResourceContext,
 			taskResource -> new TaskPage(
 				taskResource.getProcessTasksPage(
-					processId, completed, dateEnd, dateStart,
+					processId, completed, dateEnd, dateStart, key,
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(taskResource, sortsString))));
 	}

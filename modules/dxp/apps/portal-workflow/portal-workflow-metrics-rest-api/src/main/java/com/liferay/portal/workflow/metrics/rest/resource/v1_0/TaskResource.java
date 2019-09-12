@@ -47,7 +47,7 @@ public interface TaskResource {
 
 	public Page<Task> getProcessTasksPage(
 			Long processId, Boolean completed, Date dateEnd, Date dateStart,
-			Pagination pagination, Sort[] sorts)
+			String key, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

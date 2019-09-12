@@ -70,6 +70,7 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 			@Parameter(in = ParameterIn.QUERY, name = "completed"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
+			@Parameter(in = ParameterIn.QUERY, name = "key"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -87,6 +88,7 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 				dateEnd,
 			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
 				dateStart,
+			@Parameter(hidden = true) @QueryParam("key") String key,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

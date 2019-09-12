@@ -43,12 +43,14 @@ public interface TaskResource {
 
 	public Page<Task> getProcessTasksPage(
 			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart, Pagination pagination, String sortString)
+			java.util.Date dateStart, String key, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
 			Long processId, Boolean completed, java.util.Date dateEnd,
-			java.util.Date dateStart, Pagination pagination, String sortString)
+			java.util.Date dateStart, String key, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -108,13 +110,13 @@ public interface TaskResource {
 
 		public Page<Task> getProcessTasksPage(
 				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, Pagination pagination,
+				java.util.Date dateStart, String key, Pagination pagination,
 				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessTasksPageHttpResponse(
-					processId, completed, dateEnd, dateStart, pagination,
+					processId, completed, dateEnd, dateStart, key, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -130,7 +132,7 @@ public interface TaskResource {
 
 		public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
 				Long processId, Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, Pagination pagination,
+				java.util.Date dateStart, String key, Pagination pagination,
 				String sortString)
 			throws Exception {
 
@@ -170,6 +172,10 @@ public interface TaskResource {
 			if (dateStart != null) {
 				httpInvoker.parameter(
 					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
+
+			if (key != null) {
+				httpInvoker.parameter("key", String.valueOf(key));
 			}
 
 			if (pagination != null) {

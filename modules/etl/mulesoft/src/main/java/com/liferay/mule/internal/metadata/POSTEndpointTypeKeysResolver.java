@@ -27,7 +27,7 @@ import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 /**
  * @author Matija Petanjek
  */
-public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
+public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
@@ -39,7 +39,7 @@ public class GETEndpointTypeKeysResolver implements TypeKeysResolver {
 		throws ConnectionException, MetadataResolvingException {
 
 		return _metadataKeysBuilder.buildMetadataKeys(
-			metadataContext, OASConstants.OPERATION_GET);
+			metadataContext, OASConstants.OPERATION_POST);
 	}
 
 	private static final MetadataKeysBuilder _metadataKeysBuilder =

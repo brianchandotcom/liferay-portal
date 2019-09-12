@@ -35,15 +35,14 @@ import org.mule.runtime.api.metadata.MetadataKey;
 import org.mule.runtime.api.metadata.MetadataKeyBuilder;
 import org.mule.runtime.api.metadata.MetadataResolvingException;
 import org.mule.runtime.api.metadata.resolving.FailureCode;
-import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
 /**
  * @author Matija Petanjek
  */
-public abstract class BaseTypeKeysResolver implements TypeKeysResolver {
+public class MetadataKeysBuilder {
 
-	public Set<MetadataKey> getEndpointKeys(
+	public Set<MetadataKey> buildMetadataKeys(
 			MetadataContext metadataContext, String operation)
 		throws ConnectionException, MetadataResolvingException {
 

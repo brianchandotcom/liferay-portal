@@ -18,7 +18,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -26,17 +25,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -84,47 +78,18 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 		}
 
 		WorkflowUtil.withoutWorkflow(
-			() -> {
-				Function<String, ServiceContext> serviceContextFunction =
-					WorkflowUtil.getServiceContextFunction(
-						_getWorkflowAction(actionRequest), actionRequest);
-
-				String notificationRedirect = _http.setParameter(
-					_portal.getLayoutFullURL(themeDisplay), "p_l_mode",
-					Constants.EDIT);
-
-				serviceContextFunction = serviceContextFunction.andThen(
-					serviceContext -> {
-						serviceContext.setAttribute(
-							"contentURL", notificationRedirect);
-						serviceContext.setAttribute(
-							"namespace", StringPool.BLANK);
-
-						return serviceContext;
-					});
-
-				_commentManager.updateComment(
-					themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
-					comment.getClassPK(), commentId,
-					String.valueOf(Math.random()), body,
-					serviceContextFunction);
-			});
+			() -> _commentManager.updateComment(
+				themeDisplay.getUserId(), FragmentEntryLink.class.getName(),
+				comment.getClassPK(), commentId, String.valueOf(Math.random()),
+				body,
+				CommentUtil.getServiceContextFunction(
+					actionRequest, themeDisplay)));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse,
 			CommentUtil.getCommentJSONObject(
 				_commentManager.fetchComment(commentId),
 				_portal.getHttpServletRequest(actionRequest)));
-	}
-
-	private int _getWorkflowAction(ActionRequest actionRequest) {
-		boolean resolved = ParamUtil.getBoolean(actionRequest, "resolved");
-
-		if (resolved) {
-			return WorkflowConstants.ACTION_SAVE_DRAFT;
-		}
-
-		return WorkflowConstants.ACTION_PUBLISH;
 	}
 
 	@Reference

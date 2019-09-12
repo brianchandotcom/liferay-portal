@@ -18,7 +18,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.workflow.WorkflowUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -29,12 +28,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.function.Function;
 
@@ -87,22 +84,8 @@ public class AddFragmentEntryLinkCommentMVCActionCommand
 				long commentId = 0;
 
 				Function<String, ServiceContext> serviceContextFunction =
-					WorkflowUtil.getServiceContextFunction(
-						WorkflowConstants.ACTION_PUBLISH, actionRequest);
-
-				String notificationRedirect = _http.setParameter(
-					_portal.getLayoutFullURL(themeDisplay), "p_l_mode",
-					Constants.EDIT);
-
-				serviceContextFunction = serviceContextFunction.andThen(
-					serviceContext -> {
-						serviceContext.setAttribute(
-							"contentURL", notificationRedirect);
-						serviceContext.setAttribute(
-							"namespace", StringPool.BLANK);
-
-						return serviceContext;
-					});
+					CommentUtil.getServiceContextFunction(
+						actionRequest, themeDisplay);
 
 				if (parentCommentId == 0) {
 					_commentManager.subscribeDiscussion(

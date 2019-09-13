@@ -170,7 +170,7 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			StringBundler.concat(
 				"javascript:",
 				_portal.getPortletNamespace(_portal.getPortletId(request)),
-				"editOfficeDocument('", _getActionURL(cmd), "');"));
+				"editOfficeDocument(\", _getActionURL(cmd), "\");"));
 
 		return urlMenuItem;
 	}
@@ -303,14 +303,14 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 					if (_isCheckingInNewFile()) {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
-								"window.location.href = '", _getCheckInURL(),
-								"'"));
+								"window.location.href = \"", _getCheckInURL(),
+								"\""));
 					}
 					else {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
-								_getNamespace(), "showVersionDetailsDialog('",
-								_getCheckInURL(), "');"));
+								_getNamespace(), "showVersionDetailsDialog(\"",
+								_getCheckInURL(), "\");"));
 					}
 				}
 			}

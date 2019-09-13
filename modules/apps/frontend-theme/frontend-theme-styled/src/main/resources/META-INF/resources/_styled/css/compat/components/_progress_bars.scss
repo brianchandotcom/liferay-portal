@@ -56,10 +56,6 @@
 			.divider {
 				background-color: $multi-step-progress-bar-active-color;
 				color: $multi-step-progress-bar-active-color;
-
-				.lexicon-icon:not(.lexicon-icon-circle) {
-					display: none;
-				}
 			}
 		}
 
@@ -75,16 +71,6 @@
 				} @else {
 					margin-left: 15px;
 				}
-
-				.lexicon-icon:not(.lexicon-icon-check) {
-					display: none;
-				}
-			}
-		}
-
-		> :not(.active):not(.complete) {
-			.divider .lexicon-icon:not(.lexicon-icon-oauth) {
-				display: none;
 			}
 		}
 
@@ -109,10 +95,6 @@
 
 				&.lexicon-icon-check {
 					left: -16px;
-				}
-
-				.oauth-2-a {
-					display: none;
 				}
 			}
 		}

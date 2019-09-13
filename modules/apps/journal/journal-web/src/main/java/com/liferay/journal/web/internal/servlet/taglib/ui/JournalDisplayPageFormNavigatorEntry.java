@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,11 +49,7 @@ public class JournalDisplayPageFormNavigatorEntry
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		Group group = themeDisplay.getScopeGroup();
 

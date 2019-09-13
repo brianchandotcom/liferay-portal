@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteExpiredTemporaryFileEntries(
+	private void _deleteExpiredTemporaryFileEntries(
 			ActionRequest actionRequest)
 		throws PortalException {
 
@@ -93,7 +93,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void deleteFolders(
+	private void _deleteFolders(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
@@ -146,25 +146,25 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFolder(actionRequest);
+				_updateFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFolders(actionRequest, false);
+				_deleteFolders(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFolders(actionRequest, true);
+				_deleteFolders(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeFolder(actionRequest);
+				_subscribeFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeFolder(actionRequest);
+				_unsubscribeFolder(actionRequest);
 			}
 			else if (cmd.equals("deleteExpiredTemporaryFileEntries")) {
-				deleteExpiredTemporaryFileEntries(actionRequest);
+				_deleteExpiredTemporaryFileEntries(actionRequest);
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {
-				updateWorkflowDefinitions(actionRequest);
+				_updateWorkflowDefinitions(actionRequest);
 			}
 		}
 		catch (NoSuchFolderException | PrincipalException e) {
@@ -191,7 +191,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		_dlTrashService = dlTrashService;
 	}
 
-	protected void subscribeFolder(ActionRequest actionRequest)
+	private void _subscribeFolder(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -202,7 +202,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		_dlAppService.subscribeFolder(themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void unsubscribeFolder(ActionRequest actionRequest)
+	private void _unsubscribeFolder(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -214,7 +214,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void updateFolder(ActionRequest actionRequest)
+	private void _updateFolder(ActionRequest actionRequest)
 		throws PortalException {
 
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
@@ -247,7 +247,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
+	private void _updateWorkflowDefinitions(ActionRequest actionRequest)
 		throws PortalException {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

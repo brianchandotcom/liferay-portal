@@ -85,7 +85,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void cancelCheckedOutEntries(ActionRequest actionRequest)
+	private void _cancelCheckedOutEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
@@ -96,7 +96,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void checkInEntries(ActionRequest actionRequest)
+	private void _checkInEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
@@ -134,7 +134,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void checkOutEntries(ActionRequest actionRequest)
+	private void _checkOutEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
@@ -162,7 +162,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void deleteEntries(
+	private void _deleteEntries(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
@@ -210,25 +210,25 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-				cancelCheckedOutEntries(actionRequest);
+				_cancelCheckedOutEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.CHECKIN)) {
-				checkInEntries(actionRequest);
+				_checkInEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.CHECKOUT)) {
-				checkOutEntries(actionRequest);
+				_checkOutEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
+				_deleteEntries(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
-				moveEntries(actionRequest);
+				_moveEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
+				_deleteEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
+				_restoreTrashEntries(actionRequest);
 			}
 
 			WindowState windowState = actionRequest.getWindowState();
@@ -277,7 +277,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected void moveEntries(ActionRequest actionRequest)
+	private void _moveEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
@@ -310,7 +310,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				fileShortcut.getToFileEntryId(), serviceContext));
 	}
 
-	protected void restoreTrashEntries(ActionRequest actionRequest)
+	private void _restoreTrashEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long[] restoreTrashEntryIds = StringUtil.split(

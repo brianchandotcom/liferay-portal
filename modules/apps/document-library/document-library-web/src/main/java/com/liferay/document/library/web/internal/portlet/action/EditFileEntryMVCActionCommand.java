@@ -139,7 +139,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	public static final String TEMP_FOLDER_NAME =
+	private static final String _TEMP_FOLDER_NAME =
 		EditFileEntryMVCActionCommand.class.getName();
 
 	@Activate
@@ -388,7 +388,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			tempFileEntry = TempFileEntryUtil.getTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				TEMP_FOLDER_NAME, selectedFileName);
+				_TEMP_FOLDER_NAME, selectedFileName);
 
 			String originalSelectedFileName =
 				TempFileEntryUtil.getOriginalTempFileName(
@@ -453,7 +453,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String mimeType = uploadPortletRequest.getContentType("file");
 
 			FileEntry fileEntry = _dlAppService.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
+				themeDisplay.getScopeGroupId(), folderId, _TEMP_FOLDER_NAME,
 				tempFileName, inputStream, mimeType);
 
 			JSONObject jsonObject = _multipleUploadResponseHandler.onSuccess(
@@ -634,7 +634,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_dlAppService.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
+				themeDisplay.getScopeGroupId(), folderId, _TEMP_FOLDER_NAME,
 				fileName);
 
 			jsonObject.put("deleted", Boolean.TRUE);

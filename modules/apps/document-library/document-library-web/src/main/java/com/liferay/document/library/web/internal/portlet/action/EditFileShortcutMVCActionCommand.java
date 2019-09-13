@@ -59,7 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteFileShortcut(
+	private void _deleteFileShortcut(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
 
@@ -100,13 +100,13 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFileShortcut(actionRequest);
+				_updateFileShortcut(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileShortcut(actionRequest, false);
+				_deleteFileShortcut(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileShortcut(actionRequest, true);
+				_deleteFileShortcut(actionRequest, true);
 			}
 		}
 		catch (PortalException pe) {
@@ -139,7 +139,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		_dlTrashService = dlTrashService;
 	}
 
-	protected void updateFileShortcut(ActionRequest actionRequest)
+	private void _updateFileShortcut(ActionRequest actionRequest)
 		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(

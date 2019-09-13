@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecutorFactory;
+import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriterFactory;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,13 +32,12 @@ public class BatchEngineTaskExecutorFactoryImpl
 	@Override
 	public BatchEngineTaskExecutor create(Class<?> itemClass) {
 		return new BatchEngineTaskExecutorImpl<>(
-			_batchEngineTaskItemWriterRegistry, _batchEngineTaskLocalService,
+			_batchEngineTaskItemWriterFactory, _batchEngineTaskLocalService,
 			itemClass);
 	}
 
 	@Reference
-	private BatchEngineTaskItemWriterRegistry
-		_batchEngineTaskItemWriterRegistry;
+	private BatchEngineTaskItemWriterFactory _batchEngineTaskItemWriterFactory;
 
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;

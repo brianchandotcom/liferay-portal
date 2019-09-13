@@ -14,6 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.handler;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +57,33 @@ public class LayoutExceptionRequestHandler {
 
 		String errorMessage = null;
 
-		if (pe instanceof LayoutNameException) {
+		if (pe instanceof AssetCategoryException) {
+			AssetCategoryException ace = (AssetCategoryException)pe;
+
+			AssetVocabulary vocabulary = ace.getVocabulary();
+
+			String vocabularyTitle = StringPool.BLANK;
+
+			if (vocabulary != null) {
+				vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
+			}
+
+			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"please-select-at-least-one-category-for-x",
+					vocabularyTitle);
+			}
+			else if (ace.getType() ==
+						AssetCategoryException.TOO_MANY_CATEGORIES) {
+
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"you-cannot-select-more-than-one-category-for-x",
+					vocabularyTitle);
+			}
+		}
+		else if (pe instanceof LayoutNameException) {
 			LayoutNameException lne = (LayoutNameException)pe;
 
 			if (lne.getType() == LayoutNameException.TOO_LONG) {

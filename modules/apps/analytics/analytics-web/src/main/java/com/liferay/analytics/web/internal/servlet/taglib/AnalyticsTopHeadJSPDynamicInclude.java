@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -233,9 +232,7 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
-			jsonObject.put(
-				HtmlUtil.escapeJS(entry.getKey()),
-				HtmlUtil.escapeJS(entry.getValue()));
+			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
 		return jsonObject.toString();

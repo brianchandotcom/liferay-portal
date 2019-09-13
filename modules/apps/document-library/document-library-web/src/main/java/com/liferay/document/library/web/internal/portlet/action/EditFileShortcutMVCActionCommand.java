@@ -77,23 +77,14 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 				_deleteFileShortcut(actionRequest, true);
 			}
 		}
-		catch (PortalException pe) {
-			if (pe instanceof NoSuchFileShortcutException ||
-				pe instanceof PrincipalException) {
+		catch (NoSuchFileShortcutException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, pe.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (pe instanceof FileShortcutPermissionException ||
-					 pe instanceof NoSuchFileEntryException) {
-
-				SessionErrors.add(actionRequest, pe.getClass());
-			}
-			else {
-				throw pe;
-			}
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (FileShortcutPermissionException | NoSuchFileEntryException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 

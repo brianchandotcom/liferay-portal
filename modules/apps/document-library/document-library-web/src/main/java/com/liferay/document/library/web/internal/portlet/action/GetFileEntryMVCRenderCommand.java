@@ -67,22 +67,19 @@ public abstract class GetFileEntryMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 			}
+
+			return getPath();
+		}
+		catch (NoSuchFileEntryException | NoSuchFileVersionException |
+			   NoSuchRepositoryEntryException | PrincipalException e) {
+
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/document_library/error.jsp";
 		}
 		catch (PortalException pe) {
-			if (pe instanceof NoSuchFileEntryException ||
-				pe instanceof NoSuchFileVersionException ||
-				pe instanceof NoSuchRepositoryEntryException ||
-				pe instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, pe.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
 			throw new PortletException(pe);
 		}
-
-		return getPath();
 	}
 
 	protected void checkPermissions(

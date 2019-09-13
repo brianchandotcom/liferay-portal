@@ -68,20 +68,17 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);
+
+			return "/document_library/edit_file_shortcut.jsp";
+		}
+		catch (NoSuchFileShortcutException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/document_library/error.jsp";
 		}
 		catch (PortalException pe) {
-			if (pe instanceof NoSuchFileShortcutException ||
-				pe instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, pe.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
 			throw new PortletException(pe);
 		}
-
-		return "/document_library/edit_file_shortcut.jsp";
 	}
 
 	@Reference(

@@ -103,6 +103,8 @@ public class ViewFileEntryMVCRenderCommand
 
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
+
+			return super.render(renderRequest, renderResponse);
 		}
 		catch (NoSuchFileEntryException | NoSuchFileVersionException |
 			   NoSuchRepositoryEntryException | PrincipalException e) {
@@ -114,8 +116,6 @@ public class ViewFileEntryMVCRenderCommand
 		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
-
-		return super.render(renderRequest, renderResponse);
 	}
 
 	@Override

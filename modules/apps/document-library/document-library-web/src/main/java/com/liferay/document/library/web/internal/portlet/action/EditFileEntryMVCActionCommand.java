@@ -139,9 +139,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
-	private static final String _TEMP_FOLDER_NAME =
-		EditFileEntryMVCActionCommand.class.getName();
-
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -1031,6 +1028,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final String[] _RESTRICTED_GUEST_PERMISSIONS = {};
+
+	private static final String _TEMP_FOLDER_NAME =
+		EditFileEntryMVCActionCommand.class.getName();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditFileEntryMVCActionCommand.class);

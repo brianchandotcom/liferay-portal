@@ -59,38 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
-	private void _deleteFileShortcut(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws PortalException {
-
-		long fileShortcutId = ParamUtil.getLong(
-			actionRequest, "fileShortcutId");
-
-		if (moveToTrash) {
-			FileShortcut fileShortcut = _dlTrashService.moveFileShortcutToTrash(
-				fileShortcutId);
-
-			if (!(fileShortcut.getModel() instanceof TrashedModel)) {
-				hideDefaultSuccessMessage(actionRequest);
-
-				return;
-			}
-
-			List<TrashedModel> trashedModels = new ArrayList<>();
-
-			trashedModels.add((TrashedModel)fileShortcut.getModel());
-
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("trashedModels", trashedModels);
-
-			addDeleteSuccessData(actionRequest, data);
-		}
-		else {
-			_dlAppService.deleteFileShortcut(fileShortcutId);
-		}
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -137,6 +105,38 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(unbind = "-")
 	protected void setDLTrashService(DLTrashService dlTrashService) {
 		_dlTrashService = dlTrashService;
+	}
+
+	private void _deleteFileShortcut(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws PortalException {
+
+		long fileShortcutId = ParamUtil.getLong(
+			actionRequest, "fileShortcutId");
+
+		if (moveToTrash) {
+			FileShortcut fileShortcut = _dlTrashService.moveFileShortcutToTrash(
+				fileShortcutId);
+
+			if (!(fileShortcut.getModel() instanceof TrashedModel)) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				return;
+			}
+
+			List<TrashedModel> trashedModels = new ArrayList<>();
+
+			trashedModels.add((TrashedModel)fileShortcut.getModel());
+
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("trashedModels", trashedModels);
+
+			addDeleteSuccessData(actionRequest, data);
+		}
+		else {
+			_dlAppService.deleteFileShortcut(fileShortcutId);
+		}
 	}
 
 	private void _updateFileShortcut(ActionRequest actionRequest)

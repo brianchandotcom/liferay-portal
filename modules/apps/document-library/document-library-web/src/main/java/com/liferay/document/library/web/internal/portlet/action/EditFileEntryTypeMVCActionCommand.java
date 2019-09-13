@@ -77,16 +77,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
-	private void _deleteFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		long fileEntryTypeId = ParamUtil.getLong(
-			actionRequest, "fileEntryTypeId");
-
-		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -142,6 +132,16 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/document_library/error.jsp");
 		}
+	}
+
+	private void _deleteFileEntryType(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			actionRequest, "fileEntryTypeId");
+
+		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	private long[] _getLongArray(PortletRequest portletRequest, String name) {

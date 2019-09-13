@@ -97,16 +97,6 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
-	}
-
 	private void _deleteFileShortcut(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
@@ -170,7 +160,10 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private DLTrashService _dlTrashService;
 
 }

@@ -83,16 +83,6 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		return "/document_library/compare_versions.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
 	private void _compareVersions(RenderRequest renderRequest)
 		throws IOException, PortalException {
 
@@ -176,7 +166,10 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 				targetFileVersion.getVersion());
 	}
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 }

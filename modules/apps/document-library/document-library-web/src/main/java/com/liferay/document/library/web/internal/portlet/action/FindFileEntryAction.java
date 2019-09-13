@@ -71,22 +71,12 @@ public class FindFileEntryAction extends FindStrutsAction {
 		return _portletPageFinder;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	protected void setPortletLayoutFinder(
-		PortletLayoutFinder portletPageFinder) {
-
-		_portletPageFinder = portletPageFinder;
-	}
-
-	private DLAppLocalService _dlAppLocalService;
 	private PortletLayoutFinder _portletPageFinder;
 
 }

@@ -103,11 +103,6 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setRepositoryService(RepositoryService repositoryService) {
-		_repositoryService = repositoryService;
-	}
-
 	private void _unmountRepository(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -163,6 +158,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private RepositoryService _repositoryService;
 
 }

@@ -21,10 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Eudaldo Alonso
  */
-@ExtendedObjectClassDefinition(
-	category = "page-fragments",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.fragment.internal.configuration.ContentObjectConfiguration"
 )

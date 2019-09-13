@@ -63,8 +63,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName,
-				"Missing attribute 'mvcc-enabled'. When in doubt, set " +
-					"'mvcc-enabled=\"true\"'");
+				"Attribute 'mvcc-enabled' should always be set in " +
+					"service.xml. Preferably, set 'mvcc-enabled=\"true\"'.");
 		}
 
 		ServiceReferenceElementComparator serviceReferenceElementComparator =

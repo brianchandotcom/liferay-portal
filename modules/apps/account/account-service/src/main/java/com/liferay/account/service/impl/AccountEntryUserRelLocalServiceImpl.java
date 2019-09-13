@@ -21,6 +21,8 @@ import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,6 +59,13 @@ public class AccountEntryUserRelLocalServiceImpl
 		accountEntryUserRel.setAccountUserId(accountUserId);
 
 		return addAccountEntryUserRel(accountEntryUserRel);
+	}
+
+	@Override
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
+		long accountEntryId) {
+
+		return accountEntryUserRelPersistence.findByAEI(accountEntryId);
 	}
 
 	@Reference

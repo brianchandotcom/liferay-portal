@@ -13,16 +13,31 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act} from 'react-dom/test-utils';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement
+} from '@testing-library/react';
 import Flags from '../../../src/main/resources/META-INF/resources/flags/js/components/Flags.es';
 import React from 'react';
+
+const formDataToObject = formData =>
+	Array.from(formData).reduce(
+		(memo, [key, val]) => ({
+			...memo,
+			[key]: val
+		}),
+		{}
+	);
 
 function _renderFlagsComponent({
 	companyName = 'Liferay',
 	baseData = {},
 	onlyIcon = false,
 	pathTermsOfUse = '/',
-	reasons = {},
+	reasons = {value: 'text', value2: 'text2'},
 	signedIn = false,
 	uri = '//'
 } = {}) {
@@ -35,7 +50,10 @@ function _renderFlagsComponent({
 			reasons={reasons}
 			signedIn={signedIn}
 			uri={uri}
-		/>
+		/>,
+		{
+			baseElement: document.body
+		}
 	);
 }
 
@@ -53,5 +71,27 @@ describe('Flags', () => {
 		const {getByText} = _renderFlagsComponent({onlyIcon: true});
 
 		expect(getByText('report')).toHaveClass('sr-only');
+	});
+
+	it('submits a report successfully with baseData', async () => {
+		const {getByRole} = _renderFlagsComponent({
+			baseData: {
+				testingField: 'testingValue'
+			}
+		});
+		fetch.mockResponse('');
+
+		await act(async () => {
+			fireEvent.click(getByRole('button'));
+
+			const form = await waitForElement(() => getByRole('form'));
+
+			fireEvent.submit(form);
+		});
+
+		expect(fetch).toHaveBeenCalledTimes(1);
+
+		const formDataObj = formDataToObject(fetch.mock.calls[0][1].body);
+		expect(formDataObj.testingField).toBe('testingValue');
 	});
 });

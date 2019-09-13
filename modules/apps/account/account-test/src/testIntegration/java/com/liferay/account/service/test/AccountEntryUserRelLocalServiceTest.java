@@ -18,6 +18,7 @@ import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -26,10 +27,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -102,6 +105,40 @@ public class AccountEntryUserRelLocalServiceTest {
 			_user.getUserId() + RandomTestUtil.nextLong());
 	}
 
+	@Test
+	public void testGetAccountEntryUserRelsByAccountEntryId() throws Exception {
+		List<User> users = new ArrayList<>();
+
+		users.add(UserTestUtil.addUser());
+		users.add(UserTestUtil.addUser());
+		users.add(UserTestUtil.addUser());
+
+		_users.addAll(users);
+
+		for (User user : users) {
+			_accountEntryUserRels.add(
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId());
+
+		long[] expectedUserIds = ListUtil.toLongArray(
+			users, User.USER_ID_ACCESSOR);
+
+		Arrays.sort(expectedUserIds);
+
+		long[] actualUserIds = ListUtil.toLongArray(
+			accountEntryUserRels, AccountEntryUserRelModel::getAccountUserId);
+
+		Arrays.sort(actualUserIds);
+
+		Assert.assertArrayEquals(expectedUserIds, actualUserIds);
+	}
+
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -117,5 +154,8 @@ public class AccountEntryUserRelLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@DeleteAfterTestRun
+	private final List<User> _users = new ArrayList<>();
 
 }

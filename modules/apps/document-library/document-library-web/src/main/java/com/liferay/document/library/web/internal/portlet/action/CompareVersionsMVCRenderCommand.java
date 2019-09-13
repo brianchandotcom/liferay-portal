@@ -71,6 +71,8 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			_compareVersions(renderRequest);
+
+			return "/document_library/compare_versions.jsp";
 		}
 		catch (NoSuchFileEntryException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
@@ -80,8 +82,6 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
-
-		return "/document_library/compare_versions.jsp";
 	}
 
 	private void _compareVersions(RenderRequest renderRequest)

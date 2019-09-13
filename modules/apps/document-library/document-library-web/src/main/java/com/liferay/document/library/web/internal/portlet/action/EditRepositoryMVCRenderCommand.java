@@ -53,20 +53,17 @@ public class EditRepositoryMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_REPOSITORY, repository);
+
+			return "/document_library/edit_repository.jsp";
+		}
+		catch (NoSuchRepositoryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/document_library/error.jsp";
 		}
 		catch (PortalException pe) {
-			if (pe instanceof NoSuchRepositoryException ||
-				pe instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, pe.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
 			throw new PortletException(pe);
 		}
-
-		return "/document_library/edit_repository.jsp";
 	}
 
 }

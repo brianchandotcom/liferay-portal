@@ -76,30 +76,21 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 				_unmountRepository(actionRequest);
 			}
 		}
-		catch (PortalException pe) {
-			if (pe instanceof NoSuchRepositoryException ||
-				pe instanceof PrincipalException) {
+		catch (NoSuchRepositoryException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
-				SessionErrors.add(actionRequest, pe.getClass());
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (InvalidRepositoryException ire) {
+			_log.error(ire, ire);
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (pe instanceof DuplicateFolderNameException ||
-					 pe instanceof DuplicateRepositoryNameException ||
-					 pe instanceof FolderNameException ||
-					 pe instanceof InvalidRepositoryException ||
-					 pe instanceof RepositoryNameException) {
+			SessionErrors.add(actionRequest, ire.getClass());
+		}
+		catch (DuplicateFolderNameException | DuplicateRepositoryNameException |
+			   FolderNameException | RepositoryNameException e) {
 
-				if (pe instanceof InvalidRepositoryException) {
-					_log.error(pe, pe);
-				}
-
-				SessionErrors.add(actionRequest, pe.getClass());
-			}
-			else {
-				throw pe;
-			}
+			SessionErrors.add(actionRequest, e.getClass());
 		}
 	}
 

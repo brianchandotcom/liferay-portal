@@ -59,15 +59,17 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_dlPortletToolbarContributorRegistry.
-				getDLPortletToolbarContributor());
-
 		try {
+			renderRequest.setAttribute(
+				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
+				_dlPortletToolbarContributorRegistry.
+					getDLPortletToolbarContributor());
+
 			if (_pingFolderRepository(renderRequest, renderResponse)) {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
+
+			return super.render(renderRequest, renderResponse);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(renderRequest, "repositoryPingFailed", pe);
@@ -77,8 +79,6 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		catch (IOException ioe) {
 			throw new PortletException(ioe);
 		}
-
-		return super.render(renderRequest, renderResponse);
 	}
 
 	@Override

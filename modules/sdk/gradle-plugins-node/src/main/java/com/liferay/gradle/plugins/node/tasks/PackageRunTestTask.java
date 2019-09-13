@@ -14,13 +14,52 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import org.gradle.api.logging.Logger;
+import org.gradle.api.tasks.VerificationTask;
+
 /**
  * @author Peter Shin
  */
-public class PackageRunTestTask extends PackageRunTask {
+public class PackageRunTestTask
+	extends PackageRunTask implements VerificationTask {
 
 	public PackageRunTestTask() {
 		setScriptName("test");
 	}
+
+	@Override
+	public void executeNode() throws Exception {
+		try {
+			super.executeNode();
+		}
+		catch (Exception e) {
+			if (isIgnoreFailures()) {
+				Logger logger = getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(e.getMessage());
+				}
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public boolean getIgnoreFailures() {
+		return _ignoreFailures;
+	}
+
+	public boolean isIgnoreFailures() {
+		return _ignoreFailures;
+	}
+
+	@Override
+	public void setIgnoreFailures(boolean ignoreFailures) {
+		_ignoreFailures = ignoreFailures;
+	}
+
+	private boolean _ignoreFailures;
 
 }

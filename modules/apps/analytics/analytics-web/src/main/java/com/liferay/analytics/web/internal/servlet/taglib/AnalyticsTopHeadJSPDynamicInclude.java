@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.web.internal.servlet.taglib;
 
+import com.liferay.analytics.client.AnalyticsClientRequestContextContributor;
 import com.liferay.analytics.web.internal.constants.AnalyticsWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -35,15 +36,22 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -76,6 +84,20 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG_KEY,
 			serialize(analyticsClientConfig));
 
+		Map<String, String> analyticsClientRequestContext = new HashMap<>();
+
+		Stream<AnalyticsClientRequestContextContributor> stream =
+			_analyticsClientRequestContextContributors.stream();
+
+		stream.forEach(
+			analyticsClientRequestContextContributor ->
+				analyticsClientRequestContextContributor.contribute(
+					analyticsClientRequestContext, httpServletRequest));
+
+		httpServletRequest.setAttribute(
+			AnalyticsWebKeys.ANALYTICS_CLIENT_REQUEST_CONTEXT_KEY,
+			serialize(analyticsClientRequestContext));
+
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
 
@@ -85,6 +107,24 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_head.jsp#post");
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addAnalyticsClientRequestContextContributor(
+		AnalyticsClientRequestContextContributor
+			analyticsClientRequestContextContributor) {
+
+		_analyticsClientRequestContextContributors.add(
+			analyticsClientRequestContextContributor);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_analyticsClientRequestContextContributors.clear();
 	}
 
 	@Override
@@ -181,6 +221,14 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return false;
 	}
 
+	protected void removeAnalyticsClientRequestContextContributor(
+		AnalyticsClientRequestContextContributor
+			analyticsClientRequestContextContributor) {
+
+		_analyticsClientRequestContextContributors.remove(
+			analyticsClientRequestContextContributor);
+	}
+
 	protected String serialize(Map<String, String> map) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -204,6 +252,10 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsTopHeadJSPDynamicInclude.class);
+
+	private final List<AnalyticsClientRequestContextContributor>
+		_analyticsClientRequestContextContributors =
+			new CopyOnWriteArrayList<>();
 
 	@Reference
 	private JSONFactory _jsonFactory;

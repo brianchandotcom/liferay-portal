@@ -110,9 +110,15 @@ class Analytics {
 			flushInterval || FLUSH_INTERVAL
 		);
 
+		instance.ephemeralContext = {};
+
 		this._ensureIntegrity();
 
 		return instance;
+	}
+
+	updateEphemeralContext(data) {
+		instance.ephemeralContext = {...instance.ephemeralContext, ...data};
 	}
 
 	/**
@@ -237,7 +243,7 @@ class Analytics {
 			{context: {}}
 		);
 
-		return context;
+		return {...context, ...instance.ephemeralContext};
 	}
 
 	/**

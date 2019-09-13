@@ -213,7 +213,7 @@ public class DDMFormAdminDisplayContext {
 			return availableLocales;
 		}
 
-		return new Locale[] {getSiteDefaultLocale()};
+		return new Locale[] {getDefaultLocale()};
 	}
 
 	public String getClearResultsURL() throws PortletException {
@@ -417,7 +417,7 @@ public class DDMFormAdminDisplayContext {
 			return defaultLanguageId;
 		}
 
-		return LocaleUtil.toLanguageId(getSiteDefaultLocale());
+		return LocaleUtil.toLanguageId(getDefaultLocale());
 	}
 
 	public String getDisplayStyle() {
@@ -1109,6 +1109,16 @@ public class DDMFormAdminDisplayContext {
 			DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
 	}
 
+	protected Locale getDefaultLocale() {
+		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
+
+		return Optional.ofNullable(
+			themeDisplay.getLocale()
+		).orElse(
+			themeDisplay.getSiteDefaultLocale()
+		);
+	}
+
 	protected String getDisplayStyle(
 		PortletRequest portletRequest,
 		DDMFormWebConfiguration formWebConfiguration, String[] displayViews) {
@@ -1302,12 +1312,6 @@ public class DDMFormAdminDisplayContext {
 				add(getOrderByDropdownItem("name"));
 			}
 		};
-	}
-
-	protected Locale getSiteDefaultLocale() {
-		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
-
-		return themeDisplay.getSiteDefaultLocale();
 	}
 
 	protected boolean hasResults() {

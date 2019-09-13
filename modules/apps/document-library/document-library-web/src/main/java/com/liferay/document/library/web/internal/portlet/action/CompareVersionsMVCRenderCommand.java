@@ -134,18 +134,18 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 				content.getBytes(StandardCharsets.UTF_8));
 		}
 
-		if (DocumentConversionUtil.isEnabled() &&
-			DocumentConversionUtil.isConvertBeforeCompare(extension)) {
+		if (!DocumentConversionUtil.isEnabled() ||
+			!DocumentConversionUtil.isConvertBeforeCompare(extension)) {
 
-			String tempFileId = DLUtil.getTempFileId(
-				fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-			is = new FileInputStream(
-				DocumentConversionUtil.convert(
-					tempFileId, is, fileVersion.getExtension(), "txt"));
+			return is;
 		}
 
-		return is;
+		String tempFileId = DLUtil.getTempFileId(
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+		return new FileInputStream(
+			DocumentConversionUtil.convert(
+				tempFileId, is, fileVersion.getExtension(), "txt"));
 	}
 
 	@Reference

@@ -126,7 +126,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksEntryPersistence.update(entry);
+		entry = bookmarksEntryPersistence.update(entry);
 
 		// Resources
 
@@ -386,7 +386,7 @@ public class BookmarksEntryLocalServiceImpl
 				status = trashVersion.getStatus();
 			}
 
-			updateStatus(userId, entry, status);
+			entry = updateStatus(userId, entry, status);
 
 			// Trash
 
@@ -430,7 +430,7 @@ public class BookmarksEntryLocalServiceImpl
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry) {
 		entry.setVisits(entry.getVisits() + 1);
 
-		bookmarksEntryPersistence.update(entry);
+		entry = bookmarksEntryPersistence.update(entry);
 
 		assetEntryLocalService.incrementViewCounter(
 			userId, BookmarksEntry.class.getName(), entry.getEntryId(), 1);
@@ -622,7 +622,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setDescription(description);
 		entry.setExpandoBridgeAttributes(serviceContext);
 
-		bookmarksEntryPersistence.update(entry);
+		entry = bookmarksEntryPersistence.update(entry);
 
 		// Asset
 
@@ -662,7 +662,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setStatusByUserName(user.getScreenName());
 		entry.setStatusDate(new Date());
 
-		bookmarksEntryPersistence.update(entry);
+		entry = bookmarksEntryPersistence.update(entry);
 
 		JSONObject extraDataJSONObject = JSONUtil.put("title", entry.getName());
 

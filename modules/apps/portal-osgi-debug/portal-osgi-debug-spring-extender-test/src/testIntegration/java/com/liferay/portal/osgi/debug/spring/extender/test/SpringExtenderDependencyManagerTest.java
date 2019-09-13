@@ -180,9 +180,9 @@ public class SpringExtenderDependencyManagerTest {
 				sb.append(StringPool.NEW_LINE);
 			}
 
-			sb.append("\t\tServiceDependency[interface ");
+			sb.append("\t\tservice dependency [");
 			sb.append(_SPRING_EXTENDER_TEST_COMPONENT_REFERENCE_CLASS_NAME);
-			sb.append(" null]");
+			sb.append("]");
 
 			Assert.assertTrue(message, message.contains(sb.toString()));
 

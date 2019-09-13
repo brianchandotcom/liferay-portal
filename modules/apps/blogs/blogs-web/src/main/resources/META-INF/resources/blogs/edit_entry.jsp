@@ -383,15 +383,21 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</c:if>
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
-					<liferay-asset:select-asset-display-page
-						classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class) %>"
-						classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
-						groupId="<%= scopeGroupId %>"
-						showPortletLayouts="<%= true %>"
-						showViewInContextLink="<%= true %>"
-					/>
-				</aui:fieldset>
+				<%
+				Group scopeGroup = themeDisplay.getScopeGroup();
+				%>
+
+				<c:if test="<%= !scopeGroup.isCompany() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="display-page-template">
+						<liferay-asset:select-asset-display-page
+							classNameId="<%= PortalUtil.getClassNameId(BlogsEntry.class) %>"
+							classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
+							groupId="<%= scopeGroupId %>"
+							showPortletLayouts="<%= true %>"
+							showViewInContextLink="<%= true %>"
+						/>
+					</aui:fieldset>
+				</c:if>
 
 				<liferay-expando:custom-attributes-available
 					className="<%= BlogsEntry.class.getName() %>"

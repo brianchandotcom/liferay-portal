@@ -98,6 +98,19 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	private void _checkFolder(long folderId) throws PortalException {
+		if (_isExternalRepositoryFolder(folderId)) {
+			throw new InvalidRepositoryException(
+				"Tried to download Folder " + folderId +
+					" belonging to an external repository");
+		}
+	}
+
 	private void _downloadFileEntries(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
@@ -238,9 +251,29 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		return themeDisplay.getScopeGroupName() + ".zip";
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
+	private boolean _isExternalRepositoryFolder(Folder folder) {
+		if ((folder.isMountPoint() ||
+			 (folder.getGroupId() != folder.getRepositoryId())) &&
+			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isExternalRepositoryFolder(long folderId)
+		throws PortalException {
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return false;
+		}
+
+		if (_isExternalRepositoryFolder(_dlAppService.getFolder(folderId))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _zipFileEntry(
@@ -286,39 +319,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				_zipFileEntry(fileEntry, path, zipWriter);
 			}
 		}
-	}
-
-	private void _checkFolder(long folderId) throws PortalException {
-		if (_isExternalRepositoryFolder(folderId)) {
-			throw new InvalidRepositoryException(
-				"Tried to download Folder " + folderId +
-					" belonging to an external repository");
-		}
-	}
-
-	private boolean _isExternalRepositoryFolder(Folder folder) {
-		if ((folder.isMountPoint() ||
-			 (folder.getGroupId() != folder.getRepositoryId())) &&
-			RepositoryUtil.isExternalRepository(folder.getRepositoryId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isExternalRepositoryFolder(long folderId)
-		throws PortalException {
-
-		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return false;
-		}
-
-		if (_isExternalRepositoryFolder(_dlAppService.getFolder(folderId))) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private DLAppService _dlAppService;

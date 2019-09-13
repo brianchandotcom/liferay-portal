@@ -73,8 +73,61 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
-	private void _deleteExpiredTemporaryFileEntries(
-			ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteFolders(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteFolders(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				_subscribeFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				_unsubscribeFolder(actionRequest);
+			}
+			else if (cmd.equals("deleteExpiredTemporaryFileEntries")) {
+				_deleteExpiredTemporaryFileEntries(actionRequest);
+			}
+			else if (cmd.equals("updateWorkflowDefinitions")) {
+				_updateWorkflowDefinitions(actionRequest);
+			}
+		}
+		catch (NoSuchFolderException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileEntryException | DuplicateFileException |
+			   DuplicateFolderNameException | FolderNameException |
+			   RequiredFileEntryTypeException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLTrashService(DLTrashService dlTrashService) {
+		_dlTrashService = dlTrashService;
+	}
+
+	private void _deleteExpiredTemporaryFileEntries(ActionRequest actionRequest)
 		throws PortalException {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
@@ -135,60 +188,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			addDeleteSuccessData(actionRequest, data);
 		}
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				_updateFolder(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				_deleteFolders(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				_deleteFolders(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				_subscribeFolder(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				_unsubscribeFolder(actionRequest);
-			}
-			else if (cmd.equals("deleteExpiredTemporaryFileEntries")) {
-				_deleteExpiredTemporaryFileEntries(actionRequest);
-			}
-			else if (cmd.equals("updateWorkflowDefinitions")) {
-				_updateWorkflowDefinitions(actionRequest);
-			}
-		}
-		catch (NoSuchFolderException | PrincipalException e) {
-			SessionErrors.add(actionRequest, e.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/document_library/error.jsp");
-		}
-		catch (DuplicateFileEntryException | DuplicateFileException |
-			   DuplicateFolderNameException | FolderNameException |
-			   RequiredFileEntryTypeException e) {
-
-			SessionErrors.add(actionRequest, e.getClass());
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
 	}
 
 	private void _subscribeFolder(ActionRequest actionRequest)

@@ -82,6 +82,16 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		return "/document_library/compare_versions.jsp";
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	private void _compareVersions(RenderRequest renderRequest)
 		throws IOException, PortalException {
 
@@ -163,16 +173,6 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.TARGET_NAME,
 			targetFileVersion.getTitle() + StringPool.SPACE +
 				targetFileVersion.getVersion());
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
 	}
 
 	private DLAppLocalService _dlAppLocalService;

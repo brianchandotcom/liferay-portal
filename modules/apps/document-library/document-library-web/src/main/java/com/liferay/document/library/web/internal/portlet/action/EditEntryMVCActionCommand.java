@@ -85,6 +85,82 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
+				_cancelCheckedOutEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKIN)) {
+				_checkInEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKOUT)) {
+				_checkOutEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE)) {
+				_moveEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteEntries(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				_restoreTrashEntries(actionRequest);
+			}
+
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (windowState.equals(LiferayWindowState.POP_UP)) {
+				String redirect = _portal.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+
+				if (Validator.isNotNull(redirect)) {
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+			}
+		}
+		catch (DuplicateLockException | NoSuchFileEntryException |
+			   NoSuchFolderException | PrincipalException e) {
+
+			if (e instanceof DuplicateLockException) {
+				DuplicateLockException dle = (DuplicateLockException)e;
+
+				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
+			}
+			else {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (DuplicateFileEntryException | DuplicateFolderNameException |
+			   SourceFileNameException e) {
+
+			if (e instanceof DuplicateFileEntryException) {
+				HttpServletResponse httpServletResponse =
+					_portal.getHttpServletResponse(actionResponse);
+
+				httpServletResponse.setStatus(
+					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+			}
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+		catch (AssetCategoryException | AssetTagException |
+			   FileEntryLockException | InvalidFolderException e) {
+
+			SessionErrors.add(actionRequest, e.getClass(), e);
+		}
+	}
+
 	private void _cancelCheckedOutEntries(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -201,126 +277,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-				_cancelCheckedOutEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKIN)) {
-				_checkInEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKOUT)) {
-				_checkOutEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				_deleteEntries(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE)) {
-				_moveEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				_deleteEntries(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				_restoreTrashEntries(actionRequest);
-			}
-
-			WindowState windowState = actionRequest.getWindowState();
-
-			if (windowState.equals(LiferayWindowState.POP_UP)) {
-				String redirect = _portal.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				if (Validator.isNotNull(redirect)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-			}
-		}
-		catch (DuplicateLockException | NoSuchFileEntryException |
-			   NoSuchFolderException | PrincipalException e) {
-
-			if (e instanceof DuplicateLockException) {
-				DuplicateLockException dle = (DuplicateLockException)e;
-
-				SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
-			}
-			else {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/document_library/error.jsp");
-		}
-		catch (DuplicateFileEntryException | DuplicateFolderNameException |
-			   SourceFileNameException e) {
-
-			if (e instanceof DuplicateFileEntryException) {
-				HttpServletResponse httpServletResponse =
-					_portal.getHttpServletResponse(actionResponse);
-
-				httpServletResponse.setStatus(
-					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-			}
-
-			SessionErrors.add(actionRequest, e.getClass(), e);
-		}
-		catch (AssetCategoryException | AssetTagException |
-			   FileEntryLockException | InvalidFolderException e) {
-
-			SessionErrors.add(actionRequest, e.getClass(), e);
-		}
-	}
-
-	private void _moveEntries(ActionRequest actionRequest)
-		throws PortalException {
-
-		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
-
-		BulkSelection<Folder> folderBulkSelection =
-			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
-
-		folderBulkSelection.forEach(
-			folder -> _dlAppService.moveFolder(
-				folder.getFolderId(), newFolderId, serviceContext));
-
-		BulkSelection<FileEntry> fileEntryBulkSelection =
-			_fileEntryBulkSelectionFactory.create(
-				actionRequest.getParameterMap());
-
-		fileEntryBulkSelection.forEach(
-			fileEntry -> _dlAppService.moveFileEntry(
-				fileEntry.getFileEntryId(), newFolderId, serviceContext));
-
-		BulkSelection<FileShortcut> fileShortcutBulkSelection =
-			_fileShortcutBulkSelectionFactory.create(
-				actionRequest.getParameterMap());
-
-		fileShortcutBulkSelection.forEach(
-			fileShortcut -> _dlAppService.updateFileShortcut(
-				fileShortcut.getFileShortcutId(), newFolderId,
-				fileShortcut.getToFileEntryId(), serviceContext));
-	}
-
-	private void _restoreTrashEntries(ActionRequest actionRequest)
-		throws PortalException {
-
-		long[] restoreTrashEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			_trashEntryService.restoreEntry(restoreTrashEntryId);
-		}
-	}
-
 	private void _deleteFileEntry(
 		FileEntry fileEntry, boolean moveToTrash,
 		List<TrashedModel> trashedModels) {
@@ -388,6 +344,50 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (PortalException pe) {
 			ReflectionUtil.throwException(pe);
+		}
+	}
+
+	private void _moveEntries(ActionRequest actionRequest)
+		throws PortalException {
+
+		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), actionRequest);
+
+		BulkSelection<Folder> folderBulkSelection =
+			_folderBulkSelectionFactory.create(actionRequest.getParameterMap());
+
+		folderBulkSelection.forEach(
+			folder -> _dlAppService.moveFolder(
+				folder.getFolderId(), newFolderId, serviceContext));
+
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
+
+		fileEntryBulkSelection.forEach(
+			fileEntry -> _dlAppService.moveFileEntry(
+				fileEntry.getFileEntryId(), newFolderId, serviceContext));
+
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
+
+		fileShortcutBulkSelection.forEach(
+			fileShortcut -> _dlAppService.updateFileShortcut(
+				fileShortcut.getFileShortcutId(), newFolderId,
+				fileShortcut.getToFileEntryId(), serviceContext));
+	}
+
+	private void _restoreTrashEntries(ActionRequest actionRequest)
+		throws PortalException {
+
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
 	}
 

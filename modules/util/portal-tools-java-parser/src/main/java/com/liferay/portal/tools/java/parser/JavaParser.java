@@ -78,12 +78,6 @@ public class JavaParser {
 
 		String newContent = _parse(file, content);
 
-		ImportsFormatter importsFormatter = new JavaImportsFormatter();
-
-		newContent = importsFormatter.format(
-			_trimContent(newContent), ToolsUtil.getPackagePath(file),
-			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
-
 		if (writeFile && !newContent.equals(content)) {
 			FileUtil.write(file, newContent);
 		}
@@ -873,6 +867,16 @@ public class JavaParser {
 		}
 
 		newContent = _parseContent(parsedJavaClass, fileContents, lines);
+
+		if (!newContent.equals(content)) {
+			return _parse(file, newContent);
+		}
+
+		ImportsFormatter importsFormatter = new JavaImportsFormatter();
+
+		newContent = importsFormatter.format(
+			_trimContent(newContent), ToolsUtil.getPackagePath(file),
+			StringUtil.replaceLast(file.getName(), ".java", StringPool.BLANK));
 
 		if (!newContent.equals(content)) {
 			return _parse(file, newContent);

@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -198,6 +199,8 @@ public class FreeMarkerFragmentEntryProcessor
 
 				contextObjects.put(
 					"configuration", configurationDefaultValuesJSONObject);
+
+				contextObjects.put("fragmentEntryLinkUuid", StringPool.BLANK);
 
 				contextObjects.putAll(
 					FragmentEntryConfigUtil.getContextObjects(

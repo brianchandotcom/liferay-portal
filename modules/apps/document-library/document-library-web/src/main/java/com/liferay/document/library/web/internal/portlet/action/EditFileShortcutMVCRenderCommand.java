@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -68,16 +69,16 @@ public class EditFileShortcutMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT, fileShortcut);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileShortcutException ||
-				e instanceof PrincipalException) {
+		catch (PortalException pe) {
+			if (pe instanceof NoSuchFileShortcutException ||
+				pe instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, pe.getClass());
 
 				return "/document_library/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(pe);
 		}
 
 		return "/document_library/edit_file_shortcut.jsp";

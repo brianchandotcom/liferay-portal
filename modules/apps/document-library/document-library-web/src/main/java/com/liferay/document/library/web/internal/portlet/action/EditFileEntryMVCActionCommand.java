@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.UploadResponseHandler;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -105,6 +106,7 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -205,7 +207,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						portletConfig, actionRequest, actionResponse,
 						uploadPortletRequest);
 				}
-				catch (Exception e) {
+				catch (PortalException pe) {
 					if (!cmd.equals(Constants.ADD_DYNAMIC) &&
 						Validator.isNotNull(sourceFileName)) {
 
@@ -213,7 +215,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 							actionRequest, RequiredFileException.class);
 					}
 
-					throw e;
+					throw pe;
 				}
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
@@ -315,7 +317,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		List<KeyValuePair> validFileNameKVPs = new ArrayList<>();
 		List<KeyValuePair> invalidFileNameKVPs = new ArrayList<>();
@@ -371,7 +373,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			String selectedFileName, List<KeyValuePair> validFileNameKVPs,
 			List<KeyValuePair> invalidFileNameKVPs)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -431,7 +433,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _addTempFileEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(actionRequest);
@@ -463,7 +465,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _cancelFileEntriesCheckOut(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
@@ -481,7 +483,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _checkInFileEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
@@ -513,7 +515,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _checkOutFileEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
@@ -575,7 +577,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _deleteFileEntry(
 			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
@@ -620,7 +622,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _deleteTempFileEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws IOException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -655,7 +657,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private String _getAddMultipleFileEntriesErrorMessage(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			Exception e)
-		throws Exception {
+		throws PortalException {
 
 		String errorMessage = null;
 
@@ -759,7 +761,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private String _getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			FileEntry fileEntry, String redirect)
-		throws Exception {
+		throws PortletException {
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, portletConfig.getPortletName(),
@@ -900,7 +902,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse,
 			UploadPortletRequest uploadPortletRequest)
-		throws Exception {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

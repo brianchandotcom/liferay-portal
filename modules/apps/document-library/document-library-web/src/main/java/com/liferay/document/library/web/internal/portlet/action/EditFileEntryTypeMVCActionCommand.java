@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementExceptio
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -48,6 +49,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -76,7 +79,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteFileEntryType(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
@@ -87,7 +90,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -152,7 +155,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void subscribeFileEntryType(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -165,7 +168,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void unsubscribeFileEntryType(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -179,7 +182,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void updateFileEntryType(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");

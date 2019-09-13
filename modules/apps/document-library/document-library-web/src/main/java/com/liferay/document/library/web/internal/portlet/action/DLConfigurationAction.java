@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,7 +55,9 @@ public class DLConfigurationAction
 	}
 
 	@Override
-	protected void validate(ActionRequest actionRequest) throws Exception {
+	protected void validate(ActionRequest actionRequest)
+		throws PortalException {
+
 		validateDisplayStyleViews(actionRequest);
 
 		super.validate(actionRequest);

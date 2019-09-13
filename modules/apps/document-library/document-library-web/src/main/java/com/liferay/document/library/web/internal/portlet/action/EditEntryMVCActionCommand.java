@@ -60,7 +60,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
@@ -87,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void cancelCheckedOutEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
@@ -98,7 +97,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void checkInEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
@@ -136,7 +135,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void checkOutEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsFileEntry");
@@ -165,7 +164,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteEntries(
 			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		throws PortalException {
 
 		List<TrashedModel> trashedModels = new ArrayList<>();
 
@@ -276,12 +275,11 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
 	}
 
-	protected void moveEntries(ActionRequest actionRequest) throws Exception {
+	protected void moveEntries(ActionRequest actionRequest)
+		throws PortalException {
+
 		long newFolderId = ParamUtil.getLong(actionRequest, "newFolderId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -313,7 +311,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] restoreTrashEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);

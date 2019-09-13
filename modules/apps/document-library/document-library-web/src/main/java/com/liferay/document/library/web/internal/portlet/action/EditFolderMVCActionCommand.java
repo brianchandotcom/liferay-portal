@@ -51,7 +51,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,7 +95,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteFolders(
 			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		throws PortalException {
 
 		long[] deleteFolderIds = null;
 
@@ -141,7 +140,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -180,9 +179,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			SessionErrors.add(actionRequest, e.getClass());
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
 	}
 
 	@Reference(unbind = "-")
@@ -196,7 +192,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void subscribeFolder(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -207,7 +203,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void unsubscribeFolder(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -218,7 +214,9 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), folderId);
 	}
 
-	protected void updateFolder(ActionRequest actionRequest) throws Exception {
+	protected void updateFolder(ActionRequest actionRequest)
+		throws PortalException {
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -250,7 +248,7 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void updateWorkflowDefinitions(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);

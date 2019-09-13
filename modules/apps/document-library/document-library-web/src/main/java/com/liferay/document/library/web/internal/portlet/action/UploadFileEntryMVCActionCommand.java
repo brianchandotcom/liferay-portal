@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.upload.DLUploadFileEntryHandler;
 import com.liferay.document.library.web.internal.upload.DLUploadResponseHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
@@ -44,7 +45,7 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		_uploadHandler.upload(
 			_dlUploadFileEntryHandler, _dlUploadResponseHandler, actionRequest,

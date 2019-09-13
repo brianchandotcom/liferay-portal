@@ -23,12 +23,15 @@ import com.liferay.document.library.repository.authorization.capability.Authoriz
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.io.IOException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -66,10 +69,13 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
 		}
-		catch (Exception e) {
-			SessionErrors.add(renderRequest, "repositoryPingFailed", e);
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, "repositoryPingFailed", pe);
 
 			return "/document_library/error.jsp";
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 
 		return super.render(renderRequest, renderResponse);
@@ -87,7 +93,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	protected boolean pingFolderRepository(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");

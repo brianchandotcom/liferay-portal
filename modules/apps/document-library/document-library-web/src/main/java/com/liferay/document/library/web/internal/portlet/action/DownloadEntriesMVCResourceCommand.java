@@ -98,11 +98,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
 	private void _checkFolder(long folderId) throws PortalException {
 		if (_isExternalRepositoryFolder(folderId)) {
 			throw new InvalidRepositoryException(
@@ -321,6 +316,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	@Reference
 	private DLAppService _dlAppService;
 
 }

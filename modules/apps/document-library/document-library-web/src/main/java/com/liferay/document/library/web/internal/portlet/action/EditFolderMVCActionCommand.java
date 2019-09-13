@@ -117,16 +117,6 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
-	}
-
 	private void _deleteExpiredTemporaryFileEntries(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -257,7 +247,10 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext);
 	}
 
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private DLTrashService _dlTrashService;
 
 }

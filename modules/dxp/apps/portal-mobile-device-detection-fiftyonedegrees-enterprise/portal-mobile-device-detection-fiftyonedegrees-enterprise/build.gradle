@@ -11,7 +11,7 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-profile-api")
 
-	dat ext: "gz", group: "com.liferay", name: "com.51degrees.dat.enterprise", version: "3.2-20190801"
+	dat ext: "gz", group: "com.liferay", name: "com.51degrees.dat.enterprise", version: "3.2-20190913"
 }
 
 processResources {

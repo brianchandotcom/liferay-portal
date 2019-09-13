@@ -110,9 +110,15 @@ class Analytics {
 			flushInterval || FLUSH_INTERVAL
 		);
 
+		instance.ephemeralContext = {};
+
 		this._ensureIntegrity();
 
 		return instance;
+	}
+
+	updateEphemeralContext(data) {
+		instance.ephemeralContext = {...instance.ephemeralContext, ...data}
 	}
 
 	/**
@@ -237,7 +243,7 @@ class Analytics {
 			{context: {}}
 		);
 
-		return context;
+		return {...context, ...instance.ephemeralContext};
 	}
 
 	/**
@@ -409,6 +415,8 @@ class Analytics {
 	 * @param {object} eventProps Complementary information about the event
 	 */
 	send(eventId, applicationId, eventProps) {
+		const {experimentId, variantId, url} = this._getContext();
+		console.log('SEND CLIENT', eventId, {url, experimentId, variantId}, middlewares);
 		const currentContext = this._getContext();
 		const currentContextHash = hash(currentContext);
 
@@ -443,6 +451,7 @@ class Analytics {
 	 * @return {Promise} A promise resolved with the generated identity hash
 	 */
 	setIdentity(identity) {
+		console.log('setIdentity', this.config);
 		this.config.identity = identity;
 
 		return this._getUserId().then(userId =>

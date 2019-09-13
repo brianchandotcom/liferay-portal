@@ -294,18 +294,18 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	private List<ScreenNavigationEntry> _getScreenNavigationEntries() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ScreenNavigationRegistry screenNavigationRegistry =
-			ServletContextUtil.getScreenNavigationRegistry();
-
 		ScreenNavigationCategory selectedScreenNavigationCategory =
 			_getSelectedScreenNavigationCategory();
 
 		if (selectedScreenNavigationCategory == null) {
 			return null;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ScreenNavigationRegistry screenNavigationRegistry =
+			ServletContextUtil.getScreenNavigationRegistry();
 
 		return screenNavigationRegistry.getScreenNavigationEntries(
 			selectedScreenNavigationCategory, themeDisplay.getUser(),

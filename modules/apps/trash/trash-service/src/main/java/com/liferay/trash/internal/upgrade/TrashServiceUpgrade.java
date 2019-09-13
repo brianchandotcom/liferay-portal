@@ -15,6 +15,7 @@
 package com.liferay.trash.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.trash.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.trash.internal.upgrade.v2_0_0.util.TrashEntryTable;
@@ -35,6 +36,17 @@ public class TrashServiceUpgrade implements UpgradeStepRegistrator {
 			"1.0.0", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {TrashEntryTable.class}));
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"TrashEntry", "TrashVersion"};
+				}
+
+			});
 	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.wiki.internal.upgrade;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.internal.upgrade.v1_0_0.UpgradeCompanyId;
@@ -66,6 +67,19 @@ public class WikiServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.1", "2.0.0",
 			new BaseUpgradeSQLServerDatetime(
 				new Class<?>[] {WikiNodeTable.class, WikiPageTable.class}));
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"WikiNode", "WikiPage", "WikiPageResource"
+					};
+				}
+
+			});
 	}
 
 	@Reference

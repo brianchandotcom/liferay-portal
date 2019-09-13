@@ -17,7 +17,7 @@ import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure, pageStructure} from '../../util/config.es';
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import Component, {Fragment} from 'metal-jsx';
+import Component from 'metal-jsx';
 import dom from 'metal-dom';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
@@ -60,7 +60,7 @@ class Actions extends Component {
 
 	render() {
 		const {expanded} = this;
-		const {items, label, spritemap} = this.props;
+		const {disabled, items, label, spritemap} = this.props;
 
 		return (
 			<div
@@ -70,6 +70,7 @@ class Actions extends Component {
 				<span class="actions-label">{label}</span>
 
 				<ClayActionsDropdown
+					disabled={disabled}
 					events={{
 						expandedChanged: this._handleExpandedChanged.bind(this),
 						itemClicked: this._handleItemClicked.bind(this)
@@ -100,6 +101,7 @@ class Actions extends Component {
 	}
 
 	_handleElementClicked({target}) {
+		const {disabled} = this.props;
 		const {dropdown} = this.refs;
 
 		if (!dropdown.element.contains(target)) {
@@ -109,7 +111,7 @@ class Actions extends Component {
 			const indexes = getFieldIndexes(pages, fieldName);
 
 			dispatch('fieldClicked', indexes);
-		} else if (!this.expanded) {
+		} else if (!this.expanded && !disabled) {
 			this.expanded = true;
 		}
 	}
@@ -151,6 +153,15 @@ class Actions extends Component {
 }
 
 Actions.PROPS = {
+	/**
+	 * @default false
+	 * @instance
+	 * @memberof Actions
+	 * @type {!boolean}
+	 */
+
+	disabled: Config.bool().value(false),
+
 	/**
 	 * @default undefined
 	 * @instance
@@ -223,27 +234,25 @@ const withActionableFields = ChildComponent => {
 				<div>
 					<ChildComponent {...this.props} />
 
-					{this.isActionsEnabled() && (
-						<Fragment>
-							<Actions
-								items={fieldActions}
-								pages={pages}
-								portalElement={document.body}
-								ref="selectedFieldActions"
-								spritemap={spritemap}
-								visible={false}
-							/>
+					<Actions
+						disabled={!this.isActionsEnabled()}
+						items={fieldActions}
+						pages={pages}
+						portalElement={document.body}
+						ref="selectedFieldActions"
+						spritemap={spritemap}
+						visible={false}
+					/>
 
-							<Actions
-								items={fieldActions}
-								pages={pages}
-								portalElement={document.body}
-								ref="hoveredFieldActions"
-								spritemap={spritemap}
-								visible={false}
-							/>
-						</Fragment>
-					)}
+					<Actions
+						disabled={!this.isActionsEnabled()}
+						items={fieldActions}
+						pages={pages}
+						portalElement={document.body}
+						ref="hoveredFieldActions"
+						spritemap={spritemap}
+						visible={false}
+					/>
 				</div>
 			);
 		}
@@ -332,10 +341,7 @@ const withActionableFields = ChildComponent => {
 		}
 
 		_handleMouseEnterField({delegateTarget}) {
-			if (
-				this.isActionsEnabled() &&
-				!delegateTarget.classList.contains('selected')
-			) {
+			if (!delegateTarget.classList.contains('selected')) {
 				const {hoveredFieldActions} = this.refs;
 				const indexes = FormSupport.getIndexes(
 					dom.closest(delegateTarget, '.col-ddm')

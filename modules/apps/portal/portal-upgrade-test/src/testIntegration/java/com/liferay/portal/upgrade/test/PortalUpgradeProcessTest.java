@@ -69,6 +69,52 @@ public class PortalUpgradeProcessTest {
 	}
 
 	@Test
+	public void testDefineNewMajorSchemaVersion() throws Exception {
+		Version previousMajorSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor() - 1, 0, 0);
+
+		_updateSchemaVersion(previousMajorSchemaVersion);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertFalse(
+				"Major schema version changes require the upgrade tool " +
+					"execution",
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
+	}
+
+	@Test
+	public void testDefineNewMicroSchemaVersion() throws Exception {
+		Version previousMicroSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor(), _currentSchemaVersion.getMinor(),
+			_currentSchemaVersion.getMicro() - 1);
+
+		_updateSchemaVersion(previousMicroSchemaVersion);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertTrue(
+				"Micro schema version changes must be optional",
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
+	}
+
+	@Test
+	public void testDefineNewMinorSchemaVersion() throws Exception {
+		Version previousMinorSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor(),
+			_currentSchemaVersion.getMinor() - 1, 0);
+
+		_updateSchemaVersion(previousMinorSchemaVersion);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertFalse(
+				"Minor schema version changes require the upgrade tool " +
+					"exectution",
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
+	}
+
+	@Test
 	public void testGetLatestSchemaVersion() {
 		Set<Version> pendingSchemaVersions = ReflectionTestUtil.invoke(
 			_innerPortalUpgradeProcess, "getPendingSchemaVersions",
@@ -132,11 +178,45 @@ public class PortalUpgradeProcessTest {
 	}
 
 	@Test
-	public void testIsNotInRequiredSchemaVersion() throws Exception {
-		_updateSchemaVersion(_ORIGINAL_SCHEMA_VERSION);
+	public void testRevertCodeToPreviousMajorSchemaVersion() throws Exception {
+		Version nextMajorSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor() + 1, 0, 0);
+
+		_updateSchemaVersion(nextMajorSchemaVersion);
 
 		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertFalse(
+				"Major schema version changes must be non revertible",
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
+	}
+
+	@Test
+	public void testRevertCodeToPreviousMicroSchemaVersion() throws Exception {
+		Version nextMicroSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor(), _currentSchemaVersion.getMinor(),
+			_currentSchemaVersion.getMicro() + 1);
+
+		_updateSchemaVersion(nextMicroSchemaVersion);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertTrue(
+				"Micro schema version changes must be revertible",
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
+	}
+
+	@Test
+	public void testRevertCodeToPreviousMinorSchemaVersion() throws Exception {
+		Version nextMinorSchemaVersion = new Version(
+			_currentSchemaVersion.getMajor(),
+			_currentSchemaVersion.getMinor() + 1, 0);
+
+		_updateSchemaVersion(nextMinorSchemaVersion);
+
+		try (Connection connection = DataAccess.getConnection()) {
+			Assert.assertTrue(
+				"Minor schema version changes must be revertible",
 				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
 		}
 	}

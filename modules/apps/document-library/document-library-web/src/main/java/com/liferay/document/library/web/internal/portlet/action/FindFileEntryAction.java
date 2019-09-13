@@ -50,9 +50,7 @@ public class FindFileEntryAction extends FindStrutsAction {
 	}
 
 	@Override
-	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
-		throws Exception {
-
+	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey) {
 		portletURL.setParameter(
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}

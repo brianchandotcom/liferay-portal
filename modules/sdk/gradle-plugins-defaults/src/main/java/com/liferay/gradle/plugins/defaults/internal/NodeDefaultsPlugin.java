@@ -21,8 +21,10 @@ import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -48,6 +50,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		_configureTaskNpmInstall(project, portalVersion);
 
 		_configureTaskExecutePackageManager(project);
+		_configureTaskPackageRunTest(project);
 		_configureTasksPublishNodeModule(project);
 	}
 
@@ -100,6 +103,26 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		if (!PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion)) {
 			npmInstallTask.setUseNpmCI(Boolean.TRUE);
+		}
+	}
+
+	private void _configureTaskPackageRunTest(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		PackageRunTestTask packageRunTestTask =
+			(PackageRunTestTask)taskContainer.findByName(
+				NodePlugin.PACKAGE_RUN_TEST_TASK_NAME);
+
+		if (packageRunTestTask == null) {
+			return;
+		}
+
+		String ignoreFailures = GradleUtil.getTaskPrefixedProperty(
+			packageRunTestTask, "ignore.failures");
+
+		if (Validator.isNotNull(ignoreFailures)) {
+			packageRunTestTask.setIgnoreFailures(
+				Boolean.parseBoolean(ignoreFailures));
 		}
 	}
 

@@ -15,13 +15,20 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 
@@ -54,6 +61,24 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		return clearResultsURL.toString();
 	}
 
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/account_admin/add_account_user", "accountEntryId",
+							ParamUtil.getLong(
+								liferayPortletRequest, "accountEntryId"));
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add-user"));
+					});
+			}
+		};
+	}
+
 	@Override
 	public PortletURL getPortletURL() {
 		try {
@@ -71,6 +96,15 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	@Override
 	public Boolean isDisabled() {
 		return false;
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PortalPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), ActionKeys.ADD_USER);
 	}
 
 	@Override

@@ -16,12 +16,12 @@ package com.liferay.mule.internal.connection;
 
 import com.liferay.mule.internal.connection.authentication.BasicAuthentication;
 import com.liferay.mule.internal.connection.authentication.HttpAuthentication;
+import com.liferay.mule.internal.oas.OASURLParser;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -68,7 +68,7 @@ public final class LiferayConnection {
 		return _httpClient.send(
 			_getHttpRequest(
 				HttpConstants.Method.GET,
-				_serverURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, null),
 			10000, true, null);
 	}
@@ -93,7 +93,7 @@ public final class LiferayConnection {
 		return _httpClient.send(
 			_getHttpRequest(
 				HttpConstants.Method.POST,
-				_serverURL + _resolvePathParams(endpoint, pathParams),
+				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
 				queryParams, inputStream),
 			10000, true, null);
 	}
@@ -104,7 +104,7 @@ public final class LiferayConnection {
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
-		_serverURL = _getServerURL(openApiSpecPath);
+		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
 		_httpAuthentication = httpAuthentication;
 
 		_initHttpClient(httpService);
@@ -133,14 +133,13 @@ public final class LiferayConnection {
 		return httpRequestBuilder.build();
 	}
 
-	private String _getServerURL(String openApiSpecPath)
+	private String _getServerBaseURL(String openApiSpecPath)
 		throws ConnectionException {
 
-		try {
-			URL url = new URL(openApiSpecPath);
+		OASURLParser oasURLParser = new OASURLParser(openApiSpecPath);
 
-			return url.getProtocol() + "://" + url.getHost() + ":" +
-				url.getPort() + "/o/headless-commerce-admin-catalog";
+		try {
+			return oasURLParser.getServerBaseURL();
 		}
 		catch (MalformedURLException murle) {
 			throw new ConnectionException(murle);
@@ -174,6 +173,6 @@ public final class LiferayConnection {
 	private final HttpAuthentication _httpAuthentication;
 	private HttpClient _httpClient;
 	private final String _openAPISpecPath;
-	private final String _serverURL;
+	private final String _serverBaseURL;
 
 }

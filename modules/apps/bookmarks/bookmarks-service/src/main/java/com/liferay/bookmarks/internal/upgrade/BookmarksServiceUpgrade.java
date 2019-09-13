@@ -20,6 +20,7 @@ import com.liferay.bookmarks.internal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksEntryResourceBlock;
 import com.liferay.bookmarks.internal.upgrade.v2_0_0.UpgradeBookmarksFolderResourceBlock;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +43,17 @@ public class BookmarksServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.0.0", "2.0.0", new UpgradeBookmarksEntryResourceBlock(),
 			new UpgradeBookmarksFolderResourceBlock());
+
+		registry.register(
+			"2.0.0", "2.1.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {"BookmarksEntry", "BookmarksFolder"};
+				}
+
+			});
 	}
 
 	@Reference

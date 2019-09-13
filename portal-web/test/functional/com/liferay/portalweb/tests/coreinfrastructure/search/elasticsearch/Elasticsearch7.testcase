@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch6";
+	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Elasticsearch Impl";
 
@@ -34,9 +34,9 @@ definition {
 			portlet = "Search");
 
 		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = "6.5.0",
+			clientVersion = "7.3.0",
 			engineVendor = "Elasticsearch",
-			serverVersion = "6.5.0");
+			serverVersion = "7.3.0");
 
 		Navigator.gotoNavItem(navItem = "Field Mappings");
 
@@ -67,7 +67,7 @@ definition {
 	test AssertSystemSettingsPropogateToModule {
 		// Ignoring test until LPS-65459 is resolved
 
-		property test.name.skip.portal.instance = "Elasticsearch6#AssertSystemSettingsPropogateToModule";
+		property test.name.skip.portal.instance = "Elasticsearch7#AssertSystemSettingsPropogateToModule";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -76,7 +76,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Search",
-			configurationName = "Elasticsearch 6",
+			configurationName = "Elasticsearch 7",
 			configurationScope = "System Scope");
 
 		SystemSettings.editTextAreaSetting(
@@ -95,7 +95,7 @@ definition {
 		property portal.acceptance = "true";
 		property remote.elasticsearch.cluster.size = "2";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch6#ElasticsearchRemoteClusterSmokeTest";
+		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchRemoteClusterSmokeTest";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "2");
 
@@ -149,7 +149,7 @@ definition {
 
 	@priority = "5"
 	test OSGiConfigSmokeTest {
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config";
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 		property osgi.module.configurations = "clusterName=&quot;LiferayElasticsearchCluster1&quot;";
 		property portal.acceptance = "true";
 

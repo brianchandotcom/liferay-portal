@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch6";
+	property portal.suite.search.engine = "elasticsearch7";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Elasticsearch Impl";
@@ -171,7 +171,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch6EE#PortalClusterSmokeTest";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#PortalClusterSmokeTest";
 
 		Elasticsearch.viewClusterStatusViaClusterHealthAPI(numberOfNodes = "1");
 
@@ -377,9 +377,9 @@ definition {
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch6-xpack-monitoring,portal-search-elasticsearch6-xpack-security";
+		property osgi.app.includes = "portal-search-elasticsearch7-xpack-monitoring,portal-search-elasticsearch7-xpack-security";
 		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch6EE#XPackSmokeTest";
+		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

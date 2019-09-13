@@ -170,6 +170,26 @@ describe('updateEditableValuesAction', () => {
 			});
 		});
 
+		it('ignores segmentsExperienceId when it is undefined', () => {
+			delete state.defaultSegmentsExperienceId;
+			delete state.segmentsExperienceId;
+
+			dispatch(
+				updateEditableValueContentAction(
+					fragmentId,
+					EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					'myFieldId',
+					'myNewValue'
+				)
+			);
+
+			expect(
+				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR].myFieldId
+			).toEqual({
+				[languageId]: 'myNewValue'
+			});
+		});
+
 		it('keeps existing translations and segments', () => {
 			dispatch(
 				updateEditableValueContentAction(
@@ -258,6 +278,23 @@ describe('updateEditableValuesAction', () => {
 			expect(
 				editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR][segmentId]
 			).toEqual({configA: 'configAValue'});
+		});
+
+		it('ignores segmentsExperienceId when it is undefined', () => {
+			delete state.defaultSegmentsExperienceId;
+			delete state.segmentsExperienceId;
+
+			dispatch(
+				updateFragmentConfigurationAction(fragmentId, {
+					configField: 'configValue'
+				})
+			);
+
+			expect(editableValues[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]).toEqual(
+				{
+					configField: 'configValue'
+				}
+			);
 		});
 	});
 });

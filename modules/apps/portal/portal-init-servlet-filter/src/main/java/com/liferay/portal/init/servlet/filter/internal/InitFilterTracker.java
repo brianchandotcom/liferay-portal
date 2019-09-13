@@ -41,7 +41,7 @@ public class InitFilterTracker {
 		properties.put("dispatcher", new String[] {"FORWARD", "REQUEST"});
 		properties.put("servlet-context-name", "");
 		properties.put("servlet-filter-name", "Init Filter");
-		properties.put("url-pattern", "/c/*");
+		properties.put("url-pattern", "/*");
 
 		_serviceRegistration = bundleContext.registerService(
 			Filter.class, initFilter, properties);

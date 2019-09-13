@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.debug.internal.osgi.commands;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dependency.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -59,6 +60,8 @@ public class SystemCheckOSGiCommands {
 		if (GetterUtil.getBoolean(
 				bundleContext.getProperty("initial.system.check.enabled"),
 				true)) {
+
+			DependencyManagerSyncUtil.sync();
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Running system check");

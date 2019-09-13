@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dependency.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -106,6 +107,8 @@ public class DBUpgrader {
 			_checkClassNamesAndResourceActions();
 
 			verify();
+
+			DependencyManagerSyncUtil.sync();
 
 			_registerModuleServiceLifecycle("database.initialized");
 

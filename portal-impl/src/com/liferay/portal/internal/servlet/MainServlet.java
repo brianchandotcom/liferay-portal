@@ -22,6 +22,7 @@ import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.dependency.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -145,6 +146,8 @@ public class MainServlet extends HttpServlet {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Destroy plugins");
 		}
+
+		DependencyManagerSyncUtil.sync();
 
 		_portalInitializedModuleServiceLifecycleServiceRegistration.
 			unregister();

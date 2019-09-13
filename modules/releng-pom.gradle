@@ -1,3 +1,4 @@
+import com.liferay.gradle.util.FileUtil
 import com.liferay.project.templates.ProjectTemplates
 
 import groovy.io.FileType
@@ -413,13 +414,11 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 
 		String groupPath = it.groupId.text().replaceAll(/\./, "/")
 
+		File dependencyFile = new File(buildDir, "testPom/${it.artifactId.text()}-${it.version.text()}.jar")
 		String dependencyURL = "https://repository-cdn.liferay.com/nexus/content/groups/public/${groupPath}/${it.artifactId.text()}/${it.version.text()}/${it.artifactId.text()}-${it.version.text()}.jar"
 
 		try {
-			exec {
-				args dependencyURL, "--spider"
-				executable "wget"
-			}
+			FileUtil.get(project, dependencyURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], dependencyFile, false, true)
 		}
 		catch(Exception e) {
 			failedDependencies += "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}"

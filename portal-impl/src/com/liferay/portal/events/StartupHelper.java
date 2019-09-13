@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
@@ -183,10 +184,25 @@ public class StartupHelper {
 		if (!PortalUpgradeProcess.isInRequiredSchemaVersion(
 				DataAccess.getConnection())) {
 
-			String msg =
-				"You must first upgrade the portal to the required schema " +
-					"version " +
-						PortalUpgradeProcess.getRequiredSchemaVersion();
+			Version currentSchemaVersion =
+				PortalUpgradeProcess.getCurrentSchemaVersion(
+					DataAccess.getConnection());
+
+			Version requiredSchemaVersion =
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			String msg;
+
+			if (currentSchemaVersion.compareTo(requiredSchemaVersion) < 0) {
+				msg =
+					"You must first upgrade the portal to the required " +
+						"schema version " + requiredSchemaVersion;
+			}
+			else {
+				msg =
+					"Current portal schema version " + currentSchemaVersion +
+						" requires a newer version of Liferay";
+			}
 
 			System.out.println(msg);
 

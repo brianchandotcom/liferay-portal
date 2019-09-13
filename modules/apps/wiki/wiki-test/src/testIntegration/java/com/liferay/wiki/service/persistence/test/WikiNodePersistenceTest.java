@@ -124,6 +124,8 @@ public class WikiNodePersistenceTest {
 
 		WikiNode newWikiNode = _persistence.create(pk);
 
+		newWikiNode.setMvccVersion(RandomTestUtil.nextLong());
+
 		newWikiNode.setUuid(RandomTestUtil.randomString());
 
 		newWikiNode.setGroupId(RandomTestUtil.nextLong());
@@ -159,6 +161,8 @@ public class WikiNodePersistenceTest {
 		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
 			newWikiNode.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingWikiNode.getMvccVersion(), newWikiNode.getMvccVersion());
 		Assert.assertEquals(existingWikiNode.getUuid(), newWikiNode.getUuid());
 		Assert.assertEquals(
 			existingWikiNode.getNodeId(), newWikiNode.getNodeId());
@@ -295,12 +299,12 @@ public class WikiNodePersistenceTest {
 
 	protected OrderByComparator<WikiNode> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"WikiNode", "uuid", true, "nodeId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"lastPostDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"WikiNode", "mvccVersion", true, "uuid", true, "nodeId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "lastPostDate", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -539,6 +543,8 @@ public class WikiNodePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		WikiNode wikiNode = _persistence.create(pk);
+
+		wikiNode.setMvccVersion(RandomTestUtil.nextLong());
 
 		wikiNode.setUuid(RandomTestUtil.randomString());
 

@@ -30,6 +30,7 @@ public class WikiPageResourceSoap implements Serializable {
 	public static WikiPageResourceSoap toSoapModel(WikiPageResource model) {
 		WikiPageResourceSoap soapModel = new WikiPageResourceSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setResourcePrimKey(model.getResourcePrimKey());
 		soapModel.setGroupId(model.getGroupId());
@@ -97,6 +98,14 @@ public class WikiPageResourceSoap implements Serializable {
 		setResourcePrimKey(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public String getUuid() {
 		return _uuid;
 	}
@@ -145,6 +154,7 @@ public class WikiPageResourceSoap implements Serializable {
 		_title = title;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _resourcePrimKey;
 	private long _groupId;

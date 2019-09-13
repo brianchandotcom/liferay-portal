@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WikiPageModel
-	extends BaseModel<WikiPage>, ContainerModel, ResourcedModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<WikiPage>, ContainerModel, MVCCModel, ResourcedModel,
+			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface WikiPageModel
 	 * @param primaryKey the primary key of this wiki page
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this wiki page.
+	 *
+	 * @return the mvcc version of this wiki page
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this wiki page.
+	 *
+	 * @param mvccVersion the mvcc version of this wiki page
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this wiki page.

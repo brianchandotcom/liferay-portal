@@ -123,6 +123,8 @@ public class WikiPageResourcePersistenceTest {
 
 		WikiPageResource newWikiPageResource = _persistence.create(pk);
 
+		newWikiPageResource.setMvccVersion(RandomTestUtil.nextLong());
+
 		newWikiPageResource.setUuid(RandomTestUtil.randomString());
 
 		newWikiPageResource.setGroupId(RandomTestUtil.nextLong());
@@ -138,6 +140,9 @@ public class WikiPageResourcePersistenceTest {
 		WikiPageResource existingWikiPageResource =
 			_persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingWikiPageResource.getMvccVersion(),
+			newWikiPageResource.getMvccVersion());
 		Assert.assertEquals(
 			existingWikiPageResource.getUuid(), newWikiPageResource.getUuid());
 		Assert.assertEquals(
@@ -218,8 +223,9 @@ public class WikiPageResourcePersistenceTest {
 
 	protected OrderByComparator<WikiPageResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"WikiPageResource", "uuid", true, "resourcePrimKey", true,
-			"groupId", true, "companyId", true, "nodeId", true, "title", true);
+			"WikiPageResource", "mvccVersion", true, "uuid", true,
+			"resourcePrimKey", true, "groupId", true, "companyId", true,
+			"nodeId", true, "title", true);
 	}
 
 	@Test
@@ -474,6 +480,8 @@ public class WikiPageResourcePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		WikiPageResource wikiPageResource = _persistence.create(pk);
+
+		wikiPageResource.setMvccVersion(RandomTestUtil.nextLong());
 
 		wikiPageResource.setUuid(RandomTestUtil.randomString());
 

@@ -125,6 +125,8 @@ public class WikiPagePersistenceTest {
 
 		WikiPage newWikiPage = _persistence.create(pk);
 
+		newWikiPage.setMvccVersion(RandomTestUtil.nextLong());
+
 		newWikiPage.setUuid(RandomTestUtil.randomString());
 
 		newWikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
@@ -176,6 +178,8 @@ public class WikiPagePersistenceTest {
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(
 			newWikiPage.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingWikiPage.getMvccVersion(), newWikiPage.getMvccVersion());
 		Assert.assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
 		Assert.assertEquals(
 			existingWikiPage.getPageId(), newWikiPage.getPageId());
@@ -587,13 +591,14 @@ public class WikiPagePersistenceTest {
 
 	protected OrderByComparator<WikiPage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"WikiPage", "uuid", true, "pageId", true, "resourcePrimKey", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "nodeId", true,
-			"title", true, "version", true, "minorEdit", true, "summary", true,
-			"format", true, "head", true, "parentTitle", true, "redirectTitle",
-			true, "lastPublishDate", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"WikiPage", "mvccVersion", true, "uuid", true, "pageId", true,
+			"resourcePrimKey", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "nodeId", true, "title", true, "version",
+			true, "minorEdit", true, "summary", true, "format", true, "head",
+			true, "parentTitle", true, "redirectTitle", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -850,6 +855,8 @@ public class WikiPagePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		WikiPage wikiPage = _persistence.create(pk);
+
+		wikiPage.setMvccVersion(RandomTestUtil.nextLong());
 
 		wikiPage.setUuid(RandomTestUtil.randomString());
 

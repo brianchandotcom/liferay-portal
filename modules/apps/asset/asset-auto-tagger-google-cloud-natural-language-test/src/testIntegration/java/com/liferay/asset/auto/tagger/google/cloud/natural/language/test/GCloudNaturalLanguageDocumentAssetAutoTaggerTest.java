@@ -19,15 +19,19 @@ import com.liferay.asset.auto.tagger.google.cloud.natural.language.GCloudNatural
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -64,6 +68,30 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 	public void testGetTagNamesWithInvalidApiKey() throws Exception {
 		_testWithGCloudNaturalLanguageAutoTagEntitiesEndpointEnabledAndClassificationEndpointEnabled(
 			() -> {
+				Object originalHttp = ReflectionTestUtil.getAndSetFieldValue(
+					_gCloudNaturalLanguageDocumentAssetAutoTagger, "_http",
+					ProxyUtil.newProxyInstance(
+						Http.class.getClassLoader(),
+						new Class<?>[] {Http.class},
+						(proxy, method, args) -> {
+							if (!Objects.equals(
+									method.getName(), "URLtoString")) {
+
+								throw new UnsupportedOperationException();
+							}
+
+							Http.Options options = (Http.Options)args[0];
+
+							Http.Response response = new Http.Response();
+
+							response.setResponseCode(400);
+
+							options.setResponse(response);
+
+							return "{\"error\": {\"message\": \"API key not " +
+								"valid. Please pass a valid API key.\"}}";
+						}));
+
 				try {
 					_gCloudNaturalLanguageDocumentAssetAutoTagger.getTagNames(
 						RandomTestUtil.randomLong(),
@@ -78,6 +106,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 							"Language service. Response code 400: API key " +
 								"not valid. Please pass a valid API key.",
 						e.getMessage());
+				}
+				finally {
+					ReflectionTestUtil.setFieldValue(
+						_gCloudNaturalLanguageDocumentAssetAutoTagger, "_http",
+						originalHttp);
 				}
 			},
 			"invalidApiKey");

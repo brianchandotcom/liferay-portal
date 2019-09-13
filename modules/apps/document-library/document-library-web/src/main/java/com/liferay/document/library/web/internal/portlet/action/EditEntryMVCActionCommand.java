@@ -150,9 +150,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, dfee.getClass(), dfee);
 		}
 		catch (AssetCategoryException | AssetTagException |
-			   DuplicateFolderNameException |
-			   FileEntryLockException | InvalidFolderException |
-			   SourceFileNameException e) {
+			   DuplicateFolderNameException | FileEntryLockException |
+			   InvalidFolderException | SourceFileNameException e) {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}

@@ -102,12 +102,17 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	public static boolean isInRequiredSchemaVersion(Connection connection)
 		throws SQLException {
 
+		Version currentSchemaVersion = getCurrentSchemaVersion(connection);
+
 		Version requiredSchemaVersion = getRequiredSchemaVersion();
 
-		int result = requiredSchemaVersion.compareTo(
-			getCurrentSchemaVersion(connection));
+		int result = requiredSchemaVersion.compareTo(currentSchemaVersion);
 
-		if (result <= 0) {
+		if ((result == 0) ||
+			((result < 0) &&
+			 (requiredSchemaVersion.getMajor() ==
+				 currentSchemaVersion.getMajor()))) {
+
 			return true;
 		}
 

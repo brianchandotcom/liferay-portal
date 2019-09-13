@@ -100,14 +100,14 @@ public final class LiferayConnection {
 
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
 
-		httpRequestBuilder.method(
+		httpRequestBuilder.addHeader(
+			"Authorization", _httpAuthentication.getAuthorizationHeader()
+		).method(
 			method
-		).uri(
-			uri
 		).queryParams(
 			queryParams
-		).addHeader(
-			"Authorization", _httpAuthentication.getAuthorizationHeader()
+		).uri(
+			uri
 		);
 
 		return httpRequestBuilder.build();

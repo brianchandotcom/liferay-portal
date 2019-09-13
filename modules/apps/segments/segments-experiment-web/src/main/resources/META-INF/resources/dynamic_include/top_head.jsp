@@ -15,25 +15,3 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
-<%
-SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT);
-String segmentsExperimentSegmentsExperienceKey = GetterUtil.getString(request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_SEGMENTS_EXPERIENCE_KEY));
-%>
-
-<aui:script sandbox="<%= true %>">
-	if (window.Analytics) {
-		Analytics.registerMiddleware(
-			function(request) {
-				request.context.experienceId = '<%= (segmentsExperiment == null) ? segmentsExperimentSegmentsExperienceKey : segmentsExperiment.getSegmentsExperienceKey() %>';
-
-				<c:if test="<%= segmentsExperiment != null %>">
-					request.context.experimentId = '<%= segmentsExperiment.getSegmentsExperimentKey() %>';
-					request.context.variantId = '<%= segmentsExperimentSegmentsExperienceKey %>';
-				</c:if>
-
-				return request;
-			}
-		);
-	}
-</aui:script>

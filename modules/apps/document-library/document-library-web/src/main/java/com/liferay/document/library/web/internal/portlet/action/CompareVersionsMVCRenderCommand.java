@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.diff.DiffUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -34,8 +35,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 
@@ -66,25 +70,22 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			compareVersions(renderRequest);
+			_compareVersions(renderRequest);
+
+			return "/document_library/compare_versions.jsp";
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchFileEntryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
+			return "/document_library/error.jsp";
+		}
+		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
-
-		return "/document_library/compare_versions.jsp";
 	}
 
-	protected void compareVersions(RenderRequest renderRequest)
-		throws Exception {
+	private void _compareVersions(RenderRequest renderRequest)
+		throws IOException, PortalException {
 
 		long sourceFileVersionId = ParamUtil.getLong(
 			renderRequest, "sourceFileVersionId");
@@ -94,62 +95,12 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		FileVersion sourceFileVersion = _dlAppService.getFileVersion(
 			sourceFileVersionId);
 
-		InputStream sourceIs = sourceFileVersion.getContentStream(false);
-
-		String sourceExtension = sourceFileVersion.getExtension();
-
-		if (sourceExtension.equals("css") || sourceExtension.equals("htm") ||
-			sourceExtension.equals("html") || sourceExtension.equals("js") ||
-			sourceExtension.equals("txt") || sourceExtension.equals("xml")) {
-
-			String sourceContent = HtmlUtil.escape(StringUtil.read(sourceIs));
-
-			sourceIs = new UnsyncByteArrayInputStream(
-				sourceContent.getBytes(StringPool.UTF8));
-		}
+		InputStream sourceIs = _getFileVersionInputStream(sourceFileVersion);
 
 		FileVersion targetFileVersion = _dlAppLocalService.getFileVersion(
 			targetFileVersionId);
 
-		InputStream targetIs = targetFileVersion.getContentStream(false);
-
-		String targetExtension = targetFileVersion.getExtension();
-
-		if (targetExtension.equals("css") || targetExtension.equals("htm") ||
-			targetExtension.equals("html") || targetExtension.equals("js") ||
-			targetExtension.equals("txt") || targetExtension.equals("xml")) {
-
-			String targetContent = HtmlUtil.escape(StringUtil.read(targetIs));
-
-			targetIs = new UnsyncByteArrayInputStream(
-				targetContent.getBytes(StringPool.UTF8));
-		}
-
-		if (DocumentConversionUtil.isEnabled()) {
-			if (DocumentConversionUtil.isConvertBeforeCompare(
-					sourceExtension)) {
-
-				String sourceTempFileId = DLUtil.getTempFileId(
-					sourceFileVersion.getFileEntryId(),
-					sourceFileVersion.getVersion());
-
-				sourceIs = new FileInputStream(
-					DocumentConversionUtil.convert(
-						sourceTempFileId, sourceIs, sourceExtension, "txt"));
-			}
-
-			if (DocumentConversionUtil.isConvertBeforeCompare(
-					targetExtension)) {
-
-				String targetTempFileId = DLUtil.getTempFileId(
-					targetFileVersion.getFileEntryId(),
-					targetFileVersion.getVersion());
-
-				targetIs = new FileInputStream(
-					DocumentConversionUtil.convert(
-						targetTempFileId, targetIs, targetExtension, "txt"));
-			}
-		}
+		InputStream targetIs = _getFileVersionInputStream(targetFileVersion);
 
 		List<DiffResult>[] diffResults = DiffUtil.diff(
 			new InputStreamReader(sourceIs), new InputStreamReader(targetIs));
@@ -166,17 +117,41 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 				targetFileVersion.getVersion());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
+	private InputStream _getFileVersionInputStream(FileVersion fileVersion)
+		throws IOException, PortalException {
+
+		InputStream is = fileVersion.getContentStream(false);
+
+		String extension = fileVersion.getExtension();
+
+		if (extension.equals("css") || extension.equals("htm") ||
+			extension.equals("html") || extension.equals("js") ||
+			extension.equals("txt") || extension.equals("xml")) {
+
+			String content = HtmlUtil.escape(StringUtil.read(is));
+
+			is = new UnsyncByteArrayInputStream(
+				content.getBytes(StandardCharsets.UTF_8));
+		}
+
+		if (!DocumentConversionUtil.isEnabled() ||
+			!DocumentConversionUtil.isConvertBeforeCompare(extension)) {
+
+			return is;
+		}
+
+		String tempFileId = DLUtil.getTempFileId(
+			fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+		return new FileInputStream(
+			DocumentConversionUtil.convert(
+				tempFileId, is, fileVersion.getExtension(), "txt"));
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 }

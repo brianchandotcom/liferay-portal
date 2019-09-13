@@ -57,7 +57,7 @@ public class DLAdminConfigurationAction
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (Validator.isNotNull(cmd)) {
-			validate(actionRequest);
+			_validate(actionRequest);
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
@@ -72,7 +72,7 @@ public class DLAdminConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected void validate(ActionRequest actionRequest) throws Exception {
+	private void _validate(ActionRequest actionRequest) {
 		validateEmail(actionRequest, "emailFileEntryAdded");
 		validateEmail(actionRequest, "emailFileEntryUpdated");
 		validateEmailFrom(actionRequest);

@@ -39,6 +39,7 @@ import com.liferay.portal.util.RepositoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -84,22 +85,30 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			if (selectAll ||
 				resourceID.equals("/document_library/download_folder")) {
 
-				downloadFolder(resourceRequest, resourceResponse);
+				_downloadFolder(resourceRequest, resourceResponse);
 			}
 			else {
-				downloadFileEntries(resourceRequest, resourceResponse);
+				_downloadFileEntries(resourceRequest, resourceResponse);
 			}
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
 	}
 
-	protected void downloadFileEntries(
+	private void _checkFolder(long folderId) throws PortalException {
+		if (_isExternalRepositoryFolder(folderId)) {
+			throw new InvalidRepositoryException(
+				"Tried to download Folder " + folderId +
+					" belonging to an external repository");
+		}
+	}
+
+	private void _downloadFileEntries(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -147,24 +156,24 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else {
-				String zipFileName = getZipFileName(folderId, themeDisplay);
+				String zipFileName = _getZipFileName(folderId, themeDisplay);
 
 				ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 				for (FileEntry fileEntry : fileEntries) {
-					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+					_zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
 				}
 
 				for (FileShortcut fileShortcut : fileShortcuts) {
 					FileEntry fileEntry = _dlAppService.getFileEntry(
 						fileShortcut.getToFileEntryId());
 
-					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+					_zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
 				}
 
 				for (Folder folder : folders) {
 					if (!_isExternalRepositoryFolder(folder)) {
-						zipFolder(
+						_zipFolder(
 							folder.getRepositoryId(), folder.getFolderId(),
 							StringPool.SLASH.concat(folder.getName()),
 							zipWriter);
@@ -187,9 +196,9 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected void downloadFolder(
+	private void _downloadFolder(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -201,14 +210,14 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		File file = null;
 
 		try {
-			String zipFileName = getZipFileName(folderId, themeDisplay);
+			String zipFileName = _getZipFileName(folderId, themeDisplay);
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 			long repositoryId = ParamUtil.getLong(
 				resourceRequest, "repositoryId");
 
-			zipFolder(repositoryId, folderId, StringPool.SLASH, zipWriter);
+			_zipFolder(repositoryId, folderId, StringPool.SLASH, zipWriter);
 
 			file = zipWriter.getFile();
 
@@ -225,7 +234,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected String getZipFileName(long folderId, ThemeDisplay themeDisplay)
+	private String _getZipFileName(long folderId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -235,64 +244,6 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		}
 
 		return themeDisplay.getScopeGroupName() + ".zip";
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	protected void zipFileEntry(
-			FileEntry fileEntry, String path, ZipWriter zipWriter)
-		throws Exception {
-
-		zipWriter.addEntry(
-			path + StringPool.SLASH + fileEntry.getFileName(),
-			fileEntry.getContentStream());
-	}
-
-	protected void zipFolder(
-			long repositoryId, long folderId, String path, ZipWriter zipWriter)
-		throws Exception {
-
-		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
-				repositoryId, folderId, WorkflowConstants.STATUS_APPROVED,
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (Object entry : foldersAndFileEntriesAndFileShortcuts) {
-			if (entry instanceof Folder) {
-				Folder folder = (Folder)entry;
-
-				zipFolder(
-					folder.getRepositoryId(), folder.getFolderId(),
-					path.concat(
-						StringPool.SLASH
-					).concat(
-						folder.getName()
-					),
-					zipWriter);
-			}
-			else if (entry instanceof FileEntry) {
-				zipFileEntry((FileEntry)entry, path, zipWriter);
-			}
-			else if (entry instanceof FileShortcut) {
-				FileShortcut fileShortcut = (FileShortcut)entry;
-
-				FileEntry fileEntry = _dlAppService.getFileEntry(
-					fileShortcut.getToFileEntryId());
-
-				zipFileEntry(fileEntry, path, zipWriter);
-			}
-		}
-	}
-
-	private void _checkFolder(long folderId) throws PortalException {
-		if (_isExternalRepositoryFolder(folderId)) {
-			throw new InvalidRepositoryException(
-				"Tried to download Folder " + folderId +
-					" belonging to an external repository");
-		}
 	}
 
 	private boolean _isExternalRepositoryFolder(Folder folder) {
@@ -320,6 +271,52 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 		return false;
 	}
 
+	private void _zipFileEntry(
+			FileEntry fileEntry, String path, ZipWriter zipWriter)
+		throws IOException, PortalException {
+
+		zipWriter.addEntry(
+			path + StringPool.SLASH + fileEntry.getFileName(),
+			fileEntry.getContentStream());
+	}
+
+	private void _zipFolder(
+			long repositoryId, long folderId, String path, ZipWriter zipWriter)
+		throws IOException, PortalException {
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
+				repositoryId, folderId, WorkflowConstants.STATUS_APPROVED,
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Object entry : foldersAndFileEntriesAndFileShortcuts) {
+			if (entry instanceof Folder) {
+				Folder folder = (Folder)entry;
+
+				_zipFolder(
+					folder.getRepositoryId(), folder.getFolderId(),
+					path.concat(
+						StringPool.SLASH
+					).concat(
+						folder.getName()
+					),
+					zipWriter);
+			}
+			else if (entry instanceof FileEntry) {
+				_zipFileEntry((FileEntry)entry, path, zipWriter);
+			}
+			else if (entry instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)entry;
+
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					fileShortcut.getToFileEntryId());
+
+				_zipFileEntry(fileEntry, path, zipWriter);
+			}
+		}
+	}
+
+	@Reference
 	private DLAppService _dlAppService;
 
 }

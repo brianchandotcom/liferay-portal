@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -58,9 +59,38 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteFileShortcut(
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				_updateFileShortcut(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				_deleteFileShortcut(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				_deleteFileShortcut(actionRequest, true);
+			}
+		}
+		catch (NoSuchFileShortcutException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/document_library/error.jsp");
+		}
+		catch (FileShortcutPermissionException | NoSuchFileEntryException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+	}
+
+	private void _deleteFileShortcut(
 			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
@@ -90,56 +120,8 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFileShortcut(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileShortcut(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileShortcut(actionRequest, true);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileShortcutException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				actionResponse.setRenderParameter(
-					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof FileShortcutPermissionException ||
-					 e instanceof NoSuchFileEntryException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLTrashService(DLTrashService dlTrashService) {
-		_dlTrashService = dlTrashService;
-	}
-
-	protected void updateFileShortcut(ActionRequest actionRequest)
-		throws Exception {
+	private void _updateFileShortcut(ActionRequest actionRequest)
+		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
@@ -169,7 +151,10 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
 	private DLTrashService _dlTrashService;
 
 }

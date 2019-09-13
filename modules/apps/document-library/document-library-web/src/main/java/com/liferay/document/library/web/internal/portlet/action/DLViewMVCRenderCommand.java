@@ -23,12 +23,15 @@ import com.liferay.document.library.repository.authorization.capability.Authoriz
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.DLPortletToolbarContributorRegistry;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.io.IOException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -56,23 +59,26 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
-			_dlPortletToolbarContributorRegistry.
-				getDLPortletToolbarContributor());
-
 		try {
-			if (pingFolderRepository(renderRequest, renderResponse)) {
+			renderRequest.setAttribute(
+				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
+				_dlPortletToolbarContributorRegistry.
+					getDLPortletToolbarContributor());
+
+			if (_pingFolderRepository(renderRequest, renderResponse)) {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
+
+			return super.render(renderRequest, renderResponse);
 		}
-		catch (Exception e) {
-			SessionErrors.add(renderRequest, "repositoryPingFailed", e);
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, "repositoryPingFailed", pe);
 
 			return "/document_library/error.jsp";
 		}
-
-		return super.render(renderRequest, renderResponse);
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
 	}
 
 	@Override
@@ -85,9 +91,9 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		return "/document_library/view.jsp";
 	}
 
-	protected boolean pingFolderRepository(
+	private boolean _pingFolderRepository(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		String mvcRenderCommandName = ParamUtil.getString(
 			renderRequest, "mvcRenderCommandName");

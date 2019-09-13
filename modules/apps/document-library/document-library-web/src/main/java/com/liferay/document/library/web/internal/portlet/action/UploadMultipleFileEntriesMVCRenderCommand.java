@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -40,8 +39,7 @@ public class UploadMultipleFileEntriesMVCRenderCommand
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return "/document_library/upload_multiple_file_entries.jsp";
 	}

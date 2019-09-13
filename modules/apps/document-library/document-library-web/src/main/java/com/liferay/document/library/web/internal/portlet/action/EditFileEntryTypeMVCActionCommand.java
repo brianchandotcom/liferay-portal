@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementExceptio
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -48,6 +49,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -74,35 +77,25 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long fileEntryTypeId = ParamUtil.getLong(
-			actionRequest, "fileEntryTypeId");
-
-		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
-	}
-
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFileEntryType(actionRequest, actionResponse);
+				_updateFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileEntryType(actionRequest, actionResponse);
+				_deleteFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeFileEntryType(actionRequest);
+				_subscribeFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeFileEntryType(actionRequest);
+				_unsubscribeFileEntryType(actionRequest);
 			}
 
 			if (SessionErrors.isEmpty(actionRequest)) {
@@ -141,7 +134,16 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected long[] getLongArray(PortletRequest portletRequest, String name) {
+	private void _deleteFileEntryType(ActionRequest actionRequest)
+		throws PortalException {
+
+		long fileEntryTypeId = ParamUtil.getLong(
+			actionRequest, "fileEntryTypeId");
+
+		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+	}
+
+	private long[] _getLongArray(PortletRequest portletRequest, String name) {
 		String value = portletRequest.getParameter(name);
 
 		if (value == null) {
@@ -151,8 +153,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
 
-	protected void subscribeFileEntryType(ActionRequest actionRequest)
-		throws Exception {
+	private void _subscribeFileEntryType(ActionRequest actionRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -164,8 +166,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
-	protected void unsubscribeFileEntryType(ActionRequest actionRequest)
-		throws Exception {
+	private void _unsubscribeFileEntryType(ActionRequest actionRequest)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -177,9 +179,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
-	protected void updateFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	private void _updateFileEntryType(ActionRequest actionRequest)
+		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
@@ -189,7 +190,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		long[] ddmStructureIds = getLongArray(
+		long[] ddmStructureIds = _getLongArray(
 			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

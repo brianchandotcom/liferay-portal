@@ -219,6 +219,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			public static final boolean FINDER_CACHE_ENABLED = false;
 		</#if>
+
+		<#assign columnBitmaskEnabled = false />
 	<#else>
 		<#if !dependencyInjectorDS>
 			public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),

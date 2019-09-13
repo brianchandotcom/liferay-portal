@@ -92,7 +92,7 @@ public abstract class BaseExportImportTestCase {
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
 		// See LPS-32132.
 
-		LayoutLocalServiceUtil.deleteLayout(layout, true, new ServiceContext());
+		LayoutLocalServiceUtil.deleteLayout(layout, new ServiceContext());
 
 		layout = LayoutTestUtil.addLayout(group);
 	}

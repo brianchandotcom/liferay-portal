@@ -734,8 +734,7 @@ public class LayoutImportController implements ImportController {
 						layoutSetPrototype.getGroupId(), true);
 
 				if (sourcePrototypeLayout == null) {
-					_layoutLocalService.deleteLayout(
-						layout, false, serviceContext);
+					_layoutLocalService.deleteLayout(layout, serviceContext);
 				}
 			}
 		}

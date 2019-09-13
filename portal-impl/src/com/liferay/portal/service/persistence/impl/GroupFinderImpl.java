@@ -81,9 +81,6 @@ public class GroupFinderImpl
 	public static final String FIND_BY_LIVE_GROUPS =
 		GroupFinder.class.getName() + ".findByLiveGroups";
 
-	public static final String FIND_BY_NO_LAYOUTS =
-		GroupFinder.class.getName() + ".findByNoLayouts";
-
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		GroupFinder.class.getName() + ".findByNullFriendlyURL";
 
@@ -120,8 +117,8 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_GROUPS_USER_GROUPS =
 		GroupFinder.class.getName() + ".joinByGroupsUserGroups";
 
-	public static final String JOIN_BY_LAYOUT_SET =
-		GroupFinder.class.getName() + ".joinByLayoutSet";
+	public static final String JOIN_BY_LAYOUT =
+		GroupFinder.class.getName() + ".joinByLayout";
 
 	public static final String JOIN_BY_MANUAL_MEMBERSHIP =
 		GroupFinder.class.getName() + ".joinByManualMembership";
@@ -575,36 +572,6 @@ public class GroupFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Group_", GroupImpl.class);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<Group> findByNoLayouts(
-		long classNameId, boolean privateLayout, int start, int end) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_NO_LAYOUTS);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("Group_", GroupImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(classNameId);
-			qPos.add(privateLayout);
 
 			return q.list(true);
 		}
@@ -1199,7 +1166,7 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
 
-			if (key.equals("active") || key.equals("layoutSet") ||
+			if (key.equals("active") || key.equals("layout") ||
 				key.equals("manualMembership") || key.equals("site")) {
 
 				Boolean value = (Boolean)entry.getValue();
@@ -1413,8 +1380,7 @@ public class GroupFinderImpl
 		joinMap.put(
 			"groupsUserGroups",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS)));
-		joinMap.put(
-			"layoutSet", _removeWhere(CustomSQLUtil.get(JOIN_BY_LAYOUT_SET)));
+		joinMap.put("layout", _removeWhere(CustomSQLUtil.get(JOIN_BY_LAYOUT)));
 		joinMap.put(
 			"membershipRestriction",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION)));
@@ -1461,7 +1427,7 @@ public class GroupFinderImpl
 			"groupsUserGroups",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_GROUPS_USER_GROUPS)));
 		whereMap.put(
-			"layoutSet", _getCondition(CustomSQLUtil.get(JOIN_BY_LAYOUT_SET)));
+			"layout", _getCondition(CustomSQLUtil.get(JOIN_BY_LAYOUT)));
 		whereMap.put(
 			"manualMembership",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_MANUAL_MEMBERSHIP)));

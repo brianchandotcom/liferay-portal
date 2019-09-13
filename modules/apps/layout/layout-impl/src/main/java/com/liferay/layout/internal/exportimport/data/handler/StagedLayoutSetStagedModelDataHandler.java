@@ -142,8 +142,7 @@ public class StagedLayoutSetStagedModelDataHandler
 					layout.isPrivateLayout())) {
 
 				_layoutLocalService.deleteLayout(
-					layout, false,
-					ServiceContextThreadLocal.getServiceContext());
+					layout, ServiceContextThreadLocal.getServiceContext());
 			}
 		}
 	}
@@ -202,8 +201,7 @@ public class StagedLayoutSetStagedModelDataHandler
 						continue;
 					}
 
-					_layoutLocalService.deleteLayout(
-						layout, false, serviceContext);
+					_layoutLocalService.deleteLayout(layout, serviceContext);
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {
@@ -359,12 +357,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		updateLayoutPriorities(
 			portletDataContext, layoutElements,
-			portletDataContext.isPrivateLayout());
-
-		// Page count
-
-		_layoutSetLocalService.updatePageCount(
-			portletDataContext.getGroupId(),
 			portletDataContext.isPrivateLayout());
 	}
 

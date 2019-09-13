@@ -101,7 +101,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 	public void deleteLayout(
 			LayoutLocalService layoutLocalService, Layout layout,
-			boolean updateLayoutSet, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long layoutSetBranchId = ParamUtil.getLong(
@@ -119,14 +119,11 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				LayoutRevisionLocalServiceUtil.deleteLayoutLayoutRevisions(
 					layout.getPlid());
 
-				doDeleteLayout(
-					layoutLocalService, layout, updateLayoutSet,
-					serviceContext);
+				doDeleteLayout(layoutLocalService, layout, serviceContext);
 			}
 		}
 		else {
-			doDeleteLayout(
-				layoutLocalService, layout, updateLayoutSet, serviceContext);
+			doDeleteLayout(layoutLocalService, layout, serviceContext);
 		}
 	}
 
@@ -138,7 +135,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		deleteLayout(layoutLocalService, layout, true, serviceContext);
+		deleteLayout(layoutLocalService, layout, serviceContext);
 	}
 
 	@Override
@@ -410,7 +407,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 	protected void doDeleteLayout(
 			LayoutLocalService layoutLocalService, Layout layout,
-			boolean updateLayoutSet, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SystemEventHierarchyEntry systemEventHierarchyEntry =
@@ -418,13 +415,11 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				Layout.class, layout.getPlid());
 
 		if (systemEventHierarchyEntry == null) {
-			layoutLocalService.deleteLayout(
-				layout, updateLayoutSet, serviceContext);
+			layoutLocalService.deleteLayout(layout, serviceContext);
 		}
 		else {
 			try {
-				layoutLocalService.deleteLayout(
-					layout, updateLayoutSet, serviceContext);
+				layoutLocalService.deleteLayout(layout, serviceContext);
 
 				systemEventHierarchyEntry =
 					SystemEventHierarchyEntryThreadLocal.peek();
@@ -659,10 +654,17 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				return _invoke(method, arguments);
 			}
 			else if (methodName.equals("deleteLayout")) {
-				if (arguments.length == 3) {
+				if ((arguments.length == 2) &&
+					(arguments[0] instanceof Layout)) {
+
 					deleteLayout(
 						(LayoutLocalService)_targetObject, (Layout)arguments[0],
-						(Boolean)arguments[1], (ServiceContext)arguments[2]);
+						(ServiceContext)arguments[1]);
+				}
+				else if (arguments.length == 3) {
+					deleteLayout(
+						(LayoutLocalService)_targetObject, (Layout)arguments[0],
+						(ServiceContext)arguments[2]);
 				}
 				else if (arguments.length == 4) {
 					deleteLayout(

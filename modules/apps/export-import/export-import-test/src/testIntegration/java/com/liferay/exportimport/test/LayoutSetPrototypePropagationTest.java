@@ -147,7 +147,7 @@ public class LayoutSetPrototypePropagationTest
 			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
 
 		LayoutLocalServiceUtil.deleteLayout(
-			layout, true, ServiceContextTestUtil.getServiceContext());
+			layout, ServiceContextTestUtil.getServiceContext());
 
 		Layout newLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(), "test", true);
@@ -635,7 +635,7 @@ public class LayoutSetPrototypePropagationTest
 		}
 
 		LayoutLocalServiceUtil.deleteLayout(
-			layout, true, ServiceContextTestUtil.getServiceContext());
+			layout, ServiceContextTestUtil.getServiceContext());
 
 		if (linkEnabled) {
 			Assert.assertEquals(

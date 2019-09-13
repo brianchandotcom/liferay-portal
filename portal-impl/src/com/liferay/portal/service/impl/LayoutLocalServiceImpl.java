@@ -351,10 +351,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		groupLocalService.updateSite(groupId, true);
 
-		// Layout set
-
-		layoutSetLocalService.updatePageCount(groupId, privateLayout);
-
 		layout.setLayoutSet(null);
 
 		// Asset
@@ -659,20 +655,16 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public Layout deleteLayout(Layout layout) throws PortalException {
-		layoutLocalService.deleteLayout(layout, true, new ServiceContext());
+		layoutLocalService.deleteLayout(layout, new ServiceContext());
 
 		return layout;
 	}
 
 	/**
-	 * Deletes the layout, its child layouts, and its associated resources.
-	 *
-	 * @param  layout the layout
-	 * @param  updateLayoutSet whether the layout set's page counter needs to be
-	 *         updated
-	 * @param  serviceContext the service context to be applied
-	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Mueller (7.2.x), As of (7.2.x), replaced by {@link
+	 *             #deleteLayout(Layout, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
@@ -681,6 +673,24 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public void deleteLayout(
 			Layout layout, boolean updateLayoutSet,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		deleteLayout(layout, serviceContext);
+	}
+
+	/**
+	 * Deletes the layout, its child layouts, and its associated resources.
+	 *
+	 * @param  layout the layout
+	 * @param  serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public void deleteLayout(Layout layout, ServiceContext serviceContext)
 		throws PortalException {
 
 		// First layout validation
@@ -710,8 +720,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getLayoutId());
 
 		for (Layout childLayout : childLayouts) {
-			layoutLocalService.deleteLayout(
-				childLayout, updateLayoutSet, serviceContext);
+			layoutLocalService.deleteLayout(childLayout, serviceContext);
 		}
 
 		// Layout friendly URLs
@@ -782,13 +791,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout = layoutPersistence.remove(layout);
 
-		// Layout set
-
-		if (updateLayoutSet) {
-			layoutSetLocalService.updatePageCount(
-				layout.getGroupId(), layout.isPrivateLayout());
-		}
-
 		// Portal preferences
 
 		_resetPortalPreferences(layout);
@@ -824,7 +826,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout deleteLayout(long plid) throws PortalException {
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		layoutLocalService.deleteLayout(layout, true, new ServiceContext());
+		layoutLocalService.deleteLayout(layout, new ServiceContext());
 
 		return layout;
 	}
@@ -848,7 +850,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		layoutLocalService.deleteLayout(layout, true, serviceContext);
+		layoutLocalService.deleteLayout(layout, serviceContext);
 	}
 
 	/**
@@ -865,7 +867,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		layoutLocalService.deleteLayout(layout, true, serviceContext);
+		layoutLocalService.deleteLayout(layout, serviceContext);
 	}
 
 	/**
@@ -894,7 +896,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			try {
-				layoutLocalService.deleteLayout(layout, false, serviceContext);
+				layoutLocalService.deleteLayout(layout, serviceContext);
 			}
 			catch (NoSuchLayoutException nsle) {
 
@@ -904,14 +906,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					_log.debug(nsle, nsle);
 				}
 			}
-		}
-
-		// Layout set
-
-		if (GetterUtil.getBoolean(
-				serviceContext.getAttribute("updatePageCount"), true)) {
-
-			layoutSetLocalService.updatePageCount(groupId, privateLayout);
 		}
 
 		// Counter
@@ -2218,7 +2212,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		for (Layout layout : layouts) {
 			if (!layoutIdsSet.contains(layout.getLayoutId())) {
-				deleteLayout(layout, true, serviceContext);
+				deleteLayout(layout, serviceContext);
 			}
 			else {
 				newLayoutIdsSet.add(layout.getLayoutId());
@@ -2235,8 +2229,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 			layoutLocalService.updateLayout(layout);
 		}
-
-		layoutSetLocalService.updatePageCount(groupId, privateLayout);
 	}
 
 	@Override

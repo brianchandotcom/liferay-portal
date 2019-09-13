@@ -8,16 +8,8 @@
 			FROM
 				Group_
 			INNER JOIN
-				(
-					SELECT
-						DISTINCT groupId
-					FROM
-						LayoutSet
-					WHERE
-						LayoutSet.pageCount > 0
-				)
-				TEMP_TABLE ON
-					TEMP_TABLE.groupId = Group_.groupId
+				Layout ON
+					Layout.groupId = Group_.groupId
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
@@ -92,16 +84,8 @@
 			FROM
 				Group_
 			INNER JOIN
-				(
-					SELECT
-						DISTINCT groupId
-					FROM
-						LayoutSet
-					WHERE
-						LayoutSet.pageCount > 0
-				)
-				TEMP_TABLE ON
-					TEMP_TABLE.groupId = Group_.groupId
+				Layout ON
+					Layout.groupId = Group_.groupId
 			WHERE
 				(Group_.companyId = ?) AND
 				(Group_.parentGroupId = ?) AND
@@ -125,22 +109,6 @@
 						WHERE
 							Group_.liveGroupId != 0
 					)
-		]]>
-	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByNoLayouts">
-		<![CDATA[
-			SELECT
-				{Group_.*}
-			FROM
-				Group_
-			INNER JOIN
-				LayoutSet ON
-					LayoutSet.groupId = Group_.groupId
-			WHERE
-				(Group_.classNameId = ?) AND
-				(Group_.type_ != 4) AND
-				(LayoutSet.privateLayout = ?) AND
-				(LayoutSet.pageCount = 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByNullFriendlyURL">
@@ -295,15 +263,14 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByLayoutSet">
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByLayout">
 		<![CDATA[
 			INNER JOIN
-				LayoutSet ON
-					LayoutSet.groupId = Group_.groupId
+				Layout ON
+					Layout.groupId = Group_.groupId
 			WHERE
 				(Group_.liveGroupId = 0) AND
-				(LayoutSet.privateLayout = ?) AND
-				(LayoutSet.pageCount != 0)
+				(Layout.privateLayout = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByManualMembership">
@@ -321,11 +288,10 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByPageCount">
 		<![CDATA[
 			INNER JOIN
-				LayoutSet ON
-					LayoutSet.groupId = Group_.groupId
+				Layout ON
+					Layout.groupId = Group_.groupId
 			WHERE
-				(Group_.liveGroupId = 0) AND
-				(LayoutSet.pageCount != 0)
+				Group_.liveGroupId = 0
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByRoleResourcePermissions">

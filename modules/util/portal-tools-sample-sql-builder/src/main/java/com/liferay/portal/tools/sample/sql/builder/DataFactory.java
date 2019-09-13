@@ -2197,14 +2197,11 @@ public class DataFactory {
 		return layoutModel;
 	}
 
-	public List<LayoutSetModel> newLayoutSetModels(
-		long groupId, int publicLayoutSetPageCount) {
-
+	public List<LayoutSetModel> newLayoutSetModels(long groupId) {
 		List<LayoutSetModel> layoutSetModels = new ArrayList<>(2);
 
-		layoutSetModels.add(newLayoutSetModel(groupId, true, 0));
-		layoutSetModels.add(
-			newLayoutSetModel(groupId, false, publicLayoutSetPageCount));
+		layoutSetModels.add(newLayoutSetModel(groupId, true));
+		layoutSetModels.add(newLayoutSetModel(groupId, false));
 
 		return layoutSetModels;
 	}
@@ -3450,7 +3447,7 @@ public class DataFactory {
 	}
 
 	protected LayoutSetModel newLayoutSetModel(
-		long groupId, boolean privateLayout, int pageCount) {
+		long groupId, boolean privateLayout) {
 
 		LayoutSetModel layoutSetModel = new LayoutSetModelImpl();
 
@@ -3465,7 +3462,6 @@ public class DataFactory {
 		layoutSetModel.setPrivateLayout(privateLayout);
 		layoutSetModel.setThemeId("classic_WAR_classictheme");
 		layoutSetModel.setColorSchemeId("01");
-		layoutSetModel.setPageCount(pageCount);
 
 		return layoutSetModel;
 	}

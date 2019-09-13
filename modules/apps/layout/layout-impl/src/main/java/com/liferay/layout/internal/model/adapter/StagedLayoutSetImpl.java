@@ -488,11 +488,6 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	}
 
 	@Override
-	public void setPageCount(int pageCount) {
-		_layoutSet.setPageCount(pageCount);
-	}
-
-	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_layoutSet.setPrimaryKey(primaryKey);
 	}

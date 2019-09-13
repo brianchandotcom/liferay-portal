@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
@@ -173,6 +174,12 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public int getPageCount() {
+		return LayoutSetLocalServiceUtil.getPageCount(
+			getGroupId(), getPrivateLayout());
 	}
 
 	@Override

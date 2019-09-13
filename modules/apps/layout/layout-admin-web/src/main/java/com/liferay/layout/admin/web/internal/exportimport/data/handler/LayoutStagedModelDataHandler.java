@@ -793,8 +793,6 @@ public class LayoutStagedModelDataHandler
 
 		_layoutLocalService.updateLayout(importedLayout);
 
-		_layoutSetLocalService.updatePageCount(groupId, privateLayout);
-
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||
 			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {

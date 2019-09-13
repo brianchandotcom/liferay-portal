@@ -215,6 +215,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSetPrototypeUuid);
 	}
 
+	@Override
+	public int getPageCount(long groupId, boolean privateLayout) {
+		return layoutPersistence.countByG_P(groupId, privateLayout);
+	}
+
 	/**
 	 * Updates the state of the layout set prototype link.
 	 *
@@ -410,23 +415,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		updateLookAndFeel(groupId, false, themeId, colorSchemeId, css);
 		updateLookAndFeel(groupId, true, themeId, colorSchemeId, css);
-	}
-
-	@Override
-	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
-		throws PortalException {
-
-		int pageCount = layoutPersistence.countByG_P(groupId, privateLayout);
-
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
-
-		layoutSet.setModifiedDate(new Date());
-		layoutSet.setPageCount(pageCount);
-
-		layoutSetPersistence.update(layoutSet);
-
-		return layoutSet;
 	}
 
 	@Override

@@ -1038,7 +1038,6 @@
 		<column name="themeId" type="String" />
 		<column name="colorSchemeId" type="String" />
 		<column name="css" type="String" />
-		<column name="pageCount" type="int" />
 		<column name="settings" type="String" />
 		<column name="layoutSetPrototypeUuid" type="String" />
 		<column name="layoutSetPrototypeLinkEnabled" type="boolean" />

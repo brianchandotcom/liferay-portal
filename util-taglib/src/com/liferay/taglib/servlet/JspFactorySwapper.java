@@ -24,25 +24,25 @@ import javax.servlet.jsp.JspFactory;
 public class JspFactorySwapper {
 
 	public static void swap() {
-		if (!ServerDetector.isTomcat()) {
-			return;
-		}
-
 		JspFactory jspFactory = JspFactory.getDefaultFactory();
 
-		if (jspFactory instanceof JspFactoryWrapper) {
+		if (jspFactory instanceof AutoCloseJspFactoryWrapper) {
 			return;
 		}
 
 		synchronized (JspFactorySwapper.class) {
-			if (_jspFactoryWrapper == null) {
-				_jspFactoryWrapper = new JspFactoryWrapper(jspFactory);
+			if (_jspFactory == null) {
+				if (ServerDetector.isTomcat()) {
+					jspFactory = new JspFactoryWrapper(jspFactory);
+				}
+
+				_jspFactory = new AutoCloseJspFactoryWrapper(jspFactory);
 			}
 
-			JspFactory.setDefaultFactory(_jspFactoryWrapper);
+			JspFactory.setDefaultFactory(_jspFactory);
 		}
 	}
 
-	private static JspFactoryWrapper _jspFactoryWrapper;
+	private static JspFactory _jspFactory;
 
 }

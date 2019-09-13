@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -124,21 +125,12 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 	@Override
 	public long[] getAssetCategoryPrimaryKeys(long entryId) {
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRelList =
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
 			getAssetEntryAssetCategoryRelsByAssetEntryId(entryId);
 
-		long[] assetCategoryPrimaryKeys =
-			new long[assetEntryAssetCategoryRelList.size()];
-
-		for (int i = 0; i < assetEntryAssetCategoryRelList.size(); i++) {
-			AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-				assetEntryAssetCategoryRelList.get(i);
-
-			assetCategoryPrimaryKeys[i] =
-				assetEntryAssetCategoryRel.getAssetCategoryId();
-		}
-
-		return assetCategoryPrimaryKeys;
+		return ListUtil.toLongArray(
+			assetEntryAssetCategoryRels,
+			AssetEntryAssetCategoryRel::getAssetCategoryId);
 	}
 
 	@Override
@@ -203,21 +195,12 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 	@Override
 	public long[] getAssetEntryPrimaryKeys(long categoryId) {
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRelList =
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels =
 			getAssetEntryAssetCategoryRelsByAssetCategoryId(categoryId);
 
-		long[] assetEntryPrimaryKeys =
-			new long[assetEntryAssetCategoryRelList.size()];
-
-		for (int i = 0; i < assetEntryAssetCategoryRelList.size(); i++) {
-			AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-				assetEntryAssetCategoryRelList.get(i);
-
-			assetEntryPrimaryKeys[i] =
-				assetEntryAssetCategoryRel.getAssetCategoryId();
-		}
-
-		return assetEntryPrimaryKeys;
+		return ListUtil.toLongArray(
+			assetEntryAssetCategoryRels,
+			AssetEntryAssetCategoryRel::getAssetCategoryId);
 	}
 
 	private void _reindex(long assetEntryId) {

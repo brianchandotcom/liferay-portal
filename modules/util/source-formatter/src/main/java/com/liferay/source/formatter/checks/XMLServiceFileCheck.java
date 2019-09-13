@@ -50,6 +50,30 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private void _checkMVCCEnabled(
+		String fileName, String absolutePath, Element element) {
+
+		if (!isAttributeValue(_CHECK_MVCC_ENABLED_KEY, absolutePath) ||
+			(element.attributeValue("mvcc-enabled") != null)) {
+
+			return;
+		}
+
+		List<String> allowedFileNames = getAttributeValues(
+			_ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY, absolutePath);
+
+		for (String allowedFileName : allowedFileNames) {
+			if (absolutePath.endsWith(allowedFileName)) {
+				return;
+			}
+		}
+
+		addMessage(
+			fileName,
+			"Attribute 'mvcc-enabled' should always be set in service.xml. " +
+				"Preferably, set 'mvcc-enabled=\"true\"'.");
+	}
+
 	private void _checkServiceXML(
 			String fileName, String absolutePath, String content)
 		throws DocumentException, IOException {
@@ -58,14 +82,7 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		Element rootElement = document.getRootElement();
 
-		if (isAttributeValue(_CHECK_MVCC_ENABLED_KEY, absolutePath) &&
-			(rootElement.attributeValue("mvcc-enabled") == null)) {
-
-			addMessage(
-				fileName,
-				"Attribute 'mvcc-enabled' should always be set in " +
-					"service.xml. Preferably, set 'mvcc-enabled=\"true\"'.");
-		}
+		_checkMVCCEnabled(fileName, absolutePath, rootElement);
 
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
 			new ServiceReferenceElementComparator("entity");
@@ -187,6 +204,9 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String _ALLOWED_MISSING_MVCC_ENABLED_FILE_NAMES_KEY =
+		"allowedMissingMVVCEnabledFileNames";
 
 	private static final String _CHECK_MVCC_ENABLED_KEY = "checkMVCCEnabled";
 

@@ -18,6 +18,7 @@
 
 <%
 String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG_KEY);
+String analyticsClientRequestContext = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_REQUEST_CONTEXT_KEY);
 %>
 
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">

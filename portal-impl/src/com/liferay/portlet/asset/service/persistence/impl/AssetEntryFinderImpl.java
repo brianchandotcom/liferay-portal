@@ -347,7 +347,7 @@ public class AssetEntryFinderImpl
 	protected SQLQuery buildAssetQuerySQL(
 		AssetEntryQuery entryQuery, boolean count, Session session) {
 
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(53);
 
 		if (count) {
 			sb.append(
@@ -393,8 +393,9 @@ public class AssetEntryFinderImpl
 			sb.append("UNION ");
 			sb.append("SELECT AssetLink.entryId2 as entryId ");
 			sb.append("FROM AssetLink WHERE AssetLink.entryId1 = ? ");
-			sb.append("AND AssetLink.entryId2 != ? ) TEMP_ASSETLINK ");
-			sb.append("ON (TEMP_ASSETLINK.entryId = AssetEntry.entryId) ");
+			sb.append("AND AssetLink.entryId2 != ? ) TEMP_TABLE_ASSET_LINK ");
+			sb.append("ON (TEMP_TABLE_ASSET_LINK.entryId = ");
+			sb.append("AssetEntry.entryId) ");
 		}
 
 		String orderByCol1 = AssetEntryQuery.ORDER_BY_COLUMNS[2];

@@ -19,17 +19,10 @@
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
+<%@ page import="com.liferay.analytics.web.internal.constants.AnalyticsWebKeys" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
-page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
-
-<%@ page import="java.util.Objects" %>
+page import="com.liferay.portal.kernel.util.PropsUtil" %>
 
 <liferay-frontend:defineObjects />
 

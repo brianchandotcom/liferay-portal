@@ -42,8 +42,6 @@ AUI.add(
 				}
 			},
 
-			AUGMENTS: [Liferay.CropRegion],
-
 			EXTENDS: A.Plugin.Base,
 
 			NAME: 'covercropper',

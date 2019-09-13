@@ -1356,122 +1356,73 @@
 
 			config = A.merge(defaultValues, config);
 
-			var ddmURL;
-
-			if (config.basePortletURL) {
-				ddmURL = Liferay.PortletURL.createURL(config.basePortletURL);
-			} else {
-				ddmURL = Liferay.PortletURL.createRenderURL();
-			}
-
-			ddmURL.setEscapeXML(false);
-
-			ddmURL.setDoAsGroupId(
-				config.doAsGroupId || themeDisplay.getScopeGroupId()
-			);
-
-			ddmURL.setParameter('classNameId', config.classNameId);
-			ddmURL.setParameter('classPK', config.classPK);
-			ddmURL.setParameter(
-				'resourceClassNameId',
-				config.resourceClassNameId
-			);
-			ddmURL.setParameter('eventName', config.eventName);
-			ddmURL.setParameter('groupId', config.groupId);
-			ddmURL.setParameter('mode', config.mode);
-
-			if (config.mvcPath) {
-				ddmURL.setParameter('mvcPath', config.mvcPath);
-			} else {
-				ddmURL.setParameter('mvcPath', '/view.jsp');
-			}
+			var params = {
+				classNameId: config.classNameId,
+				classPK: config.classPK,
+				doAsGroupId:
+					config.doAsGroupId || themeDisplay.getScopeGroupId(),
+				eventName: config.eventName,
+				groupId: config.groupId,
+				mode: config.mode,
+				mvcPath: config.mvcPath || '/view.jsp',
+				p_p_state: 'pop_up',
+				portletResourceNamespace: config.portletResourceNamespace,
+				resourceClassNameId: config.resourceClassNameId,
+				scopeTitle: config.title,
+				structureAvailableFields: config.structureAvailableFields,
+				templateId: config.templateId
+			};
 
 			if ('navigationStartsOn' in config) {
-				ddmURL.setParameter(
-					'navigationStartsOn',
-					config.navigationStartsOn
-				);
+				params.navigationStartsOn = config.navigationStartsOn;
 			}
 
-			ddmURL.setParameter(
-				'portletResourceNamespace',
-				config.portletResourceNamespace
-			);
-
 			if ('redirect' in config) {
-				ddmURL.setParameter('redirect', config.redirect);
+				params.redirect = config.redirect;
 			}
 
 			if ('refererPortletName' in config) {
-				ddmURL.setParameter(
-					'refererPortletName',
-					config.refererPortletName
-				);
+				params.refererPortletName = config.refererPortletName;
 			}
 
 			if ('refererWebDAVToken' in config) {
-				ddmURL.setParameter(
-					'refererWebDAVToken',
-					config.refererWebDAVToken
-				);
+				params.refererWebDAVToken = config.refererWebDAVToken;
 			}
 
-			ddmURL.setParameter('scopeTitle', config.title);
-
 			if ('searchRestriction' in config) {
-				ddmURL.setParameter(
-					'searchRestriction',
-					config.searchRestriction
-				);
-				ddmURL.setParameter(
-					'searchRestrictionClassNameId',
-					config.searchRestrictionClassNameId
-				);
-				ddmURL.setParameter(
-					'searchRestrictionClassPK',
-					config.searchRestrictionClassPK
-				);
+				params.searchRestriction = config.searchRestriction;
+				params.searchRestrictionClassNameId =
+					config.searchRestrictionClassNameId;
+				params.searchRestrictionClassPK =
+					config.searchRestrictionClassPK;
 			}
 
 			if ('showAncestorScopes' in config) {
-				ddmURL.setParameter(
-					'showAncestorScopes',
-					config.showAncestorScopes
-				);
+				params.showAncestorScopes = config.showAncestorScopes;
 			}
 
 			if ('showBackURL' in config) {
-				ddmURL.setParameter('showBackURL', config.showBackURL);
+				params.showBackURL = config.showBackURL;
 			}
 
 			if ('showCacheableInput' in config) {
-				ddmURL.setParameter(
-					'showCacheableInput',
-					config.showCacheableInput
-				);
+				params.showCacheableInput = config.showCacheableInput;
 			}
 
 			if ('showHeader' in config) {
-				ddmURL.setParameter('showHeader', config.showHeader);
+				params.showHeader = config.showHeader;
 			}
 
 			if ('showManageTemplates' in config) {
-				ddmURL.setParameter(
-					'showManageTemplates',
-					config.showManageTemplates
-				);
+				params.showManageTemplates = config.showManageTemplates;
 			}
 
-			ddmURL.setParameter(
-				'structureAvailableFields',
-				config.structureAvailableFields
+			var url = Liferay.Util.PortletURL.createRenderURL(
+				config.basePortletURL,
+				params
 			);
-			ddmURL.setParameter('templateId', config.templateId);
 
-			ddmURL.setPortletId(Liferay.PortletKeys.DYNAMIC_DATA_MAPPING);
-			ddmURL.setWindowState('pop_up');
-
-			config.uri = ddmURL.toString();
+			config.uri = url.toString();
 
 			var dialogConfig = config.dialog;
 
@@ -1498,7 +1449,7 @@
 				);
 			});
 		},
-		['liferay-portlet-url']
+		['aui-base']
 	);
 
 	Liferay.provide(
@@ -1618,7 +1569,7 @@
 					}
 				};
 
-				var editURL = new Liferay.PortletURL.createURL(
+				var editURL = new Liferay.Util.PortletURL.createPortletURL(
 					config.uri,
 					A.merge(
 						{
@@ -1649,7 +1600,7 @@
 				});
 			}
 		},
-		['aui-base', 'liferay-portlet-url', 'liferay-util-window']
+		['aui-base', 'liferay-util-window']
 	);
 
 	Liferay.provide(

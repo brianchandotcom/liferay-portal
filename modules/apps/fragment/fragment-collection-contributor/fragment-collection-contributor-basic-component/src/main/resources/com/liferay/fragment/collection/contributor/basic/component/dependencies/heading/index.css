@@ -1,3 +1,3 @@
-.component-heading[data-text-color] * {
-	color: inherit !important;
+.fragment-heading-text-colored a {
+	color: inherit;
 }

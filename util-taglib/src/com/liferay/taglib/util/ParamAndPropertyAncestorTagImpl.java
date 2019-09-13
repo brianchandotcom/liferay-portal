@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseBodyTagSupport;
-import com.liferay.taglib.servlet.AutoClosePageContextRegistry;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -189,30 +188,17 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	@Override
-	public synchronized void setPageContext(PageContext pageContext) {
+	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)pageContext.getRequest();
+		_httpServletRequest = (HttpServletRequest)pageContext.getRequest();
 
-		_httpServletRequest = httpServletRequest;
-
-		_servletContext = (ServletContext)httpServletRequest.getAttribute(
+		_servletContext = (ServletContext)_httpServletRequest.getAttribute(
 			WebKeys.CTX);
 
 		if (_servletContext == null) {
 			_servletContext = pageContext.getServletContext();
 		}
-
-		AutoClosePageContextRegistry.registerCloseCallback(
-			pageContext,
-			() -> {
-				synchronized (ParamAndPropertyAncestorTagImpl.this) {
-					if (httpServletRequest == _httpServletRequest) {
-						_httpServletRequest = null;
-					}
-				}
-			});
 	}
 
 	public void setServletContext(ServletContext servletContext) {

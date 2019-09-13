@@ -26,6 +26,7 @@ import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
 import groovy.json.JsonSlurper;
@@ -266,24 +267,6 @@ public class NodePlugin implements Plugin<Project> {
 		packageRunTask.setGroup(BasePlugin.BUILD_GROUP);
 		packageRunTask.setScriptName(scriptName);
 
-		if (taskName.equals(PACKAGE_RUN_TEST_TASK_NAME)) {
-			PluginContainer pluginContainer = project.getPlugins();
-
-			pluginContainer.withType(
-				LifecycleBasePlugin.class,
-				new Action<LifecycleBasePlugin>() {
-
-					@Override
-					public void execute(
-						LifecycleBasePlugin lifecycleBasePlugin) {
-
-						_configureTaskPackageRunTestForLifecycleBasePlugin(
-							packageRunTask);
-					}
-
-				});
-		}
-
 		return packageRunTask;
 	}
 
@@ -337,6 +320,36 @@ public class NodePlugin implements Plugin<Project> {
 		return packageRunBuildTask;
 	}
 
+	private PackageRunTestTask _addTaskPackageRunTest(
+		NpmInstallTask npmInstallTask) {
+
+		Project project = npmInstallTask.getProject();
+
+		final PackageRunTestTask packageRunTestTask = GradleUtil.addTask(
+			project, PACKAGE_RUN_TEST_TASK_NAME, PackageRunTestTask.class);
+
+		packageRunTestTask.dependsOn(npmInstallTask);
+		packageRunTestTask.setDescription(
+			"Runs the \"build\" package.json script.");
+		packageRunTestTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			LifecycleBasePlugin.class,
+			new Action<LifecycleBasePlugin>() {
+
+				@Override
+				public void execute(LifecycleBasePlugin lifecycleBasePlugin) {
+					_configureTaskPackageRunTestForLifecycleBasePlugin(
+						packageRunTestTask);
+				}
+
+			});
+
+		return packageRunTestTask;
+	}
+
 	@SuppressWarnings("unchecked")
 	private void _addTasksPackageRun(
 		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap,
@@ -353,6 +366,9 @@ public class NodePlugin implements Plugin<Project> {
 			for (String scriptName : scriptsJsonMap.keySet()) {
 				if (Objects.equals(scriptName, "build")) {
 					_addTaskPackageRunBuild(npmInstallTask, nodeExtension);
+				}
+				else if (Objects.equals(scriptName, "test")) {
+					_addTaskPackageRunTest(npmInstallTask);
 				}
 				else {
 					_addTaskPackageRun(scriptName, npmInstallTask);
@@ -711,13 +727,13 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskPackageRunTestForLifecycleBasePlugin(
-		ExecutePackageManagerTask executePackageManagerTask) {
+		PackageRunTestTask packageRunTestTask) {
 
 		Task checkTask = GradleUtil.getTask(
-			executePackageManagerTask.getProject(),
+			packageRunTestTask.getProject(),
 			LifecycleBasePlugin.CHECK_TASK_NAME);
 
-		checkTask.dependsOn(executePackageManagerTask);
+		checkTask.dependsOn(packageRunTestTask);
 	}
 
 	private void _configureTaskPublishNodeModule(

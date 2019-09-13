@@ -443,10 +443,8 @@ class Sidebar extends Component {
 	}
 
 	_getTabItems() {
-		const {tabs} = this.state;
-
 		if (!this._isEditMode()) {
-			return tabs['edit'].items;
+			return this.state.tabs;
 		}
 
 		const {focusedField} = this.props;
@@ -1180,20 +1178,10 @@ Sidebar.STATE = {
 	 */
 
 	tabs: Config.object()
-		.value({
-			add: {
-				items: [
-					Liferay.Language.get('elements'),
-					Liferay.Language.get('element-sets')
-				]
-			},
-			edit: {
-				items: [
-					Liferay.Language.get('basic'),
-					Liferay.Language.get('properties')
-				]
-			}
-		})
+		.value([
+			Liferay.Language.get('elements'),
+			Liferay.Language.get('element-sets')
+		])
 		.internal()
 };
 

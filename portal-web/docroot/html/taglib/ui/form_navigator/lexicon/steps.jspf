@@ -108,6 +108,7 @@
 					boolean isFoundActiveStep = false;
 
 					for (int j = 0; j < sectionKeys.length; j++) {
+						String sectionIcon = "live";
 						String sectionKey = sectionKeys[j];
 						String sectionLabel = sectionLabels[j];
 
@@ -130,10 +131,12 @@
 						if (curSection.equals(sectionKey) || curSection.equals(sectionId)) {
 							cssClass += " active";
 							isFoundActiveStep = true;
+							sectionIcon = "circle";
 						}
 
 						if (!isFoundActiveStep) {
 							cssClass += " complete";
+							sectionIcon = "check";
 						}
 
 						if (ArrayUtil.contains(modifiedSections, sectionId)) {
@@ -145,14 +148,8 @@
 							<div class="progress-bar-title"><%= sectionLabel %></div>
 
 							<div class="divider">
-								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-circle">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#circle"></use>
-								</svg>
-								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#check"></use>
-								</svg>
-								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-oauth">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#oauth"></use>
+								<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= sectionIcon %>">
+									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= sectionIcon %>"></use>
 								</svg>
 							</div>
 
@@ -292,9 +289,13 @@
 
 					if (tabview.indexOf(item) < tabIndex) {
 						node.addClass('complete');
+						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('check'));
+					}
+					else if (tabview.indexOf(item) === tabIndex) {
+						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('circle'));
 					}
 					else {
-						node.removeClass('complete');
+						node.one('.divider').setHTML(Liferay.Util.getLexiconIconTpl('live'));
 					}
 				}
 			);

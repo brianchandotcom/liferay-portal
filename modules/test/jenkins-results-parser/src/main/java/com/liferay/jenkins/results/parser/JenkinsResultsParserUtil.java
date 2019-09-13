@@ -850,7 +850,7 @@ public class JenkinsResultsParserUtil {
 		try {
 			JSONObject jobJSONObject = toJSONObject(
 				_getDistPortalJobURL(portalBranchName) +
-					"api/json?tree=builds[number,url]");
+					"api/json?tree=builds[number]");
 
 			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
 
@@ -862,15 +862,6 @@ public class JenkinsResultsParserUtil {
 				}
 
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
-
-				JSONObject buildResultJSONObject = toJSONObject(
-					buildJSONObject.getString("url") + "api/json?tree=result");
-
-				Object buildResult = buildResultJSONObject.get("result");
-
-				if (buildResult == JSONObject.NULL) {
-					continue;
-				}
 
 				String distPortalBundlesBuildURL = combine(
 					_getDistPortalBundlesURL(portalBranchName),

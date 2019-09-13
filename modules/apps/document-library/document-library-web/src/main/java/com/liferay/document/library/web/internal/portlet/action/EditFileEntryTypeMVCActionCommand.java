@@ -86,10 +86,10 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				_updateFileEntryType(actionRequest, actionResponse);
+				_updateFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				_deleteFileEntryType(actionRequest, actionResponse);
+				_deleteFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				_subscribeFileEntryType(actionRequest);
@@ -134,8 +134,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _deleteFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _deleteFileEntryType(ActionRequest actionRequest)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -180,8 +179,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
-	private void _updateFileEntryType(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	private void _updateFileEntryType(ActionRequest actionRequest)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(

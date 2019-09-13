@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+package com.liferay.analytics.web.internal.constants;
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+/**
+ * @author Marcellus Tavares
+ */
+public class AnalyticsWebKeys {
 
-<%@ page import="com.liferay.analytics.web.internal.constants.AnalyticsWebKeys" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
-page import="com.liferay.portal.kernel.util.PropsUtil" %>
+	public static final String ANALYTICS_CLIENT_CONFIG_KEY =
+		"ANALYTICS_CLIENT_CONFIG_KEY";
 
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<%@ include file="/init-ext.jsp" %>
+}

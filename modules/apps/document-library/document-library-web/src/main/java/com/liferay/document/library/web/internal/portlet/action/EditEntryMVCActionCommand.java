@@ -21,6 +21,7 @@ import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -271,7 +272,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 		catch (AssetCategoryException | AssetTagException |
-			   InvalidFolderException e) {
+			   FileEntryLockException | InvalidFolderException e) {
 
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}

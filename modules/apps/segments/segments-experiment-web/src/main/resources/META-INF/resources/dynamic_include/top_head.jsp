@@ -15,3 +15,24 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT);
+%>
+
+<aui:script sandbox="<%= true %>">
+	<c:if test='<%= (segmentsExperiment != null) && Objects.equals(segmentsExperiment.getGoal(), "click") && Validator.isNotNull(segmentsExperiment.getGoalTarget()) %>'>
+		var element = document.getElementById('<%= segmentsExperiment.getGoalTarget() %>');
+
+		if (element) {
+			element.addEventListener(
+				'click',
+				function(event) {
+					if (window.Analytics) {
+						Analytics.send('ctaClicked', 'Page', {'elementId': event.target.id});
+					}
+				}
+			);
+		}
+	</c:if>
+</aui:script>

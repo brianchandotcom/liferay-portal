@@ -55,10 +55,10 @@ public abstract class ValidateRootFolderConfigurationAction
 	protected void validate(ActionRequest actionRequest)
 		throws PortalException {
 
-		validateRootFolder(actionRequest);
+		_validateRootFolder(actionRequest);
 	}
 
-	protected void validateRootFolder(ActionRequest actionRequest)
+	private void _validateRootFolder(ActionRequest actionRequest)
 		throws PortalException {
 
 		long rootFolderId = GetterUtil.getLong(

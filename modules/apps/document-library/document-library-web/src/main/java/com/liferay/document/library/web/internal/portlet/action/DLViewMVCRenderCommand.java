@@ -65,7 +65,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 				getDLPortletToolbarContributor());
 
 		try {
-			if (pingFolderRepository(renderRequest, renderResponse)) {
+			if (_pingFolderRepository(renderRequest, renderResponse)) {
 				return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 			}
 		}
@@ -91,7 +91,7 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		return "/document_library/view.jsp";
 	}
 
-	protected boolean pingFolderRepository(
+	private boolean _pingFolderRepository(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortalException {
 

@@ -70,10 +70,10 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateRepository(actionRequest);
+				_updateRepository(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				unmountRepository(actionRequest);
+				_unmountRepository(actionRequest);
 			}
 		}
 		catch (PortalException pe) {
@@ -108,7 +108,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		_repositoryService = repositoryService;
 	}
 
-	protected void unmountRepository(ActionRequest actionRequest)
+	private void _unmountRepository(ActionRequest actionRequest)
 		throws PortalException {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
@@ -116,7 +116,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 		_repositoryService.deleteRepository(repositoryId);
 	}
 
-	protected void updateRepository(ActionRequest actionRequest)
+	private void _updateRepository(ActionRequest actionRequest)
 		throws PortalException {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");

@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void deleteFileEntryType(
+	private void _deleteFileEntryType(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
@@ -96,16 +96,16 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateFileEntryType(actionRequest, actionResponse);
+				_updateFileEntryType(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileEntryType(actionRequest, actionResponse);
+				_deleteFileEntryType(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribeFileEntryType(actionRequest);
+				_subscribeFileEntryType(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribeFileEntryType(actionRequest);
+				_unsubscribeFileEntryType(actionRequest);
 			}
 
 			if (SessionErrors.isEmpty(actionRequest)) {
@@ -144,7 +144,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected long[] getLongArray(PortletRequest portletRequest, String name) {
+	private long[] _getLongArray(PortletRequest portletRequest, String name) {
 		String value = portletRequest.getParameter(name);
 
 		if (value == null) {
@@ -154,7 +154,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
 
-	protected void subscribeFileEntryType(ActionRequest actionRequest)
+	private void _subscribeFileEntryType(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -167,7 +167,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
-	protected void unsubscribeFileEntryType(ActionRequest actionRequest)
+	private void _unsubscribeFileEntryType(ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -180,7 +180,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getScopeGroupId(), fileEntryTypeId);
 	}
 
-	protected void updateFileEntryType(
+	private void _updateFileEntryType(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
@@ -192,7 +192,7 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
-		long[] ddmStructureIds = getLongArray(
+		long[] ddmStructureIds = _getLongArray(
 			actionRequest, "ddmStructuresSearchContainerPrimaryKeys");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

@@ -87,7 +87,7 @@ public class GetFileActionHelper {
 			long groupId = ParamUtil.getLong(
 				httpServletRequest, "groupId", themeDisplay.getScopeGroupId());
 
-			getFile(
+			_getFile(
 				fileEntryId, folderId, name, title, version, fileShortcutId,
 				uuid, groupId, targetExtension, httpServletRequest,
 				httpServletResponse);
@@ -98,7 +98,7 @@ public class GetFileActionHelper {
 				httpServletResponse);
 		}
 		catch (PrincipalException pe) {
-			processPrincipalException(
+			_processPrincipalException(
 				pe, httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
@@ -106,7 +106,7 @@ public class GetFileActionHelper {
 		}
 	}
 
-	protected void getFile(
+	private void _getFile(
 			long fileEntryId, long folderId, String name, String title,
 			String version, long fileShortcutId, String uuid, long groupId,
 			String targetExtension, HttpServletRequest httpServletRequest,
@@ -240,7 +240,7 @@ public class GetFileActionHelper {
 			contentLength, contentType);
 	}
 
-	protected void processPrincipalException(
+	private void _processPrincipalException(
 			Throwable t, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {

@@ -58,12 +58,12 @@ public class DLConfigurationAction
 	protected void validate(ActionRequest actionRequest)
 		throws PortalException {
 
-		validateDisplayStyleViews(actionRequest);
+		_validateDisplayStyleViews(actionRequest);
 
 		super.validate(actionRequest);
 	}
 
-	protected void validateDisplayStyleViews(ActionRequest actionRequest) {
+	private void _validateDisplayStyleViews(ActionRequest actionRequest) {
 		String displayViews = GetterUtil.getString(
 			getParameter(actionRequest, "displayViews"));
 

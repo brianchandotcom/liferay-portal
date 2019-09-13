@@ -53,12 +53,14 @@ const updateEditableValueContentAction = (
 			),
 			{
 				content,
-				path: [
-					processor,
-					editableId,
-					_getSegmentsExperienceId(getState),
-					_getLanguageId(getState)
-				]
+				path: _getSegmentsExperienceId(getState)
+					? [
+							processor,
+							editableId,
+							_getSegmentsExperienceId(getState),
+							_getLanguageId(getState)
+					  ]
+					: [processor, editableId, _getLanguageId(getState)]
 			}
 		],
 		dispatch,
@@ -138,10 +140,12 @@ const updateFragmentConfigurationAction = (
 		[
 			{
 				content: configuration,
-				path: [
-					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					_getSegmentsExperienceId(getState)
-				]
+				path: _getSegmentsExperienceId(getState)
+					? [
+							FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+							_getSegmentsExperienceId(getState)
+					  ]
+					: [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]
 			}
 		],
 		dispatch,

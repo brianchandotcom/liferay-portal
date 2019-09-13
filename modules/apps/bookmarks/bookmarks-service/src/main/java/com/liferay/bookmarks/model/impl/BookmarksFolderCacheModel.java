@@ -18,6 +18,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class BookmarksFolderCacheModel
-	implements CacheModel<BookmarksFolder>, Externalizable {
+	implements CacheModel<BookmarksFolder>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class BookmarksFolderCacheModel
 		BookmarksFolderCacheModel bookmarksFolderCacheModel =
 			(BookmarksFolderCacheModel)obj;
 
-		if (folderId == bookmarksFolderCacheModel.folderId) {
+		if ((folderId == bookmarksFolderCacheModel.folderId) &&
+			(mvccVersion == bookmarksFolderCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class BookmarksFolderCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, folderId);
+		int hashCode = HashUtil.hash(0, folderId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", folderId=");
 		sb.append(folderId);
@@ -106,6 +123,8 @@ public class BookmarksFolderCacheModel
 	@Override
 	public BookmarksFolder toEntityModel() {
 		BookmarksFolderImpl bookmarksFolderImpl = new BookmarksFolderImpl();
+
+		bookmarksFolderImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			bookmarksFolderImpl.setUuid("");
@@ -194,6 +213,7 @@ public class BookmarksFolderCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		folderId = objectInput.readLong();
@@ -222,6 +242,8 @@ public class BookmarksFolderCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -286,6 +308,7 @@ public class BookmarksFolderCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long folderId;
 	public long groupId;

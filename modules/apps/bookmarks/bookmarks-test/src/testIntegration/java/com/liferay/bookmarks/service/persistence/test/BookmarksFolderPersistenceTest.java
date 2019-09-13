@@ -124,6 +124,8 @@ public class BookmarksFolderPersistenceTest {
 
 		BookmarksFolder newBookmarksFolder = _persistence.create(pk);
 
+		newBookmarksFolder.setMvccVersion(RandomTestUtil.nextLong());
+
 		newBookmarksFolder.setUuid(RandomTestUtil.randomString());
 
 		newBookmarksFolder.setGroupId(RandomTestUtil.nextLong());
@@ -161,6 +163,9 @@ public class BookmarksFolderPersistenceTest {
 		BookmarksFolder existingBookmarksFolder = _persistence.findByPrimaryKey(
 			newBookmarksFolder.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingBookmarksFolder.getMvccVersion(),
+			newBookmarksFolder.getMvccVersion());
 		Assert.assertEquals(
 			existingBookmarksFolder.getUuid(), newBookmarksFolder.getUuid());
 		Assert.assertEquals(
@@ -328,12 +333,13 @@ public class BookmarksFolderPersistenceTest {
 
 	protected OrderByComparator<BookmarksFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BookmarksFolder", "uuid", true, "folderId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentFolderId", true, "treePath",
-			true, "name", true, "description", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"BookmarksFolder", "mvccVersion", true, "uuid", true, "folderId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentFolderId", true, "treePath", true, "name", true,
+			"description", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -572,6 +578,8 @@ public class BookmarksFolderPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		BookmarksFolder bookmarksFolder = _persistence.create(pk);
+
+		bookmarksFolder.setMvccVersion(RandomTestUtil.nextLong());
 
 		bookmarksFolder.setUuid(RandomTestUtil.randomString());
 

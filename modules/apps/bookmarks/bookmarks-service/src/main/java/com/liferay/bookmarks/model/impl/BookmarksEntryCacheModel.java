@@ -18,6 +18,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class BookmarksEntryCacheModel
-	implements CacheModel<BookmarksEntry>, Externalizable {
+	implements CacheModel<BookmarksEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class BookmarksEntryCacheModel
 		BookmarksEntryCacheModel bookmarksEntryCacheModel =
 			(BookmarksEntryCacheModel)obj;
 
-		if (entryId == bookmarksEntryCacheModel.entryId) {
+		if ((entryId == bookmarksEntryCacheModel.entryId) &&
+			(mvccVersion == bookmarksEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class BookmarksEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, entryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
@@ -112,6 +129,8 @@ public class BookmarksEntryCacheModel
 	@Override
 	public BookmarksEntry toEntityModel() {
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
+
+		bookmarksEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			bookmarksEntryImpl.setUuid("");
@@ -210,6 +229,7 @@ public class BookmarksEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		entryId = objectInput.readLong();
@@ -243,6 +263,8 @@ public class BookmarksEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -317,6 +339,7 @@ public class BookmarksEntryCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long entryId;
 	public long groupId;

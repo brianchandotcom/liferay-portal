@@ -79,22 +79,24 @@ public class BookmarksEntryModelImpl
 	public static final String TABLE_NAME = "BookmarksEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"folderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"url", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"visits", Types.INTEGER},
-		{"priority", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"folderId", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"url", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"visits", Types.INTEGER}, {"priority", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -118,7 +120,7 @@ public class BookmarksEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BookmarksEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table BookmarksEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BookmarksEntry";
 
@@ -169,6 +171,7 @@ public class BookmarksEntryModelImpl
 
 		BookmarksEntry model = new BookmarksEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -341,6 +344,11 @@ public class BookmarksEntryModelImpl
 		Map<String, BiConsumer<BookmarksEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<BookmarksEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", BookmarksEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<BookmarksEntry, Long>)BookmarksEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", BookmarksEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -435,6 +443,17 @@ public class BookmarksEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1069,6 +1088,7 @@ public class BookmarksEntryModelImpl
 	public Object clone() {
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
 
+		bookmarksEntryImpl.setMvccVersion(getMvccVersion());
 		bookmarksEntryImpl.setUuid(getUuid());
 		bookmarksEntryImpl.setEntryId(getEntryId());
 		bookmarksEntryImpl.setGroupId(getGroupId());
@@ -1199,6 +1219,8 @@ public class BookmarksEntryModelImpl
 	public CacheModel<BookmarksEntry> toCacheModel() {
 		BookmarksEntryCacheModel bookmarksEntryCacheModel =
 			new BookmarksEntryCacheModel();
+
+		bookmarksEntryCacheModel.mvccVersion = getMvccVersion();
 
 		bookmarksEntryCacheModel.uuid = getUuid();
 
@@ -1387,6 +1409,7 @@ public class BookmarksEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;

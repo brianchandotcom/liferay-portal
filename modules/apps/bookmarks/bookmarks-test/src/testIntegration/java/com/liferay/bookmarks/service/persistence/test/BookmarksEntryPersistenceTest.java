@@ -124,6 +124,8 @@ public class BookmarksEntryPersistenceTest {
 
 		BookmarksEntry newBookmarksEntry = _persistence.create(pk);
 
+		newBookmarksEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newBookmarksEntry.setUuid(RandomTestUtil.randomString());
 
 		newBookmarksEntry.setGroupId(RandomTestUtil.nextLong());
@@ -167,6 +169,9 @@ public class BookmarksEntryPersistenceTest {
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(
 			newBookmarksEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingBookmarksEntry.getMvccVersion(),
+			newBookmarksEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingBookmarksEntry.getUuid(), newBookmarksEntry.getUuid());
 		Assert.assertEquals(
@@ -390,13 +395,13 @@ public class BookmarksEntryPersistenceTest {
 
 	protected OrderByComparator<BookmarksEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"BookmarksEntry", "uuid", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "folderId", true, "treePath", true,
-			"name", true, "url", true, "description", true, "visits", true,
-			"priority", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"BookmarksEntry", "mvccVersion", true, "uuid", true, "entryId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"folderId", true, "treePath", true, "name", true, "url", true,
+			"description", true, "visits", true, "priority", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -634,6 +639,8 @@ public class BookmarksEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		BookmarksEntry bookmarksEntry = _persistence.create(pk);
+
+		bookmarksEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		bookmarksEntry.setUuid(RandomTestUtil.randomString());
 

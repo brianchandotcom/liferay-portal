@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.bookmarks.model.BookmarksEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
@@ -36,6 +37,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.bookmarks.model.BookmarksFolder">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="folderId" type="long" />
 		<field name="groupId" type="long" />

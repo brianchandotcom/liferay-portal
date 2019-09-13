@@ -31,9 +31,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -168,10 +166,12 @@ public class CompilerWrapper extends Compiler {
 				Enumeration<URL> enumeration = classLoader.getResources(
 					"/META-INF/resources" + ctxt.getJspFile());
 
-				List<URL> urls = Collections.list(enumeration);
+				if (enumeration.hasMoreElements()) {
+					enumeration.nextElement();
 
-				if (urls.size() > 1) {
-					return null;
+					if (enumeration.hasMoreElements()) {
+						return null;
+					}
 				}
 			}
 			catch (Exception e) {

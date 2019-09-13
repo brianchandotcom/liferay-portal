@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
@@ -57,23 +58,36 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 			return javaClass.getContent();
 		}
 
-		if (!absolutePath.contains("-web/src/") ||
-			absolutePath.contains("/test/") ||
-			absolutePath.contains("/testIntegration/")) {
-
-			return javaTerm.getContent();
-		}
-
-		if (packageName.contains(".internal.") ||
+		if (absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/") ||
+			packageName.contains(".internal.") ||
 			packageName.endsWith(".internal")) {
 
 			return javaClass.getContent();
 		}
 
+		if (absolutePath.contains("-service/src/")) {
+			_checkServiceClasses(fileName, packageName);
+		}
+		else if (absolutePath.contains("-web/src/")) {
+			_checkExportedClasses(fileName, packageName);
+		}
+
+		return javaClass.getContent();
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
+	}
+
+	private void _checkExportedClasses(String fileName, String packageName)
+		throws IOException {
+
 		BNDSettings bndSettings = getBNDSettings(fileName);
 
 		if (bndSettings == null) {
-			return javaClass.getContent();
+			return;
 		}
 
 		List<String> exportPackageNames = bndSettings.getExportPackageNames();
@@ -84,13 +98,6 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 				"Classes that are not exported should be in 'internal' " +
 					"package");
 		}
-
-		return javaClass.getContent();
-	}
-
-	@Override
-	protected String[] getCheckableJavaTermNames() {
-		return new String[] {JAVA_CLASS};
 	}
 
 	private void _checkImplPackageName(String fileName, String packageName)
@@ -112,6 +119,28 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 				fileName,
 				"Use 'internal' instead of 'impl' in package '" + packageName +
 					"'");
+		}
+	}
+
+	private void _checkServiceClasses(String fileName, String packageName)
+		throws IOException {
+
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		if ((bndSettings == null) ||
+			!GetterUtil.getBoolean(
+				BNDSourceUtil.getDefinitionValue(
+					bndSettings.getContent(), "Liferay-Service"))) {
+
+			return;
+		}
+
+		if (!packageName.matches(
+				".*\\.(model|service)\\.(impl|persistence).*")) {
+
+			addMessage(
+				fileName,
+				"Classes in service modules should be in 'internal' package");
 		}
 	}
 

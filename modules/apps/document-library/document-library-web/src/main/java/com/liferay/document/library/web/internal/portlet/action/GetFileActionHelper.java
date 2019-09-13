@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFileEntryPermission;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -110,7 +111,7 @@ public class GetFileActionHelper {
 			String version, long fileShortcutId, String uuid, long groupId,
 			String targetExtension, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		if (name.startsWith("DLFE-")) {
 			name = name.substring(5);

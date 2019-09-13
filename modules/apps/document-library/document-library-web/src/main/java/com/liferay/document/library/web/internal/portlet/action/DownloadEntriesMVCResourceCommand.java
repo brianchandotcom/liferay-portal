@@ -39,6 +39,7 @@ import com.liferay.portal.util.RepositoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -92,14 +93,14 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 			return false;
 		}
-		catch (Exception e) {
+		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
 	}
 
 	protected void downloadFileEntries(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -189,7 +190,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	protected void downloadFolder(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException, PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -244,7 +245,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	protected void zipFileEntry(
 			FileEntry fileEntry, String path, ZipWriter zipWriter)
-		throws Exception {
+		throws IOException, PortalException {
 
 		zipWriter.addEntry(
 			path + StringPool.SLASH + fileEntry.getFileName(),
@@ -253,7 +254,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	protected void zipFolder(
 			long repositoryId, long folderId, String path, ZipWriter zipWriter)
-		throws Exception {
+		throws IOException, PortalException {
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
 			_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(

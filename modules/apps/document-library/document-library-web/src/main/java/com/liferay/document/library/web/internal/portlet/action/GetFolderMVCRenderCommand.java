@@ -56,16 +56,16 @@ public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL, getDLTrashUtil());
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (PortalException pe) {
+			if (pe instanceof NoSuchFolderException ||
+				pe instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, pe.getClass());
 
 				return "/document_library/error.jsp";
 			}
 
-			throw new PortletException(e);
+			throw new PortletException(pe);
 		}
 
 		return getPath();

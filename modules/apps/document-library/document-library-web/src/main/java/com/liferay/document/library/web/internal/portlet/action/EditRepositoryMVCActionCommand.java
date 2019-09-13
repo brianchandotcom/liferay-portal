@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.RepositoryNameException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -63,7 +64,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -75,29 +76,29 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 				unmountRepository(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRepositoryException ||
-				e instanceof PrincipalException) {
+		catch (PortalException pe) {
+			if (pe instanceof NoSuchRepositoryException ||
+				pe instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, pe.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/document_library/error.jsp");
 			}
-			else if (e instanceof DuplicateFolderNameException ||
-					 e instanceof DuplicateRepositoryNameException ||
-					 e instanceof FolderNameException ||
-					 e instanceof InvalidRepositoryException ||
-					 e instanceof RepositoryNameException) {
+			else if (pe instanceof DuplicateFolderNameException ||
+					 pe instanceof DuplicateRepositoryNameException ||
+					 pe instanceof FolderNameException ||
+					 pe instanceof InvalidRepositoryException ||
+					 pe instanceof RepositoryNameException) {
 
-				if (e instanceof InvalidRepositoryException) {
-					_log.error(e, e);
+				if (pe instanceof InvalidRepositoryException) {
+					_log.error(pe, pe);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, pe.getClass());
 			}
 			else {
-				throw e;
+				throw pe;
 			}
 		}
 	}
@@ -108,7 +109,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void unmountRepository(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
@@ -116,7 +117,7 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void updateRepository(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 

@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.diff.DiffResult;
 import com.liferay.portal.kernel.diff.DiffUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -68,15 +70,12 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		try {
 			compareVersions(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchFileEntryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/document_library/error.jsp";
-			}
-
+			return "/document_library/error.jsp";
+		}
+		catch (IOException | PortalException e) {
 			throw new PortletException(e);
 		}
 
@@ -84,7 +83,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected void compareVersions(RenderRequest renderRequest)
-		throws Exception {
+		throws IOException, PortalException {
 
 		long sourceFileVersionId = ParamUtil.getLong(
 			renderRequest, "sourceFileVersionId");

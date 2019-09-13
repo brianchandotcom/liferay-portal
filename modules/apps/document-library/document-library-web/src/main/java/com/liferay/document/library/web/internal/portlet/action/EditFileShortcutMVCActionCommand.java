@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -60,7 +61,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteFileShortcut(
 			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
+		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
@@ -93,7 +94,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -108,22 +109,22 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 				deleteFileShortcut(actionRequest, true);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileShortcutException ||
-				e instanceof PrincipalException) {
+		catch (PortalException pe) {
+			if (pe instanceof NoSuchFileShortcutException ||
+				pe instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, pe.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/document_library/error.jsp");
 			}
-			else if (e instanceof FileShortcutPermissionException ||
-					 e instanceof NoSuchFileEntryException) {
+			else if (pe instanceof FileShortcutPermissionException ||
+					 pe instanceof NoSuchFileEntryException) {
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, pe.getClass());
 			}
 			else {
-				throw e;
+				throw pe;
 			}
 		}
 	}
@@ -139,7 +140,7 @@ public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void updateFileShortcut(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");

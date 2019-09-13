@@ -72,7 +72,7 @@ public class DLAdminConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected void validate(ActionRequest actionRequest) throws Exception {
+	protected void validate(ActionRequest actionRequest) {
 		validateEmail(actionRequest, "emailFileEntryAdded");
 		validateEmail(actionRequest, "emailFileEntryUpdated");
 		validateEmailFrom(actionRequest);

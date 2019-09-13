@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -51,12 +52,14 @@ public abstract class ValidateRootFolderConfigurationAction
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
-	protected void validate(ActionRequest actionRequest) throws Exception {
+	protected void validate(ActionRequest actionRequest)
+		throws PortalException {
+
 		validateRootFolder(actionRequest);
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		long rootFolderId = GetterUtil.getLong(
 			getParameter(actionRequest, "rootFolderId"));
@@ -65,14 +68,14 @@ public abstract class ValidateRootFolderConfigurationAction
 			try {
 				DLAppLocalServiceUtil.getFolder(rootFolderId);
 			}
-			catch (Exception e) {
-				if (e instanceof NoSuchFolderException ||
-					e instanceof NoSuchRepositoryEntryException) {
+			catch (PortalException pe) {
+				if (pe instanceof NoSuchFolderException ||
+					pe instanceof NoSuchRepositoryEntryException) {
 
 					SessionErrors.add(actionRequest, "rootFolderIdInvalid");
 				}
 				else {
-					throw e;
+					throw pe;
 				}
 			}
 		}

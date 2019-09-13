@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -91,8 +92,8 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/error.jsp";
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		catch (PortalException pe) {
+			throw new PortletException(pe);
 		}
 	}
 

@@ -63,8 +63,8 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryUserRelId);
 
 		accountEntryUserRel.setAccountEntryUserRelId(accountEntryUserRelId);
-		accountEntryUserRel.setUserId(userId);
 		accountEntryUserRel.setAccountEntryId(accountEntryId);
+		accountEntryUserRel.setUserId(userId);
 
 		return addAccountEntryUserRel(accountEntryUserRel);
 	}

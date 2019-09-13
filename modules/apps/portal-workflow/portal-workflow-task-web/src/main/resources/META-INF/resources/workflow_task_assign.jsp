@@ -78,7 +78,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		done.on(
 			'click',
 			function(event) {
-				var data = new URLSearchParams(new FormData(document.querySelector('#<portlet:namespace />assignFm')));
+				var data = new FormData(document.querySelector('#<portlet:namespace />assignFm'));
 
 				Liferay.Util.fetch(
 					'<%= assignURL.toString() %>',

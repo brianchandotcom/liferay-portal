@@ -14,7 +14,6 @@
 
 package com.liferay.batch.engine.internal;
 
-import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
@@ -29,26 +28,18 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 
-import java.sql.Blob;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ivica Cardic
  */
+@Component(service = BatchEngineTaskExecutor.class)
 public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
-
-	public BatchEngineTaskExecutorImpl(
-		BatchEngineTaskItemWriterFactory batchEngineTaskItemWriterFactory,
-		BatchEngineTaskLocalService batchEngineTaskLocalService,
-		Class<T> itemClass) {
-
-		_batchEngineTaskItemWriterFactory = batchEngineTaskItemWriterFactory;
-		_batchEngineTaskLocalService = batchEngineTaskLocalService;
-		_itemClass = itemClass;
-	}
 
 	@Override
 	public void execute(BatchEngineTask batchEngineTask) {
@@ -99,13 +90,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 
 		T item = null;
 
-		Blob content = batchEngineTask.getContent();
-
 		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
-				BatchEngineTaskItemReaderFactory.create(
-					BatchEngineTaskContentType.valueOf(
-						batchEngineTask.getContentType()),
-					content.getBinaryStream(), _itemClass);
+				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
 			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter =
 				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
 
@@ -134,9 +120,13 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	private final BatchEngineTaskItemWriterFactory
-		_batchEngineTaskItemWriterFactory;
-	private final BatchEngineTaskLocalService _batchEngineTaskLocalService;
-	private final Class<T> _itemClass;
+	@Reference
+	private BatchEngineTaskItemReaderFactory _batchEngineTaskItemReaderFactory;
+
+	@Reference
+	private BatchEngineTaskItemWriterFactory _batchEngineTaskItemWriterFactory;
+
+	@Reference
+	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
 }

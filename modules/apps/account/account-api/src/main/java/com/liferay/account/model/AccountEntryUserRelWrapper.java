@@ -43,8 +43,8 @@ public class AccountEntryUserRelWrapper
 
 		attributes.put("accountEntryUserRelId", getAccountEntryUserRelId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
 		attributes.put("accountEntryId", getAccountEntryId());
+		attributes.put("userId", getUserId());
 
 		return attributes;
 	}
@@ -64,16 +64,16 @@ public class AccountEntryUserRelWrapper
 			setCompanyId(companyId);
 		}
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
 		Long accountEntryId = (Long)attributes.get("accountEntryId");
 
 		if (accountEntryId != null) {
 			setAccountEntryId(accountEntryId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
 		}
 	}
 

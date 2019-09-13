@@ -4,7 +4,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "karma start"
+		"test_DISABLED": "karma start"
 	},
 	"version": "4.0.0"
 }

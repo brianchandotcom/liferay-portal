@@ -17,6 +17,7 @@ package com.liferay.trash.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TrashEntryModel
-	extends AttachedModel, BaseModel<TrashEntry>, ShardedModel {
+	extends AttachedModel, BaseModel<TrashEntry>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +58,22 @@ public interface TrashEntryModel
 	 * @param primaryKey the primary key of this trash entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this trash entry.
+	 *
+	 * @return the mvcc version of this trash entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this trash entry.
+	 *
+	 * @param mvccVersion the mvcc version of this trash entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the entry ID of this trash entry.

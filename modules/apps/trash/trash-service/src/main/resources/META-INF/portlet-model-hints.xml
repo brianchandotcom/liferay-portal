@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.trash.model.TrashEntry">
+		<field name="mvccVersion" type="long" />
 		<field name="entryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -17,6 +18,7 @@
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.trash.model.TrashVersion">
+		<field name="mvccVersion" type="long" />
 		<field name="versionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="entryId" type="long" />

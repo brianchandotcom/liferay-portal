@@ -41,6 +41,7 @@ public class TrashVersionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("versionId", getVersionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("entryId", getEntryId());
@@ -54,6 +55,12 @@ public class TrashVersionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long versionId = (Long)attributes.get("versionId");
 
 		if (versionId != null) {
@@ -145,6 +152,16 @@ public class TrashVersionWrapper
 	@Override
 	public long getEntryId() {
 		return model.getEntryId();
+	}
+
+	/**
+	 * Returns the mvcc version of this trash version.
+	 *
+	 * @return the mvcc version of this trash version
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -257,6 +274,16 @@ public class TrashVersionWrapper
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
+	}
+
+	/**
+	 * Sets the mvcc version of this trash version.
+	 *
+	 * @param mvccVersion the mvcc version of this trash version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

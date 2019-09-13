@@ -74,18 +74,19 @@ public class TrashEntryModelImpl
 	public static final String TABLE_NAME = "TrashEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"systemEventSetKey", Types.BIGINT}, {"typeSettings", Types.CLOB},
-		{"status", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"entryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"systemEventSetKey", Types.BIGINT},
+		{"typeSettings", Types.CLOB}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +101,7 @@ public class TrashEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TrashEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
+		"create table TrashEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 
@@ -147,6 +148,7 @@ public class TrashEntryModelImpl
 
 		TrashEntry model = new TrashEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -306,6 +308,10 @@ public class TrashEntryModelImpl
 		Map<String, BiConsumer<TrashEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<TrashEntry, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", TrashEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<TrashEntry, Long>)TrashEntry::setMvccVersion);
 		attributeGetterFunctions.put("entryId", TrashEntry::getEntryId);
 		attributeSetterBiConsumers.put(
 			"entryId", (BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
@@ -352,6 +358,17 @@ public class TrashEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -615,6 +632,7 @@ public class TrashEntryModelImpl
 	public Object clone() {
 		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
 
+		trashEntryImpl.setMvccVersion(getMvccVersion());
 		trashEntryImpl.setEntryId(getEntryId());
 		trashEntryImpl.setGroupId(getGroupId());
 		trashEntryImpl.setCompanyId(getCompanyId());
@@ -714,6 +732,8 @@ public class TrashEntryModelImpl
 	@Override
 	public CacheModel<TrashEntry> toCacheModel() {
 		TrashEntryCacheModel trashEntryCacheModel = new TrashEntryCacheModel();
+
+		trashEntryCacheModel.mvccVersion = getMvccVersion();
 
 		trashEntryCacheModel.entryId = getEntryId();
 
@@ -832,6 +852,7 @@ public class TrashEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;

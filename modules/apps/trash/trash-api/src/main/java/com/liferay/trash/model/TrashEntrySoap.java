@@ -31,6 +31,7 @@ public class TrashEntrySoap implements Serializable {
 	public static TrashEntrySoap toSoapModel(TrashEntry model) {
 		TrashEntrySoap soapModel = new TrashEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -93,6 +94,14 @@ public class TrashEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getEntryId() {
@@ -183,6 +192,7 @@ public class TrashEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private long _entryId;
 	private long _groupId;
 	private long _companyId;

@@ -1,4 +1,5 @@
 create table TrashEntry (
+	mvccVersion LONG default 0 not null,
 	entryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -13,6 +14,7 @@ create table TrashEntry (
 );
 
 create table TrashVersion (
+	mvccVersion LONG default 0 not null,
 	versionId LONG not null primary key,
 	companyId LONG,
 	entryId LONG,

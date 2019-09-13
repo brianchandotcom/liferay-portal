@@ -27,6 +27,7 @@ import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -38,6 +39,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Artur Aquino
  */
+@Ignore
 public class ReplicasManagerImplTest {
 
 	@Before

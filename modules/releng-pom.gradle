@@ -421,11 +421,13 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 			FileUtil.get(project, dependencyURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], dependencyFile, false, true)
 		}
 		catch(Exception e) {
+			logger.error "Unable to get {}", dependencyURL
+
 			failedDependencies += "${it.groupId.text()}:${it.artifactId.text()}:${it.version.text()}"
 		}
 	}
 
-	assert failedDependencies == []
+	assert failedDependencies.size() == 0
 
 	pomNode.developers.developer.each {
 		assert it.name.text().matches(/[A-Za-z]+(?: [A-Za-z]+)*/)

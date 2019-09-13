@@ -210,28 +210,27 @@ class FragmentsEditor extends Component {
 		);
 
 		if (targetItem) {
+			let hoveredItemId = targetItemId;
+			let hoveredItemType = targetItemType;
+
 			const targetItemIsEditable =
 				targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
 				targetItemType ===
 					FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
 
-			let hoveredItemId = targetItemId;
-			let hoveredItemType = targetItemType;
-
-			if (targetItemIsEditable) {
+			if (
+				targetItemIsEditable &&
+				!targetItem.classList.contains(
+					'fragments-editor__editable--highlighted'
+				)
+			) {
 				const fragment = getFragmentEntryLinkListElement(
 					targetItem.dataset.fragmentEntryLinkId,
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				);
 
-				if (
-					!targetItem.classList.contains(
-						'fragments-editor__editable--highlighted'
-					)
-				) {
-					hoveredItemId = fragment.dataset.fragmentsEditorItemId;
-					hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-				}
+				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
+				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
 			}
 
 			this.store.dispatch({

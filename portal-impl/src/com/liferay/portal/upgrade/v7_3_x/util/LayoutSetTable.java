@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_3_x.util;
 
 import java.sql.Types;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +32,8 @@ public class LayoutSetTable {
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"privateLayout", Types.BOOLEAN}, {"logoId", Types.BIGINT},
 		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"css", Types.CLOB}, {"pageCount", Types.INTEGER},
-		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"css", Types.CLOB}, {"settings_", Types.CLOB},
+		{"layoutSetPrototypeUuid", Types.VARCHAR},
 		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
 	};
 
@@ -64,8 +63,6 @@ TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 
-TABLE_COLUMNS_MAP.put("pageCount", Types.INTEGER);
-
 TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 
 TABLE_COLUMNS_MAP.put("layoutSetPrototypeUuid", Types.VARCHAR);
@@ -74,7 +71,7 @@ TABLE_COLUMNS_MAP.put("layoutSetPrototypeLinkEnabled", Types.BOOLEAN);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 

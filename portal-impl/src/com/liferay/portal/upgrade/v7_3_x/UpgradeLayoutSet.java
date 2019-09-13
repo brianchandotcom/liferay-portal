@@ -29,7 +29,8 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 
 			alter(
 				LayoutSetTable.class, new AlterTableDropColumn("headId"),
-				new AlterTableDropColumn("head"));
+				new AlterTableDropColumn("head"),
+				new AlterTableDropColumn("pageCount"));
 		}
 
 		runSQL("DROP_TABLE_IF_EXISTS(LayoutSetVersion)");

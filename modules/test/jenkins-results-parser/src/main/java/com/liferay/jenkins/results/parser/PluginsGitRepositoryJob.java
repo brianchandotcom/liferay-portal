@@ -65,24 +65,6 @@ public class PluginsGitRepositoryJob
 		return portalGitWorkingDirectory;
 	}
 
-	public String getPoshiQuery(String testBatchName) {
-		String propertyName = JenkinsResultsParserUtil.combine(
-			"test.batch.run.property.query[", testBatchName, "]");
-
-		Properties jobProperties = getJobProperties();
-
-		if (jobProperties.containsKey(propertyName)) {
-			String propertyValue = JenkinsResultsParserUtil.getProperty(
-				jobProperties, propertyName);
-
-			if ((propertyValue != null) && !propertyValue.isEmpty()) {
-				return propertyValue;
-			}
-		}
-
-		return null;
-	}
-
 	protected PluginsGitRepositoryJob(String jobName) {
 		super(jobName);
 

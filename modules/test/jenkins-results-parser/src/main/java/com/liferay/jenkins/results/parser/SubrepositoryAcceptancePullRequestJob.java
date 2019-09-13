@@ -61,32 +61,6 @@ public class SubrepositoryAcceptancePullRequestJob
 	}
 
 	@Override
-	public String getPoshiQuery(String testBatchName) {
-		String[] propertyNames = {
-			JenkinsResultsParserUtil.combine(
-				"test.batch.run.property.query[", testBatchName, "][",
-				_testSuiteName, "]"),
-			JenkinsResultsParserUtil.combine(
-				"test.batch.run.property.query[", testBatchName, "]")
-		};
-
-		Properties jobProperties = getJobProperties();
-
-		for (String propertyName : propertyNames) {
-			if (jobProperties.containsKey(propertyName)) {
-				String propertyValue = JenkinsResultsParserUtil.getProperty(
-					jobProperties, propertyName);
-
-				if ((propertyValue != null) && !propertyValue.isEmpty()) {
-					return propertyValue;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
 	}

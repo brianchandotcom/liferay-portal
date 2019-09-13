@@ -21,6 +21,10 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 String analyticsClientRequestContext = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_REQUEST_CONTEXT_KEY);
 %>
 
+<script data-senna-track="temporary" type="text/javascript">
+	var requestContext = <%= analyticsClientRequestContext %>;
+</script>
+
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 	(function(u, c, a, m, o, l) {
 		o = 'script';
@@ -34,7 +38,9 @@ String analyticsClientRequestContext = (String)request.getAttribute(AnalyticsWeb
 	})('https://analytics-js-cdn.liferay.com', function() {
 		var config = <%= analyticsClientConfig %>
 
-		Analytics.create({...config});
+		Analytics.create(config);
+
+		Analytics.updateEphemeralContext(requestContext);
 
 		Analytics.registerMiddleware(
 			function(request) {
@@ -63,7 +69,9 @@ String analyticsClientRequestContext = (String)request.getAttribute(AnalyticsWeb
 					Analytics.dispose();
 
 					if (!themeDisplay.isControlPanel()) {
-						Analytics.create({...config});
+						Analytics.create(config);
+
+						Analytics.updateEphemeralContext(requestContext);
 
 						Analytics.registerMiddleware(
 							function(request) {
@@ -88,5 +96,5 @@ String analyticsClientRequestContext = (String)request.getAttribute(AnalyticsWeb
 				}
 			);
 		</c:if>
-	});
+});
 </script>

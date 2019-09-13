@@ -304,6 +304,10 @@ public class LayoutSetLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static int getPageCount(long groupId, boolean privateLayout) {
+		return getService().getPageCount(groupId, privateLayout);
+	}
+
 	public static com.liferay.portal.kernel.model.PersistedModel
 			getPersistedModel(java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -390,13 +394,6 @@ public class LayoutSetLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().updateLookAndFeel(groupId, themeId, colorSchemeId, css);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutSet updatePageCount(
-			long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().updatePageCount(groupId, privateLayout);
 	}
 
 	public static com.liferay.portal.kernel.model.LayoutSet updateSettings(

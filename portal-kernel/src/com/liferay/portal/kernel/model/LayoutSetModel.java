@@ -224,20 +224,6 @@ public interface LayoutSetModel
 	public void setCss(String css);
 
 	/**
-	 * Returns the page count of this layout set.
-	 *
-	 * @return the page count of this layout set
-	 */
-	public int getPageCount();
-
-	/**
-	 * Sets the page count of this layout set.
-	 *
-	 * @param pageCount the page count of this layout set
-	 */
-	public void setPageCount(int pageCount);
-
-	/**
 	 * Returns the settings of this layout set.
 	 *
 	 * @return the settings of this layout set

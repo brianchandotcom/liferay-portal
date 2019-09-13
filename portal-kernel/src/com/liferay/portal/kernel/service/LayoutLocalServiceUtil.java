@@ -393,20 +393,31 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
-	 * Deletes the layout, its child layouts, and its associated resources.
-	 *
-	 * @param layout the layout
-	 * @param updateLayoutSet whether the layout set's page counter needs to be
-	 updated
-	 * @param serviceContext the service context to be applied
-	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Mueller (7.2.x), As of (7.2.x), replaced by {@link
+	 #deleteLayout(Layout, ServiceContext)}
 	 */
+	@Deprecated
 	public static void deleteLayout(
 			com.liferay.portal.kernel.model.Layout layout,
 			boolean updateLayoutSet, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteLayout(layout, updateLayoutSet, serviceContext);
+	}
+
+	/**
+	 * Deletes the layout, its child layouts, and its associated resources.
+	 *
+	 * @param layout the layout
+	 * @param serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static void deleteLayout(
+			com.liferay.portal.kernel.model.Layout layout,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteLayout(layout, serviceContext);
 	}
 
 	/**

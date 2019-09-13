@@ -96,6 +96,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public boolean getLogo();
 
+	public int getPageCount();
+
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getSettingsProperties();
 

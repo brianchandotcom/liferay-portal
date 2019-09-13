@@ -62,10 +62,6 @@ public interface GroupFinder {
 		findByLiveGroups();
 
 	public java.util.List<com.liferay.portal.kernel.model.Group>
-		findByNoLayouts(
-			long classNameId, boolean privateLayout, int start, int end);
-
-	public java.util.List<com.liferay.portal.kernel.model.Group>
 		findByNullFriendlyURL();
 
 	public java.util.List<com.liferay.portal.kernel.model.Group> findBySystem(

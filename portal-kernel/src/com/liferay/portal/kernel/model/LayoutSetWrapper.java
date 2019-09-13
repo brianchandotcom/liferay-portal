@@ -52,7 +52,6 @@ public class LayoutSetWrapper
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
 		attributes.put("css", getCss());
-		attributes.put("pageCount", getPageCount());
 		attributes.put("settings", getSettings());
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put(
@@ -127,12 +126,6 @@ public class LayoutSetWrapper
 
 		if (css != null) {
 			setCss(css);
-		}
-
-		Integer pageCount = (Integer)attributes.get("pageCount");
-
-		if (pageCount != null) {
-			setPageCount(pageCount);
 		}
 
 		String settings = (String)attributes.get("settings");
@@ -327,11 +320,6 @@ public class LayoutSetWrapper
 		return model.getMvccVersion();
 	}
 
-	/**
-	 * Returns the page count of this layout set.
-	 *
-	 * @return the page count of this layout set
-	 */
 	@Override
 	public int getPageCount() {
 		return model.getPageCount();
@@ -577,16 +565,6 @@ public class LayoutSetWrapper
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		model.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	 * Sets the page count of this layout set.
-	 *
-	 * @param pageCount the page count of this layout set
-	 */
-	@Override
-	public void setPageCount(int pageCount) {
-		model.setPageCount(pageCount);
 	}
 
 	/**

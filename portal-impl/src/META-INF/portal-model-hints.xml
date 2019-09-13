@@ -830,7 +830,6 @@
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="pageCount" type="int" />
 		<field name="settings" type="String">
 			<hint-collection name="CLOB" />
 		</field>

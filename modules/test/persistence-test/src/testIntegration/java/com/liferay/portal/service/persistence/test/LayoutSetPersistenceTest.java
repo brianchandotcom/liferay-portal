@@ -142,8 +142,6 @@ public class LayoutSetPersistenceTest {
 
 		newLayoutSet.setCss(RandomTestUtil.randomString());
 
-		newLayoutSet.setPageCount(RandomTestUtil.nextInt());
-
 		newLayoutSet.setSettings(RandomTestUtil.randomString());
 
 		newLayoutSet.setLayoutSetPrototypeUuid(RandomTestUtil.randomString());
@@ -181,8 +179,6 @@ public class LayoutSetPersistenceTest {
 			existingLayoutSet.getColorSchemeId(),
 			newLayoutSet.getColorSchemeId());
 		Assert.assertEquals(existingLayoutSet.getCss(), newLayoutSet.getCss());
-		Assert.assertEquals(
-			existingLayoutSet.getPageCount(), newLayoutSet.getPageCount());
 		Assert.assertEquals(
 			existingLayoutSet.getSettings(), newLayoutSet.getSettings());
 		Assert.assertEquals(
@@ -253,8 +249,8 @@ public class LayoutSetPersistenceTest {
 			"LayoutSet", "mvccVersion", true, "layoutSetId", true, "groupId",
 			true, "companyId", true, "createDate", true, "modifiedDate", true,
 			"privateLayout", true, "logoId", true, "themeId", true,
-			"colorSchemeId", true, "pageCount", true, "layoutSetPrototypeUuid",
-			true, "layoutSetPrototypeLinkEnabled", true);
+			"colorSchemeId", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test
@@ -520,8 +516,6 @@ public class LayoutSetPersistenceTest {
 		layoutSet.setColorSchemeId(RandomTestUtil.randomString());
 
 		layoutSet.setCss(RandomTestUtil.randomString());
-
-		layoutSet.setPageCount(RandomTestUtil.nextInt());
 
 		layoutSet.setSettings(RandomTestUtil.randomString());
 

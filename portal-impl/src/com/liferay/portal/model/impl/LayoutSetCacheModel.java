@@ -76,7 +76,7 @@ public class LayoutSetCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,8 +100,6 @@ public class LayoutSetCacheModel
 		sb.append(colorSchemeId);
 		sb.append(", css=");
 		sb.append(css);
-		sb.append(", pageCount=");
-		sb.append(pageCount);
 		sb.append(", settings=");
 		sb.append(settings);
 		sb.append(", layoutSetPrototypeUuid=");
@@ -160,8 +158,6 @@ public class LayoutSetCacheModel
 			layoutSetImpl.setCss(css);
 		}
 
-		layoutSetImpl.setPageCount(pageCount);
-
 		if (settings == null) {
 			layoutSetImpl.setSettings("");
 		}
@@ -209,8 +205,6 @@ public class LayoutSetCacheModel
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
 		css = objectInput.readUTF();
-
-		pageCount = objectInput.readInt();
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 
@@ -257,8 +251,6 @@ public class LayoutSetCacheModel
 			objectOutput.writeUTF(css);
 		}
 
-		objectOutput.writeInt(pageCount);
-
 		if (settings == null) {
 			objectOutput.writeUTF("");
 		}
@@ -290,7 +282,6 @@ public class LayoutSetCacheModel
 	public String themeId;
 	public String colorSchemeId;
 	public String css;
-	public int pageCount;
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;

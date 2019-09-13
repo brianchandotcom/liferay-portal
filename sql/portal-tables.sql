@@ -677,7 +677,6 @@ create table LayoutSet (
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,
 	css TEXT null,
-	pageCount INTEGER,
 	settings_ TEXT null,
 	layoutSetPrototypeUuid VARCHAR(75) null,
 	layoutSetPrototypeLinkEnabled BOOLEAN

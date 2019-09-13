@@ -1104,35 +1104,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	 * Returns a range of all non-system groups of a specified type (className)
-	 * that have no layouts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
-	 * refers to the first result in the set. Setting both <code>start</code>
-	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param className the entity's class name
-	 * @param privateLayout whether to include groups with private layout sets
-	 or non-private layout sets
-	 * @param start the lower bound of the range of groups to return
-	 * @param end the upper bound of the range of groups to return (not
-	 inclusive)
-	 * @return the range of matching groups
-	 */
-	public static java.util.List<com.liferay.portal.kernel.model.Group>
-		getNoLayoutsGroups(
-			String className, boolean privateLayout, int start, int end) {
-
-		return getService().getNoLayoutsGroups(
-			className, privateLayout, start, end);
-	}
-
-	/**
 	 * Returns all non-system groups having <code>null</code> or empty friendly
 	 * URLs.
 	 *

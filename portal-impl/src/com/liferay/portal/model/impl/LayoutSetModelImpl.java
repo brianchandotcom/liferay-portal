@@ -74,8 +74,8 @@ public class LayoutSetModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"privateLayout", Types.BOOLEAN}, {"logoId", Types.BIGINT},
 		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
-		{"css", Types.CLOB}, {"pageCount", Types.INTEGER},
-		{"settings_", Types.CLOB}, {"layoutSetPrototypeUuid", Types.VARCHAR},
+		{"css", Types.CLOB}, {"settings_", Types.CLOB},
+		{"layoutSetPrototypeUuid", Types.VARCHAR},
 		{"layoutSetPrototypeLinkEnabled", Types.BOOLEAN}
 	};
 
@@ -94,14 +94,13 @@ public class LayoutSetModelImpl
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("pageCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeLinkEnabled", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,pageCount INTEGER,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+		"create table LayoutSet (mvccVersion LONG default 0 not null,layoutSetId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSet";
 
@@ -166,7 +165,6 @@ public class LayoutSetModelImpl
 		model.setThemeId(soapModel.getThemeId());
 		model.setColorSchemeId(soapModel.getColorSchemeId());
 		model.setCss(soapModel.getCss());
-		model.setPageCount(soapModel.getPageCount());
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
 		model.setLayoutSetPrototypeLinkEnabled(
@@ -365,10 +363,6 @@ public class LayoutSetModelImpl
 		attributeGetterFunctions.put("css", LayoutSet::getCss);
 		attributeSetterBiConsumers.put(
 			"css", (BiConsumer<LayoutSet, String>)LayoutSet::setCss);
-		attributeGetterFunctions.put("pageCount", LayoutSet::getPageCount);
-		attributeSetterBiConsumers.put(
-			"pageCount",
-			(BiConsumer<LayoutSet, Integer>)LayoutSet::setPageCount);
 		attributeGetterFunctions.put("settings", LayoutSet::getSettings);
 		attributeSetterBiConsumers.put(
 			"settings", (BiConsumer<LayoutSet, String>)LayoutSet::setSettings);
@@ -578,17 +572,6 @@ public class LayoutSetModelImpl
 
 	@JSON
 	@Override
-	public int getPageCount() {
-		return _pageCount;
-	}
-
-	@Override
-	public void setPageCount(int pageCount) {
-		_pageCount = pageCount;
-	}
-
-	@JSON
-	@Override
 	public String getSettings() {
 		if (_settings == null) {
 			return "";
@@ -710,7 +693,6 @@ public class LayoutSetModelImpl
 		layoutSetImpl.setThemeId(getThemeId());
 		layoutSetImpl.setColorSchemeId(getColorSchemeId());
 		layoutSetImpl.setCss(getCss());
-		layoutSetImpl.setPageCount(getPageCount());
 		layoutSetImpl.setSettings(getSettings());
 		layoutSetImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(
@@ -860,8 +842,6 @@ public class LayoutSetModelImpl
 			layoutSetCacheModel.css = null;
 		}
 
-		layoutSetCacheModel.pageCount = getPageCount();
-
 		layoutSetCacheModel.settings = getSettings();
 
 		String settings = layoutSetCacheModel.settings;
@@ -981,7 +961,6 @@ public class LayoutSetModelImpl
 	private String _themeId;
 	private String _colorSchemeId;
 	private String _css;
-	private int _pageCount;
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private String _originalLayoutSetPrototypeUuid;

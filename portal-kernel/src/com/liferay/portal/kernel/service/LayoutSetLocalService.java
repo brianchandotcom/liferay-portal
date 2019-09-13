@@ -248,6 +248,9 @@ public interface LayoutSetLocalService
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPageCount(long groupId, boolean privateLayout);
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
@@ -303,9 +306,6 @@ public interface LayoutSetLocalService
 
 	public void updateLookAndFeel(
 			long groupId, String themeId, String colorSchemeId, String css)
-		throws PortalException;
-
-	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
 		throws PortalException;
 
 	public LayoutSet updateSettings(

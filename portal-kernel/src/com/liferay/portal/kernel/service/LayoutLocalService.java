@@ -381,14 +381,10 @@ public interface LayoutLocalService
 	public Layout deleteLayout(Layout layout) throws PortalException;
 
 	/**
-	 * Deletes the layout, its child layouts, and its associated resources.
-	 *
-	 * @param layout the layout
-	 * @param updateLayoutSet whether the layout set's page counter needs to be
-	 updated
-	 * @param serviceContext the service context to be applied
-	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Mueller (7.2.x), As of (7.2.x), replaced by {@link
+	 #deleteLayout(Layout, ServiceContext)}
 	 */
+	@Deprecated
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
@@ -396,6 +392,20 @@ public interface LayoutLocalService
 	public void deleteLayout(
 			Layout layout, boolean updateLayoutSet,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Deletes the layout, its child layouts, and its associated resources.
+	 *
+	 * @param layout the layout
+	 * @param serviceContext the service context to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE
+	)
+	public void deleteLayout(Layout layout, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

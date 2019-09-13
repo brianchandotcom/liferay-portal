@@ -269,8 +269,7 @@ public class RankingPortletDisplayBuilder {
 	}
 
 	private String _getOrderByCol() {
-		return ParamUtil.getString(
-			_renderRequest, "orderByCol", _DEFAULT_SORT_COLUMN);
+		return ParamUtil.getString(_renderRequest, "orderByCol", _ORDER_BY_COL);
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems(String keywords) {
@@ -291,13 +290,12 @@ public class RankingPortletDisplayBuilder {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							Objects.equals(
-								_getOrderByCol(), _DEFAULT_SORT_COLUMN));
+							Objects.equals(_getOrderByCol(), _ORDER_BY_COL));
 						dropdownItem.setHref(
-							portletURL, "orderByCol", _DEFAULT_SORT_COLUMN);
+							portletURL, "orderByCol", _ORDER_BY_COL);
 						dropdownItem.setLabel(
 							LanguageUtil.get(
-								_httpServletRequest, _DEFAULT_SORT_COLUMN));
+								_httpServletRequest, _ORDER_BY_COL));
 					});
 			}
 		};
@@ -360,7 +358,7 @@ public class RankingPortletDisplayBuilder {
 		return searchContainer;
 	}
 
-	private static final String _DEFAULT_SORT_COLUMN =
+	private static final String _ORDER_BY_COL =
 		RankingFields.QUERY_STRING_KEYWORD;
 
 	private final DocumentToRankingTranslator _documentToRankingTranslator;

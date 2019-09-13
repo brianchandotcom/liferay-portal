@@ -10937,16 +10937,22 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.suite.search.engine" />
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
 				<if>
-					<contains string="${portal.suite.search.engine}" substring="elasticsearch7" />
+					<isset property="env.CI_TEST_SUITE" />
 					<then>
-						<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+						<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+						<if>
+							<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
+							<then>
+								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
@@ -11340,16 +11346,22 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.suite.search.engine" />
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
 				<if>
-					<contains string="${portal.suite.search.engine}" substring="elasticsearch7" />
+					<isset property="env.CI_TEST_SUITE" />
 					<then>
-						<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+						<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+						<if>
+							<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
+							<then>
+								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />

@@ -55,17 +55,17 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
 
 		<!-- Other fields -->
 
 		<column name="accountEntryId" type="long" />
+		<column name="userId" type="long" />
 
 		<!-- Finder methods -->
 
 		<finder name="A_U" return-type="AccountEntryUserRel">
-			<finder-column name="userId" />
 			<finder-column name="accountEntryId" />
+			<finder-column name="userId" />
 		</finder>
 
 		<!-- References -->

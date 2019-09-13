@@ -68,10 +68,10 @@ public class AccountEntryUserRelCacheModel
 		sb.append(accountEntryUserRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
-		sb.append(", userId=");
-		sb.append(userId);
 		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
+		sb.append(", userId=");
+		sb.append(userId);
 		sb.append("}");
 
 		return sb.toString();
@@ -84,8 +84,8 @@ public class AccountEntryUserRelCacheModel
 
 		accountEntryUserRelImpl.setAccountEntryUserRelId(accountEntryUserRelId);
 		accountEntryUserRelImpl.setCompanyId(companyId);
-		accountEntryUserRelImpl.setUserId(userId);
 		accountEntryUserRelImpl.setAccountEntryId(accountEntryId);
+		accountEntryUserRelImpl.setUserId(userId);
 
 		accountEntryUserRelImpl.resetOriginalValues();
 
@@ -98,9 +98,9 @@ public class AccountEntryUserRelCacheModel
 
 		companyId = objectInput.readLong();
 
-		userId = objectInput.readLong();
-
 		accountEntryId = objectInput.readLong();
+
+		userId = objectInput.readLong();
 	}
 
 	@Override
@@ -109,14 +109,14 @@ public class AccountEntryUserRelCacheModel
 
 		objectOutput.writeLong(companyId);
 
-		objectOutput.writeLong(userId);
-
 		objectOutput.writeLong(accountEntryId);
+
+		objectOutput.writeLong(userId);
 	}
 
 	public long accountEntryUserRelId;
 	public long companyId;
-	public long userId;
 	public long accountEntryId;
+	public long userId;
 
 }

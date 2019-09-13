@@ -72,7 +72,7 @@ public class AccountEntryUserRelModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"accountEntryUserRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"accountEntryId", Types.BIGINT}
+		{"accountEntryId", Types.BIGINT}, {"userId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,12 +81,12 @@ public class AccountEntryUserRelModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("accountEntryUserRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntryUserRel (accountEntryUserRelId LONG not null primary key,companyId LONG,userId LONG,accountEntryId LONG)";
+		"create table AccountEntryUserRel (accountEntryUserRelId LONG not null primary key,companyId LONG,accountEntryId LONG,userId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";
@@ -134,8 +134,8 @@ public class AccountEntryUserRelModelImpl
 
 		model.setAccountEntryUserRelId(soapModel.getAccountEntryUserRelId());
 		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
+		model.setUserId(soapModel.getUserId());
 
 		return model;
 	}
@@ -304,17 +304,17 @@ public class AccountEntryUserRelModelImpl
 			"companyId",
 			(BiConsumer<AccountEntryUserRel, Long>)
 				AccountEntryUserRel::setCompanyId);
-		attributeGetterFunctions.put("userId", AccountEntryUserRel::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId",
-			(BiConsumer<AccountEntryUserRel, Long>)
-				AccountEntryUserRel::setUserId);
 		attributeGetterFunctions.put(
 			"accountEntryId", AccountEntryUserRel::getAccountEntryId);
 		attributeSetterBiConsumers.put(
 			"accountEntryId",
 			(BiConsumer<AccountEntryUserRel, Long>)
 				AccountEntryUserRel::setAccountEntryId);
+		attributeGetterFunctions.put("userId", AccountEntryUserRel::getUserId);
+		attributeSetterBiConsumers.put(
+			"userId",
+			(BiConsumer<AccountEntryUserRel, Long>)
+				AccountEntryUserRel::setUserId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -342,6 +342,29 @@ public class AccountEntryUserRelModelImpl
 	@Override
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	@JSON
+	@Override
+	public long getAccountEntryId() {
+		return _accountEntryId;
+	}
+
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		_columnBitmask |= ACCOUNTENTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalAccountEntryId) {
+			_setOriginalAccountEntryId = true;
+
+			_originalAccountEntryId = _accountEntryId;
+		}
+
+		_accountEntryId = accountEntryId;
+	}
+
+	public long getOriginalAccountEntryId() {
+		return _originalAccountEntryId;
 	}
 
 	@JSON
@@ -381,29 +404,6 @@ public class AccountEntryUserRelModelImpl
 
 	public long getOriginalUserId() {
 		return _originalUserId;
-	}
-
-	@JSON
-	@Override
-	public long getAccountEntryId() {
-		return _accountEntryId;
-	}
-
-	@Override
-	public void setAccountEntryId(long accountEntryId) {
-		_columnBitmask |= ACCOUNTENTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalAccountEntryId) {
-			_setOriginalAccountEntryId = true;
-
-			_originalAccountEntryId = _accountEntryId;
-		}
-
-		_accountEntryId = accountEntryId;
-	}
-
-	public long getOriginalAccountEntryId() {
-		return _originalAccountEntryId;
 	}
 
 	public long getColumnBitmask() {
@@ -447,8 +447,8 @@ public class AccountEntryUserRelModelImpl
 		accountEntryUserRelImpl.setAccountEntryUserRelId(
 			getAccountEntryUserRelId());
 		accountEntryUserRelImpl.setCompanyId(getCompanyId());
-		accountEntryUserRelImpl.setUserId(getUserId());
 		accountEntryUserRelImpl.setAccountEntryId(getAccountEntryId());
+		accountEntryUserRelImpl.setUserId(getUserId());
 
 		accountEntryUserRelImpl.resetOriginalValues();
 
@@ -511,15 +511,15 @@ public class AccountEntryUserRelModelImpl
 	public void resetOriginalValues() {
 		AccountEntryUserRelModelImpl accountEntryUserRelModelImpl = this;
 
-		accountEntryUserRelModelImpl._originalUserId =
-			accountEntryUserRelModelImpl._userId;
-
-		accountEntryUserRelModelImpl._setOriginalUserId = false;
-
 		accountEntryUserRelModelImpl._originalAccountEntryId =
 			accountEntryUserRelModelImpl._accountEntryId;
 
 		accountEntryUserRelModelImpl._setOriginalAccountEntryId = false;
+
+		accountEntryUserRelModelImpl._originalUserId =
+			accountEntryUserRelModelImpl._userId;
+
+		accountEntryUserRelModelImpl._setOriginalUserId = false;
 
 		accountEntryUserRelModelImpl._columnBitmask = 0;
 	}
@@ -534,9 +534,9 @@ public class AccountEntryUserRelModelImpl
 
 		accountEntryUserRelCacheModel.companyId = getCompanyId();
 
-		accountEntryUserRelCacheModel.userId = getUserId();
-
 		accountEntryUserRelCacheModel.accountEntryId = getAccountEntryId();
+
+		accountEntryUserRelCacheModel.userId = getUserId();
 
 		return accountEntryUserRelCacheModel;
 	}
@@ -616,12 +616,12 @@ public class AccountEntryUserRelModelImpl
 
 	private long _accountEntryUserRelId;
 	private long _companyId;
-	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _accountEntryId;
 	private long _originalAccountEntryId;
 	private boolean _setOriginalAccountEntryId;
+	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private long _columnBitmask;
 	private AccountEntryUserRel _escapedModel;
 

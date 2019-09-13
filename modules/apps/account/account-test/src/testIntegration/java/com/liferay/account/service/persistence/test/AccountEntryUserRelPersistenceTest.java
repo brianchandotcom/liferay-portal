@@ -126,9 +126,9 @@ public class AccountEntryUserRelPersistenceTest {
 
 		newAccountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
 
-		newAccountEntryUserRel.setUserId(RandomTestUtil.nextLong());
-
 		newAccountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
+
+		newAccountEntryUserRel.setUserId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(newAccountEntryUserRel));
 
@@ -143,11 +143,11 @@ public class AccountEntryUserRelPersistenceTest {
 			existingAccountEntryUserRel.getCompanyId(),
 			newAccountEntryUserRel.getCompanyId());
 		Assert.assertEquals(
-			existingAccountEntryUserRel.getUserId(),
-			newAccountEntryUserRel.getUserId());
-		Assert.assertEquals(
 			existingAccountEntryUserRel.getAccountEntryId(),
 			newAccountEntryUserRel.getAccountEntryId());
+		Assert.assertEquals(
+			existingAccountEntryUserRel.getUserId(),
+			newAccountEntryUserRel.getUserId());
 	}
 
 	@Test
@@ -186,7 +186,7 @@ public class AccountEntryUserRelPersistenceTest {
 	protected OrderByComparator<AccountEntryUserRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"AccountEntryUserRel", "accountEntryUserRelId", true, "companyId",
-			true, "userId", true, "accountEntryId", true);
+			true, "accountEntryId", true, "userId", true);
 	}
 
 	@Test
@@ -443,9 +443,9 @@ public class AccountEntryUserRelPersistenceTest {
 
 		accountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
 
-		accountEntryUserRel.setUserId(RandomTestUtil.nextLong());
-
 		accountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
+
+		accountEntryUserRel.setUserId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(accountEntryUserRel));
 

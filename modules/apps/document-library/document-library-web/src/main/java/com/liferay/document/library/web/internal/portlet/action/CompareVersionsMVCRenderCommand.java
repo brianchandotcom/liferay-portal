@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.nio.charset.StandardCharsets;
+
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -94,62 +95,12 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		FileVersion sourceFileVersion = _dlAppService.getFileVersion(
 			sourceFileVersionId);
 
-		InputStream sourceIs = sourceFileVersion.getContentStream(false);
-
-		String sourceExtension = sourceFileVersion.getExtension();
-
-		if (sourceExtension.equals("css") || sourceExtension.equals("htm") ||
-			sourceExtension.equals("html") || sourceExtension.equals("js") ||
-			sourceExtension.equals("txt") || sourceExtension.equals("xml")) {
-
-			String sourceContent = HtmlUtil.escape(StringUtil.read(sourceIs));
-
-			sourceIs = new UnsyncByteArrayInputStream(
-				sourceContent.getBytes(StandardCharsets.UTF_8));
-		}
+		InputStream sourceIs = _getFileVersionInputStream(sourceFileVersion);
 
 		FileVersion targetFileVersion = _dlAppLocalService.getFileVersion(
 			targetFileVersionId);
 
-		InputStream targetIs = targetFileVersion.getContentStream(false);
-
-		String targetExtension = targetFileVersion.getExtension();
-
-		if (targetExtension.equals("css") || targetExtension.equals("htm") ||
-			targetExtension.equals("html") || targetExtension.equals("js") ||
-			targetExtension.equals("txt") || targetExtension.equals("xml")) {
-
-			String targetContent = HtmlUtil.escape(StringUtil.read(targetIs));
-
-			targetIs = new UnsyncByteArrayInputStream(
-				targetContent.getBytes(StandardCharsets.UTF_8));
-		}
-
-		if (DocumentConversionUtil.isEnabled()) {
-			if (DocumentConversionUtil.isConvertBeforeCompare(
-					sourceExtension)) {
-
-				String sourceTempFileId = DLUtil.getTempFileId(
-					sourceFileVersion.getFileEntryId(),
-					sourceFileVersion.getVersion());
-
-				sourceIs = new FileInputStream(
-					DocumentConversionUtil.convert(
-						sourceTempFileId, sourceIs, sourceExtension, "txt"));
-			}
-
-			if (DocumentConversionUtil.isConvertBeforeCompare(
-					targetExtension)) {
-
-				String targetTempFileId = DLUtil.getTempFileId(
-					targetFileVersion.getFileEntryId(),
-					targetFileVersion.getVersion());
-
-				targetIs = new FileInputStream(
-					DocumentConversionUtil.convert(
-						targetTempFileId, targetIs, targetExtension, "txt"));
-			}
-		}
+		InputStream targetIs = _getFileVersionInputStream(targetFileVersion);
 
 		List<DiffResult>[] diffResults = DiffUtil.diff(
 			new InputStreamReader(sourceIs), new InputStreamReader(targetIs));
@@ -164,6 +115,37 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.TARGET_NAME,
 			targetFileVersion.getTitle() + StringPool.SPACE +
 				targetFileVersion.getVersion());
+	}
+
+	private InputStream _getFileVersionInputStream(FileVersion fileVersion)
+		throws IOException, PortalException {
+
+		InputStream is = fileVersion.getContentStream(false);
+
+		String extension = fileVersion.getExtension();
+
+		if (extension.equals("css") || extension.equals("htm") ||
+			extension.equals("html") || extension.equals("js") ||
+			extension.equals("txt") || extension.equals("xml")) {
+
+			String content = HtmlUtil.escape(StringUtil.read(is));
+
+			is = new UnsyncByteArrayInputStream(
+				content.getBytes(StandardCharsets.UTF_8));
+		}
+
+		if (DocumentConversionUtil.isEnabled() &&
+			DocumentConversionUtil.isConvertBeforeCompare(extension)) {
+
+			String tempFileId = DLUtil.getTempFileId(
+				fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+			is = new FileInputStream(
+				DocumentConversionUtil.convert(
+					tempFileId, is, fileVersion.getExtension(), "txt"));
+		}
+
+		return is;
 	}
 
 	@Reference

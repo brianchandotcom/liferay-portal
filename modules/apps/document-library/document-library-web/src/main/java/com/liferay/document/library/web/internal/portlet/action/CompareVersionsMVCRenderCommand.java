@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -114,7 +115,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			String sourceContent = HtmlUtil.escape(StringUtil.read(sourceIs));
 
 			sourceIs = new UnsyncByteArrayInputStream(
-				sourceContent.getBytes(StringPool.UTF8));
+				sourceContent.getBytes(StandardCharsets.UTF_8));
 		}
 
 		FileVersion targetFileVersion = _dlAppLocalService.getFileVersion(
@@ -131,7 +132,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			String targetContent = HtmlUtil.escape(StringUtil.read(targetIs));
 
 			targetIs = new UnsyncByteArrayInputStream(
-				targetContent.getBytes(StringPool.UTF8));
+				targetContent.getBytes(StandardCharsets.UTF_8));
 		}
 
 		if (DocumentConversionUtil.isEnabled()) {

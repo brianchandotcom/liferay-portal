@@ -67,6 +67,14 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					</div>
 				</c:when>
 			</c:choose>
+
+			<aui:fieldset label="categorization">
+				<liferay-asset:asset-categories-selector
+					className="<%= Layout.class.getName() %>"
+					classPK="<%= 0 %>"
+					showOnlyRequiredVocabularies="<%= true %>"
+				/>
+			</aui:fieldset>
 		</liferay-frontend:edit-form-body>
 
 		<liferay-frontend:edit-form-footer>

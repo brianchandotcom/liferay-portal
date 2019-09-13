@@ -65,6 +65,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameters(portletRequest.getParameterMap());
+
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/document_library/edit_in_office365_and_redirect");

@@ -65,6 +65,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameters(portletRequest.getParameterMap());
+
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/document_library/create_in_office365_and_redirect");

@@ -135,11 +135,6 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 					batchEngineTaskItemWriter, items, batchEngineTaskOperation);
 			}
 		}
-
-		if (!items.isEmpty()) {
-			_commitItems(
-				batchEngineTaskItemWriter, items, batchEngineTaskOperation);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

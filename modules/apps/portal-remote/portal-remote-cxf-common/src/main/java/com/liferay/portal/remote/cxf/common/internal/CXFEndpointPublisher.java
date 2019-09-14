@@ -88,7 +88,7 @@ public class CXFEndpointPublisher {
 					_dependencyManager.createServiceDependency();
 
 				serviceDependency.setCallbacks(
-					servicesRegistrator, "addExtension", "-");
+					servicesRegistrator, "addExtension", null);
 				serviceDependency.setRequired(true);
 				serviceDependency.setService(Object.class, extension);
 

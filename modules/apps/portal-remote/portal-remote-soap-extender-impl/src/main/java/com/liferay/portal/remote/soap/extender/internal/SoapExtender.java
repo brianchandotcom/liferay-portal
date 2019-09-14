@@ -129,7 +129,7 @@ public class SoapExtender {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		serviceDependency.setCallbacks("setSoapDescriptorBuilder", "-");
+		serviceDependency.setCallbacks("setSoapDescriptorBuilder", null);
 		serviceDependency.setRequired(false);
 		serviceDependency.setService(
 			SoapDescriptorBuilder.class,

@@ -180,7 +180,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) />
+	<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn()/>
 
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
@@ -395,7 +395,28 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.removeResult(_finderPathFetchBy${uniqueEntityFinder.name}, args);
 				}
 
-				if ((${entity.varName}ModelImpl.getColumnBitmask() & _finderPathFetchBy${uniqueEntityFinder.name}.getColumnBitmask()) != 0) {
+				if (
+					<#if columnBitmaskEnabled>
+						(${entity.varName}ModelImpl.getColumnBitmask() & _finderPathFetchBy${uniqueEntityFinder.name}.getColumnBitmask()) != 0
+					<#else>
+						<#list entityColumns as entityColumn>
+							<#if entityColumn.isPrimitiveType()>
+								<#if stringUtil.equals(entityColumn.type, "boolean")>
+									(${entity.varName}ModelImpl.is${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+								<#else>
+									(${entity.varName}ModelImpl.get${entityColumn.methodName}() != ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+								</#if>
+							<#else>
+								!Objects.equals(${entity.varName}ModelImpl.get${entityColumn.methodName}(), ${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+							</#if>
+
+							<#if entityColumn_has_next>
+								||
+							</#if>
+						</#list>
+					</#if>
+					) {
+
 					Object[] args = new Object[] {
 						<#list entityColumns as entityColumn>
 							<#if stringUtil.equals(entityColumn.type, "Date")>

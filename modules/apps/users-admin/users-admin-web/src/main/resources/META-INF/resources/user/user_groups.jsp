@@ -178,8 +178,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 					},
 
 					<%
-						String eventName = liferayPortletResponse.getNamespace() + "selectUserGroup";
-						%>
+					String eventName = liferayPortletResponse.getNamespace() + "selectUserGroup";
+					%>
 
 					id: '<%= eventName %>',
 
@@ -188,12 +188,12 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						'<liferay-ui:message arguments="user-group" key="select-x" />',
 
 					<%
-						PortletURL selectUserGroupURL = PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE);
+					PortletURL selectUserGroupURL = PortletProviderUtil.getPortletURL(request, UserGroup.class.getName(), PortletProvider.Action.BROWSE);
 
-						selectUserGroupURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-						selectUserGroupURL.setParameter("eventName", eventName);
-						selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
-						%>
+					selectUserGroupURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+					selectUserGroupURL.setParameter("eventName", eventName);
+					selectUserGroupURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
 
 					uri: '<%= selectUserGroupURL.toString() %>'
 				},

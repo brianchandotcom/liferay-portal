@@ -193,8 +193,8 @@ else {
 
 					if (reminderQueryCustomQuestionInput) {
 						<%
-							for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
-							%>
+						for (String question : PropsValues.USERS_REMINDER_QUERIES_QUESTIONS) {
+						%>
 
 						if (
 							reminderQueryCustomQuestionInput.value ===
@@ -204,8 +204,8 @@ else {
 						}
 
 						<%
-							}
-							%>
+						}
+						%>
 
 						focusInput = reminderQueryCustomQuestionInput;
 					}

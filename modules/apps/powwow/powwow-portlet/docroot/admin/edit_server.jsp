@@ -123,6 +123,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 		<%
 		}
 		%>
+
 	}
 
 	var providerType = A.one('#<portlet:namespace />providerType');

@@ -477,8 +477,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		<c:if test="<%= uploadURL != null %>">
 
 			<%
-				String imageEditorPortletId = PortletProviderUtil.getPortletId(Image.class.getName(), PortletProvider.Action.EDIT);
-				%>
+			String imageEditorPortletId = PortletProviderUtil.getPortletId(Image.class.getName(), PortletProvider.Action.EDIT);
+			%>
 
 			<c:if test="<%= Validator.isNotNull(imageEditorPortletId) %>">
 				<liferay-portlet:renderURL portletName="<%= imageEditorPortletId %>" var="viewImageEditorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -505,10 +505,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		<c:if test="<%= uploadURL != null %>">
 
 			<%
-				String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
+			String returnType = ItemSelectorRepositoryEntryBrowserUtil.getItemSelectorReturnTypeClassName(itemSelectorReturnTypeResolver, existingFileEntryReturnType);
 
-				uploadURL.setParameter("returnType", returnType);
-				%>
+			uploadURL.setParameter("returnType", returnType);
+			%>
 
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
 			uploadItemURL: '<%= uploadURL.toString() %>'

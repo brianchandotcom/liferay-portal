@@ -410,10 +410,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 	Liferay.on('<portlet:namespace/>refreshSelectChangeList', function(event) {
 		setTimeout(function() {
 			<%
-					PortletURL refreshURL = PortletURLFactoryUtil.create(request, CTPortletKeys.CHANGE_LISTS, PortletRequest.RENDER_PHASE);
+			PortletURL refreshURL = PortletURLFactoryUtil.create(request, CTPortletKeys.CHANGE_LISTS, PortletRequest.RENDER_PHASE);
 
-					refreshURL.setParameter("production", "true");
-					%>
+			refreshURL.setParameter("production", "true");
+			%>
 
 			Liferay.Util.navigate('<%= refreshURL.toString() %>');
 		}, 1000);

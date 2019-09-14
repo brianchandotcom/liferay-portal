@@ -139,4 +139,5 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	<%
 	}
 	%>
+
 </aui:script>

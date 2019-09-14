@@ -279,8 +279,8 @@ name = HtmlUtil.escapeJS(name);
 			textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
 
 			<%
-				boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
-				%>
+			boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
+			%>
 
 			useCustomDataProcessor: <%= useCustomDataProcessor %>
 		}).render();

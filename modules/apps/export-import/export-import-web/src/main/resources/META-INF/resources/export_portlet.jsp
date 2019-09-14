@@ -497,12 +497,12 @@ portletURL.setParameter("portletResource", portletResource);
 			{
 				body: function(val, fieldNode, ruleValue) {
 					<%
-						JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+					JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
 
-						for (String s : PropsValues.DL_CHAR_BLACKLIST) {
-							blacklistCharJSONArray.put(s);
-						}
-						%>
+					for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+						blacklistCharJSONArray.put(s);
+					}
+					%>
 
 					var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
 

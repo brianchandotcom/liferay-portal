@@ -92,14 +92,14 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			}
 
 			<%
-		String messageKey = "you-are-being-redirected-to-an-external-editor-to-edit-this-document";
+			String messageKey = "you-are-being-redirected-to-an-external-editor-to-edit-this-document";
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+			String cmd = ParamUtil.getString(request, Constants.CMD);
 
-		if (cmd.equals(Constants.ADD)) {
-			messageKey = "you-are-being-redirected-to-an-external-editor-to-create-this-document";
-		}
-		%>
+			if (cmd.equals(Constants.ADD)) {
+				messageKey = "you-are-being-redirected-to-an-external-editor-to-create-this-document";
+			}
+			%>
 
 			Liferay.Util.openWindow(
 				{

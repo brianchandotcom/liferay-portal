@@ -65,8 +65,8 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 		boundingBox: '#<portlet:namespace />fileUpload',
 
 		<%
-			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-			%>
+		DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+		%>
 
 		decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 		deleteFile: '<%= deleteURL.toString() %>',

@@ -450,10 +450,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			) {
 				if (!window['<%= namespace %>' + options.name]) {
 					<%
-						String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
+					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
 
-						editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
-						%>
+					editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
+					%>
 
 					Liferay.Util.fetch('<%= editorURL %>', {
 						body: Util.objectToFormData(Util.ns('<%= namespace %>', options)),
@@ -619,10 +619,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 					});
 
 					<%
-						String paginationURL = HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace);
+					String paginationURL = HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace);
 
-						paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
-						%>
+					paginationURL = HttpUtil.addParameter(paginationURL, "skipEditorLoading", "true");
+					%>
 
 					Liferay.Util.fetch('<%= paginationURL %>', {
 						body: Util.objectToFormData(data),

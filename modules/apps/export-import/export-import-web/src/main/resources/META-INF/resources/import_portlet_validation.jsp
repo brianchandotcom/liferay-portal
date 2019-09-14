@@ -55,8 +55,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 			boundingBox: '#<portlet:namespace />fileUpload',
 
 			<%
-				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-				%>
+			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
@@ -64,8 +64,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="exportImport"><portlet:param name="mvcRenderCommandName" value="exportImport" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="portletResource" value="<%= portletResource %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 
 			<%
-				DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-				%>
+			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+			%>
 
 			fileDescription:
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',

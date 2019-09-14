@@ -106,15 +106,15 @@ List groupNames = (List)objArray[8];
 						title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 						<%
-								PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-								groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
-								groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-								groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
-								groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
-								groupSelectorURL.setParameter("target", target);
-								groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
+						groupSelectorURL.setParameter("includeCompany", Boolean.TRUE.toString());
+						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+						groupSelectorURL.setParameter("includeUserPersonalSite", Boolean.TRUE.toString());
+						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
+						groupSelectorURL.setParameter("target", target);
+						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+						%>
 
 						uri: '<%= groupSelectorURL.toString() %>'
 					});

@@ -77,8 +77,8 @@ String treeId = (String)request.getAttribute("liferay-layout:layouts-tree:treeId
 		incomplete: <%= incomplete %>,
 
 		<%
-			long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
-			%>
+		long[] openNodes = StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeId), 0L);
+		%>
 
 		layouts: <%= LayoutsTreeUtil.getLayoutsJSON(request, groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, openNodes, true, treeId, layoutSetBranch) %>,
 

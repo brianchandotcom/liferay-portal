@@ -157,14 +157,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		calendarContainer: calendarContainer,
 
 		<%
-			java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
-			int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
-			int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
-			int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
-			%>
+		int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
+		int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
+		int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
+		int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
+		%>
 
 		currentTime: new Date(
 			<%= nowYear %>,
@@ -176,14 +176,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 
 		<%
-			java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			dateJCalendar.setTimeInMillis(date);
+		dateJCalendar.setTimeInMillis(date);
 
-			int dateYear = dateJCalendar.get(java.util.Calendar.YEAR);
-			int dateMonth = dateJCalendar.get(java.util.Calendar.MONTH);
-			int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			%>
+		int dateYear = dateJCalendar.get(java.util.Calendar.YEAR);
+		int dateMonth = dateJCalendar.get(java.util.Calendar.MONTH);
+		int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		%>
 
 		date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
 
@@ -214,12 +214,12 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		},
 
 		<%
-			java.util.Calendar todayJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+		java.util.Calendar todayJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
-			int todayYear = todayJCalendar.get(java.util.Calendar.YEAR);
-			int todayMonth = todayJCalendar.get(java.util.Calendar.MONTH);
-			int todayDay = todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-			%>
+		int todayYear = todayJCalendar.get(java.util.Calendar.YEAR);
+		int todayMonth = todayJCalendar.get(java.util.Calendar.MONTH);
+		int todayDay = todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
+		%>
 
 		todayDate: new Date(<%= todayYear %>, <%= todayMonth %>, <%= todayDay %>),
 		views: views

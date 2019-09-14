@@ -196,8 +196,8 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 									},
 
 									<%
-										SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
-										%>
+									SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
+									%>
 
 									eventName:
 										'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',

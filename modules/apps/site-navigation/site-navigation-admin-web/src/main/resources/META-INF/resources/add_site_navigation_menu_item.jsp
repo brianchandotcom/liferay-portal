@@ -101,8 +101,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 					if (response.siteNavigationMenuItemId) {
 						Liferay.fire('closeWindow', {
 							<%
-									Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-									%>
+							Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+							%>
 
 							id:
 								'_<%= HtmlUtil.escapeJS(selPortlet.getPortletId()) %>_addMenuItem',

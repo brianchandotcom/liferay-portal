@@ -156,8 +156,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							},
 
 							<%
-								String regularRoleEventName = liferayPortletResponse.getNamespace() + "selectRegularRole";
-								%>
+							String regularRoleEventName = liferayPortletResponse.getNamespace() + "selectRegularRole";
+							%>
 
 							id: '<%= regularRoleEventName %>',
 							selectedData: searchContainerData,
@@ -165,13 +165,13 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 								'<liferay-ui:message arguments="regular-role" key="select-x" />',
 
 							<%
-								PortletURL selectRegularRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+							PortletURL selectRegularRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-								selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-								selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
-								selectRegularRoleURL.setParameter("syncEntitiesEventName", regularRoleSyncEntitiesEventName);
-								selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
+							selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+							selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
+							selectRegularRoleURL.setParameter("syncEntitiesEventName", regularRoleSyncEntitiesEventName);
+							selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
 
 							uri: '<%= selectRegularRoleURL.toString() %>'
 						},
@@ -432,8 +432,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							},
 
 							<%
-								String organizationRoleEventName = liferayPortletResponse.getNamespace() + "selectOrganizationRole";
-								%>
+							String organizationRoleEventName = liferayPortletResponse.getNamespace() + "selectOrganizationRole";
+							%>
 
 							id: '<%= organizationRoleEventName %>',
 							selectedData: [],
@@ -441,16 +441,16 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 								'<liferay-ui:message arguments="organization-role" key="select-x" />',
 
 							<%
-								PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+							PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-								selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-								selectOrganizationRoleURL.setParameter("step", "1");
-								selectOrganizationRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-								selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
-								selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
-								selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
-								selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
+							selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+							selectOrganizationRoleURL.setParameter("step", "1");
+							selectOrganizationRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+							selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
+							selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
+							selectOrganizationRoleURL.setParameter("syncEntitiesEventName", organizationRoleSyncEntitiesEventName);
+							selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
 
 							uri: '<%= selectOrganizationRoleURL.toString() %>'
 						},
@@ -655,8 +655,8 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							},
 
 							<%
-								String siteRoleEventName = liferayPortletResponse.getNamespace() + "selectSiteRole";
-								%>
+							String siteRoleEventName = liferayPortletResponse.getNamespace() + "selectSiteRole";
+							%>
 
 							id: '<%= siteRoleEventName %>',
 							selectedData: [],
@@ -664,15 +664,15 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 								'<liferay-ui:message arguments="site-role" key="select-x" />',
 
 							<%
-								PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+							PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-								selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
-								selectSiteRoleURL.setParameter("step", "1");
-								selectSiteRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
-								selectSiteRoleURL.setParameter("syncEntitiesEventName", siteRoleSyncEntitiesEventName);
-								selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
-								%>
+							selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+							selectSiteRoleURL.setParameter("step", "1");
+							selectSiteRoleURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
+							selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
+							selectSiteRoleURL.setParameter("syncEntitiesEventName", siteRoleSyncEntitiesEventName);
+							selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
 
 							uri: '<%= selectSiteRoleURL.toString() %>'
 						},

@@ -250,8 +250,8 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			boundingBox: '#<portlet:namespace />myCalendarList',
 
 			<%
-				updateCalendarsJSONArray(request, userCalendarsJSONArray);
-				%>
+			updateCalendarsJSONArray(request, userCalendarsJSONArray);
+			%>
 
 			calendars: <%= userCalendarsJSONArray %>,
 			scheduler: <portlet:namespace />scheduler,
@@ -291,8 +291,8 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			boundingBox: '#<portlet:namespace />otherCalendarList',
 
 			<%
-				updateCalendarsJSONArray(request, otherCalendarsJSONArray);
-				%>
+			updateCalendarsJSONArray(request, otherCalendarsJSONArray);
+			%>
 
 			calendars: <%= otherCalendarsJSONArray %>,
 			scheduler: <portlet:namespace />scheduler,
@@ -314,8 +314,8 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			boundingBox: '#<portlet:namespace />siteCalendarList',
 
 			<%
-				updateCalendarsJSONArray(request, groupCalendarsJSONArray);
-				%>
+			updateCalendarsJSONArray(request, groupCalendarsJSONArray);
+			%>
 
 			calendars: <%= groupCalendarsJSONArray %>,
 			scheduler: <portlet:namespace />scheduler,

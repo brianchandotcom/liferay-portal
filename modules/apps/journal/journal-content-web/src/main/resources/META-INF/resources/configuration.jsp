@@ -66,33 +66,33 @@ String redirect = ParamUtil.getString(request, "redirect");
 		event.preventDefault();
 
 		<%
-			PortletURL selectWebContentURL = PortletProviderUtil.getPortletURL(request, JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
+		PortletURL selectWebContentURL = PortletProviderUtil.getPortletURL(request, JournalArticle.class.getName(), PortletProvider.Action.BROWSE);
 
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getScopeGroupId());
+		Group scopeGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getScopeGroupId());
 
-			if (scopeGroup.isLayoutPrototype()) {
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(scopeGroup.getCompanyId());
+		if (scopeGroup.isLayoutPrototype()) {
+			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(scopeGroup.getCompanyId());
 
-				selectWebContentURL.setParameter("selectedGroupIds", String.valueOf(companyGroup.getGroupId()));
+			selectWebContentURL.setParameter("selectedGroupIds", String.valueOf(companyGroup.getGroupId()));
+		}
+		else {
+			selectWebContentURL.setParameter("groupId", String.valueOf(journalContentDisplayContext.getGroupId()));
+
+			if (journalContentDisplayContext.getSelectedGroupIds() != null) {
+				selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(journalContentDisplayContext.getSelectedGroupIds()));
 			}
 			else {
-				selectWebContentURL.setParameter("groupId", String.valueOf(journalContentDisplayContext.getGroupId()));
-
-				if (journalContentDisplayContext.getSelectedGroupIds() != null) {
-					selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(journalContentDisplayContext.getSelectedGroupIds()));
-				}
-				else {
-					selectWebContentURL.setParameter("selectedGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
-				}
+				selectWebContentURL.setParameter("selectedGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
 			}
+		}
 
-			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
-			selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
-			selectWebContentURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
-			selectWebContentURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-			selectWebContentURL.setParameter("eventName", "selectContent");
-			selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
-			%>
+		selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
+		selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
+		selectWebContentURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+		selectWebContentURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+		selectWebContentURL.setParameter("eventName", "selectContent");
+		selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
+		%>
 
 		var baseSelectWebContentURI = '<%= selectWebContentURL.toString() %>';
 

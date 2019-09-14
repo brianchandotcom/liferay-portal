@@ -151,8 +151,8 @@ if (organization != null) {
 
 				if (countryDiv) {
 					<%
-						for (String curType : organizationsTypes) {
-						%>
+					for (String curType : organizationsTypes) {
+					%>
 
 					if (event.currentTarget.value === '<%= curType %>') {
 						if (
@@ -165,8 +165,9 @@ if (organization != null) {
 					}
 
 					<%
-						}
-						%>
+					}
+					%>
+
 				}
 			});
 		}

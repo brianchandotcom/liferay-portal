@@ -220,13 +220,13 @@ else {
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 					<%
-						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+					PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-						groupSelectorURL.setParameter("groupId", String.valueOf(group.getGroupId()));
-						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
-						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
-						%>
+					groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+					groupSelectorURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+					groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
+					groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
 
 					uri: '<%= groupSelectorURL.toString() %>'
 				},

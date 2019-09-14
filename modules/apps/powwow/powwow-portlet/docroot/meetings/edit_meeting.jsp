@@ -327,31 +327,33 @@ if (powwowMeeting != null) {
 			);
 
 			<%
-				if (PowwowServiceProviderUtil.isSupportsOptionAutoStartVideo(providerType)) {
-				%>
+			if (PowwowServiceProviderUtil.isSupportsOptionAutoStartVideo(providerType)) {
+			%>
 
 			A.one('#<portlet:namespace />autoStartVideo')
 				.get('parentNode')
 				.show();
 
 			<%
-				}
-				%>
+			}
+			%>
 
 			<%
-				if (PowwowServiceProviderUtil.isSupportsOptionPassword(providerType)) {
-				%>
+			if (PowwowServiceProviderUtil.isSupportsOptionPassword(providerType)) {
+			%>
 
 			A.one('#<portlet:namespace />optionPassword').show();
 
 			<%
-				}
-				%>
+			}
+			%>
+
 		}
 
 		<%
 		}
 		%>
+
 	}
 
 	var selection = A.one('#<portlet:namespace />providerType');
@@ -445,4 +447,5 @@ if (powwowMeeting != null) {
 	<%
 	}
 	%>
+
 </aui:script>

@@ -157,8 +157,8 @@ String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 				aspectRatio: <%= aspectRatio %>,
 
 				<%
-					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-					%>
+				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+				%>
 
 				decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 

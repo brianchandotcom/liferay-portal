@@ -56,8 +56,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 			boundingBox: '#<portlet:namespace />fileUpload',
 
 			<%
-				DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-				%>
+			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 
@@ -65,8 +65,8 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="importLayouts"><portlet:param name="mvcRenderCommandName" value="importLayouts" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 
 			<%
-				DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-				%>
+			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+			%>
 
 			fileDescription:
 				'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',

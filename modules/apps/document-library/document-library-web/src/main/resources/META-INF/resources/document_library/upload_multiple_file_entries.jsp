@@ -67,8 +67,8 @@ if (portletTitleBasedNavigation) {
 								boundingBox: '#<portlet:namespace />fileUpload',
 
 								<%
-									DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-									%>
+								DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+								%>
 
 								decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 

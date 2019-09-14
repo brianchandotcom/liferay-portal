@@ -51,8 +51,8 @@ if (message != null) {
 		boundingBox: '#<portlet:namespace />fileUpload',
 
 		<%
-			DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-			%>
+		DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+		%>
 
 		decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 		deleteFile:
@@ -60,8 +60,8 @@ if (message != null) {
 		fallback: '#<portlet:namespace />fallback',
 
 		<%
-			DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
-			%>
+		DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
+		%>
 
 		fileDescription:
 			'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',

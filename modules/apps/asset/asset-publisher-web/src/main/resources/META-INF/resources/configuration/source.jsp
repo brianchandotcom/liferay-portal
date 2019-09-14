@@ -294,21 +294,21 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	}
 
 	<%
-		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+	ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
+	List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
 
-		if (assetAvailableClassTypes.isEmpty()) {
+	if (assetAvailableClassTypes.isEmpty()) {
+		continue;
+	}
+
+	for (ClassType classType : assetAvailableClassTypes) {
+		List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
+
+		if (classTypeFields.isEmpty()) {
 			continue;
 		}
-
-		for (ClassType classType : assetAvailableClassTypes) {
-			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
-
-			if (classTypeFields.isEmpty()) {
-				continue;
-			}
-		%>
+	%>
 
 	var optgroupClose = '</optgroup>';
 	var optgroupOpen =
@@ -318,22 +318,22 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	var columnBuffer2 = [optgroupOpen];
 
 	<%
-			String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
-			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
+	String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
+	String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
 
-			for (ClassTypeField classTypeField : classTypeFields) {
-				String value = assetPublisherWebUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
-				String selectedOrderByColumn1 = StringPool.BLANK;
-				String selectedOrderByColumn2 = StringPool.BLANK;
+	for (ClassTypeField classTypeField : classTypeFields) {
+		String value = assetPublisherWebUtil.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
+		String selectedOrderByColumn1 = StringPool.BLANK;
+		String selectedOrderByColumn2 = StringPool.BLANK;
 
-				if (orderByColumn1.equals(value)) {
-					selectedOrderByColumn1 = "selected";
-				}
+		if (orderByColumn1.equals(value)) {
+			selectedOrderByColumn1 = "selected";
+		}
 
-				if (orderByColumn2.equals(value)) {
-					selectedOrderByColumn2 = "selected";
-				}
-			%>
+		if (orderByColumn2.equals(value)) {
+			selectedOrderByColumn2 = "selected";
+		}
+	%>
 
 	columnBuffer1.push(
 		'<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
@@ -343,8 +343,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	);
 
 	<%
-			}
-			%>
+	}
+	%>
 
 	columnBuffer1.push(optgroupClose);
 	columnBuffer2.push(optgroupClose);
@@ -357,8 +357,8 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 	] = columnBuffer2.join('');
 
 	<%
-		}
-		%>
+	}
+	%>
 
 	var <%= className %>SubtypeSelector = document.getElementById(
 		'<portlet:namespace />anyClassType<%= className %>'
@@ -468,6 +468,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		<%
 		}
 		%>
+
 	}
 
 	<portlet:namespace />toggleSubclasses(false);

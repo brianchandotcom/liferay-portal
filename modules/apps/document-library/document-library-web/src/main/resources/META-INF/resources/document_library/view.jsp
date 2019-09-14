@@ -229,8 +229,8 @@ String navigation = ParamUtil.getString(request, "navigation");
 					columnNames: ['<%= StringUtil.merge(escapedEntryColumns, "','") %>'],
 
 					<%
-						DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
-						%>
+					DecimalFormatSymbols decimalFormatSymbols = DecimalFormatSymbols.getInstance(locale);
+					%>
 
 					decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 					displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',

@@ -83,17 +83,17 @@ DDMTemplate ddmTemplate = journalEditArticleDisplayContext.getDDMTemplate();
 				var uri = '<%= previewArticleContentTemplateURL %>';
 
 				<%
-					long ddmTemplateId = 0;
+				long ddmTemplateId = 0;
 
-					if (ddmTemplate != null) {
-						if (ddmTemplate.getTemplateId() == 0) {
-							ddmTemplateId = -1;
-						}
-						else {
-							ddmTemplateId = ddmTemplate.getTemplateId();
-						}
+				if (ddmTemplate != null) {
+					if (ddmTemplate.getTemplateId() == 0) {
+						ddmTemplateId = -1;
 					}
-					%>
+					else {
+						ddmTemplateId = ddmTemplate.getTemplateId();
+					}
+				}
+				%>
 
 				var ddmTemplateId = '<%= ddmTemplateId %>';
 

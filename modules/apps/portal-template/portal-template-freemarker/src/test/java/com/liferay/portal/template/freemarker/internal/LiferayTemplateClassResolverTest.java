@@ -78,8 +78,7 @@ public class LiferayTemplateClassResolverTest {
 		catch (TemplateException te) {
 			ClassNotFoundException cnfe = (ClassNotFoundException)te.getCause();
 
-			Assert.assertEquals(
-				"Unable to load class invalidClass", cnfe.getMessage());
+			Assert.assertEquals("invalidClass", cnfe.getMessage());
 		}
 	}
 

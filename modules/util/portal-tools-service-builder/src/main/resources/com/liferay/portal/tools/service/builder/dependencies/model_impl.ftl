@@ -287,11 +287,15 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#if dependencyInjectorDS>
 		public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
-			_entityCacheEnabled = entityCacheEnabled;
+			<#if !entity.hasEagerBlobColumn()>
+				_entityCacheEnabled = entityCacheEnabled;
+			</#if>
 		}
 
 		public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-			_finderCacheEnabled = finderCacheEnabled;
+			<#if !entity.hasEagerBlobColumn()>
+				_finderCacheEnabled = finderCacheEnabled;
+			</#if>
 		}
 	</#if>
 
@@ -1770,8 +1774,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	}
 
 	<#if dependencyInjectorDS>
-		private static boolean _entityCacheEnabled;
-		private static boolean _finderCacheEnabled;
+		<#if entity.hasEagerBlobColumn()>
+			private static final boolean _entityCacheEnabled = false;
+			private static final boolean _finderCacheEnabled = false;
+		<#else>
+			private static boolean _entityCacheEnabled;
+			private static boolean _finderCacheEnabled;
+		</#if>
 	</#if>
 
 	<#list entity.databaseRegularEntityColumns as entityColumn>

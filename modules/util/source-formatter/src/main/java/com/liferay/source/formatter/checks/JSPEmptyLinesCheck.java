@@ -61,70 +61,62 @@ public class JSPEmptyLinesCheck extends EmptyLinesCheck {
 	}
 
 	private String _fixMissingEmptyLines(String content) {
-		while (true) {
-			Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue;
 			}
+		}
 
-			matcher = _missingEmptyLinePattern2.matcher(content);
+		matcher = _missingEmptyLinePattern2.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
-
-				continue;
 			}
+		}
 
-			matcher = _missingEmptyLinePattern3.matcher(content);
+		matcher = _missingEmptyLinePattern3.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue;
 			}
+		}
 
-			matcher = _missingEmptyLinePattern4.matcher(content);
+		matcher = _missingEmptyLinePattern4.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue;
 			}
-
-			break;
 		}
 
 		return content;
 	}
 
 	private String _fixRedundantEmptyLines(String content) {
-		while (true) {
-			Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
+		Matcher matcher = _redundantEmptyLinePattern1.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", StringPool.BLANK, matcher.start() + 1);
-
-				continue;
 			}
+		}
 
-			matcher = _redundantEmptyLinePattern2.matcher(content);
+		matcher = _redundantEmptyLinePattern2.matcher(content);
 
-			if (matcher.find()) {
-				content = StringUtil.replaceFirst(
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", StringPool.BLANK, matcher.start() + 1);
-
-				continue;
 			}
-
-			break;
 		}
 
 		return content;

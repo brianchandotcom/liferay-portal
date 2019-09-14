@@ -81,6 +81,11 @@ public abstract class BaseJob implements Job {
 		}
 	}
 
+	@Override
+	public boolean usePreBuiltBundles() {
+		return false;
+	}
+
 	protected BaseJob(String jobName) {
 		_jobName = jobName;
 	}

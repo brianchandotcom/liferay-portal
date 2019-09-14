@@ -47,9 +47,9 @@ const TEST_LIST = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}];
 describe('utils', () => {
 	describe('buildUrl', () => {
 		it('adds a single parameter to the url', () => {
-			expect(
-				buildUrl(TEST_BASE_URL, {testParam: 'testValue'}).href
-			).toEqual(TEST_BASE_URL + '?testParam=testValue');
+			expect(buildUrl(TEST_BASE_URL, {testParam: 'testValue'})).toEqual(
+				TEST_BASE_URL + '?testParam=testValue'
+			);
 		});
 
 		it('adds multiple parameters to the url', () => {
@@ -57,7 +57,7 @@ describe('utils', () => {
 				buildUrl(TEST_BASE_URL, {
 					testParam1: 'testValue1',
 					testParam2: 'testValue2'
-				}).href
+				})
 			).toEqual(
 				TEST_BASE_URL + '?testParam1=testValue1&testParam2=testValue2'
 			);
@@ -69,13 +69,13 @@ describe('utils', () => {
 
 			const url = buildUrl(baseUrl, params);
 
-			expect(url.href).toEqual(TEST_BASE_URL + '?baseParam=testValue');
+			expect(url).toEqual(TEST_BASE_URL + '?baseParam=testValue');
 		});
 
 		it('returns the same url if no parameters are passed', () => {
 			const url = buildUrl(TEST_BASE_URL);
 
-			expect(url.href).toEqual(TEST_BASE_URL);
+			expect(url).toEqual(TEST_BASE_URL);
 		});
 	});
 

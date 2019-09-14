@@ -11,290 +11,233 @@
 
 import AddResultModal from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResultModal.es';
 import React from 'react';
-import {fireEvent, render, waitForElement} from '@testing-library/react';
-import {getMockResultsData} from '../../mocks/data.es';
+import {
+	fireEvent,
+	getByPlaceholderText,
+	render,
+	waitForElement
+} from '@testing-library/react';
+import {
+	FETCH_SEARCH_DOCUMENTS_URL,
+	getMockResultsData
+} from '../../mocks/data.es';
 import '@testing-library/jest-dom/extend-expect';
-
-const DELTAS = [5, 10, 20, 30, 50];
-
-const RESULTS_DATA = {
-	items: getMockResultsData(10, 0, 'search', false).documents,
-	total: 250
-};
 
 const MODAL_ID = 'add-result-modal';
 const RESULTS_LIST_ID = 'add-result-items';
 
-/* eslint-disable no-unused-vars */
-jest.mock('react-dnd', () => ({
-	DragSource: el => el => el,
-	DropTarget: el => el => el
-}));
-/* eslint-enable no-unused-vars */
-
 describe('AddResultModal', () => {
-	it('shows a modal', async () => {
+	beforeEach(() => {
+		fetch.mockResponse(JSON.stringify(getMockResultsData()));
+	});
+
+	it('renders the modal', async () => {
+		const {findByTestId} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		const modalElement = await findByTestId(MODAL_ID);
+
+		expect(modalElement).toBeInTheDocument();
+	});
+
+	it('prompts a message to search in the modal', async () => {
+		// This is a temporary mock to get the initial message to display.
+		// There currently isn't a way to disable the initial fetch, so the
+		// current workaround is showing an initial message if a refetch
+		// hasn't been called.
+		//
+		// This should be removed after disabling the initial fetch.
+		fetch.mockResponse(JSON.stringify({}));
+
 		const {getByTestId} = render(
 			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
 			/>
 		);
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
-		expect(getByTestId(MODAL_ID)).toBeInTheDocument();
+		const modal = getByTestId(MODAL_ID);
+
+		expect(modal).toHaveTextContent('search-the-engine');
+
+		expect(modal).toHaveTextContent('search-the-engine-to-display-results');
 	});
 
-	it('shows no results list when dataLoading is true', () => {
-		const {queryByTestId} = render(
-			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={true}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
-			/>
-		);
+	it('searches for results and calls the onAddResultSubmit function after add is pressed', async () => {
+		const onAddResultSubmit = jest.fn();
 
-		expect(queryByTestId(RESULTS_LIST_ID)).not.toBeInTheDocument();
-	});
-
-	it('has placeholder text for searching the engine', async () => {
-		const {getByPlaceholderText, getByTestId} = render(
+		const {getByTestId, getByText} = render(
 			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={onAddResultSubmit}
+				onCloseModal={jest.fn()}
 			/>
 		);
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
-		expect(getByPlaceholderText('search-the-engine')).toBeInTheDocument();
-	});
+		const modal = getByTestId(MODAL_ID);
 
-	it('calls the handleSearchChange function when text is entered', async () => {
-		const handleSearchChange = jest.fn();
-
-		const {getByPlaceholderText, getByTestId} = render(
-			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={handleSearchChange}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
-			/>
-		);
-
-		await waitForElement(() => getByTestId(MODAL_ID));
-
-		const input = getByPlaceholderText('search-the-engine');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
-		expect(handleSearchChange.mock.calls.length).toBe(1);
-	});
-
-	it('calls the handleSearchKeyDown function when enter is pressed', async () => {
-		const handleSearchKeyDown = jest.fn();
-
-		const {getByPlaceholderText, getByTestId} = render(
-			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={handleSearchKeyDown}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
-			/>
-		);
-
-		await waitForElement(() => getByTestId(MODAL_ID));
-
-		const input = getByPlaceholderText('search-the-engine');
-
 		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
 
-		expect(handleSearchKeyDown.mock.calls.length).toBe(1);
-	});
+		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
-	it('lists the results', async () => {
-		const {getByTestId, getByText} = render(
-			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
-			/>
+		fireEvent.click(
+			getByTestId('100').querySelector('.custom-control-input')
 		);
-
-		await waitForElement(() => getByTestId(MODAL_ID));
-
-		expect(getByText('300 This is a Document Example')).toBeInTheDocument();
-		expect(
-			getByText('305 This is a Web Content Example')
-		).toBeInTheDocument();
-	});
-
-	it('calls the handleSubmit function when add button is pressed', async () => {
-		const handleSubmit = jest.fn();
-
-		const {getByTestId, getByText} = render(
-			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[1]} // Select at least 1 item to enable the add button.
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => ['300'])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={() => handleSubmit}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
-			/>
-		);
-
-		await waitForElement(() => getByTestId(MODAL_ID));
 
 		fireEvent.click(getByText('add'));
 
-		expect(handleSubmit.mock.calls.length).toBe(1);
+		expect(onAddResultSubmit.mock.calls.length).toBe(1);
 	});
 
 	it('disables the add button when the selected results are empty', async () => {
 		const {getByTestId, getByText} = render(
 			<AddResultModal
-				DELTAS={DELTAS}
-				addResultSearchQuery={''}
-				addResultSelectedIds={[]}
-				dataLoading={false}
-				getCurrentResultSelectedIds={jest.fn(() => [])}
-				handleAllCheckbox={jest.fn()}
-				handleClearAllSelected={jest.fn()}
-				handleClose={jest.fn()}
-				handleDeltaChange={jest.fn()}
-				handlePageChange={jest.fn()}
-				handleSearchChange={jest.fn()}
-				handleSearchEnter={jest.fn()}
-				handleSearchKeyDown={jest.fn()}
-				handleSelect={jest.fn()}
-				handleSubmit={jest.fn()}
-				page={1}
-				renderEmptyState={jest.fn()}
-				results={RESULTS_DATA}
-				selectedDelta={DELTAS[2]}
-				showModal={true}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
 			/>
 		);
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
 		expect(getByText('add')).toHaveAttribute('disabled');
+	});
+
+	it('shows the results in the modal after enter key is pressed', async () => {
+		const {getByTestId} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		await waitForElement(() => getByTestId(MODAL_ID));
+
+		const modal = getByTestId(MODAL_ID);
+
+		const input = getByPlaceholderText(modal, 'search-the-engine');
+
+		fireEvent.change(input, {target: {value: 'test'}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+
+		expect(modal).toHaveTextContent('100 This is a Document Example');
+		expect(modal).toHaveTextContent('109 This is a Web Content Example');
+	});
+
+	it('does not show the prompt in the modal after enter key is pressed', async () => {
+		const {getByTestId} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		await waitForElement(() => getByTestId(MODAL_ID));
+
+		const modal = getByTestId(MODAL_ID);
+
+		const input = getByPlaceholderText(modal, 'search-the-engine');
+
+		fireEvent.change(input, {target: {value: 'test'}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+
+		expect(modal).not.toHaveTextContent('sorry-there-are-no-results-found');
+	});
+
+	/**
+	 * Temporarily disable pagination test until pagination is fixed
+	 * in LPS-96397. (LPS-101090)
+	 */
+	xit('shows next page results in the modal after navigation is pressed', async () => {
+		const onAddResultSubmit = jest.fn();
+
+		const {getByTestId} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={onAddResultSubmit}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		await waitForElement(() => getByTestId(MODAL_ID));
+
+		const modal = getByTestId(MODAL_ID);
+
+		const input = getByPlaceholderText(modal, 'search-the-engine');
+
+		fireEvent.change(input, {target: {value: 'test'}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+
+		fireEvent.click(modal.querySelector('.lexicon-icon-angle-right'));
+
+		await waitForElement(() => getByTestId('150'));
+
+		expect(modal).not.toHaveTextContent('100 This is a Document Example');
+		expect(modal).not.toHaveTextContent(
+			'149 This is a Web Content Example'
+		);
+		expect(modal).toHaveTextContent('150 This is a Document Example');
+		expect(modal).toHaveTextContent('199 This is a Web Content Example');
+	});
+
+	/**
+	 * Temporarily disable pagination test until pagination is fixed
+	 * in LPS-96397. (LPS-101090)
+	 */
+	xit('updates results count in the modal after page delta is pressed', async () => {
+		const onAddResultSubmit = jest.fn();
+
+		const {getByTestId, queryAllByText} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={onAddResultSubmit}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		await waitForElement(() => getByTestId(MODAL_ID));
+
+		const modal = getByTestId(MODAL_ID);
+
+		const input = getByPlaceholderText(modal, 'search-the-engine');
+
+		fireEvent.change(input, {target: {value: 'test'}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+
+		fireEvent.click(queryAllByText('x-items')[4]);
+
+		await waitForElement(() => getByTestId('139'));
+
+		expect(modal).not.toHaveTextContent(
+			'149 This is a Web Content Example'
+		);
 	});
 });

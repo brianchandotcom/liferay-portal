@@ -20,6 +20,8 @@ import {
 import '../../src/main/resources/META-INF/resources/css/main.scss';
 
 import AddResult from '../../src/main/resources/META-INF/resources/js/components/add_result/AddResult.es';
+import AddResultModal from '../../src/main/resources/META-INF/resources/js/components/add_result/AddResultModal.es';
+import AddResultSearchBar from '../../src/main/resources/META-INF/resources/js/components/add_result/AddResultSearchBar.es';
 import Alias from '../../src/main/resources/META-INF/resources/js/components/alias/Alias.es';
 import ClayEmptyState from '../../src/main/resources/META-INF/resources/js/components/shared/ClayEmptyState.es';
 import FilterDisplay from '../../src/main/resources/META-INF/resources/js/components/list/FilterDisplay.es';
@@ -79,16 +81,32 @@ storiesOf('Pages|ResultsRankingForm', module).add('default', () => (
 	/>
 ));
 
-storiesOf('Components|AddResult', module).add('default', () => (
-	<AddResult
-		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"
-		onAddResultSubmit={action('onAddResultSubmit')}
-	/>
-));
+storiesOf('Components|AddResult', module)
+	.add('AddResult', () => (
+		<AddResult
+			fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"
+			onAddResultSubmit={action('onAddResultSubmit')}
+		/>
+	))
+	.add('AddResultModal', () => (
+		<AddResultModal
+			fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"
+			onAddResultSubmit={action('onAddResultSubmit')}
+			onCloseModal={action('onCloseModal')}
+		/>
+	))
+	.add('AddResultSearchBar', () => (
+		<AddResultSearchBar
+			onSearchKeyDown={action('onSearchKeyDown')}
+			onSearchQueryChange={action('onSearchQueryChange')}
+			onSearchSubmit={action('onSearchSubmit')}
+			searchQuery={text('Search Query', '')}
+		/>
+	));
 
 storiesOf('Components|Alias', module)
 	.addDecorator(withSheet)
-	.add('default', () => (
+	.add('Alias', () => (
 		<Alias
 			keywords={array('Keywords', [], ',')}
 			onClickDelete={action('onClickDelete')}
@@ -96,7 +114,7 @@ storiesOf('Components|Alias', module)
 		/>
 	));
 
-storiesOf('Components|EmptyState', module)
+storiesOf('Components|ClayEmptyState', module)
 	.addDecorator(withSheet)
 	.add('default', () => (
 		<ClayEmptyState

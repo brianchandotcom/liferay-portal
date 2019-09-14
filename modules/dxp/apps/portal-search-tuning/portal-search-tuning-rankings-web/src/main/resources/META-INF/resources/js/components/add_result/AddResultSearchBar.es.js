@@ -62,7 +62,11 @@ AddResultSearchBar.propTypes = {
 	onSearchKeyDown: PropTypes.func.isRequired,
 	onSearchQueryChange: PropTypes.func.isRequired,
 	onSearchSubmit: PropTypes.func.isRequired,
-	searchQuery: PropTypes.string.isRequired
+	searchQuery: PropTypes.string
+};
+
+AddResultSearchBar.defaultProps = {
+	searchQuery: ''
 };
 
 export default AddResultSearchBar;

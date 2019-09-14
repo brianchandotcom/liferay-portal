@@ -203,6 +203,12 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 			return parseDigest(
 				httpServletRequest, authorization, authorizationParts);
 		}
+		else if (StringUtil.equalsIgnoreCase(
+					scheme, HttpAuthorizationHeader.SCHEME_BEARER)) {
+
+			return new HttpAuthorizationHeader(
+				HttpAuthorizationHeader.SCHEME_BEARER);
+		}
 		else {
 			throw new UnsupportedOperationException("Scheme " + scheme);
 		}

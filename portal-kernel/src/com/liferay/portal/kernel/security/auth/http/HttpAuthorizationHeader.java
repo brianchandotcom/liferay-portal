@@ -41,6 +41,8 @@ public class HttpAuthorizationHeader {
 
 	public static final String SCHEME_BASIC = "Basic";
 
+	public static final String SCHEME_BEARER = "Bearer";
+
 	public static final String SCHEME_DIGEST = "Digest";
 
 	public HttpAuthorizationHeader(String scheme) {

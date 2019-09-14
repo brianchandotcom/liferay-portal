@@ -100,8 +100,7 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 			versionRange = new VersionRange(
 				true, new Version(version.getMajor(), version.getMinor(), 0),
-				new Version(version.getMajor() + 1, 0, 0),
-				false);
+				new Version(version.getMajor() + 1, 0, 0), false);
 		}
 		else if (VersionRange.isVersionRange(property)) {
 			versionRange = VersionRange.parseVersionRange(property);

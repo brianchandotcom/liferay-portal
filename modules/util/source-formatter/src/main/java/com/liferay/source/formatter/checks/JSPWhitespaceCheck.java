@@ -118,6 +118,7 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 			String line = null;
 
 			boolean javaSource = false;
+			boolean jsSource = false;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				if (!fileName.endsWith("/jsonws/action.jsp")) {
@@ -131,6 +132,25 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 				}
 				else if (trimmedLine.equals("%>")) {
 					javaSource = false;
+				}
+				else if (trimmedLine.equals("<aui:script>") ||
+						 trimmedLine.startsWith("<aui:script ") ||
+						 trimmedLine.equals("<script>") ||
+						 trimmedLine.startsWith("<script ")) {
+
+					jsSource = true;
+				}
+				else if (trimmedLine.equals("</aui:script>") ||
+						 trimmedLine.equals("</script>")) {
+
+					jsSource = false;
+				}
+
+				if (jsSource && !javaSource) {
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
 				}
 
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&

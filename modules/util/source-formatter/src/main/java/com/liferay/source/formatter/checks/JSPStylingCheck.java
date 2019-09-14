@@ -170,10 +170,12 @@ public class JSPStylingCheck extends StylingCheck {
 	private String _formatLineBreak(String fileName, String content) {
 		Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
 
-		if (matcher.find()) {
-			addMessage(
-				fileName, "There should be a line break after '}'",
-				getLineNumber(content, matcher.start(1)));
+		while (matcher.find()) {
+			if (!JSPSourceUtil.isJSSource(content, matcher.start(1))) {
+				addMessage(
+					fileName, "There should be a line break after '}'",
+					getLineNumber(content, matcher.start(1)));
+			}
 		}
 
 		matcher = _incorrectLineBreakPattern2.matcher(content);

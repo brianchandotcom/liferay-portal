@@ -41,12 +41,38 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 			String line = null;
 			String previousLine = StringPool.BLANK;
 
+			boolean javaSource = false;
+			boolean jsSource = false;
+
 			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (!line.startsWith(StringPool.POUND)) {
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
+					javaSource = true;
+				}
+				else if (trimmedLine.equals("%>")) {
+					javaSource = false;
+				}
+				else if (trimmedLine.equals("<aui:script>") ||
+						 trimmedLine.startsWith("<aui:script ") ||
+						 trimmedLine.equals("<script>") ||
+						 trimmedLine.startsWith("<script ")) {
+
+					jsSource = true;
+				}
+				else if (trimmedLine.equals("</aui:script>") ||
+						 trimmedLine.equals("</script>")) {
+
+					jsSource = false;
+				}
+
+				if (!line.startsWith(StringPool.POUND) &&
+					(!jsSource || javaSource)) {
+
 					checkLineBreaks(line, previousLine, fileName, lineNumber);
 				}
 

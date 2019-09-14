@@ -36,22 +36,23 @@ public class UpgradeViewCount extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(_tableName, _viewCountColumnName)) {
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					StringBundler.concat(
-						"insert into ViewCountEntry (companyId, classNameId, ",
-						"classPK, viewCount) select companyId, ",
-						PortalUtil.getClassNameId(_clazz), ", ",
-						_primaryColumnName, ", ", _viewCountColumnName,
-						" from ", _tableName));
-				PreparedStatement ps2 = connection.prepareStatement(
-					StringBundler.concat(
-						"alter table ", _tableName, " drop column ",
-						_viewCountColumnName))) {
+		if (!hasColumn(_tableName, _viewCountColumnName)) {
+			return;
+		}
 
-				ps1.executeUpdate();
-				ps2.executeUpdate();
-			}
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into ViewCountEntry (companyId, classNameId, ",
+					"classPK, viewCount) select companyId, ",
+					PortalUtil.getClassNameId(_clazz), ", ", _primaryColumnName,
+					", ", _viewCountColumnName, " from ", _tableName));
+			PreparedStatement ps2 = connection.prepareStatement(
+				StringBundler.concat(
+					"alter table ", _tableName, " drop column ",
+					_viewCountColumnName))) {
+
+			ps1.executeUpdate();
+			ps2.executeUpdate();
 		}
 	}
 

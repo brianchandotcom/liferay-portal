@@ -80,6 +80,13 @@ public class UpgradeViewCountTest {
 			"UpgradeViewCount", UpgradeViewCountTest.class, "primaryKey",
 			"readCount");
 
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			Assert.assertTrue(
+				dbInspector.hasColumn("UpgradeViewCount", "readCount"));
+		}
+
 		upgradeCTModel.upgrade();
 
 		try (Connection connection = DataAccess.getConnection();
@@ -95,10 +102,8 @@ public class UpgradeViewCountTest {
 			Assert.assertEquals(3, rs.getLong("viewCount"));
 
 			Assert.assertFalse(rs.next());
-		}
 
-		try (Connection con = DataAccess.getConnection()) {
-			DBInspector dbInspector = new DBInspector(con);
+			DBInspector dbInspector = new DBInspector(connection);
 
 			Assert.assertFalse(
 				dbInspector.hasColumn("UpgradeViewCount", "readCount"));

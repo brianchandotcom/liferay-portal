@@ -135,37 +135,36 @@ public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 			}
 
 			for (Map.Entry<Serializable, T> entry : ctModels.entrySet()) {
-				ctEntries.compute(
-					entry.getKey(),
-					(primaryKey, ctEntry) -> {
-						T ctModel = entry.getValue();
+				Serializable primaryKey = entry.getKey();
 
-						long mvccVersion = ctModel.getMvccVersion();
+				CTEntry ctEntry = ctEntries.get(primaryKey);
 
-						if ((fromCTCollectionId == _targetCTCollectionId) &&
-							(mvccVersion != ctEntry.getModelMvccVersion())) {
+				T ctModel = entry.getValue();
 
-							throw new SystemException(
-								StringBundler.concat(
-									"MvccVersion mismatch between ", ctEntry,
-									" and ", ctModel, " for ",
-									_ctService.getModelClass()));
-						}
+				long mvccVersion = ctModel.getMvccVersion();
 
-						ctModel.setCtCollectionId(toCTCollectionId);
+				if ((fromCTCollectionId == _targetCTCollectionId) &&
+					(mvccVersion != ctEntry.getModelMvccVersion())) {
 
-						ctModel = ctPersistence.updateCTModel(ctModel, true);
+					throw new SystemException(
+						StringBundler.concat(
+							"MvccVersion mismatch between ", ctEntry, " and ",
+							ctModel, " for ", _ctService.getModelClass()));
+				}
 
-						ctPersistence.clearCache(ctModel);
+				ctModel.setCtCollectionId(toCTCollectionId);
 
-						if (toCTCollectionId == _sourceCTCollectionId) {
-							ctEntry.setModelMvccVersion(mvccVersion + 1);
+				ctModel = ctPersistence.updateCTModel(ctModel, true);
 
-							return _ctEntryLocalService.updateCTEntry(ctEntry);
-						}
+				ctPersistence.clearCache(ctModel);
 
-						return ctEntry;
-					});
+				if (toCTCollectionId == _sourceCTCollectionId) {
+					ctEntry.setModelMvccVersion(mvccVersion + 1);
+
+					ctEntries.put(
+						primaryKey,
+						_ctEntryLocalService.updateCTEntry(ctEntry));
+				}
 			}
 
 			Session session = ctPersistence.getCurrentSession();

@@ -79,7 +79,7 @@ public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
 
-	private Void _moveCTEntries(
+	private void _moveCTEntries(
 		CTPersistence<T> ctPersistence, Map<Serializable, CTEntry> ctEntries,
 		long fromCTCollectionId, long toCTCollectionId) {
 
@@ -136,8 +136,6 @@ public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 			session.flush();
 			session.clear();
 		}
-
-		return null;
 	}
 
 	private Void _publish(CTPersistence<T> ctPersistence) {

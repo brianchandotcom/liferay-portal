@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,6 +43,7 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.param.converter.provider.SiteParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -594,6 +596,15 @@ public class GraphQLServletExtender {
 				else if (parameterName.equals("pageSize")) {
 					argument = 20;
 				}
+			}
+
+			if (parameterName.equals("siteKey") && (argument != null)) {
+				SiteParamConverterProvider siteParamConverterProvider =
+					new SiteParamConverterProvider(_groupLocalService);
+
+				args[i - 1] = Long.valueOf(
+					siteParamConverterProvider.getGroupId(
+						CompanyThreadLocal.getCompanyId(), (String)argument));
 			}
 
 			if (_isMultipartBody(parameter)) {
@@ -1223,6 +1234,9 @@ public class GraphQLServletExtender {
 	private FilterParserProvider _filterParserProvider;
 
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

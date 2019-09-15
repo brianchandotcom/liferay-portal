@@ -46,20 +46,11 @@ public class SiteParamConverterProvider
 		MultivaluedMap<String, String> multivaluedMap =
 			_uriInfo.getPathParameters();
 
-		String siteId = multivaluedMap.getFirst("siteId");
+		Long siteId = getGroupId(
+			_company.getCompanyId(), multivaluedMap.getFirst("siteId"));
 
 		if (siteId != null) {
-			Group group = _groupLocalService.fetchGroup(
-				_company.getCompanyId(), siteId);
-
-			if (group == null) {
-				group = _groupLocalService.fetchGroup(
-					GetterUtil.getLong(siteId));
-			}
-
-			if ((group != null) && group.isSite()) {
-				return group.getGroupId();
-			}
+			return siteId;
 		}
 
 		throw new NotFoundException(
@@ -72,6 +63,23 @@ public class SiteParamConverterProvider
 
 		if (Long.class.equals(clazz) && _hasSiteIdAnnotation(annotations)) {
 			return (ParamConverter<T>)this;
+		}
+
+		return null;
+	}
+
+	public Long getGroupId(long companyId, String siteId) {
+		if (siteId != null) {
+			Group group = _groupLocalService.fetchGroup(companyId, siteId);
+
+			if (group == null) {
+				group = _groupLocalService.fetchGroup(
+					GetterUtil.getLong(siteId));
+			}
+
+			if ((group != null) && group.isSite()) {
+				return group.getGroupId();
+			}
 		}
 
 		return null;

@@ -51,7 +51,6 @@ import org.apache.log4j.spi.ThrowableInformation;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -87,11 +86,6 @@ public class LayoutCTTest {
 			Layout.class);
 
 		_group = GroupTestUtil.addGroup();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_ctCollectionLocalService.deleteCTCollection(_ctCollection);
 	}
 
 	@Test
@@ -485,6 +479,7 @@ public class LayoutCTTest {
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
 
+	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
 	@Inject

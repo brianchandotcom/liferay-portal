@@ -170,7 +170,7 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 			StringBundler.concat(
 				"javascript:",
 				_portal.getPortletNamespace(_portal.getPortletId(request)),
-				"editOfficeDocument(\", _getActionURL(cmd), "\");"));
+				"editOfficeDocument(\"", _getActionURL(cmd), "\");"));
 
 		return urlMenuItem;
 	}

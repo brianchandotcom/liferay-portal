@@ -280,6 +280,7 @@ public class Query {
 	@GraphQLField
 	public BlogPostingPage blogPostings(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -324,6 +325,7 @@ public class Query {
 	@GraphQLField
 	public BlogPostingImagePage blogPostingImages(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -490,7 +492,9 @@ public class Query {
 	 */
 	@GraphQLField
 	public ContentSetElementPage contentSetByKeyContentSetElements(
-			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key,
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
+			@GraphQLName("key") String key,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -512,6 +516,7 @@ public class Query {
 	@GraphQLField
 	public ContentSetElementPage contentSetByUuidContentSetElements(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("uuid") String uuid,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -552,6 +557,7 @@ public class Query {
 	@GraphQLField
 	public ContentStructurePage contentStructures(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -637,6 +643,7 @@ public class Query {
 	@GraphQLField
 	public DocumentPage documents(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -709,6 +716,7 @@ public class Query {
 	@GraphQLField
 	public DocumentFolderPage documentFolders(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -834,6 +842,7 @@ public class Query {
 	@GraphQLField
 	public KnowledgeBaseArticlePage knowledgeBaseArticles(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -944,6 +953,7 @@ public class Query {
 	@GraphQLField
 	public KnowledgeBaseFolderPage knowledgeBaseFolders(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -1166,6 +1176,7 @@ public class Query {
 	@GraphQLField
 	public MessageBoardSectionPage messageBoardSections(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1260,6 +1271,7 @@ public class Query {
 	@GraphQLField
 	public MessageBoardThreadPage messageBoardThreads(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1318,6 +1330,7 @@ public class Query {
 	@GraphQLField
 	public StructuredContentPage structuredContents(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1346,7 +1359,9 @@ public class Query {
 	 */
 	@GraphQLField
 	public StructuredContent structuredContentByKey(
-			@GraphQLName("siteId") Long siteId, @GraphQLName("key") String key)
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
+			@GraphQLName("key") String key)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1365,6 +1380,7 @@ public class Query {
 	@GraphQLField
 	public StructuredContent structuredContentByUuid(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("uuid") String uuid)
 		throws Exception {
 
@@ -1470,6 +1486,7 @@ public class Query {
 	@GraphQLField
 	public StructuredContentFolderPage structuredContentFolders(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -1550,6 +1567,7 @@ public class Query {
 	@GraphQLField
 	public WikiNodePage wikiNodes(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

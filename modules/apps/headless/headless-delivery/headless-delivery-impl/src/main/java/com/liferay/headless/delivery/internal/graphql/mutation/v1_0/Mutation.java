@@ -295,6 +295,7 @@ public class Mutation {
 	@GraphQLField
 	public BlogPosting createSiteBlogPosting(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("blogPosting") BlogPosting blogPosting)
 		throws Exception {
 
@@ -324,6 +325,7 @@ public class Mutation {
 	@GraphQLName("postSiteBlogPostingImageSiteIdMultipartBody")
 	public BlogPostingImage createSiteBlogPostingImage(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -509,6 +511,7 @@ public class Mutation {
 	@GraphQLName("postSiteDocumentSiteIdMultipartBody")
 	public Document createSiteDocument(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("multipartBody") MultipartBody multipartBody)
 		throws Exception {
 
@@ -577,6 +580,7 @@ public class Mutation {
 	@GraphQLField
 	public DocumentFolder createSiteDocumentFolder(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
 		throws Exception {
 
@@ -712,6 +716,7 @@ public class Mutation {
 	@GraphQLField
 	public KnowledgeBaseArticle createSiteKnowledgeBaseArticle(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("knowledgeBaseArticle") KnowledgeBaseArticle
 				knowledgeBaseArticle)
 		throws Exception {
@@ -825,6 +830,7 @@ public class Mutation {
 	@GraphQLField
 	public KnowledgeBaseFolder createSiteKnowledgeBaseFolder(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("knowledgeBaseFolder") KnowledgeBaseFolder
 				knowledgeBaseFolder)
 		throws Exception {
@@ -1078,6 +1084,7 @@ public class Mutation {
 	@GraphQLField
 	public MessageBoardSection createSiteMessageBoardSection(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("messageBoardSection") MessageBoardSection
 				messageBoardSection)
 		throws Exception {
@@ -1197,6 +1204,7 @@ public class Mutation {
 	@GraphQLField
 	public MessageBoardThread createSiteMessageBoardThread(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("messageBoardThread") MessageBoardThread
 				messageBoardThread)
 		throws Exception {
@@ -1212,6 +1220,7 @@ public class Mutation {
 	@GraphQLField
 	public StructuredContent createSiteStructuredContent(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("structuredContent") StructuredContent
 				structuredContent)
 		throws Exception {
@@ -1332,6 +1341,7 @@ public class Mutation {
 	@GraphQLField
 	public StructuredContentFolder createSiteStructuredContentFolder(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("structuredContentFolder") StructuredContentFolder
 				structuredContentFolder)
 		throws Exception {
@@ -1414,6 +1424,7 @@ public class Mutation {
 	@GraphQLField
 	public WikiNode createSiteWikiNode(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("wikiNode") WikiNode wikiNode)
 		throws Exception {
 

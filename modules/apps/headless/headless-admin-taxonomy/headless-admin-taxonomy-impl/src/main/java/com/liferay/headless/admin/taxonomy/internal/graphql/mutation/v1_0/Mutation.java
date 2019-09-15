@@ -95,6 +95,7 @@ public class Mutation {
 	@GraphQLField
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("keyword") Keyword keyword)
 		throws Exception {
 
@@ -180,6 +181,7 @@ public class Mutation {
 	@GraphQLField
 	public TaxonomyVocabulary createSiteTaxonomyVocabulary(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("taxonomyVocabulary") TaxonomyVocabulary
 				taxonomyVocabulary)
 		throws Exception {

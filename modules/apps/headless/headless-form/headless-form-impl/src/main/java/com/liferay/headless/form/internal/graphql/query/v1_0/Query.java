@@ -107,6 +107,7 @@ public class Query {
 	@GraphQLField
 	public FormPage forms(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -214,6 +215,7 @@ public class Query {
 	@GraphQLField
 	public FormStructurePage formStructures(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {

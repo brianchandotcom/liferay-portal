@@ -140,6 +140,7 @@ public class Mutation {
 	@GraphQLField
 	public boolean createSiteDataDefinitionPermission(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataDefinitionPermission") DataDefinitionPermission
 				dataDefinitionPermission)
@@ -158,6 +159,7 @@ public class Mutation {
 	@GraphQLField
 	public DataDefinition createSiteDataDefinition(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("dataDefinition") DataDefinition dataDefinition)
 		throws Exception {
 
@@ -231,6 +233,7 @@ public class Mutation {
 	@GraphQLField
 	public boolean createSiteDataLayoutPermission(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataLayoutPermission") DataLayoutPermission
 				dataLayoutPermission)
@@ -411,6 +414,7 @@ public class Mutation {
 	@GraphQLField
 	public boolean createSiteDataRecordCollectionPermission(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("operation") String operation,
 			@GraphQLName("dataRecordCollectionPermission")
 				DataRecordCollectionPermission dataRecordCollectionPermission)

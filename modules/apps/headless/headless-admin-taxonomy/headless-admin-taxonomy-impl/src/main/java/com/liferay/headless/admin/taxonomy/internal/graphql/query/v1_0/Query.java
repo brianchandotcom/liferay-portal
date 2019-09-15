@@ -98,6 +98,7 @@ public class Query {
 	@GraphQLField
 	public KeywordPage keywords(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -201,6 +202,7 @@ public class Query {
 	@GraphQLField
 	public TaxonomyVocabularyPage taxonomyVocabularies(
 			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,

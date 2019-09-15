@@ -177,6 +177,7 @@ public class Mutation {
 	public java.util.Collection<TaxonomyVocabulary>
 			createSiteTaxonomyVocabulariesCommonPage(
 				@GraphQLName("siteId") Long siteId,
+				@GraphQLName("siteKey") String siteKey,
 				@GraphQLName("documentBulkSelection") DocumentBulkSelection
 					documentBulkSelection)
 		throws Exception {

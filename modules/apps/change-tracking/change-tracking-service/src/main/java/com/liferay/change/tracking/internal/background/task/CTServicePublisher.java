@@ -76,43 +76,7 @@ public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 
 	@Override
 	public void publish() {
-
-		// Order matters to avoid causing constraint violations
-
-		if (_deletionCTEntries != null) {
-			_ctService.updateWithUnsafeFunction(
-				ctPersistence -> _moveCTEntries(
-					ctPersistence, _deletionCTEntries, _targetCTCollectionId,
-					_sourceCTCollectionId));
-		}
-
-		if (_modificationCTEntries != null) {
-			_ctService.updateWithUnsafeFunction(
-				ctPersistence -> {
-					long tempCTCollectionId = -_sourceCTCollectionId;
-
-					_moveCTEntries(
-						ctPersistence, _modificationCTEntries,
-						_sourceCTCollectionId, tempCTCollectionId);
-
-					_moveCTEntries(
-						ctPersistence, _modificationCTEntries,
-						_targetCTCollectionId, _sourceCTCollectionId);
-
-					_moveCTEntries(
-						ctPersistence, _modificationCTEntries,
-						tempCTCollectionId, _targetCTCollectionId);
-
-					return null;
-				});
-		}
-
-		if (_additionCTEntries != null) {
-			_ctService.updateWithUnsafeFunction(
-				ctPersistence -> _moveCTEntries(
-					ctPersistence, _additionCTEntries, _sourceCTCollectionId,
-					_targetCTCollectionId));
-		}
+		_ctService.updateWithUnsafeFunction(this::_publish);
 	}
 
 	private Void _moveCTEntries(
@@ -171,6 +135,41 @@ public class CTServicePublisher<T extends CTModel<T>> implements CTPublisher {
 
 			session.flush();
 			session.clear();
+		}
+
+		return null;
+	}
+
+	private Void _publish(CTPersistence<T> ctPersistence) {
+
+		// Order matters to avoid causing constraint violations
+
+		if (_deletionCTEntries != null) {
+			_moveCTEntries(
+				ctPersistence, _deletionCTEntries, _targetCTCollectionId,
+				_sourceCTCollectionId);
+		}
+
+		if (_modificationCTEntries != null) {
+			long tempCTCollectionId = -_sourceCTCollectionId;
+
+			_moveCTEntries(
+				ctPersistence, _modificationCTEntries, _sourceCTCollectionId,
+				tempCTCollectionId);
+
+			_moveCTEntries(
+				ctPersistence, _modificationCTEntries, _targetCTCollectionId,
+				_sourceCTCollectionId);
+
+			_moveCTEntries(
+				ctPersistence, _modificationCTEntries, tempCTCollectionId,
+				_targetCTCollectionId);
+		}
+
+		if (_additionCTEntries != null) {
+			_moveCTEntries(
+				ctPersistence, _additionCTEntries, _sourceCTCollectionId,
+				_targetCTCollectionId);
 		}
 
 		return null;

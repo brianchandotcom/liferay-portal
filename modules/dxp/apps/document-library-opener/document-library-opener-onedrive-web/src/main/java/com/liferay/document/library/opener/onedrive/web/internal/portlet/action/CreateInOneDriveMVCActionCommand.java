@@ -17,7 +17,7 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.CreateInOneDriveHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.CreateInOneDriveHelper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;

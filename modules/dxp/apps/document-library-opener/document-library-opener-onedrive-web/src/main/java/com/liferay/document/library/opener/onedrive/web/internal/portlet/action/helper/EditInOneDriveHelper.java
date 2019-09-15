@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util;
+package com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;

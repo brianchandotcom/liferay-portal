@@ -98,37 +98,32 @@ public class CTPublishBackgroundTaskExecutor
 		Map<Long, CTPublisher> ctPublishers = new HashMap<>();
 
 		for (CTEntry ctEntry : ctEntries) {
-			ctPublishers.compute(
+			CTPublisher ctPublisher = ctPublishers.computeIfAbsent(
 				ctEntry.getModelClassNameId(),
-				(modelClassNameId, ctPublisher) -> {
-					if (ctPublisher == null) {
-						CTService<?> ctService =
-							_ctServiceRegistry.getCTService(modelClassNameId);
+				modelClassNameId -> {
+					CTService<?> ctService = _ctServiceRegistry.getCTService(
+						modelClassNameId);
 
-						if (ctService != null) {
-							ctPublisher = new CTServicePublisher<>(
-								_ctEntryLocalService, ctService, ctCollectionId,
-								CTConstants.CT_COLLECTION_ID_PRODUCTION);
-						}
-						else if (_ctEngineManager.isChangeTrackingSupported(
-									ctCollection.getCompanyId(),
-									modelClassNameId)) {
-
-							ctPublisher = new CTDefinitionPublisher(
-								_ctEntryLocalService, ignoreCollision);
-						}
-						else {
-							throw new SystemException(
-								StringBundler.concat(
-									"Unable to publish ", ctCollectionId,
-									" missing service for ", modelClassNameId));
-						}
+					if (ctService != null) {
+						return new CTServicePublisher<>(
+							_ctEntryLocalService, ctService, ctCollectionId,
+							CTConstants.CT_COLLECTION_ID_PRODUCTION);
 					}
 
-					ctPublisher.addCTEntry(ctEntry);
+					if (_ctEngineManager.isChangeTrackingSupported(
+							ctCollection.getCompanyId(), modelClassNameId)) {
 
-					return ctPublisher;
+						return new CTDefinitionPublisher(
+							_ctEntryLocalService, ignoreCollision);
+					}
+
+					throw new SystemException(
+						StringBundler.concat(
+							"Unable to publish ", ctCollectionId,
+							" missing service for ", modelClassNameId));
 				});
+
+			ctPublisher.addCTEntry(ctEntry);
 		}
 
 		try (SafeClosable safeClosable =

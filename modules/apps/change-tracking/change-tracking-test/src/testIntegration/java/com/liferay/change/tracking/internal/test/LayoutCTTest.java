@@ -378,6 +378,55 @@ public class LayoutCTTest {
 	}
 
 	@Test
+	public void testPublishModifiedLayoutWithTargetDeleted() throws Exception {
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					_ctCollection.getCtCollectionId())) {
+
+			layout.setFriendlyURL("/testModifyLayout");
+
+			layout = _layoutLocalService.updateLayout(layout);
+		}
+
+		_layoutLocalService.deleteLayout(layout);
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"com.liferay.portal.background.task.internal.messaging." +
+						"BackgroundTaskMessageListener",
+					Level.ERROR)) {
+
+			_ctProcessLocalService.addCTProcess(
+				_ctCollection.getUserId(), _ctCollection.getCtCollectionId(),
+				false, new ServiceContext());
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(
+				loggingEvents.toString(), 1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Assert.assertNotNull(throwableInformation);
+
+			Throwable throwable = throwableInformation.getThrowable();
+
+			Assert.assertNotNull(throwable);
+
+			String message = throwable.toString();
+
+			Assert.assertTrue(
+				message, message.contains("Size mismatch between "));
+		}
+	}
+
+	@Test
 	public void testPublishNewLayout() throws Exception {
 		Layout layout = null;
 

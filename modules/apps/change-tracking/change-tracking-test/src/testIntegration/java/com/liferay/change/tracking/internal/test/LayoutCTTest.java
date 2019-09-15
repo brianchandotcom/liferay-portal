@@ -368,18 +368,13 @@ public class LayoutCTTest {
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
 			new ServiceContext());
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+		Layout productionLayout = _layoutLocalService.fetchLayout(
+			layout.getPlid());
 
-			Layout productionLayout = _layoutLocalService.fetchLayout(
-				layout.getPlid());
+		Assert.assertNotNull(productionLayout);
 
-			Assert.assertNotNull(productionLayout);
-
-			Assert.assertEquals(
-				layout.getFriendlyURL(), productionLayout.getFriendlyURL());
-		}
+		Assert.assertEquals(
+			layout.getFriendlyURL(), productionLayout.getFriendlyURL());
 	}
 
 	@Test
@@ -397,13 +392,8 @@ public class LayoutCTTest {
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
 			new ServiceContext());
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			Assert.assertEquals(
-				layout, _layoutLocalService.fetchLayout(layout.getPlid()));
-		}
+		Assert.assertEquals(
+			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	@Test
@@ -421,13 +411,7 @@ public class LayoutCTTest {
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
 			new ServiceContext());
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
-
-			Assert.assertNull(
-				_layoutLocalService.fetchLayout(layout.getPlid()));
-		}
+		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}
 
 	@Test

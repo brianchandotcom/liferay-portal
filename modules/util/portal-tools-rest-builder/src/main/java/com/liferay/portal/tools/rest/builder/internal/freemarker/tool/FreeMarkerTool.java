@@ -120,9 +120,24 @@ public class FreeMarkerTool {
 	}
 
 	public String getGraphQLArguments(
-		List<JavaMethodParameter> javaMethodParameters) {
+		List<JavaMethodParameter> javaMethodParameters, String schemaVarName) {
 
-		return OpenAPIParserUtil.getArguments(javaMethodParameters);
+		String arguments = OpenAPIParserUtil.getArguments(javaMethodParameters);
+
+		arguments = arguments.replace(
+			"filter",
+			"_filterBiFunction.apply(" + schemaVarName +
+				"Resource, filterString)");
+
+		arguments = arguments.replace(
+			"pageSize,page", "Pagination.of(page, pageSize)");
+
+		arguments = arguments.replace(
+			"sorts",
+			"_sortsBiFunction.apply(" + schemaVarName +
+				"Resource, sortsString)");
+
+		return arguments;
 	}
 
 	public List<JavaMethodSignature> getGraphQLJavaMethodSignatures(
@@ -177,8 +192,22 @@ public class FreeMarkerTool {
 		List<JavaMethodParameter> javaMethodParameters, Operation operation,
 		boolean annotation) {
 
-		return GraphQLOpenAPIParser.getParameters(
+		String parameters = GraphQLOpenAPIParser.getParameters(
 			javaMethodParameters, operation, annotation);
+
+		parameters = parameters.replace(
+			"com.liferay.portal.kernel.search.filter.Filter filter",
+			"String filterString");
+
+		parameters = parameters.replace(
+			"com.liferay.portal.kernel.search.Sort[] sorts",
+			"String sortsString");
+
+		parameters = parameters.replace(
+			"Long siteId",
+			"Long siteId, @GraphQLName(\"siteKey\") String siteKey");
+
+		return parameters;
 	}
 
 	public String getGraphQLPropertyName(

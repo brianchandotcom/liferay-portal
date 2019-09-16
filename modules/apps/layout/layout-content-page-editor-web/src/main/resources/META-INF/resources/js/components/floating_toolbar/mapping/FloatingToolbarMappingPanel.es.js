@@ -265,6 +265,8 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		const fieldId = event.delegateTarget.value;
 
+		const shouldRemoveValues = fieldId === '';
+
 		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
 			this.store.dispatch(
 				updateEditableValueFieldIdAction(
@@ -272,8 +274,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 					this._getFragmentEntryProcessor(),
 					this.item.editableId,
 					{
-						classNameId: this._selectedAssetEntry.classNameId,
-						classPK: this._selectedAssetEntry.classPK,
+						classNameId: shouldRemoveValues
+							? ''
+							: this._selectedAssetEntry.classNameId,
+						classPK: shouldRemoveValues
+							? ''
+							: this._selectedAssetEntry.classPK,
 						fieldId
 					}
 				)

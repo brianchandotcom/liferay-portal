@@ -27,6 +27,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,9 +57,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerConfiguration",
-	service = {AssetAutoTagger.class, AssetAutoTaggerImpl.class}
+	service = AopService.class
 )
-public class AssetAutoTaggerImpl implements AssetAutoTagger {
+public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 
 	public Set<String> getClassNames() {
 		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>

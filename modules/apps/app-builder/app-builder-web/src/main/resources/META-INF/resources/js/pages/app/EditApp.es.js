@@ -32,10 +32,21 @@ export default ({
 		dataListViewId: null,
 		name: {
 			en_US: ''
-		}
+		},
+		settings: {
+			deploymentTypes: []
+		},
+		status: 'deployed'
 	});
 
 	const [currentStep, setCurrentStep] = useState(0);
+
+	const {
+		dataLayoutId,
+		dataListViewId,
+		name: {en_US: appName},
+		settings: {deploymentTypes}
+	} = app;
 
 	let title = Liferay.Language.get('new-app');
 
@@ -66,10 +77,6 @@ export default ({
 	};
 
 	const onDeploy = () => {
-		if (app.name.en_US === '') {
-			return;
-		}
-
 		if (appId) {
 			updateItem(`/o/app-builder/v1.0/apps/${appId}`, app).then(onCancel);
 		} else {
@@ -78,6 +85,15 @@ export default ({
 				app
 			).then(onCancel);
 		}
+	};
+
+	const onDeploymentConfigChange = deploymentConfig => {
+		setApp(prevApp => ({
+			...prevApp,
+			settings: {
+				deploymentTypes: deploymentConfig
+			}
+		}));
 	};
 
 	const onDataLayoutIdChange = dataLayoutId => {
@@ -94,11 +110,19 @@ export default ({
 		}));
 	};
 
-	const {
-		dataLayoutId,
-		dataListViewId,
-		name: {en_US: appName}
-	} = app;
+	const validateNextStep = () => {
+		let nextStepDisabled = false;
+
+		if (currentStep === 2) {
+			nextStepDisabled =
+				appName === '' ||
+				!dataLayoutId ||
+				!dataDefinitionId ||
+				deploymentTypes.length === 0;
+		}
+
+		return nextStepDisabled;
+	};
 
 	return (
 		<>
@@ -162,7 +186,12 @@ export default ({
 						)}
 
 						{currentStep == 2 && (
-							<DeployApp/>
+							<DeployApp
+								appName={appName}
+								onDeploymentConfigChange={
+									onDeploymentConfigChange
+								}
+							/>
 						)}
 					</div>
 
@@ -170,6 +199,7 @@ export default ({
 
 					<EditAppFooter
 						currentStep={currentStep}
+						nextStepDisabled={validateNextStep()}
 						onCancel={onCancel}
 						onDeploy={onDeploy}
 						onStepChange={step => setCurrentStep(step)}

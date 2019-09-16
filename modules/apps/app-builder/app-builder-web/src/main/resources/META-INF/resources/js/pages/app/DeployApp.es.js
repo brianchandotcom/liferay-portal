@@ -14,10 +14,18 @@
 
 import React, {useState} from 'react';
 
-export default ({onDeploymentTypeChange}) => {
-	const [isProductMenu, setProductMenu] = useState(false);
-	const [optionType, setOptionType] = useState(false);
-	const [menuName, setMenuName] = useState('');
+export default ({appName, onDeploymentConfigChange}) => {
+	const [isProductMenu, setIsProductMenu] = useState(false);
+
+	const onSwitchClick = () => {
+		const deploymentTypes = [];
+
+		if (!isProductMenu) {
+			deploymentTypes.push('productMenu');
+		}
+		setIsProductMenu(!isProductMenu);
+		onDeploymentConfigChange(deploymentTypes);
+	};
 
 	return (
 		<>
@@ -48,7 +56,7 @@ export default ({onDeploymentTypeChange}) => {
 						<input
 							checked={isProductMenu}
 							className="toggle-switch-check"
-							onClick={() => setProductMenu(!isProductMenu)}
+							onChange={onSwitchClick}
 							type="checkbox"
 						/>
 						<span aria-hidden="true" className="toggle-switch-bar">
@@ -68,15 +76,13 @@ export default ({onDeploymentTypeChange}) => {
 								</label>
 								<input
 									className="form-control"
+									disabled={true}
 									id="productMenuName"
-									onChange={() =>
-										setMenuName(event.target.value)
-									}
 									placeholder={Liferay.Language.get(
 										'untitled-app'
 									)}
 									type="text"
-									value={menuName}
+									value={appName}
 								/>
 							</div>
 						</div>
@@ -90,11 +96,9 @@ export default ({onDeploymentTypeChange}) => {
 								</label>
 								<select
 									className="form-control"
+									disabled={true}
 									id="selectPlacement"
-									onChange={() =>
-										setOptionType(event.target.value)
-									}
-									value={optionType}
+									value={3}
 								>
 									<option value={1}>
 										{Liferay.Language.get('control-panel')}
@@ -110,24 +114,23 @@ export default ({onDeploymentTypeChange}) => {
 								</select>
 							</div>
 						</div>
-						{optionType > 1 && (
-							<div className="col-md-6">
-								<div className="form-group">
-									<label htmlFor="selectSites">
-										{Liferay.Language.get('site-level')}
-									</label>
-									<select
-										className="form-control"
-										id="selectSites"
-										value={1}
-									>
-										<option value={1}>
-											{Liferay.Language.get('all-sites')}
-										</option>
-									</select>
-								</div>
+						<div className="col-md-6">
+							<div className="form-group">
+								<label htmlFor="selectSites">
+									{Liferay.Language.get('site-level')}
+								</label>
+								<select
+									className="form-control"
+									disabled={true}
+									id="selectSites"
+									value={1}
+								>
+									<option value={1}>
+										{Liferay.Language.get('all-sites')}
+									</option>
+								</select>
 							</div>
-						)}
+						</div>
 					</div>
 				</>
 			)}

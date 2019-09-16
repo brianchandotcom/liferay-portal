@@ -95,6 +95,22 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return file.get();
 	}
 
+	public static String getCanonicalPath(File file) {
+		try {
+			String canonicalPath = file.getCanonicalPath();
+
+			if (File.separatorChar != '/') {
+				canonicalPath = canonicalPath.replace(File.separatorChar, '/');
+			}
+
+			return canonicalPath;
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(
+				"Unable to get canonical path of " + file, ioe);
+		}
+	}
+
 	public static File[] getDirectories(File dir) {
 		return dir.listFiles(
 			new FileFilter() {
@@ -218,6 +234,17 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 					content.substring(matcher.end(groupCount));
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static boolean startsWith(File file, File startFile) {
+		String path = getCanonicalPath(file);
+		String startPath = getCanonicalPath(startFile);
+
+		if (path.startsWith(startPath)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static void writeProperties(File file, Map<?, ?> properties) {

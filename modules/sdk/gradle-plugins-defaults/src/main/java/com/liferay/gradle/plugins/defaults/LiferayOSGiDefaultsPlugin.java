@@ -1651,7 +1651,52 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					ConfigurableFileCollection sourceFiles = project.files();
 
 					if (FileUtil.exists(project, "build.gradle")) {
+						Logger logger = project.getLogger();
+
+						File projectDir = project.getProjectDir();
+						File rootDir = project.getRootDir();
+
 						TaskContainer taskContainer = project.getTasks();
+
+						TaskCollection<Copy> copyTasks = taskContainer.withType(
+							Copy.class);
+
+						for (Copy copy : copyTasks) {
+							FileCollection copySourceFiles = copy.getSource();
+
+							Set<File> files = Collections.emptySet();
+
+							try {
+								files = copySourceFiles.getFiles();
+							}
+							catch (Exception e) {
+								if (logger.isInfoEnabled()) {
+									logger.info(
+										"Unable to get {} source files. {}",
+										copy, e.getMessage());
+								}
+							}
+
+							for (File file : files) {
+								String canonicalPath =
+									FileUtil.getCanonicalPath(file);
+
+								if (canonicalPath.contains("/.releng/") ||
+									canonicalPath.endsWith(".jar") ||
+									canonicalPath.endsWith(".zip")) {
+
+									continue;
+								}
+
+								if (!FileUtil.startsWith(file, rootDir) ||
+									FileUtil.startsWith(file, projectDir)) {
+
+									continue;
+								}
+
+								sourceFiles.from(file);
+							}
+						}
 
 						MergePropertiesTask mergePropertiesTask =
 							(MergePropertiesTask)taskContainer.findByName(

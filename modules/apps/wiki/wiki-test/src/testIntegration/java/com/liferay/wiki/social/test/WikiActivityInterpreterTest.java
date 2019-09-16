@@ -90,7 +90,7 @@ public class WikiActivityInterpreterTest
 			TestPropsValues.getUserId(), _page.getNodeId(), _page.getTitle(),
 			_attachmentFileName);
 
-		WikiPageLocalServiceUtil.movePageToTrash(
+		_page = WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), _page);
 	}
 

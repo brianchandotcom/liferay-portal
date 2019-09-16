@@ -53,11 +53,9 @@ public class WikiNodeUADTestHelper {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		_wikiNodeLocalService.updateStatus(
+		return _wikiNodeLocalService.updateStatus(
 			statusByUserId, wikiNode, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
-
-		return wikiNode;
 	}
 
 	public void cleanUpDependencies(List<WikiNode> wikiNodes) throws Exception {

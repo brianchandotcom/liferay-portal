@@ -68,11 +68,9 @@ public class WikiPageUADTestHelper {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
-		_wikiPageLocalService.updateStatus(
+		return _wikiPageLocalService.updateStatus(
 			statusByUserId, wikiPage, WorkflowConstants.STATUS_APPROVED,
 			serviceContext, workflowContext);
-
-		return wikiPage;
 	}
 
 	public void cleanUpDependencies(List<WikiPage> wikiPages) throws Exception {

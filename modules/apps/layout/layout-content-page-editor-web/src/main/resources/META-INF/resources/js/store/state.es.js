@@ -318,15 +318,6 @@ const INITIAL_STATE = {
 	editFragmentEntryLinkURL: Config.string().value(''),
 
 	/**
-	 * URL for updating a distinct fragment entries of the editor.
-	 * @default ''
-	 * @instance
-	 * @review
-	 * @type {string}
-	 */
-	editFragmentEntryLinksURL: Config.string().value(''),
-
-	/**
 	 * Available elements that can be dragged inside the existing Page Template,
 	 * organized by fragment categories.
 	 * @default []

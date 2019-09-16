@@ -33,6 +33,7 @@ public class SegmentsExperimentRelSoap implements Serializable {
 
 		SegmentsExperimentRelSoap soapModel = new SegmentsExperimentRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setSegmentsExperimentRelId(
 			model.getSegmentsExperimentRelId());
 		soapModel.setGroupId(model.getGroupId());
@@ -104,6 +105,14 @@ public class SegmentsExperimentRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSegmentsExperimentRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getSegmentsExperimentRelId() {
@@ -186,6 +195,7 @@ public class SegmentsExperimentRelSoap implements Serializable {
 		_split = split;
 	}
 
+	private long _mvccVersion;
 	private long _segmentsExperimentRelId;
 	private long _groupId;
 	private long _companyId;

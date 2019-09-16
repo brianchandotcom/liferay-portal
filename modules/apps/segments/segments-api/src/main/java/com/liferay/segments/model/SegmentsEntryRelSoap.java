@@ -31,6 +31,7 @@ public class SegmentsEntryRelSoap implements Serializable {
 	public static SegmentsEntryRelSoap toSoapModel(SegmentsEntryRel model) {
 		SegmentsEntryRelSoap soapModel = new SegmentsEntryRelSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setSegmentsEntryRelId(model.getSegmentsEntryRelId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -100,6 +101,14 @@ public class SegmentsEntryRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSegmentsEntryRelId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getSegmentsEntryRelId() {
@@ -182,6 +191,7 @@ public class SegmentsEntryRelSoap implements Serializable {
 		_classPK = classPK;
 	}
 
+	private long _mvccVersion;
 	private long _segmentsEntryRelId;
 	private long _groupId;
 	private long _companyId;

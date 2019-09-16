@@ -1,4 +1,5 @@
 create table SegmentsEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	segmentsEntryId LONG not null primary key,
 	groupId LONG,
@@ -18,6 +19,7 @@ create table SegmentsEntry (
 );
 
 create table SegmentsEntryRel (
+	mvccVersion LONG default 0 not null,
 	segmentsEntryRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -31,6 +33,7 @@ create table SegmentsEntryRel (
 );
 
 create table SegmentsExperience (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	segmentsExperienceId LONG not null primary key,
 	groupId LONG,
@@ -50,6 +53,7 @@ create table SegmentsExperience (
 );
 
 create table SegmentsExperiment (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	segmentsExperimentId LONG not null primary key,
 	groupId LONG,
@@ -70,6 +74,7 @@ create table SegmentsExperiment (
 );
 
 create table SegmentsExperimentRel (
+	mvccVersion LONG default 0 not null,
 	segmentsExperimentRelId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

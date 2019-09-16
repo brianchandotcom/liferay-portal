@@ -73,17 +73,19 @@ public class SegmentsEntryRelModelImpl
 	public static final String TABLE_NAME = "SegmentsEntryRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"segmentsEntryRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"segmentsEntryRelId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"segmentsEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("segmentsEntryRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class SegmentsEntryRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntryRel (segmentsEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,classNameId LONG,classPK LONG)";
+		"create table SegmentsEntryRel (mvccVersion LONG default 0 not null,segmentsEntryRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntryRel";
 
@@ -144,6 +146,7 @@ public class SegmentsEntryRelModelImpl
 
 		SegmentsEntryRel model = new SegmentsEntryRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setSegmentsEntryRelId(soapModel.getSegmentsEntryRelId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -309,6 +312,12 @@ public class SegmentsEntryRelModelImpl
 				new LinkedHashMap<String, BiConsumer<SegmentsEntryRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", SegmentsEntryRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SegmentsEntryRel, Long>)
+				SegmentsEntryRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"segmentsEntryRelId", SegmentsEntryRel::getSegmentsEntryRelId);
 		attributeSetterBiConsumers.put(
 			"segmentsEntryRelId",
@@ -365,6 +374,17 @@ public class SegmentsEntryRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -608,6 +628,7 @@ public class SegmentsEntryRelModelImpl
 	public Object clone() {
 		SegmentsEntryRelImpl segmentsEntryRelImpl = new SegmentsEntryRelImpl();
 
+		segmentsEntryRelImpl.setMvccVersion(getMvccVersion());
 		segmentsEntryRelImpl.setSegmentsEntryRelId(getSegmentsEntryRelId());
 		segmentsEntryRelImpl.setGroupId(getGroupId());
 		segmentsEntryRelImpl.setCompanyId(getCompanyId());
@@ -709,6 +730,8 @@ public class SegmentsEntryRelModelImpl
 	public CacheModel<SegmentsEntryRel> toCacheModel() {
 		SegmentsEntryRelCacheModel segmentsEntryRelCacheModel =
 			new SegmentsEntryRelCacheModel();
+
+		segmentsEntryRelCacheModel.mvccVersion = getMvccVersion();
 
 		segmentsEntryRelCacheModel.segmentsEntryRelId = getSegmentsEntryRelId();
 
@@ -826,6 +849,7 @@ public class SegmentsEntryRelModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _segmentsEntryRelId;
 	private long _groupId;
 	private long _originalGroupId;

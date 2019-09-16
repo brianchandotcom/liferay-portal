@@ -123,6 +123,8 @@ public class SegmentsEntryRelPersistenceTest {
 
 		SegmentsEntryRel newSegmentsEntryRel = _persistence.create(pk);
 
+		newSegmentsEntryRel.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSegmentsEntryRel.setGroupId(RandomTestUtil.nextLong());
 
 		newSegmentsEntryRel.setCompanyId(RandomTestUtil.nextLong());
@@ -146,6 +148,9 @@ public class SegmentsEntryRelPersistenceTest {
 		SegmentsEntryRel existingSegmentsEntryRel =
 			_persistence.findByPrimaryKey(newSegmentsEntryRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSegmentsEntryRel.getMvccVersion(),
+			newSegmentsEntryRel.getMvccVersion());
 		Assert.assertEquals(
 			existingSegmentsEntryRel.getSegmentsEntryRelId(),
 			newSegmentsEntryRel.getSegmentsEntryRelId());
@@ -236,10 +241,10 @@ public class SegmentsEntryRelPersistenceTest {
 
 	protected OrderByComparator<SegmentsEntryRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SegmentsEntryRel", "segmentsEntryRelId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "segmentsEntryId", true, "classNameId",
-			true, "classPK", true);
+			"SegmentsEntryRel", "mvccVersion", true, "segmentsEntryRelId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "segmentsEntryId",
+			true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -489,6 +494,8 @@ public class SegmentsEntryRelPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SegmentsEntryRel segmentsEntryRel = _persistence.create(pk);
+
+		segmentsEntryRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		segmentsEntryRel.setGroupId(RandomTestUtil.nextLong());
 

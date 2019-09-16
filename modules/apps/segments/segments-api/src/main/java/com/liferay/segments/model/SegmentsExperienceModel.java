@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -42,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SegmentsExperienceModel
 	extends AttachedModel, BaseModel<SegmentsExperience>, LocalizedModel,
-			ShardedModel, StagedGroupedModel {
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface SegmentsExperienceModel
 	 * @param primaryKey the primary key of this segments experience
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this segments experience.
+	 *
+	 * @return the mvcc version of this segments experience
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this segments experience.
+	 *
+	 * @param mvccVersion the mvcc version of this segments experience
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this segments experience.

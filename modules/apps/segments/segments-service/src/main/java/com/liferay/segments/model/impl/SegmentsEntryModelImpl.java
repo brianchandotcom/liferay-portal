@@ -82,20 +82,22 @@ public class SegmentsEntryModelImpl
 	public static final String TABLE_NAME = "SegmentsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"segmentsEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"segmentsEntryKey", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"active_", Types.BOOLEAN},
-		{"criteria", Types.CLOB}, {"source", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"segmentsEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryKey", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"active_", Types.BOOLEAN}, {"criteria", Types.CLOB},
+		{"source", Types.VARCHAR}, {"type_", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("segmentsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -115,7 +117,7 @@ public class SegmentsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntry (uuid_ VARCHAR(75) null,segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryKey VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,source VARCHAR(75) null,type_ VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table SegmentsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryKey VARCHAR(75) null,name STRING null,description STRING null,active_ BOOLEAN,criteria TEXT null,source VARCHAR(75) null,type_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntry";
 
@@ -168,6 +170,7 @@ public class SegmentsEntryModelImpl
 
 		SegmentsEntry model = new SegmentsEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setSegmentsEntryId(soapModel.getSegmentsEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -334,6 +337,11 @@ public class SegmentsEntryModelImpl
 		Map<String, BiConsumer<SegmentsEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<SegmentsEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", SegmentsEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<SegmentsEntry, Long>)SegmentsEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", SegmentsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<SegmentsEntry, String>)SegmentsEntry::setUuid);
@@ -407,6 +415,17 @@ public class SegmentsEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1040,6 +1059,7 @@ public class SegmentsEntryModelImpl
 	public Object clone() {
 		SegmentsEntryImpl segmentsEntryImpl = new SegmentsEntryImpl();
 
+		segmentsEntryImpl.setMvccVersion(getMvccVersion());
 		segmentsEntryImpl.setUuid(getUuid());
 		segmentsEntryImpl.setSegmentsEntryId(getSegmentsEntryId());
 		segmentsEntryImpl.setGroupId(getGroupId());
@@ -1151,6 +1171,8 @@ public class SegmentsEntryModelImpl
 	public CacheModel<SegmentsEntry> toCacheModel() {
 		SegmentsEntryCacheModel segmentsEntryCacheModel =
 			new SegmentsEntryCacheModel();
+
+		segmentsEntryCacheModel.mvccVersion = getMvccVersion();
 
 		segmentsEntryCacheModel.uuid = getUuid();
 
@@ -1329,6 +1351,7 @@ public class SegmentsEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _segmentsEntryId;

@@ -42,6 +42,7 @@ public class SegmentsEntryRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("segmentsEntryRelId", getSegmentsEntryRelId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -58,6 +59,12 @@ public class SegmentsEntryRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long segmentsEntryRelId = (Long)attributes.get("segmentsEntryRelId");
 
 		if (segmentsEntryRelId != null) {
@@ -187,6 +194,16 @@ public class SegmentsEntryRelWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
+	}
+
+	/**
+	 * Returns the mvcc version of this segments entry rel.
+	 *
+	 * @return the mvcc version of this segments entry rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -322,6 +339,16 @@ public class SegmentsEntryRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this segments entry rel.
+	 *
+	 * @param mvccVersion the mvcc version of this segments entry rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

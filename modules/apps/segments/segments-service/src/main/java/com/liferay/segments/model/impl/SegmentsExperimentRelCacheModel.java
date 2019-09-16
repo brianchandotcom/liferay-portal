@@ -17,6 +17,7 @@ package com.liferay.segments.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class SegmentsExperimentRelCacheModel
-	implements CacheModel<SegmentsExperimentRel>, Externalizable {
+	implements CacheModel<SegmentsExperimentRel>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,8 +49,9 @@ public class SegmentsExperimentRelCacheModel
 		SegmentsExperimentRelCacheModel segmentsExperimentRelCacheModel =
 			(SegmentsExperimentRelCacheModel)obj;
 
-		if (segmentsExperimentRelId ==
-				segmentsExperimentRelCacheModel.segmentsExperimentRelId) {
+		if ((segmentsExperimentRelId ==
+				segmentsExperimentRelCacheModel.segmentsExperimentRelId) &&
+			(mvccVersion == segmentsExperimentRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class SegmentsExperimentRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, segmentsExperimentRelId);
+		int hashCode = HashUtil.hash(0, segmentsExperimentRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{segmentsExperimentRelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", segmentsExperimentRelId=");
 		sb.append(segmentsExperimentRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -96,6 +112,7 @@ public class SegmentsExperimentRelCacheModel
 		SegmentsExperimentRelImpl segmentsExperimentRelImpl =
 			new SegmentsExperimentRelImpl();
 
+		segmentsExperimentRelImpl.setMvccVersion(mvccVersion);
 		segmentsExperimentRelImpl.setSegmentsExperimentRelId(
 			segmentsExperimentRelId);
 		segmentsExperimentRelImpl.setGroupId(groupId);
@@ -134,6 +151,8 @@ public class SegmentsExperimentRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		segmentsExperimentRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -154,6 +173,8 @@ public class SegmentsExperimentRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(segmentsExperimentRelId);
 
 		objectOutput.writeLong(groupId);
@@ -179,6 +200,7 @@ public class SegmentsExperimentRelCacheModel
 		objectOutput.writeDouble(split);
 	}
 
+	public long mvccVersion;
 	public long segmentsExperimentRelId;
 	public long groupId;
 	public long companyId;

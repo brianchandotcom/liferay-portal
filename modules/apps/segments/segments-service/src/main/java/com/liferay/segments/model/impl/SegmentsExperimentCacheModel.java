@@ -17,6 +17,7 @@ package com.liferay.segments.model.impl;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.segments.model.SegmentsExperiment;
 
 import java.io.Externalizable;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class SegmentsExperimentCacheModel
-	implements CacheModel<SegmentsExperiment>, Externalizable {
+	implements CacheModel<SegmentsExperiment>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,8 +49,9 @@ public class SegmentsExperimentCacheModel
 		SegmentsExperimentCacheModel segmentsExperimentCacheModel =
 			(SegmentsExperimentCacheModel)obj;
 
-		if (segmentsExperimentId ==
-				segmentsExperimentCacheModel.segmentsExperimentId) {
+		if ((segmentsExperimentId ==
+				segmentsExperimentCacheModel.segmentsExperimentId) &&
+			(mvccVersion == segmentsExperimentCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -59,14 +61,28 @@ public class SegmentsExperimentCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, segmentsExperimentId);
+		int hashCode = HashUtil.hash(0, segmentsExperimentId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", segmentsExperimentId=");
 		sb.append(segmentsExperimentId);
@@ -109,6 +125,8 @@ public class SegmentsExperimentCacheModel
 	public SegmentsExperiment toEntityModel() {
 		SegmentsExperimentImpl segmentsExperimentImpl =
 			new SegmentsExperimentImpl();
+
+		segmentsExperimentImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			segmentsExperimentImpl.setUuid("");
@@ -187,6 +205,7 @@ public class SegmentsExperimentCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		segmentsExperimentId = objectInput.readLong();
@@ -217,6 +236,8 @@ public class SegmentsExperimentCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -281,6 +302,7 @@ public class SegmentsExperimentCacheModel
 		objectOutput.writeInt(status);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long segmentsExperimentId;
 	public long groupId;

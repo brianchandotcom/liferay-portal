@@ -125,6 +125,8 @@ public class SegmentsExperimentPersistenceTest {
 
 		SegmentsExperiment newSegmentsExperiment = _persistence.create(pk);
 
+		newSegmentsExperiment.setMvccVersion(RandomTestUtil.nextLong());
+
 		newSegmentsExperiment.setUuid(RandomTestUtil.randomString());
 
 		newSegmentsExperiment.setGroupId(RandomTestUtil.nextLong());
@@ -165,6 +167,9 @@ public class SegmentsExperimentPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newSegmentsExperiment.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingSegmentsExperiment.getMvccVersion(),
+			newSegmentsExperiment.getMvccVersion());
 		Assert.assertEquals(
 			existingSegmentsExperiment.getUuid(),
 			newSegmentsExperiment.getUuid());
@@ -338,10 +343,11 @@ public class SegmentsExperimentPersistenceTest {
 
 	protected OrderByComparator<SegmentsExperiment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SegmentsExperiment", "uuid", true, "segmentsExperimentId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "segmentsEntryId",
-			true, "segmentsExperienceId", true, "segmentsExperimentKey", true,
+			"SegmentsExperiment", "mvccVersion", true, "uuid", true,
+			"segmentsExperimentId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "segmentsEntryId", true,
+			"segmentsExperienceId", true, "segmentsExperimentKey", true,
 			"classNameId", true, "classPK", true, "name", true, "description",
 			true, "status", true);
 	}
@@ -608,6 +614,8 @@ public class SegmentsExperimentPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		SegmentsExperiment segmentsExperiment = _persistence.create(pk);
+
+		segmentsExperiment.setMvccVersion(RandomTestUtil.nextLong());
 
 		segmentsExperiment.setUuid(RandomTestUtil.randomString());
 

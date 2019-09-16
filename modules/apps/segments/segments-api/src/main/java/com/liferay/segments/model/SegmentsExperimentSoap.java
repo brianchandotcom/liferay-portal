@@ -31,6 +31,7 @@ public class SegmentsExperimentSoap implements Serializable {
 	public static SegmentsExperimentSoap toSoapModel(SegmentsExperiment model) {
 		SegmentsExperimentSoap soapModel = new SegmentsExperimentSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setSegmentsExperimentId(model.getSegmentsExperimentId());
 		soapModel.setGroupId(model.getGroupId());
@@ -108,6 +109,14 @@ public class SegmentsExperimentSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSegmentsExperimentId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -246,6 +255,7 @@ public class SegmentsExperimentSoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _segmentsExperimentId;
 	private long _groupId;

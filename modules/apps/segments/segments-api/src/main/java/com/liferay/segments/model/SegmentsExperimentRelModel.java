@@ -17,6 +17,7 @@ package com.liferay.segments.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsExperimentRelModel
-	extends BaseModel<SegmentsExperimentRel>, GroupedModel, ShardedModel {
+	extends BaseModel<SegmentsExperimentRel>, GroupedModel, MVCCModel,
+			ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface SegmentsExperimentRelModel
 	 * @param primaryKey the primary key of this segments experiment rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this segments experiment rel.
+	 *
+	 * @return the mvcc version of this segments experiment rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this segments experiment rel.
+	 *
+	 * @param mvccVersion the mvcc version of this segments experiment rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the segments experiment rel ID of this segments experiment rel.

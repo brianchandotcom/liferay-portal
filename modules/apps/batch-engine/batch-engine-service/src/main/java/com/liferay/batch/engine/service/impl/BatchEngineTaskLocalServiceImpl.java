@@ -23,6 +23,8 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -60,6 +62,13 @@ public class BatchEngineTaskLocalServiceImpl
 		batchEngineTask.setVersion(version);
 
 		return batchEngineTaskPersistence.update(batchEngineTask);
+	}
+
+	public List<BatchEngineTask> getBatchEngineTasks(
+		BatchEngineTaskExecuteStatus executeStatus) {
+
+		return batchEngineTaskPersistence.findByexecuteStatus(
+			executeStatus.toString());
 	}
 
 }

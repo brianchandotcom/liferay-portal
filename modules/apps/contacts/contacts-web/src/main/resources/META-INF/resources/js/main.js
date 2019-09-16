@@ -324,7 +324,7 @@ AUI.add(
 
 					var config = instance._config;
 
-					var url = new Liferay.PortletURL.createRenderURL(
+					var url = Liferay.Util.PortletURL.createRenderURL(
 						config.baseRenderURL,
 						{
 							entryId: contact.entryId,

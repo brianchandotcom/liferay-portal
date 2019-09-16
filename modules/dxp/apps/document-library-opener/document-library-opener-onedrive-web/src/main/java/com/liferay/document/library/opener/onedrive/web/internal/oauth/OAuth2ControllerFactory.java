@@ -109,10 +109,10 @@ public class OAuth2ControllerFactory {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"folderId", ParamUtil.getString(portletRequest, "folderId"));
-		portletURL.setParameter(
 			"repositoryId",
 			ParamUtil.getString(portletRequest, "repositoryId"));
+		portletURL.setParameter(
+			"folderId", ParamUtil.getString(portletRequest, "folderId"));
 
 		return portletURL.toString();
 	}

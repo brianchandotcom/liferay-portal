@@ -219,7 +219,8 @@ class FragmentsEditor extends Component {
 				targetItemIsEditable &&
 				!targetItem.classList.contains(
 					'fragments-editor__editable--highlighted'
-				)
+				) &&
+				!('fragmentsEditorSidebarStructureItem' in targetItem.dataset)
 			) {
 				const fragment = getElement(
 					targetItem.dataset.fragmentEntryLinkId,

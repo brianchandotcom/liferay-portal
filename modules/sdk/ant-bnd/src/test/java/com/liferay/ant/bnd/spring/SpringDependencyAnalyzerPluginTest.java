@@ -88,7 +88,7 @@ public class SpringDependencyAnalyzerPluginTest {
 	public void testDependenciesDefinedOnlyInAnnotationWithRequireSchemaRange()
 		throws Exception {
 
-		Jar jar = analyze(SampleBean.class, "[1.0.0,1.1.0)", null);
+		Jar jar = analyze(SampleBean.class, "[1.0.0,2.0.0)", null);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");

@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -25,9 +26,14 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,7 +55,24 @@ public class RenderFragmentEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public DefaultFragmentRendererContext getDefaultFragmentRendererContext() {
+	public DefaultFragmentRendererContext getDefaultFragmentRendererContext()
+		throws PrincipalException {
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(_httpServletRequest);
+
+		String p_p_auth = ParamUtil.getString(
+			originalHttpServletRequest, "p_p_auth");
+
+		String token = AuthTokenUtil.getToken(
+			_httpServletRequest, _themeDisplay.getPlid(),
+			FragmentPortletKeys.FRAGMENT);
+
+		if (!Objects.equals(token, p_p_auth)) {
+			throw new PrincipalException.MustHavePermission(
+				0, "Invalid token received");
+		}
+
 		FragmentEntry fragmentEntry = _getFragmentEntry();
 
 		String css = BeanParamUtil.getString(

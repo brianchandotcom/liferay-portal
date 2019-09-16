@@ -43,7 +43,7 @@ public class ScreenNavigationRegistry {
 		List<ScreenNavigationCategory> screenNavigationCategories =
 			_screenNavigationCategoriesMap.getService(screenNavigationId);
 
-		if (screenNavigationCategories == null) {
+		if (ListUtil.isEmpty(screenNavigationCategories)) {
 			return Collections.emptyList();
 		}
 
@@ -69,7 +69,7 @@ public class ScreenNavigationRegistry {
 		List<ScreenNavigationEntry> screenNavigationEntries =
 			_screenNavigationEntriesMap.getService(key);
 
-		if (screenNavigationEntries == null) {
+		if (ListUtil.isEmpty(screenNavigationEntries)) {
 			return Collections.emptyList();
 		}
 

@@ -34,7 +34,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 %>
 
-<c:if test="<%= (screenNavigationCategories != null) && (screenNavigationCategories.size() > 1) %>">
+<c:if test="<%= ListUtil.isNotEmpty(screenNavigationCategories) && (screenNavigationCategories.size() > 1) %>">
 	<div class="page-header">
 		<div class="<%= headerContainerCssClass %>">
 			<clay:navigation-bar
@@ -60,7 +60,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 	</div>
 </c:if>
 
-<c:if test="<%= (selectedScreenNavigationEntry != null) && (screenNavigationEntries != null) %>">
+<c:if test="<%= (selectedScreenNavigationEntry != null) && ListUtil.isNotEmpty(screenNavigationEntries) %>">
 	<div class="<%= containerWrapperCssClass %>">
 		<div class="row">
 			<c:if test="<%= screenNavigationEntries.size() > 1 %>">

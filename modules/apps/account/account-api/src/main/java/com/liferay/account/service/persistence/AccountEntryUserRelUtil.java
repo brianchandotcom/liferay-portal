@@ -127,6 +127,74 @@ public class AccountEntryUserRelUtil {
 	}
 
 	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the matching account entry user rel
+	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
+	 */
+	public static AccountEntryUserRel findByA_U(
+			long accountEntryId, long userId)
+		throws com.liferay.account.exception.NoSuchEntryUserRelException {
+
+		return getPersistence().findByA_U(accountEntryId, userId);
+	}
+
+	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
+	 */
+	public static AccountEntryUserRel fetchByA_U(
+		long accountEntryId, long userId) {
+
+		return getPersistence().fetchByA_U(accountEntryId, userId);
+	}
+
+	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
+	 */
+	public static AccountEntryUserRel fetchByA_U(
+		long accountEntryId, long userId, boolean useFinderCache) {
+
+		return getPersistence().fetchByA_U(
+			accountEntryId, userId, useFinderCache);
+	}
+
+	/**
+	 * Removes the account entry user rel where accountEntryId = &#63; and userId = &#63; from the database.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the account entry user rel that was removed
+	 */
+	public static AccountEntryUserRel removeByA_U(
+			long accountEntryId, long userId)
+		throws com.liferay.account.exception.NoSuchEntryUserRelException {
+
+		return getPersistence().removeByA_U(accountEntryId, userId);
+	}
+
+	/**
+	 * Returns the number of account entry user rels where accountEntryId = &#63; and userId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the number of matching account entry user rels
+	 */
+	public static int countByA_U(long accountEntryId, long userId) {
+		return getPersistence().countByA_U(accountEntryId, userId);
+	}
+
+	/**
 	 * Caches the account entry user rel in the entity cache if it is enabled.
 	 *
 	 * @param accountEntryUserRel the account entry user rel
@@ -149,27 +217,24 @@ public class AccountEntryUserRelUtil {
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
-	 * @param accountEntryUserRelPK the primary key for the new account entry user rel
+	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
-	public static AccountEntryUserRel create(
-		AccountEntryUserRelPK accountEntryUserRelPK) {
-
-		return getPersistence().create(accountEntryUserRelPK);
+	public static AccountEntryUserRel create(long accountEntryUserRelId) {
+		return getPersistence().create(accountEntryUserRelId);
 	}
 
 	/**
 	 * Removes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel that was removed
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
-	public static AccountEntryUserRel remove(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+	public static AccountEntryUserRel remove(long accountEntryUserRelId)
 		throws com.liferay.account.exception.NoSuchEntryUserRelException {
 
-		return getPersistence().remove(accountEntryUserRelPK);
+		return getPersistence().remove(accountEntryUserRelId);
 	}
 
 	public static AccountEntryUserRel updateImpl(
@@ -181,27 +246,27 @@ public class AccountEntryUserRelUtil {
 	/**
 	 * Returns the account entry user rel with the primary key or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
 	public static AccountEntryUserRel findByPrimaryKey(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+			long accountEntryUserRelId)
 		throws com.liferay.account.exception.NoSuchEntryUserRelException {
 
-		return getPersistence().findByPrimaryKey(accountEntryUserRelPK);
+		return getPersistence().findByPrimaryKey(accountEntryUserRelId);
 	}
 
 	/**
 	 * Returns the account entry user rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel, or <code>null</code> if a account entry user rel with the primary key could not be found
 	 */
 	public static AccountEntryUserRel fetchByPrimaryKey(
-		AccountEntryUserRelPK accountEntryUserRelPK) {
+		long accountEntryUserRelId) {
 
-		return getPersistence().fetchByPrimaryKey(accountEntryUserRelPK);
+		return getPersistence().fetchByPrimaryKey(accountEntryUserRelId);
 	}
 
 	/**
@@ -283,10 +348,6 @@ public class AccountEntryUserRelUtil {
 	 */
 	public static int countAll() {
 		return getPersistence().countAll();
-	}
-
-	public static Set<String> getCompoundPKColumnNames() {
-		return getPersistence().getCompoundPKColumnNames();
 	}
 
 	public static AccountEntryUserRelPersistence getPersistence() {

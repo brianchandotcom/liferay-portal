@@ -43,8 +43,8 @@ public class AccountEntryUserRelWrapper
 
 		attributes.put("accountEntryUserRelId", getAccountEntryUserRelId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("userId", getUserId());
 		attributes.put("accountEntryId", getAccountEntryId());
+		attributes.put("userId", getUserId());
 
 		return attributes;
 	}
@@ -64,16 +64,16 @@ public class AccountEntryUserRelWrapper
 			setCompanyId(companyId);
 		}
 
-		Long userId = (Long)attributes.get("userId");
-
-		if (userId != null) {
-			setUserId(userId);
-		}
-
 		Long accountEntryId = (Long)attributes.get("accountEntryId");
 
 		if (accountEntryId != null) {
 			setAccountEntryId(accountEntryId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
 		}
 	}
 
@@ -113,9 +113,7 @@ public class AccountEntryUserRelWrapper
 	 * @return the primary key of this account entry user rel
 	 */
 	@Override
-	public com.liferay.account.service.persistence.AccountEntryUserRelPK
-		getPrimaryKey() {
-
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -185,10 +183,7 @@ public class AccountEntryUserRelWrapper
 	 * @param primaryKey the primary key of this account entry user rel
 	 */
 	@Override
-	public void setPrimaryKey(
-		com.liferay.account.service.persistence.AccountEntryUserRelPK
-			primaryKey) {
-
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 

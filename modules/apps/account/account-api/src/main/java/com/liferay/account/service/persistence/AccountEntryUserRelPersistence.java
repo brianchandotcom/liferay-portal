@@ -18,8 +18,6 @@ import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import java.util.Set;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -44,6 +42,56 @@ public interface AccountEntryUserRelPersistence
 	 */
 
 	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the matching account entry user rel
+	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
+	 */
+	public AccountEntryUserRel findByA_U(long accountEntryId, long userId)
+		throws NoSuchEntryUserRelException;
+
+	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
+	 */
+	public AccountEntryUserRel fetchByA_U(long accountEntryId, long userId);
+
+	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
+	 */
+	public AccountEntryUserRel fetchByA_U(
+		long accountEntryId, long userId, boolean useFinderCache);
+
+	/**
+	 * Removes the account entry user rel where accountEntryId = &#63; and userId = &#63; from the database.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the account entry user rel that was removed
+	 */
+	public AccountEntryUserRel removeByA_U(long accountEntryId, long userId)
+		throws NoSuchEntryUserRelException;
+
+	/**
+	 * Returns the number of account entry user rels where accountEntryId = &#63; and userId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param userId the user ID
+	 * @return the number of matching account entry user rels
+	 */
+	public int countByA_U(long accountEntryId, long userId);
+
+	/**
 	 * Caches the account entry user rel in the entity cache if it is enabled.
 	 *
 	 * @param accountEntryUserRel the account entry user rel
@@ -61,21 +109,19 @@ public interface AccountEntryUserRelPersistence
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
-	 * @param accountEntryUserRelPK the primary key for the new account entry user rel
+	 * @param accountEntryUserRelId the primary key for the new account entry user rel
 	 * @return the new account entry user rel
 	 */
-	public AccountEntryUserRel create(
-		AccountEntryUserRelPK accountEntryUserRelPK);
+	public AccountEntryUserRel create(long accountEntryUserRelId);
 
 	/**
 	 * Removes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel that was removed
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
-	public AccountEntryUserRel remove(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+	public AccountEntryUserRel remove(long accountEntryUserRelId)
 		throws NoSuchEntryUserRelException;
 
 	public AccountEntryUserRel updateImpl(
@@ -84,22 +130,20 @@ public interface AccountEntryUserRelPersistence
 	/**
 	 * Returns the account entry user rel with the primary key or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel
 	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
 	 */
-	public AccountEntryUserRel findByPrimaryKey(
-			AccountEntryUserRelPK accountEntryUserRelPK)
+	public AccountEntryUserRel findByPrimaryKey(long accountEntryUserRelId)
 		throws NoSuchEntryUserRelException;
 
 	/**
 	 * Returns the account entry user rel with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param accountEntryUserRelPK the primary key of the account entry user rel
+	 * @param accountEntryUserRelId the primary key of the account entry user rel
 	 * @return the account entry user rel, or <code>null</code> if a account entry user rel with the primary key could not be found
 	 */
-	public AccountEntryUserRel fetchByPrimaryKey(
-		AccountEntryUserRelPK accountEntryUserRelPK);
+	public AccountEntryUserRel fetchByPrimaryKey(long accountEntryUserRelId);
 
 	/**
 	 * Returns all the account entry user rels.
@@ -168,7 +212,5 @@ public interface AccountEntryUserRelPersistence
 	 * @return the number of account entry user rels
 	 */
 	public int countAll();
-
-	public Set<String> getCompoundPKColumnNames();
 
 }

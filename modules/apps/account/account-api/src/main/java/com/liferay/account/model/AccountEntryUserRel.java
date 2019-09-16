@@ -59,43 +59,5 @@ public interface AccountEntryUserRel
 				}
 
 			};
-	public static final Accessor<AccountEntryUserRel, Long> USER_ID_ACCESSOR =
-		new Accessor<AccountEntryUserRel, Long>() {
-
-			@Override
-			public Long get(AccountEntryUserRel accountEntryUserRel) {
-				return accountEntryUserRel.getUserId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<AccountEntryUserRel> getTypeClass() {
-				return AccountEntryUserRel.class;
-			}
-
-		};
-	public static final Accessor<AccountEntryUserRel, Long>
-		ACCOUNT_ENTRY_ID_ACCESSOR = new Accessor<AccountEntryUserRel, Long>() {
-
-			@Override
-			public Long get(AccountEntryUserRel accountEntryUserRel) {
-				return accountEntryUserRel.getAccountEntryId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<AccountEntryUserRel> getTypeClass() {
-				return AccountEntryUserRel.class;
-			}
-
-		};
 
 }

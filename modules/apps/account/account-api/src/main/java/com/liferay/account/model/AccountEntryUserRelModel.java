@@ -14,7 +14,6 @@
 
 package com.liferay.account.model;
 
-import com.liferay.account.service.persistence.AccountEntryUserRelPK;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
@@ -46,14 +45,14 @@ public interface AccountEntryUserRelModel
 	 *
 	 * @return the primary key of this account entry user rel
 	 */
-	public AccountEntryUserRelPK getPrimaryKey();
+	public long getPrimaryKey();
 
 	/**
 	 * Sets the primary key of this account entry user rel.
 	 *
 	 * @param primaryKey the primary key of this account entry user rel
 	 */
-	public void setPrimaryKey(AccountEntryUserRelPK primaryKey);
+	public void setPrimaryKey(long primaryKey);
 
 	/**
 	 * Returns the account entry user rel ID of this account entry user rel.
@@ -86,6 +85,20 @@ public interface AccountEntryUserRelModel
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the account entry ID of this account entry user rel.
+	 *
+	 * @return the account entry ID of this account entry user rel
+	 */
+	public long getAccountEntryId();
+
+	/**
+	 * Sets the account entry ID of this account entry user rel.
+	 *
+	 * @param accountEntryId the account entry ID of this account entry user rel
+	 */
+	public void setAccountEntryId(long accountEntryId);
+
+	/**
 	 * Returns the user ID of this account entry user rel.
 	 *
 	 * @return the user ID of this account entry user rel
@@ -112,19 +125,5 @@ public interface AccountEntryUserRelModel
 	 * @param userUuid the user uuid of this account entry user rel
 	 */
 	public void setUserUuid(String userUuid);
-
-	/**
-	 * Returns the account entry ID of this account entry user rel.
-	 *
-	 * @return the account entry ID of this account entry user rel
-	 */
-	public long getAccountEntryId();
-
-	/**
-	 * Sets the account entry ID of this account entry user rel.
-	 *
-	 * @param accountEntryId the account entry ID of this account entry user rel
-	 */
-	public void setAccountEntryId(long accountEntryId);
 
 }

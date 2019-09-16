@@ -62,16 +62,14 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{accountEntryUserRelId=");
 		sb.append(accountEntryUserRelId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
-		sb.append(", userId=");
-		sb.append(userId);
+		sb.append(", accountUserId=");
+		sb.append(accountUserId);
 		sb.append("}");
 
 		return sb.toString();
@@ -83,9 +81,8 @@ public class AccountEntryUserRelCacheModel
 			new AccountEntryUserRelImpl();
 
 		accountEntryUserRelImpl.setAccountEntryUserRelId(accountEntryUserRelId);
-		accountEntryUserRelImpl.setCompanyId(companyId);
 		accountEntryUserRelImpl.setAccountEntryId(accountEntryId);
-		accountEntryUserRelImpl.setUserId(userId);
+		accountEntryUserRelImpl.setAccountUserId(accountUserId);
 
 		accountEntryUserRelImpl.resetOriginalValues();
 
@@ -96,27 +93,22 @@ public class AccountEntryUserRelCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		accountEntryUserRelId = objectInput.readLong();
 
-		companyId = objectInput.readLong();
-
 		accountEntryId = objectInput.readLong();
 
-		userId = objectInput.readLong();
+		accountUserId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(accountEntryUserRelId);
 
-		objectOutput.writeLong(companyId);
-
 		objectOutput.writeLong(accountEntryId);
 
-		objectOutput.writeLong(userId);
+		objectOutput.writeLong(accountUserId);
 	}
 
 	public long accountEntryUserRelId;
-	public long companyId;
 	public long accountEntryId;
-	public long userId;
+	public long accountUserId;
 
 }

@@ -33,9 +33,8 @@ public class AccountEntryUserRelSoap implements Serializable {
 		AccountEntryUserRelSoap soapModel = new AccountEntryUserRelSoap();
 
 		soapModel.setAccountEntryUserRelId(model.getAccountEntryUserRelId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAccountEntryId(model.getAccountEntryId());
-		soapModel.setUserId(model.getUserId());
+		soapModel.setAccountUserId(model.getAccountUserId());
 
 		return soapModel;
 	}
@@ -106,14 +105,6 @@ public class AccountEntryUserRelSoap implements Serializable {
 		_accountEntryUserRelId = accountEntryUserRelId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getAccountEntryId() {
 		return _accountEntryId;
 	}
@@ -122,17 +113,16 @@ public class AccountEntryUserRelSoap implements Serializable {
 		_accountEntryId = accountEntryId;
 	}
 
-	public long getUserId() {
-		return _userId;
+	public long getAccountUserId() {
+		return _accountUserId;
 	}
 
-	public void setUserId(long userId) {
-		_userId = userId;
+	public void setAccountUserId(long accountUserId) {
+		_accountUserId = accountUserId;
 	}
 
 	private long _accountEntryUserRelId;
-	private long _companyId;
 	private long _accountEntryId;
-	private long _userId;
+	private long _accountUserId;
 
 }

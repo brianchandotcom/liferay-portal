@@ -127,71 +127,71 @@ public class AccountEntryUserRelUtil {
 	}
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
-	public static AccountEntryUserRel findByA_U(
-			long accountEntryId, long userId)
+	public static AccountEntryUserRel findByA_A(
+			long accountEntryId, long accountUserId)
 		throws com.liferay.account.exception.NoSuchEntryUserRelException {
 
-		return getPersistence().findByA_U(accountEntryId, userId);
+		return getPersistence().findByA_A(accountEntryId, accountUserId);
 	}
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public static AccountEntryUserRel fetchByA_U(
-		long accountEntryId, long userId) {
+	public static AccountEntryUserRel fetchByA_A(
+		long accountEntryId, long accountUserId) {
 
-		return getPersistence().fetchByA_U(accountEntryId, userId);
+		return getPersistence().fetchByA_A(accountEntryId, accountUserId);
 	}
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
-	public static AccountEntryUserRel fetchByA_U(
-		long accountEntryId, long userId, boolean useFinderCache) {
+	public static AccountEntryUserRel fetchByA_A(
+		long accountEntryId, long accountUserId, boolean useFinderCache) {
 
-		return getPersistence().fetchByA_U(
-			accountEntryId, userId, useFinderCache);
+		return getPersistence().fetchByA_A(
+			accountEntryId, accountUserId, useFinderCache);
 	}
 
 	/**
-	 * Removes the account entry user rel where accountEntryId = &#63; and userId = &#63; from the database.
+	 * Removes the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the account entry user rel that was removed
 	 */
-	public static AccountEntryUserRel removeByA_U(
-			long accountEntryId, long userId)
+	public static AccountEntryUserRel removeByA_A(
+			long accountEntryId, long accountUserId)
 		throws com.liferay.account.exception.NoSuchEntryUserRelException {
 
-		return getPersistence().removeByA_U(accountEntryId, userId);
+		return getPersistence().removeByA_A(accountEntryId, accountUserId);
 	}
 
 	/**
-	 * Returns the number of account entry user rels where accountEntryId = &#63; and userId = &#63;.
+	 * Returns the number of account entry user rels where accountEntryId = &#63; and accountUserId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the number of matching account entry user rels
 	 */
-	public static int countByA_U(long accountEntryId, long userId) {
-		return getPersistence().countByA_U(accountEntryId, userId);
+	public static int countByA_A(long accountEntryId, long accountUserId) {
+		return getPersistence().countByA_A(accountEntryId, accountUserId);
 	}
 
 	/**

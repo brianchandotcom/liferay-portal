@@ -42,9 +42,8 @@ public class AccountEntryUserRelWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("accountEntryUserRelId", getAccountEntryUserRelId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("accountEntryId", getAccountEntryId());
-		attributes.put("userId", getUserId());
+		attributes.put("accountUserId", getAccountUserId());
 
 		return attributes;
 	}
@@ -58,22 +57,16 @@ public class AccountEntryUserRelWrapper
 			setAccountEntryUserRelId(accountEntryUserRelId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long accountEntryId = (Long)attributes.get("accountEntryId");
 
 		if (accountEntryId != null) {
 			setAccountEntryId(accountEntryId);
 		}
 
-		Long userId = (Long)attributes.get("userId");
+		Long accountUserId = (Long)attributes.get("accountUserId");
 
-		if (userId != null) {
-			setUserId(userId);
+		if (accountUserId != null) {
+			setAccountUserId(accountUserId);
 		}
 	}
 
@@ -98,13 +91,23 @@ public class AccountEntryUserRelWrapper
 	}
 
 	/**
-	 * Returns the company ID of this account entry user rel.
+	 * Returns the account user ID of this account entry user rel.
 	 *
-	 * @return the company ID of this account entry user rel
+	 * @return the account user ID of this account entry user rel
 	 */
 	@Override
-	public long getCompanyId() {
-		return model.getCompanyId();
+	public long getAccountUserId() {
+		return model.getAccountUserId();
+	}
+
+	/**
+	 * Returns the account user uuid of this account entry user rel.
+	 *
+	 * @return the account user uuid of this account entry user rel
+	 */
+	@Override
+	public String getAccountUserUuid() {
+		return model.getAccountUserUuid();
 	}
 
 	/**
@@ -115,26 +118,6 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the user ID of this account entry user rel.
-	 *
-	 * @return the user ID of this account entry user rel
-	 */
-	@Override
-	public long getUserId() {
-		return model.getUserId();
-	}
-
-	/**
-	 * Returns the user uuid of this account entry user rel.
-	 *
-	 * @return the user uuid of this account entry user rel
-	 */
-	@Override
-	public String getUserUuid() {
-		return model.getUserUuid();
 	}
 
 	/**
@@ -168,13 +151,23 @@ public class AccountEntryUserRelWrapper
 	}
 
 	/**
-	 * Sets the company ID of this account entry user rel.
+	 * Sets the account user ID of this account entry user rel.
 	 *
-	 * @param companyId the company ID of this account entry user rel
+	 * @param accountUserId the account user ID of this account entry user rel
 	 */
 	@Override
-	public void setCompanyId(long companyId) {
-		model.setCompanyId(companyId);
+	public void setAccountUserId(long accountUserId) {
+		model.setAccountUserId(accountUserId);
+	}
+
+	/**
+	 * Sets the account user uuid of this account entry user rel.
+	 *
+	 * @param accountUserUuid the account user uuid of this account entry user rel
+	 */
+	@Override
+	public void setAccountUserUuid(String accountUserUuid) {
+		model.setAccountUserUuid(accountUserUuid);
 	}
 
 	/**
@@ -185,26 +178,6 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the user ID of this account entry user rel.
-	 *
-	 * @param userId the user ID of this account entry user rel
-	 */
-	@Override
-	public void setUserId(long userId) {
-		model.setUserId(userId);
-	}
-
-	/**
-	 * Sets the user uuid of this account entry user rel.
-	 *
-	 * @param userUuid the user uuid of this account entry user rel
-	 */
-	@Override
-	public void setUserUuid(String userUuid) {
-		model.setUserUuid(userUuid);
 	}
 
 	@Override

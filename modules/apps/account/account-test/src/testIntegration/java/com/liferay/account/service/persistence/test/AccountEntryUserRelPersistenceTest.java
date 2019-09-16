@@ -124,11 +124,9 @@ public class AccountEntryUserRelPersistenceTest {
 
 		AccountEntryUserRel newAccountEntryUserRel = _persistence.create(pk);
 
-		newAccountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
-
 		newAccountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
 
-		newAccountEntryUserRel.setUserId(RandomTestUtil.nextLong());
+		newAccountEntryUserRel.setAccountUserId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(newAccountEntryUserRel));
 
@@ -140,22 +138,19 @@ public class AccountEntryUserRelPersistenceTest {
 			existingAccountEntryUserRel.getAccountEntryUserRelId(),
 			newAccountEntryUserRel.getAccountEntryUserRelId());
 		Assert.assertEquals(
-			existingAccountEntryUserRel.getCompanyId(),
-			newAccountEntryUserRel.getCompanyId());
-		Assert.assertEquals(
 			existingAccountEntryUserRel.getAccountEntryId(),
 			newAccountEntryUserRel.getAccountEntryId());
 		Assert.assertEquals(
-			existingAccountEntryUserRel.getUserId(),
-			newAccountEntryUserRel.getUserId());
+			existingAccountEntryUserRel.getAccountUserId(),
+			newAccountEntryUserRel.getAccountUserId());
 	}
 
 	@Test
-	public void testCountByA_U() throws Exception {
-		_persistence.countByA_U(
+	public void testCountByA_A() throws Exception {
+		_persistence.countByA_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByA_U(0L, 0L);
+		_persistence.countByA_A(0L, 0L);
 	}
 
 	@Test
@@ -185,8 +180,8 @@ public class AccountEntryUserRelPersistenceTest {
 
 	protected OrderByComparator<AccountEntryUserRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AccountEntryUserRel", "accountEntryUserRelId", true, "companyId",
-			true, "accountEntryId", true, "userId", true);
+			"AccountEntryUserRel", "accountEntryUserRelId", true,
+			"accountEntryId", true, "accountUserId", true);
 	}
 
 	@Test
@@ -430,9 +425,9 @@ public class AccountEntryUserRelPersistenceTest {
 				existingAccountEntryUserRel, "getOriginalAccountEntryId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingAccountEntryUserRel.getUserId()),
+			Long.valueOf(existingAccountEntryUserRel.getAccountUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAccountEntryUserRel, "getOriginalUserId",
+				existingAccountEntryUserRel, "getOriginalAccountUserId",
 				new Class<?>[0]));
 	}
 
@@ -441,11 +436,9 @@ public class AccountEntryUserRelPersistenceTest {
 
 		AccountEntryUserRel accountEntryUserRel = _persistence.create(pk);
 
-		accountEntryUserRel.setCompanyId(RandomTestUtil.nextLong());
-
 		accountEntryUserRel.setAccountEntryId(RandomTestUtil.nextLong());
 
-		accountEntryUserRel.setUserId(RandomTestUtil.nextLong());
+		accountEntryUserRel.setAccountUserId(RandomTestUtil.nextLong());
 
 		_accountEntryUserRels.add(_persistence.update(accountEntryUserRel));
 

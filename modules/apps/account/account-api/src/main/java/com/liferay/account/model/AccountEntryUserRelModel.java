@@ -15,7 +15,6 @@
 package com.liferay.account.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +31,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountEntryUserRelModel
-	extends BaseModel<AccountEntryUserRel>, ShardedModel {
+	extends BaseModel<AccountEntryUserRel> {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -69,22 +68,6 @@ public interface AccountEntryUserRelModel
 	public void setAccountEntryUserRelId(long accountEntryUserRelId);
 
 	/**
-	 * Returns the company ID of this account entry user rel.
-	 *
-	 * @return the company ID of this account entry user rel
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this account entry user rel.
-	 *
-	 * @param companyId the company ID of this account entry user rel
-	 */
-	@Override
-	public void setCompanyId(long companyId);
-
-	/**
 	 * Returns the account entry ID of this account entry user rel.
 	 *
 	 * @return the account entry ID of this account entry user rel
@@ -99,31 +82,31 @@ public interface AccountEntryUserRelModel
 	public void setAccountEntryId(long accountEntryId);
 
 	/**
-	 * Returns the user ID of this account entry user rel.
+	 * Returns the account user ID of this account entry user rel.
 	 *
-	 * @return the user ID of this account entry user rel
+	 * @return the account user ID of this account entry user rel
 	 */
-	public long getUserId();
+	public long getAccountUserId();
 
 	/**
-	 * Sets the user ID of this account entry user rel.
+	 * Sets the account user ID of this account entry user rel.
 	 *
-	 * @param userId the user ID of this account entry user rel
+	 * @param accountUserId the account user ID of this account entry user rel
 	 */
-	public void setUserId(long userId);
+	public void setAccountUserId(long accountUserId);
 
 	/**
-	 * Returns the user uuid of this account entry user rel.
+	 * Returns the account user uuid of this account entry user rel.
 	 *
-	 * @return the user uuid of this account entry user rel
+	 * @return the account user uuid of this account entry user rel
 	 */
-	public String getUserUuid();
+	public String getAccountUserUuid();
 
 	/**
-	 * Sets the user uuid of this account entry user rel.
+	 * Sets the account user uuid of this account entry user rel.
 	 *
-	 * @param userUuid the user uuid of this account entry user rel
+	 * @param accountUserUuid the account user uuid of this account entry user rel
 	 */
-	public void setUserUuid(String userUuid);
+	public void setAccountUserUuid(String accountUserUuid);
 
 }

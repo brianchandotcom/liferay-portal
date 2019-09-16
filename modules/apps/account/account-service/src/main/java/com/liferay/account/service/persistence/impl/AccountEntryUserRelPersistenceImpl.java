@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -86,23 +85,24 @@ public class AccountEntryUserRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathFetchByA_U;
-	private FinderPath _finderPathCountByA_U;
+	private FinderPath _finderPathFetchByA_A;
+	private FinderPath _finderPathCountByA_A;
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or throws a <code>NoSuchEntryUserRelException</code> if it could not be found.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the matching account entry user rel
 	 * @throws NoSuchEntryUserRelException if a matching account entry user rel could not be found
 	 */
 	@Override
-	public AccountEntryUserRel findByA_U(long accountEntryId, long userId)
+	public AccountEntryUserRel findByA_A(
+			long accountEntryId, long accountUserId)
 		throws NoSuchEntryUserRelException {
 
-		AccountEntryUserRel accountEntryUserRel = fetchByA_U(
-			accountEntryId, userId);
+		AccountEntryUserRel accountEntryUserRel = fetchByA_A(
+			accountEntryId, accountUserId);
 
 		if (accountEntryUserRel == null) {
 			StringBundler msg = new StringBundler(6);
@@ -112,8 +112,8 @@ public class AccountEntryUserRelPersistenceImpl
 			msg.append("accountEntryId=");
 			msg.append(accountEntryId);
 
-			msg.append(", userId=");
-			msg.append(userId);
+			msg.append(", accountUserId=");
+			msg.append(accountUserId);
 
 			msg.append("}");
 
@@ -128,40 +128,42 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
 	@Override
-	public AccountEntryUserRel fetchByA_U(long accountEntryId, long userId) {
-		return fetchByA_U(accountEntryId, userId, true);
+	public AccountEntryUserRel fetchByA_A(
+		long accountEntryId, long accountUserId) {
+
+		return fetchByA_A(accountEntryId, accountUserId, true);
 	}
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
 	 */
 	@Override
-	public AccountEntryUserRel fetchByA_U(
-		long accountEntryId, long userId, boolean useFinderCache) {
+	public AccountEntryUserRel fetchByA_A(
+		long accountEntryId, long accountUserId, boolean useFinderCache) {
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {accountEntryId, userId};
+			finderArgs = new Object[] {accountEntryId, accountUserId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByA_U, finderArgs, this);
+				_finderPathFetchByA_A, finderArgs, this);
 		}
 
 		if (result instanceof AccountEntryUserRel) {
@@ -169,7 +171,7 @@ public class AccountEntryUserRelPersistenceImpl
 				(AccountEntryUserRel)result;
 
 			if ((accountEntryId != accountEntryUserRel.getAccountEntryId()) ||
-				(userId != accountEntryUserRel.getUserId())) {
+				(accountUserId != accountEntryUserRel.getAccountUserId())) {
 
 				result = null;
 			}
@@ -180,9 +182,9 @@ public class AccountEntryUserRelPersistenceImpl
 
 			query.append(_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE);
 
-			query.append(_FINDER_COLUMN_A_U_ACCOUNTENTRYID_2);
+			query.append(_FINDER_COLUMN_A_A_ACCOUNTENTRYID_2);
 
-			query.append(_FINDER_COLUMN_A_U_USERID_2);
+			query.append(_FINDER_COLUMN_A_A_ACCOUNTUSERID_2);
 
 			String sql = query.toString();
 
@@ -197,14 +199,14 @@ public class AccountEntryUserRelPersistenceImpl
 
 				qPos.add(accountEntryId);
 
-				qPos.add(userId);
+				qPos.add(accountUserId);
 
 				List<AccountEntryUserRel> list = q.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByA_U, finderArgs, list);
+							_finderPathFetchByA_A, finderArgs, list);
 					}
 				}
 				else {
@@ -214,12 +216,12 @@ public class AccountEntryUserRelPersistenceImpl
 						if (_log.isWarnEnabled()) {
 							if (!useFinderCache) {
 								finderArgs = new Object[] {
-									accountEntryId, userId
+									accountEntryId, accountUserId
 								};
 							}
 
 							_log.warn(
-								"AccountEntryUserRelPersistenceImpl.fetchByA_U(long, long, boolean) with parameters (" +
+								"AccountEntryUserRelPersistenceImpl.fetchByA_A(long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -234,7 +236,7 @@ public class AccountEntryUserRelPersistenceImpl
 			}
 			catch (Exception e) {
 				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByA_U, finderArgs);
+					finderCache.removeResult(_finderPathFetchByA_A, finderArgs);
 				}
 
 				throw processException(e);
@@ -253,34 +255,35 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 	/**
-	 * Removes the account entry user rel where accountEntryId = &#63; and userId = &#63; from the database.
+	 * Removes the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; from the database.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the account entry user rel that was removed
 	 */
 	@Override
-	public AccountEntryUserRel removeByA_U(long accountEntryId, long userId)
+	public AccountEntryUserRel removeByA_A(
+			long accountEntryId, long accountUserId)
 		throws NoSuchEntryUserRelException {
 
-		AccountEntryUserRel accountEntryUserRel = findByA_U(
-			accountEntryId, userId);
+		AccountEntryUserRel accountEntryUserRel = findByA_A(
+			accountEntryId, accountUserId);
 
 		return remove(accountEntryUserRel);
 	}
 
 	/**
-	 * Returns the number of account entry user rels where accountEntryId = &#63; and userId = &#63;.
+	 * Returns the number of account entry user rels where accountEntryId = &#63; and accountUserId = &#63;.
 	 *
 	 * @param accountEntryId the account entry ID
-	 * @param userId the user ID
+	 * @param accountUserId the account user ID
 	 * @return the number of matching account entry user rels
 	 */
 	@Override
-	public int countByA_U(long accountEntryId, long userId) {
-		FinderPath finderPath = _finderPathCountByA_U;
+	public int countByA_A(long accountEntryId, long accountUserId) {
+		FinderPath finderPath = _finderPathCountByA_A;
 
-		Object[] finderArgs = new Object[] {accountEntryId, userId};
+		Object[] finderArgs = new Object[] {accountEntryId, accountUserId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -289,9 +292,9 @@ public class AccountEntryUserRelPersistenceImpl
 
 			query.append(_SQL_COUNT_ACCOUNTENTRYUSERREL_WHERE);
 
-			query.append(_FINDER_COLUMN_A_U_ACCOUNTENTRYID_2);
+			query.append(_FINDER_COLUMN_A_A_ACCOUNTENTRYID_2);
 
-			query.append(_FINDER_COLUMN_A_U_USERID_2);
+			query.append(_FINDER_COLUMN_A_A_ACCOUNTUSERID_2);
 
 			String sql = query.toString();
 
@@ -306,7 +309,7 @@ public class AccountEntryUserRelPersistenceImpl
 
 				qPos.add(accountEntryId);
 
-				qPos.add(userId);
+				qPos.add(accountUserId);
 
 				count = (Long)q.uniqueResult();
 
@@ -325,11 +328,11 @@ public class AccountEntryUserRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A_U_ACCOUNTENTRYID_2 =
+	private static final String _FINDER_COLUMN_A_A_ACCOUNTENTRYID_2 =
 		"accountEntryUserRel.accountEntryId = ? AND ";
 
-	private static final String _FINDER_COLUMN_A_U_USERID_2 =
-		"accountEntryUserRel.userId = ?";
+	private static final String _FINDER_COLUMN_A_A_ACCOUNTUSERID_2 =
+		"accountEntryUserRel.accountUserId = ?";
 
 	public AccountEntryUserRelPersistenceImpl() {
 		setModelClass(AccountEntryUserRel.class);
@@ -350,10 +353,10 @@ public class AccountEntryUserRelPersistenceImpl
 			accountEntryUserRel.getPrimaryKey(), accountEntryUserRel);
 
 		finderCache.putResult(
-			_finderPathFetchByA_U,
+			_finderPathFetchByA_A,
 			new Object[] {
 				accountEntryUserRel.getAccountEntryId(),
-				accountEntryUserRel.getUserId()
+				accountEntryUserRel.getAccountUserId()
 			},
 			accountEntryUserRel);
 
@@ -436,13 +439,13 @@ public class AccountEntryUserRelPersistenceImpl
 
 		Object[] args = new Object[] {
 			accountEntryUserRelModelImpl.getAccountEntryId(),
-			accountEntryUserRelModelImpl.getUserId()
+			accountEntryUserRelModelImpl.getAccountUserId()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByA_U, args, Long.valueOf(1), false);
+			_finderPathCountByA_A, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByA_U, args, accountEntryUserRelModelImpl, false);
+			_finderPathFetchByA_A, args, accountEntryUserRelModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -452,23 +455,23 @@ public class AccountEntryUserRelPersistenceImpl
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				accountEntryUserRelModelImpl.getAccountEntryId(),
-				accountEntryUserRelModelImpl.getUserId()
+				accountEntryUserRelModelImpl.getAccountUserId()
 			};
 
-			finderCache.removeResult(_finderPathCountByA_U, args);
-			finderCache.removeResult(_finderPathFetchByA_U, args);
+			finderCache.removeResult(_finderPathCountByA_A, args);
+			finderCache.removeResult(_finderPathFetchByA_A, args);
 		}
 
 		if ((accountEntryUserRelModelImpl.getColumnBitmask() &
-			 _finderPathFetchByA_U.getColumnBitmask()) != 0) {
+			 _finderPathFetchByA_A.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				accountEntryUserRelModelImpl.getOriginalAccountEntryId(),
-				accountEntryUserRelModelImpl.getOriginalUserId()
+				accountEntryUserRelModelImpl.getOriginalAccountUserId()
 			};
 
-			finderCache.removeResult(_finderPathCountByA_U, args);
-			finderCache.removeResult(_finderPathFetchByA_U, args);
+			finderCache.removeResult(_finderPathCountByA_A, args);
+			finderCache.removeResult(_finderPathFetchByA_A, args);
 		}
 	}
 
@@ -484,8 +487,6 @@ public class AccountEntryUserRelPersistenceImpl
 
 		accountEntryUserRel.setNew(true);
 		accountEntryUserRel.setPrimaryKey(accountEntryUserRelId);
-
-		accountEntryUserRel.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return accountEntryUserRel;
 	}
@@ -948,17 +949,17 @@ public class AccountEntryUserRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
-		_finderPathFetchByA_U = new FinderPath(
+		_finderPathFetchByA_A = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			AccountEntryUserRelImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByA_U",
+			"fetchByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			AccountEntryUserRelModelImpl.ACCOUNTENTRYID_COLUMN_BITMASK |
-			AccountEntryUserRelModelImpl.USERID_COLUMN_BITMASK);
+			AccountEntryUserRelModelImpl.ACCOUNTUSERID_COLUMN_BITMASK);
 
-		_finderPathCountByA_U = new FinderPath(
+		_finderPathCountByA_A = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_U",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.configuration.activator;
+package com.liferay.dynamic.data.mapping.internal.data.provider.configuration.activator;
 
 import com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

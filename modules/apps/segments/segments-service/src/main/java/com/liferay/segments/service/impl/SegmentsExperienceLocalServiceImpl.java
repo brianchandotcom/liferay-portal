@@ -402,32 +402,32 @@ public class SegmentsExperienceLocalServiceImpl
 			return segmentsExperiencePersistence.update(segmentsExperience);
 		}
 
-		final int originalPriority = segmentsExperience.getPriority();
+		int originalPriority = segmentsExperience.getPriority();
 
 		segmentsExperience.setPriority(
 			SegmentsExperienceConstants.PRIORITY_DEFAULT - 1);
 
-		segmentsExperiencePersistence.update(segmentsExperience);
+		segmentsExperience = segmentsExperiencePersistence.update(
+			segmentsExperience);
 
 		swapSegmentsExperience.setPriority(
 			SegmentsExperienceConstants.PRIORITY_DEFAULT - 2);
 
-		segmentsExperiencePersistence.update(swapSegmentsExperience);
+		swapSegmentsExperience = segmentsExperiencePersistence.update(
+			swapSegmentsExperience);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				segmentsExperience.setPriority(newPriority);
+		segmentsExperiencePersistence.flush();
 
-				segmentsExperienceLocalService.updateSegmentsExperience(
-					segmentsExperience);
+		segmentsExperience.setPriority(newPriority);
 
-				swapSegmentsExperience.setPriority(originalPriority);
+		segmentsExperience =
+			segmentsExperienceLocalService.updateSegmentsExperience(
+				segmentsExperience);
 
-				segmentsExperienceLocalService.updateSegmentsExperience(
-					swapSegmentsExperience);
+		swapSegmentsExperience.setPriority(originalPriority);
 
-				return null;
-			});
+		segmentsExperienceLocalService.updateSegmentsExperience(
+			swapSegmentsExperience);
 
 		return segmentsExperience;
 	}

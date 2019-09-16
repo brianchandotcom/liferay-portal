@@ -30,5 +30,11 @@
 		<column name="operation" type="String" />
 		<column name="startTime" type="Date" />
 		<column name="version" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="executeStatus" return-type="Collection">
+			<finder-column name="executeStatus" />
+		</finder>
 	</entity>
 </service-builder>

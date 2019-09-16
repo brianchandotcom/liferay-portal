@@ -30,9 +30,6 @@ definition {
 
 		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
 
-		Click(locator1 = "Button#DELETE");
-
-		AssertElementNotPresent(locator1 = "Form#SIDEBAR_CLOSE");
 	}
 
 	macro gotoEditField {

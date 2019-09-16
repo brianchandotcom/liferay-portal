@@ -291,17 +291,16 @@ public class PortletPreferencesFactoryImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String doAsUserIdEncoded = themeDisplay.getDoAsUserId();
+		String doAsUserId = themeDisplay.getDoAsUserId();
 
 		long userId = themeDisplay.getUserId();
 
-		if (Validator.isNotNull(doAsUserIdEncoded)) {
+		if (Validator.isNotNull(doAsUserId)) {
 			Company company = themeDisplay.getCompany();
 
 			try {
 				userId = GetterUtil.getLong(
-					Encryptor.decrypt(company.getKeyObj(), doAsUserIdEncoded),
-					userId);
+					Encryptor.decrypt(company.getKeyObj(), doAsUserId), userId);
 			}
 			catch (EncryptorException ee) {
 				_log.error("Unable to decrypt user id", ee);

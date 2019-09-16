@@ -108,7 +108,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
-				<aui:input name="canonicalURL" placeholder="canonical-url" type="text">
+				<aui:input localized="<%= true %>" name="canonicalURL" placeholder="canonical-url" type="text">
 					<aui:validator name="url" />
 				</aui:input>
 			</div>

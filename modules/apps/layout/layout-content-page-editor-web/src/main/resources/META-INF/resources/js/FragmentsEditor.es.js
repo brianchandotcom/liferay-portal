@@ -37,14 +37,29 @@ import {updateActiveItemAction} from './actions/updateActiveItem.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
 
 /**
- * DOM selector where the fragmentEntryLinks are rendered
+ * @type {string}
  */
-const WRAPPER_SELECTOR = '.fragment-entry-link-list-wrapper';
+const ITEM_CLASS = 'fragments-editor__item';
+
+/**
+ * @type {string}
+ */
+const ACTIVE_ITEM_CLASS = `${ITEM_CLASS}--active`;
+
+/**
+ * @type {string}
+ */
+const HOVERED_ITEM_CLASS = `${ITEM_CLASS}--hovered`;
 
 /**
  * DOM selector where the sidebar is rendered
  */
 const SIDEBAR_SELECTOR = '.fragments-editor-sidebar';
+
+/**
+ * DOM selector where the fragmentEntryLinks are rendered
+ */
+const WRAPPER_SELECTOR = '.fragment-entry-link-list-wrapper';
 
 /**
  * FragmentsEditor
@@ -53,27 +68,29 @@ const SIDEBAR_SELECTOR = '.fragments-editor-sidebar';
 class FragmentsEditor extends Component {
 	/**
 	 * @param {KeyboardEvent|MouseEvent} event
-	 * @return {{fragmentsEditorItemId: string|null, fragmentsEditorItemType: string|null}}
+	 * @return {{targetItem: HTMLElement, targetItemId: string|null, targetItemType: string|null}}
 	 * @private
 	 * @review
 	 */
 	static _getTargetItemData(event) {
+		let targetItem = event.target;
 		let {targetItemId = null, targetItemType = null} =
-			event.target.dataset || {};
+			targetItem.dataset || {};
 
 		if (!targetItemId || !targetItemType) {
-			const parent = dom.closest(
+			targetItem = dom.closest(
 				event.target,
 				'[data-fragments-editor-item-id]'
 			);
 
-			if (parent) {
-				targetItemId = parent.dataset.fragmentsEditorItemId;
-				targetItemType = parent.dataset.fragmentsEditorItemType;
+			if (targetItem) {
+				targetItemId = targetItem.dataset.fragmentsEditorItemId;
+				targetItemType = targetItem.dataset.fragmentsEditorItemType;
 			}
 		}
 
 		return {
+			targetItem,
 			targetItemId,
 			targetItemType
 		};
@@ -171,11 +188,21 @@ class FragmentsEditor extends Component {
 	 */
 	_updateActiveItem(event) {
 		const {
+			targetItem,
 			targetItemId,
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
+		document
+			.querySelectorAll(`.${ACTIVE_ITEM_CLASS}`)
+			.forEach(hoveredItem => {
+				hoveredItem.classList.remove(ACTIVE_ITEM_CLASS);
+			});
+
 		if (targetItemId && targetItemType) {
+			targetItem.classList.add(ITEM_CLASS);
+			targetItem.classList.add(ACTIVE_ITEM_CLASS);
+
 			this.store.dispatch(
 				updateActiveItemAction(targetItemId, targetItemType, {
 					appendItem: this._shiftPressed
@@ -206,9 +233,18 @@ class FragmentsEditor extends Component {
 
 		const targetItem = getElement(targetItemId, targetItemType);
 
+		document
+			.querySelectorAll(`.${HOVERED_ITEM_CLASS}`)
+			.forEach(hoveredItem => {
+				hoveredItem.classList.remove(HOVERED_ITEM_CLASS);
+			});
+
 		if (targetItem) {
 			let hoveredItemId = targetItemId;
 			let hoveredItemType = targetItemType;
+
+			targetItem.classList.add(ITEM_CLASS);
+			targetItem.classList.add(HOVERED_ITEM_CLASS);
 
 			const targetItemIsEditable =
 				targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||

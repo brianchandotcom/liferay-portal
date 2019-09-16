@@ -281,35 +281,41 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	_handleFieldOptionChange(event) {
 		const fieldId = event.delegateTarget.value;
 
-		const config = {
-			classNameId: this._selectedAssetEntry.classNameId,
-			classPK: this._selectedAssetEntry.classPK,
-			href: '',
-			mapperType: 'link'
-		};
-
-		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content) {
-			config.fieldId = fieldId;
-		} else if (
-			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
-		) {
-			config.mappedField = fieldId;
-		}
-
-		this._updateRowConfig(config);
-
-		if (
-			!fieldId ||
-			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
-		) {
-			this._mappedFieldValue = '';
+		if (fieldId === '') {
+			this._clearRowConfig();
 		} else {
-			this._getMappedValue(fieldId).then(fieldValue => {
-				if (typeof fieldValue === 'string') {
-					this._mappedFieldValue = fieldValue;
-					this._updateRowConfig({href: fieldValue});
-				}
-			});
+			const config = {
+				classNameId: this._selectedAssetEntry.classNameId,
+				classPK: this._selectedAssetEntry.classPK,
+				href: '',
+				mapperType: 'link'
+			};
+
+			if (
+				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content
+			) {
+				config.fieldId = fieldId;
+			} else if (
+				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
+			) {
+				config.mappedField = fieldId;
+			}
+
+			this._updateRowConfig(config);
+
+			if (
+				!fieldId ||
+				this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
+			) {
+				this._mappedFieldValue = '';
+			} else {
+				this._getMappedValue(fieldId).then(fieldValue => {
+					if (typeof fieldValue === 'string') {
+						this._mappedFieldValue = fieldValue;
+						this._updateRowConfig({href: fieldValue});
+					}
+				});
+			}
 		}
 	}
 

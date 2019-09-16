@@ -20,6 +20,7 @@
 		<!-- Other fields -->
 
 		<column name="batchSize" type="long" />
+		<column name="callbackURL" type="String" />
 		<column name="className" type="String" />
 		<column name="content" type="Blob" />
 		<column name="contentType" type="String" />

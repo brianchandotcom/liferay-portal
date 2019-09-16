@@ -855,13 +855,11 @@ public class JenkinsResultsParserUtil {
 			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
 
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
-				Object object = buildsJSONArray.get(i);
+				JSONObject buildJSONObject = buildsJSONArray.optJSONObject(i);
 
-				if (object == JSONObject.NULL) {
+				if (buildJSONObject == null) {
 					continue;
 				}
-
-				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
 				String distPortalBundlesBuildURL = combine(
 					_getDistPortalBundlesURL(portalBranchName),

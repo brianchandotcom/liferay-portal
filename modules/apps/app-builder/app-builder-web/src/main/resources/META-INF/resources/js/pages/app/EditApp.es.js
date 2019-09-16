@@ -13,6 +13,7 @@
  */
 
 import React, {useState} from 'react';
+import DeployApp from './DeployApp.es';
 import EditAppBody from './EditAppBody.es';
 import EditAppFooter from './EditAppFooter.es';
 import MultiStepNav from './MultiStepNav.es';
@@ -161,9 +162,7 @@ export default ({
 						)}
 
 						{currentStep == 2 && (
-							<div className="autofit-row">
-								<div className="col-md-12">Deploy</div>
-							</div>
+							<DeployApp/>
 						)}
 					</div>
 

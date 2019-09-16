@@ -52,20 +52,16 @@
 
 		<column name="accountEntryUserRelId" primary="true" type="long" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="accountEntryId" type="long" />
-		<column name="userId" type="long" />
+		<column name="accountUserId" type="long" />
 
 		<!-- Finder methods -->
 
-		<finder name="A_U" return-type="AccountEntryUserRel">
+		<finder name="A_A" return-type="AccountEntryUserRel">
 			<finder-column name="accountEntryId" />
-			<finder-column name="userId" />
+			<finder-column name="accountUserId" />
 		</finder>
 
 		<!-- References -->

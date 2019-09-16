@@ -21,25 +21,40 @@ import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.template.LayoutConverter;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.layout.util.template.LayoutData;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletDecorator;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -80,6 +95,8 @@ public class ConvertLayoutMVCActionCommand
 
 		Layout layout = _layoutService.updateType(
 			selPlid, LayoutConstants.TYPE_CONTENT);
+
+		_updatePortletDecorator(layout);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -133,6 +150,71 @@ public class ConvertLayoutMVCActionCommand
 			new Date());
 	}
 
+	private String _getDefaultPortletDecoratorId(Layout layout)
+		throws PortalException {
+
+		Theme theme = layout.getTheme();
+
+		List<PortletDecorator> portletDecorators = theme.getPortletDecorators();
+
+		Stream<PortletDecorator> portletDecoratorsStream =
+			portletDecorators.stream();
+
+		List<PortletDecorator> filteredPortletDecorators =
+			portletDecoratorsStream.filter(
+				portletDecorator -> portletDecorator.isDefaultPortletDecorator()
+			).collect(
+				Collectors.toList()
+			);
+
+		if (ListUtil.isEmpty(filteredPortletDecorators)) {
+			return StringPool.BLANK;
+		}
+
+		PortletDecorator defaultPortletDecorator =
+			filteredPortletDecorators.get(0);
+
+		return defaultPortletDecorator.getPortletDecoratorId();
+	}
+
+	private void _updatePortletDecorator(Layout layout) throws Exception {
+		String defaultPortletDecoratorId = _getDefaultPortletDecoratorId(
+			layout);
+
+		List<PortletPreferences> portletPreferencesList =
+			_portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			String preferencesXML = portletPreferences.getPreferences();
+
+			if (Validator.isNull(preferencesXML)) {
+				preferencesXML = PortletConstants.DEFAULT_PREFERENCES;
+			}
+
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferencesFactoryUtil.fromDefaultXML(preferencesXML);
+
+			String portletSetupPortletDecoratorId =
+				jxPortletPreferences.getValue(
+					"portletSetupPortletDecoratorId", StringPool.BLANK);
+
+			if (Validator.isNotNull(portletSetupPortletDecoratorId)) {
+				continue;
+			}
+
+			jxPortletPreferences.setValue(
+				"portletSetupPortletDecoratorId", defaultPortletDecoratorId);
+
+			portletPreferences.setPreferences(
+				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+
+			_portletPreferencesLocalService.updatePortletPreferences(
+				portletPreferences);
+		}
+	}
+
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -154,5 +236,11 @@ public class ConvertLayoutMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

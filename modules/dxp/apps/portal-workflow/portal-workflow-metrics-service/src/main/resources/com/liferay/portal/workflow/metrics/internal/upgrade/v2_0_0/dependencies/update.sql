@@ -11,7 +11,7 @@ create table WMSLADefinition (
 	calendarKey VARCHAR(75) null,
 	description TEXT null,
 	duration LONG,
-	name STRING null,
+	name VARCHAR(75) null,
 	pauseNodeKeys VARCHAR(75) null,
 	processId LONG,
 	processVersion VARCHAR(75) null,
@@ -35,7 +35,7 @@ create table WMSLADefinitionVersion (
 	createDate DATE null,
 	modifiedDate DATE null,
 	calendarKey VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description TEXT null,
 	duration LONG,
 	name VARCHAR(75) null,
 	pauseNodeKeys VARCHAR(75) null,
@@ -51,7 +51,7 @@ create table WMSLADefinitionVersion (
 	statusDate DATE null
 );
 
-create index IX_C1C90A3E on WMSLADefinition (companyId, name[$COLUMN_LENGTH:4000$], processId);
+create index IX_C1C90A3E on WMSLADefinition (companyId, name[$COLUMN_LENGTH:75$], processId);
 create index IX_9959E720 on WMSLADefinition (companyId, processId, processVersion[$COLUMN_LENGTH:75$], status);
 create index IX_4E8F5783 on WMSLADefinition (companyId, processId, status);
 create index IX_73175D43 on WMSLADefinition (companyId, status);

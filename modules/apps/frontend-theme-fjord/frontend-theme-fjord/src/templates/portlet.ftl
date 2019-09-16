@@ -47,9 +47,7 @@
 			<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
 		</@>
 
-		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
-
-		<#if portlet_display.isShowBackIcon() || show_portlet_decorator || portlet_header?has_content>
+		<#if portlet_display.isShowBackIcon() || portlet_display.isShowPortletTitle() || portlet_header?has_content>
 			<div class="autofit-float autofit-row portlet-header">
 				<#if portlet_display.isShowBackIcon()>
 					<div class="autofit-col">
@@ -64,7 +62,7 @@
 					</div>
 				</#if>
 
-				<#if show_portlet_decorator>
+				<#if portlet_display.isShowPortletTitle()>
 					<div class="autofit-col autofit-col-expand">
 						<h2 class="portlet-title-text">${portlet_title}</h2>
 					</div>

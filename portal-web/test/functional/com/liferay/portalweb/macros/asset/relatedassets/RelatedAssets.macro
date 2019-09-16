@@ -54,7 +54,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		Button.clickAdd();
+		Button.clickDone();
 	}
 
 	macro viewDefaultPG {

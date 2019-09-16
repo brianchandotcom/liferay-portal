@@ -20,6 +20,10 @@ definition {
 			value1 = "${fragmentComment}");
 
 		Button.clickComment();
+
+		AssertElementNotPresent(
+			key_fragmentComment = "${fragmentComment}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_INPUT_CONTENT");
 	}
 
 	macro addCommentViaFragment {
@@ -39,6 +43,10 @@ definition {
 			value1 = "${fragmentComment}");
 
 		Button.clickComment();
+
+		AssertElementNotPresent(
+			key_fragmentComment = "${fragmentComment}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_INPUT_CONTENT");
 	}
 
 	macro addExperience {

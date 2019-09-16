@@ -50,6 +50,7 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
 					<portlet:param name="redirect" value="<%= accountDisplaySearchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
 				</portlet:renderURL>
 

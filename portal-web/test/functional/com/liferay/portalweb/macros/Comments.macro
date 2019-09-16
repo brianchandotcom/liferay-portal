@@ -29,7 +29,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Comments#COMMENT_INFO",
-			value1 = "Comments are read only in Staging.");
+			value1 = "INFO:Comments are unavailable in staged sites.");
 	}
 
 }

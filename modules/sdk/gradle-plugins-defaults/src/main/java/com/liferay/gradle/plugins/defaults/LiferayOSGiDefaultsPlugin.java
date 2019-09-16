@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.FindSecurityBugsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.JSDocDefaultsPlugin;
@@ -302,6 +303,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
+	public static final String WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME =
+		"writeIncludedSourcesDigest";
+
 	public static final String ZIP_ZIPPABLE_RESOURCES_TASK_NAME =
 		"zipZippableResources";
 
@@ -444,10 +448,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, privateProject, testProject);
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
+		WriteDigestTask writeIncludedSourcesDigestTask =
+			_addTaskWriteIncludedSourcesDigest(project);
+
 		final ReplaceRegexTask updateFileVersionsTask =
 			_addTaskUpdateFileVersions(project);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
-			project);
+			project, writeIncludedSourcesDigestTask);
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
@@ -1567,10 +1574,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateVersion(Project project) {
+	private ReplaceRegexTask _addTaskUpdateVersion(
+		Project project, WriteDigestTask writeIncludedSourcesDigestTask) {
+
 		final ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
+
+		replaceRegexTask.finalizedBy(writeIncludedSourcesDigestTask);
 
 		_configureTaskReplaceRegexJSMatches(replaceRegexTask);
 
@@ -1602,6 +1613,38 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			IncrementVersionClosure.MICRO_INCREMENT);
 
 		return replaceRegexTask;
+	}
+
+	private WriteDigestTask _addTaskWriteIncludedSourcesDigest(
+		Project project) {
+
+		WriteDigestTask writeDigestTask = GradleUtil.addTask(
+			project, WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME,
+			WriteDigestTask.class);
+
+		writeDigestTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					WriteDigestTask writeDigestTask = (WriteDigestTask)task;
+
+					FileCollection source = writeDigestTask.getSource();
+
+					if (source.isEmpty()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		writeDigestTask.setDescription(
+			"Writes a digest file to keep track of files from other projects " +
+				"used by this project.");
+
+		return writeDigestTask;
 	}
 
 	private Zip _addTaskZipDirectory(

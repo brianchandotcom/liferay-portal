@@ -949,6 +949,81 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return file;
 	}
 
+	private boolean _hasStaleDigestFile(Project project) {
+		Logger logger = project.getLogger();
+
+		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayThemeDefaultsPlugin.
+						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+			String digest = writeDigestTask.getDigest();
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"Parent theme for {} has new commits", project);
+				}
+
+				return true;
+			}
+		}
+
+		if (GradleUtil.hasPlugin(project, LiferayOSGiDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayOSGiDefaultsPlugin.
+						WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME);
+
+			FileCollection sourceFiles = writeDigestTask.getSource();
+
+			String digest = null;
+
+			if (!sourceFiles.isEmpty()) {
+				digest = writeDigestTask.getDigest();
+			}
+
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Included source files for ");
+					sb.append(project.getPath());
+					sb.append(" have new commits");
+
+					for (File file : sourceFiles.getFiles()) {
+						sb.append("\n- ");
+						sb.append(file);
+					}
+
+					logger.quiet(sb.toString());
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _hasStaleProjectDependencies(Project project) {
 		Logger logger = project.getLogger();
 
@@ -1047,7 +1122,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Properties artifactProperties = GUtil.loadProperties(
 			artifactPropertiesFile);
 
-		String artifactGitId = artifactProperties.getProperty("artifact.git.id");
+		String artifactGitId = artifactProperties.getProperty(
+			"artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
 			if (logger.isQuietEnabled()) {
@@ -1078,81 +1154,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				if (logger.isQuietEnabled()) {
 					logger.quiet("{} has new commits", gitWorkingDir.getName());
-				}
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _hasStaleDigestFile(Project project) {
-		Logger logger = project.getLogger();
-
-		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
-			WriteDigestTask writeDigestTask =
-				(WriteDigestTask)GradleUtil.getTask(
-					project,
-					LiferayThemeDefaultsPlugin.
-						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
-
-			String digest = writeDigestTask.getDigest();
-			String oldDigest = writeDigestTask.getOldDigest();
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Digest for {} is {}, old digest is {}", writeDigestTask,
-					digest, oldDigest);
-			}
-
-			if (!Objects.equals(digest, oldDigest)) {
-				if (logger.isQuietEnabled()) {
-					logger.quiet(
-						"Parent theme for {} has new commits", project);
-				}
-
-				return true;
-			}
-		}
-
-		if (GradleUtil.hasPlugin(project, LiferayOSGiDefaultsPlugin.class)) {
-			WriteDigestTask writeDigestTask =
-				(WriteDigestTask)GradleUtil.getTask(
-					project,
-					LiferayOSGiDefaultsPlugin.
-						WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME);
-
-			FileCollection sourceFiles = writeDigestTask.getSource();
-
-			String digest = null;
-
-			if (!sourceFiles.isEmpty()) {
-				digest = writeDigestTask.getDigest();
-			}
-
-			String oldDigest = writeDigestTask.getOldDigest();
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"Digest for {} is {}, old digest is {}", writeDigestTask,
-					digest, oldDigest);
-			}
-
-			if (!Objects.equals(digest, oldDigest)) {
-				if (logger.isQuietEnabled()) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("Included source files for ");
-					sb.append(project.getPath());
-					sb.append(" have new commits");
-
-					for (File file : sourceFiles.getFiles()) {
-						sb.append("\n- ");
-						sb.append(file);
-					}
-
-					logger.quiet(sb.toString());
 				}
 
 				return true;

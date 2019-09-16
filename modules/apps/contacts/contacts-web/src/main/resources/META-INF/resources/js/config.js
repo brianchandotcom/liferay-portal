@@ -29,7 +29,6 @@
 							'datasource-io',
 							'json-parse',
 							'liferay-portlet-base',
-							'liferay-portlet-url',
 							'liferay-util-window'
 						]
 					}

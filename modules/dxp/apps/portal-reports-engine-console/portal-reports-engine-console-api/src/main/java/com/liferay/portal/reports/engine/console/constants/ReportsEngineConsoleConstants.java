@@ -19,6 +19,9 @@ package com.liferay.portal.reports.engine.console.constants;
  */
 public class ReportsEngineConsoleConstants {
 
+	public static final String RESOURCE_NAME =
+		"com.liferay.portal.reports.engine.console.admin";
+
 	public static final String SERVICE_NAME = "com.liferay.portal.reports";
 
 }

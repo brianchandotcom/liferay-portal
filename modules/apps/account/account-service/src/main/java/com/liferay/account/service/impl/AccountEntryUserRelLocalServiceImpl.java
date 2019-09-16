@@ -39,23 +39,25 @@ public class AccountEntryUserRelLocalServiceImpl
 	 * AccountEntryUserRel is essentially an "AccountEntry membership".
 	 *
 	 * @param accountEntryId the primary key of the AccountEntry
-	 * @param userId the primary key of the User
+	 * @param accountUserId the primary key of the User
 	 * @return the AccountEntryUserRel
 	 * @review
 	 */
 	@Override
 	public AccountEntryUserRel addAccountEntryUserRel(
-			long accountEntryId, long userId)
+			long accountEntryId, long accountUserId)
 		throws PortalException {
 
-		if (accountEntryUserRelPersistence.fetchByA_U(accountEntryId, userId) !=
-				null) {
+		AccountEntryUserRel existingAccountEntryUserRel =
+			accountEntryUserRelPersistence.fetchByA_A(
+				accountEntryId, accountUserId);
 
+		if (existingAccountEntryUserRel != null) {
 			throw new DuplicateAccountEntryUserRelException();
 		}
 
 		accountEntryLocalService.getAccountEntry(accountEntryId);
-		userLocalService.getUser(userId);
+		userLocalService.getUser(accountUserId);
 
 		long accountEntryUserRelId = counterLocalService.increment();
 
@@ -64,7 +66,7 @@ public class AccountEntryUserRelLocalServiceImpl
 
 		accountEntryUserRel.setAccountEntryUserRelId(accountEntryUserRelId);
 		accountEntryUserRel.setAccountEntryId(accountEntryId);
-		accountEntryUserRel.setUserId(userId);
+		accountEntryUserRel.setAccountUserId(accountUserId);
 
 		return addAccountEntryUserRel(accountEntryUserRel);
 	}

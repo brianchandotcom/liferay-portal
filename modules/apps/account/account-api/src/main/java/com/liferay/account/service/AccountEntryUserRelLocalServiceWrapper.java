@@ -52,17 +52,17 @@ public class AccountEntryUserRelLocalServiceWrapper
 	 * AccountEntryUserRel is essentially an "AccountEntry membership".
 	 *
 	 * @param accountEntryId the primary key of the AccountEntry
-	 * @param userId the primary key of the User
+	 * @param accountUserId the primary key of the User
 	 * @return the AccountEntryUserRel
 	 * @review
 	 */
 	@Override
 	public com.liferay.account.model.AccountEntryUserRel addAccountEntryUserRel(
-			long accountEntryId, long userId)
+			long accountEntryId, long accountUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, userId);
+			accountEntryId, accountUserId);
 	}
 
 	/**

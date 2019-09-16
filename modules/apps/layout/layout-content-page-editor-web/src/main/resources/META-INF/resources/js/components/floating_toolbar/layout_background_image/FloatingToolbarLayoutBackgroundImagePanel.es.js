@@ -141,16 +141,15 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 
 		if (
 			nextState.mappedAssetEntries &&
-			nextState.item.config.backgroundImage &&
-			nextState.item.config.backgroundImage.classNameId &&
-			nextState.item.config.backgroundImage.classPK
+			nextState._selectedAssetEntry &&
+			nextState._selectedAssetEntry.classNameId &&
+			nextState._selectedAssetEntry.classPK
 		) {
 			const mappedAssetEntry = nextState.mappedAssetEntries.find(
 				assetEntry =>
-					nextState.item.config.backgroundImage.classNameId ===
+					nextState._selectedAssetEntry.classNameId ===
 						assetEntry.classNameId &&
-					nextState.item.config.backgroundImage.classPK ===
-						assetEntry.classPK
+					nextState._selectedAssetEntry.classPK === assetEntry.classPK
 			);
 
 			if (mappedAssetEntry) {
@@ -174,6 +173,9 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 		if (firstRender) {
 			if (this.item.config.backgroundImage) {
 				const {backgroundImage} = this.item.config;
+
+				this._selectedAssetEntry.classNameId = this.item.config.backgroundImage.classNameId;
+				this._selectedAssetEntry.classPK = this.item.config.backgroundImage.classPK;
 
 				this._selectedImageSourceTypeId =
 					backgroundImage.classNameId || backgroundImage.mappedField
@@ -277,12 +279,6 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			assetBrowserURL: assetBrowserUrl,
 			callback: selectedAssetEntry => {
 				this._selectAssetEntry(selectedAssetEntry);
-
-				this.store.dispatch(
-					Object.assign({}, selectedAssetEntry, {
-						type: ADD_MAPPED_ASSET_ENTRY
-					})
-				);
 			},
 			eventName: `${this.portletNamespace}selectAsset`,
 			modalTitle: assetBrowserWindowTitle
@@ -394,13 +390,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 		} else if (
 			this._selectedMappingSourceTypeId ===
 				MAPPING_SOURCE_TYPE_IDS.content &&
-			this.item.config.backgroundImage &&
-			this.item.config.backgroundImage.classNameId &&
-			this.item.config.backgroundImage.classPK
+			this._selectedAssetEntry.classNameId &&
+			this._selectedAssetEntry.classPK
 		) {
 			promise = getAssetMappingFields(
-				this.item.config.backgroundImage.classNameId,
-				this.item.config.backgroundImage.classPK
+				this._selectedAssetEntry.classNameId,
+				this._selectedAssetEntry.classPK
 			);
 		}
 
@@ -409,6 +404,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 				this._fields = response.filter(
 					field =>
 						COMPATIBLE_TYPES['image'].indexOf(field.type) !== -1
+				);
+
+				this.store.dispatch(
+					Object.assign({}, this._selectedAssetEntry, {
+						type: ADD_MAPPED_ASSET_ENTRY
+					})
 				);
 			});
 		} else if (this._fields.length) {
@@ -424,14 +425,9 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_selectAssetEntry(assetEntry) {
-		this.store.dispatch(
-			updateRowConfigAction(this.itemId, {
-				backgroundImage: {
-					classNameId: assetEntry.classNameId,
-					classPK: assetEntry.classPK
-				}
-			})
-		);
+		this._selectedAssetEntry = assetEntry;
+
+		this._loadFields();
 	}
 
 	/**
@@ -440,16 +436,24 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_selectField(fieldId) {
-		const fieldData =
+		let fieldData =
 			this._selectedMappingSourceTypeId ===
 			MAPPING_SOURCE_TYPE_IDS.content
 				? {
-						classNameId: this.item.config.backgroundImage
-							.classNameId,
-						classPK: this.item.config.backgroundImage.classPK,
+						classNameId: this._selectedAssetEntry.classNameId,
+						classPK: this._selectedAssetEntry.classPK,
 						fieldId
 				  }
 				: {mappedField: fieldId};
+
+		if (fieldId === '') {
+			fieldData = {
+				classNameId: '',
+				classPK: '',
+				fieldId: '',
+				mappedField: ''
+			};
+		}
 
 		this.store.dispatch(
 			updateRowConfigAction(this.itemId, {
@@ -492,6 +496,16 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	_fields: Config.array()
 		.internal()
 		.value([]),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {string}
+	 */
+	_selectedAssetEntry: Config.object()
+		.internal()
+		.value({}),
 
 	/**
 	 * @default undefined

@@ -105,20 +105,6 @@ public class PersonalApplicationURLUtil {
 			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 				group.getGroupId(), privateLayout,
 				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
-
-			if ((controlPanelLayout && !group.isControlPanel()) ||
-				!LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), layout, true,
-					ActionKeys.VIEW)) {
-
-				Group controlPanelGroup = themeDisplay.getControlPanelGroup();
-
-				layout = new VirtualLayout(
-					LayoutLocalServiceUtil.getFriendlyURLLayout(
-						controlPanelGroup.getGroupId(), privateLayout,
-						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL),
-					themeDisplay.getScopeGroup());
-			}
 		}
 		catch (NoSuchLayoutException nsle) {
 
@@ -130,6 +116,20 @@ public class PersonalApplicationURLUtil {
 
 			layout = _addEmbeddedPersonalApplicationLayout(
 				user.getUserId(), group.getGroupId(), privateLayout);
+		}
+
+		if ((controlPanelLayout && !group.isControlPanel()) ||
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout, true,
+				ActionKeys.VIEW)) {
+
+			Group controlPanelGroup = themeDisplay.getControlPanelGroup();
+
+			layout = new VirtualLayout(
+				LayoutLocalServiceUtil.getFriendlyURLLayout(
+					controlPanelGroup.getGroupId(), privateLayout,
+					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL),
+				themeDisplay.getScopeGroup());
 		}
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(

@@ -116,7 +116,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WMSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name STRING null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WMSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WMSLADefinition";
 

@@ -374,13 +374,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 			"WMSLADefinitionVersion", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionVersionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "calendarKey", true, "description",
-			true, "duration", true, "name", true, "pauseNodeKeys", true,
-			"processId", true, "processVersion", true, "startNodeKeys", true,
-			"stopNodeKeys", true, "version", true,
-			"workflowMetricsSLADefinitionId", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			true, "modifiedDate", true, "calendarKey", true, "duration", true,
+			"name", true, "pauseNodeKeys", true, "processId", true,
+			"processVersion", true, "startNodeKeys", true, "stopNodeKeys", true,
+			"version", true, "workflowMetricsSLADefinitionId", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test

@@ -77,7 +77,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"calendarKey", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"duration", Types.BIGINT},
+		{"description", Types.CLOB}, {"duration", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"pauseNodeKeys", Types.VARCHAR},
 		{"processId", Types.BIGINT}, {"processVersion", Types.VARCHAR},
 		{"startNodeKeys", Types.VARCHAR}, {"stopNodeKeys", Types.VARCHAR},
@@ -100,7 +100,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("calendarKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pauseNodeKeys", Types.VARCHAR);
@@ -117,7 +117,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WMSLADefinitionVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description VARCHAR(75) null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,wmSLADefinitionId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WMSLADefinitionVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,wmSLADefinitionId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WMSLADefinitionVersion";

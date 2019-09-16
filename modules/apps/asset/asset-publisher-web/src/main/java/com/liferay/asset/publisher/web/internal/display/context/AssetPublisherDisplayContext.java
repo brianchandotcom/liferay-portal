@@ -1104,9 +1104,11 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
+		long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+			getReferencedModelsGroupIds());
+
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupsVocabularies(
-				getReferencedModelsGroupIds());
+			AssetVocabularyServiceUtil.getGroupsVocabularies(groupIds);
 
 		return ListUtil.toList(
 			vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR);

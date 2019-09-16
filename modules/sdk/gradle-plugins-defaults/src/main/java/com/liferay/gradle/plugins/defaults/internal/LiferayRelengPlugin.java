@@ -324,13 +324,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				public boolean isSatisfiedBy(Task task) {
 					Project project = task.getProject();
 
-					if (!GradlePluginsDefaultsUtil.isTestProject(project) &&
-						_hasProjectDependencies(project)) {
-
-						return true;
+					if (GradlePluginsDefaultsUtil.isTestProject(project)) {
+						return false;
 					}
 
-					return false;
+					if (!_hasProjectDependencies(project) &&
+						!_hasStaleDigestFile(task.getProject())) {
+
+						return false;
+					}
+
+					return true;
 				}
 
 			});
@@ -1017,6 +1021,34 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
 
 			String digest = writeDigestTask.getDigest();
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
+				return true;
+			}
+		}
+
+		if (GradleUtil.hasPlugin(project, LiferayOSGiDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayOSGiDefaultsPlugin.
+						WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME);
+
+			FileCollection sourceFiles = writeDigestTask.getSource();
+
+			String digest = null;
+
+			if (!sourceFiles.isEmpty()) {
+				digest = writeDigestTask.getDigest();
+			}
+
 			String oldDigest = writeDigestTask.getOldDigest();
 
 			if (logger.isInfoEnabled()) {

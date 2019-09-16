@@ -854,6 +854,9 @@ public class JenkinsResultsParserUtil {
 
 			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
 
+			Pattern distPortalBundleFileNamesPattern =
+				_getDistPortalBundleFileNamesPattern(portalBranchName);
+
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.optJSONObject(i);
 
@@ -866,25 +869,12 @@ public class JenkinsResultsParserUtil {
 					String.valueOf(buildJSONObject.getInt("number")));
 
 				try {
-					String content = toString(distPortalBundlesBuildURL);
+					Matcher matcher = distPortalBundleFileNamesPattern.matcher(
+						toString(distPortalBundlesBuildURL));
 
-					boolean containsBundleFileNames = true;
-
-					for (String distPortalBundleFileName :
-							_getDistPortalBundleFileNames(portalBranchName)) {
-
-						if (!content.contains(distPortalBundleFileName)) {
-							containsBundleFileNames = false;
-
-							break;
-						}
+					if (matcher.find()) {
+						return distPortalBundlesBuildURL;
 					}
-
-					if (!containsBundleFileNames) {
-						continue;
-					}
-
-					return distPortalBundlesBuildURL;
 				}
 				catch (IOException ioe) {
 					System.out.println("WARNING: " + ioe.getMessage());
@@ -2869,7 +2859,7 @@ public class JenkinsResultsParserUtil {
 		return combine(parentFileCanonicalPath, "/", canonicalFile.getName());
 	}
 
-	private static String[] _getDistPortalBundleFileNames(
+	private static Pattern _getDistPortalBundleFileNamesPattern(
 		String portalBranchName) {
 
 		try {
@@ -2877,15 +2867,38 @@ public class JenkinsResultsParserUtil {
 				getBuildProperties(), "dist.portal.bundle.file.names",
 				portalBranchName);
 
-			if (distPortalBundleFileNames != null) {
-				return distPortalBundleFileNames.split(",");
+			if (distPortalBundleFileNames == null) {
+				distPortalBundleFileNames =
+					_DIST_PORTAL_BUNDLE_FILE_NAMES_DEFAULT;
 			}
+
+			StringBuilder sb = new StringBuilder();
+
+			List<String> distPortalBundleFileNamesList = Lists.newArrayList(
+				distPortalBundleFileNames.split("\\s*,\\s*"));
+
+			Collections.sort(distPortalBundleFileNamesList);
+
+			for (String distPortalBundleFileName :
+					distPortalBundleFileNamesList) {
+
+				String quotedDistPortalBundleFileName = Pattern.quote(
+					distPortalBundleFileName);
+
+				sb.append("\\<a href=\"");
+				sb.append(quotedDistPortalBundleFileName);
+				sb.append("\"\\>");
+				sb.append(quotedDistPortalBundleFileName);
+				sb.append("\\</a\\>.*");
+			}
+
+			sb.setLength(sb.length() - 2);
+
+			return Pattern.compile(sb.toString(), Pattern.DOTALL);
 		}
 		catch (IOException ioe) {
-			System.out.println("WARNING: " + ioe.getMessage());
+			throw new RuntimeException("Unable to load build properties", ioe);
 		}
-
-		return _DIST_PORTAL_BUNDLE_FILE_NAMES_DEFAULT;
 	}
 
 	private static String _getDistPortalBundlesURL(String portalBranchName) {
@@ -3110,10 +3123,9 @@ public class JenkinsResultsParserUtil {
 		return true;
 	}
 
-	private static final String[] _DIST_PORTAL_BUNDLE_FILE_NAMES_DEFAULT = {
-		"git-hash", "liferay-portal-bundle-tomcat.tar.gz",
-		"liferay-portal-source.tar.gz"
-	};
+	private static final String _DIST_PORTAL_BUNDLE_FILE_NAMES_DEFAULT =
+		"git-hash,liferay-portal-bundle-tomcat.tar.gz," +
+			"liferay-portal-source.tar.gz";
 
 	private static final String _DIST_PORTAL_BUNDLES_URL_DEFAULT =
 		"http://test-1-0/userContent/bundles/test-portal-acceptance-upstream";

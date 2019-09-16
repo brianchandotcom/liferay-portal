@@ -774,21 +774,20 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Properties artifactProperties;
+					Project project = recordArtifactTask.getProject();
 
-					File artifactPropertiesFile =
-						recordArtifactTask.getOutputFile();
+					if (_isStale(
+							project, project.getProjectDir(),
+							recordArtifactTask.getOutputFile())) {
 
-					if (artifactPropertiesFile.exists()) {
-						artifactProperties = GUtil.loadProperties(
-							artifactPropertiesFile);
-					}
-					else {
-						artifactProperties = new Properties();
+						return true;
 					}
 
-					return _isStale(
-						recordArtifactTask.getProject(), artifactProperties);
+					if (_hasStaleDigestFile(project)) {
+						return true;
+					}
+
+					return false;
 				}
 
 			});
@@ -967,23 +966,36 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private boolean _isStale(
-		final Project project, Properties artifactProperties) {
+		Project project, File gitWorkingDir, File artifactPropertiesFile) {
 
 		Logger logger = project.getLogger();
 
-		final String artifactGitId = artifactProperties.getProperty(
-			"artifact.git.id");
+		if (!artifactPropertiesFile.exists()) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"{} has never been published", gitWorkingDir.getName());
+			}
+
+			return true;
+		}
+
+		Properties artifactProperties = GUtil.loadProperties(
+			artifactPropertiesFile);
+
+		String artifactGitId = artifactProperties.getProperty("artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
 			if (logger.isInfoEnabled()) {
-				logger.info("{} has never been published", project);
+				logger.info(
+					"{} has never been published", gitWorkingDir.getName());
 			}
 
 			return true;
 		}
 
 		String result = GitUtil.getGitResult(
-			project, "log", "--format=%s", artifactGitId + "..HEAD", ".");
+			project, gitWorkingDir, "log", "--format=%s",
+			artifactGitId + "..HEAD", ".");
 
 		String[] lines = result.split("\\r?\\n");
 
@@ -1001,10 +1013,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				return true;
 			}
-		}
-
-		if (_hasStaleDigestFile(project)) {
-			return true;
 		}
 
 		return false;

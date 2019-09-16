@@ -863,7 +863,7 @@ public class JenkinsResultsParserUtil {
 
 				String distPortalBundlesBuildURL = combine(
 					_getDistPortalBundlesURL(portalBranchName),
-					String.valueOf(buildJSONObject.getInt("number")), "/");
+					String.valueOf(buildJSONObject.getInt("number")));
 
 				try {
 					String content = toString(distPortalBundlesBuildURL);

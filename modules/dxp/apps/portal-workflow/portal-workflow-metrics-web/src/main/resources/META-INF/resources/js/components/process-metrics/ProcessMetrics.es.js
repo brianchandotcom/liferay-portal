@@ -19,6 +19,7 @@ import DropDownHeader from './DropDownHeader.es';
 import {getPathname} from '../../shared/components/tabs/TabItem.es';
 import {openErrorToast} from '../../shared/util/toast.es';
 import PendingItemsCard from './process-items/PendingItemsCard.es';
+import PerformanceByStepCard from './performance-by-step/PerformanceByStepCard.es';
 import React from 'react';
 import {sub} from '../../shared/util/lang.es';
 import Tabs from '../../shared/components/tabs/Tabs.es';
@@ -177,7 +178,8 @@ class ProcessMetrics extends React.Component {
 							path={performanceTab.path}
 							render={withParams(
 								CompletedItemsCard,
-								CompletionVelocityCard
+								CompletionVelocityCard,
+								PerformanceByStepCard
 							)}
 						/>
 					</Switch>

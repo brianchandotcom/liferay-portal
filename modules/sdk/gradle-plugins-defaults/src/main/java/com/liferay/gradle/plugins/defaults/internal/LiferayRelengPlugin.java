@@ -1019,8 +1019,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 				else if (logger.isQuietEnabled()) {
 					logger.quiet(
-						"{} has version \"default\" in {}.", project,
-						dependency);
+						"Project {} has version \"default\" in {}.",
+						project.getPath(), dependency);
 
 					return true;
 				}
@@ -1036,8 +1036,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Logger logger = project.getLogger();
 
 		if (!artifactPropertiesFile.exists()) {
-			if (logger.isInfoEnabled()) {
-				logger.info(
+			if (logger.isQuietEnabled()) {
+				logger.quiet(
 					"{} has never been published", gitWorkingDir.getName());
 			}
 
@@ -1050,8 +1050,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String artifactGitId = artifactProperties.getProperty("artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
-			if (logger.isInfoEnabled()) {
-				logger.info(
+			if (logger.isQuietEnabled()) {
+				logger.quiet(
 					"{} has never been published", gitWorkingDir.getName());
 			}
 
@@ -1075,6 +1075,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			if (!line.contains(
 					WriteArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+
+				if (logger.isQuietEnabled()) {
+					logger.quiet("{} has new commits", gitWorkingDir.getName());
+				}
 
 				return true;
 			}
@@ -1103,6 +1107,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"Parent theme for {} has new commits", project);
+				}
+
 				return true;
 			}
 		}
@@ -1131,6 +1140,21 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 
 			if (!Objects.equals(digest, oldDigest)) {
+				if (logger.isQuietEnabled()) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("Included source files for ");
+					sb.append(project.getPath());
+					sb.append(" have new commits");
+
+					for (File file : sourceFiles.getFiles()) {
+						sb.append("\n- ");
+						sb.append(file);
+					}
+
+					logger.quiet(sb.toString());
+				}
+
 				return true;
 			}
 		}

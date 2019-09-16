@@ -190,6 +190,24 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	}
 
 	/**
+	 * Clears row config
+	 * @private
+	 * @review
+	 */
+	_clearRowConfig() {
+		const config = {
+			classNameId: '',
+			classPK: '',
+			fieldId: '',
+			href: '',
+			mappedField: '',
+			mapperType: 'link'
+		};
+
+		this._updateRowConfig(config);
+	}
+
+	/**
 	 * @private
 	 * @review
 	 */
@@ -328,18 +346,8 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	_handleSourceTypeChange(event) {
 		this._selectedSourceTypeId = event.delegateTarget.value;
 
-		const config = {
-			classNameId: '',
-			classPK: '',
-			fieldId: '',
-			href: '',
-			mappedField: '',
-			mapperType: 'link'
-		};
-
 		this._clearFields();
-
-		this._updateRowConfig(config);
+		this._clearRowConfig();
 	}
 
 	/**

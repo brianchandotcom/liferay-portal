@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_COMMENTS_INPUT_CONTENT</td>
+	<td>//div[contains(@class,'alloy-editor-container') and contains(@id,'pageEditorCommentEditor')]/div[contains(@data-placeholder,'Type your comment here.')]/p[contains(.,'${fragmentComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
 	<td>//div[contains(@class,'text-secondary')]/p[contains(.,'${key_fragmentComment}')]</td>
 	<td></td>

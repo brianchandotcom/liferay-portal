@@ -14,6 +14,7 @@ import {AppContext} from './AppContext.es';
 import fetch from '../shared/rest/fetch.es';
 import HeaderController from '../shared/components/header-controller/HeaderController.es';
 import InstanceListCard from './process-metrics/instance-list/InstanceListCard.es';
+import PerformanceByStep from './process-metrics/performance-by-step/PerformanceByStep.es';
 import ProcessMetrics from './process-metrics/ProcessMetrics.es';
 import ProcessListCard from './process-list/ProcessListCard.es';
 import React from 'react';
@@ -105,6 +106,12 @@ export default class AppComponent extends React.Component {
 								exact
 								path="/sla/edit/:processId/:id"
 								render={withParams(SLAForm)}
+							/>
+
+							<Route
+								exact
+								path="/performance/:processId/:pageSize/:page/:sort"
+								render={withParams(PerformanceByStep)}
 							/>
 						</Switch>
 					</div>

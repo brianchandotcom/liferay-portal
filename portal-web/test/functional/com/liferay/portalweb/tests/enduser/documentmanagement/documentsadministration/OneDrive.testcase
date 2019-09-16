@@ -194,6 +194,68 @@ definition {
 			tagNameList = "adventures");
 	}
 
+	@description = "This test ensures that an Excel sheet can be deleted."
+	@priority = "5"
+	test DeleteExcelSheet {
+		property test.name.skip.portal.instance = "OneDrive#DeleteExcelSheet";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "Excel Sheet Title",
+			key_documentTitle = "Untitled.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Excel Sheet Title");
+	}
+
+	@description = "This test ensures that a PowerPoint presentation can be deleted."
+	@priority = "5"
+	test DeletePowerPointPresentation {
+		property test.name.skip.portal.instance = "OneDrive#DeletePowerPointPresentation";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "PowerPoint Presentation Title",
+			key_documentTitle = "Untitled.pptx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "PowerPoint Presentation Title");
+	}
+
+	@description = "This test ensures that a Word document can be deleted."
+	@priority = "5"
+	test DeleteWordDocument {
+		property test.name.skip.portal.instance = "OneDrive#DeleteWordDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.deletePG(dmDocumentTitle = "Untitled");
+	}
+
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
 	@priority = "4"
 	test EditExcelSheet {

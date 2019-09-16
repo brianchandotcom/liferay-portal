@@ -21,7 +21,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.util.FragmentPortletSetupUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.CharPool;
@@ -421,14 +420,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			_updateLayoutPortletSetup(
 				portletPreferencesList, jxPortletPreferences);
-		}
-
-		try {
-			FragmentPortletSetupUtil.setPortletBareboneCSSClassName(
-				jxPortletPreferences);
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
 		}
 
 		Document preferencesDocument = _getDocument(

@@ -58,11 +58,13 @@ public class BatchEngineTaskLocalServiceUtil {
 				batchEngineTaskContentType,
 			com.liferay.batch.engine.BatchEngineTaskOperation
 				batchEngineTaskOperation,
-			long batchSize, String className, byte[] content, String version) {
+			long batchSize, String callbackURL, String className,
+			byte[] content, String version) {
 
 		return getService().addBatchEngineTask(
 			companyId, userId, batchEngineTaskContentType,
-			batchEngineTaskOperation, batchSize, className, content, version);
+			batchEngineTaskOperation, batchSize, callbackURL, className,
+			content, version);
 	}
 
 	/**

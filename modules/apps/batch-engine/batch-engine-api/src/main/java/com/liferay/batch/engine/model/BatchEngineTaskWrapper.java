@@ -53,6 +53,7 @@ public class BatchEngineTaskWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("batchSize", getBatchSize());
+		attributes.put("callbackURL", getCallbackURL());
 		attributes.put("className", getClassName());
 		attributes.put("content", getContent());
 		attributes.put("contentType", getContentType());
@@ -114,6 +115,12 @@ public class BatchEngineTaskWrapper
 
 		if (batchSize != null) {
 			setBatchSize(batchSize);
+		}
+
+		String callbackURL = (String)attributes.get("callbackURL");
+
+		if (callbackURL != null) {
+			setCallbackURL(callbackURL);
 		}
 
 		String className = (String)attributes.get("className");
@@ -189,6 +196,16 @@ public class BatchEngineTaskWrapper
 	@Override
 	public long getBatchSize() {
 		return model.getBatchSize();
+	}
+
+	/**
+	 * Returns the callback url of this batch engine task.
+	 *
+	 * @return the callback url of this batch engine task
+	 */
+	@Override
+	public String getCallbackURL() {
+		return model.getCallbackURL();
 	}
 
 	/**
@@ -389,6 +406,16 @@ public class BatchEngineTaskWrapper
 	@Override
 	public void setBatchSize(long batchSize) {
 		model.setBatchSize(batchSize);
+	}
+
+	/**
+	 * Sets the callback url of this batch engine task.
+	 *
+	 * @param callbackURL the callback url of this batch engine task
+	 */
+	@Override
+	public void setCallbackURL(String callbackURL) {
+		model.setCallbackURL(callbackURL);
 	}
 
 	/**

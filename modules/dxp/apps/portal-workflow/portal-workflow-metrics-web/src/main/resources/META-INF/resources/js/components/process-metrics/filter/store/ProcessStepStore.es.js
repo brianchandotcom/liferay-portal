@@ -65,7 +65,9 @@ const useProcessStep = (processId, processStepKeys) => {
 		);
 	};
 
-	useEffect(() => fetchData(), []);
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	const previousKeys = usePrevious(processStepKeys);
 

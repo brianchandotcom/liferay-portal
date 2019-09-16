@@ -41,7 +41,7 @@ const useTimeRange = timeRangeKeys => {
 		setError(null);
 		setLoading(true);
 
-		return client
+		client
 			.get('/time-ranges')
 			.then(({data}) => {
 				const timeRanges = [
@@ -99,7 +99,7 @@ const useTimeRange = timeRangeKeys => {
 		);
 	};
 
-	useEffect(() => fetchData(), []);
+	useEffect(fetchData, []);
 
 	const previousKeys = usePrevious(timeRangeKeys);
 

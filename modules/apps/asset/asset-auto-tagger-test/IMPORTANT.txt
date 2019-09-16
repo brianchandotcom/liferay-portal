@@ -1,0 +1,21 @@
+The issue here is that messages are being imported as separate entities instead of being imported [after the commented entity|https://github.com/liferay/liferay-portal/blob/c23914c90b3cfb3adcc4891300c2ba410cd86581/portal-kernel/src/com/liferay/exportimport/kernel/lar/BaseStagedModelDataHandler.java#L394] (the FragmentEntryLink in this case).
+
+When this happens, the discussion is imported using the referenced entity classPK from the staging group since the entity hasn't been imported yet. When staging is disabled the staging group is deleted and the comments are lost.
+
+This is what happens when the publish to staging button is clicked:
+ # The message is imported as an independent entity [here|https://github.com/liferay/liferay-portal/blob/72b04a2550124973b6c9977a8bd82019c0ca7c47/modules/apps/export-import/export-import-service/src/main/java/com/liferay/exportimport/internal/controller/LayoutImportController.java#L563].
+# Since [the message depends on the discussion|https://github.com/liferay/liferay-portal/blob/9434ebde2d946839a8ac8cda18d89e4d03e884cb/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/exportimport/data/handler/MBMessageStagedModelDataHandler.java#L126-L128], the discussion is imported first.
+# Th MBDiscussionStagedModelDataHandler [retrieves the referenced entity's classPK|https://github.com/liferay/liferay-portal/blob/ca3b399adfd313e8b9df1a32e5d335b424a29570/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/exportimport/data/handler/MBDiscussionStagedModelDataHandler.java#L121-L125] (FragmentEntryLink) which hasn't been imported yet therefore obtaining the wrong classPK, the one from the staging group. This causes [the next call|https://github.com/liferay/liferay-portal/blob/ca3b399adfd313e8b9df1a32e5d335b424a29570/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/exportimport/data/handler/MBDiscussionStagedModelDataHandler.java#L127-L129] to obtain the exisiting discussion so nothing is actually imported since the original discussion is reused, which is wrong.
+ # [MBMessageStagedModelDataHandler#doImportStagedModel|https://github.com/liferay/liferay-portal/blob/9434ebde2d946839a8ac8cda18d89e4d03e884cb/modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/exportimport/data/handler/MBMessageStagedModelDataHandler.java#L219] uses the existing discussion and the message is imported to it. This causes the message to actually appear twice in the staging's page editor. 
+# When staging is disabled the staging group is deleted and the messages with it.
+
+
+
+
+ 
+
+ 
+
+ 
+
+ 

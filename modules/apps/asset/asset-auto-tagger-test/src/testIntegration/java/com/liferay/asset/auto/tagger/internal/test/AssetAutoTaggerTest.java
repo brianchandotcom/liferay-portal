@@ -71,18 +71,6 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 	}
 
 	@Test
-	public void testAutoTagsANewAssetOnDraft() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		AssetEntry assetEntry = addFileEntryAssetEntry(serviceContext);
-
-		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
-	}
-
-	@Test
 	public void testAutoTagsANewAssetOnPublishAfterDraft() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
@@ -148,6 +136,18 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 
 				Assert.assertTrue(assetTags.isEmpty());
 			});
+	}
+
+	@Test
+	public void testDoesNotAutoTagANewAssetOnDraft() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId(), 0);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		AssetEntry assetEntry = addFileEntryAssetEntry(serviceContext);
+
+		assertDoesNotContainAssetTagName(assetEntry, ASSET_TAG_NAME_AUTO);
 	}
 
 	@Test

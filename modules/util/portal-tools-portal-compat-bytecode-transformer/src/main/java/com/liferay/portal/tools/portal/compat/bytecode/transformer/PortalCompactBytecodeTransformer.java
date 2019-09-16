@@ -50,10 +50,7 @@ public class PortalCompactBytecodeTransformer {
 
 					String fileName = String.valueOf(filePath.getFileName());
 
-					if (fileName.endsWith(".class") &&
-						!fileName.endsWith("ServiceUtil.class") &&
-						!fileName.endsWith("ServiceWrapper.class")) {
-
+					if (fileName.endsWith(".class")) {
 						_transform(filePath);
 					}
 

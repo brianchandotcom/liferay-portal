@@ -16,6 +16,7 @@ package com.liferay.portal.tools.portal.compat.bytecode.transformer;
 
 import java.lang.reflect.Modifier;
 
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -38,16 +39,33 @@ public class PortalCompactClassVisitor extends ClassVisitor {
 
 		cv.visit(version, access, name, signature, superName, interfaces);
 
+		if (name.endsWith("ServiceUtil") || name.endsWith("ServiceWrapper")) {
+			_annotationOnly = true;
+		}
+
 		_superName = superName;
 
 		_interface = Modifier.isInterface(access);
 	}
 
 	@Override
+	public AnnotationVisitor visitAnnotation(
+		String descriptor, boolean visible) {
+
+		if (!_interface &&
+			descriptor.equals("LaQute/bnd/annotation/ProviderType;")) {
+
+			return null;
+		}
+
+		return super.visitAnnotation(descriptor, visible);
+	}
+
+	@Override
 	public FieldVisitor visitField(
 		int access, String name, String desc, String signature, Object value) {
 
-		if (Modifier.isPrivate(access)) {
+		if (!_annotationOnly && Modifier.isPrivate(access)) {
 			return null;
 		}
 
@@ -59,12 +77,16 @@ public class PortalCompactClassVisitor extends ClassVisitor {
 		int access, String name, String desc, String signature,
 		String[] exceptions) {
 
+		MethodVisitor methodVisitor = cv.visitMethod(
+			access, name, desc, signature, exceptions);
+
+		if (_annotationOnly) {
+			return methodVisitor;
+		}
+
 		if (Modifier.isPrivate(access)) {
 			return null;
 		}
-
-		MethodVisitor methodVisitor = cv.visitMethod(
-			access, name, desc, signature, exceptions);
 
 		if (_interface) {
 			return methodVisitor;
@@ -90,6 +112,7 @@ public class PortalCompactClassVisitor extends ClassVisitor {
 			methodVisitor, argumentsSize);
 	}
 
+	private boolean _annotationOnly;
 	private boolean _interface;
 	private String _superName;
 

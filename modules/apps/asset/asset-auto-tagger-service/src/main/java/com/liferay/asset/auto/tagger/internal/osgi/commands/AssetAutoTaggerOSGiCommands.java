@@ -17,7 +17,7 @@ package com.liferay.asset.auto.tagger.internal.osgi.commands;
 import com.liferay.asset.auto.tagger.AssetAutoTagger;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
-import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerImpl;
+import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerHelper;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -90,7 +90,7 @@ public class AssetAutoTaggerOSGiCommands {
 
 		if (ArrayUtil.isEmpty(classNames)) {
 			Set<String> classNamesSet = new HashSet<>(
-				_assetAutoTaggerImpl.getClassNames());
+				_assetAutoTaggerHelper.getClassNames());
 
 			classNamesSet.remove("*");
 
@@ -176,7 +176,7 @@ public class AssetAutoTaggerOSGiCommands {
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
-	private AssetAutoTaggerImpl _assetAutoTaggerImpl;
+	private AssetAutoTaggerHelper _assetAutoTaggerHelper;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

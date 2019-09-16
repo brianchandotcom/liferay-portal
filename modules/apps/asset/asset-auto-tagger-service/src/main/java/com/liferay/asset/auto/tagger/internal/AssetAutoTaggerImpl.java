@@ -25,8 +25,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,9 +34,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,10 +42,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -61,38 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 
-	public Set<String> getClassNames() {
-		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-			serviceTrackerMap = _getServiceTrackerMap();
-
-		return serviceTrackerMap.keySet();
-	}
-
-	public boolean isAutoTaggable(AssetEntry assetEntry) {
-		try {
-			AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
-				_getAssetAutoTaggerConfiguration(assetEntry);
-
-			if (assetAutoTaggerConfiguration.isEnabled() &&
-				assetEntry.isVisible() &&
-				(ListUtil.isNotEmpty(
-					_getAssetAutoTagProviders(assetEntry.getClassName())) ||
-				 ListUtil.isNotEmpty(_getAssetEntryAssetAutoTagProviders()))) {
-
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return false;
-	}
-
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void tag(AssetEntry assetEntry) throws PortalException {
-		if (!isAutoTaggable(assetEntry)) {
+		if (!_assetAutoTaggerHelper.isAutoTaggable(assetEntry)) {
 			return;
 		}
 
@@ -174,18 +139,6 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 		_reindex(assetEntry);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	protected synchronized void deactivate() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
-	}
-
 	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
 			AssetEntry assetEntry)
 		throws PortalException {
@@ -193,42 +146,6 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 		return _assetAutoTaggerConfigurationFactory.
 			getGroupAssetAutoTaggerConfiguration(
 				_groupLocalService.getGroup(assetEntry.getGroupId()));
-	}
-
-	private List<AssetAutoTagProvider<?>> _getAssetAutoTagProviders(
-		String className) {
-
-		List<AssetAutoTagProvider<?>> assetAutoTagProviders = new ArrayList<>();
-
-		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-			serviceTrackerMap = _getServiceTrackerMap();
-
-		List<AssetAutoTagProvider<?>> generalAssetAutoTagProviders =
-			serviceTrackerMap.getService("*");
-
-		if (!ListUtil.isEmpty(generalAssetAutoTagProviders)) {
-			assetAutoTagProviders.addAll(generalAssetAutoTagProviders);
-		}
-
-		if (Validator.isNotNull(className)) {
-			List<AssetAutoTagProvider<?>> classNameAssetAutoTagProviders =
-				serviceTrackerMap.getService(className);
-
-			if (!ListUtil.isEmpty(classNameAssetAutoTagProviders)) {
-				assetAutoTagProviders.addAll(classNameAssetAutoTagProviders);
-			}
-		}
-
-		return assetAutoTagProviders;
-	}
-
-	private List<AssetAutoTagProvider<?>>
-		_getAssetEntryAssetAutoTagProviders() {
-
-		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-			serviceTrackerMap = _getServiceTrackerMap();
-
-		return serviceTrackerMap.getService(AssetEntry.class.getName());
 	}
 
 	private List<String> _getAutoAssetTagNames(
@@ -239,7 +156,7 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 		Set<String> assetTagNamesSet = new LinkedHashSet<>();
 
 		for (AssetAutoTagProvider assetEntryAssetAutoTagProvider :
-				_getAssetEntryAssetAutoTagProviders()) {
+				_assetAutoTaggerHelper.getAssetEntryAssetAutoTagProviders()) {
 
 			assetTagNamesSet.addAll(
 				assetEntryAssetAutoTagProvider.getTagNames(assetEntry));
@@ -247,7 +164,8 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 
 		if (assetRenderer != null) {
 			List<AssetAutoTagProvider<?>> assetAutoTagProviders =
-				_getAssetAutoTagProviders(assetEntry.getClassName());
+				_assetAutoTaggerHelper.getAssetAutoTagProviders(
+					assetEntry.getClassName());
 
 			for (AssetAutoTagProvider assetAutoTagProvider :
 					assetAutoTagProviders) {
@@ -270,30 +188,6 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 		return assetTagNames;
 	}
 
-	private ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-		_getServiceTrackerMap() {
-
-		ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-			serviceTrackerMap = _serviceTrackerMap;
-
-		if (serviceTrackerMap != null) {
-			return serviceTrackerMap;
-		}
-
-		synchronized (this) {
-			if (_serviceTrackerMap == null) {
-				_serviceTrackerMap =
-					(ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>)
-						(ServiceTrackerMap)
-							ServiceTrackerMapFactory.openMultiValueMap(
-								_bundleContext, AssetAutoTagProvider.class,
-								"model.class.name");
-			}
-
-			return _serviceTrackerMap;
-		}
-	}
-
 	private void _reindex(AssetEntry assetEntry) throws PortalException {
 		Indexer<Object> indexer = _indexerRegistry.getIndexer(
 			assetEntry.getClassName());
@@ -314,17 +208,15 @@ public class AssetAutoTaggerImpl implements AopService, AssetAutoTagger {
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
-	private AssetTagLocalService _assetTagLocalService;
+	private AssetAutoTaggerHelper _assetAutoTaggerHelper;
 
-	private BundleContext _bundleContext;
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
-
-	private volatile ServiceTrackerMap<String, List<AssetAutoTagProvider<?>>>
-		_serviceTrackerMap;
 
 }

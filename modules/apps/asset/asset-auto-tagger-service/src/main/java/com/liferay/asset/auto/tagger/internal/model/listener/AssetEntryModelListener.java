@@ -14,7 +14,7 @@
 
 package com.liferay.asset.auto.tagger.internal.model.listener;
 
-import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerImpl;
+import com.liferay.asset.auto.tagger.internal.AssetAutoTaggerHelper;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
@@ -79,7 +79,7 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 						return null;
 					}
 
-					if (!_assetAutoTaggerImpl.isAutoTaggable(assetEntry)) {
+					if (!_assetAutoTaggerHelper.isAutoTaggable(assetEntry)) {
 						return null;
 					}
 
@@ -119,7 +119,7 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
-	private AssetAutoTaggerImpl _assetAutoTaggerImpl;
+	private AssetAutoTaggerHelper _assetAutoTaggerHelper;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

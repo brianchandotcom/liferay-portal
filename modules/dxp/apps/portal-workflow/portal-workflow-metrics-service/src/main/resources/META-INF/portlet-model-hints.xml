@@ -17,7 +17,7 @@
 		</field>
 		<field name="duration" type="long" />
 		<field name="name" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint name="max-length">75</hint>
 		</field>
 		<field name="pauseNodeKeys" type="String" />
 		<field name="processId" type="long" />

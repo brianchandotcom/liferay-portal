@@ -1650,6 +1650,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public FileCollection call() throws Exception {
 					ConfigurableFileCollection sourceFiles = project.files();
 
+					String includeresource = BndBuilderUtil.getInstruction(
+						project, Constants.INCLUDERESOURCE);
+
+					if (Validator.isNotNull(includeresource)) {
+						for (String resource : includeresource.split(",")) {
+							resource = resource.trim();
+
+							int x = resource.indexOf("=../");
+
+							if (x == -1) {
+								continue;
+							}
+
+							String path = resource.substring(x + 1);
+
+							if (path.contains("/classes/") ||
+								path.endsWith(".jar") ||
+								path.endsWith(".zip")) {
+
+								continue;
+							}
+
+							sourceFiles.from(project.files(path));
+						}
+					}
+
 					if (FileUtil.exists(project, "build.gradle")) {
 						Logger logger = project.getLogger();
 

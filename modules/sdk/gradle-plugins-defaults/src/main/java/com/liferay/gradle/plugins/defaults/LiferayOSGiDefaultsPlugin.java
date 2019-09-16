@@ -3985,9 +3985,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		uploadArchivesTask.dependsOn(publishNodeModuleTasks);
 
+		String projectPath = project.getPath();
+
+		if (projectPath.startsWith(":sdk:") ||
+			projectPath.startsWith(":util:")) {
+
+			uploadArchivesTask.finalizedBy(updateFileVersionsTask);
+		}
+
 		if (!GradlePluginsDefaultsUtil.isSnapshot(project)) {
-			uploadArchivesTask.finalizedBy(
-				updateFileVersionsTask, updateVersionTask);
+			uploadArchivesTask.finalizedBy(updateVersionTask);
 		}
 	}
 

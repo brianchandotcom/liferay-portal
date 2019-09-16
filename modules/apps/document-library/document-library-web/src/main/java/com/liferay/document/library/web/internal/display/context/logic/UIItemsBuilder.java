@@ -461,7 +461,7 @@ public class UIItemsBuilder {
 		}
 
 		String label = TextFormatter.formatStorageSize(
-			_fileEntry.getSize(), _themeDisplay.getLocale());
+			_fileVersion.getSize(), _themeDisplay.getLocale());
 
 		label = StringBundler.concat(
 			_themeDisplay.translate("download"), " (", label, ")");
@@ -501,7 +501,7 @@ public class UIItemsBuilder {
 		}
 
 		String label = TextFormatter.formatStorageSize(
-			_fileEntry.getSize(), _themeDisplay.getLocale());
+			_fileVersion.getSize(), _themeDisplay.getLocale());
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,

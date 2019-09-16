@@ -16,16 +16,23 @@ package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.metadata.GETEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.LiferayOutputTypeResolver;
+import com.liferay.mule.internal.metadata.GETEndpointTypeResolver;
+import com.liferay.mule.internal.metadata.POSTEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.POSTEndpointTypeResolver;
 
+import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
+import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
 import org.mule.runtime.extension.api.annotation.param.Connection;
+import org.mule.runtime.extension.api.annotation.param.Content;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
@@ -45,7 +52,7 @@ public class LiferayOperations {
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
-	@OutputResolver(output = LiferayOutputTypeResolver.class)
+	@OutputResolver(output = GETEndpointTypeResolver.class)
 	public Result<InputStream, Void> get(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
@@ -69,9 +76,23 @@ public class LiferayOperations {
 		throw new UnsupportedOperationException();
 	}
 
-	@MediaType(strict = false, value = MediaType.ANY)
-	public String post() {
-		throw new UnsupportedOperationException();
+	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	public Result<InputStream, Void> post(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
+			@Content @TypeResolver(value = POSTEndpointTypeResolver.class)
+				InputStream inputStream)
+		throws IOException, TimeoutException {
+
+		HttpResponse httpResponse = connection.post(
+			inputStream, _pathParams, _queryParams, endpoint);
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		return Result.<InputStream, Void>builder(
+		).output(
+			httpEntity.getContent()
+		).build();
 	}
 
 	@Expression(ExpressionSupport.NOT_SUPPORTED)

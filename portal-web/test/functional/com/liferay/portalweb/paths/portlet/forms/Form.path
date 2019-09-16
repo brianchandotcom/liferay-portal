@@ -222,6 +222,16 @@
 </tr>
 <!--SIDEBAR -->
 <tr>
+	<td>SIDEBAR_AUTOCOMPLETE_TAB</td>
+	<td>//a[contains(@class,'tab') and .='Autocomplete'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Autocomplete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_ADVANCED_TAB</td>
+	<td>//a[contains(@class,'tab') and .='Advanced'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Advanced')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR_PROPERTIES_TAB</td>
 	<td>//a[contains(@class,'tab') and .='Properties'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Properties')]</td>
 	<td></td>

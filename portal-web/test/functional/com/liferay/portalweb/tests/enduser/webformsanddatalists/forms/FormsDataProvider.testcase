@@ -69,7 +69,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field With Autocomplete");
 
-		Form.gotoAdvancedTab();
+		Form.gotoAutocompleteTab();
 
 		Form.enableAutocompleteConfiguration();
 
@@ -94,7 +94,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field With Autocomplete");
 
-		Form.gotoAdvancedTab();
+		Form.gotoAutocompleteTab();
 
 		Form.editFieldDataProvider(
 			dataProvider = "Country Names",
@@ -231,6 +231,8 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
 
+		Form.gotoAutocompleteTab();
+
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",
 			dataProviderOutput = "Country Names");
@@ -331,6 +333,8 @@ definition {
 		Form.gotoAddField(fieldType = "Select from List");
 
 		Form.editFieldLabelMetal(fieldValue = "Countries");
+
+		Form.gotoAutocompleteTab();
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",

@@ -40,6 +40,7 @@ export default ({
 	});
 
 	const [currentStep, setCurrentStep] = useState(0);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		dataLayoutId,
@@ -77,6 +78,7 @@ export default ({
 	};
 
 	const onDeploy = () => {
+		setIsLoading(true);
 		if (appId) {
 			updateItem(`/o/app-builder/v1.0/apps/${appId}`, app).then(onCancel);
 		} else {
@@ -199,6 +201,7 @@ export default ({
 
 					<EditAppFooter
 						currentStep={currentStep}
+						isLoading={isLoading}
 						nextStepDisabled={validateNextStep()}
 						onCancel={onCancel}
 						onDeploy={onDeploy}

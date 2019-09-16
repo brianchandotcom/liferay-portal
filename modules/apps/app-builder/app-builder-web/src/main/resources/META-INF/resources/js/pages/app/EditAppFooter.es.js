@@ -17,6 +17,7 @@ import Button from '../../components/button/Button.es';
 
 export default ({
 	currentStep,
+	isLoading = false,
 	nextStepDisabled = false,
 	onCancel,
 	onDeploy,
@@ -59,7 +60,7 @@ export default ({
 					)}
 					{currentStep === 2 && (
 						<Button
-							disabled={nextStepDisabled}
+							disabled={isLoading || nextStepDisabled}
 							displayType="primary"
 							onClick={onDeploy}
 						>

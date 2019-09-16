@@ -19,6 +19,32 @@
 	<td>//div/input[contains(@class,'docs-title-input')]</td>
 	<td></td>
 </tr>
+<!--INSERT_LINK-->
+<tr>
+	<td>INSERT_LINK_APPLY_BUTTON</td>
+	<td>//div[contains(@class,'insertlinkbubble-buttonbar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSERT_LINK_BUTTON</td>
+	<td>//div[@id='insertLinkButton']//div[@class='goog-toolbar-button-inner-box goog-inline-block']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSERT_LINK_DOCUMENT_CONTENT</td>
+	<td>//span[@class='kix-wordhtmlgenerator-word-node' and contains(.,'${key_googleDocContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSERT_LINK_LINK</td>
+	<td>//div[contains(@class,'urlinput-url-container')]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSERT_LINK_TEXT</td>
+	<td>//div[@class="docs-link-insertlinkbubble-toppane"]/input[@type='text']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

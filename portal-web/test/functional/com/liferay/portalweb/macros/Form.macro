@@ -266,17 +266,17 @@ definition {
 		AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB");
 	}
 
-	macro gotoAutocompleteTab {
+	macro gotoAdvancedTab {
 		AssertClick(
 			locator1 = "Form#SIDEBAR_ADVANCED_TAB",
 			value1 = "Advanced");
 		Pause(locator1 = "1000");
 	}
 
-	macro gotoAdvancedTab {
+	macro gotoAutocompleteTab {
 		AssertClick(
-			locator1 = "Form#SIDEBAR_ADVANCED_TAB",
-			value1 = "Advanced");
+			locator1 = "Form#SIDEBAR_AUTOCOMPLETE_TAB",
+			value1 = "Autocomplete");
 		Pause(locator1 = "1000");
 	}
 

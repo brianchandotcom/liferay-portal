@@ -27,6 +27,9 @@
 	{@param? _handleSourceTypeChange: any}
 	{@param? _handleSubmit: any}
 	{@param? _mappedFieldValue: string}
+	{@param? _selectedAssetEntry: [
+		title: string
+	]}
 	{@param? _selectedSourceTypeId: string}
 	{@param? _sourceTypeIds: [
 		content: string,
@@ -110,7 +113,7 @@
 						{param mappedFieldValue: $_mappedFieldValue /}
 						{param sourceTypeIds: $_sourceTypeIds /}
 						{param sourceTypes: $_sourceTypes /}
-						{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title : '' /}
+						{param selectedAssetEntryTitle: $item.editableValues.config ? $item.editableValues.config.title ?: $_selectedAssetEntry.title : '' /}
 						{param selectedSourceTypeId: $_selectedSourceTypeId /}
 						{param store: $store /}
 					{/call}

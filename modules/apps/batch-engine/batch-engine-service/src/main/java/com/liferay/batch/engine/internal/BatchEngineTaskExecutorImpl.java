@@ -82,6 +82,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 				BatchEngineTaskExecuteStatus.COMPLETED.toString());
 
 			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+
+			_batchEngineTaskCallbackURLNotifier.notify(batchEngineTask);
 		}
 		catch (Throwable t) {
 			_log.error(
@@ -93,6 +95,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 				BatchEngineTaskExecuteStatus.FAILED.toString());
 
 			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+
+			_batchEngineTaskCallbackURLNotifier.notify(batchEngineTask);
 		}
 	}
 
@@ -159,6 +163,10 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
+
+	private final BatchEngineTaskCallbackURLNotifier
+		_batchEngineTaskCallbackURLNotifier =
+			new BatchEngineTaskCallbackURLNotifier();
 
 	@Reference
 	private BatchEngineTaskItemClassRegistry _batchEngineTaskItemClassRegistry;

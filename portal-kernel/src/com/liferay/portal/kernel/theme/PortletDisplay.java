@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -458,6 +459,16 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 	public boolean isShowPortletIcon() {
 		return _showPortletIcon;
+	}
+
+	public boolean isShowPortletTitle() {
+		if (Validator.isNotNull(getPortletDecoratorId()) &&
+			!StringUtil.equals(getPortletDecoratorId(), "barebone")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowPrintIcon() {

@@ -259,12 +259,4 @@
 		timeToIdleSeconds="600"
 	>
 	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="100000"
-		name="com.liferay.portal.security.permission.PermissionCacheUtil_RESOURCE_BLOCK_IDS_BAG"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
 </ehcache>

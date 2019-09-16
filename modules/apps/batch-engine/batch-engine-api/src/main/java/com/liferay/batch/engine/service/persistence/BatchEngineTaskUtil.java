@@ -474,6 +474,181 @@ public class BatchEngineTaskUtil {
 	}
 
 	/**
+	 * Returns all the batch engine tasks where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @return the matching batch engine tasks
+	 */
+	public static List<BatchEngineTask> findByexecuteStatus(
+		String executeStatus) {
+
+		return getPersistence().findByexecuteStatus(executeStatus);
+	}
+
+	/**
+	 * Returns a range of all the batch engine tasks where executeStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param executeStatus the execute status
+	 * @param start the lower bound of the range of batch engine tasks
+	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @return the range of matching batch engine tasks
+	 */
+	public static List<BatchEngineTask> findByexecuteStatus(
+		String executeStatus, int start, int end) {
+
+		return getPersistence().findByexecuteStatus(executeStatus, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the batch engine tasks where executeStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param executeStatus the execute status
+	 * @param start the lower bound of the range of batch engine tasks
+	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching batch engine tasks
+	 */
+	public static List<BatchEngineTask> findByexecuteStatus(
+		String executeStatus, int start, int end,
+		OrderByComparator<BatchEngineTask> orderByComparator) {
+
+		return getPersistence().findByexecuteStatus(
+			executeStatus, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the batch engine tasks where executeStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BatchEngineTaskModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param executeStatus the execute status
+	 * @param start the lower bound of the range of batch engine tasks
+	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching batch engine tasks
+	 */
+	public static List<BatchEngineTask> findByexecuteStatus(
+		String executeStatus, int start, int end,
+		OrderByComparator<BatchEngineTask> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByexecuteStatus(
+			executeStatus, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first batch engine task in the ordered set where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching batch engine task
+	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 */
+	public static BatchEngineTask findByexecuteStatus_First(
+			String executeStatus,
+			OrderByComparator<BatchEngineTask> orderByComparator)
+		throws com.liferay.batch.engine.exception.NoSuchTaskException {
+
+		return getPersistence().findByexecuteStatus_First(
+			executeStatus, orderByComparator);
+	}
+
+	/**
+	 * Returns the first batch engine task in the ordered set where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 */
+	public static BatchEngineTask fetchByexecuteStatus_First(
+		String executeStatus,
+		OrderByComparator<BatchEngineTask> orderByComparator) {
+
+		return getPersistence().fetchByexecuteStatus_First(
+			executeStatus, orderByComparator);
+	}
+
+	/**
+	 * Returns the last batch engine task in the ordered set where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching batch engine task
+	 * @throws NoSuchTaskException if a matching batch engine task could not be found
+	 */
+	public static BatchEngineTask findByexecuteStatus_Last(
+			String executeStatus,
+			OrderByComparator<BatchEngineTask> orderByComparator)
+		throws com.liferay.batch.engine.exception.NoSuchTaskException {
+
+		return getPersistence().findByexecuteStatus_Last(
+			executeStatus, orderByComparator);
+	}
+
+	/**
+	 * Returns the last batch engine task in the ordered set where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
+	 */
+	public static BatchEngineTask fetchByexecuteStatus_Last(
+		String executeStatus,
+		OrderByComparator<BatchEngineTask> orderByComparator) {
+
+		return getPersistence().fetchByexecuteStatus_Last(
+			executeStatus, orderByComparator);
+	}
+
+	/**
+	 * Returns the batch engine tasks before and after the current batch engine task in the ordered set where executeStatus = &#63;.
+	 *
+	 * @param batchEngineTaskId the primary key of the current batch engine task
+	 * @param executeStatus the execute status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next batch engine task
+	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
+	 */
+	public static BatchEngineTask[] findByexecuteStatus_PrevAndNext(
+			long batchEngineTaskId, String executeStatus,
+			OrderByComparator<BatchEngineTask> orderByComparator)
+		throws com.liferay.batch.engine.exception.NoSuchTaskException {
+
+		return getPersistence().findByexecuteStatus_PrevAndNext(
+			batchEngineTaskId, executeStatus, orderByComparator);
+	}
+
+	/**
+	 * Removes all the batch engine tasks where executeStatus = &#63; from the database.
+	 *
+	 * @param executeStatus the execute status
+	 */
+	public static void removeByexecuteStatus(String executeStatus) {
+		getPersistence().removeByexecuteStatus(executeStatus);
+	}
+
+	/**
+	 * Returns the number of batch engine tasks where executeStatus = &#63;.
+	 *
+	 * @param executeStatus the execute status
+	 * @return the number of matching batch engine tasks
+	 */
+	public static int countByexecuteStatus(String executeStatus) {
+		return getPersistence().countByexecuteStatus(executeStatus);
+	}
+
+	/**
 	 * Caches the batch engine task in the entity cache if it is enabled.
 	 *
 	 * @param batchEngineTask the batch engine task

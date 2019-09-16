@@ -272,6 +272,15 @@ public class BatchEngineTaskLocalServiceWrapper
 			getBatchEngineTaskByUuidAndCompanyId(uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.batch.engine.model.BatchEngineTask>
+		getBatchEngineTasks(
+			com.liferay.batch.engine.BatchEngineTaskExecuteStatus
+				executeStatus) {
+
+		return _batchEngineTaskLocalService.getBatchEngineTasks(executeStatus);
+	}
+
 	/**
 	 * Returns a range of all the batch engine tasks.
 	 *

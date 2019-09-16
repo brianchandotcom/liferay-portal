@@ -126,9 +126,11 @@ public class BatchEngineTaskModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long EXECUTESTATUS_COLUMN_BITMASK = 2L;
 
-	public static final long BATCHENGINETASKID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+
+	public static final long BATCHENGINETASKID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -605,7 +607,17 @@ public class BatchEngineTaskModelImpl
 
 	@Override
 	public void setExecuteStatus(String executeStatus) {
+		_columnBitmask |= EXECUTESTATUS_COLUMN_BITMASK;
+
+		if (_originalExecuteStatus == null) {
+			_originalExecuteStatus = _executeStatus;
+		}
+
 		_executeStatus = executeStatus;
+	}
+
+	public String getOriginalExecuteStatus() {
+		return GetterUtil.getString(_originalExecuteStatus);
 	}
 
 	@Override
@@ -779,6 +791,9 @@ public class BatchEngineTaskModelImpl
 		batchEngineTaskModelImpl._setModifiedDate = false;
 
 		batchEngineTaskModelImpl._contentBlobModel = null;
+
+		batchEngineTaskModelImpl._originalExecuteStatus =
+			batchEngineTaskModelImpl._executeStatus;
 
 		batchEngineTaskModelImpl._columnBitmask = 0;
 	}
@@ -1055,6 +1070,7 @@ public class BatchEngineTaskModelImpl
 	private Date _endTime;
 	private String _errorMessage;
 	private String _executeStatus;
+	private String _originalExecuteStatus;
 	private String _operation;
 	private Date _startTime;
 	private String _version;

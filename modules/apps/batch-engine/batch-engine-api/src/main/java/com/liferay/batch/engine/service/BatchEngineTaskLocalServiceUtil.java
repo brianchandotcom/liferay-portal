@@ -258,6 +258,14 @@ public class BatchEngineTaskLocalServiceUtil {
 			uuid, companyId);
 	}
 
+	public static java.util.List<com.liferay.batch.engine.model.BatchEngineTask>
+		getBatchEngineTasks(
+			com.liferay.batch.engine.BatchEngineTaskExecuteStatus
+				executeStatus) {
+
+		return getService().getBatchEngineTasks(executeStatus);
+	}
+
 	/**
 	 * Returns a range of all the batch engine tasks.
 	 *

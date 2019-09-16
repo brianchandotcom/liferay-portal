@@ -15,6 +15,7 @@
 package com.liferay.batch.engine.service;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
+import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.model.BatchEngineTaskContentBlobModel;
@@ -224,6 +225,10 @@ public interface BatchEngineTaskLocalService
 	public BatchEngineTask getBatchEngineTaskByUuidAndCompanyId(
 			String uuid, long companyId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchEngineTask> getBatchEngineTasks(
+		BatchEngineTaskExecuteStatus executeStatus);
 
 	/**
 	 * Returns a range of all the batch engine tasks.

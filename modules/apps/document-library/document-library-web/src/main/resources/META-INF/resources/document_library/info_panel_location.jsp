@@ -31,9 +31,15 @@ long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_
 		<%
 		PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
 
-		viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view");
+		}
+		else {
+			viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
+			viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
+		}
+
 		viewFolderURL.setParameter("redirect", currentURL);
-		viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
 		%>
 
 		<clay:link

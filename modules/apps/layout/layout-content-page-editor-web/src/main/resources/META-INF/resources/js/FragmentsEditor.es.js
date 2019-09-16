@@ -25,7 +25,7 @@ import {
 	CLEAR_HOVERED_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
-import {getFragmentEntryLinkListElement} from './utils/FragmentsEditorGetUtils.es';
+import {getElement} from './utils/FragmentsEditorGetUtils.es';
 import {INITIAL_STATE} from './store/state.es';
 import {
 	startListeningWidgetConfigurationChange,
@@ -204,10 +204,7 @@ class FragmentsEditor extends Component {
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
-		const targetItem = getFragmentEntryLinkListElement(
-			targetItemId,
-			targetItemType
-		);
+		const targetItem = getElement(targetItemId, targetItemType);
 
 		if (targetItem) {
 			let hoveredItemId = targetItemId;
@@ -224,7 +221,7 @@ class FragmentsEditor extends Component {
 					'fragments-editor__editable--highlighted'
 				)
 			) {
-				const fragment = getFragmentEntryLinkListElement(
+				const fragment = getElement(
 					targetItem.dataset.fragmentEntryLinkId,
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				);

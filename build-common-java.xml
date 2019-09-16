@@ -126,7 +126,7 @@
 						<equals arg1="${baseline.jar.report.level}" arg2="off" />
 					</not>
 					<then>
-						<gradle-execute forcedcacheenabled="false" task="baseline" />
+						<!--<gradle-execute forcedcacheenabled="false" task="baseline" />-->
 					</then>
 				</if>
 			</then>

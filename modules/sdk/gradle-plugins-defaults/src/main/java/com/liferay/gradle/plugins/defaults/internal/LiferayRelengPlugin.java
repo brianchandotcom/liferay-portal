@@ -47,6 +47,7 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -835,6 +836,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		uploadArchivesTask.dependsOn(recordArtifactTask);
+
+		uploadArchivesTask.setActions(Collections.emptyList());
 
 		_configureTaskEnabledIfRelease(recordArtifactTask);
 	}

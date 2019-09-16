@@ -102,12 +102,14 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-		_sendResource(httpServletResponse, resourceDescriptor, locale);
+		_sendResource(
+			httpServletResponse, resourceDescriptor, locale, pathInfo);
 	}
 
 	private void _sendResource(
 			HttpServletResponse httpServletResponse,
-			ResourceDescriptor resourceDescriptor, Locale locale)
+			ResourceDescriptor resourceDescriptor, Locale locale,
+			String pathInfo)
 		throws IOException {
 
 		JSPackage jsPackage = resourceDescriptor.getJsPackage();
@@ -127,16 +129,20 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			JSBundle jsBundle = jsPackage.getJSBundle();
+			String extension = FileUtil.getExtension(pathInfo);
 
-			ResourceBundleLoader resourceBundleLoader =
-				_bundleSymbolicNameServiceTrackerMap.getService(
-					jsBundle.getName());
+			if (extension.equals("js")) {
+				JSBundle jsBundle = jsPackage.getJSBundle();
 
-			if (resourceBundleLoader != null) {
-				content = LanguageUtil.process(
-					() -> resourceBundleLoader.loadResourceBundle(locale),
-					locale, content);
+				ResourceBundleLoader resourceBundleLoader =
+					_bundleSymbolicNameServiceTrackerMap.getService(
+						jsBundle.getName());
+
+				if (resourceBundleLoader != null) {
+					content = LanguageUtil.process(
+						() -> resourceBundleLoader.loadResourceBundle(locale),
+						locale, content);
+				}
 			}
 
 			printWriter.print(content);
@@ -155,11 +161,11 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 		String extension = FileUtil.getExtension(pathInfo);
 
-		if (extension.equals(".js")) {
+		if (extension.equals("js")) {
 			httpServletResponse.setContentType(
 				ContentTypes.TEXT_JAVASCRIPT_UTF8);
 		}
-		else if (extension.equals(".map")) {
+		else if (extension.equals("map")) {
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		}
 		else {

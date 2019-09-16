@@ -101,6 +101,10 @@ $c: '.workflow-process-dashboard';
 		}
 	}
 
+	.table-scrollable {
+		max-height: 22.5rem;
+	}
+
 	.velocity-value,
 	.velocity-unit {
 		color: #30313f;

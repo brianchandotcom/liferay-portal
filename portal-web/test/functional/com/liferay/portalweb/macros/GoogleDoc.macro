@@ -1,5 +1,33 @@
 definition {
 
+	macro addContent {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
+
+		if (isSet(insertLink)) {
+			Click(locator1 = "GoogleDoc#INSERT_LINK_BUTTON");
+
+			Click(locator1 = "GoogleDoc#INSERT_LINK_LINK");
+
+			Type(
+				locator1 = "GoogleDoc#INSERT_LINK_LINK",
+				value1 = "${linkAddress}");
+
+			Click(locator1 = "GoogleDoc#INSERT_LINK_TEXT");
+
+			Type(
+				locator1 = "GoogleDoc#INSERT_LINK_TEXT",
+				value1 = "${linkText}");
+
+			Click(locator1 = "GoogleDoc#INSERT_LINK_APPLY_BUTTON");
+
+			var key_googleDocContent = "${googleDocContent}";
+
+			AssertElementPresent(locator1 = "GoogleDoc#INSERT_LINK_DOCUMENT_CONTENT");
+		}
+
+		SelectFrameTop();
+	}
+
 	macro discardChanges {
 		var key_text = "Discard Changes";
 

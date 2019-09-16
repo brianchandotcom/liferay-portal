@@ -79,22 +79,6 @@
 	</cache>
 	<cache
 		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portlet.expando.model.impl.ExpandoColumnImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portlet.expando.model.impl.ExpandoTableImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
 		maxElementsInMemory="100000"
 		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portlet.expando.model.impl.ExpandoValueImpl"
 		overflowToDisk="false"
@@ -124,30 +108,6 @@
 		eternal="false"
 		maxElementsInMemory="50000"
 		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.GroupImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.LayoutImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.LayoutImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.LayoutImpl.List2"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
@@ -220,30 +180,6 @@
 		eternal="false"
 		maxElementsInMemory="100000"
 		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portal.model.impl.ResourcePermissionImpl.List2"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoColumnImpl"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoColumnImpl.List1"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.dao.orm.FinderCache.com.liferay.portlet.expando.model.impl.ExpandoColumnImpl.List2"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
@@ -327,30 +263,6 @@
 		eternal="false"
 		maxElementsInMemory="100000"
 		name="com.liferay.portal.security.permission.PermissionCacheUtil_RESOURCE_BLOCK_IDS_BAG"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.servlet.filters.cache.CacheUtil"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portal.kernel.webserver.WebServerServletToken"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
-		name="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

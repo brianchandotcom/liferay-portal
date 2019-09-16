@@ -57,6 +57,7 @@ import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleD
 import com.liferay.portal.reports.engine.console.exception.DefinitionNameException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailDeliveryException;
 import com.liferay.portal.reports.engine.console.exception.EntryEmailNotificationsException;
+import com.liferay.portal.reports.engine.console.internal.util.ReportsEngineSubscriptionSender;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.model.Source;
@@ -490,7 +491,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 				reportsGroupServiceEmailConfiguration.emailDeliverySubject());
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender =
+			new ReportsEngineSubscriptionSender();
 
 		String reportName = StringUtil.extractLast(
 			fileName, StringPool.FORWARD_SLASH);

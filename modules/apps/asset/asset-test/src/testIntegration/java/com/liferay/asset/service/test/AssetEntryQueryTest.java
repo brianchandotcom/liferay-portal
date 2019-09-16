@@ -17,10 +17,12 @@ package com.liferay.asset.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
@@ -48,9 +50,12 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -399,6 +404,21 @@ public class AssetEntryQueryTest {
 	@Test
 	public void testKeywordsUserName() throws Exception {
 		testAssetKeywords("Test", "Concert in Madrid", "Blah blah blah", 2);
+	}
+
+	@Test
+	public void testLinkedAssetMultipleLinked() throws Exception {
+		testLinkedAsset(3);
+	}
+
+	@Test
+	public void testLinkedAssetNoLinked() throws Exception {
+		testLinkedAsset(0);
+	}
+
+	@Test
+	public void testLinkedAssetOneLinked() throws Exception {
+		testLinkedAsset(1);
 	}
 
 	@Test
@@ -819,6 +839,105 @@ public class AssetEntryQueryTest {
 			"Modularity with OSGI", null,
 			new String[] {"liferay", "architecture", "modularity", "osgi"}, any,
 			not, expectedAssetEntriesCount);
+	}
+
+	protected void testLinkedAsset(int expectedAssetEntriesCount)
+		throws Exception {
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAndOperator(true);
+		assetEntryQuery.setGroupIds(new long[] {_group.getGroupId()});
+
+		int initialAssetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BlogsEntry blogsEntry1 = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			StringPool.BLANK, null, null, serviceContext);
+
+		AssetEntry assetEntry1 = AssetEntryLocalServiceUtil.getEntry(
+			BlogsEntry.class.getName(), blogsEntry1.getEntryId());
+
+		List<BlogsEntry> blogsEntries = new ArrayList<>();
+
+		blogsEntries.add(blogsEntry1);
+
+		List<AssetLink> assetLinks = new ArrayList<>();
+
+		Set<Long> linkedAssetEntryIds = new HashSet<>();
+
+		for (int i = 0; i < expectedAssetEntriesCount; i++) {
+			BlogsEntry linkedBlogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+				TestPropsValues.getUserId(), StringUtil.randomString(),
+				StringPool.BLANK, StringUtil.randomString(),
+				RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true,
+				null, StringPool.BLANK, null, null, serviceContext);
+
+			AssetEntry linkedAssetEntry = AssetEntryLocalServiceUtil.getEntry(
+				BlogsEntry.class.getName(), linkedBlogsEntry.getEntryId());
+
+			AssetLink assetLink = AssetLinkLocalServiceUtil.addLink(
+				TestPropsValues.getUserId(), assetEntry1.getEntryId(),
+				linkedAssetEntry.getEntryId(), 0, 0);
+
+			blogsEntries.add(linkedBlogsEntry);
+
+			assetLinks.add(assetLink);
+
+			linkedAssetEntryIds.add(linkedAssetEntry.getEntryId());
+		}
+
+		BlogsEntry notLinkedBlogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			StringPool.BLANK, null, null, serviceContext);
+
+		blogsEntries.add(notLinkedBlogsEntry);
+
+		assetEntryQuery.setLinkedAssetEntryId(assetEntry1.getEntryId());
+
+		threadLocalCache.removeAll();
+
+		int assetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(
+			initialAssetEntriesCount + expectedAssetEntriesCount,
+			assetEntriesCount);
+
+		List<AssetEntry> entries = AssetEntryServiceUtil.getEntries(
+			assetEntryQuery);
+
+		Assert.assertEquals(
+			entries.toString(),
+			initialAssetEntriesCount + expectedAssetEntriesCount,
+			entries.size());
+
+		for (AssetEntry assetEntry : entries) {
+			Assert.assertTrue(
+				linkedAssetEntryIds.contains(assetEntry.getEntryId()));
+		}
+
+		for (AssetLink assetLink : assetLinks) {
+			AssetLinkLocalServiceUtil.deleteAssetLink(assetLink);
+		}
+
+		for (BlogsEntry blogsEntry : blogsEntries) {
+			BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry);
+		}
 	}
 
 	protected void testOrderByRatings(

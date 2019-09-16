@@ -37,6 +37,22 @@ public class StringUtil extends com.liferay.gradle.util.StringUtil {
 		return sb.toString();
 	}
 
+	public static boolean startsWith(String s, String start) {
+		if ((s == null) || (start == null)) {
+			return false;
+		}
+
+		if (start.length() > s.length()) {
+			return false;
+		}
+
+		if (!s.startsWith(start)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public static String uncapitalize(String s) {
 		char firstChar = s.charAt(0);
 

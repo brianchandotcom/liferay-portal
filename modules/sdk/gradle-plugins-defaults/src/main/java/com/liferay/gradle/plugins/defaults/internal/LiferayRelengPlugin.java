@@ -30,6 +30,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GitRepo;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.StringUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.spec.SkipIfMatchesIgnoreProjectRegexTaskSpec;
 import com.liferay.gradle.plugins.defaults.tasks.MergeFilesTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
@@ -328,8 +329,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						return false;
 					}
 
-					if (!_hasProjectDependencies(project) &&
-						!_hasStaleDigestFile(task.getProject())) {
+					if (!_hasStaleDigestFile(task.getProject()) &&
+						!_hasStaleProjectDependencies(project)) {
 
 						return false;
 					}
@@ -549,7 +550,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 					@Override
 					public boolean isSatisfiedBy(Task task) {
-						if (_hasProjectDependencies(task.getProject())) {
+						if (_hasStaleProjectDependencies(task.getProject())) {
 							return false;
 						}
 
@@ -924,8 +925,35 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		return sb.toString();
 	}
 
-	private boolean _hasProjectDependencies(Project project) {
+	private File _getPortalProjectDir(
+		String group, String name, File portalRootDir) {
+
+		if (portalRootDir == null) {
+			return null;
+		}
+
+		if (!Objects.equals(group, "com.liferay.portal") ||
+			!StringUtil.startsWith(name, "com.liferay.")) {
+
+			return null;
+		}
+
+		String s = name.substring(12);
+
+		File file = new File(portalRootDir, s.replace('.', '-'));
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return file;
+	}
+
+	private boolean _hasStaleProjectDependencies(Project project) {
 		Logger logger = project.getLogger();
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
 
 		for (Configuration configuration : project.getConfigurations()) {
 			String name = configuration.getName();
@@ -941,21 +969,58 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
-					return true;
+					ProjectDependency projectDependency =
+						(ProjectDependency)dependency;
+
+					Project dependencyProject =
+						projectDependency.getDependencyProject();
+
+					WritePropertiesTask writePropertiesTask =
+						(WritePropertiesTask)GradleUtil.getTask(
+							dependencyProject, RECORD_ARTIFACT_TASK_NAME);
+
+					if (_isStale(
+							dependencyProject,
+							dependencyProject.getProjectDir(),
+							writePropertiesTask.getOutputFile())) {
+
+						return true;
+					}
+
+					if (_hasStaleDigestFile(dependencyProject)) {
+						return true;
+					}
 				}
 
-				if (!name.startsWith("compile")) {
+				if (!StringUtil.startsWith(name, "compile") ||
+					!Objects.equals(dependency.getVersion(), "default")) {
+
 					continue;
 				}
 
-				String version = dependency.getVersion();
+				File portalProjectDir = _getPortalProjectDir(
+					dependency.getGroup(), dependency.getName(), portalRootDir);
 
-				if ((version != null) && version.equals("default")) {
-					if (logger.isQuietEnabled()) {
-						logger.quiet(
-							"{} has version \"default\" in {}.", project,
-							dependency);
+				if (portalProjectDir != null) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("modules/");
+					sb.append(_RELENG_DIR_NAME);
+					sb.append('/');
+					sb.append(portalProjectDir.getName());
+					sb.append(".properties");
+
+					if (_isStale(
+							project, portalProjectDir,
+							new File(portalRootDir, sb.toString()))) {
+
+						return true;
 					}
+				}
+				else if (logger.isQuietEnabled()) {
+					logger.quiet(
+						"{} has version \"default\" in {}.", project,
+						dependency);
 
 					return true;
 				}

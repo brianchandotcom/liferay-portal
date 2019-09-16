@@ -72,17 +72,19 @@ public class UpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 		_initGroupIdMaps(company.getCompanyId());
 
-		StringBuilder sb = new StringBuilder(15);
+		StringBuilder sb = new StringBuilder(17);
 
 		sb.append("select JournalArticle.groupId, ");
 		sb.append("JournalArticle.resourcePrimKey, AssetEntry.classUuid from ");
 		sb.append("JournalArticle inner join AssetEntry on ( ");
 		sb.append("AssetEntry.classNameId = ? and AssetEntry.classPK = ");
-		sb.append("JournalArticle.resourcePrimKey) where ");
+		sb.append("JournalArticle.resourcePrimKey ) inner join Group_ on ( ");
+		sb.append("Group_.groupId = JournalArticle.groupId) where ");
 		sb.append("JournalArticle.companyId = ? and ");
 		sb.append("JournalArticle.layoutUuid is not null and ");
-		sb.append("JournalArticle.layoutUuid != '' and not exists (select ");
-		sb.append("1 from AssetDisplayPageEntry where ");
+		sb.append("JournalArticle.layoutUuid != '' and ");
+		sb.append("Group_.remoteStagingGroupCount = 0 and not exists ( ");
+		sb.append("select 1 from AssetDisplayPageEntry where ");
 		sb.append("AssetDisplayPageEntry.groupId = JournalArticle.groupId ");
 		sb.append("and AssetDisplayPageEntry.classNameId = ? and ");
 		sb.append("AssetDisplayPageEntry.classPK = ");

@@ -58,6 +58,8 @@ import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocPlugin;
 import com.liferay.gradle.plugins.jsdoc.JSDocTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.lang.merger.LangMergerPlugin;
+import com.liferay.gradle.plugins.lang.merger.tasks.MergePropertiesTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
@@ -166,6 +168,7 @@ import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
 import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.maven.MavenPom;
 import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -1616,7 +1619,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private WriteDigestTask _addTaskWriteIncludedSourcesDigest(
-		Project project) {
+		final Project project) {
 
 		WriteDigestTask writeDigestTask = GradleUtil.addTask(
 			project, WRITE_INCLUDED_SOURCES_DIGEST_TASK_NAME,
@@ -1636,6 +1639,31 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					}
 
 					return true;
+				}
+
+			});
+
+		writeDigestTask.source(
+			new Callable<FileCollection>() {
+
+				@Override
+				public FileCollection call() throws Exception {
+					ConfigurableFileCollection sourceFiles = project.files();
+
+					if (FileUtil.exists(project, "build.gradle")) {
+						TaskContainer taskContainer = project.getTasks();
+
+						MergePropertiesTask mergePropertiesTask =
+							(MergePropertiesTask)taskContainer.findByName(
+								LangMergerPlugin.MERGE_LANG_TASK_NAME);
+
+						if (mergePropertiesTask != null) {
+							sourceFiles.from(
+								mergePropertiesTask.getSourceFiles());
+						}
+					}
+
+					return sourceFiles;
 				}
 
 			});

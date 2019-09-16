@@ -850,7 +850,7 @@ public class JenkinsResultsParserUtil {
 		try {
 			JSONObject jobJSONObject = toJSONObject(
 				_getDistPortalJobURL(portalBranchName) +
-					"api/json?tree=builds[number]");
+					"/api/json?tree=builds[number]");
 
 			JSONArray buildsJSONArray = jobJSONObject.getJSONArray("builds");
 
@@ -865,8 +865,8 @@ public class JenkinsResultsParserUtil {
 				}
 
 				String distPortalBundlesBuildURL = combine(
-					_getDistPortalBundlesURL(portalBranchName),
-					String.valueOf(buildJSONObject.getInt("number")));
+					_getDistPortalBundlesURL(portalBranchName), "/",
+					String.valueOf(buildJSONObject.getInt("number")), "/");
 
 				try {
 					Matcher matcher = distPortalBundleFileNamesPattern.matcher(
@@ -2933,7 +2933,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return combine(
-			_DIST_PORTAL_JOB_URL_DEFAULT, "(", portalBranchName, ")/");
+			_DIST_PORTAL_JOB_URL_DEFAULT, "(", portalBranchName, ")");
 	}
 
 	private static String _getGitHubAPIRateLimitStatusMessage(

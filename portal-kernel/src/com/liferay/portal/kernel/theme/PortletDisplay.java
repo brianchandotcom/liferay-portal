@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.theme;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
@@ -31,6 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
+
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -470,6 +474,17 @@ public class PortletDisplay implements Cloneable, Serializable {
 			return false;
 		}
 
+		PortletPreferences portletSetup = getPortletSetup();
+
+		String portletSetupPortletDecoratorId = portletSetup.getValue(
+			"portletSetupPortletDecoratorId", StringPool.BLANK);
+
+		if (Validator.isNull(portletSetupPortletDecoratorId) &&
+			_isFragmentPage()) {
+
+			return false;
+		}
+
 		return true;
 	}
 
@@ -874,6 +889,22 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 	public void writeContent(Writer writer) throws IOException {
 		_contentSB.writeTo(writer);
+	}
+
+	private boolean _isFragmentPage() {
+		Layout layout = _themeDisplay.getLayout();
+
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+
+			return true;
+		}
+
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletDisplay.class);

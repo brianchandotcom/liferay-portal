@@ -53,6 +53,10 @@ definition {
 
 		SetupWizard.viewDefaultAdministratorUserPG();
 
+		Type(
+			locator1 = "TextInput#EMAIL",
+			value1 = "test@liferay.com");
+
 		SetupWizard.viewDefaultDatabasePG();
 
 		SetupWizard.finishConfigurationPG();
@@ -224,7 +228,7 @@ definition {
 
 		AssertTextEquals.assertValue(
 			locator1 = "TextInput#EMAIL",
-			value1 = "test@liferay.com");
+			value1 = "");
 	}
 
 	macro viewDefaultDatabasePG {

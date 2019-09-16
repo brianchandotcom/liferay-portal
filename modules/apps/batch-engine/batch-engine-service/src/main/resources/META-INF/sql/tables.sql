@@ -7,6 +7,7 @@ create table BatchEngineTask (
 	createDate DATE null,
 	modifiedDate DATE null,
 	batchSize LONG,
+	callbackURL VARCHAR(75) null,
 	className VARCHAR(75) null,
 	content BLOB,
 	contentType VARCHAR(75) null,

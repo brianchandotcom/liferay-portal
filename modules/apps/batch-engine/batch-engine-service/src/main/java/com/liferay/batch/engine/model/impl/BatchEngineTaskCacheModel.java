@@ -78,7 +78,7 @@ public class BatchEngineTaskCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class BatchEngineTaskCacheModel
 		sb.append(modifiedDate);
 		sb.append(", batchSize=");
 		sb.append(batchSize);
+		sb.append(", callbackURL=");
+		sb.append(callbackURL);
 		sb.append(", className=");
 		sb.append(className);
 		sb.append(", contentType=");
@@ -149,6 +151,13 @@ public class BatchEngineTaskCacheModel
 		}
 
 		batchEngineTaskImpl.setBatchSize(batchSize);
+
+		if (callbackURL == null) {
+			batchEngineTaskImpl.setCallbackURL("");
+		}
+		else {
+			batchEngineTaskImpl.setCallbackURL(callbackURL);
+		}
 
 		if (className == null) {
 			batchEngineTaskImpl.setClassName("");
@@ -225,6 +234,7 @@ public class BatchEngineTaskCacheModel
 		modifiedDate = objectInput.readLong();
 
 		batchSize = objectInput.readLong();
+		callbackURL = objectInput.readUTF();
 		className = objectInput.readUTF();
 		contentType = objectInput.readUTF();
 		endTime = objectInput.readLong();
@@ -255,6 +265,13 @@ public class BatchEngineTaskCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(batchSize);
+
+		if (callbackURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(callbackURL);
+		}
 
 		if (className == null) {
 			objectOutput.writeUTF("");
@@ -311,6 +328,7 @@ public class BatchEngineTaskCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long batchSize;
+	public String callbackURL;
 	public String className;
 	public String contentType;
 	public long endTime;

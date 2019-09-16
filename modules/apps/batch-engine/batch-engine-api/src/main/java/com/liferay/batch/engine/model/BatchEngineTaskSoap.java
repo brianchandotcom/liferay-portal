@@ -41,6 +41,7 @@ public class BatchEngineTaskSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBatchSize(model.getBatchSize());
+		soapModel.setCallbackURL(model.getCallbackURL());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setContent(model.getContent());
 		soapModel.setContentType(model.getContentType());
@@ -173,6 +174,14 @@ public class BatchEngineTaskSoap implements Serializable {
 		_batchSize = batchSize;
 	}
 
+	public String getCallbackURL() {
+		return _callbackURL;
+	}
+
+	public void setCallbackURL(String callbackURL) {
+		_callbackURL = callbackURL;
+	}
+
 	public String getClassName() {
 		return _className;
 	}
@@ -253,6 +262,7 @@ public class BatchEngineTaskSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _batchSize;
+	private String _callbackURL;
 	private String _className;
 	private Blob _content;
 	private String _contentType;

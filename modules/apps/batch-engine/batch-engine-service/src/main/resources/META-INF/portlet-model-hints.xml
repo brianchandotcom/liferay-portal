@@ -10,6 +10,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="batchSize" type="long" />
+		<field name="callbackURL" type="String" />
 		<field name="className" type="String" />
 		<field name="content" type="Blob" />
 		<field name="contentType" type="String" />

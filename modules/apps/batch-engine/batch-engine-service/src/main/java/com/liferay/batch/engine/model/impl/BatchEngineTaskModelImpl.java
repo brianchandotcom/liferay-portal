@@ -76,11 +76,11 @@ public class BatchEngineTaskModelImpl
 		{"batchEngineTaskId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"batchSize", Types.BIGINT},
-		{"className", Types.VARCHAR}, {"content", Types.BLOB},
-		{"contentType", Types.VARCHAR}, {"endTime", Types.TIMESTAMP},
-		{"errorMessage", Types.VARCHAR}, {"executeStatus", Types.VARCHAR},
-		{"operation", Types.VARCHAR}, {"startTime", Types.TIMESTAMP},
-		{"version", Types.VARCHAR}
+		{"callbackURL", Types.VARCHAR}, {"className", Types.VARCHAR},
+		{"content", Types.BLOB}, {"contentType", Types.VARCHAR},
+		{"endTime", Types.TIMESTAMP}, {"errorMessage", Types.VARCHAR},
+		{"executeStatus", Types.VARCHAR}, {"operation", Types.VARCHAR},
+		{"startTime", Types.TIMESTAMP}, {"version", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -95,6 +95,7 @@ public class BatchEngineTaskModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("batchSize", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("callbackURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("className", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.BLOB);
 		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
@@ -107,7 +108,7 @@ public class BatchEngineTaskModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
+		"create table BatchEngineTask (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,batchEngineTaskId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchSize LONG,callbackURL VARCHAR(75) null,className VARCHAR(75) null,content BLOB,contentType VARCHAR(75) null,endTime DATE null,errorMessage VARCHAR(75) null,executeStatus VARCHAR(75) null,operation VARCHAR(75) null,startTime DATE null,version VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchEngineTask";
 
@@ -304,6 +305,12 @@ public class BatchEngineTaskModelImpl
 			"batchSize",
 			(BiConsumer<BatchEngineTask, Long>)BatchEngineTask::setBatchSize);
 		attributeGetterFunctions.put(
+			"callbackURL", BatchEngineTask::getCallbackURL);
+		attributeSetterBiConsumers.put(
+			"callbackURL",
+			(BiConsumer<BatchEngineTask, String>)
+				BatchEngineTask::setCallbackURL);
+		attributeGetterFunctions.put(
 			"className", BatchEngineTask::getClassName);
 		attributeSetterBiConsumers.put(
 			"className",
@@ -482,6 +489,21 @@ public class BatchEngineTaskModelImpl
 	@Override
 	public void setBatchSize(long batchSize) {
 		_batchSize = batchSize;
+	}
+
+	@Override
+	public String getCallbackURL() {
+		if (_callbackURL == null) {
+			return "";
+		}
+		else {
+			return _callbackURL;
+		}
+	}
+
+	@Override
+	public void setCallbackURL(String callbackURL) {
+		_callbackURL = callbackURL;
 	}
 
 	@Override
@@ -676,6 +698,7 @@ public class BatchEngineTaskModelImpl
 		batchEngineTaskImpl.setCreateDate(getCreateDate());
 		batchEngineTaskImpl.setModifiedDate(getModifiedDate());
 		batchEngineTaskImpl.setBatchSize(getBatchSize());
+		batchEngineTaskImpl.setCallbackURL(getCallbackURL());
 		batchEngineTaskImpl.setClassName(getClassName());
 		batchEngineTaskImpl.setContentType(getContentType());
 		batchEngineTaskImpl.setEndTime(getEndTime());
@@ -801,6 +824,14 @@ public class BatchEngineTaskModelImpl
 
 		batchEngineTaskCacheModel.batchSize = getBatchSize();
 
+		batchEngineTaskCacheModel.callbackURL = getCallbackURL();
+
+		String callbackURL = batchEngineTaskCacheModel.callbackURL;
+
+		if ((callbackURL != null) && (callbackURL.length() == 0)) {
+			batchEngineTaskCacheModel.callbackURL = null;
+		}
+
 		batchEngineTaskCacheModel.className = getClassName();
 
 		String className = batchEngineTaskCacheModel.className;
@@ -872,7 +903,7 @@ public class BatchEngineTaskModelImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -890,6 +921,8 @@ public class BatchEngineTaskModelImpl
 		sb.append(getModifiedDate());
 		sb.append(", batchSize=");
 		sb.append(getBatchSize());
+		sb.append(", callbackURL=");
+		sb.append(getCallbackURL());
 		sb.append(", className=");
 		sb.append(getClassName());
 		sb.append(", contentType=");
@@ -913,7 +946,7 @@ public class BatchEngineTaskModelImpl
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.batch.engine.model.BatchEngineTask");
@@ -950,6 +983,10 @@ public class BatchEngineTaskModelImpl
 		sb.append(
 			"<column><column-name>batchSize</column-name><column-value><![CDATA[");
 		sb.append(getBatchSize());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>callbackURL</column-name><column-value><![CDATA[");
+		sb.append(getCallbackURL());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>className</column-name><column-value><![CDATA[");
@@ -1011,6 +1048,7 @@ public class BatchEngineTaskModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _batchSize;
+	private String _callbackURL;
 	private String _className;
 	private BatchEngineTaskContentBlobModel _contentBlobModel;
 	private String _contentType;

@@ -199,6 +199,21 @@ public interface BatchEngineTaskModel
 	public void setBatchSize(long batchSize);
 
 	/**
+	 * Returns the callback url of this batch engine task.
+	 *
+	 * @return the callback url of this batch engine task
+	 */
+	@AutoEscape
+	public String getCallbackURL();
+
+	/**
+	 * Sets the callback url of this batch engine task.
+	 *
+	 * @param callbackURL the callback url of this batch engine task
+	 */
+	public void setCallbackURL(String callbackURL);
+
+	/**
 	 * Returns the class name of this batch engine task.
 	 *
 	 * @return the class name of this batch engine task

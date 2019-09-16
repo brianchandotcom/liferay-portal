@@ -12,14 +12,12 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
+import ClayButton from '@clayui/button';
+import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useState, useRef, useEffect} from 'react';
 
-import ClayButton from '@clayui/button';
 import Button from './Button.es';
-import useIsMounted from '../../store/hooks/useIsMounted.es';
 
 const CONFIRM_BUTTON_CLASS = 'fragments-editor__inline-confirm-button';
 

@@ -12,12 +12,11 @@
  * details.
  */
 
-/* eslint no-unused-vars: "warn" */
-
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayDropDown from '@clayui/drop-down';
+import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -33,7 +32,6 @@ import ReplyCommentForm from './ReplyCommentForm.es';
 import ResolveButton from './ResolveButton.es';
 import UserIcon from '../../common/UserIcon.es';
 import useSelector from '../../../store/hooks/useSelector.es';
-import useIsMounted from '../../../store/hooks/useIsMounted.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;

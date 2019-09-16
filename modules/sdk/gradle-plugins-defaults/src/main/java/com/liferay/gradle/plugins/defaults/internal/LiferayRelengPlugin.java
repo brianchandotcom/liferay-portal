@@ -999,6 +999,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			}
 		}
 
+		if (_hasStaleDigestFile(project)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _hasStaleDigestFile(Project project) {
+		Logger logger = project.getLogger();
+
 		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
 			WriteDigestTask writeDigestTask =
 				(WriteDigestTask)GradleUtil.getTask(

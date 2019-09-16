@@ -15,7 +15,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:portal-instances:portal-instances-api")
-	compileOnly project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
 	compileOnly project(":core:petra:petra-function")

@@ -46,12 +46,19 @@ public class JournalDisplayPageFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, JournalArticle article) {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		Group group = null;
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+		if ((article != null) && (article.getId() > 0)) {
+			group = _groupLocalService.fetchGroup(article.getGroupId());
+		}
+		else {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-		Group group = themeDisplay.getScopeGroup();
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			group = themeDisplay.getScopeGroup();
+		}
 
 		if ((group != null) && group.isCompany()) {
 			return false;

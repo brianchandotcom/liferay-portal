@@ -59,6 +59,41 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
+	@description = "This test ensures that a Google Doc is autotagged once checked in."
+	@priority = "4"
+	test AutoTagGoogleDoc {
+		property test.name.skip.portal.instance = "GoogleDrive#AutoTagGoogleDoc";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.001");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.addContent(
+			googleDocContent = "Alice",
+			insertLink = "true",
+			linkAddress = "https://www.adobe.com/be_en/active-use/pdf/Alice_in_Wonderland.pdf",
+			linkText = "Alice's Adventures in Wonderland.docx");
+
+		GoogleDoc.saveAndExit();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewPG(dmDocumentTitle = "Untitled");
+
+		AutoTagging.assertAutoTagPresent(tagName = "adventures");
+
+		AutoTagging.assertAutoTagPresent(tagName = "alice");
+	}
+
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = "5"
 	test CancelGoogleDocCreation {

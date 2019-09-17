@@ -770,6 +770,44 @@ definition {
 		Staging.searchPublishTemplate(searchTerm = "Second");
 	}
 
+	@description = "This is a use case for LPS-82028."
+	@priority = "4"
+	test SingleAssetPublishLayoutScopedContent {
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration");
+
+		IFrame.selectConfigurationFrame();
+
+		Portlet.selectScope(scope = "Staging Test Page (Create New)");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		ProductMenu.gotoScopedPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs",
+			scope = "Staging Test Page");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Click(
+			key_rowEntry = "Blogs Entry Title",
+			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+		MenuItem.viewNotPresent(menuItem = "Publish to Live");
+	}
+
 	@description = "This is a use case for LPS-82689."
 	@priority = "3"
 	test StagingPublishAssetPublisherConfiguredTagsFilter {

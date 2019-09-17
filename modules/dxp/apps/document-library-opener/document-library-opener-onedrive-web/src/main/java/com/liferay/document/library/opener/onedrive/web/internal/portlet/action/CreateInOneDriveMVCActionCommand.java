@@ -110,7 +110,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 
 			xssfWorkbook.createSheet(
-				_translateKey(locale, "onedrive-excel-sheet"));
+				_translate(locale, "onedrive-excel-sheet"));
 
 			try {
 				xssfWorkbook.write(byteArrayOutputStream);
@@ -145,7 +145,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 			String title = ParamUtil.getString(
 				portletRequest, "title",
-				_translateKey(_portal.getLocale(portletRequest), "untitled"));
+				_translate(_portal.getLocale(portletRequest), "untitled"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				portletRequest);
@@ -164,7 +164,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			return JSONUtil.put(
 				"dialogMessage",
-				_translateKey(
+				_translate(
 					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-" +
 						"create-this-document")
@@ -195,7 +195,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return liferayPortletURL.toString();
 	}
 
-	private String _translateKey(Locale locale, String key) {
+	private String _translate(Locale locale, String key) {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 

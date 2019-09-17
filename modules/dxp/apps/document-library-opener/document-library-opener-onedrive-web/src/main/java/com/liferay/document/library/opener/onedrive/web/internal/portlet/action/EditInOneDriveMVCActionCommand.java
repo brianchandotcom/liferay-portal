@@ -115,7 +115,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				return JSONUtil.put(
 					"dialogMessage",
-					_translateKey(
+					_translate(
 						_portal.getLocale(portletRequest),
 						"you-are-being-redirected-to-an-external-editor-to-" +
 							"edit-this-document")
@@ -147,7 +147,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			return JSONUtil.put(
 				"dialogMessage",
-				_translateKey(
+				_translate(
 					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-edit-" +
 						"this-document")
@@ -175,7 +175,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return liferayPortletURL.toString();
 	}
 
-	private String _translateKey(Locale locale, String key) {
+	private String _translate(Locale locale, String key) {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 

@@ -120,7 +120,7 @@ public class OAuth2ControllerFactory {
 		return portletURL.toString();
 	}
 
-	private String _translateKey(Locale locale, String key) {
+	private String _translate(Locale locale, String key) {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
@@ -220,7 +220,7 @@ public class OAuth2ControllerFactory {
 						portletRequest, portletResponse,
 						JSONUtil.put(
 							"error",
-							_translateKey(
+							_translate(
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}

@@ -85,20 +85,19 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 					portletRequest, folder, "onedrive-word",
 					DLOpenerMimeTypes.APPLICATION_VND_DOCX, _ICON_NAME_DOCUMENT,
 					_ICON_COLOR_DOCUMENT,
-					_translateKey(portletRequest, "create-word-document")));
+					_translate(portletRequest, "create-word-document")));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-powerpoint",
 					DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION,
-					_translateKey(
-						portletRequest, "create-powerpoint-document")));
+					_translate(portletRequest, "create-powerpoint-document")));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-excel",
 					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET,
-					_translateKey(portletRequest, "create-excel-document")));
+					_translate(portletRequest, "create-excel-document")));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -114,7 +113,7 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 		urlMenuItem.setData(
 			Collections.singletonMap("file-icon-color", iconColor));
 		urlMenuItem.setIcon(icon);
-		urlMenuItem.setLabel(_translateKey(portletRequest, key));
+		urlMenuItem.setLabel(_translate(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
 		urlMenuItem.setURL(
 			StringBundler.concat(
@@ -164,7 +163,7 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 		}
 	}
 
-	private String _translateKey(PortletRequest portletRequest, String key) {
+	private String _translate(PortletRequest portletRequest, String key) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			_portal.getLocale(portletRequest),
 			DLOpenerOneDriveDLPortletToolbarContributorContext.class);

@@ -48,22 +48,16 @@ import org.osgi.service.component.annotations.Reference;
 public final class AMImageProcessorImpl implements AMImageProcessor {
 
 	@Override
-	public void cleanUp(FileVersion fileVersion) {
-		try {
-			if (!_amImageValidator.isValid(fileVersion)) {
-				return;
-			}
+	public void cleanUp(FileVersion fileVersion) throws PortalException {
+		if (!_amImageValidator.isValid(fileVersion)) {
+			return;
+		}
 
-			_amImageEntryLocalService.deleteAMImageEntryFileVersion(
-				fileVersion);
-		}
-		catch (PortalException pe) {
-			throw new AMRuntimeException.IOException(pe);
-		}
+		_amImageEntryLocalService.deleteAMImageEntryFileVersion(fileVersion);
 	}
 
 	@Override
-	public void process(FileVersion fileVersion) {
+	public void process(FileVersion fileVersion) throws PortalException {
 		if (!_amImageValidator.isValid(fileVersion)) {
 			return;
 		}
@@ -72,14 +66,16 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
 				fileVersion.getCompanyId());
 
-		amImageConfigurationEntries.forEach(
-			amImageConfigurationEntry -> process(
-				fileVersion, amImageConfigurationEntry.getUUID()));
+		for (AMImageConfigurationEntry amImageConfigurationEntry :
+				amImageConfigurationEntries) {
+
+			process(fileVersion, amImageConfigurationEntry.getUUID());
+		}
 	}
 
 	@Override
-	public void process(
-		FileVersion fileVersion, String configurationEntryUuid) {
+	public void process(FileVersion fileVersion, String configurationEntryUuid)
+		throws PortalException {
 
 		if (!_amImageValidator.isValid(fileVersion)) {
 			return;
@@ -133,8 +129,8 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 					amImageScaledImage.getSize());
 			}
 		}
-		catch (IOException | PortalException e) {
-			throw new AMRuntimeException.IOException(e);
+		catch (IOException ioe) {
+			throw new AMRuntimeException.IOException(ioe);
 		}
 	}
 

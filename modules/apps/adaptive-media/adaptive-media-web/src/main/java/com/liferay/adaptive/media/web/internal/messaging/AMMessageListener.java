@@ -83,8 +83,8 @@ public class AMMessageListener extends BaseMessageListener {
 				}
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
+				if (_log.isInfoEnabled()) {
+					_log.info(e, e);
 				}
 			}
 		}

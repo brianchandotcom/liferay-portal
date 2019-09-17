@@ -194,6 +194,32 @@ definition {
 			tagNameList = "adventures");
 	}
 
+	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
+	@priority = "4"
+	test CancelCheckoutOnWordDocument {
+		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "Word Doc Title",
+			key_documentTitle = "Untitled.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.cancelCheckoutPG(dmDocumentTitle = "Untitled");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Untitled",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Word Doc Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
 	@description = "This test ensures that an Excel sheet can be deleted."
 	@priority = "5"
 	test DeleteExcelSheet {

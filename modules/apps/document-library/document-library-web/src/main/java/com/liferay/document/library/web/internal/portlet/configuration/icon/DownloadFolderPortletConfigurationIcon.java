@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.RepositoryUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -100,7 +101,11 @@ public class DownloadFolderPortletConfigurationIcon
 			() -> {
 				Folder folder = ActionUtil.getFolder(portletRequest);
 
-				if (folder.isMountPoint()) {
+				if (folder.isMountPoint() ||
+					(RepositoryUtil.isExternalRepository(
+						folder.getRepositoryId()) &&
+					 folder.isRoot())) {
+
 					return false;
 				}
 

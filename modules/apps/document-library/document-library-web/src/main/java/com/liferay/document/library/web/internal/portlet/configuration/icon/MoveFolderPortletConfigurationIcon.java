@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.RepositoryUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -87,11 +88,19 @@ public class MoveFolderPortletConfigurationIcon
 		return DLPortletConfigurationIconUtil.runWithDefaultValueOnError(
 			false,
 			() -> {
+				Folder folder = ActionUtil.getFolder(portletRequest);
+
+				if (folder.isMountPoint() ||
+					(RepositoryUtil.isExternalRepository(
+						folder.getRepositoryId()) &&
+					 folder.isRoot())) {
+
+					return false;
+				}
+
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)portletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
-
-				Folder folder = ActionUtil.getFolder(portletRequest);
 
 				if (ModelResourcePermissionHelper.contains(
 						_folderModelResourcePermission,

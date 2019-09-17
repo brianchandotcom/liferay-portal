@@ -14,10 +14,36 @@ definition {
 
 	macro clickResultEllipsisItem {
 		Click(
-			assetTitle = "${assetTitle}",
+			key_assetTitle = "${assetTitle}",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
+	macro configureAliases {
+		if (isSet(deleteAlias)) {
+			Click(
+				key_alias = "${deleteAlias}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_REMOVE");
+
+			AssertElementNotPresent(
+				key_alias = "${deleteAlias}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_VALUE");
+		}
+
+		if (isSet(addAlias)) {
+			Type(
+				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+				value1 = "${addAlias}");
+
+			KeyPress(
+				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+				value1 = ",");
+
+			AssertElementPresent(
+				key_alias = "${addAlias}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_VALUE");
+		}
 	}
 
 }

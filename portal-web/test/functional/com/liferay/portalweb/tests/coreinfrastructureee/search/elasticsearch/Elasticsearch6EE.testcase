@@ -101,15 +101,20 @@ definition {
 			value1 = "There are no entries.");
 	}
 
-	test PinAndHideResults {
+	test PinAndHideResultsWithAliases {
 		property portal.acceptance = "true";
 
-		for (var title : list "WC Title 1,WC Title 2,WC Title 3") {
+		for (var title : list "WC Title 1,WC Title 3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Guest",
 				title = "${title}");
 		}
+
+		JSONWebcontent.addWebContent(
+			content = "apple",
+			groupName = "Guest",
+			title = "WC Title 2");
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -126,6 +131,10 @@ definition {
 			assetTitle = "WC Title 2",
 			menuItem = "Hide Result");
 
+		SearchTuning.configureAliases(addAlias = "apple");
+
+		SearchTuning.configureAliases(addAlias = "banana");
+
 		Button.clickSave();
 
 		Navigator.openURL();
@@ -137,6 +146,59 @@ definition {
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "banana");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 3",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Title");
+
+		SearchTuning.configureAliases(deleteAlias = "apple");
+
+		SearchTuning.configureAliases(deleteAlias = "banana");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 3/Web Content Article");
+
+		SearchPortlets.searchEmbedded(searchTerm = "banana");
+
+		SearchResultPortlet.viewNoSearchResults(searchTerm = "banana");
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -163,7 +225,14 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			resultOrder = "1",
+			value1 = "WC Title 3");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
 	}
 
 	@priority = "5"

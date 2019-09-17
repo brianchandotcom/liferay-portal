@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Adolfo Pérez
@@ -51,13 +51,8 @@ public class DefaultRepositoryEventRegistry
 		Tuple tuple = new Tuple(repositoryEventTypeClass, modelClass);
 
 		Collection<RepositoryEventListener<?, ?>> repositoryEventListeners =
-			_repositoryEventListeners.get(tuple);
-
-		if (repositoryEventListeners == null) {
-			repositoryEventListeners = new ArrayList<>();
-
-			_repositoryEventListeners.put(tuple, repositoryEventListeners);
-		}
+			_repositoryEventListeners.computeIfAbsent(
+				tuple, keyTuple -> new CopyOnWriteArrayList<>());
 
 		repositoryEventListeners.add(repositoryEventListener);
 	}
@@ -109,6 +104,6 @@ public class DefaultRepositoryEventRegistry
 
 	private final RepositoryEventTrigger _parentRepositoryEventTrigger;
 	private final Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
-		_repositoryEventListeners = new HashMap<>();
+		_repositoryEventListeners = new ConcurrentHashMap<>();
 
 }

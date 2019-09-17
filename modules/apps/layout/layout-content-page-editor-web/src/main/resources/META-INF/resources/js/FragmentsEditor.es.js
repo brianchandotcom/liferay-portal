@@ -34,7 +34,6 @@ import {
 import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
 import {updateActiveItemAction} from './actions/updateActiveItem.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
 
 /**
  * @type {string}
@@ -231,47 +230,20 @@ class FragmentsEditor extends Component {
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
-		const targetItem = getElement(targetItemId, targetItemType);
-
 		document
 			.querySelectorAll(`.${HOVERED_ITEM_CLASS}`)
 			.forEach(hoveredItem => {
 				hoveredItem.classList.remove(HOVERED_ITEM_CLASS);
 			});
 
-		if (targetItem) {
-			let hoveredItemId = targetItemId;
-			let hoveredItemType = targetItemType;
+		const targetItem = getElement(targetItemId, targetItemType);
 
+		if (targetItem) {
 			targetItem.classList.add(ITEM_CLASS);
 			targetItem.classList.add(HOVERED_ITEM_CLASS);
+		}
 
-			const targetItemIsEditable =
-				targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
-				targetItemType ===
-					FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
-
-			if (
-				targetItemIsEditable &&
-				!targetItem.classList.contains(
-					'fragments-editor__editable--highlighted'
-				)
-			) {
-				const fragment = getElement(
-					targetItem.dataset.fragmentEntryLinkId,
-					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-				);
-
-				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
-				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
-			}
-
-			this.store.dispatch({
-				hoveredItemId,
-				hoveredItemType,
-				type: UPDATE_HOVERED_ITEM
-			});
-		} else if (targetItemId && targetItemType) {
+		if (targetItemId && targetItemType) {
 			this.store.dispatch({
 				hoveredItemId: targetItemId,
 				hoveredItemType: targetItemType,

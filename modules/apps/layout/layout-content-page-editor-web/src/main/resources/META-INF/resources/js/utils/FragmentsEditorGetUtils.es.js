@@ -82,6 +82,9 @@ function editableIsMappedToAssetEntry(editableValues) {
  * Checks if the given editable should be highlighted
  * @param {string} activeItemId
  * @param {string} activeItemType
+ * @param {string} fragmentEntryLinkId
+ * @param {string} hoveredItemId
+ * @param {string} hoveredItemType
  * @param {object} structure
  * @private
  * @return {boolean}
@@ -91,6 +94,8 @@ function editableShouldBeHighlighted(
 	activeItemId,
 	activeItemType,
 	fragmentEntryLinkId,
+	hoveredItemId,
+	hoveredItemType,
 	structure
 ) {
 	const parentFragmentIsInActiveItemPath = itemIsInPath(
@@ -99,7 +104,15 @@ function editableShouldBeHighlighted(
 		FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 	);
 
-	return parentFragmentIsInActiveItemPath;
+	const parentFragmentIsInHoveredItemPath = itemIsInPath(
+		getItemPath(hoveredItemId, hoveredItemType, structure),
+		fragmentEntryLinkId,
+		FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+	);
+
+	return (
+		parentFragmentIsInActiveItemPath || parentFragmentIsInHoveredItemPath
+	);
 }
 
 /**

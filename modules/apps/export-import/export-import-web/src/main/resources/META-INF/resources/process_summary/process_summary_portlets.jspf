@@ -162,6 +162,7 @@
 
 							<%
 							int i = 0;
+
 							for (Map.Entry<String, Long> additionEntry : currentAdditions.entrySet()) {
 								++i;
 

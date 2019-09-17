@@ -37,6 +37,7 @@
 
 		while (iterator.hasNext()) {
 			String scopeAlias = iterator.next();
+
 			if (!scopeAliases.contains(scopeAlias)) {
 				sb.append("<span class=\"removed-scope\">");
 				sb.append(LanguageUtil.get(request, scopeAlias));

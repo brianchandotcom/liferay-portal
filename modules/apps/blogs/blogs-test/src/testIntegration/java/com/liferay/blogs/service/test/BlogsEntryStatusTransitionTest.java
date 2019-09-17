@@ -190,6 +190,7 @@ public class BlogsEntryStatusTransitionTest {
 			new HashMap<String, Serializable>());
 
 		Assert.assertFalse(isAssetEntryVisible(entry.getEntryId()));
+
 		Assert.assertEquals(0, searchBlogsEntriesCount(group.getGroupId()));
 
 		checkSocialActivity(BlogsActivityKeys.ADD_ENTRY, 1);
@@ -226,6 +227,7 @@ public class BlogsEntryStatusTransitionTest {
 			new HashMap<String, Serializable>());
 
 		Assert.assertFalse(isAssetEntryVisible(entry.getEntryId()));
+
 		Assert.assertEquals(0, searchBlogsEntriesCount(group.getGroupId()));
 
 		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);

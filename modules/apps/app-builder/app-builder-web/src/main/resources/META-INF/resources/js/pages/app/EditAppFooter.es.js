@@ -15,22 +15,7 @@
 import React from 'react';
 import Button from '../../components/button/Button.es';
 
-export default ({
-	currentStep,
-	isLoading = false,
-	nextStepDisabled = false,
-	onCancel,
-	onDeploy,
-	onStepChange
-}) => {
-	const onNextStep = () => {
-		onStepChange(currentStep + 1);
-	};
-
-	const onPreviousStep = () => {
-		onStepChange(currentStep - 1);
-	};
-
+export default ({children, onCancel}) => {
 	return (
 		<div className="card-footer bg-transparent">
 			<div className="autofit-row">
@@ -40,33 +25,7 @@ export default ({
 					</Button>
 				</div>
 				<div className="col-md-4 offset-md-4 text-right">
-					{currentStep > 0 && (
-						<Button
-							className="mr-3"
-							displayType="secondary"
-							onClick={onPreviousStep}
-						>
-							{Liferay.Language.get('previous')}
-						</Button>
-					)}
-					{currentStep < 2 && (
-						<Button
-							disabled={nextStepDisabled}
-							displayType="primary"
-							onClick={onNextStep}
-						>
-							{Liferay.Language.get('next')}
-						</Button>
-					)}
-					{currentStep === 2 && (
-						<Button
-							disabled={isLoading || nextStepDisabled}
-							displayType="primary"
-							onClick={onDeploy}
-						>
-							{Liferay.Language.get('deploy')}
-						</Button>
-					)}
+					{children}
 				</div>
 			</div>
 		</div>

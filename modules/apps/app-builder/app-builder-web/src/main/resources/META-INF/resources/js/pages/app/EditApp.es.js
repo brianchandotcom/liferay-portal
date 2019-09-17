@@ -17,6 +17,7 @@ import DeployApp from './DeployApp.es';
 import EditAppBody from './EditAppBody.es';
 import EditAppFooter from './EditAppFooter.es';
 import MultiStepNav from './MultiStepNav.es';
+import Button from '../../components/button/Button.es';
 import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {UpperToolbarInput} from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, updateItem} from '../../utils/client.es';
@@ -40,7 +41,6 @@ export default ({
 	});
 
 	const [currentStep, setCurrentStep] = useState(0);
-	const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		dataLayoutId,
@@ -80,7 +80,6 @@ export default ({
 	};
 
 	const onDeploy = () => {
-		setIsLoading(true);
 		if (appId) {
 			updateItem(`/o/app-builder/v1.0/apps/${appId}`, app).then(onCancel);
 		} else {
@@ -110,20 +109,6 @@ export default ({
 			...prevApp,
 			dataListViewId
 		}));
-	};
-
-	const validateNextStep = () => {
-		let nextStepDisabled = false;
-
-		if (currentStep === 2) {
-			nextStepDisabled =
-				appName === '' ||
-				!dataLayoutId ||
-				!dataDefinitionId ||
-				deploymentTypes.length === 0;
-		}
-
-		return nextStepDisabled;
 	};
 
 	return (
@@ -198,14 +183,38 @@ export default ({
 
 					<h4 className="card-divider"></h4>
 
-					<EditAppFooter
-						currentStep={currentStep}
-						isLoading={isLoading}
-						nextStepDisabled={validateNextStep()}
-						onCancel={onCancel}
-						onDeploy={onDeploy}
-						onStepChange={step => setCurrentStep(step)}
-					/>
+					<EditAppFooter onCancel={onCancel}>
+						{currentStep > 0 && (
+							<Button
+								className="mr-3"
+								displayType="secondary"
+								onClick={() => setCurrentStep(currentStep - 1)}
+							>
+								{Liferay.Language.get('previous')}
+							</Button>
+						)}
+						{currentStep < 2 && (
+							<Button
+								disabled={
+									(currentStep === 0 && !dataLayoutId) ||
+									(currentStep === 1 && !dataListViewId)
+								}
+								displayType="primary"
+								onClick={() => setCurrentStep(currentStep + 1)}
+							>
+								{Liferay.Language.get('next')}
+							</Button>
+						)}
+						{currentStep === 2 && (
+							<Button
+								disabled={!deploymentTypes.length || !appName}
+								displayType="primary"
+								onClick={onDeploy}
+							>
+								{Liferay.Language.get('deploy')}
+							</Button>
+						)}
+					</EditAppFooter>
 				</div>
 			</div>
 		</>

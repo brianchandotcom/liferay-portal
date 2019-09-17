@@ -12,59 +12,61 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.internal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.EntryLocalService;
+import com.liferay.portal.reports.engine.console.model.Source;
+import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Michael C. Han
  * @author Gavin Wan
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Entry",
+	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Source",
 	service = BaseModelPermissionChecker.class
 )
 @Deprecated
-public class EntryPermissionChecker implements BaseModelPermissionChecker {
+public class SourcePermissionChecker implements BaseModelPermissionChecker {
 
 	public static void check(
-			PermissionChecker permissionChecker, Entry entry, String actionId)
+			PermissionChecker permissionChecker, long sourceId, String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(permissionChecker, entry, actionId);
+		_sourceModelResourcePermission.check(
+			permissionChecker, sourceId, actionId);
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, long entryId, String actionId)
+			PermissionChecker permissionChecker, Source source, String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
-			permissionChecker, entryId, actionId);
+		_sourceModelResourcePermission.check(
+			permissionChecker, source, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, Entry entry, String actionId)
+			PermissionChecker permissionChecker, long sourceId, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
-			permissionChecker, entry, actionId);
+		return _sourceModelResourcePermission.contains(
+			permissionChecker, sourceId, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long entryId, String actionId)
+			PermissionChecker permissionChecker, Source source, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
-			permissionChecker, entryId, actionId);
+		return _sourceModelResourcePermission.contains(
+			permissionChecker, source, actionId);
 	}
 
 	@Override
@@ -73,23 +75,25 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_sourceModelResourcePermission.check(
 			permissionChecker, primaryKey, actionId);
 	}
 
-	protected void setEntryLocalService(EntryLocalService entryLocalService) {
-	}
-
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Entry)",
+		target = "(model.class.name=com.liferay.portal.reports.engine.console.model.Source)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
-		ModelResourcePermission<Entry> modelResourcePermission) {
+		ModelResourcePermission<Source> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_sourceModelResourcePermission = modelResourcePermission;
 	}
 
-	private static ModelResourcePermission<Entry> _entryModelResourcePermission;
+	protected void setSourceLocalService(
+		SourceLocalService sourceLocalService) {
+	}
+
+	private static ModelResourcePermission<Source>
+		_sourceModelResourcePermission;
 
 }

@@ -39,7 +39,7 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 			Company company, Method resourceMethod,
 			String[] resourceMethodParameters,
 			ServiceObjects<Object> resourceServiceObjects, User user)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		_company = company;
 		_resourceMethod = resourceMethod;
@@ -88,11 +88,11 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 		}
 	}
 
-	private Object _getResource() throws Exception {
+	private Object _getResource() throws ReflectiveOperationException {
 		Object resource = _resourceServiceObjects.getService();
 
 		_setFieldValue(
-			"contextAcceptLanguage", resource,
+			resource, "contextAcceptLanguage",
 			new AcceptLanguage() {
 
 				@Override
@@ -112,14 +112,14 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 
 			});
 
-		_setFieldValue("contextCompany", resource, _company);
-		_setFieldValue("contextUser", resource, _user);
+		_setFieldValue(resource, "contextCompany", _company);
+		_setFieldValue(resource, "contextUser", _user);
 
 		return resource;
 	}
 
-	private void _setFieldValue(String fieldName, Object resource, Object value)
-		throws IllegalAccessException, NoSuchFieldException {
+	private void _setFieldValue(Object resource, String fieldName, Object value)
+		throws ReflectiveOperationException {
 
 		Class<?> resourceClass = resource.getClass();
 

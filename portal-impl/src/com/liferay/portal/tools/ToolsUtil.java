@@ -350,36 +350,43 @@ public class ToolsUtil {
 							"\\.\\s*"),
 						")\\W"));
 
-				Matcher matcher = pattern.matcher(afterImportsContent);
+				outerLoop:
+				while (true) {
+					Matcher matcher = pattern.matcher(afterImportsContent);
 
-				while (matcher.find()) {
-					x = matcher.start();
+					while (matcher.find()) {
+						x = matcher.start();
 
-					int y = afterImportsContent.lastIndexOf(
-						CharPool.NEW_LINE, x);
+						int y = afterImportsContent.lastIndexOf(
+							CharPool.NEW_LINE, x);
 
-					if (y == -1) {
-						y = 0;
+						if (y == -1) {
+							y = 0;
+						}
+
+						String s = afterImportsContent.substring(y, x + 1);
+
+						if (isInsideQuotes(s, x - y)) {
+							continue;
+						}
+
+						s = StringUtil.trim(s);
+
+						if (s.startsWith("//")) {
+							continue;
+						}
+
+						int z = importPackageAndClassName.lastIndexOf(
+							StringPool.PERIOD);
+
+						afterImportsContent = StringUtil.replaceFirst(
+							afterImportsContent, matcher.group(1),
+							importPackageAndClassName.substring(z + 1), x);
+
+						continue outerLoop;
 					}
 
-					String s = afterImportsContent.substring(y, x + 1);
-
-					if (isInsideQuotes(s, x - y)) {
-						continue;
-					}
-
-					s = StringUtil.trim(s);
-
-					if (s.startsWith("//")) {
-						continue;
-					}
-
-					int z = importPackageAndClassName.lastIndexOf(
-						StringPool.PERIOD);
-
-					afterImportsContent = StringUtil.replaceFirst(
-						afterImportsContent, matcher.group(1),
-						importPackageAndClassName.substring(z + 1), x);
+					break;
 				}
 			}
 

@@ -22,7 +22,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -299,16 +298,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
-		FragmentEntry fragmentEntry =
-			fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
-
-		if (fragmentEntry != null) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), fragmentEntry.getGroupId(),
-				ActionKeys.VIEW);
-		}
-
-		return fragmentEntry;
+		return fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
 	}
 
 	/**

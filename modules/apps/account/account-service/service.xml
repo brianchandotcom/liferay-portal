@@ -59,6 +59,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AEI" return-type="Collection">
+			<finder-column name="accountEntryId" />
+		</finder>
 		<finder name="AEI_AUI" return-type="AccountEntryUserRel">
 			<finder-column name="accountEntryId" />
 			<finder-column name="accountUserId" />

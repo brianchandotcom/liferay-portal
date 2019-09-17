@@ -172,7 +172,7 @@ portletDisplay.setURLBack(redirect);
 			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
 
 			if (choicesAction) {
-				choicesAction.setAttribute('value', '<%= "addChoice" %>');
+				choicesAction.setAttribute('value', "addChoice");
 			}
 
 			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');
@@ -204,7 +204,7 @@ portletDisplay.setURLBack(redirect);
 			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
 
 			if (choicesAction) {
-				choicesAction.setAttribute('value', '<%= "deleteChoice" %>');
+				choicesAction.setAttribute('value', "deleteChoice");
 			}
 
 			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');

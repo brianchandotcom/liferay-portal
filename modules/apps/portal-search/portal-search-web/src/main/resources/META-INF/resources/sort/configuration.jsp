@@ -75,7 +75,7 @@ JSONArray fieldsJSONArray = sortPortletPreferences.getFieldsJSONArray();
 
 				<aui:input cssClass="fields-input" name="<%= PortletPreferencesJspUtil.getInputName(SortPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="hidden" value="<%= sortPortletPreferences.getFieldsString() %>" />
 
-				<aui:input name='<%= "fieldsIndexes" %>' type="hidden" value="<%= StringUtil.merge(fieldsIndexes) %>" />
+				<aui:input name="fieldsIndexes" type="hidden" value="<%= StringUtil.merge(fieldsIndexes) %>" />
 			</aui:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

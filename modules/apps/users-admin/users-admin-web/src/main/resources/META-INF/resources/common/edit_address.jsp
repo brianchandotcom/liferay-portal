@@ -71,27 +71,27 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" message="please-select-a-type" />
 
-				<aui:select label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" name='<%= "addressTypeId" %>' />
+				<aui:select label="type" listType="<%= editContactInformationDisplayContext.getClassName() + ListTypeConstants.ADDRESS %>" name="addressTypeId" />
 
 				<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 
-				<aui:input fieldParam='<%= "addressStreet1" %>' id='<%= "addressStreet1" %>' name="street1" required="<%= true %>" />
+				<aui:input fieldParam="addressStreet1" id="addressStreet1" name="street1" required="<%= true %>" />
 
-				<aui:input fieldParam='<%= "addressStreet2" %>' id='<%= "addressStreet2" %>' name="street2" />
+				<aui:input fieldParam="addressStreet2" id="addressStreet2" name="street2" />
 
-				<aui:input fieldParam='<%= "addressStreet3" %>' id='<%= "addressStreet3" %>' name="street3" />
+				<aui:input fieldParam="addressStreet3" id="addressStreet3" name="street3" />
 
 				<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 
-				<aui:input fieldParam='<%= "addressCity" %>' id='<%= "addressCity" %>' name="city" required="<%= true %>" />
+				<aui:input fieldParam="addressCity" id="addressCity" name="city" required="<%= true %>" />
 
 				<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-				<aui:select label="country" name='<%= "addressCountryId" %>' />
+				<aui:select label="country" name="addressCountryId" />
 
 				<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-				<aui:select label="region" name='<%= "addressRegionId" %>' />
+				<aui:select label="region" name="addressRegionId" />
 
 				<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 
@@ -106,10 +106,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 						</span>
 					</label>
 
-					<aui:input fieldParam='<%= "addressZip" %>' id='<%= "addressZip" %>' label="" name="zip" />
+					<aui:input fieldParam="addressZip" id="addressZip" label="" name="zip" />
 				</div>
 
-				<aui:input cssClass="mailing-ctrl" fieldParam='<%= "addressMailing" %>' id='<%= "addressMailing" %>' name="mailing" />
+				<aui:input cssClass="mailing-ctrl" fieldParam="addressMailing" id="addressMailing" name="mailing" />
 			</div>
 
 			<div class="sheet-footer">

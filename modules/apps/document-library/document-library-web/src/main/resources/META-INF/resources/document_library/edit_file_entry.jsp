@@ -305,7 +305,7 @@ if (portletTitleBasedNavigation) {
 													title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 													<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-														<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
+														<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
 													</liferay-portlet:renderURL>
 
 													uri: '<%= selectFolderURL.toString() %>'

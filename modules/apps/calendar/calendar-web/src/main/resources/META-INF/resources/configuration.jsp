@@ -27,7 +27,7 @@
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:tabs
-			names='<%= "user-settings,display-settings,rss" %>'
+			names="user-settings,display-settings,rss"
 			param="tabs2"
 			refresh="<%= false %>"
 		>

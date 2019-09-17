@@ -183,7 +183,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 												<clay:link
 													buttonStyle="primary"
 													data="<%= data %>"
-													elementClasses='<%= "btn-sm" %>'
+													elementClasses="btn-sm"
 													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 													label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 													title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'
@@ -196,7 +196,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<div class="btn-group-item" data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>">
 										<clay:link
 											buttonStyle="primary"
-											elementClasses='<%= "btn-sm" %>'
+											elementClasses="btn-sm"
 											href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 											label='<%= LanguageUtil.get(resourceBundle, "download") %>'
 											title='<%= LanguageUtil.format(resourceBundle, "file-size-x", TextFormatter.formatStorageSize(fileVersion.getSize(), locale), false) %>'

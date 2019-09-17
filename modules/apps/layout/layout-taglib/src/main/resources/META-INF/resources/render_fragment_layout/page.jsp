@@ -28,7 +28,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 %>
 
 <c:if test="<%= structureJSONArray != null %>">
-	<div class="layout-content" id="main-content" role="main">
+	<div class="layout-content portlet-layout" id="main-content" role="main">
 
 		<%
 		for (int i = 0; i < structureJSONArray.length(); i++) {

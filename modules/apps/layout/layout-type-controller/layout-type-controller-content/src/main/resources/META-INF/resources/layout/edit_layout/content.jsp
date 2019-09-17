@@ -22,7 +22,7 @@
 
 <liferay-ui:success key="layoutPublished" message="the-page-was-published-succesfully" />
 
-<div class="layout-content" id="main-content" role="main">
+<div class="layout-content portlet-layout" id="main-content" role="main">
 	<liferay-portlet:runtime
 		portletName="<%= ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET %>"
 	/>

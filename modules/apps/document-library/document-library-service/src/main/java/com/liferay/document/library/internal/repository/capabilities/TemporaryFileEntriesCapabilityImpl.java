@@ -345,11 +345,11 @@ public class TemporaryFileEntriesCapabilityImpl
 
 		@Override
 		public void execute(FileEntry fileEntry) throws PortalException {
-			Folder folder = fileEntry.getFolder();
-
 			DLAppHelperLocalServiceUtil.deleteFileEntry(fileEntry);
 
 			_documentRepository.deleteFileEntry(fileEntry.getFileEntryId());
+
+			Folder folder = fileEntry.getFolder();
 
 			Folder mountFolder = _documentRepository.getFolder(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

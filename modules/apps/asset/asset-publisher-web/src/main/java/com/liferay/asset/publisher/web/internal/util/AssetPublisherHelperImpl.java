@@ -847,21 +847,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		AssetEntryQuery assetEntryQuery,
 		PortletPreferences portletPreferences) {
 
-		List<Long> filteredCategoryIds = new ArrayList<>();
-
 		long[] portletPreferencesCategoryIds = getAssetCategoryIds(
 			portletPreferences);
 
 		long[] allCategoryIds = assetEntryQuery.getAllCategoryIds();
 
-		for (long categoryId : portletPreferencesCategoryIds) {
-			if (!ArrayUtil.contains(allCategoryIds, categoryId)) {
-				filteredCategoryIds.add(categoryId);
-			}
-		}
+		long[] filteredCategoryIds = ArrayUtil.filter(
+			portletPreferencesCategoryIds,
+			categoryId -> !ArrayUtil.contains(allCategoryIds, categoryId));
 
-		return _filterAssetCategoryIds(
-			ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0])));
+		return _filterAssetCategoryIds(filteredCategoryIds);
 	}
 
 	private List<AssetEntryResult> _getAssetEntryResultsByClassName(

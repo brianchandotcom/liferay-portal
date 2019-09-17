@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -190,7 +189,7 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	@Override
-	public void setPageContext(PageContext pageContext) {
+	public synchronized void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
 		HttpServletRequest httpServletRequest =
@@ -207,9 +206,13 @@ public class ParamAndPropertyAncestorTagImpl
 
 		AutoClosePageContextRegistry.registerCloseCallback(
 			pageContext,
-			() -> _atomicReferenceFieldUpdater.compareAndSet(
-				ParamAndPropertyAncestorTagImpl.this, httpServletRequest,
-				null));
+			() -> {
+				synchronized (ParamAndPropertyAncestorTagImpl.this) {
+					if (httpServletRequest == _httpServletRequest) {
+						_httpServletRequest = null;
+					}
+				}
+			});
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -220,15 +223,10 @@ public class ParamAndPropertyAncestorTagImpl
 		return _servletContext;
 	}
 
-	private static final AtomicReferenceFieldUpdater
-		_atomicReferenceFieldUpdater = AtomicReferenceFieldUpdater.newUpdater(
-			ParamAndPropertyAncestorTagImpl.class, HttpServletRequest.class,
-			"_httpServletRequest");
-
 	private boolean _allowEmptyParam;
 	private boolean _copyCurrentRenderParameters = true;
 	private DynamicServletRequest _dynamicServletRequest;
-	private volatile HttpServletRequest _httpServletRequest;
+	private HttpServletRequest _httpServletRequest;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;
 	private ServletContext _servletContext;

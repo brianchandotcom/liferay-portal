@@ -85,11 +85,14 @@ public class PortalUpgradeProcessTest {
 
 	@Test
 	public void testDefineNewMicroSchemaVersion() throws Exception {
-		Version previousMicroSchemaVersion = new Version(
-			_currentSchemaVersion.getMajor(), _currentSchemaVersion.getMinor(),
-			_currentSchemaVersion.getMicro() - 1);
+		if (_currentSchemaVersion.getMicro() > 0) {
+			Version previousMicroSchemaVersion = new Version(
+				_currentSchemaVersion.getMajor(),
+				_currentSchemaVersion.getMinor(),
+				_currentSchemaVersion.getMicro() - 1);
 
-		_updateSchemaVersion(previousMicroSchemaVersion);
+			_updateSchemaVersion(previousMicroSchemaVersion);
+		}
 
 		try (Connection connection = DataAccess.getConnection()) {
 			Assert.assertTrue(

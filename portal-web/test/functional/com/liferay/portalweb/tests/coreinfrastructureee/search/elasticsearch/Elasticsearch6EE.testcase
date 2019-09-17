@@ -248,7 +248,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.addSynonymSet(synonyms = "Article,Journal");
+		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -282,7 +282,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.deleteSynonymSet(synonymSet = "Article, Journal");
+		SearchTuning.deleteSynonymSet(synonymSet = "Article, Journal");
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -364,7 +364,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.addSynonymSet(synonyms = "Article,Journal");
+		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
 		ProductMenu.gotoPortlet(
 			category = "Search Tuning",
@@ -415,7 +415,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
 		for (var counter : list "1,2,3,4,5,6") {
-			SearchAdministration.addSynonymSet(synonyms = "phone${counter},mobile${counter}");
+			SearchTuning.addSynonymSet(synonyms = "phone${counter},mobile${counter}");
 		}
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
@@ -788,11 +788,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.addSynonymSet(synonyms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet");
+		SearchTuning.addSynonymSet(synonyms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet");
 
 		AssertElementPresent(
 			key_synonyms = "banana, red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet",
-			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
 		Navigator.openURL();
 
@@ -815,14 +815,14 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.editSynonymSet(
+		SearchTuning.editSynonymSet(
 			addSynonyms = "pear",
 			deleteSynonym = "banana",
 			synonymSet = "banana, red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet");
 
 		AssertElementPresent(
 			key_synonyms = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear",
-			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
 		Navigator.openURL();
 
@@ -857,11 +857,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.addSynonymSet(synonyms = "red apple,citrus-orange");
+		SearchTuning.addSynonymSet(synonyms = "red apple,citrus-orange");
 
 		AssertElementPresent(
 			key_synonyms = "red apple, citrus-orange",
-			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
 		Navigator.openURL();
 
@@ -882,7 +882,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
-		SearchAdministration.deleteSynonymSet(synonymSet = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear");
+		SearchTuning.deleteSynonymSet(synonymSet = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear");
 
 		Navigator.openURL();
 

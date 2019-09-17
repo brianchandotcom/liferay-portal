@@ -145,9 +145,14 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 						<%
 						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("fragments-editor-item-id", PortalUtil.getClassNameId(JournalArticle.class) + "-" + assetRenderer.getClassPK());
+						data.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 						%>
 
-						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" data-fragments-editor-item-id="<%= PortalUtil.getClassNameId(assetRenderer.getClassName()) %>-<%= assetRenderer.getClassPK() %>" data-fragments-editor-item-type="fragments-editor-mapped-item">
+						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 							<liferay-journal:journal-article-display
 								articleDisplay="<%= articleDisplay %>"
 							/>

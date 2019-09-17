@@ -27,8 +27,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.ws.rs.PathParam;
@@ -108,21 +109,25 @@ public class BatchEngineTaskItemWriterFactory {
 
 	private final Map<String, ResourceMethodServiceReferenceTuple>
 		_resourceServiceReferenceMap = new ConcurrentHashMap<>();
-	private ServiceTracker<Object, Object> _serviceTracker;
+	private ServiceTracker<Object, List<String>> _serviceTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;
 
 	private class ItemClassServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
+		implements ServiceTrackerCustomizer<Object, List<String>> {
 
 		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
+		public List<String> addingService(
+			ServiceReference<Object> serviceReference) {
+
 			Object resource = _bundleContext.getService(serviceReference);
 
 			Class<?> resourceClass = resource.getClass();
 
 			Class<?> parentResourceClass = resourceClass.getSuperclass();
+
+			List<String> keys = null;
 
 			for (Method resourceMethod : resourceClass.getMethods()) {
 				BatchEngineTaskMethod batchEngineTaskMethod =
@@ -134,13 +139,14 @@ public class BatchEngineTaskItemWriterFactory {
 
 				Class<?> itemClass = batchEngineTaskMethod.itemClass();
 
+				String key = StringBundler.concat(
+					batchEngineTaskMethod.batchEngineTaskOperation(),
+					StringPool.POUND, itemClass.getName(), StringPool.POUND,
+					serviceReference.getProperty("api.version"));
+
 				try {
 					_resourceServiceReferenceMap.put(
-						StringBundler.concat(
-							batchEngineTaskMethod.batchEngineTaskOperation(),
-							StringPool.POUND, itemClass.getName(),
-							StringPool.POUND,
-							serviceReference.getProperty("api.version")),
+						key,
 						new ResourceMethodServiceReferenceTuple(
 							resourceMethod,
 							_getMethodParameterNames(
@@ -153,33 +159,27 @@ public class BatchEngineTaskItemWriterFactory {
 				catch (NoSuchMethodException nsme) {
 					throw new IllegalStateException(nsme);
 				}
+
+				if (keys == null) {
+					keys = new ArrayList<>();
+				}
+
+				keys.add(key);
 			}
 
-			return resource;
+			return keys;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object resource) {
+			ServiceReference<Object> serviceReference, List<String> keys) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, Object resource) {
+			ServiceReference<Object> serviceReference, List<String> keys) {
 
-			for (Map.Entry<String, ResourceMethodServiceReferenceTuple> entry :
-					_resourceServiceReferenceMap.entrySet()) {
-
-				ResourceMethodServiceReferenceTuple tuple = entry.getValue();
-
-				if (!Objects.equals(
-						serviceReference, tuple.getServiceReference())) {
-
-					continue;
-				}
-
-				_resourceServiceReferenceMap.remove(entry.getKey());
-			}
+			keys.forEach(_resourceServiceReferenceMap::remove);
 		}
 
 		private ItemClassServiceTrackerCustomizer(BundleContext bundleContext) {

@@ -15,14 +15,30 @@
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
+import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.EditInOneDriveHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.OneDriveURLHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -50,13 +66,95 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getJSONOAuth2Controller(
-				this::_getSuccessURL);
+		OAuth2Controller oAuth2Controller = getOAuth2Controller();
 
 		oAuth2Controller.execute(
-			actionRequest, actionResponse,
-			_editInOneDriveHelper::executeCommand);
+			actionRequest, actionResponse, this::_executeCommand);
+	}
+
+	protected OAuth2Controller getOAuth2Controller() {
+		return _oAuth2ControllerFactory.getJSONOAuth2Controller(
+			this::_getSuccessURL);
+	}
+
+	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+
+		return _dlOpenerOneDriveManager.checkOut(
+			serviceContext.getUserId(),
+			_dlAppService.getFileEntry(fileEntryId));
+	}
+
+	private JSONObject _executeCommand(PortletRequest portletRequest)
+		throws PortalException {
+
+		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
+		long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
+
+		if (cmd.equals(Constants.CHECKOUT)) {
+			try {
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(portletRequest);
+
+				DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> _checkOutOneDriveFileEntry(
+							fileEntryId, serviceContext));
+
+				String oneDriveBackgroundTaskStatusURL =
+					_oneDriveURLHelper.getBackgroundTaskStatusURL(
+						portletRequest, dlOpenerOneDriveFileReference);
+
+				return JSONUtil.put(
+					"dialogMessage",
+					_translator.translateKey(
+						_portal.getLocale(portletRequest),
+						"you-are-being-redirected-to-an-external-editor-to-" +
+							"edit-this-document")
+				).put(
+					"oneDriveBackgroundTaskStatusURL",
+					oneDriveBackgroundTaskStatusURL
+				);
+			}
+			catch (PortalException | RuntimeException e) {
+				throw e;
+			}
+			catch (Throwable throwable) {
+				throw new PortalException(throwable);
+			}
+		}
+		else if (cmd.equals(Constants.EDIT)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
+				_dlOpenerOneDriveManager.requestEditAccess(
+					themeDisplay.getUserId(),
+					_dlAppService.getFileEntry(fileEntryId));
+
+			String oneDriveBackgroundTaskStatusURL =
+				_oneDriveURLHelper.getBackgroundTaskStatusURL(
+					portletRequest, dlOpenerOneDriveFileReference);
+
+			return JSONUtil.put(
+				"dialogMessage",
+				_translator.translateKey(
+					_portal.getLocale(portletRequest),
+					"you-are-being-redirected-to-an-external-editor-to-edit-" +
+						"this-document")
+			).put(
+				"oneDriveBackgroundTaskStatusURL",
+				oneDriveBackgroundTaskStatusURL
+			);
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {
@@ -74,15 +172,28 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private EditInOneDriveHelper _editInOneDriveHelper;
+	private DLAppService _dlAppService;
+
+	@Reference
+	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;
+
+	@Reference
+	private OneDriveURLHelper _oneDriveURLHelper;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	private final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private Translator _translator;
 
 }

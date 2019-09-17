@@ -17,12 +17,7 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.CreateInOneDriveHelper;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,23 +35,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class CreateInOneDriveAndRedirectMVCActionCommand
-	extends BaseMVCActionCommand {
+	extends CreateInOneDriveMVCActionCommand {
 
 	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		OAuth2Controller oAuth2Controller =
-			_oAuth2ControllerFactory.getRedirectingOAuth2Controller();
-
-		oAuth2Controller.execute(
-			actionRequest, actionResponse,
-			_createInOneDriveHelper::executeCommand);
+	protected OAuth2Controller getOAuth2Controller() {
+		return _oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 	}
-
-	@Reference
-	private CreateInOneDriveHelper _createInOneDriveHelper;
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;

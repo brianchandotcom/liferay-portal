@@ -25,8 +25,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_RESULT</td>
+	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT_ELLIPSIS</td>
 	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_RESULT_PINNED</td>
+	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//div[contains(@class,'result-pin-icon-display')]</td>
 	<td></td>
 </tr>
 </tbody>

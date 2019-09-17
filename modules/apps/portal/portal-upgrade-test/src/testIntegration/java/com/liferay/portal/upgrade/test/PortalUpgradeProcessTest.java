@@ -89,7 +89,8 @@ public class PortalUpgradeProcessTest {
 
 		if (_currentSchemaVersion.getMicro() > 0) {
 			previousMicroSchemaVersion = new Version(
-				_currentSchemaVersion.getMajor(), _currentSchemaVersion.getMinor(),
+				_currentSchemaVersion.getMajor(),
+				_currentSchemaVersion.getMinor(),
 				_currentSchemaVersion.getMicro() - 1);
 		}
 

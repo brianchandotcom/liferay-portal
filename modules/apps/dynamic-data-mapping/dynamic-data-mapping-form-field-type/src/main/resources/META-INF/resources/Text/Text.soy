@@ -91,7 +91,7 @@
 	{@param? readOnly: bool}
 	{@param? value: string}
 
-	{let $inputValue: $value ?: $predefinedValue /}
+	{let $inputValue: isNonnull($value) and $value != '' ? $value : $predefinedValue /}
 
 	{let $attributes kind="attributes"}
 		class="ddm-field-text form-control"

@@ -1,49 +1,53 @@
-.dropdown .dropdown-item {
-	padding: 0.5rem 1rem !important;
+.dropdown {
+	position: static;
 
-	&.active .dropdown-item-text {
-		color: #272833;
-		font-weight: 600;
-	}
+	.dropdown-item {
+		padding: 0.5rem 1rem !important;
 
-	.custom-control {
-		cursor: pointer;
-		display: initial;
-	}
+		&.active .dropdown-item-text {
+			color: #272833;
+			font-weight: 600;
+		}
 
-	&.control-hidden {
-		.custom-control-input,
-		.custom-control-label:after,
-		.custom-control-label:before {
-			display: none;
+		.custom-control {
+			cursor: pointer;
+			display: initial;
+		}
+
+		&.control-hidden {
+			.custom-control-input,
+			.custom-control-label:after,
+			.custom-control-label:before {
+				display: none;
+			}
+
+			.dropdown-item-text {
+				padding-left: 0;
+			}
+		}
+
+		.dropdown-item-description {
+			display: block;
+			font-size: 0.625em;
+			line-height: 1rem;
 		}
 
 		.dropdown-item-text {
-			padding-left: 0;
+			color: #6b6c7e;
+			font-weight: normal;
+			padding: 0 0 0 2rem;
 		}
-	}
 
-	.dropdown-item-description {
-		display: block;
-		font-size: 0.625em;
-		line-height: 1rem;
-	}
+		&:not(.with-description) .dropdown-item-name {
+			line-height: 1.5625rem;
+		}
 
-	.dropdown-item-text {
-		color: #6b6c7e;
-		font-weight: normal;
-		padding: 0 0 0 2rem;
-	}
+		&.with-description {
+			padding-top: 0.75rem !important;
 
-	&:not(.with-description) .dropdown-item-name {
-		line-height: 1.5625rem;
-	}
-
-	&.with-description {
-		padding-top: 0.75rem !important;
-
-		&:not(.control-hidden) .dropdown-item-text {
-			margin-top: -0.5rem;
+			&:not(.control-hidden) .dropdown-item-text {
+				margin-top: -0.5rem;
+			}
 		}
 	}
 }

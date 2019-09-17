@@ -23,8 +23,6 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -117,8 +115,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 		props.put("fetchDocumentsSearchUrl", searchResultsRankingResourceURL.toString());
 		props.put("fetchDocumentsVisibleUrl", resultsRankingResourceURL.toString());
 		props.put("formName", renderResponse.getNamespace() + "editResultsRankingsFm");
-		props.put("initialAliases", (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]");
-		props.put("searchQuery", HtmlUtil.escape(keywords));
+		props.put("initialAliases", aliases);
+		props.put("searchQuery", keywords);
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("context", context);

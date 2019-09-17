@@ -48,6 +48,7 @@ long accountEntryId = accountDisplay.getAccountId();
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
 		</portlet:actionURL>
 

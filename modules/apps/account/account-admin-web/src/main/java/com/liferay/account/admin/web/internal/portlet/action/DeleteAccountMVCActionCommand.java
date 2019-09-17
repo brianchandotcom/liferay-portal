@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,6 +49,12 @@ public class DeleteAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "accountEntryIds");
 
 		_accountEntryLocalService.deleteAccountEntries(accountEntryIds);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
 	}
 
 	@Reference

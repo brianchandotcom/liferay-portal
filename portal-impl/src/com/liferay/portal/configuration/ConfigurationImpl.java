@@ -31,6 +31,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -90,9 +91,9 @@ public class ConfigurationImpl
 
 			// Add to configList of base conf
 
-			List<Configuration> configurations =
+			List<Configuration> configurations = new LinkedList<>(
 				(List<Configuration>)field1.get(
-					_classLoaderAggregateProperties);
+					_classLoaderAggregateProperties));
 
 			MapConfiguration newConfiguration = new MapConfiguration(
 				_castPropertiesToMap(properties));
@@ -101,15 +102,19 @@ public class ConfigurationImpl
 
 			configurations.add(0, newConfiguration);
 
+			field1.set(_classLoaderAggregateProperties, configurations);
+
 			// Add to configList of AggregatedProperties itself
 
 			CompositeConfiguration compositeConfiguration =
 				_classLoaderAggregateProperties.getBaseConfiguration();
 
-			configurations = (List<Configuration>)field1.get(
-				compositeConfiguration);
+			configurations = new LinkedList<>(
+				(List<Configuration>)field1.get(compositeConfiguration));
 
 			configurations.add(0, newConfiguration);
+
+			field1.set(compositeConfiguration, configurations);
 
 			_properties = null;
 

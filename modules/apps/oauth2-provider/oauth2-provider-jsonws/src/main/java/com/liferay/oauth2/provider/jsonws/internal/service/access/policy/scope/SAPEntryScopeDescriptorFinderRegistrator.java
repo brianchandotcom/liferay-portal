@@ -152,8 +152,15 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 
 			ServiceRegistration serviceRegistration = entry.getValue();
 
-			serviceRegistration.setProperties(
-				_buildScopeDescriptorProperties(entry.getKey()));
+			try {
+				serviceRegistration.setProperties(
+					_buildScopeDescriptorProperties(entry.getKey()));
+			}
+			catch (IllegalStateException ise) {
+
+				// Concurrent unregisteration from register(long)
+
+			}
 		}
 	}
 

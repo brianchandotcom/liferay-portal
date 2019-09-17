@@ -28,6 +28,80 @@ definition {
 		}
 	}
 
+	test AssertCannotAddDuplicateQueriesAndAliases {
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "Article");
+
+		SearchTuning.configureAliases(addAlias = "Journal");
+
+		Button.clickSave();
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputText(
+			fieldLabel = "Search Query",
+			text = "Article");
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewErrorMessage(errorMessage = "A ranking already exists");
+
+		Navigator.gotoBack();
+
+		PortletEntry.inputText(
+			fieldLabel = "Search Query",
+			text = "Journal");
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewErrorMessage(errorMessage = "A ranking already exists");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		AssertElementNotPresent(
+			key_query = "Article",
+			locator1 = "SearchTuning#RESULT_RANKINGS_DUPLICATE_ENTRY");
+
+		AssertElementNotPresent(
+			key_query = "Journal",
+			locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+
+		SearchTuning.addResultRanking(searchQuery = "Web Content");
+
+		Type(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+			value1 = "Article");
+
+		KeyPress(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+			value1 = ",");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "A ranking already exists");
+
+		Navigator.gotoBack();
+
+		Type(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+			value1 = "Journal");
+
+		KeyPress(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_FIELD",
+			value1 = ",");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "A ranking already exists");
+	}
+
 	test AssertResultRankingsWithSynonyms {
 		for (var title : list "Article 1,Article 2,Journal 1,Journal 2") {
 			JSONWebcontent.addWebContent(

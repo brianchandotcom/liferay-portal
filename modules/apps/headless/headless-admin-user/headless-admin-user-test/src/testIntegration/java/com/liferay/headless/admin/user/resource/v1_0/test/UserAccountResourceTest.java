@@ -196,12 +196,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGraphQLGetMyUserAccount() {
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetSiteUserAccountsPage() {
-	}
-
 	@Override
 	@Test
 	public void testGraphQLGetUserAccountsPage() throws Exception {
@@ -227,7 +221,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 					{
 						put("page", 1);
 						put("pageSize", 3);
-						put("siteId", testGroup.getGroupId());
 					}
 				},
 				graphQLFields.toArray(new GraphQLField[0])));
@@ -240,7 +233,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
 			"userAccounts");
 
-		Assert.assertEquals(2, userAccountsJSONObject.get("totalCount"));
+		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
 
 		assertEqualsJSONArray(
 			Arrays.asList(userAccount1, userAccount2),

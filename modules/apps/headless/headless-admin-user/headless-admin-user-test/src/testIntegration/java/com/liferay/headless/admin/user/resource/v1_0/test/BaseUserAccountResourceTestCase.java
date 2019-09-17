@@ -815,59 +815,6 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLGetSiteUserAccountsPage() throws Exception {
-		List<GraphQLField> graphQLFields = new ArrayList<>();
-
-		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
-
-		graphQLFields.add(
-			new GraphQLField(
-				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
-
-		graphQLFields.add(new GraphQLField("page"));
-		graphQLFields.add(new GraphQLField("totalCount"));
-
-		GraphQLField graphQLField = new GraphQLField(
-			"query",
-			new GraphQLField(
-				"userAccounts",
-				new HashMap<String, Object>() {
-					{
-						put("page", 1);
-						put("pageSize", 2);
-						put("siteId", testGroup.getGroupId());
-					}
-				},
-				graphQLFields.toArray(new GraphQLField[0])));
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
-			"userAccounts");
-
-		Assert.assertEquals(0, userAccountsJSONObject.get("totalCount"));
-
-		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
-		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
-
-		jsonObject = JSONFactoryUtil.createJSONObject(
-			invoke(graphQLField.toString()));
-
-		dataJSONObject = jsonObject.getJSONObject("data");
-
-		userAccountsJSONObject = dataJSONObject.getJSONObject("userAccounts");
-
-		Assert.assertEquals(2, userAccountsJSONObject.get("totalCount"));
-
-		assertEqualsJSONArray(
-			Arrays.asList(userAccount1, userAccount2),
-			userAccountsJSONObject.getJSONArray("items"));
-	}
-
-	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
 			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);

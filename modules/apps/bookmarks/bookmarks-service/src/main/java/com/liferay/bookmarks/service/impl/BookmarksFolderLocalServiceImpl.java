@@ -711,7 +711,7 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setStatusByUserName(user.getFullName());
 		folder.setStatusDate(new Date());
 
-		bookmarksFolderPersistence.update(folder);
+		folder = bookmarksFolderPersistence.update(folder);
 
 		// Asset
 

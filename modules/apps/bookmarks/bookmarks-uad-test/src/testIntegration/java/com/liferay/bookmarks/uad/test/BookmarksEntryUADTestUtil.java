@@ -51,10 +51,8 @@ public class BookmarksEntryUADTestUtil {
 		BookmarksEntry bookmarksEntry = addBookmarksEntry(
 			bookmarksEntryLocalService, userId);
 
-		bookmarksEntryLocalService.updateStatus(
+		return bookmarksEntryLocalService.updateStatus(
 			statusByUserId, bookmarksEntry, WorkflowConstants.STATUS_APPROVED);
-
-		return bookmarksEntry;
 	}
 
 }

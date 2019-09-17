@@ -158,6 +158,83 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test AssertResultRankingsMiscUI {
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
+
+		LexiconEntry.gotoAdd();
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewRequiredField();
+
+		Navigator.gotoBack();
+
+		for (var query : list "Article 1,Article 2,Article 3,Article 4,Article 5,Article 6,Article 7") {
+			SearchTuning.addResultRanking(searchQuery = "${query}");
+
+			Button.clickSave();
+		}
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		for (var query : list "Article 1,Article 2,Article 3,Article 4,Article 5") {
+			AssertElementPresent(
+				key_query = "${query}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		for (var query : list "Article 6,Article 7") {
+			AssertElementNotPresent(
+				key_query = "${query}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 7 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		for (var query : list "Article 6,Article 7") {
+			AssertElementPresent(
+				key_query = "${query}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		for (var query : list "Article 1,Article 2,Article 3,Article 4,Article 5") {
+			AssertElementNotPresent(
+				key_query = "${query}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		Pagination.viewResults(results = "Showing 6 to 7 of 7 entries.");
+
+		Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 7 entries.");
+
+		PortletEntry.deleteViaToolbar(rowEntries = "Article 1,Article 2,Article 3");
+
+		for (var query : list "Article 1,Article 2,Article 3") {
+			AssertElementNotPresent(
+				key_query = "${query}",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ENTRY");
+		}
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Custom Results Yet");
+	}
+
 	test AssertResultRankingsWithSynonyms {
 		for (var title : list "Article 1,Article 2,Journal 1,Journal 2") {
 			JSONWebcontent.addWebContent(

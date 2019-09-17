@@ -56,7 +56,7 @@ export default ({appName, onSettingsChange, settings}) => {
 						<p className="list-group-subtext">
 							<small>
 								{Liferay.Language.get(
-									'deploy-it-in-the-control-panel-or-in-a-specific-site'
+									'deploy-to-the-control-panel-or-a-site-menu'
 								)}
 							</small>
 						</p>
@@ -83,13 +83,13 @@ export default ({appName, onSettingsChange, settings}) => {
 					<div className="autofit-row pl-4 pr-4">
 						<div className="autofit-col-expand">
 							<div className="form-group">
-								<label htmlFor="productMenuName">
-									{Liferay.Language.get('name-in-the-menu')}
+								<label htmlFor="menuLabel">
+									{Liferay.Language.get('menu-label')}
 								</label>
 								<input
 									className="form-control"
 									disabled={true}
-									id="productMenuName"
+									id="menuLabel"
 									placeholder={Liferay.Language.get(
 										'untitled-app'
 									)}
@@ -104,7 +104,7 @@ export default ({appName, onSettingsChange, settings}) => {
 						<div className="autofit-col-expand">
 							<div className="form-group">
 								<label htmlFor="selectPlacement">
-									{Liferay.Language.get('place-it-on')}
+									{Liferay.Language.get('place-it-in-the')}
 								</label>
 								<select
 									className="form-control"
@@ -116,25 +116,26 @@ export default ({appName, onSettingsChange, settings}) => {
 										{Liferay.Language.get('control-panel')}
 									</option>
 									<option value={2}>
-										{Liferay.Language.get('site-level')}
+										{Liferay.Language.get('site-menu')}
 									</option>
 									<option value={3}>
 										{Liferay.Language.get(
-											'control-panel-and-site-level'
+											'control-panel-and-site-menu'
 										)}
 									</option>
 								</select>
 							</div>
 						</div>
+
 						<div className="col-md-6">
 							<div className="form-group">
-								<label htmlFor="selectSites">
-									{Liferay.Language.get('site-level')}
+								<label htmlFor="selectSite">
+									{Liferay.Language.get('site')}
 								</label>
 								<select
 									className="form-control"
 									disabled={true}
-									id="selectSites"
+									id="selectSite"
 									value={1}
 								>
 									<option value={1}>

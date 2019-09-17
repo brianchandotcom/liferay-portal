@@ -142,7 +142,12 @@ if (journalContentDisplayContext.isShowArticle()) {
 						</c:choose>
 					</c:when>
 					<c:when test="<%= articleDisplay != null %>">
-						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>">
+
+						<%
+						AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+						%>
+
+						<div class="<%= journalContentDisplayContext.isPreview() ? "p-1 preview-asset-entry" : StringPool.BLANK %>" data-fragments-editor-item-id="<%= PortalUtil.getClassNameId(assetRenderer.getClassName()) %>-<%= assetRenderer.getClassPK() %>" data-fragments-editor-item-type="fragments-editor-mapped-item">
 							<liferay-journal:journal-article-display
 								articleDisplay="<%= articleDisplay %>"
 							/>

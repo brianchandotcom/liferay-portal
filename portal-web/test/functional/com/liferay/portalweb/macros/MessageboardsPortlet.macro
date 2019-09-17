@@ -300,7 +300,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "TextInput#EMAIL_FROM_ADDRESS",
-			value1 = "test@domain.invalid");
+			value1 = "test@liferay.com");
 
 		if (isSet(emailFromAddress)) {
 			Type(

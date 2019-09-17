@@ -86,8 +86,6 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 	}
 
 	private void _execute(BatchEngineTask batchEngineTask) throws Throwable {
-		List<T> items = new ArrayList<>();
-
 		T item = null;
 
 		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
@@ -95,10 +93,10 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter =
 				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
 
+			List<T> items = new ArrayList<>();
+
 			while ((item = batchEngineTaskItemReader.read()) != null) {
-				if (items.size() < batchEngineTask.getBatchSize()) {
-					items.add(item);
-				}
+				items.add(item);
 
 				if (items.size() == batchEngineTask.getBatchSize()) {
 					_commitItems(batchEngineTaskItemWriter, items);

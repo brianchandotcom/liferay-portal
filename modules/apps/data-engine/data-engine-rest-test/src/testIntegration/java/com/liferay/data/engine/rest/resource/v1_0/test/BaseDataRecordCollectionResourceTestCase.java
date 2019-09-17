@@ -761,7 +761,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"dataRecordCollection",
+				"siteDataRecordCollection",
 				new HashMap<String, Object>() {
 					{
 						put("siteId", dataRecordCollection.getSiteId());
@@ -780,7 +780,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				dataRecordCollection,
-				dataJSONObject.getJSONObject("dataRecordCollection")));
+				dataJSONObject.getJSONObject("siteDataRecordCollection")));
 	}
 
 	protected DataRecordCollection

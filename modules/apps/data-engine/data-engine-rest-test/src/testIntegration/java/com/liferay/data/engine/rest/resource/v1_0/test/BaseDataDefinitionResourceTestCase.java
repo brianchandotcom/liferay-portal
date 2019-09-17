@@ -720,7 +720,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"dataDefinition",
+				"siteDataDefinition",
 				new HashMap<String, Object>() {
 					{
 						put("siteId", dataDefinition.getSiteId());
@@ -739,7 +739,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertTrue(
 			equalsJSONObject(
 				dataDefinition,
-				dataJSONObject.getJSONObject("dataDefinition")));
+				dataJSONObject.getJSONObject("siteDataDefinition")));
 	}
 
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()

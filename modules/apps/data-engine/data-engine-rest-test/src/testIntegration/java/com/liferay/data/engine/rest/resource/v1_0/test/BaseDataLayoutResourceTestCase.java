@@ -874,7 +874,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		GraphQLField graphQLField = new GraphQLField(
 			"query",
 			new GraphQLField(
-				"dataLayout",
+				"siteDataLayout",
 				new HashMap<String, Object>() {
 					{
 						put("siteId", dataLayout.getSiteId());
@@ -890,7 +890,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Assert.assertTrue(
 			equalsJSONObject(
-				dataLayout, dataJSONObject.getJSONObject("dataLayout")));
+				dataLayout, dataJSONObject.getJSONObject("siteDataLayout")));
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

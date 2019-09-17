@@ -16,7 +16,7 @@ package com.liferay.batch.engine.internal.util;
 
 import java.lang.reflect.Method;
 
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceObjects;
 
 /**
  * @author Ivica Cardic
@@ -25,11 +25,11 @@ public class ResourceMethodServiceReferenceTuple {
 
 	public ResourceMethodServiceReferenceTuple(
 		Method method, String[] methodParameterNames,
-		ServiceReference<Object> serviceReference) {
+		ServiceObjects<Object> serviceObjects) {
 
 		_method = method;
 		_methodParameterNames = methodParameterNames;
-		_serviceReference = serviceReference;
+		_serviceObjects = serviceObjects;
 	}
 
 	public Method getMethod() {
@@ -40,12 +40,12 @@ public class ResourceMethodServiceReferenceTuple {
 		return _methodParameterNames;
 	}
 
-	public ServiceReference<Object> getServiceReference() {
-		return _serviceReference;
+	public ServiceObjects<Object> getServiceObjects() {
+		return _serviceObjects;
 	}
 
 	private final Method _method;
 	private final String[] _methodParameterNames;
-	private final ServiceReference<Object> _serviceReference;
+	private final ServiceObjects<Object> _serviceObjects;
 
 }

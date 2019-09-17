@@ -48,13 +48,11 @@ public class BatchEngineTaskItemWriterFactory {
 	public BatchEngineTaskItemWriterFactory(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_bundleContext = bundleContext;
-
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(
 				"(&(api.version=*)(osgi.jaxrs.resource=true))"),
-			new BatchEngineTaskMethodServiceTrackerCustomizer());
+			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
 
 		_serviceTracker.open();
 	}
@@ -89,7 +87,7 @@ public class BatchEngineTaskItemWriterFactory {
 		return new BatchEngineTaskItemWriter<>(
 			companyLocalService.getCompany(batchEngineTask.getCompanyId()),
 			tuple.getMethod(), tuple.getMethodParameterNames(),
-			_bundleContext.getServiceObjects(tuple.getServiceReference()),
+			tuple.getServiceObjects(),
 			userLocalService.getUser(batchEngineTask.getUserId()));
 	}
 
@@ -97,7 +95,6 @@ public class BatchEngineTaskItemWriterFactory {
 		_serviceTracker.close();
 	}
 
-	private final BundleContext _bundleContext;
 	private final Map<String, ResourceMethodServiceReferenceTuple>
 		_resourceServiceReferenceMap = new ConcurrentHashMap<>();
 	private final ServiceTracker<Object, List<String>> _serviceTracker;
@@ -137,7 +134,8 @@ public class BatchEngineTaskItemWriterFactory {
 							resourceMethod,
 							_getMethodParameterNames(
 								resourceClass, resourceMethod),
-							serviceReference));
+							_bundleContext.getServiceObjects(
+								serviceReference)));
 				}
 				catch (NoSuchMethodException nsme) {
 					throw new IllegalStateException(nsme);
@@ -165,6 +163,12 @@ public class BatchEngineTaskItemWriterFactory {
 			keys.forEach(_resourceServiceReferenceMap::remove);
 
 			_bundleContext.ungetService(serviceReference);
+		}
+
+		private BatchEngineTaskMethodServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private String[] _getMethodParameterNames(
@@ -208,6 +212,8 @@ public class BatchEngineTaskItemWriterFactory {
 
 			return parameterNames;
 		}
+
+		private final BundleContext _bundleContext;
 
 	}
 

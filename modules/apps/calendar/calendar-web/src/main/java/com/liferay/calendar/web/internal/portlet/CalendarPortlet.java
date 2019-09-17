@@ -1219,8 +1219,13 @@ public class CalendarPortlet extends MVCPortlet {
 
 		keywords = StringUtil.toLowerCase(keywords);
 
-		searchContext.setAttribute(Field.NAME, keywords);
-		searchContext.setAttribute("resourceName", keywords);
+		String localizedName = LocalizationUtil.getLocalizedName(
+			Field.NAME, searchContext.getLanguageId());
+		String localizedResourceName = LocalizationUtil.getLocalizedName(
+			"resourceName", searchContext.getLanguageId());
+
+		searchContext.setAttribute(localizedName, keywords);
+		searchContext.setAttribute(localizedResourceName, keywords);
 
 		searchContext.setCompanyId(themeDisplay.getCompanyId());
 		searchContext.setEnd(SearchContainer.DEFAULT_DELTA);

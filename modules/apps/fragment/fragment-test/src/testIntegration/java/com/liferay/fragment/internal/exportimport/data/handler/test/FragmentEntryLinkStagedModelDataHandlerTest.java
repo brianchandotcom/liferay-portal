@@ -195,6 +195,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected boolean isCommentableStagedModel() {
+		return true;
+	}
+
+	@Override
 	protected void validateImportedStagedModel(
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {

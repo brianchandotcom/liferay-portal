@@ -223,7 +223,10 @@ function SegmentsExperiments({
 					)}
 				</ClayTabs.TabPane>
 				<ClayTabs.TabPane>
-					<ExperimentsHistory experimentHistory={experimentHistory} />
+					<ExperimentsHistory
+						experimentHistory={experimentHistory}
+						onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
+					/>
 				</ClayTabs.TabPane>
 			</ClayTabs.Content>
 		</>

@@ -23,10 +23,11 @@ import {NO_EXPERIMENT_ILLUSTRATION_FILENAME} from '../util/contants.es';
 
 const {useContext} = React;
 
-function ExperimentsHistory({experimentHistory}) {
+function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 	const {assetsPath} = useContext(SegmentsExperimentContext);
 
 	const noHistoryIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILENAME}`;
+
 	return experimentHistory.length === 0 ? (
 		<div className="text-center">
 			<img
@@ -46,31 +47,54 @@ function ExperimentsHistory({experimentHistory}) {
 		<ClayList>
 			{experimentHistory.map(experiment => {
 				return (
-					<ClayList.Item key={experiment.segmentsExperimentId}>
-						<ClayList.ItemTitle>
-							{experiment.name}
-						</ClayList.ItemTitle>
-						<ClayList.ItemText className="text-secondary">
-							{experiment.description}
-						</ClayList.ItemText>
-						<ClayList.ItemText>
-							<ClayLabel
-								displayType={statusToLabelDisplayType(
-									experiment.status.value
-								)}
-							>
-								{experiment.status.label}
-							</ClayLabel>
-						</ClayList.ItemText>
+					<ClayList.Item
+						className="py-3"
+						flex
+						key={experiment.segmentsExperimentId}
+					>
+						<ClayList.ItemField expand>
+							<ClayList.ItemTitle>
+								{experiment.name}
+							</ClayList.ItemTitle>
+							<ClayList.ItemText className="text-secondary">
+								{experiment.description}
+							</ClayList.ItemText>
+							<ClayList.ItemText>
+								<ClayLabel
+									displayType={statusToLabelDisplayType(
+										experiment.status.value
+									)}
+								>
+									{experiment.status.label}
+								</ClayLabel>
+							</ClayList.ItemText>
+						</ClayList.ItemField>
+						<ClayList.ItemField>
+							<ClayList.QuickActionMenu>
+								<ClayList.QuickActionMenu.Item
+									onClick={_handleDeleteExperiment}
+									symbol="times-circle"
+								/>
+							</ClayList.QuickActionMenu>
+						</ClayList.ItemField>
 					</ClayList.Item>
 				);
 			})}
 		</ClayList>
 	);
+
+	function _handleDeleteExperiment() {
+		const confirmed = confirm(
+			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+		);
+
+		if (confirmed) return onDeleteSegmentsExperiment();
+	}
 }
 
 ExperimentsHistory.propTypes = {
-	experimentHistory: PropTypes.arrayOf(SegmentsExperimentType).isRequired
+	experimentHistory: PropTypes.arrayOf(SegmentsExperimentType).isRequired,
+	onDeleteSegmentsExperiment: PropTypes.func.isRequired
 };
 
 export default ExperimentsHistory;

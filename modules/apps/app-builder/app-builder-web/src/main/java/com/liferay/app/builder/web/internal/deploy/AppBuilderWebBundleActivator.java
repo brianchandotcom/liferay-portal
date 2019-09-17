@@ -16,43 +16,35 @@ package com.liferay.app.builder.web.internal.deploy;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
-import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Component(immediate = true, service = {})
-public class AppDeployerActivator {
+public class AppBuilderWebBundleActivator implements BundleActivator {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
+	@Override
+	public void start(BundleContext bundleContext) throws Exception {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, AppDeployer.class,
-			new AppDeployerServiceTrackerCustomizer(
-				_appBuilderAppLocalService, bundleContext));
+			new AppDeployerServiceTrackerCustomizer(bundleContext));
 	}
 
-	@Deactivate
-	public void deactivate() {
+	@Override
+	public void stop(BundleContext bundleContext) throws Exception {
 		_serviceTracker.close();
 	}
-
-	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private ServiceTracker<AppDeployer, AppDeployer> _serviceTracker;
 
@@ -64,7 +56,7 @@ public class AppDeployerActivator {
 			ServiceReference<AppDeployer> serviceReference) {
 
 			List<Long> appBuilderAppIds =
-				_appBuilderAppLocalService.getAppBuilderAppIds(
+				AppBuilderAppLocalServiceUtil.getAppBuilderAppIds(
 					AppBuilderAppConstants.STATUS_DEPLOYED,
 					(String)serviceReference.getProperty(
 						"com.app.builder.deploy.type"));
@@ -99,14 +91,11 @@ public class AppDeployerActivator {
 		}
 
 		private AppDeployerServiceTrackerCustomizer(
-			AppBuilderAppLocalService appBuilderAppLocalService,
 			BundleContext bundleContext) {
 
-			_appBuilderAppLocalService = appBuilderAppLocalService;
 			_bundleContext = bundleContext;
 		}
 
-		private final AppBuilderAppLocalService _appBuilderAppLocalService;
 		private final BundleContext _bundleContext;
 		private final Logger _logger = Logger.getLogger(
 			AppDeployerServiceTrackerCustomizer.class.getName());

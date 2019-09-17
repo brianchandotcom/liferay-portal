@@ -60,7 +60,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			int threadsCount = categoryDisplay.getSubcategoriesThreadsCount(curCategory);
 			%>
 
-			<span class="h6 text-default">
+			<span class="h6 mt-2 text-default">
 				<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= (subcategoriesCount == 1) ? "x-category" : "x-categories" %>' />
 			</span>
 			<span class="h6 text-default">

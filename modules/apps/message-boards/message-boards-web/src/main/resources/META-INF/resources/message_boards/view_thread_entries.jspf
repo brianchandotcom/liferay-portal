@@ -139,7 +139,7 @@
 			int viewCount = thread.getViewCount();
 			%>
 
-			<div>
+			<div class="mt-2">
 				<liferay-ui:message arguments="<%= repliesCount %>" key='<%= (repliesCount == 1) ? "x-reply" : "x-replies" %>' />
 			</div>
 

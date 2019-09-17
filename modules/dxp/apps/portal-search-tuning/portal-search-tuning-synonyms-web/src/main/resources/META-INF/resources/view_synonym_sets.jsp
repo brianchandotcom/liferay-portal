@@ -22,7 +22,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymsDisplayContext" %>
 
 <liferay-frontend:defineObjects />
@@ -72,7 +73,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 				cssClass="table-cell-expand table-title"
 			>
 				<aui:a href="<%= rowURL %>">
-					<%= synonymSetDisplayContext.getDisplayedSynonymSet() %>
+					<%= HtmlUtil.escape(synonymSetDisplayContext.getDisplayedSynonymSet()) %>
 				</aui:a>
 			</liferay-ui:search-container-column-text>
 

@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>AppBuilder</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AppBuilder</td></tr>
+</thead>
+<tbody>
+
+<!--CUSTOM_OBJECTS_LISTING_SCREEN-->
+<tr>
+	<td>BUTTON_ADD</td>
+	<td>//*[contains(@class,'lexicon-icon-plus')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>BUTTON_ADD_NEW_ITEM</td>
+	<td>//div[contains(@class,'taglib-empty-result-message')]//button[@class='btn btn-secondary' and contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+
+<tr>
+	<td>ITEM_ON_THE_TABLE</td>
+	<td>//table[contains(@class,'table')]//a[contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[@class='custom-control-input']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_OPTION_LABEL</td>
+	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
+	<td></td>
+</tr>
+
+<!--CUSTOM_OBJECTS_LISTING_SCREEN_MODAL_ITEMS-->
+<tr>
+	<td>INPUT_OBJECT_NAME</td>
+	<td>//input[@id='customObjectNameInput']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>BUTTON_CONTINUE</td>
+	<td>//div[contains(@class,'popover')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>BUTTON_CANCEL</td>
+	<td>//div[contains(@class,'popover')]//button[contains(@class,'btn-secondary')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHECKBOX_CONTINUE_AND_CREATE_FORM_VIEW</td>
+	<td>//div[contains(@class,'popover')]//input[@class='custom-control-input']</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>MESSAGE_EXCLAMATION_REQUIRED_FIELD</td>
+	<td>//strong[contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>MESSAGE_TITLE_EMPTY_LIST</td>
+	<td>//h1[contains(@class,'taglib-empty-result-message-title') and contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MESSAGE_DESCRIPTION_EMPTY_LIST</td>
+	<td>//p[contains(@class,'taglib-empty-result-message-description') and contains (text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+
+
+<!--FORM_VIEW_LISTING_SCREEN-->
+<tr>
+	<td>CUSTOM_OBJECT_NAME_ON_HEADER</td>
+	<td>//span[contains(@class,'control-menu-level-1-heading') and contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+<!--CUSTOM_OBJECT_SCREEN-->
+<tr>
+	<td>CUSTOM_OBJECT_TABS</td>
+	<td>//a[contains(text(),'${value1}')]</td>
+	<td></td>
+</tr>
+
+
+</tbody>
+</table>
+</body>
+</html>

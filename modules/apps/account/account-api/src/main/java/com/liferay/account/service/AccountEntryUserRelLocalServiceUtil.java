@@ -231,6 +231,13 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().getAccountEntryUserRels(start, end);
 	}
 
+	public static java.util.List<com.liferay.account.model.AccountEntryUserRel>
+		getAccountEntryUserRelsByAccountEntryId(long accountEntryId) {
+
+		return getService().getAccountEntryUserRelsByAccountEntryId(
+			accountEntryId);
+	}
+
 	/**
 	 * Returns the number of account entry user rels.
 	 *

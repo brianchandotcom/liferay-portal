@@ -53,7 +53,7 @@ public class Query {
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		/**
-		 * ${freeMarkerTool.getGraphQLMethodJavadoc(javaMethodSignature, openAPIYAML)}
+		 * ${freeMarkerTool.getGraphQLMethodJavadoc(javaMethodSignature, javaMethodSignatures, openAPIYAML)}
 		 */
 		${freeMarkerTool.getGraphQLMethodAnnotations(javaMethodSignature)}
 		public
@@ -64,7 +64,7 @@ public class Query {
 			${javaMethodSignature.returnType}
 		</#if>
 
-		${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+		${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 			<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters, freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)) />
 
 			<#if javaMethodSignature.returnType?contains("Collection<")>
@@ -98,7 +98,7 @@ public class Query {
 				${javaMethodSignature.returnType}
 			</#if>
 
-			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
+			${freeMarkerTool.getGraphQLRelationName(javaMethodSignature, javaMethodSignatures)}(${freeMarkerTool.getGraphQLParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, true)}) throws Exception {
 				<#assign arguments = freeMarkerTool.getGraphQLArguments(javaMethodSignature.javaMethodParameters, freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)) />
 
 				<#if javaMethodSignature.returnType?contains("Collection<")>

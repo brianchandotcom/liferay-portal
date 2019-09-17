@@ -1056,7 +1056,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 		</#if>
 
-		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature), "delete" + schemaName)>
+		<#assign methodName = freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures)/>
+
+		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete") && stringUtil.equals(methodName, "delete" + schemaName)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}();
@@ -1096,7 +1098,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(errorsJSONArray.length() > 0);
 				}
 			}
-		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature), schemaVarNames)>
+		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(methodName, schemaVarNames)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
@@ -1163,7 +1165,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					GraphQLField graphQLField = new GraphQLField(
 						"query",
 						new GraphQLField(
-							"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature)}",
+							"${methodName}",
 							new HashMap<String, Object>() {
 								{
 									<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
@@ -1187,7 +1189,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-					Assert.assertTrue(equalsJSONObject(${schemaVarName}, dataJSONObject.getJSONObject("${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature)}")));
+					Assert.assertTrue(equalsJSONObject(${schemaVarName}, dataJSONObject.getJSONObject("${methodName}")));
 				<#else>
 					Assert.assertTrue(true);
 				</#if>

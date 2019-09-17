@@ -16,7 +16,9 @@ package com.liferay.message.boards.internal.search.spi.model.index.contributor;
 
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -68,6 +70,7 @@ public class MBMessageModelDocumentContributor
 				mbMessage.getSubject());
 		}
 
+		document.addKeyword("answer", mbMessage.isAnswer());
 		document.addKeyword("parentMessageId", mbMessage.getParentMessageId());
 		document.addKeyword(
 			Field.ROOT_ENTRY_CLASS_PK, mbMessage.getRootMessageId());
@@ -88,6 +91,13 @@ public class MBMessageModelDocumentContributor
 		}
 
 		document.addKeyword("threadId", mbMessage.getThreadId());
+
+		if (mbMessage.getMessageId() == mbMessage.getRootMessageId()) {
+			MBThread mbThread = mbThreadLocalService.fetchMBThread(
+				mbMessage.getThreadId());
+
+			document.addKeyword("question", mbThread.isQuestion());
+		}
 
 		if (mbMessage.isDiscussion()) {
 			List<RelatedEntryIndexer> relatedEntryIndexers =
@@ -143,6 +153,9 @@ public class MBMessageModelDocumentContributor
 
 	@Reference
 	protected MBDiscussionLocalService mbDiscussionLocalService;
+
+	@Reference
+	protected MBThreadLocalService mbThreadLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageModelDocumentContributor.class);

@@ -175,6 +175,8 @@ public class BatchEngineTaskItemWriterFactory {
 			ServiceReference<Object> serviceReference, List<String> keys) {
 
 			keys.forEach(_resourceServiceReferenceMap::remove);
+
+			_bundleContext.ungetService(serviceReference);
 		}
 
 		private ItemClassServiceTrackerCustomizer(BundleContext bundleContext) {

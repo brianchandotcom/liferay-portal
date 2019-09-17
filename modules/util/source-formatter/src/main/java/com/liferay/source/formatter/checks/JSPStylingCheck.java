@@ -56,6 +56,8 @@ public class JSPStylingCheck extends StylingCheck {
 				"confirm(\"<%= UnicodeLanguageUtil.", ";\n"
 			});
 
+		content = content.replaceAll("'<%= (\"[^.(\\[\"]+\") %>'", "$1");
+
 		_checkIllegalSyntax(
 			fileName, content, "=>", "Do not use arrow function",
 			"arrow_functions.markdown");

@@ -15,13 +15,19 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.time.Month;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,6 +65,48 @@ public class AccountEntryUserRelLocalServiceImpl
 		accountEntryUserRel.setAccountUserId(accountUserId);
 
 		return addAccountEntryUserRel(accountEntryUserRel);
+	}
+
+	@Override
+	public AccountEntryUserRel addUser(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		long companyId = accountEntry.getCompanyId();
+
+		boolean autoPassword = true;
+		String password1 = null;
+		String password2 = null;
+		boolean autoScreenName = false;
+		long facebookId = 0;
+		String openId = null;
+		boolean male = true;
+		int birthdayMonth = Month.JANUARY.getValue();
+		int birthdayDay = 1;
+		int birthdayYear = 1970;
+		String jobTitle = null;
+		long[] groupIds = null;
+		long[] organizationIds = null;
+		long[] roleIds = null;
+		long[] userGroupIds = null;
+		boolean sendEmail = false;
+
+		ServiceContext serviceContext = null;
+
+		User user = userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+
+		return accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntryId, user.getUserId());
 	}
 
 	@Override

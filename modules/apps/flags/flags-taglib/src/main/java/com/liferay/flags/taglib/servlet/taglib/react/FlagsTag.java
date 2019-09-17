@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -230,8 +231,8 @@ public class FlagsTag extends IncludeTag {
 			return _message;
 		}
 
-		ResourceBundle resourceBundle =
-			(ResourceBundle)pageContext.getAttribute("resourceBundle");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", PortalUtil.getLocale(request), getClass());
 
 		_message = LanguageUtil.get(resourceBundle, "report");
 

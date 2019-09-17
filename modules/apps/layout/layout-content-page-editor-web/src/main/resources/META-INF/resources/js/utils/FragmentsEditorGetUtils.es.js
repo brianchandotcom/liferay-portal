@@ -147,7 +147,7 @@ function getDropRowPosition(structure, targetRowId, targetBorder) {
  */
 function getElement(itemId, itemType) {
 	return document.querySelector(
-		`[data-fragments-editor-item-id="${itemId}"][data-fragments-editor-item-type="${itemType}"]`
+		`.fragment-entry-link-list [data-fragments-editor-item-id="${itemId}"][data-fragments-editor-item-type="${itemType}"]`
 	);
 }
 

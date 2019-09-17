@@ -255,8 +255,7 @@ class FragmentsEditor extends Component {
 				targetItemIsEditable &&
 				!targetItem.classList.contains(
 					'fragments-editor__editable--highlighted'
-				) &&
-				!('fragmentsEditorSidebarStructureItem' in targetItem.dataset)
+				)
 			) {
 				const fragment = getElement(
 					targetItem.dataset.fragmentEntryLinkId,
@@ -270,6 +269,12 @@ class FragmentsEditor extends Component {
 			this.store.dispatch({
 				hoveredItemId,
 				hoveredItemType,
+				type: UPDATE_HOVERED_ITEM
+			});
+		} else if (targetItemId && targetItemType) {
+			this.store.dispatch({
+				hoveredItemId: targetItemId,
+				hoveredItemType: targetItemType,
 				type: UPDATE_HOVERED_ITEM
 			});
 		} else {

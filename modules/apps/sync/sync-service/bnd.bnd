@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sync Service
 Bundle-SymbolicName: com.liferay.sync.service
 Bundle-Version: 4.0.0
-Liferay-Require-SchemaVersion: 1.0.4
+Liferay-Require-SchemaVersion: 1.0.5
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -8414,18 +8414,9 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addPersistedSubscribers(
 			JournalFolder.class.getName(), article.getGroupId());
 
-		long liveGroupId = 0;
+		Group group = groupLocalService.getGroup(article.getGroupId());
 
-		try {
-			Group group = serviceContext.getScopeGroup();
-
-			if (group.isStagingGroup()) {
-				liveGroupId = staging.getLiveGroupId(
-					serviceContext.getScopeGroupId());
-			}
-		}
-		catch (Exception e) {
-		}
+		long liveGroupId = group.getLiveGroupId();
 
 		if (liveGroupId > 0) {
 			subscriptionSender.addPersistedSubscribers(

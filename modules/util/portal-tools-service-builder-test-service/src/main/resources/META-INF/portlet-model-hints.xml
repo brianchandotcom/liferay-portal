@@ -6,6 +6,22 @@
 		<field name="companyId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity">
+		<field name="uuid" type="String" />
+		<field name="eagerBlobEntityId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="field1" type="String" />
+		<field name="field2" type="boolean" />
+		<field name="field3" type="int" />
+		<field name="field4" type="Date" />
+		<field name="field5" type="String" />
+		<field name="fieldBlob" type="Blob" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry">
 		<field name="defaultLanguageId" type="String" />
 		<field name="localizedEntryId" type="long" />

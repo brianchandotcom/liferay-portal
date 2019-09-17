@@ -64,9 +64,12 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 
 	public void write(List<? extends T> items) throws Exception {
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
+			PermissionThreadLocal.getPermissionChecker();
 
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		String name = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
@@ -74,8 +77,8 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 			_write(items);
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(null);
-			PrincipalThreadLocal.setName(0);
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(name);
 		}
 	}
 

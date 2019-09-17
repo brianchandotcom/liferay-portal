@@ -15,7 +15,6 @@
 package com.liferay.mule.internal.metadata;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.NullNode;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.json.JsonNodeReader;
@@ -70,7 +69,12 @@ public class MetadataTypeBuilder {
 		return _resolveObjectMetadataType(
 			_getObjectTypeBuilder(metadataContext), oasJsonNode,
 			schemaJsonNode.get(OASConstants.PROPERTIES),
-			_getRequiredJsonNode(schemaJsonNode));
+			_fetchRequiredJsonNode(schemaJsonNode));
+	}
+
+	private JsonNode _fetchRequiredJsonNode(JsonNode schemaJsonNode) {
+		return _jsonNodeReader.fetchDescendantJsonNode(
+			schemaJsonNode, OASConstants.REQUIRED);
 	}
 
 	private ArrayTypeBuilder _getArrayTypeBuilder(
@@ -215,16 +219,6 @@ public class MetadataTypeBuilder {
 		return _jsonNodeReader.getDescendantJsonNode(openAPISpecJsonNode, path);
 	}
 
-	private JsonNode _getRequiredJsonNode(JsonNode schemaJsonNode) {
-		JsonNode requiredJsonNode = schemaJsonNode.get(OASConstants.REQUIRED);
-
-		if (requiredJsonNode == null) {
-			return NullNode.getInstance();
-		}
-
-		return requiredJsonNode;
-	}
-
 	private JsonNode _getSchemaJsonNode(
 		JsonNode openAPISpecJsonNode, String schemaName) {
 
@@ -256,7 +250,7 @@ public class MetadataTypeBuilder {
 
 		_resolveObjectMetadataType(
 			objectTypeBuilder, oasJsonNode, propertiesJsonNode,
-			_getRequiredJsonNode(schemaJsonNode));
+			_fetchRequiredJsonNode(schemaJsonNode));
 
 		return arrayTypeBuilder.build();
 	}
@@ -280,7 +274,7 @@ public class MetadataTypeBuilder {
 		JsonNode nestedObjectPropertiesJsonNode =
 			nestedObjectSchemaJsonNode.get(OASConstants.PROPERTIES);
 
-		JsonNode nestedObjectRequiredJsonNode = _getRequiredJsonNode(
+		JsonNode nestedObjectRequiredJsonNode = _fetchRequiredJsonNode(
 			nestedObjectSchemaJsonNode);
 
 		_resolveObjectMetadataType(

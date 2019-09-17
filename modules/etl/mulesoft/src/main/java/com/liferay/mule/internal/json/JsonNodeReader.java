@@ -16,6 +16,7 @@ package com.liferay.mule.internal.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 
 import java.io.IOException;
 
@@ -26,6 +27,20 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
  * @author Matija Petanjek
  */
 public class JsonNodeReader {
+
+	public JsonNode fetchDescendantJsonNode(JsonNode jsonNode, String path) {
+		String[] pathParts = path.split(">");
+
+		for (String pathPart : pathParts) {
+			jsonNode = jsonNode.get(pathPart);
+
+			if (jsonNode == null) {
+				return NullNode.getInstance();
+			}
+		}
+
+		return jsonNode;
+	}
 
 	public JsonNode fromHttpResponse(HttpResponse httpResponse)
 		throws IOException {

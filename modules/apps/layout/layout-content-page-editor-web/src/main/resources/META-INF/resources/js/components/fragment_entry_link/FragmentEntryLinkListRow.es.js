@@ -57,8 +57,6 @@ class FragmentEntryLinkListRow extends Component {
 	static _getFloatingToolbarButtons(config) {
 		const buttons = [];
 
-		buttons.push(FLOATING_TOOLBAR_BUTTONS.removeFragment);
-
 		buttons.push(FLOATING_TOOLBAR_BUTTONS.backgroundColor);
 
 		const layoutBackgroundImageButton = {
@@ -134,9 +132,6 @@ class FragmentEntryLinkListRow extends Component {
 		this._handleBodyMouseLeave = this._handleBodyMouseLeave.bind(this);
 		this._handleBodyMouseMove = this._handleBodyMouseMove.bind(this);
 		this._handleBodyMouseUp = this._handleBodyMouseUp.bind(this);
-		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
-			this
-		);
 
 		document.body.addEventListener(
 			'mouseleave',
@@ -289,9 +284,6 @@ class FragmentEntryLinkListRow extends Component {
 			buttons: FragmentEntryLinkListRow._getFloatingToolbarButtons(
 				this.row.config
 			),
-			events: {
-				buttonClicked: this._handleFloatingToolbarButtonClicked
-			},
 			item: this.row,
 			itemId: this.rowId,
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.row,
@@ -442,22 +434,6 @@ class FragmentEntryLinkListRow extends Component {
 	}
 
 	/**
-	 * Callback executed when an floating toolbar button is clicked
-	 * @param {Event} event
-	 * @param {Object} data
-	 * @private
-	 */
-	_handleFloatingToolbarButtonClicked(event, data) {
-		const {panelId} = data;
-
-		if (panelId === FLOATING_TOOLBAR_BUTTONS.removeFragment.panelId) {
-			event.preventDefault();
-
-			removeItem(this.store, removeRowAction(this.rowId));
-		}
-	}
-
-	/**
 	 * @private
 	 */
 	_handleResizerMouseDown(event) {
@@ -493,6 +469,17 @@ class FragmentEntryLinkListRow extends Component {
 				);
 			}
 		}
+	}
+
+	/**
+	 * Callback executed when the remove row button is clicked.
+	 * @param {Event} event
+	 * @private
+	 */
+	_handleRowRemoveButtonClick(event) {
+		event.stopPropagation();
+
+		removeItem(this.store, removeRowAction(this.hoveredItemId));
 	}
 
 	/**

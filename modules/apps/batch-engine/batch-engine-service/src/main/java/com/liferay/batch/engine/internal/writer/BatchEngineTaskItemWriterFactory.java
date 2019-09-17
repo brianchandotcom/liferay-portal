@@ -60,7 +60,7 @@ public class BatchEngineTaskItemWriterFactory {
 			bundleContext,
 			bundleContext.createFilter(
 				"(&(api.version=*)(osgi.jaxrs.resource=true))"),
-			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
+			new BatchEngineTaskMethodServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -179,12 +179,6 @@ public class BatchEngineTaskItemWriterFactory {
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		private BatchEngineTaskMethodServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		private String[] _getMethodParameterNames(
 				Class<?> resourceClass, Method resourceMethod)
 			throws NoSuchMethodException {
@@ -226,8 +220,6 @@ public class BatchEngineTaskItemWriterFactory {
 
 			return parameterNames;
 		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

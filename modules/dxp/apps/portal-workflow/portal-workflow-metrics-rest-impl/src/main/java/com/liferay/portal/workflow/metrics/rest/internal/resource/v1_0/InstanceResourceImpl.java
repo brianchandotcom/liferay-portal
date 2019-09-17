@@ -220,7 +220,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createAssigneeUserIdExistsBooleanQuery(
+	private BooleanQuery _createAssigneeUserIdsExistsBooleanQuery(
 		Long[] assigneeUserIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -232,7 +232,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		return booleanQuery;
 	}
 
-	private BooleanQuery _createAssigneeUserIdTermsBooleanQuery(
+	private BooleanQuery _createAssigneeUserIdsTermsBooleanQuery(
 		Long[] assigneeUserIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
@@ -452,8 +452,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		if (assigneeUserIds.length > 0) {
 			booleanQuery.addShouldQueryClauses(
-				_createAssigneeUserIdExistsBooleanQuery(assigneeUserIds),
-				_createAssigneeUserIdTermsBooleanQuery(assigneeUserIds));
+				_createAssigneeUserIdsExistsBooleanQuery(assigneeUserIds),
+				_createAssigneeUserIdsTermsBooleanQuery(assigneeUserIds));
 		}
 
 		if (taskKeys.length > 0) {

@@ -49,40 +49,40 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 	<aui:field-wrapper label="start-date">
 		<liferay-ui:input-date
-			dayParam='<%= "startDateDay" %>'
+			dayParam="startDateDay"
 			dayValue="<%= startDateDay %>"
-			monthParam='<%= "startDateMonth" %>'
+			monthParam="startDateMonth"
 			monthValue="<%= startDateMonth %>"
-			yearParam='<%= "startDateYear" %>'
+			yearParam="startDateYear"
 			yearValue="<%= startDateYear %>"
 		/>
 
 		<liferay-ui:input-time
-			amPmParam='<%= "startDateAmPm" %>'
+			amPmParam="startDateAmPm"
 			amPmValue="<%= startDateAmPm %>"
-			hourParam='<%= "startDateHour" %>'
+			hourParam="startDateHour"
 			hourValue="<%= startDateHour %>"
-			minuteParam='<%= "startDateMinute" %>'
+			minuteParam="startDateMinute"
 			minuteValue="<%= startDateMinute %>"
 		/>
 	</aui:field-wrapper>
 
 	<aui:field-wrapper label="end-date">
 		<liferay-ui:input-date
-			dayParam='<%= "endDateDay" %>'
+			dayParam="endDateDay"
 			dayValue="<%= endDateDay %>"
-			monthParam='<%= "endDateMonth" %>'
+			monthParam="endDateMonth"
 			monthValue="<%= endDateMonth %>"
-			yearParam='<%= "endDateYear" %>'
+			yearParam="endDateYear"
 			yearValue="<%= endDateYear %>"
 		/>
 
 		<liferay-ui:input-time
-			amPmParam='<%= "endDateAmPm" %>'
+			amPmParam="endDateAmPm"
 			amPmValue="<%= endDateAmPm %>"
-			hourParam='<%= "endDateHour" %>'
+			hourParam="endDateHour"
 			hourValue="<%= endDateHour %>"
-			minuteParam='<%= "endDateMinute" %>'
+			minuteParam="endDateMinute"
 			minuteValue="<%= endDateMinute %>"
 		/>
 	</aui:field-wrapper>

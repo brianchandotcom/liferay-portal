@@ -44,8 +44,8 @@
 	}
 
 	<%
-	String oneDriveBackgroundTaskStatusURL = (String)request.getAttribute("oneDriveBackgroundTaskStatusURL");
 	String dialogMessage = (String)request.getAttribute("dialogMessage");
+	String oneDriveBackgroundTaskStatusURL = (String)request.getAttribute("oneDriveBackgroundTaskStatusURL");
 	%>
 
 	<c:if test="<%= oneDriveBackgroundTaskStatusURL != null %>">

@@ -33,6 +33,8 @@ public class OASConstants {
 
 	public static final String PATH_ITEMS_ITEMS_REF = "items>items>$ref";
 
+	public static final String PATH_ITEMS_REF = "items>$ref";
+
 	public static final String
 		PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN =
 			"paths>ENDPOINT_TPL>OPERATION_TPL>responses>default>content>" +

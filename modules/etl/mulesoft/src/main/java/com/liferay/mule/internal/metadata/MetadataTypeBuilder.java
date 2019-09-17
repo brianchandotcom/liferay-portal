@@ -61,9 +61,13 @@ public class MetadataTypeBuilder {
 		JsonNode schemaJsonNode = _getSchemaJsonNode(oasJsonNode, schemaName);
 
 		if (schemaName.startsWith("Page")) {
+			JsonNode propertiesJsonNode = schemaJsonNode.get(
+				OASConstants.PROPERTIES);
+
 			return _resolveArrayMetadataType(
 				_getArrayTypeBuilder(metadataContext), oasJsonNode,
-				schemaJsonNode.get(OASConstants.PROPERTIES));
+				_jsonNodeReader.getDescendantJsonNode(
+					propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF));
 		}
 
 		return _resolveObjectMetadataType(
@@ -123,10 +127,10 @@ public class MetadataTypeBuilder {
 			return;
 		}
 		else if (Objects.equals(typeJsonNode.textValue(), OASConstants.ARRAY)) {
-			objectFieldTypeBuilder.value(
-			).arrayType(
-			).of(
-			).objectType();
+			_resolveNestedArrayMetadataType(
+				objectFieldTypeBuilder.value(
+				).arrayType(),
+				oasJsonNode, propertyJsonNode);
 
 			return;
 		}
@@ -235,24 +239,31 @@ public class MetadataTypeBuilder {
 
 	private MetadataType _resolveArrayMetadataType(
 		ArrayTypeBuilder arrayTypeBuilder, JsonNode oasJsonNode,
-		JsonNode propertiesJsonNode) {
+		JsonNode referenceJsonNode) {
 
 		ObjectTypeBuilder objectTypeBuilder = arrayTypeBuilder.of(
 		).objectType();
 
-		JsonNode referenceJsonNode = _jsonNodeReader.getDescendantJsonNode(
-			propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF);
-
 		JsonNode schemaJsonNode = _getSchemaJsonNode(
 			oasJsonNode, _getSchemaName(referenceJsonNode.textValue()));
 
-		propertiesJsonNode = schemaJsonNode.get(OASConstants.PROPERTIES);
-
 		_resolveObjectMetadataType(
-			objectTypeBuilder, oasJsonNode, propertiesJsonNode,
+			objectTypeBuilder, oasJsonNode,
+			schemaJsonNode.get(OASConstants.PROPERTIES),
 			_fetchRequiredJsonNode(schemaJsonNode));
 
 		return arrayTypeBuilder.build();
+	}
+
+	private void _resolveNestedArrayMetadataType(
+		ArrayTypeBuilder arrayTypeBuilder, JsonNode oasJsonNode,
+		JsonNode propertyJsonNode) {
+
+		JsonNode referenceJsonNode = _jsonNodeReader.getDescendantJsonNode(
+			propertyJsonNode, OASConstants.PATH_ITEMS_REF);
+
+		_resolveArrayMetadataType(
+			arrayTypeBuilder, oasJsonNode, referenceJsonNode);
 	}
 
 	private void _resolveNestedObjectMetadataType(

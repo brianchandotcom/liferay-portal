@@ -794,6 +794,57 @@ public class CTSQLTransformerTest {
 	}
 
 	@Test
+	public void testUnionCount() throws Exception {
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out.sql", 0,
+			ps -> {},
+			rs -> Assert.assertEquals(5, rs.getLong(1)),
+			rs -> Assert.assertEquals(5, rs.getLong(1)));
+
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out.sql",
+			_getCTCollectionId(6), ps -> {},
+			rs -> Assert.assertEquals(5, rs.getLong(1)),
+			rs -> Assert.assertEquals(5, rs.getLong(1)));
+	}
+
+	@Test
+	public void testUnionCountAdd() throws Exception {
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out_ct_add.sql",
+			_getCTCollectionId(1), ps -> {},
+			rs -> Assert.assertEquals(6, rs.getLong(1)),
+			rs -> Assert.assertEquals(6, rs.getLong(1)));
+	}
+
+	@Test
+	public void testUnionCountModify() throws Exception {
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out_ct_modify.sql",
+			_getCTCollectionId(2), ps -> {},
+			rs -> Assert.assertEquals(5, rs.getLong(1)),
+			rs -> Assert.assertEquals(5, rs.getLong(1)));
+	}
+
+	@Test
+	public void testUnionCountMoved() throws Exception {
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out_ct_modify.sql",
+			_getCTCollectionId(3), ps -> {},
+			rs -> Assert.assertEquals(5, rs.getLong(1)),
+			rs -> Assert.assertEquals(5, rs.getLong(1)));
+	}
+
+	@Test
+	public void testUnionCountRemove() throws Exception {
+		_assertQuery(
+			"union_select_count_in.sql", "union_select_count_out_ct_remove.sql",
+			_getCTCollectionId(4), ps -> {},
+			rs -> Assert.assertEquals(4, rs.getLong(1)),
+			rs -> Assert.assertEquals(4, rs.getLong(1)));
+	}
+
+	@Test
 	public void testUpdateAndDelete() throws Exception {
 		long ctCollectionId7 = _createCTEntries(
 			7, MainTable.class, null, null, null);

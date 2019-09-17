@@ -79,7 +79,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 
 										if (confirm(confirmMessage)) {
 											var data = new URLSearchParams();
-											data.append(<portlet:namespace />entryId, <%= entryId %>);
+											data.append('<portlet:namespace />entryId', <%= entryId %>);
 
 											Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
 												body: data,

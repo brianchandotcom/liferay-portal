@@ -38,7 +38,4 @@ export function percentageNumberToIndex(percentageNumber) {
 export const MAX_CONFIDENCE_LEVEL = 99;
 export const MIN_CONFIDENCE_LEVEL = 80;
 
-export const INITIAL_CONFIDENCE_LEVEL = parseInt(
-	MIN_CONFIDENCE_LEVEL + (MAX_CONFIDENCE_LEVEL - MIN_CONFIDENCE_LEVEL) / 2,
-	10
-);
+export const INITIAL_CONFIDENCE_LEVEL = 95;

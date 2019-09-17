@@ -56,9 +56,14 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		String title = assetRenderer.getTitle(locale);
 
 		String viewURL = assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet());
+
+		Map<String, Object> fragmentsEditorData = new HashMap<>();
+
+		fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
+		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 %>
 
-		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>">
+		<div class="asset-abstract mb-5 <%= assetPublisherWebUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<div class="mb-2">
 				<h4 class="component-title">
 					<c:choose>

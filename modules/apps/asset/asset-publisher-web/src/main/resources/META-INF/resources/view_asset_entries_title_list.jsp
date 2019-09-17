@@ -60,9 +60,14 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 
 		request.setAttribute("view.jsp-assetEntry", assetEntry);
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+
+		Map<String, Object> fragmentsEditorData = new HashMap<>();
+
+		fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
+		fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 	%>
 
-		<li class="list-group-item list-group-item-flex <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "active" : StringPool.BLANK %>">
+		<li class="list-group-item list-group-item-flex <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<div class="autofit-col">
 					<span class="inline-item">

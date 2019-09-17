@@ -99,9 +99,14 @@ if (stageableGroup.isLayout()) {
 
 						request.setAttribute("view.jsp-assetEntry", assetEntry);
 						request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+
+						Map<String, Object> fragmentsEditorData = new HashMap<>();
+
+						fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
+						fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 					%>
 
-						<tr class="<%= (previewAssetEntryId == assetEntry.getEntryId()) ? "table-active" : StringPool.BLANK %>">
+						<tr class="<%= (previewAssetEntryId == assetEntry.getEntryId()) ? "table-active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 							<td class="table-cell-expand table-title">
 								<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 

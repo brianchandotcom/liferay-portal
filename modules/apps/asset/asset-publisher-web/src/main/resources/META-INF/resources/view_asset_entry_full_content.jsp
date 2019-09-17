@@ -67,9 +67,14 @@ if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
 }
 
 String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, HttpUtil.setParameter(viewFullContentURL.toString(), "redirect", currentURL));
+
+Map<String, Object> fragmentsEditorData = new HashMap<>();
+
+fragmentsEditorData.put("fragments-editor-item-id", PortalUtil.getClassNameId(assetRenderer.getClassName()) + "-" + assetRenderer.getClassPK());
+fragmentsEditorData.put("fragments-editor-item-type", "fragments-editor-mapped-item");
 %>
 
-<div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>">
+<div class="asset-full-content clearfix mb-5 <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %> <%= (previewAssetEntryId == assetEntry.getEntryId()) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 	<div class="mb-2">
 		<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 			<h4 class="component-title">

@@ -110,7 +110,7 @@ export default ({appName, onSettingsChange, settings}) => {
 									className="form-control"
 									disabled={true}
 									id="selectPlacement"
-									value={3}
+									value={1}
 								>
 									<option value={1}>
 										{Liferay.Language.get('control-panel')}

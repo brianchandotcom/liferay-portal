@@ -2,10 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-api/src/main/java/com/liferay/portal/reports/engine/console/service/permission/AdminResourcePermissionChecker\.java" />
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-api/src/main/java/com/liferay/portal/reports/engine/console/service/permission/DefinitionPermissionChecker\.java" />
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-api/src/main/java/com/liferay/portal/reports/engine/console/service/permission/EntryPermissionChecker\.java" />
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-api/src/main/java/com/liferay/portal/reports/engine/console/service/permission/SourcePermissionChecker\.java" />
 		<suppress checks="XMLServiceReferenceCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-service/service\.xml" />
 	</source-check>
 </suppressions>

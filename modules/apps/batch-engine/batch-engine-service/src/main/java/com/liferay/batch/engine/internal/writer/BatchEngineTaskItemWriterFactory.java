@@ -125,8 +125,6 @@ public class BatchEngineTaskItemWriterFactory {
 
 			Class<?> resourceClass = resource.getClass();
 
-			Class<?> parentResourceClass = resourceClass.getSuperclass();
-
 			List<String> keys = null;
 
 			for (Method resourceMethod : resourceClass.getMethods()) {
@@ -150,10 +148,7 @@ public class BatchEngineTaskItemWriterFactory {
 						new ResourceMethodServiceReferenceTuple(
 							resourceMethod,
 							_getMethodParameterNames(
-								parentResourceClass.getMethod(
-									resourceMethod.getName(),
-									resourceMethod.getParameterTypes()),
-								resourceMethod),
+								resourceClass, resourceMethod),
 							serviceReference));
 				}
 				catch (NoSuchMethodException nsme) {
@@ -187,16 +182,22 @@ public class BatchEngineTaskItemWriterFactory {
 		}
 
 		private String[] _getMethodParameterNames(
-			Method parentResourceMethod, Method resourceMethod) {
-
-			Parameter[] parentResourceMethodParameters =
-				parentResourceMethod.getParameters();
+				Class<?> resourceClass, Method resourceMethod)
+			throws NoSuchMethodException {
 
 			Parameter[] resourceMethodParameters =
 				resourceMethod.getParameters();
 
 			String[] parameterNames =
 				new String[resourceMethodParameters.length];
+
+			Class<?> parentResourceClass = resourceClass.getSuperclass();
+
+			Method parentResourceMethod = parentResourceClass.getMethod(
+				resourceMethod.getName(), resourceMethod.getParameterTypes());
+
+			Parameter[] parentResourceMethodParameters =
+				parentResourceMethod.getParameters();
 
 			for (int i = 0; i < resourceMethodParameters.length; i++) {
 				Parameter parameter = resourceMethodParameters[i];

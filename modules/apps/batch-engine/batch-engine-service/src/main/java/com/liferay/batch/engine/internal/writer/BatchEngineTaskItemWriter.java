@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -52,10 +51,8 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 	}
 
 	@Override
-	public void close() throws IOException {
-		if (_resource != null) {
-			_resourceServiceObjects.ungetService(_resource);
-		}
+	public void close() {
+		_resourceServiceObjects.ungetService(_resource);
 	}
 
 	public void write(List<? extends T> items) throws Exception {

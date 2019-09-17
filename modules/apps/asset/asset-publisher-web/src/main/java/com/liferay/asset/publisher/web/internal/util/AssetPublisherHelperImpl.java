@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -141,8 +140,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		if (_isSearchWithIndex(portletName, assetEntryQuery)) {
 			return _assetHelper.searchAssetEntries(
 				assetEntryQuery,
-				_filterAssetCategoryIds(
-					getAssetCategoryIds(portletPreferences)),
+				_filterCategoryIdsPresentInAssetEntryQuery(
+					assetEntryQuery, portletPreferences),
 				getAssetTagNames(portletPreferences), attributes, companyId,
 				assetEntryQuery.getKeywords(), layout, locale, scopeGroupId,
 				timeZone, userId, start, end);
@@ -838,23 +837,31 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				continue;
 			}
 
-			List<AssetCategory> childAssetCategories =
-				_assetCategoryLocalService.getChildCategories(assetCategoryId);
-
-			long[] childAssetCategoryIds = ListUtil.toLongArray(
-				childAssetCategories, AssetCategoryModel::getCategoryId);
-
-			long[] filteredChildAssetCategoryIds = _filterAssetCategoryIds(
-				childAssetCategoryIds);
-
-			Collections.addAll(
-				assetCategoryIdsList,
-				ArrayUtil.toLongArray(filteredChildAssetCategoryIds));
-
 			assetCategoryIdsList.add(assetCategoryId);
 		}
 
 		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
+	}
+
+	private long[] _filterCategoryIdsPresentInAssetEntryQuery(
+		AssetEntryQuery assetEntryQuery,
+		PortletPreferences portletPreferences) {
+
+		List<Long> filteredCategoryIds = new ArrayList<>();
+
+		long[] portletPreferencesCategoryIds = getAssetCategoryIds(
+			portletPreferences);
+
+		long[] allCategoryIds = assetEntryQuery.getAllCategoryIds();
+
+		for (long categoryId : portletPreferencesCategoryIds) {
+			if (!ArrayUtil.contains(allCategoryIds, categoryId)) {
+				filteredCategoryIds.add(categoryId);
+			}
+		}
+
+		return _filterAssetCategoryIds(
+			ArrayUtil.toArray(filteredCategoryIds.toArray(new Long[0])));
 	}
 
 	private List<AssetEntryResult> _getAssetEntryResultsByClassName(

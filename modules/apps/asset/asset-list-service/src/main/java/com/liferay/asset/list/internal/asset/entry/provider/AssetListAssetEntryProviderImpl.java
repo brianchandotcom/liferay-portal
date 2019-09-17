@@ -16,7 +16,6 @@ package com.liferay.asset.list.internal.asset.entry.provider;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -381,19 +379,6 @@ public class AssetListAssetEntryProviderImpl
 			if (category == null) {
 				continue;
 			}
-
-			List<AssetCategory> childAssetCategories =
-				_assetCategoryLocalService.getChildCategories(assetCategoryId);
-
-			long[] childAssetCategoryIds = ListUtil.toLongArray(
-				childAssetCategories, AssetCategoryModel::getCategoryId);
-
-			long[] filteredChildAssetCategoryIds = _filterAssetCategoryIds(
-				childAssetCategoryIds);
-
-			Collections.addAll(
-				assetCategoryIdsList,
-				ArrayUtil.toLongArray(filteredChildAssetCategoryIds));
 
 			assetCategoryIdsList.add(assetCategoryId);
 		}

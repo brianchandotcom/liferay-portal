@@ -16,13 +16,16 @@ package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.base.SourceServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.permission.AdminResourcePermissionChecker;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
-import com.liferay.portal.reports.engine.console.service.permission.SourcePermissionChecker;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,7 +44,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		AdminResourcePermissionChecker.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ReportsActionKeys.ADD_SOURCE);
 
@@ -52,7 +55,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 
 	@Override
 	public Source deleteSource(long sourceId) throws PortalException {
-		SourcePermissionChecker.check(
+		_sourceModelResourcePermission.check(
 			getPermissionChecker(), sourceId, ActionKeys.DELETE);
 
 		return sourceLocalService.deleteSource(sourceId);
@@ -60,7 +63,7 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 
 	@Override
 	public Source getSource(long sourceId) throws PortalException {
-		SourcePermissionChecker.check(
+		_sourceModelResourcePermission.check(
 			getPermissionChecker(), sourceId, ActionKeys.VIEW);
 
 		return sourceLocalService.getSource(sourceId);
@@ -91,12 +94,23 @@ public class SourceServiceImpl extends SourceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SourcePermissionChecker.check(
+		_sourceModelResourcePermission.check(
 			getPermissionChecker(), sourceId, ActionKeys.UPDATE);
 
 		return sourceLocalService.updateSource(
 			sourceId, nameMap, driverClassName, driverUrl, driverUserName,
 			driverPassword, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				SourceServiceImpl.class, "_portletResourcePermission",
+				ReportsEngineConsoleConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<Source>
+		_sourceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				SourceServiceImpl.class, "_sourceModelResourcePermission",
+				Source.class);
 
 }

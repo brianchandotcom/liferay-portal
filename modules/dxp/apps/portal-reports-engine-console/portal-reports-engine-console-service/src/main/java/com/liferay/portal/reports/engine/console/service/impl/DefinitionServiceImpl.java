@@ -16,13 +16,16 @@ package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.base.DefinitionServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.permission.AdminResourcePermissionChecker;
-import com.liferay.portal.reports.engine.console.service.permission.DefinitionPermissionChecker;
 
 import java.io.InputStream;
 
@@ -44,7 +47,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		AdminResourcePermissionChecker.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_DEFINITION);
 
@@ -57,7 +60,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 	public Definition deleteDefinition(long definitionId)
 		throws PortalException {
 
-		DefinitionPermissionChecker.check(
+		_definitionModelResourcePermission.check(
 			getPermissionChecker(), definitionId, ActionKeys.DELETE);
 
 		return definitionLocalService.deleteDefinition(definitionId);
@@ -65,7 +68,7 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 
 	@Override
 	public Definition getDefinition(long definitionId) throws PortalException {
-		DefinitionPermissionChecker.check(
+		_definitionModelResourcePermission.check(
 			getPermissionChecker(), definitionId, ActionKeys.VIEW);
 
 		return definitionLocalService.getDefinition(definitionId);
@@ -101,12 +104,23 @@ public class DefinitionServiceImpl extends DefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DefinitionPermissionChecker.check(
+		_definitionModelResourcePermission.check(
 			getPermissionChecker(), definitionId, ActionKeys.UPDATE);
 
 		return definitionLocalService.updateDefinition(
 			definitionId, nameMap, descriptionMap, sourceId, reportParameters,
 			fileName, inputStream, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<Definition>
+		_definitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DefinitionServiceImpl.class,
+				"_definitionModelResourcePermission", Definition.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				DefinitionServiceImpl.class, "_portletResourcePermission",
+				ReportsEngineConsoleConstants.RESOURCE_NAME);
 
 }

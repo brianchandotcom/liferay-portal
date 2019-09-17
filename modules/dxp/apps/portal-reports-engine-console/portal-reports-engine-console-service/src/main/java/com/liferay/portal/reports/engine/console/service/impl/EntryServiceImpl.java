@@ -16,12 +16,13 @@ package com.liferay.portal.reports.engine.console.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.service.base.EntryServiceBaseImpl;
-import com.liferay.portal.reports.engine.console.service.permission.DefinitionPermissionChecker;
-import com.liferay.portal.reports.engine.console.service.permission.EntryPermissionChecker;
 import com.liferay.portal.reports.engine.console.service.permission.ReportsActionKeys;
 
 import java.util.Date;
@@ -42,7 +43,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DefinitionPermissionChecker.check(
+		_definitionModelResourcePermission.check(
 			getPermissionChecker(), definitionId, ReportsActionKeys.ADD_REPORT);
 
 		return entryLocalService.addEntry(
@@ -56,7 +57,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 	public void deleteAttachment(long companyId, long entryId, String fileName)
 		throws PortalException {
 
-		EntryPermissionChecker.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		entryLocalService.deleteAttachment(companyId, fileName);
@@ -64,7 +65,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 	@Override
 	public Entry deleteEntry(long entryId) throws PortalException {
-		EntryPermissionChecker.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		return entryLocalService.deleteEntry(entryId);
@@ -99,7 +100,7 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 			boolean notification)
 		throws PortalException {
 
-		EntryPermissionChecker.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.VIEW);
 
 		entryLocalService.sendEmails(
@@ -108,10 +109,21 @@ public class EntryServiceImpl extends EntryServiceBaseImpl {
 
 	@Override
 	public void unscheduleEntry(long entryId) throws PortalException {
-		EntryPermissionChecker.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
 		entryLocalService.unscheduleEntry(entryId);
 	}
+
+	private static volatile ModelResourcePermission<Definition>
+		_definitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				EntryServiceImpl.class, "_definitionModelResourcePermission",
+				Definition.class);
+	private static volatile ModelResourcePermission<Entry>
+		_entryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				EntryServiceImpl.class, "_entryModelResourcePermission",
+				Entry.class);
 
 }

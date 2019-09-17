@@ -46,8 +46,10 @@ export default ({
 		dataLayoutId,
 		dataListViewId,
 		name: {en_US: appName},
-		settings: {deploymentTypes}
+		settings
 	} = app;
+
+	const {deploymentTypes} = settings;
 
 	let title = Liferay.Language.get('new-app');
 
@@ -89,12 +91,10 @@ export default ({
 		}
 	};
 
-	const onDeploymentConfigChange = deploymentConfig => {
+	const onSettingsChange = settings => {
 		setApp(prevApp => ({
 			...prevApp,
-			settings: {
-				deploymentTypes: deploymentConfig
-			}
+			settings
 		}));
 	};
 
@@ -190,9 +190,8 @@ export default ({
 						{currentStep == 2 && (
 							<DeployApp
 								appName={appName}
-								onDeploymentConfigChange={
-									onDeploymentConfigChange
-								}
+								onSettingsChange={onSettingsChange}
+								settings={settings}
 							/>
 						)}
 					</div>

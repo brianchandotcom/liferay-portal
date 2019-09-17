@@ -14,18 +14,30 @@
 
 import React, {useState} from 'react';
 
-export default ({appName, onDeploymentConfigChange}) => {
-	const [isProductMenu, setIsProductMenu] = useState(false);
+export default ({appName, onSettingsChange, settings}) => {
+	const [state, setState] = useState({
+		productMenu: settings.deploymentTypes.includes('productMenu'),
+		standalone: settings.deploymentTypes.includes('standalone'),
+		widget: settings.deploymentTypes.includes('widget')
+	});
 
-	const onSwitchClick = () => {
-		const deploymentTypes = [];
+	const onSwitchToggle = type => {
+		const {deploymentTypes: types} = settings;
 
-		if (!isProductMenu) {
-			deploymentTypes.push('productMenu');
-		}
-		setIsProductMenu(!isProductMenu);
-		onDeploymentConfigChange(deploymentTypes);
+		onSettingsChange({
+			...settings,
+			deploymentTypes: types.includes(type)
+				? types.filter(deploymentType => deploymentType !== type)
+				: types.concat(type)
+		});
+
+		setState(prevState => ({
+			...prevState,
+			[type]: !prevState[type]
+		}));
 	};
+
+	const {productMenu: isProductMenu} = state;
 
 	return (
 		<>
@@ -56,7 +68,7 @@ export default ({appName, onDeploymentConfigChange}) => {
 						<input
 							checked={isProductMenu}
 							className="toggle-switch-check"
-							onChange={onSwitchClick}
+							onChange={() => onSwitchToggle('productMenu')}
 							type="checkbox"
 						/>
 						<span aria-hidden="true" className="toggle-switch-bar">

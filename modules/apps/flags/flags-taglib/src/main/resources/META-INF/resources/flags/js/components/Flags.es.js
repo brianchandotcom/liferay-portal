@@ -13,6 +13,7 @@
  */
 
 import {fetch, objectToFormData} from 'frontend-js-web';
+import {useIsMounted} from 'frontend-js-react-web';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
@@ -85,6 +86,8 @@ const Flags = ({
 		}
 	};
 
+	const isMounted = useIsMounted();
+
 	const handleSubmitReport = event => {
 		event.preventDefault();
 
@@ -106,13 +109,19 @@ const Flags = ({
 			method: 'post'
 		})
 			.then(({status}) => {
-				if (status === Liferay.STATUS_CODE.OK) {
-					setStatus(STATUS_SUCCESS);
-				} else {
-					setStatus(STATUS_ERROR);
+				if (isMounted()) {
+					if (status === Liferay.STATUS_CODE.OK) {
+						setStatus(STATUS_SUCCESS);
+					} else {
+						setStatus(STATUS_ERROR);
+					}
 				}
 			})
-			.catch(() => setStatus(STATUS_ERROR));
+			.catch(() => {
+				if (isMounted()) {
+					setStatus(STATUS_ERROR);
+				}
+			});
 	};
 
 	return (

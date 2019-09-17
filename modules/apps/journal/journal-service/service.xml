@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.journal">
 	<namespace>Journal</namespace>
-	<entity local-service="true" name="JournalArticle" remote-service="true" trash-enabled="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="JournalArticle" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -232,7 +232,7 @@
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity local-service="false" name="JournalArticleLocalization" remote-service="false">
+	<entity change-tracking-enabled="true" local-service="false" name="JournalArticleLocalization" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -259,7 +259,7 @@
 			<finder-column name="languageId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="JournalArticleResource" remote-service="false" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="JournalArticleResource" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -416,7 +416,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
 	</entity>
-	<entity local-service="true" name="JournalFolder" remote-service="true" trash-enabled="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="JournalFolder" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

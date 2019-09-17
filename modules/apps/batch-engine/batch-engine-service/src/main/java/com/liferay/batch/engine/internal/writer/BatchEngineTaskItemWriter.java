@@ -16,10 +16,6 @@ package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
@@ -63,22 +59,35 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 	}
 
 	public void write(List<? extends T> items) throws Exception {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		for (T item : items) {
+			Object[] args = new Object[_resourceMethod.getParameterCount()];
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
+			Parameter[] parameters = _resourceMethod.getParameters();
 
-		String name = PrincipalThreadLocal.getName();
+			for (int i = 0; i < parameters.length; i++) {
+				Parameter parameter = parameters[i];
 
-		PrincipalThreadLocal.setName(_user.getUserId());
+				if (parameter.getType() == item.getClass()) {
+					args[i] = item;
+				}
+				else {
+					if (_resourceMethodParameters[i] == null) {
+						throw new IllegalArgumentException(
+							"Unable to find method argument name");
+					}
 
-		try {
-			_write(items);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(name);
+					Class<?> itemClass = item.getClass();
+
+					Field parameterField = itemClass.getDeclaredField(
+						_resourceMethodParameters[i]);
+
+					parameterField.setAccessible(true);
+
+					args[i] = parameterField.get(item);
+				}
+			}
+
+			_resourceMethod.invoke(_resource, args);
 		}
 	}
 
@@ -124,39 +133,6 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 		field.setAccessible(true);
 
 		field.set(resource, value);
-	}
-
-	private void _write(List<? extends T> items) throws Exception {
-		for (T item : items) {
-			Object[] args = new Object[_resourceMethod.getParameterCount()];
-
-			Parameter[] parameters = _resourceMethod.getParameters();
-
-			for (int i = 0; i < parameters.length; i++) {
-				Parameter parameter = parameters[i];
-
-				if (parameter.getType() == item.getClass()) {
-					args[i] = item;
-				}
-				else {
-					if (_resourceMethodParameters[i] == null) {
-						throw new IllegalArgumentException(
-							"Unable to find method argument name");
-					}
-
-					Class<?> itemClass = item.getClass();
-
-					Field parameterField = itemClass.getDeclaredField(
-						_resourceMethodParameters[i]);
-
-					parameterField.setAccessible(true);
-
-					args[i] = parameterField.get(item);
-				}
-			}
-
-			_resourceMethod.invoke(_resource, args);
-		}
 	}
 
 	private final Company _company;

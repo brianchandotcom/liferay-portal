@@ -24,6 +24,12 @@ import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -86,7 +92,17 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 	}
 
 	private void _execute(BatchEngineTask batchEngineTask) throws Throwable {
-		T item = null;
+		User user = _userLocalService.getUser(batchEngineTask.getUserId());
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		String name = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
 				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
@@ -94,6 +110,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
 
 			List<T> items = new ArrayList<>();
+
+			T item = null;
 
 			while ((item = batchEngineTaskItemReader.read()) != null) {
 				items.add(item);
@@ -108,6 +126,10 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 			if (!items.isEmpty()) {
 				_commitItems(batchEngineTaskItemWriter, items);
 			}
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(name);
 		}
 	}
 
@@ -126,5 +148,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

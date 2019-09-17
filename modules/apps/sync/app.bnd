@@ -9,7 +9,7 @@ Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
-Liferay-Releng-Restart-Required: true
+Liferay-Releng-Restart-Required: false
 Liferay-Releng-Suite:
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

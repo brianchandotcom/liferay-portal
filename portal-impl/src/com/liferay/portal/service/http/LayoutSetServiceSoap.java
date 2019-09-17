@@ -152,6 +152,11 @@ public class LayoutSetServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateVirtualHosts(long, boolean, TreeMap)}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.LayoutSetSoap
 			updateVirtualHost(
 				long groupId, boolean privateLayout, String virtualHost)
@@ -161,6 +166,27 @@ public class LayoutSetServiceSoap {
 			com.liferay.portal.kernel.model.LayoutSet returnValue =
 				LayoutSetServiceUtil.updateVirtualHost(
 					groupId, privateLayout, virtualHost);
+
+			return com.liferay.portal.kernel.model.LayoutSetSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutSetSoap
+			updateVirtualHosts(
+				long groupId, boolean privateLayout,
+				java.util.TreeMap<String, String> virtualHostnames)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.LayoutSet returnValue =
+				LayoutSetServiceUtil.updateVirtualHosts(
+					groupId, privateLayout, virtualHostnames);
 
 			return com.liferay.portal.kernel.model.LayoutSetSoap.toSoapModel(
 				returnValue);

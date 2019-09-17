@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -312,8 +313,18 @@ public interface LayoutSetLocalService
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateVirtualHosts(long, boolean, TreeMap)}
+	 */
+	@Deprecated
 	public LayoutSet updateVirtualHost(
 			long groupId, boolean privateLayout, String virtualHostname)
+		throws PortalException;
+
+	public LayoutSet updateVirtualHosts(
+			long groupId, boolean privateLayout,
+			TreeMap<String, String> virtualHostnames)
 		throws PortalException;
 
 }

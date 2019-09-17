@@ -65,7 +65,8 @@ public class VirtualHostModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"virtualHostId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"layoutSetId", Types.BIGINT},
-		{"hostname", Types.VARCHAR}
+		{"hostname", Types.VARCHAR}, {"defaultVirtualHost", Types.BOOLEAN},
+		{"languageId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,18 +78,20 @@ public class VirtualHostModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("hostname", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultVirtualHost", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(200) null)";
+		"create table VirtualHost (mvccVersion LONG default 0 not null,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(200) null,defaultVirtualHost BOOLEAN,languageId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 
 	public static final String ORDER_BY_JPQL =
-		" ORDER BY virtualHost.virtualHostId ASC";
+		" ORDER BY virtualHost.virtualHostId DESC";
 
 	public static final String ORDER_BY_SQL =
-		" ORDER BY VirtualHost.virtualHostId ASC";
+		" ORDER BY VirtualHost.virtualHostId DESC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -113,11 +116,13 @@ public class VirtualHostModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long HOSTNAME_COLUMN_BITMASK = 2L;
+	public static final long DEFAULTVIRTUALHOST_COLUMN_BITMASK = 2L;
 
-	public static final long LAYOUTSETID_COLUMN_BITMASK = 4L;
+	public static final long HOSTNAME_COLUMN_BITMASK = 4L;
 
-	public static final long VIRTUALHOSTID_COLUMN_BITMASK = 8L;
+	public static final long LAYOUTSETID_COLUMN_BITMASK = 8L;
+
+	public static final long VIRTUALHOSTID_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -271,6 +276,16 @@ public class VirtualHostModelImpl
 		attributeSetterBiConsumers.put(
 			"hostname",
 			(BiConsumer<VirtualHost, String>)VirtualHost::setHostname);
+		attributeGetterFunctions.put(
+			"defaultVirtualHost", VirtualHost::getDefaultVirtualHost);
+		attributeSetterBiConsumers.put(
+			"defaultVirtualHost",
+			(BiConsumer<VirtualHost, Boolean>)
+				VirtualHost::setDefaultVirtualHost);
+		attributeGetterFunctions.put("languageId", VirtualHost::getLanguageId);
+		attributeSetterBiConsumers.put(
+			"languageId",
+			(BiConsumer<VirtualHost, String>)VirtualHost::setLanguageId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -295,6 +310,8 @@ public class VirtualHostModelImpl
 
 	@Override
 	public void setVirtualHostId(long virtualHostId) {
+		_columnBitmask = -1L;
+
 		_virtualHostId = virtualHostId;
 	}
 
@@ -367,6 +384,48 @@ public class VirtualHostModelImpl
 		return GetterUtil.getString(_originalHostname);
 	}
 
+	@Override
+	public boolean getDefaultVirtualHost() {
+		return _defaultVirtualHost;
+	}
+
+	@Override
+	public boolean isDefaultVirtualHost() {
+		return _defaultVirtualHost;
+	}
+
+	@Override
+	public void setDefaultVirtualHost(boolean defaultVirtualHost) {
+		_columnBitmask |= DEFAULTVIRTUALHOST_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultVirtualHost) {
+			_setOriginalDefaultVirtualHost = true;
+
+			_originalDefaultVirtualHost = _defaultVirtualHost;
+		}
+
+		_defaultVirtualHost = defaultVirtualHost;
+	}
+
+	public boolean getOriginalDefaultVirtualHost() {
+		return _originalDefaultVirtualHost;
+	}
+
+	@Override
+	public String getLanguageId() {
+		if (_languageId == null) {
+			return "";
+		}
+		else {
+			return _languageId;
+		}
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -408,6 +467,8 @@ public class VirtualHostModelImpl
 		virtualHostImpl.setCompanyId(getCompanyId());
 		virtualHostImpl.setLayoutSetId(getLayoutSetId());
 		virtualHostImpl.setHostname(getHostname());
+		virtualHostImpl.setDefaultVirtualHost(isDefaultVirtualHost());
+		virtualHostImpl.setLanguageId(getLanguageId());
 
 		virtualHostImpl.resetOriginalValues();
 
@@ -416,17 +477,25 @@ public class VirtualHostModelImpl
 
 	@Override
 	public int compareTo(VirtualHost virtualHost) {
-		long primaryKey = virtualHost.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getVirtualHostId() < virtualHost.getVirtualHostId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getVirtualHostId() > virtualHost.getVirtualHostId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -482,6 +551,11 @@ public class VirtualHostModelImpl
 
 		virtualHostModelImpl._originalHostname = virtualHostModelImpl._hostname;
 
+		virtualHostModelImpl._originalDefaultVirtualHost =
+			virtualHostModelImpl._defaultVirtualHost;
+
+		virtualHostModelImpl._setOriginalDefaultVirtualHost = false;
+
 		virtualHostModelImpl._columnBitmask = 0;
 	}
 
@@ -504,6 +578,16 @@ public class VirtualHostModelImpl
 
 		if ((hostname != null) && (hostname.length() == 0)) {
 			virtualHostCacheModel.hostname = null;
+		}
+
+		virtualHostCacheModel.defaultVirtualHost = isDefaultVirtualHost();
+
+		virtualHostCacheModel.languageId = getLanguageId();
+
+		String languageId = virtualHostCacheModel.languageId;
+
+		if ((languageId != null) && (languageId.length() == 0)) {
+			virtualHostCacheModel.languageId = null;
 		}
 
 		return virtualHostCacheModel;
@@ -589,6 +673,10 @@ public class VirtualHostModelImpl
 	private boolean _setOriginalLayoutSetId;
 	private String _hostname;
 	private String _originalHostname;
+	private boolean _defaultVirtualHost;
+	private boolean _originalDefaultVirtualHost;
+	private boolean _setOriginalDefaultVirtualHost;
+	private String _languageId;
 	private long _columnBitmask;
 	private VirtualHost _escapedModel;
 

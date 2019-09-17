@@ -193,6 +193,11 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.fetchVirtualHost(virtualHostId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getVirtualHosts(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId) {
@@ -255,6 +260,11 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.getVirtualHost(virtualHostId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getVirtualHosts(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
 			long companyId, long layoutSetId)
@@ -289,6 +299,14 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.getVirtualHosts(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.VirtualHost>
+			getVirtualHosts(long companyId, long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _virtualHostLocalService.getVirtualHosts(companyId, layoutSetId);
+	}
+
 	/**
 	 * Returns the number of virtual hosts.
 	 *
@@ -299,6 +317,11 @@ public class VirtualHostLocalServiceWrapper
 		return _virtualHostLocalService.getVirtualHostsCount();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateVirtualHosts(long, long, TreeMap)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
 		long companyId, long layoutSetId, java.lang.String hostname) {
@@ -318,6 +341,16 @@ public class VirtualHostLocalServiceWrapper
 		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
 
 		return _virtualHostLocalService.updateVirtualHost(virtualHost);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.VirtualHost>
+		updateVirtualHosts(
+			long companyId, long layoutSetId,
+			java.util.TreeMap<java.lang.String, java.lang.String> hostnameMap) {
+
+		return _virtualHostLocalService.updateVirtualHosts(
+			companyId, layoutSetId, hostnameMap);
 	}
 
 	@Override

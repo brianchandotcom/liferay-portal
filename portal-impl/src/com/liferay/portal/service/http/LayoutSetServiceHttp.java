@@ -348,6 +348,45 @@ public class LayoutSetServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSet updateVirtualHosts(
+			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
+			java.util.TreeMap<String, String> virtualHostnames)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutSetServiceUtil.class, "updateVirtualHosts",
+				_updateVirtualHostsParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout, virtualHostnames);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.portal.kernel.model.LayoutSet)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetServiceHttp.class);
 
 	private static final Class<?>[]
@@ -375,5 +414,7 @@ public class LayoutSetServiceHttp {
 		new Class[] {long.class, boolean.class, String.class};
 	private static final Class<?>[] _updateVirtualHostParameterTypes7 =
 		new Class[] {long.class, boolean.class, String.class};
+	private static final Class<?>[] _updateVirtualHostsParameterTypes8 =
+		new Class[] {long.class, boolean.class, java.util.TreeMap.class};
 
 }

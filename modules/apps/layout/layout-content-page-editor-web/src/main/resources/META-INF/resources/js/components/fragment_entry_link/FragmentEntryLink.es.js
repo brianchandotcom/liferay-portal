@@ -63,6 +63,22 @@ import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 class FragmentEntryLink extends Component {
 	/**
 	 * @inheritdoc
+	 */
+	created() {
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
+			this
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	disposed() {
+		this._disposeFloatingToolbar();
+	}
+
+	/**
+	 * @inheritdoc
 	 * @param {object} state
 	 * @return {object}
 	 * @review
@@ -91,22 +107,6 @@ class FragmentEntryLink extends Component {
 				sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
 			)
 		};
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	created() {
-		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
-			this
-		);
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	disposed() {
-		this._disposeFloatingToolbar();
 	}
 
 	/**
@@ -239,8 +239,6 @@ class FragmentEntryLink extends Component {
 	_getFloatingToolbarButtons() {
 		const buttons = [];
 
-		buttons.push(FLOATING_TOOLBAR_BUTTONS.removeFragment);
-
 		const fragmentEntryLink = this.fragmentEntryLinks[
 			this.fragmentEntryLinkId
 		];
@@ -269,16 +267,7 @@ class FragmentEntryLink extends Component {
 	_handleFloatingToolbarButtonClicked(event, data) {
 		const {panelId} = data;
 
-		if (panelId === FLOATING_TOOLBAR_BUTTONS.removeFragment.panelId) {
-			event.preventDefault();
-
-			removeItem(
-				this.store,
-				removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
-			);
-		} else if (
-			panelId === FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId
-		) {
+		if (panelId === FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId) {
 			event.preventDefault();
 
 			this._duplicateFragmentEntryLink();

@@ -366,9 +366,9 @@ public class TemporaryFileEntriesCapabilityImpl
 
 				DLAppHelperLocalServiceUtil.deleteFolder(folder);
 
-				_documentRepository.deleteFolder(folderId);
-
 				folder = folder.getParentFolder();
+
+				_documentRepository.deleteFolder(folderId);
 			}
 		}
 

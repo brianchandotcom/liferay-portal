@@ -25,6 +25,7 @@ import com.liferay.segments.asah.connector.internal.client.data.binding.Individu
 import com.liferay.segments.asah.connector.internal.client.data.binding.InterestTermsJSONObjectMapper;
 import com.liferay.segments.asah.connector.internal.client.model.DXPVariants;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.ExperimentSettings;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -72,6 +73,18 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		return _jsonWebServiceClient.doPost(
 			Experiment.class, _PATH_EXPERIMENTS, experiment, _headers);
+	}
+
+	@Override
+	public Long calculateExperimentEstimatedDaysDuration(
+		String experimentId, ExperimentSettings experimentSettings) {
+
+		return _jsonWebServiceClient.doPost(
+			Long.class,
+			StringUtil.replace(
+				_PATH_EXPERIMENTS_ESTIMATED_DAYS_DURATION, "{experimentId}",
+				experimentId),
+			experimentSettings, _headers);
 	}
 
 	@Override
@@ -302,6 +315,9 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 	private static final String _PATH_EXPERIMENTS_DXP_VARIANTS =
 		_PATH_EXPERIMENTS + "/{experimentId}/dxp-variants";
+
+	private static final String _PATH_EXPERIMENTS_ESTIMATED_DAYS_DURATION =
+		_PATH_EXPERIMENTS + "/{experimentId}/estimated-days-duration";
 
 	private static final String _PATH_EXPERIMENTS_EXPERIMENT =
 		_PATH_EXPERIMENTS + "/{experimentId}";

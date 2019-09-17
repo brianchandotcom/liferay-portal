@@ -16,6 +16,7 @@ package com.liferay.segments.asah.connector.internal.client;
 
 import com.liferay.segments.asah.connector.internal.client.model.DXPVariants;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.ExperimentSettings;
 import com.liferay.segments.asah.connector.internal.client.model.Individual;
 import com.liferay.segments.asah.connector.internal.client.model.IndividualSegment;
 import com.liferay.segments.asah.connector.internal.client.model.Results;
@@ -41,6 +42,17 @@ public interface AsahFaroBackendClient {
 	public Experiment addExperiment(Experiment experiment);
 
 	/**
+	 * Calculates the estimated duration in days for the experiment
+	 * <code>experimentId</code> given a {@link ExperimentSettings}
+	 *
+	 * @param  experimentId the ID of the experiment
+	 * @param  experimentSettings settings for the calculation
+	 * @return estimated duration for the experiment in days
+	 */
+	public Long calculateExperimentEstimatedDaysDuration(
+		String experimentId, ExperimentSettings experimentSettings);
+
+	/**
 	 * Deletes an {@link Experiment}.
 	 *
 	 * @param  experimentId the ID of the experiment to be removed
@@ -56,8 +68,8 @@ public interface AsahFaroBackendClient {
 	public String getDataSourceId();
 
 	/**
-	 * Returns the individual matching the primary key for the data source {@link
-	 * #getDataSourceId()}.
+	 * Returns the individual matching the primary key for the data source
+	 * {@link #getDataSourceId()}.
 	 *
 	 * @param  individualPK the primary key of the individual
 	 * @return the individual matching the primary key, or {@code null} if no
@@ -110,8 +122,8 @@ public interface AsahFaroBackendClient {
 	/**
 	 * Updates a set of {@link DXPVariants}.
 	 *
-	 * @param experimentId the experiment ID
-	 * @param dxpVariants list of experiment variants
+	 * @param  experimentId the experiment ID
+	 * @param  dxpVariants list of experiment variants
 	 * @review
 	 */
 	public void updateExperimentDXPVariants(

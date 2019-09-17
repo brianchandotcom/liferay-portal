@@ -38,12 +38,13 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	);
 	const [draftVariants, setDraftVariants] = useState(
 		variants.map((variant, index) => {
+			const remainingSplit = 100 % variants.length;
 			const splitValue = parseInt(100 / variants.length, 10);
 
 			let split;
 
-			if (index === variants.length - 1) {
-				split = 100 - splitValue * (variants.length - 1);
+			if (index === 0 && remainingSplit > 0) {
+				split = splitValue + remainingSplit;
 			} else {
 				split = splitValue;
 			}

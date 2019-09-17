@@ -195,7 +195,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 						dropdownItem.setHref(
 							liferayPortletResponse.createRenderURL(),
 							"mvcRenderCommandName",
-							"/account_admin/edit_account");
+							"/account_admin/edit_account", "backURL",
+							currentURLObj.toString());
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "add-account"));
 					});

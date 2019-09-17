@@ -12,44 +12,21 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Entry;
-import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Gavin Wan
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Leon Chi
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Entry",
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class EntryPermissionChecker implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, Entry entry, String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(permissionChecker, entry, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long entryId, String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(
-			permissionChecker, entryId, actionId);
-	}
+@Component(immediate = true, service = {})
+public class EntryPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Entry entry, String actionId)
@@ -65,19 +42,6 @@ public class EntryPermissionChecker implements BaseModelPermissionChecker {
 
 		return _entryModelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_entryModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
-	}
-
-	protected void setEntryLocalService(EntryLocalService entryLocalService) {
 	}
 
 	@Reference(

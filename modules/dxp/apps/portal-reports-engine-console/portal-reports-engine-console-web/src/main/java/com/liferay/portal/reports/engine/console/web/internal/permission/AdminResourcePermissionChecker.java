@@ -12,12 +12,11 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 
@@ -25,17 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Peter Shin
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Leon Chi
  */
-@Component(
-	immediate = true,
-	property = "resource.name=" + ReportsEngineConsoleConstants.RESOURCE_NAME,
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class AdminResourcePermissionChecker
-	extends BaseResourcePermissionChecker {
+@Component(immediate = true, service = {})
+public class AdminResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		ReportsEngineConsoleConstants.RESOURCE_NAME;
@@ -44,18 +36,13 @@ public class AdminResourcePermissionChecker
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
+		if (!contains(permissionChecker, groupId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME, groupId, actionId);
+		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return _portletResourcePermission.contains(

@@ -12,47 +12,21 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Definition;
-import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Leon Chi
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Definition",
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, Definition definition,
-			String actionId)
-		throws PortalException {
-
-		_definitionModelResourcePermission.check(
-			permissionChecker, definition, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long definitionId,
-			String actionId)
-		throws PortalException {
-
-		_definitionModelResourcePermission.check(
-			permissionChecker, definitionId, actionId);
-	}
+@Component(immediate = true, service = {})
+public class DefinitionPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, Definition definition,
@@ -70,20 +44,6 @@ public class DefinitionPermissionChecker implements BaseModelPermissionChecker {
 
 		return _definitionModelResourcePermission.contains(
 			permissionChecker, definitionId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_definitionModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
-	}
-
-	protected void setDefinitionLocalService(
-		DefinitionLocalService definitionLocalService) {
 	}
 
 	@Reference(

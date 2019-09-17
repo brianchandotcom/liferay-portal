@@ -12,46 +12,21 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.web.internal.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.service.SourceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
- * @author Gavin Wan
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Leon Chi
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Source",
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class SourcePermissionChecker implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long sourceId, String actionId)
-		throws PortalException {
-
-		_sourceModelResourcePermission.check(
-			permissionChecker, sourceId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, Source source, String actionId)
-		throws PortalException {
-
-		_sourceModelResourcePermission.check(
-			permissionChecker, source, actionId);
-	}
+@Component(immediate = true, service = {})
+public class SourcePermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long sourceId, String actionId)
@@ -67,16 +42,6 @@ public class SourcePermissionChecker implements BaseModelPermissionChecker {
 
 		return _sourceModelResourcePermission.contains(
 			permissionChecker, source, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_sourceModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(
@@ -87,10 +52,6 @@ public class SourcePermissionChecker implements BaseModelPermissionChecker {
 		ModelResourcePermission<Source> modelResourcePermission) {
 
 		_sourceModelResourcePermission = modelResourcePermission;
-	}
-
-	protected void setSourceLocalService(
-		SourceLocalService sourceLocalService) {
 	}
 
 	private static ModelResourcePermission<Source>

@@ -23,7 +23,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_fragmentComment = "${fragmentComment}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_INPUT_CONTENT");
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
 	macro addCommentViaFragment {
@@ -46,7 +46,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_fragmentComment = "${fragmentComment}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS_INPUT_CONTENT");
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
 	macro addExperience {

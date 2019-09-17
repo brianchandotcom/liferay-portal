@@ -14,6 +14,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import ClaySlider from '@clayui/slider';
 
 function SliderWithLabel({
 	label,
@@ -34,12 +35,12 @@ function SliderWithLabel({
 				)}
 			</span>
 			<div className="form-group-item flex-row">
-				<input
+				<ClaySlider
 					className="w-100"
 					max={max}
 					min={min}
-					onChange={_handleValueChange}
-					type="range"
+					onValueChange={onValueChange}
+					showTooltip={false}
 					value={value}
 				/>
 				<small className="form-text font-weight-normal ml-3">
@@ -48,12 +49,6 @@ function SliderWithLabel({
 			</div>
 		</label>
 	);
-
-	function _handleValueChange(event) {
-		const newValue = parseFloat(event.target.value);
-
-		onValueChange(newValue);
-	}
 }
 
 SliderWithLabel.propTypes = {

@@ -106,6 +106,9 @@ public class MBDiscussionStagedModelDataHandler
 		Element discussionElement = portletDataContext.getExportDataElement(
 			discussion);
 
+		discussionElement.addAttribute(
+			"importedByRelatedElement", Boolean.TRUE.toString());
+
 		portletDataContext.addClassedModel(
 			discussionElement, ExportImportPathUtil.getModelPath(discussion),
 			discussion);

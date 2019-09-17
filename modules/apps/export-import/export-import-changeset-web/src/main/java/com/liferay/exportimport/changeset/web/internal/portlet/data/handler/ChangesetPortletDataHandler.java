@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -212,13 +213,10 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			List<Element> entityElements = entityTypeElement.elements();
 
 			for (Element entityElement : entityElements) {
-				if (!String.valueOf(
-						entityElement.attribute("path")).contains(
-							"MBMessage") &&
-					!String.valueOf(
-						entityElement.attribute("path")).contains(
-							"MBDiscussion")) {
+				boolean importedByRelatedElement = GetterUtil.getBoolean(
+					entityElement.attributeValue("importedByRelatedElement"));
 
+				if (!importedByRelatedElement) {
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, entityElement);
 				}

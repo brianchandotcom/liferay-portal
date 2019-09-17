@@ -192,6 +192,11 @@ public class MBMessageStagedModelDataHandler
 			}
 		}
 
+		if (message.isDiscussion()) {
+			messageElement.addAttribute(
+				"importedByRelatedElement", Boolean.TRUE.toString());
+		}
+
 		portletDataContext.addClassedModel(
 			messageElement, ExportImportPathUtil.getModelPath(message),
 			message);

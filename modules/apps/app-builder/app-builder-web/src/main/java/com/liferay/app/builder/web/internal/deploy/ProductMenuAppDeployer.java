@@ -61,8 +61,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void deploy(long appId) throws Exception {
+		String appBuilderPanelCategoryKey = _getAppBuilderPanelCategoryKey(
+			appId);
 		String portletName = _getPortletName(appId);
-		String key = _getKey(appId);
 
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
@@ -82,12 +83,13 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		if (jsonArray.length() == 2) {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
-				mapKey -> new ServiceRegistration<?>[] {
-					_deployAppPanelApp(portletName, key),
+				key -> new ServiceRegistration<?>[] {
+					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
 					_deployAppPanelCategory(
-						appName, key, PanelCategoryKeys.CONTROL_PANEL),
+						appBuilderPanelCategoryKey, appName,
+						PanelCategoryKeys.CONTROL_PANEL),
 					_deployAppPanelCategory(
-						appName, key,
+						appBuilderPanelCategoryKey, appName,
 						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT),
 					_deployAppPortlet(appId, appName, portletName)
 				});
@@ -96,9 +98,10 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				mapKey -> new ServiceRegistration<?>[] {
-					_deployAppPanelApp(portletName, key),
+					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
 					_deployAppPanelCategory(
-						appName, key, jsonArray.getString(0)),
+						appBuilderPanelCategoryKey, appName,
+						jsonArray.getString(0)),
 					_deployAppPortlet(appId, appName, portletName)
 				});
 		}
@@ -132,27 +135,28 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployAppPanelApp(
-		String portletName, String panelCategoryKey) {
+		String appBuilderPanelCategoryKey, String portletName) {
 
 		return _bundleContext.registerService(
 			PanelApp.class, new ProductMenuAppPanelApp(portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("panel.app.order:Integer", 100);
-					put("panel.category.key", panelCategoryKey);
+					put("panel.category.key", appBuilderPanelCategoryKey);
 				}
 			});
 	}
 
 	private ServiceRegistration<?> _deployAppPanelCategory(
-		String appName, String key, String panelCategoryKey) {
+		String appBuilderPanelCategoryKey, String appName,
+		String parentPanelCategoryKey) {
 
 		Dictionary<String, Object> properties =
 			new HashMapDictionary<String, Object>() {
 				{
-					put("key", key);
+					put("key", appBuilderPanelCategoryKey);
 					put("label", appName);
-					put("panel.category.key", panelCategoryKey);
+					put("panel.category.key", parentPanelCategoryKey);
 					put("panel.category.order:Integer", 600);
 				}
 			};
@@ -190,7 +194,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			});
 	}
 
-	private String _getKey(long appId) {
+	private String _getAppBuilderPanelCategoryKey(long appId) {
 		return AppBuilderPanelCategoryKeys.CONTROL_PANEL_APP_BUILDER_APP +
 			appId;
 	}

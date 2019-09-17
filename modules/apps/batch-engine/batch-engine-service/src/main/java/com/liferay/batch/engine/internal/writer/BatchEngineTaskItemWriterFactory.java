@@ -60,7 +60,7 @@ public class BatchEngineTaskItemWriterFactory {
 			bundleContext,
 			bundleContext.createFilter(
 				"(&(api.version=*)(osgi.jaxrs.resource=true))"),
-			new ItemClassServiceTrackerCustomizer(bundleContext));
+			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
 
 		_serviceTracker.open();
 	}
@@ -114,7 +114,7 @@ public class BatchEngineTaskItemWriterFactory {
 	@Reference
 	private UserLocalService _userLocalService;
 
-	private class ItemClassServiceTrackerCustomizer
+	private class BatchEngineTaskMethodServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, List<String>> {
 
 		@Override
@@ -179,7 +179,9 @@ public class BatchEngineTaskItemWriterFactory {
 			_bundleContext.ungetService(serviceReference);
 		}
 
-		private ItemClassServiceTrackerCustomizer(BundleContext bundleContext) {
+		private BatchEngineTaskMethodServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
 			_bundleContext = bundleContext;
 		}
 

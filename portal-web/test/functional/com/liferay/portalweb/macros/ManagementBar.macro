@@ -48,7 +48,7 @@ definition {
 			var menuItem = "${orderBy}";
 		}
 
-		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		Click.pauseClickAt(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = "${menuItem}");
 	}

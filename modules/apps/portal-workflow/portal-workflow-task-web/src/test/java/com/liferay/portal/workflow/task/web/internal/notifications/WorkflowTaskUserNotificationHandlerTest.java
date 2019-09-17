@@ -81,9 +81,11 @@ public class WorkflowTaskUserNotificationHandlerTest {
 	}
 
 	@Test
-	public void testInvalidWorkflowTaskIdShouldReturnLink() throws Exception {
+	public void testInvalidWorkflowTaskIdShouldReturnBlankLink()
+		throws Exception {
+
 		Assert.assertEquals(
-			_VALID_LINK,
+			StringPool.BLANK,
 			_workflowTaskUserNotificationHandler.getLink(
 				mockUserNotificationEvent(
 					_VALID_ENTRY_CLASS_NAME, _INVALID_WORKFLOW_TASK_ID),

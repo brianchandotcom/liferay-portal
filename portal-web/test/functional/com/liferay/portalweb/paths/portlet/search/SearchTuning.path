@@ -30,6 +30,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_DUPLICATE_ENTRY</td>
+	<td>//tr[@data-qa-id='row']//td[contains(@class,'query-column') and contains(.,'${key_query}')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_ENTRY</td>
+	<td>//tr[@data-qa-id='row']//td[contains(@class,'query-column') and contains(.,'${key_query}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT</td>
 	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]</td>
 	<td></td>

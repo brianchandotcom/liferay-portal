@@ -786,7 +786,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		@Override
 		public void visit(SetOperationList setOperationList) {
 			for (SelectBody selectBody : setOperationList.getSelects()) {
-				selectBody.accept(this);
+				selectBody.accept(newInstance());
 			}
 		}
 

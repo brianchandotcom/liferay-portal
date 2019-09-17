@@ -102,18 +102,15 @@ public class SubscriptionSender implements Serializable {
 		hooks.add(hook);
 	}
 
-	public void addPersistedStagingSubscribers(String className, long classPK) {
-		ObjectValuePair<String, Long> ovp = new ObjectValuePair<>(
-			className, classPK);
-
-		_persistestedStagingSubscribersOVPs.add(ovp);
+	public void addPersistedSubscribers(String className, long classPK) {
+		addPersistedSubscribers(className, classPK, true);
 	}
 
-	public void addPersistedSubscribers(String className, long classPK) {
-		ObjectValuePair<String, Long> ovp = new ObjectValuePair<>(
-			className, classPK);
+	public void addPersistedSubscribers(
+		String className, long classPK, boolean notifyImmediately) {
 
-		_persistestedSubscribersOVPs.add(ovp);
+		_persistedSubscribers.add(
+			new Tuple(className, classPK, notifyImmediately));
 	}
 
 	public void addRuntimeSubscribers(String toAddress, String toName) {
@@ -137,11 +134,10 @@ public class SubscriptionSender implements Serializable {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			for (ObjectValuePair<String, Long> ovp :
-					_persistestedSubscribersOVPs) {
-
-				String className = ovp.getKey();
-				long classPK = ovp.getValue();
+			for (Tuple tuple : _persistedSubscribers) {
+				String className = (String)tuple.getObject(0);
+				long classPK = (long)tuple.getObject(1);
+				boolean notifyImmediately = (boolean)tuple.getObject(2);
 
 				List<Subscription> subscriptions =
 					SubscriptionLocalServiceUtil.getSubscriptions(
@@ -149,7 +145,8 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifyPersistedSubscriber(subscription);
+						notifyPersistedSubscriber(
+							subscription, notifyImmediately);
 					}
 					catch (Exception e) {
 						_log.error(
@@ -159,31 +156,7 @@ public class SubscriptionSender implements Serializable {
 				}
 			}
 
-			_persistestedSubscribersOVPs.clear();
-
-			for (ObjectValuePair<String, Long> ovp :
-					_persistestedStagingSubscribersOVPs) {
-
-				String className = ovp.getKey();
-				long classPK = ovp.getValue();
-
-				List<Subscription> subscriptions =
-					SubscriptionLocalServiceUtil.getSubscriptions(
-						companyId, className, classPK);
-
-				for (Subscription subscription : subscriptions) {
-					try {
-						notifyPersistedSubscriber(subscription, false);
-					}
-					catch (Exception e) {
-						_log.error(
-							"Unable to process subscription: " + subscription,
-							e);
-					}
-				}
-			}
-
-			_persistestedStagingSubscribersOVPs.clear();
+			_persistedSubscribers.clear();
 
 			for (ObjectValuePair<String, String> ovp :
 					_runtimeSubscribersOVPs) {
@@ -1127,10 +1100,7 @@ public class SubscriptionSender implements Serializable {
 	private String _mailIdPopPortletPrefix;
 	private long _notificationClassNameId;
 	private int _notificationType;
-	private final List<ObjectValuePair<String, Long>>
-		_persistestedStagingSubscribersOVPs = new ArrayList<>();
-	private final List<ObjectValuePair<String, Long>>
-		_persistestedSubscribersOVPs = new ArrayList<>();
+	private final List<Tuple> _persistedSubscribers = new ArrayList<>();
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();

@@ -8428,8 +8428,8 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if (liveGroupId > 0) {
-			subscriptionSender.addPersistedStagingSubscribers(
-				JournalFolder.class.getName(), liveGroupId);
+			subscriptionSender.addPersistedSubscribers(
+				JournalFolder.class.getName(), liveGroupId, false);
 		}
 
 		if (folder != null) {
@@ -8446,14 +8446,16 @@ public class JournalArticleLocalServiceImpl
 					folder.getUuid(), liveGroupId);
 
 				if (folder != null) {
-					subscriptionSender.addPersistedStagingSubscribers(
-						JournalFolder.class.getName(), folder.getFolderId());
+					subscriptionSender.addPersistedSubscribers(
+						JournalFolder.class.getName(), folder.getFolderId(),
+						false);
 
 					for (Long ancestorFolderId :
 							folder.getAncestorFolderIds()) {
 
-						subscriptionSender.addPersistedStagingSubscribers(
-							JournalFolder.class.getName(), ancestorFolderId);
+						subscriptionSender.addPersistedSubscribers(
+							JournalFolder.class.getName(), ancestorFolderId,
+							false);
 					}
 				}
 			}
@@ -8475,9 +8477,9 @@ public class JournalArticleLocalServiceImpl
 				article.getUuid(), liveGroupId);
 
 			if (article != null) {
-				subscriptionSender.addPersistedStagingSubscribers(
+				subscriptionSender.addPersistedSubscribers(
 					JournalArticle.class.getName(),
-					article.getResourcePrimKey());
+					article.getResourcePrimKey(), false);
 			}
 		}
 

@@ -123,13 +123,9 @@ definition {
 
 		SearchTuning.addResultRanking(searchQuery = "WC Title");
 
-		SearchTuning.clickResultEllipsisItem(
-			assetTitle = "WC Title 3",
-			menuItem = "Pin Result");
+		SearchTuning.pinResult(assetTitle = "WC Title 3");
 
-		SearchTuning.clickResultEllipsisItem(
-			assetTitle = "WC Title 2",
-			menuItem = "Hide Result");
+		SearchTuning.hideResult(assetTitle = "WC Title 2");
 
 		SearchTuning.configureAliases(addAlias = "apple");
 
@@ -209,15 +205,9 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "WC Title");
 
-		SearchTuning.clickResultEllipsisItem(
-			assetTitle = "WC Title 3",
-			menuItem = "Unpin Result");
+		SearchTuning.unpinResult(assetTitle = "WC Title 3");
 
-		Navigator.gotoNavTab(navTab = "Hidden");
-
-		SearchTuning.clickResultEllipsisItem(
-			assetTitle = "WC Title 2",
-			menuItem = "Show Result");
+		SearchTuning.unhideResult(assetTitle = "WC Title 2");
 
 		Button.clickSave();
 

@@ -1,5 +1,13 @@
 definition {
 
+	macro _clickResultEllipsisItem {
+		Click(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
 	macro addResultRanking {
 		LexiconEntry.gotoAdd();
 
@@ -10,14 +18,6 @@ definition {
 		Button.click(button = "Customize Results");
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro clickResultEllipsisItem {
-		Click(
-			key_assetTitle = "${assetTitle}",
-			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
 	macro configureAliases {
@@ -44,6 +44,57 @@ definition {
 				key_alias = "${addAlias}",
 				locator1 = "SearchTuning#RESULT_RANKINGS_ALIAS_VALUE");
 		}
+	}
+
+	macro hideResult {
+		SearchTuning._clickResultEllipsisItem(
+			assetTitle = "${assetTitle}",
+			menuItem = "Hide Result");
+
+		AssertElementNotPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
+	macro pinResult {
+		SearchTuning._clickResultEllipsisItem(
+			assetTitle = "${assetTitle}",
+			menuItem = "Pin Result");
+
+		AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+	}
+
+	macro unhideResult {
+		if (IsElementNotPresent(key_tab = "Hidden", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Hidden");
+		}
+
+		if ("${pinResult}" == "true") {
+			SearchTuning._clickResultEllipsisItem(
+				assetTitle = "${assetTitle}",
+				menuItem = "Pin Result");
+		}
+		else {
+			SearchTuning._clickResultEllipsisItem(
+				assetTitle = "${assetTitle}",
+				menuItem = "Show Result");
+		}
+
+		AssertElementNotPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+	}
+
+	macro unpinResult {
+		SearchTuning._clickResultEllipsisItem(
+			assetTitle = "${assetTitle}",
+			menuItem = "Unpin Result");
+
+		AssertElementNotPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 
 }

@@ -24,28 +24,28 @@ import org.osgi.framework.ServiceObjects;
 public class ResourceMethodServiceReferenceTuple {
 
 	public ResourceMethodServiceReferenceTuple(
-		Method method, String[] methodParameterNames,
+		Method method, String[] itemClassFieldNames,
 		ServiceObjects<Object> serviceObjects) {
 
 		_method = method;
-		_methodParameterNames = methodParameterNames;
+		_itemClassFieldNames = itemClassFieldNames;
 		_serviceObjects = serviceObjects;
+	}
+
+	public String[] getItemClassFieldNames() {
+		return _itemClassFieldNames;
 	}
 
 	public Method getMethod() {
 		return _method;
 	}
 
-	public String[] getMethodParameterNames() {
-		return _methodParameterNames;
-	}
-
 	public ServiceObjects<Object> getServiceObjects() {
 		return _serviceObjects;
 	}
 
+	private final String[] _itemClassFieldNames;
 	private final Method _method;
-	private final String[] _methodParameterNames;
 	private final ServiceObjects<Object> _serviceObjects;
 
 }

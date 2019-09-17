@@ -86,7 +86,7 @@ public class BatchEngineTaskItemWriterFactory {
 
 		return new BatchEngineTaskItemWriter<>(
 			companyLocalService.getCompany(batchEngineTask.getCompanyId()),
-			tuple.getMethod(), tuple.getMethodParameterNames(),
+			tuple.getMethod(), tuple.getItemClassFieldNames(),
 			tuple.getServiceObjects(),
 			userLocalService.getUser(batchEngineTask.getUserId()));
 	}
@@ -132,7 +132,7 @@ public class BatchEngineTaskItemWriterFactory {
 						key,
 						new ResourceMethodServiceReferenceTuple(
 							resourceMethod,
-							_getMethodParameterNames(
+							_getItemClassFieldNames(
 								resourceClass, resourceMethod),
 							_bundleContext.getServiceObjects(
 								serviceReference)));
@@ -171,14 +171,14 @@ public class BatchEngineTaskItemWriterFactory {
 			_bundleContext = bundleContext;
 		}
 
-		private String[] _getMethodParameterNames(
+		private String[] _getItemClassFieldNames(
 				Class<?> resourceClass, Method resourceMethod)
 			throws NoSuchMethodException {
 
 			Parameter[] resourceMethodParameters =
 				resourceMethod.getParameters();
 
-			String[] parameterNames =
+			String[] itemClassFieldNames =
 				new String[resourceMethodParameters.length];
 
 			Class<?> parentResourceClass = resourceClass.getSuperclass();
@@ -202,15 +202,15 @@ public class BatchEngineTaskItemWriterFactory {
 						PathParam.class);
 
 					if (pathParam != null) {
-						parameterNames[i] = pathParam.value();
+						itemClassFieldNames[i] = pathParam.value();
 					}
 				}
 				else {
-					parameterNames[i] = batchEngineTaskField.value();
+					itemClassFieldNames[i] = batchEngineTaskField.value();
 				}
 			}
 
-			return parameterNames;
+			return itemClassFieldNames;
 		}
 
 		private final BundleContext _bundleContext;

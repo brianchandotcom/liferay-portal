@@ -37,13 +37,13 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 
 	public BatchEngineTaskItemWriter(
 			Company company, Method resourceMethod,
-			String[] resourceMethodParameters,
+			String[] itemClassFieldNames,
 			ServiceObjects<Object> resourceServiceObjects, User user)
 		throws ReflectiveOperationException {
 
 		_company = company;
 		_resourceMethod = resourceMethod;
-		_resourceMethodParameters = resourceMethodParameters;
+		_itemClassFieldNames = itemClassFieldNames;
 		_resourceServiceObjects = resourceServiceObjects;
 		_user = user;
 
@@ -68,19 +68,19 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 					args[i] = item;
 				}
 				else {
-					if (_resourceMethodParameters[i] == null) {
+					if (_itemClassFieldNames[i] == null) {
 						throw new IllegalArgumentException(
 							"Unable to find method argument name");
 					}
 
 					Class<?> itemClass = item.getClass();
 
-					Field parameterField = itemClass.getDeclaredField(
-						_resourceMethodParameters[i]);
+					Field field = itemClass.getDeclaredField(
+						_itemClassFieldNames[i]);
 
-					parameterField.setAccessible(true);
+					field.setAccessible(true);
 
-					args[i] = parameterField.get(item);
+					args[i] = field.get(item);
 				}
 			}
 
@@ -133,9 +133,9 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 	}
 
 	private final Company _company;
+	private final String[] _itemClassFieldNames;
 	private final Object _resource;
 	private final Method _resourceMethod;
-	private final String[] _resourceMethodParameters;
 	private final ServiceObjects<Object> _resourceServiceObjects;
 	private final User _user;
 

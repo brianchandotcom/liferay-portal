@@ -51,7 +51,7 @@ export default ({appName, onSettingsChange, settings}) => {
 				<div className="autofit-col-expand">
 					<section className="autofit-section">
 						<p className="list-group-title">
-							<h3>Product Menu</h3>
+							<h3>{Liferay.Language.get('product-menu')}</h3>
 						</p>
 						<p className="list-group-subtext">
 							<small>

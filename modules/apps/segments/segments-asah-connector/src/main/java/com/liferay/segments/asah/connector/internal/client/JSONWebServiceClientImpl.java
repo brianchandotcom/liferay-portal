@@ -126,15 +126,14 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	}
 
 	@Override
-	public <T> T doPost(
-		Class<T> clazz, String url, T object, Map<String, String> headers) {
+	public <T, V> V doPost(
+		Class<V> clazz, String url, T object, Map<String, String> headers) {
 
 		WebTarget webTarget = _client.target(_baseURI);
 
 		webTarget = webTarget.path(url);
 
-		Invocation.Builder builder = webTarget.request(
-			MediaType.APPLICATION_JSON_TYPE);
+		Invocation.Builder builder = webTarget.request();
 
 		for (Map.Entry<String, String> entry : headers.entrySet()) {
 			builder.header(entry.getKey(), entry.getValue());

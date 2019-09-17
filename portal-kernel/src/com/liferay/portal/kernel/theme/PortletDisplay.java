@@ -488,6 +488,14 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return true;
 	}
 
+	public boolean isShowPortletTopper() {
+		if (_isFragmentPage()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isShowPrintIcon() {
 		return _showPrintIcon;
 	}

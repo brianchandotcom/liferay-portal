@@ -13,54 +13,11 @@
 			<supports>
 				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
 				<action-key>PERMISSIONS</action-key>
-				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
 			<guest-unsupported>
 				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.fragment.model.FragmentCollection</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_fragment_web_portlet_FragmentPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.fragment.model.FragmentEntry</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_fragment_web_portlet_FragmentPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
 		</permissions>
 	</model-resource>
 </resource-action-mapping>

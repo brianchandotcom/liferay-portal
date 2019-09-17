@@ -17,10 +17,12 @@ package com.liferay.batch.engine.internal.writer;
 import com.liferay.batch.engine.BatchEngineTaskField;
 import com.liferay.batch.engine.BatchEngineTaskMethod;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.internal.util.ResourceMethodServiceReferenceTuple;
 import com.liferay.batch.engine.model.BatchEngineTask;
+import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -36,6 +38,7 @@ import javax.ws.rs.PathParam;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceObjects;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -57,7 +60,7 @@ public class BatchEngineTaskItemWriterFactory {
 		_serviceTracker.open();
 	}
 
-	public <T> BatchEngineTaskItemWriter<T> create(
+	public BatchEngineTaskItemWriter create(
 			BatchEngineTask batchEngineTask,
 			CompanyLocalService companyLocalService,
 			UserLocalService userLocalService)
@@ -66,14 +69,16 @@ public class BatchEngineTaskItemWriterFactory {
 		BatchEngineTaskOperation batchEngineTaskOperation =
 			BatchEngineTaskOperation.valueOf(batchEngineTask.getOperation());
 
-		ResourceMethodServiceReferenceTuple tuple =
-			_resourceServiceReferenceMap.get(
-				StringBundler.concat(
-					batchEngineTaskOperation, StringPool.POUND,
-					batchEngineTask.getClassName(), StringPool.POUND,
-					batchEngineTask.getVersion()));
+		UnsafeBiFunction
+			<Company, User, BatchEngineTaskItemWriter,
+			 ReflectiveOperationException> unsafeBiFunction =
+				_batchEngineTaskItemWriterFactories.get(
+					StringBundler.concat(
+						batchEngineTaskOperation, StringPool.POUND,
+						batchEngineTask.getClassName(), StringPool.POUND,
+						batchEngineTask.getVersion()));
 
-		if (tuple == null) {
+		if (unsafeBiFunction == null) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("No resource available for batchEngineTaskOperation ");
@@ -84,10 +89,8 @@ public class BatchEngineTaskItemWriterFactory {
 			throw new IllegalStateException(sb.toString());
 		}
 
-		return new BatchEngineTaskItemWriter<>(
+		return unsafeBiFunction.apply(
 			companyLocalService.getCompany(batchEngineTask.getCompanyId()),
-			tuple.getMethod(), tuple.getItemClassFieldNames(),
-			tuple.getServiceObjects(),
 			userLocalService.getUser(batchEngineTask.getUserId()));
 	}
 
@@ -95,8 +98,12 @@ public class BatchEngineTaskItemWriterFactory {
 		_serviceTracker.close();
 	}
 
-	private final Map<String, ResourceMethodServiceReferenceTuple>
-		_resourceServiceReferenceMap = new ConcurrentHashMap<>();
+	private final Map
+		<String,
+		 UnsafeBiFunction
+			 <Company, User, BatchEngineTaskItemWriter,
+			  ReflectiveOperationException>>
+				_batchEngineTaskItemWriterFactories = new ConcurrentHashMap<>();
 	private final ServiceTracker<Object, List<String>> _serviceTracker;
 
 	private class BatchEngineTaskMethodServiceTrackerCustomizer
@@ -128,14 +135,17 @@ public class BatchEngineTaskItemWriterFactory {
 					serviceReference.getProperty("api.version"));
 
 				try {
-					_resourceServiceReferenceMap.put(
+					String[] itemClassFieldNames = _getItemClassFieldNames(
+						resourceClass, resourceMethod);
+
+					ServiceObjects<Object> serviceObjects =
+						_bundleContext.getServiceObjects(serviceReference);
+
+					_batchEngineTaskItemWriterFactories.put(
 						key,
-						new ResourceMethodServiceReferenceTuple(
-							resourceMethod,
-							_getItemClassFieldNames(
-								resourceClass, resourceMethod),
-							_bundleContext.getServiceObjects(
-								serviceReference)));
+						(company, user) -> new BatchEngineTaskItemWriter(
+							company, resourceMethod, itemClassFieldNames,
+							serviceObjects, user));
 				}
 				catch (NoSuchMethodException nsme) {
 					throw new IllegalStateException(nsme);
@@ -160,7 +170,7 @@ public class BatchEngineTaskItemWriterFactory {
 		public void removedService(
 			ServiceReference<Object> serviceReference, List<String> keys) {
 
-			keys.forEach(_resourceServiceReferenceMap::remove);
+			keys.forEach(_batchEngineTaskItemWriterFactories::remove);
 
 			_bundleContext.ungetService(serviceReference);
 		}

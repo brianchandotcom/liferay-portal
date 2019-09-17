@@ -33,7 +33,7 @@ import org.osgi.framework.ServiceObjects;
 /**
  * @author Ivica cardic
  */
-public class BatchEngineTaskItemWriter<T> implements Closeable {
+public class BatchEngineTaskItemWriter implements Closeable {
 
 	public BatchEngineTaskItemWriter(
 			Company company, Method resourceMethod,
@@ -55,8 +55,8 @@ public class BatchEngineTaskItemWriter<T> implements Closeable {
 		_resourceServiceObjects.ungetService(_resource);
 	}
 
-	public void write(List<? extends T> items) throws Exception {
-		for (T item : items) {
+	public void write(List<?> items) throws Exception {
+		for (Object item : items) {
 			Object[] args = new Object[_resourceMethod.getParameterCount()];
 
 			Parameter[] parameters = _resourceMethod.getParameters();

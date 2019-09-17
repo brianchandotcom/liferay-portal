@@ -97,8 +97,7 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 	}
 
 	private void _commitItems(
-			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter,
-			List<T> items)
+			BatchEngineTaskItemWriter batchEngineTaskItemWriter, List<T> items)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
@@ -126,7 +125,7 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
 				_batchEngineTaskItemReaderFactory.create(
 					batchEngineTask, _batchEngineTaskItemClassRegistry);
-			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter =
+			BatchEngineTaskItemWriter batchEngineTaskItemWriter =
 				_batchEngineTaskItemWriterFactory.create(
 					batchEngineTask, _companyLocalService, _userLocalService)) {
 

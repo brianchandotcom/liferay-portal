@@ -8,6 +8,26 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro addResult {
+		Button.click(button = "Add Result");
+
+		Type(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
+			value1 = "${searchTerm}");
+
+		KeyPress(
+			locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
+			value1 = "\RETURN");
+
+		FormFields.enableCheckbox(fieldName = "${assetTitle}");
+
+		Button.click(button = "Add");
+
+		AssertElementPresent(
+			key_assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+	}
+
 	macro addResultRanking {
 		LexiconEntry.gotoAdd();
 

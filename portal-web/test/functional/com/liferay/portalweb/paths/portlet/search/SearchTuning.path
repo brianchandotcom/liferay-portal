@@ -25,8 +25,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR</td>
+	<td>//div[@data-testid='add-result-modal']//input[contains(@aria-label,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT</td>
 	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_RESULT_DRAG_HANDLE</td>
+	<td>//li[contains(@class,'results-ranking-item-pinned') and contains(.,'${key_assetTitle}')]//span[@draggable]</td>
 	<td></td>
 </tr>
 <tr>

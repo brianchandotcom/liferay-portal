@@ -315,6 +315,86 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
+	test ReorderAddedResultsFromOtherSites {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Liferay Article");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Liferay Journal");
+
+		JSONGroup.addGroup(groupName = "New Site");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "New Site",
+			title = "New Site Article");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "New Site",
+			title = "New Site Journal");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "Article");
+
+		SearchTuning.pinResult(assetTitle = "New Site Article");
+
+		SearchTuning.addResult(
+			assetTitle = "Liferay Journal",
+			searchTerm = "content");
+
+		SearchTuning.addResult(
+			assetTitle = "New Site Journal",
+			searchTerm = "journal");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_assetTitle = "New Site Journal",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_DRAG_HANDLE",
+			locator2 = "//li[contains(@class,'results-ranking-item-pinned')][3]",
+			value1 = "");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Article");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Article");
+
+		for (var title : list "Liferay Journal,New Site Article,New Site Journal") {
+			SearchTuning.unpinResult(assetTitle = "${title}");
+		}
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "Article");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Liferay Article",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
+	}
+
 	test SearchWithSynonyms {
 		property portal.acceptance = "true";
 

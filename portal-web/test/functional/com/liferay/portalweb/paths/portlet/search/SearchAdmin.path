@@ -13,27 +13,6 @@
 	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]//strong[${position}][contains(.,'${searchInformation}')]</td>
 	<td></td>
 </tr>
-<!--SYNONYMS-->
-<tr>
-	<td>SYNONYMS_ENTRY</td>
-	<td>//table[contains(@id, synonymSetsEntries)]//a[contains(.,'${key_synonyms}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SYNONYMS_MULTI_SELECT_FIELD</td>
-	<td>//div[contains(@id,'SynonymsPortlet')]//input[@class='form-control-inset']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SYNONYMS_MULTI_SELECT_REMOVE</td>
-	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_synonym}')]//button[contains(@class,'close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SYNONYMS_MULTI_SELECT_VALUE</td>
-	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_synonym}')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

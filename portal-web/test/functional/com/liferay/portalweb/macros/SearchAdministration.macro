@@ -1,25 +1,5 @@
 definition {
 
-	macro addSynonymSet {
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_FIELD",
-			value1 = "${synonyms}");
-
-		KeyPress(
-			locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_FIELD",
-			value1 = ",");
-
-		for (var synonym : list "${synonyms}") {
-			AssertElementPresent(
-				key_synonym = "${synonym}",
-				locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_VALUE");
-		}
-
-		Button.clickPublish();
-	}
-
 	macro assertEngineVendorAndVersions {
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_INFORMATION",
@@ -38,42 +18,6 @@ definition {
 			position = "3",
 			searchInformation = "${serverVersion}",
 			value1 = "${serverVersion}");
-	}
-
-	macro deleteSynonymSet {
-		LexiconEntry.delete(rowEntry = "${synonymSet}");
-
-		AssertElementNotPresent(
-			key_synonyms = "${synonymSet}",
-			locator1 = "SearchAdmin#SYNONYMS_ENTRY");
-	}
-
-	macro editSynonymSet {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${synonymSet}");
-
-		if (isSet(deleteSynonym)) {
-			Click(
-				key_synonym = "${deleteSynonym}",
-				locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_REMOVE");
-
-			AssertElementNotPresent(
-				key_synonym = "${deleteSynonym}",
-				locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_VALUE");
-		}
-
-		if (isSet(addSynonyms)) {
-			Type(
-				locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_FIELD",
-				value1 = "${addSynonyms}");
-
-			KeyPress(
-				locator1 = "SearchAdmin#SYNONYMS_MULTI_SELECT_FIELD",
-				value1 = ",");
-		}
-
-		Button.clickPublish();
 	}
 
 	macro executeSearchActions {

@@ -184,20 +184,16 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Text Fragment Example");
 
-		task ("Change the configuration value in the toolbar") {
-			PageEditorConfiguration.changeConfigSelection(
-				fragmentName = "Text Fragment Example",
-				optionValue = "dark");
-		}
+		PageEditorConfiguration.changeConfigSelection(
+			fragmentName = "Text Fragment Example",
+			optionValue = "dark");
 
 		task ("Assert dark text is visible") {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
 		}
 
-		task ("Retore the configuration value in the toolbar") {
-			PageEditorConfiguration.restoreConfigValues(
-				fragmentName = "Text Fragment Example");
-		}
+		PageEditorConfiguration.restoreConfigValues(
+			fragmentName = "Text Fragment Example");
 
 		task ("Assert default value is displayed") {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'light')]");

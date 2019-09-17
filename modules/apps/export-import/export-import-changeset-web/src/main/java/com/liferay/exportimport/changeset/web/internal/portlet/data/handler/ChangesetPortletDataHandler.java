@@ -212,8 +212,16 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			List<Element> entityElements = entityTypeElement.elements();
 
 			for (Element entityElement : entityElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, entityElement);
+				if (!String.valueOf(
+						entityElement.attribute("path")).contains(
+							"MBMessage") &&
+					!String.valueOf(
+						entityElement.attribute("path")).contains(
+							"MBDiscussion")) {
+
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, entityElement);
+				}
 			}
 		}
 

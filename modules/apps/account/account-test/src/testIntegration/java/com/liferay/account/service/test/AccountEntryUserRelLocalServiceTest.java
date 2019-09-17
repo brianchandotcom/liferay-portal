@@ -24,16 +24,21 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -106,6 +111,24 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	@Test
+	public void testAddUser() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+		UserInfo userInfo = new UserInfo();
+
+		AccountEntryUserRel accountEntryUserRel = _addUser(
+			accountEntry.getAccountEntryId(), userInfo);
+
+		User user = _userLocalService.fetchUser(
+			accountEntryUserRel.getAccountUserId());
+
+		Assert.assertNotNull(user);
+		Assert.assertEquals(
+			accountEntryUserRel.getAccountUserId(), user.getUserId());
+		Assert.assertEquals(userInfo.screenName, user.getScreenName());
+	}
+
+	@Test
 	public void testGetAccountEntryUserRelsByAccountEntryId() throws Exception {
 		_users.add(UserTestUtil.addUser());
 		_users.add(UserTestUtil.addUser());
@@ -135,6 +158,56 @@ public class AccountEntryUserRelLocalServiceTest {
 		Assert.assertArrayEquals(expectedUserIds, actualUserIds);
 	}
 
+	@Test
+	public void testUserNotCreatedWithInvalidAccountEntryId() throws Exception {
+		UserInfo userInfo = new UserInfo();
+
+		try {
+			_addUser(RandomTestUtil.nextLong(), userInfo);
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Assert.assertNull(
+				_userLocalService.fetchUserByScreenName(
+					TestPropsValues.getCompanyId(), userInfo.screenName));
+		}
+	}
+
+	@Test
+	public void testUserNotCreatedWithInvalidUserInfo() throws Exception {
+		UserInfo userInfo = new UserInfo();
+
+		userInfo.emailAddress = "liferay";
+
+		try {
+			_addUser(_accountEntry.getAccountEntryId(), userInfo);
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Assert.assertNull(
+				_userLocalService.fetchUserByScreenName(
+					TestPropsValues.getCompanyId(), userInfo.screenName));
+		}
+	}
+
+	private AccountEntryUserRel _addUser(long accountId, UserInfo userInfo)
+		throws Exception {
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelLocalService.addUser(
+				accountId, TestPropsValues.getUserId(), userInfo.screenName,
+				userInfo.emailAddress, userInfo.locale, userInfo.firstName,
+				userInfo.middleName, userInfo.lastName, userInfo.prefixId,
+				userInfo.suffixId);
+
+		_users.add(
+			_userLocalService.getUser(accountEntryUserRel.getAccountUserId()));
+
+		return accountEntryUserRel;
+	}
+
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -151,7 +224,25 @@ public class AccountEntryUserRelLocalServiceTest {
 	@DeleteAfterTestRun
 	private User _user;
 
+	@Inject
+	private UserLocalService _userLocalService;
+
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();
+
+	private static class UserInfo {
+
+		public String emailAddress =
+			RandomTestUtil.randomString() + "@liferay.com";
+		public String firstName = RandomTestUtil.randomString();
+		public String lastName = RandomTestUtil.randomString();
+		public Locale locale = LocaleThreadLocal.getDefaultLocale();
+		public String middleName = RandomTestUtil.randomString();
+		public long prefixId = RandomTestUtil.randomLong();
+		public String screenName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+		public long suffixId = RandomTestUtil.randomLong();
+
+	}
 
 }

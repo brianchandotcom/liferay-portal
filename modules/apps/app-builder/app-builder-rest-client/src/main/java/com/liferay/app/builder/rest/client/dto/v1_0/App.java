@@ -30,6 +30,28 @@ import javax.annotation.Generated;
 @Generated("")
 public class App {
 
+	public AppDeployment[] getAppDeployments() {
+		return appDeployments;
+	}
+
+	public void setAppDeployments(AppDeployment[] appDeployments) {
+		this.appDeployments = appDeployments;
+	}
+
+	public void setAppDeployments(
+		UnsafeSupplier<AppDeployment[], Exception>
+			appDeploymentsUnsafeSupplier) {
+
+		try {
+			appDeployments = appDeploymentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AppDeployment[] appDeployments;
+
 	public Long getDataDefinitionId() {
 		return dataDefinitionId;
 	}
@@ -174,27 +196,6 @@ public class App {
 	}
 
 	protected Map<String, Object> name;
-
-	public Map<String, Object> getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Map<String, Object> settings) {
-		this.settings = settings;
-	}
-
-	public void setSettings(
-		UnsafeSupplier<Map<String, Object>, Exception> settingsUnsafeSupplier) {
-
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, Object> settings;
 
 	public Long getSiteId() {
 		return siteId;

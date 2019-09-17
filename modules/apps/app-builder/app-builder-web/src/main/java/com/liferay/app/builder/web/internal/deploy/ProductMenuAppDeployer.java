@@ -17,6 +17,8 @@ package com.liferay.app.builder.web.internal.deploy;
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDeployment;
+import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.application.list.ProductMenuAppPanelApp;
 import com.liferay.app.builder.web.internal.application.list.ProductMenuAppPanelCategory;
@@ -26,6 +28,9 @@ import com.liferay.app.builder.web.internal.portlet.ProductMenuAppPortlet;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -56,8 +61,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void deploy(long appId) throws Exception {
+		String appBuilderPanelCategoryKey = _getAppBuilderPanelCategoryKey(
+			appId);
 		String portletName = _getPortletName(appId);
-		String panelCategoryKey = _getPanelCategoryKey(appId);
 
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
@@ -65,13 +71,40 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		String appName = appBuilderApp.getName(
 			LocaleThreadLocal.getDefaultLocale());
 
-		_serviceRegistrationsMap.computeIfAbsent(
-			appId,
-			key -> new ServiceRegistration<?>[] {
-				_deployAppPanelApp(portletName, panelCategoryKey),
-				_deployAppPanelCategory(appName, panelCategoryKey),
-				_deployAppPortlet(appId, appName, portletName)
-			});
+		AppBuilderAppDeployment appBuilderAppDeployment =
+			_appBuilderAppDeploymentLocalService.getAppBuilderAppDeployment(
+				appId, "productMenu");
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			appBuilderAppDeployment.getSettings());
+
+		JSONArray jsonArray = jsonObject.getJSONArray("scope");
+
+		if (jsonArray.length() == 2) {
+			_serviceRegistrationsMap.computeIfAbsent(
+				appId,
+				key -> new ServiceRegistration<?>[] {
+					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
+					_deployAppPanelCategory(
+						appBuilderPanelCategoryKey, appName,
+						PanelCategoryKeys.CONTROL_PANEL),
+					_deployAppPanelCategory(
+						appBuilderPanelCategoryKey, appName,
+						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT),
+					_deployAppPortlet(appId, appName, portletName)
+				});
+		}
+		else {
+			_serviceRegistrationsMap.computeIfAbsent(
+				appId,
+				mapKey -> new ServiceRegistration<?>[] {
+					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
+					_deployAppPanelCategory(
+						appBuilderPanelCategoryKey, appName,
+						jsonArray.getString(0)),
+					_deployAppPortlet(appId, appName, portletName)
+				});
+		}
 
 		appBuilderApp.setStatus(
 			AppBuilderAppConstants.Status.DEPLOYED.getValue());
@@ -102,27 +135,28 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployAppPanelApp(
-		String portletName, String panelCategoryKey) {
+		String appBuilderPanelCategoryKey, String portletName) {
 
 		return _bundleContext.registerService(
 			PanelApp.class, new ProductMenuAppPanelApp(portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("panel.app.order:Integer", 100);
-					put("panel.category.key", panelCategoryKey);
+					put("panel.category.key", appBuilderPanelCategoryKey);
 				}
 			});
 	}
 
 	private ServiceRegistration<?> _deployAppPanelCategory(
-		String appName, String panelCategoryKey) {
+		String appBuilderPanelCategoryKey, String appName,
+		String parentPanelCategoryKey) {
 
 		Dictionary<String, Object> properties =
 			new HashMapDictionary<String, Object>() {
 				{
-					put("key", panelCategoryKey);
+					put("key", appBuilderPanelCategoryKey);
 					put("label", appName);
-					put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
+					put("panel.category.key", parentPanelCategoryKey);
 					put("panel.category.order:Integer", 600);
 				}
 			};
@@ -160,7 +194,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			});
 	}
 
-	private String _getPanelCategoryKey(long appId) {
+	private String _getAppBuilderPanelCategoryKey(long appId) {
 		return AppBuilderPanelCategoryKeys.CONTROL_PANEL_APP_BUILDER_APP +
 			appId;
 	}
@@ -170,9 +204,17 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	@Reference
+	private AppBuilderAppDeploymentLocalService
+		_appBuilderAppDeploymentLocalService;
+
+	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
 		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 

@@ -11,6 +11,12 @@ create table AppBuilderApp (
 	ddmStructureLayoutId LONG,
 	deDataListViewId LONG,
 	name STRING null,
-	settings_ TEXT null,
 	status INTEGER
+);
+
+create table AppBuilderAppDeployment (
+	appBuilderAppDeploymentId LONG not null primary key,
+	appBuilderAppId LONG,
+	settings_ TEXT null,
+	type_ VARCHAR(75) null
 );

@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.app.builder.deploy;
+package com.liferay.app.builder.service.persistence;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Jeyvison Nascimento
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public interface AppDeployerTracker {
+@ProviderType
+public interface AppBuilderAppFinder {
 
-	public AppDeployer getAppDeployer(String deploymentType);
+	public java.util.List<Long> findByS_T(int status, String type);
 
 }

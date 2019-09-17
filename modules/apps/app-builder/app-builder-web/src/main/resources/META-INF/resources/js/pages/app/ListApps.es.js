@@ -129,7 +129,9 @@ export default ({
 						{DEPLOYMENT_STATUS[item.status.toLowerCase()]}
 					</ClayLabel>
 				),
-				type: concatTypes(item.settings.deploymentTypes)
+				type: concatTypes(
+					item.appDeployments.map(deployment => deployment.type)
+				)
 			})}
 		</ListView>
 	);

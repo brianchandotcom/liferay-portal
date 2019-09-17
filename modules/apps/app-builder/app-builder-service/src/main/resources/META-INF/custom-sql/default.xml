@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.app.builder.service.persistence.AppBuilderAppFinder.findByS_T">
+		<![CDATA[
+			SELECT
+				AppBuilderApp.appBuilderAppId
+			FROM
+				AppBuilderApp
+			INNER JOIN
+				AppBuilderAppDeployment
+			ON
+				AppBuilderApp.appBuilderAppId = AppBuilderAppDeployment.appBuilderAppId
+			WHERE
+				(AppBuilderApp.status = ?) AND
+				(AppBuilderAppDeployment.type_ = ?)
+		]]>
+	</sql>
+</custom-sql>

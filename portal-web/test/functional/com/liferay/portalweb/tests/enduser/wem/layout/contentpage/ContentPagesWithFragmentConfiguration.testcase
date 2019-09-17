@@ -190,10 +190,8 @@ definition {
 				optionValue = "dark");
 		}
 
-		task ("Assert value is changed") {
-			AssertVisible(
-				key_text = "Title-dark",
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+		task ("Assert dark text is visible") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
 		}
 
 		task ("Retore the configuration value in the toolbar") {
@@ -203,24 +201,7 @@ definition {
 		}
 
 		task ("Assert default value is displayed") {
-			AssertVisible(
-				key_text = "Title-light",
-				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
-		}
-
-		task ("Publish content page and assert the value selected is displayed") {
-
-			PageEditor.clickPublish();
-
-			Navigator.gotoSitePage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			task ("Assert default value is displayed") {
-				AssertVisible(
-					key_text = "Title-light",
-					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
-			}
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'light')]");
 		}
 	}
 

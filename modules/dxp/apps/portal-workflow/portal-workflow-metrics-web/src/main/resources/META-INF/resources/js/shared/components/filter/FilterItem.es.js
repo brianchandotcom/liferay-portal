@@ -75,7 +75,7 @@ export default class FilterItem extends React.Component {
 						<span className="dropdown-item-text">
 							<span
 								className="dropdown-item-name"
-								data-testid="filterItemName"
+								data-testId="filterItemName"
 							>
 								{name}
 							</span>

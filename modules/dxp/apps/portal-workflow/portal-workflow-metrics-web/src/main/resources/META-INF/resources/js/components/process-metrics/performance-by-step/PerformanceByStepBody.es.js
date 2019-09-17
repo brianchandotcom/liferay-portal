@@ -52,8 +52,10 @@ const Body = ({processId}) => {
 
 				<div className="mb-1 text-right">
 					<button className="border-0 btn btn-secondary btn-sm">
-						{Liferay.Language.get('view-all-steps') +
-							` (${data.totalCount})`}
+						<span data-testId="viewAllSteps">
+							{Liferay.Language.get('view-all-steps') +
+								` (${data.totalCount})`}
+						</span>
 
 						<Icon iconName="caret-right-l" />
 					</button>

@@ -74,7 +74,7 @@ public class DataRecordCollectionTestUtil {
 	}
 
 	public static DataRecordCollection getSiteDataRecordCollection(
-			Long siteId, String dataRecordCollectionKey)
+			String dataRecordCollectionKey, Long siteId)
 		throws Exception {
 
 		DataRecordCollectionResource.Builder recordCollectionBuilder =

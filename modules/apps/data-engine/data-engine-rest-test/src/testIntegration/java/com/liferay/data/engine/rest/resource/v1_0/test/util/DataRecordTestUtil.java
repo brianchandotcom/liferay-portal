@@ -59,7 +59,7 @@ public class DataRecordTestUtil {
 	}
 
 	public static DataRecord postDataRecordCollectionDataRecord(
-			long dataRecordColectionId, DataRecord dataRecord)
+			DataRecord dataRecord, long dataRecordColectionId)
 		throws Exception {
 
 		DataRecordResource.Builder recordBuilder = DataRecordResource.builder();

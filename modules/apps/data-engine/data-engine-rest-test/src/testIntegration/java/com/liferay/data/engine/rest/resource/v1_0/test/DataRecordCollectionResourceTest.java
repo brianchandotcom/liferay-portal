@@ -44,17 +44,17 @@ public class DataRecordCollectionResourceTest
 		super.setUp();
 
 		_dataDefinition = DataDefinitionTestUtil.postSiteDataDefinition(
-			testGroup.getGroupId(),
 			DataDefinitionTestUtil.createDataDefinition(
 				"MyText", RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), testGroup.getGroupId()));
+				RandomTestUtil.randomString(), testGroup.getGroupId()),
+			testGroup.getGroupId());
 		_irrelevantDataDefinition =
 			DataDefinitionTestUtil.postSiteDataDefinition(
-				irrelevantGroup.getGroupId(),
 				DataDefinitionTestUtil.createDataDefinition(
 					"MyText", RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
-					irrelevantGroup.getGroupId()));
+					irrelevantGroup.getGroupId()),
+				irrelevantGroup.getGroupId());
 	}
 
 	@Override

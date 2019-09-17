@@ -84,7 +84,7 @@ public class DataDefinitionTestUtil {
 	}
 
 	public static DataDefinition postSiteDataDefinition(
-			Long siteId, DataDefinition dataDefinition)
+			DataDefinition dataDefinition, Long siteId)
 		throws Exception {
 
 		DataDefinitionResource.Builder builder =

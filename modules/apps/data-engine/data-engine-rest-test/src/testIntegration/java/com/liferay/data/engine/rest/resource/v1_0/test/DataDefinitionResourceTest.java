@@ -49,17 +49,6 @@ public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
 	@Override
-	public void testGetDataDefinitionDataDefinitionFieldFieldType()
-		throws Exception {
-
-		String fieldTypes =
-			dataDefinitionResource.
-				getDataDefinitionDataDefinitionFieldFieldType();
-
-		Assert.assertTrue(Validator.isNotNull(fieldTypes));
-	}
-
-	@Override
 	@Test
 	public void testDeleteDataDefinition() throws Exception {
 		super.testDeleteDataDefinition();
@@ -89,9 +78,9 @@ public class DataDefinitionResourceTest
 
 		DataRecord dataRecord =
 			DataRecordTestUtil.postDataRecordCollectionDataRecord(
-				dataRecordCollection.getId(),
 				DataRecordTestUtil.createDataRecord(
-					dataRecordCollection.getId(), fieldName));
+					dataRecordCollection.getId(), fieldName),
+				dataRecordCollection.getId());
 
 		assertHttpResponseStatusCode(
 			204,
@@ -115,6 +104,18 @@ public class DataDefinitionResourceTest
 		assertHttpResponseStatusCode(
 			404,
 			DataRecordTestUtil.getDataRecordHttpResponse(dataRecord.getId()));
+	}
+
+	@Override
+	@Test
+	public void testGetDataDefinitionDataDefinitionFieldFieldType()
+		throws Exception {
+
+		String fieldTypes =
+			dataDefinitionResource.
+				getDataDefinitionDataDefinitionFieldFieldType();
+
+		Assert.assertTrue(Validator.isNotNull(fieldTypes));
 	}
 
 	@Override

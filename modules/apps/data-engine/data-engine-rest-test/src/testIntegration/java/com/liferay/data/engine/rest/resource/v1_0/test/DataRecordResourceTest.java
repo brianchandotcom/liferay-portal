@@ -41,10 +41,10 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 		super.setUp();
 
 		_dataDefinition = DataDefinitionTestUtil.postSiteDataDefinition(
-			testGroup.getGroupId(),
 			DataDefinitionTestUtil.createDataDefinition(
 				"MyText", RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), testGroup.getGroupId()));
+				RandomTestUtil.randomString(), testGroup.getGroupId()),
+			testGroup.getGroupId());
 
 		_dataRecordCollection =
 			DataRecordCollectionTestUtil.postDataDefinitionDataRecordCollection(
@@ -85,7 +85,7 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 	public void testPostDataDefinitionDataRecord() throws Exception {
 		DataRecordCollection dataRecordCollection =
 			DataRecordCollectionTestUtil.getSiteDataRecordCollection(
-				testGroup.getGroupId(), _dataDefinition.getDataDefinitionKey());
+				_dataDefinition.getDataDefinitionKey(), testGroup.getGroupId());
 
 		DataRecord randomDataRecord = DataRecordTestUtil.createDataRecord(
 			dataRecordCollection.getId(), "MyText");

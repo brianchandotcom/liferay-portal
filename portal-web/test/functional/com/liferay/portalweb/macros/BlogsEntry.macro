@@ -315,6 +315,8 @@ definition {
 	macro flagPG {
 		var key_entryTitle = "${entryTitle}";
 
+		AssertElementPresent(locator1 = "BlogsEntry#FLAG_LINK");
+
 		Click(locator1 = "BlogsEntry#FLAG_LINK");
 
 		AssertElementPresent.assertVisible(locator1 = "BlogsEntry#FLAG_MODAL");

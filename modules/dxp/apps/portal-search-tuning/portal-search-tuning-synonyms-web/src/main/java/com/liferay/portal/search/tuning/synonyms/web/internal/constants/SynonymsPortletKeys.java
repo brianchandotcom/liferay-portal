@@ -19,6 +19,9 @@ package com.liferay.portal.search.tuning.synonyms.web.internal.constants;
  */
 public class SynonymsPortletKeys {
 
+	public static final String EDIT_SYNONYM_SET_DISPLAY_CONTEXT =
+		"EDIT_SYNONYM_SET_DISPLAY_CONTEXT";
+
 	public static final String SYNONYMS =
 		"com_liferay_portal_search_tuning_synonyms_web_internal_portlet_" +
 			"SynonymsPortlet";

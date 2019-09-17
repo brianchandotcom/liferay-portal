@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
+import com.liferay.portal.search.tuning.synonyms.web.internal.display.context.EditSynonymSetsDisplayBuilder;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -49,6 +50,15 @@ public class UpdateSynonymSetsMVCRenderCommand implements MVCRenderCommand {
 		if (synonymSets != null) {
 			renderRequest.setAttribute("synonymSets", synonymSets);
 		}
+
+		EditSynonymSetsDisplayBuilder editSynonymSetsDisplayBuilder =
+			new EditSynonymSetsDisplayBuilder(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse);
+
+		renderRequest.setAttribute(
+			SynonymsPortletKeys.EDIT_SYNONYM_SET_DISPLAY_CONTEXT,
+			editSynonymSetsDisplayBuilder.build());
 
 		return "/update_synonym_sets.jsp";
 	}

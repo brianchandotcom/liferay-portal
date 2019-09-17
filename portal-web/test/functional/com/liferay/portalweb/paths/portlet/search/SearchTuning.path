@@ -10,8 +10,23 @@
 <tbody>
 <!--RESULT_RANKINGS-->
 <tr>
+	<td>RESULT_RANKINGS_ALIAS_FIELD</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Alias')]//input[contains(@class,'form-control-inset')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_ALIAS_REMOVE</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_alias}')]//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULT_RANKINGS_ALIAS_VALUE</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_alias}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_RESULT_ELLIPSIS</td>
-	<td>//li[contains(@class,'list-item-root') and contains(.,'${assetTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(@class,'list-item-root') and contains(.,'${key_assetTitle}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 </tbody>

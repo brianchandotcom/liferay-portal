@@ -22,7 +22,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
-import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.OneDriveURLHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.OneDriveURLUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -159,8 +159,9 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 						folderId, contentType, title, serviceContext));
 
 			String oneDriveBackgroundTaskStatusURL =
-				_oneDriveURLHelper.getBackgroundTaskStatusURL(
-					portletRequest, dlOpenerOneDriveFileReference);
+				OneDriveURLUtil.getBackgroundTaskStatusURL(
+					dlOpenerOneDriveFileReference, _portal, portletRequest,
+					_portletURLFactory);
 
 			return JSONUtil.put(
 				"dialogMessage",
@@ -213,9 +214,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;
-
-	@Reference
-	private OneDriveURLHelper _oneDriveURLHelper;
 
 	@Reference
 	private Portal _portal;

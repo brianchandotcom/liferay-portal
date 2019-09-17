@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper;
+package com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util;
 
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -21,21 +21,18 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Cristina González
  */
-@Component(service = OneDriveURLHelper.class)
-public class OneDriveURLHelper {
+public class OneDriveURLUtil {
 
-	public String getBackgroundTaskStatusURL(
-		PortletRequest portletRequest,
-		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference) {
+	public static String getBackgroundTaskStatusURL(
+		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference,
+		Portal portal, PortletRequest portletRequest,
+		PortletURLFactory portletURLFactory) {
 
-		ResourceURL resourceURL = _portletURLFactory.create(
-			portletRequest, _portal.getPortletId(portletRequest),
+		ResourceURL resourceURL = portletURLFactory.create(
+			portletRequest, portal.getPortletId(portletRequest),
 			PortletRequest.RESOURCE_PHASE);
 
 		resourceURL.setParameter(
@@ -50,11 +47,5 @@ public class OneDriveURLHelper {
 
 		return resourceURL.toString();
 	}
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
 
 }

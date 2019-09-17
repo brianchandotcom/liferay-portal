@@ -63,7 +63,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 			modelVar="synonymSetDisplayContext"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="updateSynonymSet" />
+				<portlet:param name="mvcRenderCommandName" value="editSynonymSet" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="synonymSets" value="<%= synonymSetDisplayContext.getSynonymSet() %>" />
 			</portlet:renderURL>

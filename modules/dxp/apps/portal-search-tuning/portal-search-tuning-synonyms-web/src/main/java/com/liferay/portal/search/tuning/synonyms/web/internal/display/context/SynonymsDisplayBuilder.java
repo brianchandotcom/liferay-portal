@@ -135,7 +135,7 @@ public class SynonymsDisplayBuilder {
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "updateSynonymSet",
+							"mvcRenderCommandName", "editSynonymSet",
 							"redirect",
 							_portal.getCurrentURL(_httpServletRequest),
 							"synonymSets", synonymSet);
@@ -178,7 +178,7 @@ public class SynonymsDisplayBuilder {
 					dropdownItem -> {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName", "updateSynonymSet",
+							"mvcRenderCommandName", "editSynonymSet",
 							"redirect",
 							_portal.getCurrentURL(_httpServletRequest));
 						dropdownItem.setLabel(

@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS,
-		"mvc.command.name=updateSynonymSet"
+		"mvc.command.name=editSynonymSet"
 	},
 	service = MVCRenderCommand.class
 )
-public class UpdateSynonymSetsMVCRenderCommand implements MVCRenderCommand {
+public class EditSynonymSetsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -60,7 +60,7 @@ public class UpdateSynonymSetsMVCRenderCommand implements MVCRenderCommand {
 			SynonymsPortletKeys.EDIT_SYNONYM_SET_DISPLAY_CONTEXT,
 			editSynonymSetsDisplayBuilder.build());
 
-		return "/update_synonym_sets.jsp";
+		return "/edit_synonym_sets.jsp";
 	}
 
 	@Reference

@@ -47,7 +47,7 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
-	macro restoreConfigSelectionValue {
+	macro restoreConfigValues {
 		Click(
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");

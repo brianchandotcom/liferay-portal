@@ -195,8 +195,7 @@ definition {
 		}
 
 		task ("Retore the configuration value in the toolbar") {
-			PageEditorConfiguration.restoreConfigSelectionValue(
-				defaultValue = "light",
+			PageEditorConfiguration.restoreConfigValues(
 				fragmentName = "Text Fragment Example");
 		}
 

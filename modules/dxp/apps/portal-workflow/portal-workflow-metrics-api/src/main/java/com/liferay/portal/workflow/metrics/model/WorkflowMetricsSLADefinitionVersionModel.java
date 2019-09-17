@@ -224,6 +224,27 @@ public interface WorkflowMetricsSLADefinitionVersionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the active of this workflow metrics sla definition version.
+	 *
+	 * @return the active of this workflow metrics sla definition version
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition version is active.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition version is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this workflow metrics sla definition version is active.
+	 *
+	 * @param active the active of this workflow metrics sla definition version
+	 */
+	public void setActive(boolean active);
+
+	/**
 	 * Returns the calendar key of this workflow metrics sla definition version.
 	 *
 	 * @return the calendar key of this workflow metrics sla definition version

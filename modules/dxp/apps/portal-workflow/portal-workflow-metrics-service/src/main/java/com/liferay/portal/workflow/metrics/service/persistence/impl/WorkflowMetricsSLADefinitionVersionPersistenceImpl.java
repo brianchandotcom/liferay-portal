@@ -2462,6 +2462,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		dbColumnNames.put(
 			"workflowMetricsSLADefinitionVersionId",
 			"wmSLADefinitionVersionId");
+		dbColumnNames.put("active", "active_");
 		dbColumnNames.put(
 			"workflowMetricsSLADefinitionId", "wmSLADefinitionId");
 
@@ -3520,7 +3521,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {
-			"uuid", "workflowMetricsSLADefinitionVersionId",
+			"uuid", "workflowMetricsSLADefinitionVersionId", "active",
 			"workflowMetricsSLADefinitionId"
 		});
 

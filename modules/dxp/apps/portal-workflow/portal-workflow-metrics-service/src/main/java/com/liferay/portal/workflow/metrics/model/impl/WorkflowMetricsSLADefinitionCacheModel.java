@@ -82,7 +82,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", calendarKey=");
 		sb.append(calendarKey);
 		sb.append(", description=");
@@ -177,6 +179,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 			workflowMetricsSLADefinitionImpl.setModifiedDate(
 				new Date(modifiedDate));
 		}
+
+		workflowMetricsSLADefinitionImpl.setActive(active);
 
 		if (calendarKey == null) {
 			workflowMetricsSLADefinitionImpl.setCalendarKey("");
@@ -277,6 +281,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		active = objectInput.readBoolean();
 		calendarKey = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -325,6 +331,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeBoolean(active);
 
 		if (calendarKey == null) {
 			objectOutput.writeUTF("");
@@ -409,6 +417,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public boolean active;
 	public String calendarKey;
 	public String description;
 	public long duration;

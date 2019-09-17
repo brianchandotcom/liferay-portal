@@ -76,14 +76,15 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		{"wmSLADefinitionVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"calendarKey", Types.VARCHAR},
-		{"description", Types.CLOB}, {"duration", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"pauseNodeKeys", Types.VARCHAR},
-		{"processId", Types.BIGINT}, {"processVersion", Types.VARCHAR},
-		{"startNodeKeys", Types.VARCHAR}, {"stopNodeKeys", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"wmSLADefinitionId", Types.BIGINT},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
+		{"calendarKey", Types.VARCHAR}, {"description", Types.CLOB},
+		{"duration", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"pauseNodeKeys", Types.VARCHAR}, {"processId", Types.BIGINT},
+		{"processVersion", Types.VARCHAR}, {"startNodeKeys", Types.VARCHAR},
+		{"stopNodeKeys", Types.VARCHAR}, {"version", Types.VARCHAR},
+		{"wmSLADefinitionId", Types.BIGINT}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,6 +100,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("calendarKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
@@ -117,7 +119,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WMSLADefinitionVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,wmSLADefinitionId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WMSLADefinitionVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,wmSLADefinitionId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table WMSLADefinitionVersion";
@@ -362,6 +364,12 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 			"modifiedDate",
 			(BiConsumer<WorkflowMetricsSLADefinitionVersion, Date>)
 				WorkflowMetricsSLADefinitionVersion::setModifiedDate);
+		attributeGetterFunctions.put(
+			"active", WorkflowMetricsSLADefinitionVersion::getActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<WorkflowMetricsSLADefinitionVersion, Boolean>)
+				WorkflowMetricsSLADefinitionVersion::setActive);
 		attributeGetterFunctions.put(
 			"calendarKey", WorkflowMetricsSLADefinitionVersion::getCalendarKey);
 		attributeSetterBiConsumers.put(
@@ -627,6 +635,21 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		_active = active;
 	}
 
 	@Override
@@ -1004,6 +1027,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 		workflowMetricsSLADefinitionVersionImpl.setCreateDate(getCreateDate());
 		workflowMetricsSLADefinitionVersionImpl.setModifiedDate(
 			getModifiedDate());
+		workflowMetricsSLADefinitionVersionImpl.setActive(isActive());
 		workflowMetricsSLADefinitionVersionImpl.setCalendarKey(
 			getCalendarKey());
 		workflowMetricsSLADefinitionVersionImpl.setDescription(
@@ -1188,6 +1212,8 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 			workflowMetricsSLADefinitionVersionCacheModel.modifiedDate =
 				Long.MIN_VALUE;
 		}
+
+		workflowMetricsSLADefinitionVersionCacheModel.active = isActive();
 
 		workflowMetricsSLADefinitionVersionCacheModel.calendarKey =
 			getCalendarKey();
@@ -1397,6 +1423,7 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private boolean _active;
 	private String _calendarKey;
 	private String _description;
 	private long _duration;

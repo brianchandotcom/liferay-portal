@@ -76,14 +76,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		{"wmSLADefinitionId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"calendarKey", Types.VARCHAR},
-		{"description", Types.CLOB}, {"duration", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"pauseNodeKeys", Types.VARCHAR},
-		{"processId", Types.BIGINT}, {"processVersion", Types.VARCHAR},
-		{"startNodeKeys", Types.VARCHAR}, {"stopNodeKeys", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
+		{"calendarKey", Types.VARCHAR}, {"description", Types.CLOB},
+		{"duration", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"pauseNodeKeys", Types.VARCHAR}, {"processId", Types.BIGINT},
+		{"processVersion", Types.VARCHAR}, {"startNodeKeys", Types.VARCHAR},
+		{"stopNodeKeys", Types.VARCHAR}, {"version", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,6 +99,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("calendarKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
@@ -116,7 +117,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WMSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WMSLADefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,wmSLADefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,calendarKey VARCHAR(75) null,description TEXT null,duration LONG,name VARCHAR(75) null,pauseNodeKeys VARCHAR(75) null,processId LONG,processVersion VARCHAR(75) null,startNodeKeys VARCHAR(75) null,stopNodeKeys VARCHAR(75) null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WMSLADefinition";
 
@@ -147,21 +148,26 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition"),
 		true);
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	public static final long PROCESSID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
-	public static final long PROCESSVERSION_COLUMN_BITMASK = 16L;
+	public static final long PROCESSID_COLUMN_BITMASK = 16L;
 
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long PROCESSVERSION_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
 
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK =
+		256L;
+
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 512L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.workflow.metrics.service.util.ServiceProps.get(
@@ -357,6 +363,12 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			(BiConsumer<WorkflowMetricsSLADefinition, Date>)
 				WorkflowMetricsSLADefinition::setModifiedDate);
 		attributeGetterFunctions.put(
+			"active", WorkflowMetricsSLADefinition::getActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<WorkflowMetricsSLADefinition, Boolean>)
+				WorkflowMetricsSLADefinition::setActive);
+		attributeGetterFunctions.put(
 			"calendarKey", WorkflowMetricsSLADefinition::getCalendarKey);
 		attributeSetterBiConsumers.put(
 			"calendarKey",
@@ -492,7 +504,20 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
 
+		_columnBitmask |= WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalWorkflowMetricsSLADefinitionId) {
+			_setOriginalWorkflowMetricsSLADefinitionId = true;
+
+			_originalWorkflowMetricsSLADefinitionId =
+				_workflowMetricsSLADefinitionId;
+		}
+
 		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
+	}
+
+	public long getOriginalWorkflowMetricsSLADefinitionId() {
+		return _originalWorkflowMetricsSLADefinitionId;
 	}
 
 	@Override
@@ -606,6 +631,33 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
+		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@Override
@@ -988,6 +1040,7 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionImpl.setUserName(getUserName());
 		workflowMetricsSLADefinitionImpl.setCreateDate(getCreateDate());
 		workflowMetricsSLADefinitionImpl.setModifiedDate(getModifiedDate());
+		workflowMetricsSLADefinitionImpl.setActive(isActive());
 		workflowMetricsSLADefinitionImpl.setCalendarKey(getCalendarKey());
 		workflowMetricsSLADefinitionImpl.setDescription(getDescription());
 		workflowMetricsSLADefinitionImpl.setDuration(getDuration());
@@ -1073,6 +1126,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionModelImpl._originalUuid =
 			workflowMetricsSLADefinitionModelImpl._uuid;
 
+		workflowMetricsSLADefinitionModelImpl.
+			_originalWorkflowMetricsSLADefinitionId =
+				workflowMetricsSLADefinitionModelImpl.
+					_workflowMetricsSLADefinitionId;
+
+		workflowMetricsSLADefinitionModelImpl.
+			_setOriginalWorkflowMetricsSLADefinitionId = false;
+
 		workflowMetricsSLADefinitionModelImpl._originalGroupId =
 			workflowMetricsSLADefinitionModelImpl._groupId;
 
@@ -1084,6 +1145,11 @@ public class WorkflowMetricsSLADefinitionModelImpl
 		workflowMetricsSLADefinitionModelImpl._setOriginalCompanyId = false;
 
 		workflowMetricsSLADefinitionModelImpl._setModifiedDate = false;
+
+		workflowMetricsSLADefinitionModelImpl._originalActive =
+			workflowMetricsSLADefinitionModelImpl._active;
+
+		workflowMetricsSLADefinitionModelImpl._setOriginalActive = false;
 
 		workflowMetricsSLADefinitionModelImpl._originalName =
 			workflowMetricsSLADefinitionModelImpl._name;
@@ -1157,6 +1223,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 			workflowMetricsSLADefinitionCacheModel.modifiedDate =
 				Long.MIN_VALUE;
 		}
+
+		workflowMetricsSLADefinitionCacheModel.active = isActive();
 
 		workflowMetricsSLADefinitionCacheModel.calendarKey = getCalendarKey();
 
@@ -1341,6 +1409,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _workflowMetricsSLADefinitionId;
+	private long _originalWorkflowMetricsSLADefinitionId;
+	private boolean _setOriginalWorkflowMetricsSLADefinitionId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
@@ -1352,6 +1422,9 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private String _calendarKey;
 	private String _description;
 	private long _duration;

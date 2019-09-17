@@ -82,7 +82,7 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -102,6 +102,8 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", calendarKey=");
 		sb.append(calendarKey);
 		sb.append(", description=");
@@ -181,6 +183,8 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 			workflowMetricsSLADefinitionVersionImpl.setModifiedDate(
 				new Date(modifiedDate));
 		}
+
+		workflowMetricsSLADefinitionVersionImpl.setActive(active);
 
 		if (calendarKey == null) {
 			workflowMetricsSLADefinitionVersionImpl.setCalendarKey("");
@@ -288,6 +292,8 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		active = objectInput.readBoolean();
 		calendarKey = objectInput.readUTF();
 		description = objectInput.readUTF();
 
@@ -338,6 +344,8 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeBoolean(active);
 
 		if (calendarKey == null) {
 			objectOutput.writeUTF("");
@@ -424,6 +432,7 @@ public class WorkflowMetricsSLADefinitionVersionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public boolean active;
 	public String calendarKey;
 	public String description;
 	public long duration;

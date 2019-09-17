@@ -44,6 +44,7 @@ public class WorkflowMetricsSLADefinitionVersionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setActive(model.isActive());
 		soapModel.setCalendarKey(model.getCalendarKey());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDuration(model.getDuration());
@@ -198,6 +199,18 @@ public class WorkflowMetricsSLADefinitionVersionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	public String getCalendarKey() {
 		return _calendarKey;
 	}
@@ -329,6 +342,7 @@ public class WorkflowMetricsSLADefinitionVersionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _active;
 	private String _calendarKey;
 	private String _description;
 	private long _duration;

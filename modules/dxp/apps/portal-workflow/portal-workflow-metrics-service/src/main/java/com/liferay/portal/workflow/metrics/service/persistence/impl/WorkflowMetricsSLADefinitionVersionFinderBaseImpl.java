@@ -41,6 +41,7 @@ public class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 		dbColumnNames.put(
 			"workflowMetricsSLADefinitionVersionId",
 			"wmSLADefinitionVersionId");
+		dbColumnNames.put("active", "active_");
 		dbColumnNames.put(
 			"workflowMetricsSLADefinitionId", "wmSLADefinitionId");
 

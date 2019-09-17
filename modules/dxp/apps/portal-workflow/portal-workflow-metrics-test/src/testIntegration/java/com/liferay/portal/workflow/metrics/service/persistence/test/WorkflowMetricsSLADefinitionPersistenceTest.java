@@ -150,6 +150,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		newWorkflowMetricsSLADefinition.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newWorkflowMetricsSLADefinition.setActive(
+			RandomTestUtil.randomBoolean());
+
 		newWorkflowMetricsSLADefinition.setCalendarKey(
 			RandomTestUtil.randomString());
 
@@ -229,6 +232,9 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLADefinition.getModifiedDate()));
 		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.isActive(),
+			newWorkflowMetricsSLADefinition.isActive());
+		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getCalendarKey(),
 			newWorkflowMetricsSLADefinition.getCalendarKey());
 		Assert.assertEquals(
@@ -302,11 +308,11 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_P() throws Exception {
-		_persistence.countByC_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByWMSLAD_A() throws Exception {
+		_persistence.countByWMSLAD_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_P(0L, 0L);
+		_persistence.countByWMSLAD_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -318,33 +324,47 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_N_P() throws Exception {
-		_persistence.countByC_N_P(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());
+	public void testCountByC_A_P() throws Exception {
+		_persistence.countByC_A_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByC_N_P(0L, "null", 0L);
-
-		_persistence.countByC_N_P(0L, (String)null, 0L);
+		_persistence.countByC_A_P(0L, RandomTestUtil.randomBoolean(), 0L);
 	}
 
 	@Test
-	public void testCountByC_P_S() throws Exception {
-		_persistence.countByC_P_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByC_A_N_P() throws Exception {
+		_persistence.countByC_A_N_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
+			RandomTestUtil.nextLong());
 
-		_persistence.countByC_P_S(0L, 0L, 0);
+		_persistence.countByC_A_N_P(
+			0L, RandomTestUtil.randomBoolean(), "null", 0L);
+
+		_persistence.countByC_A_N_P(
+			0L, RandomTestUtil.randomBoolean(), (String)null, 0L);
 	}
 
 	@Test
-	public void testCountByC_P_NotPV_S() throws Exception {
-		_persistence.countByC_P_NotPV_S(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextInt());
+	public void testCountByC_A_P_S() throws Exception {
+		_persistence.countByC_A_P_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByC_P_NotPV_S(0L, 0L, "null", 0);
+		_persistence.countByC_A_P_S(0L, RandomTestUtil.randomBoolean(), 0L, 0);
+	}
 
-		_persistence.countByC_P_NotPV_S(0L, 0L, (String)null, 0);
+	@Test
+	public void testCountByC_A_P_NotPV_S() throws Exception {
+		_persistence.countByC_A_P_NotPV_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByC_A_P_NotPV_S(
+			0L, RandomTestUtil.randomBoolean(), 0L, "null", 0);
+
+		_persistence.countByC_A_P_NotPV_S(
+			0L, RandomTestUtil.randomBoolean(), 0L, (String)null, 0);
 	}
 
 	@Test
@@ -381,10 +401,10 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			"WMSLADefinition", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "calendarKey", true, "duration", true,
-			"name", true, "pauseNodeKeys", true, "processId", true,
-			"processVersion", true, "startNodeKeys", true, "stopNodeKeys", true,
-			"version", true, "status", true, "statusByUserId", true,
+			true, "modifiedDate", true, "active", true, "calendarKey", true,
+			"duration", true, "name", true, "pauseNodeKeys", true, "processId",
+			true, "processVersion", true, "startNodeKeys", true, "stopNodeKeys",
+			true, "version", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}
 
@@ -659,20 +679,16 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingWorkflowMetricsSLADefinition.getCompanyId()),
+			Long.valueOf(
+				existingWorkflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWorkflowMetricsSLADefinition, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWorkflowMetricsSLADefinition.getName(),
-				ReflectionTestUtil.invoke(
-					existingWorkflowMetricsSLADefinition, "getOriginalName",
-					new Class<?>[0])));
+				existingWorkflowMetricsSLADefinition,
+				"getOriginalWorkflowMetricsSLADefinitionId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingWorkflowMetricsSLADefinition.getProcessId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingWorkflowMetricsSLADefinition, "getOriginalProcessId",
+			Boolean.valueOf(existingWorkflowMetricsSLADefinition.getActive()),
+			ReflectionTestUtil.<Boolean>invoke(
+				existingWorkflowMetricsSLADefinition, "getOriginalActive",
 				new Class<?>[0]));
 	}
 
@@ -699,6 +715,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		workflowMetricsSLADefinition.setCreateDate(RandomTestUtil.nextDate());
 
 		workflowMetricsSLADefinition.setModifiedDate(RandomTestUtil.nextDate());
+
+		workflowMetricsSLADefinition.setActive(RandomTestUtil.randomBoolean());
 
 		workflowMetricsSLADefinition.setCalendarKey(
 			RandomTestUtil.randomString());

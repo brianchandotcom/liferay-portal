@@ -157,6 +157,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 		newWorkflowMetricsSLADefinitionVersion.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newWorkflowMetricsSLADefinitionVersion.setActive(
+			RandomTestUtil.randomBoolean());
+
 		newWorkflowMetricsSLADefinitionVersion.setCalendarKey(
 			RandomTestUtil.randomString());
 
@@ -243,6 +246,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 				existingWorkflowMetricsSLADefinitionVersion.getModifiedDate()),
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLADefinitionVersion.getModifiedDate()));
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinitionVersion.isActive(),
+			newWorkflowMetricsSLADefinitionVersion.isActive());
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinitionVersion.getCalendarKey(),
 			newWorkflowMetricsSLADefinitionVersion.getCalendarKey());
@@ -374,11 +380,11 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 			"WMSLADefinitionVersion", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionVersionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "calendarKey", true, "duration", true,
-			"name", true, "pauseNodeKeys", true, "processId", true,
-			"processVersion", true, "startNodeKeys", true, "stopNodeKeys", true,
-			"version", true, "workflowMetricsSLADefinitionId", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
+			true, "modifiedDate", true, "active", true, "calendarKey", true,
+			"duration", true, "name", true, "pauseNodeKeys", true, "processId",
+			true, "processVersion", true, "startNodeKeys", true, "stopNodeKeys",
+			true, "version", true, "workflowMetricsSLADefinitionId", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
 			"statusDate", true);
 	}
 
@@ -722,6 +728,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceTest {
 
 		workflowMetricsSLADefinitionVersion.setModifiedDate(
 			RandomTestUtil.nextDate());
+
+		workflowMetricsSLADefinitionVersion.setActive(
+			RandomTestUtil.randomBoolean());
 
 		workflowMetricsSLADefinitionVersion.setCalendarKey(
 			RandomTestUtil.randomString());

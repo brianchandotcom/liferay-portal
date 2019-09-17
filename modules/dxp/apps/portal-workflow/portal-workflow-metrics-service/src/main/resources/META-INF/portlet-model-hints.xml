@@ -11,6 +11,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
 		<field name="calendarKey" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
@@ -40,6 +41,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
 		<field name="calendarKey" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />

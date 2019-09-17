@@ -74,13 +74,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 			workflowMetricsSLADefinition);
 	}
 
-	public static int countWorkflowMetricsSLADefinitions(
-		long companyId, long processId, int status) {
-
-		return getService().countWorkflowMetricsSLADefinitions(
-			companyId, processId, status);
-	}
-
 	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
@@ -94,6 +87,15 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 
 		return getService().createWorkflowMetricsSLADefinition(
 			workflowMetricsSLADefinitionId);
+	}
+
+	public static void deactivateWorkflowMetricsSLADefinition(
+			long workflowMetricsSLADefinitionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deactivateWorkflowMetricsSLADefinition(
+			workflowMetricsSLADefinitionId, serviceContext);
 	}
 
 	/**
@@ -304,6 +306,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 			workflowMetricsSLADefinitionId);
 	}
 
+	public static
+		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
+				getWorkflowMetricsSLADefinition(
+					long workflowMetricsSLADefinitionId, boolean active)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getWorkflowMetricsSLADefinition(
+			workflowMetricsSLADefinitionId, active);
+	}
+
 	/**
 	 * Returns the workflow metrics sla definition matching the UUID and group.
 	 *
@@ -342,51 +354,32 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(long companyId, int status) {
-
-		return getService().getWorkflowMetricsSLADefinitions(companyId, status);
-	}
-
-	public static java.util.List
-		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(long companyId, long processId) {
-
-		return getService().getWorkflowMetricsSLADefinitions(
-			companyId, processId);
-	}
-
-	public static java.util.List
-		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, int status, int start, int end,
+				long companyId, boolean active, long processId, int status,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.workflow.metrics.model.
 						WorkflowMetricsSLADefinition> obc) {
 
 		return getService().getWorkflowMetricsSLADefinitions(
-			companyId, processId, status, start, end, obc);
+			companyId, active, processId, status, start, end, obc);
 	}
 
 	public static java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.workflow.metrics.model.
-						WorkflowMetricsSLADefinition> orderByComparator) {
+				long companyId, boolean active, long processId,
+				String processVersion, int status) {
 
 		return getService().getWorkflowMetricsSLADefinitions(
-			companyId, processId, start, end, orderByComparator);
+			companyId, active, processId, processVersion, status);
 	}
 
 	public static java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, String processVersion,
-				int status) {
+			getWorkflowMetricsSLADefinitions(long companyId, int status) {
 
-		return getService().getWorkflowMetricsSLADefinitions(
-			companyId, processId, processVersion, status);
+		return getService().getWorkflowMetricsSLADefinitions(companyId, status);
 	}
 
 	/**
@@ -437,17 +430,17 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	}
 
 	public static int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId) {
+		long companyId, boolean active, long processId) {
 
 		return getService().getWorkflowMetricsSLADefinitionsCount(
-			companyId, processId);
+			companyId, active, processId);
 	}
 
 	public static int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId, int status) {
+		long companyId, boolean active, long processId, int status) {
 
 		return getService().getWorkflowMetricsSLADefinitionsCount(
-			companyId, processId, status);
+			companyId, active, processId, status);
 	}
 
 	public static

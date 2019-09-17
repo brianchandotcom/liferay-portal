@@ -57,6 +57,7 @@ public class WorkflowMetricsSLADefinitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("active", isActive());
 		attributes.put("calendarKey", getCalendarKey());
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
@@ -130,6 +131,12 @@ public class WorkflowMetricsSLADefinitionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 
 		String calendarKey = (String)attributes.get("calendarKey");
@@ -215,6 +222,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+	}
+
+	/**
+	 * Returns the active of this workflow metrics sla definition.
+	 *
+	 * @return the active of this workflow metrics sla definition
+	 */
+	@Override
+	public boolean getActive() {
+		return model.getActive();
 	}
 
 	/**
@@ -478,6 +495,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is active.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is active; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isActive() {
+		return model.isActive();
+	}
+
+	/**
 	 * Returns <code>true</code> if this workflow metrics sla definition is approved.
 	 *
 	 * @return <code>true</code> if this workflow metrics sla definition is approved; <code>false</code> otherwise
@@ -565,6 +592,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets whether this workflow metrics sla definition is active.
+	 *
+	 * @param active the active of this workflow metrics sla definition
+	 */
+	@Override
+	public void setActive(boolean active) {
+		model.setActive(active);
 	}
 
 	/**

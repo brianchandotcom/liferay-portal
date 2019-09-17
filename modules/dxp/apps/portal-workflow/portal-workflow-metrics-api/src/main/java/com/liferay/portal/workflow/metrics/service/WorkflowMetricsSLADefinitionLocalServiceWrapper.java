@@ -74,14 +74,6 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 			addWorkflowMetricsSLADefinition(workflowMetricsSLADefinition);
 	}
 
-	@Override
-	public int countWorkflowMetricsSLADefinitions(
-		long companyId, long processId, int status) {
-
-		return _workflowMetricsSLADefinitionLocalService.
-			countWorkflowMetricsSLADefinitions(companyId, processId, status);
-	}
-
 	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
@@ -96,6 +88,17 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 
 		return _workflowMetricsSLADefinitionLocalService.
 			createWorkflowMetricsSLADefinition(workflowMetricsSLADefinitionId);
+	}
+
+	@Override
+	public void deactivateWorkflowMetricsSLADefinition(
+			long workflowMetricsSLADefinitionId,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_workflowMetricsSLADefinitionLocalService.
+			deactivateWorkflowMetricsSLADefinition(
+				workflowMetricsSLADefinitionId, serviceContext);
 	}
 
 	/**
@@ -329,6 +332,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 			getWorkflowMetricsSLADefinition(workflowMetricsSLADefinitionId);
 	}
 
+	@Override
+	public
+		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
+				getWorkflowMetricsSLADefinition(
+					long workflowMetricsSLADefinitionId, boolean active)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _workflowMetricsSLADefinitionLocalService.
+			getWorkflowMetricsSLADefinition(
+				workflowMetricsSLADefinitionId, active);
+	}
+
 	/**
 	 * Returns the workflow metrics sla definition matching the UUID and group.
 	 *
@@ -371,59 +386,37 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(long companyId, int status) {
-
-		return _workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinitions(companyId, status);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(long companyId, long processId) {
-
-		return _workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinitions(companyId, processId);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, int status, int start, int end,
+				long companyId, boolean active, long processId, int status,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.workflow.metrics.model.
 						WorkflowMetricsSLADefinition> obc) {
 
 		return _workflowMetricsSLADefinitionLocalService.
 			getWorkflowMetricsSLADefinitions(
-				companyId, processId, status, start, end, obc);
+				companyId, active, processId, status, start, end, obc);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.workflow.metrics.model.
-						WorkflowMetricsSLADefinition> orderByComparator) {
+				long companyId, boolean active, long processId,
+				String processVersion, int status) {
 
 		return _workflowMetricsSLADefinitionLocalService.
 			getWorkflowMetricsSLADefinitions(
-				companyId, processId, start, end, orderByComparator);
+				companyId, active, processId, processVersion, status);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
-			getWorkflowMetricsSLADefinitions(
-				long companyId, long processId, String processVersion,
-				int status) {
+			getWorkflowMetricsSLADefinitions(long companyId, int status) {
 
 		return _workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinitions(
-				companyId, processId, processVersion, status);
+			getWorkflowMetricsSLADefinitions(companyId, status);
 	}
 
 	/**
@@ -480,18 +473,19 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 
 	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId) {
+		long companyId, boolean active, long processId) {
 
 		return _workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinitionsCount(companyId, processId);
+			getWorkflowMetricsSLADefinitionsCount(companyId, active, processId);
 	}
 
 	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId, int status) {
+		long companyId, boolean active, long processId, int status) {
 
 		return _workflowMetricsSLADefinitionLocalService.
-			getWorkflowMetricsSLADefinitionsCount(companyId, processId, status);
+			getWorkflowMetricsSLADefinitionsCount(
+				companyId, active, processId, status);
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
+import com.liferay.batch.engine.BatchEngineTaskItemClassRegistry;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -38,7 +40,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,6 +52,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchEngineTaskExecutor.class)
 public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
+
+	@Activate
+	public void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_batchEngineTaskItemWriterFactory =
+			new BatchEngineTaskItemWriterFactory(bundleContext);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_batchEngineTaskItemWriterFactory.destroy();
+	}
 
 	@Override
 	public void execute(BatchEngineTask batchEngineTask) {
@@ -105,9 +124,11 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
-				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
+				_batchEngineTaskItemReaderFactory.create(
+					batchEngineTask, _batchEngineTaskItemClassRegistry);
 			BatchEngineTaskItemWriter<T> batchEngineTaskItemWriter =
-				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
+				_batchEngineTaskItemWriterFactory.create(
+					batchEngineTask, _companyLocalService, _userLocalService)) {
 
 			List<T> items = new ArrayList<>();
 
@@ -141,13 +162,18 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
-	private BatchEngineTaskItemReaderFactory _batchEngineTaskItemReaderFactory;
+	private BatchEngineTaskItemClassRegistry _batchEngineTaskItemClassRegistry;
 
-	@Reference
+	private final BatchEngineTaskItemReaderFactory
+		_batchEngineTaskItemReaderFactory =
+			new BatchEngineTaskItemReaderFactory();
 	private BatchEngineTaskItemWriterFactory _batchEngineTaskItemWriterFactory;
 
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

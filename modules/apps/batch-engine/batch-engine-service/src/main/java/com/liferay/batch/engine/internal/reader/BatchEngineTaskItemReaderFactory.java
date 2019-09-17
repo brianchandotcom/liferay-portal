@@ -20,17 +20,14 @@ import com.liferay.batch.engine.model.BatchEngineTask;
 
 import java.sql.Blob;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Shuyang Zhou
  */
-@Component(service = BatchEngineTaskItemReaderFactory.class)
 public class BatchEngineTaskItemReaderFactory {
 
 	public <T> BatchEngineTaskItemReader<T> create(
-			BatchEngineTask batchEngineTask)
+			BatchEngineTask batchEngineTask,
+			BatchEngineTaskItemClassRegistry batchEngineTaskItemClassRegistry)
 		throws Exception {
 
 		BatchEngineTaskContentType batchEngineTaskContentType =
@@ -39,7 +36,7 @@ public class BatchEngineTaskItemReaderFactory {
 		Blob content = batchEngineTask.getContent();
 
 		@SuppressWarnings("unchecked")
-		Class<T> itemClass = (Class<T>)_batchEngineTaskItemClassRegistry.get(
+		Class<T> itemClass = (Class<T>)batchEngineTaskItemClassRegistry.get(
 			batchEngineTask.getClassName());
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
@@ -63,8 +60,5 @@ public class BatchEngineTaskItemReaderFactory {
 			"Unknown batch engine task content type " +
 				batchEngineTaskContentType);
 	}
-
-	@Reference
-	private BatchEngineTaskItemClassRegistry _batchEngineTaskItemClassRegistry;
 
 }

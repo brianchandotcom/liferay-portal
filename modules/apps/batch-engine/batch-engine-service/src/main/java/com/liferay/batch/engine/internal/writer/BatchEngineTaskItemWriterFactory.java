@@ -37,21 +37,15 @@ import javax.ws.rs.PathParam;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Ivica cardic
  */
-@Component(service = BatchEngineTaskItemWriterFactory.class)
 public class BatchEngineTaskItemWriterFactory {
 
-	@Activate
-	public void activate(BundleContext bundleContext)
+	public BatchEngineTaskItemWriterFactory(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
 		_bundleContext = bundleContext;
@@ -66,7 +60,9 @@ public class BatchEngineTaskItemWriterFactory {
 	}
 
 	public <T> BatchEngineTaskItemWriter<T> create(
-			BatchEngineTask batchEngineTask)
+			BatchEngineTask batchEngineTask,
+			CompanyLocalService companyLocalService,
+			UserLocalService userLocalService)
 		throws Exception {
 
 		BatchEngineTaskOperation batchEngineTaskOperation =
@@ -91,28 +87,20 @@ public class BatchEngineTaskItemWriterFactory {
 		}
 
 		return new BatchEngineTaskItemWriter<>(
-			_companyLocalService.getCompany(batchEngineTask.getCompanyId()),
+			companyLocalService.getCompany(batchEngineTask.getCompanyId()),
 			tuple.getMethod(), tuple.getMethodParameterNames(),
 			_bundleContext.getServiceObjects(tuple.getServiceReference()),
-			_userLocalService.getUser(batchEngineTask.getUserId()));
+			userLocalService.getUser(batchEngineTask.getUserId()));
 	}
 
-	@Deactivate
-	public void deactivate(BundleContext bundleContext) {
+	public void destroy() {
 		_serviceTracker.close();
 	}
 
-	private BundleContext _bundleContext;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
+	private final BundleContext _bundleContext;
 	private final Map<String, ResourceMethodServiceReferenceTuple>
 		_resourceServiceReferenceMap = new ConcurrentHashMap<>();
-	private ServiceTracker<Object, List<String>> _serviceTracker;
-
-	@Reference
-	private UserLocalService _userLocalService;
+	private final ServiceTracker<Object, List<String>> _serviceTracker;
 
 	private class BatchEngineTaskMethodServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, List<String>> {

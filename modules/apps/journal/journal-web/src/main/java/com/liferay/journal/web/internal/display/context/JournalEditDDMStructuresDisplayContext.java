@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
-import com.liferay.journal.web.internal.util.JournalChangeTrackingHelperUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -209,16 +208,6 @@ public class JournalEditDDMStructuresDisplayContext {
 	}
 
 	public String getSaveButtonLabel() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (JournalChangeTrackingHelperUtil.hasActiveCTCollection(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId())) {
-
-			return "publish-to-change-list";
-		}
-
 		return "save";
 	}
 

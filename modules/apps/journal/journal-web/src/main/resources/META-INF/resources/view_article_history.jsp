@@ -137,22 +137,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 								value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 							/>
 
-							<c:if test="<%= journalDisplayContext.isChangeListColumnVisible() %>">
-
-								<%
-								PortletURL viewChangeListURL = journalDisplayContext.getChangeListURL(articleVersion);
-
-								viewChangeListURL.setParameter("backURL", portletURL.toString());
-								%>
-
-								<liferay-ui:search-container-column-text
-									cssClass="change-list-title table-cell-content"
-									href="<%= viewChangeListURL.toString() %>"
-									name="change-list"
-									value="<%= HtmlUtil.escape(journalDisplayContext.getChangeListName(articleVersion)) %>"
-								/>
-							</c:if>
-
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-100"
 								name="version"

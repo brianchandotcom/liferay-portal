@@ -65,9 +65,9 @@
 
 						<clay:button
 							data="<%= data %>"
+							elementClasses="btn-secondary"
 							label='<%= LanguageUtil.get(resourceBundle, "revoke") %>'
 							size="sm"
-							style="secondary"
 							type="submit"
 						/>
 					</div>

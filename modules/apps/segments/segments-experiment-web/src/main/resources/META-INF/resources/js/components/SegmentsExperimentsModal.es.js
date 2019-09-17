@@ -111,14 +111,14 @@ function SegmentsExperimentsModal({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={invalidForm}
-							displayType="secondary"
-							onClick={onClose}
-						>
+						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
-						<ClayButton displayType="primary" onClick={_handleSave}>
+						<ClayButton
+							disabled={invalidForm}
+							displayType="primary"
+							onClick={_handleSave}
+						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>

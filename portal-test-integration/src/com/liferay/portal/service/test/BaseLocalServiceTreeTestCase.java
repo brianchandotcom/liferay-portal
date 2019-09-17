@@ -30,7 +30,10 @@ import org.junit.Test;
 
 /**
  * @author Shinn Lok
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.portal.local.service.tree.test.util.BaseLocalServiceTreeTestCase}
  */
+@Deprecated
 public abstract class BaseLocalServiceTreeTestCase {
 
 	@Before

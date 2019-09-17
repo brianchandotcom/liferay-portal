@@ -59,7 +59,10 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceObjects;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Ivica Cardic
@@ -80,15 +83,54 @@ public class NestedFieldsWriterInterceptorTest {
 			Mockito.any(Message.class)
 		);
 
+		ServiceReference serviceReference1 = new MockServiceReference();
+
+		Mockito.doReturn(
+			ProductResource_v1_0_Impl.class
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getResourceClass(
+			serviceReference1
+		);
+
+		ServiceReference serviceReference2 = new MockServiceReference();
+
+		Mockito.doReturn(
+			ProductResource_v2_0_Impl.class
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getResourceClass(
+			serviceReference2
+		);
+
 		_productResource_v1_0_Impl = new ProductResource_v1_0_Impl();
+
+		Mockito.doReturn(
+			new MockServiceObjects<>(_productResource_v1_0_Impl)
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getServiceObjects(
+			serviceReference1
+		);
+
 		_productResource_v2_0_Impl = new ProductResource_v2_0_Impl();
 
 		Mockito.doReturn(
-			Arrays.asList(
-				_productResource_v1_0_Impl, _productResource_v2_0_Impl)
+			new MockServiceObjects<>(_productResource_v2_0_Impl)
 		).when(
 			_nestedFieldsWriterInterceptor
-		).getResources();
+		).getServiceObjects(
+			serviceReference2
+		);
+
+		Mockito.doReturn(
+			Arrays.asList(serviceReference1, serviceReference2)
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getServiceReferences();
+
+		_writerInterceptorContext = Mockito.mock(
+			WriterInterceptorContext.class);
 
 		_writerInterceptorContext = Mockito.mock(
 			WriterInterceptorContext.class);
@@ -958,6 +1000,64 @@ public class NestedFieldsWriterInterceptorTest {
 		@Override
 		public ThemeDisplay createContext(Message message) {
 			return new ThemeDisplay();
+		}
+
+	}
+
+	private class MockServiceObjects<S> implements ServiceObjects<S> {
+
+		@Override
+		public S getService() {
+			return _service;
+		}
+
+		@Override
+		public ServiceReference<S> getServiceReference() {
+			return null;
+		}
+
+		@Override
+		public void ungetService(S service) {
+		}
+
+		private MockServiceObjects(S service) {
+			_service = service;
+		}
+
+		private final S _service;
+
+	}
+
+	private class MockServiceReference<S> implements ServiceReference<S> {
+
+		@Override
+		public int compareTo(Object reference) {
+			return 0;
+		}
+
+		@Override
+		public Bundle getBundle() {
+			return null;
+		}
+
+		@Override
+		public Object getProperty(String key) {
+			return null;
+		}
+
+		@Override
+		public String[] getPropertyKeys() {
+			return new String[0];
+		}
+
+		@Override
+		public Bundle[] getUsingBundles() {
+			return new Bundle[0];
+		}
+
+		@Override
+		public boolean isAssignableTo(Bundle bundle, String className) {
+			return false;
 		}
 
 	}

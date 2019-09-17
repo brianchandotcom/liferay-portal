@@ -78,6 +78,47 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-96685. User can change select fragment configuration in a display page template."
+	test AddSelectConfigurationFragmentToDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
+
+		PageEditorConfiguration.changeConfigSelection(
+			fragmentName = "Text Fragment Example",
+			optionValue = "dark");
+
+		PageEditor.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Edit");
+
+		task ("Assert dark text is visible") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
+		}
+	}
+
 	@description = "This is a test for LPS-99543. User can change text fragment configuration in a display page template."
 	@priority = "5"
 	test AddTextConfigurationFragmentToDisplayPageTemplate {

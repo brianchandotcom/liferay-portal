@@ -76,6 +76,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-96685. User can change select fragment configuration."
+	test AddSelectConfigurationFragmentToContentPage {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
+
+		PageEditorConfiguration.changeConfigSelection(
+			fragmentName = "Text Fragment Example",
+			optionValue = "dark");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert dark text is visible") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
+		}
+	}
+
 	@description = "This is a test for LPS-99543. User can change text fragment configuration."
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPage {

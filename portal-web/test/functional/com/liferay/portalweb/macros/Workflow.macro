@@ -251,7 +251,7 @@ definition {
 	}
 
 	macro configureWorkflow {
-		AssertClick(
+		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = "${workflowResourceValue}",
 			locator1 = "Button#EDIT_ROW",
 			value1 = "Edit");

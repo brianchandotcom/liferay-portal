@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -184,7 +185,7 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	@Override
-	public synchronized void setPageContext(PageContext pageContext) {
+	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
 		HttpServletRequest httpServletRequest =
@@ -201,13 +202,9 @@ public class ParamAndPropertyAncestorTagImpl
 
 		AutoClosePageContextRegistry.registerCloseCallback(
 			pageContext,
-			() -> {
-				synchronized (ParamAndPropertyAncestorTagImpl.this) {
-					if (httpServletRequest == request) {
-						request = null;
-					}
-				}
-			});
+			() -> _atomicReferenceFieldUpdater.compareAndSet(
+				ParamAndPropertyAncestorTagImpl.this, httpServletRequest,
+				null));
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -222,13 +219,18 @@ public class ParamAndPropertyAncestorTagImpl
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link #getRequest()}
 	 */
 	@Deprecated
-	protected HttpServletRequest request;
+	protected volatile HttpServletRequest request;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link #getServletContext()}
 	 */
 	@Deprecated
 	protected ServletContext servletContext;
+
+	private static final AtomicReferenceFieldUpdater
+		_atomicReferenceFieldUpdater = AtomicReferenceFieldUpdater.newUpdater(
+			ParamAndPropertyAncestorTagImpl.class, HttpServletRequest.class,
+			"request");
 
 	private boolean _allowEmptyParam;
 	private boolean _copyCurrentRenderParameters = true;

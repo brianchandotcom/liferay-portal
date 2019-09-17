@@ -103,7 +103,7 @@ public class AMImageProcessorImplTest {
 		_amImageProcessorImpl.cleanUp(_fileVersion);
 	}
 
-	@Test(expected = AMRuntimeException.IOException.class)
+	@Test(expected = PortalException.class)
 	public void testCleanUpPortalException() throws Exception {
 		Mockito.when(
 			_amImageValidator.isValid(Mockito.any(FileVersion.class))
@@ -351,7 +351,7 @@ public class AMImageProcessorImplTest {
 		);
 	}
 
-	@Test(expected = AMRuntimeException.IOException.class)
+	@Test(expected = DuplicateAMImageEntryException.class)
 	public void testProcessDuplicateAMImageEntryExceptionInImageService()
 		throws Exception {
 

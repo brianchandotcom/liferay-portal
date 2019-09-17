@@ -29,7 +29,7 @@ import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
 import com.liferay.portal.reports.engine.console.service.SourceLocalService;
-import com.liferay.portal.reports.engine.console.service.permission.AdminResourcePermissionChecker;
+import com.liferay.portal.reports.engine.console.web.internal.permission.AdminResourcePermissionChecker;
 
 import java.util.List;
 

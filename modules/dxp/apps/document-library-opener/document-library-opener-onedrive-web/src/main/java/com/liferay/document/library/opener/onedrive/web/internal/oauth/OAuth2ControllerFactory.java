@@ -15,12 +15,12 @@
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.liferay.document.library.opener.oauth.OAuth2State;
-import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -29,12 +29,15 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import javax.portlet.PortletRequest;
@@ -117,8 +120,18 @@ public class OAuth2ControllerFactory {
 		return portletURL.toString();
 	}
 
+	private String _translateKey(Locale locale, String key) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, key);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OAuth2ControllerFactory.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
@@ -129,8 +142,10 @@ public class OAuth2ControllerFactory {
 	@Reference
 	private PortletURLFactory _portletURLFactory;
 
-	@Reference
-	private Translator _translator;
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private static class OAuth2Result {
 
@@ -205,7 +220,7 @@ public class OAuth2ControllerFactory {
 						portletRequest, portletResponse,
 						JSONUtil.put(
 							"error",
-							_translator.translateKey(
+							_translateKey(
 								_portal.getLocale(portletRequest),
 								"your-request-failed-to-complete")));
 				}

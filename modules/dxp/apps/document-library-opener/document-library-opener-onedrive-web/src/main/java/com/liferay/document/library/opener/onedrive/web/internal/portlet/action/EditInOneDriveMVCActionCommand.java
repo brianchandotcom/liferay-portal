@@ -21,10 +21,10 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
 import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.helper.OneDriveURLHelper;
-import com.liferay.document.library.opener.onedrive.web.internal.translator.Translator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -38,7 +38,11 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -111,7 +115,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				return JSONUtil.put(
 					"dialogMessage",
-					_translator.translateKey(
+					_translateKey(
 						_portal.getLocale(portletRequest),
 						"you-are-being-redirected-to-an-external-editor-to-" +
 							"edit-this-document")
@@ -143,7 +147,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			return JSONUtil.put(
 				"dialogMessage",
-				_translator.translateKey(
+				_translateKey(
 					_portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-edit-" +
 						"this-document")
@@ -171,11 +175,21 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return liferayPortletURL.toString();
 	}
 
+	private String _translateKey(Locale locale, String key) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, key);
+	}
+
 	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OAuth2ControllerFactory _oAuth2ControllerFactory;
@@ -189,11 +203,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private PortletURLFactory _portletURLFactory;
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
+
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private Translator _translator;
 
 }

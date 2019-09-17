@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -73,6 +74,12 @@ public interface AccountEntryUserRelLocalService
 
 	public AccountEntryUserRel addAccountEntryUserRel(
 			long accountEntryId, long accountUserId)
+		throws PortalException;
+
+	public AccountEntryUserRel addUser(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
 		throws PortalException;
 
 	/**

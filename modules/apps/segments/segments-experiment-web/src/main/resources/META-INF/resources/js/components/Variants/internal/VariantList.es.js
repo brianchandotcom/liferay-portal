@@ -30,6 +30,9 @@ function VariantList({
 	return (
 		<ClayList>
 			{variants.map(variant => {
+				const publishableVariant =
+					publishable && !!(!variant.control || variant.winner);
+
 				return (
 					<Variant
 						active={
@@ -43,7 +46,7 @@ function VariantList({
 						onVariantDeletion={onVariantDeletion}
 						onVariantEdition={onVariantEdition}
 						onVariantPublish={onVariantPublish}
-						publishable={publishable}
+						publishable={publishableVariant}
 						segmentsExperienceId={variant.segmentsExperienceId}
 						showSplit={!publishable && !editable}
 						split={variant.split}

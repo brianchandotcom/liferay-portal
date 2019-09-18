@@ -126,7 +126,7 @@ function Variant({
 				</ClayList.ItemField>
 			)}
 
-			{publishable && !control && (
+			{publishable && (
 				<ClayList.ItemField>
 					<ClayButton
 						displayType={winner ? 'primary' : 'secondary'}

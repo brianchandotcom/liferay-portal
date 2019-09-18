@@ -316,8 +316,11 @@ public class InputTag extends BaseInputTag {
 			return;
 		}
 
-		List<String> checkboxNames = (List<String>)request.getAttribute(
-			"LIFERAY_SHARED_aui:form:checkboxNames");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		List<String> checkboxNames =
+			(List<String>)httpServletRequest.getAttribute(
+				"LIFERAY_SHARED_aui:form:checkboxNames");
 
 		if (checkboxNames != null) {
 			String inputName = getInputName();

@@ -81,8 +81,11 @@ public class WrapPortletTag
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			Theme theme = themeDisplay.getTheme();
 
@@ -95,7 +98,7 @@ public class WrapPortletTag
 			// Page
 
 			ThemeUtil.include(
-				servletContext, request,
+				servletContext, httpServletRequest,
 				PipingServletResponse.createPipingServletResponse(pageContext),
 				getPage(), theme);
 

@@ -88,7 +88,8 @@ public class IconTag extends BaseIconTag {
 			return id;
 		}
 
-		id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
+		id = PortalUtil.generateRandomKey(
+			getRequest(), IconTag.class.getName());
 
 		id = HtmlUtil.getAUICompatibleId(id);
 

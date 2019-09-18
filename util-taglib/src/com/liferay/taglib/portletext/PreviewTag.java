@@ -68,7 +68,7 @@ public class PreviewTag extends IncludeTag {
 		try {
 			doTag(
 				getPage(), _portletName, _queryString, _showBorders, _width,
-				servletContext, request,
+				servletContext, getRequest(),
 				PipingServletResponse.createPipingServletResponse(pageContext));
 
 			return EVAL_PAGE;

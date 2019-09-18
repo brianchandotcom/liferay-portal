@@ -47,8 +47,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (MultiSessionErrors.isEmpty(portletRequest)) {
 			return SKIP_BODY;
@@ -222,8 +225,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return "exclamation-full";
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return "warning-full";
@@ -237,8 +243,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return _getBodyContentString();
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			String alertMessage = _message;
@@ -250,7 +259,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 
 			if (_translateMessage) {
 				alertMessage = LanguageUtil.get(
-					request,
+					httpServletRequest,
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					alertMessage);
 			}
@@ -259,7 +268,8 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		}
 
 		if (_key == null) {
-			return LanguageUtil.get(request, "your-request-failed-to-complete");
+			return LanguageUtil.get(
+				httpServletRequest, "your-request-failed-to-complete");
 		}
 
 		if (MultiSessionErrors.contains(portletRequest, _key)) {
@@ -267,7 +277,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 
 			if (_translateMessage) {
 				alertMessage = LanguageUtil.get(
-					request,
+					httpServletRequest,
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					_message);
 			}
@@ -283,8 +293,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return "danger";
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (MultiSessionErrors.contains(portletRequest, "warning")) {
 			return "warning";
@@ -294,18 +307,21 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getAlertTitle() {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if ((_key != null) && Validator.isNull(_message)) {
-			return LanguageUtil.get(request, "error-colon");
+			return LanguageUtil.get(httpServletRequest, "error-colon");
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (MultiSessionErrors.contains(portletRequest, "warning")) {
-			return LanguageUtil.get(request, "warning-colon");
+			return LanguageUtil.get(httpServletRequest, "warning-colon");
 		}
 
-		return LanguageUtil.get(request, "error-colon");
+		return LanguageUtil.get(httpServletRequest, "error-colon");
 	}
 
 	private String _getBodyContentString() {
@@ -317,8 +333,11 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private boolean _isShowAlert() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if ((_key != null) && Validator.isNull(_message)) {
 			if (MultiSessionErrors.contains(portletRequest, _key) &&

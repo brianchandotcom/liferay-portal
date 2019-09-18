@@ -33,6 +33,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -75,10 +76,12 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 	@Override
 	public int doStartTag() throws JspException {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		try {
 			if (_iteratorURL == null) {
 				PortletResponse portletResponse =
-					(PortletResponse)request.getAttribute(
+					(PortletResponse)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 				MimeResponse mimeResponse = (MimeResponse)portletResponse;
@@ -88,7 +91,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 			if (_searchContainer == null) {
 				PortletRequest portletRequest =
-					(PortletRequest)request.getAttribute(
+					(PortletRequest)httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST);
 
 				_searchContainer = new SearchContainer<>(
@@ -128,7 +131,8 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 			else {
 				String orderByCol = ParamUtil.getString(
-					request, _searchContainer.getOrderByColParam(), null);
+					httpServletRequest, _searchContainer.getOrderByColParam(),
+					null);
 
 				if (orderByCol != null) {
 					_searchContainer.setOrderByCol(orderByCol);
@@ -148,7 +152,8 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 			else {
 				String orderByType = ParamUtil.getString(
-					request, _searchContainer.getOrderByTypeParam(), null);
+					httpServletRequest, _searchContainer.getOrderByTypeParam(),
+					null);
 
 				if (orderByType != null) {
 					_searchContainer.setOrderByType(orderByType);

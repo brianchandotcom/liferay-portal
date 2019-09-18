@@ -125,8 +125,11 @@ public class InputCheckBoxTag extends IncludeTag {
 	}
 
 	protected void updateFormCheckboxNames() {
-		List<String> checkboxNames = (List<String>)request.getAttribute(
-			"aui:form:checkboxNames");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		List<String> checkboxNames =
+			(List<String>)httpServletRequest.getAttribute(
+				"aui:form:checkboxNames");
 
 		if (checkboxNames != null) {
 			checkboxNames.add(_param);

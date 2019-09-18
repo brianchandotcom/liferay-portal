@@ -261,8 +261,11 @@ public class IconTag extends IncludeTag {
 	 */
 	@Deprecated
 	protected String getDetails() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _getDetails(themeDisplay);
 	}
@@ -272,7 +275,10 @@ public class IconTag extends IncludeTag {
 			return _id;
 		}
 
-		String id = (String)request.getAttribute("liferay-ui:icon-menu:id");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String id = (String)httpServletRequest.getAttribute(
+			"liferay-ui:icon-menu:id");
 
 		String message = _message;
 
@@ -288,7 +294,7 @@ public class IconTag extends IncludeTag {
 			);
 
 			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
+				(PortletResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 			String namespace = StringPool.BLANK;
@@ -301,7 +307,8 @@ public class IconTag extends IncludeTag {
 				getOriginalServletRequest(), namespace, id);
 		}
 		else {
-			id = PortalUtil.generateRandomKey(request, IconTag.class.getName());
+			id = PortalUtil.generateRandomKey(
+				httpServletRequest, IconTag.class.getName());
 		}
 
 		id = HtmlUtil.getAUICompatibleId(id);
@@ -387,8 +394,11 @@ public class IconTag extends IncludeTag {
 	 */
 	@Deprecated
 	protected String getSrc() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _getSrc(themeDisplay);
 	}
@@ -398,8 +408,11 @@ public class IconTag extends IncludeTag {
 	 */
 	@Deprecated
 	protected String getSrcHover() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _getSrcHover(themeDisplay);
 	}
@@ -447,8 +460,11 @@ public class IconTag extends IncludeTag {
 			return _label;
 		}
 
-		IntegerWrapper iconListIconCount = (IntegerWrapper)request.getAttribute(
-			"liferay-ui:icon-list:icon-count");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		IntegerWrapper iconListIconCount =
+			(IntegerWrapper)httpServletRequest.getAttribute(
+				"liferay-ui:icon-list:icon-count");
 
 		if (iconListIconCount != null) {
 			_label = true;
@@ -456,8 +472,9 @@ public class IconTag extends IncludeTag {
 			return true;
 		}
 
-		IntegerWrapper iconMenuIconCount = (IntegerWrapper)request.getAttribute(
-			"liferay-ui:icon-menu:icon-count");
+		IntegerWrapper iconMenuIconCount =
+			(IntegerWrapper)httpServletRequest.getAttribute(
+				"liferay-ui:icon-menu:icon-count");
 
 		if (iconMenuIconCount != null) {
 			_label = true;
@@ -465,7 +482,7 @@ public class IconTag extends IncludeTag {
 			return true;
 		}
 
-		Boolean iconListSingleIcon = (Boolean)request.getAttribute(
+		Boolean iconListSingleIcon = (Boolean)httpServletRequest.getAttribute(
 			"liferay-ui:icon-list:single-icon");
 
 		if (iconListSingleIcon != null) {
@@ -474,7 +491,7 @@ public class IconTag extends IncludeTag {
 			return true;
 		}
 
-		Boolean iconMenuSingleIcon = (Boolean)request.getAttribute(
+		Boolean iconMenuSingleIcon = (Boolean)httpServletRequest.getAttribute(
 			"liferay-ui:icon-menu:single-icon");
 
 		if (iconMenuSingleIcon != null) {
@@ -620,8 +637,10 @@ public class IconTag extends IncludeTag {
 
 		String imageFileName = StringUtil.replace(_src, "common/../", "");
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (imageFileName.contains(Http.PROTOCOL_DELIMITER)) {
-			String portalURL = PortalUtil.getPortalURL(request);
+			String portalURL = PortalUtil.getPortalURL(httpServletRequest);
 
 			if (imageFileName.startsWith(portalURL)) {
 				imageFileName = imageFileName.substring(portalURL.length());
@@ -651,8 +670,9 @@ public class IconTag extends IncludeTag {
 			if (spriteImage != null) {
 				spriteFileName = spriteImage.getSpriteFileName();
 
-				if (BrowserSnifferUtil.isIe(request) &&
-					(BrowserSnifferUtil.getMajorVersion(request) < 7)) {
+				if (BrowserSnifferUtil.isIe(httpServletRequest) &&
+					(BrowserSnifferUtil.getMajorVersion(httpServletRequest) <
+						7)) {
 
 					spriteFileName = StringUtil.replace(
 						spriteFileName, ".png", ".gif");
@@ -665,11 +685,12 @@ public class IconTag extends IncludeTag {
 		}
 
 		if (spriteImage == null) {
-			Portlet portlet = (Portlet)request.getAttribute(
+			Portlet portlet = (Portlet)httpServletRequest.getAttribute(
 				"liferay-portlet:icon_portlet:portlet");
 
 			if (portlet == null) {
-				portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+				portlet = (Portlet)httpServletRequest.getAttribute(
+					WebKeys.RENDER_PORTLET);
 			}
 
 			if (portlet != null) {
@@ -680,8 +701,11 @@ public class IconTag extends IncludeTag {
 				if (spriteImage != null) {
 					spriteFileName = spriteImage.getSpriteFileName();
 
-					if (BrowserSnifferUtil.isIe(request) &&
-						(BrowserSnifferUtil.getMajorVersion(request) < 7)) {
+					float majorVersion = BrowserSnifferUtil.getMajorVersion(
+						httpServletRequest);
+
+					if (BrowserSnifferUtil.isIe(httpServletRequest) &&
+						(majorVersion < 7)) {
 
 						spriteFileName = StringUtil.replace(
 							spriteFileName, ".png", ".gif");

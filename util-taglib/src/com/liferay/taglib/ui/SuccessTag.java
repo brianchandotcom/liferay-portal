@@ -57,11 +57,14 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest == null) {
-			if (SessionMessages.contains(request, _key)) {
+			if (SessionMessages.contains(httpServletRequest, _key)) {
 				_hasMessage = true;
 
 				return super.doStartTag();
@@ -112,11 +115,14 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 			bodyContentString = bodyContent.toString();
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			request, themeDisplay.getLocale());
+			httpServletRequest, themeDisplay.getLocale());
 
 		if (Validator.isNotNull(bodyContentString)) {
 			message = bodyContentString;

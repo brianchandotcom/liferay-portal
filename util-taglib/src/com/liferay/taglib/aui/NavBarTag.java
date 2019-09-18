@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavBarTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTag;
 
@@ -32,17 +33,24 @@ public class NavBarTag extends BaseNavBarTag implements BodyTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		setNamespacedAttribute(request, "dataTarget", _dataTarget);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		setNamespacedAttribute(httpServletRequest, "dataTarget", _dataTarget);
 		setNamespacedAttribute(
-			request, "responsiveButtons", _responsiveButtonsSB.toString());
-		setNamespacedAttribute(request, "selectedItemName", _selectedItemName);
+			httpServletRequest, "responsiveButtons",
+			_responsiveButtonsSB.toString());
+		setNamespacedAttribute(
+			httpServletRequest, "selectedItemName", _selectedItemName);
 
 		return super.doEndTag();
 	}
 
 	@Override
 	public int doStartTag() throws JspException {
-		request.setAttribute("aui:nav-bar:navItemCount", new IntegerWrapper());
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
+			"aui:nav-bar:navItemCount", new IntegerWrapper());
 
 		return super.doStartTag();
 	}

@@ -162,8 +162,11 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categoryNames;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return FormNavigatorCategoryUtil.getLabels(
 			_id, themeDisplay.getLocale());
@@ -174,8 +177,11 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categorySections;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String[] categoryKeys = getCategoryKeys();
 
@@ -196,8 +202,11 @@ public class FormNavigatorTag extends IncludeTag {
 			return _categorySections;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String[] categoryKeys = getCategoryKeys();
 

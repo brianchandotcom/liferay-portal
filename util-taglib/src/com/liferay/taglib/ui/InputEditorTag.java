@@ -329,8 +329,11 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 	protected String getContentsLanguageId() {
 		if (_contentsLanguageId == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_contentsLanguageId = themeDisplay.getLanguageId();
 		}
@@ -339,7 +342,10 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	protected String getCssClasses() {
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
+			WebKeys.RENDER_PORTLET);
 
 		String cssClasses = "portlet ";
 
@@ -351,7 +357,10 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	protected Map<String, Object> getData() {
-		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String portletId = (String)httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
 
 		if (portletId == null) {
 			return _data;
@@ -359,26 +368,29 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 		Map<String, Object> attributes = new HashMap<>();
 
-		Enumeration<String> enumeration = request.getAttributeNames();
+		Enumeration<String> enumeration =
+			httpServletRequest.getAttributeNames();
 
 		while (enumeration.hasMoreElements()) {
 			String attributeName = enumeration.nextElement();
 
 			if (attributeName.startsWith("liferay-ui:input-editor")) {
 				attributes.put(
-					attributeName, request.getAttribute(attributeName));
+					attributeName,
+					httpServletRequest.getAttribute(attributeName));
 			}
 		}
 
 		attributes.put("liferay-ui:input-editor:namespace", getNamespace());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletId), getConfigKey(),
-				getEditorName(request), attributes, themeDisplay,
+				getEditorName(httpServletRequest), attributes, themeDisplay,
 				getRequestBackedPortletURLFactory());
 
 		Map<String, Object> data = editorConfiguration.getData();
@@ -401,19 +413,23 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	}
 
 	protected String getEditorResourceType() {
-		Editor editor = getEditor(request);
+		Editor editor = getEditor(getRequest());
 
 		return editor.getResourceType();
 	}
 
 	protected String getNamespace() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest == null) || (portletResponse == null)) {
-			return AUIUtil.getNamespace(request);
+			return AUIUtil.getNamespace(httpServletRequest);
 		}
 
 		return AUIUtil.getNamespace(portletRequest, portletResponse);
@@ -421,7 +437,7 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected String getPage() {
-		Editor editor = getEditor(request);
+		Editor editor = getEditor(getRequest());
 
 		return editor.getJspPath();
 	}
@@ -429,11 +445,15 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 	protected RequestBackedPortletURLFactory
 		getRequestBackedPortletURLFactory() {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest == null) {
-			return RequestBackedPortletURLFactoryUtil.create(request);
+			return RequestBackedPortletURLFactoryUtil.create(
+				httpServletRequest);
 		}
 
 		return RequestBackedPortletURLFactoryUtil.create(portletRequest);

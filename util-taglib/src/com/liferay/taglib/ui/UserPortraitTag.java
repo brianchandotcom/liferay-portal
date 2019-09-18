@@ -138,8 +138,11 @@ public class UserPortraitTag extends IncludeTag {
 
 		User user = getUser();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String userPortraitHTML = getUserPortraitHTML(
 			_cssClass, _size, user, themeDisplay);
@@ -200,8 +203,11 @@ public class UserPortraitTag extends IncludeTag {
 	 */
 	@Deprecated
 	protected String getPortraitURL(User user) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return _getPortraitURL(user, themeDisplay);
 	}

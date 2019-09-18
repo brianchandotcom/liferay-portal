@@ -56,8 +56,11 @@ public class LayoutCommonTag extends IncludeTag {
 
 	@Override
 	protected int processEndTag() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isStatePopUp()) {
 			if (!themeDisplay.isStateExclusive() && !themeDisplay.isWidget()) {
@@ -79,7 +82,8 @@ public class LayoutCommonTag extends IncludeTag {
 						company.getCompanyId(), portletId)) {
 
 					RuntimeTag.doTag(
-						portletId, pageContext, request, httpServletResponse);
+						portletId, pageContext, httpServletRequest,
+						httpServletResponse);
 				}
 			}
 		}

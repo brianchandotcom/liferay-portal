@@ -145,8 +145,11 @@ public class LanguageTag extends IncludeTag {
 			return _ddmTemplateGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
 	}
@@ -158,15 +161,19 @@ public class LanguageTag extends IncludeTag {
 			return formAction;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		formAction =
 			themeDisplay.getPathMain() + "/portal/update_language?p_l_id=" +
 				themeDisplay.getPlid();
 
 		formAction = HttpUtil.setParameter(
-			formAction, "redirect", PortalUtil.getCurrentURL(request));
+			formAction, "redirect",
+			PortalUtil.getCurrentURL(httpServletRequest));
 
 		return formAction;
 	}
@@ -208,8 +215,11 @@ public class LanguageTag extends IncludeTag {
 			currentLocale = LocaleUtil.fromLanguageId(_languageId);
 		}
 		else {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			currentLocale = themeDisplay.getLocale();
 		}
@@ -240,8 +250,11 @@ public class LanguageTag extends IncludeTag {
 			return Arrays.asList(LocaleUtil.fromLanguageIds(_languageIds));
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 	}
@@ -253,10 +266,14 @@ public class LanguageTag extends IncludeTag {
 			return name;
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		String namespace = AUIUtil.getNamespace(
 			portletRequest, portletResponse);

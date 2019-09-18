@@ -89,8 +89,11 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	protected String getPortletId() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -98,12 +101,16 @@ public class IconOptionsTag extends IconTag {
 	}
 
 	protected PortletRequest getPortletRequest() {
-		return (PortletRequest)request.getAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		return (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
 	protected PortletResponse getPortletResponse() {
-		return (PortletResponse)request.getAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		return (PortletResponse)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 	}
 

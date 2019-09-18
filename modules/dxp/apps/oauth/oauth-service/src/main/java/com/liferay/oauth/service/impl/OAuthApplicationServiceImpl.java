@@ -19,15 +19,25 @@ import com.liferay.oauth.service.base.OAuthApplicationServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthApplicationPermission;
 import com.liferay.oauth.service.permission.OAuthPermission;
 import com.liferay.oauth.util.OAuthActionKeys;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(
+	property = {
+		"json.web.service.context.name=oauth",
+		"json.web.service.context.path=OAuthApplication"
+	},
+	service = AopService.class
+)
 public class OAuthApplicationServiceImpl
 	extends OAuthApplicationServiceBaseImpl {
 

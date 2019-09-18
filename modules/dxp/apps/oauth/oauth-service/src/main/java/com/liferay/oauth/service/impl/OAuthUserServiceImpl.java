@@ -20,14 +20,24 @@ import com.liferay.oauth.service.base.OAuthUserServiceBaseImpl;
 import com.liferay.oauth.service.permission.OAuthUserPermission;
 import com.liferay.oauth.util.OAuthActionKeys;
 import com.liferay.oauth.util.OAuthUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
+@Component(
+	property = {
+		"json.web.service.context.name=oauth",
+		"json.web.service.context.path=OAuthUser"
+	},
+	service = AopService.class
+)
 public class OAuthUserServiceImpl extends OAuthUserServiceBaseImpl {
 
 	@Override

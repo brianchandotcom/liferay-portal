@@ -147,6 +147,11 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteEntries(long companyId) {
+		_announcementsEntryLocalService.deleteEntries(companyId);
+	}
+
+	@Override
 	public void deleteEntries(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

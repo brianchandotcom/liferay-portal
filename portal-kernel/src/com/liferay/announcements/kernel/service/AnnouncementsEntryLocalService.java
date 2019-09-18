@@ -132,6 +132,8 @@ public interface AnnouncementsEntryLocalService
 	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
 		throws PortalException;
 
+	public void deleteEntries(long companyId);
+
 	public void deleteEntries(long classNameId, long classPK)
 		throws PortalException;
 

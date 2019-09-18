@@ -141,6 +141,10 @@ public class AnnouncementsEntryLocalServiceUtil {
 		return getService().deleteAnnouncementsEntry(entryId);
 	}
 
+	public static void deleteEntries(long companyId) {
+		getService().deleteEntries(companyId);
+	}
+
 	public static void deleteEntries(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

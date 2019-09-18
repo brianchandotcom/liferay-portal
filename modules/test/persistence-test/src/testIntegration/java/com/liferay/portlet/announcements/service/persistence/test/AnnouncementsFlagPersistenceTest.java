@@ -159,6 +159,13 @@ public class AnnouncementsFlagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByEntryId() throws Exception {
 		_persistence.countByEntryId(RandomTestUtil.nextLong());
 

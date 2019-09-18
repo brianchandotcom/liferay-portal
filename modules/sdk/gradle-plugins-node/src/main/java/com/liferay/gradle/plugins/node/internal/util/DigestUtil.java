@@ -38,8 +38,26 @@ import org.gradle.internal.hash.HashValue;
 
 /**
  * @author Hugo Huijser
+ * @author Andrea Di Giorgi
  */
 public class DigestUtil {
+
+	public static String getDigest(File digestFile) {
+		if (!digestFile.exists()) {
+			return null;
+		}
+
+		byte[] bytes = null;
+
+		try {
+			bytes = Files.readAllBytes(digestFile.toPath());
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		return new String(bytes, StandardCharsets.UTF_8);
+	}
 
 	public static String getDigest(Iterable<File> files) {
 		StringBuilder sb = new StringBuilder();
@@ -95,23 +113,6 @@ public class DigestUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String getDigest(File digestFile) {
-		if (!digestFile.exists()) {
-			return null;
-		}
-
-		byte[] bytes = null;
-
-		try {
-			bytes = Files.readAllBytes(digestFile.toPath());
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
-
-		return new String(bytes, StandardCharsets.UTF_8);
 	}
 
 	private static SortedSet<File> _flattenAndSort(Iterable<File> files)

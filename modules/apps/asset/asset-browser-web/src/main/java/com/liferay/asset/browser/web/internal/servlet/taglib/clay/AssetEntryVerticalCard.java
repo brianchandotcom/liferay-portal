@@ -68,6 +68,8 @@ public class AssetEntryVerticalCard implements VerticalCard {
 		Map<String, String> data = new HashMap<>();
 
 		data.put("assetclassname", _assetEntry.getClassName());
+		data.put(
+			"assetclassnameid", String.valueOf(_assetEntry.getClassNameId()));
 		data.put("assetclasspk", String.valueOf(_assetEntry.getClassPK()));
 		data.put(
 			"assettitle", _assetRenderer.getTitle(_themeDisplay.getLocale()));

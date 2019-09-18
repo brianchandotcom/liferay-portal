@@ -211,6 +211,14 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.baseline") {
+			if (project.path.startsWith(":third-party:")) {
+				baseline {
+					enabled = false
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
 			downloadLiferayModuleConfigGenerator {
 				enabled = false

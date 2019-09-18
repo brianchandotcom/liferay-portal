@@ -42,7 +42,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileManager;
@@ -56,8 +55,6 @@ import org.apache.jasper.JasperException;
 import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.Options;
 import org.apache.jasper.compiler.ErrorDispatcher;
-import org.apache.jasper.compiler.JavacErrorDetail;
-import org.apache.jasper.compiler.Node;
 import org.apache.jasper.compiler.TldCache;
 import org.apache.tomcat.util.descriptor.tld.TaglibXml;
 import org.apache.tomcat.util.descriptor.tld.TldParser;
@@ -80,7 +77,8 @@ import org.xml.sax.SAXException;
  */
 public class JspCompiler {
 
-	public JavacErrorDetail[] compile(String className, Node.Nodes pageNodes)
+	public DiagnosticCollector<JavaFileObject> compile(
+			String className, ErrorDispatcher errorDispatcher)
 		throws JasperException {
 
 		_bytecodeJavaFileObjects = new ArrayList<>();
@@ -88,7 +86,7 @@ public class JspCompiler {
 		JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 
 		if (javaCompiler == null) {
-			_errorDispatcher.jspError("jsp.error.nojdk");
+			errorDispatcher.jspError("jsp.error.nojdk");
 
 			throw new JasperException("Unable to find Java compiler");
 		}
@@ -123,7 +121,8 @@ public class JspCompiler {
 							_jspCompilationContext.getServletJavaFileName()))));
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Compiling JSP: ".concat(className));
+				_log.debug(
+					"Compiling JSP: ".concat(_jspCompilationContext.getFQCN()));
 			}
 
 			if (compilationTask.call()) {
@@ -140,32 +139,11 @@ public class JspCompiler {
 			throw new JasperException(ioException);
 		}
 
-		List<Diagnostic<? extends JavaFileObject>> diagnostics =
-			diagnosticCollector.getDiagnostics();
-
-		JavacErrorDetail[] javacErrorDetails =
-			new JavacErrorDetail[diagnostics.size()];
-
-		for (int i = 0; i < diagnostics.size(); i++) {
-			Diagnostic<? extends JavaFileObject> diagnostic = diagnostics.get(
-				i);
-
-			javacErrorDetails[i] = ErrorDispatcher.createJavacError(
-				_javaFileName, pageNodes,
-				new StringBuilder(diagnostic.getMessage(null)),
-				(int)diagnostic.getLineNumber());
-		}
-
-		return javacErrorDetails;
+		return diagnosticCollector;
 	}
 
-	public void init(
-		JspCompilationContext jspCompilationContext,
-		ErrorDispatcher errorDispatcher) {
-
-		_errorDispatcher = errorDispatcher;
+	public void init(JspCompilationContext jspCompilationContext) {
 		_jspCompilationContext = jspCompilationContext;
-		_jspRuntimeContext = jspCompilationContext.getRuntimeContext();
 
 		_compilerOptions.add("-XDuseUnsharedTable");
 		_compilerOptions.add("-proc:none");
@@ -575,7 +553,6 @@ public class JspCompiler {
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private final List<String> _compilerOptions = new ArrayList<>();
-	private ErrorDispatcher _errorDispatcher;
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
 		new ArrayList<>();
 	private JspCompilationContext _jspCompilationContext;

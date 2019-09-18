@@ -35,7 +35,7 @@ export default function(nameSpace) {
 
 			form.elements[
 				`${nameSpace}deletedSynonymSetsString`
-			].value = checkedSynonyms.join(';');
+			].value = checkedSynonyms.join(', ');
 
 			form.submit();
 		}

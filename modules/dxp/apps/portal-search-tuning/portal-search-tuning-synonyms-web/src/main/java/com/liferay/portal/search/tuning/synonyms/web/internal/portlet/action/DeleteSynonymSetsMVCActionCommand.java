@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -51,7 +52,8 @@ public class DeleteSynonymSetsMVCActionCommand extends BaseMVCActionCommand {
 		String deletedSynonymSetsString = ParamUtil.getString(
 			actionRequest, "deletedSynonymSetsString");
 
-		String[] deletedSynonymSets = deletedSynonymSetsString.split(";");
+		String[] deletedSynonymSets = deletedSynonymSetsString.split(
+			StringPool.COMMA_AND_SPACE);
 
 		for (String filterName : _FILTER_NAMES) {
 			String[] synonymSets = _synonymIndexer.getSynonymSets(

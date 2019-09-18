@@ -40,7 +40,7 @@ public class BatchEngineTaskLocalServiceImpl
 		long companyId, long userId,
 		BatchEngineTaskContentType batchEngineTaskContentType,
 		BatchEngineTaskOperation batchEngineTaskOperation, long batchSize,
-		String className, byte[] content, String version) {
+		String callbackURL, String className, byte[] content, String version) {
 
 		BatchEngineTask batchEngineTask = batchEngineTaskPersistence.create(
 			counterLocalService.increment(BatchEngineTask.class.getName()));
@@ -48,6 +48,7 @@ public class BatchEngineTaskLocalServiceImpl
 		batchEngineTask.setCompanyId(companyId);
 		batchEngineTask.setUserId(userId);
 		batchEngineTask.setBatchSize(batchSize);
+		batchEngineTask.setCallbackURL(callbackURL);
 		batchEngineTask.setClassName(className);
 		batchEngineTask.setContent(
 			new OutputBlob(

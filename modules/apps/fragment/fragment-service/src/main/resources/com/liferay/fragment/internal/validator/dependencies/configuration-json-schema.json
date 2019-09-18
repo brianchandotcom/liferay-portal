@@ -223,6 +223,9 @@
 										"type": "string"
 									}
 								},
+								"not": {
+									"type": "null"
+								},
 								"required": [
 									"value"
 								],

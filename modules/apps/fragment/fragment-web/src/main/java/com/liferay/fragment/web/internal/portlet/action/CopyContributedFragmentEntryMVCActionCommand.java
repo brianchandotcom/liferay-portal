@@ -18,13 +18,13 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -136,10 +136,6 @@ public class CopyContributedFragmentEntryMVCActionCommand
 		String imagePreviewURL) {
 
 		try {
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionService.fetchFragmentCollection(
-					fragmentCollectionId);
-
 			URL url = new URL(imagePreviewURL);
 
 			byte[] bytes = null;
@@ -150,10 +146,24 @@ public class CopyContributedFragmentEntryMVCActionCommand
 
 			String shortFileName = FileUtil.getShortFileName(imagePreviewURL);
 
+			Repository repository =
+				PortletFileRepositoryUtil.fetchPortletRepository(
+					groupId, FragmentPortletKeys.FRAGMENT);
+
+			if (repository == null) {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setAddGroupPermissions(true);
+				serviceContext.setAddGuestPermissions(true);
+
+				repository = PortletFileRepositoryUtil.addPortletRepository(
+					groupId, FragmentPortletKeys.FRAGMENT, serviceContext);
+			}
+
 			FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 				groupId, userId, FragmentCollection.class.getName(),
 				fragmentCollectionId, FragmentPortletKeys.FRAGMENT,
-				fragmentCollection.getResourcesFolderId(), bytes, shortFileName,
+				repository.getDlFolderId(), bytes, shortFileName,
 				MimeTypesUtil.getContentType(shortFileName), false);
 
 			return fileEntry.getFileEntryId();
@@ -173,9 +183,6 @@ public class CopyContributedFragmentEntryMVCActionCommand
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentCollectionService _fragmentCollectionService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

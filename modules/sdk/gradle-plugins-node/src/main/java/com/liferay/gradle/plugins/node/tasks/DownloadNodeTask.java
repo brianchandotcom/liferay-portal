@@ -59,10 +59,9 @@ public class DownloadNodeTask extends DefaultTask {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (Objects.equals(
-							DigestUtil.getDigest(_getDigestFile()),
-							DigestUtil.getDigest(getNodeUrl(), getNpmUrl()))) {
+					String oldDigest = DigestUtil.getDigest(_getDigestFile());
 
+					if (Objects.equals(oldDigest, _getDigest())) {
 						return false;
 					}
 
@@ -145,7 +144,7 @@ public class DownloadNodeTask extends DefaultTask {
 			Files.createSymbolicLink(linkPath, linkTargetFile.toPath());
 		}
 
-		String digest = DigestUtil.getDigest(getNodeUrl(), getNpmUrl());
+		String digest = _getDigest();
 
 		FileUtil.write(
 			_getDigestFile(), digest.getBytes(StandardCharsets.UTF_8));
@@ -211,6 +210,10 @@ public class DownloadNodeTask extends DefaultTask {
 		}
 
 		return FileUtil.get(getProject(), url, destinationFile);
+	}
+
+	private String _getDigest() {
+		return DigestUtil.getDigest(getNodeUrl(), getNpmUrl());
 	}
 
 	private File _getDigestFile() {

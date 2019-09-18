@@ -145,14 +145,12 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
 		ddmForm.updateDDMFormInputValue();
 
-		var form = A.one('#' + result.form);
-
-		var data = new URLSearchParams(new FormData(document.querySelector('#'+result.form)));
+		var form = document.getElementById(result.form);
 
 		Liferay.Util.fetch(
-			form.attr('action'),
+			form.action,
 			{
-				body: data,
+				body: new FormData(form),
 				method: 'POST'
 			}
 		).then(function(response) {

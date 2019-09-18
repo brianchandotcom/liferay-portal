@@ -55,7 +55,7 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
 		Button.click(
-			button = "Restore Values")
+			button = "Restore Values");
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}

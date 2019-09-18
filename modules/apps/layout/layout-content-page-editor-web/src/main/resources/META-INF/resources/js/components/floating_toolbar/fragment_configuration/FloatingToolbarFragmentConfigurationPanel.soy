@@ -24,9 +24,9 @@
 	{@param? spritemap: string}
 	{@param? store: ?}
 
-	<div class="popover popover-scrollable pt-3">
-		<div class="floating-toolbar-fragment-configuration-panel popover-scrollable__content">
-			<div class="pb-3 pl-3 pr-3">
+	<div class="popover">
+		<div class="floating-toolbar-fragment-configuration-panel">
+			<div class="p-3">
 				{foreach $fieldSet in $item.configuration.fieldSets}
 					{call .fieldSet}
 						{param configurationValues: $item.configurationValues /}

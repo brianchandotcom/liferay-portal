@@ -49,18 +49,10 @@
 		z-index: $floatingToolbarPanelZIndex;
 
 		& > .popover {
+			max-height: 250px;
 			min-width: $floatingToolbarPanelMinWidth;
+			overflow: auto;
 			position: static;
-		}
-
-		& > .popover-scrollable {
-			height: 250px;
-			overflow-y: hidden;
-
-			.popover-scrollable__content {
-				height: 100%;
-				overflow-y: auto;
-			}
 		}
 
 		.btn,

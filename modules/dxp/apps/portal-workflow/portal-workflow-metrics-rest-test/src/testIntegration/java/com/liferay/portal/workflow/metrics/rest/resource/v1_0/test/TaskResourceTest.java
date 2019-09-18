@@ -85,6 +85,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Task task1 = randomTask();
 
 		task1.setDurationAvg(1000L);
+		task1.setInstanceCount(1L);
 		task1.setOnTimeInstanceCount(0L);
 		task1.setOverdueInstanceCount(0L);
 
@@ -93,6 +94,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Task task2 = randomTask();
 
 		task2.setDurationAvg(2000L);
+		task2.setInstanceCount(1L);
 		task2.setOnTimeInstanceCount(0L);
 		task2.setOverdueInstanceCount(0L);
 

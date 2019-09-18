@@ -612,6 +612,22 @@ definition {
 	test ViewCommentOnDifferentExperience {
 		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
 
+		ProductMenu.gotoPortlet(
+			category = "People",
+			panel = "Site Administration",
+			portlet = "Segments");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+		Segmentation.fillTitle(titleField = "New Segment Title");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Contains");
+		Segmentation.fillEmailAddress(emailAddressField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

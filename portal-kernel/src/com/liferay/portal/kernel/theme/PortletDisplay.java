@@ -479,8 +479,12 @@ public class PortletDisplay implements Cloneable, Serializable {
 		String portletSetupPortletDecoratorId = portletSetup.getValue(
 			"portletSetupPortletDecoratorId", StringPool.BLANK);
 
+		Layout layout = _themeDisplay.getLayout();
+
 		if (Validator.isNull(portletSetupPortletDecoratorId) &&
-			_isFragmentPage()) {
+			(Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
 
 			return false;
 		}
@@ -489,7 +493,12 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	public boolean isShowPortletTopper() {
-		if (_isFragmentPage()) {
+		Layout layout = _themeDisplay.getLayout();
+
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
+			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+
 			return false;
 		}
 
@@ -897,22 +906,6 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 	public void writeContent(Writer writer) throws IOException {
 		_contentSB.writeTo(writer);
-	}
-
-	private boolean _isFragmentPage() {
-		Layout layout = _themeDisplay.getLayout();
-
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
-
-			return true;
-		}
-
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletDisplay.class);

@@ -45,8 +45,8 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
-	macro gotoAddItemViaNewButton {
-		Click(
+	macro gotoAddItemViaNewButton { 
+		AssertClick(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = "New Custom Object");
 	}
@@ -60,9 +60,7 @@ definition {
 	}
 
 	macro switchTab() {
-		Click(
-			locator1 = "AppBuilder#CUSTOM_OBJECT_TABS",
-			value1 = "${tabName}");
+		Navigator.gotoNavItem(navItem = "${tabName}");
 	}
 
 	macro teardownAppBuilder {

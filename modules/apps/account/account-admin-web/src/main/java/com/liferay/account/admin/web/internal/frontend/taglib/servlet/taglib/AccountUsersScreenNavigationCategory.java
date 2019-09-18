@@ -15,25 +15,13 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
-import com.liferay.account.admin.web.internal.display.AccountDisplay;
-import com.liferay.account.model.AccountEntry;
-import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.io.IOException;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Albert Lee
@@ -46,53 +34,27 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class AccountUsersScreenNavigationCategory
-	implements ScreenNavigationCategory, ScreenNavigationEntry {
+	extends BaseAccountScreenNavigationEntry
+	implements ScreenNavigationCategory {
 
+	@Override
 	public String getCategoryKey() {
 		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS;
 	}
 
+	@Override
 	public String getEntryKey() {
 		return AccountScreenNavigationEntryConstants.ENTRY_KEY_USERS;
 	}
 
+	@Override
+	public String getJspPath() {
+		return "/account/users.jsp";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "users");
 	}
-
-	public String getScreenNavigationKey() {
-		return AccountScreenNavigationEntryConstants.
-			SCREEN_NAVIGATION_KEY_ACCOUNT;
-	}
-
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		long accountEntryId = ParamUtil.getLong(
-			httpServletRequest, "accountEntryId");
-
-		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
-			accountEntryId);
-
-		AccountDisplay accountDisplay = null;
-
-		if (accountEntry != null) {
-			accountDisplay = AccountDisplay.of(accountEntry);
-		}
-
-		httpServletRequest.setAttribute(
-			AccountWebKeys.ACCOUNT_DISPLAY, accountDisplay);
-
-		_jspRenderer.renderJSP(
-			httpServletRequest, httpServletResponse, "/account/users.jsp");
-	}
-
-	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
 
 }

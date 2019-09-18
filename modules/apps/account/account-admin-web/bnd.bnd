@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.account.admin.web
 Bundle-Version: 1.0.0
 Liferay-JS-Submodules-Bridge: account-admin-web
 Web-ContextPath: /account-admin-web
+-dsannotations-options: inherit

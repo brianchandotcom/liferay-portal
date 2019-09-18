@@ -16,11 +16,9 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
-import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
@@ -39,10 +37,7 @@ public class EditInOneDriveAndRedirectMVCActionCommand
 
 	@Override
 	protected OAuth2Controller getOAuth2Controller() {
-		return _oAuth2ControllerFactory.getRedirectingOAuth2Controller();
+		return oAuth2ControllerFactory.getRedirectingOAuth2Controller();
 	}
-
-	@Reference
-	private OAuth2ControllerFactory _oAuth2ControllerFactory;
 
 }

@@ -77,19 +77,41 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected OAuth2Controller getOAuth2Controller() {
-		return _oAuth2ControllerFactory.getJSONOAuth2Controller(
+		return oAuth2ControllerFactory.getJSONOAuth2Controller(
 			this::_getSuccessURL);
 	}
+
+	@Reference
+	protected DLAppService dlAppService;
+
+	@Reference
+	protected DLOpenerOneDriveManager dlOpenerOneDriveManager;
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected OAuth2ControllerFactory oAuth2ControllerFactory;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletURLFactory portletURLFactory;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	protected ResourceBundleLoader resourceBundleLoader;
 
 	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 
-		return _dlOpenerOneDriveManager.checkOut(
-			serviceContext.getUserId(),
-			_dlAppService.getFileEntry(fileEntryId));
+		return dlOpenerOneDriveManager.checkOut(
+			serviceContext.getUserId(), dlAppService.getFileEntry(fileEntryId));
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)
@@ -111,13 +133,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 				String oneDriveBackgroundTaskStatusURL =
 					OneDriveURLUtil.getBackgroundTaskStatusURL(
-						dlOpenerOneDriveFileReference, _portal, portletRequest,
-						_portletURLFactory);
+						dlOpenerOneDriveFileReference, portal, portletRequest,
+						portletURLFactory);
 
 				return JSONUtil.put(
 					"dialogMessage",
 					_translate(
-						_portal.getLocale(portletRequest),
+						portal.getLocale(portletRequest),
 						"you-are-being-redirected-to-an-external-editor-to-" +
 							"edit-this-document")
 				).put(
@@ -138,19 +160,19 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
-				_dlOpenerOneDriveManager.requestEditAccess(
+				dlOpenerOneDriveManager.requestEditAccess(
 					themeDisplay.getUserId(),
-					_dlAppService.getFileEntry(fileEntryId));
+					dlAppService.getFileEntry(fileEntryId));
 
 			String oneDriveBackgroundTaskStatusURL =
 				OneDriveURLUtil.getBackgroundTaskStatusURL(
-					dlOpenerOneDriveFileReference, _portal, portletRequest,
-					_portletURLFactory);
+					dlOpenerOneDriveFileReference, portal, portletRequest,
+					portletURLFactory);
 
 			return JSONUtil.put(
 				"dialogMessage",
 				_translate(
-					_portal.getLocale(portletRequest),
+					portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-edit-" +
 						"this-document")
 			).put(
@@ -164,8 +186,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			portletRequest, _portal.getPortletId(portletRequest),
+		LiferayPortletURL liferayPortletURL = portletURLFactory.create(
+			portletRequest, portal.getPortletId(portletRequest),
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameters(portletRequest.getParameterMap());
@@ -178,34 +200,11 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _translate(Locale locale, String key) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
-		return _language.get(resourceBundle, key);
+		return language.get(resourceBundle, key);
 	}
-
-	@Reference
-	private DLAppService _dlAppService;
-
-	@Reference
-	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private OAuth2ControllerFactory _oAuth2ControllerFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

@@ -44,3 +44,4 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /document-library-opener-one-drive-web
+-dsannotations-options: inherit

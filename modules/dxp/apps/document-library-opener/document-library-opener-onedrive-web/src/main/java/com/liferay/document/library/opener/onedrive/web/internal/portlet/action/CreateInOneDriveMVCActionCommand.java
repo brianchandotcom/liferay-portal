@@ -86,16 +86,42 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected OAuth2Controller getOAuth2Controller() {
-		return _oAuth2ControllerFactory.getJSONOAuth2Controller(
+		return oAuth2ControllerFactory.getJSONOAuth2Controller(
 			this::_getSuccessURL);
 	}
+
+	@Reference
+	protected DLAppService dlAppService;
+
+	@Reference
+	protected DLOpenerOneDriveManager dlOpenerOneDriveManager;
+
+	@Reference
+	protected Language language;
+
+	@Reference
+	protected OAuth2ControllerFactory oAuth2ControllerFactory;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletURLFactory portletURLFactory;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	protected ResourceBundleLoader resourceBundleLoader;
+
+	@Reference
+	protected UniqueFileEntryTitleProvider uniqueFileEntryTitleProvider;
 
 	private DLOpenerOneDriveFileReference _addDLOpenerOneDriveFileReference(
 			Locale locale, long userId, long repositoryId, long folderId,
 			String mimeType, String title, ServiceContext serviceContext)
 		throws PortalException {
 
-		String uniqueTitle = _uniqueFileEntryTitleProvider.provide(
+		String uniqueTitle = uniqueFileEntryTitleProvider.provide(
 			serviceContext.getScopeGroupId(), folderId, title);
 
 		String sourceFileName = uniqueTitle;
@@ -122,15 +148,15 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		FileEntry fileEntry = _dlAppService.addFileEntry(
+		FileEntry fileEntry = dlAppService.addFileEntry(
 			repositoryId, folderId, sourceFileName, mimeType, uniqueTitle,
 			StringPool.BLANK, StringPool.BLANK,
 			byteArrayOutputStream.toByteArray(), serviceContext);
 
-		_dlAppService.checkOutFileEntry(
+		dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		return _dlOpenerOneDriveManager.createFile(userId, fileEntry);
+		return dlOpenerOneDriveManager.createFile(userId, fileEntry);
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)
@@ -145,7 +171,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 			String title = ParamUtil.getString(
 				portletRequest, "title",
-				_translate(_portal.getLocale(portletRequest), "untitled"));
+				_translate(portal.getLocale(portletRequest), "untitled"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				portletRequest);
@@ -154,19 +180,19 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,
 					() -> _addDLOpenerOneDriveFileReference(
-						_portal.getLocale(portletRequest),
-						_portal.getUserId(portletRequest), repositoryId,
+						portal.getLocale(portletRequest),
+						portal.getUserId(portletRequest), repositoryId,
 						folderId, contentType, title, serviceContext));
 
 			String oneDriveBackgroundTaskStatusURL =
 				OneDriveURLUtil.getBackgroundTaskStatusURL(
-					dlOpenerOneDriveFileReference, _portal, portletRequest,
-					_portletURLFactory);
+					dlOpenerOneDriveFileReference, portal, portletRequest,
+					portletURLFactory);
 
 			return JSONUtil.put(
 				"dialogMessage",
 				_translate(
-					_portal.getLocale(portletRequest),
+					portal.getLocale(portletRequest),
 					"you-are-being-redirected-to-an-external-editor-to-" +
 						"create-this-document")
 			).put(
@@ -183,8 +209,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			portletRequest, _portal.getPortletId(portletRequest),
+		LiferayPortletURL liferayPortletURL = portletURLFactory.create(
+			portletRequest, portal.getPortletId(portletRequest),
 			PortletRequest.ACTION_PHASE);
 
 		liferayPortletURL.setParameters(portletRequest.getParameterMap());
@@ -197,40 +223,14 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _translate(Locale locale, String key) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(locale);
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
 
-		return _language.get(resourceBundle, key);
+		return language.get(resourceBundle, key);
 	}
-
-	@Reference
-	private DLAppService _dlAppService;
-
-	@Reference
-	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private OAuth2ControllerFactory _oAuth2ControllerFactory;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
-	@Reference
-	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;
 
 }

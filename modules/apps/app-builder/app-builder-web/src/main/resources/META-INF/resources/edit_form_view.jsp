@@ -18,6 +18,7 @@
 
 <%
 String componentId = renderResponse.getNamespace() + "dataLayoutBuilder";
+String customObjectSidebarElementId = renderResponse.getNamespace() + "-app-builder-custom-object-sidebar";
 String dataLayoutBuilderElementId = renderResponse.getNamespace() + "-app-builder-data-layout-builder";
 String editFormViewRootElementId = renderResponse.getNamespace() + "-app-builder-edit-form-view";
 
@@ -39,6 +40,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("basePortletURL", basePortletURL.toString());
+			data.put("customObjectSidebarElementId", customObjectSidebarElementId);
 			data.put("dataDefinitionId", dataDefinitionId);
 			data.put("dataLayoutBuilderElementId", dataLayoutBuilderElementId);
 			data.put("dataLayoutBuilderId", componentId);
@@ -52,14 +54,18 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 			/>
 		</div>
 
-		<div class="app-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
-			<liferay-data-engine:data-layout-builder
-				componentId="<%= componentId %>"
-				dataDefinitionInputId="dataDefinition"
-				dataLayoutId="<%= dataLayoutId %>"
-				dataLayoutInputId="dataLayout"
-				namespace="<%= renderResponse.getNamespace() %>"
-			/>
+		<div class="app-builder-form-view-body">
+			<div class="app-builder-custom-object-sidebar" id="<%= customObjectSidebarElementId %>"></div>
+
+			<div class="app-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
+				<liferay-data-engine:data-layout-builder
+					componentId="<%= componentId %>"
+					dataDefinitionInputId="dataDefinition"
+					dataLayoutId="<%= dataLayoutId %>"
+					dataLayoutInputId="dataLayout"
+					namespace="<%= renderResponse.getNamespace() %>"
+				/>
+			</div>
 		</div>
 	</aui:form>
 </div>

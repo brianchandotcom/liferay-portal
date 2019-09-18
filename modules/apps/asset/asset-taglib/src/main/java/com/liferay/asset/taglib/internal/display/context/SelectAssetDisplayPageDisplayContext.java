@@ -175,7 +175,12 @@ public class SelectAssetDisplayPageDisplayContext {
 			_getAssetDisplayPageEntry();
 
 		if (assetDisplayPageEntry == null) {
-			_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
+			if (Validator.isNull(getLayoutUuid())) {
+				_displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
+			}
+			else {
+				_displayPageType = AssetDisplayPageConstants.TYPE_SPECIFIC;
+			}
 		}
 		else {
 			_displayPageType = assetDisplayPageEntry.getType();

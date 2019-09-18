@@ -31,6 +31,17 @@ public class AccountDisplay {
 		return new AccountDisplay(accountEntry);
 	}
 
+	public static AccountDisplay of(long accountEntryId) {
+		AccountEntry accountEntry =
+			AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId);
+
+		if (accountEntry != null) {
+			return new AccountDisplay(accountEntry);
+		}
+
+		return null;
+	}
+
 	public long getAccountId() {
 		return _accountId;
 	}

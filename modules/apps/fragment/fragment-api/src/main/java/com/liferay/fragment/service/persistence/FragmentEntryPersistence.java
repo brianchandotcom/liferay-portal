@@ -518,62 +518,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByGroupId_PrevAndNext(
-			long fragmentEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -587,14 +531,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByGroupId(long groupId);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByGroupId(long groupId);
 
 	/**
 	 * Returns all the fragment entries where fragmentCollectionId = &#63;.
@@ -879,67 +815,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI(
-		long groupId, long fragmentCollectionId);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI(
-		long groupId, long fragmentCollectionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI(
-		long groupId, long fragmentCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -955,15 +830,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI(long groupId, long fragmentCollectionId);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI(long groupId, long fragmentCollectionId);
 
 	/**
 	 * Returns the fragment entry where groupId = &#63; and fragmentEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1167,74 +1033,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN(
-		long groupId, long fragmentCollectionId, String name);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN(
-		long groupId, long fragmentCollectionId, String name, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN(
-		long groupId, long fragmentCollectionId, String name, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_LikeN_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1253,17 +1051,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI_LikeN(
-		long groupId, long fragmentCollectionId, String name);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name);
 
 	/**
@@ -1415,72 +1202,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T(
-		long groupId, long fragmentCollectionId, int type);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T(
-		long groupId, long fragmentCollectionId, int type, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T(
-		long groupId, long fragmentCollectionId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_T_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			int type,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1499,17 +1220,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI_T(
-		long groupId, long fragmentCollectionId, int type);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type);
 
 	/**
@@ -1662,73 +1372,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_S_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1747,17 +1390,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI_S(
-		long groupId, long fragmentCollectionId, int status);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param status the status
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status);
 
 	/**
@@ -1921,78 +1553,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN_S(
-		long groupId, long fragmentCollectionId, String name, int status);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN_S(
-		long groupId, long fragmentCollectionId, String name, int status,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_LikeN_S(
-		long groupId, long fragmentCollectionId, String name, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_LikeN_S_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			String name, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2013,18 +1573,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI_LikeN_S(
-		long groupId, long fragmentCollectionId, String name, int status);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param name the name
-	 * @param status the status
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI_LikeN_S(
 		long groupId, long fragmentCollectionId, String name, int status);
 
 	/**
@@ -2188,78 +1736,6 @@ public interface FragmentEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T_S(
-		long groupId, long fragmentCollectionId, int type, int status);
-
-	/**
-	 * Returns a range of all the fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T_S(
-		long groupId, long fragmentCollectionId, int type, int status,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the fragment entries that the user has permissions to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entries that the user has permission to view
-	 */
-	public java.util.List<FragmentEntry> filterFindByG_FCI_T_S(
-		long groupId, long fragmentCollectionId, int type, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-			orderByComparator);
-
-	/**
-	 * Returns the fragment entries before and after the current fragment entry in the ordered set of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param fragmentEntryId the primary key of the current fragment entry
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	public FragmentEntry[] filterFindByG_FCI_T_S_PrevAndNext(
-			long fragmentEntryId, long groupId, long fragmentCollectionId,
-			int type, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentEntry>
-				orderByComparator)
-		throws NoSuchEntryException;
-
-	/**
 	 * Removes all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -2280,18 +1756,6 @@ public interface FragmentEntryPersistence
 	 * @return the number of matching fragment entries
 	 */
 	public int countByG_FCI_T_S(
-		long groupId, long fragmentCollectionId, int type, int status);
-
-	/**
-	 * Returns the number of fragment entries that the user has permission to view where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentCollectionId the fragment collection ID
-	 * @param type the type
-	 * @param status the status
-	 * @return the number of matching fragment entries that the user has permission to view
-	 */
-	public int filterCountByG_FCI_T_S(
 		long groupId, long fragmentCollectionId, int type, int status);
 
 	/**

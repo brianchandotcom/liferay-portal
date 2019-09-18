@@ -29,9 +29,5 @@ const EditFormViewApp = dragDropContext(HTML5Backend)(
 );
 
 export default function(props) {
-	return (
-		<div className="app-builder-root">
-			<EditFormViewApp {...props} />
-		</div>
-	);
+	return <EditFormViewApp {...props} />;
 }

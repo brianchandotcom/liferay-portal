@@ -65,9 +65,9 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 	@Override
 	public void cancelCheckOut(long fileEntryId) throws PortalException {
-		super.cancelCheckOut(fileEntryId);
-
 		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		super.cancelCheckOut(fileEntryId);
 
 		if (_dlOpenerOneDriveManager.isConfigured(fileEntry.getCompanyId()) &&
 			_dlOpenerOneDriveManager.isOneDriveFile(fileEntry)) {

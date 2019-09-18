@@ -20,13 +20,26 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.tools.Diagnostic;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaFileObject;
+
 import org.apache.jasper.EmbeddedServletOptions;
+import org.apache.jasper.JasperException;
+import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.Options;
 import org.apache.jasper.compiler.Compiler;
+import org.apache.jasper.compiler.ErrorDispatcher;
+import org.apache.jasper.compiler.JavacErrorDetail;
 import org.apache.jasper.compiler.JspRuntimeContext;
+import org.apache.jasper.compiler.Localizer;
+import org.apache.jasper.compiler.SmapStratum;
+import org.apache.jasper.compiler.SmapUtil;
+import org.apache.jasper.servlet.JspServletWrapper;
 
 /**
  * @author Matthew Tambara
@@ -44,6 +57,18 @@ public class CompilerWrapper extends Compiler {
 		}
 
 		super.compile(compileClass);
+	}
+
+	@Override
+	public void init(
+		JspCompilationContext jspCompilationContext,
+		JspServletWrapper jspServletWrapper) {
+
+		super.init(jspCompilationContext, jspServletWrapper);
+
+		_jspCompiler = new JspCompiler();
+
+		_jspCompiler.init(jspCompilationContext);
 	}
 
 	@Override
@@ -82,6 +107,54 @@ public class CompilerWrapper extends Compiler {
 		}
 
 		return super.isOutDated();
+	}
+
+	@Override
+	protected void generateClass(Map<String, SmapStratum> smaps)
+		throws Exception {
+
+		DiagnosticCollector<JavaFileObject> diagnosticCollector =
+			_jspCompiler.compile(ctxt.getServletClassName(), errDispatcher);
+
+		if (!ctxt.keepGenerated()) {
+			File javaFile = new File(ctxt.getServletJavaFileName());
+
+			if (!javaFile.delete()) {
+				throw new JasperException(
+					Localizer.getMessage(
+						"jsp.warning.compiler.javafile.delete.fail", javaFile));
+			}
+		}
+
+		if (diagnosticCollector != null) {
+			List<Diagnostic<? extends JavaFileObject>> diagnostics =
+				diagnosticCollector.getDiagnostics();
+
+			JavacErrorDetail[] javacErrorDetails =
+				new JavacErrorDetail[diagnostics.size()];
+
+			for (int i = 0; i < diagnostics.size(); i++) {
+				Diagnostic<? extends JavaFileObject> diagnostic =
+					diagnostics.get(i);
+
+				javacErrorDetails[i] = ErrorDispatcher.createJavacError(
+					ctxt.getServletJavaFileName(), pageNodes,
+					new StringBuilder(diagnostic.getMessage(null)),
+					(int)diagnostic.getLineNumber());
+			}
+
+			errDispatcher.javacError(javacErrorDetails);
+
+			return;
+		}
+
+		if (ctxt.isPrototypeMode()) {
+			return;
+		}
+
+		if (!options.isSmapSuppressed()) {
+			SmapUtil.installSmap(smaps);
+		}
 	}
 
 	private URL _getClassURL(String className) {
@@ -159,6 +232,7 @@ public class CompilerWrapper extends Compiler {
 
 	private final Map<String, JSPClassInfo> _jspClassInfos =
 		new ConcurrentHashMap<>();
+	private JspCompiler _jspCompiler;
 
 	private class JSPClassInfo {
 

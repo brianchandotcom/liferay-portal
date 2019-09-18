@@ -91,28 +91,6 @@ public class MetadataTypeBuilder {
 		}
 	}
 
-	private void _getObjectFieldKey(
-		ObjectFieldTypeBuilder objectFieldTypeBuilder,
-		Map.Entry<String, JsonNode> propertyEntry) {
-
-		objectFieldTypeBuilder.key(propertyEntry.getKey());
-	}
-
-	private void _getObjectFieldRequired(
-		ObjectFieldTypeBuilder objectFieldTypeBuilder, String propertyName,
-		JsonNode requiredJsonNode) {
-
-		for (JsonNode propertyNameJsonNode : requiredJsonNode) {
-			if (propertyName.equals(propertyNameJsonNode.textValue())) {
-				objectFieldTypeBuilder.required(true);
-
-				return;
-			}
-		}
-
-		objectFieldTypeBuilder.required(false);
-	}
-
 	private void _getObjectFieldValue(
 		ObjectFieldTypeBuilder objectFieldTypeBuilder,
 		Map.Entry<String, JsonNode> propertyEntry) {
@@ -272,14 +250,36 @@ public class MetadataTypeBuilder {
 			ObjectFieldTypeBuilder objectFieldTypeBuilder =
 				objectTypeBuilder.addField();
 
-			_getObjectFieldKey(objectFieldTypeBuilder, propertyEntry);
+			_setObjectFieldKey(objectFieldTypeBuilder, propertyEntry);
 			_getObjectFieldValue(objectFieldTypeBuilder, propertyEntry);
-			_getObjectFieldRequired(
+			_setObjectFieldRequired(
 				objectFieldTypeBuilder, propertyEntry.getKey(),
 				requiredJsonNode);
 		}
 
 		return objectTypeBuilder.build();
+	}
+
+	private void _setObjectFieldKey(
+		ObjectFieldTypeBuilder objectFieldTypeBuilder,
+		Map.Entry<String, JsonNode> propertyEntry) {
+
+		objectFieldTypeBuilder.key(propertyEntry.getKey());
+	}
+
+	private void _setObjectFieldRequired(
+		ObjectFieldTypeBuilder objectFieldTypeBuilder, String propertyName,
+		JsonNode requiredJsonNode) {
+
+		for (JsonNode propertyNameJsonNode : requiredJsonNode) {
+			if (propertyName.equals(propertyNameJsonNode.textValue())) {
+				objectFieldTypeBuilder.required(true);
+
+				return;
+			}
+		}
+
+		objectFieldTypeBuilder.required(false);
 	}
 
 	private final JsonNodeReader _jsonNodeReader = new JsonNodeReader();

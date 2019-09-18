@@ -45,6 +45,13 @@ public @interface Details {
 	@Meta.AD(deflt = "false", name = "expose-global", required = false)
 	public boolean exposeGlobal();
 
+	@Meta.AD(
+		deflt = "warn", name = "log-level",
+		optionValues = {"off", "error", "warn", "info", "debug"},
+		required = false
+	)
+	public String logLevel();
+
 	@Meta.AD(deflt = "7", name = "wait-timeout", required = false)
 	public int waitTimeout();
 

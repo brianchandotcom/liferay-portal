@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.NodeExecutor;
+import com.liferay.gradle.plugins.node.internal.util.DigestUtil;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
@@ -38,7 +39,6 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
@@ -59,24 +59,10 @@ public class DownloadNodeTask extends DefaultTask {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					File digestFile = new File(getNodeDir(), ".digest");
-
-					if (!digestFile.exists()) {
-						return true;
-					}
-
-					byte[] bytes = null;
-
-					try {
-						bytes = Files.readAllBytes(digestFile.toPath());
-					}
-					catch (IOException ioe) {
-						throw new UncheckedIOException(ioe);
-					}
-
 					if (Objects.equals(
-							new String(bytes, StandardCharsets.UTF_8),
-							_getDigest())) {
+							DigestUtil.getDigestFileContent(
+								new File(getNodeDir(), ".digest")),
+							DigestUtil.getDigest(getNodeUrl(), getNpmUrl()))) {
 
 						return false;
 					}
@@ -160,7 +146,7 @@ public class DownloadNodeTask extends DefaultTask {
 			Files.createSymbolicLink(linkPath, linkTargetFile.toPath());
 		}
 
-		String digest = _getDigest();
+		String digest = DigestUtil.getDigest(getNodeUrl(), getNpmUrl());
 
 		FileUtil.write(
 			new File(getNodeDir(), ".digest"),
@@ -227,14 +213,6 @@ public class DownloadNodeTask extends DefaultTask {
 		}
 
 		return FileUtil.get(getProject(), url, destinationFile);
-	}
-
-	private String _getDigest() {
-		String nodeUrl = getNodeUrl();
-		String npmUrl = getNpmUrl();
-
-		return Integer.toHexString(nodeUrl.hashCode()) + "-" +
-			Integer.toHexString(npmUrl.hashCode());
 	}
 
 	private final NodeExecutor _nodeExecutor;

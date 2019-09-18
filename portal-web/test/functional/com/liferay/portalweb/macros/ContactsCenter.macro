@@ -1,0 +1,21 @@
+definition {
+
+	macro addPG {
+		Button.click(button = "Add Contact");
+
+		AssertElementPresent(locator1 = "TextInput#NAME");
+
+		PortletEntry.inputName(name = "${contactName}");
+
+		Type(
+			locator1 = "ContactsCenter#CONTACT_EMAIL_ADDRESS",
+			value1 = "${emailAddress}");
+
+		Button.clickSave();
+
+		AssertTextEquals(
+			locator1 = "ContactsCenter#SUCCESS_MESSAGE",
+			value1 = "You have successfully added a new contact.");
+	}
+
+} 

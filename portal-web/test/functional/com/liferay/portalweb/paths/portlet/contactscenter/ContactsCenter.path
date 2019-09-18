@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>ContactsCenter</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ContactsCenter</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONTACT_EMAIL_ADDRESS</td>
+	<td>//div[label[contains(.,'Email Address')]]//input[@type='email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//span[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

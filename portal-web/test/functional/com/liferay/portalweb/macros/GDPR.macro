@@ -104,6 +104,18 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro downloadExportedPersonalData {
+		for (var application : list "${applications}") {
+			var key_rowEntry = "${application}";
+
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS");
+
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "MenuItem#DOWNLOAD",
+				value1 = "Download");
+		}
+	}
+
 	macro editEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",

@@ -15,9 +15,11 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.admin.web.internal.display.AccountDisplay;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.Locale;
 
@@ -55,6 +57,15 @@ public class AccountUsersScreenNavigationCategory
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "users");
+	}
+
+	@Override
+	public boolean isVisible(User user, AccountDisplay accountDisplay) {
+		if (accountDisplay != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

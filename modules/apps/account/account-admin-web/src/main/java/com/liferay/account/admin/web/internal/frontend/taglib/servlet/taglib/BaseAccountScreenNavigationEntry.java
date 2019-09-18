@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Albert Lee
  */
 public abstract class BaseAccountScreenNavigationEntry
-	implements ScreenNavigationEntry {
+	implements ScreenNavigationEntry<AccountDisplay> {
 
 	public abstract String getJspPath();
 

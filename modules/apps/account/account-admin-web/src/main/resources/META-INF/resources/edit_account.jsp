@@ -29,6 +29,7 @@ if (accountDisplay != null) {
 
 <liferay-frontend:screen-navigation
 	containerWrapperCssClass=""
+	context="<%= accountDisplay %>"
 	headerContainerCssClass=""
 	inverted="<%= true %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT %>"

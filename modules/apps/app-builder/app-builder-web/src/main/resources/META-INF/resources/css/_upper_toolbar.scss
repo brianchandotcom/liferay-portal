@@ -1,0 +1,7 @@
+.app-builder-upper-toolbar {
+	height: $upperToolbarHeight;
+	position: fixed;
+	transition: width 0.5s $animation;
+	width: 100%;
+	z-index: 10;
+}

@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
 import org.osgi.service.component.annotations.Activate;
@@ -69,6 +71,14 @@ public class SegmentsExperimentRelModelListener
 		}
 
 		try {
+			SegmentsExperiment segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					segmentsExperimentRel.getSegmentsExperimentId());
+
+			if (segmentsExperiment == null) {
+				return;
+			}
+
 			_processUpdateSegmentsExperimentRel(segmentsExperimentRel);
 		}
 		catch (Exception e) {
@@ -123,6 +133,9 @@ public class SegmentsExperimentRelModelListener
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Reference
+	private SegmentsExperimentLocalService _segmentsExperimentLocalService;
 
 	@Reference
 	private SegmentsExperimentRelLocalService

@@ -188,6 +188,15 @@ public class AnnouncementsEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteEntries(long companyId) {
+		announcementsDeliveryPersistence.removeByCompanyId(companyId);
+
+		announcementsFlagPersistence.removeByCompanyId(companyId);
+
+		announcementsEntryPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
 	public void deleteEntries(long classNameId, long classPK)
 		throws PortalException {
 

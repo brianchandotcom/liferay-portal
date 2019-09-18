@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.node.internal.util;
 
+import com.liferay.gradle.util.Validator;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -82,8 +84,10 @@ public class DigestUtil {
 		StringBuilder sb = new StringBuilder();
 
 		for (String s : array) {
-			sb.append(Integer.toHexString(s.hashCode()));
-			sb.append('-');
+			if (Validator.isNotNull(s)) {
+				sb.append(Integer.toHexString(s.hashCode()));
+				sb.append('-');
+			}
 		}
 
 		if (sb.length() > 0) {

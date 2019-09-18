@@ -402,27 +402,27 @@ public class UpgradeClient {
 			GogoShellClient gogoShellClient, String command)
 		throws IOException {
 
-		if (command.equals("exit") || command.equals("quit")) {
-			return false;
-		}
-
 		if (command.equals("")) {
 			return true;
 		}
 
+		_fileOutputStream.write(
+			(_GOGO_SHELL_PREFFIX + command + System.lineSeparator()).
+				getBytes());
+
+		if (command.equals("exit") || command.equals("quit")) {
+			return false;
+		}
+
 		String output = gogoShellClient.send(command);
 
-		int endOfFirstLineIndex = output.indexOf('\n');
+		int endOfFirstLineIndex = output.indexOf(System.lineSeparator());
 
-		if (endOfFirstLineIndex != -1) {
-			String firstLine =
-				_GOGO_SHELL_PREFFIX +
-					output.substring(0, endOfFirstLineIndex + 1);
-
-			_fileOutputStream.write(firstLine.getBytes());
-
-			output = output.substring(endOfFirstLineIndex + 1);
+		if (endOfFirstLineIndex == -1) {
+			return true;
 		}
+
+		output = output.substring(endOfFirstLineIndex + 1);
 
 		System.out.println(output);
 

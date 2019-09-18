@@ -1,0 +1,24 @@
+definition {
+
+	macro gotoEditableFieldLink {
+		PageEditor.clickEditableField(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
+
+		PageEditor.clickEditableField(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LINK_BUTTON");
+	}
+
+	macro updateURL {
+		Variables.assertDefined(parameterList = "${url}");
+
+		Type(
+			locator1 = "PageEditorEditableLink#URL",
+			value1 = "${url}");
+
+		PageEditor.waitForAutoSave();
+	}
+}

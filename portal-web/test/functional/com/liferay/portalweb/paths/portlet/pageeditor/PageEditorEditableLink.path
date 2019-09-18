@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>PageEditorEditableLink</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PageEditorEditableLink</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>URL</td>
+	<td>//div[contains(@class,'floating-toolbar-link-panel')]//input[contains(@id,'floatingToolbarLinkHrefPanelOption')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

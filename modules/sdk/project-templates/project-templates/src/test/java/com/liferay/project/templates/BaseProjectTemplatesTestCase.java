@@ -89,7 +89,8 @@ public interface BaseProjectTemplatesTestCase {
 		Arrays.asList(
 			"*.js.map", "*_jsp.class", "*manifest.json", "*pom.properties",
 			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
-			"Built-By", "Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
+			" Build-Jdk-Spec", "Built-By", "Javac-Debug", "Javac-Deprecation",
+			"Javac-Encoding"),
 		',');
 
 	public static final String DEPENDENCY_MODULES_EXTENDER_API =

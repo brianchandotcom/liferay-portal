@@ -46,7 +46,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -651,7 +650,11 @@ public class NodePlugin implements Plugin<Project> {
 
 		final File digestFile = packageRunBuildTask.getDigestFile();
 
-		if (!_isStale(digestFile, packageRunBuildTask.getSourceFiles())) {
+		String newDigest = DigestUtil.getDigest(
+			packageRunBuildTask.getSourceFiles());
+		String oldDigest = DigestUtil.getDigestFileContent(digestFile);
+
+		if (!Objects.equals(oldDigest, newDigest)) {
 			Project project = packageRunBuildTask.getProject();
 
 			ProcessResources processResourcesTask =
@@ -906,19 +909,6 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	private boolean _isStale(
-		File sourceDigestFile, FileCollection sourceFileCollection) {
-
-		if (!Objects.equals(
-				DigestUtil.getDigestFileContent(sourceDigestFile),
-				DigestUtil.getDigest(sourceFileCollection))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _PACKAGE_RUN_TASK_NAME_PREFIX = "packageRun";

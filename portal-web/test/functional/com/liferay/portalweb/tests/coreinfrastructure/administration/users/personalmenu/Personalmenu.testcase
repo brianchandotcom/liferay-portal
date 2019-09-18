@@ -122,4 +122,67 @@ definition {
 		Site.viewSelectSiteViaPersonalMenuMySites(siteName = "${siteName}");
 	}
 
+	@priority = "4"
+	test RenderAppsWithCurrentTheme {
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewPG(portletName = "Notifications");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewPG(portletName = "Notifications");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewNoSpecificPG(portletName = "Notifications");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewNoSpecificPG(portletName = "Notifications");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Web Content");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewNoSpecificPG(portletName = "Notifications");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Notifications");
+
+		Portlet.viewNoSpecificPG(portletName = "Notifications");
+	}
+
 }

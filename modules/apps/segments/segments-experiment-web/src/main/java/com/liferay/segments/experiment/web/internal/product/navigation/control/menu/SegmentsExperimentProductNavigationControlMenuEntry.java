@@ -157,8 +157,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", _portal.getLocale(httpServletRequest),
-				getClass());
+				_portal.getLocale(httpServletRequest), getClass());
 
 			values.put(
 				"title",

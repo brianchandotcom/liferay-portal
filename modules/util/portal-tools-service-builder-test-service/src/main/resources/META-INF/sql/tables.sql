@@ -11,6 +11,13 @@ create table BigDecimalEntry (
 	bigDecimalValue DECIMAL(30, 16) null
 );
 
+create table EagerBlobEntity (
+	uuid_ VARCHAR(75) null,
+	eagerBlobEntityId LONG not null primary key,
+	groupId LONG,
+	fieldBlob BLOB
+);
+
 create table LVEntries_BigDecimalEntries (
 	companyId LONG not null,
 	bigDecimalEntryId LONG not null,

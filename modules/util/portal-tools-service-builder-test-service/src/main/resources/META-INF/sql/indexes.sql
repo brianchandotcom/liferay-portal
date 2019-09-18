@@ -3,6 +3,8 @@ create index IX_67100507 on BigDecimalEntries_LVEntries (lvEntryId);
 
 create index IX_867C5A9 on BigDecimalEntry (bigDecimalValue);
 
+create unique index IX_24660854 on EagerBlobEntity (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_C28A6270 on LVEntry (groupId, head);
 create unique index IX_70D6DE35 on LVEntry (groupId, uniqueGroupKey[$COLUMN_LENGTH:75$], head);
 create unique index IX_50CAD09D on LVEntry (headId);

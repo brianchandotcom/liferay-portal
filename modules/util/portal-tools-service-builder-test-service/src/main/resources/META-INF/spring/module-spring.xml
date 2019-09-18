@@ -8,6 +8,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntityPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence" parent="basePersistence" />

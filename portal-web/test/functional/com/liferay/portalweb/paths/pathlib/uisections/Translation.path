@@ -30,6 +30,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_LOCALE_CONTENT</td>
+	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized') and contains(@id,'JournalPortlet_Menu')][*[normalize-space(text())='${key_locale}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_LOCALE_DESCRIPTION</td>
+	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized') and contains(@id,'description')][*[normalize-space(text())='${key_locale}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_LOCALE_TITLE</td>
+	<td>//div[contains(@class,'localized')]//button[contains(@class,'localized') and contains(@id,'description')][*[normalize-space(text())='${key_locale}']]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNSELECTED_LOCALE_ICON</td>
 	<td>//div[@id='translationManager']//span[contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>

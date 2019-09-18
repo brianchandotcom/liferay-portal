@@ -323,6 +323,67 @@ definition {
 			key_fragmentName = "Rich Text");
 	}
 
+	@description = "This test covers LPS-101027. It ensures that published comment should remain if staging is deactivated."
+	@priority = "3"
+	test ViewCommentAfterDeactivateStaging {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDeactivateStaging";
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Rich Text");
+
+		PageEditor.addComment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Rich Text",
+			position = "1");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.deactivateStagingCP(siteName = "Test Site Name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoCommentViaFragment(
+			content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+			fragmentClass = "rich-text",
+			fragmentComment = "This is a fragment comment!",
+			fragmentName = "Rich Text",
+			position = "1");
+
+		PageEditor.viewComment(
+			fragmentComment = "This is a fragment comment!",
+			key_fragmentName = "Rich Text");
+	}
+
 	@description = "This test covers LPS-99643. It ensures that the comment on the content page is not removed after the draft is discarded."
 	@priority = "4"
 	test ViewCommentAfterDiscardedDraft {

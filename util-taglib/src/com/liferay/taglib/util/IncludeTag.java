@@ -79,7 +79,7 @@ public class IncludeTag extends AttributesTagSupport {
 				return EVAL_PAGE;
 			}
 
-			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+			if (!FileAvailabilityUtil.isAvailable(getServletContext(), page)) {
 				logUnavailablePage(page);
 
 				return processEndTag();
@@ -110,7 +110,7 @@ public class IncludeTag extends AttributesTagSupport {
 				return EVAL_BODY_INCLUDE;
 			}
 
-			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+			if (!FileAvailabilityUtil.isAvailable(getServletContext(), page)) {
 				logUnavailablePage(page);
 
 				return processStartTag();
@@ -140,7 +140,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 			PortletBag portletBag = PortletBagPool.get(rootPortletId);
 
-			servletContext = portletBag.getServletContext();
+			setServletContext(portletBag.getServletContext());
 		}
 	}
 
@@ -243,7 +243,7 @@ public class IncludeTag extends AttributesTagSupport {
 		Theme theme = (Theme)httpServletRequest.getAttribute(WebKeys.THEME);
 
 		ThemeUtil.include(
-			servletContext, httpServletRequest, httpServletResponse, page,
+			getServletContext(), httpServletRequest, httpServletResponse, page,
 			theme);
 	}
 
@@ -367,7 +367,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 		if (_useCustomPage) {
 			String customPage = getCustomPage(
-				servletContext, httpServletRequest, page);
+				getServletContext(), httpServletRequest, page);
 
 			if (Validator.isNotNull(customPage)) {
 				page = customPage;
@@ -401,7 +401,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-				servletContext, page);
+				getServletContext(), page);
 
 		requestDispatcher.include(getRequest(), httpServletResponse);
 	}
@@ -435,6 +435,8 @@ public class IncludeTag extends AttributesTagSupport {
 		sb.append("Unable to find ");
 		sb.append(page);
 		sb.append(" in the context ");
+
+		ServletContext servletContext = getServletContext();
 
 		String contextPath = PortalUtil.getPathContext(
 			servletContext.getContextPath());
@@ -521,11 +523,12 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 
 		boolean exists = theme.resourceExists(
-			servletContext, ThemeUtil.getPortletId(httpServletRequest), page);
+			getServletContext(), ThemeUtil.getPortletId(httpServletRequest),
+			page);
 
 		if (_log.isDebugEnabled() && exists) {
 			String resourcePath = theme.getResourcePath(
-				servletContext, null, page);
+				getServletContext(), null, page);
 
 			_log.debug(resourcePath);
 		}

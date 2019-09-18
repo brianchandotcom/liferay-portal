@@ -472,8 +472,8 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 			String page, HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		servletContext = PortalWebResourcesUtil.getServletContext(
-			getEditorResourceType());
+		setServletContext(
+			PortalWebResourcesUtil.getServletContext(getEditorResourceType()));
 
 		super.includePage(page, httpServletResponse);
 	}

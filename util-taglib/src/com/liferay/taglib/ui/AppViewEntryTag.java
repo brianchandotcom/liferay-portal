@@ -370,7 +370,7 @@ public class AppViewEntryTag extends IncludeTag {
 			return _actionJspServletContext;
 		}
 
-		return servletContext;
+		return getServletContext();
 	}
 
 	@Override

@@ -25,7 +25,7 @@ import {
 	CLEAR_HOVERED_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
-import {getElement} from './utils/FragmentsEditorGetUtils.es';
+import {getFragmentEntryLinkListElements} from './utils/FragmentsEditorGetUtils.es';
 import {INITIAL_STATE} from './store/state.es';
 import {
 	startListeningWidgetConfigurationChange,
@@ -39,7 +39,6 @@ import {updateActiveItemAction} from './actions/updateActiveItem.es';
  * @type {string}
  */
 const ITEM_CLASS = 'fragments-editor__item';
-
 
 /**
  * @type {string}
@@ -188,7 +187,6 @@ class FragmentsEditor extends Component {
 		} = FragmentsEditor._getTargetItemData(event);
 
 		if (targetItemId && targetItemType) {
-
 			this.store.dispatch(
 				updateActiveItemAction(targetItemId, targetItemType, {
 					appendItem: this._shiftPressed
@@ -223,11 +221,16 @@ class FragmentsEditor extends Component {
 				hoveredItem.classList.remove(HOVERED_ITEM_CLASS);
 			});
 
-		const targetItem = getElement(targetItemId, targetItemType);
+		const targetItems = getFragmentEntryLinkListElements(
+			targetItemId,
+			targetItemType
+		);
 
-		if (targetItem) {
-			targetItem.classList.add(ITEM_CLASS);
-			targetItem.classList.add(HOVERED_ITEM_CLASS);
+		if (targetItems.length > 0) {
+			targetItems.forEach(targetItem => {
+				targetItem.classList.add(ITEM_CLASS);
+				targetItem.classList.add(HOVERED_ITEM_CLASS);
+			});
 		}
 
 		if (targetItemId && targetItemType) {

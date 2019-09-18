@@ -45,7 +45,7 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
-	macro gotoAddItemViaNewButton { 
+	macro gotoAddItemViaNewButton {
 		AssertClick(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = "New Custom Object");

@@ -21,6 +21,7 @@ definition {
 		Page.tearDownCP();
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test VimeoPortletSmoke {
 		property portlet.plugins.includes = "vimeo-portlet";

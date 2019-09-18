@@ -16,10 +16,13 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 
 /**
  * @author Jorge Ferrer
@@ -52,14 +55,26 @@ public class ConfigurationCategoryDisplay {
 	}
 
 	private String _getMessage(Locale locale, String key) {
-		return LanguageUtil.get(
-			new AggregateResourceBundle(
-				ResourceBundleUtil.getBundle(
-					locale, _configurationCategory.getClass()),
-				ResourceBundleUtil.getBundle(
-					locale, ConfigurationCategoryDisplay.class)),
-			key);
+		try {
+			return LanguageUtil.get(
+				new AggregateResourceBundle(
+					ResourceBundleUtil.getBundle(
+						locale, _configurationCategory.getClass()),
+					ResourceBundleUtil.getBundle(
+						locale, ConfigurationCategoryDisplay.class)),
+				key);
+		}
+		catch (MissingResourceException mre) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(mre, mre);
+			}
+
+			return key;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationCategoryDisplay.class);
 
 	private final ConfigurationCategory _configurationCategory;
 

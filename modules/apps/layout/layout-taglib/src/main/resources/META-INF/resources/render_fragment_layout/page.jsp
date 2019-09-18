@@ -72,7 +72,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 									String size = columnJSONObject.getString("size");
 								%>
 
-									<div class="col <%= Validator.isNotNull(size) ? "col-" + size : StringPool.BLANK %>">
+									<div class="<%= Validator.isNotNull(size) ? "col-md-" + size : StringPool.BLANK %>">
 
 										<%
 										JSONArray fragmentEntryLinkIdsJSONArray = columnJSONObject.getJSONArray("fragmentEntryLinkIds");

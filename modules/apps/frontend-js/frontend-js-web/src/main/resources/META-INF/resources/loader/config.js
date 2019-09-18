@@ -46,5 +46,7 @@
 
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
 
+	__CONFIG__.logLevel = Liferay.LOG_LEVEL;
+
 	__CONFIG__.waitTimeout = Liferay.WAIT_TIMEOUT;
 })();

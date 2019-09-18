@@ -96,6 +96,9 @@ public class JSLoaderConfigServlet extends HttpServlet {
 		stringWriter.write(
 			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
+		stringWriter.write(
+			"Liferay.LOG_LEVEL = '" + _details.logLevel() + "';\n");
+
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);

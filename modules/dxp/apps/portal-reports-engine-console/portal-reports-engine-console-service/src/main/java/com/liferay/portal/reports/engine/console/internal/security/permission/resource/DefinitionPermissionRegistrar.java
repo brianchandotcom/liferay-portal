@@ -17,12 +17,10 @@ package com.liferay.portal.reports.engine.console.internal.security.permission.r
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.service.DefinitionLocalService;
-
-import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -39,10 +37,6 @@ public class DefinitionPermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("model.class.name", Definition.class.getName());
-
 		_serviceRegistration = bundleContext.registerService(
 			ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
@@ -51,7 +45,8 @@ public class DefinitionPermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 				}),
-			properties);
+			MapUtil.singletonDictionary(
+				"model.class.name", Definition.class.getName()));
 	}
 
 	@Deactivate

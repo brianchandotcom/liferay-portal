@@ -18,10 +18,8 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.reports.engine.console.constants.ReportsEngineConsoleConstants;
-
-import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -38,11 +36,6 @@ public class AdminResourcePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			"resource.name", ReportsEngineConsoleConstants.RESOURCE_NAME);
-
 		_serviceRegistration = bundleContext.registerService(
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
@@ -50,7 +43,8 @@ public class AdminResourcePermissionRegistrar {
 				new StagedPortletPermissionLogic(
 					_stagingPermission,
 					ReportsEngineConsoleConstants.RESOURCE_NAME)),
-			properties);
+			MapUtil.singletonDictionary(
+				"resource.name", ReportsEngineConsoleConstants.RESOURCE_NAME));
 	}
 
 	@Deactivate

@@ -49,6 +49,9 @@ definition {
 			userLastName = "${userLastName}",
 			userScreenName = "${userScreenName}");
 
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
 	}
 
 	@priority = "5"
@@ -74,6 +77,8 @@ definition {
 		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+
+		PageEditorConfiguration.restoreConfigValues(fragmentName = "Text Fragment Example");
 	}
 
 }

@@ -23,6 +23,12 @@ import java.util.Set;
  */
 public interface OutputStreamContainerFactoryTracker {
 
+	public default OutputStreamContainerFactory
+		getDummyOutputStreamContainerFactory() {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public OutputStreamContainerFactory getOutputStreamContainerFactory();
 
 	public OutputStreamContainerFactory getOutputStreamContainerFactory(

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalMessages;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -305,6 +306,14 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
+		ServletContext servletContext = servletConfig.getServletContext();
+
+		if (servletContext != ServletContextPool.get(
+				portal.getServletContextName())) {
+
+			return;
+		}
+
 		super.init(servletConfig);
 
 		_private = GetterUtil.getBoolean(

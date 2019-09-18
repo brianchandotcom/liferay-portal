@@ -102,18 +102,23 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 			"error", error
 		);
 
-		if (complete && (dlOpenerFileEntryReference != null) &&
-			Validator.isNotNull(dlOpenerFileEntryReference.getReferenceKey())) {
+		if (complete && (dlOpenerFileEntryReference != null)) {
+			if (Validator.isNull(
+					dlOpenerFileEntryReference.getReferenceKey())) {
 
-			try {
-				String office365EditURL =
-					_dlOpenerOneDriveManager.getOneDriveFileURL(
-						_portal.getUserId(resourceRequest), fileEntry);
-
-				jsonObject.put("office365EditURL", office365EditURL);
-			}
-			catch (GraphServicePortalException gspe) {
 				jsonObject.put("error", true);
+			}
+			else {
+				try {
+					String office365EditURL =
+						_dlOpenerOneDriveManager.getOneDriveFileURL(
+							_portal.getUserId(resourceRequest), fileEntry);
+
+					jsonObject.put("office365EditURL", office365EditURL);
+				}
+				catch (GraphServicePortalException gspe) {
+					jsonObject.put("error", true);
+				}
 			}
 		}
 

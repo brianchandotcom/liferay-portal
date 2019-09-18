@@ -110,6 +110,17 @@ public class CompilerWrapper extends Compiler {
 	}
 
 	@Override
+	public void removeGeneratedFiles() {
+		JSPClassInfo jspClassInfo = _jspClassInfos.get(ctxt.getFQCN());
+
+		if (jspClassInfo != null) {
+			return;
+		}
+
+		super.removeGeneratedFiles();
+	}
+
+	@Override
 	protected void generateClass(Map<String, SmapStratum> smaps)
 		throws Exception {
 

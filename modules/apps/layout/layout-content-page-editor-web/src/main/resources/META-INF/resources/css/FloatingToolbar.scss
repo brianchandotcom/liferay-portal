@@ -57,7 +57,7 @@
 			height: 250px;
 			overflow-y: hidden;
 
-			&__content {
+			.popover-scrollable__content {
 				height: 100%;
 				overflow-y: auto;
 			}

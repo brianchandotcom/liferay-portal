@@ -52,9 +52,8 @@ public abstract class BaseLocalServiceTreeTestCase {
 		rebuildTree();
 
 		for (TreeModel treeModel : _treeModels) {
-			long primaryKey = GetterUtil.getLong(treeModel.getPrimaryKeyObj());
-
-			treeModel = getTreeModel(primaryKey);
+			treeModel = getTreeModel(
+				GetterUtil.getLong(treeModel.getPrimaryKeyObj()));
 
 			Assert.assertEquals(
 				treeModel.buildTreePath(), treeModel.getTreePath());

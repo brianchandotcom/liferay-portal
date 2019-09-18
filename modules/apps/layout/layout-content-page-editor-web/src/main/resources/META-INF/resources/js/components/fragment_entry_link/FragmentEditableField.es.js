@@ -459,7 +459,7 @@ class FragmentEditableField extends PortletBase {
 		const {type} = data;
 
 		if (type === 'editor') {
-			this._createProcessor();
+			this._createProcessor(event);
 		}
 	}
 

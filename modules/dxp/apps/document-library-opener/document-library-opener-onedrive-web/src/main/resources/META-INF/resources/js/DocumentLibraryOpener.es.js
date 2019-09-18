@@ -130,6 +130,8 @@ class DocumentLibraryOpener {
 	}
 
 	edit({formSubmitURL}) {
+		this._refreshAfterNavigate = true;
+
 		const loadingPromise = this._showLoading({
 			dialogMessage: Liferay.Language.get(
 				'you-are-being-redirected-to-an-external-editor-to-edit-this-document'

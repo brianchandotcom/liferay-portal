@@ -129,7 +129,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		return Arrays.asList(
 			_bundleContext.getAllServiceReferences(
-				null, "(osgi.jaxrs.resource=true)"));
+				null, "(&(api.version=*)(osgi.jaxrs.resource=true))"));
 	}
 
 	private Object _adaptToFieldType(Class<?> fieldType, Object value) {

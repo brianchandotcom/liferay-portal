@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.internal.util.DigestUtil;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
@@ -929,7 +930,7 @@ public class NodePlugin implements Plugin<Project> {
 		}
 
 		String oldDigest = new String(bytes, StandardCharsets.UTF_8);
-		String newDigest = FileUtil.getDigest(sourceFileCollection);
+		String newDigest = DigestUtil.getDigest(sourceFileCollection);
 
 		if (!Objects.equals(oldDigest, newDigest)) {
 			return true;

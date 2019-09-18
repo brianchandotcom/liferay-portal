@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.internal.util.DigestUtil;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
@@ -44,7 +45,7 @@ public class PackageRunBuildTask extends PackageRunTask {
 
 	@Override
 	public void executeNode() throws Exception {
-		String digest = FileUtil.getDigest(getSourceFiles());
+		String digest = DigestUtil.getDigest(getSourceFiles());
 
 		super.executeNode();
 

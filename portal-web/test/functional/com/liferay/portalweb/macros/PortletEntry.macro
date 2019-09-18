@@ -173,9 +173,24 @@ definition {
 	}
 
 	macro viewLocale {
-		AssertElementPresent(
-			key_locale = "${locale}",
-			locator1 = "Translation#CURRENT_LOCALE");
+		if ("${portletName}" == "Web Content") {
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#CURRENT_LOCALE_TITLE");
+
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#CURRENT_LOCALE_CONTENT");
+
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#CURRENT_LOCALE_DESCRIPTION");
+		}
+		else {
+			AssertElementPresent(
+				key_locale = "${locale}",
+				locator1 = "Translation#CURRENT_LOCALE");
+		}
 	}
 
 	macro viewNoNavItemLink {

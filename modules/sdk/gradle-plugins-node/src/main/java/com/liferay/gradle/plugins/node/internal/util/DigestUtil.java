@@ -102,14 +102,16 @@ public class DigestUtil {
 			return null;
 		}
 
-		try {
-			byte[] bytes = Files.readAllBytes(digestFile.toPath());
+		byte[] bytes = null;
 
-			return new String(bytes, StandardCharsets.UTF_8);
+		try {
+			bytes = Files.readAllBytes(digestFile.toPath());
 		}
 		catch (IOException ioe) {
-			return null;
+			throw new UncheckedIOException(ioe);
 		}
+
+		return new String(bytes, StandardCharsets.UTF_8);
 	}
 
 	private static SortedSet<File> _flattenAndSort(Iterable<File> files)

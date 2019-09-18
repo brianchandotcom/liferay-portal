@@ -40,10 +40,6 @@ import {updateActiveItemAction} from './actions/updateActiveItem.es';
  */
 const ITEM_CLASS = 'fragments-editor__item';
 
-/**
- * @type {string}
- */
-const ACTIVE_ITEM_CLASS = `${ITEM_CLASS}--active`;
 
 /**
  * @type {string}
@@ -187,20 +183,11 @@ class FragmentsEditor extends Component {
 	 */
 	_updateActiveItem(event) {
 		const {
-			targetItem,
 			targetItemId,
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
-		document
-			.querySelectorAll(`.${ACTIVE_ITEM_CLASS}`)
-			.forEach(hoveredItem => {
-				hoveredItem.classList.remove(ACTIVE_ITEM_CLASS);
-			});
-
 		if (targetItemId && targetItemType) {
-			targetItem.classList.add(ITEM_CLASS);
-			targetItem.classList.add(ACTIVE_ITEM_CLASS);
 
 			this.store.dispatch(
 				updateActiveItemAction(targetItemId, targetItemType, {

@@ -405,12 +405,6 @@ class FloatingToolbarLinkPanel extends PortletBase {
 					this._fields = response.filter(field =>
 						['text', 'url'].includes(field.type)
 					);
-
-					this.store.dispatch(
-						Object.assign({}, this._selectedAssetEntry, {
-							type: ADD_MAPPED_ASSET_ENTRY
-						})
-					);
 				});
 		} else if (this._fields.length) {
 			this._clearFields();
@@ -426,6 +420,12 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 */
 	_selectAssetEntry(assetEntry) {
 		this._selectedAssetEntry = assetEntry;
+
+		this.store.dispatch(
+			Object.assign({}, this._selectedAssetEntry, {
+				type: ADD_MAPPED_ASSET_ENTRY
+			})
+		);
 
 		this._loadFields();
 	}

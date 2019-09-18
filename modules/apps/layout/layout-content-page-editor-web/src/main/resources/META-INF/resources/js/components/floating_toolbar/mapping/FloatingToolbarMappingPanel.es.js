@@ -355,12 +355,6 @@ class FloatingToolbarMappingPanel extends PortletBase {
 								field.type
 							) !== -1
 					);
-
-					this.store.dispatch(
-						Object.assign({}, this._selectedAssetEntry, {
-							type: ADD_MAPPED_ASSET_ENTRY
-						})
-					);
 				});
 		} else if (this._fields.length) {
 			this._clearFields();
@@ -376,6 +370,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 */
 	_selectAssetEntry(assetEntry) {
 		this._selectedAssetEntry = assetEntry;
+
+		this.store.dispatch(
+			Object.assign({}, this._selectedAssetEntry, {
+				type: ADD_MAPPED_ASSET_ENTRY
+			})
+		);
 
 		this._loadFields();
 	}

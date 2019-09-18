@@ -405,12 +405,6 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 					field =>
 						COMPATIBLE_TYPES['image'].indexOf(field.type) !== -1
 				);
-
-				this.store.dispatch(
-					Object.assign({}, this._selectedAssetEntry, {
-						type: ADD_MAPPED_ASSET_ENTRY
-					})
-				);
 			});
 		} else if (this._fields.length) {
 			this._clearFields();
@@ -426,6 +420,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_selectAssetEntry(assetEntry) {
 		this._selectedAssetEntry = assetEntry;
+
+		this.store.dispatch(
+			Object.assign({}, this._selectedAssetEntry, {
+				type: ADD_MAPPED_ASSET_ENTRY
+			})
+		);
 
 		this._loadFields();
 	}

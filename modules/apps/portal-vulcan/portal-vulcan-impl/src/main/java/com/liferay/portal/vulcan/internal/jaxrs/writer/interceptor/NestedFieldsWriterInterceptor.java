@@ -42,7 +42,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -148,10 +147,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 			int i = 0;
 
-			Iterator iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				Array.set(value, i++, iterator.next());
+			for (Object object : collection) {
+				Array.set(value, i++, object);
 			}
 		}
 

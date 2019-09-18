@@ -82,8 +82,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_readEndpointJsonObject();
 
-		_currentItemIdx = 0;
-
 		if (_itemsJsonArray.size() <= 0) {
 			_hasMore = false;
 
@@ -127,7 +125,12 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	public JsonValue getCurrentJsonValue() throws NoSuchElementException {
-		return _itemsJsonArray.get(_currentItemIdx);
+		if (_currentItemIdx < _itemsJsonArray.size()) {
+			return _itemsJsonArray.get(_currentItemIdx);
+		}
+
+		throw new NoSuchElementException(
+			"JSON array does not have more elements");
 	}
 
 	@Override
@@ -163,6 +166,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			liferayConnectionResourceBaseProperties.getItemsPerPage()
 		).build();
 
+		_currentItemIdx = 0;
+
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
 		if (_logger.isDebugEnabled()) {
@@ -174,25 +179,35 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		JsonObject jsonObject = liferaySource.doGetRequest(
 			resourceURI.toString());
 
-		if (jsonObject.containsKey("items")) {
-			_itemsJsonArray = jsonObject.getJsonArray("items");
+		if (jsonObject.containsKey("page")) {
+			if (jsonObject.containsKey("items")) {
+				_itemsJsonArray = jsonObject.getJsonArray("items");
 
-			if (jsonObject.containsKey("lastPage")) {
-				_lastPage = jsonObject.getInt("lastPage");
+				if (jsonObject.containsKey("lastPage")) {
+					_lastPage = jsonObject.getInt("lastPage");
+				}
+
+				return;
 			}
-		}
-		else {
-			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 
-			jsonArrayBuilder.add(jsonObject);
+			JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 
 			_itemsJsonArray = jsonArrayBuilder.build();
 
 			_currentPage = 1;
 			_lastPage = 1;
+
+			return;
 		}
 
-		_currentItemIdx = 0;
+		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+
+		jsonArrayBuilder.add(jsonObject);
+
+		_itemsJsonArray = jsonArrayBuilder.build();
+
+		_currentPage = 1;
+		_lastPage = 1;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

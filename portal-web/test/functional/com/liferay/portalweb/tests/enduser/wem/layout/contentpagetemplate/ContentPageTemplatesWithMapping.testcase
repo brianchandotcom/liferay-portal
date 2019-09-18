@@ -6,19 +6,19 @@ definition {
 	property testray.main.component.name = "Layout Page Templates";
 
 	setUp {
-			TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-			User.firstLoginPG();
+		User.firstLoginPG();
 
-			JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
 	}
 
 	tearDown {
@@ -39,14 +39,13 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Basic Sections",
-    		fragmentName = "Banner Center");
+			fragmentName = "Banner Center");
 
 		PageEditorEditableLink.gotoEditableFieldLink(
 			fragmentName = "Banner Center",
 			id = "link");
 
-		PageEditorEditableLink.updateURL(
-			url = "https://liferay.com");
+		PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 		PageEditor.clickPublish();
 
@@ -57,7 +56,7 @@ definition {
 		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
 		task ("Assert editable has the specified URL mapped correctly") {
-			Click(locator1="//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+			Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
 		}
 	}
 

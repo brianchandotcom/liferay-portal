@@ -6,15 +6,15 @@ definition {
 	property testray.main.component.name = "Display Pages";
 
 	setUp {
-			TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
-			User.firstLoginPG();
+		User.firstLoginPG();
 
-			JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 	}
 
 	tearDown {
@@ -35,14 +35,13 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Basic Sections",
-    		fragmentName = "Banner Center");
+			fragmentName = "Banner Center");
 
 		PageEditorEditableLink.gotoEditableFieldLink(
 			fragmentName = "Banner Center",
 			id = "link");
 
-		PageEditorEditableLink.updateURL(
-			url = "https://liferay.com");
+		PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 		PageEditor.clickPublish();
 
@@ -53,7 +52,7 @@ definition {
 			item = "Edit");
 
 		task ("Assert editable has the specified URL mapped correctly") {
-			Click(locator1="//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+			Click(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
 		}
 	}
 

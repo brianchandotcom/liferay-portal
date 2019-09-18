@@ -9,18 +9,6 @@ definition {
 		return "${key}";
 	}
 
-	macro openViewContentPage {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
-		}
-
-		if (!(isSet(pageFriendlyUrl))) {
-			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
-		}
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}");
-	}
-
 	macro openEditContentPage {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
@@ -31,6 +19,18 @@ definition {
 		}
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}?p_l_mode=edit");
+	}
+
+	macro openViewContentPage {
+		if (!(isSet(siteURLKey))) {
+			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = "${siteName}");
+		}
+
+		if (!(isSet(pageFriendlyUrl))) {
+			var pageFriendlyUrl = ContentPagesNavigator._convertNameToKey(name = "${pageName}");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${pageFriendlyUrl}");
 	}
 
 }

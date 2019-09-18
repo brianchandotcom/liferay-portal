@@ -25,4 +25,4 @@ Import-Package:\
 	com.liferay.taglib.ui.display.context,\
 	com.liferay.taglib.ui.util,\
 	com.liferay.taglib.util
--includeresource: @com.liferay.util.taglib-[0-9.]*.jar!/META-INF/*.tld
+-includeresource: @com.liferay.util.taglib-[0-9.]*(-SNAPSHOT|).jar!/META-INF/*.tld

@@ -176,6 +176,10 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-68846 and LPS-66321">
+			<contains>Unable to call .* of /documents</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-81732">
 			<contains>There are no actions associated with the resource com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion</contains>
 			<matches></matches>

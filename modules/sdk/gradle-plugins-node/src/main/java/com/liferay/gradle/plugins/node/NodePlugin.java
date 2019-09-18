@@ -33,10 +33,6 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import groovy.json.JsonSlurper;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.Map;
@@ -49,7 +45,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
@@ -916,23 +911,10 @@ public class NodePlugin implements Plugin<Project> {
 	private boolean _isStale(
 		File sourceDigestFile, FileCollection sourceFileCollection) {
 
-		if (!sourceDigestFile.exists()) {
-			return true;
-		}
+		if (!Objects.equals(
+				DigestUtil.getDigestFileContent(sourceDigestFile),
+				DigestUtil.getDigest(sourceFileCollection))) {
 
-		byte[] bytes = null;
-
-		try {
-			bytes = Files.readAllBytes(sourceDigestFile.toPath());
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
-
-		String oldDigest = new String(bytes, StandardCharsets.UTF_8);
-		String newDigest = DigestUtil.getDigest(sourceFileCollection);
-
-		if (!Objects.equals(oldDigest, newDigest)) {
 			return true;
 		}
 

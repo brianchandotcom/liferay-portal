@@ -323,10 +323,10 @@ definition {
 			key_fragmentName = "Rich Text");
 	}
 
-	@description = "This test covers LPS-101027. It ensures that published comment should remain if staging is deactivated."
+	@description = "This test covers LPS-101027. It ensures that a published comment should remain if staging is deactivated."
 	@priority = "3"
-	test ViewCommentAfterDeactivateStaging {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDeactivateStaging";
+	test ViewCommentAfterDeactivatingStaging {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentAfterDeactivatingStaging";
 
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");
 

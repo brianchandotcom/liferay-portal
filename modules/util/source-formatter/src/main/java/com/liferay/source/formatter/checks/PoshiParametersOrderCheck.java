@@ -46,6 +46,19 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 
 		outerLoop:
 		while (matcher1.find()) {
+			int x = matcher1.start(2);
+
+			int[] multiLineCommentsPositions =
+				PoshiSourceUtil.getMultiLinePositions(
+					content, _multiLineCommentsPattern);
+
+			if (PoshiSourceUtil.isInsideMultiLines(
+					SourceUtil.getLineNumber(content, x),
+					multiLineCommentsPositions)) {
+
+				continue;
+			}
+
 			Map<String, String> parametersMap = new TreeMap<>(
 				new NaturalOrderStringComparator());
 
@@ -97,27 +110,8 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 				sb.setIndex(sb.index() - 1);
 			}
 
-			int x = content.indexOf(parameters);
-
-			int[] multiLineCommentsPositions =
-				PoshiSourceUtil.getMultiLinePositions(
-					content, _multiLineCommentsPattern);
-
-			while (content.indexOf(parameters, x) != -1) {
-				if (!PoshiSourceUtil.isInsideMultiLines(
-						SourceUtil.getLineNumber(content, x),
-						multiLineCommentsPositions)) {
-
-					break;
-				}
-
-				x = x + parameters.length();
-			}
-
-			if (content.indexOf(parameters, x) != -1) {
-				content = StringUtil.replaceFirst(
-					content, parameters, sb.toString(), x);
-			}
+			content = StringUtil.replaceFirst(
+				content, parameters, sb.toString(), x);
 		}
 
 		return content;

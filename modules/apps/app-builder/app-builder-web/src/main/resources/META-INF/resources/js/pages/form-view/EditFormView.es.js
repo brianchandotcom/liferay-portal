@@ -16,8 +16,10 @@ import React, {useState, useContext, useEffect} from 'react';
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
+import CustomObjectSidebar from './CustomObjectSidebar.es';
 import LayoutBuilderManager from './LayoutBuilderManager.es';
 import LayoutBuilderSidebar from './LayoutBuilderSidebar.es';
+import {createPortal} from 'react-dom';
 
 const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
 	...props,
@@ -74,6 +76,7 @@ const saveDataLayoutBuilder = ({
 
 const EditFormView = props => {
 	const {
+		customObjectSidebarElementId,
 		dataDefinitionId,
 		dataLayoutBuilder,
 		dataLayoutBuilderElementId,
@@ -193,6 +196,14 @@ const EditFormView = props => {
 					</UpperToolbar.Button>
 				</UpperToolbar.Group>
 			</UpperToolbar>
+
+			{createPortal(
+				<CustomObjectSidebar
+					customObjectSidebarElementId={customObjectSidebarElementId}
+					dataLayoutBuilder={dataLayoutBuilder}
+				/>,
+				document.querySelector(`#${customObjectSidebarElementId}`)
+			)}
 
 			<LayoutBuilderSidebar
 				dataLayoutBuilder={dataLayoutBuilder}

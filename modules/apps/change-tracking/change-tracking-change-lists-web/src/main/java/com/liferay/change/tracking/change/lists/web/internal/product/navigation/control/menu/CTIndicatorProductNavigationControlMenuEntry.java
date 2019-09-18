@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.product.navigation.control.menu;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTProductNavigationControlMenuCategoryKeys;
 import com.liferay.change.tracking.model.CTCollection;
@@ -93,7 +94,12 @@ public class CTIndicatorProductNavigationControlMenuEntry
 
 		String ctCollectionName = StringPool.BLANK;
 
-		if (ctPreferences == null) {
+		String image = "change-list-disabled";
+
+		if ((ctPreferences == null) ||
+			(ctPreferences.getCtCollectionId() ==
+				CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
+
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				themeDisplay.getLocale(),
 				CTIndicatorProductNavigationControlMenuEntry.class);
@@ -107,6 +113,8 @@ public class CTIndicatorProductNavigationControlMenuEntry
 
 			if (ctCollection != null) {
 				ctCollectionName = ctCollection.getName();
+
+				image = "change-list";
 			}
 		}
 
@@ -131,14 +139,8 @@ public class CTIndicatorProductNavigationControlMenuEntry
 			IconTag iconTag = new IconTag();
 
 			iconTag.setCssClass("icon-monospaced");
+			iconTag.setImage(image);
 			iconTag.setMarkupView("lexicon");
-
-			if (ctPreferences == null) {
-				iconTag.setImage("change-list-disabled");
-			}
-			else {
-				iconTag.setImage("change-list");
-			}
 
 			values.put(
 				"changeTrackingIcon",

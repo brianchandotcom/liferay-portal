@@ -1,0 +1,61 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-98031."
+	@priority = "5"
+	test MapManualURLToLinkFragment {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Sections",
+    		fragmentName = "Banner Center");
+
+		PageEditorEditableLink.gotoEditableFieldLink(
+			fragmentName = "Banner Center",
+			id = "link");
+
+		PageEditorEditableLink.updateURL(
+			url = "https://liferay.com");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert editable has the specified URL mapped correctly") {
+			Click(locator1="//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
+		}
+	}
+
+}

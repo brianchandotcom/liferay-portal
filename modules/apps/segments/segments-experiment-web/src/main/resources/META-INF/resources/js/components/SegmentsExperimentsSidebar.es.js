@@ -141,9 +141,9 @@ function SegmentsExperimentsSidebar({
 		dispatch(closeEditionModal());
 	}
 
-	function _handleDeleteSegmentsExperiment() {
+	function _handleDeleteSegmentsExperiment(experimentId) {
 		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId
+			segmentsExperimentId: experimentId
 		};
 
 		APIService.deleteExperiment(body).then(() => {

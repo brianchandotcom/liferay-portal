@@ -143,7 +143,7 @@ function SegmentsExperiments({
 											</ClayDropDown.Item>
 											<ClayDropDown.Item
 												onClick={
-													_handleDeleteExperiment
+													_handleDeleteActiveExperiment
 												}
 											>
 												{Liferay.Language.get('delete')}
@@ -232,12 +232,13 @@ function SegmentsExperiments({
 		</>
 	);
 
-	function _handleDeleteExperiment() {
+	function _handleDeleteActiveExperiment() {
 		const confirmed = confirm(
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 		);
 
-		if (confirmed) return onDeleteSegmentsExperiment();
+		if (confirmed)
+			return onDeleteSegmentsExperiment(experiment.segmentsExperimentId);
 	}
 
 	function _handleExperienceSelection(event) {

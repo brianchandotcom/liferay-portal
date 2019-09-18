@@ -74,7 +74,11 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 						<ClayList.ItemField>
 							<ClayList.QuickActionMenu>
 								<ClayList.QuickActionMenu.Item
-									onClick={_handleDeleteExperiment}
+									onClick={() =>
+										_handleDeleteExperiment(
+											experiment.segmentsExperimentId
+										)
+									}
 									symbol="times-circle"
 								/>
 							</ClayList.QuickActionMenu>
@@ -85,12 +89,12 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 		</ClayList>
 	);
 
-	function _handleDeleteExperiment() {
+	function _handleDeleteExperiment(experimentId) {
 		const confirmed = confirm(
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 		);
 
-		if (confirmed) return onDeleteSegmentsExperiment();
+		if (confirmed) return onDeleteSegmentsExperiment(experimentId);
 	}
 }
 

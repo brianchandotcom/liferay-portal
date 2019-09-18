@@ -12,7 +12,7 @@
 		animation-duration: 0.7s;
 		animation-iteration-count: infinite;
 		animation-name: drop-color;
-		animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+		animation-timing-function: $animation;
 		background-color: #2e5aac;
 		border-color: #0b5fff;
 		color: #0b5fff;

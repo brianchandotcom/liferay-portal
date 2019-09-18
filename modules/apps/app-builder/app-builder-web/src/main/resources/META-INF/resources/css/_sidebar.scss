@@ -1,15 +1,17 @@
 .app-builder-sidebar {
 	background: white;
+	border-left: 1px solid rgb(225, 224, 232);
 	border-top-width: 0;
 	display: flex;
 	flex-flow: column;
 	height: 100%;
+	margin-top: $upperToolbarHeight;
 	position: fixed;
 	right: 0;
 
 	&.main {
 		transform: translateX(0%);
-		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		transition: transform 0.3s $animation, opacity 0.3s $animation;
 		width: $sidebarMainWidth;
 
 		&.closed {
@@ -21,7 +23,7 @@
 	&.mini {
 		padding: 16px;
 		transform: translateX(0%);
-		transition: transform 0.3s ease-in-out;
+		transition: transform 0.3s $animation;
 		width: $sidebarMiniWidth;
 
 		&.closed {
@@ -35,14 +37,19 @@
 		margin-right: -1rem;
 	}
 
+	.sidebar {
+		box-shadow: none;
+	}
+
 	.sidebar-body {
 		height: calc(100vh - 168px);
 	}
 }
 
 .app-builder-sidebar-content {
+	margin-top: $upperToolbarHeight;
 	padding-right: $sidebarMainWidth;
-	transition: padding-right 0.3s ease-in-out;
+	transition: padding-right 0.3s $animation;
 
 	&.closed {
 		padding-right: $sidebarMiniWidth;

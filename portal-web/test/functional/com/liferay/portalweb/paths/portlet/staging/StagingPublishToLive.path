@@ -60,8 +60,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DATE_SCHEDULE_REPEAT_RADIO</td>
-	<td>//option[contains(@id,'recurrenceType${key_frequency}')]</td>
+	<td>DATE_SCHEDULE_REPEAT_DROPDOWN</td>
+	<td>//select[contains(@id,'_recurrence')]</td>
 	<td></td>
 </tr>
 <tr>

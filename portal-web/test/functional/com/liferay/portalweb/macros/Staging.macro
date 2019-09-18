@@ -136,17 +136,17 @@ definition {
 
 		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
 
-		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
-
 		Type(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
 			value1 = "${scheduleTitleName}");
 
+		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
+
 		Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
 
-		Check(
-			key_frequency = "Daily",
-			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO");
+		Select(
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
+			value1 = "Daily");
 
 		AssertClick(
 			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
@@ -1039,9 +1039,9 @@ definition {
 		}
 
 		if (isSet(frequency)) {
-			Check(
-				key_frequency = "${frequency}",
-				locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO");
+			Select(
+				locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
+				value1 = "${frequency}");
 		}
 
 		if (isSet(checkContentNameList)) {

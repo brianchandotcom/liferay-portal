@@ -1,9 +1,32 @@
 definition {
 
+	@summary = "Select a content type and subtype when adding a display page. These locators should not be needed to be reused."
+	macro _selectMappingTypes {
+		if (!(isSet(contentType))) {
+			var contentType = "Web Content Article";
+		}
+
+		if (!(isSet(subType))) {
+			var subType = "Basic Web Content";
+		}
+
+		Select(
+			locator1 = "//div[contains(.,'Content Type')]/select",
+			value1 = "${contentType}");
+
+		Select(
+			locator1 = "//div[contains(.,'Subtype')]/select",
+			value1 = "${subType}");
+	}
+
 	macro addDisplayPage {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = "${displayPageName}");
+
+		DisplayPageTemplatesAdmin._selectMappingTypes(
+			contentType = "${contentType}",
+			subType = "${subType}");
 
 		Button.clickSave();
 

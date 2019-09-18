@@ -33,7 +33,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="executeStatus" return-type="Collection">
+		<finder name="ExecuteStatus" return-type="Collection">
 			<finder-column name="executeStatus" />
 		</finder>
 	</entity>

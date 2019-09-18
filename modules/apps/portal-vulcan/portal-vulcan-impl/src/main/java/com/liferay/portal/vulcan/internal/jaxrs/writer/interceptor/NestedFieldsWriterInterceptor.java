@@ -371,7 +371,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				fieldName, nestedFieldsContext, pathParameters, queryParameters,
 				resourceBaseClassParameter);
 
-			if (args[i] == null) {
+			if ((args[i] == null) && (resourceClassParameters != null)) {
 				args[i] = _getMethodArgValueFromItem(
 					item, resourceBaseClassParameter,
 					resourceClassParameters[i]);

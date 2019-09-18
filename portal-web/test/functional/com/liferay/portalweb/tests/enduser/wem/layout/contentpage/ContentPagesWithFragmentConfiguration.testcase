@@ -162,6 +162,7 @@ definition {
 	@description = "This is a test for LPS-96685. User can restore and change fragment configuration value."
 	@priority = "5"
 	test RestoreAndChangeConfigurationFragmentToContentPage {
+		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");

@@ -73,12 +73,10 @@ AUI.add(
 
 					var form = instance.get('form');
 
-					const body = new URLSearchParams(new FormData(form));
-
 					Liferay.Util.fetch(
 						instance.get('deactivateSimulationUrl'),
 						{
-							body,
+							body: new FormData(form),
 							method: 'POST'
 						}
 					)
@@ -96,14 +94,10 @@ AUI.add(
 				_simulateSegmentsEntries() {
 					var instance = this;
 
-					const body = new URLSearchParams(
-						new FormData(instance.get('form'))
-					);
-
 					Liferay.Util.fetch(
 						instance.get('simulateSegmentsEntriesUrl'),
 						{
-							body,
+							body: new FormData(instance.get('form')),
 							method: 'POST'
 						}
 					)

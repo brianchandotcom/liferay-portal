@@ -79,16 +79,9 @@ AUI.add(
 							body: new FormData(form),
 							method: 'POST'
 						}
-					)
-						.then(response => {
-							return response.text();
-						})
-						.then(() => {
-							A.all('#' + form.id + ' input').set(
-								'checked',
-								false
-							);
-						});
+					).then(() => {
+						A.all('#' + form.id + ' input').set('checked', false);
+					});
 				},
 
 				_simulateSegmentsEntries() {
@@ -100,23 +93,19 @@ AUI.add(
 							body: new FormData(instance.get('form')),
 							method: 'POST'
 						}
-					)
-						.then(response => {
-							return response.text();
-						})
-						.then(() => {
-							const iframe = A.one('#simulationDeviceIframe');
+					).then(() => {
+						const iframe = A.one('#simulationDeviceIframe');
 
-							if (iframe) {
-								const iframeWindow = A.Node.getDOMNode(
-									iframe.get('contentWindow')
-								);
+						if (iframe) {
+							const iframeWindow = A.Node.getDOMNode(
+								iframe.get('contentWindow')
+							);
 
-								if (iframeWindow) {
-									iframeWindow.location.reload();
-								}
+							if (iframeWindow) {
+								iframeWindow.location.reload();
 							}
-						});
+						}
+					});
 				},
 
 				destructor() {

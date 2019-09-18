@@ -23,24 +23,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * covered by Liferay's support services
  * @author Pavel Savinov
  */
-@ExtendedObjectClassDefinition(
-	category = "pages", generateUI = false,
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration",
-	localization = "content/Language",
-	name = "content-page-editor-configuration-name"
+	id = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentCreationContentPageEditorConfiguration"
 )
 public interface ContentCreationContentPageEditorConfiguration {
 
 	/**
 	 * Enables option to create content from the editable fields selection.
 	 */
-	@Meta.AD(
-		deflt = "false", description = "content-creation-enabled-description",
-		name = "content-creation-enabled", required = false
-	)
+	@Meta.AD(deflt = "false", required = false)
 	public boolean contentCreationEnabled();
 
 }

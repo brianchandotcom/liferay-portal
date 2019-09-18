@@ -14,12 +14,14 @@
 
 package com.liferay.segments.experiment.web.internal.portlet;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext;
 import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
@@ -29,6 +31,8 @@ import com.liferay.segments.service.SegmentsExperimentService;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -36,14 +40,18 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Arques
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
@@ -60,6 +68,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = {Portlet.class, SegmentsExperimentPortlet.class}
 )
 public class SegmentsExperimentPortlet extends MVCPortlet {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_segmentsExperimentConfiguration = ConfigurableUtil.createConfigurable(
+			SegmentsExperimentConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doDispatch(
@@ -82,7 +97,8 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext =
 			new SegmentsExperimentDisplayContext(
 				httpServletRequest, renderResponse, _layoutLocalService,
-				_portal, _segmentsExperienceService, _segmentsExperimentService,
+				_portal, _segmentsExperienceService,
+				_segmentsExperimentConfiguration, _segmentsExperimentService,
 				_segmentsExperimentRelService);
 
 		renderRequest.setAttribute(
@@ -105,6 +121,9 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;
+
+	private volatile SegmentsExperimentConfiguration
+		_segmentsExperimentConfiguration;
 
 	@Reference
 	private SegmentsExperimentProductNavigationControlMenuEntry

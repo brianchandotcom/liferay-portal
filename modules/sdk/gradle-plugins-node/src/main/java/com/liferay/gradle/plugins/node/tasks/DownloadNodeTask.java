@@ -60,7 +60,7 @@ public class DownloadNodeTask extends DefaultTask {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					if (Objects.equals(
-							DigestUtil.getDigestFileContent(_getDigestFile()),
+							DigestUtil.getDigest(_getDigestFile()),
 							DigestUtil.getDigest(getNodeUrl(), getNpmUrl()))) {
 
 						return false;

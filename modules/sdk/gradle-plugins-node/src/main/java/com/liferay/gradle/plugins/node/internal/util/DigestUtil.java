@@ -97,7 +97,7 @@ public class DigestUtil {
 		return sb.toString();
 	}
 
-	public static String getDigestFileContent(File digestFile) {
+	public static String getDigest(File digestFile) {
 		if (!digestFile.exists()) {
 			return null;
 		}

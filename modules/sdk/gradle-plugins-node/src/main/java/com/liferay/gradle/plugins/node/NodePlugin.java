@@ -652,7 +652,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		String newDigest = DigestUtil.getDigest(
 			packageRunBuildTask.getSourceFiles());
-		String oldDigest = DigestUtil.getDigestFileContent(digestFile);
+		String oldDigest = DigestUtil.getDigest(digestFile);
 
 		if (!Objects.equals(oldDigest, newDigest)) {
 			Project project = packageRunBuildTask.getProject();

@@ -75,6 +75,21 @@
 	</div>
 </div>
 
+<div id='<%= liferayPortletResponse.getNamespace() + "manageCollaborators-root" %>''>
+
+	<%
+	Map<String, Object> data = new HashMap<>();
+
+	data.put("number", 1);
+	%>
+
+	<react:component
+		componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
+		data="<%= data %>"
+		module="js/index.es"
+	/>
+</div>
+
 <%
 boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("info_panel_file_entry.jsp-showManageCollaborators"));
 %>

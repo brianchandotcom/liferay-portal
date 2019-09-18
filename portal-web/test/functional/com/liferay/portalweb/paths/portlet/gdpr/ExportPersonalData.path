@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>ExportPersonalData</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ExportPersonalData</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>HEADER</td>
+	<td>//ul[contains(@class,'control-menu-nav')]//span[contains(@data-qa-id,'headerTitle') and contains(.,'${key_firstName} ${key_lastName} - Export Personal Data')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

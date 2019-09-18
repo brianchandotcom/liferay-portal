@@ -1504,6 +1504,19 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro exportPersonalDataCP {
+		Search.searchCP(searchTerm = "${userFirstName}");
+
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Export Personal Data",
+			rowEntry = "${userFirstName}");
+
+		AssertElementPresent(
+			key_firstName = "${userFirstName}",
+			key_lastName = "${userLastName}",
+			locator1 = "ExportPersonalData#HEADER");
+	}
+
 	@summary = "Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'; if not logged in as '${userEmailAddress}', then log out first"
 	macro firstLoginPG {
 		if (isSet(virtualHostsURL)) {

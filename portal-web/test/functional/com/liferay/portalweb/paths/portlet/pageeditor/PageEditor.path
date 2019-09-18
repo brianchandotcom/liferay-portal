@@ -279,6 +279,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDITABLE_FIELD_TOOLBAR_LINK_BUTTON</td>
+	<td>//button[@data-title='Link']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDITABLE_FIELD_TOOLBAR_MAP_BUTTON</td>
 	<td>//button[@data-title='Map']</td>
 	<td></td>

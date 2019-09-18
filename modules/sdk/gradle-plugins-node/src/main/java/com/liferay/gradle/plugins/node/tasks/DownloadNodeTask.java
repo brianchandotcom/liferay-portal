@@ -60,8 +60,7 @@ public class DownloadNodeTask extends DefaultTask {
 				@Override
 				public boolean isSatisfiedBy(Task task) {
 					if (Objects.equals(
-							DigestUtil.getDigestFileContent(
-								new File(getNodeDir(), ".digest")),
+							DigestUtil.getDigestFileContent(_getDigestFile()),
 							DigestUtil.getDigest(getNodeUrl(), getNpmUrl()))) {
 
 						return false;
@@ -149,8 +148,7 @@ public class DownloadNodeTask extends DefaultTask {
 		String digest = DigestUtil.getDigest(getNodeUrl(), getNpmUrl());
 
 		FileUtil.write(
-			new File(getNodeDir(), ".digest"),
-			digest.getBytes(StandardCharsets.UTF_8));
+			_getDigestFile(), digest.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@OutputDirectory
@@ -213,6 +211,10 @@ public class DownloadNodeTask extends DefaultTask {
 		}
 
 		return FileUtil.get(getProject(), url, destinationFile);
+	}
+
+	private File _getDigestFile() {
+		return new File(getNodeDir(), ".digest");
 	}
 
 	private final NodeExecutor _nodeExecutor;

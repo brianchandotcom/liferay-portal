@@ -19,6 +19,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.util.GradleSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -40,9 +42,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		content = matcher.replaceAll("$1$2 {\n\t$3\n}$4");
 
-		matcher = _stylingPattern2.matcher(content);
-
-		content = matcher.replaceAll("$1$2 = $3$4");
+		content = _stylingCheck(content);
 
 		return content;
 	}
@@ -103,8 +103,29 @@ public class GradleStylingCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(content, match, sb.toString());
 	}
 
+	private String _stylingCheck(String content) {
+		int[] multiLineStringsPositions =
+			GradleSourceUtil.getMultiLinePositions(
+				content, _multiLineStringsPattern);
+
+		Matcher matcher = _stylingPattern2.matcher(content);
+
+		while (matcher.find()) {
+			if (!GradleSourceUtil.isInsideMultiLines(
+					SourceUtil.getLineNumber(content, matcher.start()),
+					multiLineStringsPositions)) {
+
+				return matcher.replaceFirst("$1$2 = $3$4");
+			}
+		}
+
+		return content;
+	}
+
 	private static final Pattern _mapKeyPattern = Pattern.compile(
 		"(\".+?\") *: *(\".+?\")");
+	private static final Pattern _multiLineStringsPattern = Pattern.compile(
+		"\"\"\"\\\\\n.*?\"\"\"", Pattern.DOTALL);
 	private static final Pattern _stylingPattern1 = Pattern.compile(
 		"(\\A|\n)(\\w+)\\.(\\w+ = \\w+)(\n|\\Z)");
 	private static final Pattern _stylingPattern2 = Pattern.compile(

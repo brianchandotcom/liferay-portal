@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.internal.upgrade.v1_x_x;
+package com.liferay.sync.internal.upgrade.v1_0_6;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.sync.service.DLSyncEventLocalService;

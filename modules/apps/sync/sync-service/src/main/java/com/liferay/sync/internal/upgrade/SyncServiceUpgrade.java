@@ -18,7 +18,7 @@ import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.sync.internal.upgrade.v1_x_x.UpgradeSyncDLObject;
+import com.liferay.sync.internal.upgrade.v1_0_6.UpgradeSyncDLObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,9 +37,7 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.1", "1.0.2",
-			new com.liferay.sync.internal.upgrade.v1_0_2.UpgradeSchema(),
-			new UpgradeSyncDLObject(
-				_dlSyncEventLocalService, _groupLocalService));
+			new com.liferay.sync.internal.upgrade.v1_0_2.UpgradeSchema());
 
 		registry.register(
 			"1.0.2", "1.0.3",

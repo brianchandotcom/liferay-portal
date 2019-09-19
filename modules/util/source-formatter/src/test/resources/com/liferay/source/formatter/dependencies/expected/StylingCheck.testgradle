@@ -11,7 +11,14 @@ LIBSASS_VERSION=\"${project.libSassVersion}\"
 autoreconf --force --install
 ./configure --disable-static --disable-tests --enable-shared
 make -j5""")
+
+		buildShFile.write('''\
+LIBSASS_VERSION_NEW=\"${project.libSassVersion}\"
+autoreconf --force --install
+./configure --disable-static --disable-tests --enable-shared
+make -j5''')
 	}
+
 	resourcesDirName = "darwin_universal"
 }
 

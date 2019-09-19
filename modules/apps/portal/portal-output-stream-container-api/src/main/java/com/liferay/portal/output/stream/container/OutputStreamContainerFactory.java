@@ -21,4 +21,8 @@ public interface OutputStreamContainerFactory {
 
 	public OutputStreamContainer create(String hint);
 
+	public default String getFactoryName() {
+		return null;
+	}
+
 }

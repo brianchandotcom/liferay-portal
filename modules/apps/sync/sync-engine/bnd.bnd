@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 3.4.6
+-fixupmessages: Classes found in the wrong directory: ...;is:=ignore

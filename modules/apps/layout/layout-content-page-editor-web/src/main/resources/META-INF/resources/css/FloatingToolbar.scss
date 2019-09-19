@@ -51,8 +51,11 @@
 		& > .popover {
 			max-height: 250px;
 			min-width: $floatingToolbarPanelMinWidth;
-			overflow: auto;
 			position: static;
+
+			&.popover-scrollable {
+			overflow: auto;
+			}
 		}
 
 		.btn,

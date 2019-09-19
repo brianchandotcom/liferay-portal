@@ -114,6 +114,7 @@ class FragmentsEditor extends Component {
 	 */
 	disposed() {
 		document.removeEventListener('click', this._handleDocumentClick, true);
+		document.removeEventListener('keydown', this._handleDocumentKeyDown);
 		document.removeEventListener('keyup', this._handleDocumentKeyUp);
 		document.removeEventListener(
 			'mouseover',

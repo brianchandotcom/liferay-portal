@@ -68,6 +68,10 @@ public class JournalHistoryDisplayContext {
 			JournalPortletUtil.getArticleOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
+		articleSearchContainer.setOrderByCol(getOrderByCol());
+		articleSearchContainer.setOrderByComparator(orderByComparator);
+		articleSearchContainer.setOrderByType(getOrderByType());
+
 		List<JournalArticle> articleVersions =
 			JournalArticleServiceUtil.getArticlesByArticleId(
 				_article.getGroupId(), _article.getArticleId(),

@@ -654,7 +654,7 @@ public class NodePlugin implements Plugin<Project> {
 			packageRunBuildTask.getSourceFiles());
 		String oldDigest = DigestUtil.getDigest(digestFile);
 
-		if (!Objects.equals(oldDigest, newDigest)) {
+		if (Objects.equals(oldDigest, newDigest)) {
 			Project project = packageRunBuildTask.getProject();
 
 			ProcessResources processResourcesTask =

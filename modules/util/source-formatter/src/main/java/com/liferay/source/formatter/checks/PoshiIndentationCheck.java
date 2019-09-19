@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
+import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -49,14 +49,13 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 			boolean insideMultiLineString = false;
 
-			int[] multiLineCommentsPositions =
-				PoshiSourceUtil.getMultiLinePositions(
-					content, _multiLineCommentsPattern);
+			int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (PoshiSourceUtil.isInsideMultiLines(
+				if (SourceUtil.isInsideMultiLines(
 						lineNumber, multiLineCommentsPositions)) {
 
 					sb.append(line);

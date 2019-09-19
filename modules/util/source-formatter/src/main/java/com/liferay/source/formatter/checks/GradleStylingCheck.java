@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.util.Map;
@@ -106,14 +105,13 @@ public class GradleStylingCheck extends BaseFileCheck {
 	private String _stylingCheck(
 		String content, Pattern pattern, String replacement) {
 
-		int[] multiLineStringsPositions =
-			GradleSourceUtil.getMultiLinePositions(
-				content, _multiLineStringsPattern);
+		int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
+			content, _multiLineStringsPattern);
 
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			if (!GradleSourceUtil.isInsideMultiLines(
+			if (!SourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, matcher.start()),
 					multiLineStringsPositions)) {
 

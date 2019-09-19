@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
@@ -46,10 +45,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _formatWhitespace(String content) {
-		int[] multiLineCommentsPositions =
-			PoshiSourceUtil.getMultiLinePositions(
-				content, _multiLineCommentsPattern);
-		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+		int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
+			content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = SourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
 		Matcher matcher = _incorrectWhitespacePattern.matcher(content);
@@ -66,9 +64,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 			}
 
 			if (!ToolsUtil.isInsideQuotes(content, pos) &&
-				!PoshiSourceUtil.isInsideMultiLines(
+				!SourceUtil.isInsideMultiLines(
 					getLineNumber(content, pos), multiLineCommentsPositions) &&
-				!PoshiSourceUtil.isInsideMultiLines(
+				!SourceUtil.isInsideMultiLines(
 					getLineNumber(content, pos), multiLineStringPositions)) {
 
 				return StringUtil.replaceFirst(
@@ -83,10 +81,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		int[] multiLineCommentsPositions =
-			PoshiSourceUtil.getMultiLinePositions(
-				content, _multiLineCommentsPattern);
-		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+		int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
+			content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = SourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
 		StringBundler sb = new StringBundler();
@@ -103,9 +100,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 
 				line = trimLine(fileName, absolutePath, line);
 
-				if (PoshiSourceUtil.isInsideMultiLines(
+				if (SourceUtil.isInsideMultiLines(
 						lineNumber, multiLineCommentsPositions) ||
-					PoshiSourceUtil.isInsideMultiLines(
+					SourceUtil.isInsideMultiLines(
 						lineNumber, multiLineStringPositions)) {
 
 					sb.append(line);
@@ -132,10 +129,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 	}
 
 	private String _formatWhitespaceOnCommand(String content) {
-		int[] multiLineCommentsPositions =
-			PoshiSourceUtil.getMultiLinePositions(
-				content, _multiLineCommentsPattern);
-		int[] multiLineStringPositions = PoshiSourceUtil.getMultiLinePositions(
+		int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
+			content, _multiLineCommentsPattern);
+		int[] multiLineStringPositions = SourceUtil.getMultiLinePositions(
 			content, _multiLineStringPattern);
 
 		Matcher matcher = _incorrectCommandPattern.matcher(content);
@@ -143,9 +139,9 @@ public class PoshiWhitespaceCheck extends WhitespaceCheck {
 		while (matcher.find()) {
 			int lineNumber = SourceUtil.getLineNumber(content, matcher.start());
 
-			if (!PoshiSourceUtil.isInsideMultiLines(
+			if (!SourceUtil.isInsideMultiLines(
 					lineNumber, multiLineCommentsPositions) &&
-				!PoshiSourceUtil.isInsideMultiLines(
+				!SourceUtil.isInsideMultiLines(
 					lineNumber, multiLineStringPositions)) {
 
 				return StringUtil.replaceFirst(

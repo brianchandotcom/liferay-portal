@@ -28,6 +28,11 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -127,6 +132,21 @@ public class SourceUtil {
 		return x + 1;
 	}
 
+	public static int[] getMultiLinePositions(
+		String content, Pattern multiLinePattern) {
+
+		List<Integer> multiLinePositions = new ArrayList<>();
+
+		Matcher matcher = multiLinePattern.matcher(content);
+
+		while (matcher.find()) {
+			multiLinePositions.add(getLineNumber(content, matcher.start()));
+			multiLinePositions.add(getLineNumber(content, matcher.end() - 1));
+		}
+
+		return ArrayUtil.toIntArray(multiLinePositions);
+	}
+
 	public static String getTitleCase(String s, String[] exceptions) {
 		String[] words = s.split("\\s+");
 
@@ -180,6 +200,22 @@ public class SourceUtil {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	public static boolean isInsideMultiLines(
+		int lineNumber, int[] multiLinePositions) {
+
+		for (int i = 0; i < (multiLinePositions.length - 1); i += 2) {
+			if (lineNumber < multiLinePositions[i]) {
+				return false;
+			}
+
+			if (lineNumber <= multiLinePositions[i + 1]) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isXML(String content) {

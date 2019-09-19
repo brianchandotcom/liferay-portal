@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.checks.util.PoshiSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
 import java.io.IOException;
@@ -48,11 +47,10 @@ public class PoshiParametersOrderCheck extends BaseFileCheck {
 		while (matcher1.find()) {
 			int x = matcher1.start(2);
 
-			int[] multiLineCommentsPositions =
-				PoshiSourceUtil.getMultiLinePositions(
-					content, _multiLineCommentsPattern);
+			int[] multiLineCommentsPositions = SourceUtil.getMultiLinePositions(
+				content, _multiLineCommentsPattern);
 
-			if (PoshiSourceUtil.isInsideMultiLines(
+			if (SourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, x),
 					multiLineCommentsPositions)) {
 

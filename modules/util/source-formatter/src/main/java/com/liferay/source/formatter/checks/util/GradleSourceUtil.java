@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 
@@ -71,39 +70,6 @@ public class GradleSourceUtil {
 		}
 
 		return dependenciesBlocks;
-	}
-
-	public static int[] getMultiLinePositions(
-		String content, Pattern multiLinePattern) {
-
-		List<Integer> multiLinePositions = new ArrayList<>();
-
-		Matcher matcher = multiLinePattern.matcher(content);
-
-		while (matcher.find()) {
-			multiLinePositions.add(
-				SourceUtil.getLineNumber(content, matcher.start()));
-			multiLinePositions.add(
-				SourceUtil.getLineNumber(content, matcher.end() - 1));
-		}
-
-		return ArrayUtil.toIntArray(multiLinePositions);
-	}
-
-	public static boolean isInsideMultiLines(
-		int lineNumber, int[] multiLinePositions) {
-
-		for (int i = 0; i < (multiLinePositions.length - 1); i += 2) {
-			if (lineNumber < multiLinePositions[i]) {
-				return false;
-			}
-
-			if (lineNumber <= multiLinePositions[i + 1]) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	public static boolean isSpringBootExecutable(String content) {

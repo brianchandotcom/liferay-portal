@@ -93,6 +93,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				key -> new ServiceRegistration<?>[] {
+					_deployAppPortlet(appId, appName, portletName),
 					_deployAppPanelApp(
 						appBuilderPanelCategoryKey, portletName,
 						JSONUtil.toLongArray(
@@ -102,22 +103,21 @@ public class ProductMenuAppDeployer implements AppDeployer {
 						PanelCategoryKeys.CONTROL_PANEL),
 					_deployAppPanelCategory(
 						appBuilderPanelCategoryKey, appName,
-						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT),
-					_deployAppPortlet(appId, appName, portletName)
+						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT)
 				});
 		}
 		else {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				mapKey -> new ServiceRegistration<?>[] {
+					_deployAppPortlet(appId, appName, portletName),
 					_deployAppPanelApp(
 						appBuilderPanelCategoryKey, portletName,
 						JSONUtil.toLongArray(
 							jsonObject.getJSONArray("siteIds"))),
 					_deployAppPanelCategory(
 						appBuilderPanelCategoryKey, appName,
-						jsonArray.getString(0)),
-					_deployAppPortlet(appId, appName, portletName)
+						jsonArray.getString(0))
 				});
 		}
 

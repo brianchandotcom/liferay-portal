@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.internal.info.display.field;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
+import com.liferay.dynamic.data.mapping.kernel.DDMForm;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,11 +69,27 @@ public class DDMFormValuesInfoDisplayFieldProviderImpl<T extends GroupedModel>
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldsValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
+		DDMForm ddmForm = ddmFormValues.getDDMForm();
+
+		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
+			true);
+
 		for (Map.Entry<String, List<DDMFormFieldValue>> entry :
 				ddmFormFieldsValuesMap.entrySet()) {
 
+			DDMFormField ddmFormField = ddmFormFields.get(entry.getKey());
+
+			List<DDMFormFieldValue> ddmFormFieldsValues = entry.getValue();
+
+			if (Objects.equals(ddmFormField.getType(), "ddm-image") &&
+				(ddmFormFieldsValues.size() > 1)) {
+
+				ddmFormFieldsValues = Collections.singletonList(
+					ddmFormFieldsValues.get(0));
+			}
+
 			_addDDMFormFieldValues(
-				t, entry.getKey(), entry.getValue(), infoDisplayFieldValues,
+				t, entry.getKey(), ddmFormFieldsValues, infoDisplayFieldValues,
 				locale);
 		}
 

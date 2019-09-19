@@ -211,8 +211,7 @@ class FragmentEntryLink extends Component {
 			.dispatch(
 				duplicateFragmentEntryLinkAction(
 					this.fragmentEntryLinkId,
-					this.rowType,
-					this.content
+					this.rowType
 				)
 			)
 			.dispatch(updateLastSaveDateAction())

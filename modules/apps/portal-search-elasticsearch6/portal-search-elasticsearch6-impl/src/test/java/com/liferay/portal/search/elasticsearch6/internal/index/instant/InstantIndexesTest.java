@@ -21,8 +21,8 @@ import com.liferay.portal.search.elasticsearch6.internal.index.IndexSynchronizer
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexSynchronizerImpl;
 import com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer.Microcontainer;
 import com.liferay.portal.search.elasticsearch6.internal.test.util.microcontainer.MicrocontainerImpl;
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexDefinition;
 import com.liferay.portal.search.elasticsearch6.spi.index.IndexRegistrar;
+import com.liferay.portal.search.spi.index.IndexDefinition;
 
 import java.util.Arrays;
 

@@ -28,16 +28,15 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -1515,6 +1514,7 @@ public class FragmentCollectionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private FinderPath _finderPathWithPaginationCountByGroupId;
 
 	/**
 	 * Returns all the fragment collections where groupId = &#63;.
@@ -1962,38 +1962,63 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the fragment collections that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching fragment collections that the user has permission to view
-	 */
-	@Override
-	public List<FragmentCollection> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment collections that the user has permission to view where groupId = &#63;.
+	 * Returns all the fragment collections where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of fragment collections
-	 * @param end the upper bound of the range of fragment collections (not inclusive)
-	 * @return the range of matching fragment collections that the user has permission to view
+	 * @param groupIds the group IDs
+	 * @return the matching fragment collections
 	 */
 	@Override
-	public List<FragmentCollection> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
+	public List<FragmentCollection> findByGroupId(long[] groupIds) {
+		return findByGroupId(
+			groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the fragment collections that the user has permissions to view where groupId = &#63;.
+	 * Returns a range of all the fragment collections where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	@Override
+	public List<FragmentCollection> findByGroupId(
+		long[] groupIds, int start, int end) {
+
+		return findByGroupId(groupIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	@Override
+	public List<FragmentCollection> findByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return findByGroupId(groupIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -2003,293 +2028,136 @@ public class FragmentCollectionPersistenceImpl
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment collections that the user has permission to view
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
 	 */
 	@Override
-	public List<FragmentCollection> filterFindByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId(groupId, start, end, orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			query = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, FragmentCollectionImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, FragmentCollectionImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			return (List<FragmentCollection>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set of fragment collections that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	@Override
-	public FragmentCollection[] filterFindByGroupId_PrevAndNext(
-			long fragmentCollectionId, long groupId,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId_PrevAndNext(
-				fragmentCollectionId, groupId, orderByComparator);
-		}
-
-		FragmentCollection fragmentCollection = findByPrimaryKey(
-			fragmentCollectionId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentCollection[] array = new FragmentCollectionImpl[3];
-
-			array[0] = filterGetByGroupId_PrevAndNext(
-				session, fragmentCollection, groupId, orderByComparator, true);
-
-			array[1] = fragmentCollection;
-
-			array[2] = filterGetByGroupId_PrevAndNext(
-				session, fragmentCollection, groupId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected FragmentCollection filterGetByGroupId_PrevAndNext(
-		Session session, FragmentCollection fragmentCollection, long groupId,
+	public List<FragmentCollection> findByGroupId(
+		long[] groupIds, int start, int end,
 		OrderByComparator<FragmentCollection> orderByComparator,
-		boolean previous) {
+		boolean useFinderCache) {
 
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
+		if (groupIds == null) {
+			groupIds = new long[0];
 		}
-		else {
-			query = new StringBundler(4);
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_1);
+		if (groupIds.length == 1) {
+			return findByGroupId(groupIds[0], start, end, orderByComparator);
 		}
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+		boolean pagination = true;
+		Object[] finderArgs = null;
 
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_2);
-		}
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
+			pagination = false;
 
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds)};
 			}
+		}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), start, end, orderByComparator
+			};
+		}
 
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
+		List<FragmentCollection> list = null;
 
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
+		if (useFinderCache) {
+			list = (List<FragmentCollection>)finderCache.getResult(
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
-			query.append(ORDER_BY_CLAUSE);
+			if ((list != null) && !list.isEmpty()) {
+				for (FragmentCollection fragmentCollection : list) {
+					if (!ArrayUtil.contains(
+							groupIds, fragmentCollection.getGroupId())) {
 
-			String[] orderByFields = orderByComparator.getOrderByFields();
+						list = null;
 
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
+						break;
 					}
 				}
 			}
 		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
+
+			if (groupIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
+
+				query.append(StringUtil.merge(groupIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
 				query.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
 			}
-			else {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_SQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				if (!pagination) {
+					list = (List<FragmentCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<FragmentCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs,
+						list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, FragmentCollectionImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, FragmentCollectionImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						fragmentCollection)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<FragmentCollection> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
+		return list;
 	}
 
 	/**
@@ -2359,55 +2227,79 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of fragment collections that the user has permission to view where groupId = &#63;.
+	 * Returns the number of fragment collections where groupId = any &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @return the number of matching fragment collections that the user has permission to view
+	 * @param groupIds the group IDs
+	 * @return the number of matching fragment collections
 	 */
 	@Override
-	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByGroupId(groupId);
+	public int countByGroupId(long[] groupIds) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
-		StringBundler query = new StringBundler(2);
+		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
 
-		query.append(_FILTER_SQL_COUNT_FRAGMENTCOLLECTION_WHERE);
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByGroupId, finderArgs, this);
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+		if (count == null) {
+			StringBundler query = new StringBundler();
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+			query.append(_SQL_COUNT_FRAGMENTCOLLECTION_WHERE);
 
-		Session session = null;
+			if (groupIds.length > 0) {
+				query.append("(");
 
-		try {
-			session = openSession();
+				query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+				query.append(StringUtil.merge(groupIds));
 
-			q.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+				query.append(")");
 
-			QueryPos qPos = QueryPos.getInstance(q);
+				query.append(")");
+			}
 
-			qPos.add(groupId);
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
 
-			Long count = (Long)q.uniqueResult();
+			String sql = query.toString();
 
-			return count.intValue();
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByGroupId, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationCountByGroupId, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"fragmentCollection.groupId = ?";
+
+	private static final String _FINDER_COLUMN_GROUPID_GROUPID_7 =
+		"fragmentCollection.groupId IN (";
 
 	private FinderPath _finderPathFetchByG_FCK;
 	private FinderPath _finderPathCountByG_FCK;
@@ -3169,42 +3061,69 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the fragment collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching fragment collections that the user has permission to view
-	 */
-	@Override
-	public List<FragmentCollection> filterFindByG_LikeN(
-		long groupId, String name) {
-
-		return filterFindByG_LikeN(
-			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns all the fragment collections where groupId = any &#63; and name LIKE &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param name the name
-	 * @param start the lower bound of the range of fragment collections
-	 * @param end the upper bound of the range of fragment collections (not inclusive)
-	 * @return the range of matching fragment collections that the user has permission to view
+	 * @return the matching fragment collections
 	 */
 	@Override
-	public List<FragmentCollection> filterFindByG_LikeN(
-		long groupId, String name, int start, int end) {
+	public List<FragmentCollection> findByG_LikeN(
+		long[] groupIds, String name) {
 
-		return filterFindByG_LikeN(groupId, name, start, end, null);
+		return findByG_LikeN(
+			groupIds, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the fragment collections that the user has permissions to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns a range of all the fragment collections where groupId = any &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @return the range of matching fragment collections
+	 */
+	@Override
+	public List<FragmentCollection> findByG_LikeN(
+		long[] groupIds, String name, int start, int end) {
+
+		return findByG_LikeN(groupIds, name, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = any &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param name the name
+	 * @param start the lower bound of the range of fragment collections
+	 * @param end the upper bound of the range of fragment collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching fragment collections
+	 */
+	@Override
+	public List<FragmentCollection> findByG_LikeN(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return findByG_LikeN(
+			groupIds, name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the fragment collections where groupId = &#63; and name LIKE &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -3215,330 +3134,161 @@ public class FragmentCollectionPersistenceImpl
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment collections that the user has permission to view
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching fragment collections
 	 */
 	@Override
-	public List<FragmentCollection> filterFindByG_LikeN(
-		long groupId, String name, int start, int end,
-		OrderByComparator<FragmentCollection> orderByComparator) {
+	public List<FragmentCollection> findByG_LikeN(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_LikeN(groupId, name, start, end, orderByComparator);
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
 
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			query = new StringBundler(5);
+		if (groupIds.length == 1) {
+			return findByG_LikeN(
+				groupIds[0], name, start, end, orderByComparator);
 		}
 
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_1);
-		}
+		boolean pagination = true;
+		Object[] finderArgs = null;
 
-		query.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
 
-		boolean bindName = false;
+			pagination = false;
 
-		if (name.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
-		}
-		else {
-			bindName = true;
-
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 			}
 		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_SQL);
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				StringUtil.merge(groupIds), name, start, end, orderByComparator
+			};
+		}
+
+		List<FragmentCollection> list = null;
+
+		if (useFinderCache) {
+			list = (List<FragmentCollection>)finderCache.getResult(
+				_finderPathWithPaginationFindByG_LikeN, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (FragmentCollection fragmentCollection : list) {
+					if (!ArrayUtil.contains(
+							groupIds, fragmentCollection.getGroupId()) ||
+						!StringUtil.wildcardMatches(
+							fragmentCollection.getName(), name, '_', '%', '\\',
+							true)) {
+
+						list = null;
+
+						break;
+					}
+				}
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+		if (list == null) {
+			StringBundler query = new StringBundler();
 
-		Session session = null;
+			query.append(_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
 
-		try {
-			session = openSession();
+			if (groupIds.length > 0) {
+				query.append("(");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+				query.append(_FINDER_COLUMN_G_LIKEN_GROUPID_7);
 
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, FragmentCollectionImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, FragmentCollectionImpl.class);
-			}
+				query.append(StringUtil.merge(groupIds));
 
-			QueryPos qPos = QueryPos.getInstance(q);
+				query.append(")");
 
-			qPos.add(groupId);
+				query.append(")");
 
-			if (bindName) {
-				qPos.add(name);
-			}
-
-			return (List<FragmentCollection>)QueryUtil.list(
-				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the fragment collections before and after the current fragment collection in the ordered set of fragment collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
-	 *
-	 * @param fragmentCollectionId the primary key of the current fragment collection
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	@Override
-	public FragmentCollection[] filterFindByG_LikeN_PrevAndNext(
-			long fragmentCollectionId, long groupId, String name,
-			OrderByComparator<FragmentCollection> orderByComparator)
-		throws NoSuchCollectionException {
-
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_LikeN_PrevAndNext(
-				fragmentCollectionId, groupId, name, orderByComparator);
-		}
-
-		name = Objects.toString(name, "");
-
-		FragmentCollection fragmentCollection = findByPrimaryKey(
-			fragmentCollectionId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentCollection[] array = new FragmentCollectionImpl[3];
-
-			array[0] = filterGetByG_LikeN_PrevAndNext(
-				session, fragmentCollection, groupId, name, orderByComparator,
-				true);
-
-			array[1] = fragmentCollection;
-
-			array[2] = filterGetByG_LikeN_PrevAndNext(
-				session, fragmentCollection, groupId, name, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected FragmentCollection filterGetByG_LikeN_PrevAndNext(
-		Session session, FragmentCollection fragmentCollection, long groupId,
-		String name, OrderByComparator<FragmentCollection> orderByComparator,
-		boolean previous) {
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(
-				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_WHERE);
-		}
-		else {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
-
-		boolean bindName = false;
-
-		if (name.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
-		}
-		else {
-			bindName = true;
-
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(
-				_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
 			}
 
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
-							true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
-							true));
-				}
+			boolean bindName = false;
 
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
-				}
-				else {
-					query.append(
-						getColumnName(
-							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
-				}
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
+			if (name.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
 			}
 			else {
-				query.append(FragmentCollectionModelImpl.ORDER_BY_SQL);
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				if (!pagination) {
+					list = (List<FragmentCollection>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<FragmentCollection>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_LikeN, finderArgs,
+						list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_LikeN, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
 			}
 		}
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, FragmentCollectionImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, FragmentCollectionImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(groupId);
-
-		if (bindName) {
-			qPos.add(name);
-		}
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						fragmentCollection)) {
-
-				qPos.add(orderByConditionValue);
-			}
-		}
-
-		List<FragmentCollection> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
+		return list;
 	}
 
 	/**
@@ -3628,73 +3378,101 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of fragment collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
+	 * Returns the number of fragment collections where groupId = any &#63; and name LIKE &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param groupIds the group IDs
 	 * @param name the name
-	 * @return the number of matching fragment collections that the user has permission to view
+	 * @return the number of matching fragment collections
 	 */
 	@Override
-	public int filterCountByG_LikeN(long groupId, String name) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_LikeN(groupId, name);
+	public int countByG_LikeN(long[] groupIds, String name) {
+		if (groupIds == null) {
+			groupIds = new long[0];
+		}
+		else if (groupIds.length > 1) {
+			groupIds = ArrayUtil.sortedUnique(groupIds);
 		}
 
 		name = Objects.toString(name, "");
 
-		StringBundler query = new StringBundler(3);
+		Object[] finderArgs = new Object[] {StringUtil.merge(groupIds), name};
 
-		query.append(_FILTER_SQL_COUNT_FRAGMENTCOLLECTION_WHERE);
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByG_LikeN, finderArgs, this);
 
-		query.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
+		if (count == null) {
+			StringBundler query = new StringBundler();
 
-		boolean bindName = false;
+			query.append(_SQL_COUNT_FRAGMENTCOLLECTION_WHERE);
 
-		if (name.isEmpty()) {
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
-		}
-		else {
-			bindName = true;
+			if (groupIds.length > 0) {
+				query.append("(");
 
-			query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
-		}
+				query.append(_FINDER_COLUMN_G_LIKEN_GROUPID_7);
 
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			query.toString(), FragmentCollection.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+				query.append(StringUtil.merge(groupIds));
 
-		Session session = null;
+				query.append(")");
 
-		try {
-			session = openSession();
+				query.append(")");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-
-			if (bindName) {
-				qPos.add(name);
+				query.append(WHERE_AND);
 			}
 
-			Long count = (Long)q.uniqueResult();
+			boolean bindName = false;
 
-			return count.intValue();
+			if (name.isEmpty()) {
+				query.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindName) {
+					qPos.add(name);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByG_LikeN, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationCountByG_LikeN, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+
+		return count.intValue();
 	}
 
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 =
 		"fragmentCollection.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_7 =
+		"fragmentCollection.groupId IN (";
 
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 =
 		"fragmentCollection.name LIKE ?";
@@ -4569,6 +4347,11 @@ public class FragmentCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()});
 
+		_finderPathWithPaginationCountByGroupId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()});
+
 		_finderPathFetchByG_FCK = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			FragmentCollectionImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -4658,30 +4441,7 @@ public class FragmentCollectionPersistenceImpl
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION_WHERE =
 		"SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"fragmentCollection.fragmentCollectionId";
-
-	private static final String _FILTER_SQL_SELECT_FRAGMENTCOLLECTION_WHERE =
-		"SELECT DISTINCT {fragmentCollection.*} FROM FragmentCollection fragmentCollection WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {FragmentCollection.*} FROM (SELECT DISTINCT fragmentCollection.fragmentCollectionId FROM FragmentCollection fragmentCollection WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_FRAGMENTCOLLECTION_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN FragmentCollection ON TEMP_TABLE.fragmentCollectionId = FragmentCollection.fragmentCollectionId";
-
-	private static final String _FILTER_SQL_COUNT_FRAGMENTCOLLECTION_WHERE =
-		"SELECT COUNT(DISTINCT fragmentCollection.fragmentCollectionId) AS COUNT_VALUE FROM FragmentCollection fragmentCollection WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "fragmentCollection";
-
-	private static final String _FILTER_ENTITY_TABLE = "FragmentCollection";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentCollection.";
-
-	private static final String _ORDER_BY_ENTITY_TABLE = "FragmentCollection.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No FragmentCollection exists with the primary key ";

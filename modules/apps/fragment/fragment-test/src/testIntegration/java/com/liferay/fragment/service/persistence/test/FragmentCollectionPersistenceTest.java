@@ -234,6 +234,11 @@ public class FragmentCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() throws Exception {
+		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByG_FCK() throws Exception {
 		_persistence.countByG_FCK(RandomTestUtil.nextLong(), "");
 
@@ -249,6 +254,13 @@ public class FragmentCollectionPersistenceTest {
 		_persistence.countByG_LikeN(0L, "null");
 
 		_persistence.countByG_LikeN(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_LikeNArrayable() throws Exception {
+		_persistence.countByG_LikeN(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -273,12 +285,6 @@ public class FragmentCollectionPersistenceTest {
 	public void testFindAll() throws Exception {
 		_persistence.findAll(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
-	}
-
-	@Test
-	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<FragmentCollection> getOrderByComparator() {

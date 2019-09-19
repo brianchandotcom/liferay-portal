@@ -66,45 +66,40 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								</div>
 
 								<ul class="mb-2 nav nav-stacked">
-
-									<%
-									if (ListUtil.isNotEmpty(fragmentCollectionContributors)) {
-									%>
-
+									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollectionContributors) %>">
 										<span class="truncate-text">
 											<liferay-ui:message key="default" />
 										</span>
 
-									<%
-									}
+										<%
+										for (FragmentCollectionContributor fragmentCollectionContributor : fragmentCollectionContributors) {
+										%>
 
-									for (FragmentCollectionContributor fragmentCollectionContributor : fragmentCollectionContributors) {
-									%>
+											<li class="nav-item">
 
-										<li class="nav-item">
+												<%
+												PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
 
-											<%
-											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+												fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+												fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
+												%>
 
-											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-											fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
-											%>
+												<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
 
-											<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-												<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
+													<liferay-ui:icon
+														icon="lock"
+														iconCssClass="text-muted"
+														markupView="lexicon"
+													/>
+												</a>
+											</li>
 
-												<liferay-ui:icon
-													icon="lock"
-													iconCssClass="text-muted"
-													markupView="lexicon"
-												/>
-											</a>
-										</li>
+										<%
+										}
+										%>
 
-									<%
-									}
-									%>
-
+									</c:if>
 								</ul>
 
 								<ul class="mb-2 nav nav-stacked">
@@ -147,45 +142,40 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								</ul>
 
 								<ul class="mb-2 nav nav-stacked">
-
-									<%
-									if (ListUtil.isNotEmpty(fragmentCollections)) {
-									%>
-
+									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
 										<span class="truncate-text"><%= fragmentDisplayContext.getGroupName(scopeGroupId) %></span>
 
-									<%
-									}
+										<%
+										for (FragmentCollection fragmentCollection : fragmentCollections) {
+										%>
 
-									for (FragmentCollection fragmentCollection : fragmentCollections) {
-									%>
+											<li class="nav-item">
 
-										<li class="nav-item">
+												<%
+												PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
 
-											<%
-											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+												fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
+												%>
 
-											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-											fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
-											%>
+												<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 
-											<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-												<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+													<c:if test="<%= fragmentCollection.getGroupId() != scopeGroupId %>">
+														<liferay-ui:icon
+															icon="lock"
+															iconCssClass="text-muted"
+															markupView="lexicon"
+														/>
+													</c:if>
+												</a>
+											</li>
 
-												<c:if test="<%= fragmentCollection.getGroupId() != scopeGroupId %>">
-													<liferay-ui:icon
-														icon="lock"
-														iconCssClass="text-muted"
-														markupView="lexicon"
-													/>
-												</c:if>
-											</a>
-										</li>
+										<%
+										}
+										%>
 
-									<%
-									}
-									%>
-
+									</c:if>
 								</ul>
 							</c:when>
 							<c:otherwise>

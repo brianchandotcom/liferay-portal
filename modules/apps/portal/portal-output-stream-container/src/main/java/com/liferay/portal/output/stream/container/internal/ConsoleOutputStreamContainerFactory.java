@@ -49,4 +49,11 @@ public class ConsoleOutputStreamContainerFactory
 		};
 	}
 
+	@Override
+	public String getFactoryName() {
+		return _FACTORY_NAME;
+	}
+
+	private static final String _FACTORY_NAME = "console";
+
 }

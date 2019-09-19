@@ -20,6 +20,12 @@
 String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG_KEY);
 %>
 
+<script data-senna-track="temporary" type="text/javascript">
+	var runMiddlewares = function() {
+		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
+	};
+</script>
+
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 	(function(u, c, a, m, o, l) {
 		o = 'script';
@@ -33,7 +39,7 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 	})('https://analytics-js-cdn.liferay.com', function() {
 		var config = <%= analyticsClientConfig %>
 
-		Analytics.create({...config});
+		Analytics.create(config);
 
 		Analytics.registerMiddleware(
 			function(request) {
@@ -53,6 +59,8 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 			);
 		}
 
+		runMiddlewares();
+
 		Analytics.send('pageViewed', 'Page');
 
 		<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
@@ -62,7 +70,7 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 					Analytics.dispose();
 
 					if (!themeDisplay.isControlPanel()) {
-						Analytics.create({...config});
+						Analytics.create(config);
 
 						Analytics.registerMiddleware(
 							function(request) {
@@ -81,6 +89,8 @@ String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANA
 								}
 							);
 						}
+
+						runMiddlewares();
 
 						Analytics.send('pageViewed', 'Page', {'page': event.path});
 					}

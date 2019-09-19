@@ -135,12 +135,10 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			new ByteArrayOutputStream();
 
 		if (Objects.equals(DLOpenerMimeTypes.APPLICATION_VND_XLSX, mimeType)) {
-			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+			try (XSSFWorkbook xssfWorkbook = new XSSFWorkbook()) {
+				xssfWorkbook.createSheet(
+					_translate(locale, "onedrive-excel-sheet"));
 
-			xssfWorkbook.createSheet(
-				_translate(locale, "onedrive-excel-sheet"));
-
-			try {
 				xssfWorkbook.write(byteArrayOutputStream);
 			}
 			catch (IOException ioe) {

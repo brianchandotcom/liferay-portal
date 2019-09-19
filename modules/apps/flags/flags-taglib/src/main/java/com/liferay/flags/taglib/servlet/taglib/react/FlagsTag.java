@@ -233,7 +233,7 @@ public class FlagsTag extends IncludeTag {
 		ResourceBundle resourceBundle = new AggregateResourceBundle(
 			(ResourceBundle)pageContext.getAttribute("resourceBundle"),
 			ResourceBundleUtil.getBundle(
-				"content.Language", PortalUtil.getLocale(request), getClass()));
+				PortalUtil.getLocale(request), "com.liferay.flags.taglib"));
 
 		if (Validator.isNotNull(_message)) {
 			return LanguageUtil.get(resourceBundle, _message);

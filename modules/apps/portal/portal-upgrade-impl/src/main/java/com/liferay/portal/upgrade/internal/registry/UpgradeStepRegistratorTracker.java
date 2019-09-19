@@ -18,11 +18,15 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
+import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
+import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -171,7 +175,20 @@ public class UpgradeStepRegistratorTracker {
 			}
 
 			if (_releaseManagerConfiguration.autoUpgrade()) {
-				_releaseManagerOSGiCommands.executeTo(bundleSymbolicName, null);
+				try {
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeInfos,
+						_swappedLogExecutor.
+							getDummyOutputStreamContainerFactoryName());
+				}
+				catch (Throwable t) {
+					_swappedLogExecutor.execute(
+						bundleSymbolicName,
+						() -> _log.error(
+							"Failed upgrade process for module ".concat(
+								bundleSymbolicName),
+							t));
+				}
 			}
 
 			return serviceRegistrations;
@@ -194,6 +211,15 @@ public class UpgradeStepRegistratorTracker {
 				serviceRegistration.unregister();
 			}
 		}
+
+		private final Log _log = LogFactoryUtil.getLog(
+			UpgradeStepRegistratorTracker.class);
+
+		@Reference
+		private SwappedLogExecutor _swappedLogExecutor;
+
+		@Reference
+		private UpgradeExecutor _upgradeExecutor;
 
 	}
 

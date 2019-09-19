@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -138,12 +139,14 @@ public class FlagsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		try {
+			String message = _getMessage();
+
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:data", _getData());
+				"liferay-flags:flags:data", _getData(message));
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:elementClasses", _getElementClasses());
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:message", _getMessage());
+				"liferay-flags:flags:message", message);
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:onlyIcon", !_label);
 		}
@@ -152,7 +155,9 @@ public class FlagsTag extends IncludeTag {
 		}
 	}
 
-	private Map<String, Object> _getData() throws PortalException {
+	private Map<String, Object> _getData(String message)
+		throws PortalException {
+
 		Map<String, Object> data = new HashMap<>();
 
 		Map<String, Object> context = new HashMap<>();
@@ -175,8 +180,6 @@ public class FlagsTag extends IncludeTag {
 
 		props.put("disabled", !_enabled);
 		props.put("forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay));
-
-		String message = _getMessage();
 
 		if (Validator.isNotNull(message)) {
 			props.put("message", message);
@@ -227,16 +230,16 @@ public class FlagsTag extends IncludeTag {
 	}
 
 	private String _getMessage() {
+		ResourceBundle resourceBundle = new AggregateResourceBundle(
+			(ResourceBundle)pageContext.getAttribute("resourceBundle"),
+			ResourceBundleUtil.getBundle(
+				"content.Language", PortalUtil.getLocale(request), getClass()));
+
 		if (Validator.isNotNull(_message)) {
-			return _message;
+			return LanguageUtil.get(resourceBundle, _message);
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", PortalUtil.getLocale(request), getClass());
-
-		_message = LanguageUtil.get(resourceBundle, "report");
-
-		return _message;
+		return LanguageUtil.get(resourceBundle, "report");
 	}
 
 	private static final String _PAGE = "/flags/page.jsp";

@@ -80,8 +80,9 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = _calculateSegmentsExperimentEstimatedDaysDuration(
-				actionRequest);
+			jsonObject =
+				_calculateSegmentsExperimentEstimatedDaysDurationJSONObject(
+					actionRequest);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -103,8 +104,31 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private JSONObject _calculateSegmentsExperimentEstimatedDaysDuration(
-			ActionRequest actionRequest)
+	private Long _calculateSegmentsExperimentEstimatedDaysDuration(
+		double confidenceLevel, SegmentsExperiment segmentsExperiment,
+		Map<String, Double> segmentsExperienceKeySplitMap) {
+
+		if (_asahFaroBackendClient == null) {
+			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
+				_asahFaroBackendClientFactory.createAsahFaroBackendClient();
+
+			if (!asahFaroBackendClientOptional.isPresent()) {
+				return null;
+			}
+
+			_asahFaroBackendClient = asahFaroBackendClientOptional.get();
+		}
+
+		return _asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			_createExperimentSettings(
+				confidenceLevel, segmentsExperienceKeySplitMap,
+				segmentsExperiment));
+	}
+
+	private JSONObject
+			_calculateSegmentsExperimentEstimatedDaysDurationJSONObject(
+				ActionRequest actionRequest)
 		throws PortalException {
 
 		long segmentsExperimentId = ParamUtil.getLong(
@@ -138,35 +162,12 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommand
 
 		Long segmentsExperimentEstimatedDaysDuration =
 			_calculateSegmentsExperimentEstimatedDaysDuration(
-				segmentsExperiment,
 				ParamUtil.getDouble(actionRequest, "confidenceLevel"),
-				segmentsExperienceKeySplitMap);
+				segmentsExperiment, segmentsExperienceKeySplitMap);
 
 		return JSONUtil.put(
 			"segmentsExperimentEstimatedDaysDuration",
 			segmentsExperimentEstimatedDaysDuration);
-	}
-
-	private Long _calculateSegmentsExperimentEstimatedDaysDuration(
-		SegmentsExperiment segmentsExperiment, double confidenceLevel,
-		Map<String, Double> segmentsExperienceKeySplitMap) {
-
-		if (_asahFaroBackendClient == null) {
-			Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
-				_asahFaroBackendClientFactory.createAsahFaroBackendClient();
-
-			if (!asahFaroBackendClientOptional.isPresent()) {
-				return null;
-			}
-
-			_asahFaroBackendClient = asahFaroBackendClientOptional.get();
-		}
-
-		return _asahFaroBackendClient.calculateExperimentEstimatedDaysDuration(
-			segmentsExperiment.getSegmentsExperimentKey(),
-			_createExperimentSettings(
-				confidenceLevel, segmentsExperienceKeySplitMap,
-				segmentsExperiment));
 	}
 
 	private DXPVariantSettings _createDXPVariantSettings(

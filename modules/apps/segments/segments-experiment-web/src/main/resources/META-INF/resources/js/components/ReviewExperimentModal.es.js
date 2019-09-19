@@ -182,7 +182,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 											/>
 										) : (
 											estimation.days &&
-											_getHumanDays(estimation.days)
+											_getDaysMessage(estimation.days)
 										)}
 									</p>
 								</div>
@@ -261,7 +261,7 @@ function _variantsToSplitVariantsMap(variants) {
 	}, {});
 }
 
-function _getHumanDays(days) {
+function _getDaysMessage(days) {
 	if (days === 1)
 		return Liferay.Util.sub(Liferay.Language.get('x-day'), days);
 	else return Liferay.Util.sub(Liferay.Language.get('x-days'), days);

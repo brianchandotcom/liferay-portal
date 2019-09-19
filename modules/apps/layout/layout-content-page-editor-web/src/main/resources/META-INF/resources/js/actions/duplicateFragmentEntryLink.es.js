@@ -21,13 +21,11 @@ import {updateActiveItemAction} from './updateActiveItem.es';
 /**
  * @param {string} fragmentEntryLinkId
  * @param {string} fragmentEntryLinkRowType
- * @param {string} content
  * @review
  */
 function duplicateFragmentEntryLinkAction(
 	fragmentEntryLinkId,
-	fragmentEntryLinkRowType,
-	content
+	fragmentEntryLinkRowType
 ) {
 	return function(dispatch) {
 		let newFragmentEntryLinkId;
@@ -39,9 +37,8 @@ function duplicateFragmentEntryLinkAction(
 				return dispatch(
 					_duplicateFragmentEntryLinkAction(
 						fragmentEntryLinkId,
-						{...fragmentEntryLink, content},
-						fragmentEntryLinkRowType,
-						content
+						fragmentEntryLink,
+						fragmentEntryLinkRowType
 					)
 				);
 			})

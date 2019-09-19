@@ -67,8 +67,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=check", "osgi.command.function=execute",
-		"osgi.command.function=executeAll", "osgi.command.function=list",
-		"osgi.command.scope=upgrade"
+		"osgi.command.function=executeAll", "osgi.command.function=executeTo",
+		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
 	service = ReleaseManagerOSGiCommands.class
 )
@@ -199,6 +199,40 @@ public class ReleaseManagerOSGiCommands {
 		sb.append("details about the status of a specific upgrade.");
 
 		return sb.toString();
+	}
+
+	@Descriptor("Execute upgrade for a specific module with a specific output")
+	public String executeTo(
+		String bundleSymbolicName, String outputStreamContainerFactoryName) {
+
+		if (_serviceTrackerMap.getService(bundleSymbolicName) == null) {
+			return "No upgrade processes registered for " + bundleSymbolicName;
+		}
+
+		try {
+			List<UpgradeInfo> upgradeInfos = _serviceTrackerMap.getService(
+				bundleSymbolicName);
+
+			if (outputStreamContainerFactoryName == null) {
+				outputStreamContainerFactoryName =
+					_swappedLogExecutor.
+						getDummyOutputStreamContainerFactoryName();
+			}
+
+			_upgradeExecutor.execute(
+				bundleSymbolicName, upgradeInfos,
+				outputStreamContainerFactoryName);
+		}
+		catch (Throwable t) {
+			_swappedLogExecutor.execute(
+				bundleSymbolicName,
+				() -> _log.error(
+					"Failed upgrade process for module ".concat(
+						bundleSymbolicName),
+					t));
+		}
+
+		return null;
 	}
 
 	@Descriptor("List registered upgrade processes for all modules")

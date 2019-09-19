@@ -30,8 +30,8 @@ import BusyButton from './BusyButton/BusyButton.es';
 import SegmentsExperimentContext from '../context.es';
 import {StateContext} from '../state/context.es';
 import {useDebounceCallback} from '../util/hooks.es';
+import {SUCCESS_ANIMATION_FILE_NAME} from '../util/contants.es';
 
-const SUCCESS_ANIMATION_PATH = '/success.gif';
 const TIME_ESTIMATION_THROTTLE_TIME_MS = 1000;
 
 function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
@@ -76,7 +76,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		};
 	});
 
-	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_PATH}`;
+	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_FILE_NAME}`;
 
 	const [getEstimation] = useDebounceCallback(body => {
 		APIService.getEstimatedTime(body)

@@ -18,22 +18,21 @@
 
 <%
 SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT);
-String segmentsExperimentSegmentsExperienceKey = GetterUtil.getString(request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_SEGMENTS_EXPERIENCE_KEY));
 %>
 
 <aui:script sandbox="<%= true %>">
-	if (window.Analytics) {
-		Analytics.registerMiddleware(
-			function(request) {
-				request.context.experienceId = '<%= (segmentsExperiment == null) ? segmentsExperimentSegmentsExperienceKey : segmentsExperiment.getSegmentsExperienceKey() %>';
+	<c:if test='<%= (segmentsExperiment != null) && Objects.equals(segmentsExperiment.getGoal(), "click") && Validator.isNotNull(segmentsExperiment.getGoalTarget()) %>'>
+		var element = document.getElementById('<%= segmentsExperiment.getGoalTarget() %>');
 
-				<c:if test="<%= segmentsExperiment != null %>">
-					request.context.experimentId = '<%= segmentsExperiment.getSegmentsExperimentKey() %>';
-					request.context.variantId = '<%= segmentsExperimentSegmentsExperienceKey %>';
-				</c:if>
-
-				return request;
-			}
-		);
-	}
+		if (element) {
+			element.addEventListener(
+				'click',
+				function(event) {
+					if (window.Analytics) {
+						Analytics.send('ctaClicked', 'Page', {'elementId': event.target.id});
+					}
+				}
+			);
+		}
+	</c:if>
 </aui:script>

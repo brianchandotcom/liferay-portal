@@ -27,10 +27,13 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys" %><%@
 page import="com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext" %><%@
 page import="com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil" %><%@
 page import="com.liferay.segments.model.SegmentsExperiment" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

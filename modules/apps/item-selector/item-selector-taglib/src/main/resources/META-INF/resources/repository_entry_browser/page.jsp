@@ -198,6 +198,14 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 							</liferay-ui:search-container-column-text>
 
+							<liferay-ui:search-container-column-text>
+								<clay:button
+									elementClasses="btn-outline-borderless btn-outline-secondary component-action icon-view"
+									icon="view"
+									monospaced="<%= true %>"
+									style="outline-secondary"
+								/>
+							</liferay-ui:search-container-column-text>
 						<%
 						}
 
@@ -234,6 +242,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 							>
 								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - folder.getModifiedDate().getTime(), true), HtmlUtil.escape(folder.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
 							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								value="--"
+							/>
 
 						<%
 						}
@@ -397,7 +409,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											url="<%= viewFolderURL.toString() %>"
 										/>
 									</liferay-ui:search-container-column-text>
-
 								<%
 								}
 
@@ -450,6 +461,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 										</div>
 									</liferay-ui:search-container-column-text>
 
+									<liferay-ui:search-container-column-icon
+							   			icon="view"
+							   			cssClass="icon-view"
+							  		/>
 								<%
 								}
 								%>

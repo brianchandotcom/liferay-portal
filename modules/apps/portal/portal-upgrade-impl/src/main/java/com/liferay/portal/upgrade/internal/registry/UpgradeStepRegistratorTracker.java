@@ -171,7 +171,7 @@ public class UpgradeStepRegistratorTracker {
 			}
 
 			if (_releaseManagerConfiguration.autoUpgrade()) {
-				_releaseManagerOSGiCommands.execute(bundleSymbolicName);
+				_releaseManagerOSGiCommands.executeTo(bundleSymbolicName, null);
 			}
 
 			return serviceRegistrations;

@@ -15,14 +15,19 @@
 package com.liferay.app.builder.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Jeyvison Nascimento
  */
 public class ProductMenuAppPanelApp extends BasePanelApp {
 
-	public ProductMenuAppPanelApp(String portletId) {
+	public ProductMenuAppPanelApp(String portletId, long[] siteIds) {
 		_portletId = portletId;
+		_siteIds = siteIds;
 	}
 
 	@Override
@@ -30,6 +35,21 @@ public class ProductMenuAppPanelApp extends BasePanelApp {
 		return _portletId;
 	}
 
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (super.isShow(permissionChecker, group) &&
+			(ArrayUtil.isEmpty(_siteIds) ||
+			 ArrayUtil.contains(_siteIds, group.getGroupId()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final String _portletId;
+	private final long[] _siteIds;
 
 }

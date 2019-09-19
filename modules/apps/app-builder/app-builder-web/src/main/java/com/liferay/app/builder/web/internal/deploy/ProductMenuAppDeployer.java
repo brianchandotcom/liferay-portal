@@ -31,6 +31,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -43,6 +44,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -57,6 +59,13 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_bundleContext = null;
+
+		_serviceRegistrationsMap.clear();
 	}
 
 	@Override
@@ -84,7 +93,10 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				key -> new ServiceRegistration<?>[] {
-					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
+					_deployAppPanelApp(
+						appBuilderPanelCategoryKey, portletName,
+						JSONUtil.toLongArray(
+							jsonObject.getJSONArray("siteIds"))),
 					_deployAppPanelCategory(
 						appBuilderPanelCategoryKey, appName,
 						PanelCategoryKeys.CONTROL_PANEL),
@@ -98,7 +110,10 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				mapKey -> new ServiceRegistration<?>[] {
-					_deployAppPanelApp(appBuilderPanelCategoryKey, portletName),
+					_deployAppPanelApp(
+						appBuilderPanelCategoryKey, portletName,
+						JSONUtil.toLongArray(
+							jsonObject.getJSONArray("siteIds"))),
 					_deployAppPanelCategory(
 						appBuilderPanelCategoryKey, appName,
 						jsonArray.getString(0)),
@@ -135,10 +150,10 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployAppPanelApp(
-		String appBuilderPanelCategoryKey, String portletName) {
+		String appBuilderPanelCategoryKey, String portletName, long[] siteIds) {
 
 		return _bundleContext.registerService(
-			PanelApp.class, new ProductMenuAppPanelApp(portletName),
+			PanelApp.class, new ProductMenuAppPanelApp(portletName, siteIds),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("panel.app.order:Integer", 100);

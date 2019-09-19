@@ -25,6 +25,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
+import com.liferay.document.library.opener.onedrive.web.internal.exception.GraphServicePortalException;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.CharPool;
@@ -78,7 +79,12 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 						fileEntry);
 
-			_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
+			try {
+				_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
+			}
+			catch (GraphServicePortalException.ItemNotFound inf) {
+				_log.error("The OneDrive file has been already deleted ", inf);
+			}
 
 			if ((dlOpenerFileEntryReference.getType() ==
 					DLOpenerFileEntryReferenceConstants.TYPE_NEW) &&

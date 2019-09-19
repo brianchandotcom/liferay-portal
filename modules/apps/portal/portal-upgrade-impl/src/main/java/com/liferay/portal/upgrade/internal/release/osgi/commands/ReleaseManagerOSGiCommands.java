@@ -68,7 +68,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	property = {
 		"osgi.command.function=check", "osgi.command.function=execute",
 		"osgi.command.function=executeAll", "osgi.command.function=executeTo",
-		"osgi.command.function=list", "osgi.command.scope=upgrade"
+		"osgi.command.function=list", "osgi.command.function=showReports",
+		"osgi.command.scope=upgrade"
 	},
 	service = ReleaseManagerOSGiCommands.class
 )
@@ -273,6 +274,18 @@ public class ReleaseManagerOSGiCommands {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	@Descriptor("Show all available outputs")
+	public void showReports() {
+		Set<String> outputStreamContainerFactoryNames =
+			_swappedLogExecutor.getOutputStreamContainerFactoryNames();
+
+		for (String outputStreamContainerFactoryName :
+				outputStreamContainerFactoryNames) {
+
+			System.out.println(outputStreamContainerFactoryName);
+		}
 	}
 
 	@Activate

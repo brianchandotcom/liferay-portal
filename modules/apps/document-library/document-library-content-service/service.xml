@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.document.library.content">
 	<namespace>DL</namespace>
-	<entity human-name="document library content" local-service="true" name="DLContent" remote-service="false">
+	<entity change-tracking-enabled="true" human-name="document library content" local-service="true" name="DLContent" remote-service="false">
 
 		<!-- PK fields -->
 

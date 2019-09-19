@@ -54,7 +54,7 @@
 			position: static;
 
 			&.popover-scrollable {
-			overflow: auto;
+				overflow: auto;
 			}
 		}
 
@@ -140,5 +140,11 @@
 }
 
 .item-selector-dropdown-menu {
-	max-height: 240px;
+	max-height: 230px;
+}
+
+.floating-toolbar-fragment-configuration-panel {
+	.item-selector-dropdown-menu {
+		max-height: 130px;
+	}
 }

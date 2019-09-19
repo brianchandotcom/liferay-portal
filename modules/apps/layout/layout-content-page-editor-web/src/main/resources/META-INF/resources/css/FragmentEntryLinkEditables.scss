@@ -68,10 +68,6 @@
 		z-index: 1;
 	}
 
-	&[type='image'] > img {
-		max-width: 100%;
-	}
-
 	.cke_editable {
 		background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
 		outline: 0;

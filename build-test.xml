@@ -10963,6 +10963,9 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<then>
 								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
 							</then>
+							<else>
+								<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
+							</else>
 						</if>
 					</then>
 					<else>
@@ -11372,6 +11375,9 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 							<then>
 								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
 							</then>
+							<else>
+								<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
+							</else>
 						</if>
 					</then>
 					<else>

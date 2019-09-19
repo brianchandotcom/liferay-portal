@@ -34,6 +34,7 @@ public class JournalArticleLocalizationSoap implements Serializable {
 			new JournalArticleLocalizationSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setArticleLocalizationId(model.getArticleLocalizationId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setArticlePK(model.getArticlePK());
@@ -111,6 +112,14 @@ public class JournalArticleLocalizationSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getArticleLocalizationId() {
 		return _articleLocalizationId;
 	}
@@ -160,6 +169,7 @@ public class JournalArticleLocalizationSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _articleLocalizationId;
 	private long _companyId;
 	private long _articlePK;

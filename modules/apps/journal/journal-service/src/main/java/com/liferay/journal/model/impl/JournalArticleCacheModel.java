@@ -77,10 +77,12 @@ public class JournalArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(71);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", id=");
@@ -157,6 +159,7 @@ public class JournalArticleCacheModel
 		JournalArticleImpl journalArticleImpl = new JournalArticleImpl();
 
 		journalArticleImpl.setMvccVersion(mvccVersion);
+		journalArticleImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			journalArticleImpl.setUuid("");
@@ -322,6 +325,8 @@ public class JournalArticleCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		id = objectInput.readLong();
@@ -377,6 +382,8 @@ public class JournalArticleCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -505,6 +512,7 @@ public class JournalArticleCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long id;
 	public long resourcePrimKey;

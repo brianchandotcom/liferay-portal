@@ -76,10 +76,12 @@ public class JournalArticleResourceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", resourcePrimKey=");
@@ -101,6 +103,7 @@ public class JournalArticleResourceCacheModel
 			new JournalArticleResourceImpl();
 
 		journalArticleResourceImpl.setMvccVersion(mvccVersion);
+		journalArticleResourceImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			journalArticleResourceImpl.setUuid("");
@@ -128,6 +131,8 @@ public class JournalArticleResourceCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		resourcePrimKey = objectInput.readLong();
@@ -141,6 +146,8 @@ public class JournalArticleResourceCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -164,6 +171,7 @@ public class JournalArticleResourceCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long resourcePrimKey;
 	public long groupId;

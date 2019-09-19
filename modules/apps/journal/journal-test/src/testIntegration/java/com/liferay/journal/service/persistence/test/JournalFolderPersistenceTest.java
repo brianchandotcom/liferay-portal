@@ -126,6 +126,8 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setMvccVersion(RandomTestUtil.nextLong());
 
+		newJournalFolder.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newJournalFolder.setUuid(RandomTestUtil.randomString());
 
 		newJournalFolder.setGroupId(RandomTestUtil.nextLong());
@@ -168,6 +170,9 @@ public class JournalFolderPersistenceTest {
 		Assert.assertEquals(
 			existingJournalFolder.getMvccVersion(),
 			newJournalFolder.getMvccVersion());
+		Assert.assertEquals(
+			existingJournalFolder.getCtCollectionId(),
+			newJournalFolder.getCtCollectionId());
 		Assert.assertEquals(
 			existingJournalFolder.getUuid(), newJournalFolder.getUuid());
 		Assert.assertEquals(
@@ -244,6 +249,13 @@ public class JournalFolderPersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -353,13 +365,13 @@ public class JournalFolderPersistenceTest {
 
 	protected OrderByComparator<JournalFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalFolder", "mvccVersion", true, "uuid", true, "folderId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"parentFolderId", true, "treePath", true, "name", true,
-			"description", true, "restrictionType", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"JournalFolder", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "folderId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "restrictionType", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -625,6 +637,8 @@ public class JournalFolderPersistenceTest {
 		JournalFolder journalFolder = _persistence.create(pk);
 
 		journalFolder.setMvccVersion(RandomTestUtil.nextLong());
+
+		journalFolder.setCtCollectionId(RandomTestUtil.nextLong());
 
 		journalFolder.setUuid(RandomTestUtil.randomString());
 

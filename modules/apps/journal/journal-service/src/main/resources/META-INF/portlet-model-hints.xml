@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.journal.model.JournalArticle">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="id" type="long" />
 		<field name="resourcePrimKey" type="long" />
@@ -55,6 +56,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleLocalization">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="articleLocalizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="articlePK" type="long" />
@@ -68,6 +70,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleResource">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="resourcePrimKey" type="long" />
 		<field name="groupId" type="long" />
@@ -127,6 +130,7 @@
 	</model>
 	<model name="com.liferay.journal.model.JournalFolder">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="folderId" type="long" />
 		<field name="groupId" type="long" />

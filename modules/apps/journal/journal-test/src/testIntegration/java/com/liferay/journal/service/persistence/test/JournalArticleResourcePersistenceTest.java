@@ -129,6 +129,8 @@ public class JournalArticleResourcePersistenceTest {
 
 		newJournalArticleResource.setMvccVersion(RandomTestUtil.nextLong());
 
+		newJournalArticleResource.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newJournalArticleResource.setUuid(RandomTestUtil.randomString());
 
 		newJournalArticleResource.setGroupId(RandomTestUtil.nextLong());
@@ -147,6 +149,9 @@ public class JournalArticleResourcePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticleResource.getMvccVersion(),
 			newJournalArticleResource.getMvccVersion());
+		Assert.assertEquals(
+			existingJournalArticleResource.getCtCollectionId(),
+			newJournalArticleResource.getCtCollectionId());
 		Assert.assertEquals(
 			existingJournalArticleResource.getUuid(),
 			newJournalArticleResource.getUuid());
@@ -189,6 +194,13 @@ public class JournalArticleResourcePersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -235,9 +247,9 @@ public class JournalArticleResourcePersistenceTest {
 
 	protected OrderByComparator<JournalArticleResource> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalArticleResource", "mvccVersion", true, "uuid", true,
-			"resourcePrimKey", true, "groupId", true, "companyId", true,
-			"articleId", true);
+			"JournalArticleResource", "mvccVersion", true, "ctCollectionId",
+			true, "uuid", true, "resourcePrimKey", true, "groupId", true,
+			"companyId", true, "articleId", true);
 	}
 
 	@Test
@@ -517,6 +529,8 @@ public class JournalArticleResourcePersistenceTest {
 		JournalArticleResource journalArticleResource = _persistence.create(pk);
 
 		journalArticleResource.setMvccVersion(RandomTestUtil.nextLong());
+
+		journalArticleResource.setCtCollectionId(RandomTestUtil.nextLong());
 
 		journalArticleResource.setUuid(RandomTestUtil.randomString());
 

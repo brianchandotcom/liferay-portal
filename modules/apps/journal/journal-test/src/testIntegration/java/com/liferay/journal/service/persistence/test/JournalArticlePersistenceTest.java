@@ -127,6 +127,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setMvccVersion(RandomTestUtil.nextLong());
 
+		newJournalArticle.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newJournalArticle.setUuid(RandomTestUtil.randomString());
 
 		newJournalArticle.setResourcePrimKey(RandomTestUtil.nextLong());
@@ -199,6 +201,9 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticle.getMvccVersion(),
 			newJournalArticle.getMvccVersion());
+		Assert.assertEquals(
+			existingJournalArticle.getCtCollectionId(),
+			newJournalArticle.getCtCollectionId());
 		Assert.assertEquals(
 			existingJournalArticle.getUuid(), newJournalArticle.getUuid());
 		Assert.assertEquals(
@@ -328,6 +333,13 @@ public class JournalArticlePersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -719,10 +731,10 @@ public class JournalArticlePersistenceTest {
 
 	protected OrderByComparator<JournalArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"JournalArticle", "mvccVersion", true, "uuid", true, "id", true,
-			"resourcePrimKey", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "folderId", true, "classNameId", true,
+			"JournalArticle", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "id", true, "resourcePrimKey", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "folderId", true, "classNameId", true,
 			"classPK", true, "treePath", true, "articleId", true, "version",
 			true, "urlTitle", true, "DDMStructureKey", true, "DDMTemplateKey",
 			true, "defaultLanguageId", true, "layoutUuid", true, "displayDate",
@@ -999,6 +1011,8 @@ public class JournalArticlePersistenceTest {
 		JournalArticle journalArticle = _persistence.create(pk);
 
 		journalArticle.setMvccVersion(RandomTestUtil.nextLong());
+
+		journalArticle.setCtCollectionId(RandomTestUtil.nextLong());
 
 		journalArticle.setUuid(RandomTestUtil.randomString());
 

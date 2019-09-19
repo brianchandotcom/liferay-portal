@@ -14,7 +14,10 @@
 
 package com.liferay.journal.service;
 
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link JournalArticleResourceLocalService}.
@@ -41,10 +44,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the journal article resource that was added
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		addJournalArticleResource(
-			com.liferay.journal.model.JournalArticleResource
-				journalArticleResource) {
+	public JournalArticleResource addJournalArticleResource(
+		JournalArticleResource journalArticleResource) {
 
 		return _journalArticleResourceLocalService.addJournalArticleResource(
 			journalArticleResource);
@@ -57,8 +58,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the new journal article resource
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		createJournalArticleResource(long resourcePrimKey) {
+	public JournalArticleResource createJournalArticleResource(
+		long resourcePrimKey) {
 
 		return _journalArticleResourceLocalService.createJournalArticleResource(
 			resourcePrimKey);
@@ -79,10 +80,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the journal article resource that was removed
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		deleteJournalArticleResource(
-			com.liferay.journal.model.JournalArticleResource
-				journalArticleResource) {
+	public JournalArticleResource deleteJournalArticleResource(
+		JournalArticleResource journalArticleResource) {
 
 		return _journalArticleResourceLocalService.deleteJournalArticleResource(
 			journalArticleResource);
@@ -96,8 +95,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @throws PortalException if a journal article resource with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-			deleteJournalArticleResource(long resourcePrimKey)
+	public JournalArticleResource deleteJournalArticleResource(
+			long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalArticleResourceLocalService.deleteJournalArticleResource(
@@ -209,24 +208,24 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		fetchArticleResource(long groupId, String articleId) {
+	public JournalArticleResource fetchArticleResource(
+		long groupId, String articleId) {
 
 		return _journalArticleResourceLocalService.fetchArticleResource(
 			groupId, articleId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		fetchArticleResource(String uuid, long groupId) {
+	public JournalArticleResource fetchArticleResource(
+		String uuid, long groupId) {
 
 		return _journalArticleResourceLocalService.fetchArticleResource(
 			uuid, groupId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		fetchJournalArticleResource(long resourcePrimKey) {
+	public JournalArticleResource fetchJournalArticleResource(
+		long resourcePrimKey) {
 
 		return _journalArticleResourceLocalService.fetchJournalArticleResource(
 			resourcePrimKey);
@@ -240,8 +239,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		fetchJournalArticleResourceByUuidAndGroupId(String uuid, long groupId) {
+	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _journalArticleResourceLocalService.
 			fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
@@ -255,7 +254,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalArticleResource getArticleResource(
+	public JournalArticleResource getArticleResource(
 			long articleResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -278,8 +277,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalArticleResource>
-		getArticleResources(long groupId) {
+	public java.util.List<JournalArticleResource> getArticleResources(
+		long groupId) {
 
 		return _journalArticleResourceLocalService.getArticleResources(groupId);
 	}
@@ -300,8 +299,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @throws PortalException if a journal article resource with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-			getJournalArticleResource(long resourcePrimKey)
+	public JournalArticleResource getJournalArticleResource(
+			long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalArticleResourceLocalService.getJournalArticleResource(
@@ -317,8 +316,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @throws PortalException if a matching journal article resource could not be found
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-			getJournalArticleResourceByUuidAndGroupId(String uuid, long groupId)
+	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _journalArticleResourceLocalService.
@@ -337,8 +336,8 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the range of journal article resources
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalArticleResource>
-		getJournalArticleResources(int start, int end) {
+	public java.util.List<JournalArticleResource> getJournalArticleResources(
+		int start, int end) {
 
 		return _journalArticleResourceLocalService.getJournalArticleResources(
 			start, end);
@@ -352,7 +351,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the matching journal article resources, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalArticleResource>
+	public java.util.List<JournalArticleResource>
 		getJournalArticleResourcesByUuidAndCompanyId(
 			String uuid, long companyId) {
 
@@ -371,12 +370,11 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the range of matching journal article resources, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.journal.model.JournalArticleResource>
+	public java.util.List<JournalArticleResource>
 		getJournalArticleResourcesByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.journal.model.JournalArticleResource>
-					orderByComparator) {
+				<JournalArticleResource> orderByComparator) {
 
 		return _journalArticleResourceLocalService.
 			getJournalArticleResourcesByUuidAndCompanyId(
@@ -420,13 +418,31 @@ public class JournalArticleResourceLocalServiceWrapper
 	 * @return the journal article resource that was updated
 	 */
 	@Override
-	public com.liferay.journal.model.JournalArticleResource
-		updateJournalArticleResource(
-			com.liferay.journal.model.JournalArticleResource
-				journalArticleResource) {
+	public JournalArticleResource updateJournalArticleResource(
+		JournalArticleResource journalArticleResource) {
 
 		return _journalArticleResourceLocalService.updateJournalArticleResource(
 			journalArticleResource);
+	}
+
+	@Override
+	public CTPersistence<JournalArticleResource> getCTPersistence() {
+		return _journalArticleResourceLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<JournalArticleResource> getModelClass() {
+		return _journalArticleResourceLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<JournalArticleResource>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _journalArticleResourceLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

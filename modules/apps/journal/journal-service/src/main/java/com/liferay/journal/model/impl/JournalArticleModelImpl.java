@@ -79,23 +79,24 @@ public class JournalArticleModelImpl
 	public static final String TABLE_NAME = "JournalArticle";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"id_", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"folderId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"treePath", Types.VARCHAR},
-		{"articleId", Types.VARCHAR}, {"version", Types.DOUBLE},
-		{"urlTitle", Types.VARCHAR}, {"content", Types.CLOB},
-		{"DDMStructureKey", Types.VARCHAR}, {"DDMTemplateKey", Types.VARCHAR},
-		{"defaultLanguageId", Types.VARCHAR}, {"layoutUuid", Types.VARCHAR},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"reviewDate", Types.TIMESTAMP}, {"indexable", Types.BOOLEAN},
-		{"smallImage", Types.BOOLEAN}, {"smallImageId", Types.BIGINT},
-		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"id_", Types.BIGINT},
+		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"folderId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"treePath", Types.VARCHAR}, {"articleId", Types.VARCHAR},
+		{"version", Types.DOUBLE}, {"urlTitle", Types.VARCHAR},
+		{"content", Types.CLOB}, {"DDMStructureKey", Types.VARCHAR},
+		{"DDMTemplateKey", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
+		{"layoutUuid", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
+		{"indexable", Types.BOOLEAN}, {"smallImage", Types.BOOLEAN},
+		{"smallImageId", Types.BIGINT}, {"smallImageURL", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -103,6 +104,7 @@ public class JournalArticleModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
@@ -139,7 +141,7 @@ public class JournalArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table JournalArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table JournalArticle (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,id_ LONG not null,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,urlTitle VARCHAR(255) null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (id_, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 
@@ -167,31 +169,33 @@ public class JournalArticleModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 32L;
 
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 64L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 64L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 128L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 128L;
 
-	public static final long FOLDERID_COLUMN_BITMASK = 256L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 256L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 512L;
+	public static final long FOLDERID_COLUMN_BITMASK = 512L;
 
-	public static final long INDEXABLE_COLUMN_BITMASK = 1024L;
+	public static final long GROUPID_COLUMN_BITMASK = 1024L;
 
-	public static final long LAYOUTUUID_COLUMN_BITMASK = 2048L;
+	public static final long INDEXABLE_COLUMN_BITMASK = 2048L;
 
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 4096L;
+	public static final long LAYOUTUUID_COLUMN_BITMASK = 4096L;
 
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 8192L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 8192L;
 
-	public static final long STATUS_COLUMN_BITMASK = 16384L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 16384L;
 
-	public static final long URLTITLE_COLUMN_BITMASK = 32768L;
+	public static final long STATUS_COLUMN_BITMASK = 32768L;
 
-	public static final long USERID_COLUMN_BITMASK = 65536L;
+	public static final long URLTITLE_COLUMN_BITMASK = 65536L;
 
-	public static final long UUID_COLUMN_BITMASK = 131072L;
+	public static final long USERID_COLUMN_BITMASK = 131072L;
 
-	public static final long VERSION_COLUMN_BITMASK = 262144L;
+	public static final long UUID_COLUMN_BITMASK = 262144L;
+
+	public static final long VERSION_COLUMN_BITMASK = 524288L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -215,6 +219,7 @@ public class JournalArticleModelImpl
 		JournalArticle model = new JournalArticleImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setId(soapModel.getId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
@@ -405,6 +410,12 @@ public class JournalArticleModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<JournalArticle, Long>)JournalArticle::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", JournalArticle::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<JournalArticle, Long>)
+				JournalArticle::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", JournalArticle::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -579,6 +590,29 @@ public class JournalArticleModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1567,6 +1601,7 @@ public class JournalArticleModelImpl
 		JournalArticleImpl journalArticleImpl = new JournalArticleImpl();
 
 		journalArticleImpl.setMvccVersion(getMvccVersion());
+		journalArticleImpl.setCtCollectionId(getCtCollectionId());
 		journalArticleImpl.setUuid(getUuid());
 		journalArticleImpl.setId(getId());
 		journalArticleImpl.setResourcePrimKey(getResourcePrimKey());
@@ -1676,6 +1711,11 @@ public class JournalArticleModelImpl
 	public void resetOriginalValues() {
 		JournalArticleModelImpl journalArticleModelImpl = this;
 
+		journalArticleModelImpl._originalCtCollectionId =
+			journalArticleModelImpl._ctCollectionId;
+
+		journalArticleModelImpl._setOriginalCtCollectionId = false;
+
 		journalArticleModelImpl._originalUuid = journalArticleModelImpl._uuid;
 
 		journalArticleModelImpl._originalResourcePrimKey =
@@ -1767,6 +1807,8 @@ public class JournalArticleModelImpl
 			new JournalArticleCacheModel();
 
 		journalArticleCacheModel.mvccVersion = getMvccVersion();
+
+		journalArticleCacheModel.ctCollectionId = getCtCollectionId();
 
 		journalArticleCacheModel.uuid = getUuid();
 
@@ -2035,6 +2077,9 @@ public class JournalArticleModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _id;

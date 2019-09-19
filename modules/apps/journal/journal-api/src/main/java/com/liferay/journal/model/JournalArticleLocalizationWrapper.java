@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class JournalArticleLocalizationWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("articleLocalizationId", getArticleLocalizationId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("articlePK", getArticlePK());
@@ -61,6 +64,12 @@ public class JournalArticleLocalizationWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long articleLocalizationId = (Long)attributes.get(
@@ -129,6 +138,16 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the ct collection ID of this journal article localization.
+	 *
+	 * @return the ct collection ID of this journal article localization
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -212,6 +231,16 @@ public class JournalArticleLocalizationWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this journal article localization.
+	 *
+	 * @param ctCollectionId the ct collection ID of this journal article localization
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the description of this journal article localization.
 	 *
 	 * @param description the description of this journal article localization
@@ -259,6 +288,20 @@ public class JournalArticleLocalizationWrapper
 	@Override
 	public void setTitle(String title) {
 		model.setTitle(title);
+	}
+
+	@Override
+	public Map<String, Function<JournalArticleLocalization, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<JournalArticleLocalization, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

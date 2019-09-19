@@ -1,7 +1,8 @@
 create table JournalArticle (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	id_ LONG not null primary key,
+	id_ LONG not null,
 	resourcePrimKey LONG,
 	groupId LONG,
 	companyId LONG,
@@ -32,26 +33,31 @@ create table JournalArticle (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (id_, ctCollectionId)
 );
 
 create table JournalArticleLocalization (
 	mvccVersion LONG default 0 not null,
-	articleLocalizationId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	articleLocalizationId LONG not null,
 	companyId LONG,
 	articlePK LONG,
 	title VARCHAR(400) null,
 	description STRING null,
-	languageId VARCHAR(75) null
+	languageId VARCHAR(75) null,
+	primary key (articleLocalizationId, ctCollectionId)
 );
 
 create table JournalArticleResource (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	resourcePrimKey LONG not null primary key,
+	resourcePrimKey LONG not null,
 	groupId LONG,
 	companyId LONG,
-	articleId VARCHAR(75) null
+	articleId VARCHAR(75) null,
+	primary key (resourcePrimKey, ctCollectionId)
 );
 
 create table JournalContentSearch (
@@ -94,8 +100,9 @@ create table JournalFeed (
 
 create table JournalFolder (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	folderId LONG not null primary key,
+	folderId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -111,5 +118,6 @@ create table JournalFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	primary key (folderId, ctCollectionId)
 );

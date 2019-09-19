@@ -78,10 +78,12 @@ public class JournalArticleLocalizationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", articleLocalizationId=");
 		sb.append(articleLocalizationId);
 		sb.append(", companyId=");
@@ -105,6 +107,7 @@ public class JournalArticleLocalizationCacheModel
 			new JournalArticleLocalizationImpl();
 
 		journalArticleLocalizationImpl.setMvccVersion(mvccVersion);
+		journalArticleLocalizationImpl.setCtCollectionId(ctCollectionId);
 		journalArticleLocalizationImpl.setArticleLocalizationId(
 			articleLocalizationId);
 		journalArticleLocalizationImpl.setCompanyId(companyId);
@@ -140,6 +143,8 @@ public class JournalArticleLocalizationCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		articleLocalizationId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -153,6 +158,8 @@ public class JournalArticleLocalizationCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(articleLocalizationId);
 
@@ -183,6 +190,7 @@ public class JournalArticleLocalizationCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long articleLocalizationId;
 	public long companyId;
 	public long articlePK;

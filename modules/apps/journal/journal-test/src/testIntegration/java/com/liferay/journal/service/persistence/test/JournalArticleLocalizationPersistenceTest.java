@@ -127,6 +127,9 @@ public class JournalArticleLocalizationPersistenceTest {
 
 		newJournalArticleLocalization.setMvccVersion(RandomTestUtil.nextLong());
 
+		newJournalArticleLocalization.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newJournalArticleLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		newJournalArticleLocalization.setArticlePK(RandomTestUtil.nextLong());
@@ -150,6 +153,9 @@ public class JournalArticleLocalizationPersistenceTest {
 			existingJournalArticleLocalization.getMvccVersion(),
 			newJournalArticleLocalization.getMvccVersion());
 		Assert.assertEquals(
+			existingJournalArticleLocalization.getCtCollectionId(),
+			newJournalArticleLocalization.getCtCollectionId());
+		Assert.assertEquals(
 			existingJournalArticleLocalization.getArticleLocalizationId(),
 			newJournalArticleLocalization.getArticleLocalizationId());
 		Assert.assertEquals(
@@ -167,6 +173,13 @@ public class JournalArticleLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingJournalArticleLocalization.getLanguageId(),
 			newJournalArticleLocalization.getLanguageId());
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -215,9 +228,9 @@ public class JournalArticleLocalizationPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"JournalArticleLocalization", "mvccVersion", true,
-			"articleLocalizationId", true, "companyId", true, "articlePK", true,
-			"title", true, "description", true, "languageId", true);
+			"JournalArticleLocalization", "mvccVersion", true, "ctCollectionId",
+			true, "articleLocalizationId", true, "companyId", true, "articlePK",
+			true, "title", true, "description", true, "languageId", true);
 	}
 
 	@Test
@@ -468,6 +481,8 @@ public class JournalArticleLocalizationPersistenceTest {
 			_persistence.create(pk);
 
 		journalArticleLocalization.setMvccVersion(RandomTestUtil.nextLong());
+
+		journalArticleLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		journalArticleLocalization.setCompanyId(RandomTestUtil.nextLong());
 

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,9 +54,11 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -177,6 +180,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -186,12 +192,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByResourcePrimKey;
 				finderArgs = new Object[] {resourcePrimKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByResourcePrimKey;
 			finderArgs = new Object[] {
 				resourcePrimKey, start, end, orderByComparator
@@ -200,7 +206,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -268,12 +274,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -580,11 +586,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByResourcePrimKey(long resourcePrimKey) {
-		FinderPath finderPath = _finderPathCountByResourcePrimKey;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByResourcePrimKey;
+
+			finderArgs = new Object[] {resourcePrimKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -608,10 +624,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -702,6 +722,9 @@ public class JournalArticlePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -711,19 +734,19 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
 				finderArgs = new Object[] {uuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -800,12 +823,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -1118,11 +1141,21 @@ public class JournalArticlePersistenceImpl
 	public int countByUuid(String uuid) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {uuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid;
+
+			finderArgs = new Object[] {uuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1157,10 +1190,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1244,15 +1281,18 @@ public class JournalArticlePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
 				_finderPathFetchByUUID_G, finderArgs, this);
 		}
@@ -1305,7 +1345,7 @@ public class JournalArticlePersistenceImpl
 				List<JournalArticle> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByUUID_G, finderArgs, list);
 					}
@@ -1319,7 +1359,7 @@ public class JournalArticlePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathFetchByUUID_G, finderArgs);
 				}
@@ -1366,11 +1406,21 @@ public class JournalArticlePersistenceImpl
 	public int countByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUUID_G;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUUID_G;
+
+			finderArgs = new Object[] {uuid, groupId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1409,10 +1459,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1516,6 +1570,9 @@ public class JournalArticlePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1525,12 +1582,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
 				finderArgs = new Object[] {uuid, companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
@@ -1539,7 +1596,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -1622,12 +1679,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -1967,11 +2024,21 @@ public class JournalArticlePersistenceImpl
 	public int countByUuid_C(String uuid, long companyId) {
 		uuid = Objects.toString(uuid, "");
 
-		FinderPath finderPath = _finderPathCountByUuid_C;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {uuid, companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByUuid_C;
+
+			finderArgs = new Object[] {uuid, companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2010,10 +2077,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2033,6 +2104,533 @@ public class JournalArticlePersistenceImpl
 
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"journalArticle.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByCTCollectionId;
+	private FinderPath _finderPathWithoutPaginationFindByCTCollectionId;
+	private FinderPath _finderPathCountByCTCollectionId;
+
+	/**
+	 * Returns all the journal articles where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByCTCollectionId(long ctCollectionId) {
+		return findByCTCollectionId(
+			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the journal articles where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByCTCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return findByCTCollectionId(ctCollectionId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal articles where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		return findByCTCollectionId(
+			ctCollectionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal articles where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching journal articles
+	 */
+	@Override
+	public List<JournalArticle> findByCTCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<JournalArticle> orderByComparator,
+		boolean useFinderCache) {
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+
+			if (useFinderCache && productionMode) {
+				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+				finderArgs = new Object[] {ctCollectionId};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderPath = _finderPathWithPaginationFindByCTCollectionId;
+			finderArgs = new Object[] {
+				ctCollectionId, start, end, orderByComparator
+			};
+		}
+
+		List<JournalArticle> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<JournalArticle>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (JournalArticle journalArticle : list) {
+					if (ctCollectionId != journalArticle.getCtCollectionId()) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ctCollectionId);
+
+				if (!pagination) {
+					list = (List<JournalArticle>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<JournalArticle>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache && productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal article in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle findByCTCollectionId_First(
+			long ctCollectionId,
+			OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+
+		JournalArticle journalArticle = fetchByCTCollectionId_First(
+			ctCollectionId, orderByComparator);
+
+		if (journalArticle != null) {
+			return journalArticle;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ctCollectionId=");
+		msg.append(ctCollectionId);
+
+		msg.append("}");
+
+		throw new NoSuchArticleException(msg.toString());
+	}
+
+	/**
+	 * Returns the first journal article in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle fetchByCTCollectionId_First(
+		long ctCollectionId,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		List<JournalArticle> list = findByCTCollectionId(
+			ctCollectionId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last journal article in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle findByCTCollectionId_Last(
+			long ctCollectionId,
+			OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+
+		JournalArticle journalArticle = fetchByCTCollectionId_Last(
+			ctCollectionId, orderByComparator);
+
+		if (journalArticle != null) {
+			return journalArticle;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ctCollectionId=");
+		msg.append(ctCollectionId);
+
+		msg.append("}");
+
+		throw new NoSuchArticleException(msg.toString());
+	}
+
+	/**
+	 * Returns the last journal article in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	@Override
+	public JournalArticle fetchByCTCollectionId_Last(
+		long ctCollectionId,
+		OrderByComparator<JournalArticle> orderByComparator) {
+
+		int count = countByCTCollectionId(ctCollectionId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<JournalArticle> list = findByCTCollectionId(
+			ctCollectionId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set where ctCollectionId = &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param ctCollectionId the ct collection ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	@Override
+	public JournalArticle[] findByCTCollectionId_PrevAndNext(
+			long id, long ctCollectionId,
+			OrderByComparator<JournalArticle> orderByComparator)
+		throws NoSuchArticleException {
+
+		JournalArticle journalArticle = findByPrimaryKey(id);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalArticle[] array = new JournalArticleImpl[3];
+
+			array[0] = getByCTCollectionId_PrevAndNext(
+				session, journalArticle, ctCollectionId, orderByComparator,
+				true);
+
+			array[1] = journalArticle;
+
+			array[2] = getByCTCollectionId_PrevAndNext(
+				session, journalArticle, ctCollectionId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalArticle getByCTCollectionId_PrevAndNext(
+		Session session, JournalArticle journalArticle, long ctCollectionId,
+		OrderByComparator<JournalArticle> orderByComparator, boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_JOURNALARTICLE_WHERE);
+
+		query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(JournalArticleModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(ctCollectionId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						journalArticle)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<JournalArticle> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the journal articles where ctCollectionId = &#63; from the database.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 */
+	@Override
+	public void removeByCTCollectionId(long ctCollectionId) {
+		for (JournalArticle journalArticle :
+				findByCTCollectionId(
+					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(journalArticle);
+		}
+	}
+
+	/**
+	 * Returns the number of journal articles where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the number of matching journal articles
+	 */
+	@Override
+	public int countByCTCollectionId(long ctCollectionId) {
+		FinderPath finderPath = _finderPathCountByCTCollectionId;
+
+		Object[] finderArgs = new Object[] {ctCollectionId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_JOURNALARTICLE_WHERE);
+
+			query.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(ctCollectionId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
+		"journalArticle.ctCollectionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
@@ -2110,6 +2708,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2119,19 +2720,19 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -2197,12 +2798,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -2830,11 +3431,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2858,10 +3469,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3000,6 +3615,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3009,12 +3627,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
 				finderArgs = new Object[] {companyId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
@@ -3023,7 +3641,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3089,12 +3707,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -3394,11 +4012,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {companyId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCompanyId;
+
+			finderArgs = new Object[] {companyId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -3422,10 +4050,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3520,6 +4152,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3529,12 +4164,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByDDMStructureKey;
 				finderArgs = new Object[] {DDMStructureKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByDDMStructureKey;
 			finderArgs = new Object[] {
 				DDMStructureKey, start, end, orderByComparator
@@ -3543,7 +4178,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -3622,12 +4257,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -4019,6 +4654,9 @@ public class JournalArticlePersistenceImpl
 				DDMStructureKeies[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -4027,11 +4665,11 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {StringUtil.merge(DDMStructureKeies)};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				StringUtil.merge(DDMStructureKeies), start, end,
 				orderByComparator
@@ -4040,7 +4678,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByDDMStructureKey, finderArgs,
 				this);
@@ -4133,14 +4771,14 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByDDMStructureKey,
 						finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByDDMStructureKey,
 						finderArgs);
@@ -4182,11 +4820,21 @@ public class JournalArticlePersistenceImpl
 	public int countByDDMStructureKey(String DDMStructureKey) {
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
-		FinderPath finderPath = _finderPathCountByDDMStructureKey;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {DDMStructureKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByDDMStructureKey;
+
+			finderArgs = new Object[] {DDMStructureKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -4221,10 +4869,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4256,12 +4908,20 @@ public class JournalArticlePersistenceImpl
 			DDMStructureKeies = ArrayUtil.sortedUnique(DDMStructureKeies);
 		}
 
-		Object[] finderArgs = new Object[] {
-			StringUtil.merge(DDMStructureKeies)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByDDMStructureKey, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {StringUtil.merge(DDMStructureKeies)};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByDDMStructureKey, finderArgs,
+				this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -4316,14 +4976,18 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByDDMStructureKey, finderArgs,
-					count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByDDMStructureKey,
+						finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByDDMStructureKey,
-					finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByDDMStructureKey,
+						finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4422,6 +5086,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4431,12 +5098,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByDDMTemplateKey;
 				finderArgs = new Object[] {DDMTemplateKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByDDMTemplateKey;
 			finderArgs = new Object[] {
 				DDMTemplateKey, start, end, orderByComparator
@@ -4445,7 +5112,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -4524,12 +5191,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -4851,11 +5518,21 @@ public class JournalArticlePersistenceImpl
 	public int countByDDMTemplateKey(String DDMTemplateKey) {
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
-		FinderPath finderPath = _finderPathCountByDDMTemplateKey;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {DDMTemplateKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByDDMTemplateKey;
+
+			finderArgs = new Object[] {DDMTemplateKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -4890,10 +5567,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4990,6 +5671,9 @@ public class JournalArticlePersistenceImpl
 
 		layoutUuid = Objects.toString(layoutUuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4999,12 +5683,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByLayoutUuid;
 				finderArgs = new Object[] {layoutUuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByLayoutUuid;
 			finderArgs = new Object[] {
 				layoutUuid, start, end, orderByComparator
@@ -5013,7 +5697,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5090,12 +5774,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -5414,11 +6098,21 @@ public class JournalArticlePersistenceImpl
 	public int countByLayoutUuid(String layoutUuid) {
 		layoutUuid = Objects.toString(layoutUuid, "");
 
-		FinderPath finderPath = _finderPathCountByLayoutUuid;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {layoutUuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByLayoutUuid;
+
+			finderArgs = new Object[] {layoutUuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -5453,10 +6147,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5551,6 +6249,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5560,12 +6261,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindBySmallImageId;
 				finderArgs = new Object[] {smallImageId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindBySmallImageId;
 			finderArgs = new Object[] {
 				smallImageId, start, end, orderByComparator
@@ -5574,7 +6275,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -5640,12 +6341,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -5950,11 +6651,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countBySmallImageId(long smallImageId) {
-		FinderPath finderPath = _finderPathCountBySmallImageId;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {smallImageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountBySmallImageId;
+
+			finderArgs = new Object[] {smallImageId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -5978,10 +6689,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6080,6 +6795,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6089,12 +6807,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByR_I;
 				finderArgs = new Object[] {resourcePrimKey, indexable};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByR_I;
 			finderArgs = new Object[] {
 				resourcePrimKey, indexable, start, end, orderByComparator
@@ -6103,7 +6821,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6176,12 +6894,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -6506,11 +7224,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByR_I(long resourcePrimKey, boolean indexable) {
-		FinderPath finderPath = _finderPathCountByR_I;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, indexable};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_I;
+
+			finderArgs = new Object[] {resourcePrimKey, indexable};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6538,10 +7266,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6642,6 +7374,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6651,12 +7386,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByR_ST;
 				finderArgs = new Object[] {resourcePrimKey, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByR_ST;
 			finderArgs = new Object[] {
 				resourcePrimKey, status, start, end, orderByComparator
@@ -6665,7 +7400,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -6738,12 +7473,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -7138,6 +7873,9 @@ public class JournalArticlePersistenceImpl
 				resourcePrimKey, statuses[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -7146,13 +7884,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					resourcePrimKey, StringUtil.merge(statuses)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				resourcePrimKey, StringUtil.merge(statuses), start, end,
 				orderByComparator
@@ -7161,7 +7899,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByR_ST, finderArgs, this);
 
@@ -7239,13 +7977,13 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByR_ST, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByR_ST, finderArgs);
 				}
@@ -7286,11 +8024,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByR_ST(long resourcePrimKey, int status) {
-		FinderPath finderPath = _finderPathCountByR_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_ST;
+
+			finderArgs = new Object[] {resourcePrimKey, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -7318,10 +8066,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7349,12 +8101,21 @@ public class JournalArticlePersistenceImpl
 			statuses = ArrayUtil.sortedUnique(statuses);
 		}
 
-		Object[] finderArgs = new Object[] {
-			resourcePrimKey, StringUtil.merge(statuses)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByR_ST, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				resourcePrimKey, StringUtil.merge(statuses)
+			};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByR_ST, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -7394,12 +8155,17 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByR_ST, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByR_ST, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_ST, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByR_ST, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7500,6 +8266,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7509,12 +8278,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_U;
 				finderArgs = new Object[] {groupId, userId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_U;
 			finderArgs = new Object[] {
 				groupId, userId, start, end, orderByComparator
@@ -7523,7 +8292,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -7595,12 +8364,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -8269,11 +9038,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_U;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, userId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_U;
+
+			finderArgs = new Object[] {groupId, userId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -8301,10 +9080,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8457,6 +9240,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8466,12 +9252,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_F;
 				finderArgs = new Object[] {groupId, folderId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_F;
 			finderArgs = new Object[] {
 				groupId, folderId, start, end, orderByComparator
@@ -8480,7 +9266,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -8552,12 +9338,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -9443,6 +10229,9 @@ public class JournalArticlePersistenceImpl
 				groupId, folderIds[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -9451,13 +10240,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, StringUtil.merge(folderIds)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(folderIds), start, end,
 				orderByComparator
@@ -9466,7 +10255,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_F, finderArgs, this);
 
@@ -9543,13 +10332,13 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByG_F, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByG_F, finderArgs);
 				}
@@ -9590,11 +10379,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_F(long groupId, long folderId) {
-		FinderPath finderPath = _finderPathCountByG_F;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F;
+
+			finderArgs = new Object[] {groupId, folderId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -9622,10 +10421,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -9653,12 +10456,19 @@ public class JournalArticlePersistenceImpl
 			folderIds = ArrayUtil.sortedUnique(folderIds);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(folderIds)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_F, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {groupId, StringUtil.merge(folderIds)};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByG_F, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -9698,12 +10508,16 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_F, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByG_F, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_F, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByG_F, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -9932,6 +10746,9 @@ public class JournalArticlePersistenceImpl
 
 		articleId = Objects.toString(articleId, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9941,12 +10758,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_A;
 				finderArgs = new Object[] {groupId, articleId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, articleId, start, end, orderByComparator
@@ -9955,7 +10772,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -10038,12 +10855,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -10755,11 +11572,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_A(long groupId, String articleId) {
 		articleId = Objects.toString(articleId, "");
 
-		FinderPath finderPath = _finderPathCountByG_A;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, articleId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_A;
+
+			finderArgs = new Object[] {groupId, articleId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -10798,10 +11625,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -10971,6 +11802,9 @@ public class JournalArticlePersistenceImpl
 
 		urlTitle = Objects.toString(urlTitle, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10980,12 +11814,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_UT;
 				finderArgs = new Object[] {groupId, urlTitle};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_UT;
 			finderArgs = new Object[] {
 				groupId, urlTitle, start, end, orderByComparator
@@ -10994,7 +11828,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -11077,12 +11911,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -11794,11 +12628,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_UT(long groupId, String urlTitle) {
 		urlTitle = Objects.toString(urlTitle, "");
 
-		FinderPath finderPath = _finderPathCountByG_UT;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, urlTitle};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_UT;
+
+			finderArgs = new Object[] {groupId, urlTitle};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -11837,10 +12681,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -12013,6 +12861,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -12022,12 +12873,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_DDMSK;
 				finderArgs = new Object[] {groupId, DDMStructureKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_DDMSK;
 			finderArgs = new Object[] {
 				groupId, DDMStructureKey, start, end, orderByComparator
@@ -12036,7 +12887,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -12120,12 +12971,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -12839,11 +13690,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_DDMSK(long groupId, String DDMStructureKey) {
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
-		FinderPath finderPath = _finderPathCountByG_DDMSK;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, DDMStructureKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_DDMSK;
+
+			finderArgs = new Object[] {groupId, DDMStructureKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -12882,10 +13743,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -13058,6 +13923,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -13067,12 +13935,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_DDMTK;
 				finderArgs = new Object[] {groupId, DDMTemplateKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_DDMTK;
 			finderArgs = new Object[] {
 				groupId, DDMTemplateKey, start, end, orderByComparator
@@ -13081,7 +13949,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -13165,12 +14033,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -13884,11 +14752,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_DDMTK(long groupId, String DDMTemplateKey) {
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
-		FinderPath finderPath = _finderPathCountByG_DDMTK;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, DDMTemplateKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_DDMTK;
+
+			finderArgs = new Object[] {groupId, DDMTemplateKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -13927,10 +14805,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -14100,6 +14982,9 @@ public class JournalArticlePersistenceImpl
 
 		layoutUuid = Objects.toString(layoutUuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -14109,12 +14994,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_L;
 				finderArgs = new Object[] {groupId, layoutUuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_L;
 			finderArgs = new Object[] {
 				groupId, layoutUuid, start, end, orderByComparator
@@ -14123,7 +15008,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -14206,12 +15091,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -14924,11 +15809,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_L(long groupId, String layoutUuid) {
 		layoutUuid = Objects.toString(layoutUuid, "");
 
-		FinderPath finderPath = _finderPathCountByG_L;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, layoutUuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_L;
+
+			finderArgs = new Object[] {groupId, layoutUuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -14967,10 +15862,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -15139,6 +16038,9 @@ public class JournalArticlePersistenceImpl
 
 		layoutUuid = Objects.toString(layoutUuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -15150,7 +16052,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -15233,12 +16135,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -16192,6 +17094,9 @@ public class JournalArticlePersistenceImpl
 				groupId, layoutUuids[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -16200,13 +17105,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, StringUtil.merge(layoutUuids)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(layoutUuids), start, end,
 				orderByComparator
@@ -16215,7 +17120,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_NotL, finderArgs, this);
 
@@ -16307,14 +17212,14 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByG_NotL, finderArgs,
 						list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByG_NotL, finderArgs);
 				}
@@ -16357,11 +17262,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_NotL(long groupId, String layoutUuid) {
 		layoutUuid = Objects.toString(layoutUuid, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByG_NotL;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, layoutUuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByG_NotL;
+
+			finderArgs = new Object[] {groupId, layoutUuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -16400,10 +17315,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -16435,12 +17354,19 @@ public class JournalArticlePersistenceImpl
 			layoutUuids = ArrayUtil.sortedUnique(layoutUuids);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, StringUtil.merge(layoutUuids)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_NotL, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {groupId, StringUtil.merge(layoutUuids)};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByG_NotL, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -16495,12 +17421,17 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_NotL, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByG_NotL, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_NotL, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByG_NotL, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -16758,6 +17689,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -16767,12 +17701,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_ST;
 				finderArgs = new Object[] {groupId, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_ST;
 			finderArgs = new Object[] {
 				groupId, status, start, end, orderByComparator
@@ -16781,7 +17715,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -16853,12 +17787,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -17527,11 +18461,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_ST(long groupId, int status) {
-		FinderPath finderPath = _finderPathCountByG_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_ST;
+
+			finderArgs = new Object[] {groupId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -17559,10 +18503,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -17714,6 +18662,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -17723,12 +18674,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_V;
 				finderArgs = new Object[] {companyId, version};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_V;
 			finderArgs = new Object[] {
 				companyId, version, start, end, orderByComparator
@@ -17737,7 +18688,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -17809,12 +18760,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -18139,11 +19090,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByC_V(long companyId, double version) {
-		FinderPath finderPath = _finderPathCountByC_V;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {companyId, version};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_V;
+
+			finderArgs = new Object[] {companyId, version};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -18171,10 +19132,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -18273,6 +19238,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -18282,12 +19250,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_ST;
 				finderArgs = new Object[] {companyId, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_ST;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
@@ -18296,7 +19264,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -18368,12 +19336,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -18698,11 +19666,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByC_ST(long companyId, int status) {
-		FinderPath finderPath = _finderPathCountByC_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {companyId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_ST;
+
+			finderArgs = new Object[] {companyId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -18730,10 +19708,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -18831,6 +19813,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -18842,7 +19827,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -18914,12 +19899,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -19244,11 +20229,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByC_NotST(long companyId, int status) {
-		FinderPath finderPath = _finderPathWithPaginationCountByC_NotST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {companyId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByC_NotST;
+
+			finderArgs = new Object[] {companyId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -19276,10 +20271,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -19383,6 +20382,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -19392,12 +20394,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_DDMTK;
 				finderArgs = new Object[] {classNameId, DDMTemplateKey};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_DDMTK;
 			finderArgs = new Object[] {
 				classNameId, DDMTemplateKey, start, end, orderByComparator
@@ -19406,7 +20408,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -19490,12 +20492,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -19835,11 +20837,21 @@ public class JournalArticlePersistenceImpl
 	public int countByC_DDMTK(long classNameId, String DDMTemplateKey) {
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
-		FinderPath finderPath = _finderPathCountByC_DDMTK;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {classNameId, DDMTemplateKey};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_DDMTK;
+
+			finderArgs = new Object[] {classNameId, DDMTemplateKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -19878,10 +20890,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -19982,6 +20998,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -19993,7 +21012,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -20077,12 +21096,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -20418,11 +21437,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByLtD_S(Date displayDate, int status) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtD_S;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {_getTime(displayDate), status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByLtD_S;
+
+			finderArgs = new Object[] {_getTime(displayDate), status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -20461,10 +21490,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -20577,6 +21610,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -20586,12 +21622,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByR_I_S;
 				finderArgs = new Object[] {resourcePrimKey, indexable, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByR_I_S;
 			finderArgs = new Object[] {
 				resourcePrimKey, indexable, status, start, end,
@@ -20601,7 +21637,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -20679,12 +21715,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -21103,6 +22139,9 @@ public class JournalArticlePersistenceImpl
 				orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -21111,13 +22150,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					resourcePrimKey, indexable, StringUtil.merge(statuses)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				resourcePrimKey, indexable, StringUtil.merge(statuses), start,
 				end, orderByComparator
@@ -21126,7 +22165,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByR_I_S, finderArgs, this);
 
@@ -21209,13 +22248,13 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByR_I_S, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByR_I_S, finderArgs);
 				}
@@ -21262,11 +22301,21 @@ public class JournalArticlePersistenceImpl
 	public int countByR_I_S(
 		long resourcePrimKey, boolean indexable, int status) {
 
-		FinderPath finderPath = _finderPathCountByR_I_S;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {resourcePrimKey, indexable, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByR_I_S;
+
+			finderArgs = new Object[] {resourcePrimKey, indexable, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -21298,10 +22347,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -21332,12 +22385,21 @@ public class JournalArticlePersistenceImpl
 			statuses = ArrayUtil.sortedUnique(statuses);
 		}
 
-		Object[] finderArgs = new Object[] {
-			resourcePrimKey, indexable, StringUtil.merge(statuses)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByR_I_S, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				resourcePrimKey, indexable, StringUtil.merge(statuses)
+			};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByR_I_S, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -21381,12 +22443,17 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByR_I_S, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByR_I_S, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_I_S, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByR_I_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -21498,6 +22565,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -21507,12 +22577,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_C;
 				finderArgs = new Object[] {groupId, userId, classNameId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_U_C;
 			finderArgs = new Object[] {
 				groupId, userId, classNameId, start, end, orderByComparator
@@ -21521,7 +22591,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -21598,12 +22668,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -22306,11 +23376,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_U_C(long groupId, long userId, long classNameId) {
-		FinderPath finderPath = _finderPathCountByG_U_C;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, userId, classNameId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_U_C;
+
+			finderArgs = new Object[] {groupId, userId, classNameId};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -22342,10 +23422,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -22513,6 +23597,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -22522,12 +23609,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_F_ST;
 				finderArgs = new Object[] {groupId, folderId, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_F_ST;
 			finderArgs = new Object[] {
 				groupId, folderId, status, start, end, orderByComparator
@@ -22536,7 +23623,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -22613,12 +23700,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -23552,6 +24639,9 @@ public class JournalArticlePersistenceImpl
 				groupId, folderId, statuses[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -23560,13 +24650,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, folderId, StringUtil.merge(statuses)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, folderId, StringUtil.merge(statuses), start, end,
 				orderByComparator
@@ -23575,7 +24665,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_F_ST, finderArgs, this);
 
@@ -23657,14 +24747,14 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByG_F_ST, finderArgs,
 						list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByG_F_ST, finderArgs);
 				}
@@ -23707,11 +24797,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_F_ST(long groupId, long folderId, int status) {
-		FinderPath finderPath = _finderPathCountByG_F_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, folderId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_F_ST;
+
+			finderArgs = new Object[] {groupId, folderId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -23743,10 +24843,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -23775,12 +24879,21 @@ public class JournalArticlePersistenceImpl
 			statuses = ArrayUtil.sortedUnique(statuses);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, folderId, StringUtil.merge(statuses)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_F_ST, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				groupId, folderId, StringUtil.merge(statuses)
+			};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByG_F_ST, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -23824,12 +24937,17 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_F_ST, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByG_F_ST, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_F_ST, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByG_F_ST, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -24078,6 +25196,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -24087,12 +25208,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_C;
 				finderArgs = new Object[] {groupId, classNameId, classPK};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, start, end, orderByComparator
@@ -24101,7 +25222,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -24178,12 +25299,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -24886,11 +26007,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long groupId, long classNameId, long classPK) {
-		FinderPath finderPath = _finderPathCountByG_C_C;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, classPK};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_C;
+
+			finderArgs = new Object[] {groupId, classNameId, classPK};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -24922,10 +26053,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -25083,15 +26218,18 @@ public class JournalArticlePersistenceImpl
 
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, classNameId, DDMStructureKey};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_C_DDMSK, finderArgs, this);
 		}
@@ -25150,7 +26288,7 @@ public class JournalArticlePersistenceImpl
 				List<JournalArticle> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByG_C_DDMSK, finderArgs, list);
 					}
@@ -25160,7 +26298,7 @@ public class JournalArticlePersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									groupId, classNameId, DDMStructureKey
 								};
@@ -25181,7 +26319,7 @@ public class JournalArticlePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathFetchByG_C_DDMSK, finderArgs);
 				}
@@ -25234,13 +26372,21 @@ public class JournalArticlePersistenceImpl
 
 		DDMStructureKey = Objects.toString(DDMStructureKey, "");
 
-		FinderPath finderPath = _finderPathCountByG_C_DDMSK;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, DDMStructureKey
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_DDMSK;
+
+			finderArgs = new Object[] {groupId, classNameId, DDMStructureKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -25283,10 +26429,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -25403,6 +26553,9 @@ public class JournalArticlePersistenceImpl
 
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -25412,14 +26565,14 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_DDMTK;
 				finderArgs = new Object[] {
 					groupId, classNameId, DDMTemplateKey
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_C_DDMTK;
 			finderArgs = new Object[] {
 				groupId, classNameId, DDMTemplateKey, start, end,
@@ -25429,7 +26582,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -25518,12 +26671,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -26274,13 +27427,21 @@ public class JournalArticlePersistenceImpl
 
 		DDMTemplateKey = Objects.toString(DDMTemplateKey, "");
 
-		FinderPath finderPath = _finderPathCountByG_C_DDMTK;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, DDMTemplateKey
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_DDMTK;
+
+			finderArgs = new Object[] {groupId, classNameId, DDMTemplateKey};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -26323,10 +27484,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -26514,6 +27679,9 @@ public class JournalArticlePersistenceImpl
 
 		layoutUuid = Objects.toString(layoutUuid, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -26523,12 +27691,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_L;
 				finderArgs = new Object[] {groupId, classNameId, layoutUuid};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_C_L;
 			finderArgs = new Object[] {
 				groupId, classNameId, layoutUuid, start, end, orderByComparator
@@ -26537,7 +27705,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -26625,12 +27793,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -27378,11 +28546,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_C_L(long groupId, long classNameId, String layoutUuid) {
 		layoutUuid = Objects.toString(layoutUuid, "");
 
-		FinderPath finderPath = _finderPathCountByG_C_L;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, layoutUuid};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_L;
+
+			finderArgs = new Object[] {groupId, classNameId, layoutUuid};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -27425,10 +28603,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -27602,15 +28784,18 @@ public class JournalArticlePersistenceImpl
 
 		articleId = Objects.toString(articleId, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, articleId, version};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = finderCache.getResult(
 				_finderPathFetchByG_A_V, finderArgs, this);
 		}
@@ -27668,7 +28853,7 @@ public class JournalArticlePersistenceImpl
 				List<JournalArticle> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						finderCache.putResult(
 							_finderPathFetchByG_A_V, finderArgs, list);
 					}
@@ -27682,7 +28867,7 @@ public class JournalArticlePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathFetchByG_A_V, finderArgs);
 				}
@@ -27733,11 +28918,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_A_V(long groupId, String articleId, double version) {
 		articleId = Objects.toString(articleId, "");
 
-		FinderPath finderPath = _finderPathCountByG_A_V;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, articleId, version};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_A_V;
+
+			finderArgs = new Object[] {groupId, articleId, version};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -27780,10 +28975,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -27898,6 +29097,9 @@ public class JournalArticlePersistenceImpl
 
 		articleId = Objects.toString(articleId, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -27907,12 +29109,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_A_ST;
 				finderArgs = new Object[] {groupId, articleId, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_A_ST;
 			finderArgs = new Object[] {
 				groupId, articleId, status, start, end, orderByComparator
@@ -27921,7 +29123,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -28009,12 +29211,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -29002,6 +30204,9 @@ public class JournalArticlePersistenceImpl
 				groupId, articleId, statuses[0], start, end, orderByComparator);
 		}
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		Object[] finderArgs = null;
 
@@ -29010,13 +30215,13 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
 					groupId, articleId, StringUtil.merge(statuses)
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, articleId, StringUtil.merge(statuses), start, end,
 				orderByComparator
@@ -29025,7 +30230,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_A_ST, finderArgs, this);
 
@@ -29118,14 +30323,14 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(
 						_finderPathWithPaginationFindByG_A_ST, finderArgs,
 						list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(
 						_finderPathWithPaginationFindByG_A_ST, finderArgs);
 				}
@@ -29170,11 +30375,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_A_ST(long groupId, String articleId, int status) {
 		articleId = Objects.toString(articleId, "");
 
-		FinderPath finderPath = _finderPathCountByG_A_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, articleId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_A_ST;
+
+			finderArgs = new Object[] {groupId, articleId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -29217,10 +30432,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -29251,12 +30470,21 @@ public class JournalArticlePersistenceImpl
 			statuses = ArrayUtil.sortedUnique(statuses);
 		}
 
-		Object[] finderArgs = new Object[] {
-			groupId, articleId, StringUtil.merge(statuses)
-		};
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_A_ST, finderArgs, this);
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				groupId, articleId, StringUtil.merge(statuses)
+			};
+
+			count = (Long)finderCache.getResult(
+				_finderPathWithPaginationCountByG_A_ST, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler();
@@ -29311,12 +30539,17 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_A_ST, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathWithPaginationCountByG_A_ST, finderArgs,
+						count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_A_ST, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathWithPaginationCountByG_A_ST, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -29595,6 +30828,9 @@ public class JournalArticlePersistenceImpl
 
 		articleId = Objects.toString(articleId, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -29606,7 +30842,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -29694,12 +30930,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -30443,11 +31679,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_A_NotST(long groupId, String articleId, int status) {
 		articleId = Objects.toString(articleId, "");
 
-		FinderPath finderPath = _finderPathWithPaginationCountByG_A_NotST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, articleId, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathWithPaginationCountByG_A_NotST;
+
+			finderArgs = new Object[] {groupId, articleId, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -30490,10 +31736,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -30680,6 +31930,9 @@ public class JournalArticlePersistenceImpl
 
 		urlTitle = Objects.toString(urlTitle, "");
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -30689,12 +31942,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_UT_ST;
 				finderArgs = new Object[] {groupId, urlTitle, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_UT_ST;
 			finderArgs = new Object[] {
 				groupId, urlTitle, status, start, end, orderByComparator
@@ -30703,7 +31956,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -30791,12 +32044,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -31539,11 +32792,21 @@ public class JournalArticlePersistenceImpl
 	public int countByG_UT_ST(long groupId, String urlTitle, int status) {
 		urlTitle = Objects.toString(urlTitle, "");
 
-		FinderPath finderPath = _finderPathCountByG_UT_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {groupId, urlTitle, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_UT_ST;
+
+			finderArgs = new Object[] {groupId, urlTitle, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -31586,10 +32849,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -31772,6 +33039,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -31781,12 +33051,12 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_V_ST;
 				finderArgs = new Object[] {companyId, version, status};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_V_ST;
 			finderArgs = new Object[] {
 				companyId, version, status, start, end, orderByComparator
@@ -31795,7 +33065,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -31872,12 +33142,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -32219,11 +33489,21 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countByC_V_ST(long companyId, double version, int status) {
-		FinderPath finderPath = _finderPathCountByC_V_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {companyId, version, status};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_V_ST;
+
+			finderArgs = new Object[] {companyId, version, status};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -32255,10 +33535,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -32369,6 +33653,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -32378,14 +33665,14 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_ED_ST;
 				finderArgs = new Object[] {
 					classNameId, _getTime(expirationDate), status
 				};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByC_ED_ST;
 			finderArgs = new Object[] {
 				classNameId, _getTime(expirationDate), status, start, end,
@@ -32395,7 +33682,7 @@ public class JournalArticlePersistenceImpl
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
@@ -32485,12 +33772,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -32848,13 +34135,23 @@ public class JournalArticlePersistenceImpl
 	public int countByC_ED_ST(
 		long classNameId, Date expirationDate, int status) {
 
-		FinderPath finderPath = _finderPathCountByC_ED_ST;
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
 
-		Object[] finderArgs = new Object[] {
-			classNameId, _getTime(expirationDate), status
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_ED_ST;
+
+			finderArgs = new Object[] {
+				classNameId, _getTime(expirationDate), status
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -32897,10 +34194,14 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -32945,6 +34246,12 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(JournalArticle journalArticle) {
+		if (journalArticle.getCtCollectionId() != 0) {
+			journalArticle.resetOriginalValues();
+
+			return;
+		}
+
 		entityCache.putResult(
 			entityCacheEnabled, JournalArticleImpl.class,
 			journalArticle.getPrimaryKey(), journalArticle);
@@ -32983,6 +34290,12 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public void cacheResult(List<JournalArticle> journalArticles) {
 		for (JournalArticle journalArticle : journalArticles) {
+			if (journalArticle.getCtCollectionId() != 0) {
+				journalArticle.resetOriginalValues();
+
+				continue;
+			}
+
 			if (entityCache.getResult(
 					entityCacheEnabled, JournalArticleImpl.class,
 					journalArticle.getPrimaryKey()) == null) {
@@ -33232,6 +34545,10 @@ public class JournalArticlePersistenceImpl
 
 	@Override
 	protected JournalArticle removeImpl(JournalArticle journalArticle) {
+		if (!ctPersistenceHelper.isRemove(journalArticle)) {
+			return journalArticle;
+		}
+
 		Session session = null;
 
 		try {
@@ -33320,7 +34637,18 @@ public class JournalArticlePersistenceImpl
 		try {
 			session = openSession();
 
-			if (journalArticle.isNew()) {
+			if (ctPersistenceHelper.isInsert(journalArticle)) {
+				if (!isNew) {
+					JournalArticle oldJournalArticle =
+						(JournalArticle)session.get(
+							JournalArticleImpl.class,
+							journalArticle.getPrimaryKeyObj());
+
+					if (oldJournalArticle != null) {
+						session.evict(oldJournalArticle);
+					}
+				}
+
 				session.save(journalArticle);
 
 				journalArticle.setNew(false);
@@ -33334,6 +34662,49 @@ public class JournalArticlePersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (journalArticle.getCtCollectionId() != 0) {
+			if (!_columnBitmaskEnabled) {
+				finderCache.clearCache(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			}
+			else if (isNew) {
+				Object[] args = new Object[] {
+					journalArticleModelImpl.getCtCollectionId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+			}
+			else if ((journalArticleModelImpl.getColumnBitmask() &
+					  _finderPathWithoutPaginationFindByCTCollectionId.
+						  getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					journalArticleModelImpl.getOriginalCtCollectionId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+
+				args = new Object[] {
+					journalArticleModelImpl.getCtCollectionId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+			}
+
+			journalArticle.resetOriginalValues();
+
+			return journalArticle;
 		}
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -33364,6 +34735,12 @@ public class JournalArticlePersistenceImpl
 			finderCache.removeResult(_finderPathCountByUuid_C, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {journalArticleModelImpl.getCtCollectionId()};
+
+			finderCache.removeResult(_finderPathCountByCTCollectionId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByCTCollectionId, args);
 
 			args = new Object[] {journalArticleModelImpl.getGroupId()};
 
@@ -33686,6 +35063,29 @@ public class JournalArticlePersistenceImpl
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
+
+			if ((journalArticleModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCTCollectionId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					journalArticleModelImpl.getOriginalCtCollectionId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
+
+				args = new Object[] {
+					journalArticleModelImpl.getCtCollectionId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCTCollectionId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCTCollectionId, args);
 			}
 
 			if ((journalArticleModelImpl.getColumnBitmask() &
@@ -34414,12 +35814,121 @@ public class JournalArticlePersistenceImpl
 	/**
 	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the journal article
+	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
+	 */
+	@Override
+	public JournalArticle fetchByPrimaryKey(Serializable primaryKey) {
+		if (ctPersistenceHelper.isProductionMode(JournalArticle.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		JournalArticle journalArticle = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			journalArticle = (JournalArticle)session.get(
+				JournalArticleImpl.class, primaryKey);
+
+			if (journalArticle != null) {
+				cacheResult(journalArticle);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return journalArticle;
+	}
+
+	/**
+	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param id the primary key of the journal article
 	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
 	 */
 	@Override
 	public JournalArticle fetchByPrimaryKey(long id) {
 		return fetchByPrimaryKey((Serializable)id);
+	}
+
+	@Override
+	public Map<Serializable, JournalArticle> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (ctPersistenceHelper.isProductionMode(JournalArticle.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, JournalArticle> map =
+			new HashMap<Serializable, JournalArticle>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
+
+			if (journalArticle != null) {
+				map.put(primaryKey, journalArticle);
+			}
+
+			return map;
+		}
+
+		StringBundler query = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		query.append(getSelectSQL());
+		query.append(" WHERE ");
+		query.append(getPKDBName());
+		query.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			query.append((long)primaryKey);
+
+			query.append(",");
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(")");
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (JournalArticle journalArticle :
+					(List<JournalArticle>)q.list()) {
+
+				map.put(journalArticle.getPrimaryKeyObj(), journalArticle);
+
+				cacheResult(journalArticle);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -34486,6 +35995,9 @@ public class JournalArticlePersistenceImpl
 		int start, int end, OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -34495,19 +36007,19 @@ public class JournalArticlePersistenceImpl
 
 			pagination = false;
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<JournalArticle> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<JournalArticle>)finderCache.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -34557,12 +36069,12 @@ public class JournalArticlePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					finderCache.removeResult(finderPath, finderArgs);
 				}
 
@@ -34594,8 +36106,15 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			JournalArticle.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)finderCache.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -34607,12 +36126,16 @@ public class JournalArticlePersistenceImpl
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					finderCache.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					finderCache.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(e);
 			}
@@ -34647,6 +36170,43 @@ public class JournalArticlePersistenceImpl
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return JournalArticleModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	@Override
+	public JournalArticle removeCTModel(
+		JournalArticle journalArticle, boolean quiet) {
+
+		if (quiet) {
+			return removeImpl(journalArticle);
+		}
+
+		return remove(journalArticle);
+	}
+
+	@Override
+	public JournalArticle updateCTModel(
+		JournalArticle journalArticle, boolean quiet) {
+
+		if (quiet) {
+			return updateImpl(journalArticle);
+		}
+
+		return update(journalArticle);
+	}
+
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "articleId", "version"});
 	}
 
 	/**
@@ -34747,6 +36307,27 @@ public class JournalArticlePersistenceImpl
 			entityCacheEnabled, finderCacheEnabled, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByCTCollectionId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, JournalArticleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCTCollectionId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, JournalArticleImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCTCollectionId",
+			new String[] {Long.class.getName()},
+			JournalArticleModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
+			JournalArticleModelImpl.ARTICLEID_COLUMN_BITMASK |
+			JournalArticleModelImpl.VERSION_COLUMN_BITMASK);
+
+		_finderPathCountByCTCollectionId = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCTCollectionId",
+			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, JournalArticleImpl.class,
@@ -35643,6 +37224,9 @@ public class JournalArticlePersistenceImpl
 	}
 
 	private boolean _columnBitmaskEnabled;
+
+	@Reference
+	protected CTPersistenceHelper ctPersistenceHelper;
 
 	@Reference
 	protected EntityCache entityCache;

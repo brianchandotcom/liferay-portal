@@ -550,6 +550,34 @@ public class MessageBoardThread {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String threadType;
 
+	@Schema(description = "The number of views of this thread.")
+	public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	@JsonIgnore
+	public void setViewCount(
+		UnsafeSupplier<Integer, Exception> viewCountUnsafeSupplier) {
+
+		try {
+			viewCount = viewCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer viewCount;
+
 	@Schema(
 		description = "A write-only property that specifies the thread's default permissions."
 	)
@@ -835,6 +863,16 @@ public class MessageBoardThread {
 			sb.append(_escape(threadType));
 
 			sb.append("\"");
+		}
+
+		if (viewCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewCount\": ");
+
+			sb.append(viewCount);
 		}
 
 		if (viewableBy != null) {

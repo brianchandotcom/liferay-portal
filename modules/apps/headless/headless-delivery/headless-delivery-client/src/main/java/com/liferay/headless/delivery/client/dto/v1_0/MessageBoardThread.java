@@ -404,6 +404,27 @@ public class MessageBoardThread {
 
 	protected String threadType;
 
+	public Integer getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
+
+	public void setViewCount(
+		UnsafeSupplier<Integer, Exception> viewCountUnsafeSupplier) {
+
+		try {
+			viewCount = viewCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer viewCount;
+
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

@@ -264,6 +264,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getThreadType());
 		}
 
+		if (messageBoardThread.getViewCount() != null) {
+			existingMessageBoardThread.setViewCount(
+				messageBoardThread.getViewCount());
+		}
+
 		if (messageBoardThread.getViewableBy() != null) {
 			existingMessageBoardThread.setViewableBy(
 				messageBoardThread.getViewableBy());

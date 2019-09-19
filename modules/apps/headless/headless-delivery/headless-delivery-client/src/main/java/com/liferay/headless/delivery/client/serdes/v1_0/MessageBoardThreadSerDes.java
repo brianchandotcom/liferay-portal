@@ -292,6 +292,16 @@ public class MessageBoardThreadSerDes {
 			sb.append("\"");
 		}
 
+		if (messageBoardThread.getViewCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"viewCount\": ");
+
+			sb.append(messageBoardThread.getViewCount());
+		}
+
 		if (messageBoardThread.getViewableBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -460,6 +470,14 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getThreadType()));
 		}
 
+		if (messageBoardThread.getViewCount() == null) {
+			map.put("viewCount", null);
+		}
+		else {
+			map.put(
+				"viewCount", String.valueOf(messageBoardThread.getViewCount()));
+		}
+
 		if (messageBoardThread.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
@@ -602,6 +620,12 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setThreadType(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewCount")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setViewCount(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

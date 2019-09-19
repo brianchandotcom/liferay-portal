@@ -1432,6 +1432,24 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 				sb.append(", ");
 			}
+
+			if (Objects.equals("viewCount", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = messageBoardThread.getViewCount();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
 		}
 
 		sb.append("}");
@@ -1677,6 +1695,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 			if (Objects.equals("threadType", additionalAssertFieldName)) {
 				if (messageBoardThread.getThreadType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("viewCount", additionalAssertFieldName)) {
+				if (messageBoardThread.getViewCount() == null) {
 					valid = false;
 				}
 
@@ -1991,6 +2017,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("viewCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getViewCount(),
+						messageBoardThread2.getViewCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getViewableBy(),
@@ -2178,6 +2215,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread.getThreadType(),
 						jsonObject.getString("threadType"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("viewCount", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread.getViewCount(),
+						jsonObject.getInt("viewCount"))) {
 
 					return false;
 				}
@@ -2393,6 +2441,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("viewCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2433,6 +2486,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				showAsQuestion = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
 				threadType = RandomTestUtil.randomString();
+				viewCount = RandomTestUtil.randomInt();
 			}
 		};
 	}

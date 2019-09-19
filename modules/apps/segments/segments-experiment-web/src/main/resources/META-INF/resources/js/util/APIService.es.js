@@ -129,6 +129,8 @@ function APIService({endpoints, namespace, contentPageEditorNamespace}) {
 APIService.propTypes = {
 	contentPageEditorNamespace: PropTypes.string.isRequired,
 	endpoints: PropTypes.shape({
+		calculateSegmentsExperimentEstimatedDurationURL:
+			PropTypes.string.isRequired,
 		createSegmentsExperimentURL: PropTypes.string.isRequired,
 		createSegmentsVariantURL: PropTypes.string.isRequired,
 		deleteSegmentsExperimentURL: PropTypes.string.isRequired,
@@ -136,8 +138,6 @@ APIService.propTypes = {
 		editSegmentsExperimentStatusURL: PropTypes.string.isRequired,
 		editSegmentsExperimentURL: PropTypes.string.isRequired,
 		editSegmentsVariantURL: PropTypes.string.isRequired,
-		calculateSegmentsExperimentEstimatedDurationURL:
-			PropTypes.string.isRequired,
 		runSegmentsExperimentURL: PropTypes.string.isRequired
 	}),
 	namespace: PropTypes.string.isRequired

@@ -17,7 +17,6 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import {debounce} from 'frontend-js-web';
 import {SplitPicker} from './SplitPicker/SplitPicker.es';
 import {SliderWithLabel} from './SliderWithLabel.es';
 import {SegmentsVariantType} from '../types.es';
@@ -30,6 +29,7 @@ import {
 import BusyButton from './BusyButton/BusyButton.es';
 import SegmentsExperimentContext from '../context.es';
 import {StateContext} from '../state/context.es';
+import {useDebounceCallback} from '../util/hooks.es';
 
 const SUCCESS_ANIMATION_PATH = '/success.gif';
 const TIME_ESTIMATION_THROTTLE_TIME_MS = 1000;
@@ -38,8 +38,8 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	const [busy, setBusy] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [estimation, setEstimation] = useState({
-		loading: true,
-		days: null
+		days: null,
+		loading: true
 	});
 	const [confidenceLevel, setConfidenceLevel] = useState(
 		INITIAL_CONFIDENCE_LEVEL
@@ -78,40 +78,42 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 
 	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_PATH}`;
 
-	const getEstimationRef = useRef(
-		debounce(body => {
-			APIService.getEstimatedTime(body)
-				.then(({segmentsExperimentEstimatedDaysDuration}) => {
-					if (mounted.current) {
-						setEstimation({
-							loading: false,
-							days: segmentsExperimentEstimatedDaysDuration
-						});
-					}
-				})
-				.catch(_error => {
-					if (mounted.current) {
-						setEstimation({
-							loading: false,
-							days: null
-						});
-					}
-				});
-		}, TIME_ESTIMATION_THROTTLE_TIME_MS)
-	);
+	const [getEstimation] = useDebounceCallback(body => {
+		APIService.getEstimatedTime(body)
+			.then(({segmentsExperimentEstimatedDaysDuration}) => {
+				if (mounted.current) {
+					setEstimation({
+						days: segmentsExperimentEstimatedDaysDuration,
+						loading: false
+					});
+				}
+			})
+			.catch(_error => {
+				if (mounted.current) {
+					setEstimation({
+						days: null,
+						loading: false
+					});
+				}
+			});
+	}, TIME_ESTIMATION_THROTTLE_TIME_MS);
 
 	useEffect(() => {
 		setEstimation({loading: true});
 
-		getEstimationRef.current({
+		getEstimation({
 			confidenceLevel,
 			segmentsExperimentId: experiment.segmentsExperimentId,
 			segmentsExperimentRels: JSON.stringify(
 				_variantsToSplitVariantsMap(draftVariants)
 			)
 		});
-		return () => {};
-	}, [draftVariants, confidenceLevel]);
+	}, [
+		draftVariants,
+		confidenceLevel,
+		getEstimation,
+		experiment.segmentsExperimentId
+	]);
 
 	return (
 		visible && (

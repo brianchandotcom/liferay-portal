@@ -37,14 +37,14 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="G_FCK" return-type="FragmentCollection" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionKey" />
 		</finder>
 		<finder name="G_LikeN" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
 

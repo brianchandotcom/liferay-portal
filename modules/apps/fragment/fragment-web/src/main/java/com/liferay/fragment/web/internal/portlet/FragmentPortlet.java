@@ -113,26 +113,16 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
 
-		Map<String, List<FragmentCollection>> inheritedFragmentCollections =
-			new TreeMap<>();
-
-		if (themeDisplay.getScopeGroupId() !=
-				themeDisplay.getCompanyGroupId()) {
-
-			try {
-				inheritedFragmentCollections = _getInheritedFragmentCollections(
-					themeDisplay);
-			}
-			catch (PortalException pe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(pe, pe);
-				}
+		try {
+			renderRequest.setAttribute(
+				FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
+				_getInheritedFragmentCollections(themeDisplay));
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
 			}
 		}
-
-		renderRequest.setAttribute(
-			FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
-			inheritedFragmentCollections);
 
 		renderRequest.setAttribute(
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
@@ -144,16 +134,23 @@ public class FragmentPortlet extends MVCPortlet {
 			_getInheritedFragmentCollections(ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		if (themeDisplay.getScopeGroupId() ==
+				themeDisplay.getCompanyGroupId()) {
+
+			return new TreeMap<>();
+		}
+
 		Map<String, List<FragmentCollection>> inheritedFragmentCollections =
 			new TreeMap<>();
 
-		Group group = _groupService.getGroup(themeDisplay.getCompanyGroupId());
-
 		List<FragmentCollection> fragmentCollections =
 			_fragmentCollectionService.getFragmentCollections(
-				group.getGroupId());
+				themeDisplay.getCompanyGroupId());
 
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
+			Group group = _groupService.getGroup(
+				themeDisplay.getCompanyGroupId());
+
 			inheritedFragmentCollections.put(
 				group.getDescriptiveName(themeDisplay.getLocale()),
 				fragmentCollections);

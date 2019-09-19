@@ -75,23 +75,15 @@
 	</div>
 </div>
 
-<div id='<%= liferayPortletResponse.getNamespace() + "manageCollaborators-root" %>''>
-
-	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("number", 1);
-	%>
-
-	<react:component
-		componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
-		data="<%= data %>"
-		module="js/index.es"
-	/>
-</div>
-
 <%
 boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("info_panel_file_entry.jsp-showManageCollaborators"));
+
+PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+manageCollaboratorsRenderURL.setParameter("dialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
+manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <c:if test="<%= showManageCollaborators %>">
@@ -104,15 +96,6 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 			style="link"
 		/>
 	</div>
-
-	<%
-	PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
-
-	manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
-	manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
-	manageCollaboratorsRenderURL.setParameter("dialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
-	manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
-	%>
 
 	<aui:script>
 		var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
@@ -143,3 +126,22 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 		);
 	</aui:script>
 </c:if>
+
+<div id='<%= liferayPortletResponse.getNamespace() + "manageCollaborators-root" %>''>
+
+	<%
+	Map<String, Object> data = new HashMap<>();
+
+	data.put("owner", owner);
+	data.put("sharingEntryToUsers", sharingEntryToUsers);
+	data.put("sharingEntriesCount", sharingEntriesCount);
+	data.put("showManageCollaborators", showManageCollaborators);
+	data.put("manageCollaboratorsRenderURL", manageCollaboratorsRenderURL.toString());
+	%>
+
+	<react:component
+		componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
+		data="<%= data %>"
+		module="js/index.es"
+	/>
+</div>

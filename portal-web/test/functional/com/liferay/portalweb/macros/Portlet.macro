@@ -310,6 +310,16 @@ definition {
 			locator1 = "Treeview#NODE_SELECTED");
 	}
 
+	macro selectScope {
+		Navigator.gotoNavTab(navTab = "Scope");
+
+		Select(
+			locator1 = "Select#SCOPE",
+			value1 = "${scope}");
+
+		Portlet.saveAndCloseConfig();
+	}
+
 	@summary = "Shutdown the current Liferay Portal instance."
 	macro shutdownServer {
 		AntCommand(

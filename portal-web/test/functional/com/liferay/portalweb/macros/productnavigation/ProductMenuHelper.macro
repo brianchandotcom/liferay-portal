@@ -62,6 +62,14 @@ definition {
 		}
 	}
 
+	macro selectScope {
+		Click(locator1 = "SiteNavigationMenu#SCOPE_COG");
+
+		Click(
+			key_scope = "${scope}",
+			locator1 = "ProductMenu#SCOPE");
+	}
+
 	macro viewNoSite {
 		var key_site = "${site}";
 

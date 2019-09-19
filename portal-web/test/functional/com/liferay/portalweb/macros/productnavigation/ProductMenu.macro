@@ -50,6 +50,17 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
 	}
 
+	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${scope} > ${portlet}"
+	macro gotoScopedPortlet {
+		ProductMenuHelper.expandPanel(panel = "${panel}");
+
+		ProductMenuHelper.expandCategory(category = "${category}");
+
+		ProductMenuHelper.selectScope(scope = "${scope}");
+
+		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
+	}
+
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoSite {
 		ProductMenuHelper.expandPanel(panel = "Site Administration");

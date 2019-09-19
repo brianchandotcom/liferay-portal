@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[contains(.,'${key_scope}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE</td>
 	<td>//div[contains(@id,'siteSelector')]//div[h5[.='${key_site}']]</td>
 	<td></td>

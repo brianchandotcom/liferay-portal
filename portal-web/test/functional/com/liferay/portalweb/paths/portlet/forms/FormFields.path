@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>CHECKBOX_ENTRY</td>
-	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@checked='' or @checked='checked']/following-sibling::span[contains(@class,'label')]</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@checked='' or @checked='checked']/following-sibling::span[contains(@class,'label')] | //div[contains(@data-field-name,'${key_fieldName}')]//input[@checked='' or @checked='checked']/following-sibling::span[contains(.,'${value1}')]</td>
 	<td></td>
 </tr>
 <tr>

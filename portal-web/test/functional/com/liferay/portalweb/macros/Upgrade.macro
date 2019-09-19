@@ -969,7 +969,7 @@ definition {
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldLabel = "Checkbox",
+			fieldValue = "Checkbox",
 			fieldName = "Checkbox");
 
 		FormPortlet.clickNextPage();

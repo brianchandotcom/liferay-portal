@@ -36,9 +36,13 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		content = _sortMapKeys("transformKeys", content);
 
-		Matcher matcher = _stylingPattern.matcher(content);
+		Matcher matcher = _stylingPattern1.matcher(content);
 
 		content = matcher.replaceAll("$1$2 {\n\t$3\n}$4");
+
+		matcher = _stylingPattern2.matcher(content);
+
+		content = matcher.replaceAll("$1$2 = $3$4");
 
 		return content;
 	}
@@ -101,7 +105,9 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 	private static final Pattern _mapKeyPattern = Pattern.compile(
 		"(\".+?\") *: *(\".+?\")");
-	private static final Pattern _stylingPattern = Pattern.compile(
+	private static final Pattern _stylingPattern1 = Pattern.compile(
 		"(\\A|\n)(\\w+)\\.(\\w+ = \\w+)(\n|\\Z)");
+	private static final Pattern _stylingPattern2 = Pattern.compile(
+		"(\\A|\n)(\t*\\w+)(?! = .) *= *(.*)(\n|\\Z)");
 
 }

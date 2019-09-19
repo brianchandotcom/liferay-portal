@@ -19,12 +19,14 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayInputStream;
 
@@ -42,6 +44,21 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 	extends BaseOpenNLPDocumentAssetAutoTaggerTestCase {
+
+	@Test
+	public void testAFileCanBeMovedToTrashAfterBeingAutoTagged()
+		throws Exception {
+
+		testWithOpenNLPDocumentAssetAutoTagProviderEnabled(
+			getClassName(),
+			() -> {
+				AssetEntry assetEntry = getAssetEntry(getTaggableText());
+
+				_dlTrashLocalService.moveFileEntryToTrash(
+					TestPropsValues.getUserId(), group.getGroupId(),
+					assetEntry.getClassPK());
+			});
+	}
 
 	@Test
 	public void testDoesNotAutoTagAFileEntryWithAnUnsupportedContentType()
@@ -86,5 +103,8 @@ public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 		return assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 	}
+
+	@Inject
+	private DLTrashLocalService _dlTrashLocalService;
 
 }

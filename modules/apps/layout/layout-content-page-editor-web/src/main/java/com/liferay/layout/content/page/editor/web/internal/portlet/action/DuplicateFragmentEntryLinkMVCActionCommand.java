@@ -34,8 +34,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -47,12 +49,16 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.service.impl.PortletPreferencesServiceImpl;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,6 +90,30 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private void _copyPortletPreferences(
+			HttpServletRequest httpServletRequest, String portletId,
+			String oldInstanceId, String newInstanceId)
+		throws PortalException {
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getPortletPreferences(
+				httpServletRequest,
+				PortletIdCodec.encode(portletId, oldInstanceId));
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				httpServletRequest,
+				PortletIdCodec.encode(portletId, oldInstanceId));
+
+		PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+			portletPreferencesIds.getCompanyId(),
+			portletPreferencesIds.getOwnerId(),
+			portletPreferencesIds.getOwnerType(),
+			portletPreferencesIds.getPlid(),
+			PortletIdCodec.encode(portletId, newInstanceId),
+			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+	}
+
 	private JSONObject _duplicateFragmentEntryLink(
 		ActionRequest actionRequest) {
 
@@ -103,6 +133,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 			String portletId = editableValuesJSONObject.getString("portletId");
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
 			if (Validator.isNotNull(portletId)) {
 				Portlet portlet = _portletLocalService.getPortletById(
 					portletId);
@@ -111,12 +144,17 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					throw new PortletIdException();
 				}
 
-				editableValuesJSONObject.put(
-					"instanceId", PortletIdCodec.generateInstanceId());
-			}
+				String oldInstanceId = editableValuesJSONObject.getString(
+					"instanceId");
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
+				String newInstanceId = PortletIdCodec.generateInstanceId();
+
+				editableValuesJSONObject.put("instanceId", newInstanceId);
+
+				_copyPortletPreferences(
+					serviceContext.getRequest(), portletId, oldInstanceId,
+					newInstanceId);
+			}
 
 			FragmentEntryLink duplicateFragmentEntryLink =
 				_fragmentEntryLinkService.addFragmentEntryLink(

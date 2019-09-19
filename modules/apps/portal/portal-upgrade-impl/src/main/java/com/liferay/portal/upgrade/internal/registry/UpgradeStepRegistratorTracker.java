@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
-import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
@@ -84,13 +83,15 @@ public class UpgradeStepRegistratorTracker {
 
 	private BundleContext _bundleContext;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
-
-	@Reference
-	private ReleaseManagerOSGiCommands _releaseManagerOSGiCommands;
-
 	private ServiceTracker
 		<UpgradeStepRegistrator, Collection<ServiceRegistration<UpgradeStep>>>
 			_serviceTracker;
+
+	@Reference
+	private SwappedLogExecutor _swappedLogExecutor;
+
+	@Reference
+	private UpgradeExecutor _upgradeExecutor;
 
 	private class UpgradeStepRegistratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -214,12 +215,6 @@ public class UpgradeStepRegistratorTracker {
 
 		private final Log _log = LogFactoryUtil.getLog(
 			UpgradeStepRegistratorTracker.class);
-
-		@Reference
-		private SwappedLogExecutor _swappedLogExecutor;
-
-		@Reference
-		private UpgradeExecutor _upgradeExecutor;
 
 	}
 

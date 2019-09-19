@@ -43,7 +43,7 @@ MenuItem menuItem = (MenuItem)request.getAttribute("liferay-ui:menu_item:menuIte
 			data="<%= javaScriptMenuItem.getData() %>"
 			iconCssClass="<%= javaScriptMenuItem.getIcon() %>"
 			message="<%= HtmlUtil.escape(javaScriptMenuItem.getLabel()) %>"
-			onClick="<%= javaScriptMenuItem.getOnClick() %>"
+			onClick="<%= HtmlUtil.escapeAttribute(javaScriptMenuItem.getOnClick()) %>"
 			url="javascript:;"
 		/>
 

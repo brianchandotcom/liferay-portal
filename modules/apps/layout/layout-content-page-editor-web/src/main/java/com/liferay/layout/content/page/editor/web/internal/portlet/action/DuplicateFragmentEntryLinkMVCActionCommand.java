@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -126,12 +127,11 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
 					fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 					fragmentEntryLink.getConfiguration(),
-					editableValuesJSONObject.toString(),
-					fragmentEntryLink.getNamespace(), 0,
-					fragmentEntryLink.getRendererKey(), serviceContext);
+					editableValuesJSONObject.toString(), StringUtil.randomId(),
+					0, fragmentEntryLink.getRendererKey(), serviceContext);
 
 			DefaultFragmentRendererContext fragmentRendererContext =
-				new DefaultFragmentRendererContext(fragmentEntryLink);
+				new DefaultFragmentRendererContext(duplicateFragmentEntryLink);
 
 			fragmentRendererContext.setLocale(serviceContext.getLocale());
 
@@ -181,6 +181,11 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 			}
 
 			jsonObject.put(
+				"content",
+				_fragmentRendererController.render(
+					fragmentRendererContext, serviceContext.getRequest(),
+					serviceContext.getResponse())
+			).put(
 				"fragmentEntryKey", fragmentEntryKey
 			).put(
 				"name", name

@@ -4,12 +4,12 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 		if (isSet(text)) {
-			AssertTextEquals(locator1 = "${fragmentLocator}",
+			AssertTextEquals(
+				locator1 = "${fragmentLocator}",
 				value1 = "${text}");
 		}
 		else {
-			AssertElementPresent(
-				locator1 = "${fragmentLocator}");
+			AssertElementPresent(locator1 = "${fragmentLocator}");
 		}
 
 		SelectFrame.selectFrameTop();

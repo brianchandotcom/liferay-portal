@@ -135,7 +135,8 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name",
+		MessageboardsCategory.gotoPG(
+			categoryName = "MB Category Name",
 			subCategoryEnabled = "true",
 			subCategoryName = "MB Subcategory Name");
 
@@ -214,8 +215,7 @@ definition {
 			pageName = "Page Name",
 			siteName = "Site Name");
 
-		MessageboardsCategory.gotoPG(
-			categoryName = "MB Category Name");
+		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
 
 		MessageboardsCategory.viewPG(
 			categoryDescription = "MB Subcategory Description",

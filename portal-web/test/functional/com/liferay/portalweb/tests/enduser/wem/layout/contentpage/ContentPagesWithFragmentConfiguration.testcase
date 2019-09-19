@@ -97,7 +97,8 @@ definition {
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
 		PageEditor.addFragment(
-			collectionName = "Collection Name",fragmentName = "Text Fragment Example");
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
 
 		PageEditorConfiguration.changeConfigSelection(
 			fragmentName = "Text Fragment Example",
@@ -191,8 +192,7 @@ definition {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
 		}
 
-		PageEditorConfiguration.restoreConfigValues(
-			fragmentName = "Text Fragment Example");
+		PageEditorConfiguration.restoreConfigValues(fragmentName = "Text Fragment Example");
 
 		task ("Assert default value is displayed") {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'light')]");

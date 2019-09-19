@@ -30,4 +30,9 @@ public class GradleSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("SortMapKeys5.testgradle");
 	}
 
+	@Test
+	public void testStylingCheck() throws Exception {
+		test("StylingCheck.testgradle");
+	}
+
 }

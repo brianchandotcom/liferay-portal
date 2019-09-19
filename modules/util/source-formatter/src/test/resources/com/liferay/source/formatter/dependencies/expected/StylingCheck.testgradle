@@ -1,0 +1,20 @@
+buildCSS {
+	imports = [
+		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
+	]
+}
+
+buildLibSass_Darwin {
+	doFirst {
+		buildShFile.write("""\
+LIBSASS_VERSION=\"${project.libSassVersion}\"
+autoreconf --force --install
+./configure --disable-static --disable-tests --enable-shared
+make -j5""")
+	}
+	resourcesDirName = "darwin_universal"
+}
+
+test {
+	enabled = false
+}

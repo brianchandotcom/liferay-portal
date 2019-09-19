@@ -516,7 +516,7 @@ definition {
 			AssertElementNotPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");
 		}
 
-		for (var resourcePanel : list "Analytics,Bulk Processing,Change Tracking,Content Delivery,Dynamic Data Lists,Forms,Portal Services,Taxonomy Administration,User Administration,Workflow Administration") {
+		for (var resourcePanel : list "Analytics,Bulk Processing,Content Delivery,Dynamic Data Lists,Forms,Portal Services,Taxonomy Administration,User Administration,Workflow Administration") {
 			var key_panel = "${resourcePanel}";
 
 			AssertElementPresent(locator1 = "OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED");

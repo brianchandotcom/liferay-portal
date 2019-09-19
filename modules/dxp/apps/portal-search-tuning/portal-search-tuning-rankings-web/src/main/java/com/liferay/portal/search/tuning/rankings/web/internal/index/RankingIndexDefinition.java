@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
-import com.liferay.portal.search.elasticsearch6.spi.index.IndexDefinition;
+import com.liferay.portal.search.spi.index.IndexDefinition;
 
 import org.osgi.service.component.annotations.Component;
 

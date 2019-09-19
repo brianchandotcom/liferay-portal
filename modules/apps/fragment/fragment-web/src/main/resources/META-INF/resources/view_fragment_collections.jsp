@@ -40,6 +40,18 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 				value="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
 			/>
 
+			<c:if test="<%= scopeGroupId != themeDisplay.getCompanyGroupId() %>">
+
+				<%
+				Group group = GroupLocalServiceUtil.fetchGroup(fragmentCollection.getGroupId());
+				%>
+
+				<liferay-ui:search-container-column-text
+					name="scope"
+					value="<%= group.getDescriptiveName(locale) %>"
+				/>
+			</c:if>
+
 			<liferay-ui:search-container-column-date
 				name="create-date"
 				property="createDate"

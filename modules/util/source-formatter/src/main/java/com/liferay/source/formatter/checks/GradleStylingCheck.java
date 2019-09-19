@@ -42,7 +42,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		content = matcher.replaceAll("$1$2 {\n\t$3\n}$4");
 
-		content = _stylingCheck(content);
+		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
 
 		return content;
 	}
@@ -103,19 +103,21 @@ public class GradleStylingCheck extends BaseFileCheck {
 		return StringUtil.replaceFirst(content, match, sb.toString());
 	}
 
-	private String _stylingCheck(String content) {
+	private String _stylingCheck(
+		String content, Pattern pattern, String replacement) {
+
 		int[] multiLineStringsPositions =
 			GradleSourceUtil.getMultiLinePositions(
 				content, _multiLineStringsPattern);
 
-		Matcher matcher = _stylingPattern2.matcher(content);
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			if (!GradleSourceUtil.isInsideMultiLines(
 					SourceUtil.getLineNumber(content, matcher.start()),
 					multiLineStringsPositions)) {
 
-				return matcher.replaceFirst("$1$2 = $3$4");
+				return matcher.replaceFirst(replacement);
 			}
 		}
 

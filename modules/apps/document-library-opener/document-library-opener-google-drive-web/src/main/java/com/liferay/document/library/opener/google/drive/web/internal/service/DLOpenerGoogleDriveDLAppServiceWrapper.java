@@ -62,9 +62,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 	@Override
 	public void cancelCheckOut(long fileEntryId) throws PortalException {
-		super.cancelCheckOut(fileEntryId);
-
 		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		super.cancelCheckOut(fileEntryId);
 
 		if (_dlOpenerGoogleDriveManager.isConfigured(
 				fileEntry.getCompanyId()) &&

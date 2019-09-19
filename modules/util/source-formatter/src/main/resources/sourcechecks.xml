@@ -427,6 +427,7 @@
 		<check name="PropertiesBuildIncludeDirsCheck" />
 		<check name="PropertiesLanguageKeysCheck" />
 		<check name="PropertiesServiceKeysCheck" />
+		<check name="PropertiesVerifyPropertiesCheck" />
 	</source-processor>
 	<source-processor name="SoySourceProcessor">
 		<check name="SoyEmptyLinesCheck" />

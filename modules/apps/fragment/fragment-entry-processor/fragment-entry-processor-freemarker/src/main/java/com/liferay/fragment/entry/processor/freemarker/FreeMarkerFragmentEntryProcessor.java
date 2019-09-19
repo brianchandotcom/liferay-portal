@@ -128,7 +128,7 @@ public class FreeMarkerFragmentEntryProcessor
 		contextObjects.put("configuration", configurationValuesJSONObject);
 
 		contextObjects.put(
-			"fragmentEntryLinkUuid", fragmentEntryLink.getUuid());
+			"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace());
 
 		contextObjects.putAll(
 			FragmentEntryConfigUtil.getContextObjects(
@@ -200,7 +200,8 @@ public class FreeMarkerFragmentEntryProcessor
 				contextObjects.put(
 					"configuration", configurationDefaultValuesJSONObject);
 
-				contextObjects.put("fragmentEntryLinkUuid", StringPool.BLANK);
+				contextObjects.put(
+					"fragmentEntryLinkNamespace", StringPool.BLANK);
 
 				contextObjects.putAll(
 					FragmentEntryConfigUtil.getContextObjects(

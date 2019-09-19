@@ -343,10 +343,6 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	public String getDefaultArticleLanguageId() {
-		if (_article == null) {
-			return LocaleUtil.toLanguageId(_themeDisplay.getLocale());
-		}
-
 		Locale siteDefaultLocale = null;
 
 		try {
@@ -356,6 +352,10 @@ public class JournalEditArticleDisplayContext {
 			_log.error(pe, pe);
 
 			siteDefaultLocale = LocaleUtil.getSiteDefault();
+		}
+
+		if (_article == null) {
+			return LocaleUtil.toLanguageId(siteDefaultLocale);
 		}
 
 		return LocalizationUtil.getDefaultLanguageId(

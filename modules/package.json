@@ -12,6 +12,9 @@
 		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-karma-alloy-config": "0.0.15",
 		"liferay-karma-config": "0.0.3",
+		"liferay-npm-bridge-generator": "2.12.0",
+		"liferay-npm-bundler": "2.12.0",
+		"liferay-npm-bundler-preset-standard": "2.12.0",
 		"liferay-npm-scripts": "9.1.0",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
 		"metal-jest-serializer": "2.0.0"

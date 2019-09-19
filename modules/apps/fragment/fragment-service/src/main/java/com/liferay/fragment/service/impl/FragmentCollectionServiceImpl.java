@@ -161,6 +161,26 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentCollection> getFragmentCollections(
+		long[] groupIds, String name, int start, int end,
+		OrderByComparator<FragmentCollection> orderByComparator) {
+
+		return fragmentCollectionPersistence.findByG_LikeN(
+			groupIds,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
+			end, orderByComparator);
+	}
+
+	@Override
 	public int getFragmentCollectionsCount(long groupId) {
 		return fragmentCollectionPersistence.countByGroupId(groupId);
 	}
@@ -169,6 +189,18 @@ public class FragmentCollectionServiceImpl
 	public int getFragmentCollectionsCount(long groupId, String name) {
 		return fragmentCollectionPersistence.countByG_LikeN(
 			groupId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds) {
+		return fragmentCollectionPersistence.countByGroupId(groupIds);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long[] groupIds, String name) {
+		return fragmentCollectionPersistence.countByG_LikeN(
+			groupIds,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
 	}
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.index.instant;
 
-import com.liferay.portal.search.elasticsearch7.spi.index.IndexDefinition;
+import com.liferay.portal.search.spi.index.IndexDefinition;
 
 import org.osgi.service.component.annotations.Component;
 

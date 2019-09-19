@@ -1050,6 +1050,117 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScope(siteName = "Site Name B");
 	}
 
+	@description = "This is a use case for LPS-96470."
+	@priority = "3"
+	test ExportImportSiteWithCommentsAndRatingsUnderBlogsEntry {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		Portlet.addPG(portletName = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.rate(ratingResult = "Thumb Up");
+
+		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
+
+		Ratings.rate(
+			commentRating = "true",
+			ratingResult = "Thumb Up");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+
+		Ratings.viewRating(
+			commentRating = "true",
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Export");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.configureExportOptions(checkContentNameList = "Blogs");
+
+		AssertClick(
+			locator1 = "SitePagesExport#EXPORT_BUTTON",
+			value1 = "Export");
+
+		var key_larFileName = "${larFileName}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SitePagesExport#CURRENT_AND_PREVIOUS_STATUS",
+			value1 = "Successful");
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.addGroup(groupName = "Second Site");
+
+		SitePages.openPagesAdmin(siteURLKey = "Second Site");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Second Site");
+
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Second Site");
+
+		BlogsEntry.viewEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.viewRating(
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+
+		BlogsEntryComment.viewPG(
+			commentCount = "1",
+			entryComment = "Blogs Entry Comment",
+			userFullName = "Test Test (You)");
+
+		Ratings.viewRating(
+			commentRating = "true",
+			ratingResult = "Thumb Up",
+			voteCount = "1");
+	}
+
 	@description = "This is a use case for LPS-54392."
 	@priority = "3"
 	test ExportImportSiteWithReferencedWebContent {

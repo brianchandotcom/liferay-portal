@@ -21,6 +21,8 @@ import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTr
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.util.Set;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -58,6 +60,11 @@ public class SwappedLogExecutor {
 
 	public OutputStream getOutputStream() {
 		return _outputStreamThreadLocal.get();
+	}
+
+	public Set<String> getOutputStreamContainerFactoryNames() {
+		return _outputStreamContainerFactoryTracker.
+			getOutputStreamContainerFactoryNames();
 	}
 
 	private void _execute(

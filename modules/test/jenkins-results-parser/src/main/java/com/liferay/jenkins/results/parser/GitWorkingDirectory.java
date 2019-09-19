@@ -1521,8 +1521,7 @@ public class GitWorkingDirectory {
 			"git ls-remote -h ", remoteURL, " ", remoteGitBranchName);
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			1000 * 60 * 10, command);
+			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10, command);
 
 		if (executionResult.getExitValue() != 0) {
 			throw new RuntimeException(

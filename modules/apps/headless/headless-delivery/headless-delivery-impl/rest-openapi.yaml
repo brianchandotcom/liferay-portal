@@ -1068,6 +1068,7 @@ components:
             required:
                 - title
             type: object
+        #@review
         MessageBoardThread:
             description: Represents a discussion thread in a message board.
             properties:
@@ -1139,6 +1140,10 @@ components:
                 threadType:
                     description: The thread's type.
                     type: string
+                viewCount:
+                    description: The number of views of this thread.
+                    readOnly: true
+                    type: integer
                 viewableBy:
                     description: A write-only property that specifies the thread's default permissions.
                     enum: [Anyone, Members, Owner]

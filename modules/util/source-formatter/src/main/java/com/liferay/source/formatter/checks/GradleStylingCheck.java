@@ -40,7 +40,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 
 		Matcher matcher = _stylingPattern1.matcher(content);
 
-		content = matcher.replaceAll("$1$2 {\n\t$3\n}$4");
+		content = _stylingCheck(content, _stylingPattern1, "$1$2 {\n\t$3\n}$4");
 
 		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
 

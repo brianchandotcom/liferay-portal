@@ -177,6 +177,8 @@ definition {
 	macro selectSpecificEvent {
 		var key_eventTitle = "${eventTitle}";
 
+		Refresh();
+
 		if (contains("${eventTitle}", "All Day")) {
 			AssertClick.assertPartialTextClickAtNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY",
@@ -199,6 +201,8 @@ definition {
 		}
 		else {
 			ScrollWebElementIntoView(locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW");
+
+			Refresh();
 
 			AssertClick.assertPartialTextClickAtNoMouseOver(
 				locator1 = "Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW",

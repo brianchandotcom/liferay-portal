@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.service.impl.PortletPreferencesServiceImpl;
 
 import java.util.Locale;
 import java.util.Map;
@@ -172,6 +172,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 				new DefaultFragmentRendererContext(duplicateFragmentEntryLink);
 
 			fragmentRendererContext.setLocale(serviceContext.getLocale());
+			fragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
 
 			jsonObject.put(
 				"configuration",

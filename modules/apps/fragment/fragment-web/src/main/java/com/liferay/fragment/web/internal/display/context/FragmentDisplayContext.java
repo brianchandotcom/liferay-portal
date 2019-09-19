@@ -310,16 +310,31 @@ public class FragmentDisplayContext {
 			"exportFragmentCollectionsURL",
 			exportFragmentCollectionsURL.toString());
 
-		PortletURL viewFragmentCollectionsURL =
+		PortletURL viewExportFragmentCollectionsURL =
 			_renderResponse.createRenderURL();
 
-		viewFragmentCollectionsURL.setParameter(
+		viewExportFragmentCollectionsURL.setParameter(
 			"mvcRenderCommandName", "/fragment/view_fragment_collections");
-		viewFragmentCollectionsURL.setWindowState(LiferayWindowState.POP_UP);
+		viewExportFragmentCollectionsURL.setParameter(
+			"includeGlobalFragmentCollections", Boolean.TRUE.toString());
+		viewExportFragmentCollectionsURL.setWindowState(
+			LiferayWindowState.POP_UP);
 
 		context.put(
-			"viewFragmentCollectionsURL",
-			viewFragmentCollectionsURL.toString());
+			"viewExportFragmentCollectionsURL",
+			viewExportFragmentCollectionsURL.toString());
+
+		PortletURL viewDeleteFragmentCollectionsURL =
+			_renderResponse.createRenderURL();
+
+		viewDeleteFragmentCollectionsURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_collections");
+		viewDeleteFragmentCollectionsURL.setWindowState(
+			LiferayWindowState.POP_UP);
+
+		context.put(
+			"viewDeleteFragmentCollectionsURL",
+			viewDeleteFragmentCollectionsURL.toString());
 
 		PortletURL viewImportURL = _renderResponse.createRenderURL();
 

@@ -75,6 +75,7 @@ class FragmentCollectionsView extends PortletBase {
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('delete'),
 			Liferay.Language.get('delete-collection'),
+			this.viewDeleteFragmentCollectionsURL,
 			selectedItems => {
 				if (
 					confirm(
@@ -105,6 +106,7 @@ class FragmentCollectionsView extends PortletBase {
 		this._openFragmentCollectionsItemSelector(
 			Liferay.Language.get('export'),
 			Liferay.Language.get('export-collection'),
+			this.viewExportFragmentCollectionsURL,
 			selectedItems => {
 				selectedItems.forEach(item => {
 					this._fragmentCollectionsFm.append(item);
@@ -122,6 +124,7 @@ class FragmentCollectionsView extends PortletBase {
 	 * Opens an item selector to select some fragment collections.
 	 * @param {string} dialogButtonLabel
 	 * @param {string} dialogTitle
+	 * @param {string} dialogURL
 	 * @param {function} callback Callback executed when some items have been
 	 *  selected. They will be sent as parameters to this callback
 	 * @private
@@ -130,13 +133,14 @@ class FragmentCollectionsView extends PortletBase {
 	_openFragmentCollectionsItemSelector(
 		dialogButtonLabel,
 		dialogTitle,
+		dialogURL,
 		callback
 	) {
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: dialogButtonLabel,
 			eventName: this.ns('selectCollections'),
 			title: dialogTitle,
-			url: this.viewFragmentCollectionsURL
+			url: dialogURL
 		});
 
 		itemSelectorDialog.on('selectedItemChange', event => {
@@ -209,7 +213,16 @@ FragmentCollectionsView.STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	viewFragmentCollectionsURL: Config.string().required(),
+	viewDeleteFragmentCollectionsURL: Config.string().required(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof FragmentCollectionsView
+	 * @review
+	 * @type {string}
+	 */
+	viewExportFragmentCollectionsURL: Config.string().required(),
 
 	/**
 	 * @default undefined

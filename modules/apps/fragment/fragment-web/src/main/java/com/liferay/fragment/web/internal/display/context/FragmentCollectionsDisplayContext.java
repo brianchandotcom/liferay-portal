@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -79,8 +80,7 @@ public class FragmentCollectionsDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-collections");
+			_renderRequest, _getPortletURL(), null, "there-are-no-collections");
 
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
@@ -98,26 +98,33 @@ public class FragmentCollectionsDisplayContext {
 		List<FragmentCollection> fragmentCollections = null;
 		int fragmentCollectionsCount = 0;
 
+		long[] groupIds = {themeDisplay.getScopeGroupId()};
+
+		if (_isIncludeGlobalFragmentCollections()) {
+			groupIds = new long[] {
+				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyGroupId()
+			};
+		}
+
 		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator);
-
-			fragmentCollectionsCount =
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
-		}
-		else {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					groupIds, _getKeywords(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId());
+					groupIds, _getKeywords());
+		}
+		else {
+			fragmentCollections =
+				FragmentCollectionServiceUtil.getFragmentCollections(
+					groupIds, searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+
+			fragmentCollectionsCount =
+				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
+					groupIds);
 		}
 
 		searchContainer.setTotal(fragmentCollectionsCount);
@@ -149,6 +156,49 @@ public class FragmentCollectionsDisplayContext {
 		return _orderByCol;
 	}
 
+	private PortletURL _getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_collections");
+		portletURL.setParameter("eventName", getEventName());
+
+		String keywords = _getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = _getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		portletURL.setParameter(
+			"includeGlobalFragmentCollections",
+			String.valueOf(_isIncludeGlobalFragmentCollections()));
+
+		return portletURL;
+	}
+
+	private boolean _isIncludeGlobalFragmentCollections() {
+		if (_includeGlobalFragmentCollections != null) {
+			return _includeGlobalFragmentCollections;
+		}
+
+		_includeGlobalFragmentCollections = ParamUtil.getBoolean(
+			_httpServletRequest, "includeGlobalFragmentCollections");
+
+		return _includeGlobalFragmentCollections;
+	}
+
 	private boolean _isSearch() {
 		if (Validator.isNotNull(_getKeywords())) {
 			return true;
@@ -159,6 +209,7 @@ public class FragmentCollectionsDisplayContext {
 
 	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
+	private Boolean _includeGlobalFragmentCollections;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

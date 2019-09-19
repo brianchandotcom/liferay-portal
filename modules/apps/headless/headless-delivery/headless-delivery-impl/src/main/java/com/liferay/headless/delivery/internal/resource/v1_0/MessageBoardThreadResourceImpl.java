@@ -378,6 +378,7 @@ public class MessageBoardThreadResourceImpl
 				siteId = mbThread.getGroupId();
 				threadType = _toThreadType(
 					mbThread.getGroupId(), mbThread.getPriority());
+				viewCount = mbThread.getViewCount();
 			}
 		};
 	}

@@ -100,6 +100,38 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			StringPool.BLANK);
 	}
 
+	private String _getPortletInstanceId(
+			Layout layout, String portletId, long segmentsExperienceId)
+		throws PortletIdException {
+
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
+
+		if (portlet.isInstanceable()) {
+			return SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				PortletIdCodec.generateInstanceId(), segmentsExperienceId);
+		}
+
+		String instanceId =
+			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				String.valueOf(CharPool.NUMBER_0), segmentsExperienceId);
+
+		String checkPortletId =
+			SegmentsExperiencePortletUtil.setSegmentsExperienceId(
+				PortletIdCodec.encode(portletId, instanceId),
+				segmentsExperienceId);
+
+		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+			checkPortletId);
+
+		if (count > 0) {
+			throw new PortletIdException(
+				"Unable to add uninstanceable portlet more than once");
+		}
+
+		return instanceId;
+	}
+
 	private JSONObject _processAddPortlet(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -129,37 +161,8 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			String instanceId = StringPool.BLANK;
-
-			Portlet portlet = _portletLocalService.getPortletById(portletId);
-
-			if (portlet.isInstanceable()) {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						PortletIdCodec.generateInstanceId(),
-						segmentsExperienceId);
-			}
-			else {
-				instanceId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						String.valueOf(CharPool.NUMBER_0),
-						segmentsExperienceId);
-
-				String checkPortletId =
-					SegmentsExperiencePortletUtil.setSegmentsExperienceId(
-						PortletIdCodec.encode(portletId, instanceId),
-						segmentsExperienceId);
-
-				long count =
-					_portletPreferencesLocalService.getPortletPreferencesCount(
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						checkPortletId);
-
-				if (count > 0) {
-					throw new PortletIdException(
-						"Unable to add uninstanceable portlet more than once");
-				}
-			}
+			String instanceId = _getPortletInstanceId(
+				layout, portletId, segmentsExperienceId);
 
 			String html = _getPortletFragmentEntryLinkHTML(
 				serviceContext.getRequest(),

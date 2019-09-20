@@ -122,7 +122,7 @@ if (extension) {
 				</c:otherwise>
 			</c:choose>
 
-			var formData = new FormData(form);
+			var formData = new FormData(form.getDOMNode());
 
 			Liferay.Util.fetch(uri, {
 				body: formData,

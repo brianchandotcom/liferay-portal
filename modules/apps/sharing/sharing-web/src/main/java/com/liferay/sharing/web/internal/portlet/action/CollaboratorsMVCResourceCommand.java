@@ -14,7 +14,13 @@
 
 package com.liferay.sharing.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,7 +48,6 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
@@ -101,12 +106,18 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"collaborators", _getSharingEntryToUsers(classPK, classNameId)
+				"collaborators",
+				_getSharingEntryToUsersJSONArray(
+					classPK, classNameId, themeDisplay)
 			).put(
 				"manageCollaboratorsURL",
 				_getManageCollaboratorsURL(
 					classNameId, classPK, themeDisplay, httpServletRequest,
 					resourceResponse)
+			).put(
+				"owner",
+				_getUserJSONObject(
+					_getOwner(classNameId, classPK), themeDisplay)
 			).put(
 				"total",
 				_sharingEntryLocalService.getSharingEntriesCount(
@@ -154,21 +165,65 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		return null;
 	}
 
-	private List<User> _getSharingEntryToUsers(long classPK, long classNameId) {
+	private User _getOwner(long classNameId, long classPK)
+		throws PortalException {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		return _userLocalService.fetchUser(assetRenderer.getUserId());
+	}
+
+	private String _getPortraitURL(ThemeDisplay themeDisplay, User user) {
+		try {
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return null;
+		}
+	}
+
+	private JSONArray _getSharingEntryToUsersJSONArray(
+		long classPK, long classNameId, ThemeDisplay themeDisplay) {
+
 		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getSharingEntries(
 				classNameId, classPK, 0, 4);
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		Stream<SharingEntry> stream = sharingEntries.stream();
 
-		return stream.map(
+		stream.map(
 			SharingEntryModel::getToUserId
 		).map(
 			_userLocalService::fetchUserById
 		).filter(
 			Objects::nonNull
-		).collect(
-			Collectors.toList()
+		).map(
+			user -> _getUserJSONObject(user, themeDisplay)
+		).forEach(
+			jsonArray::put
+		);
+
+		return jsonArray;
+	}
+
+	private JSONObject _getUserJSONObject(
+		User user, ThemeDisplay themeDisplay) {
+
+		return JSONUtil.put(
+			"fullName", user.getFullName()
+		).put(
+			"userId", user.getUserId()
+		).put(
+			"portraitURL", _getPortraitURL(themeDisplay, user)
 		);
 	}
 

@@ -35,15 +35,14 @@ const ManageCollaborators = ({
 			dialog: {
 				destroyOnHide: true,
 				height: 470,
-				width: 600,
 				on: {
 					visibleChange: event => {
 						if (!event.newVal) {
-							// TODO:
-							console.log('refresh collaborators!!');
+							// TODO refresh collaborators
 						}
 					}
-				}
+				},
+				width: 600
 			},
 			id: `${portletNamespace}manageCollaboratorsDialog`,
 			title: Liferay.Language.get('collaborators'),

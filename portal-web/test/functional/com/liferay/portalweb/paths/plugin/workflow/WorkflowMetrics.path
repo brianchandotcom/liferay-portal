@@ -9,6 +9,41 @@
 </thead>
 <tbody>
 <tr>
+	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_TITLE</td>
+	<td>//div[@class='header'][span[contains(text(),'Total Completed')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_COMPLETED_ITEMS_VALUE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'Total Completed')]]/following-sibling::div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_ONTIME_ITEMS_TITLE</td>
+	<td>//div[@class='header'][span[contains(text(),'On Time')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_OVERDUE_ITEMS_TITLE</td>
+	<td>//div[@class='header'][span[contains(text(),'Overdue')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_PENDING_ITEMS_TITLE</td>
+	<td>//div[@class='header'][span[contains(text(),'Total Pending')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_PENDING_ITEMS_VALUE</td>
+	<td>xpath=(//div[@class='header'][span[contains(text(),'Total Pending')]]/following-sibling::div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DASHBOARD_TOTAL_UNTRACKED_ITEMS_TITLE</td>
+	<td>//div[@class='header'][span[contains(text(),'Untracked')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN</td>
 	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[1]</td>
 	<td></td>
@@ -71,6 +106,11 @@
 <tr>
 	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_YEAR</td>
 	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Year')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_DASHBOARD_TAB</td>
+	<td>//li[contains(@class,'nav-item')]//a[contains(@href, 'dashboard')]</td>
 	<td></td>
 </tr>
 <tr>

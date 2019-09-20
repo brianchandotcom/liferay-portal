@@ -79,7 +79,7 @@
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@class,'management-bar')]//input[@type='checkbox']</td>
+	<td>//div[contains(@class,'management-bar')]//input[@type='checkbox'] | //li[@class='nav-item']//div[@class='custom-control custom-checkbox']</td>
 	<td></td>
 </tr>
 <tr>

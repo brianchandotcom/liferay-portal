@@ -489,9 +489,7 @@ definition {
 		if (IsElementPresent.isVisible(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX")) {
 			Click(locator1 = "Blogs#ENTRY_TABLE_ALL_CHECKBOX");
 
-			AssertClick(
-				locator1 = "Button#MOVE_TO_RECYCLE_BIN",
-				value1 = "Move to Recycle Bin");
+			Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 
 			AssertElementPresent(locator1 = "Message#SUCCESS");
 		}

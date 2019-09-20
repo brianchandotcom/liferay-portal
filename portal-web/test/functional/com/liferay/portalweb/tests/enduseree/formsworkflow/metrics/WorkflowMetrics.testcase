@@ -34,6 +34,17 @@ definition {
 			WorkflowMetrics.tearDown();
 
 		}
+
+		Blogs.tearDownCP();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "No Workflow",
+			workflowResourceValue = "Blogs Entry");
 	}
 
 	@description = "Verify the user can set a SLA to Single Approver workflow (LPS-99765)"
@@ -90,7 +101,7 @@ definition {
 	test DefaultWorkflowMetricsFilterValues {
 		property portal.acceptance = "true";
 
-		WorkflowMetrics.goToWorkflowProcess(workflowProcessName = "Single Approver");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
@@ -130,6 +141,103 @@ definition {
 			completionVelocityDateRange = "Last Year",
 			isNotPresent = "INST_DAY,INST_HOUR,INST_YEAR",
 			isPresent = "INST_WEEK,INST_MONTH");
+
+	}
+
+	@description = "Verify that the filters from All Items page are correctly loaded when accessed via Metrics Pending/Completed cards"
+	@priority = "5"
+	test VerifyAllItemsFilterFromMetrics {
+		property portal.acceptance = "true";
+
+		var key_workflowInstanceName = "Blog Entry Title";
+		var key_workflowProcessName = "Single Approver";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "${key_workflowProcessName}",
+			workflowResourceValue = "Blogs Entry");
+
+		Workflow.createWorkflowBlogInstance(workflowInstanceName = "${key_workflowInstanceName}");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "${key_workflowProcessName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE",
+			value1 = "1");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "${key_workflowProcessName}");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "ONTIME",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,On Time");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "OVERDUE",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,Overdue");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "UNTRACKED",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Pending,Untracked");
+
+		Workflow.completeWorkflowBlogInstance(workflowInstanceName = "${key_workflowInstanceName}");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "${key_workflowProcessName}");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_VALUE",
+			value1 = "1");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "${key_workflowProcessName}");
+
+		AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Days");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "ONTIME",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Days,On Time");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "OVERDUE",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Days,Overdue");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "UNTRACKED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "${key_workflowProcessName}");
+
+		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Day,Untracked");
 
 	}
 

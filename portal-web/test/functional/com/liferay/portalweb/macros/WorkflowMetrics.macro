@@ -77,8 +77,32 @@ definition {
 			value1 = "${workflowSLAName}");
 	}
 
-	macro goToWorkflowProcess {
+	macro goToDashboardAllItemsWithFilter {
+		var key_workflowProcess = "${workflowProcess}";
+		var key_workflowMetricsTab = "${workflowMetricsTab}";
+		var key_workflowFilterOption = "${workflowFilterOption}";
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "${key_workflowProcess}");
+
+		if ("${workflowMetricsTab}" == "PERFORMANCE") {
+			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+		}
+
+		if ("${workflowMetricsTab}" == "DASHBOARD") {
+			Click(locator1 = "WorkflowMetrics#METRICS_DASHBOARD_TAB");
+		}
+
+		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_workflowFilterOption}_ITEMS_TITLE");
+
+	}
+
+	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = "${workflowProcessName}";
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
 
 		Click(
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME",
@@ -89,7 +113,7 @@ definition {
 	macro goToWorkflowSLASettings {
 		var key_workflowProcessName = "${workflowProcessName}";
 
-		WorkflowMetrics.goToWorkflowProcess(workflowProcessName = "${workflowProcessName}");
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "${workflowProcessName}");
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
@@ -179,6 +203,13 @@ definition {
 			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN");
 
 			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitNotPresent}");
+		}
+	}
+
+	macro verifyFiltersFromDashboard {
+		for (var key_workflowFilterValue : list "${isFilterOptionPresent}") {
+			AssertElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_VALUE");
+
 		}
 	}
 

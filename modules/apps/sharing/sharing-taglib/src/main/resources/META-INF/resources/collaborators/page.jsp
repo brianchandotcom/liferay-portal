@@ -21,8 +21,7 @@
 	<%
 	Map<String, Object> data = new HashMap<>();
 
-	data.put("className", GetterUtil.getString(request.getAttribute("liferay-sharing:collaborators:className")));
-	data.put("classPK", GetterUtil.getLong(request.getAttribute("liferay-sharing:collaborators:classPK")));
+	data.put("collaboratorsResourceURL", request.getAttribute("liferay-sharing:collaborators:collaboratorsResourceURL"));
 	%>
 
 	<react:component

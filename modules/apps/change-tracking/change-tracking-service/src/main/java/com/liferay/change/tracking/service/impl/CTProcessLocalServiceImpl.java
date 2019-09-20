@@ -18,10 +18,12 @@ import com.liferay.change.tracking.internal.background.task.CTPublishBackgroundT
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.base.CTProcessLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -67,21 +69,40 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 		ctProcess.setCreateDate(serviceContext.getCreateDate(new Date()));
 		ctProcess.setCtCollectionId(ctCollectionId);
 
-		long backgroundTaskId = _addBackgroundTask(
-			user, ctCollectionId, ctProcessId, ignoreCollision, serviceContext);
+		Company company = companyLocalService.getCompany(user.getCompanyId());
 
-		ctProcess.setBackgroundTaskId(backgroundTaskId);
+		Map<String, Serializable> taskContextMap = new HashMap<>();
+
+		taskContextMap.put("ctCollectionId", ctCollectionId);
+		taskContextMap.put("ctProcessId", ctProcessId);
+		taskContextMap.put("ignoreCollision", ignoreCollision);
+
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.addBackgroundTask(
+				user.getUserId(), company.getGroupId(),
+				String.valueOf(ctCollectionId), null,
+				CTPublishBackgroundTaskExecutor.class, taskContextMap,
+				serviceContext);
+
+		ctProcess.setBackgroundTaskId(backgroundTask.getBackgroundTaskId());
 
 		return ctProcessPersistence.update(ctProcess);
 	}
 
 	@Override
-	public CTProcess deleteCTProcess(CTProcess ctProcess)
-		throws PortalException {
-
-		if (ctProcess.getBackgroundTaskId() > 0) {
-			_backgroundTaskManager.deleteBackgroundTask(
+	public CTProcess deleteCTProcess(CTProcess ctProcess) {
+		BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.fetchBackgroundTask(
 				ctProcess.getBackgroundTaskId());
+
+		if (backgroundTask != null) {
+			try {
+				_backgroundTaskLocalService.deleteBackgroundTask(
+					backgroundTask);
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
 		}
 
 		return ctProcessPersistence.remove(ctProcess);
@@ -120,34 +141,14 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			queryDefinition.getOrderByComparator());
 	}
 
-	private long _addBackgroundTask(
-			User user, long ctCollectionId, long ctProcessId,
-			boolean ignoreCollision, ServiceContext serviceContext)
-		throws PortalException {
-
-		Company company = companyLocalService.getCompany(user.getCompanyId());
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put("ctCollectionId", ctCollectionId);
-		taskContextMap.put("ctProcessId", ctProcessId);
-		taskContextMap.put("ignoreCollision", ignoreCollision);
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.addBackgroundTask(
-				user.getUserId(), company.getGroupId(),
-				String.valueOf(ctCollectionId), null,
-				CTPublishBackgroundTaskExecutor.class, taskContextMap,
-				serviceContext);
-
-		return backgroundTask.getBackgroundTaskId();
-	}
-
 	private void _validate(long ctCollectionId) throws PortalException {
 		ctCollectionPersistence.findByPrimaryKey(ctCollectionId);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTProcessLocalServiceImpl.class);
+
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }

@@ -98,9 +98,7 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public CTCollection deleteCTCollection(CTCollection ctCollection)
-		throws PortalException {
-
+	public CTCollection deleteCTCollection(CTCollection ctCollection) {
 		List<CTEntry> ctEntries = ctEntryPersistence.findByCTCollectionId(
 			ctCollection.getCtCollectionId());
 

@@ -102,7 +102,6 @@ definition {
 
 	@priority = "5"
 	test AddBlogsEntryWithSpecialCharacters {
-
 		Blogs.addEntry(
 			entryContent = '''Blogs Entry Content `~!@#$%^&*(){}[],.<>/?|''',
 			entryTitle = '''Blogs Entry Title `~!@#$%^&*(){}[],.<>/?|''');
@@ -342,8 +341,6 @@ definition {
 		property dummy.socket.proxy.disabled = "true";
 		property test.name.skip.portal.instance = "BlogsUsecase#DemoTrackbackURL";
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
@@ -539,8 +536,6 @@ definition {
 
 	@priority = "4"
 	test ImportBlogsCommentLAR {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -644,8 +639,6 @@ definition {
 	test ViewBlogsEntriesAsGuestViaAP {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntriesAsGuestViaAP";
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Portlet.deletePG(portletName = "Blogs");
 
 		Portlet.addPG(portletName = "Asset Publisher");
@@ -700,8 +693,6 @@ definition {
 	@priority = "4"
 	test ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing {
 		property test.name.skip.portal.instance = "BlogsUsecase#ViewBlogsEntryAsPublishedAfterFutureDisplayDateEditing";
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -812,8 +803,6 @@ definition {
 		var pageNameURL = StringUtil.replace("Blogs Page", " ", "-");
 		var pageNameURL = StringUtil.lowerCase("${pageNameURL}");
 		var friendlyURL = "${portalURL}/web/guest/${pageNameURL}/-/blogs/${entryTitleURL}";
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1410,8 +1399,6 @@ definition {
 
 	@priority = "4"
 	test ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Portlet.addPG(portletName = "Blogs Aggregator");
 
 		Portlet.gotoPortletOptions(

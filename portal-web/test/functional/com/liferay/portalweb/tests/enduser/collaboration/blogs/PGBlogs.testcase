@@ -56,8 +56,6 @@ definition {
 
 	@priority = "5"
 	test AddBlogsEntry {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -101,8 +99,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryContentNull {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addWithInvalidContent(
 			entryInvalidContent = "",
 			entryTitle = "Blogs Entry Title");
@@ -114,8 +110,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryScheduled {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -139,8 +133,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryTitle150Characters {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15");
@@ -156,8 +148,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryTitle151Characters {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addWithInvalidTitleLength(
 			entryContent = "Blogs Entry Content",
 			entryInvalidTitleLength = "|||||||||1|||||||||2|||||||||3|||||||||4|||||||||5|||||||||6|||||||||7|||||||||8|||||||||9||||||||10||||||||11||||||||12||||||||13||||||||14||||||||15X",
@@ -175,8 +165,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryTitleEscapeCharacters {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "&amp; &lt; &gt; &quot; Escape Characters Entry");
@@ -192,8 +180,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryTitleNull {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addWithInvalidTitle(
 			entryContent = "Blogs Entry Content",
 			entryInvalidTitle = "");
@@ -300,8 +286,6 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntryWithSubtitle {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -321,8 +305,6 @@ definition {
 	test AddBlogsEntryWithTrackbackURL {
 		property custom.properties = "blogs.trackback.enabled=true";
 		var ipAddress = "${getIPAddress()}";
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
@@ -788,8 +770,6 @@ definition {
 	@description = "This is a usecase for LPS-75241"
 	@priority = "5"
 	test EmbedVideo {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
 			entryContent = "video",
@@ -810,8 +790,6 @@ definition {
 
 	@priority = "5"
 	test MoveToRecycleBinBlogsEntry {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -870,8 +848,6 @@ definition {
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
 	test RemoveSmallImage {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -919,8 +895,6 @@ definition {
 	test SaveBlogsEntryDraft {
 		property portal.acceptance = "true";
 
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -945,8 +919,6 @@ definition {
 
 	@priority = "5"
 	test SaveBlogsEntryDraftAuto {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addDraftViaAutoSave(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -1220,8 +1192,6 @@ definition {
 
 	@description = "This is a usecase for LPS-66970"
 	test ViewBlogEntryViaEditedCustomURL {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1265,8 +1235,6 @@ definition {
 	test ViewBlogsEntryCommentAsGuest {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.saml.addon.keep.alive.web,com.liferay.saml.api,com.liferay.saml.impl,com.liferay.saml.opensaml.integration,com.liferay.saml.persistence.api,com.liferay.saml.persistence.service,com.liferay.saml.web,saml-hook&quot;";
-
-		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -1340,8 +1308,6 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryDraftNoAsUser {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
@@ -1487,8 +1453,6 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryWithDefaultScope {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
 			portletOption = "Configuration");
@@ -1561,8 +1525,6 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntryWithFullContentDisplayTemplate {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -1590,8 +1552,6 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsEntryWithGuestPermissionsRemoved {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntry(
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
@@ -1650,8 +1610,6 @@ definition {
 
 	@priority = "3"
 	test ViewBlogsEntryWithUploadedCoverImage {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
 			entryContent = "Blogs Entry Content",
@@ -1677,8 +1635,6 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsPortletWithNoPermissions {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		Portlet.gotoPortletOptions(
 			portletName = "Blogs",
 			portletOption = "Permissions");
@@ -1724,8 +1680,6 @@ definition {
 
 	@priority = "4"
 	test ViewEntriesUsingCardADT {
-		Navigator.gotoPage(pageName = "Blogs Page");
-
 		ApplicationDisplayTemplates.selectPortletADT(templateName = "Card");
 
 		JSONBlog.addEntry(

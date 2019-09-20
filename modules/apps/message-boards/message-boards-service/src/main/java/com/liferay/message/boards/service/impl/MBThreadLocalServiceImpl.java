@@ -1123,13 +1123,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbThreadPersistence.update(thread);
 
-		if (!question) {
-			MBMessage message = mbMessagePersistence.findByPrimaryKey(
-				thread.getRootMessageId());
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(
+			thread.getRootMessageId());
 
+		if (!question) {
 			MBMessageUtil.updateAnswer(
 				mbMessagePersistence, message, false, true);
 		}
+
+		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
+
+		indexer.reindex(message);
 	}
 
 	@Override

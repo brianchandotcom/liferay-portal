@@ -853,8 +853,9 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment1.setStatus(
 			SegmentsExperimentConstants.STATUS_TERMINATED);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment1);
+		segmentsExperiment1 =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment1);
 
 		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(
 			segmentsExperience);
@@ -865,8 +866,9 @@ public class SegmentsExperimentLocalServiceTest {
 
 		segmentsExperiment1.setStatus(SegmentsExperimentConstants.STATUS_DRAFT);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment1);
+		segmentsExperiment1 =
+			_segmentsExperimentLocalService.updateSegmentsExperiment(
+				segmentsExperiment1);
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment1.getSegmentsExperimentId(),

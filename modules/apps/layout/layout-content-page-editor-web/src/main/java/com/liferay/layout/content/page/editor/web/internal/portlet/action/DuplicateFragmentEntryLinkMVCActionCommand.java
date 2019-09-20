@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -217,6 +218,11 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 				fragmentEntryKey = fragmentRenderer.getKey();
 				name = fragmentRenderer.getLabel(serviceContext.getLocale());
+
+				if (Validator.isNotNull(portletId)) {
+					name = _portal.getPortletTitle(
+						portletId, serviceContext.getLocale());
+				}
 			}
 
 			jsonObject.put(
@@ -297,6 +303,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

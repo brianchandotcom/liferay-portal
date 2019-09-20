@@ -29,14 +29,7 @@ import org.apache.avro.Schema;
  */
 public class BaseTest {
 
-	protected Schema getSchema(
-		String endpoint, String operation, JsonObject oasJsonObject) {
-
-		return _endpointSchemaInferrer.inferSchema(
-			endpoint, operation, oasJsonObject);
-	}
-
-	protected JsonObject readObject(String fileName) {
+	public JsonObject readObject(String fileName) {
 		Class<BaseTest> baseTestClass = BaseTest.class;
 
 		InputStream resourceAsStream = baseTestClass.getResourceAsStream(
@@ -45,6 +38,13 @@ public class BaseTest {
 		JsonReader jsonReader = Json.createReader(resourceAsStream);
 
 		return jsonReader.readObject();
+	}
+
+	protected Schema getSchema(
+		String endpoint, String operation, JsonObject oasJsonObject) {
+
+		return _endpointSchemaInferrer.inferSchema(
+			endpoint, operation, oasJsonObject);
 	}
 
 	private final EndpointSchemaInferrer _endpointSchemaInferrer =

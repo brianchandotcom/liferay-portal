@@ -162,6 +162,8 @@
 
 			<c:if test="<%= thread.isLocked() %>">
 				<div>
+					<aui:icon image="lock" markupView="lexicon" />
+
 					<liferay-ui:message key="locked" />
 				</div>
 			</c:if>

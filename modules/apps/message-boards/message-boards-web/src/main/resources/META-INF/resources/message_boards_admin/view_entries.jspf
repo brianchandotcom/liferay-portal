@@ -242,10 +242,6 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								</c:otherwise>
 							</c:choose>
 
-							<div>
-								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
-							</div>
-
 							<%
 							int repliesCount = Math.max(thread.getMessageCount() - 1, 0);
 							int viewCount = thread.getViewCount();
@@ -272,11 +268,15 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 								</div>
 							</c:if>
 
-							<c:if test="<%= thread.isLocked() %>">
-								<div>
+							<div>
+								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+
+								<c:if test="<%= thread.isLocked() %>">
+									<aui:icon image="lock" markupView="lexicon" />
+
 									<liferay-ui:message key="locked" />
-								</div>
-							</c:if>
+								</c:if>
+							</div>
 						</liferay-ui:search-container-column-text>
 
 						<%

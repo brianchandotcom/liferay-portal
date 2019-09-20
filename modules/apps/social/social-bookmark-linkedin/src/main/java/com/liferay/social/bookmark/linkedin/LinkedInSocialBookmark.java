@@ -56,7 +56,7 @@ public class LinkedInSocialBookmark implements SocialBookmark {
 	@Override
 	public String getPostURL(String title, String url) {
 		return String.format(
-			"http://www.linkedin.com/shareArticle?&title=%s&mini=true&url=%s" +
+			"http://www.linkedin.com/shareArticle?title=%s&mini=true&url=%s" +
 				"&summary=",
 			URLCodec.encodeURL(title), URLCodec.encodeURL(url));
 	}

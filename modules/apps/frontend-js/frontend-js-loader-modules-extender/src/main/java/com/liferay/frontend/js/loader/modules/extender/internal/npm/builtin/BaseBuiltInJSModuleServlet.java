@@ -18,6 +18,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -28,11 +29,15 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Locale;
@@ -52,6 +57,11 @@ import org.osgi.framework.FrameworkUtil;
  * @author Adolfo Pérez
  */
 public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
+
+	public BaseBuiltInJSModuleServlet() {
+		_workDirName = StringBundler.concat(
+			PropsValues.LIFERAY_HOME, File.separator, "work");
+	}
 
 	@Override
 	public void destroy() {
@@ -114,7 +124,35 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 		JSPackage jsPackage = resourceDescriptor.getJsPackage();
 
-		URL url = jsPackage.getResourceURL(resourceDescriptor.getPackagePath());
+		URL url = null;
+
+		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED && pathInfo.endsWith(".js")) {
+			JSBundle jsBundle = jsPackage.getJSBundle();
+
+			File file = new File(
+				_workDirName,
+				StringBundler.concat(
+					jsBundle.getName(), StringPool.DASH, jsBundle.getVersion(),
+					File.separator, resourceDescriptor.getPackagePath()));
+
+			if (file.exists()) {
+				try {
+					URI uri = file.toURI();
+
+					url = uri.toURL();
+				}
+				catch (MalformedURLException murle) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid override URL " + file.toString(), murle);
+					}
+				}
+			}
+		}
+
+		if (url == null) {
+			url = jsPackage.getResourceURL(resourceDescriptor.getPackagePath());
+		}
 
 		if (url == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -181,5 +219,6 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 	private ServiceTrackerMap<String, ResourceBundleLoader>
 		_bundleSymbolicNameServiceTrackerMap;
+	private final String _workDirName;
 
 }

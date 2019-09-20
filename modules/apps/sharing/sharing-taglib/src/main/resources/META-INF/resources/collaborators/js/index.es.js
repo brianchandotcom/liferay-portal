@@ -14,8 +14,8 @@
 
 import React from 'react';
 
-import ManageCollaborators from './components/ManageCollaborators.es';
+import Collaborators from './components/Collaborators.es';
 
 export default function(props) {
-	return <ManageCollaborators {...props} />;
+	return <Collaborators {...props} />;
 }

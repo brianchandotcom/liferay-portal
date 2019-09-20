@@ -132,11 +132,11 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 	<%
 	Map<String, Object> data = new HashMap<>();
 
-	data.put("owner", owner);
-	data.put("sharingEntryToUsers", sharingEntryToUsers);
-	data.put("sharingEntriesCount", sharingEntriesCount);
-	data.put("showManageCollaborators", showManageCollaborators);
 	data.put("manageCollaboratorsRenderURL", manageCollaboratorsRenderURL.toString());
+	data.put("owner", owner);
+	data.put("sharingEntriesCount", sharingEntriesCount);
+	data.put("sharingEntryToUsers", sharingEntryToUsers);
+	data.put("showManageCollaborators", showManageCollaborators);
 	%>
 
 	<react:component

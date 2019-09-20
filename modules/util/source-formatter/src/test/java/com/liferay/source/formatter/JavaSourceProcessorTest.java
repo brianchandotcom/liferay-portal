@@ -423,4 +423,14 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("UnusedParameter.testjava", "Parameter 'color' is unused", 26);
 	}
 
+	@Test
+	public void testUnusedVariable() throws Exception {
+		test(
+			"UnusedVariable.testjava",
+			new String[] {
+				"Variable 'matcher' is unused", "Variable '_s' is unused"
+			},
+			new Integer[] {26, 31});
+	}
+
 }

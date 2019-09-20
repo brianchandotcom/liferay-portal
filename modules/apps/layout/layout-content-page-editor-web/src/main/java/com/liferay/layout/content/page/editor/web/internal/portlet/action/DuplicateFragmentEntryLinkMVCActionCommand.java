@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -98,12 +99,12 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 		throws PortalException {
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
+			_portletPreferencesFactory.getPortletPreferences(
 				httpServletRequest,
 				PortletIdCodec.encode(portletId, oldInstanceId));
 
 		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+			_portletPreferencesFactory.getPortletPreferencesIds(
 				httpServletRequest,
 				PortletIdCodec.encode(portletId, oldInstanceId));
 
@@ -310,6 +311,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesFactory _portletPreferencesFactory;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

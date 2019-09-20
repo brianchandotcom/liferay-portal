@@ -77,13 +77,6 @@
 
 <%
 boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("info_panel_file_entry.jsp-showManageCollaborators"));
-
-PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
-
-manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
-manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
-manageCollaboratorsRenderURL.setParameter("dialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
-manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 %>
 
 <c:if test="<%= showManageCollaborators %>">
@@ -96,6 +89,15 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 			style="link"
 		/>
 	</div>
+
+	<%
+	PortletURL manageCollaboratorsRenderURL = PortletProviderUtil.getPortletURL(request, SharingEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+	manageCollaboratorsRenderURL.setParameter("classNameId", String.valueOf(ClassNameLocalServiceUtil.getClassNameId(DLFileEntry.class.getName())));
+	manageCollaboratorsRenderURL.setParameter("classPK", String.valueOf(fileEntry.getFileEntryId()));
+	manageCollaboratorsRenderURL.setParameter("dialogId", liferayPortletResponse.getNamespace() + "manageCollaboratorsDialog");
+	manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
 
 	<aui:script>
 		var button = document.getElementById('<portlet:namespace/>manageCollaboratorsButton');
@@ -127,21 +129,7 @@ manageCollaboratorsRenderURL.setWindowState(LiferayWindowState.POP_UP);
 	</aui:script>
 </c:if>
 
-<div id='<%= liferayPortletResponse.getNamespace() + "manageCollaborators-root" %>''>
-
-	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("manageCollaboratorsRenderURL", manageCollaboratorsRenderURL.toString());
-	data.put("owner", owner);
-	data.put("sharingEntriesCount", sharingEntriesCount);
-	data.put("sharingEntryToUsers", sharingEntryToUsers);
-	data.put("showManageCollaborators", showManageCollaborators);
-	%>
-
-	<react:component
-		componentId='<%= liferayPortletResponse.getNamespace() + "manageCollaborators" %>'
-		data="<%= data %>"
-		module="js/index.es"
-	/>
-</div>
+<liferay-sharing:collaborators
+	className="<%= DLFileEntryConstants.getClassName() %>"
+	classPK="<%= fileEntry.getFileEntryId() %>"
+/>

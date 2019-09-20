@@ -47,123 +47,133 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Checkbox Fragment Example");
-
-		PageEditorConfiguration.checkConfigCheckbox(
-			checkboxName = "Hide Body",
-			fragmentName = "Checkbox Fragment Example");
-
-		PageEditorConfiguration.checkConfigCheckbox(
-			checkboxName = "Make Bold",
-			fragmentName = "Checkbox Fragment Example");
-
-		Button.clickPublish();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
 			displayPageName = "Display Page Name",
-			item = "Edit");
-
-		task ("Assert body text is hidden") {
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
-		}
-
-		task ("Assert text is bolded") {
-			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
-		}
+			subType = "Basic Web Content");
 	}
 
-	@description = "This is a test for LPS-96685. User can change select fragment configuration in a display page template."
-	test AddSelectConfigurationFragmentToDisplayPageTemplate {
-		property portal.acceptance = "true";
+	PageEditor.addFragment(
+		collectionName = "Collection Name",
+		fragmentName = "Checkbox Fragment Example");
 
-		task ("Add a section fragment to the fragment collection via JSON") {
-			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
-			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+	PageEditorConfiguration.checkConfigCheckbox(
+		checkboxName = "Hide Body",
+		fragmentName = "Checkbox Fragment Example");
 
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
-				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
-				name = "Text Fragment Example");
-		}
+	PageEditorConfiguration.checkConfigCheckbox(
+		checkboxName = "Make Bold",
+		fragmentName = "Checkbox Fragment Example");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+	Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+	DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Text Fragment Example");
+	DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+		displayPageName = "Display Page Name",
+		item = "Edit");
 
-		PageEditorConfiguration.changeConfigSelection(
-			fragmentName = "Text Fragment Example",
-			optionValue = "dark");
-
-		PageEditor.clickPublish();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = "Display Page Name",
-			item = "Edit");
-
-		task ("Assert dark text is visible") {
-			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
-		}
+	task ("Assert body text is hidden") {
+		AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
 	}
 
-	@description = "This is a test for LPS-99543. User can change text fragment configuration in a display page template."
-	@priority = "5"
-	test AddTextConfigurationFragmentToDisplayPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a section fragment to the fragment collection via JSON") {
-			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
-			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
-
-			JSONFragment.addSection(
-				collectionName = "Collection Name",
-				configuration = "${jsonSnippet}",
-				groupName = "Test Site Name",
-				html = "${htmlSnippet}",
-				name = "Text Fragment Example");
-		}
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "Text Fragment Example");
-
-		PageEditorConfiguration.changeConfigText(
-			editableText = "Updated fragment text",
-			fragmentName = "Text Fragment Example",
-			textConfigName = "buttonText");
-
-		Button.clickPublish();
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = "Display Page Name",
-			item = "Edit");
-
-		task ("Assert text is changed") {
-			AssertVisible(
-				key_content = "Updated fragment text",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-		}
+	task ("Assert text is bolded") {
+		AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
 	}
+}
+
+@description = "This is a test for LPS-96685. User can change select fragment configuration in a display page template."
+test AddSelectConfigurationFragmentToDisplayPageTemplate {
+	property portal.acceptance = "true";
+
+	task ("Add a section fragment to the fragment collection via JSON") {
+		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
+		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			configuration = "${jsonSnippet}",
+			groupName = "Test Site Name",
+			html = "${htmlSnippet}",
+			name = "Text Fragment Example");
+	}
+
+	DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+	DisplayPageTemplatesAdmin.addDisplayPage(
+		contentType = "Web Content Article",
+		displayPageName = "Display Page Name",
+		subType = "Basic Web Content");
+
+	PageEditor.addFragment(
+		collectionName = "Collection Name",
+		fragmentName = "Text Fragment Example");
+
+	PageEditorConfiguration.changeConfigSelection(
+		fragmentName = "Text Fragment Example",
+		optionValue = "dark");
+
+	PageEditor.clickPublish();
+
+	DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+	DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+		displayPageName = "Display Page Name",
+		item = "Edit");
+
+	task ("Assert dark text is visible") {
+		AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
+	}
+}
+
+@description = "This is a test for LPS-99543. User can change text fragment configuration in a display page template."
+@priority = "5"
+test AddTextConfigurationFragmentToDisplayPageTemplate {
+	property portal.acceptance = "true";
+
+	task ("Add a section fragment to the fragment collection via JSON") {
+		var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+		var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
+
+		JSONFragment.addSection(
+			collectionName = "Collection Name",
+			configuration = "${jsonSnippet}",
+			groupName = "Test Site Name",
+			html = "${htmlSnippet}",
+			name = "Text Fragment Example");
+	}
+
+	DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+	DisplayPageTemplatesAdmin.addDisplayPage(
+		contentType = "Web Content Article",
+		displayPageName = "Display Page Name",
+		subType = "Basic Web Content");
+
+	PageEditor.addFragment(
+		collectionName = "Collection Name",
+		fragmentName = "Text Fragment Example");
+
+	PageEditorConfiguration.changeConfigText(
+		editableText = "Updated fragment text",
+		fragmentName = "Text Fragment Example",
+		textConfigName = "buttonText");
+
+	Button.clickPublish();
+
+	DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+	DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+		displayPageName = "Display Page Name",
+		item = "Edit");
+
+	task ("Assert text is changed") {
+		AssertVisible(
+			key_content = "Updated fragment text",
+			key_fragmentClass = "configuration",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+	}
+}
 
 }

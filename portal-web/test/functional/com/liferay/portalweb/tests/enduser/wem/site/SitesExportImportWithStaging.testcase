@@ -115,216 +115,214 @@ definition {
 		task ("Add a display page to the first site") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-1-staging");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a Title Fragment to the display page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
-		}
-
-		task ("Add a Rich Text fragment to the display page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
-		}
-
-		task ("Map the display page to Basic Web Content") {
-			PageEditorMapping.selectContentType(
+			DisplayPageTemplatesAdmin.addDisplayPage(
 				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
 				subType = "Basic Web Content");
+
 		}
 
-		task ("Map the Title fragment to the Title field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Title",
-				fragmentName = "Title",
-				id = "title",
-				source = "Basic Web Content (Default)");
-		}
+			task ("Add a Title Fragment to the display page") {
+				PageEditor.addFragment(
+					collectionName = "Collection Name",
+					fragmentName = "Title");
+			}
 
-		task ("Map the Rich Text fragment to the Content field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Content",
-				fragmentName = "Rich Text",
-				id = "rich-text",
-				source = "Basic Web Content (Default)");
-		}
+			task ("Add a Rich Text fragment to the display page") {
+				PageEditor.addFragment(
+					collectionName = "Collection Name",
+					fragmentName = "Rich Text");
+			}
 
-		task ("Publish the display page") {
-			Button.clickPublish();
-		}
+			task ("Map the Title fragment to the Title field") {
+				PageEditorMapping.mapEditableTextToField(
+					field = "Title",
+					fragmentName = "Title",
+					id = "title",
+					source = "Basic Web Content (Default)");
+			}
 
-		task ("Add a web content article that uses the display page to the first site") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-1-staging");
+			task ("Map the Rich Text fragment to the Content field") {
+				PageEditorMapping.mapEditableTextToField(
+					field = "Content",
+					fragmentName = "Rich Text",
+					id = "rich-text",
+					source = "Basic Web Content (Default)");
+			}
 
-			WebContentNavigator.gotoAddCP();
+			task ("Publish the display page") {
+				Button.clickPublish();
+			}
 
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			task ("Add a web content article that uses the display page to the first site") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-1-staging");
 
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
+				WebContentNavigator.gotoAddCP();
 
-			PortletEntry.publish();
-		}
+				WebContent.addCP(
+					webContentContent = "Webcontent Content",
+					webContentTitle = "Webcontent Title");
 
-		task ("Publish the first site to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-1-staging");
+				WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
 
-			Staging.publishCustomPublication();
-		}
-	}
+				PortletEntry.publish();
+			}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+			task ("Publish the first site to live") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-1-staging");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 1");
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
-		}
-	}
-
-	@description = "Export a live site into a different staging site. This test is focused on modern site building features. The high level steps of this test are outlined in LRQA-44517."
-	@priority = "5"
-	test ImportLiveSiteToStagingSite {
-		task ("Export the first site") {
-			LAR.openExportAdmin(siteURLKey = "test-site-name-1");
-
-			LexiconEntry.gotoAdd();
-
-			LAR.exportWithAssertionOnSuccess();
-
-			LAR.downloadLar();
-		}
-
-		task ("Import the first site's lar into the staging site for the second site") {
-			LAR.openImportAdmin(siteURLKey = "test-site-name-2-staging");
-
-			LexiconEntry.gotoAdd();
-
-			Site.importSiteFromTempFolder();
-		}
-
-		task ("Assert the fragments from the first site survived the import") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Content");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Image");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Button");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Multiple Editables");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Static Text");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Image 2");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Rich Text");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Title 2");
-
-			FragmentsAdmin.viewEntryPresent(entry = "Title");
-
-			FragmentsAdminNavigator.gotoEntryEllipsisItem(
-				entry = "Button",
-				item = "Edit");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-			AssertElementPresent(locator1 = "Button#SUBMIT");
-
-			AssertElementPresent(locator1 = "Button#CANCEL");
-
-			SelectFrameTop();
-		}
-
-		task ("Assert the content page template survived the import") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-2-staging");
-
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
-
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				key_position = "1",
-				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
-
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+				Staging.publishCustomPublication();
 			}
 		}
 
-		task ("Assert the content pages and Navigation Menu widget configuration survived the import") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging");
+		tearDown {
+			var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-			Click(
-				key_pageName = "Test Template Content Page",
-				locator1 = "Home#PAGE");
+			if ("${testPortalInstance}" == "true") {
+				PortalInstances.tearDownCP();
+			}
+			else {
+				JSONGroup.deleteGroupByName(groupName = "Test Site Name 1");
 
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
+				JSONGroup.deleteGroupByName(groupName = "Test Site Name 2");
+			}
+		}
 
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
+		@description = "Export a live site into a different staging site. This test is focused on modern site building features. The high level steps of this test are outlined in LRQA-44517."
+		@priority = "5"
+		test ImportLiveSiteToStagingSite {
+			task ("Export the first site") {
+				LAR.openExportAdmin(siteURLKey = "test-site-name-1");
+
+				LexiconEntry.gotoAdd();
+
+				LAR.exportWithAssertionOnSuccess();
+
+				LAR.downloadLar();
 			}
 
-			Click(
-				key_pageName = "Test Regular Content Page",
-				locator1 = "Home#PAGE");
+			task ("Import the first site's lar into the staging site for the second site") {
+				LAR.openImportAdmin(siteURLKey = "test-site-name-2-staging");
 
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
+				LexiconEntry.gotoAdd();
 
-			AssertVisible(
-				key_href = "https://www.liferay.com/",
-				key_pageName = "Liferay",
-				locator1 = "Home#PAGE_HREF");
+				Site.importSiteFromTempFolder();
+			}
+
+			task ("Assert the fragments from the first site survived the import") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-2-staging");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Content");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Image");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Button");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Multiple Editables");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Static Text");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Image 2");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Rich Text");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Title 2");
+
+				FragmentsAdmin.viewEntryPresent(entry = "Title");
+
+				FragmentsAdminNavigator.gotoEntryEllipsisItem(
+					entry = "Button",
+					item = "Edit");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
+
+				AssertElementPresent(locator1 = "Button#SUBMIT");
+
+				AssertElementPresent(locator1 = "Button#CANCEL");
+
+				SelectFrameTop();
+			}
+
+			task ("Assert the content page template survived the import") {
+				PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-2-staging");
+
+				PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+				AssertVisible(
+					key_content = "Submit",
+					key_fragmentClass = "footer",
+					key_position = "1",
+					locator1 = "Fragment#PAGE_EDITOR_FRAGMENT");
+
+				for (var button : list "Submit,Cancel") {
+					Button.viewPresent(button = "${button}");
+				}
+			}
+
+			task ("Assert the content pages and Navigation Menu widget configuration survived the import") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging");
+
+				Click(
+					key_pageName = "Test Template Content Page",
+					locator1 = "Home#PAGE");
+
+				AssertVisible(
+					key_content = "Submit",
+					key_fragmentClass = "footer",
+					key_position = "1",
+					locator1 = "Fragment#FRAGMENT");
+
+				for (var button : list "Submit,Cancel") {
+					Button.viewPresent(button = "${button}");
+				}
+
+				Click(
+					key_pageName = "Test Regular Content Page",
+					locator1 = "Home#PAGE");
+
+				AssertVisible(
+					key_content = "Lorem ipsum dolor sit amet",
+					key_fragmentClass = "header",
+					key_position = "1",
+					locator1 = "Fragment#FRAGMENT");
+
+				AssertVisible(
+					key_href = "https://www.liferay.com/",
+					key_pageName = "Liferay",
+					locator1 = "Home#PAGE_HREF");
+			}
+
+			task ("Assert the navigation menu survived the import") {
+				NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-2-staging");
+
+				AssertVisible(
+					key_rowEntry = "Test Navigation Menu Name",
+					locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+			}
+
+			task ("Assert the display page survived the import") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
+
+				DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+			}
+
+			task ("Assert the web content article and its reference to its display page survived the import") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging/w/webcontent-title");
+
+				AssertVisible(
+					key_content = "Webcontent Title",
+					key_fragmentClass = "header",
+					key_position = "1",
+					locator1 = "Fragment#FRAGMENT");
+
+				AssertVisible(
+					key_content = "Webcontent Content",
+					key_fragmentClass = "rich-text",
+					key_position = "2",
+					locator1 = "Fragment#FRAGMENT");
+			}
 		}
 
-		task ("Assert the navigation menu survived the import") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-2-staging");
-
-			AssertVisible(
-				key_rowEntry = "Test Navigation Menu Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
-		}
-
-		task ("Assert the display page survived the import") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-2-staging");
-
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
-		}
-
-		task ("Assert the web content article and its reference to its display page survived the import") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-2-staging/w/webcontent-title");
-
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				key_position = "2",
-				locator1 = "Fragment#FRAGMENT");
-		}
 	}
-
-}

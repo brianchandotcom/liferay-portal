@@ -54,7 +54,10 @@ definition {
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {
 		task ("Add a display page with fragments mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -63,10 +66,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
@@ -238,7 +237,10 @@ definition {
 	@priority = "5"
 	test MapWebContentAuthor {
 		task ("Add a display page with author name and profile fields mapped") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -247,10 +249,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Image");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Author Name",
@@ -314,7 +312,10 @@ definition {
 	@priority = "5"
 	test MapWebContentLastEditor {
 		task ("Add a display page with last editor name and profile fields mapped") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -323,10 +324,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Image");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Last Editor Name",
@@ -454,17 +451,16 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a display page") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 		}
 
 		task ("Add a fragment with multiple editable fields in it and map it to Basic Web Content") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Multiple Editables");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
@@ -588,15 +584,14 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			contentType = "Web Content Article",
+			displayPageName = "Display Page Name",
+			subType = "WC Structure Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Multiple Editables");
-
-		PageEditorMapping.selectContentType(
-			contentType = "Web Content Article",
-			subType = "WC Structure Name");
 
 		PageEditorMapping.mapEditableTextToField(
 			field = "Title",
@@ -667,7 +662,10 @@ definition {
 		property test.name.skip.portal.instance = "DisplayPagesUseCase#ViewlanguageSelectorRedirect";
 
 		task ("Add a display page with a Language Selector widget and with a fragment mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.addWidget(portletName = "Language Selector");
 
@@ -680,10 +678,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",

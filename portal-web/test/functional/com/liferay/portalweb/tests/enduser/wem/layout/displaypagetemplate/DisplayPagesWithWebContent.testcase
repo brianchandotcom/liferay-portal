@@ -25,7 +25,10 @@ definition {
 		task ("Add a display page with fragments mapped to Basic Web Content") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -34,10 +37,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
@@ -841,7 +840,10 @@ definition {
 		}
 
 		task ("Add a second display page that is mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Non-Default Display Page");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Non-Default Display Page",
+				subType = "Basic Web Content");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -850,10 +852,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Content",

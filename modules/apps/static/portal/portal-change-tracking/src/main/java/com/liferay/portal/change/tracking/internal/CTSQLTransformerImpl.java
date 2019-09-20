@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.expression.AllComparisonExpression;
 import net.sf.jsqlparser.expression.AnalyticExpression;
 import net.sf.jsqlparser.expression.AnyComparisonExpression;
@@ -157,6 +159,7 @@ import net.sf.jsqlparser.statement.values.ValuesStatement;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -234,6 +237,11 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 		_portalCache =
 			(PortalCache<String, String>)_singleVMPool.getPortalCache(
 				CTSQLTransformerImpl.class.getName());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portalCache.removeAll();
 	}
 
 	/**
@@ -732,6 +740,18 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 					FromItem rightFromItem = join.getRightItem();
 
 					rightFromItem.accept(this);
+
+					if (join.isLeft() || join.isRight() || join.isFull() ||
+						join.isOuter()) {
+
+						allowNull = true;
+
+						Expression onExpression = join.getOnExpression();
+
+						if (onExpression != null) {
+							join.setOnExpression(_visit(onExpression));
+						}
+					}
 				}
 			}
 
@@ -856,7 +876,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 		@Override
 		public void visit(Table table) {
-			_tables.put(table.getName(), table);
+			_tableWrappers.add(new TableWrapper(table));
 		}
 
 		@Override
@@ -972,6 +992,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 		protected abstract BaseStatementVisitor newInstance();
 
+		protected boolean allowNull;
 		protected final long ctCollectionId;
 
 		private void _visit(BinaryExpression binaryExpression) {
@@ -989,15 +1010,17 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 				whereExpression.accept(this);
 			}
 
-			for (Map.Entry<String, Table> entry : _tables.entrySet()) {
-				String tableName = entry.getKey();
+			for (TableWrapper tableWrapper : _tableWrappers) {
+				Table table = tableWrapper._table;
+
+				String tableName = table.getName();
 
 				CTModelRegistration ctModelRegistration =
 					CTModelRegistry.getCTModelRegistration(tableName);
 
 				if (ctModelRegistration != null) {
 					Expression ctExpression = getWhereExpression(
-						entry.getValue(), tableName, ctModelRegistration);
+						table, tableName, ctModelRegistration);
 
 					if (whereExpression == null) {
 						whereExpression = ctExpression;
@@ -1012,7 +1035,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			return whereExpression;
 		}
 
-		private final Map<String, Table> _tables = new LinkedHashMap<>();
+		private final Set<TableWrapper> _tableWrappers = new LinkedHashSet<>();
 
 	}
 
@@ -1043,10 +1066,91 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 
 	}
 
+	private static class TableWrapper {
+
+		@Override
+		public boolean equals(Object object) {
+			TableWrapper tableWrapper = (TableWrapper)object;
+
+			Table table = tableWrapper._table;
+
+			if (table == _table) {
+				return true;
+			}
+
+			if (!Objects.equals(table.getName(), _table.getName())) {
+				return false;
+			}
+
+			Alias alias1 = table.getAlias();
+			Alias alias2 = _table.getAlias();
+
+			if (alias1 == alias2) {
+				return true;
+			}
+
+			if ((alias1 != null) && (alias2 != null) &&
+				Objects.equals(alias1.getName(), alias2.getName())) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			String name = _table.getName();
+
+			return name.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return _table.toString();
+		}
+
+		private TableWrapper(Table table) {
+			_table = table;
+		}
+
+		private final Table _table;
+
+	}
+
 	private class SelectStatementVisitor extends BaseStatementVisitor {
 
 		@Override
 		protected Expression getWhereExpression(
+			Table table, String tableName,
+			CTModelRegistration ctModelRegistration) {
+
+			Expression expression = _getWhereExpression(
+				table, tableName, ctModelRegistration);
+
+			if (allowNull) {
+				IsNullExpression isNullExpression = new IsNullExpression();
+
+				isNullExpression.setLeftExpression(
+					new Column(table, "ctCollectionId"));
+
+				expression = new Parenthesis(
+					new OrExpression(expression, isNullExpression));
+			}
+
+			return expression;
+		}
+
+		@Override
+		protected SelectStatementVisitor newInstance() {
+			return new SelectStatementVisitor(ctCollectionId);
+		}
+
+		private SelectStatementVisitor(long ctCollectionId) {
+			super(ctCollectionId);
+		}
+
+		private Expression _getWhereExpression(
 			Table table, String tableName,
 			CTModelRegistration ctModelRegistration) {
 
@@ -1132,15 +1236,6 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 			inExpression.setNot(true);
 
 			return new AndExpression(inExpression, equalsToCTCollectionIdZero);
-		}
-
-		@Override
-		protected SelectStatementVisitor newInstance() {
-			return new SelectStatementVisitor(ctCollectionId);
-		}
-
-		private SelectStatementVisitor(long ctCollectionId) {
-			super(ctCollectionId);
 		}
 
 	}

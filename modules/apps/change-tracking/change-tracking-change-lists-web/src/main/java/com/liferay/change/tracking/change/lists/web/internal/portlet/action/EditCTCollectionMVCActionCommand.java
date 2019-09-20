@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.NoSuchCollectionException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -57,46 +56,36 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
 
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			themeDisplay.getCompanyId(), name);
+
+		if ((ctCollection != null) &&
+			(ctCollection.getCtCollectionId() != ctCollectionId)) {
+
+			SessionErrors.add(actionRequest, "ctCollectionDuplicate");
+
+			_portal.copyRequestParameters(actionRequest, actionResponse);
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/edit_ct_collection.jsp");
+
+			return;
+		}
+
 		try {
+			String description = ParamUtil.getString(
+				actionRequest, "description");
+
 			if (ctCollectionId > 0) {
-				CTCollection ctCollection =
-					_ctCollectionLocalService.fetchCTCollection(
-						themeDisplay.getCompanyId(), name);
-
-				if ((ctCollection != null) &&
-					(ctCollection.getCtCollectionId() != ctCollectionId)) {
-
-					_addDuplicateError(actionRequest, actionResponse);
-
-					return;
-				}
-
-				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
-
-				if (ctCollection == null) {
-					throw new NoSuchCollectionException();
-				}
-
 				_ctCollectionLocalService.updateCTCollection(
 					themeDisplay.getUserId(), ctCollectionId, name,
 					description);
 			}
 			else {
-				CTCollection ctCollection =
-					_ctCollectionLocalService.fetchCTCollection(
-						themeDisplay.getCompanyId(), name);
-
-				if (ctCollection != null) {
-					_addDuplicateError(actionRequest, actionResponse);
-
-					return;
-				}
-
 				ctCollection = _ctCollectionLocalService.addCTCollection(
 					themeDisplay.getUserId(), name, description);
 
@@ -118,16 +107,6 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/edit_ct_collection.jsp");
 		}
-	}
-
-	private void _addDuplicateError(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		SessionErrors.add(actionRequest, "ctCollectionDuplicate");
-
-		_portal.copyRequestParameters(actionRequest, actionResponse);
-
-		actionResponse.setRenderParameter("mvcPath", "/edit_ct_collection.jsp");
 	}
 
 	@Reference

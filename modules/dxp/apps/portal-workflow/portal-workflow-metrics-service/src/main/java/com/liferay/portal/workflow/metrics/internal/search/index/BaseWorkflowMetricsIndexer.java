@@ -249,7 +249,6 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			getIndexName(), document.getUID(), document);
 
-		updateDocumentRequest.setRefresh(true);
 		updateDocumentRequest.setType(getIndexType());
 
 		searchEngineAdapter.execute(updateDocumentRequest);

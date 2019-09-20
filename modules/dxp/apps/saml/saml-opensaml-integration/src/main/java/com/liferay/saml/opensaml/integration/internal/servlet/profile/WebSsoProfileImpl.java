@@ -39,8 +39,10 @@ import com.liferay.saml.opensaml.integration.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverSAMLContextImpl;
+import com.liferay.saml.opensaml.integration.internal.resolver.DecrypterContext;
 import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverRegistry;
 import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverSAMLContextImpl;
+import com.liferay.saml.opensaml.integration.internal.resolver.SubjectAssertionContext;
 import com.liferay.saml.opensaml.integration.internal.resolver.UserResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.util.OpenSamlUtil;
 import com.liferay.saml.opensaml.integration.internal.util.SamlUtil;
@@ -672,6 +674,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 					_log.error("Unable to assertion decryption", de);
 				}
 			}
+
+			inboundMessageContext.addSubcontext(
+				new DecrypterContext(_decrypter));
 		}
 		else {
 			if (!encryptedAssertions.isEmpty()) {
@@ -739,6 +744,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 			throw new AssertionException(
 				"Response does not contain any acceptable assertions");
 		}
+
+		inboundMessageContext.addSubcontext(
+			new SubjectAssertionContext(assertion));
 
 		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
 			messageContext.getSubcontext(

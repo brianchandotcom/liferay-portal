@@ -38,9 +38,6 @@ import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
 import org.opensaml.saml.saml2.core.NameID;
-import org.opensaml.saml.saml2.core.Response;
-import org.opensaml.saml.saml2.core.Subject;
-import org.opensaml.saml.saml2.core.SubjectConfirmation;
 import org.opensaml.saml.saml2.metadata.IDPSSODescriptor;
 import org.opensaml.saml.saml2.metadata.SingleSignOnService;
 
@@ -71,60 +68,29 @@ public interface SAMLCommands {
 					return Collections.emptyMap();
 				}
 
-				Response response =
-					(Response)inboundMessageContext.getMessage();
+				final SubjectAssertionContext subjectAssertionContext =
+					inboundMessageContext.getSubcontext(
+						SubjectAssertionContext.class, false);
 
-				if (response == null) {
+				if (subjectAssertionContext == null) {
 					return Collections.emptyMap();
 				}
 
-				List<Assertion> assertions = response.getAssertions();
+				Assertion assertion = subjectAssertionContext.getAssertion();
 
-				Stream<Assertion> assertionsStream = assertions.stream();
+				List<AttributeStatement> attributeStatements =
+					assertion.getAttributeStatements();
 
-				List<Attribute> bearerAssertionAttributes =
-					assertionsStream.filter(
-						assertion -> {
-							Subject subject = assertion.getSubject();
+				Stream<AttributeStatement> stream =
+					attributeStatements.stream();
 
-							if (subject == null) {
-								return false;
-							}
-
-							List<SubjectConfirmation> subjectConfirmations =
-								subject.getSubjectConfirmations();
-
-							if (subjectConfirmations == null) {
-								return false;
-							}
-
-							Stream<SubjectConfirmation>
-								subjectConfirmationsStream =
-									subjectConfirmations.stream();
-
-							long count = subjectConfirmationsStream.filter(
-								subjectConfirmation ->
-									SubjectConfirmation.METHOD_BEARER.equals(
-										subjectConfirmation.getMethod())
-							).count();
-
-							if (count > 0) {
-								return true;
-							}
-
-							return false;
-						}
-					).map(
-						Assertion::getAttributeStatements
-					).flatMap(
-						Collection::stream
-					).map(
-						AttributeStatement::getAttributes
-					).flatMap(
-						Collection::stream
-					).collect(
-						Collectors.toList()
-					);
+				List<Attribute> bearerAssertionAttributes = stream.map(
+					AttributeStatement::getAttributes
+				).flatMap(
+					Collection::stream
+				).collect(
+					Collectors.toList()
+				);
 
 				return SamlUtil.getAttributesMap(
 					bearerAssertionAttributes, userAttributeMappingsProperties);

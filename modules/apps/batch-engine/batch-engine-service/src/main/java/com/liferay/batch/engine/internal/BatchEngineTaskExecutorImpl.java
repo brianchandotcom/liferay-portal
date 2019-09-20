@@ -50,8 +50,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ivica Cardic
  */
-@Component(service = BatchEngineTaskExecutor.class)
-public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
+@Component(immediate = true, service = BatchEngineTaskExecutor.class)
+public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	@Activate
 	public void activate(BundleContext bundleContext)
@@ -97,7 +97,8 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 	}
 
 	private void _commitItems(
-			BatchEngineTaskItemWriter batchEngineTaskItemWriter, List<T> items)
+			BatchEngineTaskItemWriter batchEngineTaskItemWriter,
+			List<Object> items)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
@@ -122,16 +123,16 @@ public class BatchEngineTaskExecutorImpl<T> implements BatchEngineTaskExecutor {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		try (BatchEngineTaskItemReader<T> batchEngineTaskItemReader =
+		try (BatchEngineTaskItemReader batchEngineTaskItemReader =
 				_batchEngineTaskItemReaderFactory.create(
 					batchEngineTask, _batchEngineTaskItemClassRegistry);
 			BatchEngineTaskItemWriter batchEngineTaskItemWriter =
 				_batchEngineTaskItemWriterFactory.create(
 					batchEngineTask, _companyLocalService, _userLocalService)) {
 
-			List<T> items = new ArrayList<>();
+			List<Object> items = new ArrayList<>();
 
-			T item = null;
+			Object item = null;
 
 			while ((item = batchEngineTaskItemReader.read()) != null) {
 				items.add(item);

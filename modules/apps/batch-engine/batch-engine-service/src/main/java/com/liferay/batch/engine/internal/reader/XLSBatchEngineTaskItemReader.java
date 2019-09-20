@@ -36,11 +36,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  * @author Ivica Cardic
  */
-public class XLSBatchEngineTaskItemReader<T>
-	implements BatchEngineTaskItemReader<T> {
+public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
 	public XLSBatchEngineTaskItemReader(
-			InputStream inputStream, Class<? extends T> itemClass)
+			InputStream inputStream, Class<?> itemClass)
 		throws IOException {
 
 		_inputStream = inputStream;
@@ -70,7 +69,7 @@ public class XLSBatchEngineTaskItemReader<T>
 	}
 
 	@Override
-	public T read() {
+	public Object read() {
 		if (!_iterator.hasNext()) {
 			return null;
 		}
@@ -121,7 +120,7 @@ public class XLSBatchEngineTaskItemReader<T>
 
 	private final String[] _columnNames;
 	private final InputStream _inputStream;
-	private final Class<? extends T> _itemClass;
+	private final Class<?> _itemClass;
 	private final Iterator<Row> _iterator;
 	private final Workbook _workbook;
 

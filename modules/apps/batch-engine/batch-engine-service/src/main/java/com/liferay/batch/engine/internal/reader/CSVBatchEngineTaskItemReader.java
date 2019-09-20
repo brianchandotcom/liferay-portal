@@ -29,11 +29,10 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class CSVBatchEngineTaskItemReader<T>
-	implements BatchEngineTaskItemReader<T> {
+public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
 	public CSVBatchEngineTaskItemReader(
-			InputStream inputStream, Class<? extends T> itemClass)
+			InputStream inputStream, Class<?> itemClass)
 		throws IOException {
 
 		_inputStream = inputStream;
@@ -51,7 +50,7 @@ public class CSVBatchEngineTaskItemReader<T>
 	}
 
 	@Override
-	public T read() throws IOException {
+	public Object read() throws IOException {
 		String line = _unsyncBufferedReader.readLine();
 
 		if (line == null) {
@@ -89,7 +88,7 @@ public class CSVBatchEngineTaskItemReader<T>
 
 	private final String[] _columnNames;
 	private final InputStream _inputStream;
-	private final Class<? extends T> _itemClass;
+	private final Class<?> _itemClass;
 	private final UnsyncBufferedReader _unsyncBufferedReader;
 
 }

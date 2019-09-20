@@ -20,8 +20,8 @@ import java.io.IOException;
 /**
  * @author Ivica Cardic
  */
-public interface BatchEngineTaskItemReader<T> extends Closeable {
+public interface BatchEngineTaskItemReader extends Closeable {
 
-	public T read() throws IOException;
+	public Object read() throws IOException;
 
 }

@@ -25,11 +25,11 @@ import java.io.InputStream;
 /**
  * @author Ivica Cardic
  */
-public class JSONBatchEngineTaskItemReader<T>
-	implements BatchEngineTaskItemReader<T> {
+public class JSONBatchEngineTaskItemReader
+	implements BatchEngineTaskItemReader {
 
 	public JSONBatchEngineTaskItemReader(
-			InputStream inputStream, Class<? extends T> itemClass)
+			InputStream inputStream, Class<?> itemClass)
 		throws IOException {
 
 		_inputStream = inputStream;
@@ -47,7 +47,7 @@ public class JSONBatchEngineTaskItemReader<T>
 	}
 
 	@Override
-	public T read() throws IOException {
+	public Object read() throws IOException {
 		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
 			return _objectMapper.readValue(_jsonParser, _itemClass);
 		}
@@ -59,7 +59,7 @@ public class JSONBatchEngineTaskItemReader<T>
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final InputStream _inputStream;
-	private final Class<? extends T> _itemClass;
+	private final Class<?> _itemClass;
 	private final JsonParser _jsonParser;
 
 }

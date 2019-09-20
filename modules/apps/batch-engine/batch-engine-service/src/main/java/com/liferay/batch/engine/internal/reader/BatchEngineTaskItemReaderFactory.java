@@ -25,7 +25,7 @@ import java.sql.Blob;
  */
 public class BatchEngineTaskItemReaderFactory {
 
-	public <T> BatchEngineTaskItemReader<T> create(
+	public BatchEngineTaskItemReader create(
 			BatchEngineTask batchEngineTask,
 			BatchEngineTaskItemClassRegistry batchEngineTaskItemClassRegistry)
 		throws Exception {
@@ -35,23 +35,23 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTask.getContentType());
 		Blob content = batchEngineTask.getContent();
 
-		Class<T> itemClass = (Class<T>)batchEngineTaskItemClassRegistry.get(
+		Class<?> itemClass = batchEngineTaskItemClassRegistry.get(
 			batchEngineTask.getClassName());
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
-			return new CSVBatchEngineTaskItemReader<>(
+			return new CSVBatchEngineTaskItemReader(
 				content.getBinaryStream(), itemClass);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineTaskItemReader<>(
+			return new JSONBatchEngineTaskItemReader(
 				content.getBinaryStream(), itemClass);
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineTaskItemReader<>(
+			return new XLSBatchEngineTaskItemReader(
 				content.getBinaryStream(), itemClass);
 		}
 

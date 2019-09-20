@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
@@ -50,10 +50,12 @@ public class LiferaySyncCapability
 
 	public LiferaySyncCapability(
 		GroupServiceAdapter groupServiceAdapter,
-		DLSyncEventLocalService dlSyncEventLocalService) {
+		DLSyncEventLocalService dlSyncEventLocalService,
+		MessageBus messageBus) {
 
 		_groupServiceAdapter = groupServiceAdapter;
 		_dlSyncEventLocalService = dlSyncEventLocalService;
+		_messageBus = messageBus;
 	}
 
 	@Override
@@ -171,7 +173,7 @@ public class LiferaySyncCapability
 
 					message.setValues(values);
 
-					MessageBusUtil.sendMessage(
+					_messageBus.sendMessage(
 						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
 						message);
 
@@ -196,6 +198,7 @@ public class LiferaySyncCapability
 			DLSyncConstants.EVENT_DELETE);
 	private final DLSyncEventLocalService _dlSyncEventLocalService;
 	private final GroupServiceAdapter _groupServiceAdapter;
+	private final MessageBus _messageBus;
 	private final RepositoryEventListener<RepositoryEventType.Move, FileEntry>
 		_moveFileEntryEventListener =
 			new SyncFileEntryRepositoryEventListener<>(

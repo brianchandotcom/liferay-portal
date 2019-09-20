@@ -55,7 +55,6 @@ public class DataDefinitionResourceTest
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		_testGetSiteDataDefinitionsPage("!@#description", "!@#d", "name");
 		_testGetSiteDataDefinitionsPage(
 			"DeFiNiTiON dEsCrIpTiOn", "DEFINITION", "name");
 		_testGetSiteDataDefinitionsPage(

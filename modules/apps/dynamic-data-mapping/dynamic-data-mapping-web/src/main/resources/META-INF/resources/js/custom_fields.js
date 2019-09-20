@@ -42,13 +42,15 @@ AUI.add(
 				'#_' + Liferay.Portlet.list[0] + '_indexable'
 			);
 
-			var indexable = indexTypeNode.getAttribute('value');
+			if (indexTypeNode !== null) {
+				var indexable = indexTypeNode.getAttribute('value');
 
-			if (indexable === 'true') {
-				return 'keyword';
+				if (indexable === 'false') {
+					return '';
+				}
 			}
 
-			return '';
+			return 'keyword';
 		};
 
 		var instanceOf = A.instanceOf;

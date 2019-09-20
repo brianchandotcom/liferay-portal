@@ -62,6 +62,7 @@ public class LiferayOSGiExtension {
 
 		_bundleDefaultInstructions.put(
 			Constants.BUNDLE_SYMBOLICNAME, project.getName());
+		_bundleDefaultInstructions.put(Constants.CDIANNOTATIONS, "");
 		_bundleDefaultInstructions.put(
 			Constants.DONOTCOPY, "(" + DONOTCOPY_DEFAULT + ")");
 		_bundleDefaultInstructions.put(

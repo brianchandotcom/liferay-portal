@@ -147,8 +147,8 @@ public class ChangeListsDisplayContext {
 		).put(
 			"urlCheckoutProduction",
 			getCheckoutURL(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
-				true)
+				CTConstants.CT_COLLECTION_ID_PRODUCTION,
+				LanguageUtil.get(_httpServletRequest, "work-on-production"))
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
 		);
@@ -164,10 +164,7 @@ public class ChangeListsDisplayContext {
 		return soyContext;
 	}
 
-	public String getCheckoutURL(
-		long ctCollectionId, String confirmationMessageArg,
-		boolean translateArg) {
-
+	public String getCheckoutURL(long ctCollectionId, String name) {
 		PortletURL checkoutURL = PortletURLFactoryUtil.create(
 			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.ACTION_PHASE);
@@ -176,23 +173,14 @@ public class ChangeListsDisplayContext {
 			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
-
-		String ctCollectionName = confirmationMessageArg;
-
-		if (translateArg) {
-			ctCollectionName = LanguageUtil.get(
-				_httpServletRequest, confirmationMessageArg);
-		}
-
-		checkoutURL.setParameter("name", ctCollectionName);
+		checkoutURL.setParameter("name", name);
 
 		if (_confirmationEnabled) {
 			return StringBundler.concat(
 				"javascript:confirm('",
 				LanguageUtil.format(
 					_httpServletRequest,
-					"do-you-want-to-switch-to-x-change-list",
-					confirmationMessageArg, translateArg),
+					"do-you-want-to-switch-to-x-change-list", name, false),
 				"') && Liferay.Util.navigate('", checkoutURL, "')");
 		}
 
@@ -535,7 +523,7 @@ public class ChangeListsDisplayContext {
 						"checkoutURL",
 						getCheckoutURL(
 							ctCollection.getCtCollectionId(),
-							ctCollection.getName(), false)
+							ctCollection.getName())
 					).put(
 						"label", ctCollection.getName()
 					));

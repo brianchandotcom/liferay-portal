@@ -58,10 +58,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 				>
 
 					<%
-					String ctCollectionName = curCTCollection.isProduction() ? "work-on-production" : curCTCollection.getName();
+					String ctCollectionName = curCTCollection.isProduction() ? LanguageUtil.get(request, "work-on-production") : curCTCollection.getName();
 
 					boolean activeChangeList = changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId());
-					String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), ctCollectionName, curCTCollection.isProduction() ? true : false);
+					String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), ctCollectionName);
 					%>
 
 					<c:choose>
@@ -203,7 +203,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 					boolean activeProductionChangeList = changeListsDisplayContext.isChangeListActive(productionCTCollection.getCtCollectionId());
 
-					String checkoutProductionURL = changeListsDisplayContext.getCheckoutURL(CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production", true);
+					String checkoutProductionURL = changeListsDisplayContext.getCheckoutURL(CTConstants.CT_COLLECTION_ID_PRODUCTION, LanguageUtil.get(request, "work-on-production"));
 					%>
 
 					<c:if test="<%= (ctCollectionSearchContainer.getCur() == 1) && Validator.isNull(displayTerms.getKeywords()) %>">
@@ -270,7 +270,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 						<%
 						boolean activeChangeList = changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId());
-						String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), curCTCollection.getName(), false);
+						String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), curCTCollection.getName());
 						%>
 
 						<c:if test="<%= !curCTCollection.isProduction() %>">

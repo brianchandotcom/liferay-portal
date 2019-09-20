@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.0.0-alpha.1",
-		"@clayui/button": "3.0.0-alpha.1",
-		"@clayui/icon": "3.0.0-alpha.1",
-		"@clayui/modal": "3.0.0-alpha.1",
+		"@clayui/alert": "3.0.0",
+		"@clayui/button": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"@clayui/modal": "3.0.0",
 		"classnames": "2.2.6",
 		"clay-badge": "2.18.1",
 		"clay-checkbox": "2.18.1",

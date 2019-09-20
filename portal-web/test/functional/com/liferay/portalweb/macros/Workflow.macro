@@ -224,6 +224,23 @@ definition {
 			workflowTask = "${workflowTask}");
 	}
 
+	macro completeWorkflowBlogInstance {
+		var key_workflowInstanceTitle = "${workflowInstanceName}";
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "${key_workflowInstanceTitle}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "${key_workflowInstanceTitle}",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+	}
+
 	macro configureDMWorkflowViaFolderInfo {
 		Click(locator1 = "Icon#INFO");
 
@@ -291,6 +308,16 @@ definition {
 		Click(locator1 = "Button#DONE");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro createWorkflowBlogInstance {
+		var key_workflowInstanceTitle = "${workflowInstanceName}";
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "",
+			entryTitle = "${key_workflowInstanceTitle}");
+
 	}
 
 	macro deleteWorkflowDefinition {

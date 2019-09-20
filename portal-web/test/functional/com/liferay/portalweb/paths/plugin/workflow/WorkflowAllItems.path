@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>WorkflowAllItems</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowAllItems</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>WORKFLOW_ALL_ITEMS_FILTER_VALUE</td>
+	<td>//div[contains(@class,'label-section')]//strong[contains(text(),'${key_workflowFilterValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_INSTANCE_NAME</td>
+	<td>//td[contains(text(),'${key_workflowInstanceName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

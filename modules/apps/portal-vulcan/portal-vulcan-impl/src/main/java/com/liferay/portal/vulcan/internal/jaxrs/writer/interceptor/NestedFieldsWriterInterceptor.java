@@ -115,7 +115,12 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	protected Class<?> getResourceClass(ServiceReference<?> serviceReference) {
 		Object resource = _bundleContext.getService(serviceReference);
 
-		return resource.getClass();
+		try {
+			return resource.getClass();
+		}
+		finally {
+			_bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	protected ServiceObjects<?> getServiceObjects(

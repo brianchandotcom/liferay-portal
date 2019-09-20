@@ -68,12 +68,6 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		OneDrive.goToOneDrive();
-
-		for (var documentTitle : list "Document_2,Excel Sheet Title,PowerPoint Presentation Title,Word Doc Title") {
-			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
-		}
-
-		Navigator.openURL();
 	}
 
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
@@ -81,30 +75,34 @@ definition {
 	test AddExcelSheet {
 		property test.name.skip.portal.instance = "OneDrive#AddExcelSheet";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Add Excel Sheet Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "Excel Sheet Title",
-			key_documentTitle = "Excel Sheet Title.xlsx");
+			dmDocumentTitle = "Add Excel Sheet Title",
+			key_documentTitle = "Add Excel Sheet Title.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Excel Sheet Title",
+			dmDocumentTitle = "Add Excel Sheet Title",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Excel Sheet Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Add Excel Sheet Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
-			key_dmDocumentTitle = "Excel Sheet Title",
+			key_dmDocumentTitle = "Add Excel Sheet Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Excel Sheet Title");
+			value1 = "Add Excel Sheet Title");
 	}
 
 	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
@@ -112,30 +110,34 @@ definition {
 	test AddPowerPointPresentation {
 		property test.name.skip.portal.instance = "OneDrive#AddPowerPointPresentation";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Add PowerPoint Presentation Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "PowerPoint Presentation Title",
-			key_documentTitle = "PowerPoint Presentation Title.pptx");
+			dmDocumentTitle = "Add PowerPoint Presentation Title",
+			key_documentTitle = "Add PowerPoint Presentation Title.pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "PowerPoint Presentation Title",
+			dmDocumentTitle = "Add PowerPoint Presentation Title",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "PowerPoint Presentation Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Add PowerPoint Presentation Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
-			key_dmDocumentTitle = "PowerPoint Presentation Title",
+			key_dmDocumentTitle = "Add PowerPoint Presentation Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "PowerPoint Presentation Title");
+			value1 = "Add PowerPoint Presentation Title");
 	}
 
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
@@ -143,36 +145,44 @@ definition {
 	test AddWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Add Word Doc Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "Word Doc Title",
-			key_documentTitle = "Word Doc Title.docx");
+			dmDocumentTitle = "Add Word Doc Title",
+			key_documentTitle = "Add Word Doc Title.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Word Doc Title",
+			dmDocumentTitle = "Add Word Doc Title",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Add Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
-			key_dmDocumentTitle = "Word Doc Title",
+			key_dmDocumentTitle = "Add Word Doc Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Word Doc Title");
+			value1 = "Add Word Doc Title");
 	}
 
 	@description = "This test ensures that a Word Document is autotagged once checked in."
 	@priority = "4"
 	test AutoTagWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#AutoTagWordDocument";
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Auto Tagging Word Doc Title");
+
+		Navigator.openURL();
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",
@@ -184,39 +194,43 @@ definition {
 
 		OneDrive.AddDocument(
 			dmDocumentContent = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "Word Doc Title",
-			key_documentTitle = "Word Doc Title.docx");
+			dmDocumentTitle = "Auto Tagging Word Doc Title",
+			key_documentTitle = "Auto Tagging Word Doc Title.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Auto Tagging Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewPG(
-			dmDocumentTitle = "Word Doc Title",
+			dmDocumentTitle = "Auto Tagging Word Doc Title",
 			tagNameList = "adventures");
 	}
 
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
 	@priority = "4"
 	test CancelCheckoutOnWordDocument {
-		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
+		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnWordDocument";
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Word Doc Title");
+
+		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "Word Doc Title",
-			key_documentTitle = "Word Doc Title.docx");
+			dmDocumentTitle = "Cancel Checkout Word Doc Title",
+			key_documentTitle = "Cancel Checkout Word Doc Title.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.cancelCheckoutPG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.cancelCheckoutPG(dmDocumentTitle = "Cancel Checkout Word Doc Title");
 
 		AssertElementNotPresent(
-			key_dmDocumentTitle = "Word Doc Title",
+			key_dmDocumentTitle = "Cancel Checkout Word Doc Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
 	}
 
@@ -225,21 +239,25 @@ definition {
 	test DeleteExcelSheet {
 		property test.name.skip.portal.instance = "OneDrive#DeleteExcelSheet";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Delete Excel Sheet Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "Excel Sheet Title",
-			key_documentTitle = "Excel Sheet Title.xlsx");
+			dmDocumentTitle = "Delete Excel Sheet Title",
+			key_documentTitle = "Delete Excel Sheet Title.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Excel Sheet Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Delete Excel Sheet Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.deletePG(dmDocumentTitle = "Excel Sheet Title");
+		DMDocument.deletePG(dmDocumentTitle = "Delete Excel Sheet Title");
 	}
 
 	@description = "This test ensures that a PowerPoint presentation can be deleted."
@@ -247,21 +265,25 @@ definition {
 	test DeletePowerPointPresentation {
 		property test.name.skip.portal.instance = "OneDrive#DeletePowerPointPresentation";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Delete PowerPoint Presentation Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "PowerPoint Presentation Title",
-			key_documentTitle = "PowerPoint Presentation Title.pptx");
+			dmDocumentTitle = "Delete PowerPoint Presentation Title",
+			key_documentTitle = "Delete PowerPoint Presentation Title.pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "PowerPoint Presentation Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Delete PowerPoint Presentation Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.deletePG(dmDocumentTitle = "PowerPoint Presentation Title");
+		DMDocument.deletePG(dmDocumentTitle = "Delete PowerPoint Presentation Title");
 	}
 
 	@description = "This test ensures that a Word document can be deleted."
@@ -269,21 +291,25 @@ definition {
 	test DeleteWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#DeleteWordDocument";
 
+		OneDrive.deleteDocument(dmDocumentTitle = "Delete Word Doc Title");
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
 
 		OneDrive.AddDocument(
-			dmDocumentTitle = "Word Doc Title",
-			key_documentTitle = "Word Doc Title.docx");
+			dmDocumentTitle = "Delete Word Doc Title",
+			key_documentTitle = "Delete Word Doc Title.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.checkinPG(dmDocumentTitle = "Delete Word Doc Title");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.deletePG(dmDocumentTitle = "Word Doc Title");
+		DMDocument.deletePG(dmDocumentTitle = "Delete Word Doc Title");
 	}
 
 	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
@@ -291,28 +317,34 @@ definition {
 	test EditExcelSheet {
 		property test.name.skip.portal.instance = "OneDrive#EditExcelSheet";
 
+		for (var documentTitle : list "Document_1,Excel Sheet Title Edited") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.xlsx",
-			dmDocumentTitle = "Document_2.xlsx");
+			dmDocumentFile = "Document_1.xlsx",
+			dmDocumentTitle = "Document_1.xlsx");
 
-		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.xlsx");
+		OneDrive.gotoEdit(dmDocumentTitle = "Document_1.xlsx");
 
 		OneDrive.editTitle(
 			dmDocumentTitle = "Excel Sheet Title Edited",
-			key_documentTitle = "Document_2.xlsx");
+			key_documentTitle = "Document_1.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Document_2.xlsx",
+			dmDocumentTitle = "Document_1.xlsx",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Document_2.xlsx");
+		DMDocument.checkinPG(dmDocumentTitle = "Document_1.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -326,6 +358,12 @@ definition {
 	@priority = "4"
 	test EditPowerPointPresentation {
 		property test.name.skip.portal.instance = "OneDrive#EditPowerPointPresentation";
+
+		for (var documentTitle : list "Document_2,Powerpoint Presentation Title Edited") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -363,28 +401,34 @@ definition {
 	test EditWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#EditWordDocument";
 
+		for (var documentTitle : list "Document_3,Word Doc Title Edited") {
+			OneDrive.deleteDocument(dmDocumentTitle = "${documentTitle}");
+		}
+
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_2.docx",
-			dmDocumentTitle = "Document_2.docx");
+			dmDocumentFile = "Document_3.docx",
+			dmDocumentTitle = "Document_3.docx");
 
-		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.docx");
+		OneDrive.gotoEdit(dmDocumentTitle = "Document_3.docx");
 
 		OneDrive.editTitle(
 			dmDocumentTitle = "Word Doc Title Edited",
-			key_documentTitle = "Document_2.docx");
+			key_documentTitle = "Document_3.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.viewCheckedoutPG(
-			dmDocumentTitle = "Document_2.docx",
+			dmDocumentTitle = "Document_3.docx",
 			status = "Draft");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.checkinPG(dmDocumentTitle = "Document_2.docx");
+		DMDocument.checkinPG(dmDocumentTitle = "Document_3.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

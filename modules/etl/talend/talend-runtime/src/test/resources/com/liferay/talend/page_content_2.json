@@ -1,0 +1,29 @@
+{
+	"items": [
+		{
+			"availableLanguages": [
+				"en-US"
+			],
+			"creator": {
+				"familyName": "Admin",
+				"givenName": "Iron",
+				"id": 20140,
+				"name": "Iron Admin"
+			},
+			"dateCreated": "2019-08-06T21:50:29Z",
+			"dateModified": "2019-08-27T02:11:45Z",
+			"description": "Dia",
+			"id": 80350,
+			"name": "Dia",
+			"numberOfTaxonomyCategories": 0,
+			"parentTaxonomyVocabulary": {
+				"id": 80281,
+				"name": "Brands"
+			}
+		}
+	],
+	"lastPage": 2,
+	"page": 2,
+	"pageSize": 1,
+	"totalCount": 2
+}

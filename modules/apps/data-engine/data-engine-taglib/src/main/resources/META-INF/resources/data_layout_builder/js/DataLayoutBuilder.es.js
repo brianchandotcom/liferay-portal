@@ -57,53 +57,52 @@ class DataLayoutBuilder extends Component {
 		this.refs.layoutProvider.dispatch(event, payload);
 	}
 
+	getDefinitionField({settingsContext}) {
+		const fieldConfig = {
+			customProperties: {}
+		};
+		const settingsContextVisitor = new PagesVisitor(settingsContext.pages);
+
+		settingsContextVisitor.mapFields(
+			({fieldName, localizable, localizedValue, value}) => {
+				if (fieldName === 'predefinedValue') {
+					fieldName = 'defaultValue';
+				} else if (fieldName === 'type') {
+					fieldName = 'fieldType';
+				}
+
+				if (localizable) {
+					if (this._isCustomProperty(fieldName)) {
+						fieldConfig.customProperties[
+							fieldName
+						] = localizedValue;
+					} else {
+						fieldConfig[fieldName] = localizedValue;
+					}
+				} else {
+					if (this._isCustomProperty(fieldName)) {
+						fieldConfig.customProperties[fieldName] = value;
+					} else {
+						fieldConfig[fieldName] = value;
+					}
+				}
+			},
+			false
+		);
+
+		return fieldConfig;
+	}
+
 	getDefinitionAndLayout(pages) {
 		const {availableLanguageIds, defaultLanguageId} = this.props;
 		const fieldDefinitions = [];
 		const pagesVisitor = new PagesVisitor(pages);
 
-		const newPages = pagesVisitor.mapFields(
-			({fieldName, settingsContext}) => {
-				const fieldConfig = {
-					customProperties: {}
-				};
-				const settingsContextVisitor = new PagesVisitor(
-					settingsContext.pages
-				);
+		const newPages = pagesVisitor.mapFields(field => {
+			fieldDefinitions.push(this.getDefinitionField(field));
 
-				settingsContextVisitor.mapFields(
-					({fieldName, localizable, localizedValue, value}) => {
-						if (fieldName === 'predefinedValue') {
-							fieldName = 'defaultValue';
-						} else if (fieldName === 'type') {
-							fieldName = 'fieldType';
-						}
-
-						if (localizable) {
-							if (this._isCustomProperty(fieldName)) {
-								fieldConfig.customProperties[
-									fieldName
-								] = localizedValue;
-							} else {
-								fieldConfig[fieldName] = localizedValue;
-							}
-						} else {
-							if (this._isCustomProperty(fieldName)) {
-								fieldConfig.customProperties[fieldName] = value;
-							} else {
-								fieldConfig[fieldName] = value;
-							}
-						}
-					},
-					false
-				);
-
-				fieldDefinitions.push(fieldConfig);
-
-				return fieldName;
-			},
-			false
-		);
+			return field.fieldName;
+		}, false);
 
 		return {
 			definition: {

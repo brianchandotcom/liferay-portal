@@ -90,46 +90,59 @@ public abstract class BaseWorkflowMetricsTestCase {
 	}
 
 	protected void retryAssertCount(
-			long expectedCount, String indexName, Object... parameters)
+			long expectedCount, String indexName, String indexType,
+			Object... parameters)
 		throws Exception {
 
 		if (searchEngineAdapter == null) {
 			return;
 		}
 
-		IdempotentRetryAssert.retryAssert(
-			15, TimeUnit.SECONDS,
-			() -> {
-				CountSearchRequest countSearchRequest =
-					new CountSearchRequest();
+		if (parameters != null) {
+			if ((parameters.length % 2) != 0) {
+				throw new IllegalArgumentException(
+					"Parameters length is not an even number");
+			}
 
-				countSearchRequest.setIndexNames(indexName);
+			IdempotentRetryAssert.retryAssert(
+				15, TimeUnit.SECONDS,
+				() -> {
+					CountSearchRequest countSearchRequest =
+						new CountSearchRequest();
 
-				BooleanQuery booleanQuery = queries.booleanQuery();
+					countSearchRequest.setIndexNames(indexName);
 
-				for (int i = 0; i < parameters.length; i = i + 2) {
-					booleanQuery.addMustQueryClauses(
-						queries.term(
-							String.valueOf(parameters[i]), parameters[i + 1]));
-				}
+					BooleanQuery booleanQuery = queries.booleanQuery();
 
-				countSearchRequest.setQuery(booleanQuery);
+					for (int i = 0; i < parameters.length; i = i + 2) {
+						booleanQuery.addMustQueryClauses(
+							queries.term(
+								String.valueOf(parameters[i]),
+								parameters[i + 1]));
+					}
 
-				CountSearchResponse countSearchResponse =
-					searchEngineAdapter.execute(countSearchRequest);
+					countSearchRequest.setQuery(booleanQuery);
 
-				Assert.assertEquals(
-					countSearchResponse.getSearchRequestString(), expectedCount,
-					countSearchResponse.getCount());
+					countSearchRequest.setTypes(indexType);
 
-				return null;
-			});
+					CountSearchResponse countSearchResponse =
+						searchEngineAdapter.execute(countSearchRequest);
+
+					Assert.assertEquals(
+						indexName + " " + indexType + " " +
+							countSearchResponse.getSearchRequestString(),
+						expectedCount, countSearchResponse.getCount());
+
+					return null;
+				});
+		}
 	}
 
-	protected void retryAssertCount(String indexName, Object... parameters)
+	protected void retryAssertCount(
+			String indexName, String indexType, Object... parameters)
 		throws Exception {
 
-		retryAssertCount(1, indexName, parameters);
+		retryAssertCount(1, indexName, indexType, parameters);
 	}
 
 	@Inject

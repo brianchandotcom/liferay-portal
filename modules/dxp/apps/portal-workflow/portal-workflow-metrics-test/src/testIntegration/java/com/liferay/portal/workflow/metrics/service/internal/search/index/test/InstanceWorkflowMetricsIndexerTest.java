@@ -51,12 +51,12 @@ public class InstanceWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-instances", "className",
-			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
-			"companyId", kaleoInstance.getCompanyId(), "completed", false,
-			"deleted", false, "instanceId", kaleoInstance.getKaleoInstanceId(),
-			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
-			"1.0");
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", false, "deleted", false,
+			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
 	}
 
 	@Test
@@ -66,12 +66,12 @@ public class InstanceWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-instances", "className",
-			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
-			"companyId", kaleoInstance.getCompanyId(), "completed", false,
-			"deleted", false, "instanceId", kaleoInstance.getKaleoInstanceId(),
-			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
-			"1.0");
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", false, "deleted", false,
+			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
 
 		kaleoInstance = completeKaleoInstance(kaleoInstance);
 
@@ -83,10 +83,11 @@ public class InstanceWorkflowMetricsIndexerTest
 			createDate.toInstant(), completionDate.toInstant());
 
 		retryAssertCount(
-			"workflow-metrics-instances", "className",
-			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
-			"companyId", kaleoInstance.getCompanyId(), "completed", true,
-			"deleted", false, "duration", duration.toMillis(), "instanceId",
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", true, "deleted", false,
+			"duration", duration.toMillis(), "instanceId",
 			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
 	}
@@ -100,12 +101,12 @@ public class InstanceWorkflowMetricsIndexerTest
 		deleteKaleoInstance(kaleoInstance);
 
 		retryAssertCount(
-			"workflow-metrics-instances", "className",
-			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
-			"companyId", kaleoInstance.getCompanyId(), "completed", false,
-			"deleted", true, "instanceId", kaleoInstance.getKaleoInstanceId(),
-			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
-			"1.0");
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", false, "deleted", true,
+			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
 	}
 
 	@Test

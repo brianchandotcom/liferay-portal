@@ -44,15 +44,18 @@ public class ProcessWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "deleted", false,
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
+			"1.0");
 		retryAssertCount(
-			"workflow-metrics-instances", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "instanceId", 0);
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"companyId", kaleoDefinition.getCompanyId(), "deleted", false,
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "instanceId",
+			0);
 		retryAssertCount(
-			"workflow-metrics-sla-process-results", "companyId",
+			"workflow-metrics-sla-process-results",
+			"WorkflowMetricsSLAProcessResultType", "companyId",
 			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "slaDefinitionId", 0);
 	}
@@ -64,9 +67,10 @@ public class ProcessWorkflowMetricsIndexerTest
 		deleteKaleoDefinition(kaleoDefinition);
 
 		retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", true, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "deleted", true,
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
+			"1.0");
 	}
 
 	@Test
@@ -92,16 +96,18 @@ public class ProcessWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "version", "1.0");
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "deleted", false,
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
+			"1.0");
 
 		updateKaleoDefinition(kaleoDefinition);
 
 		retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
-			kaleoDefinition.getKaleoDefinitionId(), "version", "2.0");
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "deleted", false,
+			"processId", kaleoDefinition.getKaleoDefinitionId(), "version",
+			"2.0");
 	}
 
 	@Inject(

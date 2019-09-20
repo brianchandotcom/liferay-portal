@@ -17,6 +17,8 @@ package com.liferay.gradle.plugins.defaults;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.gradle.publish.PublishPlugin;
+
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
@@ -1924,7 +1926,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
 		}
 
-		if (FileUtil.hasSourceFiles(jarSourcesCommercialTask, spec)) {
+		if (!GradleUtil.hasPlugin(project, PublishPlugin.class) &&
+			FileUtil.hasSourceFiles(jarSourcesCommercialTask, spec)) {
+
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarSourcesCommercialTask);
 		}

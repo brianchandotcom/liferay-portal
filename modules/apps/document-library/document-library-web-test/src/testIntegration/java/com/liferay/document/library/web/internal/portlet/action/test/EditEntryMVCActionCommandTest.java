@@ -183,6 +183,85 @@ public class EditEntryMVCActionCommandTest {
 		Assert.assertEquals("New version", fileVersion.getChangeLog());
 	}
 
+	@Test
+	public void testCheckOut() throws PortalException, PortletException {
+		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<String, String[]> parameters = Stream.of(
+			new AbstractMap.SimpleEntry<>(
+				Constants.CMD, new String[] {Constants.CHECKOUT}),
+			new AbstractMap.SimpleEntry<>(
+				"folderId",
+				new String[] {String.valueOf(initialFileEntry.getFolderId())}),
+			new AbstractMap.SimpleEntry<>(
+				"repositoryId",
+				new String[] {
+					String.valueOf(initialFileEntry.getRepositoryId())
+				}),
+			new AbstractMap.SimpleEntry<>(
+				"rowIdsFileEntry",
+				new String[] {
+					String.valueOf(initialFileEntry.getFileEntryId())
+				})
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		_mvcActionCommand.processAction(
+			new MockActionRequest(company, _group, parameters),
+			new MockActionResponse());
+
+		FileEntry actualFileEntry = _dlAppLocalService.getFileEntry(
+			initialFileEntry.getFileEntryId());
+
+		Assert.assertTrue(actualFileEntry.isCheckedOut());
+	}
+
+	@Test
+	public void testCheckOutAll() throws PortalException, PortletException {
+		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<String, String[]> parameters = Stream.of(
+			new AbstractMap.SimpleEntry<>(
+				Constants.CMD, new String[] {Constants.CHECKOUT}),
+			new AbstractMap.SimpleEntry<>(
+				"folderId",
+				new String[] {String.valueOf(initialFileEntry.getFolderId())}),
+			new AbstractMap.SimpleEntry<>(
+				"repositoryId",
+				new String[] {
+					String.valueOf(initialFileEntry.getRepositoryId())
+				}),
+			new AbstractMap.SimpleEntry<>(
+				"selectAll", new String[] {String.valueOf(Boolean.TRUE)})
+		).collect(
+			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+		);
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		_mvcActionCommand.processAction(
+			new MockActionRequest(company, _group, parameters),
+			new MockActionResponse());
+
+		FileEntry actualFileEntry = _dlAppLocalService.getFileEntry(
+			initialFileEntry.getFileEntryId());
+
+		Assert.assertTrue(actualFileEntry.isCheckedOut());
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 

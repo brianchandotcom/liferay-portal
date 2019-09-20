@@ -4568,6 +4568,12 @@ log.sanitizer.enabled=false</echo>
 						<available file="liferay-portal-source.tar.gz" />
 					</and>
 					<then>
+						<untar
+							compression="gzip"
+							dest="."
+							src="liferay-portal-bundle-${app.server.type}.tar.gz"
+						/>
+
 						<antcall inheritAll="false" target="compile" />
 
 						<antcall inheritAll="false" target="install-portal-snapshots" />

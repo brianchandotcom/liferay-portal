@@ -163,7 +163,7 @@ class EditCategories extends Component {
 			if (responseCategories && responseSelection) {
 				this.loading = false;
 				this.description = this._getDescription(responseSelection.size);
-				this.multiple = this.fileEntries.length > 1 || this.selectAll;
+				this.multiple = this.selectAll || this.fileEntries.length > 1;
 				this.vocabularies = this._parseVocabularies(
 					responseCategories.items || []
 				);

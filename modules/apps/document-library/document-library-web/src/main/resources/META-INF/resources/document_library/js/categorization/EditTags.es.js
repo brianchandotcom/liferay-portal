@@ -128,7 +128,7 @@ class EditTags extends Component {
 					(responseTags.items || []).map(item => item.name)
 				);
 				this.description = this._getDescription(responseSelection.size);
-				this.multiple = this.fileEntries.length > 1 || this.selectAll;
+				this.multiple =  this.selectAll || this.fileEntries.length > 1;
 			}
 		});
 	}

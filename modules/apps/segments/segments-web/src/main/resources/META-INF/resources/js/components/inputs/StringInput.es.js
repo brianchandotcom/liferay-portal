@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClaySelectWithOption} from '@clayui/select';
+import {ClaySelectWithOption} from '@clayui/form';
 import propTypes from 'prop-types';
 import React from 'react';
 

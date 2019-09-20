@@ -19,7 +19,7 @@ import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
 import ClayIcon from '@clayui/icon';
-import ClaySelect from '@clayui/select';
+import {ClaySelect} from '@clayui/form';
 import {SegmentsExperimentGoal} from '../types.es';
 
 function SegmentsExperimentsModal({

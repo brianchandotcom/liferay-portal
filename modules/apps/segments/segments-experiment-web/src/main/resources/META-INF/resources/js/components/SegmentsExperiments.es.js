@@ -18,7 +18,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClaySelect from '@clayui/select';
+import {ClaySelect} from '@clayui/form';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
 import {SegmentsExperienceType} from '../types.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';

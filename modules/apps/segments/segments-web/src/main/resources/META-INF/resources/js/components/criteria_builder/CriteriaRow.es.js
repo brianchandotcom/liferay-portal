@@ -16,7 +16,7 @@ import BooleanInput from '../inputs/BooleanInput.es';
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {ClaySelectWithOption} from '@clayui/select';
+import {ClaySelectWithOption} from '@clayui/form';
 import CollectionInput from '../inputs/CollectionInput.es';
 import DateInput from '../inputs/DateInput.es';
 import DateTimeInput from '../inputs/DateTimeInput.es';

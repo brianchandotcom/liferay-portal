@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -106,12 +107,12 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 				httpServletRequest,
 				PortletIdCodec.encode(portletId, oldInstanceId));
 
-		PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+		_portletPreferencesLocalService.addPortletPreferences(
 			portletPreferencesIds.getCompanyId(),
 			portletPreferencesIds.getOwnerId(),
 			portletPreferencesIds.getOwnerType(),
 			portletPreferencesIds.getPlid(),
-			PortletIdCodec.encode(portletId, newInstanceId),
+			PortletIdCodec.encode(portletId, newInstanceId), null,
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 	}
 
@@ -309,5 +310,8 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

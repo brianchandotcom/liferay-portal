@@ -22,7 +22,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -54,20 +53,12 @@ public class CheckoutCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 		long ctCollectionId = ParamUtil.getLong(
 			actionRequest, "ctCollectionId");
-		String ctCollectionName = ParamUtil.getString(actionRequest, "name");
 
 		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			CTCollection ctCollection =
 				_ctCollectionLocalService.fetchCTCollection(ctCollectionId);
 
 			if (ctCollection == null) {
-				SessionErrors.add(
-					actionRequest,
-					_portal.getPortletId(actionRequest) + "checkoutFailure",
-					ctCollectionName);
-
-				hideDefaultErrorMessage(actionRequest);
-
 				return;
 			}
 		}

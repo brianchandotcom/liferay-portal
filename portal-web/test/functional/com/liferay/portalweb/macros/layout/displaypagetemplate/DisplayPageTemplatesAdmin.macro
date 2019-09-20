@@ -5,6 +5,16 @@ definition {
 
 		PortletEntry.inputName(name = "${displayPageName}");
 
+		Select(
+			key_fieldLabel = "Content Type",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${contentType}");
+
+		Select(
+			key_fieldLabel = "Subtype",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${subType}");
+
 		Button.clickSave();
 
 		PageEditor.assertFragmentSidebarLoaded();

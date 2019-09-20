@@ -297,26 +297,6 @@ definition {
 		Portlet.saveAndCloseConfig();
 	}
 
-	macro selectScope {
-		Navigator.gotoNavTab(navTab = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "${scope}");
-
-		Portlet.saveAndCloseConfig();
-	}
-
-	macro selectScope {
-		Navigator.gotoNavTab(navTab = "Scope");
-
-		Select(
-			locator1 = "Select#SCOPE",
-			value1 = "${scope}");
-
-		Portlet.saveAndCloseConfig();
-	}
-
 	macro selectTreeNode {
 		if (IsElementPresent(locator1 = "Treeview#NODE_UNSELECTED", key_nodeName = "${nodeName}")) {
 			AssertClick.assertPartialTextClickAt(

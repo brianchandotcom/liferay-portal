@@ -56,6 +56,29 @@ public class LiferayReaderTest extends BaseTest {
 	}
 
 	@Test
+	public void testPaging() throws Exception {
+		String endpoint = "/v1.0/page-content/{id}/taxonomy-categories";
+
+		LiferayInputReader liferayInputReader = new LiferayInputReader(
+			null, new LiferayFixedResponseContentSource(),
+			_getTLiferayInputProperties(
+				Action.Unavailable, _OAS_URL, endpoint));
+
+		liferayInputReader.start();
+
+		Assert.assertTrue(
+			"Liferay input reader advanced to next page",
+			liferayInputReader.advance());
+
+		Assert.assertNotNull(
+			"Current JSON value", liferayInputReader.getCurrentJsonValue());
+
+		Assert.assertFalse(
+			"Liferay input reader advanced to next page",
+			liferayInputReader.advance());
+	}
+
+	@Test
 	public void testStartIfEmptyPageReturned() throws Exception {
 		String endpoint =
 			"/v1.0/taxonomy-vocabularies/{id}/taxonomy-categories";

@@ -173,6 +173,13 @@ public class RenderFragmentEntryStrutsActionTest {
 		elements.remove();
 
 		return bodyElement.html();
+		elements = bodyElement.getElementsByTag("link");
+
+		elements.remove();
+
+		elements = bodyElement.getElementsByTag("script");
+
+		elements.remove();
 	}
 
 	private void _setUpEnvironment(

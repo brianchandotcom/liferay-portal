@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -29,7 +30,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -63,10 +65,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.log4j.Level;
@@ -231,17 +233,27 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		String[] indexNames = ArrayUtil.toStringArray(indexNamesMap.keySet());
 
+		for (int i = 0; i < indexNames.length; i++) {
+			retryAssertCount(
+				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
+				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
+		}
+
 		clearIndices(indexNames, indexTypes, parameters);
 
-		for (String indexName : indexNames) {
-			retryAssertCount(0, indexName, parameters);
+		for (int i = 0; i < indexNames.length; i++) {
+			retryAssertCount(
+				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
+				ArrayUtil.append(new Object[] {"deleted", true}, parameters));
 		}
 
 		indexer.reindex(
 			new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
-		for (Map.Entry<String, Integer> entry : indexNamesMap.entrySet()) {
-			retryAssertCount(entry.getValue(), entry.getKey(), parameters);
+		for (int i = 0; i < indexNames.length; i++) {
+			retryAssertCount(
+				indexNamesMap.get(indexNames[i]), indexNames[i], indexTypes[i],
+				ArrayUtil.append(new Object[] {"deleted", false}, parameters));
 		}
 	}
 
@@ -250,13 +262,14 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			Object... parameters)
 		throws Exception {
 
-		Stream<String> stream = Stream.of(indexNames);
+		Map<String, Integer> indexNamesMap = Stream.of(
+			indexNames
+		).collect(
+			LinkedHashMap::new, (map, indexName) -> map.put(indexName, 1),
+			Map::putAll
+		);
 
-		assertReindex(
-			indexer,
-			stream.collect(
-				Collectors.toMap(indexName -> indexName, indexName -> 1)),
-			indexTypes, parameters);
+		assertReindex(indexer, indexNamesMap, indexTypes, parameters);
 	}
 
 	protected KaleoTaskInstanceToken assignKaleoTaskInstanceToken(
@@ -282,7 +295,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 		for (int i = 0; i < indexNames.length; i++) {
 			SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-			searchSearchRequest.setIndexNames(indexNames[i]);
+			String indexName = indexNames[i];
+
+			searchSearchRequest.setIndexNames(indexName);
 
 			BooleanQuery booleanQuery = queries.booleanQuery();
 
@@ -294,8 +309,15 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 			searchSearchRequest.setQuery(booleanQuery);
 
-			List<String> uids = Stream.of(
-				searchEngineAdapter.execute(searchSearchRequest)
+			String indexType = indexTypes[i];
+
+			searchSearchRequest.setTypes(indexType);
+
+			SearchSearchResponse searchSearchResponse =
+				searchEngineAdapter.execute(searchSearchRequest);
+
+			Stream.of(
+				searchSearchResponse
 			).map(
 				SearchSearchResponse::getSearchHits
 			).map(
@@ -305,16 +327,24 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 			).map(
 				SearchHit::getDocument
 			).map(
-				document -> document.getString("uid")
-			).collect(
-				Collectors.toList()
-			);
+				_documentBuilderFactory::builder
+			).map(
+				documentBuilder -> {
+					documentBuilder.setValue("deleted", true);
 
-			for (String uid : uids) {
-				searchEngineAdapter.execute(
-					new DeleteDocumentRequest(
-						indexNames[i], indexTypes[i], uid));
-			}
+					return documentBuilder.build();
+				}
+			).forEach(
+				document -> {
+					UpdateDocumentRequest updateDocumentRequest =
+						new UpdateDocumentRequest(
+							indexName, document.getString("uid"), document);
+
+					updateDocumentRequest.setType(indexType);
+
+					searchEngineAdapter.execute(updateDocumentRequest);
+				}
+			);
 		}
 	}
 
@@ -323,6 +353,33 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 		return _kaleoInstanceLocalService.completeKaleoInstance(
 			kaleoInstance.getKaleoInstanceId());
+	}
+
+	protected void completeKaleoTaskInstanceToken(KaleoInstance kaleoInstance)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setUserId(0);
+
+		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
+			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceTokens(
+				kaleoInstance.getKaleoInstanceId(), false, -1, -1, null,
+				serviceContext);
+
+		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
+				kaleoTaskInstanceTokens) {
+
+			_kaleoTaskInstanceTokenLocalService.assignKaleoTaskInstanceToken(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+				User.class.getName(), TestPropsValues.getUserId(), null,
+				ServiceContextTestUtil.getServiceContext());
+
+			_kaleoTaskInstanceTokenLocalService.completeKaleoTaskInstanceToken(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
+				ServiceContextTestUtil.getServiceContext());
+		}
 	}
 
 	protected KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
@@ -447,6 +504,9 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Inject
+	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@DeleteAfterTestRun
 	private KaleoDefinition _kaleoDefinition;

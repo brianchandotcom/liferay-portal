@@ -17,6 +17,8 @@ package com.liferay.portal.workflow.metrics.service.internal.search.index.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -52,11 +54,11 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-processes", "companyId",
-			kaleoDefinition.getCompanyId(), "processId",
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 		retryAssertCount(
-			4, "workflow-metrics-nodes", "companyId",
+			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
 			kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 
@@ -73,14 +75,19 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 
 		KaleoInstance kaleoInstance = getKaleoInstance(blogsEntry);
 
+		completeKaleoTaskInstanceToken(kaleoInstance);
+
 		completeKaleoInstance(kaleoInstance);
 
 		retryAssertCount(
-			"workflow-metrics-instances", "className",
-			kaleoInstance.getClassName(), "classPK", kaleoInstance.getClassPK(),
-			"companyId", kaleoInstance.getCompanyId(), "completed", true,
-			"instanceId", kaleoInstance.getKaleoInstanceId(), "processId",
+			"workflow-metrics-instances", "WorkflowMetricsInstanceType",
+			"className", kaleoInstance.getClassName(), "classPK",
+			kaleoInstance.getClassPK(), "companyId",
+			kaleoInstance.getCompanyId(), "completed", true, "instanceId",
+			kaleoInstance.getKaleoInstanceId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
+
+		_workflowMetricsSLAProcessMessageListener.receive(new Message());
 
 		assertReindex(
 			_slaProcessResultWorkflowMetricsIndexer,
@@ -107,5 +114,10 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 	@Inject
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
+
+	@Inject(
+		filter = "(&(objectClass=com.liferay.portal.workflow.metrics.internal.messaging.WorkflowMetricsSLAProcessMessageListener))"
+	)
+	private MessageListener _workflowMetricsSLAProcessMessageListener;
 
 }

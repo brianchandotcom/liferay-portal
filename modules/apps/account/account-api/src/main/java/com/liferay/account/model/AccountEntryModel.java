@@ -17,6 +17,7 @@ package com.liferay.account.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountEntryModel
-	extends AuditedModel, BaseModel<AccountEntry>, ShardedModel {
+	extends AuditedModel, BaseModel<AccountEntry>, MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +58,22 @@ public interface AccountEntryModel
 	 * @param primaryKey the primary key of this account entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this account entry.
+	 *
+	 * @return the mvcc version of this account entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this account entry.
+	 *
+	 * @param mvccVersion the mvcc version of this account entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the account entry ID of this account entry.

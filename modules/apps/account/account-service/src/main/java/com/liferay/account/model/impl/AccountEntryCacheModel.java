@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AccountEntryCacheModel
-	implements CacheModel<AccountEntry>, Externalizable {
+	implements CacheModel<AccountEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AccountEntryCacheModel
 		AccountEntryCacheModel accountEntryCacheModel =
 			(AccountEntryCacheModel)obj;
 
-		if (accountEntryId == accountEntryCacheModel.accountEntryId) {
+		if ((accountEntryId == accountEntryCacheModel.accountEntryId) &&
+			(mvccVersion == accountEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AccountEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, accountEntryId);
+		int hashCode = HashUtil.hash(0, accountEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{accountEntryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -95,6 +112,7 @@ public class AccountEntryCacheModel
 	public AccountEntry toEntityModel() {
 		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
 
+		accountEntryImpl.setMvccVersion(mvccVersion);
 		accountEntryImpl.setAccountEntryId(accountEntryId);
 		accountEntryImpl.setCompanyId(companyId);
 		accountEntryImpl.setUserId(userId);
@@ -146,6 +164,8 @@ public class AccountEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		accountEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -166,6 +186,8 @@ public class AccountEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(accountEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -203,6 +225,7 @@ public class AccountEntryCacheModel
 		objectOutput.writeInt(status);
 	}
 
+	public long mvccVersion;
 	public long accountEntryId;
 	public long companyId;
 	public long userId;

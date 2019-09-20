@@ -71,9 +71,10 @@ public class AccountEntryModelImpl
 	public static final String TABLE_NAME = "AccountEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"accountEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"accountEntryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"logoId", Types.BIGINT},
 		{"status", Types.INTEGER}
@@ -83,6 +84,7 @@ public class AccountEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +99,7 @@ public class AccountEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,logoId LONG,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,logoId LONG,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -139,6 +141,7 @@ public class AccountEntryModelImpl
 
 		AccountEntry model = new AccountEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -301,6 +304,11 @@ public class AccountEntryModelImpl
 			new LinkedHashMap<String, BiConsumer<AccountEntry, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", AccountEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AccountEntry, Long>)AccountEntry::setMvccVersion);
+		attributeGetterFunctions.put(
 			"accountEntryId", AccountEntry::getAccountEntryId);
 		attributeSetterBiConsumers.put(
 			"accountEntryId",
@@ -351,6 +359,17 @@ public class AccountEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -573,6 +592,7 @@ public class AccountEntryModelImpl
 	public Object clone() {
 		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
 
+		accountEntryImpl.setMvccVersion(getMvccVersion());
 		accountEntryImpl.setAccountEntryId(getAccountEntryId());
 		accountEntryImpl.setCompanyId(getCompanyId());
 		accountEntryImpl.setUserId(getUserId());
@@ -662,6 +682,8 @@ public class AccountEntryModelImpl
 	public CacheModel<AccountEntry> toCacheModel() {
 		AccountEntryCacheModel accountEntryCacheModel =
 			new AccountEntryCacheModel();
+
+		accountEntryCacheModel.mvccVersion = getMvccVersion();
 
 		accountEntryCacheModel.accountEntryId = getAccountEntryId();
 
@@ -793,6 +815,7 @@ public class AccountEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _accountEntryId;
 	private long _companyId;
 	private long _originalCompanyId;

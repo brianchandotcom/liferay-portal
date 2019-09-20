@@ -41,6 +41,7 @@ public class AccountEntryUserRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("accountEntryUserRelId", getAccountEntryUserRelId());
 		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("accountUserId", getAccountUserId());
@@ -50,6 +51,12 @@ public class AccountEntryUserRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long accountEntryUserRelId = (Long)attributes.get(
 			"accountEntryUserRelId");
 
@@ -111,6 +118,16 @@ public class AccountEntryUserRelWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this account entry user rel.
+	 *
+	 * @return the mvcc version of this account entry user rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this account entry user rel.
 	 *
 	 * @return the primary key of this account entry user rel
@@ -168,6 +185,16 @@ public class AccountEntryUserRelWrapper
 	@Override
 	public void setAccountUserUuid(String accountUserUuid) {
 		model.setAccountUserUuid(accountUserUuid);
+	}
+
+	/**
+	 * Sets the mvcc version of this account entry user rel.
+	 *
+	 * @param mvccVersion the mvcc version of this account entry user rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

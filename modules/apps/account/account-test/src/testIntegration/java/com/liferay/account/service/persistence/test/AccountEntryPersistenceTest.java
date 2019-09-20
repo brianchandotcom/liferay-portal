@@ -122,6 +122,8 @@ public class AccountEntryPersistenceTest {
 
 		AccountEntry newAccountEntry = _persistence.create(pk);
 
+		newAccountEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newAccountEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newAccountEntry.setUserId(RandomTestUtil.nextLong());
@@ -147,6 +149,9 @@ public class AccountEntryPersistenceTest {
 		AccountEntry existingAccountEntry = _persistence.findByPrimaryKey(
 			newAccountEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingAccountEntry.getMvccVersion(),
+			newAccountEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingAccountEntry.getAccountEntryId(),
 			newAccountEntry.getAccountEntryId());
@@ -217,10 +222,10 @@ public class AccountEntryPersistenceTest {
 
 	protected OrderByComparator<AccountEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AccountEntry", "accountEntryId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"parentAccountEntryId", true, "name", true, "description", true,
-			"logoId", true, "status", true);
+			"AccountEntry", "mvccVersion", true, "accountEntryId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "parentAccountEntryId", true, "name",
+			true, "description", true, "logoId", true, "status", true);
 	}
 
 	@Test
@@ -440,6 +445,8 @@ public class AccountEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AccountEntry accountEntry = _persistence.create(pk);
+
+		accountEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		accountEntry.setCompanyId(RandomTestUtil.nextLong());
 

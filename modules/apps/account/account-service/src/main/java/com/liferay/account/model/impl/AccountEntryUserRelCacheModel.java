@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class AccountEntryUserRelCacheModel
-	implements CacheModel<AccountEntryUserRel>, Externalizable {
+	implements CacheModel<AccountEntryUserRel>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -46,8 +47,9 @@ public class AccountEntryUserRelCacheModel
 		AccountEntryUserRelCacheModel accountEntryUserRelCacheModel =
 			(AccountEntryUserRelCacheModel)obj;
 
-		if (accountEntryUserRelId ==
-				accountEntryUserRelCacheModel.accountEntryUserRelId) {
+		if ((accountEntryUserRelId ==
+				accountEntryUserRelCacheModel.accountEntryUserRelId) &&
+			(mvccVersion == accountEntryUserRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -57,14 +59,28 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, accountEntryUserRelId);
+		int hashCode = HashUtil.hash(0, accountEntryUserRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("{accountEntryUserRelId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", accountEntryUserRelId=");
 		sb.append(accountEntryUserRelId);
 		sb.append(", accountEntryId=");
 		sb.append(accountEntryId);
@@ -80,6 +96,7 @@ public class AccountEntryUserRelCacheModel
 		AccountEntryUserRelImpl accountEntryUserRelImpl =
 			new AccountEntryUserRelImpl();
 
+		accountEntryUserRelImpl.setMvccVersion(mvccVersion);
 		accountEntryUserRelImpl.setAccountEntryUserRelId(accountEntryUserRelId);
 		accountEntryUserRelImpl.setAccountEntryId(accountEntryId);
 		accountEntryUserRelImpl.setAccountUserId(accountUserId);
@@ -91,6 +108,8 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		accountEntryUserRelId = objectInput.readLong();
 
 		accountEntryId = objectInput.readLong();
@@ -100,6 +119,8 @@ public class AccountEntryUserRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(accountEntryUserRelId);
 
 		objectOutput.writeLong(accountEntryId);
@@ -107,6 +128,7 @@ public class AccountEntryUserRelCacheModel
 		objectOutput.writeLong(accountUserId);
 	}
 
+	public long mvccVersion;
 	public long accountEntryUserRelId;
 	public long accountEntryId;
 	public long accountUserId;

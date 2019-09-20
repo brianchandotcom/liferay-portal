@@ -71,7 +71,7 @@ public class AccountEntryUserRelModelImpl
 	public static final String TABLE_NAME = "AccountEntryUserRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"accountEntryUserRelId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"accountEntryUserRelId", Types.BIGINT},
 		{"accountEntryId", Types.BIGINT}, {"accountUserId", Types.BIGINT}
 	};
 
@@ -79,13 +79,14 @@ public class AccountEntryUserRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryUserRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accountUserId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntryUserRel (accountEntryUserRelId LONG not null primary key,accountEntryId LONG,accountUserId LONG)";
+		"create table AccountEntryUserRel (mvccVersion LONG default 0 not null,accountEntryUserRelId LONG not null primary key,accountEntryId LONG,accountUserId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";
@@ -131,6 +132,7 @@ public class AccountEntryUserRelModelImpl
 
 		AccountEntryUserRel model = new AccountEntryUserRelImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setAccountEntryUserRelId(soapModel.getAccountEntryUserRelId());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
 		model.setAccountUserId(soapModel.getAccountUserId());
@@ -290,6 +292,12 @@ public class AccountEntryUserRelModelImpl
 				new LinkedHashMap<String, BiConsumer<AccountEntryUserRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", AccountEntryUserRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AccountEntryUserRel, Long>)
+				AccountEntryUserRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"accountEntryUserRelId",
 			AccountEntryUserRel::getAccountEntryUserRelId);
 		attributeSetterBiConsumers.put(
@@ -313,6 +321,17 @@ public class AccountEntryUserRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -425,6 +444,7 @@ public class AccountEntryUserRelModelImpl
 		AccountEntryUserRelImpl accountEntryUserRelImpl =
 			new AccountEntryUserRelImpl();
 
+		accountEntryUserRelImpl.setMvccVersion(getMvccVersion());
 		accountEntryUserRelImpl.setAccountEntryUserRelId(
 			getAccountEntryUserRelId());
 		accountEntryUserRelImpl.setAccountEntryId(getAccountEntryId());
@@ -509,6 +529,8 @@ public class AccountEntryUserRelModelImpl
 		AccountEntryUserRelCacheModel accountEntryUserRelCacheModel =
 			new AccountEntryUserRelCacheModel();
 
+		accountEntryUserRelCacheModel.mvccVersion = getMvccVersion();
+
 		accountEntryUserRelCacheModel.accountEntryUserRelId =
 			getAccountEntryUserRelId();
 
@@ -592,6 +614,7 @@ public class AccountEntryUserRelModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _accountEntryUserRelId;
 	private long _accountEntryId;
 	private long _originalAccountEntryId;

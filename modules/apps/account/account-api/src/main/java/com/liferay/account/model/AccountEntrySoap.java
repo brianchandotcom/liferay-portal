@@ -31,6 +31,7 @@ public class AccountEntrySoap implements Serializable {
 	public static AccountEntrySoap toSoapModel(AccountEntry model) {
 		AccountEntrySoap soapModel = new AccountEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setAccountEntryId(model.getAccountEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -93,6 +94,14 @@ public class AccountEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setAccountEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public long getAccountEntryId() {
@@ -183,6 +192,7 @@ public class AccountEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	private long _mvccVersion;
 	private long _accountEntryId;
 	private long _companyId;
 	private long _userId;

@@ -15,6 +15,7 @@
 package com.liferay.account.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountEntryUserRelModel
-	extends BaseModel<AccountEntryUserRel> {
+	extends BaseModel<AccountEntryUserRel>, MVCCModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,22 @@ public interface AccountEntryUserRelModel
 	 * @param primaryKey the primary key of this account entry user rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this account entry user rel.
+	 *
+	 * @return the mvcc version of this account entry user rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this account entry user rel.
+	 *
+	 * @param mvccVersion the mvcc version of this account entry user rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the account entry user rel ID of this account entry user rel.

@@ -186,10 +186,8 @@ public class ServiceConfigurationExtender
 			sb.append(".");
 			sb.append(version.getMinor());
 			sb.append(".0)(!(release.schema.version>=");
-			sb.append(version.getMajor());
-			sb.append(".");
-			sb.append(version.getMinor() + 1);
-			sb.append(".0)))");
+			sb.append(version.getMajor() + 1);
+			sb.append(".0.0)))");
 
 			return sb.toString();
 		}

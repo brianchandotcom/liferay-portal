@@ -70,6 +70,23 @@ definition {
 		OneDrive.goToOneDrive();
 	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
 	@priority = "5"
 	test AddExcelSheet {
@@ -436,23 +453,6 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Word Doc Title Edited",
 			dmDocumentVersionNumber = "2.0");
-	}
-
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			DMDocument.tearDownCP();
-
-			DMFolder.tearDownCP();
-
-			DMDocumentType.tearDownCP();
-
-			Page.tearDownCP();
-		}
 	}
 
 }

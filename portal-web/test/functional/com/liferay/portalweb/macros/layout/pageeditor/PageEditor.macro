@@ -1,5 +1,23 @@
 definition {
 
+	macro addBasicComponent {
+		PageEditor.gotoTab(tabName = "Section Builder");
+
+		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
+
+		DragAndDrop(
+			fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_BUILDER_BASIC_COMPONENTS_FRAGMENT",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
+
+		AssertElementPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro addComment {
 		PageEditor.gotoTab(tabName = "Comments");
 

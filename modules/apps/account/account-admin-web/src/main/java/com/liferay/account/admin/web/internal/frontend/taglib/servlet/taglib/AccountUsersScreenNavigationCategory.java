@@ -51,7 +51,7 @@ public class AccountUsersScreenNavigationCategory
 
 	@Override
 	public String getJspPath() {
-		return "/account/users.jsp";
+		return "/view_account_users.jsp";
 	}
 
 	@Override

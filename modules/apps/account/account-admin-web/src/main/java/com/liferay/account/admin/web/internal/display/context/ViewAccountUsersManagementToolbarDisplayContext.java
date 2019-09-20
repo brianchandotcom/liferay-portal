@@ -30,10 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Albert Lee
  */
-public class ViewAccountsUsersManagementToolbarDisplayContext
+public class ViewAccountUsersManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
-	public ViewAccountsUsersManagementToolbarDisplayContext(
+	public ViewAccountUsersManagementToolbarDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -74,6 +74,6 @@ public class ViewAccountsUsersManagementToolbarDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewAccountsUsersManagementToolbarDisplayContext.class);
+		ViewAccountUsersManagementToolbarDisplayContext.class);
 
 }

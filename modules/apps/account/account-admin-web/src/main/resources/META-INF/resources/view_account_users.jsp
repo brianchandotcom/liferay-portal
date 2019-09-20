@@ -24,7 +24,7 @@ List<User> results = new ArrayList<>();
 accountUsersDisplaySearchContainer.setResults(results);
 accountUsersDisplaySearchContainer.setEmptyResultsMessage("there-are-no-users-associated-to-this-account");
 
-ViewAccountsUsersManagementToolbarDisplayContext viewAccountsUsersManagementToolbarDisplayContext = new ViewAccountsUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUsersDisplaySearchContainer);
+ViewAccountUsersManagementToolbarDisplayContext viewAccountUsersManagementToolbarDisplayContext = new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUsersDisplaySearchContainer);
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
@@ -37,7 +37,7 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 %>
 
 <clay:management-toolbar
-	displayContext="<%= viewAccountsUsersManagementToolbarDisplayContext %>"
+	displayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">

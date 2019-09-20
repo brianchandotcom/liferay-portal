@@ -162,7 +162,8 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
 
-		outputSettings.prettyPrint(true);
+		outputSettings.indentAmount(0);
+		outputSettings.prettyPrint(false);
 
 		document.outputSettings(outputSettings);
 
@@ -172,7 +173,6 @@ public class RenderFragmentEntryStrutsActionTest {
 
 		elements.remove();
 
-		return bodyElement.html();
 		elements = bodyElement.getElementsByTag("link");
 
 		elements.remove();
@@ -180,6 +180,16 @@ public class RenderFragmentEntryStrutsActionTest {
 		elements = bodyElement.getElementsByTag("script");
 
 		elements.remove();
+
+		return _removeSpacingCharactersBetweenTags(bodyElement);
+	}
+
+	private String _removeSpacingCharactersBetweenTags(Element bodyElement) {
+		String htmlString = bodyElement.html();
+
+		htmlString = htmlString.replaceAll(">\\s+", ">");
+
+		return htmlString.replaceAll("\\s+<", "<");
 	}
 
 	private void _setUpEnvironment(

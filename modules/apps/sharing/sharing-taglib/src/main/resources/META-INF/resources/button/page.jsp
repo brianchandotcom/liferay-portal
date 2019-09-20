@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/sharing/init.jsp" %>
+<%@ include file="/button/init.jsp" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_sharing_button_page") + StringPool.UNDERLINE;

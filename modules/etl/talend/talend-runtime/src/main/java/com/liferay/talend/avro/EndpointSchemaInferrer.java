@@ -162,6 +162,9 @@ public class EndpointSchemaInferrer {
 			propertyJsonObject.getString(OASConstants.TYPE));
 
 		if (oasType == OASType.ARRAY) {
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_ARRAY);
+
 			return designField;
 		}
 
@@ -174,6 +177,9 @@ public class EndpointSchemaInferrer {
 		else if ((oasType == OASType.OBJECT) &&
 				 propertyJsonObject.containsKey(
 					 OASConstants.ADDITIONAL_PROPERTIES)) {
+
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_OBJECT);
 
 			JsonObject additionalPropertiesJsonObject =
 				propertyJsonObject.getJsonObject(
@@ -220,6 +226,8 @@ public class EndpointSchemaInferrer {
 				(Object)null);
 
 			designField.addProp("oas.dictionary", "true");
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_DICTIONARY);
 		}
 		else if (oasFormat == OASFormat.DOUBLE) {
 			designField = new Schema.Field(
@@ -359,6 +367,16 @@ public class EndpointSchemaInferrer {
 			schemaFields.add(designField);
 		}
 	}
+
+	private static final String _COMPLEX_TYPE_ARRAY = "complex: Array";
+
+	private static final String _COMPLEX_TYPE_DICTIONARY =
+		"complex: Dictionary";
+
+	private static final String _COMPLEX_TYPE_OBJECT = "complex: Object";
+
+	private static final String _PROPERTY_KEY_TABLE_COMMENT =
+		"di.table.comment";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		EndpointSchemaInferrer.class);

@@ -10,7 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayInputWithMultiSelect} from '@clayui/form';
+import ClayMultiSelectInput from '@clayui/multi-select';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -100,7 +100,7 @@ class SynonymSetsForm extends Component {
 							)}
 						</div>
 
-						<ClayInputWithMultiSelect
+						<ClayMultiSelectInput
 							helpText={Liferay.Language.get(
 								'type-a-comma-or-press-enter-to-input-a-synonym'
 							)}

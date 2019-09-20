@@ -8,6 +8,7 @@
 		"@clayui/link": "3.0.0",
 		"@clayui/loading-indicator": "3.0.0",
 		"@clayui/modal": "3.0.0",
+		"@clayui/multi-select": "3.0.0-alpha.1",
 		"@clayui/pagination": "3.0.0-alpha.1",
 		"@clayui/tabs": "3.0.0",
 		"classnames": "2.2.6",

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -202,29 +201,24 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkOutEntries(ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] fileEntryIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsFileEntry");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		for (long fileEntryId : fileEntryIds) {
-			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
-		}
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
+		fileShortcutBulkSelection.forEach(
+			fileShortcut -> _dlAppService.checkOutFileEntry(
+				fileShortcut.getToFileEntryId(), serviceContext));
 
-		for (long fileShortcutId : fileShortcutIds) {
-			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
-				fileShortcutId);
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-			long toFileEntryId = fileShortcut.getToFileEntryId();
-
-			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
-				_dlAppService.checkOutFileEntry(toFileEntryId, serviceContext);
-			}
-		}
+		fileEntryBulkSelection.forEach(
+			fileEntry -> _dlAppService.checkOutFileEntry(
+				fileEntry.getFileEntryId(), serviceContext));
 	}
 
 	private void _deleteEntries(

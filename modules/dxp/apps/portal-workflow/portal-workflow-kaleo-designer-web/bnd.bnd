@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.web
 Bundle-Version: 4.0.0
 Export-Package: com.liferay.portal.workflow.kaleo.designer.web.constants
 Liferay-JS-Config: /META-INF/resources/designer/js/config.js
+Web-ContextPath: /portal-workflow-kaleo-designer-web
 -dsannotations-options: inherit

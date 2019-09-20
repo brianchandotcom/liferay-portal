@@ -4,6 +4,8 @@ buildCSS {
 	]
 }
 
+it =~ "^Bundle-Version.*"
+
 buildLibSass_Darwin {
 	doFirst {
 		buildShFile.write("""\

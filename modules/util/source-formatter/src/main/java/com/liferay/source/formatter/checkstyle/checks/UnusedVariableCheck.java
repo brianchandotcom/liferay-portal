@@ -94,6 +94,22 @@ public class UnusedVariableCheck extends BaseCheck {
 			detailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST nameDetailAST : nameDetailASTList) {
+			DetailAST parentDetailAST = nameDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.DOT) {
+				if (detailAST.getType() != TokenTypes.CLASS_DEF) {
+					DetailAST previousSiblingDetailAST =
+						nameDetailAST.getPreviousSibling();
+
+					if (previousSiblingDetailAST != null) {
+						continue;
+					}
+				}
+			}
+			else if (parentDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				continue;
+			}
+
 			tokenNames.add(nameDetailAST.getText());
 		}
 

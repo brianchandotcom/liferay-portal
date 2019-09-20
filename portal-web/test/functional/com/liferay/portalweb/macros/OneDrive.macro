@@ -13,10 +13,6 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
-		AssertTextPresent(
-			locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
-			value1 = "Saved");
-
 		if (isSet(dmDocumentContent)) {
 			Pause(locator1 = "10000");
 
@@ -27,10 +23,6 @@ definition {
 			Type(
 				locator1 = "OneDrive#DOCUMENTS_CONTENT",
 				value1 = "${dmDocumentContent}");
-
-			AssertTextPresent(
-				locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
-				value1 = "Saved");
 		}
 
 		Navigator.closeWindow();
@@ -66,10 +58,6 @@ definition {
 		KeyPress(
 			locator1 = "OneDrive#DOCUMENTS_TITLE",
 			value1 = "\RETURN");
-
-		AssertTextPresent(
-			locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
-			value1 = "Saved");
 
 		Navigator.closeWindow();
 

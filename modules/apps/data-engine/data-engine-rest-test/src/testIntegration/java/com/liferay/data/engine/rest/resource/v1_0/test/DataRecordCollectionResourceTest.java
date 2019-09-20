@@ -56,8 +56,6 @@ public class DataRecordCollectionResourceTest
 		super.testGetDataDefinitionDataRecordCollectionsPage();
 
 		_testGetDataDefinitionDataRecordCollectionsPage(
-			"!@#description", "!@#d", "name");
-		_testGetDataDefinitionDataRecordCollectionsPage(
 			"CoLLeCTion dEsCrIpTiOn", "COLLECTION", "name");
 		_testGetDataDefinitionDataRecordCollectionsPage(
 			"definition", "abcdefghijklmnopqrstuvwxyz0123456789",
@@ -71,7 +69,6 @@ public class DataRecordCollectionResourceTest
 	public void testGetSiteDataRecordCollectionsPage() throws Exception {
 		super.testGetSiteDataRecordCollectionsPage();
 
-		_testGetSiteDataRecordCollectionsPage("!@#description", "!@#d", "name");
 		_testGetSiteDataRecordCollectionsPage(
 			"CoLLeCTion dEsCrIpTiOn", "COLLECTION", "name");
 		_testGetSiteDataRecordCollectionsPage(

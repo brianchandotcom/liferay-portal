@@ -59,7 +59,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		_testGetDataDefinitionDataLayoutsPage("!@#l", "!@#layout");
 		_testGetDataDefinitionDataLayoutsPage("FORM", "FoRmSLaYoUt");
 		_testGetDataDefinitionDataLayoutsPage(
 			"abcdefghijklmnopqrstuvwxyz0123456789",
@@ -81,7 +80,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		_testGetSiteDataLayoutPage("!@#la", "!@#layout");
 		_testGetSiteDataLayoutPage("FORM", "FoRmSLaYoUt");
 		_testGetSiteDataLayoutPage(
 			"abcdefghijklmnopqrstuvwxyz0123456789",

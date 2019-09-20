@@ -83,7 +83,9 @@ if (fileEntryId != 0) {
 		</div>
 	</div>
 
-	<i class="glyphicon glyphicon-ok"></i>
+	<span class="icon-check">
+		<clay:icon symbol="check" />
+	</span>
 
 	<liferay-ui:drop-here-info
 		message="drop-files-here"

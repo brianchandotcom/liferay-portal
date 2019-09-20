@@ -3,7 +3,7 @@
 		background: #fff;
 	}
 
-	.glyphicon-ok {
+	.icon-check {
 		background: #fff;
 		opacity: 0;
 		z-index: -1;
@@ -16,7 +16,7 @@
 		}
 	}
 
-	&.check-active .glyphicon-ok {
+	&.check-active .icon-check {
 		opacity: 1;
 		z-index: 0;
 	}
@@ -28,7 +28,7 @@
 			opacity: 0;
 		}
 
-		.glyphicon-ok {
+		.icon-check {
 			opacity: 0;
 		}
 
@@ -54,7 +54,7 @@
 			opacity: 0;
 		}
 
-		.glyphicon-ok {
+		.icon-check {
 			opacity: 0;
 		}
 	}

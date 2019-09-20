@@ -329,15 +329,6 @@ public class ChangeListsDisplayContext {
 			LanguageUtil.get(_httpServletRequest, "production"));
 		_productionCTCollection.setStatus(WorkflowConstants.STATUS_APPROVED);
 
-		try {
-			_productionCTCollection.setUserId(
-				_userLocalService.getDefaultUserId(
-					_themeDisplay.getCompanyId()));
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
-
 		return _productionCTCollection;
 	}
 

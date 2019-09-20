@@ -14,57 +14,11 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {useRef, useState, useEffect} from 'react';
-import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import classNames from 'classnames';
 import {useKeyDown} from '../../hooks/index.es';
-
-const findFieldType = (dataLayoutBuilder, fieldType) => {
-	return dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === fieldType;
-	});
-};
-
-const getFields = dataLayoutBuilder => {
-	const store = dataLayoutBuilder.getStore();
-	const visitor = new PagesVisitor(store.pages);
-
-	const fields = [];
-
-	visitor.mapFields(({label, type}) => {
-		const fieldType = findFieldType(dataLayoutBuilder, type);
-
-		fields.push({
-			className: 'custom-object-field',
-			description: fieldType.label,
-			dragAlignment: 'right',
-			icon: fieldType.icon,
-			label
-		});
-	});
-
-	return fields;
-};
-
-const Body = ({dataLayoutBuilder, keywords}) => {
-	const [fields, setFields] = useState(getFields(dataLayoutBuilder));
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
-
-		const eventHandler = provider.on('pagesChanged', () => {
-			const fields = getFields(dataLayoutBuilder);
-
-			setFields(fields);
-		});
-
-		return () => eventHandler.removeListener();
-	});
-
-	return <FieldTypeList fieldTypes={fields} keywords={keywords} />;
-};
+import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 
 const Header = ({keywords, onSearch}) => {
 	const [searchMode, setSearchMode] = useState(false);
@@ -162,7 +116,7 @@ const Header = ({keywords, onSearch}) => {
 	);
 };
 
-export default ({dataLayoutBuilder}) => {
+export default () => {
 	const [keywords, setKeywords] = useState('');
 	const sidebarRef = useRef();
 
@@ -175,10 +129,7 @@ export default ({dataLayoutBuilder}) => {
 				/>
 
 				<Sidebar.Body>
-					<Body
-						dataLayoutBuilder={dataLayoutBuilder}
-						keywords={keywords}
-					/>
+					<CustomObjectFieldsList keywords={keywords} />
 				</Sidebar.Body>
 			</>
 		</Sidebar>

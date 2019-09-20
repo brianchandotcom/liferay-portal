@@ -17,8 +17,13 @@ package com.liferay.sharing.taglib.servlet.taglib;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.sharing.taglib.internal.servlet.SharingConfigurationFactoryUtil;
 import com.liferay.sharing.taglib.internal.servlet.SharingJavaScriptFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -29,6 +34,25 @@ import javax.servlet.jsp.PageContext;
  * @author Alejandro Tardín
  */
 public class SharingButtonTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SharingConfigurationFactory sharingConfigurationFactory =
+			SharingConfigurationFactoryUtil.getSharingConfigurationFactory();
+
+		SharingConfiguration sharingConfiguration =
+			sharingConfigurationFactory.getGroupSharingConfiguration(
+				themeDisplay.getSiteGroup());
+
+		if (!sharingConfiguration.isEnabled()) {
+			return SKIP_BODY;
+		}
+
+		return EVAL_BODY_INCLUDE;
+	}
 
 	public String getClassName() {
 		return _className;

@@ -47,10 +47,6 @@ else {
 }
 %>
 
-<c:if test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
-	<div class="mt-4">
-</c:if>
-
 <div class="tbar upper-tbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="tbar-nav">
@@ -66,7 +62,7 @@ else {
 
 			<li class="tbar-item tbar-item-expand">
 				<div class="tbar-section text-left">
-					<h2 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>">
+					<h2 class="my-4 text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>">
 						<span class="text-truncate"><%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %></span>
 					</h2>
 				</div>
@@ -79,10 +75,6 @@ else {
 		</ul>
 	</div>
 </div>
-
-<c:if test="<%= scopeGroup.equals(themeDisplay.getControlPanelGroup()) %>">
-	</div>
-</c:if>
 
 <liferay-util:buffer
 	var="assetContent"

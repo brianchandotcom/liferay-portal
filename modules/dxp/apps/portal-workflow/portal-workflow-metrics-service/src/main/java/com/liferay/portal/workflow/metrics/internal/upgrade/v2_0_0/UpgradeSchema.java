@@ -57,7 +57,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			sb1.append("startNodeKeys, stopNodeKeys, version, status, ");
 			sb1.append("statusByUserId, statusByUserName, statusDate) ");
 			sb1.append("values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb1.append("?, ?, ?, ?, ?, ?, ?, ?)");
+			sb1.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			StringBundler sb2 = new StringBundler(10);
 
@@ -70,7 +70,7 @@ public class UpgradeSchema extends UpgradeProcess {
 			sb2.append("wmSLADefinitionId, status, statusByUserId, ");
 			sb2.append("statusByUserName, statusDate) values(?, ?, ?, ?, ?, ");
 			sb2.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb2.append("?, ?)");
+			sb2.append("?, ?, ?)");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					"select WorkflowMetricsSLADefinition.* from " +

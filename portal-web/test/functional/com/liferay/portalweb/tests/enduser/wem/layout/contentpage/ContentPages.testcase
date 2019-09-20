@@ -772,4 +772,29 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101328. Editable image name should be visible in the floating toolbar."
+	@priority = "5"
+	test ViewSelectedImageName {
+		property portal.acceptance = "true";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addBasicComponent(fragmentName = "Image");
+
+		task ("Add the Image fragment's image") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.png",
+				fragmentName = "Image",
+				id = "image");
+		}
+
+		task ("Assert the image field contains the image name.") {
+			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");
+
+			AssertVisible(locator1 = "//input[@value='Document_1.png']");
+		}
+	}
+
 }

@@ -74,7 +74,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 
-		if (_currentPage >= _lastPage) {
+		if (_currentPage > _lastPage) {
 			_hasMore = false;
 
 			return false;

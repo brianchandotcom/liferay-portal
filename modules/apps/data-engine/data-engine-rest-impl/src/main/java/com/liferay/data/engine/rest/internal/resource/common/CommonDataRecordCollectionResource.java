@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -173,20 +172,18 @@ public class CommonDataRecordCollectionResource<T> {
 					"page-size-is-greater-than-x", 250));
 		}
 
-		Group group = _groupLocalService.getGroup(siteId);
-
 		if (Validator.isNull(keywords)) {
 			return Page.of(
 				TransformUtil.transform(
 					_ddlRecordSetLocalService.search(
-						group.getCompanyId(), siteId, keywords,
+						company.getCompanyId(), siteId, keywords,
 						DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
 					_transformUnsafeFunction),
 				pagination,
 				_ddlRecordSetLocalService.searchCount(
-					group.getCompanyId(), siteId, keywords,
+					company.getCompanyId(), siteId, keywords,
 					DDLRecordSetConstants.SCOPE_DATA_ENGINE));
 		}
 

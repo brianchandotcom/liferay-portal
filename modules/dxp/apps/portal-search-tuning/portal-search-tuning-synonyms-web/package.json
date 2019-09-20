@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "3.0.0-alpha.1",
-		"@clayui/form": "3.0.0-alpha.1",
-		"@clayui/icon": "3.0.0-alpha.1",
+		"@clayui/button": "3.0.0",
+		"@clayui/form": "3.0.0",
+		"@clayui/icon": "3.0.0",
 		"classnames": "2.2.6",
 		"prop-types": "15.7.2",
 		"react": "16.9.0",

@@ -179,7 +179,7 @@ public class ServiceConfigurationExtender
 		}
 
 		private String _getVersionRangerFilter(Version version) {
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("(&(release.schema.version>=");
 			sb.append(version.getMajor());

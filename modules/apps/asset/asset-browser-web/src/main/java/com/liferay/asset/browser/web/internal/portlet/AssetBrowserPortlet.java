@@ -68,7 +68,7 @@ public class AssetBrowserPortlet extends MVCPortlet {
 	private AssetHelper _assetHelper;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.asset.browser.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.asset.browser.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
 

@@ -87,7 +87,7 @@ public class RSSPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.rss.web)(&(release.schema.version>=3.0.0)(!(release.schema.version>=3.1.0))))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.rss.web)(&(release.schema.version>=3.0.0)(!(release.schema.version>=4.0.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

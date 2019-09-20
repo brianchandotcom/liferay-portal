@@ -407,7 +407,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 	protected Portal portal;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.asset.publisher.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=1.1.0))))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.asset.publisher.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	protected Release release;
 

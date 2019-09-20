@@ -58,7 +58,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(ue);
 		}
 
-		registry.register("0.0.0", "1.0.3", new DummyUpgradeStep());
+		registry.register("0.0.0", "2.0.0", new DummyUpgradeStep());
 
 		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
 

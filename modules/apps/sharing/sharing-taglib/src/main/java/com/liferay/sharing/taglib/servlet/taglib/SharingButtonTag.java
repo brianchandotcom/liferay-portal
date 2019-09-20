@@ -82,7 +82,7 @@ public class SharingButtonTag extends IncludeTag {
 		}
 	}
 
-	private static final String _PAGE = "/sharing/page.jsp";
+	private static final String _PAGE = "/button/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SharingButtonTag.class);

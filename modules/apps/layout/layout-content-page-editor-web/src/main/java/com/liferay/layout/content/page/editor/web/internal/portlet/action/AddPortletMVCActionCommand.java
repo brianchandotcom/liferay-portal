@@ -80,6 +80,30 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		JSONObject jsonObject = _processAddPortlet(
+			actionRequest, actionResponse);
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	private String _getPortletFragmentEntryLinkHTML(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String portletId,
+			String instanceId)
+		throws Exception {
+
+		return _fragmentPortletRenderer.renderPortlet(
+			httpServletRequest, httpServletResponse, portletId, instanceId,
+			StringPool.BLANK);
+	}
+
+	private JSONObject _processAddPortlet(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -202,21 +226,7 @@ public class AddPortletMVCActionCommand extends BaseMVCActionCommand {
 				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
-	}
-
-	private String _getPortletFragmentEntryLinkHTML(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String portletId,
-			String instanceId)
-		throws Exception {
-
-		return _fragmentPortletRenderer.renderPortlet(
-			httpServletRequest, httpServletResponse, portletId, instanceId,
-			StringPool.BLANK);
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

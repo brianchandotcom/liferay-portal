@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.monitoring.DataSampleFactory;
 import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
@@ -212,9 +213,11 @@ public class MonitoringFilter
 			}
 
 			if (decrementProcessFilterCount() == 0) {
-				MessageBusUtil.sendMessage(
-					DestinationNames.MONITORING,
-					DataSampleThreadLocal.getDataSamples());
+				Message message = new Message();
+
+				message.setPayload(DataSampleThreadLocal.getDataSamples());
+
+				_messageBus.sendMessage(DestinationNames.MONITORING, message);
 
 				_processFilterCount.remove();
 			}
@@ -256,6 +259,9 @@ public class MonitoringFilter
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	private boolean _monitorPortalRequest;
 

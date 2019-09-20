@@ -24,13 +24,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
-import com.liferay.push.notifications.sender.Response;
 import com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
@@ -127,12 +126,15 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 			Result result = results.get(i);
 			String token = tokens.get(i);
 
-			Response response = new AndroidResponse(
-				result, token, payloadJSONObject);
+			com.liferay.portal.kernel.messaging.Message message =
+				new com.liferay.portal.kernel.messaging.Message();
 
-			MessageBusUtil.sendMessage(
+			message.setPayload(
+				new AndroidResponse(result, token, payloadJSONObject));
+
+			_messageBus.sendMessage(
 				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
-				response);
+				message);
 
 			if ((multicastResult.getCanonicalIds() == 0) &&
 				(multicastResult.getFailure() == 0)) {
@@ -182,6 +184,10 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 
 	private volatile AndroidPushNotificationsSenderConfiguration
 		_androidPushNotificationsSenderConfiguration;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private PushNotificationsDeviceLocalService
 		_pushNotificationsDeviceLocalService;
 	private volatile Sender _sender;

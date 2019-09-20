@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
@@ -267,7 +267,7 @@ public class ResourcesImporterHotDeployMessageListener
 				message.setResponseId(messageResponseId);
 			}
 
-			MessageBusUtil.sendMessage("liferay/resources_importer", message);
+			_messageBus.sendMessage("liferay/resources_importer", message);
 		}
 		catch (ImporterException ie) {
 			Message message = new Message();
@@ -281,7 +281,7 @@ public class ResourcesImporterHotDeployMessageListener
 				pluginPackageProperties.getTargetClassName());
 			message.put("targetClassPK", 0);
 
-			MessageBusUtil.sendMessage("liferay/resources_importer", message);
+			_messageBus.sendMessage("liferay/resources_importer", message);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(companyId);
@@ -299,6 +299,10 @@ public class ResourcesImporterHotDeployMessageListener
 	private DestinationFactory _destinationFactory;
 
 	private ImporterFactory _importerFactory;
+
+	@Reference
+	private MessageBus _messageBus;
+
 	private ServiceRegistration<Destination> _serviceRegistration;
 	private ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 

@@ -16,7 +16,8 @@ package com.liferay.push.notifications.sender.sms.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
@@ -36,6 +37,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -91,9 +93,13 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 			Response response = new SMSResponse(
 				smsFactory.create(params), payloadJSONObject);
 
-			MessageBusUtil.sendMessage(
+			Message message = new Message();
+
+			message.setPayload(response);
+
+			_messageBus.sendMessage(
 				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
-				response);
+				message);
 		}
 	}
 
@@ -116,6 +122,9 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 
 		_twilioRestClient = new TwilioRestClient(accountSID, authToken);
 	}
+
+	@Reference
+	private MessageBus _messageBus;
 
 	private volatile SMSPushNotificationsSenderConfiguration
 		_smsPushNotificationsSenderConfiguration;

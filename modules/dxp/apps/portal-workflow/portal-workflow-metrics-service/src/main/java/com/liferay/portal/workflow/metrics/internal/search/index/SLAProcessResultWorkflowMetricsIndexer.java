@@ -57,7 +57,6 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -139,6 +138,10 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
+		booleanQuery.addMustNotQueryClauses(
+			queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
+			queries.term("status", WorkfowMetricsSLAStatus.STOPPED));
+
 		_deleteDocuments(
 			booleanQuery.addMustQueryClauses(
 				queries.term("companyId", companyId),
@@ -195,16 +198,16 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		Stream<WorkflowMetricsSLADefinition> stream =
 			workflowMetricsSLADefinitions.stream();
 
-		Map<Long, List<WorkflowMetricsSLADefinition>>
-			workflowMetricsSLADefinitionsMap = stream.collect(
-				Collectors.groupingBy(
-					WorkflowMetricsSLADefinition::getProcessId));
+		Set<Long> processIds = stream.map(
+			WorkflowMetricsSLADefinition::getProcessId
+		).collect(
+			Collectors.toSet()
+		);
 
 		while (true) {
 			searchSearchResponse = searchEngineAdapter.execute(
-				_createSearchSearchRequest(
-					companyId, lastInstanceId, searchRequestSize,
-					workflowMetricsSLADefinitionsMap));
+				_createInstanceSearchSearchRequest(
+					companyId, lastInstanceId, processIds, searchRequestSize));
 
 			_reindexSLAProcessResults(companyId, searchSearchResponse);
 
@@ -271,6 +274,23 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			_createProcessIdTermsQuery(processIds));
 	}
 
+	private SearchSearchRequest _createInstanceSearchSearchRequest(
+		long companyId, long lastInstanceId, Set<Long> processIds,
+		int searchRequestSize) {
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames("workflow-metrics-instances");
+		searchSearchRequest.setQuery(
+			_createInstancesBooleanQuery(
+				companyId, lastInstanceId, processIds));
+		searchSearchRequest.setSize(searchRequestSize);
+		searchSearchRequest.setSorts(
+			Collections.singleton(sorts.field("instanceId", SortOrder.ASC)));
+
+		return searchSearchRequest;
+	}
+
 	private TermsQuery _createProcessIdTermsQuery(Set<Long> processIds) {
 		TermsQuery termsQuery = queries.terms("processId");
 
@@ -286,25 +306,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		return termsQuery;
 	}
 
-	private SearchSearchRequest _createSearchSearchRequest(
-		long companyId, long lastInstanceId, int searchRequestSize,
-		Map<Long, List<WorkflowMetricsSLADefinition>>
-			workflowMetricsSLADefinitionsMap) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-instances");
-		searchSearchRequest.setQuery(
-			_createInstancesBooleanQuery(
-				companyId, lastInstanceId,
-				workflowMetricsSLADefinitionsMap.keySet()));
-		searchSearchRequest.setSize(searchRequestSize);
-		searchSearchRequest.setSorts(
-			Collections.singleton(sorts.field("instanceId", SortOrder.ASC)));
-
-		return searchSearchRequest;
-	}
-
 	private void _deleteDocuments(BooleanQuery booleanQuery) {
 		_updateDocuments(
 			document -> new DocumentImpl() {
@@ -313,9 +314,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 					addKeyword(Field.UID, document.getString(Field.UID));
 				}
 			},
-			booleanQuery.addMustNotQueryClauses(
-				queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-				queries.term("status", WorkfowMetricsSLAStatus.STOPPED)));
+			booleanQuery);
 	}
 
 	private long _getStartNodeId(long processId, String version) {

@@ -15,19 +15,26 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.BatchEngineTaskItemClassRegistry;
+import com.liferay.batch.engine.internal.BatchEngineTaskMethodServiceTracker;
 import com.liferay.batch.engine.model.BatchEngineTask;
 
 import java.sql.Blob;
 
 /**
  * @author Shuyang Zhou
+ * @author Ivica Cardic
  */
 public class BatchEngineTaskItemReaderFactory {
 
-	public BatchEngineTaskItemReader create(
-			BatchEngineTask batchEngineTask,
-			BatchEngineTaskItemClassRegistry batchEngineTaskItemClassRegistry)
+	public BatchEngineTaskItemReaderFactory(
+		BatchEngineTaskMethodServiceTracker
+			batchEngineTaskMethodServiceTracker) {
+
+		_batchEngineTaskMethodServiceTracker =
+			batchEngineTaskMethodServiceTracker;
+	}
+
+	public BatchEngineTaskItemReader create(BatchEngineTask batchEngineTask)
 		throws Exception {
 
 		BatchEngineTaskContentType batchEngineTaskContentType =
@@ -35,7 +42,7 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTask.getContentType());
 		Blob content = batchEngineTask.getContent();
 
-		Class<?> itemClass = batchEngineTaskItemClassRegistry.get(
+		Class<?> itemClass = _batchEngineTaskMethodServiceTracker.getItemClass(
 			batchEngineTask.getClassName());
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
@@ -59,5 +66,8 @@ public class BatchEngineTaskItemReaderFactory {
 			"Unknown batch engine task content type " +
 				batchEngineTaskContentType);
 	}
+
+	private final BatchEngineTaskMethodServiceTracker
+		_batchEngineTaskMethodServiceTracker;
 
 }

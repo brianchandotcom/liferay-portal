@@ -16,7 +16,6 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
-import com.liferay.batch.engine.BatchEngineTaskItemClassRegistry;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
@@ -50,20 +49,29 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ivica Cardic
  */
-@Component(immediate = true, service = BatchEngineTaskExecutor.class)
+@Component(service = BatchEngineTaskExecutor.class)
 public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	@Activate
 	public void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
+		_batchEngineTaskMethodServiceTracker =
+			new BatchEngineTaskMethodServiceTracker(bundleContext);
+
+		_batchEngineTaskItemReaderFactory =
+			new BatchEngineTaskItemReaderFactory(
+				_batchEngineTaskMethodServiceTracker);
+
 		_batchEngineTaskItemWriterFactory =
-			new BatchEngineTaskItemWriterFactory(bundleContext);
+			new BatchEngineTaskItemWriterFactory(
+				_batchEngineTaskMethodServiceTracker, _companyLocalService,
+				_userLocalService);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_batchEngineTaskItemWriterFactory.destroy();
+		_batchEngineTaskMethodServiceTracker.destroy();
 	}
 
 	@Override
@@ -124,11 +132,9 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		try (BatchEngineTaskItemReader batchEngineTaskItemReader =
-				_batchEngineTaskItemReaderFactory.create(
-					batchEngineTask, _batchEngineTaskItemClassRegistry);
+				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
 			BatchEngineTaskItemWriter batchEngineTaskItemWriter =
-				_batchEngineTaskItemWriterFactory.create(
-					batchEngineTask, _companyLocalService, _userLocalService)) {
+				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
 
 			List<Object> items = new ArrayList<>();
 
@@ -161,16 +167,14 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	@Reference
-	private BatchEngineTaskItemClassRegistry _batchEngineTaskItemClassRegistry;
-
-	private final BatchEngineTaskItemReaderFactory
-		_batchEngineTaskItemReaderFactory =
-			new BatchEngineTaskItemReaderFactory();
+	private BatchEngineTaskItemReaderFactory _batchEngineTaskItemReaderFactory;
 	private BatchEngineTaskItemWriterFactory _batchEngineTaskItemWriterFactory;
 
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
+
+	private BatchEngineTaskMethodServiceTracker
+		_batchEngineTaskMethodServiceTracker;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

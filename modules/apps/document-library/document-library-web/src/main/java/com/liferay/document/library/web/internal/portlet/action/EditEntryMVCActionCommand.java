@@ -171,9 +171,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private void _checkInEntries(ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] fileEntryIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsFileEntry");
-
 		DLVersionNumberIncrease dlVersionNumberIncrease =
 			DLVersionNumberIncrease.valueOf(
 				actionRequest.getParameter("versionIncrease"),
@@ -183,27 +180,23 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		for (long fileEntryId : fileEntryIds) {
-			_dlAppService.checkInFileEntry(
-				fileEntryId, dlVersionNumberIncrease, changeLog,
-				serviceContext);
-		}
+		BulkSelection<FileShortcut> fileShortcutBulkSelection =
+			_fileShortcutBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-		long[] fileShortcutIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsDLFileShortcut");
+		fileShortcutBulkSelection.forEach(
+			fileShortcut -> _dlAppService.checkInFileEntry(
+				fileShortcut.getToFileEntryId(), dlVersionNumberIncrease,
+				changeLog, serviceContext));
 
-		for (long fileShortcutId : fileShortcutIds) {
-			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
-				fileShortcutId);
+		BulkSelection<FileEntry> fileEntryBulkSelection =
+			_fileEntryBulkSelectionFactory.create(
+				actionRequest.getParameterMap());
 
-			long toFileEntryId = fileShortcut.getToFileEntryId();
-
-			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
-				_dlAppService.checkInFileEntry(
-					toFileEntryId, dlVersionNumberIncrease, changeLog,
-					serviceContext);
-			}
-		}
+		fileEntryBulkSelection.forEach(
+			fileEntry -> _dlAppService.checkInFileEntry(
+				fileEntry.getFileEntryId(), dlVersionNumberIncrease, changeLog,
+				serviceContext));
 	}
 
 	private void _checkOutEntries(ActionRequest actionRequest)

@@ -22,6 +22,12 @@ import Header from './Header.es';
 import Carousel from './Carousel.es';
 import Footer from './Footer.es';
 
+const KEY_CODE = {
+	ESC: 27,
+	LEFT: 37,
+	RIGTH: 39
+};
+
 class ItemSelectorPreview extends Component {
 	static propTypes = {
 		container: PropTypes.node,
@@ -41,6 +47,14 @@ class ItemSelectorPreview extends Component {
 			currentItem: currentItem,
 			currentItemIndex: currentIndex
 		}
+	}
+
+	componentDidMount() {
+		document.documentElement.addEventListener("keydown", this.handleOnKeyDown.bind(this));
+	}
+
+	componentWillUnmount() {
+		document.documentElement.removeEventListener("keydown", this.handleOnKeyDown.bind(this));
 	}
 
 	componentDidUpdate() {
@@ -106,6 +120,22 @@ class ItemSelectorPreview extends Component {
 			currentItemIndex: index,
 			currentItem: currentItem
 		});
+	};
+
+	handleOnKeyDown = e => {
+		switch (e.which || e.keyCode) {
+			case KEY_CODE.LEFT:
+				this.handleClickPrevious();
+				break;
+			case KEY_CODE.RIGTH:
+				this.handleClickNext();
+				break;
+			case KEY_CODE.ESC:
+				e.preventDefault();
+				e.stopPropagation();
+				this.close();
+				break;
+		}
 	};
 
 	render() {

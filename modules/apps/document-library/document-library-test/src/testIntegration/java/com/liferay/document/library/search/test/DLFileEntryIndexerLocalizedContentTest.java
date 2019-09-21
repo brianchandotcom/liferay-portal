@@ -94,11 +94,9 @@ public class DLFileEntryIndexerLocalizedContentTest {
 
 		String word1 = "新規";
 		String word2 = "作成";
-		String prefix1 = "新";
-		String prefix2 = "作";
 
 		Stream.of(
-			word1, word2, prefix1, prefix2
+			word1, word2
 		).forEach(
 			searchTerm -> {
 				Document document = _search(searchTerm, LocaleUtil.JAPAN);

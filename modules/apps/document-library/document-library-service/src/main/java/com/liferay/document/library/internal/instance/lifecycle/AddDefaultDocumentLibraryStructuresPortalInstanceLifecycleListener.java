@@ -15,7 +15,6 @@
 package com.liferay.document.library.internal.instance.lifecycle;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
@@ -76,8 +75,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		if (!_dlConfiguration.addDefaultStructures()) {
 			return;
 		}
-
-		_dlFileEntryTypeLocalService.getBasicDocumentDLFileEntryType();
 
 		addDLRawMetadataStructures(company.getCompanyId());
 	}
@@ -159,13 +156,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -261,7 +251,6 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 
 	private volatile DLConfiguration _dlConfiguration;
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(ddm.form.serializer.type=json)")

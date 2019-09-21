@@ -30,12 +30,21 @@ public class GetIndexIndexResponse implements IndexResponse {
 		return _indexNames;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * #getUntypedMappings()}
+	 */
+	@Deprecated
 	public Map<String, Map<String, String>> getMappings() {
 		return _mappings;
 	}
 
 	public Map<String, String> getSettings() {
 		return _settings;
+	}
+
+	public Map<String, String> getUntypedMappings() {
+		return _untypedMappings;
 	}
 
 	public void setAliases(Map<String, List<String>> aliases) {
@@ -46,6 +55,11 @@ public class GetIndexIndexResponse implements IndexResponse {
 		_indexNames = indexNames;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * #setUntypedMappings()}
+	 */
+	@Deprecated
 	public void setMappings(Map<String, Map<String, String>> mappings) {
 		_mappings = mappings;
 	}
@@ -54,9 +68,14 @@ public class GetIndexIndexResponse implements IndexResponse {
 		_settings = settings;
 	}
 
+	public void setUntypedMappings(Map<String, String> untypedMappings) {
+		_untypedMappings = untypedMappings;
+	}
+
 	private Map<String, List<String>> _aliases;
 	private String[] _indexNames;
 	private Map<String, Map<String, String>> _mappings;
 	private Map<String, String> _settings;
+	private Map<String, String> _untypedMappings;
 
 }

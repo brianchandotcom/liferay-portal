@@ -188,6 +188,10 @@ public class JavaParser {
 			for (int i = precedingCommentToken.getLine() + 1; i <= end; i++) {
 				line = fileContents.getLine(i - 1);
 
+				if (Validator.isNull(line)) {
+					contentModifications.addRemoveLineLineNumber(i);
+				}
+
 				if (javadoc) {
 					String actualIndent = _getIndent(line);
 

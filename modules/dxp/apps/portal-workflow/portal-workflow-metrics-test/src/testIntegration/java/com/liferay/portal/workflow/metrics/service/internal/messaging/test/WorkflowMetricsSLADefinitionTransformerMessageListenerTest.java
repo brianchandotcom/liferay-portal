@@ -70,13 +70,13 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListenerTest
 				ServiceContextTestUtil.getServiceContext());
 
 		retryAssertCount(
-			"workflow-metrics-processes", "WorkflowMetricsProcessType",
-			"companyId", kaleoDefinition.getCompanyId(), "processId",
+			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
+			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "version",
 			kaleoDefinition.getVersion() + ".0");
 		retryAssertCount(
-			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
-			kaleoDefinition.getCompanyId(), "deleted", false, "processId",
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId(), "version",
 			kaleoDefinition.getVersion() + ".0");
 

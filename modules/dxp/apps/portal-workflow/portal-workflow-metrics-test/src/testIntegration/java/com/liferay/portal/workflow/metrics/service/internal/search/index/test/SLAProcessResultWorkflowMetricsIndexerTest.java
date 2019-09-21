@@ -54,12 +54,12 @@ public class SLAProcessResultWorkflowMetricsIndexerTest
 		KaleoDefinition kaleoDefinition = getKaleoDefinition();
 
 		retryAssertCount(
-			"workflow-metrics-processes", "WorkflowMetricsProcessType",
-			"companyId", kaleoDefinition.getCompanyId(), "processId",
-			kaleoDefinition.getKaleoDefinitionId());
-		retryAssertCount(
 			4, "workflow-metrics-nodes", "WorkflowMetricsNodeType", "companyId",
 			kaleoDefinition.getCompanyId(), "processId",
+			kaleoDefinition.getKaleoDefinitionId());
+		retryAssertCount(
+			"workflow-metrics-processes", "WorkflowMetricsProcessType",
+			"companyId", kaleoDefinition.getCompanyId(), "processId",
 			kaleoDefinition.getKaleoDefinitionId());
 
 		BlogsEntry blogsEntry = addBlogsEntry();

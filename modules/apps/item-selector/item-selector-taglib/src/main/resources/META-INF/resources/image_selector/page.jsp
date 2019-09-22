@@ -84,7 +84,9 @@ if (fileEntryId != 0) {
 	</div>
 
 	<span class="icon-check">
-		<clay:icon symbol="check" />
+		<clay:icon
+			symbol="check"
+		/>
 	</span>
 
 	<liferay-ui:drop-here-info

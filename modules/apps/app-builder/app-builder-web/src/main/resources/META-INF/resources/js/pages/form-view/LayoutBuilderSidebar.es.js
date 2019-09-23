@@ -15,26 +15,19 @@
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useContext} from 'react';
 import renderSettingsForm from './renderSettingsForm.es';
 import {useSidebarContent} from '../../hooks/index.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
+import DataLayoutBuilderContext from './LayoutBuilderContext.es';
+import FormViewContext from './FormViewContext.es';
 
-const findFieldType = dataLayoutBuilder => {
-	const store = dataLayoutBuilder.getStore();
-	const {settingsContext} = store.focusedField;
-	const visitor = new PagesVisitor(settingsContext.pages);
-	const typeField = visitor.findField(field => field.fieldName === 'type');
+const DefaultSidebarBody = ({keywords}) => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
-	return dataLayoutBuilder.getFieldTypes().find(({name}) => {
-		return name === typeField.value;
-	});
-};
-
-const DefaultSidebarBody = ({dataLayoutBuilder, keywords}) => {
 	return (
 		<>
 			<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
@@ -49,7 +42,9 @@ const DefaultSidebarBody = ({dataLayoutBuilder, keywords}) => {
 	);
 };
 
-const SettingsSidebarBody = ({dataLayoutBuilder, focusedField}) => {
+const SettingsSidebarBody = () => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const [{focusedField}] = useContext(FormViewContext);
 	const {settingsContext} = focusedField;
 	const formRef = useRef();
 	const [form, setForm] = useState(null);
@@ -62,6 +57,8 @@ const SettingsSidebarBody = ({dataLayoutBuilder, focusedField}) => {
 					formRef.current
 				)
 			);
+		} else {
+			form.pages = settingsContext.pages;
 		}
 	}, [dataLayoutBuilder, form, formRef, settingsContext]);
 
@@ -72,12 +69,22 @@ const SettingsSidebarBody = ({dataLayoutBuilder, focusedField}) => {
 	return <div ref={formRef}></div>;
 };
 
-const SettingsSidebarHeader = ({dataLayoutBuilder}) => {
+const SettingsSidebarHeader = () => {
+	const [{fieldTypes, focusedField}] = useContext(FormViewContext);
+	const {settingsContext} = focusedField;
+	const visitor = new PagesVisitor(settingsContext.pages);
+	const typeField = visitor.findField(field => field.fieldName === 'type');
+
+	const fieldType = fieldTypes.find(({name}) => {
+		return name === typeField.value;
+	});
+
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const handleFocusedFieldBlur = () => {
 		dataLayoutBuilder.dispatch('sidebarFieldBlurred');
 	};
 
-	const fieldType = findFieldType(dataLayoutBuilder);
+	if (!fieldType) return null;
 
 	return (
 		<Sidebar.Header className="d-flex">
@@ -118,10 +125,9 @@ const SettingsSidebarHeader = ({dataLayoutBuilder}) => {
 	);
 };
 
-export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
-	const store = dataLayoutBuilder.getStore();
-
-	const [focusedField, setFocusedField] = useState(store.focusedField);
+export default ({dataLayoutBuilderElementId}) => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const [{focusedField}] = useContext(FormViewContext);
 	const [keywords, setKeywords] = useState('');
 	const [sidebarClosed, setSidebarClosed] = useState(false);
 
@@ -130,16 +136,6 @@ export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
 	);
 
 	useSidebarContent(builderElementRef, sidebarClosed);
-
-	useEffect(() => {
-		const provider = dataLayoutBuilder.getProvider();
-
-		const eventHandler = provider.on('focusedFieldChanged', ({newVal}) => {
-			setFocusedField(newVal);
-		});
-
-		return () => eventHandler.removeListener();
-	}, [dataLayoutBuilder, setFocusedField]);
 
 	const sidebarRef = useRef();
 
@@ -165,24 +161,13 @@ export default ({dataLayoutBuilder, dataLayoutBuilderElementId}) => {
 			ref={sidebarRef}
 		>
 			<>
-				{hasFocusedField && (
-					<SettingsSidebarHeader
-						dataLayoutBuilder={dataLayoutBuilder}
-						focusedField={focusedField}
-					/>
-				)}
+				{hasFocusedField && <SettingsSidebarHeader />}
 
 				<Sidebar.Body>
 					{hasFocusedField ? (
-						<SettingsSidebarBody
-							dataLayoutBuilder={dataLayoutBuilder}
-							focusedField={focusedField}
-						/>
+						<SettingsSidebarBody />
 					) : (
-						<DefaultSidebarBody
-							dataLayoutBuilder={dataLayoutBuilder}
-							keywords={keywords}
-						/>
+						<DefaultSidebarBody keywords={keywords} />
 					)}
 				</Sidebar.Body>
 			</>

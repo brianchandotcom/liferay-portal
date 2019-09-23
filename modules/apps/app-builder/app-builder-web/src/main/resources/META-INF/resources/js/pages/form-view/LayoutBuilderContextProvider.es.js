@@ -12,10 +12,16 @@
  * details.
  */
 
-import {UPDATE_FIELD_TYPES, UPDATE_PAGES} from './actions.es';
-import {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
+import LayoutBuilderContext from './LayoutBuilderContext.es';
+import FormViewContext from './FormViewContext.es';
+import {
+	UPDATE_FIELD_TYPES,
+	UPDATE_FOCUSED_FIELD,
+	UPDATE_PAGES
+} from './actions.es';
 
-export default (dataLayoutBuilder, dispatch) => {
+export default ({dataLayoutBuilder, children}) => {
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();
 
@@ -40,6 +46,23 @@ export default (dataLayoutBuilder, dispatch) => {
 		];
 	}, [dataLayoutBuilder]);
 
+	const [, dispatch] = useContext(FormViewContext);
+
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getProvider();
+
+		const eventHandler = provider.on('focusedFieldChanged', ({newVal}) => {
+			provider.once('rendered', () => {
+				dispatch({
+					payload: {focusedField: newVal},
+					type: UPDATE_FOCUSED_FIELD
+				});
+			});
+		});
+
+		return () => eventHandler.removeListener();
+	}, [dataLayoutBuilder, dispatch]);
+
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();
 
@@ -57,4 +80,12 @@ export default (dataLayoutBuilder, dispatch) => {
 
 		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);
+
+	return (
+		<LayoutBuilderContext.Provider
+			value={[dataLayoutBuilder, dataLayoutBuilder.dispatch]}
+		>
+			{children}
+		</LayoutBuilderContext.Provider>
+	);
 };

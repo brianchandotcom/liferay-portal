@@ -12,19 +12,18 @@
  * details.
  */
 
-import React, {useEffect, useReducer, useCallback} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {getItem} from '../../utils/client.es';
 import FormViewContext, {
 	initialState,
 	createReducer
 } from './FormViewContext.es';
-import useDataLayoutBuilder from './useDataLayoutBuilder.es';
 import {
-	actionBuilders,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_IDS
 } from './actions.es';
+import LayoutBuilderContextProvider from './LayoutBuilderContextProvider.es';
 
 export default ({
 	dataDefinitionId,
@@ -35,34 +34,6 @@ export default ({
 	const reducer = createReducer(dataLayoutBuilder);
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const dispatchAction = useCallback(
-		({payload, type}) => {
-			const actionBuilder = actionBuilders[type];
-
-			if (actionBuilder) {
-				dispatch(
-					actionBuilder({
-						dataLayoutBuilder,
-						payload,
-						type
-					})
-				);
-			} else {
-				dispatch({payload, type});
-			}
-		},
-		[dataLayoutBuilder, dispatch]
-	);
-
-	const dataLayoutBuilderDispatcher = useCallback(
-		(event, payload) => {
-			dataLayoutBuilder.dispatch(event, payload);
-		},
-		[dataLayoutBuilder]
-	);
-
-	useDataLayoutBuilder(dataLayoutBuilder, dispatchAction);
-
 	useEffect(() => {
 		dispatch({
 			payload: {
@@ -71,36 +42,36 @@ export default ({
 			},
 			type: UPDATE_IDS
 		});
-	}, [dataDefinitionId, dataLayoutId]);
+	}, [dataDefinitionId, dataLayoutId, dispatch]);
 
 	useEffect(() => {
 		if (dataLayoutId) {
 			getItem(`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`).then(
 				dataLayout =>
-					dispatchAction({
+					dispatch({
 						payload: {dataLayout},
 						type: UPDATE_DATA_LAYOUT
 					})
 			);
 		}
-	}, [dataLayoutId, dispatchAction]);
+	}, [dataLayoutId, dispatch]);
 
 	useEffect(() => {
 		getItem(
 			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
 		).then(dataDefinition =>
-			dispatchAction({
+			dispatch({
 				payload: {dataDefinition},
 				type: UPDATE_DATA_DEFINITION
 			})
 		);
-	}, [dataDefinitionId, dispatchAction]);
+	}, [dataDefinitionId, dispatch]);
 
 	return (
-		<FormViewContext.Provider
-			value={[state, dispatchAction, dataLayoutBuilderDispatcher]}
-		>
-			{children}
+		<FormViewContext.Provider value={[state, dispatch]}>
+			<LayoutBuilderContextProvider dataLayoutBuilder={dataLayoutBuilder}>
+				{children}
+			</LayoutBuilderContextProvider>
 		</FormViewContext.Provider>
 	);
 };

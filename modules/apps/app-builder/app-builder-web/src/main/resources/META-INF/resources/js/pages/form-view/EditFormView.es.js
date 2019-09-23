@@ -18,7 +18,7 @@ import LayoutBuilderManager from './LayoutBuilderManager.es';
 import LayoutBuilderSidebar from './LayoutBuilderSidebar.es';
 import {createPortal} from 'react-dom';
 import FormViewUpperToolbar from './FormViewUpperToolbar.es';
-import FormViewProvider from './FormViewProvider.es';
+import FormViewContextProvider from './FormViewContextProvider.es';
 
 const parseProps = ({dataDefinitionId, dataLayoutId, ...props}) => ({
 	...props,
@@ -37,7 +37,7 @@ const EditFormView = props => {
 	} = parseProps(props);
 
 	return (
-		<FormViewProvider
+		<FormViewContextProvider
 			dataDefinitionId={dataDefinitionId}
 			dataLayoutBuilder={dataLayoutBuilder}
 			dataLayoutId={dataLayoutId}
@@ -57,7 +57,7 @@ const EditFormView = props => {
 			/>
 
 			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
-		</FormViewProvider>
+		</FormViewContextProvider>
 	);
 };
 

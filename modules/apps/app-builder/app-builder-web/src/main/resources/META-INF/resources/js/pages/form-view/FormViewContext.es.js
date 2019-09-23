@@ -21,7 +21,8 @@ import {
 	UPDATE_DATA_LAYOUT_NAME,
 	UPDATE_FIELD_TYPES,
 	UPDATE_IDS,
-	UPDATE_PAGES
+	UPDATE_PAGES,
+	UPDATE_FOCUSED_FIELD
 } from './actions.es';
 
 const FormViewContext = createContext();
@@ -37,7 +38,8 @@ const initialState = {
 		name: {}
 	},
 	dataLayoutId: 0,
-	fieldTypes: []
+	fieldTypes: [],
+	focusedField: {}
 };
 
 const setDataDefinitionFields = (
@@ -61,7 +63,9 @@ const setDataDefinitionFields = (
 
 	return newFields.concat(
 		dataDefinitionFields.filter(
-			field => !containsField(dataLayoutPages, field.name)
+			field =>
+				!containsField(dataLayoutPages, field.name) &&
+				!newFields.some(({name}) => name === field.name)
 		)
 	);
 };
@@ -115,6 +119,14 @@ const createReducer = dataLayoutBuilder => {
 				return {
 					...state,
 					fieldTypes
+				};
+			}
+			case UPDATE_FOCUSED_FIELD: {
+				const {focusedField} = action.payload;
+
+				return {
+					...state,
+					focusedField
 				};
 			}
 			case UPDATE_IDS: {

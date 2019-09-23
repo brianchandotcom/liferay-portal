@@ -77,18 +77,20 @@ public class GoogleDocsDLDisplayContextFactory
 
 		Object model = fileEntry.getModel();
 
-		if (model instanceof DLFileEntry) {
-			GoogleDocsMetadataHelper googleDocsMetadataHelper =
-				new GoogleDocsMetadataHelper(
-					_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-					(DLFileEntry)model, _dlFileEntryMetadataLocalService,
-					_fieldsToDDMFormValuesConverter, _storageEngine);
+		if (!(model instanceof DLFileEntry)) {
+			return parentDLEditFileEntryDisplayContext;
+		}
 
-			if (googleDocsMetadataHelper.isGoogleDocs()) {
-				return new GoogleDocsDLEditFileEntryDisplayContext(
-					parentDLEditFileEntryDisplayContext, httpServletRequest,
-					httpServletResponse, fileEntry);
-			}
+		GoogleDocsMetadataHelper googleDocsMetadataHelper =
+			new GoogleDocsMetadataHelper(
+				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+				(DLFileEntry)model, _dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter, _storageEngine);
+
+		if (googleDocsMetadataHelper.isGoogleDocs()) {
+			return new GoogleDocsDLEditFileEntryDisplayContext(
+				parentDLEditFileEntryDisplayContext, httpServletRequest,
+				httpServletResponse, fileEntry);
 		}
 
 		return parentDLEditFileEntryDisplayContext;
@@ -125,18 +127,20 @@ public class GoogleDocsDLDisplayContextFactory
 
 		Object model = fileVersion.getModel();
 
-		if (model instanceof DLFileVersion) {
-			GoogleDocsMetadataHelper googleDocsMetadataHelper =
-				new GoogleDocsMetadataHelper(
-					_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
-					(DLFileVersion)model, _dlFileEntryMetadataLocalService,
-					_fieldsToDDMFormValuesConverter, _storageEngine);
+		if (!(model instanceof DLFileVersion)) {
+			return parentDLViewFileVersionDisplayContext;
+		}
 
-			if (googleDocsMetadataHelper.isGoogleDocs()) {
-				return new GoogleDocsDLViewFileVersionDisplayContext(
-					parentDLViewFileVersionDisplayContext, httpServletRequest,
-					httpServletResponse, fileVersion, googleDocsMetadataHelper);
-			}
+		GoogleDocsMetadataHelper googleDocsMetadataHelper =
+			new GoogleDocsMetadataHelper(
+				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
+				(DLFileVersion)model, _dlFileEntryMetadataLocalService,
+				_fieldsToDDMFormValuesConverter, _storageEngine);
+
+		if (googleDocsMetadataHelper.isGoogleDocs()) {
+			return new GoogleDocsDLViewFileVersionDisplayContext(
+				parentDLViewFileVersionDisplayContext, httpServletRequest,
+				httpServletResponse, fileVersion, googleDocsMetadataHelper);
 		}
 
 		return parentDLViewFileVersionDisplayContext;

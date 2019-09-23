@@ -53,7 +53,6 @@ definition {
 		}
 
 		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
-
 	}
 
 	macro gotoEditField {

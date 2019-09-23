@@ -36,7 +36,6 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
-
 	}
 
 	macro deleteEntryCP {

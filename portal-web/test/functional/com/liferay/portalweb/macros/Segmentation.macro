@@ -19,7 +19,6 @@ definition {
 			locator1 = "Segmentation#ADD_FIELD_TYPE",
 			locator2 = "Segmentation#ADD_FIELD_POSITION",
 			value1 = "${propertyOption}");
-
 	}
 
 	macro changeCriterionInputEmailAddress {

@@ -141,7 +141,6 @@ definition {
 			completionVelocityDateRange = "Last Year",
 			isNotPresent = "INST_DAY,INST_HOUR,INST_YEAR",
 			isPresent = "INST_WEEK,INST_MONTH");
-
 	}
 
 	@description = "Verify that the filters from All Items page are correctly loaded when accessed via Metrics Pending/Completed cards"
@@ -238,7 +237,6 @@ definition {
 			workflowProcess = "${key_workflowProcessName}");
 
 		WorkflowMetrics.verifyFiltersFromDashboard(isFilterOptionPresent = "Completed,Last 30 Day,Untracked");
-
 	}
 
 }

@@ -55,7 +55,6 @@ definition {
 				locator1 = "ChangeListSettings#SUPPORTED_CONTENT_TYPES",
 				value1 = "${changeListContentType}");
 		}
-
 	}
 
 	@description = "Enable Change List and go to Overview"

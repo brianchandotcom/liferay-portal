@@ -478,7 +478,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
 			value1 = "${key_tagText}");
-
 	}
 
 	macro addViaDayView {

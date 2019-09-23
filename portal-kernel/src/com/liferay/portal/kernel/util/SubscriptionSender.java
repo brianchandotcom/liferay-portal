@@ -642,7 +642,7 @@ public class SubscriptionSender implements Serializable {
 			_sentEmailAddresses.add(emailAddress);
 		}
 		else {
-			if (_stagingOutboxEmailAddresses.contains(emailAddress)) {
+			if (_delayedSentEmailAddresses.contains(emailAddress)) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Do not send a duplicate email to " + emailAddress);
@@ -657,7 +657,7 @@ public class SubscriptionSender implements Serializable {
 						" to the list of users who will receive an email");
 			}
 
-			_stagingOutboxEmailAddresses.add(emailAddress);
+			_delayedSentEmailAddresses.add(emailAddress);
 		}
 
 		if (!user.isActive()) {
@@ -1104,6 +1104,6 @@ public class SubscriptionSender implements Serializable {
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();
-	private final Set<String> _stagingOutboxEmailAddresses = new HashSet<>();
+	private final Set<String> _delayedSentEmailAddresses = new HashSet<>();
 
 }

@@ -14,24 +14,35 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import React, {useRef, useState, useEffect, useContext} from 'react';
+import React, {
+	useRef,
+	useState,
+	useEffect,
+	useContext,
+	useCallback
+} from 'react';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import classNames from 'classnames';
 import {useKeyDown} from '../../hooks/index.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 import FormViewContext from './FormViewContext.es';
 
-const Header = ({keywords, onSearch}) => {
+const Header = ({keywords, onCloseSearch, onSearch}) => {
 	const [searchMode, setSearchMode] = useState(false);
 
-	const onClickClose = () => setSearchMode(false);
+	const closeSearch = useCallback(() => {
+		setSearchMode(false);
+		onCloseSearch();
+	}, [onCloseSearch, setSearchMode]);
+
+	const onClickClose = () => closeSearch();
 	const onClickSearch = () => setSearchMode(true);
 
 	const onChangeSearchInput = ({target}) => onSearch(target.value);
 
 	useKeyDown(() => {
 		if (searchMode) {
-			setSearchMode(false);
+			closeSearch();
 		}
 	}, 27);
 
@@ -131,6 +142,7 @@ export default () => {
 			<>
 				<Header
 					keywords={keywords}
+					onCloseSearch={() => setKeywords('')}
 					onSearch={keywords => setKeywords(keywords)}
 				/>
 

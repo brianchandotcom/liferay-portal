@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayMultiSelectInput from '@clayui/multi-select';
+import ClayMultiSelect from '@clayui/multi-select';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -60,13 +60,24 @@ class Alias extends Component {
 					</span>
 				</label>
 
-				<ClayMultiSelectInput
-					helpText={Liferay.Language.get('add-an-alias-instruction')}
-					inputValue={inputValue}
-					items={keywords}
-					onInputChange={this._handleInputChange}
-					onItemsChange={this._handleItemsChange}
-				/>
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayMultiSelect
+							inputValue={inputValue}
+							items={keywords}
+							onInputChange={this._handleInputChange}
+							onItemsChange={this._handleItemsChange}
+						/>
+
+						<ClayForm.FeedbackGroup>
+							<ClayForm.Text>
+								{Liferay.Language.get(
+									'add-an-alias-instruction'
+								)}
+							</ClayForm.Text>
+						</ClayForm.FeedbackGroup>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
 			</ClayForm.Group>
 		);
 	}

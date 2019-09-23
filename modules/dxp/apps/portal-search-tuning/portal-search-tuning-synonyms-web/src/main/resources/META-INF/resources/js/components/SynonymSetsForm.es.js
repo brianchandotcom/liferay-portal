@@ -10,7 +10,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayMultiSelectInput from '@clayui/multi-select';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayMultiSelect from '@clayui/multi-select';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -100,16 +101,28 @@ class SynonymSetsForm extends Component {
 							)}
 						</div>
 
-						<ClayMultiSelectInput
-							helpText={Liferay.Language.get(
-								'type-a-comma-or-press-enter-to-input-a-synonym'
-							)}
-							inputValue={inputValue}
-							items={synonyms}
-							label={Liferay.Language.get('synonyms')}
-							onInputChange={this._handleInputChange}
-							onItemsChange={this._handleItemsChange}
-						/>
+						<ClayForm.Group>
+							<label>{Liferay.Language.get('synonyms')}</label>
+
+							<ClayInput.Group>
+								<ClayInput.GroupItem>
+									<ClayMultiSelect
+										inputValue={inputValue}
+										items={synonyms}
+										onInputChange={this._handleInputChange}
+										onItemsChange={this._handleItemsChange}
+									/>
+
+									<ClayForm.FeedbackGroup>
+										<ClayForm.Text>
+											{Liferay.Language.get(
+												'type-a-comma-or-press-enter-to-input-a-synonym'
+											)}
+										</ClayForm.Text>
+									</ClayForm.FeedbackGroup>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayForm.Group>
 
 						<div className="sheet-footer">
 							<ClayButton

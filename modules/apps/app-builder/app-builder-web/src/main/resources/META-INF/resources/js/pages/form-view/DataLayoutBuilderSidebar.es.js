@@ -16,7 +16,9 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {useEffect, useRef, useState, useContext} from 'react';
-import renderSettingsForm from './renderSettingsForm.es';
+import renderSettingsForm, {
+	getFilteredSettingsContext
+} from './renderSettingsForm.es';
 import {useSidebarContent} from '../../hooks/index.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
@@ -58,7 +60,11 @@ const SettingsSidebarBody = () => {
 				)
 			);
 		} else {
-			form.pages = settingsContext.pages;
+			const filteredSettingsContext = getFilteredSettingsContext(
+				settingsContext
+			);
+
+			form.pages = filteredSettingsContext.pages;
 		}
 	}, [dataLayoutBuilder, form, formRef, settingsContext]);
 

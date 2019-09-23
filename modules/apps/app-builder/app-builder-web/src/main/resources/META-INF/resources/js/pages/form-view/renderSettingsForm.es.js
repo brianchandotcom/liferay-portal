@@ -19,7 +19,7 @@ const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.sv
 
 const UNIMPLIMENTED_PROPERTIES = ['indexType', 'required', 'validation'];
 
-const getFilteredSettingsContext = settingsContext => {
+export const getFilteredSettingsContext = settingsContext => {
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	return {
@@ -60,10 +60,6 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 	};
 
 	const handleFormAttached = function() {
-		this.evaluate();
-	};
-
-	const handleFormRendered = () => {
 		const firstInput = container.querySelector('input');
 
 		if (firstInput && !container.contains(document.activeElement)) {
@@ -73,6 +69,8 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 				firstInput.select();
 			}
 		}
+
+		this.evaluate();
 	};
 
 	return new Form(
@@ -82,8 +80,7 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 			events: {
 				attached: handleFormAttached,
 				fieldBlurred: handleFieldBlurred,
-				fieldEdited: handleFieldEdited,
-				rendered: handleFormRendered
+				fieldEdited: handleFieldEdited
 			},
 			spritemap
 		},

@@ -6,9 +6,7 @@
 
 <#assign userModel = dataFactory.guestUserModel />
 
-<@insertGroup
-	_groupModel=dataFactory.newGroupModel(userModel)
-/>
+<@insertGroup _groupModel=dataFactory.newGroupModel(userModel) />
 
 <#assign
 	groupIds = [dataFactory.guestGroupModel.groupId]
@@ -35,9 +33,7 @@
 
 <@insertLayout _layoutModel=layoutModel />
 
-<@insertGroup
-	_groupModel=userGroupModel
-/>
+<@insertGroup _groupModel=userGroupModel />
 
 <#assign
 	groupIds = dataFactory.getSequence(dataFactory.maxGroupCount)

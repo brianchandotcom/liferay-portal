@@ -2,17 +2,11 @@
 
 <@insertLayout _layoutModel=layoutModel />
 
-<@insertGroup
-	_groupModel=dataFactory.globalGroupModel
-/>
+<@insertGroup _groupModel=dataFactory.globalGroupModel />
 
-<@insertGroup
-	_groupModel=dataFactory.guestGroupModel
-/>
+<@insertGroup _groupModel=dataFactory.guestGroupModel />
 
-<@insertGroup
-	_groupModel=dataFactory.userPersonalSiteGroupModel
-/>
+<@insertGroup _groupModel=dataFactory.userPersonalSiteGroupModel />
 
 <#list dataFactory.groupModels as groupModel>
 	<#assign groupId = groupModel.groupId />
@@ -44,9 +38,7 @@
 		<@insertLayout _layoutModel=publicLayoutModel />
 	</#list>
 
-	<@insertGroup
-		_groupModel=groupModel
-	/>
+	<@insertGroup _groupModel=groupModel />
 
 	${dataFactory.getCSVWriter("repository").write(groupId + ", " + groupModel.name + "\n")}
 </#list>

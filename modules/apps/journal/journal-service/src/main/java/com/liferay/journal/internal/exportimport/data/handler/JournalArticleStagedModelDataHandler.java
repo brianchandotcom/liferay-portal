@@ -1004,7 +1004,7 @@ public class JournalArticleStagedModelDataHandler
 				_importFriendlyURLEntries(
 					portletDataContext, article, importedArticle);
 
-				_sendStoredUserNotificationEvents(article);
+				_sendUndeliveredUserNotificationEvents(article);
 			}
 			finally {
 				ServiceContextThreadLocal.popServiceContext();
@@ -1425,7 +1425,9 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
-	private void _sendStoredUserNotificationEvents(JournalArticle article) {
+	private void _sendUndeliveredUserNotificationEvents(
+		JournalArticle article) {
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			_userNotificationEventLocalService.getActionableDynamicQuery();
 

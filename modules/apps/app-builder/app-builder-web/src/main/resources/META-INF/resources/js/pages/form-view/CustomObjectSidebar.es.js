@@ -14,11 +14,12 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useRef, useState, useEffect, useContext} from 'react';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import classNames from 'classnames';
 import {useKeyDown} from '../../hooks/index.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
+import FormViewContext from './FormViewContext.es';
 
 const Header = ({keywords, onSearch}) => {
 	const [searchMode, setSearchMode] = useState(false);
@@ -41,6 +42,11 @@ const Header = ({keywords, onSearch}) => {
 			searchInputRef.current.focus();
 		}
 	}, [searchInputRef, searchMode]);
+
+	const [{dataDefinition}] = useContext(FormViewContext);
+	const {
+		name: {en_US: dataDefinitionName = ''}
+	} = dataDefinition;
 
 	return (
 		<div
@@ -92,7 +98,7 @@ const Header = ({keywords, onSearch}) => {
 				) : (
 					<>
 						<div className="autofit-col autofit-col-expand">
-							<h3>Product</h3>
+							<h3>{dataDefinitionName}</h3>
 						</div>
 
 						<div className="autofit-col" key="searchButton">

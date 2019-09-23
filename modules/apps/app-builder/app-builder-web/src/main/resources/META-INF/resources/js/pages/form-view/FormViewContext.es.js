@@ -29,7 +29,8 @@ const actions = {
 
 const initialState = {
 	dataDefinition: {
-		dataDefinitionFields: []
+		dataDefinitionFields: [],
+		name: {}
 	},
 	dataDefinitionId: 0,
 	dataLayout: {

@@ -23,6 +23,12 @@ class SharedAssets extends PortletBase {
 		this._viewAssetTypeURL = config.viewAssetTypeURL;
 	}
 
+	attached() {
+		Liferay.on('sharing:changed', () =>
+			Liferay.Portlet.refresh('#p_p_id' + this.namespace)
+		);
+	}
+
 	handleFilterItemClicked(event) {
 		const itemData = event.data.item.data;
 		const namespace = this.namespace;

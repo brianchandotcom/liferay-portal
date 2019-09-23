@@ -180,6 +180,10 @@ public class CollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private String _getPortraitURL(ThemeDisplay themeDisplay, User user) {
 		try {
+			if (user.getPortraitId() == 0) {
+				return null;
+			}
+
 			return user.getPortraitURL(themeDisplay);
 		}
 		catch (PortalException pe) {

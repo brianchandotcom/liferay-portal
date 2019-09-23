@@ -969,8 +969,8 @@ definition {
 			fieldValue = "05/02/2016");
 
 		FormsAdmin.viewCheckboxEntry(
-			fieldValue = "Checkbox",
-			fieldName = "Checkbox");
+			fieldName = "Checkbox",
+			fieldValue = "Checkbox");
 
 		FormPortlet.clickNextPage();
 

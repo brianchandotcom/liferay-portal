@@ -161,7 +161,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					</c:choose>
 				</c:if>
 
-				<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
+				<c:if test="<%= hasUpdatePermission && !(folder.isMountPoint() || (RepositoryUtil.isExternalRepository(repositoryId) && folder.isRoot())) %>">
 					<liferay-ui:icon
 						message="move"
 						url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "move(1, 'rowIdsFolder', " + folderId + ");" %>'
@@ -323,21 +323,23 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 
 			<c:choose>
 				<c:when test="<%= !folder.isMountPoint() %>">
-					<portlet:renderURL var="redirectURL">
-						<portlet:param name="mvcRenderCommandName" value="<%= mvcRenderCommandName %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
-					</portlet:renderURL>
+					<c:if test="<%= !RepositoryUtil.isExternalRepository(repositoryId) || !folder.isRoot() %>">
+						<portlet:renderURL var="redirectURL">
+							<portlet:param name="mvcRenderCommandName" value="<%= mvcRenderCommandName %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
+						</portlet:renderURL>
 
-					<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
-						<portlet:param name="<%= Constants.CMD %>" value="<%= (folder.isRepositoryCapabilityProvided(TrashCapability.class) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-						<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</portlet:actionURL>
+						<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
+							<portlet:param name="<%= Constants.CMD %>" value="<%= (folder.isRepositoryCapabilityProvided(TrashCapability.class) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+							<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+						</portlet:actionURL>
 
-					<liferay-ui:icon-delete
-						trash="<%= folder.isRepositoryCapabilityProvided(TrashCapability.class) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>"
-						url="<%= deleteURL %>"
-					/>
+						<liferay-ui:icon-delete
+							trash="<%= folder.isRepositoryCapabilityProvided(TrashCapability.class) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>"
+							url="<%= deleteURL %>"
+						/>
+					</c:if>
 				</c:when>
 				<c:otherwise>
 					<portlet:renderURL var="redirectURL">

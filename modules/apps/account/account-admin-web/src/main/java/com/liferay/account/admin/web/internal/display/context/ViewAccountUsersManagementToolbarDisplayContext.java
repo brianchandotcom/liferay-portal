@@ -73,6 +73,16 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		return false;
 	}
 
+	@Override
+	protected String[] getNavigationKeys() {
+		return new String[] {"active", "inactive"};
+	}
+
+	@Override
+	protected String[] getOrderByKeys() {
+		return new String[] {"first-name", "last-name", "email-address"};
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewAccountUsersManagementToolbarDisplayContext.class);
 

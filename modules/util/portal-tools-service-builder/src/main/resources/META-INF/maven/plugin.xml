@@ -6,7 +6,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.service.builder</artifactId>
-	<version>1.0.305</version>
+	<version>1.0.306</version>
 	<goalPrefix>service-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>

@@ -428,5 +428,3 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 		Liferay.fire('<portlet:namespace/>refreshSelectChangeList');
 	}
 </script>
-
-<%@ include file="/error_messages.jspf" %>

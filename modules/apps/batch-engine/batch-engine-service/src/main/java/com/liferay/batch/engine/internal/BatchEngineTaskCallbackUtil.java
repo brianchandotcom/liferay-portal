@@ -32,9 +32,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 /**
  * @author Ivica Cardic
  */
-public class BatchEngineTaskCallbackURLNotifier {
+public class BatchEngineTaskCallbackUtil {
 
-	public void notify(BatchEngineTask batchEngineTask) {
+	public static void sendCallback(BatchEngineTask batchEngineTask) {
 		if (Validator.isBlank(batchEngineTask.getCallbackURL())) {
 			return;
 		}
@@ -64,6 +64,6 @@ public class BatchEngineTaskCallbackURLNotifier {
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper();
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineTaskCallbackURLNotifier.class);
+		BatchEngineTaskCallbackUtil.class);
 
 }

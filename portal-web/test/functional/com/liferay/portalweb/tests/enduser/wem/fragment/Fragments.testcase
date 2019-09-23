@@ -259,6 +259,10 @@ definition {
 		}
 
 		task ("Publish the second section fragment") {
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name 2",
+				item = "Edit");
+
 			FragmentsEditor.publish();
 		}
 

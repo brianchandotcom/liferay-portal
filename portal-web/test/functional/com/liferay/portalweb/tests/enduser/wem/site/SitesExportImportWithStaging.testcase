@@ -130,12 +130,6 @@ definition {
 				fragmentName = "Rich Text");
 		}
 
-		task ("Map the display page to Basic Web Content") {
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-		}
-
 		task ("Map the Title fragment to the Title field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",

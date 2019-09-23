@@ -101,12 +101,6 @@ definition {
 	@description = "User can only map a display page to an asset type once."
 	@priority = "4"
 	test AssertAssetTypeOnlySelectableOnce {
-		task ("Map the display page to Basic Web Content") {
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-		}
-
 		task ("Assert the select button to select asset type no longer appears") {
 			PageEditorMapping.assertAssetTypeUnselectable();
 		}
@@ -331,12 +325,6 @@ definition {
 	@description = "User cannot delete a display page that is in use by an asset."
 	@priority = "4"
 	test ViewCannotDeleteActiveDisplayPage {
-		task ("Map the display page to Basic Web Content") {
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-		}
-
 		task ("Publish the display page") {
 			Button.clickPublish();
 

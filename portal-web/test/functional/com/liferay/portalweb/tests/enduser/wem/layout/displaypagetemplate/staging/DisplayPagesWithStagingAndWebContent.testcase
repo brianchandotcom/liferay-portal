@@ -41,10 +41,6 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
 
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
 				fragmentName = "Title",

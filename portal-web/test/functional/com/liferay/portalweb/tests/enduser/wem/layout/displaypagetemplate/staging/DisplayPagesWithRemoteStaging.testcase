@@ -68,10 +68,6 @@ definition {
 			displayPageName = "Display Page Name",
 			item = "Edit");
 
-		PageEditorMapping.selectContentType(
-			contentType = "Web Content Article",
-			subType = "Basic Web Content");
-
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureDisplaySettings(

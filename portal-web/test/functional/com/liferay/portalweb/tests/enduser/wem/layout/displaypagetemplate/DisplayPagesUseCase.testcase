@@ -64,10 +64,6 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
 
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
 				fragmentName = "Title",
@@ -248,10 +244,6 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Image");
 
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-
 			PageEditorMapping.mapEditableTextToField(
 				field = "Author Name",
 				fragmentName = "Rich Text",
@@ -323,10 +315,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Image");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Last Editor Name",
@@ -462,10 +450,6 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Multiple Editables");
 
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
-
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",
 				fragmentName = "Multiple Editables",
@@ -588,15 +572,13 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.addDisplayPage(
+			displayPageName = "Display Page Name",
+			subType = "WC Structure Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Multiple Editables");
-
-		PageEditorMapping.selectContentType(
-			contentType = "Web Content Article",
-			subType = "WC Structure Name");
 
 		PageEditorMapping.mapEditableTextToField(
 			field = "Title",
@@ -680,10 +662,6 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
-
-			PageEditorMapping.selectContentType(
-				contentType = "Web Content Article",
-				subType = "Basic Web Content");
 
 			PageEditorMapping.mapEditableTextToField(
 				field = "Title",

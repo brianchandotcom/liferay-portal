@@ -1,0 +1,113 @@
+components:
+    schemas:
+        Task:
+            properties:
+                className:
+                    example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
+                    type: string
+                endTime:
+                    example: 1569261245
+                    format: int64
+                    minimum: 0
+                    type: integer
+                errorMessage:
+                    example: File import failed
+                    type: string
+                executeStatus:
+                    example: INITIALIZED
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                operation:
+                    example: CREATE
+                    type: string
+                startTime:
+                    example: 1569261245
+                    format: int64
+                    minimum: 0
+                    type: integer
+                version:
+                    example: v1.0
+                    type: string
+            type: object
+        body:
+            properties:
+                file:
+                    format: binary
+                    type: string
+            type: object
+info:
+    description: ""
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "Headless Delivery"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /import/{taskId}/:
+        get:
+            operationId: getImportTask
+            parameters:
+                - in: path
+                  explode: false
+                  name: taskId
+                  required: true
+                  schema:
+                      description: The item class API version
+                      example: v1.0
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+                    description: Async
+            tags: ["Task"]
+        post:
+            operationId: postImportTask
+            parameters:
+                - in: path
+                  explode: false
+                  name: className
+                  required: true
+                  schema:
+                      description: The item class name
+                      example: com.liferay.headless.delivery.dto.v1_0.BlogPosting
+                      type: string
+                  style: simple
+                - in: path
+                  explode: false
+                  name: version
+                  required: true
+                  schema:
+                      description: The item class API version
+                      example: v1.0
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: '#/components/schemas/body'
+                required: true
+            responses:
+                202:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Task"
+                    description: Async
+            tags: ["Task"]

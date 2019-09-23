@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Headless Batch Engine Implementation
+Bundle-SymbolicName: com.liferay.headless.batch.engine.impl
+Bundle-Version: 1.0.0

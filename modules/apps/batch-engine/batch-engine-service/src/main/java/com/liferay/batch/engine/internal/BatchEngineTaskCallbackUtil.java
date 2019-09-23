@@ -41,23 +41,24 @@ public class BatchEngineTaskCallbackUtil {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-			StringEntity requestEntity = new StringEntity(
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
+
+			StringEntity stringEntity = new StringEntity(
 				_OBJECT_MAPPER.writeValueAsString(
 					Collections.singletonMap(
 						batchEngineTask.getBatchEngineTaskId(),
 						batchEngineTask.getExecuteStatus())),
 				ContentType.APPLICATION_JSON);
 
-			HttpPost postMethod = new HttpPost(
-				batchEngineTask.getCallbackURL());
+			HttpPost httpPost = new HttpPost(batchEngineTask.getCallbackURL());
 
-			postMethod.setEntity(requestEntity);
+			httpPost.setEntity(stringEntity);
 
-			httpClient.execute(postMethod);
+			closeableHttpClient.execute(httpPost);
 		}
 		catch (Exception e) {
-			_log.error(e.getMessage(), e);
+			_log.error(e, e);
 		}
 	}
 

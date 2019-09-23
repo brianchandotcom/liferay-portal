@@ -16,7 +16,13 @@
 
 <%@ include file="/collaborators/init.jsp" %>
 
-<div id="<portlet:namespace/>manageCollaborators-root">
+<liferay-util:html-top
+	outputKey="collaborators_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/collaborators/css/main.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
+<div id="<portlet:namespace/>collaborators-root">
 
 	<%
 	Map<String, Object> data = new HashMap<>();

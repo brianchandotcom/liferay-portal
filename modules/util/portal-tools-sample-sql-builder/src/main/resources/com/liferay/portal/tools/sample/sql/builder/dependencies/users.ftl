@@ -14,9 +14,7 @@
 
 	<@insertLayout _layoutModel=layoutModel />
 
-	<@insertGroup
-		_groupModel=userGroupModel
-	/>
+	<@insertGroup _groupModel=userGroupModel />
 
 	<@insertUser
 		_groupIds=groupIds

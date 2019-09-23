@@ -1122,6 +1122,10 @@
 			}
 		],
 		"properties": {
+			"breached": {
+				"store": true,
+				"type": "boolean"
+			},
 			"companyId": {
 				"store": true,
 				"type": "keyword"
@@ -1129,10 +1133,6 @@
 			"deleted": {
 				"store": true,
 				"type": "boolean"
-			},
-			"elapsedTime": {
-				"store": true,
-				"type": "long"
 			},
 			"instanceId": {
 				"store": true,
@@ -1147,18 +1147,9 @@
 				"store": true,
 				"type": "boolean"
 			},
-			"overdueDate": {
-				"format": "yyyyMMddHHmmss",
-				"store": true,
-				"type": "date"
-			},
 			"processId": {
 				"store": true,
 				"type": "keyword"
-			},
-			"remainingTime": {
-				"store": true,
-				"type": "long"
 			},
 			"slaDefinitionId": {
 				"store": true,
@@ -1173,6 +1164,10 @@
 				"type": "keyword"
 			},
 			"taskName": {
+				"store": true,
+				"type": "keyword"
+			},
+			"tokenId": {
 				"store": true,
 				"type": "keyword"
 			},

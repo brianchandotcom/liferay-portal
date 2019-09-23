@@ -67,6 +67,28 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			DLFileEntryMetadata.class);
 	}
 
+	public DLFileEntryType addGoogleDocsDLFileEntryType()
+		throws PortalException {
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
+			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
+			GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS);
+
+		if (ddmStructure == null) {
+			ddmStructure = _addGoogleDocsDDMStructure();
+		}
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			_dlFileEntryTypeLocalService.getFileEntryTypes(
+				ddmStructure.getStructureId());
+
+		if (!dlFileEntryTypes.isEmpty()) {
+			return dlFileEntryTypes.get(0);
+		}
+
+		return _addGoogleDocsDLFileEntryType(ddmStructure.getStructureId());
+	}
+
 	private DDMStructure _addGoogleDocsDDMStructure() throws PortalException {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
@@ -123,28 +145,6 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS, nameMap,
 			descriptionMap, ddmForm, ddmFormLayout, StorageType.JSON.toString(),
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
-	}
-
-	public DLFileEntryType addGoogleDocsDLFileEntryType()
-		throws PortalException {
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
-			GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS);
-
-		if (ddmStructure == null) {
-			ddmStructure = _addGoogleDocsDDMStructure();
-		}
-
-		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getFileEntryTypes(
-				ddmStructure.getStructureId());
-
-		if (!dlFileEntryTypes.isEmpty()) {
-			return dlFileEntryTypes.get(0);
-		}
-
-		return _addGoogleDocsDLFileEntryType(ddmStructure.getStructureId());
 	}
 
 	private DLFileEntryType _addGoogleDocsDLFileEntryType(long ddmStructureId)

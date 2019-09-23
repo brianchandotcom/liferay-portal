@@ -212,6 +212,18 @@ public class GoogleDocsMetadataHelper {
 		}
 	}
 
+	private Field _getField(String fieldName) {
+		_initDLFileEntryMetadataAndFields();
+
+		Field field = _fieldsMap.get(fieldName);
+
+		if (field == null) {
+			throw new IllegalArgumentException("Unknown field " + fieldName);
+		}
+
+		return field;
+	}
+
 	private void _initDLFileEntryMetadataAndFields() {
 		if (_fieldsMap != null) {
 			return;
@@ -260,18 +272,6 @@ public class GoogleDocsMetadataHelper {
 			_ddmStructureLocalService.getDDMStructure(
 				_ddmStructure.getStructureId()),
 			fields);
-	}
-
-	private Field _getField(String fieldName) {
-		_initDLFileEntryMetadataAndFields();
-
-		Field field = _fieldsMap.get(fieldName);
-
-		if (field == null) {
-			throw new IllegalArgumentException("Unknown field " + fieldName);
-		}
-
-		return field;
 	}
 
 	private final DDMFormValuesToFieldsConverter

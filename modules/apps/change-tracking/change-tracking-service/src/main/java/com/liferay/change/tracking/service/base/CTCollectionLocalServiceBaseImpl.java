@@ -119,13 +119,10 @@ public abstract class CTCollectionLocalServiceBaseImpl
 	 *
 	 * @param ctCollection the ct collection
 	 * @return the ct collection that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CTCollection deleteCTCollection(CTCollection ctCollection)
-		throws PortalException {
-
+	public CTCollection deleteCTCollection(CTCollection ctCollection) {
 		return ctCollectionPersistence.remove(ctCollection);
 	}
 

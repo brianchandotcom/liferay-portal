@@ -288,6 +288,12 @@ public class CTEntryLocalServiceWrapper
 			ctCollectionId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public int getCTCollectionCTEntriesCount(long ctCollectionId) {
+		return _ctEntryLocalService.getCTCollectionCTEntriesCount(
+			ctCollectionId);
+	}
+
 	/**
 	 * Returns a range of all the ct entries.
 	 *

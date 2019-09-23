@@ -92,11 +92,9 @@ public interface CTCollectionLocalService
 	 *
 	 * @param ctCollection the ct collection
 	 * @return the ct collection that was removed
-	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public CTCollection deleteCTCollection(CTCollection ctCollection)
-		throws PortalException;
+	public CTCollection deleteCTCollection(CTCollection ctCollection);
 
 	/**
 	 * Deletes the ct collection with the primary key from the database. Also notifies the appropriate model listeners.

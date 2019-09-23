@@ -276,6 +276,10 @@ public class CTEntryLocalServiceUtil {
 			ctCollectionId, status, start, end, orderByComparator);
 	}
 
+	public static int getCTCollectionCTEntriesCount(long ctCollectionId) {
+		return getService().getCTCollectionCTEntriesCount(ctCollectionId);
+	}
+
 	/**
 	 * Returns a range of all the ct entries.
 	 *

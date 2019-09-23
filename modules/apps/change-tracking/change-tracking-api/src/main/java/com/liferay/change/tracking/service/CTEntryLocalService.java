@@ -221,6 +221,9 @@ public interface CTEntryLocalService
 		long ctCollectionId, int status, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCTCollectionCTEntriesCount(long ctCollectionId);
+
 	/**
 	 * Returns a range of all the ct entries.
 	 *

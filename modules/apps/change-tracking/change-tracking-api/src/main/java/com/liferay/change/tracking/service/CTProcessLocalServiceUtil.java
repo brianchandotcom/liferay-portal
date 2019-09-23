@@ -76,11 +76,9 @@ public class CTProcessLocalServiceUtil {
 	 *
 	 * @param ctProcess the ct process
 	 * @return the ct process that was removed
-	 * @throws PortalException
 	 */
 	public static com.liferay.change.tracking.model.CTProcess deleteCTProcess(
-			com.liferay.change.tracking.model.CTProcess ctProcess)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.change.tracking.model.CTProcess ctProcess) {
 
 		return getService().deleteCTProcess(ctProcess);
 	}

@@ -81,12 +81,10 @@ public class CTCollectionLocalServiceUtil {
 	 *
 	 * @param ctCollection the ct collection
 	 * @return the ct collection that was removed
-	 * @throws PortalException
 	 */
 	public static com.liferay.change.tracking.model.CTCollection
-			deleteCTCollection(
-				com.liferay.change.tracking.model.CTCollection ctCollection)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		deleteCTCollection(
+			com.liferay.change.tracking.model.CTCollection ctCollection) {
 
 		return getService().deleteCTCollection(ctCollection);
 	}

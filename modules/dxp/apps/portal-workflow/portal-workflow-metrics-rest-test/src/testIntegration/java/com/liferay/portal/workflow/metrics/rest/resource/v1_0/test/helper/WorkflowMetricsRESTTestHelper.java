@@ -29,6 +29,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Node;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
@@ -71,6 +72,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Instance instance = new Instance();
 
+		instance.setCreatorUser(new CreatorUser());
+
 		if (completed) {
 			instance.setDateCompletion(RandomTestUtil.nextDate());
 		}
@@ -87,6 +90,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 		Instance instance = new Instance();
 
+		instance.setCreatorUser(new CreatorUser());
 		instance.setDateCompletion(dateCompletion);
 		instance.setId(RandomTestUtil.randomLong());
 		instance.setProcessId(processId);
@@ -97,13 +101,16 @@ public class WorkflowMetricsRESTTestHelper {
 	public Instance addInstance(long companyId, Instance instance)
 		throws Exception {
 
+		CreatorUser creatorUser = instance.getCreatorUser();
+
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
 			_createWorkflowMetricsInstanceDocument(
 				instance.getAssetTitle(), instance.getAssetType(), companyId,
 				instance.getDateCompletion() != null,
 				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId()));
+				instance.getId(), instance.getProcessId(), creatorUser.getId(),
+				creatorUser.getName()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -238,8 +245,27 @@ public class WorkflowMetricsRESTTestHelper {
 			slaDefinitionId, "taskId", taskId, "taskName", taskName);
 	}
 
+	public Task addTask(long assigneeId, long companyId, long processId)
+		throws Exception {
+
+		Task task = new Task() {
+			{
+				durationAvg = 0L;
+				instanceCount = 1L;
+				key = RandomTestUtil.randomString();
+				name = key;
+
+				onTimeInstanceCount = 0L;
+				overdueInstanceCount = 0L;
+			}
+		};
+
+		return addTask(assigneeId, companyId, processId, task, "1.0");
+	}
+
 	public Task addTask(
-			long companyId, long processId, Task task, String version)
+			long assigneeId, long companyId, long processId, Task task,
+			String version)
 		throws Exception {
 
 		long taskId = RandomTestUtil.randomLong();
@@ -269,7 +295,7 @@ public class WorkflowMetricsRESTTestHelper {
 			}
 
 			addToken(
-				companyId, task.getDurationAvg(), instance, taskId,
+				assigneeId, companyId, task.getDurationAvg(), instance, taskId,
 				task.getKey());
 		}
 
@@ -280,9 +306,17 @@ public class WorkflowMetricsRESTTestHelper {
 		return task;
 	}
 
+	public void addToken(long assigneeId, long companyId, Instance instance)
+		throws Exception {
+
+		addToken(
+			assigneeId, companyId, 0L, instance, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString());
+	}
+
 	public void addToken(
-			long companyId, long durationAvg, Instance instance, long taskId,
-			String taskName)
+			long assigneeId, long companyId, long durationAvg,
+			Instance instance, long taskId, String taskName)
 		throws Exception {
 
 		long tokenId = RandomTestUtil.randomLong();
@@ -290,18 +324,20 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_TOKEN_INDEXER),
 			_creatWorkflowMetricsTokenDocument(
-				companyId, durationAvg, instance.getId(),
+				assigneeId, companyId, durationAvg, instance.getId(),
 				instance.getProcessId(), taskId, taskName, tokenId, "1.0"));
 
 		_retryAssertCount(
-			"workflow-metrics-tokens", "companyId", companyId, "deleted", false,
-			"instanceId", instance.getId(), "processId",
-			instance.getProcessId(), "taskId", taskId, "taskName", taskName,
-			"tokenId", tokenId);
+			"workflow-metrics-tokens", "assigneeId", assigneeId, "companyId",
+			companyId, "deleted", false, "instanceId", instance.getId(),
+			"processId", instance.getProcessId(), "taskId", taskId, "taskName",
+			taskName, "tokenId", tokenId);
 	}
 
 	public void deleteInstance(long companyId, Instance instance)
 		throws Exception {
+
+		CreatorUser creatorUser = instance.getCreatorUser();
 
 		_invokeDeleteDocument(
 			_getIndexer(_CLASS_NAME_INSTANCE_INDEXER),
@@ -309,7 +345,8 @@ public class WorkflowMetricsRESTTestHelper {
 				instance.getAssetTitle(), instance.getAssetType(), companyId,
 				instance.getDateCompletion() != null,
 				instance.getDateCompletion(), instance.getDateCreated(),
-				instance.getId(), instance.getProcessId()));
+				instance.getId(), instance.getProcessId(), creatorUser.getId(),
+				creatorUser.getName()));
 
 		_retryAssertCount(
 			"workflow-metrics-instances", "companyId", companyId, "deleted",
@@ -431,7 +468,8 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private Document _createWorkflowMetricsInstanceDocument(
 		String assetTitle, String assetType, long companyId, boolean completed,
-		Date completionDate, Date createDate, long instanceId, long processId) {
+		Date completionDate, Date createDate, long instanceId, long processId,
+		Long userId, String userName) {
 
 		Document document = new DocumentImpl();
 
@@ -449,6 +487,8 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("deleted", false);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);
+		document.addKeyword("userId", userId);
+		document.addKeyword("userName", userName);
 		document.addKeyword("version", "1.0");
 
 		return document;
@@ -539,14 +579,16 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsTokenDocument(
-		long companyId, long durationAvg, long instanceId, long processId,
-		long taskId, String taskName, long tokenId, String version) {
+		long assigneeId, long companyId, long durationAvg, long instanceId,
+		long processId, long taskId, String taskName, long tokenId,
+		String version) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsToken",
 			_digest(companyId, instanceId, processId, taskId, tokenId));
+		document.addKeyword("assigneeId", assigneeId);
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", durationAvg > 0);
 		document.addDateSortable(

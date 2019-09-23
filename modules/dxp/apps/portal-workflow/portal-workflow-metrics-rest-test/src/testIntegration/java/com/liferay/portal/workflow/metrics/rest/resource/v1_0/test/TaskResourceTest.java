@@ -15,7 +15,9 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
@@ -202,8 +204,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			Long processId, Task task, String version)
 		throws Exception {
 
+		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
+
 		task = _workflowMetricsRESTTestHelper.addTask(
-			testGroup.getCompanyId(), processId, task, version);
+			adminUser.getUserId(), testGroup.getCompanyId(), processId, task,
+			version);
 
 		_tasks.add(task);
 

@@ -16,10 +16,15 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
+import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.CreatorUser;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Process;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
@@ -60,6 +65,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		_process = _workflowMetricsRESTTestHelper.addProcess(
 			testGroup.getCompanyId());
+
+		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -81,17 +88,22 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		super.testGetProcessInstancesPage();
 
 		_testGetProcessInstancesPage(
-			new String[] {"Completed"},
+			new Long[] {_user.getUserId()}, null,
+			(instance1, instance2, page) -> assertEquals(
+				Collections.singletonList(instance2),
+				(List<Instance>)page.getItems()));
+		_testGetProcessInstancesPage(
+			null, new String[] {"Completed"},
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance1),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			new String[] {"Completed", "Pending"},
+			null, new String[] {"Completed", "Pending"},
 			(instance1, instance2, page) -> assertEqualsIgnoringOrder(
 				Arrays.asList(instance1, instance2),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			new String[] {"Pending"},
+			null, new String[] {"Pending"},
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
@@ -111,6 +123,18 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	@Override
 	protected Instance randomInstance() throws Exception {
 		Instance instance = super.randomInstance();
+
+		instance.setAssigneeUsers(new AssigneeUser[0]);
+
+		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
+
+		instance.setCreatorUser(
+			new CreatorUser() {
+				{
+					id = adminUser.getUserId();
+					name = adminUser.getFullName();
+				}
+			});
 
 		instance.setDateCompletion((Date)null);
 
@@ -132,6 +156,11 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		instance = _workflowMetricsRESTTestHelper.addInstance(
 			testGroup.getCompanyId(), instance);
+
+		for (AssigneeUser assigneeUser : instance.getAssigneeUsers()) {
+			_workflowMetricsRESTTestHelper.addToken(
+				assigneeUser.getId(), testGroup.getCompanyId(), instance);
+		}
 
 		_instances.add(instance);
 
@@ -156,7 +185,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	private void _testGetProcessInstancesPage(
-			String[] statuses,
+			Long[] assigneeUserIds, String[] statuses,
 			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
@@ -171,10 +200,19 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		Instance instance2 = randomInstance();
 
+		instance2.setAssigneeUsers(
+			new AssigneeUser[] {
+				new AssigneeUser() {
+					{
+						id = _user.getUserId();
+					}
+				}
+			});
+
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), null, null, null, null, statuses, null,
+			_process.getId(), assigneeUserIds, null, null, null, statuses, null,
 			Pagination.of(1, 2));
 
 		unsafeTriConsumer.accept(instance1, instance2, page);
@@ -190,5 +228,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	private final List<Instance> _instances = new ArrayList<>();
 	private Process _process;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

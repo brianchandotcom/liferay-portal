@@ -14,9 +14,9 @@
 
 package com.liferay.deployment.helper.servlet;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.File;
 import java.io.FileOutputStream;

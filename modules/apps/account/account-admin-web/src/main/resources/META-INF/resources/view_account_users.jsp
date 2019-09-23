@@ -17,21 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer accountUsersDisplaySearchContainer = new UserSearch(liferayPortletRequest, renderResponse.createRenderURL());
+AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
 
-List<User> results = new ArrayList<>();
+SearchContainer accountUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse, accountDisplay.getAccountId());
 
-accountUsersDisplaySearchContainer.setResults(results);
-accountUsersDisplaySearchContainer.setEmptyResultsMessage("there-are-no-users-associated-to-this-account");
-
-ViewAccountUsersManagementToolbarDisplayContext viewAccountUsersManagementToolbarDisplayContext = new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUsersDisplaySearchContainer);
+ViewAccountUsersManagementToolbarDisplayContext viewAccountUsersManagementToolbarDisplayContext = new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUserDisplaySearchContainer);
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-
-AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
 
 renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName());
 %>
@@ -45,40 +40,35 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 		<aui:input name="userId" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= accountUsersDisplaySearchContainer %>"
+			searchContainer="<%= accountUserDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.User"
-				escapedModel="<%= true %>"
+				className="com.liferay.account.admin.web.internal.display.AccountUserDisplay"
 				keyProperty="userId"
 				modelVar="accountUser"
 			>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="name"
-					value="<%= accountUser.getFullName() %>"
+					property="name"
 				/>
-
-				<%
-				List<EmailAddress> emailAddresses = accountUser.getEmailAddresses();
-
-				String emailAddress = null;
-
-				if (!emailAddresses.isEmpty()) {
-					emailAddress = String.valueOf(emailAddresses.get(0));
-				}
-				%>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
-					name="email"
-					value="<%= emailAddress %>"
+					name="email-address"
+					property="emailAddress"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="job-title"
-					value="<%= accountUser.getJobTitle() %>"
+					property="jobTitle"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					name="account-roles"
+					property="accountRoles"
 				/>
 			</liferay-ui:search-container-row>
 

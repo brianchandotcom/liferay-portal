@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class UserGroupWrapper
 	extends BaseModelWrapper<UserGroup>
-	implements UserGroup, ModelWrapper<UserGroup> {
+	implements ModelWrapper<UserGroup>, UserGroup {
 
 	public UserGroupWrapper(UserGroup userGroup) {
 		super(userGroup);

@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class RatingsEntryWrapper
 	extends BaseModelWrapper<RatingsEntry>
-	implements RatingsEntry, ModelWrapper<RatingsEntry> {
+	implements ModelWrapper<RatingsEntry>, RatingsEntry {
 
 	public RatingsEntryWrapper(RatingsEntry ratingsEntry) {
 		super(ratingsEntry);

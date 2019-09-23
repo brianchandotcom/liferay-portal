@@ -1619,8 +1619,8 @@ public class AssetListEntryUsagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetListEntryUsage assetListEntryUsage : list) {
-					if ((assetListEntryId !=
-							assetListEntryUsage.getAssetListEntryId())) {
+					if (assetListEntryId !=
+							assetListEntryUsage.getAssetListEntryId()) {
 
 						list = null;
 

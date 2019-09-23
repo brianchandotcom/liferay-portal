@@ -2174,7 +2174,7 @@ public class GadgetPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Gadget gadget : list) {
-					if ((companyId != gadget.getCompanyId())) {
+					if (companyId != gadget.getCompanyId()) {
 						list = null;
 
 						break;

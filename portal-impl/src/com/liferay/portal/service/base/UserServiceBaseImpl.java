@@ -81,7 +81,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class UserServiceBaseImpl
-	extends BaseServiceImpl implements UserService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, UserService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

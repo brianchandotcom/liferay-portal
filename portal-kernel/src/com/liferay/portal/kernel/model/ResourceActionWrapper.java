@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ResourceActionWrapper
 	extends BaseModelWrapper<ResourceAction>
-	implements ResourceAction, ModelWrapper<ResourceAction> {
+	implements ModelWrapper<ResourceAction>, ResourceAction {
 
 	public ResourceActionWrapper(ResourceAction resourceAction) {
 		super(resourceAction);

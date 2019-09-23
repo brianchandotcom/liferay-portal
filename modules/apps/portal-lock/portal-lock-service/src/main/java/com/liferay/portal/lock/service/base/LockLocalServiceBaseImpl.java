@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class LockLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements LockLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, LockLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

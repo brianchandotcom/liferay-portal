@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KBFolderServiceBaseImpl
 	extends BaseServiceImpl
-	implements KBFolderService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KBFolderService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

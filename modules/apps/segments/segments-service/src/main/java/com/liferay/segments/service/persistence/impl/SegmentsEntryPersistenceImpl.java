@@ -1606,7 +1606,7 @@ public class SegmentsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntry segmentsEntry : list) {
-					if ((groupId != segmentsEntry.getGroupId())) {
+					if (groupId != segmentsEntry.getGroupId()) {
 						list = null;
 
 						break;

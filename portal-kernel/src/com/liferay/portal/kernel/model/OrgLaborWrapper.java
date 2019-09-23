@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class OrgLaborWrapper
 	extends BaseModelWrapper<OrgLabor>
-	implements OrgLabor, ModelWrapper<OrgLabor> {
+	implements ModelWrapper<OrgLabor>, OrgLabor {
 
 	public OrgLaborWrapper(OrgLabor orgLabor) {
 		super(orgLabor);

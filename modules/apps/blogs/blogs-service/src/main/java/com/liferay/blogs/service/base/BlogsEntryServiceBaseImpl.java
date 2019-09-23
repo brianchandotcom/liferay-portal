@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BlogsEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements BlogsEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, BlogsEntryService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

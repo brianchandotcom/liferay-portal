@@ -194,7 +194,7 @@ public class CTCollectionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTCollection ctCollection : list) {
-					if ((companyId != ctCollection.getCompanyId())) {
+					if (companyId != ctCollection.getCompanyId()) {
 						list = null;
 
 						break;

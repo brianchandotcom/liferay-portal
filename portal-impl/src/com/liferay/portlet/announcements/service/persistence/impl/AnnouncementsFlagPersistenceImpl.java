@@ -179,7 +179,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsFlag announcementsFlag : list) {
-					if ((companyId != announcementsFlag.getCompanyId())) {
+					if (companyId != announcementsFlag.getCompanyId()) {
 						list = null;
 
 						break;
@@ -700,7 +700,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsFlag announcementsFlag : list) {
-					if ((entryId != announcementsFlag.getEntryId())) {
+					if (entryId != announcementsFlag.getEntryId()) {
 						list = null;
 
 						break;

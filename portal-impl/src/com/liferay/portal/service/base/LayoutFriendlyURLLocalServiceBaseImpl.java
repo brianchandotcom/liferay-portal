@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements LayoutFriendlyURLLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, LayoutFriendlyURLLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

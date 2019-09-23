@@ -185,7 +185,7 @@ public class MBStatsUserPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBStatsUser mbStatsUser : list) {
-					if ((groupId != mbStatsUser.getGroupId())) {
+					if (groupId != mbStatsUser.getGroupId()) {
 						list = null;
 
 						break;
@@ -695,7 +695,7 @@ public class MBStatsUserPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBStatsUser mbStatsUser : list) {
-					if ((userId != mbStatsUser.getUserId())) {
+					if (userId != mbStatsUser.getUserId()) {
 						list = null;
 
 						break;

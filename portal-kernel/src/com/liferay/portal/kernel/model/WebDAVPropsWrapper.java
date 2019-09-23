@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class WebDAVPropsWrapper
 	extends BaseModelWrapper<WebDAVProps>
-	implements WebDAVProps, ModelWrapper<WebDAVProps> {
+	implements ModelWrapper<WebDAVProps>, WebDAVProps {
 
 	public WebDAVPropsWrapper(WebDAVProps webDAVProps) {
 		super(webDAVProps);

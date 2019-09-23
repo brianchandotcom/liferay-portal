@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SyncDLObjectServiceWrapper
-	implements SyncDLObjectService, ServiceWrapper<SyncDLObjectService> {
+	implements ServiceWrapper<SyncDLObjectService>, SyncDLObjectService {
 
 	public SyncDLObjectServiceWrapper(SyncDLObjectService syncDLObjectService) {
 		_syncDLObjectService = syncDLObjectService;

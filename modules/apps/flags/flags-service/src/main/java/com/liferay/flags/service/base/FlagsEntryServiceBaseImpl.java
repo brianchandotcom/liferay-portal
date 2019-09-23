@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FlagsEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements FlagsEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, FlagsEntryService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -191,7 +191,7 @@ public class ChangesetEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetEntry changesetEntry : list) {
-					if ((groupId != changesetEntry.getGroupId())) {
+					if (groupId != changesetEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -707,7 +707,7 @@ public class ChangesetEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetEntry changesetEntry : list) {
-					if ((companyId != changesetEntry.getCompanyId())) {
+					if (companyId != changesetEntry.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1228,8 +1228,8 @@ public class ChangesetEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetEntry changesetEntry : list) {
-					if ((changesetCollectionId !=
-							changesetEntry.getChangesetCollectionId())) {
+					if (changesetCollectionId !=
+							changesetEntry.getChangesetCollectionId()) {
 
 						list = null;
 

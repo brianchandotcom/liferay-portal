@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.http;
 
-
 /**
  * Provides the HTTP utility for the
  * <code>com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityServiceUtil</code> service

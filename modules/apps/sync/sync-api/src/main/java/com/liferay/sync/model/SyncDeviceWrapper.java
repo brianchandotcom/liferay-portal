@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class SyncDeviceWrapper
 	extends BaseModelWrapper<SyncDevice>
-	implements SyncDevice, ModelWrapper<SyncDevice> {
+	implements ModelWrapper<SyncDevice>, SyncDevice {
 
 	public SyncDeviceWrapper(SyncDevice syncDevice) {
 		super(syncDevice);

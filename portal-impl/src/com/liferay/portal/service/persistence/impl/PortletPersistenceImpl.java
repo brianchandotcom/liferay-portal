@@ -179,7 +179,7 @@ public class PortletPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Portlet portlet : list) {
-					if ((companyId != portlet.getCompanyId())) {
+					if (companyId != portlet.getCompanyId()) {
 						list = null;
 
 						break;

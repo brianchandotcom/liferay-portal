@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WeDeployAuthAppServiceBaseImpl
 	extends BaseServiceImpl
-	implements WeDeployAuthAppService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, WeDeployAuthAppService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

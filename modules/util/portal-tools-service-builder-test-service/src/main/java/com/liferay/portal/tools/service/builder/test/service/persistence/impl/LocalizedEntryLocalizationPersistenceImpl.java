@@ -188,8 +188,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				for (LocalizedEntryLocalization localizedEntryLocalization :
 						list) {
 
-					if ((localizedEntryId !=
-							localizedEntryLocalization.getLocalizedEntryId())) {
+					if (localizedEntryId !=
+							localizedEntryLocalization.getLocalizedEntryId()) {
 
 						list = null;
 

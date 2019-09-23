@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DLFileVersionPreviewLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLFileVersionPreviewLocalService, AopService,
+	implements AopService, DLFileVersionPreviewLocalService,
 			   IdentifiableOSGiService {
 
 	/**

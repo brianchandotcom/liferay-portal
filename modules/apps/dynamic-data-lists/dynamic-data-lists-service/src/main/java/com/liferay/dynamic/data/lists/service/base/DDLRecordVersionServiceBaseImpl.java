@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDLRecordVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDLRecordVersionService, AopService, IdentifiableOSGiService {
+	implements AopService, DDLRecordVersionService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

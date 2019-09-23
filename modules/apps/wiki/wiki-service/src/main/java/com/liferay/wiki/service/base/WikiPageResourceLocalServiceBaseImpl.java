@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WikiPageResourceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WikiPageResourceLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   WikiPageResourceLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

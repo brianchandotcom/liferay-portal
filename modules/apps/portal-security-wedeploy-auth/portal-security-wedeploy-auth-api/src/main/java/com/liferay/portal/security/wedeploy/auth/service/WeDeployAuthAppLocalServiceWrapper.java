@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class WeDeployAuthAppLocalServiceWrapper
-	implements WeDeployAuthAppLocalService,
-			   ServiceWrapper<WeDeployAuthAppLocalService> {
+	implements ServiceWrapper<WeDeployAuthAppLocalService>,
+			   WeDeployAuthAppLocalService {
 
 	public WeDeployAuthAppLocalServiceWrapper(
 		WeDeployAuthAppLocalService weDeployAuthAppLocalService) {

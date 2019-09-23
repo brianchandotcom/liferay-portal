@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class WikiPageWrapper
 	extends BaseModelWrapper<WikiPage>
-	implements WikiPage, ModelWrapper<WikiPage> {
+	implements ModelWrapper<WikiPage>, WikiPage {
 
 	public WikiPageWrapper(WikiPage wikiPage) {
 		super(wikiPage);

@@ -1602,7 +1602,7 @@ public class MDRRuleGroupPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRuleGroup mdrRuleGroup : list) {
-					if ((groupId != mdrRuleGroup.getGroupId())) {
+					if (groupId != mdrRuleGroup.getGroupId()) {
 						list = null;
 
 						break;

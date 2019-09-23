@@ -74,7 +74,7 @@ import javax.sql.DataSource;
  */
 public abstract class TeamLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements TeamLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, TeamLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

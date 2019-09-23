@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SharingEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements SharingEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SharingEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

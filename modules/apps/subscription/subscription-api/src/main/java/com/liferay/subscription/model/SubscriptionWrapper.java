@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SubscriptionWrapper
 	extends BaseModelWrapper<Subscription>
-	implements Subscription, ModelWrapper<Subscription> {
+	implements ModelWrapper<Subscription>, Subscription {
 
 	public SubscriptionWrapper(Subscription subscription) {
 		super(subscription);

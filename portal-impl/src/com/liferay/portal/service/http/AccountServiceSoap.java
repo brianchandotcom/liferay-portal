@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.http;
 
-
 /**
  * Provides the SOAP utility for the
  * <code>com.liferay.portal.kernel.service.AccountServiceUtil</code> service

@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DLContentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLContentLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DLContentLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

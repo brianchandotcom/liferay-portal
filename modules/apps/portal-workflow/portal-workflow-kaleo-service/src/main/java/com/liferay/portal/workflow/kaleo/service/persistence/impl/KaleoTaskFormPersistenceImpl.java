@@ -195,7 +195,7 @@ public class KaleoTaskFormPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskForm kaleoTaskForm : list) {
-					if ((companyId != kaleoTaskForm.getCompanyId())) {
+					if (companyId != kaleoTaskForm.getCompanyId()) {
 						list = null;
 
 						break;
@@ -719,8 +719,8 @@ public class KaleoTaskFormPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskForm kaleoTaskForm : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoTaskForm.getKaleoDefinitionVersionId())) {
+					if (kaleoDefinitionVersionId !=
+							kaleoTaskForm.getKaleoDefinitionVersionId()) {
 
 						list = null;
 
@@ -1252,7 +1252,7 @@ public class KaleoTaskFormPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskForm kaleoTaskForm : list) {
-					if ((kaleoNodeId != kaleoTaskForm.getKaleoNodeId())) {
+					if (kaleoNodeId != kaleoTaskForm.getKaleoNodeId()) {
 						list = null;
 
 						break;
@@ -1771,7 +1771,7 @@ public class KaleoTaskFormPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskForm kaleoTaskForm : list) {
-					if ((kaleoTaskId != kaleoTaskForm.getKaleoTaskId())) {
+					if (kaleoTaskId != kaleoTaskForm.getKaleoTaskId()) {
 						list = null;
 
 						break;

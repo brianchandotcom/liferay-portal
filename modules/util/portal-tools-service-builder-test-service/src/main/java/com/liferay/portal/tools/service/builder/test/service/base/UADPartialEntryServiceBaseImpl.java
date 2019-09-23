@@ -43,7 +43,7 @@ import javax.sql.DataSource;
  */
 public abstract class UADPartialEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements UADPartialEntryService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, UADPartialEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

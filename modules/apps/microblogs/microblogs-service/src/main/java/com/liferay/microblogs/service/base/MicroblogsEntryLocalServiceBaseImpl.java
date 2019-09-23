@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MicroblogsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MicroblogsEntryLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   MicroblogsEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ERUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ERUserLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, ERUserLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

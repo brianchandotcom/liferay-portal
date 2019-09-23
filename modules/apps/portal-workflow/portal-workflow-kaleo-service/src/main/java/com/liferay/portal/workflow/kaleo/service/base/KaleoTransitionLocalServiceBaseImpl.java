@@ -80,8 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KaleoTransitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KaleoTransitionLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   KaleoTransitionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -176,7 +176,7 @@ public class AssetLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
-					if ((entryId1 != assetLink.getEntryId1())) {
+					if (entryId1 != assetLink.getEntryId1()) {
 						list = null;
 
 						break;
@@ -684,7 +684,7 @@ public class AssetLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetLink assetLink : list) {
-					if ((entryId2 != assetLink.getEntryId2())) {
+					if (entryId2 != assetLink.getEntryId2()) {
 						list = null;
 
 						break;

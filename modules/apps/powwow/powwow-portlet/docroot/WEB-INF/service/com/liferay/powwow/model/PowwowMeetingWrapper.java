@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class PowwowMeetingWrapper
 	extends BaseModelWrapper<PowwowMeeting>
-	implements PowwowMeeting, ModelWrapper<PowwowMeeting> {
+	implements ModelWrapper<PowwowMeeting>, PowwowMeeting {
 
 	public PowwowMeetingWrapper(PowwowMeeting powwowMeeting) {
 		super(powwowMeeting);

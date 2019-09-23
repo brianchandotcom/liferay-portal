@@ -201,7 +201,7 @@ public class MicroblogsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
-					if ((companyId != microblogsEntry.getCompanyId())) {
+					if (companyId != microblogsEntry.getCompanyId()) {
 						list = null;
 
 						break;
@@ -715,7 +715,7 @@ public class MicroblogsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MicroblogsEntry microblogsEntry : list) {
-					if ((userId != microblogsEntry.getUserId())) {
+					if (userId != microblogsEntry.getUserId()) {
 						list = null;
 
 						break;

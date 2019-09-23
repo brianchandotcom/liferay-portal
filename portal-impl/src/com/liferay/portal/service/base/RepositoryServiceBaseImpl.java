@@ -53,7 +53,7 @@ import javax.sql.DataSource;
  */
 public abstract class RepositoryServiceBaseImpl
 	extends BaseServiceImpl
-	implements RepositoryService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, RepositoryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

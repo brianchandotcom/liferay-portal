@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class RepositoryEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements RepositoryEntryLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, RepositoryEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

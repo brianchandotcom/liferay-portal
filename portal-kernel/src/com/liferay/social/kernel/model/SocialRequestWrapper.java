@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class SocialRequestWrapper
 	extends BaseModelWrapper<SocialRequest>
-	implements SocialRequest, ModelWrapper<SocialRequest> {
+	implements ModelWrapper<SocialRequest>, SocialRequest {
 
 	public SocialRequestWrapper(SocialRequest socialRequest) {
 		super(socialRequest);

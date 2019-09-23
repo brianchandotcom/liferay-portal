@@ -206,8 +206,8 @@ public class JournalArticlePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if ((resourcePrimKey !=
-							journalArticle.getResourcePrimKey())) {
+					if (resourcePrimKey !=
+							journalArticle.getResourcePrimKey()) {
 
 						list = null;
 
@@ -2137,7 +2137,7 @@ public class JournalArticlePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if ((groupId != journalArticle.getGroupId())) {
+					if (groupId != journalArticle.getGroupId()) {
 						list = null;
 
 						break;
@@ -3029,7 +3029,7 @@ public class JournalArticlePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if ((companyId != journalArticle.getCompanyId())) {
+					if (companyId != journalArticle.getCompanyId()) {
 						list = null;
 
 						break;
@@ -4111,7 +4111,9 @@ public class JournalArticlePersistenceImpl
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				for (String DDMStructureKey : DDMStructureKeies) {
-					if (DDMStructureKey != null && !DDMStructureKey.isEmpty()) {
+					if ((DDMStructureKey != null) &&
+						!DDMStructureKey.isEmpty()) {
+
 						qPos.add(DDMStructureKey);
 					}
 				}
@@ -4305,7 +4307,9 @@ public class JournalArticlePersistenceImpl
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				for (String DDMStructureKey : DDMStructureKeies) {
-					if (DDMStructureKey != null && !DDMStructureKey.isEmpty()) {
+					if ((DDMStructureKey != null) &&
+						!DDMStructureKey.isEmpty()) {
+
 						qPos.add(DDMStructureKey);
 					}
 				}
@@ -5576,7 +5580,7 @@ public class JournalArticlePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if ((smallImageId != journalArticle.getSmallImageId())) {
+					if (smallImageId != journalArticle.getSmallImageId()) {
 						list = null;
 
 						break;
@@ -16073,7 +16077,7 @@ public class JournalArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String layoutUuid : layoutUuids) {
-				if (layoutUuid != null && !layoutUuid.isEmpty()) {
+				if ((layoutUuid != null) && !layoutUuid.isEmpty()) {
 					qPos.add(layoutUuid);
 				}
 			}
@@ -16283,7 +16287,7 @@ public class JournalArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String layoutUuid : layoutUuids) {
-					if (layoutUuid != null && !layoutUuid.isEmpty()) {
+					if ((layoutUuid != null) && !layoutUuid.isEmpty()) {
 						qPos.add(layoutUuid);
 					}
 				}
@@ -16484,7 +16488,7 @@ public class JournalArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String layoutUuid : layoutUuids) {
-					if (layoutUuid != null && !layoutUuid.isEmpty()) {
+					if ((layoutUuid != null) && !layoutUuid.isEmpty()) {
 						qPos.add(layoutUuid);
 					}
 				}
@@ -16648,7 +16652,7 @@ public class JournalArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String layoutUuid : layoutUuids) {
-				if (layoutUuid != null && !layoutUuid.isEmpty()) {
+				if ((layoutUuid != null) && !layoutUuid.isEmpty()) {
 					qPos.add(layoutUuid);
 				}
 			}

@@ -184,7 +184,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WorkflowDefinitionLink workflowDefinitionLink : list) {
-					if ((companyId != workflowDefinitionLink.getCompanyId())) {
+					if (companyId != workflowDefinitionLink.getCompanyId()) {
 						list = null;
 
 						break;

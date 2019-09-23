@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link TeamService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class TeamServiceWrapper
-	implements TeamService, ServiceWrapper<TeamService> {
+	implements ServiceWrapper<TeamService>, TeamService {
 
 	public TeamServiceWrapper(TeamService teamService) {
 		_teamService = teamService;

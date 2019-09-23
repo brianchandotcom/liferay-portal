@@ -1595,7 +1595,7 @@ public class MDRRulePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRule mdrRule : list) {
-					if ((ruleGroupId != mdrRule.getRuleGroupId())) {
+					if (ruleGroupId != mdrRule.getRuleGroupId()) {
 						list = null;
 
 						break;

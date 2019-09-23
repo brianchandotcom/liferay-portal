@@ -62,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WorkflowDefinitionLinkLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, WorkflowDefinitionLinkLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

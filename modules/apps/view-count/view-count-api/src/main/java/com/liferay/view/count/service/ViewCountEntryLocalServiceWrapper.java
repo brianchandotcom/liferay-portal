@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class ViewCountEntryLocalServiceWrapper
-	implements ViewCountEntryLocalService,
-			   ServiceWrapper<ViewCountEntryLocalService> {
+	implements ServiceWrapper<ViewCountEntryLocalService>,
+			   ViewCountEntryLocalService {
 
 	public ViewCountEntryLocalServiceWrapper(
 		ViewCountEntryLocalService viewCountEntryLocalService) {

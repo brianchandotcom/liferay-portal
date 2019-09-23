@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class JournalFeedServiceBaseImpl
 	extends BaseServiceImpl
-	implements JournalFeedService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, JournalFeedService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

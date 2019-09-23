@@ -1607,7 +1607,7 @@ public class AssetListEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetListEntry assetListEntry : list) {
-					if ((groupId != assetListEntry.getGroupId())) {
+					if (groupId != assetListEntry.getGroupId()) {
 						list = null;
 
 						break;

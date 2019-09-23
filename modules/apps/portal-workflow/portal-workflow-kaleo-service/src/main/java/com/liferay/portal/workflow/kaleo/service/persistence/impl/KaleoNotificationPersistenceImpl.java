@@ -194,7 +194,7 @@ public class KaleoNotificationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
-					if ((companyId != kaleoNotification.getCompanyId())) {
+					if (companyId != kaleoNotification.getCompanyId()) {
 						list = null;
 
 						break;
@@ -725,8 +725,8 @@ public class KaleoNotificationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoNotification kaleoNotification : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoNotification.getKaleoDefinitionVersionId())) {
+					if (kaleoDefinitionVersionId !=
+							kaleoNotification.getKaleoDefinitionVersionId()) {
 
 						list = null;
 

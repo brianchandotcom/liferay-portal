@@ -742,9 +742,8 @@ public class CompanyServiceHttp {
 	private static final Class<?>[] _deleteLogoParameterTypes2 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getCompaniesParameterTypes3 = new Class[] {
-		
-	};
+	private static final Class<?>[] _getCompaniesParameterTypes3 =
+		new Class[] {};
 	private static final Class<?>[] _getCompanyByIdParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCompanyByLogoIdParameterTypes5 =

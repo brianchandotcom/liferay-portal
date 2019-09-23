@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMStructureLayoutServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMStructureLayoutService, AopService, IdentifiableOSGiService {
+	implements AopService, DDMStructureLayoutService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

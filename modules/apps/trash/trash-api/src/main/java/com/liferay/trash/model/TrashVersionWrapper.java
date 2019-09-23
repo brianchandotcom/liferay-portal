@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class TrashVersionWrapper
 	extends BaseModelWrapper<TrashVersion>
-	implements TrashVersion, ModelWrapper<TrashVersion> {
+	implements ModelWrapper<TrashVersion>, TrashVersion {
 
 	public TrashVersionWrapper(TrashVersion trashVersion) {
 		super(trashVersion);

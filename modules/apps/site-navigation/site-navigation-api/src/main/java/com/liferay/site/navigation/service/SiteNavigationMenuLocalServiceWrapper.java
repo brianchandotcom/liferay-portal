@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SiteNavigationMenuLocalServiceWrapper
-	implements SiteNavigationMenuLocalService,
-			   ServiceWrapper<SiteNavigationMenuLocalService> {
+	implements ServiceWrapper<SiteNavigationMenuLocalService>,
+			   SiteNavigationMenuLocalService {
 
 	public SiteNavigationMenuLocalServiceWrapper(
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService) {

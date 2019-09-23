@@ -189,7 +189,7 @@ public class AuditEventPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AuditEvent auditEvent : list) {
-					if ((companyId != auditEvent.getCompanyId())) {
+					if (companyId != auditEvent.getCompanyId()) {
 						list = null;
 
 						break;

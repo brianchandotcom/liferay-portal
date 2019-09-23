@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SocialRequestServiceWrapper
-	implements SocialRequestService, ServiceWrapper<SocialRequestService> {
+	implements ServiceWrapper<SocialRequestService>, SocialRequestService {
 
 	public SocialRequestServiceWrapper(
 		SocialRequestService socialRequestService) {

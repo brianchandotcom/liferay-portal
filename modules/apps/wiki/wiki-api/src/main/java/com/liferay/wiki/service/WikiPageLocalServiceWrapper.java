@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class WikiPageLocalServiceWrapper
-	implements WikiPageLocalService, ServiceWrapper<WikiPageLocalService> {
+	implements ServiceWrapper<WikiPageLocalService>, WikiPageLocalService {
 
 	public WikiPageLocalServiceWrapper(
 		WikiPageLocalService wikiPageLocalService) {

@@ -196,7 +196,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2Authorization oAuth2Authorization : list) {
-					if ((userId != oAuth2Authorization.getUserId())) {
+					if (userId != oAuth2Authorization.getUserId()) {
 						list = null;
 
 						break;
@@ -720,8 +720,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2Authorization oAuth2Authorization : list) {
-					if ((oAuth2ApplicationId !=
-							oAuth2Authorization.getOAuth2ApplicationId())) {
+					if (oAuth2ApplicationId !=
+							oAuth2Authorization.getOAuth2ApplicationId()) {
 
 						list = null;
 
@@ -1258,8 +1258,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2Authorization oAuth2Authorization : list) {
-					if ((accessTokenContentHash !=
-							oAuth2Authorization.getAccessTokenContentHash())) {
+					if (accessTokenContentHash !=
+							oAuth2Authorization.getAccessTokenContentHash()) {
 
 						list = null;
 
@@ -1799,8 +1799,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2Authorization oAuth2Authorization : list) {
-					if ((refreshTokenContentHash !=
-							oAuth2Authorization.getRefreshTokenContentHash())) {
+					if (refreshTokenContentHash !=
+							oAuth2Authorization.getRefreshTokenContentHash()) {
 
 						list = null;
 

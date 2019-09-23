@@ -194,8 +194,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetAutoTaggerEntry assetAutoTaggerEntry : list) {
-					if ((assetEntryId !=
-							assetAutoTaggerEntry.getAssetEntryId())) {
+					if (assetEntryId !=
+							assetAutoTaggerEntry.getAssetEntryId()) {
 
 						list = null;
 
@@ -722,7 +722,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetAutoTaggerEntry assetAutoTaggerEntry : list) {
-					if ((assetTagId != assetAutoTaggerEntry.getAssetTagId())) {
+					if (assetTagId != assetAutoTaggerEntry.getAssetTagId()) {
 						list = null;
 
 						break;

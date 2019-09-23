@@ -193,8 +193,8 @@ public class JournalArticleLocalizationPersistenceImpl
 				for (JournalArticleLocalization journalArticleLocalization :
 						list) {
 
-					if ((articlePK !=
-							journalArticleLocalization.getArticlePK())) {
+					if (articlePK !=
+							journalArticleLocalization.getArticlePK()) {
 
 						list = null;
 

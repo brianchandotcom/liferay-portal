@@ -1326,7 +1326,7 @@ public class PhonePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Phone phone : list) {
-					if ((companyId != phone.getCompanyId())) {
+					if (companyId != phone.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1833,7 +1833,7 @@ public class PhonePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Phone phone : list) {
-					if ((userId != phone.getUserId())) {
+					if (userId != phone.getUserId()) {
 						list = null;
 
 						break;

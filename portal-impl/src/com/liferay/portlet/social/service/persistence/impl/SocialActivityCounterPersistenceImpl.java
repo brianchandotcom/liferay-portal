@@ -181,7 +181,7 @@ public class SocialActivityCounterPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivityCounter socialActivityCounter : list) {
-					if ((groupId != socialActivityCounter.getGroupId())) {
+					if (groupId != socialActivityCounter.getGroupId()) {
 						list = null;
 
 						break;

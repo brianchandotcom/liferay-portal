@@ -181,7 +181,7 @@ public class TasksEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId())) {
+					if (groupId != tasksEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -1066,7 +1066,7 @@ public class TasksEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
-					if ((userId != tasksEntry.getUserId())) {
+					if (userId != tasksEntry.getUserId()) {
 						list = null;
 
 						break;
@@ -1580,7 +1580,7 @@ public class TasksEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
-					if ((assigneeUserId != tasksEntry.getAssigneeUserId())) {
+					if (assigneeUserId != tasksEntry.getAssigneeUserId()) {
 						list = null;
 
 						break;
@@ -2100,7 +2100,7 @@ public class TasksEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (TasksEntry tasksEntry : list) {
-					if ((resolverUserId != tasksEntry.getResolverUserId())) {
+					if (resolverUserId != tasksEntry.getResolverUserId()) {
 						list = null;
 
 						break;

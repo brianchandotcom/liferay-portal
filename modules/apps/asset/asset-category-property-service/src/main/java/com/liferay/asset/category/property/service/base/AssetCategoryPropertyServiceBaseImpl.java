@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetCategoryPropertyServiceBaseImpl
 	extends BaseServiceImpl
-	implements AssetCategoryPropertyService, AopService,
+	implements AopService, AssetCategoryPropertyService,
 			   IdentifiableOSGiService {
 
 	/**

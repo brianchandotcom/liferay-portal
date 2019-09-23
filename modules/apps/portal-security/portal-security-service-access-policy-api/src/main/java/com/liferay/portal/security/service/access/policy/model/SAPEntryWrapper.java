@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class SAPEntryWrapper
 	extends BaseModelWrapper<SAPEntry>
-	implements SAPEntry, ModelWrapper<SAPEntry> {
+	implements ModelWrapper<SAPEntry>, SAPEntry {
 
 	public SAPEntryWrapper(SAPEntry sapEntry) {
 		super(sapEntry);

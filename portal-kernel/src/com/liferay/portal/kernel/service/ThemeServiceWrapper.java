@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link ThemeService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class ThemeServiceWrapper
-	implements ThemeService, ServiceWrapper<ThemeService> {
+	implements ServiceWrapper<ThemeService>, ThemeService {
 
 	public ThemeServiceWrapper(ThemeService themeService) {
 		_themeService = themeService;

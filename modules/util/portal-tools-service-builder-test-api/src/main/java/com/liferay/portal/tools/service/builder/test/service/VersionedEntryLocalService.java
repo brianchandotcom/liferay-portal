@@ -92,8 +92,8 @@ public interface VersionedEntryLocalService
 	 *
 	 * @return the new versioned entry
 	 */
-	@Transactional(enabled = false)
 	@Override
+	@Transactional(enabled = false)
 	public VersionedEntry create();
 
 	@Indexable(type = IndexableType.DELETE)

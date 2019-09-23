@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMFormInstanceRecordServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMFormInstanceRecordService, AopService,
+	implements AopService, DDMFormInstanceRecordService,
 			   IdentifiableOSGiService {
 
 	/**

@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class SiteFriendlyURLWrapper
 	extends BaseModelWrapper<SiteFriendlyURL>
-	implements SiteFriendlyURL, ModelWrapper<SiteFriendlyURL> {
+	implements ModelWrapper<SiteFriendlyURL>, SiteFriendlyURL {
 
 	public SiteFriendlyURLWrapper(SiteFriendlyURL siteFriendlyURL) {
 		super(siteFriendlyURL);

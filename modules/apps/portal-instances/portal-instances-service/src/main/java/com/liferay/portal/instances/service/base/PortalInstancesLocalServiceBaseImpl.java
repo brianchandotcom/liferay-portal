@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class PortalInstancesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PortalInstancesLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   PortalInstancesLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

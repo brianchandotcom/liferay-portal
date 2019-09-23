@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class PushNotificationsDeviceWrapper
 	extends BaseModelWrapper<PushNotificationsDevice>
-	implements PushNotificationsDevice, ModelWrapper<PushNotificationsDevice> {
+	implements ModelWrapper<PushNotificationsDevice>, PushNotificationsDevice {
 
 	public PushNotificationsDeviceWrapper(
 		PushNotificationsDevice pushNotificationsDevice) {

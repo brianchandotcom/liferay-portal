@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BookmarksFolderServiceBaseImpl
 	extends BaseServiceImpl
-	implements BookmarksFolderService, AopService, IdentifiableOSGiService {
+	implements AopService, BookmarksFolderService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

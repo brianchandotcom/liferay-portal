@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class TasksEntryServiceWrapper
-	implements TasksEntryService, ServiceWrapper<TasksEntryService> {
+	implements ServiceWrapper<TasksEntryService>, TasksEntryService {
 
 	public TasksEntryServiceWrapper(TasksEntryService tasksEntryService) {
 		_tasksEntryService = tasksEntryService;

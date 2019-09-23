@@ -1600,7 +1600,7 @@ public class RepositoryEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RepositoryEntry repositoryEntry : list) {
-					if ((repositoryId != repositoryEntry.getRepositoryId())) {
+					if (repositoryId != repositoryEntry.getRepositoryId()) {
 						list = null;
 
 						break;

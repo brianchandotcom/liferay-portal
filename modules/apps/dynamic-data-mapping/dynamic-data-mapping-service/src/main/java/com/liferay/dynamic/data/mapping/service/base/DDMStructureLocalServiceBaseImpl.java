@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMStructureLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMStructureLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DDMStructureLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

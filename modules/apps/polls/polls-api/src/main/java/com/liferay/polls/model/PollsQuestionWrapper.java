@@ -34,7 +34,7 @@ import java.util.Map;
  */
 public class PollsQuestionWrapper
 	extends BaseModelWrapper<PollsQuestion>
-	implements PollsQuestion, ModelWrapper<PollsQuestion> {
+	implements ModelWrapper<PollsQuestion>, PollsQuestion {
 
 	public PollsQuestionWrapper(PollsQuestion pollsQuestion) {
 		super(pollsQuestion);

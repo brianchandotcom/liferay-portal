@@ -45,7 +45,7 @@ import javax.sql.DataSource;
  */
 public abstract class SocialRequestServiceBaseImpl
 	extends BaseServiceImpl
-	implements SocialRequestService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SocialRequestService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

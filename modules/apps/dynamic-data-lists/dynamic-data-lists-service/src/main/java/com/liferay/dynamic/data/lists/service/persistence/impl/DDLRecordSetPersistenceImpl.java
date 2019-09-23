@@ -1602,7 +1602,7 @@ public class DDLRecordSetPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordSet ddlRecordSet : list) {
-					if ((groupId != ddlRecordSet.getGroupId())) {
+					if (groupId != ddlRecordSet.getGroupId()) {
 						list = null;
 
 						break;
@@ -2970,7 +2970,7 @@ public class DDLRecordSetPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordSet ddlRecordSet : list) {
-					if ((DDMStructureId != ddlRecordSet.getDDMStructureId())) {
+					if (DDMStructureId != ddlRecordSet.getDDMStructureId()) {
 						list = null;
 
 						break;

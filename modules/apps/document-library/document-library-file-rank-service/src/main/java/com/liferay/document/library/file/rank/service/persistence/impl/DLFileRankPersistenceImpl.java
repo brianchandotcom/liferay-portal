@@ -188,7 +188,7 @@ public class DLFileRankPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
-					if ((userId != dlFileRank.getUserId())) {
+					if (userId != dlFileRank.getUserId()) {
 						list = null;
 
 						break;
@@ -701,7 +701,7 @@ public class DLFileRankPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileRank dlFileRank : list) {
-					if ((fileEntryId != dlFileRank.getFileEntryId())) {
+					if (fileEntryId != dlFileRank.getFileEntryId()) {
 						list = null;
 
 						break;

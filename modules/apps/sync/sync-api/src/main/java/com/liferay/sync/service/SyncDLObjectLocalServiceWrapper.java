@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SyncDLObjectLocalServiceWrapper
-	implements SyncDLObjectLocalService,
-			   ServiceWrapper<SyncDLObjectLocalService> {
+	implements ServiceWrapper<SyncDLObjectLocalService>,
+			   SyncDLObjectLocalService {
 
 	public SyncDLObjectLocalServiceWrapper(
 		SyncDLObjectLocalService syncDLObjectLocalService) {

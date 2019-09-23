@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class UserTrackerPathWrapper
 	extends BaseModelWrapper<UserTrackerPath>
-	implements UserTrackerPath, ModelWrapper<UserTrackerPath> {
+	implements ModelWrapper<UserTrackerPath>, UserTrackerPath {
 
 	public UserTrackerPathWrapper(UserTrackerPath userTrackerPath) {
 		super(userTrackerPath);

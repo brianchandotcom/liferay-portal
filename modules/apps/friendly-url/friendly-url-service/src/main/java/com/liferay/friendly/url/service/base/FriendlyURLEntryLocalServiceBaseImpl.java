@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FriendlyURLEntryLocalService, AopService,
+	implements AopService, FriendlyURLEntryLocalService,
 			   IdentifiableOSGiService {
 
 	/**

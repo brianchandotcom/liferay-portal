@@ -1610,7 +1610,7 @@ public class AssetCategoryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
-					if ((groupId != assetCategory.getGroupId())) {
+					if (groupId != assetCategory.getGroupId()) {
 						list = null;
 
 						break;
@@ -2505,8 +2505,8 @@ public class AssetCategoryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
-					if ((parentCategoryId !=
-							assetCategory.getParentCategoryId())) {
+					if (parentCategoryId !=
+							assetCategory.getParentCategoryId()) {
 
 						list = null;
 
@@ -3033,7 +3033,7 @@ public class AssetCategoryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategory assetCategory : list) {
-					if ((vocabularyId != assetCategory.getVocabularyId())) {
+					if (vocabularyId != assetCategory.getVocabularyId()) {
 						list = null;
 
 						break;

@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SocialActivityLimitLocalServiceWrapper
-	implements SocialActivityLimitLocalService,
-			   ServiceWrapper<SocialActivityLimitLocalService> {
+	implements ServiceWrapper<SocialActivityLimitLocalService>,
+			   SocialActivityLimitLocalService {
 
 	public SocialActivityLimitLocalServiceWrapper(
 		SocialActivityLimitLocalService socialActivityLimitLocalService) {

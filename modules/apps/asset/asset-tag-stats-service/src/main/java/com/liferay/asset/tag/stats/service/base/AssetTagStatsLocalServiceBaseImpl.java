@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetTagStatsLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AssetTagStatsLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, AssetTagStatsLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

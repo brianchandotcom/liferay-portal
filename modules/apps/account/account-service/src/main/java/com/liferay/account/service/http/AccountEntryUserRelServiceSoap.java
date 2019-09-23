@@ -14,7 +14,6 @@
 
 package com.liferay.account.service.http;
 
-
 /**
  * Provides the SOAP utility for the
  * <code>com.liferay.account.service.AccountEntryUserRelServiceUtil</code> service

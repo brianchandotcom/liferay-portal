@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class WorkflowInstanceLinkWrapper
 	extends BaseModelWrapper<WorkflowInstanceLink>
-	implements WorkflowInstanceLink, ModelWrapper<WorkflowInstanceLink> {
+	implements ModelWrapper<WorkflowInstanceLink>, WorkflowInstanceLink {
 
 	public WorkflowInstanceLinkWrapper(
 		WorkflowInstanceLink workflowInstanceLink) {

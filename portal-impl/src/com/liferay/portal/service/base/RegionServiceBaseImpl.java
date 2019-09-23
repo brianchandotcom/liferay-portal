@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class RegionServiceBaseImpl
-	extends BaseServiceImpl implements RegionService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, RegionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

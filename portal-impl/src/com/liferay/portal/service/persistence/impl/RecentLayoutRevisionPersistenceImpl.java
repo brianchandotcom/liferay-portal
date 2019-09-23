@@ -177,7 +177,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
-					if ((groupId != recentLayoutRevision.getGroupId())) {
+					if (groupId != recentLayoutRevision.getGroupId()) {
 						list = null;
 
 						break;
@@ -699,7 +699,7 @@ public class RecentLayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
-					if ((userId != recentLayoutRevision.getUserId())) {
+					if (userId != recentLayoutRevision.getUserId()) {
 						list = null;
 
 						break;
@@ -1226,8 +1226,8 @@ public class RecentLayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (RecentLayoutRevision recentLayoutRevision : list) {
-					if ((layoutRevisionId !=
-							recentLayoutRevision.getLayoutRevisionId())) {
+					if (layoutRevisionId !=
+							recentLayoutRevision.getLayoutRevisionId()) {
 
 						list = null;
 

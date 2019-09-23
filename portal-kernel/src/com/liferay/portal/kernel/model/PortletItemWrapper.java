@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class PortletItemWrapper
 	extends BaseModelWrapper<PortletItem>
-	implements PortletItem, ModelWrapper<PortletItem> {
+	implements ModelWrapper<PortletItem>, PortletItem {
 
 	public PortletItemWrapper(PortletItem portletItem) {
 		super(portletItem);

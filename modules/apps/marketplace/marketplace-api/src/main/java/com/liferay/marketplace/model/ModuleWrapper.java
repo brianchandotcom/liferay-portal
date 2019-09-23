@@ -30,7 +30,7 @@ import java.util.Map;
  * @generated
  */
 public class ModuleWrapper
-	extends BaseModelWrapper<Module> implements Module, ModelWrapper<Module> {
+	extends BaseModelWrapper<Module> implements ModelWrapper<Module>, Module {
 
 	public ModuleWrapper(Module module) {
 		super(module);

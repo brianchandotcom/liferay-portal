@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KBArticleServiceBaseImpl
 	extends BaseServiceImpl
-	implements KBArticleService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KBArticleService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

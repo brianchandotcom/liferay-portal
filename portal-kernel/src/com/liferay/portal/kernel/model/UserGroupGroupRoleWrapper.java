@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class UserGroupGroupRoleWrapper
 	extends BaseModelWrapper<UserGroupGroupRole>
-	implements UserGroupGroupRole, ModelWrapper<UserGroupGroupRole> {
+	implements ModelWrapper<UserGroupGroupRole>, UserGroupGroupRole {
 
 	public UserGroupGroupRoleWrapper(UserGroupGroupRole userGroupGroupRole) {
 		super(userGroupGroupRole);

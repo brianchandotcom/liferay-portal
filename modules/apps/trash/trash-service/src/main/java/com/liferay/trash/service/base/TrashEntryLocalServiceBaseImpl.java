@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class TrashEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements TrashEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, TrashEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

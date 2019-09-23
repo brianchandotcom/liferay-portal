@@ -67,8 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SiteNavigationMenuLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SiteNavigationMenuLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   SiteNavigationMenuLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

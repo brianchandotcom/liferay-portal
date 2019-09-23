@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KBFolderLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KBFolderLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KBFolderLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

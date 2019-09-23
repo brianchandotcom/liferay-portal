@@ -445,7 +445,7 @@ public class MemberRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MemberRequest memberRequest : list) {
-					if ((receiverUserId != memberRequest.getReceiverUserId())) {
+					if (receiverUserId != memberRequest.getReceiverUserId()) {
 						list = null;
 
 						break;

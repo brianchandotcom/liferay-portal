@@ -31,7 +31,7 @@ import java.util.Map;
  * @generated
  */
 public class TeamWrapper
-	extends BaseModelWrapper<Team> implements Team, ModelWrapper<Team> {
+	extends BaseModelWrapper<Team> implements ModelWrapper<Team>, Team {
 
 	public TeamWrapper(Team team) {
 		super(team);

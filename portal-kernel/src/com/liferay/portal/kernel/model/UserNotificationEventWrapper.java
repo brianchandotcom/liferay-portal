@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class UserNotificationEventWrapper
 	extends BaseModelWrapper<UserNotificationEvent>
-	implements UserNotificationEvent, ModelWrapper<UserNotificationEvent> {
+	implements ModelWrapper<UserNotificationEvent>, UserNotificationEvent {
 
 	public UserNotificationEventWrapper(
 		UserNotificationEvent userNotificationEvent) {

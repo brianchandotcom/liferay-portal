@@ -34,7 +34,7 @@ import java.util.Objects;
  * @generated
  */
 public class VersionedEntryVersionWrapper
-	implements VersionedEntryVersion, ModelWrapper<VersionedEntryVersion> {
+	implements ModelWrapper<VersionedEntryVersion>, VersionedEntryVersion {
 
 	public VersionedEntryVersionWrapper(
 		VersionedEntryVersion versionedEntryVersion) {

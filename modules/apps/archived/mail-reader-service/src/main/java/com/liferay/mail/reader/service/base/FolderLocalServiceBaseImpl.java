@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FolderLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FolderLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, FolderLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

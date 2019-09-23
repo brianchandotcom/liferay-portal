@@ -61,7 +61,7 @@ import javax.sql.DataSource;
  */
 public abstract class UserNotificationEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements UserNotificationEventLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, UserNotificationEventLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

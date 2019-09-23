@@ -5177,7 +5177,7 @@ public class SyncDLObjectPersistenceImpl
 				qPos.add(repositoryId);
 
 				for (String event : events) {
-					if (event != null && !event.isEmpty()) {
+					if ((event != null) && !event.isEmpty()) {
 						qPos.add(event);
 					}
 				}
@@ -5395,7 +5395,7 @@ public class SyncDLObjectPersistenceImpl
 				qPos.add(repositoryId);
 
 				for (String event : events) {
-					if (event != null && !event.isEmpty()) {
+					if ((event != null) && !event.isEmpty()) {
 						qPos.add(event);
 					}
 				}
@@ -6177,7 +6177,7 @@ public class SyncDLObjectPersistenceImpl
 				qPos.add(parentFolderId);
 
 				for (String type : types) {
-					if (type != null && !type.isEmpty()) {
+					if ((type != null) && !type.isEmpty()) {
 						qPos.add(type);
 					}
 				}
@@ -6394,7 +6394,7 @@ public class SyncDLObjectPersistenceImpl
 				qPos.add(parentFolderId);
 
 				for (String type : types) {
-					if (type != null && !type.isEmpty()) {
+					if ((type != null) && !type.isEmpty()) {
 						qPos.add(type);
 					}
 				}

@@ -34,7 +34,7 @@ import java.util.Objects;
  * @generated
  */
 public class NestedSetsTreeEntryWrapper
-	implements NestedSetsTreeEntry, ModelWrapper<NestedSetsTreeEntry> {
+	implements ModelWrapper<NestedSetsTreeEntry>, NestedSetsTreeEntry {
 
 	public NestedSetsTreeEntryWrapper(NestedSetsTreeEntry nestedSetsTreeEntry) {
 		_nestedSetsTreeEntry = nestedSetsTreeEntry;

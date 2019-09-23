@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBMessageServiceBaseImpl
 	extends BaseServiceImpl
-	implements MBMessageService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBMessageService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

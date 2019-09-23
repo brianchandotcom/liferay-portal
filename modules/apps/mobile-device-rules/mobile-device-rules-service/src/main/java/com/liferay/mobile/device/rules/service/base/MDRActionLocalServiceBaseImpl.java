@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MDRActionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MDRActionLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MDRActionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

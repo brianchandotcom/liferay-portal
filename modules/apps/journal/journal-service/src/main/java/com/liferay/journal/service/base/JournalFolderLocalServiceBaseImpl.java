@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class JournalFolderLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements JournalFolderLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, JournalFolderLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

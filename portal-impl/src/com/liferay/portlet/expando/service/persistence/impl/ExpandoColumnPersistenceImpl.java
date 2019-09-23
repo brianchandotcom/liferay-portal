@@ -184,7 +184,7 @@ public class ExpandoColumnPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoColumn expandoColumn : list) {
-					if ((tableId != expandoColumn.getTableId())) {
+					if (tableId != expandoColumn.getTableId()) {
 						list = null;
 
 						break;
@@ -1176,7 +1176,7 @@ public class ExpandoColumnPersistenceImpl
 				qPos.add(tableId);
 
 				for (String name : names) {
-					if (name != null && !name.isEmpty()) {
+					if ((name != null) && !name.isEmpty()) {
 						qPos.add(name);
 					}
 				}
@@ -1532,7 +1532,7 @@ public class ExpandoColumnPersistenceImpl
 				qPos.add(tableId);
 
 				for (String name : names) {
-					if (name != null && !name.isEmpty()) {
+					if ((name != null) && !name.isEmpty()) {
 						qPos.add(name);
 					}
 				}
@@ -1696,7 +1696,7 @@ public class ExpandoColumnPersistenceImpl
 			qPos.add(tableId);
 
 			for (String name : names) {
-				if (name != null && !name.isEmpty()) {
+				if ((name != null) && !name.isEmpty()) {
 					qPos.add(name);
 				}
 			}

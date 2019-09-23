@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class LayoutSEOEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements LayoutSEOEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, LayoutSEOEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

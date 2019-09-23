@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WikiNodeServiceBaseImpl
 	extends BaseServiceImpl
-	implements WikiNodeService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, WikiNodeService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -179,7 +179,7 @@ public class ExpandoValuePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
-					if ((tableId != expandoValue.getTableId())) {
+					if (tableId != expandoValue.getTableId()) {
 						list = null;
 
 						break;
@@ -693,7 +693,7 @@ public class ExpandoValuePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
-					if ((columnId != expandoValue.getColumnId())) {
+					if (columnId != expandoValue.getColumnId()) {
 						list = null;
 
 						break;
@@ -1204,7 +1204,7 @@ public class ExpandoValuePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoValue expandoValue : list) {
-					if ((rowId != expandoValue.getRowId())) {
+					if (rowId != expandoValue.getRowId()) {
 						list = null;
 
 						break;

@@ -1338,7 +1338,7 @@ public class UserPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
-					if ((companyId != user.getCompanyId())) {
+					if (companyId != user.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1816,7 +1816,7 @@ public class UserPersistenceImpl
 		if (result instanceof User) {
 			User user = (User)result;
 
-			if ((contactId != user.getContactId())) {
+			if (contactId != user.getContactId()) {
 				result = null;
 			}
 		}
@@ -2572,7 +2572,7 @@ public class UserPersistenceImpl
 		if (result instanceof User) {
 			User user = (User)result;
 
-			if ((portraitId != user.getPortraitId())) {
+			if (portraitId != user.getPortraitId()) {
 				result = null;
 			}
 		}

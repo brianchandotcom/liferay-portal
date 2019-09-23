@@ -1638,7 +1638,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 				for (LayoutPageTemplateStructure layoutPageTemplateStructure :
 						list) {
 
-					if ((groupId != layoutPageTemplateStructure.getGroupId())) {
+					if (groupId != layoutPageTemplateStructure.getGroupId()) {
 						list = null;
 
 						break;

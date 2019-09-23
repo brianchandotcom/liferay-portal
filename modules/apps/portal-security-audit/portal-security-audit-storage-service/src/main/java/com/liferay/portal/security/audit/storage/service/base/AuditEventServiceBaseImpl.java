@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AuditEventServiceBaseImpl
 	extends BaseServiceImpl
-	implements AuditEventService, AopService, IdentifiableOSGiService {
+	implements AopService, AuditEventService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

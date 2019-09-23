@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class WikiPageResourceWrapper
 	extends BaseModelWrapper<WikiPageResource>
-	implements WikiPageResource, ModelWrapper<WikiPageResource> {
+	implements ModelWrapper<WikiPageResource>, WikiPageResource {
 
 	public WikiPageResourceWrapper(WikiPageResource wikiPageResource) {
 		super(wikiPageResource);

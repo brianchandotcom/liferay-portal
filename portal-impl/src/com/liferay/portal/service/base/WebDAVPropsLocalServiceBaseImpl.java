@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class WebDAVPropsLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WebDAVPropsLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, WebDAVPropsLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

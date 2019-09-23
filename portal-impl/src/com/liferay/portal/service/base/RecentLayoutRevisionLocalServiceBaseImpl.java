@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements RecentLayoutRevisionLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, RecentLayoutRevisionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -64,7 +64,7 @@ import javax.sql.DataSource;
  */
 public abstract class PowwowParticipantLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PowwowParticipantLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PowwowParticipantLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

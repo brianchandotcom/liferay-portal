@@ -31,7 +31,7 @@ import java.util.Map;
  * @generated
  */
 public class RoleWrapper
-	extends BaseModelWrapper<Role> implements Role, ModelWrapper<Role> {
+	extends BaseModelWrapper<Role> implements ModelWrapper<Role>, Role {
 
 	public RoleWrapper(Role role) {
 		super(role);

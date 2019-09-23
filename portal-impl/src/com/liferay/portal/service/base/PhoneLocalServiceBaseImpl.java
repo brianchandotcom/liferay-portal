@@ -71,7 +71,7 @@ import javax.sql.DataSource;
  */
 public abstract class PhoneLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PhoneLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PhoneLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

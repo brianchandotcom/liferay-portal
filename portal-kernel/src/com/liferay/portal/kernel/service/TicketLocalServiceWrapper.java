@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link TicketLocalService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class TicketLocalServiceWrapper
-	implements TicketLocalService, ServiceWrapper<TicketLocalService> {
+	implements ServiceWrapper<TicketLocalService>, TicketLocalService {
 
 	public TicketLocalServiceWrapper(TicketLocalService ticketLocalService) {
 		_ticketLocalService = ticketLocalService;

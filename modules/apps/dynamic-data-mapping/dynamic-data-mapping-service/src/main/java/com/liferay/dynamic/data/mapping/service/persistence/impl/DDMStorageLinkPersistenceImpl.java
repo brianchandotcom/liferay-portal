@@ -1317,7 +1317,7 @@ public class DDMStorageLinkPersistenceImpl
 		if (result instanceof DDMStorageLink) {
 			DDMStorageLink ddmStorageLink = (DDMStorageLink)result;
 
-			if ((classPK != ddmStorageLink.getClassPK())) {
+			if (classPK != ddmStorageLink.getClassPK()) {
 				result = null;
 			}
 		}
@@ -1554,7 +1554,7 @@ public class DDMStorageLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
-					if ((structureId != ddmStorageLink.getStructureId())) {
+					if (structureId != ddmStorageLink.getStructureId()) {
 						list = null;
 
 						break;
@@ -2077,8 +2077,8 @@ public class DDMStorageLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
-					if ((structureVersionId !=
-							ddmStorageLink.getStructureVersionId())) {
+					if (structureVersionId !=
+							ddmStorageLink.getStructureVersionId()) {
 
 						list = null;
 

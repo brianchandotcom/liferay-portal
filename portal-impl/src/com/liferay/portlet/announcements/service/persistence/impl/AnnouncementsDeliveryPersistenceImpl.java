@@ -183,7 +183,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsDelivery announcementsDelivery : list) {
-					if ((companyId != announcementsDelivery.getCompanyId())) {
+					if (companyId != announcementsDelivery.getCompanyId()) {
 						list = null;
 
 						break;
@@ -706,7 +706,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsDelivery announcementsDelivery : list) {
-					if ((userId != announcementsDelivery.getUserId())) {
+					if (userId != announcementsDelivery.getUserId()) {
 						list = null;
 
 						break;

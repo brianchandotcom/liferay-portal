@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetDisplayPageEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements AssetDisplayPageEntryService, AopService,
+	implements AopService, AssetDisplayPageEntryService,
 			   IdentifiableOSGiService {
 
 	/**

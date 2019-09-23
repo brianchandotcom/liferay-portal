@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class SiteNavigationMenuItemWrapper
 	extends BaseModelWrapper<SiteNavigationMenuItem>
-	implements SiteNavigationMenuItem, ModelWrapper<SiteNavigationMenuItem> {
+	implements ModelWrapper<SiteNavigationMenuItem>, SiteNavigationMenuItem {
 
 	public SiteNavigationMenuItemWrapper(
 		SiteNavigationMenuItem siteNavigationMenuItem) {

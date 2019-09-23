@@ -74,8 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SegmentsExperimentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SegmentsExperimentLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   SegmentsExperimentLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

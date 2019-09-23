@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SocialActivitySettingServiceWrapper
-	implements SocialActivitySettingService,
-			   ServiceWrapper<SocialActivitySettingService> {
+	implements ServiceWrapper<SocialActivitySettingService>,
+			   SocialActivitySettingService {
 
 	public SocialActivitySettingServiceWrapper(
 		SocialActivitySettingService socialActivitySettingService) {

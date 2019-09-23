@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link UserService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class UserServiceWrapper
-	implements UserService, ServiceWrapper<UserService> {
+	implements ServiceWrapper<UserService>, UserService {
 
 	public UserServiceWrapper(UserService userService) {
 		_userService = userService;

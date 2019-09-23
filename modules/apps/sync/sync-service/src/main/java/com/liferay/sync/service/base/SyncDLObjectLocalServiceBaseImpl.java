@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SyncDLObjectLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SyncDLObjectLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SyncDLObjectLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

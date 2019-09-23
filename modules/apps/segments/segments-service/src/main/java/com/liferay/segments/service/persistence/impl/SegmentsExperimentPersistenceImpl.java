@@ -1616,7 +1616,7 @@ public class SegmentsExperimentPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperiment segmentsExperiment : list) {
-					if ((groupId != segmentsExperiment.getGroupId())) {
+					if (groupId != segmentsExperiment.getGroupId()) {
 						list = null;
 
 						break;
@@ -5557,7 +5557,7 @@ public class SegmentsExperimentPersistenceImpl
 			statuses = ArrayUtil.sortedUnique(statuses);
 		}
 
-		if (segmentsExperienceIds.length == 1 && statuses.length == 1) {
+		if ((segmentsExperienceIds.length == 1) && (statuses.length == 1)) {
 			return findByS_C_C_S(
 				segmentsExperienceIds[0], classNameId, classPK, statuses[0],
 				start, end, orderByComparator);

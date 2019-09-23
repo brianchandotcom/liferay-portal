@@ -1602,7 +1602,7 @@ public class DDMStructurePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if ((groupId != ddmStructure.getGroupId())) {
+					if (groupId != ddmStructure.getGroupId()) {
 						list = null;
 
 						break;
@@ -2970,8 +2970,8 @@ public class DDMStructurePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if ((parentStructureId !=
-							ddmStructure.getParentStructureId())) {
+					if (parentStructureId !=
+							ddmStructure.getParentStructureId()) {
 
 						list = null;
 
@@ -3496,7 +3496,7 @@ public class DDMStructurePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if ((classNameId != ddmStructure.getClassNameId())) {
+					if (classNameId != ddmStructure.getClassNameId()) {
 						list = null;
 
 						break;

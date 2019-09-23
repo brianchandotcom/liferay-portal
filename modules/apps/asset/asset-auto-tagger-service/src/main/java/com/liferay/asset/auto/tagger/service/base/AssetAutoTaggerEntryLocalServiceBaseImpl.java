@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetAutoTaggerEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AssetAutoTaggerEntryLocalService, AopService,
+	implements AopService, AssetAutoTaggerEntryLocalService,
 			   IdentifiableOSGiService {
 
 	/**

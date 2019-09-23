@@ -190,9 +190,7 @@ public class DLFileVersionPreviewPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersionPreview dlFileVersionPreview : list) {
-					if ((fileEntryId !=
-							dlFileVersionPreview.getFileEntryId())) {
-
+					if (fileEntryId != dlFileVersionPreview.getFileEntryId()) {
 						list = null;
 
 						break;
@@ -718,8 +716,8 @@ public class DLFileVersionPreviewPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersionPreview dlFileVersionPreview : list) {
-					if ((fileVersionId !=
-							dlFileVersionPreview.getFileVersionId())) {
+					if (fileVersionId !=
+							dlFileVersionPreview.getFileVersionId()) {
 
 						list = null;
 

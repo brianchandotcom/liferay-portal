@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBDiscussionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MBDiscussionLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBDiscussionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KaleoInstanceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KaleoInstanceLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KaleoInstanceLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

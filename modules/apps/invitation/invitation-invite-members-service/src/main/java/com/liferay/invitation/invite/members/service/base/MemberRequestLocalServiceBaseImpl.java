@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MemberRequestLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MemberRequestLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MemberRequestLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

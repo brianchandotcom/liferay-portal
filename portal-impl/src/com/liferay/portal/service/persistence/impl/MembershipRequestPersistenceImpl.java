@@ -177,7 +177,7 @@ public class MembershipRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MembershipRequest membershipRequest : list) {
-					if ((groupId != membershipRequest.getGroupId())) {
+					if (groupId != membershipRequest.getGroupId()) {
 						list = null;
 
 						break;
@@ -695,7 +695,7 @@ public class MembershipRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MembershipRequest membershipRequest : list) {
-					if ((userId != membershipRequest.getUserId())) {
+					if (userId != membershipRequest.getUserId()) {
 						list = null;
 
 						break;

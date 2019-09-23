@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class NestedSetsTreeEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements NestedSetsTreeEntryLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, NestedSetsTreeEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

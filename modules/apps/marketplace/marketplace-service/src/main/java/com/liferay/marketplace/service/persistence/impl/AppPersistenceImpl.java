@@ -1331,7 +1331,7 @@ public class AppPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (App app : list) {
-					if ((companyId != app.getCompanyId())) {
+					if (companyId != app.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1808,7 +1808,7 @@ public class AppPersistenceImpl
 		if (result instanceof App) {
 			App app = (App)result;
 
-			if ((remoteAppId != app.getRemoteAppId())) {
+			if (remoteAppId != app.getRemoteAppId()) {
 				result = null;
 			}
 		}

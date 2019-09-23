@@ -179,7 +179,7 @@ public class SocialActivitySettingPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialActivitySetting socialActivitySetting : list) {
-					if ((groupId != socialActivitySetting.getGroupId())) {
+					if (groupId != socialActivitySetting.getGroupId()) {
 						list = null;
 
 						break;

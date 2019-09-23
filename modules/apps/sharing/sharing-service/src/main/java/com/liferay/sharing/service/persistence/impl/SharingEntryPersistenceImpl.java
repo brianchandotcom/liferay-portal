@@ -1599,7 +1599,7 @@ public class SharingEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SharingEntry sharingEntry : list) {
-					if ((groupId != sharingEntry.getGroupId())) {
+					if (groupId != sharingEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -2109,7 +2109,7 @@ public class SharingEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SharingEntry sharingEntry : list) {
-					if ((userId != sharingEntry.getUserId())) {
+					if (userId != sharingEntry.getUserId()) {
 						list = null;
 
 						break;
@@ -2621,7 +2621,7 @@ public class SharingEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SharingEntry sharingEntry : list) {
-					if ((toUserId != sharingEntry.getToUserId())) {
+					if (toUserId != sharingEntry.getToUserId()) {
 						list = null;
 
 						break;
@@ -3124,8 +3124,8 @@ public class SharingEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SharingEntry sharingEntry : list) {
-					if ((expirationDate.getTime() <=
-							sharingEntry.getExpirationDate().getTime())) {
+					if (expirationDate.getTime() <=
+							sharingEntry.getExpirationDate().getTime()) {
 
 						list = null;
 

@@ -69,8 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ReadingTimeEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ReadingTimeEntryLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   ReadingTimeEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

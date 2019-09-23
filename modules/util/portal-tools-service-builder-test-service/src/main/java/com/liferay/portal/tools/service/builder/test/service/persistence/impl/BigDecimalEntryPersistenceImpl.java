@@ -752,8 +752,8 @@ public class BigDecimalEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
-					if ((bigDecimalValue.compareTo(
-							bigDecimalEntry.getBigDecimalValue()) >= 0)) {
+					if (bigDecimalValue.compareTo(
+							bigDecimalEntry.getBigDecimalValue()) >= 0) {
 
 						list = null;
 
@@ -1312,8 +1312,8 @@ public class BigDecimalEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BigDecimalEntry bigDecimalEntry : list) {
-					if ((bigDecimalValue.compareTo(
-							bigDecimalEntry.getBigDecimalValue()) <= 0)) {
+					if (bigDecimalValue.compareTo(
+							bigDecimalEntry.getBigDecimalValue()) <= 0) {
 
 						list = null;
 

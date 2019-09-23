@@ -1602,7 +1602,7 @@ public class KBTemplatePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBTemplate kbTemplate : list) {
-					if ((groupId != kbTemplate.getGroupId())) {
+					if (groupId != kbTemplate.getGroupId()) {
 						list = null;
 
 						break;

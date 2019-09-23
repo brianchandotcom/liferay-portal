@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class TasksEntryLocalServiceWrapper
-	implements TasksEntryLocalService, ServiceWrapper<TasksEntryLocalService> {
+	implements ServiceWrapper<TasksEntryLocalService>, TasksEntryLocalService {
 
 	public TasksEntryLocalServiceWrapper(
 		TasksEntryLocalService tasksEntryLocalService) {

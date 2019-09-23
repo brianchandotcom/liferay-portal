@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class VersionedEntryLocalServiceWrapper
-	implements VersionedEntryLocalService,
-			   ServiceWrapper<VersionedEntryLocalService> {
+	implements ServiceWrapper<VersionedEntryLocalService>,
+			   VersionedEntryLocalService {
 
 	public VersionedEntryLocalServiceWrapper(
 		VersionedEntryLocalService versionedEntryLocalService) {

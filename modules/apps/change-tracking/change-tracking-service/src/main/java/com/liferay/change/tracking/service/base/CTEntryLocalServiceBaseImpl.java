@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class CTEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CTEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, CTEntryLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

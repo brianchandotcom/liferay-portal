@@ -192,7 +192,7 @@ public class LVEntryVersionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryVersion lvEntryVersion : list) {
-					if ((lvEntryId != lvEntryVersion.getLvEntryId())) {
+					if (lvEntryId != lvEntryVersion.getLvEntryId()) {
 						list = null;
 
 						break;
@@ -4210,7 +4210,7 @@ public class LVEntryVersionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryVersion lvEntryVersion : list) {
-					if ((groupId != lvEntryVersion.getGroupId())) {
+					if (groupId != lvEntryVersion.getGroupId()) {
 						list = null;
 
 						break;

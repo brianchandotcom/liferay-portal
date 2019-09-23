@@ -187,7 +187,7 @@ public class CTProcessPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTProcess ctProcess : list) {
-					if ((companyId != ctProcess.getCompanyId())) {
+					if (companyId != ctProcess.getCompanyId()) {
 						list = null;
 
 						break;
@@ -697,7 +697,7 @@ public class CTProcessPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTProcess ctProcess : list) {
-					if ((userId != ctProcess.getUserId())) {
+					if (userId != ctProcess.getUserId()) {
 						list = null;
 
 						break;
@@ -1210,7 +1210,7 @@ public class CTProcessPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTProcess ctProcess : list) {
-					if ((ctCollectionId != ctProcess.getCtCollectionId())) {
+					if (ctCollectionId != ctProcess.getCtCollectionId()) {
 						list = null;
 
 						break;

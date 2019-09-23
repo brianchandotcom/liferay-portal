@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DLOpenerFileEntryReferenceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLOpenerFileEntryReferenceLocalService, AopService,
+	implements AopService, DLOpenerFileEntryReferenceLocalService,
 			   IdentifiableOSGiService {
 
 	/**

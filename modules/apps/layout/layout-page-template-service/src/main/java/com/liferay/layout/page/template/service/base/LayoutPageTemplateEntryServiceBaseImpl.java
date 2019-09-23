@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements LayoutPageTemplateEntryService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   LayoutPageTemplateEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

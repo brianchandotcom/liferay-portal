@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBMessageLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MBMessageLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBMessageLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

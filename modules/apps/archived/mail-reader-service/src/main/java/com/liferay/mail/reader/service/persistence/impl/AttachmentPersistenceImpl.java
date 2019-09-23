@@ -192,7 +192,7 @@ public class AttachmentPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Attachment attachment : list) {
-					if ((messageId != attachment.getMessageId())) {
+					if (messageId != attachment.getMessageId()) {
 						list = null;
 
 						break;

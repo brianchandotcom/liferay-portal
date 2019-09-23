@@ -1586,7 +1586,7 @@ public class RepositoryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Repository repository : list) {
-					if ((groupId != repository.getGroupId())) {
+					if (groupId != repository.getGroupId()) {
 						list = null;
 
 						break;

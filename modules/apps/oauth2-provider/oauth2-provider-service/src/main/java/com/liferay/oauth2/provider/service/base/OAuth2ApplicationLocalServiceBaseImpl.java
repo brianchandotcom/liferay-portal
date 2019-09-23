@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class OAuth2ApplicationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements OAuth2ApplicationLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   OAuth2ApplicationLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

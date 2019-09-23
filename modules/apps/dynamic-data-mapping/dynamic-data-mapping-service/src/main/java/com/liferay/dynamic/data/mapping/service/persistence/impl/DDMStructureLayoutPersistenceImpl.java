@@ -1613,7 +1613,7 @@ public class DDMStructureLayoutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructureLayout ddmStructureLayout : list) {
-					if ((groupId != ddmStructureLayout.getGroupId())) {
+					if (groupId != ddmStructureLayout.getGroupId()) {
 						list = null;
 
 						break;
@@ -2687,8 +2687,8 @@ public class DDMStructureLayoutPersistenceImpl
 		if (result instanceof DDMStructureLayout) {
 			DDMStructureLayout ddmStructureLayout = (DDMStructureLayout)result;
 
-			if ((structureVersionId !=
-					ddmStructureLayout.getStructureVersionId())) {
+			if (structureVersionId !=
+					ddmStructureLayout.getStructureVersionId()) {
 
 				result = null;
 			}

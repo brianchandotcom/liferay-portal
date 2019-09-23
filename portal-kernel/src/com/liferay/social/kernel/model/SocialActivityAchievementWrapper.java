@@ -31,8 +31,8 @@ import java.util.Map;
  */
 public class SocialActivityAchievementWrapper
 	extends BaseModelWrapper<SocialActivityAchievement>
-	implements SocialActivityAchievement,
-			   ModelWrapper<SocialActivityAchievement> {
+	implements ModelWrapper<SocialActivityAchievement>,
+			   SocialActivityAchievement {
 
 	public SocialActivityAchievementWrapper(
 		SocialActivityAchievement socialActivityAchievement) {

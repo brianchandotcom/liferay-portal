@@ -30,7 +30,7 @@ import java.util.Map;
  * @generated
  */
 public class StatusWrapper
-	extends BaseModelWrapper<Status> implements Status, ModelWrapper<Status> {
+	extends BaseModelWrapper<Status> implements ModelWrapper<Status>, Status {
 
 	public StatusWrapper(Status status) {
 		super(status);

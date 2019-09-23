@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class PortletPreferencesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PortletPreferencesLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PortletPreferencesLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

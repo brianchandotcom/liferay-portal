@@ -180,7 +180,7 @@ public class VersionedEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (VersionedEntry versionedEntry : list) {
-					if ((groupId != versionedEntry.getGroupId())) {
+					if (groupId != versionedEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -1222,7 +1222,7 @@ public class VersionedEntryPersistenceImpl
 		if (result instanceof VersionedEntry) {
 			VersionedEntry versionedEntry = (VersionedEntry)result;
 
-			if ((headId != versionedEntry.getHeadId())) {
+			if (headId != versionedEntry.getHeadId()) {
 				result = null;
 			}
 		}

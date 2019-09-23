@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class TestEntityLocalServiceWrapper
-	implements TestEntityLocalService, ServiceWrapper<TestEntityLocalService> {
+	implements ServiceWrapper<TestEntityLocalService>, TestEntityLocalService {
 
 	public TestEntityLocalServiceWrapper(
 		TestEntityLocalService testEntityLocalService) {

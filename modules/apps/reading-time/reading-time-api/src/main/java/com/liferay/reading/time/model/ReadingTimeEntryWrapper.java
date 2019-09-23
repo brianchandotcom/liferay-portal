@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class ReadingTimeEntryWrapper
 	extends BaseModelWrapper<ReadingTimeEntry>
-	implements ReadingTimeEntry, ModelWrapper<ReadingTimeEntry> {
+	implements ModelWrapper<ReadingTimeEntry>, ReadingTimeEntry {
 
 	public ReadingTimeEntryWrapper(ReadingTimeEntry readingTimeEntry) {
 		super(readingTimeEntry);

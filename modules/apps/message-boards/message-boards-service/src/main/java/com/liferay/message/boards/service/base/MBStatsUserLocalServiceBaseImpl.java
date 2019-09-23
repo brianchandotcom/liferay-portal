@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBStatsUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MBStatsUserLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBStatsUserLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

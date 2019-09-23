@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBMailingListLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MBMailingListLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBMailingListLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -400,9 +400,8 @@ public class CountryServiceHttp {
 		new Class[] {String.class};
 	private static final Class<?>[] _fetchCountryByA3ParameterTypes3 =
 		new Class[] {String.class};
-	private static final Class<?>[] _getCountriesParameterTypes4 = new Class[] {
-		
-	};
+	private static final Class<?>[] _getCountriesParameterTypes4 =
+		new Class[] {};
 	private static final Class<?>[] _getCountriesParameterTypes5 = new Class[] {
 		boolean.class
 	};

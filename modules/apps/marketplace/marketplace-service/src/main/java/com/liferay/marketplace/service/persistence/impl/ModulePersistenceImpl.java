@@ -1330,7 +1330,7 @@ public class ModulePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Module module : list) {
-					if ((appId != module.getAppId())) {
+					if (appId != module.getAppId()) {
 						list = null;
 
 						break;

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class PortletPreferencesWrapper
 	extends BaseModelWrapper<PortletPreferences>
-	implements PortletPreferences, ModelWrapper<PortletPreferences> {
+	implements ModelWrapper<PortletPreferences>, PortletPreferences {
 
 	public PortletPreferencesWrapper(PortletPreferences portletPreferences) {
 		super(portletPreferences);

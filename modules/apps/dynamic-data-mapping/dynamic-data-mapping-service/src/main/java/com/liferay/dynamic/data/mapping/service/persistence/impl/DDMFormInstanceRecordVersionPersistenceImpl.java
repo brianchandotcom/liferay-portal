@@ -198,9 +198,9 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				for (DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion :
 						list) {
 
-					if ((formInstanceRecordId !=
+					if (formInstanceRecordId !=
 							ddmFormInstanceRecordVersion.
-								getFormInstanceRecordId())) {
+								getFormInstanceRecordId()) {
 
 						list = null;
 

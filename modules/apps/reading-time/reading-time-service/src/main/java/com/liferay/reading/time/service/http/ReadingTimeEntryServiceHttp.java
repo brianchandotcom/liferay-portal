@@ -14,7 +14,6 @@
 
 package com.liferay.reading.time.service.http;
 
-
 /**
  * Provides the HTTP utility for the
  * <code>com.liferay.reading.time.service.ReadingTimeEntryServiceUtil</code> service

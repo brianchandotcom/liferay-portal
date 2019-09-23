@@ -1006,7 +1006,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
-					if ((assetEntryId != assetEntryUsage.getAssetEntryId())) {
+					if (assetEntryId != assetEntryUsage.getAssetEntryId()) {
 						list = null;
 
 						break;
@@ -1524,7 +1524,7 @@ public class AssetEntryUsagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryUsage assetEntryUsage : list) {
-					if ((plid != assetEntryUsage.getPlid())) {
+					if (plid != assetEntryUsage.getPlid()) {
 						list = null;
 
 						break;

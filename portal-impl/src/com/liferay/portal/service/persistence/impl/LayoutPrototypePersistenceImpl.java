@@ -2212,7 +2212,7 @@ public class LayoutPrototypePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutPrototype layoutPrototype : list) {
-					if ((companyId != layoutPrototype.getCompanyId())) {
+					if (companyId != layoutPrototype.getCompanyId()) {
 						list = null;
 
 						break;

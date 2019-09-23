@@ -178,7 +178,7 @@ public class OrgGroupRolePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OrgGroupRole orgGroupRole : list) {
-					if ((groupId != orgGroupRole.getGroupId())) {
+					if (groupId != orgGroupRole.getGroupId()) {
 						list = null;
 
 						break;
@@ -689,7 +689,7 @@ public class OrgGroupRolePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OrgGroupRole orgGroupRole : list) {
-					if ((roleId != orgGroupRole.getRoleId())) {
+					if (roleId != orgGroupRole.getRoleId()) {
 						list = null;
 
 						break;

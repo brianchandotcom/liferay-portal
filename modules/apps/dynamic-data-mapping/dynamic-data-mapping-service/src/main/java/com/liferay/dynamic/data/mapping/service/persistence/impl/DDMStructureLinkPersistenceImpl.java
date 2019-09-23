@@ -191,7 +191,7 @@ public class DDMStructureLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructureLink ddmStructureLink : list) {
-					if ((classNameId != ddmStructureLink.getClassNameId())) {
+					if (classNameId != ddmStructureLink.getClassNameId()) {
 						list = null;
 
 						break;
@@ -715,7 +715,7 @@ public class DDMStructureLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructureLink ddmStructureLink : list) {
-					if ((structureId != ddmStructureLink.getStructureId())) {
+					if (structureId != ddmStructureLink.getStructureId()) {
 						list = null;
 
 						break;

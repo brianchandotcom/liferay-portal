@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BackgroundTaskServiceBaseImpl
 	extends BaseServiceImpl
-	implements BackgroundTaskService, AopService, IdentifiableOSGiService {
+	implements AopService, BackgroundTaskService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

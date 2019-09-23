@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class UserTrackerLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements UserTrackerLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, UserTrackerLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

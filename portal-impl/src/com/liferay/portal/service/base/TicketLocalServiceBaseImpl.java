@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class TicketLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements TicketLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, TicketLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

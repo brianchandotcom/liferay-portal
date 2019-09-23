@@ -207,7 +207,7 @@ public class WikiPagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
-					if ((resourcePrimKey != wikiPage.getResourcePrimKey())) {
+					if (resourcePrimKey != wikiPage.getResourcePrimKey()) {
 						list = null;
 
 						break;
@@ -2116,7 +2116,7 @@ public class WikiPagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiPage wikiPage : list) {
-					if ((nodeId != wikiPage.getNodeId())) {
+					if (nodeId != wikiPage.getNodeId()) {
 						list = null;
 
 						break;

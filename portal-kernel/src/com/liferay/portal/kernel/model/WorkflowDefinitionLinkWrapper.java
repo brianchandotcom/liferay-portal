@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class WorkflowDefinitionLinkWrapper
 	extends BaseModelWrapper<WorkflowDefinitionLink>
-	implements WorkflowDefinitionLink, ModelWrapper<WorkflowDefinitionLink> {
+	implements ModelWrapper<WorkflowDefinitionLink>, WorkflowDefinitionLink {
 
 	public WorkflowDefinitionLinkWrapper(
 		WorkflowDefinitionLink workflowDefinitionLink) {

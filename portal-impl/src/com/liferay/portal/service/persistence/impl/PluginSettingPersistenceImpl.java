@@ -183,7 +183,7 @@ public class PluginSettingPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PluginSetting pluginSetting : list) {
-					if ((companyId != pluginSetting.getCompanyId())) {
+					if (companyId != pluginSetting.getCompanyId()) {
 						list = null;
 
 						break;

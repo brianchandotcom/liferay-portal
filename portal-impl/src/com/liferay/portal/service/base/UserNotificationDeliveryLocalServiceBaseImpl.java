@@ -61,7 +61,7 @@ import javax.sql.DataSource;
  */
 public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements UserNotificationDeliveryLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, UserNotificationDeliveryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

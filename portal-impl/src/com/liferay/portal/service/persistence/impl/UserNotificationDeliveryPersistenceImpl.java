@@ -177,7 +177,7 @@ public class UserNotificationDeliveryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationDelivery userNotificationDelivery : list) {
-					if ((userId != userNotificationDelivery.getUserId())) {
+					if (userId != userNotificationDelivery.getUserId()) {
 						list = null;
 
 						break;

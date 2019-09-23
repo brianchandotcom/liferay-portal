@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FragmentCollectionServiceBaseImpl
 	extends BaseServiceImpl
-	implements FragmentCollectionService, AopService, IdentifiableOSGiService {
+	implements AopService, FragmentCollectionService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

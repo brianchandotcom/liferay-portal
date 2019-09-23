@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ScreensRatingsEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements ScreensRatingsEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, ScreensRatingsEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

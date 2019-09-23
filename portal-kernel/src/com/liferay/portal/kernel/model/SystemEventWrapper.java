@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class SystemEventWrapper
 	extends BaseModelWrapper<SystemEvent>
-	implements SystemEvent, ModelWrapper<SystemEvent> {
+	implements ModelWrapper<SystemEvent>, SystemEvent {
 
 	public SystemEventWrapper(SystemEvent systemEvent) {
 		super(systemEvent);

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class VirtualHostWrapper
 	extends BaseModelWrapper<VirtualHost>
-	implements VirtualHost, ModelWrapper<VirtualHost> {
+	implements ModelWrapper<VirtualHost>, VirtualHost {
 
 	public VirtualHostWrapper(VirtualHost virtualHost) {
 		super(virtualHost);

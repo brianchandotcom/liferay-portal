@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SharingEntryServiceWrapper
-	implements SharingEntryService, ServiceWrapper<SharingEntryService> {
+	implements ServiceWrapper<SharingEntryService>, SharingEntryService {
 
 	public SharingEntryServiceWrapper(SharingEntryService sharingEntryService) {
 		_sharingEntryService = sharingEntryService;

@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class VersionedEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements VersionedEntryLocalService, IdentifiableOSGiService,
+	implements IdentifiableOSGiService, VersionedEntryLocalService,
 			   VersionService<VersionedEntry, VersionedEntryVersion> {
 
 	/**

@@ -191,9 +191,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
 						list) {
 
-					if ((lvEntryLocalizationId !=
+					if (lvEntryLocalizationId !=
 							lvEntryLocalizationVersion.
-								getLvEntryLocalizationId())) {
+								getLvEntryLocalizationId()) {
 
 						list = null;
 
@@ -977,8 +977,8 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
 						list) {
 
-					if ((lvEntryId !=
-							lvEntryLocalizationVersion.getLvEntryId())) {
+					if (lvEntryId !=
+							lvEntryLocalizationVersion.getLvEntryId()) {
 
 						list = null;
 

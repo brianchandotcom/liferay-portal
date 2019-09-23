@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetListEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements AssetListEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, AssetListEntryService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class AssetListEntryAssetEntryRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AssetListEntryAssetEntryRelLocalService, AopService,
+	implements AopService, AssetListEntryAssetEntryRelLocalService,
 			   IdentifiableOSGiService {
 
 	/**

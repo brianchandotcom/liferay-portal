@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class TasksEntryWrapper
 	extends BaseModelWrapper<TasksEntry>
-	implements TasksEntry, ModelWrapper<TasksEntry> {
+	implements ModelWrapper<TasksEntry>, TasksEntry {
 
 	public TasksEntryWrapper(TasksEntry tasksEntry) {
 		super(tasksEntry);

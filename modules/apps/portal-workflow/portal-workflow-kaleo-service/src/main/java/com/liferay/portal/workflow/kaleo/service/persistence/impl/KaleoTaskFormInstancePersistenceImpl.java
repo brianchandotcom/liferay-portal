@@ -194,7 +194,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((companyId != kaleoTaskFormInstance.getCompanyId())) {
+					if (companyId != kaleoTaskFormInstance.getCompanyId()) {
 						list = null;
 
 						break;
@@ -727,9 +727,9 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoDefinitionVersionId !=
+					if (kaleoDefinitionVersionId !=
 							kaleoTaskFormInstance.
-								getKaleoDefinitionVersionId())) {
+								getKaleoDefinitionVersionId()) {
 
 						list = null;
 
@@ -1267,8 +1267,8 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoInstanceId !=
-							kaleoTaskFormInstance.getKaleoInstanceId())) {
+					if (kaleoInstanceId !=
+							kaleoTaskFormInstance.getKaleoInstanceId()) {
 
 						list = null;
 
@@ -1797,9 +1797,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoTaskId !=
-							kaleoTaskFormInstance.getKaleoTaskId())) {
-
+					if (kaleoTaskId != kaleoTaskFormInstance.getKaleoTaskId()) {
 						list = null;
 
 						break;
@@ -2332,9 +2330,9 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoTaskInstanceTokenId !=
+					if (kaleoTaskInstanceTokenId !=
 							kaleoTaskFormInstance.
-								getKaleoTaskInstanceTokenId())) {
+								getKaleoTaskInstanceTokenId()) {
 
 						list = null;
 
@@ -2840,9 +2838,7 @@ public class KaleoTaskFormInstancePersistenceImpl
 			KaleoTaskFormInstance kaleoTaskFormInstance =
 				(KaleoTaskFormInstance)result;
 
-			if ((kaleoTaskFormId !=
-					kaleoTaskFormInstance.getKaleoTaskFormId())) {
-
+			if (kaleoTaskFormId != kaleoTaskFormInstance.getKaleoTaskFormId()) {
 				result = null;
 			}
 		}

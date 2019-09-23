@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SAPEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SAPEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SAPEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

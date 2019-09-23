@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class UADPartialEntryServiceWrapper
-	implements UADPartialEntryService, ServiceWrapper<UADPartialEntryService> {
+	implements ServiceWrapper<UADPartialEntryService>, UADPartialEntryService {
 
 	public UADPartialEntryServiceWrapper(
 		UADPartialEntryService uadPartialEntryService) {

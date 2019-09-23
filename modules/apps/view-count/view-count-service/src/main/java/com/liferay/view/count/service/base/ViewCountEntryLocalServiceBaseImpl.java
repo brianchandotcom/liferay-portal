@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ViewCountEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ViewCountEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, ViewCountEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

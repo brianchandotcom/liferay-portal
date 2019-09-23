@@ -1588,7 +1588,7 @@ public class TeamPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Team team : list) {
-					if ((groupId != team.getGroupId())) {
+					if (groupId != team.getGroupId()) {
 						list = null;
 
 						break;

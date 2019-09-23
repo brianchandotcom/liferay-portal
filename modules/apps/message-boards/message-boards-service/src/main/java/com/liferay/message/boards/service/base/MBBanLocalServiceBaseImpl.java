@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBBanLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements MBBanLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBBanLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

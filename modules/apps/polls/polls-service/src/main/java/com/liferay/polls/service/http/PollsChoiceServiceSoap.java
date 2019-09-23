@@ -14,7 +14,6 @@
 
 package com.liferay.polls.service.http;
 
-
 /**
  * Provides the SOAP utility for the
  * <code>com.liferay.polls.service.PollsChoiceServiceUtil</code> service

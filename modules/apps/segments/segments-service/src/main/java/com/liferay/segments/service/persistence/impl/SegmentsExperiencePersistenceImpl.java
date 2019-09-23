@@ -1616,7 +1616,7 @@ public class SegmentsExperiencePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperience segmentsExperience : list) {
-					if ((groupId != segmentsExperience.getGroupId())) {
+					if (groupId != segmentsExperience.getGroupId()) {
 						list = null;
 
 						break;
@@ -2518,8 +2518,8 @@ public class SegmentsExperiencePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperience segmentsExperience : list) {
-					if ((segmentsEntryId !=
-							segmentsExperience.getSegmentsEntryId())) {
+					if (segmentsEntryId !=
+							segmentsExperience.getSegmentsEntryId()) {
 
 						list = null;
 

@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class LayoutSEOEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements LayoutSEOEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, LayoutSEOEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

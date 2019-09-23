@@ -194,8 +194,8 @@ public class SegmentsEntryRelPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsEntryRel segmentsEntryRel : list) {
-					if ((segmentsEntryId !=
-							segmentsEntryRel.getSegmentsEntryId())) {
+					if (segmentsEntryId !=
+							segmentsEntryRel.getSegmentsEntryId()) {
 
 						list = null;
 

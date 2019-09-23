@@ -1611,7 +1611,7 @@ public class LayoutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if ((groupId != layout.getGroupId())) {
+					if (groupId != layout.getGroupId()) {
 						list = null;
 
 						break;
@@ -2492,7 +2492,7 @@ public class LayoutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if ((companyId != layout.getCompanyId())) {
+					if (companyId != layout.getCompanyId()) {
 						list = null;
 
 						break;
@@ -3003,7 +3003,7 @@ public class LayoutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if ((parentPlid != layout.getParentPlid())) {
+					if (parentPlid != layout.getParentPlid()) {
 						list = null;
 
 						break;
@@ -3484,7 +3484,7 @@ public class LayoutPersistenceImpl
 		if (result instanceof Layout) {
 			Layout layout = (Layout)result;
 
-			if ((iconImageId != layout.getIconImageId())) {
+			if (iconImageId != layout.getIconImageId()) {
 				result = null;
 			}
 		}

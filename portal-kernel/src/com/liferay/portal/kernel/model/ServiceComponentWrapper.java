@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ServiceComponentWrapper
 	extends BaseModelWrapper<ServiceComponent>
-	implements ServiceComponent, ModelWrapper<ServiceComponent> {
+	implements ModelWrapper<ServiceComponent>, ServiceComponent {
 
 	public ServiceComponentWrapper(ServiceComponent serviceComponent) {
 		super(serviceComponent);

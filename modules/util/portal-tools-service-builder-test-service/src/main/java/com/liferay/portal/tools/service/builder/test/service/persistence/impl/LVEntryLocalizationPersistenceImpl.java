@@ -184,7 +184,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntryLocalization lvEntryLocalization : list) {
-					if ((lvEntryId != lvEntryLocalization.getLvEntryId())) {
+					if (lvEntryId != lvEntryLocalization.getLvEntryId()) {
 						list = null;
 
 						break;
@@ -946,7 +946,7 @@ public class LVEntryLocalizationPersistenceImpl
 			LVEntryLocalization lvEntryLocalization =
 				(LVEntryLocalization)result;
 
-			if ((headId != lvEntryLocalization.getHeadId())) {
+			if (headId != lvEntryLocalization.getHeadId()) {
 				result = null;
 			}
 		}

@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class RepositoryEntryWrapper
 	extends BaseModelWrapper<RepositoryEntry>
-	implements RepositoryEntry, ModelWrapper<RepositoryEntry> {
+	implements ModelWrapper<RepositoryEntry>, RepositoryEntry {
 
 	public RepositoryEntryWrapper(RepositoryEntry repositoryEntry) {
 		super(repositoryEntry);

@@ -5,6 +5,10 @@
 
 .button-holder {
 	margin: 20px 0;
+
+	.btn:not(:last-child) {
+		margin-right: 12px;
+	}
 }
 
 .form-search .input-group {

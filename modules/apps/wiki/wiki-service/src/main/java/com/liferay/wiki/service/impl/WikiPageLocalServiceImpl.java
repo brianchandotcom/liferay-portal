@@ -1906,7 +1906,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		_updatePage(
-			userId, page, 0, newTitle, content, summary, page.isMinorEdit(),
+			userId, page, newTitle, content, summary, page.isMinorEdit(),
 			page.getFormat(), page.getParentTitle(), page.getRedirectTitle(),
 			serviceContext);
 	}
@@ -2104,8 +2104,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 
 			return _updatePage(
-				userId, oldPage, 0, StringPool.BLANK, content, summary,
-				minorEdit, format, parentTitle, redirectTitle, serviceContext);
+				userId, oldPage, StringPool.BLANK, content, summary, minorEdit,
+				format, parentTitle, redirectTitle, serviceContext);
 		}
 		catch (NoSuchPageException nspe) {
 			return addPage(
@@ -3300,8 +3300,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	private WikiPage _updatePage(
-			long userId, WikiPage oldPage, long newNodeId, String newTitle,
-			String content, String summary, boolean minorEdit, String format,
+			long userId, WikiPage oldPage, String newTitle, String content,
+			String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -3322,10 +3322,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			WikiPage.class.getName(), pageId, "text/" + format, content);
 
 		long nodeId = oldPage.getNodeId();
-
-		if (newNodeId != 0) {
-			nodeId = newNodeId;
-		}
 
 		if (!format.equals(oldPage.getFormat())) {
 			_validate(nodeId, content, format);

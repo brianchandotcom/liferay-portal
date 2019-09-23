@@ -438,6 +438,12 @@
 	<td>//label[contains(@for,'enableExperimentalInterface')]/span</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENABLE_CHECKBOX_VIA_SPAN</td>
+	<td>//label[contains(.,'${key_checkboxOption}')]/input[@type='checkbox']/../span</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -22,7 +22,9 @@ const UserIcon = ({fullName = '', portraitURL = '', userId, size = 'lg'}) => {
 
 	return (
 		<ClaySticker
-			className={`flex-shrink-0 sticker-use-icon user-icon-color-${stickerColor}`}
+			className={`flex-shrink-0 sticker-use-icon ${
+				!portraitURL ? 'user-icon-color-' + stickerColor : ''
+			}`}
 			displayType="secondary"
 			shape="circle"
 			size={size}

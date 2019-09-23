@@ -40,7 +40,7 @@ const Collaborators = ({
 
 	useEffect(() => {
 		Liferay.on(
-			`sharing:share:${classNameId}:${classPK}`,
+			`sharing:changed:${classNameId}:${classPK}`,
 			updateCollaborators
 		);
 	}, [classNameId, classPK, updateCollaborators]);
@@ -50,13 +50,6 @@ const Collaborators = ({
 			dialog: {
 				destroyOnHide: true,
 				height: 470,
-				on: {
-					visibleChange: event => {
-						if (!event.newVal) {
-							updateCollaborators();
-						}
-					}
-				},
 				width: 600
 			},
 			id: `${portletNamespace}manageCollaboratorsDialog`,

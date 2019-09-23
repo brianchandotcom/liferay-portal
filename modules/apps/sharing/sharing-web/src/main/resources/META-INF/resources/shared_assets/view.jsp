@@ -98,6 +98,15 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 			<liferay-ui:search-container-column-jsp
 				path="/shared_assets/sharing_entry_action.jsp"
 			/>
+
+			<aui:script>
+				Liferay.on(
+					'sharing:changed:' + '<%= sharingEntry.getClassNameId() %>' + ':' + '<%= sharingEntry.getClassPK() %>',
+					function() {
+						Liferay.Portlet.refresh('#p_p_id' + '<%= liferayPortletResponse.getNamespace() %>');
+					}
+				);
+			</aui:script>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

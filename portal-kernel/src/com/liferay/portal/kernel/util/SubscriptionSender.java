@@ -1090,6 +1090,7 @@ public class SubscriptionSender implements Serializable {
 	private final Map<String, EscapableObject<String>> _context =
 		new HashMap<>();
 	private String _contextCreatorUserPrefix;
+	private final Set<String> _delayedSentEmailAddresses = new HashSet<>();
 	private String _entryTitle;
 	private String _entryURL;
 	private final Map<Hook.Event<?>, List<Hook<?>>> _hooks = new HashMap<>();
@@ -1104,6 +1105,5 @@ public class SubscriptionSender implements Serializable {
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();
-	private final Set<String> _delayedSentEmailAddresses = new HashSet<>();
 
 }

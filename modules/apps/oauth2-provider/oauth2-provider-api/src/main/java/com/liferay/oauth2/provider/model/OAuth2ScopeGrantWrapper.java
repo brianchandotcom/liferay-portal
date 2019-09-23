@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class OAuth2ScopeGrantWrapper
 	extends BaseModelWrapper<OAuth2ScopeGrant>
-	implements OAuth2ScopeGrant, ModelWrapper<OAuth2ScopeGrant> {
+	implements ModelWrapper<OAuth2ScopeGrant>, OAuth2ScopeGrant {
 
 	public OAuth2ScopeGrantWrapper(OAuth2ScopeGrant oAuth2ScopeGrant) {
 		super(oAuth2ScopeGrant);

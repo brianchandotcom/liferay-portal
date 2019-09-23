@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SAPEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements SAPEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SAPEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

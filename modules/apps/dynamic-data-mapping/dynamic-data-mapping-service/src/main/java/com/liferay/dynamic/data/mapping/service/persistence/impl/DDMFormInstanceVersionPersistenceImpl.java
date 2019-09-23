@@ -197,8 +197,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMFormInstanceVersion ddmFormInstanceVersion : list) {
-					if ((formInstanceId !=
-							ddmFormInstanceVersion.getFormInstanceId())) {
+					if (formInstanceId !=
+							ddmFormInstanceVersion.getFormInstanceId()) {
 
 						list = null;
 

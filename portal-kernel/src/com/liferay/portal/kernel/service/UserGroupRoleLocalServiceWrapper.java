@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link UserGroupRoleLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class UserGroupRoleLocalServiceWrapper
-	implements UserGroupRoleLocalService,
-			   ServiceWrapper<UserGroupRoleLocalService> {
+	implements ServiceWrapper<UserGroupRoleLocalService>,
+			   UserGroupRoleLocalService {
 
 	public UserGroupRoleLocalServiceWrapper(
 		UserGroupRoleLocalService userGroupRoleLocalService) {

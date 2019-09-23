@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MDRActionServiceBaseImpl
 	extends BaseServiceImpl
-	implements MDRActionService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MDRActionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

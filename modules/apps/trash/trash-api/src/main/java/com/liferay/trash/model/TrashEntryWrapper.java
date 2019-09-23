@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class TrashEntryWrapper
 	extends BaseModelWrapper<TrashEntry>
-	implements TrashEntry, ModelWrapper<TrashEntry> {
+	implements ModelWrapper<TrashEntry>, TrashEntry {
 
 	public TrashEntryWrapper(TrashEntry trashEntry) {
 		super(trashEntry);

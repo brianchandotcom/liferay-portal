@@ -39,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  * @generated
  */
-@Deprecated
 @AccessControlled
+@Deprecated
 @JSONWebService
 @ProviderType
 @Transactional(

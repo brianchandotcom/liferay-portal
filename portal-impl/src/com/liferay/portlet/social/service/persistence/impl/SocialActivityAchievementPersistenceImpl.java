@@ -180,7 +180,7 @@ public class SocialActivityAchievementPersistenceImpl
 				for (SocialActivityAchievement socialActivityAchievement :
 						list) {
 
-					if ((groupId != socialActivityAchievement.getGroupId())) {
+					if (groupId != socialActivityAchievement.getGroupId()) {
 						list = null;
 
 						break;

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class RecentLayoutBranchWrapper
 	extends BaseModelWrapper<RecentLayoutBranch>
-	implements RecentLayoutBranch, ModelWrapper<RecentLayoutBranch> {
+	implements ModelWrapper<RecentLayoutBranch>, RecentLayoutBranch {
 
 	public RecentLayoutBranchWrapper(RecentLayoutBranch recentLayoutBranch) {
 		super(recentLayoutBranch);

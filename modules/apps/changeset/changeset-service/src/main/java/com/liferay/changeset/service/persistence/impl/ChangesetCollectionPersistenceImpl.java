@@ -192,7 +192,7 @@ public class ChangesetCollectionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
-					if ((groupId != changesetCollection.getGroupId())) {
+					if (groupId != changesetCollection.getGroupId()) {
 						list = null;
 
 						break;
@@ -715,7 +715,7 @@ public class ChangesetCollectionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ChangesetCollection changesetCollection : list) {
-					if ((companyId != changesetCollection.getCompanyId())) {
+					if (companyId != changesetCollection.getCompanyId()) {
 						list = null;
 
 						break;

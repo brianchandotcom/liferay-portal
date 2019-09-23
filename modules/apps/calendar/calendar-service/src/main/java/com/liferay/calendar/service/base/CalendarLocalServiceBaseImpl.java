@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class CalendarLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CalendarLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, CalendarLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

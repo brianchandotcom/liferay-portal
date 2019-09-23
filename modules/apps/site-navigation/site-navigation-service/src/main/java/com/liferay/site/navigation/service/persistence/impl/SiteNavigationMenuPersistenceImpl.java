@@ -1615,7 +1615,7 @@ public class SiteNavigationMenuPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SiteNavigationMenu siteNavigationMenu : list) {
-					if ((groupId != siteNavigationMenu.getGroupId())) {
+					if (groupId != siteNavigationMenu.getGroupId()) {
 						list = null;
 
 						break;

@@ -50,7 +50,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class TeamServiceBaseImpl
-	extends BaseServiceImpl implements TeamService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, TeamService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

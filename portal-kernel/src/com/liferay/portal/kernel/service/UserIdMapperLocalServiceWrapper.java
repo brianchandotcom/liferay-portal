@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link UserIdMapperLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class UserIdMapperLocalServiceWrapper
-	implements UserIdMapperLocalService,
-			   ServiceWrapper<UserIdMapperLocalService> {
+	implements ServiceWrapper<UserIdMapperLocalService>,
+			   UserIdMapperLocalService {
 
 	public UserIdMapperLocalServiceWrapper(
 		UserIdMapperLocalService userIdMapperLocalService) {

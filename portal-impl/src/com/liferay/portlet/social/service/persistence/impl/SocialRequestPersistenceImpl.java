@@ -1594,7 +1594,7 @@ public class SocialRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
-					if ((companyId != socialRequest.getCompanyId())) {
+					if (companyId != socialRequest.getCompanyId()) {
 						list = null;
 
 						break;
@@ -2106,7 +2106,7 @@ public class SocialRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
-					if ((userId != socialRequest.getUserId())) {
+					if (userId != socialRequest.getUserId()) {
 						list = null;
 
 						break;
@@ -2624,7 +2624,7 @@ public class SocialRequestPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRequest socialRequest : list) {
-					if ((receiverUserId != socialRequest.getReceiverUserId())) {
+					if (receiverUserId != socialRequest.getReceiverUserId()) {
 						list = null;
 
 						break;

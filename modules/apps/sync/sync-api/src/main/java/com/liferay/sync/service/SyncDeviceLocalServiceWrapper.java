@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SyncDeviceLocalServiceWrapper
-	implements SyncDeviceLocalService, ServiceWrapper<SyncDeviceLocalService> {
+	implements ServiceWrapper<SyncDeviceLocalService>, SyncDeviceLocalService {
 
 	public SyncDeviceLocalServiceWrapper(
 		SyncDeviceLocalService syncDeviceLocalService) {

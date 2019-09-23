@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDLRecordSetLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDLRecordSetLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DDLRecordSetLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

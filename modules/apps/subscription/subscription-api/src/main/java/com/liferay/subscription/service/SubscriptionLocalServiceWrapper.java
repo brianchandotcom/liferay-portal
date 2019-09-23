@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SubscriptionLocalServiceWrapper
-	implements SubscriptionLocalService,
-			   ServiceWrapper<SubscriptionLocalService> {
+	implements ServiceWrapper<SubscriptionLocalService>,
+			   SubscriptionLocalService {
 
 	public SubscriptionLocalServiceWrapper(
 		SubscriptionLocalService subscriptionLocalService) {

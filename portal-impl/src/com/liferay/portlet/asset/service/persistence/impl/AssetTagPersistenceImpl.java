@@ -1592,7 +1592,7 @@ public class AssetTagPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetTag assetTag : list) {
-					if ((groupId != assetTag.getGroupId())) {
+					if (groupId != assetTag.getGroupId()) {
 						list = null;
 
 						break;
@@ -2902,7 +2902,7 @@ public class AssetTagPersistenceImpl
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				for (String name : names) {
-					if (name != null && !name.isEmpty()) {
+					if ((name != null) && !name.isEmpty()) {
 						qPos.add(name);
 					}
 				}
@@ -3088,7 +3088,7 @@ public class AssetTagPersistenceImpl
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				for (String name : names) {
-					if (name != null && !name.isEmpty()) {
+					if ((name != null) && !name.isEmpty()) {
 						qPos.add(name);
 					}
 				}

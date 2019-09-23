@@ -1610,7 +1610,7 @@ public class BookmarksEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BookmarksEntry bookmarksEntry : list) {
-					if ((companyId != bookmarksEntry.getCompanyId())) {
+					if (companyId != bookmarksEntry.getCompanyId()) {
 						list = null;
 
 						break;

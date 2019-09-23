@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ChangesetEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ChangesetEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, ChangesetEntryLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

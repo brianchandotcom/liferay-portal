@@ -183,7 +183,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
-					if ((userGroupId != userGroupGroupRole.getUserGroupId())) {
+					if (userGroupId != userGroupGroupRole.getUserGroupId()) {
 						list = null;
 
 						break;
@@ -707,7 +707,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
-					if ((groupId != userGroupGroupRole.getGroupId())) {
+					if (groupId != userGroupGroupRole.getGroupId()) {
 						list = null;
 
 						break;
@@ -1225,7 +1225,7 @@ public class UserGroupGroupRolePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroupGroupRole userGroupGroupRole : list) {
-					if ((roleId != userGroupGroupRole.getRoleId())) {
+					if (roleId != userGroupGroupRole.getRoleId()) {
 						list = null;
 
 						break;

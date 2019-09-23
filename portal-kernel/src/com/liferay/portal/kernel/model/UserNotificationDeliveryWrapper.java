@@ -30,8 +30,8 @@ import java.util.Map;
  */
 public class UserNotificationDeliveryWrapper
 	extends BaseModelWrapper<UserNotificationDelivery>
-	implements UserNotificationDelivery,
-			   ModelWrapper<UserNotificationDelivery> {
+	implements ModelWrapper<UserNotificationDelivery>,
+			   UserNotificationDelivery {
 
 	public UserNotificationDeliveryWrapper(
 		UserNotificationDelivery userNotificationDelivery) {

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMStructureVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMStructureVersionService, AopService, IdentifiableOSGiService {
+	implements AopService, DDMStructureVersionService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

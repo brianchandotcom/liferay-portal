@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FragmentEntryLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements FragmentEntryLinkLocalService, AopService,
+	implements AopService, FragmentEntryLinkLocalService,
 			   IdentifiableOSGiService {
 
 	/**

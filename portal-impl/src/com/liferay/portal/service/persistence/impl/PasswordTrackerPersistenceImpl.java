@@ -177,7 +177,7 @@ public class PasswordTrackerPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PasswordTracker passwordTracker : list) {
-					if ((userId != passwordTracker.getUserId())) {
+					if (userId != passwordTracker.getUserId()) {
 						list = null;
 
 						break;

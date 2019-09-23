@@ -62,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class ResourceActionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ResourceActionLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, ResourceActionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -1590,7 +1590,7 @@ public class GroupPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
-					if ((companyId != group.getCompanyId())) {
+					if (companyId != group.getCompanyId()) {
 						list = null;
 
 						break;
@@ -2070,7 +2070,7 @@ public class GroupPersistenceImpl
 		if (result instanceof Group) {
 			Group group = (Group)result;
 
-			if ((liveGroupId != group.getLiveGroupId())) {
+			if (liveGroupId != group.getLiveGroupId()) {
 				result = null;
 			}
 		}

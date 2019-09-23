@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DLSyncEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLSyncEventLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DLSyncEventLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

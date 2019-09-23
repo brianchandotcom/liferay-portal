@@ -186,7 +186,7 @@ public class LayoutSetBranchPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutSetBranch layoutSetBranch : list) {
-					if ((groupId != layoutSetBranch.getGroupId())) {
+					if (groupId != layoutSetBranch.getGroupId()) {
 						list = null;
 
 						break;

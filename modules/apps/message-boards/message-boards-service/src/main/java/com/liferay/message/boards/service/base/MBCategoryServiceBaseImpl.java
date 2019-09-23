@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class MBCategoryServiceBaseImpl
 	extends BaseServiceImpl
-	implements MBCategoryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, MBCategoryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

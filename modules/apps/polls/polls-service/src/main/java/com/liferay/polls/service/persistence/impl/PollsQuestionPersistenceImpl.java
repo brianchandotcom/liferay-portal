@@ -1603,7 +1603,7 @@ public class PollsQuestionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PollsQuestion pollsQuestion : list) {
-					if ((groupId != pollsQuestion.getGroupId())) {
+					if (groupId != pollsQuestion.getGroupId()) {
 						list = null;
 
 						break;

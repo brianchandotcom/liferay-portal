@@ -2198,7 +2198,7 @@ public class UserGroupPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserGroup userGroup : list) {
-					if ((companyId != userGroup.getCompanyId())) {
+					if (companyId != userGroup.getCompanyId()) {
 						list = null;
 
 						break;

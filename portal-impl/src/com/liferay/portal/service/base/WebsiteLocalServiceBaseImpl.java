@@ -71,7 +71,7 @@ import javax.sql.DataSource;
  */
 public abstract class WebsiteLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WebsiteLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, WebsiteLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -192,7 +192,7 @@ public class CTEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId())) {
+					if (ctCollectionId != ctEntry.getCtCollectionId()) {
 						list = null;
 
 						break;

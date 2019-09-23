@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class CTPreferencesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CTPreferencesLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, CTPreferencesLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

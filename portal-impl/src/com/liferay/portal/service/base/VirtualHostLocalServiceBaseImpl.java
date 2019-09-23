@@ -63,7 +63,7 @@ import javax.sql.DataSource;
  */
 public abstract class VirtualHostLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements VirtualHostLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, VirtualHostLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

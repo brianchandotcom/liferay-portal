@@ -198,8 +198,8 @@ public class SegmentsExperimentRelPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SegmentsExperimentRel segmentsExperimentRel : list) {
-					if ((segmentsExperimentId !=
-							segmentsExperimentRel.getSegmentsExperimentId())) {
+					if (segmentsExperimentId !=
+							segmentsExperimentRel.getSegmentsExperimentId()) {
 
 						list = null;
 

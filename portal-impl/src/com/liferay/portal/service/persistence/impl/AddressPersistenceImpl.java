@@ -1328,7 +1328,7 @@ public class AddressPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Address address : list) {
-					if ((companyId != address.getCompanyId())) {
+					if (companyId != address.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1836,7 +1836,7 @@ public class AddressPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Address address : list) {
-					if ((userId != address.getUserId())) {
+					if (userId != address.getUserId()) {
 						list = null;
 
 						break;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class StagingLocalServiceWrapper
-	implements StagingLocalService, ServiceWrapper<StagingLocalService> {
+	implements ServiceWrapper<StagingLocalService>, StagingLocalService {
 
 	public StagingLocalServiceWrapper(StagingLocalService stagingLocalService) {
 		_stagingLocalService = stagingLocalService;

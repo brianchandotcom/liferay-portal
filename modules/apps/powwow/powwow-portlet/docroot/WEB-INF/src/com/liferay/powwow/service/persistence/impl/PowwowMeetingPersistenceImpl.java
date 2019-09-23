@@ -180,7 +180,7 @@ public class PowwowMeetingPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
-					if ((groupId != powwowMeeting.getGroupId())) {
+					if (groupId != powwowMeeting.getGroupId()) {
 						list = null;
 
 						break;
@@ -1075,7 +1075,7 @@ public class PowwowMeetingPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
-					if ((powwowServerId != powwowMeeting.getPowwowServerId())) {
+					if (powwowServerId != powwowMeeting.getPowwowServerId()) {
 						list = null;
 
 						break;
@@ -1594,7 +1594,7 @@ public class PowwowMeetingPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PowwowMeeting powwowMeeting : list) {
-					if ((status != powwowMeeting.getStatus())) {
+					if (status != powwowMeeting.getStatus()) {
 						list = null;
 
 						break;

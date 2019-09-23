@@ -115,8 +115,7 @@ public class ThemeServiceHttp {
 	private static final Class<?>[] _getThemesParameterTypes0 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getWARThemesParameterTypes1 = new Class[] {
-		
-	};
+	private static final Class<?>[] _getWARThemesParameterTypes1 =
+		new Class[] {};
 
 }

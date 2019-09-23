@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class PowwowServerWrapper
 	extends BaseModelWrapper<PowwowServer>
-	implements PowwowServer, ModelWrapper<PowwowServer> {
+	implements ModelWrapper<PowwowServer>, PowwowServer {
 
 	public PowwowServerWrapper(PowwowServer powwowServer) {
 		super(powwowServer);

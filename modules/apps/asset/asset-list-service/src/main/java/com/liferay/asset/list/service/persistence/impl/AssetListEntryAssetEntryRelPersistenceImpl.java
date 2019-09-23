@@ -1643,9 +1643,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
 						list) {
 
-					if ((assetListEntryId !=
-							assetListEntryAssetEntryRel.
-								getAssetListEntryId())) {
+					if (assetListEntryId !=
+							assetListEntryAssetEntryRel.getAssetListEntryId()) {
 
 						list = null;
 

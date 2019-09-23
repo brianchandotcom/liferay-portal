@@ -1600,7 +1600,7 @@ public class DLFileShortcutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
-					if ((companyId != dlFileShortcut.getCompanyId())) {
+					if (companyId != dlFileShortcut.getCompanyId()) {
 						list = null;
 
 						break;
@@ -2118,7 +2118,7 @@ public class DLFileShortcutPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
-					if ((toFileEntryId != dlFileShortcut.getToFileEntryId())) {
+					if (toFileEntryId != dlFileShortcut.getToFileEntryId()) {
 						list = null;
 
 						break;

@@ -189,7 +189,7 @@ public class DDLRecordVersionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecordVersion ddlRecordVersion : list) {
-					if ((recordId != ddlRecordVersion.getRecordId())) {
+					if (recordId != ddlRecordVersion.getRecordId()) {
 						list = null;
 
 						break;

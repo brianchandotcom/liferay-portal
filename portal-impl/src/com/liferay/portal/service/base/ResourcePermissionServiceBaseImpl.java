@@ -46,7 +46,7 @@ import javax.sql.DataSource;
  */
 public abstract class ResourcePermissionServiceBaseImpl
 	extends BaseServiceImpl
-	implements ResourcePermissionService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, ResourcePermissionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

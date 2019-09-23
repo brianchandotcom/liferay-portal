@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ScreensDDMStructureVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements ScreensDDMStructureVersionService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   ScreensDDMStructureVersionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

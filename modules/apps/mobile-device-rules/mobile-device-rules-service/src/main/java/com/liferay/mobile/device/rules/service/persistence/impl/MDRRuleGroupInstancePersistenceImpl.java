@@ -1621,7 +1621,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-					if ((groupId != mdrRuleGroupInstance.getGroupId())) {
+					if (groupId != mdrRuleGroupInstance.getGroupId()) {
 						list = null;
 
 						break;
@@ -2529,9 +2529,7 @@ public class MDRRuleGroupInstancePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRuleGroupInstance mdrRuleGroupInstance : list) {
-					if ((ruleGroupId !=
-							mdrRuleGroupInstance.getRuleGroupId())) {
-
+					if (ruleGroupId != mdrRuleGroupInstance.getRuleGroupId()) {
 						list = null;
 
 						break;

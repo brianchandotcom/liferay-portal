@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link WebsiteService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class WebsiteServiceWrapper
-	implements WebsiteService, ServiceWrapper<WebsiteService> {
+	implements ServiceWrapper<WebsiteService>, WebsiteService {
 
 	public WebsiteServiceWrapper(WebsiteService websiteService) {
 		_websiteService = websiteService;

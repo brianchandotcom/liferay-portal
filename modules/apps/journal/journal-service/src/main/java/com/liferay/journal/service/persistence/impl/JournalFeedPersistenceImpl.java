@@ -1597,7 +1597,7 @@ public class JournalFeedPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFeed journalFeed : list) {
-					if ((groupId != journalFeed.getGroupId())) {
+					if (groupId != journalFeed.getGroupId()) {
 						list = null;
 
 						break;

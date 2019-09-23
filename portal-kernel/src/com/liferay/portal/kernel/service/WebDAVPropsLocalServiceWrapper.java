@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link WebDAVPropsLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class WebDAVPropsLocalServiceWrapper
-	implements WebDAVPropsLocalService,
-			   ServiceWrapper<WebDAVPropsLocalService> {
+	implements ServiceWrapper<WebDAVPropsLocalService>,
+			   WebDAVPropsLocalService {
 
 	public WebDAVPropsLocalServiceWrapper(
 		WebDAVPropsLocalService webDAVPropsLocalService) {

@@ -183,7 +183,7 @@ public class UserTrackerPathPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserTrackerPath userTrackerPath : list) {
-					if ((userTrackerId != userTrackerPath.getUserTrackerId())) {
+					if (userTrackerId != userTrackerPath.getUserTrackerId()) {
 						list = null;
 
 						break;

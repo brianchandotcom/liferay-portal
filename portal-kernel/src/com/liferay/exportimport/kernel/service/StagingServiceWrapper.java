@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class StagingServiceWrapper
-	implements StagingService, ServiceWrapper<StagingService> {
+	implements ServiceWrapper<StagingService>, StagingService {
 
 	public StagingServiceWrapper(StagingService stagingService) {
 		_stagingService = stagingService;

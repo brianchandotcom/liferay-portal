@@ -31,7 +31,7 @@ import java.util.Map;
  * @generated
  */
 public class UserWrapper
-	extends BaseModelWrapper<User> implements User, ModelWrapper<User> {
+	extends BaseModelWrapper<User> implements ModelWrapper<User>, User {
 
 	public UserWrapper(User user) {
 		super(user);

@@ -168,7 +168,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
 				(DLOpenerFileEntryReference)result;
 
-			if ((fileEntryId != dlOpenerFileEntryReference.getFileEntryId())) {
+			if (fileEntryId != dlOpenerFileEntryReference.getFileEntryId()) {
 				result = null;
 			}
 		}

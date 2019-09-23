@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class OAuth2AuthorizationWrapper
 	extends BaseModelWrapper<OAuth2Authorization>
-	implements OAuth2Authorization, ModelWrapper<OAuth2Authorization> {
+	implements ModelWrapper<OAuth2Authorization>, OAuth2Authorization {
 
 	public OAuth2AuthorizationWrapper(OAuth2Authorization oAuth2Authorization) {
 		super(oAuth2Authorization);

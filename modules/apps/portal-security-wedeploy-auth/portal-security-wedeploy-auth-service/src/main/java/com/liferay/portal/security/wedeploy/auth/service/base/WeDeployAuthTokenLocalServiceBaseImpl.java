@@ -62,8 +62,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WeDeployAuthTokenLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WeDeployAuthTokenLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   WeDeployAuthTokenLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

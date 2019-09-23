@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link VirtualHostLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class VirtualHostLocalServiceWrapper
-	implements VirtualHostLocalService,
-			   ServiceWrapper<VirtualHostLocalService> {
+	implements ServiceWrapper<VirtualHostLocalService>,
+			   VirtualHostLocalService {
 
 	public VirtualHostLocalServiceWrapper(
 		VirtualHostLocalService virtualHostLocalService) {

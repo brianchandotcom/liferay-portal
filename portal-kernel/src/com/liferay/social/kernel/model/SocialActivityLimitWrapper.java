@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class SocialActivityLimitWrapper
 	extends BaseModelWrapper<SocialActivityLimit>
-	implements SocialActivityLimit, ModelWrapper<SocialActivityLimit> {
+	implements ModelWrapper<SocialActivityLimit>, SocialActivityLimit {
 
 	public SocialActivityLimitWrapper(SocialActivityLimit socialActivityLimit) {
 		super(socialActivityLimit);

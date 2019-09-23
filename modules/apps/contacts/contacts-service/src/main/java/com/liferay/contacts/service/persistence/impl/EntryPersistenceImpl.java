@@ -188,7 +188,7 @@ public class EntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
-					if ((userId != entry.getUserId())) {
+					if (userId != entry.getUserId()) {
 						list = null;
 
 						break;

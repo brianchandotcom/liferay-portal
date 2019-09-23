@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SegmentsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SegmentsEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SegmentsEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

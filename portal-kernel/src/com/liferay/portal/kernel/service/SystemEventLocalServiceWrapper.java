@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link SystemEventLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class SystemEventLocalServiceWrapper
-	implements SystemEventLocalService,
-			   ServiceWrapper<SystemEventLocalService> {
+	implements ServiceWrapper<SystemEventLocalService>,
+			   SystemEventLocalService {
 
 	public SystemEventLocalServiceWrapper(
 		SystemEventLocalService systemEventLocalService) {

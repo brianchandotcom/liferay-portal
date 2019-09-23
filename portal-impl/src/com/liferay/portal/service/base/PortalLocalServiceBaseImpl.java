@@ -42,7 +42,7 @@ import javax.sql.DataSource;
  */
 public abstract class PortalLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PortalLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PortalLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

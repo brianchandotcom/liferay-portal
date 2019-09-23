@@ -63,7 +63,7 @@ import javax.sql.DataSource;
  */
 public abstract class PasswordTrackerLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PasswordTrackerLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PasswordTrackerLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

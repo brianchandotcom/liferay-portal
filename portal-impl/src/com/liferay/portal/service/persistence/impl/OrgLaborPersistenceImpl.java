@@ -178,7 +178,7 @@ public class OrgLaborPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OrgLabor orgLabor : list) {
-					if ((organizationId != orgLabor.getOrganizationId())) {
+					if (organizationId != orgLabor.getOrganizationId()) {
 						list = null;
 
 						break;

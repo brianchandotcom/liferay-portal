@@ -1601,7 +1601,7 @@ public class AppBuilderAppPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderApp appBuilderApp : list) {
-					if ((groupId != appBuilderApp.getGroupId())) {
+					if (groupId != appBuilderApp.getGroupId()) {
 						list = null;
 
 						break;

@@ -191,7 +191,7 @@ public class CTPreferencesPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CTPreferences ctPreferences : list) {
-					if ((ctCollectionId != ctPreferences.getCtCollectionId())) {
+					if (ctCollectionId != ctPreferences.getCtCollectionId()) {
 						list = null;
 
 						break;

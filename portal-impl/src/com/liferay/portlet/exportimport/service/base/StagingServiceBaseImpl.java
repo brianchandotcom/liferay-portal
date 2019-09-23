@@ -53,7 +53,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class StagingServiceBaseImpl
-	extends BaseServiceImpl implements StagingService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, StagingService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

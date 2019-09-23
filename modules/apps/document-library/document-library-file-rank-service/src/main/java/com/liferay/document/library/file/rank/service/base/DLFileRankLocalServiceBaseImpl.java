@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DLFileRankLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DLFileRankLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DLFileRankLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

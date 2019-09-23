@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.social.service.http;
 
-
 /**
  * Provides the SOAP utility for the
  * <code>com.liferay.social.kernel.service.SocialRequestServiceUtil</code> service

@@ -1661,9 +1661,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				for (LayoutPageTemplateStructureRel
 						layoutPageTemplateStructureRel : list) {
 
-					if ((layoutPageTemplateStructureId !=
+					if (layoutPageTemplateStructureId !=
 							layoutPageTemplateStructureRel.
-								getLayoutPageTemplateStructureId())) {
+								getLayoutPageTemplateStructureId()) {
 
 						list = null;
 
@@ -2226,9 +2226,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				for (LayoutPageTemplateStructureRel
 						layoutPageTemplateStructureRel : list) {
 
-					if ((segmentsExperienceId !=
+					if (segmentsExperienceId !=
 							layoutPageTemplateStructureRel.
-								getSegmentsExperienceId())) {
+								getSegmentsExperienceId()) {
 
 						list = null;
 

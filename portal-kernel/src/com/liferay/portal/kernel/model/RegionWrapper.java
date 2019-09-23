@@ -29,7 +29,7 @@ import java.util.Map;
  * @generated
  */
 public class RegionWrapper
-	extends BaseModelWrapper<Region> implements Region, ModelWrapper<Region> {
+	extends BaseModelWrapper<Region> implements ModelWrapper<Region>, Region {
 
 	public RegionWrapper(Region region) {
 		super(region);

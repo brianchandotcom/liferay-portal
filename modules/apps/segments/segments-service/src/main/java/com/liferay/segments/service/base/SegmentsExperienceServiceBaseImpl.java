@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SegmentsExperienceServiceBaseImpl
 	extends BaseServiceImpl
-	implements SegmentsExperienceService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SegmentsExperienceService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

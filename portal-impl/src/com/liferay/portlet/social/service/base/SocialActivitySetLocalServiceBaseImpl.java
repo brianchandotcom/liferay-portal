@@ -62,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class SocialActivitySetLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SocialActivitySetLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SocialActivitySetLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

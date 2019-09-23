@@ -2211,7 +2211,7 @@ public class PasswordPolicyPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PasswordPolicy passwordPolicy : list) {
-					if ((companyId != passwordPolicy.getCompanyId())) {
+					if (companyId != passwordPolicy.getCompanyId()) {
 						list = null;
 
 						break;

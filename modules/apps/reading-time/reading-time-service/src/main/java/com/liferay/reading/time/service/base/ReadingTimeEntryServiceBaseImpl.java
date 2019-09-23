@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ReadingTimeEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements ReadingTimeEntryService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, ReadingTimeEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

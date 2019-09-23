@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class WebsiteWrapper
 	extends BaseModelWrapper<Website>
-	implements Website, ModelWrapper<Website> {
+	implements ModelWrapper<Website>, Website {
 
 	public WebsiteWrapper(Website website) {
 		super(website);

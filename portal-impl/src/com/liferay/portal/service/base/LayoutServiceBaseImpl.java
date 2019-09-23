@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class LayoutServiceBaseImpl
-	extends BaseServiceImpl implements LayoutService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, LayoutService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

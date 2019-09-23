@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class TrashEntryLocalServiceWrapper
-	implements TrashEntryLocalService, ServiceWrapper<TrashEntryLocalService> {
+	implements ServiceWrapper<TrashEntryLocalService>, TrashEntryLocalService {
 
 	public TrashEntryLocalServiceWrapper(
 		TrashEntryLocalService trashEntryLocalService) {

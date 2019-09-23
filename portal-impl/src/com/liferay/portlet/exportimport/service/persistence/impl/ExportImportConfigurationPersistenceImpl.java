@@ -185,7 +185,7 @@ public class ExportImportConfigurationPersistenceImpl
 				for (ExportImportConfiguration exportImportConfiguration :
 						list) {
 
-					if ((groupId != exportImportConfiguration.getGroupId())) {
+					if (groupId != exportImportConfiguration.getGroupId()) {
 						list = null;
 
 						break;
@@ -714,9 +714,7 @@ public class ExportImportConfigurationPersistenceImpl
 				for (ExportImportConfiguration exportImportConfiguration :
 						list) {
 
-					if ((companyId !=
-							exportImportConfiguration.getCompanyId())) {
-
+					if (companyId != exportImportConfiguration.getCompanyId()) {
 						list = null;
 
 						break;

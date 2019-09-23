@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class WeDeployAuthAppWrapper
 	extends BaseModelWrapper<WeDeployAuthApp>
-	implements WeDeployAuthApp, ModelWrapper<WeDeployAuthApp> {
+	implements ModelWrapper<WeDeployAuthApp>, WeDeployAuthApp {
 
 	public WeDeployAuthAppWrapper(WeDeployAuthApp weDeployAuthApp) {
 		super(weDeployAuthApp);

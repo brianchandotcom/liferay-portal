@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class ReleaseWrapper
 	extends BaseModelWrapper<Release>
-	implements Release, ModelWrapper<Release> {
+	implements ModelWrapper<Release>, Release {
 
 	public ReleaseWrapper(Release release) {
 		super(release);

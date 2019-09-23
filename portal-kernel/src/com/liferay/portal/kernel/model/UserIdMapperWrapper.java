@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class UserIdMapperWrapper
 	extends BaseModelWrapper<UserIdMapper>
-	implements UserIdMapper, ModelWrapper<UserIdMapper> {
+	implements ModelWrapper<UserIdMapper>, UserIdMapper {
 
 	public UserIdMapperWrapper(UserIdMapper userIdMapper) {
 		super(userIdMapper);

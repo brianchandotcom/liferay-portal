@@ -1591,7 +1591,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((groupId != dlFileEntry.getGroupId())) {
+					if (groupId != dlFileEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -2483,7 +2483,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((companyId != dlFileEntry.getCompanyId())) {
+					if (companyId != dlFileEntry.getCompanyId()) {
 						list = null;
 
 						break;
@@ -3000,7 +3000,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((repositoryId != dlFileEntry.getRepositoryId())) {
+					if (repositoryId != dlFileEntry.getRepositoryId()) {
 						list = null;
 
 						break;
@@ -4073,7 +4073,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((fileEntryTypeId != dlFileEntry.getFileEntryTypeId())) {
+					if (fileEntryTypeId != dlFileEntry.getFileEntryTypeId()) {
 						list = null;
 
 						break;
@@ -4597,7 +4597,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((smallImageId != dlFileEntry.getSmallImageId())) {
+					if (smallImageId != dlFileEntry.getSmallImageId()) {
 						list = null;
 
 						break;
@@ -5114,7 +5114,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((largeImageId != dlFileEntry.getLargeImageId())) {
+					if (largeImageId != dlFileEntry.getLargeImageId()) {
 						list = null;
 
 						break;
@@ -5631,7 +5631,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((custom1ImageId != dlFileEntry.getCustom1ImageId())) {
+					if (custom1ImageId != dlFileEntry.getCustom1ImageId()) {
 						list = null;
 
 						break;
@@ -6151,7 +6151,7 @@ public class DLFileEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if ((custom2ImageId != dlFileEntry.getCustom2ImageId())) {
+					if (custom2ImageId != dlFileEntry.getCustom2ImageId()) {
 						list = null;
 
 						break;

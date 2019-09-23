@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ERAssetVocabularyLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ERAssetVocabularyLocalService, AopService,
+	implements AopService, ERAssetVocabularyLocalService,
 			   IdentifiableOSGiService {
 
 	/**

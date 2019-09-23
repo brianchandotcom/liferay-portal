@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link UserTrackerPathLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class UserTrackerPathLocalServiceWrapper
-	implements UserTrackerPathLocalService,
-			   ServiceWrapper<UserTrackerPathLocalService> {
+	implements ServiceWrapper<UserTrackerPathLocalService>,
+			   UserTrackerPathLocalService {
 
 	public UserTrackerPathLocalServiceWrapper(
 		UserTrackerPathLocalService userTrackerPathLocalService) {

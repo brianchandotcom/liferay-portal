@@ -1608,7 +1608,7 @@ public class DLFileEntryTypePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryType dlFileEntryType : list) {
-					if ((groupId != dlFileEntryType.getGroupId())) {
+					if (groupId != dlFileEntryType.getGroupId()) {
 						list = null;
 
 						break;

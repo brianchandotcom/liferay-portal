@@ -1349,7 +1349,7 @@ public class DLFileEntryMetadataPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryMetadata dlFileEntryMetadata : list) {
-					if ((fileEntryId != dlFileEntryMetadata.getFileEntryId())) {
+					if (fileEntryId != dlFileEntryMetadata.getFileEntryId()) {
 						list = null;
 
 						break;
@@ -1876,8 +1876,8 @@ public class DLFileEntryMetadataPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryMetadata dlFileEntryMetadata : list) {
-					if ((fileVersionId !=
-							dlFileEntryMetadata.getFileVersionId())) {
+					if (fileVersionId !=
+							dlFileEntryMetadata.getFileVersionId()) {
 
 						list = null;
 

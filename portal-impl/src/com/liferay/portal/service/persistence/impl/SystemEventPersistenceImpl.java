@@ -177,7 +177,7 @@ public class SystemEventPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SystemEvent systemEvent : list) {
-					if ((groupId != systemEvent.getGroupId())) {
+					if (groupId != systemEvent.getGroupId()) {
 						list = null;
 
 						break;

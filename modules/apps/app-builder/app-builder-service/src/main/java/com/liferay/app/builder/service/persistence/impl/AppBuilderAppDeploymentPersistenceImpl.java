@@ -197,8 +197,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AppBuilderAppDeployment appBuilderAppDeployment : list) {
-					if ((appBuilderAppId !=
-							appBuilderAppDeployment.getAppBuilderAppId())) {
+					if (appBuilderAppId !=
+							appBuilderAppDeployment.getAppBuilderAppId()) {
 
 						list = null;
 

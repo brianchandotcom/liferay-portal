@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SyncDLFileVersionDiffWrapper
 	extends BaseModelWrapper<SyncDLFileVersionDiff>
-	implements SyncDLFileVersionDiff, ModelWrapper<SyncDLFileVersionDiff> {
+	implements ModelWrapper<SyncDLFileVersionDiff>, SyncDLFileVersionDiff {
 
 	public SyncDLFileVersionDiffWrapper(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {

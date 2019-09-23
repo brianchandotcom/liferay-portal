@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMDataProviderInstanceServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMDataProviderInstanceService, AopService,
+	implements AopService, DDMDataProviderInstanceService,
 			   IdentifiableOSGiService {
 
 	/**

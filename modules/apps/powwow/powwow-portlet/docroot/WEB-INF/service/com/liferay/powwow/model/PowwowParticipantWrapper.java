@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class PowwowParticipantWrapper
 	extends BaseModelWrapper<PowwowParticipant>
-	implements PowwowParticipant, ModelWrapper<PowwowParticipant> {
+	implements ModelWrapper<PowwowParticipant>, PowwowParticipant {
 
 	public PowwowParticipantWrapper(PowwowParticipant powwowParticipant) {
 		super(powwowParticipant);

@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class ViewCountEntryWrapper
 	extends BaseModelWrapper<ViewCountEntry>
-	implements ViewCountEntry, ModelWrapper<ViewCountEntry> {
+	implements ModelWrapper<ViewCountEntry>, ViewCountEntry {
 
 	public ViewCountEntryWrapper(ViewCountEntry viewCountEntry) {
 		super(viewCountEntry);

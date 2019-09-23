@@ -287,6 +287,12 @@ public class FragmentCollectionPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<FragmentCollection> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"FragmentCollection", "mvccVersion", true, "uuid", true,

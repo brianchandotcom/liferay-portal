@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class PortalPreferencesWrapper
 	extends BaseModelWrapper<PortalPreferences>
-	implements PortalPreferences, ModelWrapper<PortalPreferences> {
+	implements ModelWrapper<PortalPreferences>, PortalPreferences {
 
 	public PortalPreferencesWrapper(PortalPreferences portalPreferences) {
 		super(portalPreferences);

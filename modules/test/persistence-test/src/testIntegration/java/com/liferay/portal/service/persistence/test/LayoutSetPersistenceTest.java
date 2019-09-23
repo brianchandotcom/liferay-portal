@@ -206,20 +206,20 @@ public class LayoutSetPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P() throws Exception {
+		_persistence.countByG_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByC_L() throws Exception {
 		_persistence.countByC_L(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_L(0L, "null");
 
 		_persistence.countByC_L(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

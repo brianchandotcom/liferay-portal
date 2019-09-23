@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BatchEngineTaskLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements BatchEngineTaskLocalService, AopService,
+	implements AopService, BatchEngineTaskLocalService,
 			   IdentifiableOSGiService {
 
 	/**

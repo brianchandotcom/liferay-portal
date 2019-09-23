@@ -187,8 +187,8 @@ public class LayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
-					if ((layoutSetBranchId !=
-							layoutRevision.getLayoutSetBranchId())) {
+					if (layoutSetBranchId !=
+							layoutRevision.getLayoutSetBranchId()) {
 
 						list = null;
 
@@ -709,7 +709,7 @@ public class LayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
-					if ((plid != layoutRevision.getPlid())) {
+					if (plid != layoutRevision.getPlid()) {
 						list = null;
 
 						break;
@@ -1219,7 +1219,7 @@ public class LayoutRevisionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutRevision layoutRevision : list) {
-					if ((status != layoutRevision.getStatus())) {
+					if (status != layoutRevision.getStatus()) {
 						list = null;
 
 						break;

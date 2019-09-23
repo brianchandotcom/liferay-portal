@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SharingEntryLocalServiceWrapper
-	implements SharingEntryLocalService,
-			   ServiceWrapper<SharingEntryLocalService> {
+	implements ServiceWrapper<SharingEntryLocalService>,
+			   SharingEntryLocalService {
 
 	public SharingEntryLocalServiceWrapper(
 		SharingEntryLocalService sharingEntryLocalService) {

@@ -192,7 +192,7 @@ public class DDMTemplateVersionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateVersion ddmTemplateVersion : list) {
-					if ((templateId != ddmTemplateVersion.getTemplateId())) {
+					if (templateId != ddmTemplateVersion.getTemplateId()) {
 						list = null;
 
 						break;

@@ -33,7 +33,7 @@ import java.util.Objects;
  * @see TestEntity
  * @generated
  */
-public class TestEntityWrapper implements TestEntity, ModelWrapper<TestEntity> {
+public class TestEntityWrapper implements ModelWrapper<TestEntity>, TestEntity {
 
 	public TestEntityWrapper(TestEntity testEntity) {
 		_testEntity = testEntity;

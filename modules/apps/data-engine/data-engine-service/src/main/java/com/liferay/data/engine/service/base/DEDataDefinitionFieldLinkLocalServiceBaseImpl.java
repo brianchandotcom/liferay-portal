@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DEDataDefinitionFieldLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DEDataDefinitionFieldLinkLocalService, AopService,
+	implements AopService, DEDataDefinitionFieldLinkLocalService,
 			   IdentifiableOSGiService {
 
 	/**

@@ -197,7 +197,7 @@ public class OAuth2ApplicationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2Application oAuth2Application : list) {
-					if ((companyId != oAuth2Application.getCompanyId())) {
+					if (companyId != oAuth2Application.getCompanyId()) {
 						list = null;
 
 						break;

@@ -177,7 +177,7 @@ public class ExpandoRowPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoRow expandoRow : list) {
-					if ((tableId != expandoRow.getTableId())) {
+					if (tableId != expandoRow.getTableId()) {
 						list = null;
 
 						break;
@@ -687,7 +687,7 @@ public class ExpandoRowPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ExpandoRow expandoRow : list) {
-					if ((classPK != expandoRow.getClassPK())) {
+					if (classPK != expandoRow.getClassPK()) {
 						list = null;
 
 						break;

@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PasswordPolicyRelLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PasswordPolicyRelLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

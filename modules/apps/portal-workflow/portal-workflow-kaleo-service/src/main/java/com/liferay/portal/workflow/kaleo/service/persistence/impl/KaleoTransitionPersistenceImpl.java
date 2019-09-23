@@ -195,7 +195,7 @@ public class KaleoTransitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTransition kaleoTransition : list) {
-					if ((companyId != kaleoTransition.getCompanyId())) {
+					if (companyId != kaleoTransition.getCompanyId()) {
 						list = null;
 
 						break;
@@ -722,8 +722,8 @@ public class KaleoTransitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTransition kaleoTransition : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoTransition.getKaleoDefinitionVersionId())) {
+					if (kaleoDefinitionVersionId !=
+							kaleoTransition.getKaleoDefinitionVersionId()) {
 
 						list = null;
 
@@ -1256,7 +1256,7 @@ public class KaleoTransitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTransition kaleoTransition : list) {
-					if ((kaleoNodeId != kaleoTransition.getKaleoNodeId())) {
+					if (kaleoNodeId != kaleoTransition.getKaleoNodeId()) {
 						list = null;
 
 						break;

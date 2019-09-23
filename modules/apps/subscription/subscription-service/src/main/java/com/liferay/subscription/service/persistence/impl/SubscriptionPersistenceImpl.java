@@ -192,7 +192,7 @@ public class SubscriptionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
-					if ((groupId != subscription.getGroupId())) {
+					if (groupId != subscription.getGroupId()) {
 						list = null;
 
 						break;
@@ -702,7 +702,7 @@ public class SubscriptionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
-					if ((userId != subscription.getUserId())) {
+					if (userId != subscription.getUserId()) {
 						list = null;
 
 						break;
@@ -1217,7 +1217,7 @@ public class SubscriptionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
-					if ((classNameId != subscription.getClassNameId())) {
+					if (classNameId != subscription.getClassNameId()) {
 						list = null;
 
 						break;

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class PortletWrapper
 	extends BaseModelWrapper<Portlet>
-	implements Portlet, ModelWrapper<Portlet> {
+	implements ModelWrapper<Portlet>, Portlet {
 
 	public PortletWrapper(Portlet portlet) {
 		super(portlet);

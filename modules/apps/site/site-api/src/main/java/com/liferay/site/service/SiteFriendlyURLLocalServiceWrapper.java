@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SiteFriendlyURLLocalServiceWrapper
-	implements SiteFriendlyURLLocalService,
-			   ServiceWrapper<SiteFriendlyURLLocalService> {
+	implements ServiceWrapper<SiteFriendlyURLLocalService>,
+			   SiteFriendlyURLLocalService {
 
 	public SiteFriendlyURLLocalServiceWrapper(
 		SiteFriendlyURLLocalService siteFriendlyURLLocalService) {

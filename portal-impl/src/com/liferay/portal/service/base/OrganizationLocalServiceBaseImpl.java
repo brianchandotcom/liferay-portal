@@ -90,7 +90,7 @@ import javax.sql.DataSource;
  */
 public abstract class OrganizationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements OrganizationLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, OrganizationLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -191,7 +191,7 @@ public class AccountPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Account account : list) {
-					if ((userId != account.getUserId())) {
+					if (userId != account.getUserId()) {
 						list = null;
 
 						break;

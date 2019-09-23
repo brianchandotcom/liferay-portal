@@ -67,7 +67,7 @@ import javax.sql.DataSource;
  */
 public abstract class OrganizationServiceBaseImpl
 	extends BaseServiceImpl
-	implements OrganizationService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, OrganizationService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

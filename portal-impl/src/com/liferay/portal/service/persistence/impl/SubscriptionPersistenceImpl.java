@@ -182,7 +182,7 @@ public class SubscriptionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Subscription subscription : list) {
-					if ((userId != subscription.getUserId())) {
+					if (userId != subscription.getUserId()) {
 						list = null;
 
 						break;

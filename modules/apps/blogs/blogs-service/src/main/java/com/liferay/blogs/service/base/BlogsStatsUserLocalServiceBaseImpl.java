@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BlogsStatsUserLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements BlogsStatsUserLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, BlogsStatsUserLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

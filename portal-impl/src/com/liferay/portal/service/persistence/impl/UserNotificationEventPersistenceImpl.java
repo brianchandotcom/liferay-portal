@@ -1349,7 +1349,7 @@ public class UserNotificationEventPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserNotificationEvent userNotificationEvent : list) {
-					if ((userId != userNotificationEvent.getUserId())) {
+					if (userId != userNotificationEvent.getUserId()) {
 						list = null;
 
 						break;

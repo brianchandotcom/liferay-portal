@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class PollsVoteServiceBaseImpl
 	extends BaseServiceImpl
-	implements PollsVoteService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, PollsVoteService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

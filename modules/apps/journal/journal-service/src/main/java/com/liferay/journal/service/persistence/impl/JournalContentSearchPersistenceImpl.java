@@ -191,7 +191,7 @@ public class JournalContentSearchPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
-					if ((companyId != journalContentSearch.getCompanyId())) {
+					if (companyId != journalContentSearch.getCompanyId()) {
 						list = null;
 
 						break;

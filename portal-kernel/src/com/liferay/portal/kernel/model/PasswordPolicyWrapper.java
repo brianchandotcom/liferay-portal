@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class PasswordPolicyWrapper
 	extends BaseModelWrapper<PasswordPolicy>
-	implements PasswordPolicy, ModelWrapper<PasswordPolicy> {
+	implements ModelWrapper<PasswordPolicy>, PasswordPolicy {
 
 	public PasswordPolicyWrapper(PasswordPolicy passwordPolicy) {
 		super(passwordPolicy);

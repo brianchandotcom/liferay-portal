@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WikiNodeLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WikiNodeLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, WikiNodeLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

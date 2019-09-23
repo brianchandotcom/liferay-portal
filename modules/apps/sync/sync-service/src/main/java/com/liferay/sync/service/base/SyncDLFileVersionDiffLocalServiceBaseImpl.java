@@ -64,8 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SyncDLFileVersionDiffLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   SyncDLFileVersionDiffLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

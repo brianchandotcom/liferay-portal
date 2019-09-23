@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link UserNotificationDeliveryLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class UserNotificationDeliveryLocalServiceWrapper
-	implements UserNotificationDeliveryLocalService,
-			   ServiceWrapper<UserNotificationDeliveryLocalService> {
+	implements ServiceWrapper<UserNotificationDeliveryLocalService>,
+			   UserNotificationDeliveryLocalService {
 
 	public UserNotificationDeliveryLocalServiceWrapper(
 		UserNotificationDeliveryLocalService

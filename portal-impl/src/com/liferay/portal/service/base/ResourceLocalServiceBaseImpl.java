@@ -43,7 +43,7 @@ import javax.sql.DataSource;
  */
 public abstract class ResourceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements ResourceLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, ResourceLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

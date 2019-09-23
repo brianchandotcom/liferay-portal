@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ResourcePermissionWrapper
 	extends BaseModelWrapper<ResourcePermission>
-	implements ResourcePermission, ModelWrapper<ResourcePermission> {
+	implements ModelWrapper<ResourcePermission>, ResourcePermission {
 
 	public ResourcePermissionWrapper(ResourcePermission resourcePermission) {
 		super(resourcePermission);

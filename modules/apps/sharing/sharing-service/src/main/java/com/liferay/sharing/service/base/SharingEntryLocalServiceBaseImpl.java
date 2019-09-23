@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SharingEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SharingEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SharingEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

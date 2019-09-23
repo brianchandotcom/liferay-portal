@@ -1339,7 +1339,7 @@ public class SyncDevicePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDevice syncDevice : list) {
-					if ((userId != syncDevice.getUserId())) {
+					if (userId != syncDevice.getUserId()) {
 						list = null;
 
 						break;

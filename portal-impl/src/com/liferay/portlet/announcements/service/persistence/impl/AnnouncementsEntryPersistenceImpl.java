@@ -2223,7 +2223,7 @@ public class AnnouncementsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsEntry announcementsEntry : list) {
-					if ((companyId != announcementsEntry.getCompanyId())) {
+					if (companyId != announcementsEntry.getCompanyId()) {
 						list = null;
 
 						break;
@@ -3124,7 +3124,7 @@ public class AnnouncementsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsEntry announcementsEntry : list) {
-					if ((userId != announcementsEntry.getUserId())) {
+					if (userId != announcementsEntry.getUserId()) {
 						list = null;
 
 						break;

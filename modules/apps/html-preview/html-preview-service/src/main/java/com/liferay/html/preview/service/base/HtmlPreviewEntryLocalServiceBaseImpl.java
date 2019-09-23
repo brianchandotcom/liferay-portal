@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class HtmlPreviewEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements HtmlPreviewEntryLocalService, AopService,
+	implements AopService, HtmlPreviewEntryLocalService,
 			   IdentifiableOSGiService {
 
 	/**

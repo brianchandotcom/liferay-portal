@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ScreensJournalArticleServiceBaseImpl
 	extends BaseServiceImpl
-	implements ScreensJournalArticleService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   ScreensJournalArticleService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

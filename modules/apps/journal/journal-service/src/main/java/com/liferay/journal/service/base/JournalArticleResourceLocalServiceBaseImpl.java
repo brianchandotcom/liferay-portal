@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class JournalArticleResourceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements JournalArticleResourceLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   JournalArticleResourceLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

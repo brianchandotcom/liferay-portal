@@ -2195,7 +2195,7 @@ public class SAPEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SAPEntry sapEntry : list) {
-					if ((companyId != sapEntry.getCompanyId())) {
+					if (companyId != sapEntry.getCompanyId()) {
 						list = null;
 
 						break;

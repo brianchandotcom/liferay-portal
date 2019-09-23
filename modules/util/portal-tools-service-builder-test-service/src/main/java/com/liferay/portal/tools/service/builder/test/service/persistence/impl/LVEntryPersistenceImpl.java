@@ -3428,7 +3428,7 @@ public class LVEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LVEntry lvEntry : list) {
-					if ((groupId != lvEntry.getGroupId())) {
+					if (groupId != lvEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -6054,7 +6054,7 @@ public class LVEntryPersistenceImpl
 		if (result instanceof LVEntry) {
 			LVEntry lvEntry = (LVEntry)result;
 
-			if ((headId != lvEntry.getHeadId())) {
+			if (headId != lvEntry.getHeadId()) {
 				result = null;
 			}
 		}

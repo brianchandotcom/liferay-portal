@@ -107,8 +107,8 @@ public interface LVEntryLocalService
 	 *
 	 * @return the new lv entry
 	 */
-	@Transactional(enabled = false)
 	@Override
+	@Transactional(enabled = false)
 	public LVEntry create();
 
 	@Indexable(type = IndexableType.DELETE)

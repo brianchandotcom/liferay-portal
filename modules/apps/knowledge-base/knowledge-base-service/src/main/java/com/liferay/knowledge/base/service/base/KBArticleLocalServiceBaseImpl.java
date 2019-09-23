@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KBArticleLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KBArticleLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KBArticleLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

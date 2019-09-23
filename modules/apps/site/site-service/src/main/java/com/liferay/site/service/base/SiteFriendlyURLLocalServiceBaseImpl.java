@@ -67,8 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SiteFriendlyURLLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SiteFriendlyURLLocalService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   SiteFriendlyURLLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

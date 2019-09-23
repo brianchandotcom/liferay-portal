@@ -1642,9 +1642,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 						list) {
 
-					if ((groupId !=
-							layoutPageTemplateCollection.getGroupId())) {
-
+					if (groupId != layoutPageTemplateCollection.getGroupId()) {
 						list = null;
 
 						break;

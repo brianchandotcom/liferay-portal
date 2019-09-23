@@ -1619,7 +1619,7 @@ public class JournalArticleResourcePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticleResource journalArticleResource : list) {
-					if ((groupId != journalArticleResource.getGroupId())) {
+					if (groupId != journalArticleResource.getGroupId()) {
 						list = null;
 
 						break;

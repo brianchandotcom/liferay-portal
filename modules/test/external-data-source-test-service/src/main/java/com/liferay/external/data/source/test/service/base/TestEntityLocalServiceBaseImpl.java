@@ -60,7 +60,7 @@ import javax.sql.DataSource;
  */
 public abstract class TestEntityLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements TestEntityLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, TestEntityLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

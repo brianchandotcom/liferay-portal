@@ -178,7 +178,7 @@ public class UserIdMapperPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserIdMapper userIdMapper : list) {
-					if ((userId != userIdMapper.getUserId())) {
+					if (userId != userIdMapper.getUserId()) {
 						list = null;
 
 						break;

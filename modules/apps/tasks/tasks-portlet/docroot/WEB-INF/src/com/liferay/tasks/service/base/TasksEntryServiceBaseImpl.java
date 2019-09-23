@@ -48,7 +48,7 @@ import javax.sql.DataSource;
  */
 public abstract class TasksEntryServiceBaseImpl
 	extends BaseServiceImpl
-	implements TasksEntryService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, TasksEntryService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

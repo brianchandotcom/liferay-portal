@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DDMStorageLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMStorageLinkLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DDMStorageLinkLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class OrganizationWrapper
 	extends BaseModelWrapper<Organization>
-	implements Organization, ModelWrapper<Organization> {
+	implements ModelWrapper<Organization>, Organization {
 
 	public OrganizationWrapper(Organization organization) {
 		super(organization);

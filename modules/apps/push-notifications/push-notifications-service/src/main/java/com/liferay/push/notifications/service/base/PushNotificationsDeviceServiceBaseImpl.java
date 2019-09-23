@@ -44,8 +44,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class PushNotificationsDeviceServiceBaseImpl
 	extends BaseServiceImpl
-	implements PushNotificationsDeviceService, AopService,
-			   IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService,
+			   PushNotificationsDeviceService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

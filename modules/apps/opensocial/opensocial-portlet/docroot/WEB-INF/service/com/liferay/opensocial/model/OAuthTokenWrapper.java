@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class OAuthTokenWrapper
 	extends BaseModelWrapper<OAuthToken>
-	implements OAuthToken, ModelWrapper<OAuthToken> {
+	implements ModelWrapper<OAuthToken>, OAuthToken {
 
 	public OAuthTokenWrapper(OAuthToken oAuthToken) {
 		super(oAuthToken);

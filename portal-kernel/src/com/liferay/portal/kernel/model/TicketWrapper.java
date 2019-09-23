@@ -30,7 +30,7 @@ import java.util.Map;
  * @generated
  */
 public class TicketWrapper
-	extends BaseModelWrapper<Ticket> implements Ticket, ModelWrapper<Ticket> {
+	extends BaseModelWrapper<Ticket> implements ModelWrapper<Ticket>, Ticket {
 
 	public TicketWrapper(Ticket ticket) {
 		super(ticket);

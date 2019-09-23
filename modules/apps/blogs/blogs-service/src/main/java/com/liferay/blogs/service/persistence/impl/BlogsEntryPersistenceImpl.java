@@ -1606,7 +1606,7 @@ public class BlogsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId())) {
+					if (groupId != blogsEntry.getGroupId()) {
 						list = null;
 
 						break;
@@ -2495,7 +2495,7 @@ public class BlogsEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId())) {
+					if (companyId != blogsEntry.getCompanyId()) {
 						list = null;
 
 						break;

@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 @Deprecated
 public abstract class KaleoDefinitionServiceBaseImpl
 	extends BaseServiceImpl
-	implements KaleoDefinitionService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KaleoDefinitionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -159,7 +159,7 @@ public class ImagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Image image : list) {
-					if ((size <= image.getSize())) {
+					if (size <= image.getSize()) {
 						list = null;
 
 						break;

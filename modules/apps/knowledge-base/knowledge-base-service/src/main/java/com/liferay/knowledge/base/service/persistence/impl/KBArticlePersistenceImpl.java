@@ -209,7 +209,7 @@ public class KBArticlePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
-					if ((resourcePrimKey != kbArticle.getResourcePrimKey())) {
+					if (resourcePrimKey != kbArticle.getResourcePrimKey()) {
 						list = null;
 
 						break;
@@ -26903,7 +26903,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}
@@ -27124,7 +27124,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -27337,7 +27337,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -27517,7 +27517,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}
@@ -28621,7 +28621,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}
@@ -28842,7 +28842,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -29055,7 +29055,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -29233,7 +29233,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}
@@ -30337,7 +30337,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}
@@ -30558,7 +30558,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -30771,7 +30771,7 @@ public class KBArticlePersistenceImpl
 				qPos.add(groupId);
 
 				for (String sections : sectionses) {
-					if (sections != null && !sections.isEmpty()) {
+					if ((sections != null) && !sections.isEmpty()) {
 						qPos.add(sections);
 					}
 				}
@@ -30949,7 +30949,7 @@ public class KBArticlePersistenceImpl
 			qPos.add(groupId);
 
 			for (String sections : sectionses) {
-				if (sections != null && !sections.isEmpty()) {
+				if ((sections != null) && !sections.isEmpty()) {
 					qPos.add(sections);
 				}
 			}

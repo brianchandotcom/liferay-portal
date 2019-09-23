@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class PollsChoiceWrapper
 	extends BaseModelWrapper<PollsChoice>
-	implements PollsChoice, ModelWrapper<PollsChoice> {
+	implements ModelWrapper<PollsChoice>, PollsChoice {
 
 	public PollsChoiceWrapper(PollsChoice pollsChoice) {
 		super(pollsChoice);

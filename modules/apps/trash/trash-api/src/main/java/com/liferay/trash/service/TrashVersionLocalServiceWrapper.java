@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class TrashVersionLocalServiceWrapper
-	implements TrashVersionLocalService,
-			   ServiceWrapper<TrashVersionLocalService> {
+	implements ServiceWrapper<TrashVersionLocalService>,
+			   TrashVersionLocalService {
 
 	public TrashVersionLocalServiceWrapper(
 		TrashVersionLocalService trashVersionLocalService) {

@@ -59,7 +59,7 @@ import javax.sql.DataSource;
  */
 public abstract class PortalPreferencesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PortalPreferencesLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, PortalPreferencesLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

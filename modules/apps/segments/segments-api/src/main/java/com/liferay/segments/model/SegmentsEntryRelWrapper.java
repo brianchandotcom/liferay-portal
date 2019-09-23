@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SegmentsEntryRelWrapper
 	extends BaseModelWrapper<SegmentsEntryRel>
-	implements SegmentsEntryRel, ModelWrapper<SegmentsEntryRel> {
+	implements ModelWrapper<SegmentsEntryRel>, SegmentsEntryRel {
 
 	public SegmentsEntryRelWrapper(SegmentsEntryRel segmentsEntryRel) {
 		super(segmentsEntryRel);

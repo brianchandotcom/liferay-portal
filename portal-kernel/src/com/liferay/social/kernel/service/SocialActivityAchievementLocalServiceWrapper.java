@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SocialActivityAchievementLocalServiceWrapper
-	implements SocialActivityAchievementLocalService,
-			   ServiceWrapper<SocialActivityAchievementLocalService> {
+	implements ServiceWrapper<SocialActivityAchievementLocalService>,
+			   SocialActivityAchievementLocalService {
 
 	public SocialActivityAchievementLocalServiceWrapper(
 		SocialActivityAchievementLocalService

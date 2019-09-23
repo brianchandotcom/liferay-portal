@@ -179,7 +179,7 @@ public class UserTrackerPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserTracker userTracker : list) {
-					if ((companyId != userTracker.getCompanyId())) {
+					if (companyId != userTracker.getCompanyId()) {
 						list = null;
 
 						break;
@@ -690,7 +690,7 @@ public class UserTrackerPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (UserTracker userTracker : list) {
-					if ((userId != userTracker.getUserId())) {
+					if (userId != userTracker.getUserId()) {
 						list = null;
 
 						break;

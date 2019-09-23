@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SocialActivityCounterLocalServiceWrapper
-	implements SocialActivityCounterLocalService,
-			   ServiceWrapper<SocialActivityCounterLocalService> {
+	implements ServiceWrapper<SocialActivityCounterLocalService>,
+			   SocialActivityCounterLocalService {
 
 	public SocialActivityCounterLocalServiceWrapper(
 		SocialActivityCounterLocalService socialActivityCounterLocalService) {

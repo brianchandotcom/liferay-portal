@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link WebsiteLocalService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class WebsiteLocalServiceWrapper
-	implements WebsiteLocalService, ServiceWrapper<WebsiteLocalService> {
+	implements ServiceWrapper<WebsiteLocalService>, WebsiteLocalService {
 
 	public WebsiteLocalServiceWrapper(WebsiteLocalService websiteLocalService) {
 		_websiteLocalService = websiteLocalService;

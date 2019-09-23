@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class WikiPageServiceBaseImpl
 	extends BaseServiceImpl
-	implements WikiPageService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, WikiPageService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

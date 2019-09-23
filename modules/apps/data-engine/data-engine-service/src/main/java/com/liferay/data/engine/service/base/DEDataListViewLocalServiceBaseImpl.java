@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class DEDataListViewLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DEDataListViewLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, DEDataListViewLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

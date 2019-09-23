@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class ScreensDDLRecordServiceBaseImpl
 	extends BaseServiceImpl
-	implements ScreensDDLRecordService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, ScreensDDLRecordService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

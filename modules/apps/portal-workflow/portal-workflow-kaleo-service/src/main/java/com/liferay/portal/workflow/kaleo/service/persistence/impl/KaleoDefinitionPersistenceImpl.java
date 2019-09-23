@@ -198,7 +198,7 @@ public class KaleoDefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoDefinition kaleoDefinition : list) {
-					if ((companyId != kaleoDefinition.getCompanyId())) {
+					if (companyId != kaleoDefinition.getCompanyId()) {
 						list = null;
 
 						break;

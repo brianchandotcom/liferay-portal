@@ -65,7 +65,7 @@ import javax.sql.DataSource;
  */
 public abstract class TasksEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements TasksEntryLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, TasksEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class WikiNodeWrapper
 	extends BaseModelWrapper<WikiNode>
-	implements WikiNode, ModelWrapper<WikiNode> {
+	implements ModelWrapper<WikiNode>, WikiNode {
 
 	public WikiNodeWrapper(WikiNode wikiNode) {
 		super(wikiNode);

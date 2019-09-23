@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link ThemeLocalService}.
  *
@@ -23,7 +22,7 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class ThemeLocalServiceWrapper
-	implements ThemeLocalService, ServiceWrapper<ThemeLocalService> {
+	implements ServiceWrapper<ThemeLocalService>, ThemeLocalService {
 
 	public ThemeLocalServiceWrapper(ThemeLocalService themeLocalService) {
 		_themeLocalService = themeLocalService;

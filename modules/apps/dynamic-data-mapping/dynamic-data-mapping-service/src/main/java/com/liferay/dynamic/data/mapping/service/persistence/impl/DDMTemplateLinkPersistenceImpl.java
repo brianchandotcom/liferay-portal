@@ -191,7 +191,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateLink ddmTemplateLink : list) {
-					if ((classNameId != ddmTemplateLink.getClassNameId())) {
+					if (classNameId != ddmTemplateLink.getClassNameId()) {
 						list = null;
 
 						break;
@@ -714,7 +714,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplateLink ddmTemplateLink : list) {
-					if ((templateId != ddmTemplateLink.getTemplateId())) {
+					if (templateId != ddmTemplateLink.getTemplateId()) {
 						list = null;
 
 						break;

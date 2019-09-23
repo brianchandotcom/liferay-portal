@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SyncDLFileVersionDiffLocalServiceWrapper
-	implements SyncDLFileVersionDiffLocalService,
-			   ServiceWrapper<SyncDLFileVersionDiffLocalService> {
+	implements ServiceWrapper<SyncDLFileVersionDiffLocalService>,
+			   SyncDLFileVersionDiffLocalService {
 
 	public SyncDLFileVersionDiffLocalServiceWrapper(
 		SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService) {

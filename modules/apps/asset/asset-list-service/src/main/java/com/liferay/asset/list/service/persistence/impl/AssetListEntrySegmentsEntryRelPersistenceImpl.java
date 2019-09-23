@@ -1650,9 +1650,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				for (AssetListEntrySegmentsEntryRel
 						assetListEntrySegmentsEntryRel : list) {
 
-					if ((assetListEntryId !=
+					if (assetListEntryId !=
 							assetListEntrySegmentsEntryRel.
-								getAssetListEntryId())) {
+								getAssetListEntryId()) {
 
 						list = null;
 
@@ -2188,9 +2188,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				for (AssetListEntrySegmentsEntryRel
 						assetListEntrySegmentsEntryRel : list) {
 
-					if ((segmentsEntryId !=
+					if (segmentsEntryId !=
 							assetListEntrySegmentsEntryRel.
-								getSegmentsEntryId())) {
+								getSegmentsEntryId()) {
 
 						list = null;
 

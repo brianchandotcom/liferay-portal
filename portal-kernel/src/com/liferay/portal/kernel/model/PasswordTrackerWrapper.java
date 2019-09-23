@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class PasswordTrackerWrapper
 	extends BaseModelWrapper<PasswordTracker>
-	implements PasswordTracker, ModelWrapper<PasswordTracker> {
+	implements ModelWrapper<PasswordTracker>, PasswordTracker {
 
 	public PasswordTrackerWrapper(PasswordTracker passwordTracker) {
 		super(passwordTracker);

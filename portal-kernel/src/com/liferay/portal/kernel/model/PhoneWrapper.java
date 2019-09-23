@@ -31,7 +31,7 @@ import java.util.Map;
  * @generated
  */
 public class PhoneWrapper
-	extends BaseModelWrapper<Phone> implements Phone, ModelWrapper<Phone> {
+	extends BaseModelWrapper<Phone> implements ModelWrapper<Phone>, Phone {
 
 	public PhoneWrapper(Phone phone) {
 		super(phone);

@@ -211,9 +211,9 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuth2ScopeGrant oAuth2ScopeGrant : list) {
-					if ((oAuth2ApplicationScopeAliasesId !=
+					if (oAuth2ApplicationScopeAliasesId !=
 							oAuth2ScopeGrant.
-								getOAuth2ApplicationScopeAliasesId())) {
+								getOAuth2ApplicationScopeAliasesId()) {
 
 						list = null;
 

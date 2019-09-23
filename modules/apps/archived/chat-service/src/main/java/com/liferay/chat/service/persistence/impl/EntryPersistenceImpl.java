@@ -187,7 +187,7 @@ public class EntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
-					if ((createDate != entry.getCreateDate())) {
+					if (createDate != entry.getCreateDate()) {
 						list = null;
 
 						break;
@@ -698,7 +698,7 @@ public class EntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
-					if ((fromUserId != entry.getFromUserId())) {
+					if (fromUserId != entry.getFromUserId()) {
 						list = null;
 
 						break;
@@ -1206,7 +1206,7 @@ public class EntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Entry entry : list) {
-					if ((toUserId != entry.getToUserId())) {
+					if (toUserId != entry.getToUserId()) {
 						list = null;
 
 						break;

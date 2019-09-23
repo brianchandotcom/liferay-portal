@@ -192,7 +192,7 @@ public class BlogsStatsUserPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsStatsUser blogsStatsUser : list) {
-					if ((groupId != blogsStatsUser.getGroupId())) {
+					if (groupId != blogsStatsUser.getGroupId()) {
 						list = null;
 
 						break;
@@ -703,7 +703,7 @@ public class BlogsStatsUserPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsStatsUser blogsStatsUser : list) {
-					if ((userId != blogsStatsUser.getUserId())) {
+					if (userId != blogsStatsUser.getUserId()) {
 						list = null;
 
 						break;

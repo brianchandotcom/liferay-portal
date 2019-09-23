@@ -59,7 +59,7 @@ import javax.sql.DataSource;
  */
 public abstract class UserIdMapperLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements UserIdMapperLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, UserIdMapperLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

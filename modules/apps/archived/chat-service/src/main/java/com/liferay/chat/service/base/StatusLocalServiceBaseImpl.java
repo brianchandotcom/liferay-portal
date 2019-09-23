@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class StatusLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements StatusLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, StatusLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-
 /**
  * Provides a wrapper for {@link WorkflowDefinitionLinkLocalService}.
  *
@@ -23,8 +22,8 @@ package com.liferay.portal.kernel.service;
  * @generated
  */
 public class WorkflowDefinitionLinkLocalServiceWrapper
-	implements WorkflowDefinitionLinkLocalService,
-			   ServiceWrapper<WorkflowDefinitionLinkLocalService> {
+	implements ServiceWrapper<WorkflowDefinitionLinkLocalService>,
+			   WorkflowDefinitionLinkLocalService {
 
 	public WorkflowDefinitionLinkLocalServiceWrapper(
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {

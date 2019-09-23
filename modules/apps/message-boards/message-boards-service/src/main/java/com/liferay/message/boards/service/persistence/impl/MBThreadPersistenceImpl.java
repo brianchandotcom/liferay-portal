@@ -1603,7 +1603,7 @@ public class MBThreadPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThread mbThread : list) {
-					if ((groupId != mbThread.getGroupId())) {
+					if (groupId != mbThread.getGroupId()) {
 						list = null;
 
 						break;
@@ -2459,7 +2459,7 @@ public class MBThreadPersistenceImpl
 		if (result instanceof MBThread) {
 			MBThread mbThread = (MBThread)result;
 
-			if ((rootMessageId != mbThread.getRootMessageId())) {
+			if (rootMessageId != mbThread.getRootMessageId()) {
 				result = null;
 			}
 		}

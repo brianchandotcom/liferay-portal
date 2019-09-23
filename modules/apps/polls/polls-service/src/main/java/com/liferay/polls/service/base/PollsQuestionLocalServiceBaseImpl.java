@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class PollsQuestionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements PollsQuestionLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, PollsQuestionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

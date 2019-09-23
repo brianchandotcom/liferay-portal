@@ -193,7 +193,7 @@ public class KaleoActionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
-					if ((companyId != kaleoAction.getCompanyId())) {
+					if (companyId != kaleoAction.getCompanyId()) {
 						list = null;
 
 						break;
@@ -716,8 +716,8 @@ public class KaleoActionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoAction kaleoAction : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoAction.getKaleoDefinitionVersionId())) {
+					if (kaleoDefinitionVersionId !=
+							kaleoAction.getKaleoDefinitionVersionId()) {
 
 						list = null;
 

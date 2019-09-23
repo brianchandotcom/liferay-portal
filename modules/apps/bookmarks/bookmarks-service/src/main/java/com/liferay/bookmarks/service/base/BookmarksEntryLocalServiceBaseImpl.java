@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BookmarksEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements BookmarksEntryLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, BookmarksEntryLocalService, IdentifiableOSGiService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

@@ -195,7 +195,7 @@ public class AccountEntryPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AccountEntry accountEntry : list) {
-					if ((companyId != accountEntry.getCompanyId())) {
+					if (companyId != accountEntry.getCompanyId()) {
 						list = null;
 
 						break;

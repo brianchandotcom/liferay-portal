@@ -197,9 +197,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
 						list) {
 
-					if ((dataProviderInstanceId !=
+					if (dataProviderInstanceId !=
 							ddmDataProviderInstanceLink.
-								getDataProviderInstanceId())) {
+								getDataProviderInstanceId()) {
 
 						list = null;
 
@@ -743,8 +743,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
 						list) {
 
-					if ((structureId !=
-							ddmDataProviderInstanceLink.getStructureId())) {
+					if (structureId !=
+							ddmDataProviderInstanceLink.getStructureId()) {
 
 						list = null;
 

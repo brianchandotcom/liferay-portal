@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SubscriptionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SubscriptionLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SubscriptionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

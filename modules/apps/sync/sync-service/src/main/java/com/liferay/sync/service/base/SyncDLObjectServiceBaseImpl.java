@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class SyncDLObjectServiceBaseImpl
 	extends BaseServiceImpl
-	implements SyncDLObjectService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, SyncDLObjectService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

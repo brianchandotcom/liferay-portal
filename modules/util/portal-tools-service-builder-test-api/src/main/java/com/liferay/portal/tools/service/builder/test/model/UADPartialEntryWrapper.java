@@ -34,7 +34,7 @@ import java.util.Objects;
  * @generated
  */
 public class UADPartialEntryWrapper
-	implements UADPartialEntry, ModelWrapper<UADPartialEntry> {
+	implements ModelWrapper<UADPartialEntry>, UADPartialEntry {
 
 	public UADPartialEntryWrapper(UADPartialEntry uadPartialEntry) {
 		_uadPartialEntry = uadPartialEntry;

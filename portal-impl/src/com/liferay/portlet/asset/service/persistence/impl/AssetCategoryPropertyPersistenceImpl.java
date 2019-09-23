@@ -188,7 +188,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
-					if ((companyId != assetCategoryProperty.getCompanyId())) {
+					if (companyId != assetCategoryProperty.getCompanyId()) {
 						list = null;
 
 						break;
@@ -715,7 +715,7 @@ public class AssetCategoryPropertyPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
-					if ((categoryId != assetCategoryProperty.getCategoryId())) {
+					if (categoryId != assetCategoryProperty.getCategoryId()) {
 						list = null;
 
 						break;

@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class KBCommentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KBCommentLocalService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, KBCommentLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

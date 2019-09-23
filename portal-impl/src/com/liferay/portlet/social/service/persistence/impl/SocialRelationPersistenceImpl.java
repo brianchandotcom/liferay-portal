@@ -1339,7 +1339,7 @@ public class SocialRelationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
-					if ((companyId != socialRelation.getCompanyId())) {
+					if (companyId != socialRelation.getCompanyId()) {
 						list = null;
 
 						break;
@@ -1854,7 +1854,7 @@ public class SocialRelationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
-					if ((userId1 != socialRelation.getUserId1())) {
+					if (userId1 != socialRelation.getUserId1()) {
 						list = null;
 
 						break;
@@ -2369,7 +2369,7 @@ public class SocialRelationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
-					if ((userId2 != socialRelation.getUserId2())) {
+					if (userId2 != socialRelation.getUserId2()) {
 						list = null;
 
 						break;
@@ -2881,7 +2881,7 @@ public class SocialRelationPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SocialRelation socialRelation : list) {
-					if ((type != socialRelation.getType())) {
+					if (type != socialRelation.getType()) {
 						list = null;
 
 						break;

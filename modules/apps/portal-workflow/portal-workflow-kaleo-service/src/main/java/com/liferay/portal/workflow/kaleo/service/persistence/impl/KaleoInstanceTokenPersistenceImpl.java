@@ -196,7 +196,7 @@ public class KaleoInstanceTokenPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstanceToken kaleoInstanceToken : list) {
-					if ((companyId != kaleoInstanceToken.getCompanyId())) {
+					if (companyId != kaleoInstanceToken.getCompanyId()) {
 						list = null;
 
 						break;
@@ -728,8 +728,8 @@ public class KaleoInstanceTokenPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstanceToken kaleoInstanceToken : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoInstanceToken.getKaleoDefinitionVersionId())) {
+					if (kaleoDefinitionVersionId !=
+							kaleoInstanceToken.getKaleoDefinitionVersionId()) {
 
 						list = null;
 
@@ -1267,8 +1267,8 @@ public class KaleoInstanceTokenPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstanceToken kaleoInstanceToken : list) {
-					if ((kaleoInstanceId !=
-							kaleoInstanceToken.getKaleoInstanceId())) {
+					if (kaleoInstanceId !=
+							kaleoInstanceToken.getKaleoInstanceId()) {
 
 						list = null;
 

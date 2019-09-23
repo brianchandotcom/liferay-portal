@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class SocialActivityWrapper
 	extends BaseModelWrapper<SocialActivity>
-	implements SocialActivity, ModelWrapper<SocialActivity> {
+	implements ModelWrapper<SocialActivity>, SocialActivity {
 
 	public SocialActivityWrapper(SocialActivity socialActivity) {
 		super(socialActivity);

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class JournalFolderServiceBaseImpl
 	extends BaseServiceImpl
-	implements JournalFolderService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, JournalFolderService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

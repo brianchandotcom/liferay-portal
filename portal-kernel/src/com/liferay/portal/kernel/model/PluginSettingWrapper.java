@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class PluginSettingWrapper
 	extends BaseModelWrapper<PluginSetting>
-	implements PluginSetting, ModelWrapper<PluginSetting> {
+	implements ModelWrapper<PluginSetting>, PluginSetting {
 
 	public PluginSettingWrapper(PluginSetting pluginSetting) {
 		super(pluginSetting);

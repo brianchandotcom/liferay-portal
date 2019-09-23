@@ -61,7 +61,7 @@ import javax.sql.DataSource;
  */
 public abstract class SocialActivityLimitLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SocialActivityLimitLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SocialActivityLimitLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

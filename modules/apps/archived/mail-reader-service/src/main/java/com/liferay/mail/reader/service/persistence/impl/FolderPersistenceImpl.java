@@ -191,7 +191,7 @@ public class FolderPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Folder folder : list) {
-					if ((accountId != folder.getAccountId())) {
+					if (accountId != folder.getAccountId()) {
 						list = null;
 
 						break;

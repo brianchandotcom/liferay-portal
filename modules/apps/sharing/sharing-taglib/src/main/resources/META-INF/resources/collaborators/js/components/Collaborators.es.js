@@ -25,11 +25,13 @@ import UserIcon from './UserIcon.es';
 const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	const [data, setData] = useState(null);
 
-	useEffect(() => {
+	const updateCollaborators = () => {
 		fetch(collaboratorsResourceURL)
 			.then(res => res.json())
 			.then(setData);
-	}, [collaboratorsResourceURL]);
+	};
+
+	useEffect(updateCollaborators, [collaboratorsResourceURL]);
 
 	const handleClick = () => {
 		Liferay.Util.openWindow({
@@ -39,7 +41,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 				on: {
 					visibleChange: event => {
 						if (!event.newVal) {
-							// TODO refresh collaborators
+							updateCollaborators();
 						}
 					}
 				},

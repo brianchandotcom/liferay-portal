@@ -20,8 +20,11 @@ import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import {SLAStatusContext} from '../filter/store/SLAStatusStore.es';
 import {TimeRangeContext} from '../filter/store/TimeRangeStore.es';
 import {TimeRangeFilter} from '../filter/TimeRangeFilter.es';
+import AssigneeFilter from '../filter/AssigneeFilter.es';
+import {AssigneeContext} from '../filter/store/AssigneeStore.es';
 
 const InstanceListFilters = ({totalCount}) => {
+	const {assignees} = useContext(AssigneeContext);
 	const {isCompletedStatusSelected, processStatuses} = useContext(
 		ProcessStatusContext
 	);
@@ -71,6 +74,14 @@ const InstanceListFilters = ({totalCount}) => {
 			)
 		);
 
+		filters.push(
+			asFilterObject(
+				assignees,
+				filterConstants.assignees,
+				Liferay.Language.get('assignees')
+			)
+		);
+
 		return filters;
 	};
 
@@ -92,6 +103,8 @@ const InstanceListFilters = ({totalCount}) => {
 						{completedStatusSelected && <TimeRangeFilter />}
 
 						<ProcessStepFilter />
+
+						<AssigneeFilter />
 					</ul>
 				</div>
 			</nav>

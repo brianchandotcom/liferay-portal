@@ -29,6 +29,7 @@ import Request from '../../../shared/components/request/Request.es';
 export function InstanceListCard({page, pageSize, processId, query}) {
 	const filters = getFiltersParam(query);
 	const {
+		assigneeUserIds = [],
 		slaStatuses = [],
 		statuses = [],
 		taskKeys = [],
@@ -38,6 +39,7 @@ export function InstanceListCard({page, pageSize, processId, query}) {
 	return (
 		<Request>
 			<InstanceFiltersProvider
+				assigneeKeys={assigneeUserIds}
 				processId={processId}
 				processStatusKeys={statuses}
 				processStepKeys={taskKeys}

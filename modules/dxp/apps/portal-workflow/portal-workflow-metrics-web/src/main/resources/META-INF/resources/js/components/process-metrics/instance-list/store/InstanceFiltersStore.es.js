@@ -14,8 +14,10 @@ import {ProcessStepProvider} from '../../filter/store/ProcessStepStore.es';
 import React from 'react';
 import {SLAStatusProvider} from '../../filter/store/SLAStatusStore.es';
 import {TimeRangeProvider} from '../../filter/store/TimeRangeStore.es';
+import {AssigneeProvider} from '../../filter/store/AssigneeStore.es';
 
 const InstanceFiltersProvider = ({
+	assigneeKeys,
 	children,
 	processId,
 	processStatusKeys,
@@ -31,7 +33,12 @@ const InstanceFiltersProvider = ({
 						processId={processId}
 						processStepKeys={processStepKeys}
 					>
-						{children}
+						<AssigneeProvider
+							assigneeKeys={assigneeKeys}
+							processId={processId}
+						>
+							{children}
+						</AssigneeProvider>
 					</ProcessStepProvider>
 				</TimeRangeProvider>
 			</ProcessStatusProvider>

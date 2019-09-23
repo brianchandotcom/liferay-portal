@@ -18,8 +18,10 @@ import {ProcessStepContext} from '../../filter/store/ProcessStepStore.es';
 import {SLAStatusContext} from '../../filter/store/SLAStatusStore.es';
 import {TimeRangeContext} from '../../filter/store/TimeRangeStore.es';
 import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil.es';
+import {AssigneeContext} from '../../filter/store/AssigneeStore.es';
 
 const filterConstants = {
+	assignees: 'assigneeUserIds',
 	processStatus: 'statuses',
 	processStep: 'taskKeys',
 	slaStatus: 'slaStatuses',
@@ -38,6 +40,7 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	const [totalCount, setTotalCount] = useState();
 
 	const {client, setTitle} = useContext(AppContext);
+	const {getSelectedAssignees} = useContext(AssigneeContext);
 	const {getSelectedProcessStatuses, isCompletedStatusSelected} = useContext(
 		ProcessStatusContext
 	);
@@ -54,6 +57,9 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 
 		let baseURL = `/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`;
 
+		const selectedAssignees = getSelectedAssignees(
+			filters[filterConstants.assignees]
+		);
 		const selectedProcessStatuses = getSelectedProcessStatuses(
 			filters[filterConstants.processStatus]
 		);
@@ -68,6 +74,15 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 			filters[filterConstants.timeRangeDateEnd],
 			filters[filterConstants.timeRangeDateStart]
 		);
+
+		if (selectedAssignees && selectedAssignees.length) {
+			setSearching(true);
+
+			baseURL += reduceFilters(
+				selectedAssignees,
+				filterConstants.assignees
+			);
+		}
 
 		if (selectedProcessStatuses && selectedProcessStatuses.length) {
 			setSearching(true);

@@ -39,7 +39,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "3.5.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.3.0"
 	compile group: "com.liferay", name: "com.liferay.ant.bnd", version: "3.2.2"
 	compile group: "com.liferay", name: "com.liferay.gogo.shell.client", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "2.0.2"
@@ -64,7 +64,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.7"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["lib/plugins/biz.aQute.bndlib-3.4.0.jar"])
 }
 
 downloadBundle {

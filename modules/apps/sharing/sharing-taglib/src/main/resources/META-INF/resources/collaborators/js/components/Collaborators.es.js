@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -50,7 +51,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 		});
 	};
 
-	if (!data) return <></>;
+	if (!data) return <ClayLoadingIndicator />;
 
 	const {owner, total, manageCollaboratorsURL, collaborators} = data;
 

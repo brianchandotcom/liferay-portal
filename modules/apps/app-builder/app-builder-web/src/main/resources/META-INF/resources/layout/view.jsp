@@ -17,3 +17,9 @@
 <%@ include file="/layout/init.jsp" %>
 
 <liferay-ui:layout-common />
+
+<%
+long appId = (long)request.getAttribute(AppBuilderWebKeys.APP_ID);
+%>
+
+<%= appId %>

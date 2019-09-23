@@ -206,7 +206,7 @@ public class StandaloneAppDeployer implements AppDeployer {
 
 		return _bundleContext.registerService(
 			LayoutTypeController.class,
-			new AppPortletLayoutTypeController(servletContext),
+			new AppPortletLayoutTypeController(appId, servletContext),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("layout.type", portletName);

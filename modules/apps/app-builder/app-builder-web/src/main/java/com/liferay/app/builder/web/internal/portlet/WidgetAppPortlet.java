@@ -14,10 +14,34 @@
 
 package com.liferay.app.builder.web.internal.portlet;
 
+import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+
+import java.io.IOException;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Gabriel Albuquerque
  */
 public class WidgetAppPortlet extends MVCPortlet {
+
+	public WidgetAppPortlet(long appId) {
+		_appId = appId;
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(AppBuilderWebKeys.APP_ID, _appId);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	private final long _appId;
+
 }

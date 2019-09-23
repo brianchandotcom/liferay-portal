@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.web.internal.layout.type;
 
+import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
@@ -21,6 +22,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -32,7 +34,10 @@ public class AppPortletLayoutTypeController
 	public AppPortletLayoutTypeController() {
 	}
 
-	public AppPortletLayoutTypeController(ServletContext servletContext) {
+	public AppPortletLayoutTypeController(
+		long appId, ServletContext servletContext) {
+
+		_appId = appId;
 		this.servletContext = servletContext;
 	}
 
@@ -82,6 +87,13 @@ public class AppPortletLayoutTypeController
 	}
 
 	@Override
+	protected void addAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute(AppBuilderWebKeys.APP_ID, _appId);
+
+		super.addAttributes(httpServletRequest);
+	}
+
+	@Override
 	protected ServletResponse createServletResponse(
 		HttpServletResponse httpServletResponse,
 		UnsyncStringWriter unsyncStringWriter) {
@@ -107,5 +119,7 @@ public class AppPortletLayoutTypeController
 			"&p_v_l_s_g_id=${liferay:pvlsgid}&p_p_state=pop_up";
 
 	private static final String _VIEW_PAGE = "/layout/view.jsp";
+
+	private long _appId;
 
 }

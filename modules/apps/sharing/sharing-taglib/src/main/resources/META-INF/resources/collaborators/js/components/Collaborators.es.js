@@ -17,32 +17,43 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
 
-const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
+const Collaborators = ({
+	classNameId,
+	classPK,
+	collaboratorsResourceURL,
+	portletNamespace
+}) => {
 	const [data, setData] = useState(null);
 
-	useEffect(() => {
+	const updateCollaborators = useCallback(() => {
 		fetch(collaboratorsResourceURL)
 			.then(res => res.json())
 			.then(setData);
 	}, [collaboratorsResourceURL]);
+
+	useEffect(() => updateCollaborators(), [updateCollaborators]);
+
+	useEffect(() => {
+		Liferay.on('sharing:changed', event => {
+			if (
+				classNameId === event.classNameId &&
+				event.classPK === classPK
+			) {
+				updateCollaborators();
+			}
+		});
+	}, [classNameId, classPK, updateCollaborators]);
 
 	const handleClick = () => {
 		Liferay.Util.openWindow({
 			dialog: {
 				destroyOnHide: true,
 				height: 470,
-				on: {
-					visibleChange: event => {
-						if (!event.newVal) {
-							// TODO refresh collaborators
-						}
-					}
-				},
 				width: 600
 			},
 			id: `${portletNamespace}manageCollaboratorsDialog`,

@@ -1,4 +1,5 @@
 create table AssetEntryUsage (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	assetEntryUsageId LONG not null primary key,
 	groupId LONG,

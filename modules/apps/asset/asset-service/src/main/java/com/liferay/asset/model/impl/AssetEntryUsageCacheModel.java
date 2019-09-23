@@ -18,6 +18,7 @@ import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetEntryUsageCacheModel
-	implements CacheModel<AssetEntryUsage>, Externalizable {
+	implements CacheModel<AssetEntryUsage>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,10 @@ public class AssetEntryUsageCacheModel
 		AssetEntryUsageCacheModel assetEntryUsageCacheModel =
 			(AssetEntryUsageCacheModel)obj;
 
-		if (assetEntryUsageId == assetEntryUsageCacheModel.assetEntryUsageId) {
+		if ((assetEntryUsageId ==
+				assetEntryUsageCacheModel.assetEntryUsageId) &&
+			(mvccVersion == assetEntryUsageCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +61,28 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, assetEntryUsageId);
+		int hashCode = HashUtil.hash(0, assetEntryUsageId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", assetEntryUsageId=");
 		sb.append(assetEntryUsageId);
@@ -94,6 +112,8 @@ public class AssetEntryUsageCacheModel
 	@Override
 	public AssetEntryUsage toEntityModel() {
 		AssetEntryUsageImpl assetEntryUsageImpl = new AssetEntryUsageImpl();
+
+		assetEntryUsageImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetEntryUsageImpl.setUuid("");
@@ -146,6 +166,7 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		assetEntryUsageId = objectInput.readLong();
@@ -167,6 +188,8 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -197,6 +220,7 @@ public class AssetEntryUsageCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long assetEntryUsageId;
 	public long groupId;

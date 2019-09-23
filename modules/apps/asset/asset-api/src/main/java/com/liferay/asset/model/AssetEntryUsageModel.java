@@ -16,6 +16,7 @@ package com.liferay.asset.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.util.Date;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface AssetEntryUsageModel extends BaseModel<AssetEntryUsage> {
+public interface AssetEntryUsageModel
+	extends BaseModel<AssetEntryUsage>, MVCCModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +56,22 @@ public interface AssetEntryUsageModel extends BaseModel<AssetEntryUsage> {
 	 * @param primaryKey the primary key of this asset entry usage
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this asset entry usage.
+	 *
+	 * @return the mvcc version of this asset entry usage
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this asset entry usage.
+	 *
+	 * @param mvccVersion the mvcc version of this asset entry usage
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this asset entry usage.

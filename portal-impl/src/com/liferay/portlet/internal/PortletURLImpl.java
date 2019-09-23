@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,7 +49,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -466,9 +466,8 @@ public class PortletURLImpl
 
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"Cacheability ", cacheability, " is not FULL, ",
-					String.valueOf(FULL), ", PAGE, ", PAGE, ", or PORTLET, ",
-					String.valueOf(PORTLET)));
+					"Cacheability ", cacheability, " is not FULL, ", FULL,
+					", PAGE, ", PAGE, ", or PORTLET, ", PORTLET));
 		}
 
 		if (_portletRequest instanceof ResourceRequest) {

@@ -58,7 +58,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	const {owner, total, manageCollaboratorsURL, collaborators} = data;
 
 	if (total < 1) {
-		return;
+		return null;
 	}
 
 	const moreCollaboratorsCount = total - collaborators.length;

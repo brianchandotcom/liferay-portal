@@ -16,15 +16,16 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 
 const UserIcon = ({fullName = '', portraitURL = '', userId, size = 'lg'}) => {
 	const stickerColor = parseInt(userId, 10) % 10;
 
 	return (
 		<ClaySticker
-			className={`sticker-use-icon ${
-				!portraitURL ? 'user-icon-color-' + stickerColor : ''
-			}`}
+			className={classNames('sticker-use-icon', {
+				[`user-icon-color-${stickerColor}`]: !portraitURL
+			})}
 			displayType="secondary"
 			shape="circle"
 			size={size}

@@ -1,0 +1,161 @@
+@component-name = "app-builder"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "App Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Custom Objects");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "App Builder",
+				panel = "Control Panel",
+				portlet = "Custom Objects");
+
+			AppBuilderAdmin.teardownAppBuilder();
+
+		}
+	}
+
+	@description = "Add a Custom Object with valid name"
+	@priority = "5"
+	test AddCustomObjectWithValidName {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.validateCustomObjectNameOnHeader(customObjectName = "my custom object");
+
+		AppBuilderAdmin.gotoBack();
+
+		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(
+			customObjectName = "my custom object");
+
+	}
+
+	@description = "Attempt to add a Custom Object without a valid name"
+	@priority = "5"
+	test AttemptToAddCustomObjectWithoutValidName {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+		AppBuilderAdmin.validateRequiredValidNameMessage();
+		AppBuilderAdmin.cancelNewCustomObject();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+		AppBuilderAdmin.validateRequiredValidNameMessage();
+		AppBuilderAdmin.cancelNewCustomObject();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "false");
+		AppBuilderAdmin.validateRequiredValidNameMessage();
+		AppBuilderAdmin.cancelNewCustomObject();
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "false");
+		AppBuilderAdmin.validateRequiredValidNameMessage();
+		AppBuilderAdmin.cancelNewCustomObject();
+
+	}
+
+	@description = "Validate empty list state of Apps listing screen"
+	@priority = "5"
+	test ValidateEmptyStateOfAppsListingScreen {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.validateEmptyListMessage(
+			description = "Select the form and table view you want and deploy your app as a widget, standalone or place it in the product menu.",
+			title = "There are no apps yet.");
+
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New App");
+	}
+
+	@description = "Validate empty list state of Custom Object listing screen"
+	@priority = "5"
+	test ValidateEmptyStateOfCustomObjectListingScreen {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.teardownAppBuilder();
+
+		AppBuilderAdmin.validateEmptyListMessage(
+			description = "Custom Objects define the types of data your business application needs.",
+			title = "There are no custom objects yet.");
+
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+
+	}
+
+	@description = "Validate empty list state of Form View listing screen"
+	@priority = "5"
+	test ValidateEmptyStateOfFormViewListingScreen {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.validateEmptyListMessage(
+			description = "Create one or more forms to display the data held in your data object.",
+			title = "There are no form views yet.");
+
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Form View");
+	}
+
+	@description = "Validate empty list state of Table View listing screen"
+	@priority = "5"
+	test ValidateEmptyStateOfTableViewListingScreen {
+		property portal.acceptance = "false";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "false",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.validateEmptyListMessage(
+			description = "Create one or more tables to display the data held in your data object.",
+			title = "There are no table views yet.");
+
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Table View");
+	}
+
+}

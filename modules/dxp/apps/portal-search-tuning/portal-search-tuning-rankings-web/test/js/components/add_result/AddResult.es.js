@@ -15,7 +15,7 @@ import {
 	FETCH_SEARCH_DOCUMENTS_URL,
 	getMockResultsData
 } from '../../mocks/data.es';
-import {fireEvent, render, wait, within} from '@testing-library/react';
+import {fireEvent, render, wait} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 const MODAL_ID = 'add-result-modal';
@@ -50,27 +50,6 @@ describe('AddResult', () => {
 
 		await wait(() => {
 			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
-		});
-	});
-
-	it('closes the modal when the cancel button gets clicked', async () => {
-		const {getByTestId, getByText, queryByTestId} = render(
-			<AddResult
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				onAddResultSubmit={jest.fn()}
-			/>
-		);
-
-		fireEvent.click(getByText('add-result'));
-
-		await wait(() => {
-			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
-		});
-
-		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('cancel'));
-
-		await wait(() => {
-			expect(queryByTestId(MODAL_ID)).toBeNull();
 		});
 	});
 });

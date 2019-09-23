@@ -15,6 +15,7 @@ import {
 	fireEvent,
 	getByPlaceholderText,
 	render,
+	wait,
 	waitForElement
 } from '@testing-library/react';
 import {
@@ -164,6 +165,24 @@ describe('AddResultModal', () => {
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
 		expect(modal).not.toHaveTextContent('sorry-there-are-no-results-found');
+	});
+
+	it('closes the modal when the cancel button gets clicked', async () => {
+		const {getByText, queryByTestId} = render(
+			<AddResultModal
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+				onCloseModal={jest.fn()}
+			/>
+		);
+
+		await waitForElement(() => queryByTestId(MODAL_ID));
+
+		fireEvent.click(getByText('cancel'));
+
+		await wait(() => {
+			expect(queryByTestId(MODAL_ID)).toBeNull();
+		});
 	});
 
 	/**

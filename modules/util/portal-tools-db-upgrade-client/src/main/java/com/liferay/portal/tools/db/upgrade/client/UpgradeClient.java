@@ -91,6 +91,11 @@ public class UpgradeClient {
 			}
 
 			File logDir = new File(_jarDir, "logs");
+
+			if ((logDir != null) && !logDir.exists()) {
+				logDir.mkdirs();
+			}
+
 			File logFile = null;
 
 			if (commandLine.hasOption("log-file")) {
@@ -164,10 +169,6 @@ public class UpgradeClient {
 		verifyProperties();
 
 		File logDir = _logFile.getParentFile();
-
-		if ((logDir != null) && !logDir.exists()) {
-			logDir.mkdirs();
-		}
 
 		System.setOut(new TeePrintStream(_fileOutputStream, System.out));
 

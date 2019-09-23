@@ -42,7 +42,6 @@ import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
@@ -128,7 +127,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	@SuppressWarnings("rawtypes")
 	private BaselineTask _addTaskBaseline(
 		final AbstractArchiveTask newJarTask) {
 
@@ -139,21 +137,6 @@ public class BaselinePlugin implements Plugin<Project> {
 			"Compares the public API of this project with the public API of " +
 				"the previous released version, if found.");
 		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
-
-		Project project = baselineTask.getProject();
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withId(
-			"biz.aQute.bnd.builder",
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					_configureTaskBaselineForBndBuilderPlugin(baselineTask);
-				}
-
-			});
 
 		return baselineTask;
 	}
@@ -384,12 +367,6 @@ public class BaselinePlugin implements Plugin<Project> {
 			project, "baseline.jar.report.only.dirty.packages", true);
 
 		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
-	}
-
-	private void _configureTaskBaselineForBndBuilderPlugin(
-		BaselineTask baselineTask) {
-
-		GradleUtil.setProperty(baselineTask, "bundleTask", null);
 	}
 
 	private void _configureTasksBaseline(

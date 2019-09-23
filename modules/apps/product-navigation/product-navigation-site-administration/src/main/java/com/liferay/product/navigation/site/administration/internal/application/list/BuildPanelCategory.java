@@ -46,9 +46,4 @@ public class BuildPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "category.site_administration.build");
 	}
 
-	@Override
-	public boolean isPersistState() {
-		return true;
-	}
-
 }

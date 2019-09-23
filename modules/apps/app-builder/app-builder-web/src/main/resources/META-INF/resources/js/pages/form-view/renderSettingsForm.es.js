@@ -60,6 +60,10 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 	};
 
 	const handleFormAttached = function() {
+		this.evaluate();
+	};
+
+	const handleFormRendered = () => {
 		const firstInput = container.querySelector('input');
 
 		if (firstInput && !container.contains(document.activeElement)) {
@@ -69,8 +73,6 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 				firstInput.select();
 			}
 		}
-
-		this.evaluate();
 	};
 
 	return new Form(
@@ -80,7 +82,8 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 			events: {
 				attached: handleFormAttached,
 				fieldBlurred: handleFieldBlurred,
-				fieldEdited: handleFieldEdited
+				fieldEdited: handleFieldEdited,
+				rendered: handleFormRendered
 			},
 			spritemap
 		},

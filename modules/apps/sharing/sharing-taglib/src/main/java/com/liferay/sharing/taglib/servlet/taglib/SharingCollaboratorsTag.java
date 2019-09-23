@@ -15,6 +15,7 @@
 package com.liferay.sharing.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
@@ -76,6 +77,13 @@ public class SharingCollaboratorsTag extends IncludeTag {
 			"classPK", String.valueOf(getClassPK()));
 
 		collaboratorsResourceURL.setResourceID("/sharing/collaborators");
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classNameId",
+			PortalUtil.getClassNameId(getClassName()));
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classPK", getClassPK());
 
 		httpServletRequest.setAttribute(
 			"liferay-sharing:collaborators:collaboratorsResourceURL",

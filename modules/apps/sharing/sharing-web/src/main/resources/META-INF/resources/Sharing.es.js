@@ -233,7 +233,9 @@ class Sharing extends PortletBase {
 						`#p_p_id${this._refererPortletNamespace}`
 					);
 
-					parent.Liferay.fire('sharing:share');
+					parent.Liferay.fire(
+						`sharing:share:${this._classNameId}:${this._classPK}`
+					);
 
 					this._showNotification(json.successMessage);
 				})

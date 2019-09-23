@@ -22,7 +22,12 @@ import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
 
-const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
+const Collaborators = ({
+	classNameId,
+	classPK,
+	collaboratorsResourceURL,
+	portletNamespace
+}) => {
 	const [data, setData] = useState(null);
 
 	const updateCollaborators = useCallback(() => {
@@ -34,8 +39,11 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	useEffect(() => updateCollaborators(), [updateCollaborators]);
 
 	useEffect(() => {
-		Liferay.on('sharing:share', updateCollaborators);
-	}, [updateCollaborators]);
+		Liferay.on(
+			`sharing:share:${classNameId}:${classPK}`,
+			updateCollaborators
+		);
+	}, [classNameId, classPK, updateCollaborators]);
 
 	const handleClick = () => {
 		Liferay.Util.openWindow({

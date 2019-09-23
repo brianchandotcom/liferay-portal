@@ -51,9 +51,15 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 		});
 	};
 
-	if (!data) return <ClayLoadingIndicator />;
+	if (!data) {
+		return <ClayLoadingIndicator />;
+	}
 
 	const {owner, total, manageCollaboratorsURL, collaborators} = data;
+
+	if (total < 1) {
+		return;
+	}
 
 	const moreCollaboratorsCount = total - collaborators.length;
 

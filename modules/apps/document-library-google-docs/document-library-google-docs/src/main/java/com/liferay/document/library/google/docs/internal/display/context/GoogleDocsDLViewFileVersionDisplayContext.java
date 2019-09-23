@@ -88,6 +88,10 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
+		if (!isActionsVisible()) {
+			return menu;
+		}
+
 		// See LPS-79987
 
 		if (Validator.isNull(

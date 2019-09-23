@@ -57,7 +57,7 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 		Type(
-			key_fieldLabel = "Custom Canonical URL",
+			key_fieldLabel = "Canonical URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "http://mycustomizedurl.com/mydesiredurl");
 

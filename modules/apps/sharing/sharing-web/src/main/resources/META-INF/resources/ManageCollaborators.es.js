@@ -311,9 +311,10 @@ class ManageCollaborators extends PortletBase {
 					  });
 			})
 			.then(json => {
-				parent.Liferay.fire(
-					`sharing:changed:${this._classNameId}:${this._classPK}`
-				);
+				parent.Liferay.fire('sharing:changed', {
+					classNameId: this._classNameId,
+					classPK: this._classPK
+				});
 				this._loadingResponse = false;
 				this._showNotification(json.successMessage);
 			})

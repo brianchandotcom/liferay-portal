@@ -39,10 +39,14 @@ const Collaborators = ({
 	useEffect(() => updateCollaborators(), [updateCollaborators]);
 
 	useEffect(() => {
-		Liferay.on(
-			`sharing:changed:${classNameId}:${classPK}`,
-			updateCollaborators
-		);
+		Liferay.on('sharing:changed', event => {
+			if (
+				classNameId === event.classNameId &&
+				event.classPK === classPK
+			) {
+				updateCollaborators();
+			}
+		});
 	}, [classNameId, classPK, updateCollaborators]);
 
 	const handleClick = () => {

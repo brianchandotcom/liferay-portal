@@ -21,7 +21,7 @@ import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
 
-const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
+const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
@@ -135,9 +135,9 @@ const ManageCollaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	);
 };
 
-ManageCollaborators.propTypes = {
+Collaborators.propTypes = {
 	collaboratorsURL: PropTypes.string,
 	portletNamespace: PropTypes.string.isRequired
 };
 
-export default ManageCollaborators;
+export default Collaborators;

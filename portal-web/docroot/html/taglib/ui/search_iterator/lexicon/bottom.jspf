@@ -99,34 +99,42 @@
 
 			if (contentBox) {
 				var mainContent = contentBox.ancestor('#main-content');
+				var horizontalScrollingContainer = document.querySelector('.lfr-search-container-fixed-first-column .table-responsive');
+				var fixedHeaderScrollingContainer = document.querySelector('.lfr-search-iterator-fixed-header-inner-wrapper');
 
-				if (mainContent) {
-					var scrollingContainer = window === Liferay.Util.getOpener() ? window : mainContent._node;
+				if (mainContent && horizontalScrollingContainer && fixedHeaderScrollingContainer) {
+					var verticalScrollingContainer = window === Liferay.Util.getOpener() ? window : mainContent._node;
 
 					var table = fixedHeader.parentElement.parentElement;
 					var trDomRect = fixedHeader.previousElementSibling.getBoundingClientRect();
 
+					var syncScrollingContainers = function(event) {
+						fixedHeaderScrollingContainer.scrollLeft = horizontalScrollingContainer.scrollLeft;
+					}
+
 					var fixedHeaderEventHandler = function(event) {
-						var scrollTop = scrollingContainer.scrollTop;
-
+						var scrollTop = verticalScrollingContainer.scrollTop;
 						var trDomRecTop = trDomRect.top;
-
-						fixedHeader.style.transform = 'translateY(' + Math.ceil(scrollTop - table.offsetTop - trDomRect.height) + 'px)';
 
 						if (fixedHeader.classList.contains('hide') && (scrollTop >= trDomRecTop)) {
 							fixedHeader.classList.remove('hide');
+
+							syncScrollingContainers();
 						}
-						else if (scrollingContainer.scrollTop < trDomRecTop) {
+						else if (verticalScrollingContainer.scrollTop < trDomRecTop) {
 							fixedHeader.classList.add('hide');
 						}
 					};
 
-					scrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
+					verticalScrollingContainer.addEventListener('scroll', fixedHeaderEventHandler);
+
+					horizontalScrollingContainer.addEventListener('scroll', syncScrollingContainers);
 
 					Liferay.on(
 						'destroyPortlet',
 						function() {
-							scrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
+							verticalScrollingContainer.removeEventListener('scroll', fixedHeaderEventHandler);
+							horizontalScrollingContainer.removeEventListener('scroll', syncScrollingContainers);
 						}
 					);
 				}

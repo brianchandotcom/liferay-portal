@@ -35,5 +35,5 @@ if (rowChecker != null) {
 	</div>
 </c:if>
 
-<div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %> lfr-search-container-wrapper <%= displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) ? StringPool.BLANK : "main-content-body" %>">
+<div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %> lfr-search-container-wrapper <%= displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) ? StringPool.BLANK : "main-content-body" %> <%= fixedHeader ? "lfr-search-container-fixed-first-column" : StringPool.BLANK %>">
 	<div id="<%= namespace + id %>SearchContainer">

@@ -174,7 +174,17 @@ if (fixedHeader) {
 
 				<c:if test="<%= fixedHeader %>">
 					<tr aria-hidden="true" class="hide lfr-search-iterator-fixed-header" id="<%= namespace + id %>fixedHeader">
-						<%= theadContent %>
+						<th>
+							<div class="lfr-search-iterator-fixed-header-inner-wrapper">
+								<table>
+									<thead>
+										<tr>
+											<%= theadContent %>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</th>
 					</tr>
 				</c:if>
 			</thead>

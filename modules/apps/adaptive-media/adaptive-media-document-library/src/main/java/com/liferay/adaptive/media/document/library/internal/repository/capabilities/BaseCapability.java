@@ -18,6 +18,7 @@ import com.liferay.adaptive.media.document.library.internal.util.AMCleanUpOnUpda
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
+import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,7 +69,9 @@ public abstract class BaseCapability
 	protected InputStreamSanitizer inputStreamSanitizer;
 
 	private void _deleteAdaptiveMedia(FileEntry fileEntry) {
-		if (ExportImportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!DLAppHelperThreadLocal.isEnabled()) {
+
 			return;
 		}
 
@@ -91,7 +94,9 @@ public abstract class BaseCapability
 	}
 
 	private void _updateAdaptiveMedia(FileEntry fileEntry) {
-		if (ExportImportThreadLocal.isImportInProcess()) {
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!DLAppHelperThreadLocal.isEnabled()) {
+
 			return;
 		}
 

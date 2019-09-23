@@ -77,7 +77,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 			return true;
 		}
 
-		if (category.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) &&
+		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION) &&
 			group.isLayout() && !portlet.isScopeable()) {
 
 			return true;

@@ -1690,9 +1690,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				for (WorkflowMetricsSLADefinitionVersion
 						workflowMetricsSLADefinitionVersion : list) {
 
-					if ((workflowMetricsSLADefinitionId !=
+					if (workflowMetricsSLADefinitionId !=
 							workflowMetricsSLADefinitionVersion.
-								getWorkflowMetricsSLADefinitionId())) {
+								getWorkflowMetricsSLADefinitionId()) {
 
 						list = null;
 

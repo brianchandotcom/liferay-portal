@@ -45,7 +45,7 @@ import javax.sql.DataSource;
  */
 public abstract class SPIDefinitionServiceBaseImpl
 	extends BaseServiceImpl
-	implements SPIDefinitionService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SPIDefinitionService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

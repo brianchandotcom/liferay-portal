@@ -49,7 +49,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class SourceServiceBaseImpl
-	extends BaseServiceImpl implements SourceService, IdentifiableOSGiService {
+	extends BaseServiceImpl implements IdentifiableOSGiService, SourceService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

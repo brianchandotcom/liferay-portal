@@ -187,7 +187,7 @@ public class SPIDefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SPIDefinition spiDefinition : list) {
-					if ((companyId != spiDefinition.getCompanyId())) {
+					if (companyId != spiDefinition.getCompanyId()) {
 						list = null;
 
 						break;

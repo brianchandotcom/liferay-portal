@@ -180,8 +180,8 @@ public class KaleoProcessLinkPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoProcessLink kaleoProcessLink : list) {
-					if ((kaleoProcessId !=
-							kaleoProcessLink.getKaleoProcessId())) {
+					if (kaleoProcessId !=
+							kaleoProcessLink.getKaleoProcessId()) {
 
 						list = null;
 

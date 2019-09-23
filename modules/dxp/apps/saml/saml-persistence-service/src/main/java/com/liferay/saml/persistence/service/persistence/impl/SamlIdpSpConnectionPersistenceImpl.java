@@ -184,7 +184,7 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlIdpSpConnection samlIdpSpConnection : list) {
-					if ((companyId != samlIdpSpConnection.getCompanyId())) {
+					if (companyId != samlIdpSpConnection.getCompanyId()) {
 						list = null;
 
 						break;

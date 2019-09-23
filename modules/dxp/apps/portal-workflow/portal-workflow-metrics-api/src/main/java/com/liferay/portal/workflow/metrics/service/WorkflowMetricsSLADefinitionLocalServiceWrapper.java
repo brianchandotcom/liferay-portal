@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class WorkflowMetricsSLADefinitionLocalServiceWrapper
-	implements WorkflowMetricsSLADefinitionLocalService,
-			   ServiceWrapper<WorkflowMetricsSLADefinitionLocalService> {
+	implements ServiceWrapper<WorkflowMetricsSLADefinitionLocalService>,
+			   WorkflowMetricsSLADefinitionLocalService {
 
 	public WorkflowMetricsSLADefinitionLocalServiceWrapper(
 		WorkflowMetricsSLADefinitionLocalService

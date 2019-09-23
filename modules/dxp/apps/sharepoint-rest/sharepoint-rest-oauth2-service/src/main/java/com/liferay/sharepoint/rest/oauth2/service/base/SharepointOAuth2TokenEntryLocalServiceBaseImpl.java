@@ -62,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class SharepointOAuth2TokenEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SharepointOAuth2TokenEntryLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SharepointOAuth2TokenEntryLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

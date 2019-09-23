@@ -174,8 +174,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlIdpSsoSession samlIdpSsoSession : list) {
-					if ((createDate.getTime() <=
-							samlIdpSsoSession.getCreateDate().getTime())) {
+					if (createDate.getTime() <=
+							samlIdpSsoSession.getCreateDate().getTime()) {
 
 						list = null;
 

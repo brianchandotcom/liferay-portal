@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SourceServiceWrapper
-	implements SourceService, ServiceWrapper<SourceService> {
+	implements ServiceWrapper<SourceService>, SourceService {
 
 	public SourceServiceWrapper(SourceService sourceService) {
 		_sourceService = sourceService;

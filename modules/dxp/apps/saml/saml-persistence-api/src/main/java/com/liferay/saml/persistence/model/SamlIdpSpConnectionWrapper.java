@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SamlIdpSpConnectionWrapper
 	extends BaseModelWrapper<SamlIdpSpConnection>
-	implements SamlIdpSpConnection, ModelWrapper<SamlIdpSpConnection> {
+	implements ModelWrapper<SamlIdpSpConnection>, SamlIdpSpConnection {
 
 	public SamlIdpSpConnectionWrapper(SamlIdpSpConnection samlIdpSpConnection) {
 		super(samlIdpSpConnection);

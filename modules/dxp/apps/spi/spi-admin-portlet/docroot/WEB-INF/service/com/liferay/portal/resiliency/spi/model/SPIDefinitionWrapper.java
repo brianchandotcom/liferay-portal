@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SPIDefinitionWrapper
 	extends BaseModelWrapper<SPIDefinition>
-	implements SPIDefinition, ModelWrapper<SPIDefinition> {
+	implements ModelWrapper<SPIDefinition>, SPIDefinition {
 
 	public SPIDefinitionWrapper(SPIDefinition spiDefinition) {
 		super(spiDefinition);

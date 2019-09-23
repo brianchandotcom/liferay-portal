@@ -1579,7 +1579,7 @@ public class SourcePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Source source : list) {
-					if ((groupId != source.getGroupId())) {
+					if (groupId != source.getGroupId()) {
 						list = null;
 
 						break;
@@ -2457,7 +2457,7 @@ public class SourcePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Source source : list) {
-					if ((companyId != source.getCompanyId())) {
+					if (companyId != source.getCompanyId()) {
 						list = null;
 
 						break;

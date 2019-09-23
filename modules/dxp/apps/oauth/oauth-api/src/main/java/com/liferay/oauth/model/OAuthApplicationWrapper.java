@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class OAuthApplicationWrapper
 	extends BaseModelWrapper<OAuthApplication>
-	implements OAuthApplication, ModelWrapper<OAuthApplication> {
+	implements ModelWrapper<OAuthApplication>, OAuthApplication {
 
 	public OAuthApplicationWrapper(OAuthApplication oAuthApplication) {
 		super(oAuthApplication);

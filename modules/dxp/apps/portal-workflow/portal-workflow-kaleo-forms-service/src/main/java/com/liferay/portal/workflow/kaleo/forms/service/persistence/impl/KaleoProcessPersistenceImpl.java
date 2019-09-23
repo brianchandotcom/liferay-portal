@@ -1589,7 +1589,7 @@ public class KaleoProcessPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoProcess kaleoProcess : list) {
-					if ((groupId != kaleoProcess.getGroupId())) {
+					if (groupId != kaleoProcess.getGroupId()) {
 						list = null;
 
 						break;
@@ -2449,7 +2449,7 @@ public class KaleoProcessPersistenceImpl
 		if (result instanceof KaleoProcess) {
 			KaleoProcess kaleoProcess = (KaleoProcess)result;
 
-			if ((DDLRecordSetId != kaleoProcess.getDDLRecordSetId())) {
+			if (DDLRecordSetId != kaleoProcess.getDDLRecordSetId()) {
 				result = null;
 			}
 		}

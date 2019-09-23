@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SPIDefinitionServiceWrapper
-	implements SPIDefinitionService, ServiceWrapper<SPIDefinitionService> {
+	implements ServiceWrapper<SPIDefinitionService>, SPIDefinitionService {
 
 	public SPIDefinitionServiceWrapper(
 		SPIDefinitionService spiDefinitionService) {

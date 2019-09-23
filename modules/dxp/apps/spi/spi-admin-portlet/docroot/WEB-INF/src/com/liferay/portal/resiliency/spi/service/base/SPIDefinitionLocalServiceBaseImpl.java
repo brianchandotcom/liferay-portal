@@ -62,7 +62,7 @@ import javax.sql.DataSource;
  */
 public abstract class SPIDefinitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SPIDefinitionLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SPIDefinitionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

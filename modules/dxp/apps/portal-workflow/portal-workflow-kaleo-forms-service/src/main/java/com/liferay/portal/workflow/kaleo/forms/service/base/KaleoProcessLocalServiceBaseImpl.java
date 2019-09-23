@@ -74,7 +74,7 @@ import javax.sql.DataSource;
  */
 public abstract class KaleoProcessLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements KaleoProcessLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, KaleoProcessLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

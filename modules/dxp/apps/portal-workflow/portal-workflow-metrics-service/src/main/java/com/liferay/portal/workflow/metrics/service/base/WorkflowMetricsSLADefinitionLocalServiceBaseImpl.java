@@ -78,8 +78,8 @@ import javax.sql.DataSource;
  */
 public abstract class WorkflowMetricsSLADefinitionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements WorkflowMetricsSLADefinitionLocalService,
-			   IdentifiableOSGiService {
+	implements IdentifiableOSGiService,
+			   WorkflowMetricsSLADefinitionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

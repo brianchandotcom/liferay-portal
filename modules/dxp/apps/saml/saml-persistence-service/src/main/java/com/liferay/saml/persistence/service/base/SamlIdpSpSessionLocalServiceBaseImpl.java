@@ -68,7 +68,7 @@ import javax.sql.DataSource;
  */
 public abstract class SamlIdpSpSessionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SamlIdpSpSessionLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SamlIdpSpSessionLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

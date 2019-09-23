@@ -33,8 +33,8 @@ import java.util.Map;
  */
 public class WorkflowMetricsSLADefinitionVersionWrapper
 	extends BaseModelWrapper<WorkflowMetricsSLADefinitionVersion>
-	implements WorkflowMetricsSLADefinitionVersion,
-			   ModelWrapper<WorkflowMetricsSLADefinitionVersion> {
+	implements ModelWrapper<WorkflowMetricsSLADefinitionVersion>,
+			   WorkflowMetricsSLADefinitionVersion {
 
 	public WorkflowMetricsSLADefinitionVersionWrapper(
 		WorkflowMetricsSLADefinitionVersion

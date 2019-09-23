@@ -172,8 +172,8 @@ public class SamlSpMessagePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SamlSpMessage samlSpMessage : list) {
-					if ((expirationDate.getTime() <=
-							samlSpMessage.getExpirationDate().getTime())) {
+					if (expirationDate.getTime() <=
+							samlSpMessage.getExpirationDate().getTime()) {
 
 						list = null;
 

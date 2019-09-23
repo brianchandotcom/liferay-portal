@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 public class SharepointOAuth2TokenEntryLocalServiceWrapper
-	implements SharepointOAuth2TokenEntryLocalService,
-			   ServiceWrapper<SharepointOAuth2TokenEntryLocalService> {
+	implements ServiceWrapper<SharepointOAuth2TokenEntryLocalService>,
+			   SharepointOAuth2TokenEntryLocalService {
 
 	public SharepointOAuth2TokenEntryLocalServiceWrapper(
 		SharepointOAuth2TokenEntryLocalService

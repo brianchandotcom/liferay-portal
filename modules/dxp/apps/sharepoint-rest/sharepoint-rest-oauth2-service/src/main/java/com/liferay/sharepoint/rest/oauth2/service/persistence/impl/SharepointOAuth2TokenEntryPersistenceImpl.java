@@ -178,7 +178,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 				for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
 						list) {
 
-					if ((userId != sharepointOAuth2TokenEntry.getUserId())) {
+					if (userId != sharepointOAuth2TokenEntry.getUserId()) {
 						list = null;
 
 						break;

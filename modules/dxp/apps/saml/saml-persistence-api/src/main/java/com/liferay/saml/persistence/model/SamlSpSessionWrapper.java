@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SamlSpSessionWrapper
 	extends BaseModelWrapper<SamlSpSession>
-	implements SamlSpSession, ModelWrapper<SamlSpSession> {
+	implements ModelWrapper<SamlSpSession>, SamlSpSession {
 
 	public SamlSpSessionWrapper(SamlSpSession samlSpSession) {
 		super(samlSpSession);

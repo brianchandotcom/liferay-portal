@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class OAuthUserServiceBaseImpl
 	extends BaseServiceImpl
-	implements OAuthUserService, AopService, IdentifiableOSGiService {
+	implements AopService, IdentifiableOSGiService, OAuthUserService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

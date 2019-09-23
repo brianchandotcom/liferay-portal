@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SamlSpAuthRequestWrapper
 	extends BaseModelWrapper<SamlSpAuthRequest>
-	implements SamlSpAuthRequest, ModelWrapper<SamlSpAuthRequest> {
+	implements ModelWrapper<SamlSpAuthRequest>, SamlSpAuthRequest {
 
 	public SamlSpAuthRequestWrapper(SamlSpAuthRequest samlSpAuthRequest) {
 		super(samlSpAuthRequest);

@@ -32,7 +32,7 @@ import java.util.Map;
  * @generated
  */
 public class SourceWrapper
-	extends BaseModelWrapper<Source> implements Source, ModelWrapper<Source> {
+	extends BaseModelWrapper<Source> implements ModelWrapper<Source>, Source {
 
 	public SourceWrapper(Source source) {
 		super(source);

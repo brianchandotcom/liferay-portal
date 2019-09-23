@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class SamlSpMessageWrapper
 	extends BaseModelWrapper<SamlSpMessage>
-	implements SamlSpMessage, ModelWrapper<SamlSpMessage> {
+	implements ModelWrapper<SamlSpMessage>, SamlSpMessage {
 
 	public SamlSpMessageWrapper(SamlSpMessage samlSpMessage) {
 		super(samlSpMessage);

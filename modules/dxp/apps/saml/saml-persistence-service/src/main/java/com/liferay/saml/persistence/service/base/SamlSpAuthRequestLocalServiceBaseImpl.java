@@ -68,7 +68,7 @@ import javax.sql.DataSource;
  */
 public abstract class SamlSpAuthRequestLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements SamlSpAuthRequestLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, SamlSpAuthRequestLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

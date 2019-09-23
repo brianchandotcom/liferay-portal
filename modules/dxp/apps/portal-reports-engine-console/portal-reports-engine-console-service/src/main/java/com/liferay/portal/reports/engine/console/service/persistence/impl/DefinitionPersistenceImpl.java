@@ -1585,7 +1585,7 @@ public class DefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
-					if ((groupId != definition.getGroupId())) {
+					if (groupId != definition.getGroupId()) {
 						list = null;
 
 						break;
@@ -2474,7 +2474,7 @@ public class DefinitionPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Definition definition : list) {
-					if ((companyId != definition.getCompanyId())) {
+					if (companyId != definition.getCompanyId()) {
 						list = null;
 
 						break;

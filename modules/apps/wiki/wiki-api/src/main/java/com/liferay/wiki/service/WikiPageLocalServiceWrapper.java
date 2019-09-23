@@ -1201,6 +1201,11 @@ public class WikiPageLocalServiceWrapper
 	}
 
 	@Override
+	public void updateLastPostDate(long nodeId, java.util.Date lastPostDate) {
+		_wikiPageLocalService.updateLastPostDate(nodeId, lastPostDate);
+	}
+
+	@Override
 	public com.liferay.wiki.model.WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,

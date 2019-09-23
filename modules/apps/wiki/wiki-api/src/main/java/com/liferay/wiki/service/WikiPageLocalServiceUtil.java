@@ -1080,6 +1080,12 @@ public class WikiPageLocalServiceUtil {
 			priority);
 	}
 
+	public static void updateLastPostDate(
+		long nodeId, java.util.Date lastPostDate) {
+
+		getService().updateLastPostDate(nodeId, lastPostDate);
+	}
+
 	public static com.liferay.wiki.model.WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,

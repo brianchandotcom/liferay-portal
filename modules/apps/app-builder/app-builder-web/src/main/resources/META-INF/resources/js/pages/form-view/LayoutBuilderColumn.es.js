@@ -12,7 +12,9 @@
  * details.
  */
 
-import {useContext, useEffect} from 'react';
+import {useEffect, useCallback, useContext} from 'react';
+import FormViewContext from './FormViewContext.es';
+import DataLayoutBuilderContext from './LayoutBuilderContext.es';
 import {useDrop} from 'react-dnd';
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
@@ -20,8 +22,7 @@ import {
 	DRAG_CUSTOM_OBJECT_FIELD,
 	DRAG_FIELD_TYPE
 } from '../../utils/dragTypes.es';
-import FormViewContext from './FormViewContext.es';
-import {ADD_CUSTOM_OBJECT_FIELD} from './actions.es';
+import {addCustomObjectField, addLayoutBuilderField} from './actions.es';
 
 const replaceColumn = node => {
 	if (node.parentNode) {
@@ -30,29 +31,45 @@ const replaceColumn = node => {
 };
 
 export default ({node}) => {
-	const [, dispatch, dispatchBuilderEvent] = useContext(FormViewContext);
+	const [{dataDefinition}] = useContext(FormViewContext);
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const onDrop = useCallback(
+		({data, type}) => {
+			const addedToPlaceholder = !!dom.closest(node, '.placeholder');
+			const indexes = getIndexes(node.parentElement);
+
+			if (type === DRAG_FIELD_TYPE) {
+				dataLayoutBuilder.dispatch(
+					'fieldAdded',
+					addLayoutBuilderField({
+						addedToPlaceholder,
+						dataLayoutBuilder,
+						fieldTypeName: data.name,
+						indexes
+					})
+				);
+			} else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
+				dataLayoutBuilder.dispatch(
+					'fieldAdded',
+					addCustomObjectField({
+						addedToPlaceholder,
+						dataDefinition,
+						dataDefinitionFieldName: data.name,
+						dataLayoutBuilder,
+						indexes
+					})
+				);
+			}
+		},
+		[dataDefinition, dataLayoutBuilder, node]
+	);
 	const [{canDrop, overTarget}, dropColumn] = useDrop({
 		accept: [DRAG_CUSTOM_OBJECT_FIELD, DRAG_FIELD_TYPE],
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver()
 		}),
-		drop: ({type, ...item}) => {
-			const payload = {
-				addedToPlaceholder: !!dom.closest(node, '.placeholder'),
-				fieldType: {
-					...item.data,
-					editable: true
-				},
-				indexes: getIndexes(node.parentElement)
-			};
-
-			if (type === DRAG_FIELD_TYPE) {
-				dispatchBuilderEvent('fieldAdded', payload);
-			} else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
-				dispatch({payload, type: ADD_CUSTOM_OBJECT_FIELD});
-			}
-		}
+		drop: onDrop
 	});
 
 	useEffect(() => {

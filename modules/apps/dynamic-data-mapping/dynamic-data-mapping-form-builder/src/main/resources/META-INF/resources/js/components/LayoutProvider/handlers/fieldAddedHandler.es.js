@@ -56,7 +56,7 @@ const handleFieldAdded = (props, state, event) => {
 		name,
 		settingsContext,
 		spritemap,
-		type: name
+		type: fieldType.name
 	};
 
 	if (addedToPlaceholder) {

@@ -17,7 +17,49 @@ export const UPDATE_DATA_DEFINITION = 'UPDATE_DATA_DEFINITION';
 export const UPDATE_DATA_LAYOUT = 'UPDATE_DATA_LAYOUT';
 export const UPDATE_DATA_LAYOUT_NAME = 'UPDATE_DATA_LAYOUT_NAME';
 export const UPDATE_FIELD_TYPES = 'UPDATE_FIELD_TYPES';
+export const UPDATE_FOCUSED_FIELD = 'UPDATE_FOCUSED_FIELD';
 export const UPDATE_IDS = 'UPDATE_IDS';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 
-export const actionBuilders = {};
+export const addCustomObjectField = ({
+	dataDefinition,
+	dataDefinitionFieldName,
+	dataLayoutBuilder,
+	...payload
+}) => {
+	const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
+		({name}) => name === dataDefinitionFieldName
+	);
+	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
+		return name === dataDefinitionField.fieldType;
+	});
+	const settingsContext = dataLayoutBuilder.getFieldSettingsContext(
+		dataDefinitionField
+	);
+
+	return {
+		...payload,
+		fieldType: {
+			...fieldType,
+			settingsContext
+		}
+	};
+};
+
+export const addLayoutBuilderField = ({
+	dataLayoutBuilder,
+	fieldTypeName,
+	...payload
+}) => {
+	const fieldType = dataLayoutBuilder.getFieldTypes().find(({name}) => {
+		return name === fieldTypeName;
+	});
+
+	return {
+		...payload,
+		fieldType: {
+			...fieldType,
+			editable: true
+		}
+	};
+};

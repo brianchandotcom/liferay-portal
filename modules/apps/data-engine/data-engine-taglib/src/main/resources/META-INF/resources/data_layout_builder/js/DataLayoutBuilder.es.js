@@ -136,6 +136,34 @@ class DataLayoutBuilder extends Component {
 		};
 	}
 
+	getFieldSettingsContext(dataDefinitionField) {
+		const fieldTypes = this.getFieldTypes();
+		const fieldType = fieldTypes.find(({name}) => {
+			return name === dataDefinitionField.fieldType;
+		});
+		const {settingsContext} = fieldType;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		return {
+			...settingsContext,
+			pages: visitor.mapFields(field => {
+				const {fieldName} = field;
+				const propertyName = this._getDataDefinitionFieldPropertyName(
+					fieldName
+				);
+				const propertyValue = this._getDataDefinitionFieldPropertyValue(
+					dataDefinitionField,
+					propertyName
+				);
+
+				return {
+					...field,
+					value: propertyValue || field.value
+				};
+			})
+		};
+	}
+
 	getFieldTypes() {
 		const {fieldTypes} = this.props;
 
@@ -247,6 +275,24 @@ class DataLayoutBuilder extends Component {
 		];
 
 		return fields.indexOf(name) === -1;
+	}
+
+	_getDataDefinitionFieldPropertyName(propertyName) {
+		const map = {
+			fieldName: 'name',
+			predefinedValue: 'defaultValue',
+			type: 'fieldType'
+		};
+
+		return map[propertyName] || propertyName;
+	}
+
+	_getDataDefinitionFieldPropertyValue(dataDefinitionField, propertyName) {
+		if (this._isCustomProperty(propertyName)) {
+			return dataDefinitionField.customProperties[propertyName];
+		}
+
+		return dataDefinitionField[propertyName];
 	}
 
 	_setContext(context) {

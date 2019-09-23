@@ -65,8 +65,8 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 
 	return (
 		<>
-			<div className="autofit-row manage-collaborators sidebar-panel">
-				<div className="autofit-col manage-collaborators-owner">
+			<div className="autofit-row collaborators sidebar-panel">
+				<div className="autofit-col collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"
 						data-title={Liferay.Util.sub(
@@ -82,7 +82,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 					<div className="autofit-row">
 						{collaborators.map(collaborator => (
 							<div
-								className="autofit-col manage-collaborators-collaborator"
+								className="autofit-col collaborators-collaborator"
 								key={collaborator.userId}
 							>
 								<div
@@ -94,7 +94,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 							</div>
 						))}
 						{moreCollaboratorsCount > 0 && (
-							<div className="autofit-col manage-collaborators-collaborator">
+							<div className="autofit-col collaborators-collaborator">
 								<div
 									className="lfr-portal-tooltip"
 									data-title={
@@ -129,7 +129,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 			{manageCollaboratorsURL && (
 				<div className="autofit-row sidebar-panel">
 					<ClayButton
-						className="btn-link manage-collaborators-btn"
+						className="btn-link collaborators-btn"
 						displayType="link"
 						onClick={handleClick}
 						small

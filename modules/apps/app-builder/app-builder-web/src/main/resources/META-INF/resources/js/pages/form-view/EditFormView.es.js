@@ -14,8 +14,8 @@
 
 import React, {useState} from 'react';
 import CustomObjectSidebar from './CustomObjectSidebar.es';
-import LayoutBuilderManager from './LayoutBuilderManager.es';
-import LayoutBuilderSidebar from './LayoutBuilderSidebar.es';
+import DataLayoutBuilderDragAndDrop from './DataLayoutBuilderDragAndDrop.es';
+import DataLayoutBuilderSidebar from './DataLayoutBuilderSidebar.es';
 import {createPortal} from 'react-dom';
 import FormViewUpperToolbar from './FormViewUpperToolbar.es';
 import FormViewContextProvider from './FormViewContextProvider.es';
@@ -51,12 +51,14 @@ const EditFormView = props => {
 				document.querySelector(`#${customObjectSidebarElementId}`)
 			)}
 
-			<LayoutBuilderSidebar
+			<DataLayoutBuilderSidebar
 				dataLayoutBuilder={dataLayoutBuilder}
 				dataLayoutBuilderElementId={dataLayoutBuilderElementId}
 			/>
 
-			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
+			<DataLayoutBuilderDragAndDrop
+				dataLayoutBuilder={dataLayoutBuilder}
+			/>
 		</FormViewContextProvider>
 	);
 };

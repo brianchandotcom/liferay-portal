@@ -22,7 +22,7 @@ import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
-import DataLayoutBuilderContext from './LayoutBuilderContext.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
 
 const DefaultSidebarBody = ({keywords}) => {

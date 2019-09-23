@@ -14,7 +14,7 @@
 
 import {useEffect, useCallback, useContext} from 'react';
 import FormViewContext from './FormViewContext.es';
-import DataLayoutBuilderContext from './LayoutBuilderContext.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import {useDrop} from 'react-dnd';
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';

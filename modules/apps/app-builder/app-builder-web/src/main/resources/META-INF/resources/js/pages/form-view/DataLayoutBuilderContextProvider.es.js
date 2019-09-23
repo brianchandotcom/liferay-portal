@@ -13,7 +13,7 @@
  */
 
 import React, {useEffect, useContext} from 'react';
-import LayoutBuilderContext from './LayoutBuilderContext.es';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
 import {
 	UPDATE_FIELD_TYPES,
@@ -82,10 +82,10 @@ export default ({dataLayoutBuilder, children}) => {
 	}, [dataLayoutBuilder, dispatch]);
 
 	return (
-		<LayoutBuilderContext.Provider
+		<DataLayoutBuilderContext.Provider
 			value={[dataLayoutBuilder, dataLayoutBuilder.dispatch]}
 		>
 			{children}
-		</LayoutBuilderContext.Provider>
+		</DataLayoutBuilderContext.Provider>
 	);
 };

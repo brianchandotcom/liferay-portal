@@ -23,7 +23,7 @@ import {
 	UPDATE_DATA_LAYOUT,
 	UPDATE_IDS
 } from './actions.es';
-import LayoutBuilderContextProvider from './LayoutBuilderContextProvider.es';
+import DataLayoutBuilderContextProvider from './DataLayoutBuilderContextProvider.es';
 
 export default ({
 	dataDefinitionId,
@@ -69,9 +69,11 @@ export default ({
 
 	return (
 		<FormViewContext.Provider value={[state, dispatch]}>
-			<LayoutBuilderContextProvider dataLayoutBuilder={dataLayoutBuilder}>
+			<DataLayoutBuilderContextProvider
+				dataLayoutBuilder={dataLayoutBuilder}
+			>
 				{children}
-			</LayoutBuilderContextProvider>
+			</DataLayoutBuilderContextProvider>
 		</FormViewContext.Provider>
 	);
 };

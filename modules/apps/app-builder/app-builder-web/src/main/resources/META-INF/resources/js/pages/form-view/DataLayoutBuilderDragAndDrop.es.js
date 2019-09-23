@@ -15,7 +15,7 @@
 import dom from 'metal-dom';
 import React, {useEffect, useState} from 'react';
 import DragLayer from '../../components/drag-and-drop/DragLayer.es';
-import LayoutBuilderColumn from './LayoutBuilderColumn.es';
+import DataLayoutBuilderColumn from './DataLayoutBuilderColumn.es';
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 
 const getColumns = () => [
@@ -51,7 +51,7 @@ export default ({dataLayoutBuilder}) => {
 			{columns.map(
 				(node, index) =>
 					node.parentElement && (
-						<LayoutBuilderColumn
+						<DataLayoutBuilderColumn
 							key={getColumnKey(node, index)}
 							node={node}
 						/>

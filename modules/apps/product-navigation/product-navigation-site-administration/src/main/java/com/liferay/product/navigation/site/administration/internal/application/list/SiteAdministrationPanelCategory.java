@@ -122,21 +122,6 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	public void setGroupURLProvider(GroupURLProvider groupURLProvider) {
-		_groupURLProvider = groupURLProvider;
-	}
-
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
-	@Reference(unbind = "-")
-	public void setRecentGroupManager(RecentGroupManager recentGroupManager) {
-		_recentGroupManager = recentGroupManager;
-	}
-
 	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.navigation.site.administration)",
@@ -146,8 +131,13 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 		super.setServletContext(servletContext);
 	}
 
+	@Reference
 	private GroupURLProvider _groupURLProvider;
+
+	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
 	private RecentGroupManager _recentGroupManager;
 
 }

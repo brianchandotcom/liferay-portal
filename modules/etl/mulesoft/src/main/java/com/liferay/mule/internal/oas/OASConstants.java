@@ -44,6 +44,8 @@ public class OASConstants {
 
 	public static final String PROPERTIES = "properties";
 
+	public static final String REF = "$ref";
+
 	public static final String REQUIRED = "required";
 
 	public static final String TYPE = "type";

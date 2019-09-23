@@ -549,6 +549,8 @@ public class WorkflowMetricsRESTTestHelper {
 			_digest(companyId, instanceId, processId, taskId, tokenId));
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("completed", durationAvg > 0);
+		document.addDateSortable(
+			"completionDate", (durationAvg > 0) ? new Date() : null);
 		document.addKeyword("deleted", false);
 		document.addKeyword("duration", durationAvg);
 		document.addKeyword("instanceId", instanceId);

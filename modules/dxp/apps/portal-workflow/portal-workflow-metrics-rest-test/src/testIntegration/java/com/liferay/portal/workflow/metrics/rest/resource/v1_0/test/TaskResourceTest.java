@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -102,6 +104,35 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Page<Task> page = taskResource.getProcessTasksPage(
 			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			"durationAvg:asc");
+
+		assertEquals(Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		page = taskResource.getProcessTasksPage(
+			_process.getId(), true, null, null, task1.getKey(),
+			Pagination.of(1, 2), null);
+
+		assertEquals(Arrays.asList(task1), (List<Task>)page.getItems());
+
+		page = taskResource.getProcessTasksPage(
+			_process.getId(), true, RandomTestUtil.nextDate(),
+			DateUtils.addMinutes(RandomTestUtil.nextDate(), -2), null,
+			Pagination.of(1, 2), "durationAvg:desc");
+
+		assertEquals(Arrays.asList(task2, task1), (List<Task>)page.getItems());
+
+		task1.setDurationAvg(0L);
+		task1.setInstanceCount(0L);
+		task1.setOnTimeInstanceCount(0L);
+		task1.setOverdueInstanceCount(0L);
+
+		task2.setDurationAvg(0L);
+		task2.setInstanceCount(0L);
+		task2.setOnTimeInstanceCount(0L);
+		task2.setOverdueInstanceCount(0L);
+
+		page = taskResource.getProcessTasksPage(
+			_process.getId(), true, null, null, null, Pagination.of(0, 0),
 			null);
 
 		assertEqualsIgnoringOrder(
@@ -127,8 +158,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"durationAvg", "instanceCount", "key", "onTimeInstanceCount",
-			"overdueInstanceCount"
+			"durationAvg", "instanceCount", "key", "name",
+			"onTimeInstanceCount", "overdueInstanceCount"
 		};
 	}
 
@@ -146,6 +177,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		int instanceCount = RandomTestUtil.randomInt(0, 20);
 
 		task.setInstanceCount((long)instanceCount);
+
+		task.setName(task.getKey());
 
 		int onTimeInstanceCount = RandomTestUtil.randomInt(0, instanceCount);
 

@@ -16,24 +16,23 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskField;
 import com.liferay.batch.engine.BatchEngineTaskMethod;
+import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
 import com.liferay.petra.function.UnsafeBiFunction;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.PathParam;
 
@@ -67,48 +66,90 @@ public class BatchEngineTaskMethodServiceTracker {
 
 	public UnsafeBiFunction
 		<Company, User, BatchEngineTaskItemWriter, ReflectiveOperationException>
-			getBatchEngineTaskItemWriterFactory(String key) {
+			getBatchEngineTaskItemWriterFactory(
+				BatchEngineTaskOperation batchEngineTaskOperation,
+				String itemClassName, String apiVersion) {
 
-		return _batchEngineTaskItemWriterFactories.get(key);
+		return _batchEngineTaskItemWriterFactories.get(
+			new FactoryKey(
+				batchEngineTaskOperation, itemClassName, apiVersion));
 	}
 
 	public Class<?> getItemClass(String itemClassName) {
-		Set<Class<?>> itemClasses = _itemClassKeysMap.keySet();
+		Map.Entry<Class<?>, AtomicInteger> entry = _itemClasses.get(
+			itemClassName);
 
-		Stream<Class<?>> itemClassesStream = itemClasses.stream();
+		if (entry == null) {
+			throw new IllegalStateException("Unknown class :" + itemClassName);
+		}
 
-		return itemClassesStream.filter(
-			itemClass -> Objects.equals(itemClass.getName(), itemClassName)
-		).findFirst(
-		).orElseThrow(
-			() -> new IllegalStateException(
-				StringBundler.concat(
-					"Class ", itemClassName, " is not registered"))
-		);
+		return entry.getKey();
 	}
 
 	private final Map
-		<String,
+		<FactoryKey,
 		 UnsafeBiFunction
 			 <Company, User, BatchEngineTaskItemWriter,
 			  ReflectiveOperationException>>
 				_batchEngineTaskItemWriterFactories = new ConcurrentHashMap<>();
-	private final Map<Class<?>, List<String>> _itemClassKeysMap =
+	private final Map<String, Map.Entry<Class<?>, AtomicInteger>> _itemClasses =
 		new ConcurrentHashMap<>();
-	private final ServiceTracker<Object, List<String>> _serviceTracker;
+	private final ServiceTracker<Object, List<FactoryKey>> _serviceTracker;
 
-	private class BatchEngineTaskMethodServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, List<String>> {
+	private static class FactoryKey {
 
 		@Override
-		public List<String> addingService(
+		public boolean equals(Object obj) {
+			FactoryKey factoryKey = (FactoryKey)obj;
+
+			if ((factoryKey._batchEngineTaskOperation ==
+					_batchEngineTaskOperation) &&
+				Objects.equals(factoryKey._itemClassName, _itemClassName) &&
+				Objects.equals(factoryKey._apiVersion, _apiVersion)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _batchEngineTaskOperation);
+
+			hashCode = HashUtil.hash(hashCode, _itemClassName);
+			hashCode = HashUtil.hash(hashCode, _apiVersion);
+
+			return hashCode;
+		}
+
+		private FactoryKey(
+			BatchEngineTaskOperation batchEngineTaskOperation,
+			String itemClassName, String apiVersion) {
+
+			_batchEngineTaskOperation = batchEngineTaskOperation;
+			_itemClassName = itemClassName;
+			_apiVersion = apiVersion;
+		}
+
+		private final String _apiVersion;
+		private final BatchEngineTaskOperation _batchEngineTaskOperation;
+		private final String _itemClassName;
+
+	}
+
+	private class BatchEngineTaskMethodServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, List<FactoryKey>> {
+
+		@Override
+		public List<FactoryKey> addingService(
 			ServiceReference<Object> serviceReference) {
 
 			Object resource = _bundleContext.getService(serviceReference);
 
 			Class<?> resourceClass = resource.getClass();
 
-			List<String> keys = null;
+			List<FactoryKey> factoryKeys = null;
 
 			for (Method resourceMethod : resourceClass.getMethods()) {
 				BatchEngineTaskMethod batchEngineTaskMethod =
@@ -120,10 +161,11 @@ public class BatchEngineTaskMethodServiceTracker {
 
 				Class<?> itemClass = batchEngineTaskMethod.itemClass();
 
-				String key = StringBundler.concat(
+				FactoryKey factoryKey = new FactoryKey(
 					batchEngineTaskMethod.batchEngineTaskOperation(),
-					StringPool.POUND, itemClass.getName(), StringPool.POUND,
-					serviceReference.getProperty("api.version"));
+					itemClass.getName(),
+					String.valueOf(
+						serviceReference.getProperty("api.version")));
 
 				try {
 					String[] itemClassFieldNames = _getItemClassFieldNames(
@@ -133,7 +175,7 @@ public class BatchEngineTaskMethodServiceTracker {
 						_bundleContext.getServiceObjects(serviceReference);
 
 					_batchEngineTaskItemWriterFactories.put(
-						key,
+						factoryKey,
 						(company, user) -> new BatchEngineTaskItemWriter(
 							company, itemClassFieldNames, resourceMethod,
 							serviceObjects, user));
@@ -142,52 +184,60 @@ public class BatchEngineTaskMethodServiceTracker {
 					throw new IllegalStateException(nsme);
 				}
 
-				if (keys == null) {
-					keys = new ArrayList<>();
+				if (factoryKeys == null) {
+					factoryKeys = new ArrayList<>();
 				}
 
-				keys.add(key);
+				factoryKeys.add(factoryKey);
 
-				List<String> itemClassKeys = _itemClassKeysMap.computeIfAbsent(
-					itemClass, itemClassKey -> new ArrayList<>());
+				_itemClasses.compute(
+					factoryKey._itemClassName,
+					(itemClassName, entry) -> {
+						if (entry == null) {
+							return new AbstractMap.SimpleImmutableEntry<>(
+								itemClass, new AtomicInteger(1));
+						}
 
-				itemClassKeys.add(key);
+						AtomicInteger counter = entry.getValue();
+
+						counter.incrementAndGet();
+
+						return entry;
+					});
 			}
 
-			return keys;
+			return factoryKeys;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Object> serviceReference, List<String> keys) {
+			ServiceReference<Object> serviceReference,
+			List<FactoryKey> factoryKeys) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Object> serviceReference, List<String> keys) {
+			ServiceReference<Object> serviceReference,
+			List<FactoryKey> factoryKeys) {
 
-			keys.forEach(_batchEngineTaskItemWriterFactories::remove);
+			for (FactoryKey factoryKey : factoryKeys) {
+				_batchEngineTaskItemWriterFactories.remove(factoryKey);
 
-			Set<Map.Entry<Class<?>, List<String>>> itemClassKeysEntrySet =
-				_itemClassKeysMap.entrySet();
+				_itemClasses.compute(
+					factoryKey._itemClassName,
+					(itemClassName, entry) -> {
+						if (entry == null) {
+							return null;
+						}
 
-			Iterator<Map.Entry<Class<?>, List<String>>> itemClassKeysIterator =
-				itemClassKeysEntrySet.iterator();
+						AtomicInteger counter = entry.getValue();
 
-			while (itemClassKeysIterator.hasNext()) {
-				Map.Entry<Class<?>, List<String>> entry =
-					itemClassKeysIterator.next();
+						if (counter.decrementAndGet() == 0) {
+							return null;
+						}
 
-				for (String key : keys) {
-					List<String> itemClassKeys = entry.getValue();
-
-					itemClassKeys.removeIf(
-						itemClassKey -> Objects.equals(key, itemClassKey));
-
-					if (itemClassKeys.isEmpty()) {
-						itemClassKeysIterator.remove();
-					}
-				}
+						return entry;
+					});
 			}
 
 			_bundleContext.ungetService(serviceReference);

@@ -46,9 +46,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Ivica Cardic
  */
-public class BatchEngineTaskMethodServiceTracker {
+public class BatchEngineTaskMethodRegistry {
 
-	public BatchEngineTaskMethodServiceTracker(BundleContext bundleContext)
+	public BatchEngineTaskMethodRegistry(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
 		_serviceTracker = new ServiceTracker<>(

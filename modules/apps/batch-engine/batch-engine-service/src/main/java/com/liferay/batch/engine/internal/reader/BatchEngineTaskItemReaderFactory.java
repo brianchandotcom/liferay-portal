@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.BatchEngineTaskMethodServiceTracker;
+import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
 import com.liferay.batch.engine.model.BatchEngineTask;
 
 import java.sql.Blob;
@@ -27,11 +27,9 @@ import java.sql.Blob;
 public class BatchEngineTaskItemReaderFactory {
 
 	public BatchEngineTaskItemReaderFactory(
-		BatchEngineTaskMethodServiceTracker
-			batchEngineTaskMethodServiceTracker) {
+		BatchEngineTaskMethodRegistry batchEngineTaskMethodRegistry) {
 
-		_batchEngineTaskMethodServiceTracker =
-			batchEngineTaskMethodServiceTracker;
+		_batchEngineTaskMethodRegistry = batchEngineTaskMethodRegistry;
 	}
 
 	public BatchEngineTaskItemReader create(BatchEngineTask batchEngineTask)
@@ -42,7 +40,7 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTask.getContentType());
 		Blob content = batchEngineTask.getContent();
 
-		Class<?> itemClass = _batchEngineTaskMethodServiceTracker.getItemClass(
+		Class<?> itemClass = _batchEngineTaskMethodRegistry.getItemClass(
 			batchEngineTask.getClassName());
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
@@ -67,7 +65,6 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTaskContentType);
 	}
 
-	private final BatchEngineTaskMethodServiceTracker
-		_batchEngineTaskMethodServiceTracker;
+	private final BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 
 }

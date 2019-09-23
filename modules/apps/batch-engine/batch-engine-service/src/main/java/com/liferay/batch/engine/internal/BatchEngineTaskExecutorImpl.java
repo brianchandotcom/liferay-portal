@@ -56,22 +56,22 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	public void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_batchEngineTaskMethodServiceTracker =
-			new BatchEngineTaskMethodServiceTracker(bundleContext);
+		_batchEngineTaskMethodServiceRegistry =
+			new BatchEngineTaskMethodRegistry(bundleContext);
 
 		_batchEngineTaskItemReaderFactory =
 			new BatchEngineTaskItemReaderFactory(
-				_batchEngineTaskMethodServiceTracker);
+				_batchEngineTaskMethodServiceRegistry);
 
 		_batchEngineTaskItemWriterFactory =
 			new BatchEngineTaskItemWriterFactory(
-				_batchEngineTaskMethodServiceTracker, _companyLocalService,
+				_batchEngineTaskMethodServiceRegistry, _companyLocalService,
 				_userLocalService);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_batchEngineTaskMethodServiceTracker.destroy();
+		_batchEngineTaskMethodServiceRegistry.destroy();
 	}
 
 	@Override
@@ -173,8 +173,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
-	private BatchEngineTaskMethodServiceTracker
-		_batchEngineTaskMethodServiceTracker;
+	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodServiceRegistry;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

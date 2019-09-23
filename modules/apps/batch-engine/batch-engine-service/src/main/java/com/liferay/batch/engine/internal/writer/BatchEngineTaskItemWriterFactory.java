@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.internal.writer;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
-import com.liferay.batch.engine.internal.BatchEngineTaskMethodServiceTracker;
+import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.string.StringBundler;
@@ -30,12 +30,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 public class BatchEngineTaskItemWriterFactory {
 
 	public BatchEngineTaskItemWriterFactory(
-		BatchEngineTaskMethodServiceTracker batchEngineTaskMethodServiceTracker,
+		BatchEngineTaskMethodRegistry batchEngineTaskMethodRegistry,
 		CompanyLocalService companyLocalService,
 		UserLocalService userLocalService) {
 
-		_batchEngineTaskMethodServiceTracker =
-			batchEngineTaskMethodServiceTracker;
+		_batchEngineTaskMethodRegistry = batchEngineTaskMethodRegistry;
 		_companyLocalService = companyLocalService;
 		_userLocalService = userLocalService;
 	}
@@ -49,7 +48,7 @@ public class BatchEngineTaskItemWriterFactory {
 		UnsafeBiFunction
 			<Company, User, BatchEngineTaskItemWriter,
 			 ReflectiveOperationException> unsafeBiFunction =
-				_batchEngineTaskMethodServiceTracker.
+				_batchEngineTaskMethodRegistry.
 					getBatchEngineTaskItemWriterFactory(
 						batchEngineTaskOperation,
 						batchEngineTask.getClassName(),
@@ -71,8 +70,7 @@ public class BatchEngineTaskItemWriterFactory {
 			_userLocalService.getUser(batchEngineTask.getUserId()));
 	}
 
-	private final BatchEngineTaskMethodServiceTracker
-		_batchEngineTaskMethodServiceTracker;
+	private final BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 	private final CompanyLocalService _companyLocalService;
 	private final UserLocalService _userLocalService;
 

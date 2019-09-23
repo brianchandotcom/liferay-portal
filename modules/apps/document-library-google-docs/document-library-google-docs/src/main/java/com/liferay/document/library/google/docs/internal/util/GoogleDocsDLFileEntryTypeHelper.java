@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.google.docs.internal.util;
 
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -30,7 +29,6 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -49,22 +47,19 @@ import java.util.Map;
 public class GoogleDocsDLFileEntryTypeHelper {
 
 	public GoogleDocsDLFileEntryTypeHelper(
-		Company company, ClassNameLocalService classNameLocalService, DDM ddm,
+		Company company, long dlFileEntryMetadataClassNameId, DDM ddm,
 		DDMFormDeserializer xsdDDMFormDeserializer,
 		DDMStructureLocalService ddmStructureLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
 		UserLocalService userLocalService) {
 
 		_company = company;
-		_classNameLocalService = classNameLocalService;
+		_dlFileEntryMetadataClassNameId = dlFileEntryMetadataClassNameId;
 		_ddm = ddm;
 		_xsdDDMFormDeserializer = xsdDDMFormDeserializer;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 		_userLocalService = userLocalService;
-
-		_dlFileEntryMetadataClassNameId = _classNameLocalService.getClassNameId(
-			DLFileEntryMetadata.class);
 	}
 
 	public DLFileEntryType addGoogleDocsDLFileEntryType()
@@ -174,7 +169,6 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			new long[] {ddmStructureId}, serviceContext);
 	}
 
-	private final ClassNameLocalService _classNameLocalService;
 	private final Company _company;
 	private final DDM _ddm;
 	private final DDMStructureLocalService _ddmStructureLocalService;

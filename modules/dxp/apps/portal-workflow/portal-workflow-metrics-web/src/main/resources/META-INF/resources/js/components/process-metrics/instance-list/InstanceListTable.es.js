@@ -17,28 +17,32 @@ const InstanceListTable = ({items}) => {
 		<div className="table-responsive">
 			<table
 				className="show-quick-actions-on-hover table table-fixed table-heading-nowrap table-hover table-list"
-				style={{minWidth: '1061px'}}
+				style={{minWidth: '64rem'}}
 			>
 				<thead>
 					<tr>
 						<th style={{width: '4%'}} />
 
-						<th className="table-head-title" style={{width: '9%'}}>
+						<th className="table-head-title" style={{width: '8%'}}>
 							{Liferay.Language.get('id')}
 						</th>
 
 						<th
 							className="table-cell-expand table-head-title"
-							style={{width: '31%'}}
+							style={{width: '22%'}}
 						>
 							{Liferay.Language.get('item-subject')}
 						</th>
 
-						<th className="table-head-title" style={{width: '23%'}}>
+						<th className="table-head-title" style={{width: '20%'}}>
 							{Liferay.Language.get('process-step')}
 						</th>
 
-						<th className="table-head-title" style={{width: '15%'}}>
+						<th className="table-head-title" style={{width: '14%'}}>
+							{Liferay.Language.get('assignee')}
+						</th>
+
+						<th className="table-head-title" style={{width: '14%'}}>
 							{Liferay.Language.get('created-by')}
 						</th>
 

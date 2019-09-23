@@ -45,6 +45,7 @@ const getStatusIcon = status => {
 const InstanceListItem = ({
 	assetTitle,
 	assetType,
+	assigneeUsers,
 	creatorUser,
 	dateCreated,
 	id,
@@ -55,6 +56,10 @@ const InstanceListItem = ({
 	const statusIcon = getStatusIcon(slaStatus);
 
 	const updateInstanceId = () => setInstanceId(id);
+
+	const formattedAssignees = assigneeUsers
+		? assigneeUsers.map(assigneeUser => assigneeUser.name).join(', ')
+		: '';
 
 	return (
 		<tr data-testid="instanceRow">
@@ -93,6 +98,8 @@ const InstanceListItem = ({
 					? taskNames.join(', ')
 					: Liferay.Language.get('completed')}
 			</td>
+
+			<td data-testid="assigneesCell">{formattedAssignees}</td>
 
 			<td data-testid="creatorUserCell">
 				{creatorUser ? creatorUser.name : ''}

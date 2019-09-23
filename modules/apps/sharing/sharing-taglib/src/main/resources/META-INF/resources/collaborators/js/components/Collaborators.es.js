@@ -65,7 +65,7 @@ const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 
 	return (
 		<>
-			<div className="autofit-row collaborators sidebar-panel">
+			<div className="autofit-row sidebar-panel">
 				<div className="autofit-col collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"

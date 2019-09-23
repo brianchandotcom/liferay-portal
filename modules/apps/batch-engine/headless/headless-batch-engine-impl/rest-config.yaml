@@ -1,0 +1,8 @@
+apiDir: "../headless-batch-engine-api/src/main/java"
+apiPackagePath: "com.liferay.headless.batch.engine"
+application:
+    baseURI: "/headless-batch-engine"
+    className: "HeadlessBatchEngineApplication"
+    name: "Liferay.Headless.Batch.Engine"
+author: "Ivica Cardic"
+generateGraphQL: false

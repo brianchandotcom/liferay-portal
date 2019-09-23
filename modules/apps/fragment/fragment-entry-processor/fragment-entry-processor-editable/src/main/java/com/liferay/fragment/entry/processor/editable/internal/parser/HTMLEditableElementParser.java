@@ -15,14 +15,6 @@
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
-import com.liferay.fragment.exception.FragmentEntryContentException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.util.ResourceBundle;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,21 +26,4 @@ import org.osgi.service.component.annotations.Component;
 	service = EditableElementParser.class
 )
 public class HTMLEditableElementParser extends TextEditableElementParser {
-
-	@Override
-	public void validate(Element element) throws FragmentEntryContentException {
-		Elements elements = element.select("> lfr-editable");
-
-		if (elements.size() > 0) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", getClass());
-
-			throw new FragmentEntryContentException(
-				LanguageUtil.get(
-					resourceBundle,
-					"editable-html-field-cannot-include-nested-editables-in-" +
-						"it"));
-		}
-	}
-
 }

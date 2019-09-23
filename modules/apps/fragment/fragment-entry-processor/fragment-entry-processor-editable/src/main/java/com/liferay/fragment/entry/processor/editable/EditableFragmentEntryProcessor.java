@@ -443,7 +443,25 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				continue;
 			}
 
+			_validateNestedEditableElements(element);
+
 			editableElementParser.validate(element);
+		}
+	}
+
+	private void _validateNestedEditableElements(Element element)
+		throws FragmentEntryContentException {
+
+		Elements elements = element.select("> lfr-editable");
+
+		if (elements.size() > 0) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			throw new FragmentEntryContentException(
+				LanguageUtil.get(
+					resourceBundle,
+					"editable-fields-cannot-include-nested-editables-in-it"));
 		}
 	}
 

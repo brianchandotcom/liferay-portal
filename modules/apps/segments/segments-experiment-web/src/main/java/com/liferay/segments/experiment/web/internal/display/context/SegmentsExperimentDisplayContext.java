@@ -145,6 +145,9 @@ public class SegmentsExperimentDisplayContext {
 			draftLayout, _themeDisplay);
 
 		layoutFullURL = HttpUtil.setParameter(
+			layoutFullURL, "redirect", layoutFullURL);
+
+		layoutFullURL = HttpUtil.setParameter(
 			layoutFullURL, "p_l_mode", Constants.EDIT);
 
 		return HttpUtil.setParameter(

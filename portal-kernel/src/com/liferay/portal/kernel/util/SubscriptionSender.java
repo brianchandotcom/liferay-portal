@@ -109,7 +109,7 @@ public class SubscriptionSender implements Serializable {
 	public void addPersistedSubscribers(
 		String className, long classPK, boolean notifyImmediately) {
 
-		_persistedSubscribers.add(
+		_persistedSubscribersTuples.add(
 			new Tuple(className, classPK, notifyImmediately));
 	}
 
@@ -134,7 +134,7 @@ public class SubscriptionSender implements Serializable {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
-			for (Tuple tuple : _persistedSubscribers) {
+			for (Tuple tuple : _persistedSubscribersTuples) {
 				String className = (String)tuple.getObject(0);
 				long classPK = (long)tuple.getObject(1);
 				boolean notifyImmediately = (boolean)tuple.getObject(2);
@@ -156,7 +156,7 @@ public class SubscriptionSender implements Serializable {
 				}
 			}
 
-			_persistedSubscribers.clear();
+			_persistedSubscribersTuples.clear();
 
 			for (ObjectValuePair<String, String> ovp :
 					_runtimeSubscribersOVPs) {
@@ -1100,7 +1100,7 @@ public class SubscriptionSender implements Serializable {
 	private String _mailIdPopPortletPrefix;
 	private long _notificationClassNameId;
 	private int _notificationType;
-	private final List<Tuple> _persistedSubscribers = new ArrayList<>();
+	private final List<Tuple> _persistedSubscribersTuples = new ArrayList<>();
 	private final List<ObjectValuePair<String, String>>
 		_runtimeSubscribersOVPs = new ArrayList<>();
 	private final Set<String> _sentEmailAddresses = new HashSet<>();

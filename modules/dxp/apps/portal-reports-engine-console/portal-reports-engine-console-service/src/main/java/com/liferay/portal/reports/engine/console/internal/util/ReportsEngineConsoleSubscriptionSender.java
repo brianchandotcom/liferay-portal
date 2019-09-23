@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 /**
  * @author Brian I. Kim
  */
-public class ReportsEngineSubscriptionSender extends SubscriptionSender {
+public class ReportsEngineConsoleSubscriptionSender extends SubscriptionSender {
 
 	@Override
 	protected void sendNotification(User user) throws Exception {
@@ -40,6 +40,6 @@ public class ReportsEngineSubscriptionSender extends SubscriptionSender {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReportsEngineSubscriptionSender.class);
+		ReportsEngineConsoleSubscriptionSender.class);
 
 }

@@ -67,7 +67,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			DLFileEntryMetadata.class);
 	}
 
-	public DDMStructure addGoogleDocsDDMStructure() throws PortalException {
+	private DDMStructure _addGoogleDocsDDMStructure() throws PortalException {
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			_company.getCompanyId());
 
@@ -133,7 +133,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			GoogleDocsConstants.DDM_STRUCTURE_KEY_GOOGLE_DOCS);
 
 		if (ddmStructure == null) {
-			ddmStructure = addGoogleDocsDDMStructure();
+			ddmStructure = _addGoogleDocsDDMStructure();
 		}
 
 		List<DLFileEntryType> dlFileEntryTypes =
@@ -144,10 +144,10 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			return dlFileEntryTypes.get(0);
 		}
 
-		return addGoogleDocsDLFileEntryType(ddmStructure.getStructureId());
+		return _addGoogleDocsDLFileEntryType(ddmStructure.getStructureId());
 	}
 
-	protected DLFileEntryType addGoogleDocsDLFileEntryType(long ddmStructureId)
+	private DLFileEntryType _addGoogleDocsDLFileEntryType(long ddmStructureId)
 		throws PortalException {
 
 		long defaultUserId = _userLocalService.getDefaultUserId(

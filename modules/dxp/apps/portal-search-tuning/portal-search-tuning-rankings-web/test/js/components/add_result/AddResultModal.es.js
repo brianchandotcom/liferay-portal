@@ -115,7 +115,7 @@ describe('AddResultModal', () => {
 
 		await waitForElement(() => getByTestId(MODAL_ID));
 
-		expect(getByText('add')).toHaveAttribute('disabled');
+		expect(getByText('add')).toBeDisabled();
 	});
 
 	it('shows the results in the modal after enter key is pressed', async () => {

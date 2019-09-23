@@ -24,7 +24,7 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('save')).toHaveAttribute('disabled');
+		expect(getByText('save')).toBeDisabled();
 	});
 
 	it('enables the save button', () => {
@@ -36,6 +36,6 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('save')).not.toHaveAttribute('disabled');
+		expect(getByText('save')).toBeEnabled();
 	});
 });

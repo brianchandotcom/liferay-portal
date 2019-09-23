@@ -28,19 +28,19 @@ describe('Alias', () => {
 	});
 
 	it('prompts to input an alias', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<Alias keywords={['one', 'two', 'three']} onChange={jest.fn()} />
 		);
 
-		expect(queryByText('add-an-alias-instruction')).not.toBeNull();
+		expect(getByText('add-an-alias-instruction')).toBeInTheDocument();
 	});
 
 	it('updates the input value', () => {
-		const {container} = render(
+		const {getByLabelText} = render(
 			<Alias keywords={['one']} onChange={jest.fn()} />
 		);
 
-		const input = container.querySelector('.form-control-inset');
+		const input = getByLabelText('aliases');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 

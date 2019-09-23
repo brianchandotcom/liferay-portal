@@ -49,7 +49,7 @@ class Alias extends Component {
 
 		return (
 			<ClayForm.Group>
-				<label>
+				<label htmlFor="aliases-input">
 					{Liferay.Language.get('aliases')}
 
 					<span
@@ -63,6 +63,7 @@ class Alias extends Component {
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayMultiSelect
+							id="aliases-input"
 							inputValue={inputValue}
 							items={keywords}
 							onInputChange={this._handleInputChange}

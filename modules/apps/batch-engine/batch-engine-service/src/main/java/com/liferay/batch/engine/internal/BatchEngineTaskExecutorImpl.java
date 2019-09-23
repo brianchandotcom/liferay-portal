@@ -90,6 +90,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 				BatchEngineTaskExecuteStatus.COMPLETED.toString());
 
 			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+
+			BatchEngineTaskCallbackUtil.sendCallback(batchEngineTask);
 		}
 		catch (Throwable t) {
 			_log.error(
@@ -101,6 +103,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 				BatchEngineTaskExecuteStatus.FAILED.toString());
 
 			_batchEngineTaskLocalService.updateBatchEngineTask(batchEngineTask);
+
+			BatchEngineTaskCallbackUtil.sendCallback(batchEngineTask);
 		}
 	}
 

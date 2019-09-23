@@ -14,7 +14,9 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 
 import java.util.ArrayList;
@@ -83,8 +85,9 @@ public class DocumentsAssert {
 		List<String> actualValues = _getFieldValueStrings(fieldName, documents);
 
 		Assert.assertEquals(
-			message + "->" + actualValues, _sort(expectedValues),
-			_sort(actualValues));
+			StringBundler.concat(
+				message, "->", StringUtil.merge(documents), "->", actualValues),
+			_sort(expectedValues), _sort(actualValues));
 	}
 
 	public static void assertValuesIgnoreRelevance(

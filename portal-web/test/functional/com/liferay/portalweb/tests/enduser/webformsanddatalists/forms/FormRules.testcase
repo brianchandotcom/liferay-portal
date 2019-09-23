@@ -39,6 +39,8 @@ definition {
 		property test.name.skip.portal.instance = "FormRules#ConfigureAutofillRule";
 		var portalURL = PropsUtil.get("portal.url");
 
+		FormsAdminNavigator.enableLocalNetworkDataProvider();
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

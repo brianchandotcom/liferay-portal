@@ -14,29 +14,12 @@
  */
 --%>
 
-<%@ include file="/sharing/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet" prefix="portlet" %>
 
-<%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_sharing_button_page") + StringPool.UNDERLINE;
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-String buttonComponentId = randomNamespace + "shareButton";
-%>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
-<clay:button
-	elementClasses="btn-secondary"
-	id="<%= buttonComponentId %>"
-	label='<%= LanguageUtil.get(request, "share") %>'
-	size="sm"
-	style="secondary"
-/>
-
-<aui:script>
-	var button = document.getElementById('<%= buttonComponentId %>');
-
-	button.addEventListener(
-		'click',
-		function() {
-			<%= request.getAttribute("liferay-sharing:button:onClick") %>
-		}
-	);
-</aui:script>
+<liferay-theme:defineObjects />

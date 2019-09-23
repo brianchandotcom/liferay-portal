@@ -128,3 +128,8 @@ boolean showManageCollaborators = GetterUtil.getBoolean(request.getAttribute("in
 		);
 	</aui:script>
 </c:if>
+
+<liferay-sharing:collaborators
+	className="<%= DLFileEntryConstants.getClassName() %>"
+	classPK="<%= fileEntry.getFileEntryId() %>"
+/>

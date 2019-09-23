@@ -117,6 +117,22 @@ public class FragmentRendererControllerImpl
 					httpServletResponse, unsyncStringWriter));
 		}
 		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to render content of fragment entry ",
+						fragmentEntryLink.getFragmentEntryId(), ":",
+						ioe.getMessage()),
+					ioe);
+			}
+			else {
+				_log.error(
+					StringBundler.concat(
+						"Unable to render content of fragment entry ",
+						fragmentEntryLink.getFragmentEntryId(), ":",
+						ioe.getMessage()));
+			}
+
 			SessionErrors.add(
 				httpServletRequest, "fragmentEntryContentInvalid");
 

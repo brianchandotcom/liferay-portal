@@ -104,11 +104,6 @@ public class FragmentCollectionLocalServiceImpl
 
 		fragmentCollectionPersistence.update(fragmentCollection);
 
-		// Resources
-
-		resourceLocalService.addModelResources(
-			fragmentCollection, serviceContext);
-
 		return fragmentCollection;
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,6 +55,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -156,6 +158,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					classNameId, targetLayout.getPlid(), null, serviceContext);
 		}
 
+		Map<String, FragmentEntryLink> existingFragmentEntryLinks =
+			new HashMap<>();
+
 		for (Long segmentsExperienceId :
 				_getSegmentsExperienceIds(
 					sourceLayout.getGroupId(), classNameId,
@@ -163,7 +168,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 			_copyLayoutPageTemplateStructureExperience(
 				layoutPageTemplateStructure, segmentsExperienceId, classNameId,
-				targetLayout, fragmentEntryLinkMap, serviceContext);
+				targetLayout, fragmentEntryLinkMap, existingFragmentEntryLinks,
+				serviceContext);
 		}
 
 		_assetEntryUsageLocalService.deleteAssetEntryUsagesByPlid(
@@ -186,6 +192,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			LayoutPageTemplateStructure layoutPageTemplateStructure,
 			long segmentsExperienceId, long classNameId, Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinkMap,
+			Map<String, FragmentEntryLink> existingFragmentEntryLinks,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -231,35 +238,50 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					FragmentEntryLink newFragmentEntryLink =
 						(FragmentEntryLink)fragmentEntryLink.clone();
 
-					newFragmentEntryLink.setUuid(serviceContext.getUuid());
-					newFragmentEntryLink.setFragmentEntryLinkId(
-						_counterLocalService.increment());
-					newFragmentEntryLink.setUserId(targetLayout.getUserId());
-					newFragmentEntryLink.setUserName(
-						targetLayout.getUserName());
-					newFragmentEntryLink.setCreateDate(
-						serviceContext.getCreateDate(new Date()));
-					newFragmentEntryLink.setModifiedDate(
-						serviceContext.getModifiedDate(new Date()));
-					newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
-					newFragmentEntryLink.setClassNameId(classNameId);
-					newFragmentEntryLink.setClassPK(targetLayout.getPlid());
-					newFragmentEntryLink.setLastPropagationDate(
-						serviceContext.getCreateDate(new Date()));
+					FragmentEntryLink existingFragmentEntryLink =
+						existingFragmentEntryLinks.get(
+							fragmentEntryLink.getUuid() + StringPool.POUND);
 
-					newFragmentEntryLink =
+					if (existingFragmentEntryLink != null) {
+						newFragmentEntryLinkIdsJSONArray.put(
+							existingFragmentEntryLink.getFragmentEntryLinkId());
+					}
+					else {
+						newFragmentEntryLink.setUuid(
+							fragmentEntryLink.getUuid() + StringPool.POUND);
+						newFragmentEntryLink.setFragmentEntryLinkId(
+							_counterLocalService.increment());
+						newFragmentEntryLink.setUserId(
+							targetLayout.getUserId());
+						newFragmentEntryLink.setUserName(
+							targetLayout.getUserName());
+						newFragmentEntryLink.setCreateDate(
+							serviceContext.getCreateDate(new Date()));
+						newFragmentEntryLink.setModifiedDate(
+							serviceContext.getModifiedDate(new Date()));
+						newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
+						newFragmentEntryLink.setClassNameId(classNameId);
+						newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+						newFragmentEntryLink.setLastPropagationDate(
+							serviceContext.getCreateDate(new Date()));
+
 						_fragmentEntryLinkLocalService.addFragmentEntryLink(
 							newFragmentEntryLink);
 
-					newFragmentEntryLinkIdsJSONArray.put(
-						newFragmentEntryLink.getFragmentEntryLinkId());
+						_commentManager.copyDiscussion(
+							targetLayout.getUserId(), targetLayout.getGroupId(),
+							FragmentEntryLink.class.getName(),
+							fragmentEntryLink.getFragmentEntryLinkId(),
+							newFragmentEntryLink.getFragmentEntryLinkId(),
+							className -> serviceContext);
 
-					_commentManager.copyDiscussion(
-						targetLayout.getUserId(), targetLayout.getGroupId(),
-						FragmentEntryLink.class.getName(),
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						newFragmentEntryLink.getFragmentEntryLinkId(),
-						className -> serviceContext);
+						newFragmentEntryLinkIdsJSONArray.put(
+							newFragmentEntryLink.getFragmentEntryLinkId());
+
+						existingFragmentEntryLinks.put(
+							fragmentEntryLink.getUuid() + StringPool.POUND,
+							newFragmentEntryLink);
+					}
 				}
 
 				columnJSONObject.put(

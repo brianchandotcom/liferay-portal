@@ -17,7 +17,7 @@ dependencies {
 	compile group: "org.apache.ant", name: "ant", version: "1.9.14"
 
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "3.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.6.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

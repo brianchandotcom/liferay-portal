@@ -22,7 +22,7 @@
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/collaborators/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div id="<portlet:namespace/>collaborators-root">
+<div class="collaborators" id="<portlet:namespace/>collaborators-root">
 
 	<%
 	Map<String, Object> data = new HashMap<>();

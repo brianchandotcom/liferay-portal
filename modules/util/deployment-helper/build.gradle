@@ -15,6 +15,7 @@ dependencies {
 	compileInclude group: "org.slf4j", name: "slf4j-simple", version: "1.6.6"
 	compileInclude group: "org.zeroturnaround", name: "zt-zip", version: "1.8"
 
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.14"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"

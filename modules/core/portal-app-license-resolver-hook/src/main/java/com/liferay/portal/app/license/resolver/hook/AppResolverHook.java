@@ -14,10 +14,10 @@
 
 package com.liferay.portal.app.license.resolver.hook;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.app.license.AppLicenseVerifier;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 import java.io.InputStream;

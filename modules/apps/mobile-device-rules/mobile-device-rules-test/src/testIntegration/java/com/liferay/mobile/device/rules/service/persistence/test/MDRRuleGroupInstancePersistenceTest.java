@@ -128,6 +128,8 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		MDRRuleGroupInstance newMDRRuleGroupInstance = _persistence.create(pk);
 
+		newMDRRuleGroupInstance.setMvccVersion(RandomTestUtil.nextLong());
+
 		newMDRRuleGroupInstance.setUuid(RandomTestUtil.randomString());
 
 		newMDRRuleGroupInstance.setGroupId(RandomTestUtil.nextLong());
@@ -159,6 +161,9 @@ public class MDRRuleGroupInstancePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newMDRRuleGroupInstance.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingMDRRuleGroupInstance.getMvccVersion(),
+			newMDRRuleGroupInstance.getMvccVersion());
 		Assert.assertEquals(
 			existingMDRRuleGroupInstance.getUuid(),
 			newMDRRuleGroupInstance.getUuid());
@@ -305,11 +310,11 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 	protected OrderByComparator<MDRRuleGroupInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MDRRuleGroupInstance", "uuid", true, "ruleGroupInstanceId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "ruleGroupId", true, "priority", true,
-			"lastPublishDate", true);
+			"MDRRuleGroupInstance", "mvccVersion", true, "uuid", true,
+			"ruleGroupInstanceId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"ruleGroupId", true, "priority", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -589,6 +594,8 @@ public class MDRRuleGroupInstancePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MDRRuleGroupInstance mdrRuleGroupInstance = _persistence.create(pk);
+
+		mdrRuleGroupInstance.setMvccVersion(RandomTestUtil.nextLong());
 
 		mdrRuleGroupInstance.setUuid(RandomTestUtil.randomString());
 

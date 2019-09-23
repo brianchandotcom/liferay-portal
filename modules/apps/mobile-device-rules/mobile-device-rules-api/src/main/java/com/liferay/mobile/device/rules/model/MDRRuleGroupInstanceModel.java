@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MDRRuleGroupInstanceModel
-	extends AttachedModel, BaseModel<MDRRuleGroupInstance>, ShardedModel,
-			StagedGroupedModel {
+	extends AttachedModel, BaseModel<MDRRuleGroupInstance>, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -59,6 +60,22 @@ public interface MDRRuleGroupInstanceModel
 	 * @param primaryKey the primary key of this mdr rule group instance
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this mdr rule group instance.
+	 *
+	 * @return the mvcc version of this mdr rule group instance
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this mdr rule group instance.
+	 *
+	 * @param mvccVersion the mvcc version of this mdr rule group instance
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this mdr rule group instance.

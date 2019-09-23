@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -40,7 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MDRRuleGroupModel
-	extends BaseModel<MDRRuleGroup>, LocalizedModel, ShardedModel,
+	extends BaseModel<MDRRuleGroup>, LocalizedModel, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
 	/**
@@ -62,6 +63,22 @@ public interface MDRRuleGroupModel
 	 * @param primaryKey the primary key of this mdr rule group
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this mdr rule group.
+	 *
+	 * @return the mvcc version of this mdr rule group
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this mdr rule group.
+	 *
+	 * @param mvccVersion the mvcc version of this mdr rule group
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this mdr rule group.

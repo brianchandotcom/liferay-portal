@@ -125,6 +125,8 @@ public class MDRActionPersistenceTest {
 
 		MDRAction newMDRAction = _persistence.create(pk);
 
+		newMDRAction.setMvccVersion(RandomTestUtil.nextLong());
+
 		newMDRAction.setUuid(RandomTestUtil.randomString());
 
 		newMDRAction.setGroupId(RandomTestUtil.nextLong());
@@ -160,6 +162,8 @@ public class MDRActionPersistenceTest {
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(
 			newMDRAction.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingMDRAction.getMvccVersion(), newMDRAction.getMvccVersion());
 		Assert.assertEquals(
 			existingMDRAction.getUuid(), newMDRAction.getUuid());
 		Assert.assertEquals(
@@ -258,11 +262,11 @@ public class MDRActionPersistenceTest {
 
 	protected OrderByComparator<MDRAction> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MDRAction", "uuid", true, "actionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"ruleGroupInstanceId", true, "name", true, "description", true,
-			"type", true, "lastPublishDate", true);
+			"MDRAction", "mvccVersion", true, "uuid", true, "actionId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "ruleGroupInstanceId", true, "name", true,
+			"description", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -493,6 +497,8 @@ public class MDRActionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MDRAction mdrAction = _persistence.create(pk);
+
+		mdrAction.setMvccVersion(RandomTestUtil.nextLong());
 
 		mdrAction.setUuid(RandomTestUtil.randomString());
 

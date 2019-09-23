@@ -1,4 +1,5 @@
 create table MDRAction (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	actionId LONG not null primary key,
 	groupId LONG,
@@ -18,6 +19,7 @@ create table MDRAction (
 );
 
 create table MDRRule (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	ruleId LONG not null primary key,
 	groupId LONG,
@@ -35,6 +37,7 @@ create table MDRRule (
 );
 
 create table MDRRuleGroup (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	ruleGroupId LONG not null primary key,
 	groupId LONG,
@@ -49,6 +52,7 @@ create table MDRRuleGroup (
 );
 
 create table MDRRuleGroupInstance (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	ruleGroupInstanceId LONG not null primary key,
 	groupId LONG,

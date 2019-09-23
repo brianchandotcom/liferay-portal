@@ -18,6 +18,7 @@ import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class MDRRuleGroupCacheModel
-	implements CacheModel<MDRRuleGroup>, Externalizable {
+	implements CacheModel<MDRRuleGroup>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class MDRRuleGroupCacheModel
 		MDRRuleGroupCacheModel mdrRuleGroupCacheModel =
 			(MDRRuleGroupCacheModel)obj;
 
-		if (ruleGroupId == mdrRuleGroupCacheModel.ruleGroupId) {
+		if ((ruleGroupId == mdrRuleGroupCacheModel.ruleGroupId) &&
+			(mvccVersion == mdrRuleGroupCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class MDRRuleGroupCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, ruleGroupId);
+		int hashCode = HashUtil.hash(0, ruleGroupId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", ruleGroupId=");
 		sb.append(ruleGroupId);
@@ -94,6 +111,8 @@ public class MDRRuleGroupCacheModel
 	@Override
 	public MDRRuleGroup toEntityModel() {
 		MDRRuleGroupImpl mdrRuleGroupImpl = new MDRRuleGroupImpl();
+
+		mdrRuleGroupImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			mdrRuleGroupImpl.setUuid("");
@@ -156,6 +175,7 @@ public class MDRRuleGroupCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		ruleGroupId = objectInput.readLong();
@@ -175,6 +195,8 @@ public class MDRRuleGroupCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -217,6 +239,7 @@ public class MDRRuleGroupCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long ruleGroupId;
 	public long groupId;

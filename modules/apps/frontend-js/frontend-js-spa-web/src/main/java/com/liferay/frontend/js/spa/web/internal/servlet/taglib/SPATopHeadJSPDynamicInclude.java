@@ -56,6 +56,10 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		if (_spaUtil.isDisabled(httpServletRequest)) {
+			return;
+		}
+
 		ScriptData scriptData = new ScriptData();
 
 		Map<String, String> values = new HashMap<>();

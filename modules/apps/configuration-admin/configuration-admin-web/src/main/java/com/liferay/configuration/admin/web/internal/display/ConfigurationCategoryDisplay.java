@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * @author Jorge Ferrer
@@ -55,22 +56,25 @@ public class ConfigurationCategoryDisplay {
 	}
 
 	private String _getMessage(Locale locale, String key) {
+		ResourceBundle resourceBundle;
+
 		try {
-			return LanguageUtil.get(
-				new AggregateResourceBundle(
-					ResourceBundleUtil.getBundle(
-						locale, _configurationCategory.getClass()),
-					ResourceBundleUtil.getBundle(
-						locale, ConfigurationCategoryDisplay.class)),
-				key);
+			resourceBundle = new AggregateResourceBundle(
+				ResourceBundleUtil.getBundle(
+					locale, _configurationCategory.getClass()),
+				ResourceBundleUtil.getBundle(
+					locale, ConfigurationCategoryDisplay.class));
 		}
 		catch (MissingResourceException mre) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(mre, mre);
 			}
 
-			return key;
+			resourceBundle = ResourceBundleUtil.getBundle(
+				locale, ConfigurationCategoryDisplay.class);
 		}
+
+		return LanguageUtil.get(resourceBundle, key);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

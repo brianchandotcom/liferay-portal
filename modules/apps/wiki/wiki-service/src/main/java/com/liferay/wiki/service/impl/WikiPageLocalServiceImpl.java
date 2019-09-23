@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.DateOverrideIncrement;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -260,9 +262,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Node
 
-		node.setLastPostDate(serviceContext.getModifiedDate(now));
-
-		wikiNodePersistence.update(node);
+		wikiPageLocalService.updateLastPostDate(
+			node.getNodeId(), serviceContext.getModifiedDate(now));
 
 		// Asset
 
@@ -2058,6 +2059,34 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	@BufferedIncrement(
+		configuration = "WikiNode", incrementClass = DateOverrideIncrement.class
+	)
+	@Override
+	public void updateLastPostDate(long nodeId, Date lastPostDate) {
+		WikiNode node = wikiNodePersistence.fetchByPrimaryKey(nodeId);
+
+		Date oldLastPostDate = node.getLastPostDate();
+
+		if ((node == null) ||
+			((oldLastPostDate != null) &&
+			 lastPostDate.before(oldLastPostDate))) {
+
+			return;
+		}
+
+		node.setLastPostDate(lastPostDate);
+
+		try {
+			wikiNodePersistence.update(node);
+		}
+		catch (SystemException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(se, se);
+			}
+		}
+	}
+
 	@Override
 	public WikiPage updatePage(
 			long userId, long nodeId, String title, double version,
@@ -3362,11 +3391,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Node
 
-		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
-
-		node.setLastPostDate(serviceContext.getModifiedDate(now));
-
-		wikiNodePersistence.update(node);
+		wikiPageLocalService.updateLastPostDate(
+			nodeId, serviceContext.getModifiedDate(now));
 
 		// Asset
 

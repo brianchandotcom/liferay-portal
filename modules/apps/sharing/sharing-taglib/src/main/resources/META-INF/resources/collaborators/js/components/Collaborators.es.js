@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
@@ -25,13 +25,17 @@ import UserIcon from './UserIcon.es';
 const Collaborators = ({collaboratorsResourceURL, portletNamespace}) => {
 	const [data, setData] = useState(null);
 
-	const updateCollaborators = () => {
+	const updateCollaborators = useCallback(() => {
 		fetch(collaboratorsResourceURL)
 			.then(res => res.json())
 			.then(setData);
-	};
+	}, [collaboratorsResourceURL]);
 
-	useEffect(updateCollaborators, [collaboratorsResourceURL]);
+	useEffect(() => updateCollaborators(), [updateCollaborators]);
+
+	useEffect(() => {
+		Liferay.on('sharing:share', updateCollaborators);
+	}, [updateCollaborators]);
 
 	const handleClick = () => {
 		Liferay.Util.openWindow({

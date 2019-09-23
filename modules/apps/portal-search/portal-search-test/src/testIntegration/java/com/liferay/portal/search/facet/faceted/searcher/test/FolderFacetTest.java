@@ -119,6 +119,39 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 	}
 
 	@Test
+	public void testAvoidResidualDataFromDDMStructureLocalServiceTest()
+		throws Exception {
+
+		// See LPS-58543
+
+		String keyword = "To Do";
+
+		index(keyword);
+
+		SearchContext searchContext = getSearchContext(keyword);
+
+		Facet facet = folderFacetFactory.newInstance(searchContext);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		Assert.assertEquals(hits.toString(), 3, hits.getLength());
+
+		List<String> entryClassNames = Arrays.asList(
+			DLFolder.class.getName(), DLFileEntry.class.getName(),
+			User.class.getName());
+
+		assertEntryClassNames(entryClassNames, hits, facet, searchContext);
+
+		List<String> dlFolderIds = Arrays.asList(
+			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
+
+		assertFrequencies(
+			facet.getFieldName(), searchContext, toMap(dlFolderIds, 1));
+	}
+
+	@Test
 	public void testSelection() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 

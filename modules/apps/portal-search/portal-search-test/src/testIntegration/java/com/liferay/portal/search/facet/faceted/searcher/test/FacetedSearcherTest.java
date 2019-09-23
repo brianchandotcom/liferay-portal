@@ -52,7 +52,11 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		User user = addUser(group, tag);
 
-		assertSearch(tag, toMap(user, tag));
+		SearchContext searchContext = getSearchContext(tag);
+
+		Map<String, String> expected = toMap(user, tag);
+
+		assertTags(tag, expected, searchContext);
 	}
 
 	@Test
@@ -71,22 +75,33 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		User user2 = addUser(group2, tag2);
 
-		assertSearch(
+		assertSearchGroupIdsUnset(
 			prefix, SearchMapUtil.join(toMap(user1, tag1), toMap(user2, tag2)));
 
 		deactivate(group1);
 
-		assertSearch(prefix, toMap(user2, tag2));
+		assertSearchGroupIdsUnset(prefix, toMap(user2, tag2));
 
 		deactivate(group2);
 
-		assertSearch(prefix, Collections.<String, String>emptyMap());
+		assertSearchGroupIdsUnset(
+			prefix, Collections.<String, String>emptyMap());
 	}
 
-	protected void assertSearch(String keywords, Map<String, String> expected)
+	protected void assertSearchGroupIdsUnset(
+			String keywords, Map<String, String> expected)
 		throws Exception {
 
-		SearchContext searchContext = getSearchContext(keywords);
+		SearchContext searchContext = getSearchContextWithGroupIdsUnset(
+			keywords);
+
+		assertTags(keywords, expected, searchContext);
+	}
+
+	protected void assertTags(
+			String keywords, Map<String, String> expected,
+			SearchContext searchContext)
+		throws Exception {
 
 		Hits hits = search(searchContext);
 

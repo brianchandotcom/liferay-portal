@@ -98,6 +98,30 @@ public class AssetEntriesFacetedSearcherTest
 	}
 
 	@Test
+	public void testAvoidResidualDataFromDDMStructureLocalServiceTest()
+		throws Exception {
+
+		// See LPS-58543
+
+		String keyword = "To Do";
+
+		index(keyword);
+
+		SearchContext searchContext = getSearchContext(keyword);
+
+		Facet facet = createFacet(searchContext);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		assertEntryClassNames(_entryClassNames, hits, facet, searchContext);
+
+		assertFrequencies(
+			facet.getFieldName(), searchContext, toMap(_entryClassNames));
+	}
+
+	@Test
 	public void testSelection() throws Exception {
 		String keyword = RandomTestUtil.randomString();
 

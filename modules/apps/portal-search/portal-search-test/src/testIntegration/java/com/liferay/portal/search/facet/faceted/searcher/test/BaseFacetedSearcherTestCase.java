@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.util.AssertUtils;
@@ -100,8 +102,28 @@ public abstract class BaseFacetedSearcherTestCase {
 	}
 
 	protected void assertFrequencies(
+		String fieldName, SearchContext searchContext, Hits hits,
+		Map<String, Integer> expected) {
+
+		assertFrequencies(
+			fieldName, searchContext, expected,
+			StringBundler.concat(
+				searchContext.getAttribute("queryString"), "->",
+				StringUtil.merge(hits.getDocs())));
+	}
+
+	protected void assertFrequencies(
 		String fieldName, SearchContext searchContext,
 		Map<String, Integer> expected) {
+
+		assertFrequencies(
+			fieldName, searchContext, expected,
+			(String)searchContext.getAttribute("queryString"));
+	}
+
+	protected void assertFrequencies(
+		String fieldName, SearchContext searchContext,
+		Map<String, Integer> expected, String message) {
 
 		Map<String, Facet> facets = searchContext.getFacets();
 
@@ -110,7 +132,7 @@ public abstract class BaseFacetedSearcherTestCase {
 		FacetCollector facetCollector = facet.getFacetCollector();
 
 		AssertUtils.assertEquals(
-			(String)searchContext.getAttribute("queryString"), expected,
+			message, expected,
 			TermCollectorUtil.toMap(facetCollector.getTermCollectors()));
 	}
 
@@ -130,6 +152,23 @@ public abstract class BaseFacetedSearcherTestCase {
 	}
 
 	protected SearchContext getSearchContext(String keywords) throws Exception {
+		SearchContext searchContext = userSearchFixture.getSearchContext(
+			keywords);
+
+		Stream<Group> stream = _groups.stream();
+
+		long[] groupIds = stream.mapToLong(
+			Group::getGroupId
+		).toArray();
+
+		searchContext.setGroupIds(groupIds);
+
+		return searchContext;
+	}
+
+	protected SearchContext getSearchContextWithGroupIdsUnset(String keywords)
+		throws Exception {
+
 		return userSearchFixture.getSearchContext(keywords);
 	}
 

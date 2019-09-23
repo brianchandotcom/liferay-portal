@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -91,12 +92,46 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.addFacet(facet);
 
-		search(searchContext);
+		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			String.valueOf(categoryId), 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
+	}
+
+	@Test
+	public void testAvoidResidualDataFromDDMStructureLocalServiceTest()
+		throws Exception {
+
+		// See LPS-58543
+
+		String title = "To Do";
+
+		AssetCategory assetCategory = addCategory(title);
+
+		long categoryId = assetCategory.getCategoryId();
+
+		addUser(_group, categoryId);
+
+		SearchContext searchContext = getSearchContext(
+			assetCategory.getTitleCurrentValue());
+
+		searchContext.setCategoryIds(new long[] {categoryId});
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
+
+		Facet facet = categoryFacetFactory.newInstance(searchContext);
+
+		searchContext.addFacet(facet);
+
+		Hits hits = search(searchContext);
+
+		Map<String, Integer> frequencies = Collections.singletonMap(
+			String.valueOf(categoryId), 1);
+
+		assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	protected AssetCategory addCategory(String title) throws Exception {

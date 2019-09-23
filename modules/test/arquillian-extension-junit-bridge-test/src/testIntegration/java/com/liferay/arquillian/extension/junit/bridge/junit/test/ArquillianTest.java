@@ -26,8 +26,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NoExpectedE
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NotSerializableExceptionTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NotSerializableExceptionTestItem.UnserializableException;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.RuleTestItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
@@ -180,7 +180,7 @@ public class ArquillianTest {
 			message.startsWith(
 				StringBundler.concat(
 					AssertionError.class.getName(), ": Expected test to throw ",
-					String.valueOf(IOException.class))));
+					IOException.class)));
 	}
 
 	@Test

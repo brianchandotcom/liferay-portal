@@ -189,9 +189,6 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 			originalFragmentEntryLink.getJs(),
 			persistedFragmentEntryLink.getJs());
 		Assert.assertEquals(
-			originalFragmentEntryLink.getNamespace(),
-			persistedFragmentEntryLink.getNamespace());
-		Assert.assertEquals(
 			originalFragmentEntryLink.getRendererKey(),
 			persistedFragmentEntryLink.getRendererKey());
 	}
@@ -279,9 +276,6 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 		Assert.assertEquals(
 			originalFragmentEntryLink.getJs(),
 			persistedFragmentEntryLink.getJs());
-		Assert.assertEquals(
-			originalFragmentEntryLink.getNamespace(),
-			persistedFragmentEntryLink.getNamespace());
 		Assert.assertEquals(
 			originalFragmentEntryLink.getRendererKey(),
 			persistedFragmentEntryLink.getRendererKey());

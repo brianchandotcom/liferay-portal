@@ -52,7 +52,6 @@ export default ({dataLayoutBuilder}) => {
 				(node, index) =>
 					node.parentElement && (
 						<LayoutBuilderColumn
-							dataLayoutBuilder={dataLayoutBuilder}
 							key={getColumnKey(node, index)}
 							node={node}
 						/>

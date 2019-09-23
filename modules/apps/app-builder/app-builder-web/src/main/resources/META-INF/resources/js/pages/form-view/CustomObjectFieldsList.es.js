@@ -16,6 +16,7 @@ import React, {useContext} from 'react';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import FormViewContext from './FormViewContext.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
+import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
 
 const getFieldTypes = ({dataDefinition, dataLayout, fieldTypes}) => {
 	const {dataDefinitionFields} = dataDefinition;
@@ -31,8 +32,10 @@ const getFieldTypes = ({dataDefinition, dataLayout, fieldTypes}) => {
 			description: fieldTypeSettings.label,
 			disabled: containsField(dataLayoutPages, name),
 			dragAlignment: 'right',
+			dragType: DRAG_CUSTOM_OBJECT_FIELD,
 			icon: fieldTypeSettings.icon,
-			label: label.en_US
+			label: label.en_US,
+			name
 		};
 	});
 };

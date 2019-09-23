@@ -15,17 +15,16 @@
 import {createContext} from 'react';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
+import {
+	UPDATE_DATA_DEFINITION,
+	UPDATE_DATA_LAYOUT,
+	UPDATE_DATA_LAYOUT_NAME,
+	UPDATE_FIELD_TYPES,
+	UPDATE_IDS,
+	UPDATE_PAGES
+} from './actions.es';
 
 const FormViewContext = createContext();
-
-const actions = {
-	UPDATE_DATA_DEFINITION: 'UPDATE_DATA_DEFINITION',
-	UPDATE_DATA_LAYOUT: 'UPDATE_DATA_LAYOUT',
-	UPDATE_DATA_LAYOUT_NAME: 'UPDATE_DATA_LAYOUT_NAME',
-	UPDATE_FIELD_TYPES: 'UPDATE_FIELD_TYPES',
-	UPDATE_IDS: 'UPDATE_IDS',
-	UPDATE_PAGES: 'UPDATE_PAGES'
-};
 
 const initialState = {
 	dataDefinition: {
@@ -34,6 +33,7 @@ const initialState = {
 	},
 	dataDefinitionId: 0,
 	dataLayout: {
+		dataLayoutPages: [],
 		name: {}
 	},
 	dataLayoutId: 0,
@@ -76,37 +76,49 @@ const setDataLayout = dataLayoutBuilder => {
 const createReducer = dataLayoutBuilder => {
 	return (state = initialState, action) => {
 		switch (action.type) {
-			case actions.UPDATE_DATA_DEFINITION:
+			case UPDATE_DATA_DEFINITION: {
+				const {dataDefinition} = action.payload;
+
 				return {
 					...state,
 					dataDefinition: {
 						...state.dataDefinition,
-						...action.dataDefinition
+						...dataDefinition
 					}
 				};
-			case actions.UPDATE_DATA_LAYOUT:
+			}
+			case UPDATE_DATA_LAYOUT: {
+				const {dataLayout} = action.payload;
+
 				return {
 					...state,
 					dataLayout: {
 						...state.dataLayout,
-						...action.dataLayout
+						...dataLayout
 					}
 				};
-			case actions.UPDATE_DATA_LAYOUT_NAME:
+			}
+			case UPDATE_DATA_LAYOUT_NAME: {
+				const {name} = action.payload;
+
 				return {
 					...state,
 					dataLayout: {
 						...state.dataLayout,
-						name: action.name
+						name
 					}
 				};
-			case actions.UPDATE_FIELD_TYPES:
+			}
+			case UPDATE_FIELD_TYPES: {
+				const {fieldTypes} = action.payload;
+
 				return {
 					...state,
-					fieldTypes: action.fieldTypes
+					fieldTypes
 				};
-			case actions.UPDATE_IDS: {
-				const {dataDefinitionId, dataLayoutId} = action;
+			}
+			case UPDATE_IDS: {
+				const {dataDefinitionId, dataLayoutId} = action.payload;
 
 				return {
 					...state,
@@ -114,7 +126,7 @@ const createReducer = dataLayoutBuilder => {
 					dataLayoutId
 				};
 			}
-			case actions.UPDATE_PAGES: {
+			case UPDATE_PAGES: {
 				const {dataDefinition, dataLayout} = state;
 
 				return {
@@ -141,4 +153,4 @@ const createReducer = dataLayoutBuilder => {
 
 export default FormViewContext;
 
-export {actions, initialState, createReducer};
+export {initialState, createReducer};

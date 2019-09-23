@@ -12,10 +12,16 @@
  * details.
  */
 
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {useDrop} from 'react-dnd';
 import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
+import {
+	DRAG_CUSTOM_OBJECT_FIELD,
+	DRAG_FIELD_TYPE
+} from '../../utils/dragTypes.es';
+import FormViewContext from './FormViewContext.es';
+import {ADD_CUSTOM_OBJECT_FIELD} from './actions.es';
 
 const replaceColumn = node => {
 	if (node.parentNode) {
@@ -23,22 +29,29 @@ const replaceColumn = node => {
 	}
 };
 
-export default ({dataLayoutBuilder, node}) => {
+export default ({node}) => {
+	const [, dispatch, dispatchBuilderEvent] = useContext(FormViewContext);
 	const [{canDrop, overTarget}, dropColumn] = useDrop({
-		accept: 'fieldType',
+		accept: [DRAG_CUSTOM_OBJECT_FIELD, DRAG_FIELD_TYPE],
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
 			overTarget: monitor.isOver()
 		}),
-		drop: item => {
-			dataLayoutBuilder.dispatch('fieldAdded', {
+		drop: ({type, ...item}) => {
+			const payload = {
 				addedToPlaceholder: !!dom.closest(node, '.placeholder'),
 				fieldType: {
-					...item,
+					...item.data,
 					editable: true
 				},
 				indexes: getIndexes(node.parentElement)
-			});
+			};
+
+			if (type === DRAG_FIELD_TYPE) {
+				dispatchBuilderEvent('fieldAdded', payload);
+			} else if (type === DRAG_CUSTOM_OBJECT_FIELD) {
+				dispatch({payload, type: ADD_CUSTOM_OBJECT_FIELD});
+			}
 		}
 	});
 

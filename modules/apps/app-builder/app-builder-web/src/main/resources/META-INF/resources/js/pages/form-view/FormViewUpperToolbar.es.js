@@ -15,8 +15,9 @@
 import React, {useContext} from 'react';
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
-import FormViewContext, {actions} from './FormViewContext.es';
+import FormViewContext from './FormViewContext.es';
 import saveFormView from './saveFormView.es';
+import {UPDATE_DATA_LAYOUT_NAME} from './actions.es';
 
 export default ({newCustomObject}) => {
 	const [state, dispatch] = useContext(FormViewContext);
@@ -36,7 +37,10 @@ export default ({newCustomObject}) => {
 	const onInput = ({target}) => {
 		const {value} = target;
 
-		dispatch({name: {en_US: value}, type: actions.UPDATE_DATA_LAYOUT_NAME});
+		dispatch({
+			payload: {name: {en_US: value}},
+			type: UPDATE_DATA_LAYOUT_NAME
+		});
 	};
 
 	const onKeyDown = event => {

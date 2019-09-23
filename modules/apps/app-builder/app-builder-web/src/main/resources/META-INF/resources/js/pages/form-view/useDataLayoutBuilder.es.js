@@ -12,7 +12,7 @@
  * details.
  */
 
-import {actions} from './FormViewContext.es';
+import {UPDATE_FIELD_TYPES, UPDATE_PAGES} from './actions.es';
 import {useEffect} from 'react';
 
 export default (dataLayoutBuilder, dispatch) => {
@@ -45,7 +45,7 @@ export default (dataLayoutBuilder, dispatch) => {
 
 		const eventHandler = provider.on('pagesChanged', ({newVal}) => {
 			provider.once('rendered', () => {
-				dispatch({pages: newVal, type: actions.UPDATE_PAGES});
+				dispatch({payload: {pages: newVal}, type: UPDATE_PAGES});
 			});
 		});
 
@@ -55,6 +55,6 @@ export default (dataLayoutBuilder, dispatch) => {
 	useEffect(() => {
 		const fieldTypes = dataLayoutBuilder.getFieldTypes();
 
-		dispatch({fieldTypes, type: actions.UPDATE_FIELD_TYPES});
+		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);
 };

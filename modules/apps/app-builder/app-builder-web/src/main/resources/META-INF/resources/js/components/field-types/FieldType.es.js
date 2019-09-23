@@ -19,6 +19,7 @@ import {useDrag} from 'react-dnd';
 import classnames from 'classnames';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 import FieldTypeDragPreview from './FieldTypeDragPreview.es';
+import {DRAG_FIELD_TYPE} from '../../utils/dragTypes.es';
 
 const ICONS = {
 	checkbox_multiple: 'select-from-list',
@@ -34,6 +35,7 @@ export default props => {
 		description,
 		disabled,
 		dragAlignment = 'left',
+		dragType = DRAG_FIELD_TYPE,
 		icon,
 		label,
 		name,
@@ -46,9 +48,9 @@ export default props => {
 			dragging: monitor.isDragging()
 		}),
 		item: {
-			...props,
+			data: {...props},
 			preview: () => <FieldTypeDragPreview {...props} />,
-			type: 'fieldType'
+			type: dragType
 		}
 	});
 

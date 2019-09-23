@@ -27,6 +27,12 @@ import templates from './ManageCollaborators.soy';
  * collaborators for a file entry.
  */
 class ManageCollaborators extends PortletBase {
+	constructor(config, ...args) {
+		super(config, ...args);
+
+		this._classNameId = config.classNameId;
+		this._classPK = config.classPK;
+	}
 	/**
 	 * @inheritDoc
 	 */
@@ -305,6 +311,10 @@ class ManageCollaborators extends PortletBase {
 					  });
 			})
 			.then(json => {
+				parent.Liferay.fire('sharing:changed', {
+					classNameId: this._classNameId,
+					classPK: this._classPK
+				});
 				this._loadingResponse = false;
 				this._showNotification(json.successMessage);
 			})

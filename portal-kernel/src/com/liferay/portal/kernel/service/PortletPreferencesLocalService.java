@@ -333,7 +333,7 @@ public interface PortletPreferencesLocalService
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)
@@ -347,7 +347,7 @@ public interface PortletPreferencesLocalService
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)
@@ -361,7 +361,7 @@ public interface PortletPreferencesLocalService
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)

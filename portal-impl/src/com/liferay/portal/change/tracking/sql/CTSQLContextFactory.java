@@ -23,7 +23,7 @@ public interface CTSQLContextFactory {
 
 	public CTSQLContext createCTSQLContext(
 		long ctCollectionId, String tableName, String primaryColumnName,
-		long classNameId);
+		Class<?> clazz);
 
 	public interface CTSQLContext {
 

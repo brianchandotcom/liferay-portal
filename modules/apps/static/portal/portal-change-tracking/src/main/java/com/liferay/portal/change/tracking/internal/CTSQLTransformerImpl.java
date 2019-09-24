@@ -22,7 +22,6 @@ import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -261,9 +260,6 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 	}
 
 	private static final JSqlParser _jSqlParser = new CCJSqlParserManager();
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -1176,8 +1172,7 @@ public class CTSQLTransformerImpl implements CTSQLTransformer {
 				ctSQLContextFactory.createCTSQLContext(
 					ctCollectionId, tableName,
 					ctModelRegistration.getPrimaryColumnName(),
-					_classNameLocalService.getClassNameId(
-						ctModelRegistration.getModelClass()));
+					ctModelRegistration.getModelClass());
 
 			List<Long> excludePKs = ctSQLContext.getExcludePKs();
 

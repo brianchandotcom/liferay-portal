@@ -22,6 +22,7 @@ import com.liferay.portal.change.tracking.sql.CTSQLContextFactory;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
@@ -44,11 +45,13 @@ public class CTSQLContextFactoryImpl implements CTSQLContextFactory {
 	@Override
 	public CTSQLContext createCTSQLContext(
 		long ctCollectionId, String tableName, String primaryColumnName,
-		long classNameId) {
+		Class<?> clazz) {
 
 		if (ctCollectionId < 0) {
 			return new CTSQLContextImpl(Collections.emptyList(), true, false);
 		}
+
+		long classNameId = _classNameLocalService.getClassNameId(clazz);
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTEntries(
 			ctCollectionId, classNameId);
@@ -150,6 +153,9 @@ public class CTSQLContextFactoryImpl implements CTSQLContextFactory {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTSQLContextFactoryImpl.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

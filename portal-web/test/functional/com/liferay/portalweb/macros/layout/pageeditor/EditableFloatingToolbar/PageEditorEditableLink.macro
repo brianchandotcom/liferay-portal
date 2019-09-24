@@ -5,10 +5,6 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		PageEditor.clickEditableField(
-			fragmentName = "${fragmentName}",
-			id = "${id}");
-
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LINK_BUTTON");
 	}
 

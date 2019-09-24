@@ -46,7 +46,7 @@ portletDisplay.setURLBack(redirect);
 <c:if test="<%= oAuth2Application != null %>">
 	<clay:navigation-bar
 		inverted="<%= true %>"
-		navigationItems="<%=
+		navigationItems='<%=
 				new JSPNavigationItemList(pageContext) {
 				{
 					add(
@@ -100,7 +100,7 @@ portletDisplay.setURLBack(redirect);
 					}
 				}
 			}
-		%>"
+		%>'
 	/>
 </c:if>
 

@@ -52,7 +52,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 %>
 
 <clay:navigation-bar
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -63,7 +63,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <c:if test="<%= (mdrRuleGroupsCount > 0) || searchTerms.isSearch() %>">

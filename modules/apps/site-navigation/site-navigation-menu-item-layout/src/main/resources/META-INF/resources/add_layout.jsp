@@ -23,7 +23,7 @@ PortletURL portletURL = currentURLObj;
 %>
 
 <clay:navigation-bar
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -41,7 +41,7 @@ PortletURL portletURL = currentURLObj;
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= scopeGroupId %>" />

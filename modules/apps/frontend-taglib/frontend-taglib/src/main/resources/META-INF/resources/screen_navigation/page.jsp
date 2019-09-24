@@ -39,7 +39,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 		<div class="<%= headerContainerCssClass %>">
 			<clay:navigation-bar
 				inverted="<%= inverted %>"
-				navigationItems="<%=
+				navigationItems='<%=
 					new JSPNavigationItemList(pageContext) {
 						{
 							for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
@@ -54,7 +54,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 							}
 						}
 					}
-				%>"
+				%>'
 			/>
 		</div>
 	</div>

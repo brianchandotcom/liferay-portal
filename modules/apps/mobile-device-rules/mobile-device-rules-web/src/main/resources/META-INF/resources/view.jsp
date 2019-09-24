@@ -45,7 +45,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -56,7 +56,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <liferay-frontend:management-bar

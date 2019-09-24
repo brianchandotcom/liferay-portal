@@ -301,6 +301,10 @@ public class PullRequest {
 		return _testSuiteStatus;
 	}
 
+	public String getTitle() {
+		return _jsonObject.getString("title");
+	}
+
 	public String getUpstreamBranchName() {
 		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
 

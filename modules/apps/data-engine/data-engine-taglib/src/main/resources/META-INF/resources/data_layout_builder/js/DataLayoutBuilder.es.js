@@ -147,14 +147,22 @@ class DataLayoutBuilder extends Component {
 		return {
 			...settingsContext,
 			pages: visitor.mapFields(field => {
-				const {fieldName} = field;
+				const {fieldName, localizable} = field;
 				const propertyName = this._getDataDefinitionFieldPropertyName(
 					fieldName
 				);
-				const propertyValue = this._getDataDefinitionFieldPropertyValue(
+				let propertyValue = this._getDataDefinitionFieldPropertyValue(
 					dataDefinitionField,
 					propertyName
 				);
+
+				if (
+					localizable &&
+					propertyValue &&
+					propertyValue[themeDisplay.getLanguageId()]
+				) {
+					propertyValue = propertyValue[themeDisplay.getLanguageId()];
+				}
 
 				return {
 					...field,
@@ -271,6 +279,7 @@ class DataLayoutBuilder extends Component {
 			'localizable',
 			'name',
 			'repeatable',
+			'required',
 			'tip'
 		];
 
@@ -288,8 +297,10 @@ class DataLayoutBuilder extends Component {
 	}
 
 	_getDataDefinitionFieldPropertyValue(dataDefinitionField, propertyName) {
-		if (this._isCustomProperty(propertyName)) {
-			return dataDefinitionField.customProperties[propertyName];
+		const {customProperties} = dataDefinitionField;
+
+		if (customProperties && this._isCustomProperty(propertyName)) {
+			return customProperties[propertyName];
 		}
 
 		return dataDefinitionField[propertyName];

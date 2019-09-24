@@ -17,7 +17,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 
 const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
-const UNIMPLIMENTED_PROPERTIES = ['indexType', 'required', 'validation'];
+const UNIMPLIMENTED_PROPERTIES = ['indexType', 'validation'];
 
 export const getFilteredSettingsContext = settingsContext => {
 	const visitor = new PagesVisitor(settingsContext.pages);

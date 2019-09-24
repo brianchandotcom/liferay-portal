@@ -370,7 +370,18 @@ AUI.add(
 						instance.ns('subtitleEditor')
 					].getHTML();
 					var title = window[instance.ns('titleEditor')].getText();
-					var urlTitle = instance.one('#urlTitle').val();
+
+					var automaticURL = instance
+						.one(
+							'input[name=' +
+								instance.ns('automaticURL') +
+								']:checked'
+						)
+						.val();
+
+					var urlTitle = automaticURL
+						? ''
+						: instance.one('#urlTitle').val();
 
 					var form = instance._getPrincipalForm();
 

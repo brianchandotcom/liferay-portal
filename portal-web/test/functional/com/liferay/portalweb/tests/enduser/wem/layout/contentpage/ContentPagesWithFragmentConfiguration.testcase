@@ -76,6 +76,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101326. Add placeholder in fragment configuration and assert there the placeholder text is present."
+	@priority = "5"
+	test AddPlaceholderConfigurationFragmentToContentPage {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "placeholder_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
+
+		Click(
+			fragment_name = "Text Fragment Example",
+			locator1 = "PageEditor#SECTION_NAME");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+
+		task ("Assert placeholder is exist") {
+			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIG_PANEL");
+		}
+	}
+
 	@description = "This is a test for LPS-96685. User can change select fragment configuration."
 	test AddSelectConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";

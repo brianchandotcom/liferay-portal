@@ -45,7 +45,10 @@ import org.junit.Test;
 
 /**
  * @author Preston Crary
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.portal.store.test.util.BaseStoreTestCase}
  */
+@Deprecated
 public abstract class BaseStoreTestCase {
 
 	@Before

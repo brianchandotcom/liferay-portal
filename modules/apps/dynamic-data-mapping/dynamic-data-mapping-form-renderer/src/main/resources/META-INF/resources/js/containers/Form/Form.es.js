@@ -12,14 +12,13 @@
  * details.
  */
 
-import compose from '../../util/compose.es';
 import FormRenderer from '../../components/FormRenderer/FormRenderer.es';
 import Soy from 'metal-soy';
 import templates from '../../components/FormRenderer/FormRenderer.soy';
 import withStore from '../../store/withStore.es';
 
-const composed = compose(withStore)(FormRenderer);
+const Form = withStore(FormRenderer);
 
-Soy.register(composed, templates);
+Soy.register(Form, templates);
 
-export default composed;
+export default Form;

@@ -145,6 +145,33 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp");
 	}
 
+	macro resetStructureDefaultValuesCP {
+		ClickNoError(locator1 = "Button#RESET_VALUES");
+
+		AssertConfirm(value1 = "Are you sure you want to reset the default values?");
+
+		if (isSet(templateName)) {
+			Panel.expandPanel(panel = "Default Template");
+
+			AssertTextEquals(
+				locator1 = "WCEditWebContent#SELECTED_TEMPLATE",
+				value1 = "${templateName}");
+		}
+
+		if (isSet(assetTitle)) {
+			var key_assetTitle = "${assetTitle}";
+
+			AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TYPE");
+			AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_TITLE");
+			AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_SCOPE");
+			AssertElementNotPresent(locator1 = "AssetRelatedAssets#RELATED_ASSETS_TABLE_REMOVE_LINK");
+		}
+
+		Button.clickSave();
+
+		SelectFrameTop();
+	}
+
 	macro saveCP {
 		DDLDataDefinition.save(changeListEnabled = "${changeListEnabled}");
 

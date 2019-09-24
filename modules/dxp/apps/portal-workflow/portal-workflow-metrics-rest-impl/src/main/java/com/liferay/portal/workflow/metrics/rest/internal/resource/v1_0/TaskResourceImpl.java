@@ -199,13 +199,20 @@ public class TaskResourceImpl
 	}
 
 	private BooleanQuery _createSLATaskResultsBooleanQuery(
-		long processId, Set<String> taskNames) {
+		boolean completed, long processId, Set<String> taskNames) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
+		if (completed) {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("status", WorkfowMetricsSLAStatus.RUNNING));
+		}
+		else {
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
+			booleanQuery.addMustNotQueryClauses(
+				_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
+		}
 
 		TermsQuery termsQuery = _queries.terms("taskName");
 
@@ -220,6 +227,7 @@ public class TaskResourceImpl
 	private Task _createTask(String taskName) {
 		return new Task() {
 			{
+				breachedInstanceCount = 0L;
 				durationAvg = 0L;
 				instanceCount = 0L;
 				key = taskName;
@@ -263,13 +271,19 @@ public class TaskResourceImpl
 	}
 
 	private TermsAggregationResult _getSLATermsAggregationResult(
-		FieldSort fieldSort, Pagination pagination, long processId,
-		Set<String> taskNames) {
+		boolean completed, FieldSort fieldSort, Pagination pagination,
+		long processId, Set<String> taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"taskName", "taskName");
+
+		FilterAggregation breachedFilterAggregation = _aggregations.filter(
+			"breached", _resourceHelper.createMustNotBooleanQuery());
+
+		breachedFilterAggregation.addChildAggregation(
+			_resourceHelper.createBreachedScriptedMetricAggregation());
 
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
@@ -284,7 +298,8 @@ public class TaskResourceImpl
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
 		termsAggregation.addChildrenAggregations(
-			onTimeFilterAggregation, overdueFilterAggregation);
+			breachedFilterAggregation, onTimeFilterAggregation,
+			overdueFilterAggregation);
 
 		if ((fieldSort != null) && (pagination != null) &&
 			(_isOrderByOnTimeInstanceCount(fieldSort.getField()) ||
@@ -301,7 +316,7 @@ public class TaskResourceImpl
 
 		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-results");
 		searchSearchRequest.setQuery(
-			_createSLATaskResultsBooleanQuery(processId, taskNames));
+			_createSLATaskResultsBooleanQuery(completed, processId, taskNames));
 
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
@@ -385,11 +400,19 @@ public class TaskResourceImpl
 
 		List<Task> tasks = new LinkedList<>();
 
-		if (completed) {
+		TermsAggregationResult slaTermsAggregationResult =
+			_getSLATermsAggregationResult(
+				completed, fieldSort, pagination, processId, tasksMap.keySet());
+
+		if (_isOrderByDurationAvg(fieldSort.getField()) ||
+			_isOrderByInstanceCount(fieldSort.getField())) {
+
 			taskBuckets.forEach(
 				(key, bucket) -> {
 					Task task = tasksMap.remove(key);
 
+					_populateTaskWithSLAMetrics(
+						slaTermsAggregationResult.getBucket(key), task);
 					_setDurationAvg(bucket, task);
 					_setInstanceCount(bucket, task);
 
@@ -397,33 +420,14 @@ public class TaskResourceImpl
 				});
 		}
 		else {
-			TermsAggregationResult slaTermsAggregationResult =
-				_getSLATermsAggregationResult(
-					fieldSort, pagination, processId, tasksMap.keySet());
+			for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
+				Task task = tasksMap.remove(bucket.getKey());
 
-			if (_isOrderByInstanceCount(fieldSort.getField())) {
-				taskBuckets.forEach(
-					(key, bucket) -> {
-						Task task = tasksMap.remove(key);
+				_populateTaskWithSLAMetrics(bucket, task);
+				_setDurationAvg(taskBuckets.get(bucket.getKey()), task);
+				_setInstanceCount(taskBuckets.get(bucket.getKey()), task);
 
-						_populateTaskWithSLAMetrics(
-							slaTermsAggregationResult.getBucket(key), task);
-						_setDurationAvg(bucket, task);
-						_setInstanceCount(bucket, task);
-
-						tasks.add(task);
-					});
-			}
-			else {
-				for (Bucket bucket : slaTermsAggregationResult.getBuckets()) {
-					Task task = tasksMap.remove(bucket.getKey());
-
-					_populateTaskWithSLAMetrics(bucket, task);
-					_setDurationAvg(taskBuckets.get(bucket.getKey()), task);
-					_setInstanceCount(taskBuckets.get(bucket.getKey()), task);
-
-					tasks.add(task);
-				}
+				tasks.add(task);
 			}
 		}
 
@@ -529,8 +533,18 @@ public class TaskResourceImpl
 	}
 
 	private void _populateTaskWithSLAMetrics(Bucket bucket, Task task) {
+		_setBreachedInstanceCount(bucket, task);
 		_setOnTimeInstanceCount(bucket, task);
 		_setOverdueInstanceCount(bucket, task);
+	}
+
+	private void _setBreachedInstanceCount(Bucket bucket, Task task) {
+		if (bucket == null) {
+			return;
+		}
+
+		task.setBreachedInstanceCount(
+			_resourceHelper.getBreachedInstanceCount(bucket));
 	}
 
 	private void _setDurationAvg(Bucket bucket, Task task) {

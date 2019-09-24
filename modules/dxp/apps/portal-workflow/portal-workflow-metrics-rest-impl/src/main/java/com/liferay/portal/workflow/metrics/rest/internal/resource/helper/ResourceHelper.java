@@ -60,6 +60,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ResourceHelper.class)
 public class ResourceHelper {
 
+	public ScriptedMetricAggregation createBreachedScriptedMetricAggregation() {
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric("breachedInstanceCount");
+
+		scriptedMetricAggregation.setCombineScript(
+			_workflowMetricsSlaCombineScript);
+		scriptedMetricAggregation.setInitScript(_workflowMetricsSlaInitScript);
+		scriptedMetricAggregation.setMapScript(_workflowMetricsSlaMapScript);
+		scriptedMetricAggregation.setReduceScript(
+			_workflowMetricsSlaBreachedReduceScript);
+
+		return scriptedMetricAggregation;
+	}
+
 	public BucketSortPipelineAggregation createBucketSortPipelineAggregation(
 		FieldSort fieldSort, Pagination pagination) {
 
@@ -176,6 +190,19 @@ public class ResourceHelper {
 		return scriptedMetricAggregation;
 	}
 
+	public long getBreachedInstanceCount(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"breached");
+
+		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
+			(ScriptedMetricAggregationResult)
+				filterAggregationResult.getChildAggregationResult(
+					"breachedInstanceCount");
+
+		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+	}
+
 	public String getLatestProcessVersion(long companyId, long processId) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -255,6 +282,8 @@ public class ResourceHelper {
 		_workflowMetricsInstanceCountReduceScript = createScript(
 			getClass(),
 			"workflow-metrics-instance-count-reduce-script.painless");
+		_workflowMetricsSlaBreachedReduceScript = createScript(
+			getClass(), "workflow-metrics-sla-breached-reduce-script.painless");
 		_workflowMetricsSlaCombineScript = createScript(
 			getClass(), "workflow-metrics-sla-combine-script.painless");
 		_workflowMetricsSlaInitScript = createScript(
@@ -286,6 +315,7 @@ public class ResourceHelper {
 	private Script _workflowMetricsInstanceCountInitScript;
 	private Script _workflowMetricsInstanceCountMapScript;
 	private Script _workflowMetricsInstanceCountReduceScript;
+	private Script _workflowMetricsSlaBreachedReduceScript;
 	private Script _workflowMetricsSlaCombineScript;
 	private Script _workflowMetricsSlaInitScript;
 	private Script _workflowMetricsSlaMapScript;

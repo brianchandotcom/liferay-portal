@@ -22,7 +22,7 @@ SegmentsExperiment segmentsExperiment = (SegmentsExperiment)request.getAttribute
 
 <aui:script sandbox="<%= true %>">
 	<c:if test='<%= (segmentsExperiment != null) && Objects.equals(segmentsExperiment.getGoal(), "click") && Validator.isNotNull(segmentsExperiment.getGoalTarget()) %>'>
-		var element = document.getElementById('<%= segmentsExperiment.getGoalTarget() %>');
+		var element = document.querySelector('<%= segmentsExperiment.getGoalTarget() %>');
 
 		if (element) {
 			element.addEventListener(

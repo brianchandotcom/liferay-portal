@@ -969,6 +969,20 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static GitWorkingDirectory getGitWorkingDirectory(
+		String gitRepositoryName, String upstreamBranchName) {
+
+		if (gitRepositoryName.contains("liferay-portal")) {
+			return getPortalGitWorkingDirectory(upstreamBranchName);
+		}
+
+		File gitRepositoryDir = new File(
+			getBaseGitRepositoryDir(), gitRepositoryName);
+
+		return GitWorkingDirectoryFactory.newGitWorkingDirectory(
+			upstreamBranchName, gitRepositoryDir, gitRepositoryName);
+	}
+
 	public static String[] getGlobsFromProperty(String globProperty) {
 		List<String> curlyBraceExpansionList = new ArrayList<>();
 

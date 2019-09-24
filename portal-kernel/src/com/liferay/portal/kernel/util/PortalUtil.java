@@ -153,6 +153,17 @@ public class PortalUtil {
 
 		getPortal().addPortletBreadcrumbEntry(httpServletRequest, title, url);
 	}
+	
+	/**
+	 * Return the portal work directory override path. This directory is
+	 * only used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to
+	 * true.
+	 *
+	 * @return the portal work directory override path.
+	 */
+	public String getWorkDirOverride() {
+		return getPortal().getWorkDirOverride();
+	}
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.

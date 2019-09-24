@@ -226,6 +226,7 @@ import com.liferay.util.JS;
 
 import java.awt.image.RenderedImage;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -6063,6 +6064,12 @@ public class PortalImpl implements Portal {
 
 		return getServletURL(
 			portlet, PropsValues.WIDGET_SERVLET_MAPPING, themeDisplay);
+	}
+
+	@Override
+	public String getWorkDirOverride() {
+		return StringBundler.concat(
+			PropsValues.LIFERAY_HOME, File.separator, "work");
 	}
 
 	@Override

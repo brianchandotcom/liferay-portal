@@ -1201,6 +1201,15 @@ public interface Portal {
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	/**
+	 * Return the portal work directory override path. This directory is
+	 * only used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to
+	 * true.
+	 *
+	 * @return the portal work directory override path.
+	 */
+	public String getWorkDirOverride();
+
 	public void initCustomSQL();
 
 	public User initUser(HttpServletRequest httpServletRequest)

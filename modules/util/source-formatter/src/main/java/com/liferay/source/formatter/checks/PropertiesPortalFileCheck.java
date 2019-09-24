@@ -38,7 +38,8 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		throws IOException {
 
 		if (((isPortalSource() || isSubrepository()) &&
-			 fileName.matches(".*portal-legacy-.*\\.properties")) ||
+			 (fileName.matches(".*portal-legacy-.*\\.properties") ||
+			  fileName.matches(".*/portal([-\\w]+)?\\.properties"))) ||
 			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("portal.properties"))) {
 

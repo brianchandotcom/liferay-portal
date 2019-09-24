@@ -50,7 +50,6 @@ definition {
 		AppBuilderAdmin.gotoBack();
 
 		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "my custom object");
-
 	}
 
 	@description = "Attempt to add a Custom Object without a valid name"

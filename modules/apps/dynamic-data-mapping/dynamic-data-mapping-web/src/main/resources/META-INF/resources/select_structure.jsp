@@ -88,7 +88,7 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="description"
-				truncate="<% true %>"
+				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 			/>
 

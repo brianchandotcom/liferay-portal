@@ -233,7 +233,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 									displayType="secondary"
 									onClick={onClose}
 								>
-									{Liferay.Language.get('Cancel')}
+									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
 								<BusyButton
@@ -241,7 +241,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 									disabled={busy}
 									onClick={_handleRun}
 								>
-									{Liferay.Language.get('Run')}
+									{Liferay.Language.get('run')}
 								</BusyButton>
 							</ClayButton.Group>
 						)

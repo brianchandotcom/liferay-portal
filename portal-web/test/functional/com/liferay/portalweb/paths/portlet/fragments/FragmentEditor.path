@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_CONFIG_PANEL</td>
+	<td>//div[@class='form-group']//input[contains(@placeholder,'Set Button Name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION</td>
 	<td>//button[@data-title='Fragment Configuration']</td>
 	<td></td>

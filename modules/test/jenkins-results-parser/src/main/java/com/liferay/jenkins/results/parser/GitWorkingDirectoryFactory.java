@@ -29,6 +29,11 @@ public class GitWorkingDirectoryFactory {
 		String upstreamBranchName, File gitRepositoryDir,
 		String gitRepositoryName) {
 
+		if ((gitRepositoryDir == null) && (gitRepositoryName == null)) {
+			throw new IllegalArgumentException(
+				"GitRepositoryDir and GitRepositoryName are null");
+		}
+
 		if (gitRepositoryDir == null) {
 			if (gitRepositoryName.equals("liferay-portal") &&
 				!upstreamBranchName.equals("master")) {

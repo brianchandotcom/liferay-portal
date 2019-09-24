@@ -1032,7 +1032,7 @@ public class AssetPublisherDisplayContext {
 		SearchContainer searchContainer = new SearchContainer(
 			_portletRequest, getPortletURL(), null, null);
 
-		if (isPaginationTypeNone()) {
+		if (isPaginationTypeNone() || isPaginationTypeSimple()) {
 			searchContainer.setDelta(getDelta());
 			searchContainer.setDeltaConfigurable(false);
 		}
@@ -1353,6 +1353,14 @@ public class AssetPublisherDisplayContext {
 		String curPaginationType = getPaginationType();
 
 		return curPaginationType.equals(paginationType);
+	}
+
+	public boolean isPaginationTypeSimple() {
+		if (Objects.equals(getPaginationType(), PAGINATION_TYPE_SIMPLE)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSearchWithIndex() {

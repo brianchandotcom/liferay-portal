@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
 import com.liferay.change.tracking.change.lists.web.internal.constants.CTHistoryConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsHistoryDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.constants.CTWebKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;

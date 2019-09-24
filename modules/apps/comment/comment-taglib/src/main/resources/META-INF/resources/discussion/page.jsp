@@ -234,7 +234,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 		loginURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
-		<aui:script require="metal-dom/src/all/dom as dom">
+		<aui:script require="metal-dom/src/all/dom as domAll">
 			var Util = Liferay.Util;
 
 			Liferay.provide(
@@ -495,7 +495,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								if (editorWrapper) {
 									editorWrapper.innerHTML = response;
 
-									dom.globalEval.runScriptsInElement(editorWrapper);
+									domAll.globalEval.runScriptsInElement(editorWrapper);
 								}
 
 								Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
@@ -678,7 +678,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 								if (moreCommentsContainer) {
 									moreCommentsContainer.insertAdjacentHTML('beforebegin', response);
 
-									dom.globalEval.runScriptsInElement(moreCommentsContainer.parentElement);
+									domAll.globalEval.runScriptsInElement(moreCommentsContainer.parentElement);
 								}
 							}
 						).catch(

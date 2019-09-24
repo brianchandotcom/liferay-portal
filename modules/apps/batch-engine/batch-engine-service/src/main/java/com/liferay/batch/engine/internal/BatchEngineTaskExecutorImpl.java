@@ -109,6 +109,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	}
 
 	private void _commitItems(
+			BatchEngineTask batchEngineTask,
 			BatchEngineTaskItemWriter batchEngineTaskItemWriter,
 			List<Object> items)
 		throws Throwable {
@@ -117,6 +118,11 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			_transactionConfig,
 			() -> {
 				batchEngineTaskItemWriter.write(items);
+
+				batchEngineTask.setModifiedDate(new Date());
+
+				_batchEngineTaskLocalService.updateBatchEngineTask(
+					batchEngineTask);
 
 				return null;
 			});
@@ -148,14 +154,15 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 				items.add(item);
 
 				if (items.size() == batchEngineTask.getBatchSize()) {
-					_commitItems(batchEngineTaskItemWriter, items);
+					_commitItems(
+						batchEngineTask, batchEngineTaskItemWriter, items);
 
 					items.clear();
 				}
 			}
 
 			if (!items.isEmpty()) {
-				_commitItems(batchEngineTaskItemWriter, items);
+				_commitItems(batchEngineTask, batchEngineTaskItemWriter, items);
 			}
 		}
 		finally {

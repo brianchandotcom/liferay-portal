@@ -207,7 +207,7 @@ public class FlagsTag extends IncludeTag {
 		JSONObject dataJSONObject = JSONUtil.put(
 			namespace + "className", _className
 		).put(
-			namespace + "classPK", _className
+			namespace + "classPK", _classPK
 		).put(
 			namespace + "contentTitle", _contentTitle
 		).put(

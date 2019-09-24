@@ -85,6 +85,11 @@
 	<td>//div[contains(@class,'fragment-entry-link')]/section[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//button[*[name()='svg'][*[contains(@class,'times-circle-x')]]]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

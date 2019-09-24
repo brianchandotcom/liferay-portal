@@ -14,7 +14,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
-	compileOnly project(":apps:batch-engine:headless:headless-batch-engine-api")
+	compileOnly project(":apps:headless:headless-batch-engine-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":core:petra:petra-function")
 }

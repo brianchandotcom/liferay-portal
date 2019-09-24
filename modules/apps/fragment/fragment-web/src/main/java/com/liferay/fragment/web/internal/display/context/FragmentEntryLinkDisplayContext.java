@@ -149,16 +149,6 @@ public class FragmentEntryLinkDisplayContext {
 		return "page-template";
 	}
 
-	public String getKeywords() {
-		if (Validator.isNotNull(_keywords)) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_renderRequest, "keywords", null);
-
-		return _keywords;
-	}
-
 	public String getNavigation() {
 		if (Validator.isNotNull(_navigation)) {
 			return _navigation;
@@ -347,7 +337,6 @@ public class FragmentEntryLinkDisplayContext {
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
-	private String _keywords;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

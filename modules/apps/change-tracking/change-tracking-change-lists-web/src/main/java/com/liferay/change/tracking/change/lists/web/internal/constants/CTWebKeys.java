@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.change.lists.web.internal.constants;
 
 /**
  * @author Zoltan Csaszi

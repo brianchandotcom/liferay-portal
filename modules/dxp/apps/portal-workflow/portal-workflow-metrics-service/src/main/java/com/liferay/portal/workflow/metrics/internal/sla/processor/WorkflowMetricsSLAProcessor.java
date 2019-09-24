@@ -127,10 +127,11 @@ public class WorkflowMetricsSLAProcessor {
 				workflowMetricsSLAStopwatch.getWorkfowMetricsSLAStatus();
 		}
 
-		return _createOptionalWorkflowMetricsSLAProcessResult(
-			companyId, elapsedTime, instanceId, nowLocalDateTime,
-			workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
-			workfowMetricsSLAStatus);
+		return Optional.of(
+			_createWorkflowMetricsSLAProcessResult(
+				companyId, documents, elapsedTime, instanceId, nowLocalDateTime,
+				workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
+				workfowMetricsSLAStatus));
 	}
 
 	protected WorkflowMetricsSLAProcessResult
@@ -268,6 +269,66 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
+	protected boolean hasBreachedSLA(
+		Document document, LocalDateTime nowLocalDateTime,
+		LocalDateTime overdueLocalDateTime) {
+
+		if (nowLocalDateTime.isBefore(overdueLocalDateTime)) {
+			return false;
+		}
+
+		LocalDateTime createDateLocalDateTime = LocalDateTime.parse(
+			document.getString("createDate"), _dateTimeFormatter);
+
+		if (createDateLocalDateTime.isAfter(overdueLocalDateTime)) {
+			return false;
+		}
+
+		if (Validator.isNull(document.getValue("completionDate"))) {
+			return true;
+		}
+
+		LocalDateTime completionDateLocalDateTime = LocalDateTime.parse(
+			document.getString("completionDate"), _dateTimeFormatter);
+
+		if (completionDateLocalDateTime.isAfter(overdueLocalDateTime)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isOntime(
+		Document document, LocalDateTime nowLocalDateTime,
+		LocalDateTime overdueLocalDateTime) {
+
+		if (nowLocalDateTime.isBefore(overdueLocalDateTime)) {
+			return true;
+		}
+
+		LocalDateTime createDateLocalDateTime = LocalDateTime.parse(
+			document.getString("createDate"), _dateTimeFormatter);
+
+		if (createDateLocalDateTime.isAfter(overdueLocalDateTime)) {
+			return false;
+		}
+
+		if (Validator.isNull(document.getValue("completionDate"))) {
+			return false;
+		}
+
+		LocalDateTime completionDateLocalDateTime = LocalDateTime.parse(
+			document.getString("completionDate"), _dateTimeFormatter);
+
+		if (completionDateLocalDateTime.isBefore(overdueLocalDateTime) ||
+			Objects.equals(completionDateLocalDateTime, overdueLocalDateTime)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected static class TaskInterval {
 
 		public LocalDateTime getEndLocalDateTime() {
@@ -332,16 +393,16 @@ public class WorkflowMetricsSLAProcessor {
 		return completionDateRangeFilterBuilder.build();
 	}
 
-	private Optional<WorkflowMetricsSLAProcessResult>
-		_createOptionalWorkflowMetricsSLAProcessResult(
-			long companyId, long elapsedTime, long instanceId,
-			LocalDateTime nowLocalDateTime,
+	private WorkflowMetricsSLAProcessResult
+		_createWorkflowMetricsSLAProcessResult(
+			long companyId, List<Document> documents, long elapsedTime,
+			long instanceId, LocalDateTime nowLocalDateTime,
 			WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
 			WorkflowMetricsSLADefinitionVersion
 				workflowMetricsSLADefinitionVersion,
 			WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
 
-		return Optional.of(
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			new WorkflowMetricsSLAProcessResult() {
 				{
 					setCompanyId(companyId);
@@ -369,7 +430,13 @@ public class WorkflowMetricsSLAProcessor {
 							getWorkflowMetricsSLADefinitionId());
 					setWorkfowMetricsSLAStatus(workfowMetricsSLAStatus);
 				}
-			});
+			};
+
+		workflowMetricsSLAProcessResult.setWorkflowMetricsSLATaskResults(
+			_createWorkflowMetricsSLATaskResults(
+				documents, nowLocalDateTime, workflowMetricsSLAProcessResult));
+
+		return workflowMetricsSLAProcessResult;
 	}
 
 	private WorkflowMetricsSLAStopwatch _createWorkflowMetricsSLAStopwatch(
@@ -385,15 +452,12 @@ public class WorkflowMetricsSLAProcessor {
 			StringUtil.split(
 				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
-		if (Objects.equals(
-				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
+		if (!Objects.equals(
+				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW)) {
 
 			workflowMetricsSLAStopwatch.run(lastCheckLocalDateTime);
 		}
-		else if (Objects.equals(
-					workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.NEW) &&
-				 startTimeMarkers.containsKey(startNodeId)) {
-
+		else if (startTimeMarkers.containsKey(startNodeId)) {
 			workflowMetricsSLAStopwatch.run(createDateLocalDateTime);
 		}
 
@@ -457,6 +521,55 @@ public class WorkflowMetricsSLAProcessor {
 		return workflowMetricsSLAStopwatch;
 	}
 
+	private WorkflowMetricsSLATaskResult _createWorkflowMetricsSLATaskResult(
+		Document document, LocalDateTime nowLocalDateTime,
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		return new WorkflowMetricsSLATaskResult() {
+			{
+				setBreached(
+					hasBreachedSLA(
+						document, nowLocalDateTime,
+						workflowMetricsSLAProcessResult.
+							getOverdueLocalDateTime()));
+				setCompanyId(workflowMetricsSLAProcessResult.getCompanyId());
+				setInstanceId(workflowMetricsSLAProcessResult.getInstanceId());
+				setLastCheckLocalDateTime(
+					workflowMetricsSLAProcessResult.
+						getLastCheckLocalDateTime());
+				setOnTime(
+					isOntime(
+						document, nowLocalDateTime,
+						workflowMetricsSLAProcessResult.
+							getOverdueLocalDateTime()));
+				setProcessId(workflowMetricsSLAProcessResult.getProcessId());
+				setSLADefinitionId(
+					workflowMetricsSLAProcessResult.getSLADefinitionId());
+				setTaskId(document.getLong("taskId"));
+				setTaskName(document.getString("taskName"));
+				setTokenId(document.getLong("tokenId"));
+				setWorkfowMetricsSLAStatus(
+					_getWorkfowMetricsSLAStatus(
+						document, workflowMetricsSLAProcessResult));
+			}
+		};
+	}
+
+	private List<WorkflowMetricsSLATaskResult>
+		_createWorkflowMetricsSLATaskResults(
+			List<Document> documents, LocalDateTime nowLocalDateTime,
+			WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		Stream<Document> stream = documents.stream();
+
+		return stream.map(
+			document -> _createWorkflowMetricsSLATaskResult(
+				document, nowLocalDateTime, workflowMetricsSLAProcessResult)
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private LocalDateTime _getMaxLocalDateTime(
 		LocalDateTime localDateTime1, LocalDateTime localDateTime2) {
 
@@ -494,6 +607,24 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		return map;
+	}
+
+	private WorkfowMetricsSLAStatus _getWorkfowMetricsSLAStatus(
+		Document document,
+		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+
+		if (Objects.equals(
+				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus(),
+				WorkfowMetricsSLAStatus.NEW)) {
+
+			return WorkfowMetricsSLAStatus.NEW;
+		}
+
+		if (GetterUtil.getBoolean(document.getBoolean("completed"))) {
+			return WorkfowMetricsSLAStatus.COMPLETED;
+		}
+
+		return WorkfowMetricsSLAStatus.RUNNING;
 	}
 
 	private TaskInterval _toTaskInterval(

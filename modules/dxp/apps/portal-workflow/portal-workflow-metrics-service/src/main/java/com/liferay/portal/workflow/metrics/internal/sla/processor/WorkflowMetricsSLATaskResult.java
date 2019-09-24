@@ -18,20 +18,13 @@ import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus
 
 import java.time.LocalDateTime;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * @author Rafael Praxedes
  */
-public class WorkflowMetricsSLAProcessResult {
+public class WorkflowMetricsSLATaskResult {
 
 	public long getCompanyId() {
 		return _companyId;
-	}
-
-	public long getElapsedTime() {
-		return _elapsedTime;
 	}
 
 	public long getInstanceId() {
@@ -42,42 +35,44 @@ public class WorkflowMetricsSLAProcessResult {
 		return _lastCheckLocalDateTime;
 	}
 
-	public LocalDateTime getOverdueLocalDateTime() {
-		return _overdueLocalDateTime;
-	}
-
 	public long getProcessId() {
 		return _processId;
-	}
-
-	public long getRemainingTime() {
-		return _remainingTime;
 	}
 
 	public long getSLADefinitionId() {
 		return _slaDefinitionId;
 	}
 
-	public List<WorkflowMetricsSLATaskResult>
-		getWorkflowMetricsSLATaskResults() {
+	public long getTaskId() {
+		return _taskId;
+	}
 
-		return _workflowMetricsSLATaskResults;
+	public String getTaskName() {
+		return _taskName;
+	}
+
+	public long getTokenId() {
+		return _tokenId;
 	}
 
 	public WorkfowMetricsSLAStatus getWorkfowMetricsSLAStatus() {
 		return _workfowMetricsSLAStatus;
 	}
 
+	public boolean isBreached() {
+		return _breached;
+	}
+
 	public boolean isOnTime() {
 		return _onTime;
 	}
 
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
+	public void setBreached(boolean breached) {
+		_breached = breached;
 	}
 
-	public void setElapsedTime(long elapsedTime) {
-		_elapsedTime = elapsedTime;
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	public void setInstanceId(long instanceId) {
@@ -94,26 +89,24 @@ public class WorkflowMetricsSLAProcessResult {
 		_onTime = onTime;
 	}
 
-	public void setOverdueLocalDateTime(LocalDateTime overdueLocalDateTime) {
-		_overdueLocalDateTime = overdueLocalDateTime;
-	}
-
 	public void setProcessId(long processId) {
 		_processId = processId;
-	}
-
-	public void setRemainingTime(long remainingTime) {
-		_remainingTime = remainingTime;
 	}
 
 	public void setSLADefinitionId(long slaDefinitionId) {
 		_slaDefinitionId = slaDefinitionId;
 	}
 
-	public void setWorkflowMetricsSLATaskResults(
-		List<WorkflowMetricsSLATaskResult> workflowMetricsSLATaskResults) {
+	public void setTaskId(long taskId) {
+		_taskId = taskId;
+	}
 
-		_workflowMetricsSLATaskResults = workflowMetricsSLATaskResults;
+	public void setTaskName(String taskName) {
+		_taskName = taskName;
+	}
+
+	public void setTokenId(long tokenId) {
+		_tokenId = tokenId;
 	}
 
 	public void setWorkfowMetricsSLAStatus(
@@ -122,17 +115,16 @@ public class WorkflowMetricsSLAProcessResult {
 		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
+	private boolean _breached;
 	private long _companyId;
-	private long _elapsedTime;
 	private long _instanceId;
 	private LocalDateTime _lastCheckLocalDateTime;
 	private boolean _onTime;
-	private LocalDateTime _overdueLocalDateTime;
 	private long _processId;
-	private long _remainingTime;
 	private long _slaDefinitionId;
-	private List<WorkflowMetricsSLATaskResult> _workflowMetricsSLATaskResults =
-		Collections.emptyList();
+	private long _taskId;
+	private String _taskName;
+	private long _tokenId;
 	private WorkfowMetricsSLAStatus _workfowMetricsSLAStatus;
 
 }

@@ -16,19 +16,15 @@ import '@testing-library/jest-dom/extend-expect';
 import {
 	cleanup,
 	fireEvent,
-	render,
 	waitForElement,
 	wait,
 	waitForElementToBeRemoved
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SegmentsExperimentsSidebar from '../../../src/main/resources/META-INF/resources/js/components/SegmentsExperimentsSidebar.es';
-import SegmentsExperimentsContext from '../../../src/main/resources/META-INF/resources/js/context.es';
-import React from 'react';
+import renderApp from '../renderApp.es';
 import {
 	segmentsExperiment,
 	segmentsExperiences,
-	segmentsGoals,
 	segmentsVariants
 } from '../fixtures.es';
 import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/resources/js/util/percentages.es';
@@ -47,69 +43,11 @@ jest.mock(
 	}
 );
 
-function _renderSegmentsExperimentsSidebarComponent({
-	classNameId = '',
-	classPK = '',
-	initialGoals = segmentsGoals,
-	initialSegmentsExperiences = [],
-	initialSegmentsExperiment,
-	initialSegmentsVariants = [],
-	APIService = {},
-	selectedSegmentsExperienceId,
-	type = 'content',
-	winnerSegmentsVariantId = null
-} = {}) {
-	const {
-		createExperiment = () => {},
-		createVariant = () => {},
-		deleteVariant = () => {},
-		editExperiment = () => {},
-		editVariant = () => {},
-		getEstimatedTime = () => Promise.resolve(),
-		publishExperience = () => {}
-	} = APIService;
-
-	return render(
-		<SegmentsExperimentsContext.Provider
-			value={{
-				APIService: {
-					createExperiment,
-					createVariant,
-					deleteVariant,
-					editExperiment,
-					editVariant,
-					getEstimatedTime,
-					publishExperience
-				},
-				assetsPath: '',
-				page: {
-					classNameId,
-					classPK,
-					type
-				}
-			}}
-		>
-			<SegmentsExperimentsSidebar
-				initialExperimentHistory={[]}
-				initialGoals={initialGoals}
-				initialSegmentsExperiences={initialSegmentsExperiences}
-				initialSegmentsExperiment={initialSegmentsExperiment}
-				initialSegmentsVariants={initialSegmentsVariants}
-				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
-				winnerSegmentsVariantId={winnerSegmentsVariantId}
-			/>
-		</SegmentsExperimentsContext.Provider>,
-		{
-			baseElement: document.body
-		}
-	);
-}
-
 describe('SegmentsExperimentsSidebar', () => {
 	afterEach(cleanup);
 
 	it('renders info message ab testing panel only available for content pages', () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			type: 'widget'
 		});
 
@@ -121,10 +59,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('renders ab testing panel with experience selected and zero experiments', () => {
-		const {
-			getByText,
-			getByDisplayValue
-		} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText, getByDisplayValue} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences
 		});
 
@@ -135,10 +70,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('renders ab testing panel with experience selected and an experiment', () => {
-		const {
-			getByText,
-			getByDisplayValue
-		} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText, getByDisplayValue} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment
 		});
@@ -157,7 +89,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('renders modal to create experiment when the user clicks on create test button', async () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences
 		});
 
@@ -174,7 +106,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	});
 
 	it('renders experiment status label', () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment
 		});
 
@@ -185,7 +117,7 @@ describe('SegmentsExperimentsSidebar', () => {
 	it("renders experiment without actions when it's not editable", () => {
 		segmentsExperiment.editable = false;
 
-		const {queryByTestId} = _renderSegmentsExperimentsSidebarComponent({
+		const {queryByTestId} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment
 		});
 
@@ -199,7 +131,7 @@ describe('Variants', () => {
 	afterEach(cleanup);
 
 	it('renders no variants message', () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: [segmentsVariants[0]],
@@ -217,7 +149,7 @@ describe('Variants', () => {
 	});
 
 	it('renders variant list', () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants,
@@ -244,10 +176,7 @@ describe('Variants', () => {
 				}
 			})
 		);
-		const {
-			getByText,
-			getByLabelText
-		} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText, getByLabelText} = renderApp({
 			APIService: {
 				createVariant: createVariantMock
 			},
@@ -287,7 +216,7 @@ describe('Variants', () => {
 	it("renders variants without create variant button when it's not editable", () => {
 		segmentsExperiment.editable = false;
 
-		const {queryByTestId} = _renderSegmentsExperimentsSidebarComponent({
+		const {queryByTestId} = renderApp({
 			initialSegmentsExperiment: segmentsExperiment
 		});
 
@@ -301,11 +230,7 @@ describe('Run and review test', () => {
 	afterEach(cleanup);
 
 	it('can view review Experiment Modal', async () => {
-		const {
-			getByText,
-			getByDisplayValue,
-			getAllByDisplayValue
-		} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText, getByDisplayValue, getAllByDisplayValue} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants
@@ -332,7 +257,7 @@ describe('Run and review test', () => {
 	});
 
 	it('can view estimation time', async () => {
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			APIService: {
 				getEstimatedTime: jest.fn(() =>
 					Promise.resolve({
@@ -413,10 +338,7 @@ describe('Winner declared', () => {
 	afterEach(cleanup);
 
 	it('experiment has basic Winner Declared basic elements', () => {
-		const {
-			getByText,
-			getAllByText
-		} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText, getAllByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -449,7 +371,7 @@ describe('Winner declared', () => {
 				}
 			});
 		});
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			APIService: {
 				publishExperience: mockPublish
 			},
@@ -491,7 +413,7 @@ describe('Winner declared', () => {
 			});
 		});
 
-		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+		const {getByText} = renderApp({
 			APIService: {
 				publishExperience: mockDiscard
 			},

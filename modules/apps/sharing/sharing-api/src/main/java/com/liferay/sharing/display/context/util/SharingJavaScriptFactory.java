@@ -56,4 +56,7 @@ public interface SharingJavaScriptFactory {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public default void requestSharingJavascript() {
+	}
+
 }

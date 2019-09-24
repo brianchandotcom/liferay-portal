@@ -17,7 +17,6 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
-import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -38,8 +37,7 @@ public class ViewDetailsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		return "/change_lists_history/details.jsp";
 	}

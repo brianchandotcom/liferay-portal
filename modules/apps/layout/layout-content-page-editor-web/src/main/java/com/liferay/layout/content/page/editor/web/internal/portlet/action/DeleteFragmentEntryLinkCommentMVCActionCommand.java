@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -90,8 +89,5 @@ public class DeleteFragmentEntryLinkCommentMVCActionCommand
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private Portal _portal;
 
 }

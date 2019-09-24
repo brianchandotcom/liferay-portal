@@ -17,7 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.model.listener;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -193,9 +191,6 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
 
 	@Reference
-	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;
 
 	@Reference
@@ -211,8 +206,5 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -94,9 +93,6 @@ public class EditFragmentEntryLinkCommentMVCActionCommand
 
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Portal _portal;

@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
@@ -239,9 +238,6 @@ public class FragmentEntryLinkModelListener
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			ddmTemplate.getTemplateId());
 	}
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;

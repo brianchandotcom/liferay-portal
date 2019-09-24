@@ -22,6 +22,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,6 +47,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -112,6 +114,41 @@ public class AddPortletMVCActionCommandTest {
 			actualFragmentEntryLinks.toString(),
 			originalFragmentEntryLinks.size() + 1,
 			actualFragmentEntryLinks.size());
+	}
+
+	@Test
+	public void testFragmentEntryLinkFromWidgetResponse() throws Exception {
+		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
+
+		actionRequest.addParameter("portletId", JournalPortletKeys.JOURNAL);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddPortlet",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockActionResponse());
+
+		Assert.assertNotNull(jsonObject);
+
+		Assert.assertTrue(jsonObject.has("fragmentEntryLinkId"));
+
+		long fragmentEntryLinkId = jsonObject.getLong("fragmentEntryLinkId");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		Assert.assertNotNull(fragmentEntryLink);
+
+		String editableValues = fragmentEntryLink.getEditableValues();
+
+		Assert.assertTrue(editableValues.contains(JournalPortletKeys.JOURNAL));
+
+		Locale defaultLocale = _portal.getSiteDefaultLocale(_group);
+
+		String expectedTitle = _portal.getPortletTitle(
+			JournalPortletKeys.JOURNAL, defaultLocale);
+
+		Assert.assertEquals(expectedTitle, jsonObject.getString("name"));
 	}
 
 	private MockActionRequest _getMockActionRequest() throws PortalException {

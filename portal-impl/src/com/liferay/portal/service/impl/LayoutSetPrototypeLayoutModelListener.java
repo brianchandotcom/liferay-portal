@@ -72,7 +72,7 @@ public class LayoutSetPrototypeLayoutModelListener
 
 			LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
 
-			layoutSet.setModifiedDate(layout.getModifiedDate());
+			layoutSet.setModifiedDate(modifiedDate);
 
 			UnicodeProperties settingsProperties =
 				layoutSet.getSettingsProperties();

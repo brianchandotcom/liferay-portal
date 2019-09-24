@@ -365,9 +365,11 @@ definition {
 	}
 
 	macro gotoTab {
-		Click(
-			key_tabName = "${tabName}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		if (IsElementNotPresent(key_tabName = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE")) {
+			Click(
+				key_tabName = "${tabName}",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		}
 	}
 
 	macro removeFragment {

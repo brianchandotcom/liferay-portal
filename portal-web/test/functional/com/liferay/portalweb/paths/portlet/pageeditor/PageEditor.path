@@ -190,6 +190,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE</td>
+	<td>//button[@data-title='${key_tabName}'][contains(@class,'active')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

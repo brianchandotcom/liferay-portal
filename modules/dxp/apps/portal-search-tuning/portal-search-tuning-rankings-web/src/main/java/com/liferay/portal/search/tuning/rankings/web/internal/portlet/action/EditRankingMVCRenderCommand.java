@@ -15,13 +15,16 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
+import com.liferay.portal.search.tuning.rankings.web.internal.display.context.EditRankingDisplayBuilder;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kevin Tan
@@ -41,7 +44,19 @@ public class EditRankingMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		EditRankingDisplayBuilder editRankingDisplayBuilder =
+			new EditRankingDisplayBuilder(
+				_portal.getHttpServletRequest(renderRequest), renderRequest,
+				renderResponse);
+
+		renderRequest.setAttribute(
+			ResultRankingsPortletKeys.EDIT_RANKING_DISPLAY_CONTEXT,
+			editRankingDisplayBuilder.build());
+
 		return "/edit_results_rankings.jsp";
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

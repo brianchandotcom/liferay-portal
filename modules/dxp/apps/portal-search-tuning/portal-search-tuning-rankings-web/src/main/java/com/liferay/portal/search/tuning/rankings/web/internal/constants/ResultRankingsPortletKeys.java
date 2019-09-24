@@ -19,6 +19,9 @@ package com.liferay.portal.search.tuning.rankings.web.internal.constants;
  */
 public class ResultRankingsPortletKeys {
 
+	public static final String EDIT_RANKING_DISPLAY_CONTEXT =
+		"EDIT_RANKING_DISPLAY_CONTEXT";
+
 	public static final String RESULT_RANKINGS =
 		"com_liferay_portal_search_tuning_rankings_web_internal_portlet_" +
 			"ResultRankingsPortlet";

@@ -214,18 +214,6 @@ definition {
 			removedScope = "read.portalversion",
 			resourcePanels = "Portal Services");
 
-		// Workaround OAUTH2-292
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "OAuth Application");
-
-		Navigator.gotoNavItem(navItem = "Scopes");
-
-		PortletEntry.save();
-
-		Navigator.gotoBack();
-
 		OAuth2.editScopes(
 			applicationName = "OAuth Application",
 			resourceCheckList = "liferay-json-web-services.read.buildnumber",

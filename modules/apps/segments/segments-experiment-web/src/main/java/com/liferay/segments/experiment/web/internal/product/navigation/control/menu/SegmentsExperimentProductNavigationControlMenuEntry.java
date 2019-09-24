@@ -155,14 +155,13 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			}
 
 			values.put("dataURL", "data-url='" + portletURL.toString() + "'");
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				_portal.getLocale(httpServletRequest), getClass());
-
-			values.put(
-				"title",
-				_html.escape(_language.get(resourceBundle, "ab-test")));
 		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_portal.getLocale(httpServletRequest), getClass());
+
+		values.put(
+			"title", _html.escape(_language.get(resourceBundle, "ab-test")));
 
 		IconTag iconTag = new IconTag();
 

@@ -178,7 +178,11 @@ class MapContentForm extends PortletBase {
 				let itemValue = '';
 
 				this.selectedItems.forEach(selectedItem => {
-					if (selectedItem.editableId === field.editableId) {
+					if (
+						selectedItem.editableId === field.editableId &&
+						selectedItem.fragmentEntryLinkId ===
+						field.fragmentEntryLinkId
+					) {
 						itemValue = selectedItem.itemValue;
 					}
 				});

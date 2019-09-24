@@ -25,7 +25,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.util.comparator.CTEntryCreateDateComparator;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -36,7 +35,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -463,4 +464,55 @@ public class CTManagerImpl implements CTManager {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
+	public static class CTEntryCreateDateComparator extends
+		OrderByComparator<CTEntry> {
+
+		public static final String ORDER_BY_ASC = "CTEntry.createDate ASC";
+
+		public static final String ORDER_BY_DESC = "CTEntry.createDate DESC";
+
+		public static final String[] ORDER_BY_FIELDS = {"createDate"};
+
+		public CTEntryCreateDateComparator() {
+			this(false);
+		}
+
+		public CTEntryCreateDateComparator(boolean ascending) {
+			_ascending = ascending;
+		}
+
+		@Override
+		public int compare(CTEntry ctEntry1, CTEntry ctEntry2) {
+			int value = DateUtil.compareTo(
+				ctEntry1.getCreateDate(), ctEntry2.getCreateDate());
+
+			if (_ascending) {
+				return value;
+			}
+
+			return -value;
+		}
+
+		@Override
+		public String getOrderBy() {
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+
+			return ORDER_BY_DESC;
+		}
+
+		@Override
+		public String[] getOrderByFields() {
+			return ORDER_BY_FIELDS;
+		}
+
+		@Override
+		public boolean isAscending() {
+			return _ascending;
+		}
+
+		private final boolean _ascending;
+
+	}
 }

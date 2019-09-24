@@ -59,12 +59,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		List<String> implementedClassNames =
-			javaClass.getImplementedClassNames();
-
 		_checkPackageName(
-			fileName, absolutePath, packageName, javaClass.getName(),
-			implementedClassNames);
+			fileName, absolutePath, packageName, javaClass.getName());
 
 		if (isModulesFile(absolutePath) && !isModulesApp(absolutePath, true)) {
 			_checkModulePackageName(fileName, packageName);
@@ -87,8 +83,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 			if (array.length == 2) {
 				_checkPackageName(
-					fileName, implementedClassNames, array[0], packageName,
-					array[1], true);
+					fileName, javaClass.getImplementedClassNames(), array[0],
+					packageName, array[1], true);
 			}
 		}
 
@@ -210,7 +206,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 	private void _checkPackageName(
 		String fileName, String absolutePath, String packageName,
-		String className, List<String> implementedClassNames) {
+		String className) {
 
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
@@ -264,38 +260,6 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 					"Do not use 'api' in the package for classes in the API " +
 						"module");
 			}
-		}
-
-		if ((className.endsWith("PermissionRegistrar") ||
-			 implementedClassNames.contains("ModelResourcePermissionLogic") ||
-			 implementedClassNames.contains(
-				 "PortletResourcePermissionLogic")) &&
-			!packageName.contains("internal.security.permission.resource") &&
-			!packageName.contains("kernel.security.permission.resource")) {
-
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Class '", className, "' should be in a package ",
-					"'internal.security.permission.resource' or ",
-					"'kernel.security.permission.resource'"));
-		}
-
-		if ((implementedClassNames.contains(
-				"ModelResourcePermissionDefinition") ||
-			 implementedClassNames.contains(
-				 "PortletResourcePermissionDefinition")) &&
-			!packageName.contains(
-				"internal.security.permission.resource.definition") &&
-			!packageName.contains(
-				"kernel.security.permission.resource.definition")) {
-
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Class '", className, "' should be in package ",
-					"'internal.security.permission.resource.definition' or ",
-					"'kernel.security.permission.resource.definition'"));
 		}
 
 		if (className.endsWith("OSGiCommands") &&

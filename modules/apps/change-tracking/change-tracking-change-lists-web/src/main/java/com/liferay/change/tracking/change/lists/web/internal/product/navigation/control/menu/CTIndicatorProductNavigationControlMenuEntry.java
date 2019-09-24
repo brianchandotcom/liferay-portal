@@ -175,7 +175,8 @@ public class CTIndicatorProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		CTIndicatorProductNavigationControlMenuEntry.class,
-		"/META-INF/resources/control/menu/change_tracking_indicator_icon.tmpl");
+		"/META-INF/resources/change_lists/menu" +
+			"/change_tracking_indicator_icon.tmpl");
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

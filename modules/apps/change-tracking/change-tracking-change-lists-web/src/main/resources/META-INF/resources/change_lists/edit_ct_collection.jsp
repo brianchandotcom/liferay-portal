@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists/init.jsp" %>
 
 <%
 String backURL = ParamUtil.getString(request, "backURL");

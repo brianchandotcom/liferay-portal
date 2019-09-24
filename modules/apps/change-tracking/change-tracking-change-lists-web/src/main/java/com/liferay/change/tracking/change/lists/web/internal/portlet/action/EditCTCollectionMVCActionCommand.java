@@ -71,7 +71,7 @@ public class EditCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 			_portal.copyRequestParameters(actionRequest, actionResponse);
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/edit_ct_collection.jsp");
+				"mvcPath", "/change_lists/edit_ct_collection.jsp");
 
 			return;
 		}

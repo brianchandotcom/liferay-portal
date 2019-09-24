@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists/init.jsp" %>
 
 <soy:component-renderer
 	context="<%= changeListsDisplayContext.getChangeListsContext() %>"
-	module="js/Overview.es"
+	module="change_lists/js/Overview.es"
 	templateNamespace="com.liferay.change.tracking.change.lists.web.Overview.render"
 />

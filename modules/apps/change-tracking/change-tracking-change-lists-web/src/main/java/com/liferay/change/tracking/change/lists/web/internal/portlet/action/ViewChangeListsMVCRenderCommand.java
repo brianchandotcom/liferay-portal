@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class ViewChangeListsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -49,7 +49,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		boolean select = ParamUtil.getBoolean(renderRequest, "select");
 
 		if (select) {
-			return "/view.jsp";
+			return "/change_lists/view.jsp";
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -63,10 +63,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			(ctPreferences.getCtCollectionId() !=
 				CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
-			return "/overview.jsp";
+			return "/change_lists/overview.jsp";
 		}
 
-		return "/view.jsp";
+		return "/change_lists/view.jsp";
 	}
 
 	@Reference

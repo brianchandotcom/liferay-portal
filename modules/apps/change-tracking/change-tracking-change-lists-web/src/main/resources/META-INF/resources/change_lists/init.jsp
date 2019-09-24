@@ -13,3 +13,11 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+ChangeListsDisplayContext changeListsDisplayContext = (ChangeListsDisplayContext)request.getAttribute(CTWebConstants.CHANGE_LISTS_DISPLAY_CONTEXT);
+
+portletDisplay.setShowStagingIcon(false);
+%>

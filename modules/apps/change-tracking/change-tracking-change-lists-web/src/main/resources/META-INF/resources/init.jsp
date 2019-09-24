@@ -54,11 +54,3 @@ page import="javax.portlet.PortletURL" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-ChangeListsDisplayContext changeListsDisplayContext = (ChangeListsDisplayContext)request.getAttribute(CTWebConstants.CHANGE_LISTS_DISPLAY_CONTEXT);
-
-portletDisplay.setShowStagingIcon(false);
-%>
-
-<%@ include file="/init-ext.jsp" %>

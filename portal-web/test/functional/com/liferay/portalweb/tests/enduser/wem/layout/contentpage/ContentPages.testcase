@@ -783,12 +783,10 @@ definition {
 
 		PageEditor.addBasicComponent(fragmentName = "Image");
 
-		task ("Add the Image fragment's image") {
-			PageEditor.editFragmentImage(
-				fileName = "Document_1.png",
-				fragmentName = "Image",
-				id = "image");
-		}
+		PageEditor.editFragmentImage(
+			fileName = "Document_1.png",
+			fragmentName = "Image",
+			id = "image");
 
 		task ("Assert the image field contains the image name.") {
 			Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_IMAGE_PROPERTIES_BUTTON");

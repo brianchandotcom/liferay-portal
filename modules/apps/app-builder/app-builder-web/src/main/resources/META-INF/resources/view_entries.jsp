@@ -22,7 +22,7 @@
 	Map<String, Object> data = new HashMap<>();
 
 	data.put("appId", request.getAttribute(AppBuilderWebKeys.APP_ID));
-	data.put("basePortletURL", renderResponse.createRenderURL());
+	data.put("basePortletURL", renderResponse.createRenderURL().toString());
 	%>
 
 	<react:component

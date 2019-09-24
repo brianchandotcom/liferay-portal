@@ -29,7 +29,7 @@
 			<%
 			Map<String, Object> data = new HashMap<>();
 
-			data.put("basePortletURL", renderResponse.createRenderURL());
+			data.put("basePortletURL", renderResponse.createRenderURL().toString());
 			data.put("dataDefinitionId", ParamUtil.getLong(request, "dataDefinitionId"));
 			data.put("editEntryContainerElementId", renderResponse.getNamespace() + "container");
 			%>

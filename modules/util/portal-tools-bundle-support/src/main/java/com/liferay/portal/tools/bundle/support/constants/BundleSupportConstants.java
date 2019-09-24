@@ -19,6 +19,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -57,6 +60,10 @@ public class BundleSupportConstants {
 	public static final String DEFAULT_TOKEN_URL =
 		"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
 			"/tokenauthentry/add-token-auth-entry";
+
+	public static final List<File> defaultConfigDirs = Arrays.asList(
+		new File(DEFAULT_CONFIGS_DIR_NAME), new File(DEFAULT_LCP_DIR_NAME),
+		new File(DEFAULT_DEV_OPS_DIR_NAME));
 
 	static {
 		try {

@@ -58,7 +58,14 @@ public class InitBundleCommand extends DownloadCommand {
 		FileUtil.unpack(
 			getDownloadPath(), liferayHomeDir.toPath(), _stripComponents);
 
-		_copyConfigs();
+		CopyConfigsCommand copyConfigsCommand = new CopyConfigsCommand();
+
+		copyConfigsCommand.setConfigsDirs(_configsDirs);
+		copyConfigsCommand.setEnvironment(_environment);
+		copyConfigsCommand.setLiferayHomeDir(getLiferayHomeDir());
+
+		copyConfigsCommand.execute();
+
 		_copyProvidedModules();
 		_fixPosixFilePermissions();
 	}
@@ -71,6 +78,10 @@ public class InitBundleCommand extends DownloadCommand {
 		}
 
 		return file;
+	}
+
+	public List<File> getConfigsDirs() {
+		return _configsDirs;
 	}
 
 	public String getEnvironment() {
@@ -103,37 +114,6 @@ public class InitBundleCommand extends DownloadCommand {
 
 	public void setStripComponents(int stripComponents) {
 		_stripComponents = stripComponents;
-	}
-
-	private void _copyConfigs() throws IOException {
-		for (File configDir : _configsDirs) {
-			_copyConfigs(configDir);
-		}
-	}
-
-	private void _copyConfigs(File configsDir) throws IOException {
-		if ((configsDir == null) || !configsDir.exists()) {
-			return;
-		}
-
-		Path configsDirPath = configsDir.toPath();
-
-		Path configsCommonDirPath = configsDirPath.resolve("common");
-
-		File liferayHomeDir = getLiferayHomeDir();
-
-		Path liferayHomeDirPath = liferayHomeDir.toPath();
-
-		if (Files.exists(configsCommonDirPath)) {
-			FileUtil.copyDirectory(configsCommonDirPath, liferayHomeDirPath);
-		}
-
-		Path configsEnvironmentDirPath = configsDirPath.resolve(_environment);
-
-		if (Files.exists(configsEnvironmentDirPath)) {
-			FileUtil.copyDirectory(
-				configsEnvironmentDirPath, liferayHomeDirPath);
-		}
 	}
 
 	private void _copyProvidedModules() throws IOException {
@@ -195,10 +175,7 @@ public class InitBundleCommand extends DownloadCommand {
 		description = "The directories that contains the configuration files.",
 		names = "--configs"
 	)
-	private List<File> _configsDirs = Arrays.asList(
-		new File(BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME),
-		new File(BundleSupportConstants.DEFAULT_LCP_DIR_NAME),
-		new File(BundleSupportConstants.DEFAULT_DEV_OPS_DIR_NAME));
+	private List<File> _configsDirs = BundleSupportConstants.defaultConfigDirs;
 
 	@Parameter(
 		description = "The environment of your Liferay home deployment.",

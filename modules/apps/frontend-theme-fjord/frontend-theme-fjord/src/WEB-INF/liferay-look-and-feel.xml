@@ -7,6 +7,9 @@
 	</compatibility>
 	<theme id="fjord" name="Fjord">
 		<template-extension>ftl</template-extension>
+		<settings>
+			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,secondary,light,white" />
+		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>

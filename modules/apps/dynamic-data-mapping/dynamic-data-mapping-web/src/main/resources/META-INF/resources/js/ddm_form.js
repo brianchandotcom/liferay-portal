@@ -3603,7 +3603,17 @@ AUI.add(
 
 					var fieldOptions = fieldDefinition.options;
 
-					fieldOptions.unshift(instance._getPlaceholderOption());
+					if (fieldOptions && fieldOptions[0]) {
+						if (fieldOptions[0].value === '') {
+							var displayLocale = instance.get('displayLocale');
+
+							fieldOptions[0].label[displayLocale] = '';
+						} else {
+							fieldOptions.unshift(
+								instance._getPlaceholderOption()
+							);
+						}
+					}
 
 					return fieldOptions;
 				},

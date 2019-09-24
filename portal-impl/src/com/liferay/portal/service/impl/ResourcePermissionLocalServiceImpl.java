@@ -264,7 +264,7 @@ public class ResourcePermissionLocalServiceImpl
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)
@@ -1440,7 +1440,7 @@ public class ResourcePermissionLocalServiceImpl
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)
@@ -1484,7 +1484,7 @@ public class ResourcePermissionLocalServiceImpl
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)
@@ -1527,7 +1527,7 @@ public class ResourcePermissionLocalServiceImpl
 		properties = {
 			@Property(
 				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "org.springframework.dao.DataIntegrityViolationException"
+				value = "java.sql.SQLIntegrityConstraintViolationException"
 			)
 		}
 	)

@@ -1,0 +1,265 @@
+// Compatibility layer components config
+
+$compat-alerts: true !default;
+$compat-basic_search: true !default;
+$compat-breadcrumbs: true !default;
+$compat-button_groups: true !default;
+$compat-buttons: true !default;
+$compat-cards: true !default;
+$compat-component_animations: true !default;
+$compat-dropdowns: true !default;
+$compat-figures: true !default;
+$compat-form_validation: true !default;
+$compat-forms: true !default;
+$compat-grid: true !default;
+$compat-icons: true !default;
+$compat-labels: true !default;
+$compat-liferay: true !default;
+$compat-list_groups: true !default;
+$compat-management_bar: true !default;
+$compat-modals: true !default;
+$compat-nav_tabs: true !default;
+$compat-navbar: true !default;
+$compat-navs: true !default;
+$compat-pager: true !default;
+$compat-pagination: true !default;
+$compat-panels: true !default;
+$compat-progress_bars: true !default;
+$compat-responsive_utilities: true !default;
+$compat-sidebar: true !default;
+$compat-simple_flexbox_grid: true !default;
+$compat-stickers: true !default;
+$compat-tables: true !default;
+$compat-toggle_card: true !default;
+$compat-toggle_switch: true !default;
+$compat-toolbar: true !default;
+$compat-user_icons: true !default;
+$compat-utilities: true !default;
+
+// Map Bootstrap 4 Variables to Bootstrap 3 equivalent
+
+@import 'clay/variables/icons';
+
+$icon-monospaced-size: 2rem !default;
+
+$nav-link-color: $navbar-light-color !default;
+
+// Navbar
+
+$navbar-border-bottom-width: 0.0625rem !default;
+$navbar-border-left-width: 0 !default;
+$navbar-border-right-width: 0 !default;
+$navbar-border-top-width: 0 !default;
+
+$navbar-light-active-highlight: lighten(#1865fb, 22%) !default;
+$navbar-light-bg: #fff !default;
+$navbar-light-border-color: transparent !default;
+
+$navbar-dark-active-highlight: lighten(#1865fb, 22%) !default;
+$navbar-dark-bg: #31323f !default;
+$navbar-dark-border-color: transparent !default;
+
+$zindex-basic-search-close: 5 !default;
+
+// Mangagement bar
+
+$management-bar-border-bottom-width: 0.0625rem !default; // 1px
+$management-bar-border-left-width: 0.0625rem !default; // 1px
+$management-bar-border-right-width: 0.0625rem !default; // 1px
+$management-bar-border-top-width: 0.0625rem !default; // 1px
+$management-bar-border-width: $management-bar-border-top-width
+	$management-bar-border-right-width $management-bar-border-bottom-width
+	$management-bar-border-left-width !default;
+
+$management-bar-dropdown-menu-margin-top: 0 !default;
+
+$management-bar-desktop-height: null !default;
+$management-bar-height: 3.125rem !default; // 50px
+
+$management-bar-desktop-link-line-height: $line-height-base !default;
+
+$management-bar-margin-bottom: 1.25rem !default; // 20px
+
+$management-bar-desktop-padding-horizontal: null !default;
+$management-bar-desktop-padding-vertical: null !default;
+$management-bar-padding-horizontal: $nav-link-padding-x !default;
+$management-bar-padding-vertical: (
+		$management-bar-height - 1.25rem - $management-bar-border-bottom-width -
+			$management-bar-border-top-width
+	) / 2 !default;
+
+$management-bar-btn-padding-horizontal: $management-bar-padding-horizontal !default;
+$management-bar-btn-padding-vertical: (
+		$management-bar-height - $management-bar-border-bottom-width -
+			$management-bar-border-top-width - $icon-monospaced-size
+	) / 2 !default;
+
+$management-bar-toggle-height: 2.5rem + $management-bar-border-bottom-width +
+	$management-bar-border-top-width !default;
+
+$management-bar-collapse-bg: $dropdown-bg !default;
+$management-bar-collapse-border: transparent !default;
+
+$management-bar-default-bg: #fff !default;
+$management-bar-default-border: transparent !default;
+$management-bar-default-box-shadow: null !default;
+$management-bar-default-color: $secondary !default;
+
+$management-bar-default-collapse-bg: $management-bar-default-bg !default;
+$management-bar-default-collapse-border: $management-bar-default-border !default;
+
+$management-bar-default-link-color: $secondary !default;
+
+$management-bar-default-link-hover-bg: rgba(39, 40, 51, 0.03) !default;
+$management-bar-default-link-hover-color: $navbar-light-hover-color !default;
+
+$management-bar-default-link-active-bg: darken($body-bg, 6.5%) !default;
+$management-bar-default-link-active-color: $body-color !default;
+
+$management-bar-default-link-disabled-bg: transparent !default;
+$management-bar-default-link-disabled-color: $navbar-light-disabled-color !default;
+
+$management-bar-default-btn-default-bg: transparent !default;
+$management-bar-default-btn-default-border: transparent !default;
+$management-bar-default-btn-default-color: $management-bar-default-link-color !default;
+
+$management-bar-default-btn-default-hover-bg: $management-bar-default-link-hover-bg !default;
+$management-bar-default-btn-default-hover-border: $management-bar-default-btn-default-border !default;
+$management-bar-default-btn-default-hover-color: $body-color !default;
+
+$management-bar-default-btn-default-active-bg: $management-bar-default-btn-default-hover-bg !default;
+$management-bar-default-btn-default-active-border: $management-bar-default-btn-default-hover-border !default;
+$management-bar-default-btn-default-active-color: $management-bar-default-btn-default-hover-color !default;
+
+// Icons
+
+$help-icon-default-bg: lighten(map-get($theme-colors, secondary), 24%) !default;
+$help-icon-default-color: #fff !default;
+$help-icon-default-hover-color: $help-icon-default-color !default;
+
+// Grid
+
+$screen-lg: 1200px !default;
+
+$screen-lg-min: map-get($grid-breakpoints, xl) !default;
+$screen-md-min: map-get($grid-breakpoints, lg) !default;
+$screen-sm-min: map-get($grid-breakpoints, md) !default;
+$screen-xs-min: map-get($grid-breakpoints, sm) !default;
+
+$screen-md-max: ($screen-lg-min - 1) !default;
+$screen-sm-max: ($screen-md-min - 1) !default;
+$screen-xs-max: ($screen-sm-min - 1) !default;
+
+$grid-float-breakpoint: $screen-sm-min !default;
+
+// Pager
+
+$pager-bg: $pagination-bg !default;
+$pager-border: $pagination-border-color !default;
+$pager-border-radius: 15px !default;
+
+$pager-hover-bg: $pagination-hover-bg !default;
+
+$pager-active-bg: $pagination-active-bg !default;
+$pager-active-color: $pagination-active-color !default;
+
+$pager-disabled-color: $pagination-disabled-color !default;
+
+// Progress
+
+$progress-bar-xl-height: 52px !default;
+$progress-bar-xs-height: 8px !default;
+
+// List groups
+
+$list-group-border: #ddd !default;
+$list-group-border-radius: $border-radius-base !default;
+
+$list-group-hover-bg: #f5f5f5 !default;
+
+$list-group-link-heading-color: #333 !default;
+
+$list-group-border-width: 1px !default;
+$list-group-header-font-weight: 500 !default;
+
+$list-group-header-bg: $list-group-hover-bg !default;
+$list-group-header-color: $list-group-link-heading-color !default;
+$list-group-header-hover-color: $list-group-header-color !default;
+
+$list-group-header-open-border-color: map-get($theme-colors, primary) !default;
+$list-group-header-open-border-width: 2px !default;
+
+$list-group-header-close-border-color: $list-group-border !default;
+$list-group-header-close-border-width: 1px !default;
+
+// User icons
+
+$user-icon-xs-font-size: 8px !default;
+$user-icon-xs-size: 24px !default;
+
+$user-icon-xs-desktop-font-size: 8px !default;
+$user-icon-xs-desktop-size: 24px !default;
+
+$user-icon-sm-font-size: 12px !default;
+$user-icon-sm-size: 32px !default;
+
+$user-icon-sm-desktop-font-size: $font-size-sm !default; // 12px
+$user-icon-sm-desktop-size: 32px !default;
+
+$user-icon-font-size: $font-size-sm !default; // 14px
+$user-icon-size: 32px !default;
+
+$user-icon-lg-font-size: $font-size-sm !default;
+$user-icon-lg-size: 40px !default;
+
+$user-icon-lg-desktop-font-size: $font-size-sm !default;
+$user-icon-lg-desktop-size: 40px !default;
+
+$user-icon-xl-font-size: 16px !default;
+$user-icon-xl-size: 48px !default;
+
+$user-icon-xl-desktop-font-size: 16px !default;
+$user-icon-xl-desktop-size: 48px !default;
+
+$user-icon-xxl-font-size: 20px !default;
+$user-icon-xxl-size: 56px !default;
+
+$user-icon-xxl-desktop-font-size: 20px !default;
+$user-icon-xxl-desktop-size: 56px !default;
+
+$user-icon-border-radius: 500px !default;
+$user-icon-circle-border-radius: 500px !default;
+$user-icon-rounded-border-radius: $border-radius !default;
+$user-icon-square-border-radius: 0 !default;
+
+$user-icon-default-bg: $gray-600 !default;
+
+$user-icon-primary-bg: map-get($theme-colors, primary) !default;
+
+$user-icon-info-bg: map-get($theme-colors, info) !default;
+
+$user-icon-success-bg: map-get($theme-colors, success) !default;
+
+$user-icon-warning-bg: map-get($theme-colors, warning) !default;
+
+$user-icon-danger-bg: map-get($theme-colors, danger) !default;
+
+// Multi Step Progress
+
+$multi-step-progress-bar-active-icon: '\f111' !default;
+$multi-step-progress-bar-complete-icon: '\f00c' !default;
+$multi-step-progress-bar-icon: '\f10c' !default;
+
+$multi-step-progress-bar-color: #bbb !default;
+
+$multi-step-progress-bar-active-color: map-get($theme-colors, primary) !default;
+
+$multi-step-progress-bar-complete-color: map-get($colors, gray) !default;
+$multi-step-progress-bar-complete-icon-color: map-get(
+	$theme-colors,
+	primary
+) !default;
+
+$multi-step-progress-bar-divider-height: 1px !default;
+
+$multi-step-progress-bar-fixed-width: 100px !default;

@@ -69,7 +69,7 @@ public class SubrepositoryGitRepositoryJob
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		if (portalGitWorkingDirectory == null) {
 			portalGitWorkingDirectory =
-				GitWorkingDirectoryFactory.getPortalGitWorkingDirectory(
+				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 					getBranchName());
 		}
 

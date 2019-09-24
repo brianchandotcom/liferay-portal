@@ -31,10 +31,10 @@ public abstract class BasePortalReleaseJob
 		_portalBranchName = portalBranchName;
 
 		_jenkinsGitWorkingDirectory =
-			GitWorkingDirectoryFactory.getJenkinsGitWorkingDirectory();
+			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
 
 		_portalGitWorkingDirectory =
-			GitWorkingDirectoryFactory.getPortalGitWorkingDirectory(
+			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
 				portalBranchName);
 
 		jobPropertiesFiles.add(

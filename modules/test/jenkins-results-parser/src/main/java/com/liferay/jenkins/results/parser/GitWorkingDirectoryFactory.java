@@ -129,7 +129,7 @@ public class GitWorkingDirectoryFactory {
 	private static final Map<String, GitWorkingDirectory>
 		_gitWorkingDirectories = new HashMap<>();
 
-	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
+	public static PortalGitWorkingDirectory newPortalGitWorkingDirectory(
 		String upstreamBranchName) {
 	
 		String gitRepositoryDirName = "liferay-portal";
@@ -154,7 +154,7 @@ public class GitWorkingDirectoryFactory {
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
-	public static GitWorkingDirectory getJenkinsGitWorkingDirectory() {
+	public static GitWorkingDirectory newJenkinsGitWorkingDirectory() {
 		String gitRepositoryName = "liferay-jenkins-ee";
 	
 		File gitRepositoryDir = new File(

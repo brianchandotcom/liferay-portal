@@ -1030,10 +1030,9 @@ public class AssetPublisherDisplayContext {
 		}
 
 		SearchContainer searchContainer = new SearchContainer(
-			_portletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
-			getDelta(), getPortletURL(), null, null);
+			_portletRequest, getPortletURL(), null, null);
 
-		if (!isPaginationTypeNone()) {
+		if (isPaginationTypeNone()) {
 			searchContainer.setDelta(getDelta());
 			searchContainer.setDeltaConfigurable(false);
 		}

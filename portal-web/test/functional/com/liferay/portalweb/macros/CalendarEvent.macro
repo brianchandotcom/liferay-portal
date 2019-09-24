@@ -685,7 +685,7 @@ definition {
 			Refresh();
 		}
 
-		CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
 	}
 
 	macro edit {

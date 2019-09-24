@@ -47,9 +47,9 @@ public class NotificationsPanelApp extends BasePanelApp {
 		}
 
 		return _userNotificationEventLocalService.
-			getArchivedUserNotificationEventsCount(
+			getDeliveredArchivedUserNotificationEventsCount(
 				user.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
 	@Override

@@ -3040,6 +3040,13 @@
 			<finder-column name="actionRequired" />
 			<finder-column name="archived" />
 		</finder>
+		<finder name="U_T_DT_D_A" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="type" />
+			<finder-column name="deliveryType" />
+			<finder-column name="delivered" />
+			<finder-column name="archived" />
+		</finder>
 		<finder name="U_DT_D_AR_A" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="deliveryType" />

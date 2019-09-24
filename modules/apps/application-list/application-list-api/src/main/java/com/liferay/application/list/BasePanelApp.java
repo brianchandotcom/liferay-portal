@@ -82,7 +82,7 @@ public abstract class BasePanelApp implements PanelApp {
 		return _userNotificationEventLocalService.
 			getUserNotificationEventsCount(
 				user.getUserId(), _portlet.getPortletId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
 	@Override

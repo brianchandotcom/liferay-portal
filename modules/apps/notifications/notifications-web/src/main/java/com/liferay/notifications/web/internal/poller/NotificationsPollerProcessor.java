@@ -74,9 +74,10 @@ public class NotificationsPollerProcessor extends BasePollerProcessor {
 
 		int unreadUserNotificationsCount =
 			_userNotificationEventLocalService.
-				getArchivedUserNotificationEventsCount(
+				getDeliveredArchivedUserNotificationEventsCount(
 					pollerRequest.getUserId(),
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
+					false);
 
 		pollerResponse.setParameter(
 			"unreadUserNotificationsCount",

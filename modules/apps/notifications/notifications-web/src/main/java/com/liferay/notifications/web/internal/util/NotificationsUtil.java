@@ -34,7 +34,7 @@ public class NotificationsUtil {
 		if (actionRequired) {
 			return UserNotificationEventLocalServiceUtil.
 				getArchivedUserNotificationEventsCount(
-					userId, _DELIVERY_TYPE, true, false);
+					userId, _DELIVERY_TYPE, true, true, false);
 		}
 
 		return UserNotificationEventLocalServiceUtil.
@@ -75,12 +75,13 @@ public class NotificationsUtil {
 			searchContainer.setTotal(
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEventsCount(
-						userId, _DELIVERY_TYPE, actionRequired, archived));
+						userId, _DELIVERY_TYPE, true, actionRequired,
+						archived));
 
 			searchContainer.setResults(
 				UserNotificationEventLocalServiceUtil.
 					getArchivedUserNotificationEvents(
-						userId, _DELIVERY_TYPE, actionRequired, archived,
+						userId, _DELIVERY_TYPE, true, actionRequired, archived,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						obc));
 		}

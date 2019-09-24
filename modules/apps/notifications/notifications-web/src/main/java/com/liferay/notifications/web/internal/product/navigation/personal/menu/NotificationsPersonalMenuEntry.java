@@ -52,9 +52,10 @@ public class NotificationsPersonalMenuEntry extends BasePersonalMenuEntry {
 
 		int count =
 			_userNotificationEventLocalService.
-				getArchivedUserNotificationEventsCount(
+				getDeliveredArchivedUserNotificationEventsCount(
 					themeDisplay.getUserId(),
-					UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+					UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
+					false);
 
 		if (count > 0) {
 			return "simple-circle";

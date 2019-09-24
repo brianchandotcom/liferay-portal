@@ -86,8 +86,8 @@ public class MarkAllNotificationsAsReadPortletConfigurationIcon
 				_userNotificationEventLocalService.
 					getArchivedUserNotificationEventsCount(
 						themeDisplay.getUserId(),
-						UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
-						false);
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
+						false, false);
 
 			if (unreadNotificationEventsCount > 0) {
 				return true;

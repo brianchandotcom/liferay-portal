@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists_history/init.jsp" %>
 
 <clay:management-toolbar
 	clearResultsURL="<%= changeListsHistoryDisplayContext.getClearResultsActionURL() %>"
@@ -30,6 +30,6 @@
 
 <soy:component-renderer
 	context="<%= changeListsHistoryDisplayContext.getChangeListsHistoryContext() %>"
-	module="js/ChangeListsHistory.es"
-	templateNamespace="com.liferay.change.tracking.change.lists.history.web.ChangeListsHistory.render"
+	module="change_lists_history/js/ChangeListsHistory.es"
+	templateNamespace="com.liferay.change.tracking.change.lists.web.ChangeListsHistory.render"
 />

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.history.web.internal.portlet;
+package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
-import com.liferay.change.tracking.change.lists.history.web.internal.constants.CTHistoryConstants;
-import com.liferay.change.tracking.change.lists.history.web.internal.display.context.ChangeListsHistoryDisplayContext;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTHistoryConstants;
+import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsHistoryDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=false",
 		"com.liferay.portlet.css-class-wrapper=portlet-change-lists-history",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/change_lists_history/css/main.css",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=History",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/change_lists_history/view.jsp",
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_HISTORY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"

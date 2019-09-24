@@ -19,9 +19,10 @@ import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper
 import com.liferay.adaptive.media.image.constants.AMImageDestinationNames;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 
 import java.io.IOException;
 
@@ -79,7 +80,7 @@ public abstract class BaseAMImageConfigurationTestCase {
 
 		MessageListener messageListener = messages::add;
 
-		MessageBusUtil.registerMessageListener(
+		_messageBus.registerMessageListener(
 			AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
 			messageListener);
 
@@ -87,7 +88,7 @@ public abstract class BaseAMImageConfigurationTestCase {
 			runnable.run();
 		}
 		finally {
-			MessageBusUtil.unregisterMessageListener(
+			_messageBus.unregisterMessageListener(
 				AMImageDestinationNames.ADAPTIVE_MEDIA_IMAGE_CONFIGURATION,
 				messageListener);
 		}
@@ -124,5 +125,8 @@ public abstract class BaseAMImageConfigurationTestCase {
 		public void run() throws Exception;
 
 	}
+
+	@Inject
+	private MessageBus _messageBus;
 
 }

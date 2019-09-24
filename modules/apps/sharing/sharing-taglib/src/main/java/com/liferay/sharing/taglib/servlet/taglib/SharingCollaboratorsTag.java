@@ -14,10 +14,19 @@
 
 package com.liferay.sharing.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
+import com.liferay.sharing.security.permission.SharingPermission;
 import com.liferay.sharing.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.sharing.taglib.internal.servlet.SharingJavaScriptFactoryUtil;
+import com.liferay.sharing.taglib.internal.servlet.SharingPermissionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceURL;
@@ -68,6 +77,28 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		long classNameId = PortalUtil.getClassNameId(getClassName());
+
+		boolean canManageCollaborators = _canManageCollaborators(
+			classNameId, getClassPK());
+
+		if (canManageCollaborators) {
+			SharingJavaScriptFactory sharingJavaScriptFactory =
+				SharingJavaScriptFactoryUtil.getSharingJavaScriptFactory();
+
+			sharingJavaScriptFactory.requestSharingJavascript();
+
+			httpServletRequest.setAttribute(
+				"liferay-sharing:collaborators:canManageCollaborators",
+				Boolean.TRUE);
+		}
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classNameId", classNameId);
+
+		httpServletRequest.setAttribute(
+			"liferay-sharing:collaborators:classPK", getClassPK());
+
 		ResourceURL collaboratorsResourceURL = PortletURLFactoryUtil.create(
 			request, SharingPortletKeys.SHARING, PortletRequest.RESOURCE_PHASE);
 
@@ -78,18 +109,33 @@ public class SharingCollaboratorsTag extends BaseSharingTag {
 		collaboratorsResourceURL.setResourceID("/sharing/collaborators");
 
 		httpServletRequest.setAttribute(
-			"liferay-sharing:collaborators:classNameId",
-			PortalUtil.getClassNameId(getClassName()));
-
-		httpServletRequest.setAttribute(
-			"liferay-sharing:collaborators:classPK", getClassPK());
-
-		httpServletRequest.setAttribute(
 			"liferay-sharing:collaborators:collaboratorsResourceURL",
 			collaboratorsResourceURL.toString());
 	}
 
+	private boolean _canManageCollaborators(long classNameId, long classPK) {
+		SharingPermission sharingPermission =
+			SharingPermissionUtil.getSharingPermission();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			return sharingPermission.containsManageCollaboratorsPermission(
+				themeDisplay.getPermissionChecker(), classNameId, classPK,
+				themeDisplay.getScopeGroupId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+
+			return false;
+		}
+	}
+
 	private static final String _PAGE = "/collaborators/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SharingCollaboratorsTag.class);
 
 	private String _className;
 	private long _classPK;

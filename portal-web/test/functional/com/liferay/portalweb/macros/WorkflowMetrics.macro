@@ -106,7 +106,6 @@ definition {
 		Click(
 			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME",
 			value1 = "${workflowProcessName}");
-
 	}
 
 	macro goToWorkflowSLASettings {
@@ -117,7 +116,6 @@ definition {
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
 		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
-
 	}
 
 	macro tearDown {
@@ -127,7 +125,6 @@ definition {
 			WorkflowMetrics._deleteAllSLAs();
 
 		}
-
 	}
 
 	macro verifyDefaultUnitsForEachDateRange {

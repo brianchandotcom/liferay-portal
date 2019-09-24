@@ -16,7 +16,6 @@ definition {
 		Click(locator1 = "Checkbox#ENABLE_EXPERIMENTAL_INTERFACE");
 
 		SystemSettings.saveConfiguration();
-
 	}
 
 	macro getDownloadedTempFileName {

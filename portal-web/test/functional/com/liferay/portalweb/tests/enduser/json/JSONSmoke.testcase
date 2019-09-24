@@ -33,7 +33,6 @@ definition {
 		JSONLayoutTest.runSmoke(groupName = "Test Site Name");
 		JSONOrganizationTest.runSmoke();
 		JSONRoleTest.runSmoke();
-
 	}
 
 }

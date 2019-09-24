@@ -316,7 +316,6 @@ definition {
 				pollsQuestionVoteCount = "${pollsQuestionVoteCount}",
 				pollsQuestionVotePercent = "${pollsQuestionVotePercent}");
 		}
-
 	}
 
 	macro viewPollPG {

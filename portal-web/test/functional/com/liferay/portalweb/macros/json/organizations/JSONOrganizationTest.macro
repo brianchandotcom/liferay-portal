@@ -30,7 +30,6 @@ definition {
 		}
 
 		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
-
 	}
 
 }

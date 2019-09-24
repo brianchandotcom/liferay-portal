@@ -28,7 +28,6 @@ definition {
 		JSONRole.assignRoleToUser(
 			roleTitle = "site role",
 			userEmailAddress = "test@liferay.com");
-
 	}
 
 }

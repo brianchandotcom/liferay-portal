@@ -35,7 +35,6 @@ definition {
 			key_menuItem = "Maximize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Maximize");
-
 	}
 
 	macro viewMinPortlet {

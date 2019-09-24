@@ -40,7 +40,8 @@ definition {
 	test AddCustomObjectWithValidName {
 		property portal.acceptance = "true";
 
-		AppBuilderAdmin.addCustomObject(customObjectName = "my custom object",
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "true");
 
@@ -48,9 +49,7 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(
-			customObjectName = "my custom object");
-
+		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "my custom object");
 	}
 
 	@description = "Attempt to add a Custom Object without a valid name"
@@ -85,7 +84,6 @@ definition {
 			isCreatingViaPlusIcon = "false");
 		AppBuilderAdmin.validateRequiredValidNameMessage();
 		AppBuilderAdmin.cancelNewCustomObject();
-
 	}
 
 	@description = "Validate empty list state of Apps listing screen"
@@ -119,7 +117,6 @@ definition {
 			title = "There are no custom objects yet.");
 
 		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
-
 	}
 
 	@description = "Validate empty list state of Form View listing screen"

@@ -181,7 +181,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldValue}");
-
 	}
 
 	macro editName {

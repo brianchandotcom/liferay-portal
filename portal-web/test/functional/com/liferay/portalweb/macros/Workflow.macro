@@ -316,7 +316,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "",
 			entryTitle = "${key_workflowInstanceTitle}");
-
 	}
 
 	macro deleteWorkflowDefinition {

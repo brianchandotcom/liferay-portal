@@ -11,7 +11,7 @@
 />
 
 <section class="portlet" id="portlet_${portlet_id}">
-	<#if portlet_display.isPortletDecorate() && portlet_display.isShowPortletTopper() && !portlet_display.isStateMax() && portlet_display.getPortletConfigurationIconMenu()?? && portlet_display.getPortletToolbar()??>
+	<#if portlet_display.getPortletConfigurationIconMenu()?? && portlet_display.getPortletToolbar()?? && portlet_display.isPortletDecorate() && portlet_display.isShowPortletTopper() && !portlet_display.isStateMax()>
 		<#assign
 			portlet_configuration_icon_menu = portlet_display.getPortletConfigurationIconMenu()
 			portlet_toolbar = portlet_display.getPortletToolbar()

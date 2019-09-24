@@ -16,21 +16,14 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHit;
-import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
+import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
+
+import java.sql.Timestamp;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,111 +34,86 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = SLATaskResultWorkflowMetricsIndexer.class
 )
 public class SLATaskResultWorkflowMetricsIndexer
-	extends SLAProcessResultWorkflowMetricsIndexer {
+	extends BaseSLAWorkflowMetricsIndexer {
 
-	public Document createDocument(
-		long taskId, String taskName,
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
-
-		Document document = createDocument(workflowMetricsSLAProcessResult);
-
-		document.addUID(
-			"WorkflowMetricsSLATaskResult",
-			digest(
-				workflowMetricsSLAProcessResult.getCompanyId(),
-				workflowMetricsSLAProcessResult.getInstanceId(),
-				workflowMetricsSLAProcessResult.getProcessId(),
-				workflowMetricsSLAProcessResult.getSLADefinitionId(), taskId));
-		document.addKeyword("taskId", taskId);
-		document.addKeyword("taskName", taskName);
-
-		return document;
-	}
-
-	@Override
-	public void reindex(long companyId) {
-	}
-
-	public void updateDocuments(
-		Map<Long, String> taskNames,
-		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
+	public void addDocuments(
+		List<WorkflowMetricsSLATaskResult> workflowMetricsSLATaskResults) {
 
 		if (searchEngineAdapter == null) {
 			return;
 		}
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(getIndexName());
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				queries.term(
-					"companyId",
-					workflowMetricsSLAProcessResult.getCompanyId()),
-				queries.term(
-					"instanceId",
-					workflowMetricsSLAProcessResult.getInstanceId()),
-				queries.term(
-					"processId",
-					workflowMetricsSLAProcessResult.getProcessId()),
-				queries.term(
-					"slaDefinitionId",
-					workflowMetricsSLAProcessResult.getSLADefinitionId())));
-
-		searchSearchRequest.setSelectedFieldNames(Field.UID);
-
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
-		Stream.of(
-			searchEngineAdapter.execute(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> new UpdateDocumentRequest(
-				getIndexName(), document.getString(Field.UID),
-				new DocumentImpl() {
-					{
-						addKeyword("deleted", true);
-						addKeyword(Field.UID, document.getString(Field.UID));
-					}
-				}) {
+		workflowMetricsSLATaskResults.forEach(
+			workflowMetricsSLATaskResult -> {
+				Document document = createDocument(
+					workflowMetricsSLATaskResult);
 
-				{
-					setType(getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
-		);
-
-		taskNames.forEach(
-			(taskId, taskName) ->
 				bulkDocumentRequest.addBulkableDocumentRequest(
 					new IndexDocumentRequest(
-						getIndexName(),
-						createDocument(
-							taskId, taskName,
-							workflowMetricsSLAProcessResult)) {
+						getIndexName(), document.getUID(), document) {
 
 						{
 							setType(getIndexType());
 						}
-					}));
+					});
+			});
 
 		if (ListUtil.isNotEmpty(
 				bulkDocumentRequest.getBulkableDocumentRequests())) {
 
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}
+	}
+
+	public Document createDocument(
+		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult) {
+
+		Document document = new DocumentImpl();
+
+		document.addUID(
+			"WorkflowMetricsSLATaskResult",
+			digest(
+				workflowMetricsSLATaskResult.getCompanyId(),
+				workflowMetricsSLATaskResult.getInstanceId(),
+				workflowMetricsSLATaskResult.getProcessId(),
+				workflowMetricsSLATaskResult.getSLADefinitionId(),
+				workflowMetricsSLATaskResult.getTaskId(),
+				workflowMetricsSLATaskResult.getTokenId()));
+
+		document.addKeyword(
+			"companyId", workflowMetricsSLATaskResult.getCompanyId());
+		document.addKeyword(
+			"breached", workflowMetricsSLATaskResult.isBreached());
+		document.addKeyword("deleted", false);
+		document.addKeyword(
+			"instanceId", workflowMetricsSLATaskResult.getInstanceId());
+		document.addDateSortable(
+			"lastCheckDate",
+			Timestamp.valueOf(
+				workflowMetricsSLATaskResult.getLastCheckLocalDateTime()));
+		document.addKeyword("onTime", workflowMetricsSLATaskResult.isOnTime());
+		document.addKeyword(
+			"processId", workflowMetricsSLATaskResult.getProcessId());
+		document.addKeyword(
+			"slaDefinitionId",
+			workflowMetricsSLATaskResult.getSLADefinitionId());
+		document.addKeyword(
+			"status",
+			String.valueOf(
+				workflowMetricsSLATaskResult.getWorkfowMetricsSLAStatus()));
+		document.addKeyword("taskId", workflowMetricsSLATaskResult.getTaskId());
+		document.addKeyword(
+			"taskName", workflowMetricsSLATaskResult.getTaskName());
+		document.addKeyword(
+			"tokenId", workflowMetricsSLATaskResult.getTokenId());
+
+		return document;
+	}
+
+	@Override
+	public void reindex(long companyId) {
 	}
 
 	@Override

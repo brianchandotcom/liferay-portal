@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -27,14 +26,11 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
@@ -59,7 +55,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,7 +72,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = {Indexer.class, SLAProcessResultWorkflowMetricsIndexer.class}
 )
 public class SLAProcessResultWorkflowMetricsIndexer
-	extends BaseWorkflowMetricsIndexer {
+	extends BaseSLAWorkflowMetricsIndexer {
 
 	public Document createDocument(
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
@@ -122,47 +117,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				workflowMetricsSLAProcessResult.getWorkfowMetricsSLAStatus()));
 
 		return document;
-	}
-
-	public void deleteDocuments(long companyId, long instanceId) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_deleteDocuments(
-			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("instanceId", instanceId)));
-	}
-
-	public void deleteDocuments(
-		long companyId, long processId, long slaDefinitionId) {
-
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(
-			queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
-			queries.term("status", WorkfowMetricsSLAStatus.STOPPED));
-
-		_deleteDocuments(
-			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("processId", processId),
-				queries.term("slaDefinitionId", slaDefinitionId)));
-	}
-
-	public void expireDocuments(long companyId, long instanceId) {
-		BooleanQuery booleanQuery = queries.booleanQuery();
-
-		_updateDocuments(
-			document -> new DocumentImpl() {
-				{
-					addKeyword(
-						"status", WorkfowMetricsSLAStatus.EXPIRED.toString());
-					addKeyword(Field.UID, document.getString(Field.UID));
-				}
-			},
-			booleanQuery.addMustQueryClauses(
-				queries.term("companyId", companyId),
-				queries.term("instanceId", instanceId)));
 	}
 
 	@Override
@@ -238,7 +192,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	protected KaleoNodeLocalService kaleoNodeLocalService;
 
 	@Reference
-	protected Queries queries;
+	protected SLATaskResultWorkflowMetricsIndexer
+		slaTaskResultWorkflowMetricsIndexer;
 
 	@Reference
 	protected Sorts sorts;
@@ -304,17 +259,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			));
 
 		return termsQuery;
-	}
-
-	private void _deleteDocuments(BooleanQuery booleanQuery) {
-		_updateDocuments(
-			document -> new DocumentImpl() {
-				{
-					addKeyword("deleted", true);
-					addKeyword(Field.UID, document.getString(Field.UID));
-				}
-			},
-			booleanQuery);
 	}
 
 	private long _getStartNodeId(long processId, String version) {
@@ -416,62 +360,15 @@ public class SLAProcessResultWorkflowMetricsIndexer
 											setType(getIndexType());
 										}
 									});
+
+								slaTaskResultWorkflowMetricsIndexer.
+									addDocuments(
+										workflowMetricsSLAProcessResult.
+											getWorkflowMetricsSLATaskResults());
 							});
 					}
 				);
 			}
-		);
-
-		if (ListUtil.isNotEmpty(
-				bulkDocumentRequest.getBulkableDocumentRequests())) {
-
-			searchEngineAdapter.execute(bulkDocumentRequest);
-		}
-	}
-
-	private void _updateDocuments(
-		Function<com.liferay.portal.search.document.Document, Document>
-			transformDocumentFunction,
-		Query query) {
-
-		if (searchEngineAdapter == null) {
-			return;
-		}
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(getIndexName());
-		searchSearchRequest.setQuery(query);
-		searchSearchRequest.setSelectedFieldNames(Field.UID);
-
-		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
-			searchSearchRequest);
-
-		SearchHits searchHits = searchSearchResponse.getSearchHits();
-
-		if (searchHits.getTotalHits() == 0) {
-			return;
-		}
-
-		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
-
-		Stream.of(
-			searchHits.getSearchHits()
-		).flatMap(
-			List::stream
-		).map(
-			SearchHit::getDocument
-		).map(
-			document -> new UpdateDocumentRequest(
-				getIndexName(), document.getString(Field.UID),
-				transformDocumentFunction.apply(document)) {
-
-				{
-					setType(getIndexType());
-				}
-			}
-		).forEach(
-			bulkDocumentRequest::addBulkableDocumentRequest
 		);
 
 		if (ListUtil.isNotEmpty(

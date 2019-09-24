@@ -580,6 +580,10 @@ public class SubscriptionSender implements Serializable {
 		return Boolean.TRUE;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	protected void notifyPersistedSubscriber(Subscription subscription)
 		throws Exception {
 
@@ -594,6 +598,10 @@ public class SubscriptionSender implements Serializable {
 			subscription, _className, _classPK, notifyImmediately);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	protected void notifyPersistedSubscriber(
 			Subscription subscription, String className, long classPK)
 		throws Exception {
@@ -892,6 +900,10 @@ public class SubscriptionSender implements Serializable {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	protected void sendNotification(User user) throws Exception {
 		sendNotification(user, true);
 	}
@@ -914,6 +926,10 @@ public class SubscriptionSender implements Serializable {
 		sendUserNotification(user, notifyImmediately);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	protected void sendUserNotification(User user) throws Exception {
 		sendNotification(user, true);
 	}

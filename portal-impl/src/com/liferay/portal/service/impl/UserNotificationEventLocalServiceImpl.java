@@ -62,6 +62,10 @@ public class UserNotificationEventLocalServiceImpl
 			notificationEvent.isArchived(), serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public UserNotificationEvent addUserNotificationEvent(
 			long userId, boolean actionRequired,
@@ -112,6 +116,10 @@ public class UserNotificationEventLocalServiceImpl
 		return userNotificationEvent;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public UserNotificationEvent addUserNotificationEvent(
 			long userId, String type, long timestamp, int deliveryType,

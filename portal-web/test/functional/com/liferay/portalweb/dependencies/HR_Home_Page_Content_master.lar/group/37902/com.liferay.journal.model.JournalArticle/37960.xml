@@ -1,0 +1,90 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>71f3093e-0e3f-6179-967b-c74c0ba0d481</__uuid>
+  <__originalUuid>71f3093e-0e3f-6179-967b-c74c0ba0d481</__originalUuid>
+  <__id>37960</__id>
+  <__resourcePrimKey>37961</__resourcePrimKey>
+  <__originalResourcePrimKey>37961</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>37902</__groupId>
+  <__originalGroupId>37902</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20099</__companyId>
+  <__originalCompanyId>20099</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20140</__userId>
+  <__originalUserId>20140</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-05-24 01:44:43.649</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-05-24 01:47:15.064</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>35870</__articleId>
+  <__originalArticleId>35870</__originalArticleId>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__urlTitle>meet-and-gre-1</__urlTitle>
+  <__originalUrlTitle>meet-and-gre-1</__originalUrlTitle>
+  <__content>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;czmn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;div class=&quot;thumbnail&quot;&gt;
+&lt;div class=&quot;thumbnail-label&quot;&gt;
+&lt;h2 class=&quot;lead&quot;&gt;New Faculty and Staff Orientation &lt;small&gt;Events&lt;/small&gt;&lt;/h2&gt;
+
+&lt;p&gt;Attention all new faculty and staff: Orientation will be held &lt;mark&gt;Monday, June 8 at 8:00 A.M&lt;/mark&gt;. New faculty should meet in &lt;abbr title=&quot;Room&quot;&gt;Rm.&lt;/abbr&gt; 221 and new staff should meet in &lt;abbr title=&quot;Room&quot;&gt;Rm.&lt;/abbr&gt; 139 of Adams Hall. A full schedule of orientation will be emailed to you in the coming weeks.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>BASIC-WEB-CONTENT</__DDMStructureKey>
+  <__originalDDMStructureKey>BASIC-WEB-CONTENT</__originalDDMStructureKey>
+  <__DDMTemplateKey>BASIC-WEB-CONTENT</__DDMTemplateKey>
+  <__originalDDMTemplateKey>BASIC-WEB-CONTENT</__originalDDMTemplateKey>
+  <__defaultLanguageId>en_US</__defaultLanguageId>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-05-24 01:19:00</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>37963</__smallImageId>
+  <__originalSmallImageId>37963</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20140</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-05-24 01:47:15.064</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__descriptionMap>
+    <entry>
+      <locale>en_US</locale>
+      <string>Faculty Orientation</string>
+    </entry>
+  </__descriptionMap>
+  <__imagesFolderId>37962</__imagesFolderId>
+  <__titleMap>
+    <entry>
+      <locale reference="../../../__descriptionMap/entry/locale"/>
+      <string>Orientation</string>
+    </entry>
+  </__titleMap>
+</JournalArticle>

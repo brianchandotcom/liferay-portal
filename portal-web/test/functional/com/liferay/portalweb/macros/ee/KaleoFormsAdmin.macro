@@ -647,13 +647,13 @@ definition {
 	}
 
 	macro viewNoPublishedWorkflowDefinitions {
-		PortletEntry.viewEmptyMessage(entity = "Published Definitions");
+		AssertVisible(locator1 = "KaleoFormsAdmin#KALEO_WORKFLOW_PUBLISHED_EMPTY_MESSAGE");
 	}
 
 	macro viewNoUnpublishedWorkflowDefinitions {
 		KaleoFormsAdmin.viewUnpublishedWorkflowDefinitions();
 
-		PortletEntry.viewEmptyMessage(entity = "Unpublished Definitions");
+		AssertVisible(locator1 = "KaleoFormsAdmin#KALEO_WORKFLOW_UNPUBLISHED_EMPTY_MESSAGE");
 	}
 
 	macro viewPreviousFieldSetPage {

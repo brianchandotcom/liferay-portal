@@ -14,6 +14,16 @@
 	<td>//tr[contains(.,'${key_kfProcessName}')]/td[contains(.,'${key_kfProcessName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>KALEO_WORKFLOW_PUBLISHED_EMPTY_MESSAGE</td>
+	<td>//div[contains(@class,'empty-result')]//div[contains(text(),'There are no published definitions.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KALEO_WORKFLOW_UNPUBLISHED_EMPTY_MESSAGE</td>
+	<td>//div[contains(@class,'empty-result')]//div[contains(text(),'There are no unpublished definitions.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

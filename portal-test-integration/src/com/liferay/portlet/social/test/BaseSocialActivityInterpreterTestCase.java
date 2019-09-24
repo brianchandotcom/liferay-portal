@@ -53,7 +53,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Zsolt Berentey
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *             com.liferay.social.activity.test.util.BaseSocialActivityInterpreterTestCase}
  */
+@Deprecated
 public abstract class BaseSocialActivityInterpreterTestCase {
 
 	@Before

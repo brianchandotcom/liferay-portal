@@ -226,23 +226,26 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public void addSLATaskResult(
-			long companyId, Instance instance, boolean onTime, long taskId,
-			String taskName)
+			boolean breached, long companyId, Instance instance, boolean onTime,
+			String status, long taskId, String taskName)
 		throws Exception {
 
 		long slaDefinitionId = RandomTestUtil.randomLong();
+		long tokenId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_SLA_TASK_RESULT_INDEXER),
 			_creatWorkflowMetricsSLATaskResultDocument(
-				companyId, instance.getId(), onTime, instance.getProcessId(),
-				slaDefinitionId, taskId, taskName));
+				breached, companyId, instance.getId(), onTime,
+				instance.getProcessId(), slaDefinitionId, status, taskId,
+				taskName, tokenId));
 
 		_retryAssertCount(
-			"workflow-metrics-sla-task-results", "companyId", companyId,
-			"deleted", false, "instanceId", instance.getId(), "onTime", onTime,
-			"processId", instance.getProcessId(), "slaDefinitionId",
-			slaDefinitionId, "taskId", taskId, "taskName", taskName);
+			"workflow-metrics-sla-task-results", "breached", breached,
+			"companyId", companyId, "deleted", false, "instanceId",
+			instance.getId(), "onTime", onTime, "processId",
+			instance.getProcessId(), "slaDefinitionId", slaDefinitionId,
+			"taskId", taskId, "taskName", taskName);
 	}
 
 	public Task addTask(long assigneeId, long companyId, long processId)
@@ -261,12 +264,13 @@ public class WorkflowMetricsRESTTestHelper {
 			}
 		};
 
-		return addTask(assigneeId, companyId, processId, task, "1.0");
+		return addTask(
+			assigneeId, companyId, processId, "RUNNING", task, "1.0");
 	}
 
 	public Task addTask(
-			long assigneeId, long companyId, long processId, Task task,
-			String version)
+			long assigneeId, long companyId, long processId, String status,
+			Task task, String version)
 		throws Exception {
 
 		long taskId = RandomTestUtil.randomLong();
@@ -284,13 +288,15 @@ public class WorkflowMetricsRESTTestHelper {
 
 			if (onTimeInstanceCount > 0) {
 				addSLATaskResult(
-					companyId, instance, true, taskId, task.getKey());
+					false, companyId, instance, true, status, taskId,
+					task.getKey());
 
 				onTimeInstanceCount--;
 			}
 			else if (overdueInstanceCount > 0) {
 				addSLATaskResult(
-					companyId, instance, false, taskId, task.getKey());
+					true, companyId, instance, false, status, taskId,
+					task.getKey());
 
 				overdueInstanceCount--;
 			}
@@ -557,14 +563,16 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsSLATaskResultDocument(
-		long companyId, long instanceId, boolean onTime, long processId,
-		long slaDefinitionId, long taskId, String taskName) {
+		boolean breached, long companyId, long instanceId, boolean onTime,
+		long processId, long slaDefinitionId, String status, long taskId,
+		String taskName, long tokenId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsSLATaskResult",
 			_digest(companyId, instanceId, processId, slaDefinitionId, taskId));
+		document.addKeyword("breached", breached);
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
 		document.addKeyword("elapsedTime", onTime ? 1000 : -1000);
@@ -572,9 +580,10 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("onTime", onTime);
 		document.addKeyword("processId", processId);
 		document.addKeyword("slaDefinitionId", slaDefinitionId);
-		document.addKeyword("status", "RUNNING");
+		document.addKeyword("status", status);
 		document.addKeyword("taskId", taskId);
 		document.addKeyword("taskName", taskName);
+		document.addKeyword("tokenId", tokenId);
 
 		return document;
 	}

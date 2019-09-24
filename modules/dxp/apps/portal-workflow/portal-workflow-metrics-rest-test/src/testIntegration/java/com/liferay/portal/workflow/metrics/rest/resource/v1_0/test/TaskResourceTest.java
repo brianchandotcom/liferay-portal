@@ -92,6 +92,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		task1.setInstanceCount(1L);
 		task1.setOnTimeInstanceCount(0L);
 		task1.setOverdueInstanceCount(0L);
+		task1.setBreachedInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(_process.getId(), task1, "2.0");
 
@@ -101,6 +102,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		task2.setInstanceCount(1L);
 		task2.setOnTimeInstanceCount(0L);
 		task2.setOverdueInstanceCount(0L);
+		task2.setBreachedInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(_process.getId(), task2, "2.0");
 
@@ -139,6 +141,34 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2), (List<Task>)page.getItems());
+
+		Task task3 = randomTask();
+
+		task3.setDurationAvg(3000L);
+		task3.setInstanceCount(2L);
+		task3.setOnTimeInstanceCount(0L);
+		task3.setOverdueInstanceCount(2L);
+		task3.setBreachedInstanceCount(2L);
+
+		testGetProcessTasksPage_addTask(
+			_process.getId(), "COMPLETED", task3, "2.0");
+
+		Task task4 = randomTask();
+
+		task4.setDurationAvg(4000L);
+		task4.setInstanceCount(1L);
+		task4.setOnTimeInstanceCount(1L);
+		task4.setOverdueInstanceCount(0L);
+		task4.setBreachedInstanceCount(0L);
+
+		testGetProcessTasksPage_addTask(
+			_process.getId(), "COMPLETED", task4, "2.0");
+
+		page = taskResource.getProcessTasksPage(
+			_process.getId(), true, null, null, null, Pagination.of(1, 2),
+			"durationAvg:desc");
+
+		assertEquals(Arrays.asList(task4, task3), (List<Task>)page.getItems());
 	}
 
 	@Override
@@ -193,6 +223,21 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		return task;
 	}
 
+	protected Task testGetProcessTasksPage_addTask(
+			Long processId, String status, Task task, String version)
+		throws Exception {
+
+		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
+
+		task = _workflowMetricsRESTTestHelper.addTask(
+			adminUser.getUserId(), testGroup.getCompanyId(), processId, status,
+			task, version);
+
+		_tasks.add(task);
+
+		return task;
+	}
+
 	@Override
 	protected Task testGetProcessTasksPage_addTask(Long processId, Task task)
 		throws Exception {
@@ -204,15 +249,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			Long processId, Task task, String version)
 		throws Exception {
 
-		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
-
-		task = _workflowMetricsRESTTestHelper.addTask(
-			adminUser.getUserId(), testGroup.getCompanyId(), processId, task,
-			version);
-
-		_tasks.add(task);
-
-		return task;
+		return testGetProcessTasksPage_addTask(
+			processId, "RUNNING", task, version);
 	}
 
 	@Override

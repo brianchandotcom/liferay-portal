@@ -40,7 +40,8 @@ definition {
 	test AddCustomObjectWithValidName {
 		property portal.acceptance = "true";
 
-		AppBuilderAdmin.addCustomObject(customObjectName = "my custom object",
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
 			isCreatingFormView = "false",
 			isCreatingViaPlusIcon = "true");
 
@@ -48,8 +49,7 @@ definition {
 
 		AppBuilderAdmin.gotoBack();
 
-		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(
-			customObjectName = "my custom object");
+		AppBuilderAdmin.validateCustomObjectNameOnCustomObjectList(customObjectName = "my custom object");
 
 	}
 

@@ -1,11 +1,14 @@
 def map = new HashMap();
+def onTimeMap;
 
 for (state in states) {
 	if (state == null) {
 		continue;
 	}
 
-	for (entry in state.entrySet()) {
+	onTimeMap = state.onTimeMap;
+
+	for (entry in onTimeMap.entrySet()) {
 		map.merge(
 			entry.key, entry.value, (onTime1, onTime2) -> onTime1 && onTime2);
 	}

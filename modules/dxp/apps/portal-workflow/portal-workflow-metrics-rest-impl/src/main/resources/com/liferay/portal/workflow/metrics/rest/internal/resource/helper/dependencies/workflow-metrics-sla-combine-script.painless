@@ -1,1 +1,1 @@
-return state.map;
+return state;

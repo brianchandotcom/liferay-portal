@@ -1,1 +1,2 @@
-state.map = new HashMap();
+state.breachedMap = new HashMap();
+state.onTimeMap = new HashMap();

@@ -1,0 +1,26 @@
+def map = new HashMap();
+def breachedMap;
+
+for (state in states) {
+	if (state == null) {
+		continue;
+	}
+
+	breachedMap = state.breachedMap;
+
+	for (entry in breachedMap.entrySet()) {
+		map.merge(
+			entry.key, entry.value,
+			(breached1, breached2) -> breached1 || breached2);
+	}
+}
+
+def breachedInstanceCount = 0;
+
+for (entry in map.entrySet()) {
+	if (entry.value == true) {
+		breachedInstanceCount += 1;
+	}
+}
+
+return breachedInstanceCount;

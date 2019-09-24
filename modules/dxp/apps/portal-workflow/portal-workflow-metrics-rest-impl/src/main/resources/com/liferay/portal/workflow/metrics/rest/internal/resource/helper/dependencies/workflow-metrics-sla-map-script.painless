@@ -2,9 +2,15 @@ def instanceId = doc.instanceId.value;
 
 if ((doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult") ||
 	 doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) &&
-	(doc.elapsedTime.value != 0) && !doc.status.value.equals("EXPIRED")) {
+	!instanceId.equals("0") && !doc.status.value.equals("EXPIRED")) {
 
-	state.map.merge(
+	state.onTimeMap.merge(
 		instanceId, doc.onTime.value,
 		(onTime1, onTime2) -> (onTime1 && onTime2));
+}
+
+if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult")) {
+	state.breachedMap.merge(
+		instanceId, doc.breached.value,
+		(breached1, breached2) -> (breached1 || breached2));
 }

@@ -36,7 +36,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 				<c:when test="<%= autoSiteNavigationMenus.size() > 1 %>">
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
-					<div class="auto-site-navigation-menus container mt-3">
+					<div class="auto-site-navigation-menus container my-3">
 						<div class="row">
 
 							<%

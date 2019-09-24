@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -27,7 +27,7 @@
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <div class="manage-notifications-content portlet-configuration-setup">

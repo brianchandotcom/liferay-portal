@@ -19,7 +19,7 @@
 <c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
 	<clay:navigation-bar
 		inverted="<%= false %>"
-		navigationItems="<%=
+		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
 					PortletURL portletURL = renderResponse.createRenderURL();
@@ -53,6 +53,6 @@
 						});
 				}
 			}
-		%>"
+		%>'
 	/>
 </c:if>

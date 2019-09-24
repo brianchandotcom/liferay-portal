@@ -76,7 +76,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -87,7 +87,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <liferay-frontend:management-bar

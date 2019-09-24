@@ -23,7 +23,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 %>
 
 <clay:navigation-bar
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -33,7 +33,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <aui:form action="<%= selectRestrictedFileEntryTypesDisplayContext.getFormActionURL() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">

@@ -46,7 +46,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 </aui:nav-bar>
 
 <clay:management-toolbar
-	creationMenu="<%=
+	creationMenu='<%=
 		new JSPCreationMenu(pageContext) {
 			{
 					addPrimaryDropdownItem(
@@ -57,7 +57,7 @@ sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 					);
 			}
 		}
-	%>"
+	%>'
 	disabled="<%= sapEntriesCount == 0 %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"

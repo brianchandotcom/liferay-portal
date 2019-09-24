@@ -66,7 +66,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			navigationItems="<%=
+			navigationItems='<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(
@@ -76,7 +76,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 							});
 					}
 				}
-			%>"
+			%>'
 		/>
 
 		<div class="sidebar-body">
@@ -134,7 +134,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			navigationItems="<%=
+			navigationItems='<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(
@@ -144,7 +144,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 							});
 					}
 				}
-			%>"
+			%>'
 		/>
 
 		<div class="sidebar-body">
@@ -231,7 +231,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			navigationItems="<%=
+			navigationItems='<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(
@@ -241,7 +241,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 							});
 					}
 				}
-			%>"
+			%>'
 		/>
 
 		<div class="sidebar-body">

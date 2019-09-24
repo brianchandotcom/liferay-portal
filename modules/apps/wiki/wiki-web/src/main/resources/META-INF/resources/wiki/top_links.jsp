@@ -76,7 +76,7 @@ if (portletTitleBasedNavigation) {
 	</c:if>
 
 	<clay:navigation-bar
-		navigationItems="<%=
+		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
 					add(
@@ -115,6 +115,6 @@ if (portletTitleBasedNavigation) {
 						});
 				}
 			}
-		%>"
+		%>'
 	/>
 </c:if>

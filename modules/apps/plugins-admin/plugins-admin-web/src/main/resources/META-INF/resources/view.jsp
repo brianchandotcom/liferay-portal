@@ -31,7 +31,7 @@ boolean showEditPluginHREF = true;
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -56,7 +56,7 @@ boolean showEditPluginHREF = true;
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <div class="container-fluid-1280">

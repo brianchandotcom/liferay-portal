@@ -236,54 +236,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			_queries.term("slaDefinitionId", slaDefinitionId));
 	}
 
-	private SearchSearchRequest _createSLATaskResultsSearchRequest(
-		long companyId, long instanceId, long processId, long slaDefinitionId) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-sla-task-results");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
-				_queries.term("deleted", false),
-				_queries.term("instanceId", instanceId),
-				_queries.term("processId", processId),
-				_queries.term("slaDefinitionId", slaDefinitionId)));
-
-		searchSearchRequest.setSize(10000);
-
-		return searchSearchRequest;
-	}
-
-	private SearchSearchRequest _createTokensSearchRequest(
-		long companyId, long instanceId, long processId) {
-
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", "0"));
-
-		searchSearchRequest.setQuery(
-			booleanQuery.addMustQueryClauses(
-				_queries.term("companyId", companyId),
-				_queries.term("completed", false),
-				_queries.term("deleted", false),
-				_queries.term("instanceId", instanceId),
-				_queries.term("processId", processId)));
-
-		searchSearchRequest.setSize(10000);
-
-		return searchSearchRequest;
-	}
-
 	private Map<Long, LocalDateTime> _getCreateLocalDateTimes(
 		long companyId, long processId) {
 
@@ -393,36 +345,15 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		);
 	}
 
-	private Map<Long, String> _getTaskNames(
-		SearchSearchRequest searchSearchRequest) {
-
-		return Stream.of(
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest)
-		).map(
-			SearchSearchResponse::getSearchHits
-		).map(
-			SearchHits::getSearchHits
-		).flatMap(
-			List::parallelStream
-		).map(
-			SearchHit::getDocument
-		).collect(
-			Collectors.toMap(
-				document -> document.getLong("taskId"),
-				document -> document.getString("taskName"))
-		);
-	}
-
 	private void _indexWorkflowMetricsSLAProcessResult(
-		Map<Long, String> taskNames,
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult) {
 
 		_slaProcessResultWorkflowMetricsIndexer.addDocument(
 			_slaProcessResultWorkflowMetricsIndexer.createDocument(
 				workflowMetricsSLAProcessResult));
 
-		_slaTaskResultWorkflowMetricsIndexer.updateDocuments(
-			taskNames, workflowMetricsSLAProcessResult);
+		_slaTaskResultWorkflowMetricsIndexer.addDocuments(
+			workflowMetricsSLAProcessResult.getWorkflowMetricsSLATaskResults());
 	}
 
 	private void _processCompletedInstances(
@@ -468,16 +399,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				return workflowMetricsSLAProcessResult;
 			}
 		).forEach(
-			workflowMetricsSLAProcessResult ->
-				_indexWorkflowMetricsSLAProcessResult(
-					_getTaskNames(
-						_createSLATaskResultsSearchRequest(
-							workflowMetricsSLAProcessResult.getCompanyId(),
-							workflowMetricsSLAProcessResult.getInstanceId(),
-							workflowMetricsSLAProcessResult.getProcessId(),
-							workflowMetricsSLAProcessResult.
-								getSLADefinitionId())),
-					workflowMetricsSLAProcessResult)
+			this::_indexWorkflowMetricsSLAProcessResult
 		);
 	}
 
@@ -502,14 +424,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).map(
 			Optional::get
 		).forEach(
-			workflowMetricsSLAProcessResult ->
-				_indexWorkflowMetricsSLAProcessResult(
-					_getTaskNames(
-						_createTokensSearchRequest(
-							workflowMetricsSLAProcessResult.getCompanyId(),
-							workflowMetricsSLAProcessResult.getInstanceId(),
-							workflowMetricsSLAProcessResult.getProcessId())),
-					workflowMetricsSLAProcessResult)
+			this::_indexWorkflowMetricsSLAProcessResult
 		);
 	}
 

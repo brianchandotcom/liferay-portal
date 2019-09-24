@@ -83,3 +83,11 @@ export const segmentsVariants = [
 		split: 0.0
 	}
 ];
+
+/*
+ * Default values used by the tests in assertions and mocked responses
+ */
+export const DEFAULT_ESTIMATED_DAYS = {
+	message: '14-days',
+	value: 14
+};

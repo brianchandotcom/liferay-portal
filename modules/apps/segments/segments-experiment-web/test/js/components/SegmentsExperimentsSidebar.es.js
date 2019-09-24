@@ -25,7 +25,8 @@ import renderApp from '../renderApp.es';
 import {
 	segmentsExperiment,
 	segmentsExperiences,
-	segmentsVariants
+	segmentsVariants,
+	DEFAULT_ESTIMATED_DAYS
 } from '../fixtures.es';
 import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/resources/js/util/percentages.es';
 import {
@@ -165,27 +166,14 @@ describe('Variants', () => {
 	});
 
 	it('create variant button', async () => {
-		const createVariantMock = jest.fn(variant =>
-			Promise.resolve({
-				segmentsExperimentRel: {
-					name: variant.name,
-					segmentsExperienceId: JSON.stringify(Math.random()),
-					segmentsExperimentId: JSON.stringify(Math.random()),
-					segmentsExperimentRelId: JSON.stringify(Math.random()),
-					split: 0.0
-				}
-			})
-		);
-		const {getByText, getByLabelText} = renderApp({
-			APIService: {
-				createVariant: createVariantMock
-			},
+		const {APIServiceMocks, getByText, getByLabelText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants,
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId
 		});
+		const {createVariant} = APIServiceMocks;
 
 		const button = getByText('create-variant');
 		expect(button).not.toBe(null);
@@ -206,7 +194,7 @@ describe('Variants', () => {
 		await waitForElementToBeRemoved(() => getByLabelText('name'));
 		await wait(() => getByText('Variant Name'));
 
-		expect(createVariantMock).toHaveBeenCalledWith(
+		expect(createVariant).toHaveBeenCalledWith(
 			expect.objectContaining({
 				name: 'Variant Name'
 			})
@@ -257,24 +245,20 @@ describe('Run and review test', () => {
 	});
 
 	it('can view estimation time', async () => {
-		const {getByText} = renderApp({
-			APIService: {
-				getEstimatedTime: jest.fn(() =>
-					Promise.resolve({
-						segmentsExperimentEstimatedDaysDuration: 14
-					})
-				)
-			},
+		const {APIServiceMocks, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants
 		});
+		const {getEstimatedTime} = APIServiceMocks;
 
 		const runTestButton = getByText('review-and-run-test');
 		userEvent.click(runTestButton);
 
 		await waitForElement(() => getByText('traffic-split'));
-		await waitForElement(() => getByText('14-days'));
+
+		await waitForElement(() => getByText(DEFAULT_ESTIMATED_DAYS.message));
+		expect(getEstimatedTime).toHaveBeenCalledTimes(1);
 	});
 
 	test.todo('Running test cannot be edited');
@@ -360,21 +344,7 @@ describe('Winner declared', () => {
 	});
 
 	it('variants publish action button action', async () => {
-		const mockPublish = jest.fn(({status}) => {
-			return Promise.resolve({
-				segmentsExperiment: {
-					...segmentsExperiment,
-					status: {
-						label: 'completed',
-						value: status
-					}
-				}
-			});
-		});
-		const {getByText} = renderApp({
-			APIService: {
-				publishExperience: mockPublish
-			},
+		const {APIServiceMocks, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -387,12 +357,13 @@ describe('Winner declared', () => {
 			initialSegmentsVariants: segmentsVariants,
 			winnerSegmentsVariantId: '1'
 		});
+		const {publishExperience} = APIServiceMocks;
 
 		const publishButton = getByText('publish');
 
 		userEvent.click(publishButton);
 
-		expect(mockPublish).toHaveBeenCalledWith({
+		expect(publishExperience).toHaveBeenCalledWith({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
 			status: STATUS_COMPLETED,
 			winnerSegmentsExperienceId: segmentsVariants[1].segmentsExperienceId
@@ -401,22 +372,7 @@ describe('Winner declared', () => {
 	});
 
 	it('discard button action', async () => {
-		const mockDiscard = jest.fn(({status}) => {
-			return Promise.resolve({
-				segmentsExperiment: {
-					...segmentsExperiment,
-					status: {
-						label: 'completed',
-						value: status
-					}
-				}
-			});
-		});
-
-		const {getByText} = renderApp({
-			APIService: {
-				publishExperience: mockDiscard
-			},
+		const {APIServiceMocks, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -429,12 +385,13 @@ describe('Winner declared', () => {
 			initialSegmentsVariants: segmentsVariants,
 			winnerSegmentsVariantId: '1'
 		});
+		const {publishExperience} = APIServiceMocks;
 
 		const publishButton = getByText('discard-test');
 
 		userEvent.click(publishButton);
 
-		expect(mockDiscard).toHaveBeenCalledWith({
+		expect(publishExperience).toHaveBeenCalledWith({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
 			status: STATUS_COMPLETED,
 			winnerSegmentsExperienceId: segmentsExperiment.segmentsExperienceId

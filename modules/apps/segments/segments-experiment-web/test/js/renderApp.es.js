@@ -14,7 +14,7 @@
 
 import React from 'react';
 import {render} from '@testing-library/react';
-import {segmentsGoals} from './fixtures.es';
+import {segmentsGoals, DEFAULT_ESTIMATED_DAYS} from './fixtures.es';
 import SegmentsExperimentsSidebar from '../../src/main/resources/META-INF/resources/js/components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from '../../src/main/resources/META-INF/resources/js/context.es';
 
@@ -32,15 +32,17 @@ export default function renderApp({
 } = {}) {
 	const {
 		createExperiment = () => {},
-		createVariant = () => {},
+		createVariant = jest.fn(_createVariantMock),
 		deleteVariant = () => {},
 		editExperiment = () => {},
 		editVariant = () => {},
-		getEstimatedTime = () => Promise.resolve(),
-		publishExperience = () => {}
+		getEstimatedTime = jest.fn(_getEstimatedTimeMock),
+		publishExperience = jest.fn(
+			_publishExperienceMockGenerator(initialSegmentsExperiment)
+		)
 	} = APIService;
 
-	return render(
+	const renderMethods = render(
 		<SegmentsExperimentsContext.Provider
 			value={{
 				APIService: {
@@ -74,4 +76,43 @@ export default function renderApp({
 			baseElement: document.body
 		}
 	);
+
+	return {
+		...renderMethods,
+		APIServiceMocks: {
+			createVariant,
+			getEstimatedTime,
+			publishExperience
+		}
+	};
 }
+
+/*
+ * A default mock of the APIService createVariant service.
+ */
+const _createVariantMock = variant =>
+	Promise.resolve({
+		segmentsExperimentRel: {
+			name: variant.name,
+			segmentsExperienceId: JSON.stringify(Math.random()),
+			segmentsExperimentId: JSON.stringify(Math.random()),
+			segmentsExperimentRelId: JSON.stringify(Math.random()),
+			split: 0.0
+		}
+	});
+
+const _getEstimatedTimeMock = () =>
+	Promise.resolve({
+		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value
+	});
+
+const _publishExperienceMockGenerator = experiment => ({status}) =>
+	Promise.resolve({
+		segmentsExperiment: {
+			...experiment,
+			status: {
+				label: 'completed',
+				value: status
+			}
+		}
+	});

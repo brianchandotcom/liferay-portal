@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
-import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -111,8 +111,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 				renderResponse, _resourceActions, _userLocalService);
 
 		renderRequest.setAttribute(
-			CTWebConstants.CHANGE_LISTS_DISPLAY_CONTEXT,
-			changeListsDisplayContext);
+			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

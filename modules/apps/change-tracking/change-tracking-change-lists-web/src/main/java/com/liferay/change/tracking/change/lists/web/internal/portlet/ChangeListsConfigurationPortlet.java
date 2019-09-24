@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
-import com.liferay.change.tracking.change.lists.web.internal.constants.CTConfigurationConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsConfigurationDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
@@ -82,8 +82,7 @@ public class ChangeListsConfigurationPortlet extends MVCPortlet {
 						renderResponse);
 
 			renderRequest.setAttribute(
-				CTConfigurationConstants.
-					CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,
+				CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,
 				changeListsConfigurationDisplayContext);
 		}
 		catch (Exception e) {

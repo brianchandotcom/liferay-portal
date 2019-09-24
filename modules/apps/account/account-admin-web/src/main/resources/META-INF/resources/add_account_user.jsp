@@ -31,7 +31,7 @@ portletDisplay.setURLBack(String.valueOf(backURL));
 renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accountDisplay.getName(), false));
 %>
 
-<portlet:actionURL name="/account_admin/account/add_user" var="addAccountUsersURL" />
+<portlet:actionURL name="/account_admin/add_account_user" var="addAccountUsersURL" />
 
 <liferay-frontend:edit-form
 	action="<%= addAccountUsersURL %>"

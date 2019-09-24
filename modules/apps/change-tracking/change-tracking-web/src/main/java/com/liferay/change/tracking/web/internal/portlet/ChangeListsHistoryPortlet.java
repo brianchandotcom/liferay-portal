@@ -14,11 +14,11 @@
 
 package com.liferay.change.tracking.web.internal.portlet;
 
+import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsHistoryDisplayContext;
-import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;

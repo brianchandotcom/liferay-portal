@@ -70,6 +70,12 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			_checkModulePackageName(fileName, packageName);
 		}
 
+		String className = javaClass.getName();
+
+		if (className.startsWith("Base")) {
+			return javaTerm.getContent();
+		}
+
 		List<String> expectedInternalImplementsDataEntries = getAttributeValues(
 			_EXPECTED_INTERNAL_IMPLEMENTS_DATA_KEY, absolutePath);
 
@@ -165,6 +171,11 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 
 		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
 			bndSettings.getContent(), "Bundle-SymbolicName");
+
+		Matcher matcher = _apiOrServiceBundleSymbolicNamePattern.matcher(
+			bundleSymbolicName);
+
+		bundleSymbolicName = matcher.replaceAll(StringPool.BLANK);
 
 		if (bundleSymbolicName.endsWith(expectedPackageName)) {
 			return;
@@ -321,6 +332,8 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 	private static final String _EXPECTED_INTERNAL_IMPLEMENTS_DATA_KEY =
 		"expectedInternalImplementsData";
 
+	private static final Pattern _apiOrServiceBundleSymbolicNamePattern =
+		Pattern.compile("\\.(api|service)$");
 	private static final Pattern _internalPackagePattern = Pattern.compile(
 		"\\.(impl|internal)(\\.|\\Z)");
 

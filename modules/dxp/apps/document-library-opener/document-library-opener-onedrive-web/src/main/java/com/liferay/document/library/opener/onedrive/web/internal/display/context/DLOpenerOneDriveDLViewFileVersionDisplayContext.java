@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -166,32 +167,27 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
 		urlMenuItem.setMethod(HttpMethods.POST);
-		urlMenuItem.setURL(
-			StringBundler.concat(
-				"javascript:",
-				_portal.getPortletNamespace(_portal.getPortletId(request)),
-				"editOfficeDocument(\"", _getActionURL(cmd), "\");"));
+
+		if (Objects.equals(
+				request.getParameter("mvcRenderCommandName"),
+				"/document_library/view_file_entry")) {
+
+			urlMenuItem.setData(Collections.singletonMap("senna-off", "true"));
+			urlMenuItem.setURL(
+				_getEditURL(
+					cmd, "/document_library/edit_in_office365_and_redirect"));
+		}
+		else {
+			urlMenuItem.setURL(
+				StringBundler.concat(
+					"javascript:",
+					_portal.getPortletNamespace(_portal.getPortletId(request)),
+					"editOfficeDocument(\"",
+					_getEditURL(cmd, "/document_library/edit_in_office365"),
+					"\");"));
+		}
 
 		return urlMenuItem;
-	}
-
-	private String _getActionURL(String cmd) throws PortalException {
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			request, _portal.getPortletId(request),
-			PortletRequest.ACTION_PHASE);
-
-		liferayPortletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/edit_in_office365");
-		liferayPortletURL.setParameter(Constants.CMD, cmd);
-		liferayPortletURL.setParameter(
-			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		liferayPortletURL.setParameter(
-			"folderId", String.valueOf(fileEntry.getFolderId()));
-
-		return liferayPortletURL.toString();
 	}
 
 	private String _getCancelCheckOutURL() throws PortalException {
@@ -221,6 +217,24 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		liferayPortletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/document_library/check_in_in_office365");
+		liferayPortletURL.setParameter(
+			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		liferayPortletURL.setParameter(
+			"folderId", String.valueOf(fileEntry.getFolderId()));
+
+		return liferayPortletURL.toString();
+	}
+
+	private String _getEditURL(String cmd, String url) throws PortalException {
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+			request, _portal.getPortletId(request),
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameter(ActionRequest.ACTION_NAME, url);
+		liferayPortletURL.setParameter(Constants.CMD, cmd);
 		liferayPortletURL.setParameter(
 			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
 

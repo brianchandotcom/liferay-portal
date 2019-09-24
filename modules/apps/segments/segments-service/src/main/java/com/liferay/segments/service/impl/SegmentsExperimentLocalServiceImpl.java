@@ -142,6 +142,17 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperiment deleteSegmentsExperiment(
+			long segmentsExperimentId)
+		throws PortalException {
+
+		return deleteSegmentsExperiment(
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId),
+			false);
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperiment deleteSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment)

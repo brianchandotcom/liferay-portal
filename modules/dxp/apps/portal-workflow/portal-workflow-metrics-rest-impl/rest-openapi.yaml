@@ -230,6 +230,9 @@ components:
         Task:
             description: https://www.schema.org/Task
             properties:
+                breachedInstanceCount:
+                    format: int64
+                    type: integer
                 durationAvg:
                     format: int64
                     type: integer

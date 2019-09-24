@@ -371,7 +371,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	private void _validateAttribute(Element element, String attributeName)
 		throws FragmentEntryContentException {
 
-		if (element.hasAttr(attributeName)) {
+		if (Validator.isNotNull(element.attr(attributeName))) {
 			return;
 		}
 

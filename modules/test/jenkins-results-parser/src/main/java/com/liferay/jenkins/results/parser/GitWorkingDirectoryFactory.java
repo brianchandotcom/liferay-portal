@@ -99,6 +99,42 @@ public class GitWorkingDirectoryFactory {
 			gitRepositoryName);
 	}
 
+	public static GitWorkingDirectory newJenkinsGitWorkingDirectory() {
+		String gitRepositoryName = "liferay-jenkins-ee";
+
+		File gitRepositoryDir = new File(
+			JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+			gitRepositoryName);
+
+		return newGitWorkingDirectory(
+			"master", gitRepositoryDir, gitRepositoryName);
+	}
+
+	public static PortalGitWorkingDirectory newPortalGitWorkingDirectory(
+		String upstreamBranchName) {
+
+		String gitRepositoryDirName = "liferay-portal";
+		String gitRepositoryName = "liferay-portal";
+
+		if (!upstreamBranchName.equals("master")) {
+			gitRepositoryDirName += "-" + upstreamBranchName;
+			gitRepositoryName += "-ee";
+		}
+
+		File gitRepositoryDir = new File(
+			JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
+			gitRepositoryDirName);
+
+		GitWorkingDirectory gitWorkingDirectory = newGitWorkingDirectory(
+			upstreamBranchName, gitRepositoryDir, gitRepositoryName);
+
+		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
+			throw new RuntimeException("Invalid Git working directory");
+		}
+
+		return (PortalGitWorkingDirectory)gitWorkingDirectory;
+	}
+
 	public static SubrepositoryGitWorkingDirectory
 		newSubrepositoryGitWorkingDirectory(
 			String upstreamBranchName, String repositoryName) {
@@ -128,40 +164,5 @@ public class GitWorkingDirectoryFactory {
 
 	private static final Map<String, GitWorkingDirectory>
 		_gitWorkingDirectories = new HashMap<>();
-
-	public static PortalGitWorkingDirectory newPortalGitWorkingDirectory(
-		String upstreamBranchName) {
-	
-		String gitRepositoryDirName = "liferay-portal";
-		String gitRepositoryName = "liferay-portal";
-	
-		if (!upstreamBranchName.equals("master")) {
-			gitRepositoryDirName += "-" + upstreamBranchName;
-			gitRepositoryName += "-ee";
-		}
-	
-		File gitRepositoryDir = new File(
-			JenkinsResultsParserUtil.getBaseGitRepositoryDir(), gitRepositoryDirName);
-	
-		GitWorkingDirectory gitWorkingDirectory =
-			newGitWorkingDirectory(
-				upstreamBranchName, gitRepositoryDir, gitRepositoryName);
-	
-		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			throw new RuntimeException("Invalid Git working directory");
-		}
-	
-		return (PortalGitWorkingDirectory)gitWorkingDirectory;
-	}
-
-	public static GitWorkingDirectory newJenkinsGitWorkingDirectory() {
-		String gitRepositoryName = "liferay-jenkins-ee";
-	
-		File gitRepositoryDir = new File(
-			JenkinsResultsParserUtil.getBaseGitRepositoryDir(), gitRepositoryName);
-	
-		return newGitWorkingDirectory(
-			"master", gitRepositoryDir, gitRepositoryName);
-	}
 
 }

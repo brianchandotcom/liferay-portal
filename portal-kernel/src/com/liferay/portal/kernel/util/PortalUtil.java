@@ -153,17 +153,6 @@ public class PortalUtil {
 
 		getPortal().addPortletBreadcrumbEntry(httpServletRequest, title, url);
 	}
-	
-	/**
-	 * Return the portal work directory override path. This directory is
-	 * only used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to
-	 * true.
-	 *
-	 * @return the portal work directory override path.
-	 */
-	public static String getWorkDirOverride() {
-		return getPortal().getWorkDirOverride();
-	}
 
 	/**
 	 * Adds an entry to the portlet breadcrumbs for the page in the request.
@@ -1960,6 +1949,17 @@ public class PortalUtil {
 		throws PortalException {
 
 		return getPortal().getWidgetURL(portlet, themeDisplay);
+	}
+
+	/**
+	 * Return the portal work directory override path. This directory is
+	 * only used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to
+	 * true.
+	 *
+	 * @return the portal work directory override path.
+	 */
+	public static String getWorkDirOverride() {
+		return getPortal().getWorkDirOverride();
 	}
 
 	public static void initCustomSQL() {

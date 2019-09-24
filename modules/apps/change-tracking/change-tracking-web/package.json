@@ -1,11 +1,9 @@
 {
 	"dependencies": {
-		"clay-checkbox": "2.18.1",
-		"clay-icon": "2.18.1",
+		"clay-label": "2.18.1",
+		"clay-progress-bar": "2.18.1",
+		"clay-sticker": "2.18.1",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
-		"metal-dom": "2.16.8",
-		"metal-modal": "^2.0.1",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"
 	},

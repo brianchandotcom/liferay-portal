@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.product.navigation.control.menu;
 
-import com.liferay.change.tracking.constants.CTProductNavigationControlMenuCategoryKeys;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
@@ -38,7 +38,7 @@ public class CTProductNavigationControlMenuCategory
 
 	@Override
 	public String getKey() {
-		return CTProductNavigationControlMenuCategoryKeys.CHANGE_TRACKING;
+		return CTWebConstants.CHANGE_TRACKING;
 	}
 
 	@Override

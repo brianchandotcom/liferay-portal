@@ -12,14 +12,18 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.change.lists.web.internal.constants;
 
 /**
- * @author Máté Thurzó
+ * @author Samuel Trong Tran
  */
-public class CTPanelCategoryKeys {
+public class CTWebConstants {
+
+	public static final String CHANGE_TRACKING = "change_tracking";
 
 	public static final String CONTROL_PANEL_CHANGE_LISTS =
 		"control_panel.change_lists";
+
+	public static final int USER_FILTER_ALL = -1;
 
 }

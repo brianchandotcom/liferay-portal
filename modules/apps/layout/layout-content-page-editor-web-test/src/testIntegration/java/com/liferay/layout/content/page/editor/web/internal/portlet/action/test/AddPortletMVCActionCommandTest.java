@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -116,6 +118,18 @@ public class AddPortletMVCActionCommandTest {
 			actualFragmentEntryLinks.toString(),
 			originalFragmentEntryLinks.size() + 1,
 			actualFragmentEntryLinks.size());
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testCannotAddInvalidWidgets() throws Exception {
+		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
+
+		actionRequest.addParameter("portletId", RandomTestUtil.randomString());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddPortlet",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockActionResponse());
 	}
 
 	@Test(expected = AssertionError.class)

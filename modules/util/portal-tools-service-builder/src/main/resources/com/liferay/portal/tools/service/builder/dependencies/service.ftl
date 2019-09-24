@@ -2,6 +2,7 @@ package ${apiPackagePath}.service;
 
 import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -10,6 +11,8 @@ import com.liferay.portal.kernel.service.Base${sessionTypeName}Service;
 import com.liferay.portal.kernel.service.PermissionedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedResourcedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.service.version.VersionService;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
@@ -96,6 +99,10 @@ public interface ${entity.name}${sessionTypeName}Service
 	<#assign overrideMethodNames = [] />
 
 	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
+		<#if entity.isChangeTrackingEnabled()>
+			, CTService<${entity.name}>
+		</#if>
+
 		<#if entity.isPermissionedModel()>
 			, PermissionedModelLocalService
 		<#elseif entity.isResourcedModel()>
@@ -192,4 +199,17 @@ public interface ${entity.name}${sessionTypeName}Service
 		</#if>
 	</#list>
 
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && entity.isChangeTrackingEnabled()>
+		@Transactional(enabled = false)
+		@Override
+		public CTPersistence<${entity.name}> getCTPersistence();
+
+		@Transactional(enabled = false)
+		@Override
+		public Class<${entity.name}> getModelClass();
+
+		@Transactional(rollbackFor = Throwable.class)
+		@Override
+		public <R, E extends Throwable> R updateWithUnsafeFunction(UnsafeFunction<CTPersistence<${entity.name}>, R, E> updateUnsafeFunction) throws E;
+	</#if>
 }

@@ -9,6 +9,8 @@
 		<#assign sessionType = "Local" />
 
 		<#include "spring_xml_session.ftl">
+	<#elseif entity.isChangeTrackingEnabled()>
+		<bean class="${packagePath}.service.impl.${entity.name}CTServiceImpl" id="${entity.name}CTService" />
 	</#if>
 
 	<#if entity.hasRemoteService()>

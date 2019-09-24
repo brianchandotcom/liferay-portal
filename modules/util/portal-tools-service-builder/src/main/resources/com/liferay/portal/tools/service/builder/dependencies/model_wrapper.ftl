@@ -17,6 +17,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -188,6 +190,18 @@ public class ${entity.name}Wrapper
 			}
 
 			return false;
+		}
+	</#if>
+
+	<#if entity.isChangeTrackingEnabled()>
+		@Override
+		public Map<String, Function<${entity.name}, Object>> getAttributeGetterFunctions() {
+			return ${entityFieldName}.getAttributeGetterFunctions();
+		}
+
+		@Override
+		public Map<String, BiConsumer<${entity.name}, Object>> getAttributeSetterBiConsumers() {
+			return ${entityFieldName}.getAttributeSetterBiConsumers();
 		}
 	</#if>
 

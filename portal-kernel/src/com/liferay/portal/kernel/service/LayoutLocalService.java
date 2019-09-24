@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -62,7 +65,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface LayoutLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<Layout>, PersistedModelLocalService {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -1424,5 +1427,19 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	public Layout updateType(long plid, String type) throws PortalException;
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<Layout> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<Layout> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<Layout>, R, E> updateUnsafeFunction)
+		throws E;
 
 }

@@ -9,6 +9,7 @@ import ${apiPackagePath}.model.${entity.name};
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -40,7 +41,13 @@ import java.util.Set;
 </#if>
 
 @ProviderType
-public interface ${entity.name}Persistence extends BasePersistence<${entity.name}> {
+public interface ${entity.name}Persistence extends BasePersistence<${entity.name}>
+
+	<#if entity.isChangeTrackingEnabled()>
+		, CTPersistence<${entity.name}>
+	</#if>
+
+	{
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -61,13 +68,17 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 				@Deprecated
 			</#if>
 
+			<#assign parameters = method.parameters />
+
+			<#if entity.isChangeTrackingEnabled() && stringUtil.equals(method.name, "findByCTCollectionId") && (parameters?size == 1)>
+				@Override
+			</#if>
+
 			<#if stringUtil.equals(method.name, "getBadColumnNames")>
 				@Override
 			</#if>
 
 			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name} (
-
-			<#assign parameters = method.parameters />
 
 			<#list parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}

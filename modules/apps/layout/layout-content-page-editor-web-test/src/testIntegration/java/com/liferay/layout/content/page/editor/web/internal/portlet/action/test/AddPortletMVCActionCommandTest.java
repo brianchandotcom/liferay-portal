@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -116,6 +118,23 @@ public class AddPortletMVCActionCommandTest {
 			actualFragmentEntryLinks.size());
 	}
 
+	@Test(expected = AssertionError.class)
+	public void testCannotAddMultipleUninstanceableWidgets() throws Exception {
+		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
+
+		actionRequest.addParameter("portletId", BlogsPortletKeys.BLOGS);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddPortlet",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockActionResponse());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_processAddPortlet",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockActionResponse());
+	}
+
 	@Test
 	public void testFragmentEntryLinkFromWidgetResponse() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
@@ -176,6 +195,8 @@ public class AddPortletMVCActionCommandTest {
 		themeDisplay.setCompany(_company);
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)_layout.getLayoutType());
 		themeDisplay.setLocale(_portal.getSiteDefaultLocale(_group));
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();

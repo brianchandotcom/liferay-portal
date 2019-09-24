@@ -612,6 +612,8 @@ definition {
 	test ViewCommentOnDifferentExperience {
 		property test.name.skip.portal.instance = "ContentPageReview#CommentOnDifferentExperience";
 
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
@@ -647,9 +649,7 @@ definition {
 
 		PageEditor.changeExperience(newExperience = "Default");
 
-		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
-
-		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_DELETE");
+		PageEditor.removeFragment(fragmentName = "Title");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CENTER_TEXT",

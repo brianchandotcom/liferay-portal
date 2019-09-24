@@ -378,6 +378,58 @@ public class CTManagerImpl implements CTManager {
 		return Optional.empty();
 	}
 
+	public static class CTEntryCreateDateComparator
+		extends OrderByComparator<CTEntry> {
+
+		public static final String ORDER_BY_ASC = "CTEntry.createDate ASC";
+
+		public static final String ORDER_BY_DESC = "CTEntry.createDate DESC";
+
+		public static final String[] ORDER_BY_FIELDS = {"createDate"};
+
+		public CTEntryCreateDateComparator() {
+			this(false);
+		}
+
+		public CTEntryCreateDateComparator(boolean ascending) {
+			_ascending = ascending;
+		}
+
+		@Override
+		public int compare(CTEntry ctEntry1, CTEntry ctEntry2) {
+			int value = DateUtil.compareTo(
+				ctEntry1.getCreateDate(), ctEntry2.getCreateDate());
+
+			if (_ascending) {
+				return value;
+			}
+
+			return -value;
+		}
+
+		@Override
+		public String getOrderBy() {
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+
+			return ORDER_BY_DESC;
+		}
+
+		@Override
+		public String[] getOrderByFields() {
+			return ORDER_BY_FIELDS;
+		}
+
+		@Override
+		public boolean isAscending() {
+			return _ascending;
+		}
+
+		private final boolean _ascending;
+
+	}
+
 	private CTEntry _getCTEntry(
 		long companyId, long ctCollectionId, long modelClassNameId,
 		long modelClassPK) {
@@ -464,55 +516,4 @@ public class CTManagerImpl implements CTManager {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
-	public static class CTEntryCreateDateComparator extends
-		OrderByComparator<CTEntry> {
-
-		public static final String ORDER_BY_ASC = "CTEntry.createDate ASC";
-
-		public static final String ORDER_BY_DESC = "CTEntry.createDate DESC";
-
-		public static final String[] ORDER_BY_FIELDS = {"createDate"};
-
-		public CTEntryCreateDateComparator() {
-			this(false);
-		}
-
-		public CTEntryCreateDateComparator(boolean ascending) {
-			_ascending = ascending;
-		}
-
-		@Override
-		public int compare(CTEntry ctEntry1, CTEntry ctEntry2) {
-			int value = DateUtil.compareTo(
-				ctEntry1.getCreateDate(), ctEntry2.getCreateDate());
-
-			if (_ascending) {
-				return value;
-			}
-
-			return -value;
-		}
-
-		@Override
-		public String getOrderBy() {
-			if (_ascending) {
-				return ORDER_BY_ASC;
-			}
-
-			return ORDER_BY_DESC;
-		}
-
-		@Override
-		public String[] getOrderByFields() {
-			return ORDER_BY_FIELDS;
-		}
-
-		@Override
-		public boolean isAscending() {
-			return _ascending;
-		}
-
-		private final boolean _ascending;
-
-	}
 }

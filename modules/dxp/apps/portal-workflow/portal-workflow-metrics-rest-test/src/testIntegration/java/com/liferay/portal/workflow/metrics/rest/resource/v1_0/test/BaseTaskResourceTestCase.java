@@ -448,6 +448,16 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"breachedInstanceCount", additionalAssertFieldName)) {
+
+				if (task.getBreachedInstanceCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
 				if (task.getDurationAvg() == null) {
 					valid = false;
@@ -553,6 +563,19 @@ public abstract class BaseTaskResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals(
+					"breachedInstanceCount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						task1.getBreachedInstanceCount(),
+						task2.getBreachedInstanceCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						task1.getDurationAvg(), task2.getDurationAvg())) {
@@ -625,6 +648,17 @@ public abstract class BaseTaskResourceTestCase {
 
 	protected boolean equalsJSONObject(Task task, JSONObject jsonObject) {
 		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("breachedInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getBreachedInstanceCount(),
+						jsonObject.getLong("breachedInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("durationAvg", fieldName)) {
 				if (!Objects.deepEquals(
 						task.getDurationAvg(),
@@ -746,6 +780,11 @@ public abstract class BaseTaskResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("breachedInstanceCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("durationAvg")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -806,6 +845,7 @@ public abstract class BaseTaskResourceTestCase {
 	protected Task randomTask() throws Exception {
 		return new Task() {
 			{
+				breachedInstanceCount = RandomTestUtil.randomLong();
 				durationAvg = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomString();

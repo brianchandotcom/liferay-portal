@@ -45,6 +45,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task {
 
 	@Schema
+	public Long getBreachedInstanceCount() {
+		return breachedInstanceCount;
+	}
+
+	public void setBreachedInstanceCount(Long breachedInstanceCount) {
+		this.breachedInstanceCount = breachedInstanceCount;
+	}
+
+	@JsonIgnore
+	public void setBreachedInstanceCount(
+		UnsafeSupplier<Long, Exception> breachedInstanceCountUnsafeSupplier) {
+
+		try {
+			breachedInstanceCount = breachedInstanceCountUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long breachedInstanceCount;
+
+	@Schema
 	public Long getDurationAvg() {
 		return durationAvg;
 	}
@@ -234,6 +262,16 @@ public class Task {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (breachedInstanceCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"breachedInstanceCount\": ");
+
+			sb.append(breachedInstanceCount);
+		}
 
 		if (durationAvg != null) {
 			if (sb.length() > 1) {

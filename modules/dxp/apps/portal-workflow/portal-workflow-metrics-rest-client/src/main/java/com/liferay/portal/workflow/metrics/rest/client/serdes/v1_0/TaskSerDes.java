@@ -53,6 +53,16 @@ public class TaskSerDes {
 
 		sb.append("{");
 
+		if (task.getBreachedInstanceCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"breachedInstanceCount\": ");
+
+			sb.append(task.getBreachedInstanceCount());
+		}
+
 		if (task.getDurationAvg() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -139,6 +149,15 @@ public class TaskSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (task.getBreachedInstanceCount() == null) {
+			map.put("breachedInstanceCount", null);
+		}
+		else {
+			map.put(
+				"breachedInstanceCount",
+				String.valueOf(task.getBreachedInstanceCount()));
+		}
+
 		if (task.getDurationAvg() == null) {
 			map.put("durationAvg", null);
 		}
@@ -205,7 +224,13 @@ public class TaskSerDes {
 			Task task, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "durationAvg")) {
+			if (Objects.equals(jsonParserFieldName, "breachedInstanceCount")) {
+				if (jsonParserFieldValue != null) {
+					task.setBreachedInstanceCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "durationAvg")) {
 				if (jsonParserFieldValue != null) {
 					task.setDurationAvg(
 						Long.valueOf((String)jsonParserFieldValue));

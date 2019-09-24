@@ -28,6 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class Task {
 
+	public Long getBreachedInstanceCount() {
+		return breachedInstanceCount;
+	}
+
+	public void setBreachedInstanceCount(Long breachedInstanceCount) {
+		this.breachedInstanceCount = breachedInstanceCount;
+	}
+
+	public void setBreachedInstanceCount(
+		UnsafeSupplier<Long, Exception> breachedInstanceCountUnsafeSupplier) {
+
+		try {
+			breachedInstanceCount = breachedInstanceCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long breachedInstanceCount;
+
 	public Long getDurationAvg() {
 		return durationAvg;
 	}

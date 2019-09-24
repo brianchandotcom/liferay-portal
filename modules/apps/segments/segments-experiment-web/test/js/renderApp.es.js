@@ -14,7 +14,11 @@
 
 import React from 'react';
 import {render} from '@testing-library/react';
-import {segmentsGoals, DEFAULT_ESTIMATED_DAYS} from './fixtures.es';
+import {
+	segmentsGoals,
+	DEFAULT_ESTIMATED_DAYS,
+	segmentsExperiment
+} from './fixtures.es';
 import SegmentsExperimentsSidebar from '../../src/main/resources/META-INF/resources/js/components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from '../../src/main/resources/META-INF/resources/js/context.es';
 
@@ -39,6 +43,9 @@ export default function renderApp({
 		getEstimatedTime = jest.fn(_getEstimatedTimeMock),
 		publishExperience = jest.fn(
 			_publishExperienceMockGenerator(initialSegmentsExperiment)
+		),
+		runExperiment = jest.fn(
+			_runExperimentMockGenerator(initialSegmentsExperiment)
 		)
 	} = APIService;
 
@@ -52,7 +59,8 @@ export default function renderApp({
 					editExperiment,
 					editVariant,
 					getEstimatedTime,
-					publishExperience
+					publishExperience,
+					runExperiment
 				},
 				assetsPath: '',
 				page: {
@@ -82,7 +90,8 @@ export default function renderApp({
 		APIServiceMocks: {
 			createVariant,
 			getEstimatedTime,
-			publishExperience
+			publishExperience,
+			runExperiment
 		}
 	};
 }
@@ -114,5 +123,19 @@ const _publishExperienceMockGenerator = experiment => ({status}) =>
 				label: 'completed',
 				value: status
 			}
+		}
+	});
+
+const _runExperimentMockGenerator = segmentsExperiment => ({
+	confidenceLevel,
+	segmentsExperimentId,
+	segmentsExperimentRels,
+	status
+}) =>
+	Promise.resolve({
+		segmentsExperiment: {
+			...segmentsExperiment,
+			editable: false,
+			status: {label: 'running', value: status}
 		}
 	});

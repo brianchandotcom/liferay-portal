@@ -31,7 +31,8 @@ import {
 import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/resources/js/util/percentages.es';
 import {
 	STATUS_FINISHED_WINNER,
-	STATUS_COMPLETED
+	STATUS_COMPLETED,
+	STATUS_RUNNING
 } from '../../../src/main/resources/META-INF/resources/js/util/statuses.es';
 
 jest.mock(
@@ -261,7 +262,57 @@ describe('Run and review test', () => {
 		expect(getEstimatedTime).toHaveBeenCalledTimes(1);
 	});
 
-	test.todo('Running test cannot be edited');
+	test('Running test cannot be edited', async () => {
+		const {
+			APIServiceMocks,
+			findByText,
+			queryAllByLabelText,
+			getByText,
+			debug
+		} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+		const {runExperiment} = APIServiceMocks;
+
+		const actionButtons = queryAllByLabelText('show-actions');
+
+		/*
+		 * One _show actions button_ for the Experiment and one for the Variant
+		 */
+		expect(actionButtons.length).toBe(2);
+
+		const runTestButton = getByText('review-and-run-test');
+
+		userEvent.click(runTestButton);
+
+		await waitForElement(() => getByText('traffic-split'));
+
+		const confirmRunExperimentButton = getByText('run');
+
+		userEvent.click(confirmRunExperimentButton);
+
+		await waitForElement(() => getByText('test-running-message'));
+
+		expect(runExperiment).toHaveBeenCalledWith(
+			expect.objectContaining({
+				confidenceLevel: INITIAL_CONFIDENCE_LEVEL / 100,
+				segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+				status: STATUS_RUNNING
+			})
+		);
+
+		await waitForElement(() => getByText('ok'));
+		const okButton = getByText('ok');
+
+		userEvent.click(okButton);
+
+		/*
+		 * There are no action buttons on a running Experiment
+		 */
+		expect(queryAllByLabelText('show-actions').length).toBe(0);
+	});
 
 	test.todo(
 		'Variants cannot be edited/deleted/added in a running experiment'

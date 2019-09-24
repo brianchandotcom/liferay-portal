@@ -52,6 +52,10 @@ public class UserNotificationEventLocalServiceUtil {
 			userId, delivered, actionRequired, notificationEvent);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.UserNotificationEvent
 			addUserNotificationEvent(
 				long userId, boolean actionRequired,
@@ -86,6 +90,10 @@ public class UserNotificationEventLocalServiceUtil {
 			payload, actionRequired, archived, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.UserNotificationEvent
 			addUserNotificationEvent(
 				long userId, String type, long timestamp, int deliveryType,

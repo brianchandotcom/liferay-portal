@@ -48,6 +48,10 @@ public class UserNotificationEventLocalServiceWrapper
 			userId, delivered, actionRequired, notificationEvent);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.UserNotificationEvent
 			addUserNotificationEvent(
@@ -86,6 +90,10 @@ public class UserNotificationEventLocalServiceWrapper
 			payload, actionRequired, archived, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.model.UserNotificationEvent
 			addUserNotificationEvent(

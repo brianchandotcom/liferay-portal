@@ -109,6 +109,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "package.json", true);
 
+		if (enumeration == null) {
+			_log.error("No package.json files found in " + bundle);
+
+			return null;
+		}
+
 		while (enumeration.hasMoreElements()) {
 			URL packageJSONURL = enumeration.nextElement();
 
@@ -121,6 +127,12 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 
 		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
+
+		if (enumeration == null) {
+			_log.error("No *.js files found in " + bundle);
+
+			return null;
+		}
 
 		List<Future<Map.Entry<URL, Collection<String>>>>
 			moduleDepedenciesFutures = new ArrayList<>();

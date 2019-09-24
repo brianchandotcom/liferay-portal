@@ -27,6 +27,7 @@ export default class Icon extends React.Component {
 			<svg
 				className={classes}
 				dangerouslySetInnerHTML={{__html: useTag}}
+				data-testid="icon"
 				focusable="false"
 				role="presentation"
 			/>

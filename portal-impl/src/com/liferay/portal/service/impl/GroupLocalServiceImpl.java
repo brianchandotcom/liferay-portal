@@ -382,7 +382,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		validateInheritContent(parentGroupId, inheritContent);
 
-		validateFriendlyURL(
+		friendlyURL = getValidatedFriendlyURL(
 			user.getCompanyId(), groupId, classNameId, classPK, friendlyURL);
 
 		validateParentGroup(groupId, parentGroupId);

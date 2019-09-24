@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,6 +39,8 @@ import java.io.Writer;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides general configuration methods for the portlet, providing access to
@@ -495,9 +499,15 @@ public class PortletDisplay implements Cloneable, Serializable {
 	public boolean isShowPortletTopper() {
 		Layout layout = _themeDisplay.getLayout();
 
-		if (Objects.equals(
+		HttpServletRequest httpServletRequest = _themeDisplay.getRequest();
+
+		String layoutMode = ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.VIEW) &&
+			(Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) ||
-			Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {
+			 Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT))) {
 
 			return false;
 		}

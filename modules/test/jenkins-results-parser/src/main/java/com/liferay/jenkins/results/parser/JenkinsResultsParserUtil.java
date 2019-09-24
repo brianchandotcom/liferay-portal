@@ -1104,16 +1104,6 @@ public class JenkinsResultsParserUtil {
 		return Float.parseFloat(matcher.group(1));
 	}
 
-	public static GitWorkingDirectory getJenkinsGitWorkingDirectory() {
-		String gitRepositoryName = "liferay-jenkins-ee";
-
-		File gitRepositoryDir = new File(
-			getBaseGitRepositoryDir(), gitRepositoryName);
-
-		return GitWorkingDirectoryFactory.newGitWorkingDirectory(
-			"master", gitRepositoryDir, gitRepositoryName);
-	}
-
 	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, String prefix) {
 
@@ -1349,31 +1339,6 @@ public class JenkinsResultsParserUtil {
 		catch (RuntimeException re) {
 			throw new RuntimeException("Unable to get relative path", re);
 		}
-	}
-
-	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
-		String upstreamBranchName) {
-
-		String gitRepositoryDirName = "liferay-portal";
-		String gitRepositoryName = "liferay-portal";
-
-		if (!upstreamBranchName.equals("master")) {
-			gitRepositoryDirName += "-" + upstreamBranchName;
-			gitRepositoryName += "-ee";
-		}
-
-		File gitRepositoryDir = new File(
-			getBaseGitRepositoryDir(), gitRepositoryDirName);
-
-		GitWorkingDirectory gitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, gitRepositoryDir, gitRepositoryName);
-
-		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			throw new RuntimeException("Invalid Git working directory");
-		}
-
-		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
 	public static Properties getProperties(File... propertiesFiles) {

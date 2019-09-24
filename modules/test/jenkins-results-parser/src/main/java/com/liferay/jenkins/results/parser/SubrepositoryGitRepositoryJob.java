@@ -69,7 +69,7 @@ public class SubrepositoryGitRepositoryJob
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		if (portalGitWorkingDirectory == null) {
 			portalGitWorkingDirectory =
-				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+				GitWorkingDirectoryFactory.getPortalGitWorkingDirectory(
 					getBranchName());
 		}
 

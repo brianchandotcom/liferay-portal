@@ -69,7 +69,7 @@ public abstract class PortalGitRepositoryJob
 	}
 
 	protected GitWorkingDirectory getNewGitWorkingDirectory() {
-		return JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+		return GitWorkingDirectoryFactory.getPortalGitWorkingDirectory(
 			getBranchName());
 	}
 

@@ -28,7 +28,7 @@ public class PortalUpstreamJob
 		super(jobName);
 
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
-			JenkinsResultsParserUtil.getJenkinsGitWorkingDirectory();
+			GitWorkingDirectoryFactory.getJenkinsGitWorkingDirectory();
 
 		jobPropertiesFiles.add(
 			new File(

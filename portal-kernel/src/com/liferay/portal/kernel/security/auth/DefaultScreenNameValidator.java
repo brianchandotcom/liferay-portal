@@ -45,7 +45,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 		return LanguageUtil.format(
 			locale,
 			"the-screen-name-cannot-be-an-email-address-or-a-reserved-word",
-			new String[] {POSTFIX, getSpecialChars()}, false);
+			new String[] {POSTFIX, getDescriptionSpecialChars()}, false);
 	}
 
 	@Override
@@ -58,6 +58,18 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 		}
 
 		return true;
+	}
+
+	protected String getDescriptionSpecialChars() {
+		if (_descriptionSpecialChars == null) {
+			String descriptionSpecialChars = PropsUtil.get(
+				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
+
+			_descriptionSpecialChars = StringUtil.removeChar(
+				descriptionSpecialChars, CharPool.SLASH);
+		}
+
+		return _descriptionSpecialChars;
 	}
 
 	protected String getJSEscapedSpecialChars() {
@@ -90,6 +102,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 	private static final Pattern _escapeRegexPattern = Pattern.compile(
 		"[-+\\\\\\[\\]]");
 
+	private String _descriptionSpecialChars;
 	private String _jsEscapedSpecialChars;
 	private String _specialChars;
 

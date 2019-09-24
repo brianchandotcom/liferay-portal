@@ -43,6 +43,14 @@ public class DefaultScreenNameValidatorTest extends DefaultScreenNameValidator {
 	}
 
 	@Test
+	public void testGetDescriptionSpecialChars() {
+		PropsTestUtil.setProps(
+			PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "-._'/");
+
+		Assert.assertEquals("-._'", getDescriptionSpecialChars());
+	}
+
+	@Test
 	public void testGetJSEscapedSpecialChars() {
 		PropsTestUtil.setProps(
 			PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS, "-._'");

@@ -413,6 +413,32 @@ public class UserNotificationEventLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent>
 		getArchivedUserNotificationEvents(
+			long userId, int deliveryType, boolean delivered,
+			boolean actionRequired, boolean archived, int start, int end) {
+
+		return _userNotificationEventLocalService.
+			getArchivedUserNotificationEvents(
+				userId, deliveryType, delivered, actionRequired, archived,
+				start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent>
+		getArchivedUserNotificationEvents(
+			long userId, int deliveryType, boolean delivered,
+			boolean actionRequired, boolean archived, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.UserNotificationEvent> obc) {
+
+		return _userNotificationEventLocalService.
+			getArchivedUserNotificationEvents(
+				userId, deliveryType, delivered, actionRequired, archived,
+				start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.UserNotificationEvent>
+		getArchivedUserNotificationEvents(
 			long userId, int deliveryType, boolean actionRequired,
 			boolean archived, int start, int end) {
 
@@ -480,6 +506,25 @@ public class UserNotificationEventLocalServiceWrapper
 		return _userNotificationEventLocalService.
 			getArchivedUserNotificationEventsCount(
 				userId, deliveryType, actionRequired, archived);
+	}
+
+	@Override
+	public int getArchivedUserNotificationEventsCount(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived) {
+
+		return _userNotificationEventLocalService.
+			getArchivedUserNotificationEventsCount(
+				userId, deliveryType, delivered, actionRequired, archived);
+	}
+
+	@Override
+	public int getDeliveredArchivedUserNotificationEventsCount(
+		long userId, int deliveryType, boolean delivered, boolean archived) {
+
+		return _userNotificationEventLocalService.
+			getDeliveredArchivedUserNotificationEventsCount(
+				userId, deliveryType, delivered, archived);
 	}
 
 	@Override
@@ -773,6 +818,16 @@ public class UserNotificationEventLocalServiceWrapper
 		return _userNotificationEventLocalService.
 			getUserNotificationEventsCount(
 				userId, type, deliveryType, archived);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(
+		long userId, java.lang.String type, int deliveryType, boolean delivered,
+		boolean archived) {
+
+		return _userNotificationEventLocalService.
+			getUserNotificationEventsCount(
+				userId, type, deliveryType, delivered, archived);
 	}
 
 	@Override

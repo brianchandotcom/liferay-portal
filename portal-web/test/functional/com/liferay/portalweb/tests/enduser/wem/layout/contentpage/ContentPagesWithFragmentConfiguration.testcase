@@ -108,7 +108,7 @@ definition {
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
 		task ("Assert placeholder is exist") {
-			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIG_PANEL");
+			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL");
 		}
 	}
 

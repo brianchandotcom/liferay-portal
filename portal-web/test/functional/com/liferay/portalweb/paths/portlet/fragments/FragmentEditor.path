@@ -49,7 +49,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENTS_EDITOR_FLOATING_CONFIG_PANEL</td>
+	<td>FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL</td>
 	<td>//div[@class='form-group']//input[contains(@placeholder,'Set Button Name')]</td>
 	<td></td>
 </tr>

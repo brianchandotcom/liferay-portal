@@ -89,6 +89,7 @@ const CustomTimeRangeForm = ({filterKey}) => {
 
 						<MaskedInput
 							className="form-control"
+							data-testid="dateStartInput"
 							defaultValue={dateStart}
 							mask={dateMask}
 							name="dateStart"
@@ -105,6 +106,7 @@ const CustomTimeRangeForm = ({filterKey}) => {
 
 						<MaskedInput
 							className="form-control"
+							data-testid="dateEndInput"
 							defaultValue={dateEnd}
 							mask={dateMask}
 							name="dateEnd"
@@ -119,11 +121,19 @@ const CustomTimeRangeForm = ({filterKey}) => {
 			<div className="dropdown-divider" />
 
 			<div className="custom-range-footer">
-				<button className="btn btn-secondary" onMouseDown={onCancel}>
+				<button
+					className="btn btn-secondary"
+					data-testid="cancelButton"
+					onMouseDown={onCancel}
+				>
 					{Liferay.Language.get('cancel')}
 				</button>
 
-				<button className="btn btn-primary ml-3" onClick={onApply}>
+				<button
+					className="btn btn-primary ml-3"
+					data-testid="applyButton"
+					onClick={onApply}
+				>
 					{Liferay.Language.get('apply')}
 				</button>
 			</div>
@@ -144,7 +154,9 @@ const FormGroupItem = ({children, error}) => (
 						<Icon iconName="exclamation-full" />
 					</span>
 
-					<span className="text-semi-bold">{error}</span>
+					<span className="text-semi-bold" data-testid="errorSpan">
+						{error}
+					</span>
 				</div>
 			</div>
 		)}

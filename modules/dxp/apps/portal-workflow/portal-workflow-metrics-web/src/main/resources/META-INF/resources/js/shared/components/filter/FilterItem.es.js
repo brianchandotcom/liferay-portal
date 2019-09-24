@@ -65,6 +65,7 @@ export default class FilterItem extends React.Component {
 							checked={!!active}
 							className="custom-control-input"
 							data-key={itemKey}
+							data-testid="filterItemInput"
 							onChange={this.onChange.bind(this)}
 							onClick={onClick}
 						/>

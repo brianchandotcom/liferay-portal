@@ -220,7 +220,12 @@ class Filter extends React.Component {
 					onClick={this.toggleDropDown}
 					type="button"
 				>
-					<span className="mr-2 navbar-text-truncate">{name}</span>
+					<span
+						className="mr-2 navbar-text-truncate"
+						data-testid="filterName"
+					>
+						{name}
+					</span>
 
 					<Icon iconName="caret-bottom" />
 				</button>

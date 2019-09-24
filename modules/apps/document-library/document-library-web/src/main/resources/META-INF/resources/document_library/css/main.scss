@@ -90,6 +90,10 @@
 			height: 0;
 		}
 
+		.card-type-directory .sticker {
+			font-size: 1rem;
+		}
+
 		.list-group .list-group-item {
 			h2.h5 {
 				font-weight: 600;
@@ -116,6 +120,10 @@
 					pointer-events: none;
 				}
 			}
+		}
+
+		.table .sticker-document .lexicon-icon {
+			height: 1rem;
 		}
 
 		span.h5 {

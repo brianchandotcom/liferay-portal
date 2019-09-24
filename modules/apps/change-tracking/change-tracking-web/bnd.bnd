@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Change Tracking Change Lists Web
+Bundle-SymbolicName: com.liferay.change.tracking.web
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/js/config.js
+Provide-Capability:\
+	soy;\
+		type="change-tracking-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+Web-ContextPath: /change-tracking-web
+-dsannotations-options: inherit

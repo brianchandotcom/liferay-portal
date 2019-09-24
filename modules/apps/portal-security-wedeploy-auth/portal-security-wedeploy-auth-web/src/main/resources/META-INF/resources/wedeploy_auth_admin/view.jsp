@@ -24,7 +24,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -35,7 +35,7 @@ portletURL.setParameter("mvcRenderCommandName", "/wedeploy_auth_admin/view");
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <div class="container-fluid container-fluid-max-xl container-view">

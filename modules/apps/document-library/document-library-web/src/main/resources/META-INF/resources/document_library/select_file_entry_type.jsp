@@ -29,7 +29,7 @@ portletURL.setParameter("eventName", eventName);
 %>
 
 <clay:navigation-bar
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -39,7 +39,7 @@ portletURL.setParameter("eventName", eventName);
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectFileEntryTypeFm">

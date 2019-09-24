@@ -27,7 +27,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 <clay:navigation-bar
 	inverted="<%= layout.isTypeControlPanel() %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -45,7 +45,7 @@ portletURL.setParameter("tabs1", tabs1);
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <clay:management-toolbar

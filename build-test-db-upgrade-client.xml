@@ -210,6 +210,66 @@
 		<clean-database-upgrade-client />
 	</target>
 
+	<target name="check-upgrade-client-upgrade-core-only">
+		<antcall target="rebuild-legacy-database">
+			<param name="portal.version" value="6.2.5" />
+			<param name="data.archive.type" value="data-archive-polls" />
+			<param name="skip.get.testcase.database.properties" value="true" />
+		</antcall>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config">autoUpgrade="false"</echo>
+
+		<get-database-upgrade-client-paths />
+
+		<parallel failonany="true">
+			<java
+				dir="${db.upgrade.client.home}"
+				fork="true"
+				jar="${db.upgrade.client.jar}"
+				timeout="900000"
+			>
+			</java>
+
+			<sequential>
+				<waitfor maxwait="900000">
+					<resourcecontains
+						resource="${db.upgrade.client.log}"
+						substring="Checking to see if all upgrades have completed... your upgrades have failed, have not started, or are still running."
+					/>
+				</waitfor>
+
+				<sleep seconds="20" />
+
+				<sql classpath="${app.server.lib.global.dir}/${jdbc.mysql.driver}" driver="com.mysql.cj.jdbc.Driver" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
+					<![CDATA[
+						select schemaVersion from Release_ where servletContextName = 'com.liferay.journal.web';
+					]]>
+				</sql>
+
+				<loadfile
+					property="select.result"
+					srcFile="output.txt"
+				/>
+
+				<if>
+					<contains string="${select.result}" substring="0.0.1" />
+					<then>
+						<echo message="The upgrade client only upgrades core." />
+					</then>
+					<else>
+						<fail message="The upgrade client upgrades core and modules." />
+					</else>
+				</if>
+
+				<stop-one-java-process process.name="jar" />
+			</sequential>
+		</parallel>
+
+		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration.config" />
+
+		<clean-database-upgrade-client />
+	</target>
+
 	<target name="check-upgrade-client-zip-content">
 		<get-database-upgrade-client-paths />
 

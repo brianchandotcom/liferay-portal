@@ -14,14 +14,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.util.JSONUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
@@ -99,17 +96,8 @@ public class SearchSearchRequestExecutorImpl
 	private String _getPrettyPrintedRequestString(
 		SearchRequestBuilder searchRequestBuilder) {
 
-		GsonBuilder gsonBuilder = new GsonBuilder();
-
-		gsonBuilder.setPrettyPrinting();
-
-		Gson gson = gsonBuilder.create();
-
-		JsonParser jsonParser = new JsonParser();
-
 		try {
-			return gson.toJson(
-				jsonParser.parse(searchRequestBuilder.toString()));
+			return JSONUtil.getPrettyPrintedJSONString(searchRequestBuilder);
 		}
 		catch (Exception e) {
 			return e.getMessage();

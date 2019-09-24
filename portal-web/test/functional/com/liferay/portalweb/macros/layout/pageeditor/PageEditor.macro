@@ -353,13 +353,13 @@ definition {
 	}
 
 	macro removeFragment {
-		Click(
-			fragment_name = "${fragmentName}",
-			locator1 = "PageEditor#SECTION_NAME");
+		MouseOver.mouseOverNotVisible(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click(
 			key_fragmentName = "${fragmentName}",
-			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_DELETE");
+			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON");
 
 		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",

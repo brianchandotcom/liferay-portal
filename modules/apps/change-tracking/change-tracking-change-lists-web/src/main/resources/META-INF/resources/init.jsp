@@ -27,10 +27,7 @@ taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.change.tracking.change.lists.web.internal.constants.CTConfigurationConstants" %><%@
-page import="com.liferay.change.tracking.change.lists.web.internal.constants.CTHistoryConstants" %><%@
-page import="com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants" %><%@
-page import="com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys" %><%@
+<%@ page import="com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys" %><%@
 page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsConfigurationDisplayContext" %><%@
 page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext" %><%@
 page import="com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsHistoryDetailsDisplayContext" %><%@

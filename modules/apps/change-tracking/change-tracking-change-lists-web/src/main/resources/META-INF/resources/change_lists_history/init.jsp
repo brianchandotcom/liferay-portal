@@ -19,5 +19,5 @@
 <%
 portletDisplay.setShowStagingIcon(false);
 
-ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext = (ChangeListsHistoryDisplayContext)request.getAttribute(CTHistoryConstants.CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT);
+ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext = (ChangeListsHistoryDisplayContext)request.getAttribute(CTWebKeys.CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT);
 %>

@@ -161,7 +161,7 @@ public class PortalUtil {
 	 *
 	 * @return the portal work directory override path.
 	 */
-	public String getWorkDirOverride() {
+	public static String getWorkDirOverride() {
 		return getPortal().getWorkDirOverride();
 	}
 

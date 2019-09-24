@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists_configuration/init.jsp" %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
@@ -29,10 +29,10 @@
 		<div class="sheet sheet-lg">
 			<c:choose>
 				<c:when test='<%= Objects.equals(changeListsConfigurationDisplayContext.getNavigation(), "global-settings") %>'>
-					<%@ include file="/global_settings.jspf" %>
+					<%@ include file="/change_lists_configuration/global_settings.jspf" %>
 				</c:when>
 				<c:otherwise>
-					<%@ include file="/user_settings.jspf" %>
+					<%@ include file="/change_lists_configuration/user_settings.jspf" %>
 				</c:otherwise>
 			</c:choose>
 		</div>

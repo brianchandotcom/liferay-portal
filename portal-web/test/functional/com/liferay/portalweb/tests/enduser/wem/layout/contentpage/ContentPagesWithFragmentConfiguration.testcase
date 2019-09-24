@@ -79,8 +79,6 @@ definition {
 	@description = "This is a test for LPS-101326. Add placeholder in fragment configuration and assert there the placeholder text is present."
 	@priority = "5"
 	test AddPlaceholderConfigurationFragmentToContentPage {
-		property portal.acceptance = "true";
-
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
 			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "placeholder_configuration.json");

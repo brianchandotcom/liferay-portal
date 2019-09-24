@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.history.web.internal.portlet.action;
+package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;

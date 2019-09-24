@@ -13,3 +13,11 @@
  * details.
  */
 --%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+portletDisplay.setShowStagingIcon(false);
+
+ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext = (ChangeListsHistoryDisplayContext)request.getAttribute(CTHistoryConstants.CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT);
+%>

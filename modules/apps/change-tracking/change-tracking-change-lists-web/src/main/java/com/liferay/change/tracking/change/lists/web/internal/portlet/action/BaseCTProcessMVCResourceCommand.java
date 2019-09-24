@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.history.web.internal.portlet.action;
+package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;

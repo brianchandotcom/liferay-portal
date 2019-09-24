@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.history.web.internal.constants;
+package com.liferay.change.tracking.change.lists.web.internal.constants;
 
 /**
  * @author Samuel Trong Tran

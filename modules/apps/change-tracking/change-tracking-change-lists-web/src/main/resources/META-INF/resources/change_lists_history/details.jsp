@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/change_lists_history/init.jsp" %>
 
 <%
 ChangeListsHistoryDetailsDisplayContext changeListsHistoryDetailsDisplayContext = new ChangeListsHistoryDetailsDisplayContext(request, renderRequest, renderResponse);

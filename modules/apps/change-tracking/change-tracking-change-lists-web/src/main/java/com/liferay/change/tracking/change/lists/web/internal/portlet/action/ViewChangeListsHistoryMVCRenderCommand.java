@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.history.web.internal.portlet.action;
+package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -24,24 +24,25 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Máté Thurzó
+ * @author Laszlo Pap
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_HISTORY,
-		"mvc.command.name=/change_lists_history/view_details"
+		"mvc.command.name=/", "mvc.command.name=/change_lists_history/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewDetailsMVCRenderCommand implements MVCRenderCommand {
+public class ViewChangeListsHistoryMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/details.jsp";
+		return "/change_lists_history/view.jsp";
 	}
 
 }

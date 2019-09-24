@@ -298,6 +298,8 @@ describe('Variants', () => {
 });
 
 describe('Run and review test', () => {
+	afterEach(cleanup);
+
 	it('can view review Experiment Modal', async () => {
 		const {
 			getByText,
@@ -327,6 +329,27 @@ describe('Run and review test', () => {
 
 		expect(confidenceSlider.length).toBe(1);
 		expect(splitSliders.length).toBe(2);
+	});
+
+	it('can view estimation time', async () => {
+		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+			APIService: {
+				getEstimatedTime: jest.fn(() =>
+					Promise.resolve({
+						segmentsExperimentEstimatedDaysDuration: 14
+					})
+				)
+			},
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+
+		const runTestButton = getByText('review-and-run-test');
+		userEvent.click(runTestButton);
+
+		await waitForElement(() => getByText('traffic-split'));
+		await waitForElement(() => getByText('14-days'));
 	});
 
 	test.todo('Running test cannot be edited');

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.display.context;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -180,7 +180,7 @@ public class ChangeListsHistoryDisplayContext {
 		}
 
 		_filterByUser = ParamUtil.getLong(
-			_httpServletRequest, "user", CTConstants.USER_FILTER_ALL);
+			_httpServletRequest, "user", CTWebConstants.USER_FILTER_ALL);
 
 		return _filterByUser;
 	}
@@ -245,10 +245,11 @@ public class ChangeListsHistoryDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(
-							_getFilterByUser() == CTConstants.USER_FILTER_ALL);
+							_getFilterByUser() ==
+								CTWebConstants.USER_FILTER_ALL);
 						dropdownItem.setHref(
 							_getKeywordsURL(), "user",
-							CTConstants.USER_FILTER_ALL);
+							CTWebConstants.USER_FILTER_ALL);
 						dropdownItem.setLabel(
 							LanguageUtil.get(_httpServletRequest, "all"));
 					});

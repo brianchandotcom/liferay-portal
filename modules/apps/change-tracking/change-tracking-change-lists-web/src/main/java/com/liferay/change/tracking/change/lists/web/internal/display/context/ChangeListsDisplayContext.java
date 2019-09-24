@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.display.context;
 
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
@@ -366,7 +367,7 @@ public class ChangeListsDisplayContext {
 
 		int count = (int)_ctCollectionLocalService.dynamicQueryCount(
 			_getSearchDynamicQuery(
-				_themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL,
+				_themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
 				WorkflowConstants.STATUS_APPROVED, true, keywords));
 
 		List<CTCollection> ctCollections = new ArrayList<>();
@@ -399,7 +400,8 @@ public class ChangeListsDisplayContext {
 		ctCollections.addAll(
 			_ctCollectionLocalService.dynamicQuery(
 				_getSearchDynamicQuery(
-					_themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL,
+					_themeDisplay.getCompanyId(),
+					CTWebConstants.USER_FILTER_ALL,
 					WorkflowConstants.STATUS_APPROVED, true, keywords),
 				start, end, orderByComparator));
 
@@ -745,7 +747,7 @@ public class ChangeListsDisplayContext {
 				RestrictionsFactoryUtil.eq("companyId", companyId));
 		}
 
-		if (userId > CTConstants.USER_FILTER_ALL) {
+		if (userId > CTWebConstants.USER_FILTER_ALL) {
 			dynamicQuery.add(RestrictionsFactoryUtil.eq("userId", userId));
 		}
 

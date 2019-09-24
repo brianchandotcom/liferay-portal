@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.product.navigation.control.menu;
 
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.constants.CTProductNavigationControlMenuCategoryKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + CTProductNavigationControlMenuCategoryKeys.CHANGE_TRACKING,
+		"product.navigation.control.menu.category.key=" + CTWebConstants.CHANGE_TRACKING,
 		"product.navigation.control.menu.entry.order:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class

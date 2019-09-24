@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTProcess;
@@ -149,7 +149,7 @@ public class GetCTProcessesMVCResourceCommand
 		String sort = ParamUtil.getString(resourceRequest, "sort");
 		String type = ParamUtil.getString(resourceRequest, "type");
 		long userId = ParamUtil.getLong(
-			resourceRequest, "user", CTConstants.USER_FILTER_ALL);
+			resourceRequest, "user", CTWebConstants.USER_FILTER_ALL);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

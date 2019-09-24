@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalService;
@@ -70,8 +70,8 @@ public class GetCTProcessUsersMVCResourceCommand
 		String type = ParamUtil.getString(resourceRequest, "type", null);
 
 		List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-			themeDisplay.getCompanyId(), CTConstants.USER_FILTER_ALL, keywords,
-			getStatus(type), 0, 5, null);
+			themeDisplay.getCompanyId(), CTWebConstants.USER_FILTER_ALL,
+			keywords, getStatus(type), 0, 5, null);
 
 		long[] userIds = ListUtil.toLongArray(
 			ctProcesses, CTProcess::getUserId);

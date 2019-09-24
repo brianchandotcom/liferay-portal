@@ -17,7 +17,7 @@ package com.liferay.change.tracking.change.lists.web.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.change.tracking.constants.CTPanelCategoryKeys;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -41,7 +41,7 @@ public class ChangeListsPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return CTPanelCategoryKeys.CONTROL_PANEL_CHANGE_LISTS;
+		return CTWebConstants.CONTROL_PANEL_CHANGE_LISTS;
 	}
 
 	@Override

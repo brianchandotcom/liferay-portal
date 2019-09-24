@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
+import com.liferay.change.tracking.change.lists.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.change.lists.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsDisplayContext;
-import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(
-	configurationPid = "com.liferay.change.tracking.configuration.CTConfiguration",
+	configurationPid = "com.liferay.change.tracking.change.lists.web.internal.configuration.CTConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=false",

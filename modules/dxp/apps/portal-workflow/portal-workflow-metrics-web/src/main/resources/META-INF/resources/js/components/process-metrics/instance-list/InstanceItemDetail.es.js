@@ -301,9 +301,13 @@ InstanceItemDetail.SectionSubTitle = ({children}) => {
 InstanceItemDetail.SectionAttribute = ({description, detail}) => {
 	return (
 		<p className="row">
-			<span className="col-2 font-weight-medium small text-secondary">{`${description} `}</span>
+			<span className="col-2 font-weight-medium small text-secondary">
+				{`${description} `}
+			</span>
 
-			<span className="col small">{detail}</span>
+			<span className="col small" data-testid="instanceDetailSpan">
+				{detail}
+			</span>
 		</p>
 	);
 };

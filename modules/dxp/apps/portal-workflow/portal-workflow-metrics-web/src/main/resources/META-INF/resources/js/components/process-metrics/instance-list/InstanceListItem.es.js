@@ -57,7 +57,7 @@ const InstanceListItem = ({
 	const updateInstanceId = () => setInstanceId(id);
 
 	return (
-		<tr>
+		<tr data-testid="instanceRow">
 			<td>
 				{statusIcon && (
 					<span
@@ -76,6 +76,7 @@ const InstanceListItem = ({
 			<td className="lfr-title-column table-title">
 				<a
 					data-target="#instanceDetailModal"
+					data-testid="instanceIdLink"
 					data-toggle="modal"
 					href="javascript:;"
 					onClick={updateInstanceId}
@@ -85,17 +86,19 @@ const InstanceListItem = ({
 				</a>
 			</td>
 
-			<td>{`${assetType}: ${assetTitle}`}</td>
+			<td data-testid="assetInfoCell">{`${assetType}: ${assetTitle}`}</td>
 
-			<td>
+			<td data-testid="taskNamesCell">
 				{taskNames.length
 					? taskNames.join(', ')
 					: Liferay.Language.get('completed')}
 			</td>
 
-			<td>{creatorUser ? creatorUser.name : ''}</td>
+			<td data-testid="creatorUserCell">
+				{creatorUser ? creatorUser.name : ''}
+			</td>
 
-			<td className="pr-4 text-right">
+			<td className="pr-4 text-right" data-testid="dateCreatedCell">
 				{moment
 					.utc(dateCreated)
 					.format(Liferay.Language.get('mmm-dd-yyyy-lt'))}

@@ -47,13 +47,6 @@ const concatTypes = types => {
 	}, '');
 };
 
-const ACTIONS = [
-	{
-		callback: confirmDelete('/o/app-builder/v1.0/apps/'),
-		name: Liferay.Language.get('delete')
-	}
-];
-
 const COLUMNS = [
 	{
 		key: 'name',
@@ -101,7 +94,12 @@ export default ({
 
 	return (
 		<ListView
-			actions={ACTIONS}
+			actions={[
+				{
+					action: confirmDelete('/o/app-builder/v1.0/apps/'),
+					name: Liferay.Language.get('delete')
+				}
+			]}
 			addButton={() => (
 				<Button
 					className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"

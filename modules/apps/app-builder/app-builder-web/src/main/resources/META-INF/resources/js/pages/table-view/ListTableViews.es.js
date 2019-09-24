@@ -19,18 +19,6 @@ import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
 
-const ACTIONS = [
-	{
-		link: item =>
-			`#/custom-object/${item.dataDefinitionId}/table-views/${item.id}`,
-		name: Liferay.Language.get('edit')
-	},
-	{
-		callback: confirmDelete('/o/data-engine/v1.0/data-list-views/'),
-		name: Liferay.Language.get('delete')
-	}
-];
-
 const COLUMNS = [
 	{
 		key: 'name',
@@ -51,6 +39,7 @@ const COLUMNS = [
 ];
 
 export default ({
+	history,
 	match: {
 		params: {dataDefinitionId},
 		url
@@ -58,7 +47,19 @@ export default ({
 }) => {
 	return (
 		<ListView
-			actions={ACTIONS}
+			actions={[
+				{
+					action: item =>
+						Promise.resolve(history.push(`${url}/${item.id}`)),
+					name: Liferay.Language.get('edit')
+				},
+				{
+					action: confirmDelete(
+						'/o/data-engine/v1.0/data-list-views/'
+					),
+					name: Liferay.Language.get('delete')
+				}
+			]}
 			addButton={() => (
 				<Button
 					className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"

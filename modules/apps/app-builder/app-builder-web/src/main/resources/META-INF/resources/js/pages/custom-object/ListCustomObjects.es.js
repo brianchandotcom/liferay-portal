@@ -25,32 +25,9 @@ import {confirmDelete} from '../../utils/client.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem} from '../../utils/client.es';
 
-const ACTIONS = [
-	{
-		link: item => `#/custom-object/${item.id}/form-views`,
-		name: Liferay.Language.get('form-views')
-	},
-	{
-		link: item => `#/custom-object/${item.id}/table-views`,
-		name: Liferay.Language.get('table-views')
-	},
-	{
-		link: item => `#/custom-object/${item.id}/apps`,
-		name: Liferay.Language.get('apps')
-	},
-	{
-		name: 'divider'
-	},
-	{
-		callback: confirmDelete('/o/data-engine/v1.0/data-definitions/'),
-		name: Liferay.Language.get('delete')
-	}
-];
-
 const COLUMNS = [
 	{
 		key: 'name',
-		link: item => `/custom-object/${item.id}/form-views`,
 		sortable: true,
 		value: Liferay.Language.get('name')
 	},
@@ -148,7 +125,42 @@ export default ({history}) => {
 			/>
 
 			<ListView
-				actions={ACTIONS}
+				actions={[
+					{
+						action: item =>
+							Promise.resolve(
+								history.push(
+									`/custom-object/${item.id}/form-views`
+								)
+							),
+						name: Liferay.Language.get('form-views')
+					},
+					{
+						action: item =>
+							Promise.resolve(
+								history.push(
+									`/custom-object/${item.id}/table-views`
+								)
+							),
+						name: Liferay.Language.get('table-views')
+					},
+					{
+						action: item =>
+							Promise.resolve(
+								history.push(`/custom-object/${item.id}/apps`)
+							),
+						name: Liferay.Language.get('apps')
+					},
+					{
+						name: 'divider'
+					},
+					{
+						callback: confirmDelete(
+							'/o/data-engine/v1.0/data-definitions/'
+						),
+						name: Liferay.Language.get('delete')
+					}
+				]}
 				addButton={() => (
 					<div ref={addButtonRef}>
 						<Button

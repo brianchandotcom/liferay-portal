@@ -39,17 +39,6 @@ export default ({
 		Liferay.Util.navigate(itemURL);
 	};
 
-	const ACTIONS = [
-		{
-			callback: item => Promise.resolve(handleEditItem(item)),
-			name: Liferay.Language.get('edit')
-		},
-		{
-			callback: confirmDelete('/o/data-engine/v1.0/data-layouts/'),
-			name: Liferay.Language.get('delete')
-		}
-	];
-
 	const COLUMNS = [
 		{
 			key: 'name',
@@ -76,7 +65,16 @@ export default ({
 
 	return (
 		<ListView
-			actions={ACTIONS}
+			actions={[
+				{
+					action: item => Promise.resolve(handleEditItem(item)),
+					name: Liferay.Language.get('edit')
+				},
+				{
+					action: confirmDelete('/o/data-engine/v1.0/data-layouts/'),
+					name: Liferay.Language.get('delete')
+				}
+			]}
 			addButton={() => (
 				<Button
 					className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"

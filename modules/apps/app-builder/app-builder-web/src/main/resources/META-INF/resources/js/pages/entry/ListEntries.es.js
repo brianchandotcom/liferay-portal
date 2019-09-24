@@ -20,13 +20,6 @@ import ListView from '../../components/list-view/ListView.es';
 import {Loading} from '../../components/loading/Loading.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
 
-const ACTIONS = [
-	{
-		callback: confirmDelete('/o/data-engine/v1.0/data-records/'),
-		name: Liferay.Language.get('delete')
-	}
-];
-
 const ListEntries = () => {
 	const [state, setState] = useState({
 		dataDefinitionId: null,
@@ -76,7 +69,14 @@ const ListEntries = () => {
 	return (
 		<Loading isLoading={isLoading}>
 			<ListView
-				actions={ACTIONS}
+				actions={[
+					{
+						action: confirmDelete(
+							'/o/data-engine/v1.0/data-records/'
+						),
+						name: Liferay.Language.get('delete')
+					}
+				]}
 				addButton={() => (
 					<Button
 						className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"

@@ -67,15 +67,15 @@ export default ({
 	}
 
 	const refetchOnActions = actions.map(action => {
-		if (!action.callback) {
+		if (!action.action) {
 			return action;
 		}
 
 		return {
 			...action,
-			callback: item => {
-				action.callback(item).then(confirmed => {
-					if (!confirmed) {
+			action: item => {
+				action.action(item).then(isRefetch => {
+					if (!isRefetch) {
 						return;
 					}
 

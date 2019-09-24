@@ -17,24 +17,19 @@ import React from 'react';
 
 const {Divider, Item} = ClayDropDown;
 
-export default ({action, item, setActive}) => {
-	const {callback, link, name} = action;
-	const href = link ? link(item) : '';
-
+export default ({action: {action, name}, item, setActive}) => {
 	if (name === 'divider') {
 		return <Divider />;
 	}
 
 	return (
 		<Item
-			href={href}
 			onClick={event => {
 				event.preventDefault();
-
 				setActive(false);
 
-				if (callback) {
-					callback(item);
+				if (action) {
+					action(item);
 				}
 			}}
 		>

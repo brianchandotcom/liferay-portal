@@ -122,6 +122,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -209,6 +210,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -258,6 +260,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -325,6 +328,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -362,6 +366,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -411,6 +416,7 @@ exports[`Should display error on alert when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -442,6 +448,7 @@ exports[`Should display error on alert when receive a server error after submit 
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -844,6 +851,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -931,6 +939,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -980,6 +989,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1047,6 +1057,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1084,6 +1095,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1133,6 +1145,7 @@ exports[`Should display error on field when receive a server error after submit 
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1164,6 +1177,7 @@ exports[`Should display error on field when receive a server error after submit 
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -1566,6 +1580,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1654,6 +1669,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1703,6 +1719,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1770,6 +1787,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1807,6 +1825,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1856,6 +1875,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1887,6 +1907,7 @@ exports[`Should edit the SLA with valid values 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -2282,6 +2303,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2370,6 +2392,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2419,6 +2442,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2486,6 +2510,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2523,6 +2548,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2572,6 +2598,7 @@ exports[`Should redirect to SLA list 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2603,6 +2630,7 @@ exports[`Should redirect to SLA list 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -3007,6 +3035,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3095,6 +3124,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3144,6 +3174,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3211,6 +3242,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3248,6 +3280,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3297,6 +3330,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3328,6 +3362,7 @@ exports[`Should redirect to SLA list with blocked nodes 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -3736,6 +3771,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -3824,6 +3860,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -3873,6 +3910,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -3940,6 +3978,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -3977,6 +4016,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4026,6 +4066,7 @@ exports[`Should render component 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4057,6 +4098,7 @@ exports[`Should render component 1`] = `
                                 "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                               }
                             }
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           />
@@ -4465,6 +4507,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4553,6 +4596,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4602,6 +4646,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4669,6 +4714,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4706,6 +4752,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4755,6 +4802,7 @@ exports[`Should render component in edit mode 1`] = `
                                   "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                                 }
                               }
+                              data-testid="icon"
                               focusable="false"
                               role="presentation"
                             />
@@ -4786,6 +4834,7 @@ exports[`Should render component in edit mode 1`] = `
                                 "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                               }
                             }
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           />
@@ -5420,6 +5469,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5506,6 +5556,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5555,6 +5606,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5622,6 +5674,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5659,6 +5712,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5708,6 +5762,7 @@ exports[`Should test handler erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -5739,6 +5794,7 @@ exports[`Should test handler erros 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -6128,6 +6184,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6214,6 +6271,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6263,6 +6321,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6330,6 +6389,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6367,6 +6427,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6416,6 +6477,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6447,6 +6509,7 @@ exports[`Should test handler erros at start node keys 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -6836,6 +6899,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6922,6 +6986,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -6971,6 +7036,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7038,6 +7104,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7075,6 +7142,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7124,6 +7192,7 @@ exports[`Should test handler no array erros 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7155,6 +7224,7 @@ exports[`Should test handler no array erros 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -7544,6 +7614,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7630,6 +7701,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7679,6 +7751,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7746,6 +7819,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7783,6 +7857,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7832,6 +7907,7 @@ exports[`Should test load data callback 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -7863,6 +7939,7 @@ exports[`Should test load data callback 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -8253,6 +8330,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8339,6 +8417,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8388,6 +8467,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8455,6 +8535,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8492,6 +8573,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8541,6 +8623,7 @@ exports[`Should update state after input changes 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -8572,6 +8655,7 @@ exports[`Should update state after input changes 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#asterisk\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />

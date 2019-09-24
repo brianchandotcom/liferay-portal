@@ -102,6 +102,7 @@ exports[`Should render component with completed tab activated 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -152,6 +153,7 @@ exports[`Should render component with completed tab activated 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -205,6 +207,7 @@ exports[`Should render component with completed tab activated 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -508,6 +511,7 @@ exports[`Should render component with completed tab activated 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -751,6 +755,7 @@ exports[`Should render component with default tab activated 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -801,6 +806,7 @@ exports[`Should render component with default tab activated 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -854,6 +860,7 @@ exports[`Should render component with default tab activated 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1157,6 +1164,7 @@ exports[`Should render component with default tab activated 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -1400,6 +1408,7 @@ exports[`Should render component with failure state 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -1450,6 +1459,7 @@ exports[`Should render component with failure state 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -1503,6 +1513,7 @@ exports[`Should render component with failure state 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -1806,6 +1817,7 @@ exports[`Should render component with failure state 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -2088,6 +2100,7 @@ exports[`Should render dashboard route children 1`] = `
                                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                                           }
                                         }
+                                        data-testid="icon"
                                         focusable="false"
                                         role="presentation"
                                       />
@@ -2181,6 +2194,7 @@ exports[`Should render dashboard route children 1`] = `
                                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                                   }
                                 }
+                                data-testid="icon"
                                 focusable="false"
                                 role="presentation"
                               />
@@ -2332,6 +2346,7 @@ exports[`Should render with blocked SLA 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -2382,6 +2397,7 @@ exports[`Should render with blocked SLA 1`] = `
                         <span>
                           <svg
                             class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
                             focusable="false"
                             role="presentation"
                           >
@@ -2435,6 +2451,7 @@ exports[`Should render with blocked SLA 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -2738,6 +2755,7 @@ exports[`Should render with blocked SLA 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />

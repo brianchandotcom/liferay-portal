@@ -123,6 +123,7 @@ exports[`Should component receive props 1`] = `
                                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                                   }
                                 }
+                                data-testid="icon"
                                 focusable="false"
                                 role="presentation"
                               />
@@ -291,6 +292,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                                   }
                                 }
+                                data-testid="icon"
                                 focusable="false"
                                 role="presentation"
                               />
@@ -463,6 +465,7 @@ exports[`Should render component 1`] = `
                                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                                   }
                                 }
+                                data-testid="icon"
                                 focusable="false"
                                 role="presentation"
                               />
@@ -544,6 +547,7 @@ exports[`Should render component with empty data 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />
@@ -602,6 +606,7 @@ exports[`Should render component with error state 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />

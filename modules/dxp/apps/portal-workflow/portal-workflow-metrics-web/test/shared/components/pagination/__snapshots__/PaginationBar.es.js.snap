@@ -23,6 +23,7 @@ exports[`Should render component 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -96,6 +97,7 @@ exports[`Should render component 1`] = `
               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
             }
           }
+          data-testid="icon"
           focusable="false"
           role="presentation"
         />
@@ -143,6 +145,7 @@ exports[`Should render component 1`] = `
               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
             }
           }
+          data-testid="icon"
           focusable="false"
           role="presentation"
         />

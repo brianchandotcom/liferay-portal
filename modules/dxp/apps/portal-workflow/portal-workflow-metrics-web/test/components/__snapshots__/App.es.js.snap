@@ -50,6 +50,7 @@ Array [
                             "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -128,6 +129,7 @@ exports[`Should render default component without custom header 1`] = `
                           "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
                         }
                       }
+                      data-testid="icon"
                       focusable="false"
                       role="presentation"
                     />

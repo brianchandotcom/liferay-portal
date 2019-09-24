@@ -372,6 +372,7 @@ exports[`Should cancel dialog through SLA List 1`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />
@@ -660,6 +661,7 @@ exports[`Should cancel dialog through SLA List 2`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />

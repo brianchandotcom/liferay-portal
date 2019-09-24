@@ -243,6 +243,7 @@ exports[`Should remove a item 1`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />
@@ -322,6 +323,7 @@ Array [
                       "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                     }
                   }
+                  data-testid="icon"
                   focusable="false"
                   role="presentation"
                 />
@@ -383,6 +385,7 @@ Array [
                       "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                     }
                   }
+                  data-testid="icon"
                   focusable="false"
                   role="presentation"
                 />
@@ -653,6 +656,7 @@ exports[`Should render toast with SLA saved message 1`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />
@@ -941,6 +945,7 @@ exports[`Should render toast with SLA updated message 1`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />
@@ -1229,6 +1234,7 @@ exports[`Should test props change 1`] = `
                                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
                                       }
                                     }
+                                    data-testid="icon"
                                     focusable="false"
                                     role="presentation"
                                   />

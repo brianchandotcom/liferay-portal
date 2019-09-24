@@ -131,6 +131,7 @@ exports[`Should change search value 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -182,6 +183,7 @@ exports[`Should render component 1`] = `
                 "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
               }
             }
+            data-testid="icon"
             focusable="false"
             role="presentation"
           />

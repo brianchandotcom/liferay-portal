@@ -39,6 +39,7 @@ exports[`Should render component 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />
@@ -75,6 +76,7 @@ exports[`Should render component 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />
@@ -111,6 +113,7 @@ exports[`Should render component 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />
@@ -147,6 +150,7 @@ exports[`Should render component 1`] = `
                     "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
                   }
                 }
+                data-testid="icon"
                 focusable="false"
                 role="presentation"
               />

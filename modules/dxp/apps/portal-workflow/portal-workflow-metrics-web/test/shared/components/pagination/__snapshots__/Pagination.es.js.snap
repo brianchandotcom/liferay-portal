@@ -171,6 +171,7 @@ exports[`Should change page 1`] = `
                           "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
                         }
                       }
+                      data-testid="icon"
                       focusable="false"
                       role="presentation"
                     />
@@ -372,6 +373,7 @@ exports[`Should change page 1`] = `
                           "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
                         }
                       }
+                      data-testid="icon"
                       focusable="false"
                       role="presentation"
                     />
@@ -410,6 +412,7 @@ exports[`Should render component 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -445,6 +448,7 @@ exports[`Should render component 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -476,6 +480,7 @@ exports[`Should render component at page 1 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -523,6 +528,7 @@ exports[`Should render component at page 1 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -555,6 +561,7 @@ exports[`Should render component at page 2 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -601,6 +608,7 @@ exports[`Should render component at page 2 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -633,6 +641,7 @@ exports[`Should render component at page 3 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -679,6 +688,7 @@ exports[`Should render component at page 3 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -711,6 +721,7 @@ exports[`Should render component at page 4 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -757,6 +768,7 @@ exports[`Should render component at page 4 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -789,6 +801,7 @@ exports[`Should render component at page 5 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -835,6 +848,7 @@ exports[`Should render component at page 5 1`] = `
             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
           }
         }
+        data-testid="icon"
         focusable="false"
         role="presentation"
       />
@@ -1029,6 +1043,7 @@ exports[`Should test build menu 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -2360,6 +2375,7 @@ exports[`Should test build menu 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -2563,6 +2579,7 @@ exports[`Should test build menu 2`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -3374,6 +3391,7 @@ exports[`Should test build menu 2`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -3567,6 +3585,7 @@ exports[`Should test build menu with page 1 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -4193,6 +4212,7 @@ exports[`Should test build menu with page 1 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />
@@ -4381,6 +4401,7 @@ exports[`Should test build menu without parameters 1`] = `
                             "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
                           }
                         }
+                        data-testid="icon"
                         focusable="false"
                         role="presentation"
                       />
@@ -5007,6 +5028,7 @@ exports[`Should test build menu without parameters 1`] = `
                               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
                             }
                           }
+                          data-testid="icon"
                           focusable="false"
                           role="presentation"
                         />

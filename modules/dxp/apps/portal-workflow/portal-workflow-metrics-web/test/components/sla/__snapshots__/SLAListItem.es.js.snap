@@ -47,6 +47,7 @@ exports[`Should render component 1`] = `
               "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
             }
           }
+          data-testid="icon"
           focusable="false"
           role="presentation"
         />
@@ -325,6 +326,7 @@ exports[`Should render component 2`] = `
                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                       }
                     }
+                    data-testid="icon"
                     focusable="false"
                     role="presentation"
                   />
@@ -584,6 +586,7 @@ exports[`Should render component blocked 1`] = `
                       "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
                     }
                   }
+                  data-testid="icon"
                   focusable="false"
                   role="presentation"
                 />
@@ -757,6 +760,7 @@ exports[`Should render component blocked 1`] = `
                         "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
                       }
                     }
+                    data-testid="icon"
                     focusable="false"
                     role="presentation"
                   />

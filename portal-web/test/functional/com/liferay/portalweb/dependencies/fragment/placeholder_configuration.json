@@ -1,0 +1,20 @@
+{
+  "fieldSets": [
+     {
+     "label": "Button",
+     "fields": [
+       {
+         "name": "buttonText",
+         "label": "Button Text",
+         "description": "button-text",
+         "type": "text",
+	       "typeOptions": {
+          "placeholder": "Set Button Name"
+         },
+         "dataType": "string",
+         "defaultValue": ""
+       }
+     ]
+   }
+ ]
+}

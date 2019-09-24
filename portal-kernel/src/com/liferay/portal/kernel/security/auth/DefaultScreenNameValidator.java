@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -71,7 +73,11 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 			String specialChars = PropsUtil.get(
 				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
 
-			_specialChars = StringUtil.removeChar(specialChars, CharPool.SLASH);
+			specialChars = StringUtil.removeChar(specialChars, CharPool.SLASH);
+
+			Matcher matcher = _escapeRegexPattern.matcher(specialChars);
+
+			_specialChars = matcher.replaceAll("\\\\$0");
 		}
 
 		return _specialChars;
@@ -80,6 +86,9 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 	protected boolean hasInvalidChars(String screenName) {
 		return !screenName.matches("[A-Za-z0-9" + getSpecialChars() + "]+");
 	}
+
+	private static final Pattern _escapeRegexPattern = Pattern.compile(
+		"[-+\\\\\\[\\]]");
 
 	private String _jsEscapedSpecialChars;
 	private String _specialChars;

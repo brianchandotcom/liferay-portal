@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.portal.kernel.dao.db.BaseDBTestCase;
 import com.liferay.portal.kernel.dao.db.DB;
 
 import java.io.IOException;

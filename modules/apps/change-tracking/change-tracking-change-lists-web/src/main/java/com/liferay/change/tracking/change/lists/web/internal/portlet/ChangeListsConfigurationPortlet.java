@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.configuration.web.internal.portlet;
+package com.liferay.change.tracking.change.lists.web.internal.portlet;
 
-import com.liferay.change.tracking.change.lists.configuration.web.internal.constants.CTConfigurationConstants;
-import com.liferay.change.tracking.change.lists.configuration.web.internal.display.context.ChangeListsConfigurationDisplayContext;
+import com.liferay.change.tracking.change.lists.web.internal.constants.CTConfigurationConstants;
+import com.liferay.change.tracking.change.lists.web.internal.display.context.ChangeListsConfigurationDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Settings",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/change_lists_configuration/view.jsp",
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_CONFIGURATION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator"

@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.configuration.web.internal.portlet.action;
+package com.liferay.change.tracking.change.lists.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -29,8 +28,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,64 +39,35 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.CHANGE_LISTS_CONFIGURATION,
-		"mvc.command.name=/change_lists/update_global_change_lists_configuration"
+		"mvc.command.name=/change_lists/update_user_change_lists_configuration"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateGlobalChangeListsConfigurationMVCActionCommand
+public class UpdateUserChangeListsConfigurationMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean enableChangeLists = ParamUtil.getBoolean(
-			actionRequest, "enableChangeLists");
+		boolean requireConfirmation = ParamUtil.getBoolean(
+			actionRequest, "requireConfirmation");
 
-		if (enableChangeLists) {
+		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.getCTPreferences(
-				themeDisplay.getCompanyId(), 0);
-		}
-		else {
-			CTPreferences ctPreferences =
-				_ctPreferencesLocalService.fetchCTPreferences(
-					themeDisplay.getCompanyId(), 0);
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
 
-			if (ctPreferences != null) {
-				_ctPreferencesLocalService.deleteCTPreferences(ctPreferences);
-			}
-		}
+		ctPreferences.setConfirmationEnabled(requireConfirmation);
 
-		boolean redirectToOverview = ParamUtil.getBoolean(
-			actionRequest, "redirectToOverview");
+		_ctPreferencesLocalService.updateCTPreferences(ctPreferences);
 
-		if (redirectToOverview) {
-			hideDefaultSuccessMessage(actionRequest);
-
-			SessionMessages.add(
-				_portal.getHttpServletRequest(actionRequest),
-				"requestProcessed",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-configuration-has-been-saved"));
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				actionRequest, CTPortletKeys.CHANGE_LISTS,
-				PortletRequest.RENDER_PHASE);
-
-			sendRedirect(actionRequest, actionResponse, portletURL.toString());
-		}
-		else {
-			SessionMessages.add(
-				actionRequest, "requestProcessed",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"the-configuration-has-been-saved"));
-		}
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-configuration-has-been-saved"));
 	}
 
 	@Reference

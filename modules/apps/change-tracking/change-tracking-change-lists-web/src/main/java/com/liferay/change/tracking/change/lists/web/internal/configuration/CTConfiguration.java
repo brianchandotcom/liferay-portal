@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.configuration;
+package com.liferay.change.tracking.change.lists.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "infrastructure")
 @Meta.OCD(
-	id = "com.liferay.change.tracking.configuration.CTConfiguration",
+	id = "com.liferay.change.tracking.change.lists.web.internal.configuration.CTConfiguration",
 	localization = "content/Language",
 	name = "change-tracking-portal-configuration-name"
 )

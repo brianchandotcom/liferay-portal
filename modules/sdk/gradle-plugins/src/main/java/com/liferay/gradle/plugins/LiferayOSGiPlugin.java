@@ -886,6 +886,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						});
 
 					copySpec.include("**/*.css");
+					copySpec.include("**/*.css.map");
 					copySpec.into(pathName);
 				}
 
@@ -938,6 +939,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						});
 
 					copySpec.include("**/*.js");
+					copySpec.include("**/*.js.map");
 					copySpec.into(pathName);
 				}
 

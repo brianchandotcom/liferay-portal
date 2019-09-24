@@ -25,9 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,8 +43,6 @@ public class RenderFragmentEntryDisplayContext {
 			(FragmentCollectionContributorTracker)
 				_httpServletRequest.getAttribute(
 					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext() {
@@ -117,6 +113,5 @@ public class RenderFragmentEntryDisplayContext {
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private final HttpServletRequest _httpServletRequest;
-	private final ThemeDisplay _themeDisplay;
 
 }

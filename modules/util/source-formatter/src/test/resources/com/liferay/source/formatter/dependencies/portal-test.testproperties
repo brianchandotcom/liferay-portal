@@ -1,0 +1,5 @@
+include-and-override=portal-test-ext.properties
+
+announcements.email.to.address=noreply@liferay.com
+
+admin.email.from.address=test@liferay.com

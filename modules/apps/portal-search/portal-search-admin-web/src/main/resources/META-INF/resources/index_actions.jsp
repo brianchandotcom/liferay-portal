@@ -130,7 +130,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 					}
 					%>
 
-					<div class="index-action-wrapper pull-right" data-type="portal">
+					<div class="float-right index-action-wrapper" data-type="portal">
 						<c:choose>
 							<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 
@@ -151,7 +151,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 						<liferay-ui:message key="reindex-all-spell-check-indexes" />
 					</div>
 
-					<div class="pull-right">
+					<div class="float-right">
 						<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
 					</div>
 				</li>
@@ -170,7 +170,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 							<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
 						</div>
 
-						<div class="index-action-wrapper pull-right" data-type="<%= indexer.getClassName() %>">
+						<div class="float-right index-action-wrapper" data-type="<%= indexer.getClassName() %>">
 							<c:choose>
 								<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 									<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />

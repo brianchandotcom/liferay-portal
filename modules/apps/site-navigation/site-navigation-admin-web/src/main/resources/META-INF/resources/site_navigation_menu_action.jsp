@@ -107,7 +107,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:icon
 			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY) ? "check" : StringPool.BLANK %>'
-			iconCssClass="pull-right"
+			iconCssClass="float-right"
 			markupView="lexicon"
 			message="primary-navigation"
 			onClick="<%= taglibOnClickPrimary %>"
@@ -127,7 +127,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:icon
 			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY) ? "check" : StringPool.BLANK %>'
-			iconCssClass="pull-right"
+			iconCssClass="float-right"
 			markupView="lexicon"
 			message="secondary-navigation"
 			onClick="<%= taglibOnClickSecondary %>"
@@ -147,7 +147,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		<liferay-ui:icon
 			icon='<%= (siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL) ? "check" : StringPool.BLANK %>'
-			iconCssClass="pull-right"
+			iconCssClass="float-right"
 			markupView="lexicon"
 			message="social-navigation"
 			onClick="<%= taglibOnClickSocial %>"

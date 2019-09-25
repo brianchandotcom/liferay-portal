@@ -56,7 +56,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 
 				<strong><%= HtmlUtil.escape(ruleGroup.getName(locale)) %></strong>
 
-				<span class="pull-right">
+				<span class="float-right">
 					<liferay-ui:message key="priority" />: <strong class="rule-group-instance-priority-value"><%= ruleGroupInstance.getPriority() %></strong>
 				</span>
 			</div>

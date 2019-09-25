@@ -19,7 +19,7 @@
 <div class="taglib-social-activities">
 	<c:if test="<%= feedEnabled && !activityDescriptors.isEmpty() %>">
 		<div class="clearfix">
-			<div class="pull-right">
+			<div class="float-right">
 				<liferay-rss:rss
 					delta="<%= feedDelta %>"
 					displayStyle="<%= feedDisplayStyle %>"

@@ -31,7 +31,7 @@
 	/>
 
 	<c:if test="<%= locked %>">
-		<i class="icon-lock pull-right"></i>
+		<i class="float-right icon-lock"></i>
 	</c:if>
 
 	<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">

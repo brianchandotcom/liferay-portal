@@ -271,8 +271,8 @@ public class SyncDLObjectLocalServiceImpl
 		List<Long> modifiedTimes = syncDLObjectPersistence.findWithDynamicQuery(
 			dynamicQuery);
 
-		if (modifiedTimes.isEmpty() || (modifiedTimes.get(0) == 0)) {
-			return System.currentTimeMillis();
+		if (modifiedTimes.isEmpty()) {
+			return 0;
 		}
 
 		return modifiedTimes.get(0);

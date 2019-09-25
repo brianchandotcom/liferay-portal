@@ -17,7 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = null;
+
+if (!journalDisplayContext.isSearch() || journalDisplayContext.isWebContentTabSelected()) {
+	journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+}
+else if (journalDisplayContext.isVersionsTabSelected()) {
+	journalManagementToolbarDisplayContext = new JournalArticleVersionsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+}
+else if (journalDisplayContext.isCommentsTabSelected()) {
+	journalManagementToolbarDisplayContext = new JournalArticleCommentsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+}
+else {
+	journalManagementToolbarDisplayContext = new JournalManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalDisplayContext, trashHelper);
+}
 
 String title = journalDisplayContext.getFolderTitle();
 

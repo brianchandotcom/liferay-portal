@@ -18,6 +18,4 @@
 
 <%
 ChangeListsConfigurationDisplayContext changeListsConfigurationDisplayContext = (ChangeListsConfigurationDisplayContext)request.getAttribute(CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT);
-
-portletDisplay.setShowStagingIcon(false);
 %>

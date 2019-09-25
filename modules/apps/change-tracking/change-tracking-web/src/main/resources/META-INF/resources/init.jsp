@@ -58,3 +58,7 @@ page import="javax.portlet.PortletURL" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+portletDisplay.setShowStagingIcon(false);
+%>

@@ -1454,176 +1454,86 @@ public class JournalDisplayContext {
 		articleVersionsSearchContainer.setOrderByComparator(orderByComparator);
 		articleVersionsSearchContainer.setOrderByType(getOrderByType());
 
-		if (isNavigationMine() || isNavigationRecent()) {
-			boolean includeOwner = true;
+		List<Long> folderIds = new ArrayList<>(1);
 
-			if (isNavigationMine()) {
-				includeOwner = false;
-			}
-
-			if (isNavigationRecent()) {
-				articleVersionsSearchContainer.setOrderByCol("modified-date");
-				articleVersionsSearchContainer.setOrderByType(getOrderByType());
-			}
-
-			int total = JournalArticleServiceUtil.getGroupArticlesCount(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				getFolderId(), getStatus(), includeOwner);
-
-			articleVersionsSearchContainer.setTotal(total);
-
-			List results = JournalArticleServiceUtil.getGroupArticles(
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
-				getFolderId(), getStatus(), includeOwner,
-				articleVersionsSearchContainer.getStart(),
-				articleVersionsSearchContainer.getEnd(),
-				articleVersionsSearchContainer.getOrderByComparator());
-
-			articleVersionsSearchContainer.setResults(results);
+		if (getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			folderIds.add(getFolderId());
 		}
-		else if (Validator.isNotNull(getDDMStructureKey())) {
-			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
-				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
-				getStatus());
 
-			articleVersionsSearchContainer.setTotal(total);
+		boolean orderByAsc = false;
 
-			List results = JournalArticleServiceUtil.getArticlesByStructureId(
-				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
-				getStatus(), articleVersionsSearchContainer.getStart(),
-				articleVersionsSearchContainer.getEnd(),
-				articleVersionsSearchContainer.getOrderByComparator());
-
-			articleVersionsSearchContainer.setResults(results);
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
 		}
-		else if (isSearch()) {
-			List<Long> folderIds = new ArrayList<>(1);
 
-			if (getFolderId() !=
-					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		Sort sort = null;
 
-				folderIds.add(getFolderId());
-			}
+		if (Objects.equals(getOrderByCol(), "display-date")) {
+			sort = new Sort("displayDate", Sort.LONG_TYPE, !orderByAsc);
+		}
+		else if (Objects.equals(getOrderByCol(), "id")) {
+			sort = new Sort(
+				Field.getSortableFieldName(Field.ARTICLE_ID), Sort.STRING_TYPE,
+				!orderByAsc);
+		}
+		else if (Objects.equals(getOrderByCol(), "modified-date")) {
+			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
+		}
+		else if (Objects.equals(getOrderByCol(), "relevance")) {
+			sort = new Sort(null, Sort.SCORE_TYPE, false);
+		}
+		else if (Objects.equals(getOrderByCol(), "title")) {
+			sort = new Sort(
+				Field.getSortableFieldName(
+					"localized_title_" + _themeDisplay.getLanguageId()),
+				!orderByAsc);
+		}
 
-			boolean orderByAsc = false;
+		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
+		SearchContext searchContext = buildSearchContext(
+			folderIds, articleVersionsSearchContainer.getStart(),
+			articleVersionsSearchContainer.getEnd(), sort, true);
 
-			Sort sort = null;
+		Hits hits = indexer.search(searchContext);
 
-			if (Objects.equals(getOrderByCol(), "display-date")) {
-				sort = new Sort("displayDate", Sort.LONG_TYPE, !orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "id")) {
-				sort = new Sort(
-					Field.getSortableFieldName(Field.ARTICLE_ID),
-					Sort.STRING_TYPE, !orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "modified-date")) {
-				sort = new Sort(
-					Field.MODIFIED_DATE, Sort.LONG_TYPE, !orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "relevance")) {
-				sort = new Sort(null, Sort.SCORE_TYPE, false);
-			}
-			else if (Objects.equals(getOrderByCol(), "title")) {
-				sort = new Sort(
-					Field.getSortableFieldName(
-						"localized_title_" + _themeDisplay.getLanguageId()),
-					!orderByAsc);
-			}
+		int total = hits.getLength();
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
-				JournalArticle.class);
+		articleVersionsSearchContainer.setTotal(total);
 
-			SearchContext searchContext = buildSearchContext(
-				folderIds, articleVersionsSearchContainer.getStart(),
-				articleVersionsSearchContainer.getEnd(), sort, true);
+		List results = new ArrayList<>();
 
-			Hits hits = indexer.search(searchContext);
+		Document[] documents = hits.getDocs();
 
-			int total = hits.getLength();
+		for (Document document : documents) {
+			String className = document.get(Field.ENTRY_CLASS_NAME);
+			long classPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
 
-			articleVersionsSearchContainer.setTotal(total);
+			if (className.equals(JournalArticle.class.getName())) {
+				String articleId = document.get(Field.ARTICLE_ID);
+				long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+				double version = GetterUtil.getDouble(
+					document.get(Field.VERSION));
 
-			List results = new ArrayList<>();
+				JournalArticle article =
+					JournalArticleLocalServiceUtil.fetchArticle(
+						groupId, articleId, version);
 
-			Document[] documents = hits.getDocs();
+				if (JournalChangeTrackingHelperUtil.
+						isJournalArticleInChangeList(
+							_themeDisplay.getCompanyId(),
+							_themeDisplay.getUserId(), article.getId())) {
 
-			for (Document document : documents) {
-				String className = document.get(Field.ENTRY_CLASS_NAME);
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				if (className.equals(JournalArticle.class.getName())) {
-					String articleId = document.get(Field.ARTICLE_ID);
-					long groupId = GetterUtil.getLong(
-						document.get(Field.GROUP_ID));
-					double version = GetterUtil.getDouble(
-						document.get(Field.VERSION));
-
-					JournalArticle article =
-						JournalArticleLocalServiceUtil.fetchArticle(
-							groupId, articleId, version);
-
-					if (JournalChangeTrackingHelperUtil.
-							isJournalArticleInChangeList(
-								_themeDisplay.getCompanyId(),
-								_themeDisplay.getUserId(), article.getId())) {
-
-						results.add(article);
-					}
-				}
-				else if (className.equals(JournalFolder.class.getName())) {
-					results.add(
-						JournalFolderLocalServiceUtil.getFolder(classPK));
+					results.add(article);
 				}
 			}
-
-			articleVersionsSearchContainer.setResults(results);
+			else if (className.equals(JournalFolder.class.getName())) {
+				results.add(JournalFolderLocalServiceUtil.getFolder(classPK));
+			}
 		}
-		else {
-			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus());
 
-			articleVersionsSearchContainer.setTotal(total);
-
-			OrderByComparator<Object> folderOrderByComparator = null;
-
-			boolean orderByAsc = false;
-
-			if (Objects.equals(getOrderByType(), "asc")) {
-				orderByAsc = true;
-			}
-
-			if (Objects.equals(getOrderByCol(), "display-date")) {
-				folderOrderByComparator =
-					new FolderArticleDisplayDateComparator(orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "id")) {
-				folderOrderByComparator = new FolderArticleArticleIdComparator(
-					orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "modified-date")) {
-				folderOrderByComparator =
-					new FolderArticleModifiedDateComparator(orderByAsc);
-			}
-			else if (Objects.equals(getOrderByCol(), "title")) {
-				folderOrderByComparator = new FolderArticleTitleComparator(
-					orderByAsc);
-			}
-
-			List results = JournalFolderServiceUtil.getFoldersAndArticles(
-				_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus(),
-				_themeDisplay.getLocale(),
-				articleVersionsSearchContainer.getStart(),
-				articleVersionsSearchContainer.getEnd(),
-				folderOrderByComparator);
-
-			articleVersionsSearchContainer.setResults(results);
-		}
+		articleVersionsSearchContainer.setResults(results);
 
 		_articleVersionsSearchContainer = articleVersionsSearchContainer;
 

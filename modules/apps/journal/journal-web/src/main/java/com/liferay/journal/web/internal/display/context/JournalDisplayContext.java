@@ -1187,6 +1187,16 @@ public class JournalDisplayContext {
 			_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
 	}
 
+	public boolean isCommentsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "comments") ||
+			(hasCommentsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isJournalArticleInChangeList(JournalArticle journalArticle) {
 		return JournalChangeTrackingHelperUtil.isJournalArticleInChangeList(
 			_themeDisplay.getCompanyId(), _themeDisplay.getUserId(),
@@ -1247,6 +1257,26 @@ public class JournalDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isVersionsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "versions") ||
+			(hasVersionsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isWebContentTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "web-content") ||
+			(hasResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected SearchContext buildSearchContext(

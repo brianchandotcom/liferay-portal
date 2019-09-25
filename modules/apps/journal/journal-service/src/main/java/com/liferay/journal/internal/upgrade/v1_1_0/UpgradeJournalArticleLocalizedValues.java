@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -283,21 +281,21 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 
 			_id = id;
 			_xml = xml;
-			_defaultSiteLocale = defaultSiteLocale;
+			_defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+				_xml, defaultSiteLocale);
 		}
 
 		@Override
 		public Boolean call() throws Exception {
-			try (Connection connection = DataAccess.getConnection()) {
+			try {
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("update JournalArticle set defaultLanguageId = '");
-				sb.append(
-					LocalizationUtil.getDefaultLanguageId(
-						_xml, _defaultSiteLocale));
+				sb.append(_defaultLanguageId);
 				sb.append("' where id_ = ");
 				sb.append(_id);
 
+				runSQL(connection, sb.toString());
 				runSQL(connection, sb.toString());
 			}
 			catch (Exception e) {
@@ -311,7 +309,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			return true;
 		}
 
-		private final Locale _defaultSiteLocale;
+		private final String _defaultLanguageId;
 		private final long _id;
 		private final String _xml;
 
@@ -321,8 +319,9 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		implements Callable<Boolean> {
 
 		public UpdateJournalArticleLocalizedFieldsCallable(
-			long id, long companyId, String title, String description,
-			String defaultLanguageId, String sql) {
+				long id, long companyId, String title, String description,
+				String defaultLanguageId, String sql)
+			throws Exception {
 
 			_id = id;
 			_companyId = companyId;
@@ -330,6 +329,8 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			_description = description;
 			_defaultLanguageId = defaultLanguageId;
 			_sql = sql;
+
+			_preparedStatement = connection.prepareStatement(_sql);
 		}
 
 		@Override
@@ -368,25 +369,25 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 					localizedDescription = safeLocalizedDescription;
 				}
 
-				try (Connection connection = DataAccess.getConnection();
-					PreparedStatement ps = connection.prepareStatement(_sql)) {
+				_preparedStatement.setLong(1, _increment());
+				_preparedStatement.setLong(2, _companyId);
+				_preparedStatement.setLong(3, _id);
+				_preparedStatement.setString(4, localizedTitle);
+				_preparedStatement.setString(5, localizedDescription);
+				_preparedStatement.setString(
+					6, LocaleUtil.toLanguageId(locale));
 
-					ps.setLong(1, _increment());
-					ps.setLong(2, _companyId);
-					ps.setLong(3, _id);
-					ps.setString(4, localizedTitle);
-					ps.setString(5, localizedDescription);
-					ps.setString(6, LocaleUtil.toLanguageId(locale));
+				_preparedStatement.addBatch();
+			}
 
-					ps.executeUpdate();
-				}
-				catch (Exception e) {
-					_log.error(
-						"Unable to update localized fields for article " + _id,
-						e);
+			try {
+				_preparedStatement.executeBatch();
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to update localized fields for article " + _id, e);
 
-					return false;
-				}
+				return false;
 			}
 
 			return true;
@@ -396,6 +397,7 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		private final String _defaultLanguageId;
 		private final String _description;
 		private final long _id;
+		private final PreparedStatement _preparedStatement;
 		private final String _sql;
 		private final String _title;
 

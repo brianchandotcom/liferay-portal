@@ -20,7 +20,8 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
+<%@ page import="com.liferay.journal.constants.JournalContentPortletKeys" %><%@
+page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
 page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@

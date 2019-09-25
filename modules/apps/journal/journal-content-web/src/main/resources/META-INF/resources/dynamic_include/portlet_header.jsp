@@ -20,6 +20,8 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
+<liferay-ui:success key='<%= JournalContentPortletKeys.JOURNAL_CONTENT + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 <div class="visible-interaction">
 	<liferay-ui:icon-menu
 		cssClass="btn btn-monospaced btn-sm"

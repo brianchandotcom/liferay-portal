@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
@@ -90,7 +92,10 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		aopInvocationHandler.setTarget(
 			ProxyUtil.newProxyInstance(
 				LayoutLocalServiceStagingAdvice.class.getClassLoader(),
-				new Class<?>[] {LayoutLocalService.class},
+				new Class<?>[] {
+					IdentifiableOSGiService.class, LayoutLocalService.class,
+					BaseLocalService.class
+				},
 				new LayoutLocalServiceStagingInvocationHandler(
 					this, aopInvocationHandler.getTarget())));
 

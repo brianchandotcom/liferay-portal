@@ -386,6 +386,11 @@ renderResponse.setTitle(title);
 
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+				boolean selected = false;
+
+				if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+					selected = true;
+				}
 			%>
 
 				<aui:option label="<%= HtmlUtil.escape(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />

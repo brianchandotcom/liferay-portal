@@ -341,6 +341,11 @@ if (portletTitleBasedNavigation) {
 
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+				boolean selected = false;
+
+				if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+					selected = true;
+				}
 			%>
 
 				<aui:option label="<%= HtmlUtil.escapeAttribute(workflowDefinition.getTitle(languageId)) %>" selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />

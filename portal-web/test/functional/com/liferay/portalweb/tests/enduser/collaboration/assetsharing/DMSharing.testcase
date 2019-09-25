@@ -546,7 +546,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
 	}
 
-	@description = "This test asserts that users can share via Shared Content app."
+	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
 	@priority = "5"
 	test ShareViaSharedContent {
 		JSONUser.addUser(
@@ -591,6 +591,8 @@ definition {
 		DMNavigator.gotoShareViaSharedContent(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.shareWithNoSharingPermissionsUser(userEmailAddress = "userea2@liferay.com");
+
+		AssertConsoleTextNotPresent(value1 = "ArrayIndexOutOfBoundsException");
 
 		User.logoutPG();
 

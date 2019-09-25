@@ -345,6 +345,9 @@ public class JournalDisplayContext {
 
 		searchContext.setAttribute("discussion", Boolean.TRUE);
 
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setStart(searchContainer.getStart());
+
 		List<MBMessage> mbMessages = new ArrayList<>();
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);

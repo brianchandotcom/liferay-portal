@@ -74,11 +74,11 @@ public class ExperimentUtilTest {
 			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			classPK, createDate, modifiedDate, name, description,
-			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
+			SegmentsExperienceConstants.ID_DEFAULT, classPK, name, description,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
-			SegmentsExperienceConstants.KEY_DEFAULT);
+			StringPool.BLANK, createDate, modifiedDate, segmentsExperimentKey,
+			SegmentsExperienceConstants.KEY_DEFAULT,
+			SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
@@ -169,11 +169,10 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			classPK, createDate, modifiedDate, name, description,
-			segmentsExperienceId, segmentsExperimentKey,
+			segmentsExperienceId, classPK, name, description,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
-			segmentsExperienceKey);
+			StringPool.BLANK, createDate, modifiedDate, segmentsExperimentKey,
+			segmentsExperienceKey, SegmentsExperimentConstants.STATUS_DRAFT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
@@ -249,13 +248,13 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			RandomTestUtil.randomLong(), RandomTestUtil.nextDate(),
-			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), segmentsExperienceId,
-			RandomTestUtil.randomString(),
+			segmentsExperienceId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_COMPLETED,
-			segmentsExperience.getSegmentsExperienceKey());
+			StringPool.BLANK, RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
+			segmentsExperience.getSegmentsExperienceKey(),
+			SegmentsExperimentConstants.STATUS_COMPLETED);
 
 		String dataSourceId = RandomTestUtil.randomString();
 		String pageURL = RandomTestUtil.randomString();
@@ -389,31 +388,25 @@ public class ExperimentUtilTest {
 	}
 
 	private SegmentsExperiment _createSegmentsExperiment(
-		long classPK, Date createDate, Date modifiedDate, String name,
-		String description, long segmentsExperienceId,
-		String segmentsExperimentKey, String goal, String goalTarget,
-		int status, String winnerSegmentsExperienceKey) {
+		long segmentsExperienceId, long classPK, String name,
+		String description, String goal, String goalTarget, Date createDate,
+		Date modifiedDate, String segmentsExperimentKey,
+		String winnerSegmentsExperienceKey, int status) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);
+
+		Mockito.doReturn(
+			segmentsExperienceId
+		).when(
+			segmentsExperiment
+		).getSegmentsExperienceId();
 
 		Mockito.doReturn(
 			classPK
 		).when(
 			segmentsExperiment
 		).getClassPK();
-
-		Mockito.doReturn(
-			createDate
-		).when(
-			segmentsExperiment
-		).getCreateDate();
-
-		Mockito.doReturn(
-			modifiedDate
-		).when(
-			segmentsExperiment
-		).getModifiedDate();
 
 		Mockito.doReturn(
 			name
@@ -428,18 +421,6 @@ public class ExperimentUtilTest {
 		).getDescription();
 
 		Mockito.doReturn(
-			segmentsExperienceId
-		).when(
-			segmentsExperiment
-		).getSegmentsExperienceId();
-
-		Mockito.doReturn(
-			segmentsExperimentKey
-		).when(
-			segmentsExperiment
-		).getSegmentsExperimentKey();
-
-		Mockito.doReturn(
 			goal
 		).when(
 			segmentsExperiment
@@ -450,6 +431,24 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsExperiment
 		).getGoalTarget();
+
+		Mockito.doReturn(
+			createDate
+		).when(
+			segmentsExperiment
+		).getCreateDate();
+
+		Mockito.doReturn(
+			modifiedDate
+		).when(
+			segmentsExperiment
+		).getModifiedDate();
+
+		Mockito.doReturn(
+			segmentsExperimentKey
+		).when(
+			segmentsExperiment
+		).getSegmentsExperimentKey();
 
 		Mockito.doReturn(
 			status

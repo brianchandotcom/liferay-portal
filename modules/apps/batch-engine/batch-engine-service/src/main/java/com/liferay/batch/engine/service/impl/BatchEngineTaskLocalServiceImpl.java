@@ -64,11 +64,12 @@ public class BatchEngineTaskLocalServiceImpl
 		return batchEngineTaskPersistence.update(batchEngineTask);
 	}
 
+	@Override
 	public List<BatchEngineTask> getBatchEngineTasks(
-		BatchEngineTaskExecuteStatus executeStatus) {
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus) {
 
 		return batchEngineTaskPersistence.findByExecuteStatus(
-			executeStatus.toString());
+			batchEngineTaskExecuteStatus.toString());
 	}
 
 }

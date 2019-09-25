@@ -145,7 +145,7 @@ public class SegmentsExperimentConstants {
 		},
 		TERMINATED(
 			STATUS_TERMINATED, "TERMINATED", "terminated", true, false, false,
-			true);
+			false);
 
 		public static int[] getExclusiveStatusValues() {
 			Stream<Status> stream = Arrays.stream(Status.values());

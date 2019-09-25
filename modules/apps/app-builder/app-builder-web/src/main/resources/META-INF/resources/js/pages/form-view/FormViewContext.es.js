@@ -16,6 +16,7 @@ import {createContext} from 'react';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {
+	ADD_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_DATA_LAYOUT_NAME,
@@ -24,6 +25,7 @@ import {
 	UPDATE_PAGES,
 	UPDATE_FOCUSED_FIELD
 } from './actions.es';
+import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 
 const FormViewContext = createContext();
 
@@ -40,6 +42,21 @@ const initialState = {
 	dataLayoutId: 0,
 	fieldTypes: [],
 	focusedField: {}
+};
+
+const addCustomObjectField = ({
+	dataDefinition,
+	dataLayoutBuilder,
+	fieldTypes,
+	fieldTypeName
+}) => {
+	const fieldType = fieldTypes.find(({name}) => name === fieldTypeName);
+	const dataDefinitionField = dataLayoutBuilder.getDefinitionField(fieldType);
+
+	return {
+		...dataDefinitionField,
+		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label)
+	};
 };
 
 const setDataDefinitionFields = (
@@ -80,6 +97,26 @@ const setDataLayout = dataLayoutBuilder => {
 const createReducer = dataLayoutBuilder => {
 	return (state = initialState, action) => {
 		switch (action.type) {
+			case ADD_CUSTOM_OBJECT_FIELD: {
+				const {fieldTypeName} = action.payload;
+				const {dataDefinition, fieldTypes} = state;
+
+				return {
+					...state,
+					dataDefinition: {
+						...dataDefinition,
+						dataDefinitionFields: [
+							...dataDefinition.dataDefinitionFields,
+							addCustomObjectField({
+								dataDefinition,
+								dataLayoutBuilder,
+								fieldTypeName,
+								fieldTypes
+							})
+						]
+					}
+				};
+			}
 			case UPDATE_DATA_DEFINITION: {
 				const {dataDefinition} = action.payload;
 
@@ -118,7 +155,7 @@ const createReducer = dataLayoutBuilder => {
 
 				return {
 					...state,
-					fieldTypes
+					fieldTypes: fieldTypes.filter(({system}) => !system)
 				};
 			}
 			case UPDATE_FOCUSED_FIELD: {

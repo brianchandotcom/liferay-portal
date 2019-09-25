@@ -26,6 +26,64 @@ import classNames from 'classnames';
 import {useKeyDown} from '../../hooks/index.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 import FormViewContext from './FormViewContext.es';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import {ADD_CUSTOM_OBJECT_FIELD} from './actions.es';
+
+const DropDown = () => {
+	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
+	const [active, setActive] = useState(false);
+	const [showFieldTypes, setShowFieldTypes] = useState(false);
+
+	const onActiveChange = newVal => {
+		setActive(newVal);
+		setShowFieldTypes(false);
+	};
+
+	const onClickFieldType = fieldTypeName => {
+		setActive(false);
+		dispatch({payload: {fieldTypeName}, type: ADD_CUSTOM_OBJECT_FIELD});
+	};
+
+	return (
+		<ClayDropDown
+			active={active}
+			alignmentPosition={Align.BottomRight}
+			className="custom-object-dropdown"
+			onActiveChange={onActiveChange}
+			trigger={
+				<ClayButtonWithIcon displayType="unstyled" symbol="plus" />
+			}
+		>
+			<ClayDropDown.ItemList className="custom-object-dropdown-list">
+				{showFieldTypes ? (
+					fieldTypes.map(({icon, label, name}) => (
+						<ClayDropDown.Item
+							key={name}
+							onClick={() => onClickFieldType(name)}
+							symbolLeft={icon}
+						>
+							{label}
+						</ClayDropDown.Item>
+					))
+				) : (
+					<>
+						<ClayDropDown.Item
+							key={'add'}
+							onClick={() => setShowFieldTypes(true)}
+						>
+							{Liferay.Language.get('add-field-to-object')}
+						</ClayDropDown.Item>
+						<ClayDropDown.Item key={'import'}>
+							{Liferay.Language.get(
+								'import-fields-from-spreadsheet'
+							)}
+						</ClayDropDown.Item>
+					</>
+				)}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
+	);
+};
 
 const Header = ({keywords, onCloseSearch, onSearch}) => {
 	const [searchMode, setSearchMode] = useState(false);
@@ -120,11 +178,8 @@ const Header = ({keywords, onCloseSearch, onSearch}) => {
 							/>
 						</div>
 
-						<div className="autofit-col" key="addButton">
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								symbol="plus"
-							/>
+						<div className="autofit-col" key="dropdown">
+							<DropDown />
 						</div>
 					</>
 				)}

@@ -68,8 +68,12 @@ public class AddResourceVerifierPlugin implements VerifierPlugin {
 
 						Path relativePath = jspClassesDir.relativize(path);
 
-						jar.putResource(
-							relativePath.toString(), resource, true);
+						String relativePathString = relativePath.toString();
+
+						relativePathString = relativePathString.replace(
+							"\\", "/");
+
+						jar.putResource(relativePathString, resource, true);
 
 						return FileVisitResult.CONTINUE;
 					}

@@ -345,7 +345,7 @@ public interface BatchEngineTaskPersistence
 	 * @param executeStatus the execute status
 	 * @return the matching batch engine tasks
 	 */
-	public java.util.List<BatchEngineTask> findByexecuteStatus(
+	public java.util.List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus);
 
 	/**
@@ -360,7 +360,7 @@ public interface BatchEngineTaskPersistence
 	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
 	 * @return the range of matching batch engine tasks
 	 */
-	public java.util.List<BatchEngineTask> findByexecuteStatus(
+	public java.util.List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end);
 
 	/**
@@ -376,7 +376,7 @@ public interface BatchEngineTaskPersistence
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching batch engine tasks
 	 */
-	public java.util.List<BatchEngineTask> findByexecuteStatus(
+	public java.util.List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 			orderByComparator);
@@ -395,7 +395,7 @@ public interface BatchEngineTaskPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching batch engine tasks
 	 */
-	public java.util.List<BatchEngineTask> findByexecuteStatus(
+	public java.util.List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 			orderByComparator,
@@ -409,7 +409,7 @@ public interface BatchEngineTaskPersistence
 	 * @return the first matching batch engine task
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
-	public BatchEngineTask findByexecuteStatus_First(
+	public BatchEngineTask findByExecuteStatus_First(
 			String executeStatus,
 			com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 				orderByComparator)
@@ -422,7 +422,7 @@ public interface BatchEngineTaskPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
-	public BatchEngineTask fetchByexecuteStatus_First(
+	public BatchEngineTask fetchByExecuteStatus_First(
 		String executeStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 			orderByComparator);
@@ -435,7 +435,7 @@ public interface BatchEngineTaskPersistence
 	 * @return the last matching batch engine task
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
-	public BatchEngineTask findByexecuteStatus_Last(
+	public BatchEngineTask findByExecuteStatus_Last(
 			String executeStatus,
 			com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 				orderByComparator)
@@ -448,7 +448,7 @@ public interface BatchEngineTaskPersistence
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
-	public BatchEngineTask fetchByexecuteStatus_Last(
+	public BatchEngineTask fetchByExecuteStatus_Last(
 		String executeStatus,
 		com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 			orderByComparator);
@@ -462,7 +462,7 @@ public interface BatchEngineTaskPersistence
 	 * @return the previous, current, and next batch engine task
 	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
 	 */
-	public BatchEngineTask[] findByexecuteStatus_PrevAndNext(
+	public BatchEngineTask[] findByExecuteStatus_PrevAndNext(
 			long batchEngineTaskId, String executeStatus,
 			com.liferay.portal.kernel.util.OrderByComparator<BatchEngineTask>
 				orderByComparator)
@@ -473,7 +473,7 @@ public interface BatchEngineTaskPersistence
 	 *
 	 * @param executeStatus the execute status
 	 */
-	public void removeByexecuteStatus(String executeStatus);
+	public void removeByExecuteStatus(String executeStatus);
 
 	/**
 	 * Returns the number of batch engine tasks where executeStatus = &#63;.
@@ -481,7 +481,7 @@ public interface BatchEngineTaskPersistence
 	 * @param executeStatus the execute status
 	 * @return the number of matching batch engine tasks
 	 */
-	public int countByexecuteStatus(String executeStatus);
+	public int countByExecuteStatus(String executeStatus);
 
 	/**
 	 * Caches the batch engine task in the entity cache if it is enabled.

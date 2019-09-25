@@ -479,10 +479,10 @@ public class BatchEngineTaskUtil {
 	 * @param executeStatus the execute status
 	 * @return the matching batch engine tasks
 	 */
-	public static List<BatchEngineTask> findByexecuteStatus(
+	public static List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus) {
 
-		return getPersistence().findByexecuteStatus(executeStatus);
+		return getPersistence().findByExecuteStatus(executeStatus);
 	}
 
 	/**
@@ -497,10 +497,10 @@ public class BatchEngineTaskUtil {
 	 * @param end the upper bound of the range of batch engine tasks (not inclusive)
 	 * @return the range of matching batch engine tasks
 	 */
-	public static List<BatchEngineTask> findByexecuteStatus(
+	public static List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end) {
 
-		return getPersistence().findByexecuteStatus(executeStatus, start, end);
+		return getPersistence().findByExecuteStatus(executeStatus, start, end);
 	}
 
 	/**
@@ -516,11 +516,11 @@ public class BatchEngineTaskUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching batch engine tasks
 	 */
-	public static List<BatchEngineTask> findByexecuteStatus(
+	public static List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		return getPersistence().findByexecuteStatus(
+		return getPersistence().findByExecuteStatus(
 			executeStatus, start, end, orderByComparator);
 	}
 
@@ -538,12 +538,12 @@ public class BatchEngineTaskUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching batch engine tasks
 	 */
-	public static List<BatchEngineTask> findByexecuteStatus(
+	public static List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		OrderByComparator<BatchEngineTask> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByexecuteStatus(
+		return getPersistence().findByExecuteStatus(
 			executeStatus, start, end, orderByComparator, useFinderCache);
 	}
 
@@ -555,12 +555,12 @@ public class BatchEngineTaskUtil {
 	 * @return the first matching batch engine task
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
-	public static BatchEngineTask findByexecuteStatus_First(
+	public static BatchEngineTask findByExecuteStatus_First(
 			String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws com.liferay.batch.engine.exception.NoSuchTaskException {
 
-		return getPersistence().findByexecuteStatus_First(
+		return getPersistence().findByExecuteStatus_First(
 			executeStatus, orderByComparator);
 	}
 
@@ -571,11 +571,11 @@ public class BatchEngineTaskUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
-	public static BatchEngineTask fetchByexecuteStatus_First(
+	public static BatchEngineTask fetchByExecuteStatus_First(
 		String executeStatus,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		return getPersistence().fetchByexecuteStatus_First(
+		return getPersistence().fetchByExecuteStatus_First(
 			executeStatus, orderByComparator);
 	}
 
@@ -587,12 +587,12 @@ public class BatchEngineTaskUtil {
 	 * @return the last matching batch engine task
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
-	public static BatchEngineTask findByexecuteStatus_Last(
+	public static BatchEngineTask findByExecuteStatus_Last(
 			String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws com.liferay.batch.engine.exception.NoSuchTaskException {
 
-		return getPersistence().findByexecuteStatus_Last(
+		return getPersistence().findByExecuteStatus_Last(
 			executeStatus, orderByComparator);
 	}
 
@@ -603,11 +603,11 @@ public class BatchEngineTaskUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
-	public static BatchEngineTask fetchByexecuteStatus_Last(
+	public static BatchEngineTask fetchByExecuteStatus_Last(
 		String executeStatus,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		return getPersistence().fetchByexecuteStatus_Last(
+		return getPersistence().fetchByExecuteStatus_Last(
 			executeStatus, orderByComparator);
 	}
 
@@ -620,12 +620,12 @@ public class BatchEngineTaskUtil {
 	 * @return the previous, current, and next batch engine task
 	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
 	 */
-	public static BatchEngineTask[] findByexecuteStatus_PrevAndNext(
+	public static BatchEngineTask[] findByExecuteStatus_PrevAndNext(
 			long batchEngineTaskId, String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws com.liferay.batch.engine.exception.NoSuchTaskException {
 
-		return getPersistence().findByexecuteStatus_PrevAndNext(
+		return getPersistence().findByExecuteStatus_PrevAndNext(
 			batchEngineTaskId, executeStatus, orderByComparator);
 	}
 
@@ -634,8 +634,8 @@ public class BatchEngineTaskUtil {
 	 *
 	 * @param executeStatus the execute status
 	 */
-	public static void removeByexecuteStatus(String executeStatus) {
-		getPersistence().removeByexecuteStatus(executeStatus);
+	public static void removeByExecuteStatus(String executeStatus) {
+		getPersistence().removeByExecuteStatus(executeStatus);
 	}
 
 	/**
@@ -644,8 +644,8 @@ public class BatchEngineTaskUtil {
 	 * @param executeStatus the execute status
 	 * @return the number of matching batch engine tasks
 	 */
-	public static int countByexecuteStatus(String executeStatus) {
-		return getPersistence().countByexecuteStatus(executeStatus);
+	public static int countByExecuteStatus(String executeStatus) {
+		return getPersistence().countByExecuteStatus(executeStatus);
 	}
 
 	/**

@@ -1247,9 +1247,9 @@ public class BatchEngineTaskPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"batchEngineTask.companyId = ?";
 
-	private FinderPath _finderPathWithPaginationFindByexecuteStatus;
-	private FinderPath _finderPathWithoutPaginationFindByexecuteStatus;
-	private FinderPath _finderPathCountByexecuteStatus;
+	private FinderPath _finderPathWithPaginationFindByExecuteStatus;
+	private FinderPath _finderPathWithoutPaginationFindByExecuteStatus;
+	private FinderPath _finderPathCountByExecuteStatus;
 
 	/**
 	 * Returns all the batch engine tasks where executeStatus = &#63;.
@@ -1258,8 +1258,8 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the matching batch engine tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByexecuteStatus(String executeStatus) {
-		return findByexecuteStatus(
+	public List<BatchEngineTask> findByExecuteStatus(String executeStatus) {
+		return findByExecuteStatus(
 			executeStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1276,10 +1276,10 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the range of matching batch engine tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByexecuteStatus(
+	public List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end) {
 
-		return findByexecuteStatus(executeStatus, start, end, null);
+		return findByExecuteStatus(executeStatus, start, end, null);
 	}
 
 	/**
@@ -1296,11 +1296,11 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the ordered range of matching batch engine tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByexecuteStatus(
+	public List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		return findByexecuteStatus(
+		return findByExecuteStatus(
 			executeStatus, start, end, orderByComparator, true);
 	}
 
@@ -1319,7 +1319,7 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the ordered range of matching batch engine tasks
 	 */
 	@Override
-	public List<BatchEngineTask> findByexecuteStatus(
+	public List<BatchEngineTask> findByExecuteStatus(
 		String executeStatus, int start, int end,
 		OrderByComparator<BatchEngineTask> orderByComparator,
 		boolean useFinderCache) {
@@ -1336,12 +1336,12 @@ public class BatchEngineTaskPersistenceImpl
 			pagination = false;
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByexecuteStatus;
+				finderPath = _finderPathWithoutPaginationFindByExecuteStatus;
 				finderArgs = new Object[] {executeStatus};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByexecuteStatus;
+			finderPath = _finderPathWithPaginationFindByExecuteStatus;
 			finderArgs = new Object[] {
 				executeStatus, start, end, orderByComparator
 			};
@@ -1456,12 +1456,12 @@ public class BatchEngineTaskPersistenceImpl
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByexecuteStatus_First(
+	public BatchEngineTask findByExecuteStatus_First(
 			String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws NoSuchTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByexecuteStatus_First(
+		BatchEngineTask batchEngineTask = fetchByExecuteStatus_First(
 			executeStatus, orderByComparator);
 
 		if (batchEngineTask != null) {
@@ -1488,11 +1488,11 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the first matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByexecuteStatus_First(
+	public BatchEngineTask fetchByExecuteStatus_First(
 		String executeStatus,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		List<BatchEngineTask> list = findByexecuteStatus(
+		List<BatchEngineTask> list = findByExecuteStatus(
 			executeStatus, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1511,12 +1511,12 @@ public class BatchEngineTaskPersistenceImpl
 	 * @throws NoSuchTaskException if a matching batch engine task could not be found
 	 */
 	@Override
-	public BatchEngineTask findByexecuteStatus_Last(
+	public BatchEngineTask findByExecuteStatus_Last(
 			String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws NoSuchTaskException {
 
-		BatchEngineTask batchEngineTask = fetchByexecuteStatus_Last(
+		BatchEngineTask batchEngineTask = fetchByExecuteStatus_Last(
 			executeStatus, orderByComparator);
 
 		if (batchEngineTask != null) {
@@ -1543,17 +1543,17 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the last matching batch engine task, or <code>null</code> if a matching batch engine task could not be found
 	 */
 	@Override
-	public BatchEngineTask fetchByexecuteStatus_Last(
+	public BatchEngineTask fetchByExecuteStatus_Last(
 		String executeStatus,
 		OrderByComparator<BatchEngineTask> orderByComparator) {
 
-		int count = countByexecuteStatus(executeStatus);
+		int count = countByExecuteStatus(executeStatus);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<BatchEngineTask> list = findByexecuteStatus(
+		List<BatchEngineTask> list = findByExecuteStatus(
 			executeStatus, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1573,7 +1573,7 @@ public class BatchEngineTaskPersistenceImpl
 	 * @throws NoSuchTaskException if a batch engine task with the primary key could not be found
 	 */
 	@Override
-	public BatchEngineTask[] findByexecuteStatus_PrevAndNext(
+	public BatchEngineTask[] findByExecuteStatus_PrevAndNext(
 			long batchEngineTaskId, String executeStatus,
 			OrderByComparator<BatchEngineTask> orderByComparator)
 		throws NoSuchTaskException {
@@ -1589,13 +1589,13 @@ public class BatchEngineTaskPersistenceImpl
 
 			BatchEngineTask[] array = new BatchEngineTaskImpl[3];
 
-			array[0] = getByexecuteStatus_PrevAndNext(
+			array[0] = getByExecuteStatus_PrevAndNext(
 				session, batchEngineTask, executeStatus, orderByComparator,
 				true);
 
 			array[1] = batchEngineTask;
 
-			array[2] = getByexecuteStatus_PrevAndNext(
+			array[2] = getByExecuteStatus_PrevAndNext(
 				session, batchEngineTask, executeStatus, orderByComparator,
 				false);
 
@@ -1609,7 +1609,7 @@ public class BatchEngineTaskPersistenceImpl
 		}
 	}
 
-	protected BatchEngineTask getByexecuteStatus_PrevAndNext(
+	protected BatchEngineTask getByExecuteStatus_PrevAndNext(
 		Session session, BatchEngineTask batchEngineTask, String executeStatus,
 		OrderByComparator<BatchEngineTask> orderByComparator,
 		boolean previous) {
@@ -1736,9 +1736,9 @@ public class BatchEngineTaskPersistenceImpl
 	 * @param executeStatus the execute status
 	 */
 	@Override
-	public void removeByexecuteStatus(String executeStatus) {
+	public void removeByExecuteStatus(String executeStatus) {
 		for (BatchEngineTask batchEngineTask :
-				findByexecuteStatus(
+				findByExecuteStatus(
 					executeStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
 
@@ -1753,10 +1753,10 @@ public class BatchEngineTaskPersistenceImpl
 	 * @return the number of matching batch engine tasks
 	 */
 	@Override
-	public int countByexecuteStatus(String executeStatus) {
+	public int countByExecuteStatus(String executeStatus) {
 		executeStatus = Objects.toString(executeStatus, "");
 
-		FinderPath finderPath = _finderPathCountByexecuteStatus;
+		FinderPath finderPath = _finderPathCountByExecuteStatus;
 
 		Object[] finderArgs = new Object[] {executeStatus};
 
@@ -2119,9 +2119,9 @@ public class BatchEngineTaskPersistenceImpl
 
 			args = new Object[] {batchEngineTaskModelImpl.getExecuteStatus()};
 
-			finderCache.removeResult(_finderPathCountByexecuteStatus, args);
+			finderCache.removeResult(_finderPathCountByExecuteStatus, args);
 			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByexecuteStatus, args);
+				_finderPathWithoutPaginationFindByExecuteStatus, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -2171,24 +2171,24 @@ public class BatchEngineTaskPersistenceImpl
 			}
 
 			if ((batchEngineTaskModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByexecuteStatus.
+				 _finderPathWithoutPaginationFindByExecuteStatus.
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
 					batchEngineTaskModelImpl.getOriginalExecuteStatus()
 				};
 
-				finderCache.removeResult(_finderPathCountByexecuteStatus, args);
+				finderCache.removeResult(_finderPathCountByExecuteStatus, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByexecuteStatus, args);
+					_finderPathWithoutPaginationFindByExecuteStatus, args);
 
 				args = new Object[] {
 					batchEngineTaskModelImpl.getExecuteStatus()
 				};
 
-				finderCache.removeResult(_finderPathCountByexecuteStatus, args);
+				finderCache.removeResult(_finderPathCountByExecuteStatus, args);
 				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByexecuteStatus, args);
+					_finderPathWithoutPaginationFindByExecuteStatus, args);
 			}
 		}
 
@@ -2541,23 +2541,23 @@ public class BatchEngineTaskPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
-		_finderPathWithPaginationFindByexecuteStatus = new FinderPath(
+		_finderPathWithPaginationFindByExecuteStatus = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByexecuteStatus",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExecuteStatus",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
-		_finderPathWithoutPaginationFindByexecuteStatus = new FinderPath(
+		_finderPathWithoutPaginationFindByExecuteStatus = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, BatchEngineTaskImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByexecuteStatus",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExecuteStatus",
 			new String[] {String.class.getName()},
 			BatchEngineTaskModelImpl.EXECUTESTATUS_COLUMN_BITMASK);
 
-		_finderPathCountByexecuteStatus = new FinderPath(
+		_finderPathCountByExecuteStatus = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByexecuteStatus",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExecuteStatus",
 			new String[] {String.class.getName()});
 	}
 

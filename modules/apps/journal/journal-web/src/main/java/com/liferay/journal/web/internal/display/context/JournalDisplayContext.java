@@ -1130,8 +1130,7 @@ public class JournalDisplayContext {
 		throws PortalException {
 
 		SearchContainer<MBMessage> searchContainer = new SearchContainer(
-			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
-			null, null);
+			_liferayPortletRequest, getPortletURL(), null, null);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_liferayPortletRequest.getHttpServletRequest());

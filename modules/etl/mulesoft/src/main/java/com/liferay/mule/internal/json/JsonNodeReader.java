@@ -60,6 +60,20 @@ public class JsonNodeReader {
 		return jsonNode;
 	}
 
+	public boolean hasPath(JsonNode jsonNode, String path) {
+		String[] pathParts = path.split(">");
+
+		for (String pathPart : pathParts) {
+			jsonNode = jsonNode.get(pathPart);
+
+			if (jsonNode == null) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 
 }

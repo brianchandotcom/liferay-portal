@@ -20,9 +20,13 @@ package com.liferay.mule.internal.oas;
  */
 public class OASConstants {
 
+	public static final String ADDITIONAL_PROPERTIES = "additionalProperties";
+
 	public static final String ARRAY = "array";
 
 	public static final String FORMAT = "format";
+
+	public static final String ITEMS = "items";
 
 	public static final String OPERATION_GET = "get";
 

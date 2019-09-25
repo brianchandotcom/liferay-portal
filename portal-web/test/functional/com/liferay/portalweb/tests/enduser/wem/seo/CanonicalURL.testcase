@@ -141,9 +141,7 @@ definition {
 
 		User.logoutPG();
 
-		Page.assertCanonicalURL(
-			locale = "en",
-			portalURL = "${portalURL}");
+		Page.assertCanonicalURL(portalURL = "${portalURL}");
 
 		Navigator.openSpecificURL(url = "${portalURL}/zh/");
 

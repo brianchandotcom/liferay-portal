@@ -1159,6 +1159,16 @@ public class JournalDisplayContext {
 		return false;
 	}
 
+	public boolean isCommentsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "comments") ||
+			(hasCommentsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isNavigationHome() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;
@@ -1213,6 +1223,26 @@ public class JournalDisplayContext {
 		}
 
 		return true;
+	}
+
+	public boolean isVersionsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "versions") ||
+			(hasVersionsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isWebContentTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "web-content") ||
+			(hasResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected SearchContext buildSearchContext(

@@ -32,7 +32,7 @@
 								</#if>
 
 								<div class="user-area">
-									<div class="nav pull-right">
+									<div class="float-right nav">
 										<ul class="navbar-nav">
 											<#if !is_signed_in>
 												<span class="icon-login icon-monospaced">

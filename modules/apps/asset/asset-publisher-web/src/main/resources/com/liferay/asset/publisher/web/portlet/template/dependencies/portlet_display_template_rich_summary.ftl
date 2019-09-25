@@ -20,7 +20,7 @@
 	/>
 
 	<div class="asset-abstract">
-		<div class="pull-right">
+		<div class="float-right">
 			<@getPrintIcon />
 
 			<@getFlagsIcon />

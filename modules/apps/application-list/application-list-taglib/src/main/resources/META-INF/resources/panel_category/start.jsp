@@ -22,7 +22,7 @@
 			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 
 			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="badge badge-danger panel-notifications-count pull-right">
+				<span class="badge badge-danger float-right panel-notifications-count">
 					<span class="badge-item badge-item-expand" data-qa-id="notificationsCount"><%= notificationsCount %></span>
 				</span>
 			</c:if>

@@ -31,7 +31,7 @@ String url = (String)request.getAttribute("liferay-application-list:panel-app:ur
 			<%= label %>
 
 			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="badge badge-danger pull-right">
+				<span class="badge badge-danger float-right">
 					<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
 				</span>
 			</c:if>

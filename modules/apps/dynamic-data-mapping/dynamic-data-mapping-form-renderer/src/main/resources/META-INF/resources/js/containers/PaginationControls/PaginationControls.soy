@@ -37,7 +37,7 @@
 
 		{if $activePage < $total - 1}
 			<button
-				class="btn btn-primary lfr-ddm-form-pagination-next pull-right"
+				class="btn btn-primary float-right lfr-ddm-form-pagination-next"
 				data-onclick="{$_handleNextClicked}"
 				type="button"
 			>
@@ -59,7 +59,7 @@
 		{/if}
 
 		{if $activePage == $total - 1 and not $readOnly and $showSubmitButton}
-			<button class="btn btn-primary lfr-ddm-form-submit pull-right" type="submit">
+			<button class="btn btn-primary float-right lfr-ddm-form-submit" type="submit">
 				{$submitLabel}
 			</button>
 		{/if}

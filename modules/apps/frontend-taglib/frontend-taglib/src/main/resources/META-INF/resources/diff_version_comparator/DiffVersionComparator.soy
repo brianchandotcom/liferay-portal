@@ -87,7 +87,7 @@
 	<div class="card diff-container-column">
 		{if isNonnull($selectedVersion)}
 			<div class="card-row-padded diff-version-filter" id="{$portletNamespace}versionFilter">
-				<div class="close-version-filter pull-right">
+				<div class="close-version-filter float-right">
 					<a data-onclick="handleCloseFilterClick_" href="javascript:;">
 						<svg class="lexicon-icon" focusable="false">
 							<use data-href="{$pathThemeImages}/lexicon/icons.svg#times" />
@@ -235,7 +235,7 @@
 	{@param sourceVersionLabel: string}
 	{@param targetVersion: string}
 
-	<div class="pull-right">
+	<div class="float-right">
 		{if length($diffVersions) <= 2}
 			{$sourceVersionLabel}
 		{else}

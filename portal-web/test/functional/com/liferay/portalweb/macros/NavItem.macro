@@ -24,6 +24,10 @@ definition {
 		NavItem.click(navItem = "Display Page Templates");
 	}
 
+	macro gotoFeeds {
+		NavItem.click(navItem = "Feeds");
+	}
+
 	macro gotoOrganizations {
 		NavItem.click(navItem = "Organizations");
 	}

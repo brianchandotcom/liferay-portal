@@ -33,6 +33,10 @@ public class EditRankingDisplayContext {
 		return _data;
 	}
 
+	public String getFormName() {
+		return _formName;
+	}
+
 	public String getKeywords() {
 		return _keywords;
 	}
@@ -57,6 +61,10 @@ public class EditRankingDisplayContext {
 		_data = data;
 	}
 
+	public void setFormName(String formName) {
+		_formName = formName;
+	}
+
 	public void setKeywords(String keywords) {
 		_keywords = keywords;
 	}
@@ -72,6 +80,7 @@ public class EditRankingDisplayContext {
 	private String _backURL;
 	private long _companyId;
 	private Map<String, Object> _data;
+	private String _formName;
 	private String _keywords;
 	private String _redirect;
 	private String _resultsRankingUid;

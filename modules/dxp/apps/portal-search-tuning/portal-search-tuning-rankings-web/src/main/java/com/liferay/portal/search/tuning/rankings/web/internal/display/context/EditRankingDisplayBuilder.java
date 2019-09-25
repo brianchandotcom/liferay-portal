@@ -58,6 +58,7 @@ public class EditRankingDisplayBuilder {
 		_setBackURL(editRankingDisplayContext);
 		_setCompanyId(editRankingDisplayContext);
 		_setData(editRankingDisplayContext);
+		_setFormName(editRankingDisplayContext);
 		_setKeywords(editRankingDisplayContext);
 		_setRedirect(editRankingDisplayContext);
 		_setResultsRankingUid(editRankingDisplayContext);
@@ -95,6 +96,10 @@ public class EditRankingDisplayBuilder {
 		return context;
 	}
 
+	private String _getFormName() {
+		return "editResultRankingsFm";
+	}
+
 	private String _getHiddenResultRankingsResourceURL() {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 
@@ -121,9 +126,7 @@ public class EditRankingDisplayBuilder {
 			"fetchDocumentsSearchUrl", _getSearchResultRankingsResourceURL());
 		props.put(
 			"fetchDocumentsVisibleUrl", _getVisibleResultRankingsResourceURL());
-		props.put(
-			"formName",
-			_renderResponse.getNamespace() + "editResultsRankingsFm");
+		props.put("formName", _renderResponse.getNamespace() + _getFormName());
 		props.put("initialAliases", _getAliases());
 		props.put("searchQuery", _getKeywords());
 
@@ -191,6 +194,12 @@ public class EditRankingDisplayBuilder {
 		data.put("props", _getProps());
 
 		editRankingDisplayContext.setData(data);
+	}
+
+	private void _setFormName(
+		EditRankingDisplayContext editRankingDisplayContext) {
+
+		editRankingDisplayContext.setFormName(_getFormName());
 	}
 
 	private void _setKeywords(

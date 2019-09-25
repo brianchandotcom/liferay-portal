@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
-import com.liferay.petra.concurrent.NoticeableThreadPoolExecutor;
+import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -89,16 +89,9 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		NoticeableThreadPoolExecutor noticeableThreadPoolExecutor =
-			(NoticeableThreadPoolExecutor)
-				_portalExecutorManager.getPortalExecutor(
-					BatchEngineTaskListener.class.getName());
-
-		if (noticeableThreadPoolExecutor.getActiveCount() ==
-				noticeableThreadPoolExecutor.getMaximumPoolSize()) {
-
-			return;
-		}
+		NoticeableExecutorService noticeableExecutorService =
+			_portalExecutorManager.getPortalExecutor(
+				BatchEngineTaskListener.class.getName());
 
 		List<BatchEngineTask> batchEngineTasks =
 			_batchEngineTaskLocalService.getBatchEngineTasks(
@@ -114,13 +107,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 				batchEngineTask.getModifiedDate());
 
 			if (modifiedDateTime.isBefore(localDateTime)) {
-				if (noticeableThreadPoolExecutor.getActiveCount() ==
-						noticeableThreadPoolExecutor.getMaximumPoolSize()) {
-
-					return;
-				}
-
-				noticeableThreadPoolExecutor.submit(
+				noticeableExecutorService.submit(
 					() -> {
 						try {
 							_batchEngineTaskExecutor.execute(batchEngineTask);

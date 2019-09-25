@@ -419,6 +419,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TARGET_PAGE_FRIENDLY_URL</td>
+	<td>//input[contains(@id,'targetLayoutFriendlyUrl')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT</td>
 	<td>//input[@type='text']</td>
 	<td></td>

@@ -1,0 +1,47 @@
+definition {
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${feedTitle}");
+
+		Type(
+			locator1 = "TextInput#TARGET_PAGE_FRIENDLY_URL",
+			value1 = "${pageFriendlyUrl}");
+
+		Panel.expandPanel(panel = "Web Content Constraints");
+
+		WebContentFeeds.selectStructure(structureName = "${structureName}");
+
+		SelectFrame(value1 = "relative=top");
+
+		PortletEntry.save();
+	}
+
+	macro selectStructure {
+		var key_ddlDataDefinitionName = "${structureName}";
+
+		AssertClick(
+			locator1 = "DDMEditTemplate#DETAILS_SELECT_STRUCTURE",
+			value1 = "Select");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		ClickNoError(
+			locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+			value1 = "${structureName}");
+
+		AssertConfirm(value1 = "Selecting a new structure changes the available templates and available feed item content. Do you want to proceed?");
+	}
+
+	macro viewTableEntryCP {
+		var key_feedName = "${feedName}";
+
+		AssertTextEquals(
+			locator1 = "DDMSelectFeed#FEED_TABLE_NAME",
+			value1 = "${feedName}");
+	}
+
+}

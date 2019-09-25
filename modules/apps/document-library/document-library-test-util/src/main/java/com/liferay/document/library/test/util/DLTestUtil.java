@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
@@ -42,8 +41,6 @@ public class DLTestUtil {
 
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
-		InputStream is = new ByteArrayInputStream(bytes);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
 
@@ -53,7 +50,8 @@ public class DLTestUtil {
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, is, bytes.length, serviceContext);
+			null, new ByteArrayInputStream(bytes), bytes.length,
+			serviceContext);
 	}
 
 	public static DLFolder addDLFolder(long groupId) throws Exception {

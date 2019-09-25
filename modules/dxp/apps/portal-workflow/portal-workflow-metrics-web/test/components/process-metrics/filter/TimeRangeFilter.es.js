@@ -10,10 +10,10 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
-import {TimeRangeContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
-import {TimeRangeFilter} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/TimeRangeFilter.es';
 import {MockRouter} from '../../../mock/MockRouter.es';
 import React from 'react';
+import {TimeRangeContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
+import {TimeRangeFilter} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/TimeRangeFilter.es';
 
 const defaultTimeRange = {
 	active: true,

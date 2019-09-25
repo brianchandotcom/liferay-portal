@@ -9,6 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {
+	addClickOutsideListener,
+	removeClickOutsideListener,
+	handleClickOutside
+} from './util/filterEvents.es';
 import {getSelectedItemsQuery, pushToHistory} from './util/filterUtil.es';
 import FilterItem from './FilterItem.es';
 import FilterSearch from './FilterSearch.es';
@@ -16,11 +21,6 @@ import getClassName from 'classnames';
 import Icon from '../Icon.es';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {
-	addClickOutsideListener,
-	removeClickOutsideListener,
-	handleClickOutside
-} from './util/filterEvents.es';
 
 class Filter extends React.Component {
 	constructor(props) {
@@ -100,7 +100,7 @@ class Filter extends React.Component {
 		const {multiple, onChangeFilter} = this.props;
 
 		const currentIndex = items.findIndex(
-			item => item.key == target.dataset.key
+			item => item.key === target.dataset.key
 		);
 
 		const currentItem = items[currentIndex];
@@ -147,7 +147,7 @@ class Filter extends React.Component {
 
 			if (!selectedItems.length) {
 				const index = items.findIndex(
-					item => item.key == defaultItem.key
+					item => item.key === defaultItem.key
 				);
 
 				defaultItem.active = items[index].active = true;

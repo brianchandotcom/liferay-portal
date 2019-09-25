@@ -9,17 +9,16 @@
  * distribution rights of the Software.
  */
 
+import React, {useContext, useEffect, useRef} from 'react';
 import {
 	addClickOutsideListener,
 	removeClickOutsideListener,
 	handleClickOutside
 } from '../../../shared/components/filter/util/filterEvents.es';
-import React, {useEffect, useRef} from 'react';
 import Icon from '../../../shared/components/Icon.es';
 import MaskedInput from 'react-text-mask';
 import {sub} from '../../../shared/util/lang.es';
 import {TimeRangeContext} from './store/TimeRangeStore.es';
-import {useContext} from 'react';
 import {useCustomTimeRange} from './store/CustomTimeRangeStore.es';
 
 const CustomTimeRangeForm = ({filterKey}) => {
@@ -36,6 +35,31 @@ const CustomTimeRangeForm = ({filterKey}) => {
 	const wrapperRef = useRef();
 
 	const dateFormat = 'MM/DD/YYYY';
+
+	const FormGroupItem = ({children, error}) => (
+		<div className={`form-group-item ${error ? 'has-error' : ''}`}>
+			<div className="input-group">
+				<div className="input-group-item">{children}</div>
+			</div>
+
+			{error && (
+				<div className="form-feedback-group">
+					<div className="form-feedback-item">
+						<span className="form-feedback-indicator mr-2">
+							<Icon iconName="exclamation-full" />
+						</span>
+
+						<span
+							className="text-semi-bold"
+							data-testid="errorSpan"
+						>
+							{error}
+						</span>
+					</div>
+				</div>
+			)}
+		</div>
+	);
 
 	const onBlur = ({target: {name, value}}) => {
 		validate(name, value);
@@ -140,27 +164,5 @@ const CustomTimeRangeForm = ({filterKey}) => {
 		</div>
 	);
 };
-
-const FormGroupItem = ({children, error}) => (
-	<div className={`form-group-item ${error ? 'has-error' : ''}`}>
-		<div className="input-group">
-			<div className="input-group-item">{children}</div>
-		</div>
-
-		{error && (
-			<div className="form-feedback-group">
-				<div className="form-feedback-item">
-					<span className="form-feedback-indicator mr-2">
-						<Icon iconName="exclamation-full" />
-					</span>
-
-					<span className="text-semi-bold" data-testid="errorSpan">
-						{error}
-					</span>
-				</div>
-			</div>
-		)}
-	</div>
-);
 
 export {CustomTimeRangeForm};

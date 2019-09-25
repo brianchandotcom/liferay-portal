@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {act, create} from 'react-test-renderer';
 import {
 	processStatusConstants,
 	useProcessStatus,
 	ProcessStatusProvider,
 	ProcessStatusContext
 } from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/ProcessStatusStore.es';
+import {act, create} from 'react-test-renderer';
 import React, {useContext} from 'react';
 import {renderHook} from '@testing-library/react-hooks';
 

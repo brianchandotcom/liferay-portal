@@ -10,9 +10,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+import {MockRouter} from '../../../mock/MockRouter.es';
 import {ProcessStepContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/ProcessStepStore.es';
 import ProcessStepFilter from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/ProcessStepFilter.es';
-import {MockRouter} from '../../../mock/MockRouter.es';
 import React from 'react';
 
 const processSteps = [

@@ -10,10 +10,10 @@
  */
 
 import {cleanup, render, waitForElement} from '@testing-library/react';
-import React from 'react';
 import InstanceItemDetail from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/InstanceItemDetail.es';
 import {InstanceListContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/store/InstanceListStore.es';
 import {MockRouter} from '../../../mock/MockRouter.es';
+import React from 'react';
 
 describe('The instance item detail should', () => {
 	const baseInstance = {

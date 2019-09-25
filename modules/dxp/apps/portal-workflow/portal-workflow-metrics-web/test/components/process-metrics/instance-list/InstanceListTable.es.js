@@ -10,9 +10,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import React from 'react';
 import {InstanceListContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/store/InstanceListStore.es';
 import InstanceListTable from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/instance-list/InstanceListTable.es';
+import React from 'react';
 
 const instances = [
 	{

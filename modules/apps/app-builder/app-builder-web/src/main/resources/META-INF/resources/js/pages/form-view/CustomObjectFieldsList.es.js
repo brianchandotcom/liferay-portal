@@ -17,6 +17,7 @@ import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import FormViewContext from './FormViewContext.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
+import {UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD} from './actions.es';
 
 const getFieldTypes = ({
 	dataDefinition,
@@ -47,8 +48,27 @@ const getFieldTypes = ({
 };
 
 export default ({keywords}) => {
-	const [state] = useContext(FormViewContext);
+	const [state, dispatch] = useContext(FormViewContext);
+	const {
+		dataDefinition: {dataDefinitionFields}
+	} = state;
 	const fieldTypes = getFieldTypes(state);
+	const onClick = ({name}) => {
+		const dataDefinitionField = dataDefinitionFields.find(
+			({name: currentName}) => currentName === name
+		);
 
-	return <FieldTypeList fieldTypes={fieldTypes} keywords={keywords} />;
+		dispatch({
+			payload: {dataDefinitionField},
+			type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+		});
+	};
+
+	return (
+		<FieldTypeList
+			fieldTypes={fieldTypes}
+			keywords={keywords}
+			onClick={onClick}
+		/>
+	);
 };

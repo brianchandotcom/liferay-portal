@@ -8,7 +8,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "db-support"
 }
@@ -29,10 +28,6 @@ dependencies {
 	testCompile group: "com.h2database", name: "h2", version: h2Version
 	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 javadoc {

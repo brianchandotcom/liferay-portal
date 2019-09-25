@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "deployment-helper"
 }
@@ -21,10 +20,6 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferayOSGi {

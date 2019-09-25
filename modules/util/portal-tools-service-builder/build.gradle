@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	forcedExclusions "com.ibm.icu:icu4j:2.6.1"
 	goalPrefix = "service-builder"
@@ -41,10 +40,6 @@ dependencies {
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.11.0"
 
 	xmltask group: "com.oopsconsultancy", name: "xmltask", version: "1.16"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferay {

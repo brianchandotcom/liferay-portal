@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "bundle-support"
 	useSetterComments = false
@@ -38,10 +37,6 @@ dependencies {
 	testCompile group: "com.sun.net.httpserver", name: "http", version: "20070405"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile group: "org.littleshoot", name: "littleproxy", version: "1.1.1"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferayOSGi {

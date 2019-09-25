@@ -13,7 +13,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "theme-builder"
 }
@@ -52,10 +51,6 @@ dependencies {
 
 	testThemes project(":apps:frontend-theme:frontend-theme-admin")
 	testThemes project(":apps:frontend-theme:frontend-theme-classic")
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferay {

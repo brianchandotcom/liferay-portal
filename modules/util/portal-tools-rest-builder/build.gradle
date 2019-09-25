@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "rest-builder"
 }
@@ -41,10 +40,6 @@ deployDependencies {
 	rename(/j2objc-annotations-(.+)\.jar/, "j2objc-annotations" + renameSuffix)
 	rename(/jsr305-(.+)\.jar/, "jsr305" + renameSuffix)
 	rename(/Saxon-HE-(.+)\.jar/, "Saxon-HE" + renameSuffix)
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferay {

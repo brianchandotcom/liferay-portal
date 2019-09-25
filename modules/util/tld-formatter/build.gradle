@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "tld-formatter"
 }
@@ -22,10 +21,6 @@ dependencies {
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.14"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	compileOnly group: "xerces", name: "xercesImpl", transitive: false, version: "2.11.0"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferay {

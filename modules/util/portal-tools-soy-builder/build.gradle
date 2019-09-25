@@ -6,7 +6,6 @@ buildPluginDescriptor {
 	}
 
 	finalizedBy formatSource
-	finalizedBy formatXML
 
 	goalPrefix = "soy-builder"
 }
@@ -31,10 +30,6 @@ dependencies {
 
 	testCompile group: "com.liferay", name: "com.liferay.maven.executor", version: "1.0.0"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
-}
-
-formatSource {
-	mustRunAfter formatXML
 }
 
 liferayOSGi {

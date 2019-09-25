@@ -127,6 +127,10 @@ public final class Experiment {
 		return _pageURL;
 	}
 
+	public String getPublishedDXPVariantId() {
+		return _publishedDXPVariantId;
+	}
+
 	@JsonFormat(
 		pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
 		shape = JsonFormat.Shape.STRING, timezone = "UTC"
@@ -219,6 +223,10 @@ public final class Experiment {
 		_pageURL = pageURL;
 	}
 
+	public void setPublishedDXPVariantId(String publishedDXPVariantId) {
+		_publishedDXPVariantId = publishedDXPVariantId;
+	}
+
 	public void setStartedDate(Date startedDate) {
 		if (startedDate != null) {
 			_startedDate = new Date(startedDate.getTime());
@@ -244,6 +252,7 @@ public final class Experiment {
 	private String _pageRelativePath;
 	private String _pageTitle;
 	private String _pageURL;
+	private String _publishedDXPVariantId;
 	private Date _startedDate;
 
 }

@@ -25,3 +25,5 @@ window.Liferay.Util.sub = function(string, data) {
 		return data[key] === undefined ? match : data[key];
 	});
 };
+
+window.Liferay.Util.openToast = () => true;

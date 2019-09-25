@@ -29,6 +29,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
@@ -65,7 +66,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
-import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.ByteArrayInputStream;
 

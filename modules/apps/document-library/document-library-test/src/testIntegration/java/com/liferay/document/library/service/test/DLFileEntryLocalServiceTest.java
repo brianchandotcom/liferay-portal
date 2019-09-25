@@ -36,6 +36,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.io.ByteArrayInputStream;

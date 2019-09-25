@@ -125,6 +125,13 @@ public class ExperimentUtil {
 		experiment.setPageTitle(layout.getTitle(locale));
 		experiment.setPageURL(pageURL);
 
+		if (segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_COMPLETED) {
+
+			experiment.setPublishedDXPVariantId(
+				segmentsExperiment.getWinnerSegmentsExperienceKey());
+		}
+
 		if (segmentsExperiment.getSegmentsExperienceId() ==
 				SegmentsExperienceConstants.ID_DEFAULT) {
 

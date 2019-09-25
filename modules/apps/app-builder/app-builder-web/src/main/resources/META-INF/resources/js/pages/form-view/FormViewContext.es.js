@@ -80,8 +80,12 @@ const editFocusedCustomObjectField = ({
 			if (fieldName === propertyName) {
 				localizableProperty = localizable;
 
-				field = {
+				return {
 					...field,
+					localizedValue: {
+						...field.localizedValue,
+						[themeDisplay.getLanguageId()]: propertyValue
+					},
 					value: propertyValue
 				};
 			}

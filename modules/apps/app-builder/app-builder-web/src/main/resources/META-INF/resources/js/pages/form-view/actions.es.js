@@ -37,11 +37,13 @@ export const dropCustomObjectField = ({
 	const settingsContext = dataLayoutBuilder.getFieldSettingsContext(
 		dataDefinitionField
 	);
+	const {label} = dataDefinitionField;
 
 	return {
 		...payload,
 		fieldType: {
 			...fieldType,
+			label: label[themeDisplay.getLanguageId()],
 			settingsContext
 		}
 	};

@@ -396,8 +396,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Starting the OSGi framework");
 		}
 
-		_createTempDir();
-
 		_framework.start();
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
@@ -910,14 +908,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				}
 
 			});
-	}
-
-	private void _createTempDir() throws IOException {
-		Path tempDir = Paths.get(System.getProperty("java.io.tmpdir"));
-
-		if (!Files.exists(tempDir)) {
-			Files.createDirectory(tempDir);
-		}
 	}
 
 	private Set<Bundle> _deployStaticBundlesFromFile(

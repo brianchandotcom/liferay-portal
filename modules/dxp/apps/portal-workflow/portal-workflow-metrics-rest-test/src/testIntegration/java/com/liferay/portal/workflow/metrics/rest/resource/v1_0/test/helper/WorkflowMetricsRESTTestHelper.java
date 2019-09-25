@@ -248,13 +248,14 @@ public class WorkflowMetricsRESTTestHelper {
 	public Task addTask(long assigneeId, long companyId, long processId)
 		throws Exception {
 
+		String randomString = RandomTestUtil.randomString();
+
 		Task task = new Task() {
 			{
 				durationAvg = 0L;
 				instanceCount = 1L;
-				key = RandomTestUtil.randomString();
-				name = key;
-
+				key = randomString;
+				name = randomString;
 				onTimeInstanceCount = 0L;
 				overdueInstanceCount = 0L;
 			}

@@ -67,8 +67,10 @@ const Sidebar = React.forwardRef(
 	}
 );
 
-const SidebarBody = ({children}) => {
-	return <div className="sidebar-body">{children}</div>;
+const SidebarBody = ({children, className}) => {
+	return (
+		<div className={classNames(className, 'sidebar-body')}>{children}</div>
+	);
 };
 
 const SidebarFooter = ({children}) => {

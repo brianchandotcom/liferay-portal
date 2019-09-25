@@ -386,51 +386,9 @@ public class JournalDisplayContext {
 		return journalServiceConfiguration.charactersblacklist();
 	}
 
-	public SearchContainer<MBMessage> getCommentsSearchContainer()
-		throws PortalException {
-
-		SearchContainer<MBMessage> searchContainer = new SearchContainer(
-			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
-			null, null);
-
-		SearchContext searchContext = SearchContextFactory.getInstance(
-			_liferayPortletRequest.getHttpServletRequest());
-
-		searchContext.setAttribute(
-			Field.CLASS_NAME_ID,
-			PortalUtil.getClassNameId(JournalArticle.class));
-
-		searchContext.setAttribute("discussion", Boolean.TRUE);
-
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setStart(searchContainer.getStart());
-
-		List<MBMessage> mbMessages = new ArrayList<>();
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		for (Document document : hits.getDocs()) {
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
-				entryClassPK);
-
-			mbMessages.add(mbMessage);
-		}
-
-		searchContainer.setResults(mbMessages);
-
-		searchContainer.setTotal(hits.getLength());
-
-		return searchContainer;
-	}
-
 	public int getCommentsTotal() throws PortalException {
 		SearchContainer<MBMessage> commentsSearchContainer =
-			getCommentsSearchContainer();
+			_getCommentsSearchContainer();
 
 		return commentsSearchContainer.getTotal();
 	}
@@ -938,7 +896,326 @@ public class JournalDisplayContext {
 		return _restrictionType;
 	}
 
-	public SearchContainer getSearchContainer(boolean showVersions)
+	public SearchContainer getSearchContainer() throws PortalException {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		if (!isSearch()) {
+			_searchContainer = _getSearchContainer(false);
+
+			return _searchContainer;
+		}
+
+		if (isVersionsTabSelected()) {
+			_searchContainer = _getSearchContainer(true);
+
+			return _searchContainer;
+		}
+
+		if (isCommentsTabSelected()) {
+			_searchContainer = _getCommentsSearchContainer();
+
+			return _searchContainer;
+		}
+
+		_searchContainer = _getSearchContainer(false);
+
+		return _searchContainer;
+	}
+
+	public int getStatus() {
+		if (_status != null) {
+			return _status;
+		}
+
+		_status = ParamUtil.getInteger(
+			_httpServletRequest, "status", getDefaultStatus());
+
+		return _status;
+	}
+
+	public String getTabs1() {
+		if (_tabs1 != null) {
+			return _tabs1;
+		}
+
+		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1");
+
+		return _tabs1;
+	}
+
+	public int getTotalItems() throws PortalException {
+		SearchContainer articleSearch = _getSearchContainer(false);
+
+		return articleSearch.getTotal();
+	}
+
+	public int getVersionsTotal() throws PortalException {
+		SearchContainer articleSearch = _getSearchContainer(true);
+
+		return articleSearch.getTotal();
+	}
+
+	public boolean hasCommentsResults() throws PortalException {
+		if (getCommentsTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasResults() throws PortalException {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasVersionsResults() throws PortalException {
+		if (getVersionsTotal() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isCommentsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "comments") ||
+			(hasCommentsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationHome() {
+		if (Objects.equals(getNavigation(), "all")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationMine() {
+		if (Objects.equals(getNavigation(), "mine")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationRecent() {
+		if (Objects.equals(getNavigation(), "recent")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isNavigationStructure() {
+		if (Objects.equals(getNavigation(), "structure")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowInfoButton() {
+		if (isNavigationMine()) {
+			return false;
+		}
+
+		if (isNavigationRecent()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isVersionsTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "versions") ||
+			(hasVersionsResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isWebContentTabSelected() throws PortalException {
+		if (Objects.equals(getTabs1(), "web-content") ||
+			(hasResults() && Validator.isNull(getTabs1()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected SearchContext buildSearchContext(
+		List<Long> folderIds, int start, int end, Sort sort,
+		boolean showVersions) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(false);
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.ARTICLE_ID, getKeywords());
+		attributes.put(
+			Field.CLASS_NAME_ID, JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+		attributes.put(Field.CONTENT, getKeywords());
+		attributes.put(Field.DESCRIPTION, getKeywords());
+		attributes.put(Field.STATUS, getStatus());
+		attributes.put(Field.TITLE, getKeywords());
+		attributes.put("ddmStructureKey", getDDMStructureKey());
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("expandoAttributes", getKeywords());
+		params.put("keywords", getKeywords());
+
+		attributes.put("params", params);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(_themeDisplay.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
+		searchContext.setKeywords(getKeywords());
+		searchContext.setAttribute("head", !showVersions);
+		searchContext.setAttribute("latest", !showVersions);
+		searchContext.setAttribute("params", params);
+
+		if (!showVersions) {
+			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
+		}
+
+		searchContext.setEnd(end);
+		searchContext.setFolderIds(folderIds);
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
+	private SearchContainer<MBMessage> _getCommentsSearchContainer()
+		throws PortalException {
+
+		SearchContainer<MBMessage> searchContainer = new SearchContainer(
+			_liferayPortletRequest, _liferayPortletResponse.createRenderURL(),
+			null, null);
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_liferayPortletRequest.getHttpServletRequest());
+
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID,
+			PortalUtil.getClassNameId(JournalArticle.class));
+
+		searchContext.setAttribute("discussion", Boolean.TRUE);
+
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setStart(searchContainer.getStart());
+
+		List<MBMessage> mbMessages = new ArrayList<>();
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(MBMessage.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		for (Document document : hits.getDocs()) {
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+				entryClassPK);
+
+			mbMessages.add(mbMessage);
+		}
+
+		searchContainer.setResults(mbMessages);
+
+		searchContainer.setTotal(hits.getLength());
+
+		return searchContainer;
+	}
+
+	private String _getFeedsURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
+		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+
+		return portletURL.toString();
+	}
+
+	private JSONArray _getFoldersJSONArray(long groupId, long folderId) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
+			groupId, folderId);
+
+		for (JournalFolder folder : folders) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray childrenJSONArray = _getFoldersJSONArray(
+				groupId, folder.getFolderId());
+
+			if (childrenJSONArray.length() > 0) {
+				jsonObject.put("children", childrenJSONArray);
+			}
+
+			jsonObject.put(
+				"icon", "folder"
+			).put(
+				"id", folder.getFolderId()
+			).put(
+				"name", folder.getName()
+			);
+
+			if (folder.getFolderId() == getParentFolderId()) {
+				jsonObject.put("selected", true);
+			}
+
+			if (folder.getFolderId() == getFolderId()) {
+				jsonObject.put("disabled", true);
+			}
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
+	private SearchContainer _getSearchContainer(boolean showVersions)
 		throws PortalException {
 
 		if (_articleSearchContainer != null) {
@@ -1159,255 +1436,6 @@ public class JournalDisplayContext {
 		return _articleSearchContainer;
 	}
 
-	public int getStatus() {
-		if (_status != null) {
-			return _status;
-		}
-
-		_status = ParamUtil.getInteger(
-			_httpServletRequest, "status", getDefaultStatus());
-
-		return _status;
-	}
-
-	public String getTabs1() {
-		if (_tabs1 != null) {
-			return _tabs1;
-		}
-
-		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1");
-
-		return _tabs1;
-	}
-
-	public int getTotalItems() throws PortalException {
-		SearchContainer articleSearch = getSearchContainer(false);
-
-		return articleSearch.getTotal();
-	}
-
-	public int getVersionsTotal() throws PortalException {
-		SearchContainer articleSearch = getSearchContainer(true);
-
-		return articleSearch.getTotal();
-	}
-
-	public boolean hasCommentsResults() throws PortalException {
-		if (getCommentsTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasResults() throws PortalException {
-		if (getTotalItems() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasVersionsResults() throws PortalException {
-		if (getVersionsTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isCommentsTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "comments") ||
-			(hasCommentsResults() && Validator.isNull(getTabs1()))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationHome() {
-		if (Objects.equals(getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationMine() {
-		if (Objects.equals(getNavigation(), "mine")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationRecent() {
-		if (Objects.equals(getNavigation(), "recent")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isNavigationStructure() {
-		if (Objects.equals(getNavigation(), "structure")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isShowInfoButton() {
-		if (isNavigationMine()) {
-			return false;
-		}
-
-		if (isNavigationRecent()) {
-			return false;
-		}
-
-		if (isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isVersionsTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "versions") ||
-			(hasVersionsResults() && Validator.isNull(getTabs1()))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isWebContentTabSelected() throws PortalException {
-		if (Objects.equals(getTabs1(), "web-content") ||
-			(hasResults() && Validator.isNull(getTabs1()))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected SearchContext buildSearchContext(
-		List<Long> folderIds, int start, int end, Sort sort,
-		boolean showVersions) {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setAndSearch(false);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.ARTICLE_ID, getKeywords());
-		attributes.put(
-			Field.CLASS_NAME_ID, JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-		attributes.put(Field.CONTENT, getKeywords());
-		attributes.put(Field.DESCRIPTION, getKeywords());
-		attributes.put(Field.STATUS, getStatus());
-		attributes.put(Field.TITLE, getKeywords());
-		attributes.put("ddmStructureKey", getDDMStructureKey());
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("expandoAttributes", getKeywords());
-		params.put("keywords", getKeywords());
-
-		attributes.put("params", params);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setCompanyId(_themeDisplay.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setFolderIds(folderIds);
-		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
-		searchContext.setKeywords(getKeywords());
-		searchContext.setAttribute("head", !showVersions);
-		searchContext.setAttribute("latest", !showVersions);
-		searchContext.setAttribute("params", params);
-
-		if (!showVersions) {
-			searchContext.setAttribute("showNonindexable", Boolean.TRUE);
-		}
-
-		searchContext.setEnd(end);
-		searchContext.setFolderIds(folderIds);
-		searchContext.setStart(start);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		searchContext.setStart(start);
-
-		return searchContext;
-	}
-
-	private String _getFeedsURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view_feeds.jsp");
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-
-		return portletURL.toString();
-	}
-
-	private JSONArray _getFoldersJSONArray(long groupId, long folderId) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
-			groupId, folderId);
-
-		for (JournalFolder folder : folders) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray childrenJSONArray = _getFoldersJSONArray(
-				groupId, folder.getFolderId());
-
-			if (childrenJSONArray.length() > 0) {
-				jsonObject.put("children", childrenJSONArray);
-			}
-
-			jsonObject.put(
-				"icon", "folder"
-			).put(
-				"id", folder.getFolderId()
-			).put(
-				"name", folder.getName()
-			);
-
-			if (folder.getFolderId() == getParentFolderId()) {
-				jsonObject.put("selected", true);
-			}
-
-			if (folder.getFolderId() == getFolderId()) {
-				jsonObject.put("disabled", true);
-			}
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray;
-	}
-
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
@@ -1432,6 +1460,7 @@ public class JournalDisplayContext {
 	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
 	private Integer _restrictionType;
+	private SearchContainer _searchContainer;
 	private Integer _status;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;

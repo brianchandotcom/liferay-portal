@@ -18,7 +18,7 @@
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-web-content-was-found"
-	searchContainer="<%= journalDisplayContext.getSearchContainer(true) %>"
+	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.journal.model.JournalArticle"

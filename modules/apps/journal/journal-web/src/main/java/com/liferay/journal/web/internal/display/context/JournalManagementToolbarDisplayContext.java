@@ -75,7 +75,7 @@ public class JournalManagementToolbarDisplayContext
 
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
-			journalDisplayContext.getSearchContainer(false));
+			journalDisplayContext.getSearchContainer());
 
 		_journalDisplayContext = journalDisplayContext;
 		_trashHelper = trashHelper;

@@ -74,10 +74,10 @@ public class ExperimentUtilTest {
 			layoutFriendlyURL, locale, layoutTitle, layoutUuid);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			classPK, createDate, modifiedDate, name, description,
-			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
+			SegmentsExperienceConstants.ID_DEFAULT, classPK, name, description,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
+			StringPool.BLANK, createDate, modifiedDate, segmentsExperimentKey,
+			SegmentsExperimentConstants.STATUS_DRAFT,
 			SegmentsExperienceConstants.KEY_DEFAULT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
@@ -169,11 +169,10 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			classPK, createDate, modifiedDate, name, description,
-			segmentsExperienceId, segmentsExperimentKey,
+			segmentsExperienceId, classPK, name, description,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
-			segmentsExperienceKey);
+			StringPool.BLANK, createDate, modifiedDate, segmentsExperimentKey,
+			SegmentsExperimentConstants.STATUS_DRAFT, segmentsExperienceKey);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
@@ -249,12 +248,12 @@ public class ExperimentUtilTest {
 		);
 
 		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
-			RandomTestUtil.randomLong(), RandomTestUtil.nextDate(),
-			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), segmentsExperienceId,
-			RandomTestUtil.randomString(),
+			segmentsExperienceId, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_COMPLETED,
+			StringPool.BLANK, RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
+			SegmentsExperimentConstants.STATUS_COMPLETED,
 			segmentsExperience.getSegmentsExperienceKey());
 
 		String dataSourceId = RandomTestUtil.randomString();
@@ -389,10 +388,10 @@ public class ExperimentUtilTest {
 	}
 
 	private SegmentsExperiment _createSegmentsExperiment(
-		long classPK, Date createDate, Date modifiedDate, String name,
-		String description, long segmentsExperienceId,
-		String segmentsExperimentKey, String goal, String goalTarget,
-		int status, String winnerSegmentsExperienceKey) {
+		long segmentsExperienceId, long classPK, String name,
+		String description, String goal, String goalTarget, Date createDate,
+		Date modifiedDate, String segmentsExperimentKey, int status,
+		String winnerSegmentsExperienceKey) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);

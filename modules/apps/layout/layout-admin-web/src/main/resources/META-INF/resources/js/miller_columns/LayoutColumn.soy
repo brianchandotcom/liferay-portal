@@ -167,7 +167,7 @@
 					{/if}
 				{/let}
 
-				<div class="autofit-col flex-col">
+				<div class="autofit-col">
 					<div
 						class="custom-checkbox custom-control"
 						data-onclick="{$handleLayoutColumnItemCheckboxClick}"
@@ -181,7 +181,7 @@
 				</div>
 			{/if}
 
-			<div class="autofit-col flex-col flex-col-expand layout-column-item-title">
+			<div class="autofit-col autofit-col-expand layout-column-item-title">
 				<h4 class="list-group-title">
 					<span class="text-truncate">
 						{$layoutColumnItem.title}
@@ -205,7 +205,7 @@
 			{if $layoutColumnItem.actionURLs}
 				{if $layoutColumnItem.plid == '0'}
 					{if $layoutColumnItem.actionURLs['addURL']}
-						<div class="flex-col">
+						<div class="autofit-col">
 							<div class="quick-action-menu">
 								<a
 									class="component-action"
@@ -222,7 +222,7 @@
 					{/if}
 
 					{if $layoutColumnItem.actionURLs['configureURL']}
-						<div class="flex-col">
+						<div class="autofit-col">
 							<div class="quick-action-menu">
 								<a
 									class="component-action"
@@ -239,7 +239,7 @@
 					{/if}
 				{else}
 					{if $layoutColumnItem.actionURLs['addURL']}
-						<div class="flex-col">
+						<div class="autofit-col">
 							<div class="quick-action-menu">
 								<a
 									class="component-action"
@@ -255,7 +255,7 @@
 						</div>
 					{/if}
 
-					<div class="flex-col">
+					<div class="autofit-col">
 						{let $dropdownTriggerTitle kind="text"}
 							{msg desc=""}show-actions{/msg}
 						{/let}

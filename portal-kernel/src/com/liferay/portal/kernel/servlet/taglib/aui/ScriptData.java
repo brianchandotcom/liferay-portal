@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -26,7 +25,6 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -34,7 +32,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -117,7 +116,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		Collection<PortletData> portletDataCollection = Collections.singleton(
 			portletData);
 
-		if (!portletData._es6ModulesSet.isEmpty()) {
+		if (!portletData._es6TagInvocationDatas.isEmpty()) {
 			_writeEs6ModulesTo(writer, portletDataCollection);
 		}
 
@@ -132,95 +131,6 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		AUI, ES6
 
-	}
-
-	private String _generateModuleName(String name) {
-		String[] nameAlias = _splitNameAlias(name);
-
-		return nameAlias[0];
-	}
-
-	private String _generateVariable(
-		String name, Set<String> names, boolean useAlias) {
-
-		String[] nameAlias = _splitNameAlias(name);
-
-		if (useAlias && !Validator.isBlank(nameAlias[1])) {
-			return nameAlias[1];
-		}
-
-		name = nameAlias[0];
-
-		StringBuilder sb = new StringBuilder(name.length());
-
-		char c = name.charAt(0);
-
-		boolean modified = true;
-
-		if (((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) ||
-			(c == CharPool.UNDERLINE)) {
-
-			sb.append(c);
-
-			modified = false;
-		}
-		else if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
-			sb.append((char)(c + 32));
-		}
-		else {
-			sb.append(CharPool.UNDERLINE);
-		}
-
-		boolean startNewWord = false;
-
-		for (int i = 1; i < name.length(); i++) {
-			c = name.charAt(i);
-
-			if ((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z)) {
-				if (startNewWord) {
-					sb.append((char)(c - 32));
-
-					startNewWord = false;
-				}
-				else {
-					sb.append(c);
-				}
-			}
-			else if (((CharPool.UPPER_CASE_A <= c) &&
-					  (c <= CharPool.UPPER_CASE_Z)) ||
-					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
-					 (c == CharPool.UNDERLINE)) {
-
-				sb.append(c);
-
-				startNewWord = false;
-			}
-			else {
-				modified = true;
-
-				startNewWord = true;
-			}
-		}
-
-		if (_reservedWords.contains(name)) {
-			name = StringPool.UNDERLINE + name;
-		}
-
-		String safeName = name;
-
-		if (modified) {
-			safeName = sb.toString();
-
-			name = safeName;
-		}
-
-		int i = 1;
-
-		while (!names.add(name)) {
-			name = safeName.concat(String.valueOf(i++));
-		}
-
-		return name;
 	}
 
 	private PortletData _getPortletData(String portletId) {
@@ -242,18 +152,6 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 
 		return portletData;
-	}
-
-	private String[] _splitNameAlias(String name) {
-		String[] parts = _whitespacePattern.split(name, 4);
-
-		if ((parts.length == 3) &&
-			StringUtil.equalsIgnoreCase(parts[1], "as")) {
-
-			return new String[] {parts[0], parts[2]};
-		}
-
-		return new String[] {name, StringPool.BLANK};
 	}
 
 	private void _writeAuiModulesTo(
@@ -297,35 +195,31 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			portletDataCollection.size());
 		List<String> es6Modules = new ArrayList<>();
 		List<String> es6Variables = new ArrayList<>();
-		Set<String> variableNames = new HashSet<>();
+		Set<String> usedVariables = new HashSet<>();
 
 		for (PortletData portletData : portletDataCollection) {
-			if (!portletData._es6ModulesSet.isEmpty()) {
-				es6CallbacksSB.append("(function(){\n");
+			if (!portletData._es6TagInvocationDatas.isEmpty()) {
+				for (TagInvocationData tagInvocationData :
+						portletData._es6TagInvocationDatas) {
 
-				for (String es6Module : portletData._es6ModulesSet) {
-					es6Modules.add(_generateModuleName(es6Module));
+					List<String> modules = tagInvocationData.getModules();
 
-					String rawVariable = _generateVariable(
-						es6Module, variableNames, false);
+					Stream<String> stream = modules.stream();
 
-					es6Variables.add(rawVariable);
+					List<String> variables = stream.map(
+						module -> VariableUtil.generateVariable(
+							module, usedVariables)
+					).collect(
+						Collectors.toList()
+					);
 
-					es6CallbacksSB.append("var ");
+					es6Modules.addAll(modules);
+					es6Variables.addAll(variables);
 
-					String aliasedVariable = _generateVariable(
-						es6Module, variableNames, true);
-
-					es6CallbacksSB.append(aliasedVariable);
-
-					es6CallbacksSB.append(" = ");
-					es6CallbacksSB.append(rawVariable);
-					es6CallbacksSB.append(";\n");
+					es6CallbacksSB.append(
+						tagInvocationData.getContent(variables));
+					es6CallbacksSB.append(StringPool.NEW_LINE);
 				}
-
-				es6CallbacksSB.append(portletData._es6CallbackSB);
-
-				es6CallbacksSB.append("})();\n");
 			}
 		}
 
@@ -351,23 +245,18 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			}
 
 			writer.write(") {\n");
+			writer.write("try {\n");
 
 			es6CallbacksSB.writeTo(writer);
+
+			writer.write("} catch (err) {\n");
+			writer.write("  console.error(err);\n");
+			writer.write("}\n");
 
 			writer.write("});");
 		}
 	}
 
-	private static final Set<String> _reservedWords = new HashSet<>(
-		Arrays.asList(
-			"arguments", "await", "break", "case", "catch", "class", "const",
-			"continue", "debugger", "default", "delete", "do", "else", "enum",
-			"eval", "export", "extends", "false", "finally", "for", "function",
-			"if", "implements", "import", "in", "instanceof", "interface",
-			"let", "new", "null", "package", "private", "protected", "public",
-			"return", "static", "super", "switch", "this", "throw", "true",
-			"try", "typeof", "var", "void", "while", "with", "yield"));
-	private static final Pattern _whitespacePattern = Pattern.compile("\\s+");
 	private static final long serialVersionUID = 1L;
 
 	private final ConcurrentMap<String, PortletData> _portletDataMap =
@@ -394,18 +283,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 					}
 				}
 				else {
-					_es6CallbackSB.append("(function() {\n");
-					_es6CallbackSB.append("try {\n");
-					_es6CallbackSB.append(content);
-					_es6CallbackSB.append("\n}\n");
-					_es6CallbackSB.append("catch (err) {\n");
-					_es6CallbackSB.append("console.error(err);\n");
-					_es6CallbackSB.append("}\n");
-					_es6CallbackSB.append("})();");
-
-					for (String module : modulesArray) {
-						_es6ModulesSet.add(StringUtil.trim(module));
-					}
+					_es6TagInvocationDatas.add(
+						new TagInvocationData(content, modules));
 				}
 			}
 		}
@@ -429,20 +308,15 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 					}
 				}
 				else {
-					_es6CallbackSB.append("(function() {");
-					_es6CallbackSB.append(contentSB);
-					_es6CallbackSB.append("})();");
-
-					for (String module : modulesArray) {
-						_es6ModulesSet.add(StringUtil.trim(module));
-					}
+					_es6TagInvocationDatas.add(
+						new TagInvocationData(contentSB, modules));
 				}
 			}
 		}
 
 		public void mark() {
 			_auiCallbackSBIndex = _auiCallbackSB.index();
-			_es6CallbackSBIndex = _es6CallbackSB.index();
+			_es6TagInvocationDatasIndex = _es6TagInvocationDatas.size();
 			_rawSBIndex = _rawSB.index();
 		}
 
@@ -451,8 +325,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 				_auiCallbackSB.setIndex(_auiCallbackSBIndex);
 			}
 
-			if (_es6CallbackSBIndex >= 0) {
-				_es6CallbackSB.setIndex(_es6CallbackSBIndex);
+			if (_es6TagInvocationDatasIndex >= 0) {
+				_es6TagInvocationDatas = _es6TagInvocationDatas.subList(
+					0, _es6TagInvocationDatasIndex);
 			}
 
 			if (_rawSBIndex >= 0) {
@@ -465,9 +340,9 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		private final StringBundler _auiCallbackSB = new StringBundler();
 		private int _auiCallbackSBIndex = -1;
 		private final Set<String> _auiModulesSet = new HashSet<>();
-		private final StringBundler _es6CallbackSB = new StringBundler();
-		private int _es6CallbackSBIndex = -1;
-		private final Set<String> _es6ModulesSet = new HashSet<>();
+		private List<TagInvocationData> _es6TagInvocationDatas =
+			new ArrayList<>();
+		private int _es6TagInvocationDatasIndex = -1;
 		private final StringBundler _rawSB = new StringBundler();
 		private int _rawSBIndex = -1;
 

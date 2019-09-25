@@ -169,6 +169,10 @@ class DataLayoutBuilder extends Component {
 
 				return {
 					...field,
+					localizedValue: {
+						...field.localizedValue,
+						[themeDisplay.getLanguageId()]: propertyValue
+					},
 					value: propertyValue || field.value
 				};
 			})

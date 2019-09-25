@@ -69,7 +69,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 		DDMFormField labelDDMFormField = ddmFormFieldsMap.get("label");
 
 		Assert.assertNotNull(labelDDMFormField);
-		Assert.assertEquals("key_value", labelDDMFormField.getType());
+		Assert.assertEquals("text", labelDDMFormField.getType());
 		Assert.assertNotNull(labelDDMFormField.getLabel());
 
 		Map<String, Object> properties = labelDDMFormField.getProperties();

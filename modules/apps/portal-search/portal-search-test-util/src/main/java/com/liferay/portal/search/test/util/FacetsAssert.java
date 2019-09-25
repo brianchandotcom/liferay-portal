@@ -14,12 +14,16 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,12 +55,29 @@ public class FacetsAssert {
 	}
 
 	public static void assertFrequencies(
+		String facetName, SearchContext searchContext, Hits hits,
+		Map<String, Integer> expected) {
+
+		Map<String, Facet> facets = searchContext.getFacets();
+
+		Facet facet = facets.get(facetName);
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		AssertUtils.assertEquals(
+			StringBundler.concat(
+				searchContext.getAttribute("queryString"), "->",
+				StringUtil.merge(hits.getDocs())),
+			expected,
+			TermCollectorUtil.toMap(facetCollector.getTermCollectors()));
+	}
+
+	public static void assertFrequencies(
 		String facetName, SearchContext searchContext, List<String> expected) {
 
-		String message = (String)searchContext.getAttribute("queryString");
-
 		assertFrequencies(
-			message, searchContext.getFacet(facetName), expected.toString());
+			(String)searchContext.getAttribute("queryString"),
+			searchContext.getFacet(facetName), String.valueOf(expected));
 	}
 
 	protected static String toString(TermCollector termCollector) {

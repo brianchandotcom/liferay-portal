@@ -97,7 +97,7 @@ const PageContent = props => {
 		>
 			<div className="d-flex py-3 pl-3 pr-2">
 				<div className="autofit-col autofit-col-expand">
-					<strong className="list-group-title truncate-text">
+					<strong className="list-group-title text-truncate">
 						{props.title}
 					</strong>
 

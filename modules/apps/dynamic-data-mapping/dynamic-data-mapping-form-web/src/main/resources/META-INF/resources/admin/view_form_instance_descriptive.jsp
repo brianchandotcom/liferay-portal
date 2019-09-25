@@ -29,14 +29,14 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 %>
 
 <div class="clamp-container">
-	<h2 class="h5 truncate-text">
+	<h2 class="h5 text-truncate">
 		<aui:a cssClass="form-instance-name" href="<%= href %>">
 			<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
 		</aui:a>
 	</h2>
 
 	<span class="text-default">
-		<div class="form-instance-description truncate-text">
+		<div class="form-instance-description text-truncate">
 			<%= HtmlUtil.escape(ddmFormInstance.getDescription(locale)) %>
 		</div>
 	</span>

@@ -74,9 +74,9 @@ public class BaseMentionsEditorConfigContributor
 			"<div class=\"p-1 autofit-row autofit-row-center\">",
 			"<div class=\"autofit-col inline-item-before\">{portraitHTML}",
 			"</div><div class=\"autofit-col autofit-col-expand\">",
-			"<strong class=\"truncate-text\">{fullName}</strong>",
+			"<strong class=\"text-truncate\">{fullName}</strong>",
 			"<div class=\"autofit-col-expand\">",
-			"<small class=\"truncate-text\">@{screenName}</small></div></div>",
+			"<small class=\"text-truncate\">@{screenName}</small></div></div>",
 			"</div>");
 
 		triggerJSONObject.put("tplResults", tplResults);

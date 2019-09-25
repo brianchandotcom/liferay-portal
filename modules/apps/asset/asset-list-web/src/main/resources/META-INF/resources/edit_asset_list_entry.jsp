@@ -86,7 +86,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 											editAssetListEntryURL.setParameter("segmentsEntryId", String.valueOf(assetListEntrySegmentsEntryRel.getSegmentsEntryId()));
 											%>
 
-											<a class="nav-link truncate-text <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>" href="<%= editAssetListEntryURL.toString() %>">
+											<a class="nav-link text-truncate <%= (editAssetListDisplayContext.getSegmentsEntryId() == assetListEntrySegmentsEntryRel.getSegmentsEntryId()) ? "active" : StringPool.BLANK %>" href="<%= editAssetListEntryURL.toString() %>">
 												<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(assetListEntrySegmentsEntryRel.getSegmentsEntryId(), locale)) %>
 											</a>
 										</li>

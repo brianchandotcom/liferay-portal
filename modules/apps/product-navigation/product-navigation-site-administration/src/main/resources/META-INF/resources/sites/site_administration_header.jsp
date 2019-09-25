@@ -87,7 +87,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 				</c:otherwise>
 			</c:choose>
 
-			<span class="site-name truncate-text">
+			<span class="site-name text-truncate">
 				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
 				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">

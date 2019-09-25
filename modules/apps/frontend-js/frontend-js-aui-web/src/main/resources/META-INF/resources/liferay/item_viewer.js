@@ -98,7 +98,7 @@ AUI.add(
 			CSS_ICON_MONOSPACED +
 			'">' +
 			Liferay.Util.getLexiconIconTpl('angle-left') +
-			'</span><span class="lfr-item-viewer-close-text truncate-text">{0}</span></button>';
+			'</span><span class="lfr-item-viewer-close-text text-truncate">{0}</span></button>';
 
 		var TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
 

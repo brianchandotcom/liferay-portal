@@ -39,7 +39,7 @@ AUI.add(
 			'</div>',
 			'<div class="card-col-content card-col-gutters clamp-horizontal">',
 			'<div class="clamp-container">',
-			'<span class="file-title truncate-text" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
+			'<span class="file-title text-truncate" title="{[ LString.escapeHTML(values.title ? values.title : values.name) ]}">{[ LString.escapeHTML(values.title ? values.title : values.name) ]}</span>',
 			'</div>',
 			'<span class="progress-bar">',
 			'<span class="progress" id="{id}progress"></span>',

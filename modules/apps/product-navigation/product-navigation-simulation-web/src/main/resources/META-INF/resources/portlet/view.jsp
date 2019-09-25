@@ -35,7 +35,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 				<div class="panel-header panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" role="tab">
 					<div class="panel-title">
 						<div aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle panel-toggler" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
-							<span class="category-name truncate-text"><%= panelApp.getLabel(locale) %></span>
+							<span class="category-name text-truncate"><%= panelApp.getLabel(locale) %></span>
 
 							<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 

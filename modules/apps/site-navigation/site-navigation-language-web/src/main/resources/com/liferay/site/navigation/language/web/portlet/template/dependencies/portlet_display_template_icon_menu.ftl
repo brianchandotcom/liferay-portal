@@ -1,7 +1,7 @@
 <#if entries?has_content>
 	<#assign normalizedDefaultLanguageId = stringUtil.replace(languageId, "_", "-") />
 
-	<div class="truncate-text">
+	<div class="text-truncate">
 		<@liferay_ui["icon-menu"]
 			direction="left-side"
 			icon=stringUtil.toLowerCase(normalizedDefaultLanguageId)

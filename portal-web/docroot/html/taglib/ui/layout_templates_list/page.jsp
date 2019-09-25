@@ -53,7 +53,7 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 
 								<div class="card-col-content card-col-gutters clamp-horizontal">
 									<div class="clamp-container">
-										<span class="truncate-text" title="<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>"><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+										<span class="text-truncate" title="<%= HtmlUtil.escape(layoutTemplate.getName(locale)) %>"><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
 									</div>
 								</div>
 							</div>

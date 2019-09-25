@@ -21,7 +21,7 @@ export const UPDATE_FOCUSED_FIELD = 'UPDATE_FOCUSED_FIELD';
 export const UPDATE_IDS = 'UPDATE_IDS';
 export const UPDATE_PAGES = 'UPDATE_PAGES';
 
-export const addCustomObjectField = ({
+export const dropCustomObjectField = ({
 	dataDefinition,
 	dataDefinitionFieldName,
 	dataLayoutBuilder,
@@ -46,7 +46,7 @@ export const addCustomObjectField = ({
 	};
 };
 
-export const addLayoutBuilderField = ({
+export const dropLayoutBuilderField = ({
 	dataLayoutBuilder,
 	fieldTypeName,
 	...payload

@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -71,13 +73,14 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.addFacet(facet);
 
-		search(searchContext);
+		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = SearchMapUtil.join(
 			toMap(configRange1, 0), toMap(configRange2, 1),
 			toMap(customRange, 1));
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	protected static JSONObject createDataJSONObject(String... ranges) {

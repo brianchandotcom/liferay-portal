@@ -40,6 +40,7 @@ import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.search.facet.folder.FolderFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -114,8 +115,8 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(dlFolderIds, 1));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
 	@Test
@@ -147,8 +148,8 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(dlFolderIds, 1));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
 	@Test
@@ -176,8 +177,8 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), "0"));
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(dlFolderIds, 1));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 1));
 	}
 
 	@Test
@@ -208,8 +209,8 @@ public class FolderFacetTest extends BaseFacetedSearcherTestCase {
 		List<String> dlFolderIds = Arrays.asList(
 			ArrayUtil.append(getFolderIds(_dlFolders), StringPool.BLANK));
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(dlFolderIds, 2));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(dlFolderIds, 2));
 	}
 
 	protected void assertEntryClassNames(

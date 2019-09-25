@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
@@ -93,8 +94,8 @@ public class AssetEntriesFacetedSearcherTest
 
 		assertEntryClassNames(_entryClassNames, hits, facet, searchContext);
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(_entryClassNames));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(_entryClassNames));
 	}
 
 	@Test
@@ -117,8 +118,8 @@ public class AssetEntriesFacetedSearcherTest
 
 		assertEntryClassNames(_entryClassNames, hits, facet, searchContext);
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(_entryClassNames));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(_entryClassNames));
 	}
 
 	@Test
@@ -141,8 +142,8 @@ public class AssetEntriesFacetedSearcherTest
 			Arrays.asList(JournalArticle.class.getName()), hits, facet,
 			searchContext);
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext, toMap(_entryClassNames));
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, toMap(_entryClassNames));
 	}
 
 	protected static Map<String, Integer> toMap(String key, Integer value) {

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.facet.site.SiteFacetFactory;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -68,12 +69,13 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		searchContext.addFacet(facet);
 
-		search(searchContext);
+		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = SearchMapUtil.join(
 			toMap(group1, 1), toMap(group2, 2));
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	@Test
@@ -105,7 +107,8 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		Map<String, Integer> frequencies = SearchMapUtil.join(
 			toMap(group1, 1), toMap(group2, 1));
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 
 		Map<String, String> tags = SearchMapUtil.join(
 			toMap(user1, tag1), toMap(user2, tag2));
@@ -143,7 +146,8 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		Map<String, Integer> frequencies = toMap(group1, 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 
 		Map<String, String> tags = toMap(user1, tag1);
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -74,8 +75,8 @@ public class AssetEntriesVersionFacetedSearcherTest
 
 		assertVersions(Arrays.asList("1.0"), hits, keyword);
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext,
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits,
 			Collections.singletonMap(JournalArticle.class.getName(), 1));
 	}
 
@@ -99,8 +100,8 @@ public class AssetEntriesVersionFacetedSearcherTest
 
 		assertVersions(Arrays.asList("1.1"), hits, keyword);
 
-		assertFrequencies(
-			facet.getFieldName(), searchContext,
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits,
 			Collections.singletonMap(JournalArticle.class.getName(), 1));
 	}
 

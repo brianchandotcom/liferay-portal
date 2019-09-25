@@ -18,22 +18,17 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.test.util.AssertUtils;
-import com.liferay.portal.search.test.util.TermCollectorUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
@@ -99,41 +94,6 @@ public abstract class BaseFacetedSearcherTestCase {
 			(String)searchContext.getAttribute("queryString") + "->" +
 				documents.toString(),
 			documents.isEmpty());
-	}
-
-	protected void assertFrequencies(
-		String fieldName, SearchContext searchContext, Hits hits,
-		Map<String, Integer> expected) {
-
-		assertFrequencies(
-			fieldName, searchContext, expected,
-			StringBundler.concat(
-				searchContext.getAttribute("queryString"), "->",
-				StringUtil.merge(hits.getDocs())));
-	}
-
-	protected void assertFrequencies(
-		String fieldName, SearchContext searchContext,
-		Map<String, Integer> expected) {
-
-		assertFrequencies(
-			fieldName, searchContext, expected,
-			(String)searchContext.getAttribute("queryString"));
-	}
-
-	protected void assertFrequencies(
-		String fieldName, SearchContext searchContext,
-		Map<String, Integer> expected, String message) {
-
-		Map<String, Facet> facets = searchContext.getFacets();
-
-		Facet facet = facets.get(fieldName);
-
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		AssertUtils.assertEquals(
-			message, expected,
-			TermCollectorUtil.toMap(facetCollector.getTermCollectors()));
 	}
 
 	protected void assertTags(

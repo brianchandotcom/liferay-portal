@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
 import com.liferay.portal.search.test.util.DocumentsAssert;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -85,7 +86,8 @@ public class AssetTagNamesFacetedSearcherTest
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			StringUtil.toLowerCase(tag), 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	@Test
@@ -100,11 +102,12 @@ public class AssetTagNamesFacetedSearcherTest
 
 		searchContext.addFacet(facet);
 
-		search(searchContext);
+		Hits hits = search(searchContext);
 
 		Map<String, Integer> frequencies = Collections.singletonMap(tag, 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	@Test
@@ -154,7 +157,8 @@ public class AssetTagNamesFacetedSearcherTest
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			tagToLowerCase, 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
 	protected void addJournalArticle(Group group, String title)

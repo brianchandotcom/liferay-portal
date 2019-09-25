@@ -25,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -117,12 +119,13 @@ public class PermissionFilterFacetedSearcherTest
 
 		searchContext.addFacet(facet);
 
-		search(searchContext);
+		Hits hits = search(searchContext);
 
 		Map<String, Integer> expected = Collections.singletonMap(
 			JournalArticle.class.getName(), 1);
 
-		assertFrequencies(facet.getFieldName(), searchContext, expected);
+		FacetsAssert.assertFrequencies(
+			facet.getFieldName(), searchContext, hits, expected);
 	}
 
 	protected void addJournalArticle(

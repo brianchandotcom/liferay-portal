@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.facet.category.CategoryFacetFactory;
+import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -97,7 +98,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			String.valueOf(categoryId), 1);
 
-		assertFrequencies(
+		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 
@@ -130,7 +131,7 @@ public class CategoryFacetTest extends BaseFacetedSearcherTestCase {
 		Map<String, Integer> frequencies = Collections.singletonMap(
 			String.valueOf(categoryId), 1);
 
-		assertFrequencies(
+		FacetsAssert.assertFrequencies(
 			facet.getFieldName(), searchContext, hits, frequencies);
 	}
 

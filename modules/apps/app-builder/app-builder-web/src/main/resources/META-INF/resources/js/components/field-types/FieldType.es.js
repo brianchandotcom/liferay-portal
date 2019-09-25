@@ -40,7 +40,8 @@ export default props => {
 		icon,
 		label,
 		name,
-		onAddColumn = () => {}
+		onClick = () => {},
+		onDoubleClick = () => {}
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
@@ -59,12 +60,20 @@ export default props => {
 		preview(getEmptyImage(), {captureDraggingState: true});
 	}, [preview]);
 
-	const handleOnAddColumn = label => {
+	const handleOnClick = () => {
 		if (disabled) {
 			return;
 		}
 
-		onAddColumn(label);
+		onClick({...props});
+	};
+
+	const handleOnDoubleClick = () => {
+		if (disabled) {
+			return;
+		}
+
+		onDoubleClick({...props});
 	};
 
 	const fieldIcon = ICONS[icon] ? ICONS[icon] : icon;
@@ -83,7 +92,8 @@ export default props => {
 				}
 			)}
 			data-field-type-name={name}
-			onDoubleClick={() => handleOnAddColumn(label)}
+			onClick={() => handleOnClick()}
+			onDoubleClick={() => handleOnDoubleClick()}
 			ref={drag}
 		>
 			{dragAlignment === 'left' && (

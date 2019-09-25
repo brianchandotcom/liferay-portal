@@ -237,6 +237,7 @@ function SegmentsExperimentsSidebar({
 		APIService.editExperimentStatus(body)
 			.then(function _successCallback(objectResponse) {
 				const {editable, status} = objectResponse.segmentsExperiment;
+
 				if (
 					status.value === STATUS_TERMINATED ||
 					status.value === STATUS_COMPLETED

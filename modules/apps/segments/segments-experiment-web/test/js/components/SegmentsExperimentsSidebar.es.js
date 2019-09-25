@@ -32,7 +32,8 @@ import {INITIAL_CONFIDENCE_LEVEL} from '../../../src/main/resources/META-INF/res
 import {
 	STATUS_FINISHED_WINNER,
 	STATUS_COMPLETED,
-	STATUS_RUNNING
+	STATUS_RUNNING,
+	STATUS_TERMINATED
 } from '../../../src/main/resources/META-INF/resources/js/util/statuses.es';
 
 jest.mock(
@@ -218,7 +219,7 @@ describe('Variants', () => {
 describe('Run and review test', () => {
 	afterEach(cleanup);
 
-	it('can view review Experiment Modal', async () => {
+	it('can view Review Experiment Modal', async () => {
 		const {getByText, getByDisplayValue, getAllByDisplayValue} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
@@ -262,14 +263,8 @@ describe('Run and review test', () => {
 		expect(getEstimatedTime).toHaveBeenCalledTimes(1);
 	});
 
-	test('Running test cannot be edited', async () => {
-		const {
-			APIServiceMocks,
-			findByText,
-			queryAllByLabelText,
-			getByText,
-			debug
-		} = renderApp({
+	test("can run test that won't be editable", async () => {
+		const {APIServiceMocks, queryAllByLabelText, getByText} = renderApp({
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants
@@ -314,9 +309,33 @@ describe('Run and review test', () => {
 		expect(queryAllByLabelText('show-actions').length).toBe(0);
 	});
 
-	test.todo(
-		'Variants cannot be edited/deleted/added in a running experiment'
-	);
+	it('Variants cannot be edited/deleted/added in a running experiment', async () => {
+		const runningExperiment = {
+			...segmentsExperiment,
+			editable: false,
+			status: {
+				label: 'completed',
+				status: STATUS_RUNNING
+			}
+		};
+
+		const {queryAllByLabelText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: runningExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+
+		/*
+		 * There is one traffic split label per variant
+		 */
+		expect(queryAllByLabelText('traffic-split').length).toBe(
+			segmentsVariants.length
+		);
+		/*
+		 * There is no show action button
+		 */
+		expect(queryAllByLabelText('show-actions').length).toBe(0);
+	});
 });
 
 describe('Click Target selection', () => {
@@ -358,7 +377,44 @@ describe('Click Target selection', () => {
 });
 
 describe('Experiment history tab', () => {
-	test.todo('test is archived after terminating it');
+	test('test is archived after terminating it', async () => {
+		window.confirm = jest.fn(() => true);
+
+		const runningExperiment = {
+			...segmentsExperiment,
+			editable: false,
+			status: {
+				label: 'completed',
+				value: STATUS_RUNNING
+			}
+		};
+
+		const {APIServiceMocks, getByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: runningExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+		const {editExperimentStatus} = APIServiceMocks;
+
+		const terminateButton = getByText('terminate-test');
+
+		userEvent.click(terminateButton);
+
+		expect(window.confirm).toBeCalled();
+		expect(editExperimentStatus).toHaveBeenCalledWith(
+			expect.objectContaining({
+				status: STATUS_TERMINATED
+			})
+		);
+
+		await waitForElementToBeRemoved(() => getByText('terminate-test'));
+
+		/*
+		 * Terminated test should be archived now
+		 */
+		await waitForElement(() => getByText('history (1)'));
+		getByText('create-test');
+	});
 
 	test.todo('test is archive after completing it');
 

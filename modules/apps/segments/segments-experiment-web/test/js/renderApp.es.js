@@ -14,11 +14,7 @@
 
 import React from 'react';
 import {render} from '@testing-library/react';
-import {
-	segmentsGoals,
-	DEFAULT_ESTIMATED_DAYS,
-	segmentsExperiment
-} from './fixtures.es';
+import {segmentsGoals, DEFAULT_ESTIMATED_DAYS} from './fixtures.es';
 import SegmentsExperimentsSidebar from '../../src/main/resources/META-INF/resources/js/components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from '../../src/main/resources/META-INF/resources/js/context.es';
 
@@ -39,6 +35,9 @@ export default function renderApp({
 		createVariant = jest.fn(_createVariantMock),
 		deleteVariant = () => {},
 		editExperiment = () => {},
+		editExperimentStatus = jest.fn(
+			_editExperimentStatusMockGenerator(initialSegmentsExperiment)
+		),
 		editVariant = () => {},
 		getEstimatedTime = jest.fn(_getEstimatedTimeMock),
 		publishExperience = jest.fn(
@@ -57,6 +56,7 @@ export default function renderApp({
 					createVariant,
 					deleteVariant,
 					editExperiment,
+					editExperimentStatus,
 					editVariant,
 					getEstimatedTime,
 					publishExperience,
@@ -89,6 +89,7 @@ export default function renderApp({
 		...renderMethods,
 		APIServiceMocks: {
 			createVariant,
+			editExperimentStatus,
 			getEstimatedTime,
 			publishExperience,
 			runExperiment
@@ -126,12 +127,7 @@ const _publishExperienceMockGenerator = experiment => ({status}) =>
 		}
 	});
 
-const _runExperimentMockGenerator = segmentsExperiment => ({
-	confidenceLevel,
-	segmentsExperimentId,
-	segmentsExperimentRels,
-	status
-}) =>
+const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>
 	Promise.resolve({
 		segmentsExperiment: {
 			...segmentsExperiment,
@@ -139,3 +135,14 @@ const _runExperimentMockGenerator = segmentsExperiment => ({
 			status: {label: 'running', value: status}
 		}
 	});
+
+const _editExperimentStatusMockGenerator = experiment => ({status}) => {
+	return Promise.resolve({
+		segmentsExperiment: {
+			...experiment,
+			status: {
+				value: status
+			}
+		}
+	});
+};

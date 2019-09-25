@@ -115,7 +115,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 
 			<ul class="list-group system-action-group">
 				<li class="clearfix list-group-item">
-					<div class="pull-left">
+					<div class="float-left">
 						<liferay-ui:message key="reindex-all-search-indexes" />
 					</div>
 
@@ -147,7 +147,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 					</div>
 				</li>
 				<li class="clearfix list-group-item">
-					<div class="pull-left">
+					<div class="float-left">
 						<liferay-ui:message key="reindex-all-spell-check-indexes" />
 					</div>
 
@@ -166,7 +166,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 				%>
 
 					<li class="clearfix list-group-item">
-						<div class="pull-left">
+						<div class="float-left">
 							<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
 						</div>
 

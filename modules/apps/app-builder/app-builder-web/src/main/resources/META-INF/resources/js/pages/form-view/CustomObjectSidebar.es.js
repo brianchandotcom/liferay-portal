@@ -19,7 +19,8 @@ import React, {
 	useState,
 	useEffect,
 	useContext,
-	useCallback
+	useCallback,
+	useLayoutEffect
 } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import classNames from 'classnames';
@@ -43,6 +44,16 @@ const DropDown = () => {
 		setActive(false);
 		dispatch({payload: {fieldTypeName}, type: ADD_CUSTOM_OBJECT_FIELD});
 	};
+
+	useLayoutEffect(() => {
+		if (active) {
+			const {parentElement} = document.querySelector(
+				'.custom-object-dropdown-list'
+			);
+
+			parentElement.classList.add('custom-object-dropdown-menu');
+		}
+	}, [active]);
 
 	return (
 		<ClayDropDown

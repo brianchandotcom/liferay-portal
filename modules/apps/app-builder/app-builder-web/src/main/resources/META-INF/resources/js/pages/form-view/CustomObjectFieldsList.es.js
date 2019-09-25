@@ -18,7 +18,12 @@ import FormViewContext from './FormViewContext.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
 
-const getFieldTypes = ({dataDefinition, dataLayout, fieldTypes}) => {
+const getFieldTypes = ({
+	dataDefinition,
+	dataLayout,
+	fieldTypes,
+	focusedCustomObjectField
+}) => {
 	const {dataDefinitionFields} = dataDefinition;
 	const {dataLayoutPages} = dataLayout;
 
@@ -28,6 +33,7 @@ const getFieldTypes = ({dataDefinition, dataLayout, fieldTypes}) => {
 		});
 
 		return {
+			active: name === focusedCustomObjectField.name,
 			className: 'custom-object-field',
 			description: fieldTypeSettings.label,
 			disabled: containsField(dataLayoutPages, name),

@@ -75,7 +75,7 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 
 	return new Form(
 		{
-			...getFilteredSettingsContext(settingsContext),
+			...settingsContext,
 			editable: true,
 			events: {
 				attached: handleFormAttached,

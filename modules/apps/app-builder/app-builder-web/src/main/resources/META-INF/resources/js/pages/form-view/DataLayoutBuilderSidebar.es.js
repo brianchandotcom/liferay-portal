@@ -46,24 +46,33 @@ const DefaultSidebarBody = ({keywords}) => {
 
 const SettingsSidebarBody = () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [{focusedField}] = useContext(FormViewContext);
-	const {settingsContext} = focusedField;
+	const [
+		{
+			focusedCustomObjectField: {settingsContext: fieldSettingsContext},
+			focusedField: {settingsContext: customObjectFieldSettingsContext}
+		}
+	] = useContext(FormViewContext);
 	const formRef = useRef();
 	const [form, setForm] = useState(null);
+	const settingsContext =
+		customObjectFieldSettingsContext || fieldSettingsContext;
 
 	useEffect(() => {
+		const filteredSettingsContext = getFilteredSettingsContext(
+			settingsContext
+		);
+
 		if (form === null) {
 			setForm(
 				renderSettingsForm(
-					{dataLayoutBuilder, settingsContext},
+					{
+						dataLayoutBuilder,
+						settingsContext: filteredSettingsContext
+					},
 					formRef.current
 				)
 			);
 		} else {
-			const filteredSettingsContext = getFilteredSettingsContext(
-				settingsContext
-			);
-
 			form.pages = filteredSettingsContext.pages;
 		}
 	}, [dataLayoutBuilder, form, formRef, settingsContext]);
@@ -76,8 +85,15 @@ const SettingsSidebarBody = () => {
 };
 
 const SettingsSidebarHeader = () => {
-	const [{fieldTypes, focusedField}] = useContext(FormViewContext);
-	const {settingsContext} = focusedField;
+	const [{fieldTypes, focusedCustomObjectField, focusedField}] = useContext(
+		FormViewContext
+	);
+	let {settingsContext} = focusedField;
+
+	if (focusedCustomObjectField.settingsContext) {
+		settingsContext = focusedCustomObjectField.settingsContext;
+	}
+
 	const visitor = new PagesVisitor(settingsContext.pages);
 	const typeField = visitor.findField(field => field.fieldName === 'type');
 
@@ -133,7 +149,9 @@ const SettingsSidebarHeader = () => {
 
 export default ({dataLayoutBuilderElementId}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [{focusedField}] = useContext(FormViewContext);
+	const [{focusedCustomObjectField, focusedField}] = useContext(
+		FormViewContext
+	);
 	const [keywords, setKeywords] = useState('');
 	const [sidebarClosed, setSidebarClosed] = useState(false);
 
@@ -158,19 +176,22 @@ export default ({dataLayoutBuilderElementId}) => {
 	}, [dataLayoutBuilder, sidebarRef]);
 
 	const hasFocusedField = Object.keys(focusedField).length > 0;
+	const hasFocusedCustomObjectField =
+		Object.keys(focusedCustomObjectField).length > 0;
+	const displaySettings = hasFocusedCustomObjectField || hasFocusedField;
 
 	return (
 		<Sidebar
-			closeable={!hasFocusedField}
-			onSearch={hasFocusedField ? false : setKeywords}
+			closeable={!displaySettings}
+			onSearch={displaySettings ? false : setKeywords}
 			onToggle={closed => setSidebarClosed(closed)}
 			ref={sidebarRef}
 		>
 			<>
-				{hasFocusedField && <SettingsSidebarHeader />}
+				{displaySettings && <SettingsSidebarHeader />}
 
 				<Sidebar.Body>
-					{hasFocusedField ? (
+					{displaySettings ? (
 						<SettingsSidebarBody />
 					) : (
 						<DefaultSidebarBody keywords={keywords} />

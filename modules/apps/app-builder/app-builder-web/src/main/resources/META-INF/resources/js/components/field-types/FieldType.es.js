@@ -31,6 +31,7 @@ const ICONS = {
 
 export default props => {
 	const {
+		active,
 		className,
 		description,
 		disabled,
@@ -76,6 +77,7 @@ export default props => {
 				'autofit-row-center',
 				'field-type',
 				{
+					active,
 					disabled,
 					dragging
 				}

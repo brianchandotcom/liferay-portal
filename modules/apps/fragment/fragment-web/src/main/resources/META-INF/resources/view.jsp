@@ -67,7 +67,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 								<ul class="mb-2 nav nav-stacked">
 									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollectionContributors) %>">
-										<span class="truncate-text">
+										<span class="text-truncate">
 											<liferay-ui:message key="default" />
 										</span>
 
@@ -84,7 +84,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
 												%>
 
-												<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<a class="nav-link text-truncate <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 													<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
 
 													<liferay-ui:icon
@@ -108,7 +108,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 									for (Map.Entry<String, List<FragmentCollection>> entry : inheritedFragmentCollections.entrySet()) {
 									%>
 
-										<span class="truncate-text"><%= entry.getKey() %></span>
+										<span class="text-truncate"><%= entry.getKey() %></span>
 
 										<%
 										for (FragmentCollection fragmentCollection : entry.getValue()) {
@@ -123,7 +123,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 												%>
 
-												<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 
 													<liferay-ui:icon
@@ -143,7 +143,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 								<ul class="mb-2 nav nav-stacked">
 									<c:if test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
-										<span class="truncate-text"><%= fragmentDisplayContext.getGroupName(scopeGroupId) %></span>
+										<span class="text-truncate"><%= fragmentDisplayContext.getGroupName(scopeGroupId) %></span>
 
 										<%
 										for (FragmentCollection fragmentCollection : fragmentCollections) {
@@ -158,7 +158,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 												%>
 
-												<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 
 													<c:if test="<%= fragmentCollection.getGroupId() != scopeGroupId %>">

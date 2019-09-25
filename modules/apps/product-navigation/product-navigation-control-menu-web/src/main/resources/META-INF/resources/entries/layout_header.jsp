@@ -33,5 +33,5 @@ if (Validator.isNotNull(portletId) && layout.isSystem() && !layout.isTypeControl
 %>
 
 <li class="align-items-center control-menu-nav-item control-menu-nav-item-content">
-	<span class="control-menu-level-1-heading truncate-text" data-qa-id="headerTitle"><%= headerTitle %></span>&nbsp;<span class="text-muted truncate-text">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
+	<span class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= headerTitle %></span>&nbsp;<span class="text-muted text-truncate">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
 </li>

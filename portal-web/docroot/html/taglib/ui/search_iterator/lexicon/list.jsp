@@ -151,7 +151,7 @@ if (fixedHeader) {
 								</span>
 							</c:when>
 							<c:when test="<%= truncate %>">
-								<span class="truncate-text">
+								<span class="text-truncate">
 									<%= headerNameValue %>
 								</span>
 							</c:when>
@@ -308,7 +308,7 @@ if (fixedHeader) {
 							<td class="<%= columnClassName %>" colspan="<%= entry.getColspan() %>">
 								<c:choose>
 									<c:when test="<%= truncate %>">
-										<span class="truncate-text">
+										<span class="text-truncate">
 
 											<%
 											entry.print(pageContext.getOut(), request, response);

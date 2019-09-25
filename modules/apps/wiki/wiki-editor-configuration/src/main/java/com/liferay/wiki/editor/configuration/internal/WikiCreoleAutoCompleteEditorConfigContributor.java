@@ -89,7 +89,7 @@ public class WikiCreoleAutoCompleteEditorConfigContributor
 		).put(
 			"tplReplace", "<a href=\"{title}\">{title}</a>"
 		).put(
-			"tplResults", "<span class=\"h5 truncate-text\">{title}</span>"
+			"tplResults", "<span class=\"h5 text-truncate\">{title}</span>"
 		);
 
 		autoCompleteConfigJSONObject.put(

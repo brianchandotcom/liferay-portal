@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_SELECT_ITEM</td>
-	<td>//span[contains(@class,'truncate-text')]/strong[contains(.,'${key_experienceName}')]</td>
+	<td>//span[contains(@class,'text-truncate')]/strong[contains(.,'${key_experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>

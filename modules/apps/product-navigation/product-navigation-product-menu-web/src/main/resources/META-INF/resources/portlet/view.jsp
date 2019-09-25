@@ -30,7 +30,7 @@ String panelName = GetterUtil.getString(request.getAttribute(ProductNavigationPr
 		<div class="autofit-row">
 			<div class="autofit-col autofit-col-expand">
 				<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
-					<span class="company-details truncate-text">
+					<span class="company-details text-truncate">
 						<img alt="" class="company-logo" src="<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
 
 						<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>

@@ -8,3 +8,21 @@
 body.open .app-builder-upper-toolbar {
 	width: calc(100% - #{$productMenuWidth});
 }
+
+.custom-object-dropdown-list {
+	.dropdown-item {
+		cursor: pointer;
+		padding: 0.75rem 1rem;
+	}
+
+	.dropdown-item-indicator-start {
+		background-color: #f7f7f9;
+		border-radius: 4px;
+		display: inline-block;
+		height: 24px;
+		margin-right: 0.5rem;
+		text-align: center;
+		vertical-align: middle;
+		width: 24px;
+	}
+}

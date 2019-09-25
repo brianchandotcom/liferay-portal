@@ -119,8 +119,6 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			() -> {
 				batchEngineTaskItemWriter.write(items);
 
-				batchEngineTask.setModifiedDate(new Date());
-
 				_batchEngineTaskLocalService.updateBatchEngineTask(
 					batchEngineTask);
 

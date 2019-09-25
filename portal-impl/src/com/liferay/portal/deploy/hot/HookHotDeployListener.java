@@ -117,7 +117,6 @@ import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
 import com.liferay.portal.spring.aop.AopInvocationHandler;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
@@ -1902,9 +1901,7 @@ public class HookHotDeployListener
 			properties.put("before-filter", filterTuple.getObject(1));
 			properties.put("dispatcher", filterTuple.getObject(2));
 
-			properties.put(
-				"servlet-context-name",
-				PortalContextLoaderListener.getPortalServletContextName());
+			properties.put("servlet-context-name", StringPool.BLANK);
 			properties.put("servlet-filter-name", servletFilterName);
 			properties.put("url-pattern", filterTuple.getObject(3));
 

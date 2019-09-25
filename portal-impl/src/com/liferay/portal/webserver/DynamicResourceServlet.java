@@ -54,8 +54,13 @@ public class DynamicResourceServlet extends WebServerServlet {
 		throws IOException {
 
 		String servletPath = httpServletRequest.getServletPath();
-		String pathInfo = URLDecoder.decode(
-			httpServletRequest.getPathInfo(), StringPool.UTF8);
+
+		String pathInfo = StringPool.BLANK;
+
+		if (httpServletRequest.getPathInfo() != null) {
+			pathInfo = URLDecoder.decode(
+				httpServletRequest.getPathInfo(), StringPool.UTF8);
+		}
 
 		String path = servletPath.concat(pathInfo);
 

@@ -596,6 +596,8 @@ definition {
 			fragmentName = "Title",
 			openComment = "true");
 
+		Pause(locator1 = "5000");
+
 		var fragmentComment = "Title fragment comment";
 
 		if (!(IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY"))) {

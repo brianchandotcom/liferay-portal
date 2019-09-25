@@ -65,7 +65,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			"abcdefghijklmnopqrstuvwxyz0123456789");
 		_testGetDataDefinitionDataLayoutsPage("form layout", "form layout");
 		_testGetDataDefinitionDataLayoutsPage("layo", "form layout");
-		_testGetDataDefinitionDataLayoutsPage("π€† layout", "π€† layout");
 	}
 
 	@Ignore
@@ -86,7 +85,6 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 			"abcdefghijklmnopqrstuvwxyz0123456789");
 		_testGetSiteDataLayoutPage("form layout", "form layout");
 		_testGetSiteDataLayoutPage("layo", "form layout");
-		_testGetSiteDataLayoutPage("π€†", "π€† layout");
 	}
 
 	@Ignore

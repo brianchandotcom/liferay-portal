@@ -81,8 +81,6 @@ public class DataDefinitionResourceTest
 			"description", "definition name", "definition name");
 		_testGetSiteDataDefinitionsPage(
 			"description", "nam", "definition name");
-		_testGetSiteDataDefinitionsPage("description", "π€†", "π€† name");
-		_testGetSiteDataDefinitionsPage("π€† description", "π€†", "name");
 	}
 
 	@Ignore

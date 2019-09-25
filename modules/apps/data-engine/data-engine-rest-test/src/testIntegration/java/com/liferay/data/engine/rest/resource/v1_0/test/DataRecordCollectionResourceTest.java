@@ -60,8 +60,6 @@ public class DataRecordCollectionResourceTest
 		_testGetDataDefinitionDataRecordCollectionsPage(
 			"definition", "abcdefghijklmnopqrstuvwxyz0123456789",
 			"abcdefghijklmnopqrstuvwxyz0123456789");
-		_testGetDataDefinitionDataRecordCollectionsPage(
-			"description", "π€†", "π€† name");
 	}
 
 	@Override
@@ -74,7 +72,6 @@ public class DataRecordCollectionResourceTest
 		_testGetSiteDataRecordCollectionsPage(
 			"definition", "abcdefghijklmnopqrstuvwxyz0123456789",
 			"abcdefghijklmnopqrstuvwxyz0123456789");
-		_testGetSiteDataRecordCollectionsPage("description", "π€†", "π€† name");
 	}
 
 	@Ignore

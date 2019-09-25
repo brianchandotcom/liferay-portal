@@ -61,6 +61,7 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
 import org.osgi.framework.ServiceObjects;
 import org.osgi.framework.ServiceReference;
 
@@ -71,63 +72,75 @@ public class NestedFieldsWriterInterceptorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		BundleContext bundleContext = Mockito.mock(BundleContext.class);
+
+		Filter filter = Mockito.mock(Filter.class);
+
+		Mockito.when(
+			bundleContext.createFilter(Mockito.anyString())
+		).thenReturn(
+			filter
+		);
+
+		_nestedFieldServiceTrackerCustomizer = Mockito.spy(
+			new NestedFieldsWriterInterceptor.
+				NestedFieldServiceTrackerCustomizer(bundleContext));
+
 		_nestedFieldsWriterInterceptor = Mockito.spy(
 			new NestedFieldsWriterInterceptor(
-				Mockito.mock(BundleContext.class)));
+				bundleContext, _nestedFieldServiceTrackerCustomizer));
 
 		Mockito.doReturn(
 			new MockProviderFactory()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getProviderFactory(
 			Mockito.any(Message.class)
 		);
 
 		ServiceReference serviceReference1 = new MockServiceReference();
 
+		_productResource_v1_0_Impl = new ProductResource_v1_0_Impl();
+
 		Mockito.doReturn(
-			ProductResource_v1_0_Impl.class
+			_productResource_v1_0_Impl
 		).when(
-			_nestedFieldsWriterInterceptor
-		).getResourceClass(
+			bundleContext
+		).getService(
 			serviceReference1
 		);
-
-		ServiceReference serviceReference2 = new MockServiceReference();
-
-		Mockito.doReturn(
-			ProductResource_v2_0_Impl.class
-		).when(
-			_nestedFieldsWriterInterceptor
-		).getResourceClass(
-			serviceReference2
-		);
-
-		_productResource_v1_0_Impl = new ProductResource_v1_0_Impl();
 
 		Mockito.doReturn(
 			new MockServiceObjects<>(_productResource_v1_0_Impl)
 		).when(
-			_nestedFieldsWriterInterceptor
+			bundleContext
 		).getServiceObjects(
 			serviceReference1
 		);
 
+		_nestedFieldServiceTrackerCustomizer.addingService(serviceReference1);
+
+		ServiceReference serviceReference2 = new MockServiceReference();
+
 		_productResource_v2_0_Impl = new ProductResource_v2_0_Impl();
 
 		Mockito.doReturn(
-			new MockServiceObjects<>(_productResource_v2_0_Impl)
+			_productResource_v2_0_Impl
 		).when(
-			_nestedFieldsWriterInterceptor
-		).getServiceObjects(
+			bundleContext
+		).getService(
 			serviceReference2
 		);
 
 		Mockito.doReturn(
-			Arrays.asList(serviceReference1, serviceReference2)
+			new MockServiceObjects<>(_productResource_v2_0_Impl)
 		).when(
-			_nestedFieldsWriterInterceptor
-		).getServiceReferences();
+			bundleContext
+		).getServiceObjects(
+			serviceReference2
+		);
+
+		_nestedFieldServiceTrackerCustomizer.addingService(serviceReference2);
 
 		_writerInterceptorContext = Mockito.mock(
 			WriterInterceptorContext.class);
@@ -151,7 +164,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -188,7 +201,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -225,7 +238,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -278,7 +291,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -355,7 +368,7 @@ public class NestedFieldsWriterInterceptorTest {
 					"skus", "page", String.valueOf(1), "pageSize",
 					String.valueOf(2))
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -386,7 +399,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest("productOptions")
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -432,7 +445,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -463,7 +476,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest()
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -494,7 +507,7 @@ public class NestedFieldsWriterInterceptorTest {
 			new NestedFieldsHttpServletRequestWrapperTest.
 				MockHttpServletRequest("skus")
 		).when(
-			_nestedFieldsWriterInterceptor
+			_nestedFieldServiceTrackerCustomizer
 		).getHttpServletRequest(
 			Mockito.any(Message.class)
 		);
@@ -570,6 +583,8 @@ public class NestedFieldsWriterInterceptorTest {
 		};
 	}
 
+	private NestedFieldsWriterInterceptor.NestedFieldServiceTrackerCustomizer
+		_nestedFieldServiceTrackerCustomizer;
 	private NestedFieldsWriterInterceptor _nestedFieldsWriterInterceptor;
 	private ProductResource_v1_0_Impl _productResource_v1_0_Impl;
 	private ProductResource_v2_0_Impl _productResource_v2_0_Impl;

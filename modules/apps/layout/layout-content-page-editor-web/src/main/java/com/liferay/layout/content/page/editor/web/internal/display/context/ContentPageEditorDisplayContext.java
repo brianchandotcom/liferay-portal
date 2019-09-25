@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1215,6 +1216,13 @@ public class ContentPageEditorDisplayContext {
 					return false;
 				}
 
+				if (ArrayUtil.contains(
+						_UNSUPPORTED_PORTLETS_NAMES,
+						portlet.getPortletName())) {
+
+					return false;
+				}
+
 				try {
 					return PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
@@ -1378,6 +1386,10 @@ public class ContentPageEditorDisplayContext {
 
 		return false;
 	}
+
+	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {
+		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet"
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);

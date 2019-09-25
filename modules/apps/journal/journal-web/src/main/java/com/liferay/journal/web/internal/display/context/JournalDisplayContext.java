@@ -43,6 +43,8 @@ import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.EntriesChecker;
 import com.liferay.journal.web.internal.search.EntriesMover;
 import com.liferay.journal.web.internal.search.JournalSearcher;
+import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalFolderActionDropdownItems;
 import com.liferay.journal.web.internal.util.JournalArticleTranslation;
@@ -78,6 +80,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -319,6 +322,60 @@ public class JournalDisplayContext {
 
 		return articleActionDropdownItemsProvider.
 			getArticleVersionActionDropdownItems();
+	}
+
+	public String getAvailableActions(JournalArticle article)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.DELETE)) {
+
+			availableActions.add("deleteEntries");
+		}
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.EXPIRE) &&
+			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
+
+			availableActions.add("expireEntries");
+		}
+
+		if (JournalArticlePermission.contains(
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.UPDATE)) {
+
+			availableActions.add("moveEntries");
+		}
+
+		return com.liferay.petra.string.StringUtil.merge(
+			availableActions, StringPool.COMMA);
+	}
+
+	public String getAvailableActions(JournalFolder folder)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (JournalFolderPermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.UPDATE)) {
+
+			availableActions.add("deleteEntries");
+		}
+
+		if (JournalFolderPermission.contains(
+				_themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.DELETE)) {
+
+			availableActions.add("moveEntries");
+		}
+
+		return com.liferay.petra.string.StringUtil.merge(
+			availableActions, StringPool.COMMA);
 	}
 
 	public String getChangeListName(JournalArticle journalArticle) {

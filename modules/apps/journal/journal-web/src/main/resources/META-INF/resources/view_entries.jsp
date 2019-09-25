@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalManagementToolbarDisplayContext journalManagementToolbarDisplayContext = (JournalManagementToolbarDisplayContext)request.getAttribute("view.jsp-journalManagementToolbarDisplayContext");
-
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 %>
 
@@ -53,7 +51,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", journalManagementToolbarDisplayContext.getAvailableActions(curArticle));
+				rowData.put("actions", journalDisplayContext.getAvailableActions(curArticle));
 				rowData.put("draggable", !BrowserSnifferUtil.isMobile(request) && (JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)));
 
 				String title = curArticle.getTitle(locale);
@@ -253,7 +251,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 				<%
 				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				rowData.put("actions", journalManagementToolbarDisplayContext.getAvailableActions(curFolder));
+				rowData.put("actions", journalDisplayContext.getAvailableActions(curFolder));
 				rowData.put("draggable", !BrowserSnifferUtil.isMobile(request) && (JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)));
 				rowData.put("folder", true);
 				rowData.put("folder-id", curFolder.getFolderId());

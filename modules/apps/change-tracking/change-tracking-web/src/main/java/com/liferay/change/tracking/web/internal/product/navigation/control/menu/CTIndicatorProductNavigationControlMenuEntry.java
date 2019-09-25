@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + CTWebConstants.CHANGE_TRACKING,
+		"product.navigation.control.menu.category.key=" + CTWebConstants.PRODUCT_NAVIGATION_CONTROL_MENU_CATEGORY,
 		"product.navigation.control.menu.entry.order:Integer=100"
 	},
 	service = ProductNavigationControlMenuEntry.class

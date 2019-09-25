@@ -38,7 +38,7 @@ public class CTProductNavigationControlMenuCategory
 
 	@Override
 	public String getKey() {
-		return CTWebConstants.CHANGE_TRACKING;
+		return CTWebConstants.PRODUCT_NAVIGATION_CONTROL_MENU_CATEGORY;
 	}
 
 	@Override

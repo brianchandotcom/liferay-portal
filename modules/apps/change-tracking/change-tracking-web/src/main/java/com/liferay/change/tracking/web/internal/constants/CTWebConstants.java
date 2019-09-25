@@ -19,10 +19,11 @@ package com.liferay.change.tracking.web.internal.constants;
  */
 public class CTWebConstants {
 
-	public static final String CHANGE_TRACKING = "change_tracking";
-
 	public static final String CONTROL_PANEL_CHANGE_LISTS =
 		"control_panel.change_lists";
+
+	public static final String PRODUCT_NAVIGATION_CONTROL_MENU_CATEGORY =
+		"change_tracking";
 
 	public static final int USER_FILTER_ALL = -1;
 

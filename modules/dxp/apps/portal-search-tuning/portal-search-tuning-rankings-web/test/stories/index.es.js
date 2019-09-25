@@ -31,7 +31,7 @@ import ItemDragPreview from '../../src/main/resources/META-INF/resources/js/comp
 import ItemDropdown from '../../src/main/resources/META-INF/resources/js/components/list/ItemDropdown.es';
 import List from '../../src/main/resources/META-INF/resources/js/components/list/List.es';
 import PageToolbar from '../../src/main/resources/META-INF/resources/js/components/PageToolbar.es';
-import ResultsRankingForm from '../../src/main/resources/META-INF/resources/js/components/ResultsRankingForm.es';
+import ResultRankingsForm from '../../src/main/resources/META-INF/resources/js/components/ResultRankingsForm.es';
 import ThemeContext from '../../src/main/resources/META-INF/resources/js/ThemeContext.es';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {mockDataMap} from './mock-data.es';
@@ -49,7 +49,7 @@ addDecorator(storyFn => {
 			WORKFLOW_ACTION_SAVE_DRAFT: '2'
 		},
 		namespace:
-			'_com_liferay_portal_search_ranking_web_portlet_ResultsRankingPortlet_',
+			'_com_liferay_portal_search_ranking_web_portlet_ResultRankingsPortlet_',
 		spritemap: STORYBOOK_CONSTANTS.SPRITEMAP_PATH
 	};
 
@@ -68,8 +68,8 @@ const withSheet = storyFn => (
 	</div>
 );
 
-storiesOf('Pages|ResultsRankingForm', module).add('default', () => (
-	<ResultsRankingForm
+storiesOf('Pages|ResultRankingsForm', module).add('default', () => (
+	<ResultRankingsForm
 		cancelUrl=""
 		fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
 		fetchDocumentsSearchUrl="http://www.mocky.io/v2/5d698970330000cfc7b68ab9"

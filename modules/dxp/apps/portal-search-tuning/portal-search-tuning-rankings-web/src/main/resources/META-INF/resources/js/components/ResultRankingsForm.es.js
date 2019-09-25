@@ -65,7 +65,7 @@ const HiddenInput = ({name, value}) => (
 	<input id={name} name={name} type="hidden" value={value} />
 );
 
-class ResultsRankingForm extends Component {
+class ResultRankingsForm extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
@@ -877,4 +877,4 @@ class ResultsRankingForm extends Component {
 	}
 }
 
-export default ResultsRankingForm;
+export default ResultRankingsForm;

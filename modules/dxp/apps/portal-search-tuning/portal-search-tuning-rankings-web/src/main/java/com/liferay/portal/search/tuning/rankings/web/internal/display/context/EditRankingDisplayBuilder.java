@@ -100,7 +100,7 @@ public class EditRankingDisplayBuilder {
 
 		resourceURL.setParameter(
 			"companyId", String.valueOf(_themeDisplay.getCompanyId()));
-		resourceURL.setParameter(Constants.CMD, "getVisibleResults");
+		resourceURL.setParameter(Constants.CMD, "getHiddenResults");
 		resourceURL.setParameter("resultsRankingUid", _getResultsRankingUid());
 		resourceURL.setResourceID("/results_ranking/get_results");
 
@@ -162,14 +162,14 @@ public class EditRankingDisplayBuilder {
 
 		resourceURL.setParameter(
 			"companyId", String.valueOf(_themeDisplay.getCompanyId()));
-		resourceURL.setParameter(Constants.CMD, "getHiddenResults");
+		resourceURL.setParameter(Constants.CMD, "getVisibleResults");
 		resourceURL.setParameter("resultsRankingUid", _getResultsRankingUid());
 		resourceURL.setResourceID("/results_ranking/get_results");
 
 		return resourceURL.toString();
 	}
 
-	private String _setBackURL(
+	private void _setBackURL(
 		EditRankingDisplayContext editRankingDisplayContext) {
 
 		String backURL = ParamUtil.getString(

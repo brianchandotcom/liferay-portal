@@ -10,14 +10,14 @@
  */
 
 import React from 'react';
-import ResultsRankingForm from './components/ResultsRankingForm.es';
+import ResultRankingsForm from './components/ResultRankingsForm.es';
 import ThemeContext from './ThemeContext.es';
 
 export default function({props, context}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<div className="results-rankings-root">
-				<ResultsRankingForm {...props} />
+				<ResultRankingsForm {...props} />
 			</div>
 		</ThemeContext.Provider>
 	);

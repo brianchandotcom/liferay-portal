@@ -43,7 +43,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 
 <portlet:actionURL name="/results_ranking/edit" var="addResultsRankingEntryURL" />
 
-<aui:form action="<%= addResultsRankingEntryURL %>" name="editResultsRankingsFm" onSubmit="event.preventDefault();">
+<aui:form action="<%= addResultsRankingEntryURL %>" name="editResultRankingsFm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= editRankingDisplayContext.getRedirect() %>" />
 	<aui:input name="companyId" type="hidden" value="<%= editRankingDisplayContext.getCompanyId() %>" />
 	<aui:input name="keywords" type="hidden" value="<%= editRankingDisplayContext.getKeywords() %>" />
@@ -57,7 +57,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 
 		<react:component
 			data="<%= editRankingDisplayContext.getData() %>"
-			module="js/ResultsRankingApp.es"
+			module="js/ResultRankingsApp.es"
 		/>
 	</div>
 </aui:form>

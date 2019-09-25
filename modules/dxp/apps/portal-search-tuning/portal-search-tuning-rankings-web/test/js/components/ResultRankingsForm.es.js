@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import ResultsRankingForm from '../../../src/main/resources/META-INF/resources/js/components/ResultsRankingForm.es';
+import ResultRankingsForm from '../../../src/main/resources/META-INF/resources/js/components/ResultRankingsForm.es';
 import {
 	fireEvent,
 	render,
@@ -34,10 +34,10 @@ const HIDE_BUTTON_LABEL = 'hide-result';
 
 const SHOW_BUTTON_LABEL = 'show-result';
 
-describe('ResultsRankingForm', () => {
+describe('ResultRankingsForm', () => {
 	it('renders the results ranking form', () => {
 		const {container} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -54,7 +54,7 @@ describe('ResultsRankingForm', () => {
 
 	it('renders the results ranking items after loading', async () => {
 		const {getByTestId} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -72,7 +72,7 @@ describe('ResultsRankingForm', () => {
 
 	it('renders the results ranking items after loading hidden tab', async () => {
 		const {getByTestId, getByText} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -92,7 +92,7 @@ describe('ResultsRankingForm', () => {
 
 	it('includes the initial aliases', async () => {
 		const {container} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -112,7 +112,7 @@ describe('ResultsRankingForm', () => {
 
 	it('removes an initial alias after clicking delete', async () => {
 		const {container} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -136,7 +136,7 @@ describe('ResultsRankingForm', () => {
 
 	it('renders blank aliases', () => {
 		const {container} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -161,7 +161,7 @@ describe('ResultsRankingForm', () => {
 
 	it('does not allow duplicate aliases', () => {
 		const {container} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -187,7 +187,7 @@ describe('ResultsRankingForm', () => {
 
 	it('updates the hiddenAdded', async () => {
 		const {container, getByTestId} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -210,7 +210,7 @@ describe('ResultsRankingForm', () => {
 
 	it('updates the hiddenAdded back', async () => {
 		const {container, getByTestId, getByText} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -239,7 +239,7 @@ describe('ResultsRankingForm', () => {
 
 	it('updates the hiddenRemoved', async () => {
 		const {container, getByTestId, getByText} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -264,7 +264,7 @@ describe('ResultsRankingForm', () => {
 
 	it('updates the hiddenRemoved back', async () => {
 		const {container, getByTestId, getByText} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -295,7 +295,7 @@ describe('ResultsRankingForm', () => {
 
 	it('fetches more results after clicking on load more button', async () => {
 		const {container, getByTestId} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -321,7 +321,7 @@ describe('ResultsRankingForm', () => {
 
 	it('has the same pinned end index if there are no additional pinned items loaded', async () => {
 		const {container, getByTestId} = render(
-			<ResultsRankingForm
+			<ResultRankingsForm
 				cancelUrl=""
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}

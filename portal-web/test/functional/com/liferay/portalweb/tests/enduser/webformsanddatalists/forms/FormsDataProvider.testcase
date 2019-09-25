@@ -233,8 +233,6 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Data Provider Select Field");
 
-		Form.gotoAutocompleteTab();
-
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",
 			dataProviderOutput = "Country Names");
@@ -335,8 +333,6 @@ definition {
 		Form.gotoAddField(fieldType = "Select from List");
 
 		Form.editFieldLabelMetal(fieldValue = "Countries");
-
-		Form.gotoAutocompleteTab();
 
 		Form.editFieldDataProvider(
 			dataProvider = "Liferay Countries",

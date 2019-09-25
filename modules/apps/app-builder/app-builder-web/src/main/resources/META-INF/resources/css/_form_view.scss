@@ -52,7 +52,7 @@
 		.sidebar-body {
 			background-color: transparent;
 			padding-left: 1.375rem;
-			padding-right: 0;
+			padding-right: 2px;
 
 			.field-type {
 				@extend .base-custom-object-field-type;
@@ -63,6 +63,7 @@
 					box-shadow: none;
 				}
 
+				&:hover:not(.active),
 				&:hover:not(.disabled) {
 					background-color: rgba(39, 40, 51, 0.04);
 					border-color: transparent;
@@ -72,6 +73,11 @@
 					.sticker {
 						background-color: rgb(210, 212, 219);
 					}
+				}
+
+				&.active,
+				&.active:hover {
+					border-color: #0b5fff;
 				}
 
 				.sticker {

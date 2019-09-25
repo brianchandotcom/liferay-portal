@@ -41,6 +41,7 @@ const initialState = {
 	},
 	dataLayoutId: 0,
 	fieldTypes: [],
+	focusedCustomObjectField: {},
 	focusedField: {}
 };
 
@@ -55,6 +56,9 @@ const addCustomObjectField = ({
 
 	return {
 		...dataDefinitionField,
+		label: {
+			[themeDisplay.getLanguageId()]: fieldType.label
+		},
 		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label)
 	};
 };
@@ -100,6 +104,12 @@ const createReducer = dataLayoutBuilder => {
 			case ADD_CUSTOM_OBJECT_FIELD: {
 				const {fieldTypeName} = action.payload;
 				const {dataDefinition, fieldTypes} = state;
+				const newCustomObjectField = addCustomObjectField({
+					dataDefinition,
+					dataLayoutBuilder,
+					fieldTypeName,
+					fieldTypes
+				});
 
 				return {
 					...state,
@@ -107,13 +117,14 @@ const createReducer = dataLayoutBuilder => {
 						...dataDefinition,
 						dataDefinitionFields: [
 							...dataDefinition.dataDefinitionFields,
-							addCustomObjectField({
-								dataDefinition,
-								dataLayoutBuilder,
-								fieldTypeName,
-								fieldTypes
-							})
+							newCustomObjectField
 						]
+					},
+					focusedCustomObjectField: {
+						...newCustomObjectField,
+						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
+							newCustomObjectField
+						)
 					}
 				};
 			}

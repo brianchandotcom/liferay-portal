@@ -33,6 +33,7 @@ import {
 	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 } from './actions.es';
 import isClickOutside from '../../utils/clickOutside.es';
+import ClayIcon from '@clayui/icon';
 
 const DropDown = () => {
 	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
@@ -204,7 +205,13 @@ const Header = ({keywords, onCloseSearch, onSearch}) => {
 };
 
 export default () => {
-	const [{focusedCustomObjectField}, dispatch] = useContext(FormViewContext);
+	const [
+		{
+			dataDefinition: {dataDefinitionFields},
+			focusedCustomObjectField
+		},
+		dispatch
+	] = useContext(FormViewContext);
 	const [keywords, setKeywords] = useState('');
 	const sidebarRef = useRef();
 
@@ -234,6 +241,8 @@ export default () => {
 		return () => window.removeEventListener('click', eventHandler);
 	}, [dispatch]);
 
+	const empty = dataDefinitionFields.length === 0;
+
 	return (
 		<Sidebar closeable={false} ref={sidebarRef}>
 			<>
@@ -243,8 +252,26 @@ export default () => {
 					onSearch={keywords => setKeywords(keywords)}
 				/>
 
-				<Sidebar.Body>
-					<CustomObjectFieldsList keywords={keywords} />
+				<Sidebar.Body className={classNames({empty})}>
+					{empty ? (
+						<div className="custom-object-sidebar-empty">
+							<ClayIcon symbol="custom-field" />
+
+							<h3>
+								{Liferay.Language.get(
+									'there-are-no-fields-yet'
+								)}
+							</h3>
+
+							<p>
+								{Liferay.Language.get(
+									'any-field-added-to-the-object-or-to-a-form-view-appears-here'
+								)}
+							</p>
+						</div>
+					) : (
+						<CustomObjectFieldsList keywords={keywords} />
+					)}
 				</Sidebar.Body>
 			</>
 		</Sidebar>

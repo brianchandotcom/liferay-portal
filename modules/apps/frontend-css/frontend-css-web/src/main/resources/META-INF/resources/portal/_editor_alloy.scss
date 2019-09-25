@@ -145,6 +145,15 @@
 	}
 }
 
+.ae-ui .ae-toolbars .ae-toolbar-add {
+	z-index: 9999;
+
+	.ae-button {
+		height: 32px;
+		width: 32px;
+	}
+}
+
 .has-error .alloy-editor-container .help-block {
 	font-size: 16px;
 	font-weight: normal;
@@ -154,4 +163,16 @@
 
 .ie11 .alloy-editor-container .cke_widget_inline {
 	display: inline-block;
+}
+
+@media screen and (max-width: 1279px) {
+	.ae-ui .ae-toolbars .ae-toolbar-add {
+		margin-left: 4px;
+
+		.ae-button {
+			font-size: 14px;
+			height: 24px;
+			width: 24px;
+		}
+	}
 }

@@ -74,9 +74,12 @@ public class BatchEngineTaskOrphanScannerMessageListener
 	protected void deactivate() {
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineTaskOrphanScannerMessageListener.class.getName());
+				BatchEngineTaskOrphanScannerMessageListener.class.getName(),
+				false);
 
-		executorService.shutdownNow();
+		if (executorService != null) {
+			executorService.shutdownNow();
+		}
 
 		_schedulerEngineHelper.unregister(this);
 	}

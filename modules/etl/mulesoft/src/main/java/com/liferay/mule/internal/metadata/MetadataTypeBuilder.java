@@ -60,9 +60,11 @@ public class MetadataTypeBuilder {
 
 		JsonNode schemaJsonNode = _getSchemaJsonNode(oasJsonNode, schemaName);
 
-		if (schemaName.startsWith("Page")) {
-			JsonNode propertiesJsonNode = schemaJsonNode.get(
-				OASConstants.PROPERTIES);
+		JsonNode propertiesJsonNode = schemaJsonNode.get(
+			OASConstants.PROPERTIES);
+
+		if (_jsonNodeReader.hasPath(
+				propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF)) {
 
 			ArrayTypeBuilder arrayTypeBuilder = _getArrayTypeBuilder(
 				metadataContext);
@@ -79,8 +81,7 @@ public class MetadataTypeBuilder {
 			metadataContext);
 
 		_resolveObjectMetadataType(
-			objectTypeBuilder, oasJsonNode,
-			schemaJsonNode.get(OASConstants.PROPERTIES),
+			objectTypeBuilder, oasJsonNode, propertiesJsonNode,
 			_fetchRequiredJsonNode(schemaJsonNode));
 
 		return objectTypeBuilder.build();

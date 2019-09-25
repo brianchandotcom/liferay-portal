@@ -223,5 +223,9 @@ storiesOf('Components|List/SearchBar', module)
 	));
 
 storiesOf('Components|PageToolbar', module).add('default', () => (
-	<PageToolbar submitDisabled={boolean('Disabled', false)} />
+	<PageToolbar
+		onCancel={action('onCancel')}
+		onPublish={action('onPublish')}
+		submitDisabled={boolean('Disabled', false)}
+	/>
 ));

@@ -16,8 +16,8 @@ import React, {Component} from 'react';
 
 class PageToolbar extends Component {
 	static props = {
-		onCancel: PropTypes.string,
-		onPublish: PropTypes.func,
+		onCancel: PropTypes.string.isRequired,
+		onPublish: PropTypes.func.isRequired,
 		onSaveAsDraft: PropTypes.func,
 		submitDisabled: PropTypes.bool
 	};
@@ -60,18 +60,16 @@ class PageToolbar extends Component {
 							</li>
 						)}
 
-						{onPublish && (
-							<li className="tbar-item">
-								<ClayButton
-									disabled={submitDisabled}
-									onClick={onPublish}
-									small
-									type="submit"
-								>
-									{Liferay.Language.get('save')}
-								</ClayButton>
-							</li>
-						)}
+						<li className="tbar-item">
+							<ClayButton
+								disabled={submitDisabled}
+								onClick={onPublish}
+								small
+								type="submit"
+							>
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</li>
 					</ul>
 				</div>
 			</nav>

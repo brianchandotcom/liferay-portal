@@ -211,6 +211,10 @@ public interface AccountEntryUserRelLocalService
 	public List<AccountEntryUserRel> getAccountEntryUserRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
+		long accountEntryId);
+
 	/**
 	 * Returns the number of account entry user rels.
 	 *

@@ -73,12 +73,7 @@ public class ChangeListsPortlet extends BaseChangeListPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			checkPermissions(renderRequest);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
+		checkRender(renderRequest);
 
 		if (ParamUtil.getBoolean(renderRequest, "production")) {
 			SessionMessages.add(

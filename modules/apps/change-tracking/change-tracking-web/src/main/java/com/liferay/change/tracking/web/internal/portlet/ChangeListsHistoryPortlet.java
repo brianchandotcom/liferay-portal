@@ -68,13 +68,7 @@ public class ChangeListsHistoryPortlet extends BaseChangeListPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			checkPermissions(renderRequest);
-		}
-		catch (Exception e) {
-			throw new PortletException(
-				"Unable to check permissions: " + e.getMessage(), e);
-		}
+		checkRender(renderRequest);
 
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");

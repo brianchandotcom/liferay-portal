@@ -28,7 +28,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Activate;
 
@@ -73,6 +75,18 @@ public abstract class BaseChangeListPortlet extends MVCPortlet {
 			String.format(
 				"User %s must have administrator role to access %s",
 				permissionChecker.getUserId(), getClass().getSimpleName()));
+	}
+
+	protected void checkRender(RenderRequest renderRequest)
+		throws PortletException {
+
+		try {
+			checkPermissions(renderRequest);
+		}
+		catch (Exception e) {
+			throw new PortletException(
+				"Unable to check permissions: " + e.getMessage(), e);
+		}
 	}
 
 	private Set<String> _administratorRoleNames;

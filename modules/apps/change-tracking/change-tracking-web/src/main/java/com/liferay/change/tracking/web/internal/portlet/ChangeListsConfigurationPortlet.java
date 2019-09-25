@@ -57,24 +57,18 @@ public class ChangeListsConfigurationPortlet extends BaseChangeListPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		try {
-			checkPermissions(renderRequest);
+		checkRender(renderRequest);
 
-			ChangeListsConfigurationDisplayContext
-				changeListsConfigurationDisplayContext =
-					new ChangeListsConfigurationDisplayContext(
-						_ctPreferencesLocalService,
-						_portal.getHttpServletRequest(renderRequest),
-						renderResponse);
+		ChangeListsConfigurationDisplayContext
+			changeListsConfigurationDisplayContext =
+				new ChangeListsConfigurationDisplayContext(
+					_ctPreferencesLocalService,
+					_portal.getHttpServletRequest(renderRequest),
+					renderResponse);
 
-			renderRequest.setAttribute(
-				CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,
-				changeListsConfigurationDisplayContext);
-		}
-		catch (Exception e) {
-			throw new PortletException(
-				"Unable to check permissions: " + e.getMessage(), e);
-		}
+		renderRequest.setAttribute(
+			CTWebKeys.CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT,
+			changeListsConfigurationDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

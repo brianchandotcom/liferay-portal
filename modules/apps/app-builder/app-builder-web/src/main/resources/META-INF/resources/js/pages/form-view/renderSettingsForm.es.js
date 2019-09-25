@@ -36,11 +36,11 @@ export const getFilteredSettingsContext = settingsContext => {
 	};
 };
 
-export default ({dataLayoutBuilder, settingsContext}, container) => {
+export default ({dispatchEvent, settingsContext}, container) => {
 	const handleFieldBlurred = ({fieldInstance, value}) => {
 		const {fieldName} = fieldInstance;
 
-		dataLayoutBuilder.dispatch('fieldBlurred', {
+		dispatchEvent('fieldBlurred', {
 			editingLanguageId: 'en_US',
 			propertyName: fieldName,
 			propertyValue: value
@@ -51,7 +51,7 @@ export default ({dataLayoutBuilder, settingsContext}, container) => {
 		if (fieldInstance && !fieldInstance.isDisposed()) {
 			const {fieldName} = fieldInstance;
 
-			dataLayoutBuilder.dispatch('fieldEdited', {
+			dispatchEvent('fieldEdited', {
 				editingLanguageId: 'en_US',
 				propertyName: fieldName,
 				propertyValue: value

@@ -16,9 +16,13 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 import React, {useContext} from 'react';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
-import {addItem} from '../../utils/client.es';
+import {addItem, updateItem} from '../../utils/client.es';
 
-export default ({dataDefinitionId, editEntryContainerElementId}) => {
+export default ({
+	dataDefinitionId,
+	dataRecordId,
+	editEntryContainerElementId
+}) => {
 	const {basePortletURL} = useContext(AppContext);
 
 	const onCancel = () => {
@@ -29,18 +33,25 @@ export default ({dataDefinitionId, editEntryContainerElementId}) => {
 		const {pages} = Liferay.component(editEntryContainerElementId);
 		const visitor = new PagesVisitor(pages);
 
-		const dataRecords = {
+		const dataRecord = {
 			dataRecordValues: {}
 		};
 
 		visitor.mapFields(({fieldName, value}) => {
-			dataRecords.dataRecordValues[fieldName] = value;
+			dataRecord.dataRecordValues[fieldName] = value;
 		});
 
-		addItem(
-			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
-			dataRecords
-		).then(onCancel);
+		if (dataRecordId) {
+			updateItem(
+				`/o/data-engine/v1.0/data-records/${dataRecordId}`,
+				dataRecord
+			).then(onCancel);
+		} else {
+			addItem(
+				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-records`,
+				dataRecord
+			).then(onCancel);
+		}
 	};
 
 	return <Button onClick={onSave}>{Liferay.Language.get('save')}</Button>;

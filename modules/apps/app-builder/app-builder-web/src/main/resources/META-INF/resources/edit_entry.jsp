@@ -21,6 +21,7 @@
 		<liferay-data-engine:data-layout-renderer
 			containerId='<%= renderResponse.getNamespace() + "container" %>'
 			dataLayoutId='<%= ParamUtil.getLong(request, "dataLayoutId") %>'
+			dataRecordId='<%= ParamUtil.getLong(request, "dataRecordId") %>'
 			namespace="<%= renderResponse.getNamespace() %>"
 		/>
 
@@ -31,6 +32,7 @@
 
 			data.put("basePortletURL", String.valueOf(renderResponse.createRenderURL()));
 			data.put("dataDefinitionId", ParamUtil.getLong(request, "dataDefinitionId"));
+			data.put("dataRecordId", ParamUtil.getLong(request, "dataRecordId"));
 			data.put("editEntryContainerElementId", renderResponse.getNamespace() + "container");
 			%>
 

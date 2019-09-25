@@ -13,7 +13,6 @@
  */
 
 import React, {useContext, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
@@ -56,20 +55,26 @@ const ListEntries = () => {
 	const {dataDefinitionId, dataLayoutId, dataListView, isLoading} = state;
 	const {fieldNames: columns} = dataListView;
 
-	const onClickAddButton = () => {
-		Liferay.Util.navigate(
-			Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
-				dataDefinitionId,
-				dataLayoutId,
-				mvcPath: '/edit_entry.jsp'
-			})
-		);
+	const getItemURL = (dataRecordId = 0) =>
+		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+			dataDefinitionId,
+			dataLayoutId,
+			dataRecordId,
+			mvcPath: '/edit_entry.jsp'
+		});
+
+	const handleEditItem = () => {
+		Liferay.Util.navigate(getItemURL());
 	};
 
 	return (
 		<Loading isLoading={isLoading}>
 			<ListView
 				actions={[
+					{
+						action: item => Promise.resolve(handleEditItem(item)),
+						name: Liferay.Language.get('edit')
+					},
 					{
 						action: confirmDelete(
 							'/o/data-engine/v1.0/data-records/'
@@ -80,7 +85,7 @@ const ListEntries = () => {
 				addButton={() => (
 					<Button
 						className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-						onClick={onClickAddButton}
+						onClick={handleEditItem}
 						symbol="plus"
 						tooltip={Liferay.Language.get('new-entry')}
 					/>
@@ -93,7 +98,7 @@ const ListEntries = () => {
 					button: () => (
 						<Button
 							displayType="secondary"
-							onClick={onClickAddButton}
+							onClick={handleEditItem}
 						>
 							{Liferay.Language.get('new-entry')}
 						</Button>
@@ -107,9 +112,9 @@ const ListEntries = () => {
 					const firstColumn = columns[0];
 
 					dataRecordValues[firstColumn] = (
-						<Link to={`entry/${id}`}>
+						<a href={getItemURL(id)}>
 							{dataRecordValues[firstColumn]}
-						</Link>
+						</a>
 					);
 
 					return {...item, ...dataRecordValues};

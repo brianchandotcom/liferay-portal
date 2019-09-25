@@ -16,17 +16,10 @@ import React from 'react';
 import EditEntry from './EditEntry.es';
 import {AppContextProvider} from '../../AppContext.es';
 
-export default ({
-	basePortletURL,
-	dataDefinitionId,
-	editEntryContainerElementId
-}) => {
+export default ({basePortletURL, ...restProps}) => {
 	return (
 		<AppContextProvider basePortletURL={basePortletURL}>
-			<EditEntry
-				dataDefinitionId={dataDefinitionId}
-				editEntryContainerElementId={editEntryContainerElementId}
-			/>
+			<EditEntry {...restProps} />
 		</AppContextProvider>
 	);
 };

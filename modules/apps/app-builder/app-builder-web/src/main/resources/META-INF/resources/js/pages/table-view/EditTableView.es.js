@@ -226,7 +226,7 @@ const EditTableView = ({
 									name: field.fieldType
 								}))}
 								keywords={keywords}
-								onAddColumn={onAddColumn}
+								onDoubleClick={({label}) => onAddColumn(label)}
 							/>
 						</Sidebar.TabContent>
 					</Sidebar.Body>

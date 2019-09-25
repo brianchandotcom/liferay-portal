@@ -15,7 +15,7 @@
 import React from 'react';
 import FieldType from './FieldType.es';
 
-export default ({fieldTypes, keywords, onAddColumn}) => {
+export default ({fieldTypes, keywords, onClick, onDoubleClick}) => {
 	const regex = new RegExp(keywords, 'ig');
 
 	return fieldTypes
@@ -31,7 +31,8 @@ export default ({fieldTypes, keywords, onAddColumn}) => {
 			<FieldType
 				{...fieldType}
 				key={`${fieldType.name}_${index}`}
-				onAddColumn={onAddColumn}
+				onClick={onClick}
+				onDoubleClick={onDoubleClick}
 			/>
 		));
 };

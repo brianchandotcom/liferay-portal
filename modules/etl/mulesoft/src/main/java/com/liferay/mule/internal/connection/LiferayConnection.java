@@ -60,6 +60,19 @@ public final class LiferayConnection {
 		throw new UnsupportedOperationException();
 	}
 
+	public HttpResponse delete(
+			MultiMap<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint)
+		throws IOException, TimeoutException {
+
+		return _httpClient.send(
+			_getHttpRequest(
+				HttpConstants.Method.DELETE,
+				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				queryParams, null),
+			10000, true, null);
+	}
+
 	public HttpResponse get(
 			MultiMap<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)
@@ -118,6 +131,8 @@ public final class LiferayConnection {
 
 		httpRequestBuilder.addHeader(
 			"Authorization", _httpAuthentication.getAuthorizationHeader()
+		).addHeader(
+			"Content-Type", "application/json"
 		).method(
 			method
 		).queryParams(

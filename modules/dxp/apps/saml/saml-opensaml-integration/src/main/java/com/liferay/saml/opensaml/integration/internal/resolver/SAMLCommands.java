@@ -68,7 +68,7 @@ public interface SAMLCommands {
 					return Collections.emptyMap();
 				}
 
-				final SubjectAssertionContext subjectAssertionContext =
+				SubjectAssertionContext subjectAssertionContext =
 					inboundMessageContext.getSubcontext(
 						SubjectAssertionContext.class, false);
 

@@ -18,7 +18,7 @@
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-comment-was-found"
-	searchContainer="<%= journalDisplayContext.getCommentsSearchContainer() %>"
+	searchContainer="<%= journalDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBMessage"

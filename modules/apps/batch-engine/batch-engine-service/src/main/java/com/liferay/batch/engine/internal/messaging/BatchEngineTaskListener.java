@@ -20,8 +20,6 @@ import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -60,19 +57,15 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 			GetterUtil.getLong(properties.get("heartbeat.period")) *
 				Time.SECOND;
 
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
+		String className = BatchEngineTaskListener.class.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
 			GetterUtil.getInteger(properties.get("interval")), TimeUnit.SECOND);
 
-		SchedulerEntryImpl schedulerEntry = new SchedulerEntryImpl(
-			className, trigger);
-
 		_schedulerEngineHelper.register(
-			this, schedulerEntry, DestinationNames.SCHEDULER_DISPATCH);
+			this, new SchedulerEntryImpl(className, trigger),
+			DestinationNames.SCHEDULER_DISPATCH);
 	}
 
 	@Deactivate
@@ -87,36 +80,25 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 	}
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
+	protected void doReceive(Message message) {
 		NoticeableExecutorService noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
 				BatchEngineTaskListener.class.getName());
 
-		List<BatchEngineTask> batchEngineTasks =
-			_batchEngineTaskLocalService.getBatchEngineTasks(
-				BatchEngineTaskExecuteStatus.STARTED);
-
 		long currentTime = System.currentTimeMillis();
 
-		for (BatchEngineTask batchEngineTask : batchEngineTasks) {
+		for (BatchEngineTask batchEngineTask :
+				_batchEngineTaskLocalService.getBatchEngineTasks(
+					BatchEngineTaskExecuteStatus.STARTED)) {
+
 			Date modifiedDate = batchEngineTask.getModifiedDate();
 
 			if ((currentTime - modifiedDate.getTime()) > _heartbeatInterval) {
 				noticeableExecutorService.submit(
-					() -> {
-						try {
-							_batchEngineTaskExecutor.execute(batchEngineTask);
-						}
-						catch (Exception e) {
-							_log.error(e, e);
-						}
-					});
+					() -> _batchEngineTaskExecutor.execute(batchEngineTask));
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineTaskListener.class);
 
 	@Reference
 	private BatchEngineTaskExecutor _batchEngineTaskExecutor;

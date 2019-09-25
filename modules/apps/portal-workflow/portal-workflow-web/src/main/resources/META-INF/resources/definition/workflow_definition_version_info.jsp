@@ -24,7 +24,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 String userName = workflowDefinitionDisplayContext.getUserNameOrBlank(workflowDefinition);
 %>
 
-<div class="flex-col flex-col-expand">
+<div class="autofit-col autofit-col-expand">
 	<div class="list-group-title"><%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %></div>
 	<div class="list-group-subtitle"><%= HtmlUtil.escape(userName) %></div>
 </div>

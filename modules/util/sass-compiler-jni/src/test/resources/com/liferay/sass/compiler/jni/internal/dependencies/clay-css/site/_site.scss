@@ -1165,7 +1165,7 @@ section.row {
 	.card-row {
 		height: 100px;
 
-		.flex-col {
+		.autofit-col {
 			text-align: center;
 
 			&:nth-child(odd) {

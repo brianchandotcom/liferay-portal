@@ -652,6 +652,11 @@ public class JournalContentDisplayContext {
 				PortalUtil.getLiferayPortletRequest(_portletRequest), null,
 				LiferayWindowState.NORMAL, _themeDisplay.getURLCurrent());
 
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			portletURL.setParameter(
+				"portletResource", portletDisplay.getPortletName());
+
 			return portletURL.toString();
 		}
 		catch (Exception e) {

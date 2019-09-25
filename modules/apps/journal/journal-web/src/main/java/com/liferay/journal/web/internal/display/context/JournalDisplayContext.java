@@ -960,13 +960,13 @@ public class JournalDisplayContext {
 	}
 
 	public int getTotalItems() throws PortalException {
-        SearchContainer articleSearch = _getArticlesSearchContainer();
+		SearchContainer articleSearch = _getArticlesSearchContainer();
 
 		return articleSearch.getTotal();
 	}
 
 	public int getVersionsTotal() throws PortalException {
-        SearchContainer articleSearch = _getVersionsSearchContainer();
+		SearchContainer articleSearch = _getVersionsSearchContainer();
 
 		return articleSearch.getTotal();
 	}

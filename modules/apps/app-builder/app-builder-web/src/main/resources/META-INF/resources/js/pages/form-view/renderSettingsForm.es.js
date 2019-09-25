@@ -60,16 +60,6 @@ export default ({dispatchEvent, settingsContext}, container) => {
 	};
 
 	const handleFormAttached = function() {
-		const firstInput = container.querySelector('input');
-
-		if (firstInput && !container.contains(document.activeElement)) {
-			firstInput.focus();
-
-			if (firstInput.select) {
-				firstInput.select();
-			}
-		}
-
 		this.evaluate();
 	};
 

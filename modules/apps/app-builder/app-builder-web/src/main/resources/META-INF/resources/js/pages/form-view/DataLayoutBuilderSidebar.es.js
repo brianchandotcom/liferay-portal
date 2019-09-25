@@ -20,7 +20,8 @@ import React, {
 	useRef,
 	useState,
 	useContext,
-	useCallback
+	useCallback,
+	useLayoutEffect
 } from 'react';
 import renderSettingsForm, {
 	getFilteredSettingsContext
@@ -53,15 +54,12 @@ const DefaultSidebarBody = ({keywords}) => {
 
 const SettingsSidebarBody = () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [
-		{
-			focusedCustomObjectField: {
-				settingsContext: customObjectFieldSettingsContext
-			},
-			focusedField: {settingsContext: fieldSettingsContext}
-		},
-		dispatch
-	] = useContext(FormViewContext);
+	const [state, dispatch] = useContext(FormViewContext);
+	const {focusedCustomObjectField, focusedField} = state;
+	const {
+		settingsContext: customObjectFieldSettingsContext
+	} = focusedCustomObjectField;
+	const {settingsContext: fieldSettingsContext} = focusedField;
 	const formRef = useRef();
 	const [form, setForm] = useState(null);
 	const hasFocusedCustomObjectField = !!customObjectFieldSettingsContext;
@@ -70,9 +68,9 @@ const SettingsSidebarBody = () => {
 		: fieldSettingsContext;
 	const dispatchEvent = useCallback(
 		(type, payload) => {
-			if (hasFocusedCustomObjectField) {
+			if (hasFocusedCustomObjectField && type === 'fieldEdited') {
 				dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
-			} else {
+			} else if (!hasFocusedCustomObjectField) {
 				dataLayoutBuilder.dispatch(type, payload);
 			}
 		},
@@ -102,6 +100,28 @@ const SettingsSidebarBody = () => {
 	useEffect(() => {
 		return () => form && form.dispose();
 	}, [form]);
+
+	const focusedFieldName = hasFocusedCustomObjectField
+		? focusedCustomObjectField.name
+		: focusedField.name;
+
+	useLayoutEffect(() => {
+		if (!form) {
+			return;
+		}
+
+		form.once('rendered', () => {
+			const firstInput = form.element.querySelector('input');
+
+			if (firstInput && !form.element.contains(document.activeElement)) {
+				firstInput.focus();
+
+				if (firstInput.select) {
+					firstInput.select();
+				}
+			}
+		});
+	}, [focusedFieldName, form]);
 
 	return <div ref={formRef}></div>;
 };

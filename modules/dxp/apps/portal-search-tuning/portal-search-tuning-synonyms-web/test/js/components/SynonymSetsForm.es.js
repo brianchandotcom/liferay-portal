@@ -21,7 +21,20 @@ const INPUT_NAME = 'testInput';
 const ORIGINAL_INPUT_NAME = 'testOriginalInput';
 
 describe('SynonymSetsForm', () => {
-	it('renders', () => {
+	it('renders with no existing synonyms', () => {
+		const {container} = render(
+			<SynonymSetsForm
+				formName={FORM_NAME}
+				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
+				synonymSets=""
+			/>
+		);
+
+		expect(container).not.toBeNull();
+	});
+
+	it('renders with existing synonyms', () => {
 		const {container} = render(
 			<SynonymSetsForm
 				formName={FORM_NAME}

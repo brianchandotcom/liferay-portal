@@ -33,11 +33,9 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
+import com.liferay.portal.kernel.util.Time;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -58,8 +56,9 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_heartbeatInterval = GetterUtil.getInteger(
-			properties.get("heartbeat.period"));
+		_heartbeatInterval =
+			GetterUtil.getLong(properties.get("heartbeat.period")) *
+				Time.SECOND;
 
 		Class<?> clazz = getClass();
 
@@ -97,16 +96,12 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 			_batchEngineTaskLocalService.getBatchEngineTasks(
 				BatchEngineTaskExecuteStatus.STARTED);
 
-		LocalDateTime localDateTime = LocalDateTime.now();
-
-		localDateTime = localDateTime.minus(
-			_heartbeatInterval, ChronoUnit.SECONDS);
+		long currentTime = System.currentTimeMillis();
 
 		for (BatchEngineTask batchEngineTask : batchEngineTasks) {
-			LocalDateTime modifiedDateTime = LocalDateTimeUtil.toLocalDateTime(
-				batchEngineTask.getModifiedDate());
+			Date modifiedDate = batchEngineTask.getModifiedDate();
 
-			if (modifiedDateTime.isBefore(localDateTime)) {
+			if ((currentTime - modifiedDate.getTime()) > _heartbeatInterval) {
 				noticeableExecutorService.submit(
 					() -> {
 						try {
@@ -129,7 +124,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
-	private int _heartbeatInterval;
+	private long _heartbeatInterval;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

@@ -22,6 +22,7 @@ export default function renderApp({
 	classNameId = '',
 	classPK = '',
 	initialGoals = segmentsGoals,
+	initialExperimentHistory = [],
 	initialSegmentsExperiences = [],
 	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
@@ -71,7 +72,7 @@ export default function renderApp({
 			}}
 		>
 			<SegmentsExperimentsSidebar
-				initialExperimentHistory={[]}
+				initialExperimentHistory={initialExperimentHistory}
 				initialGoals={initialGoals}
 				initialSegmentsExperiences={initialSegmentsExperiences}
 				initialSegmentsExperiment={initialSegmentsExperiment}
@@ -116,7 +117,10 @@ const _getEstimatedTimeMock = () =>
 		segmentsExperimentEstimatedDaysDuration: DEFAULT_ESTIMATED_DAYS.value
 	});
 
-const _publishExperienceMockGenerator = experiment => ({status}) =>
+const _publishExperienceMockGenerator = experiment => ({
+	status,
+	winnerSegmentsExperienceId
+}) =>
 	Promise.resolve({
 		segmentsExperiment: {
 			...experiment,
@@ -124,7 +128,8 @@ const _publishExperienceMockGenerator = experiment => ({status}) =>
 				label: 'completed',
 				value: status
 			}
-		}
+		},
+		winnerSegmentsExperienceId
 	});
 
 const _runExperimentMockGenerator = segmentsExperiment => ({status}) =>

@@ -16,6 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {
 	cleanup,
 	fireEvent,
+	waitForDomChange,
 	waitForElement,
 	wait,
 	waitForElementToBeRemoved
@@ -33,7 +34,8 @@ import {
 	STATUS_FINISHED_WINNER,
 	STATUS_COMPLETED,
 	STATUS_RUNNING,
-	STATUS_TERMINATED
+	STATUS_TERMINATED,
+	STATUS_FINISHED_NO_WINNER
 } from '../../../src/main/resources/META-INF/resources/js/util/statuses.es';
 
 jest.mock(
@@ -377,6 +379,8 @@ describe('Click Target selection', () => {
 });
 
 describe('Experiment history tab', () => {
+	afterEach(cleanup);
+
 	test('test is archived after terminating it', async () => {
 		window.confirm = jest.fn(() => true);
 
@@ -416,13 +420,107 @@ describe('Experiment history tab', () => {
 		getByText('create-test');
 	});
 
-	test.todo('test is archive after completing it');
+	test('test is archive after completing it', async () => {
+		const noWinnerDeclaredExperiment = {
+			...segmentsExperiment,
+			editable: false,
+			status: {
+				label: 'no winner',
+				value: STATUS_FINISHED_NO_WINNER
+			}
+		};
 
-	test.todo('test just archived are shown in the top of the history list');
+		const {APIServiceMocks, getByText, queryAllByText} = renderApp({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: noWinnerDeclaredExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+		const {publishExperience} = APIServiceMocks;
 
-	test.todo('tests have name, description and status label');
+		const publishButtons = queryAllByText('publish');
 
-	test.todo('history tab title has number of archived tests next to it');
+		/*
+		 * Only the alternative variant has a publish button
+		 */
+		expect(publishButtons.length).toBe(1);
+
+		getByText('discard-test');
+
+		userEvent.click(publishButtons[0]);
+
+		await waitForElement(() => getByText('completed'));
+
+		expect(publishExperience).toHaveBeenCalledWith(
+			expect.objectContaining({
+				segmentsExperimentId:
+					noWinnerDeclaredExperiment.segmentsExperimentId,
+				status: STATUS_COMPLETED,
+				winnerSegmentsExperienceId:
+					segmentsVariants[1].segmentsExperienceId
+			})
+		);
+
+		const historyTab = getByText('history (1)');
+
+		userEvent.click(historyTab);
+
+		await waitForDomChange();
+
+		await waitForElement(() => getByText(segmentsExperiment.name));
+	});
+
+	test('tests have name, description and status label', async () => {
+		const experimentHistory = [
+			{
+				...segmentsExperiment,
+				description: 'archived 1 description',
+				name: 'archived 1',
+				segmentsExperimentId: 'h-1',
+				status: {
+					label: 'terminated',
+					value: STATUS_TERMINATED
+				}
+			},
+			{
+				...segmentsExperiment,
+				name: 'archived 2',
+				segmentsExperimentId: 'h-2',
+				status: {
+					label: 'completed',
+					value: STATUS_COMPLETED
+				}
+			}
+		];
+
+		const {getByText} = renderApp({
+			initialExperimentHistory: experimentHistory
+		});
+
+		/*
+		 * History tab has the number of arhived Experiments
+		 */
+		const historyTab = getByText('history (2)');
+
+		userEvent.click(historyTab);
+
+		await waitForDomChange();
+
+		await waitForElement(() => getByText(experimentHistory[0].name));
+
+		/*
+		 * Experiment 1 is present in the UI
+		 */
+		getByText(experimentHistory[0].name);
+		getByText(experimentHistory[0].description);
+		getByText(experimentHistory[0].status.label);
+
+		/*
+		 * Experiment 2 is present in the UI
+		 */
+		getByText(experimentHistory[1].name);
+		getByText(experimentHistory[1].description);
+		getByText(experimentHistory[1].status.label);
+	});
 });
 
 describe('Winner declared', () => {

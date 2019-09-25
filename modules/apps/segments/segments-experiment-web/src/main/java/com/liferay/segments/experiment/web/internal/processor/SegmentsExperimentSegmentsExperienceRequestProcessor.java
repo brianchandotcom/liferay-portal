@@ -125,8 +125,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			_segmentsExperimentLocalService.
 				getSegmentsExperienceSegmentsExperiments(
 					new long[] {segmentsExperienceId}, classNameId, classPK,
-					new int[] {SegmentsExperimentConstants.STATUS_RUNNING}, 0,
-					1);
+					SegmentsExperimentConstants.Status.getSplitStatusValues(),
+					0, 1);
 
 		if (segmentsExperiments.isEmpty()) {
 			if (_log.isDebugEnabled()) {

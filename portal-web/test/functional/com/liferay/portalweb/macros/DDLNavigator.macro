@@ -22,10 +22,6 @@ definition {
 	macro gotoDDLRecordEditViaWorkflow {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
-		SelectFrame(value1 = "relative=top");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
 		WorkflowAsset.viewDetails(
 			userName = "${userName}",
 			workflowStatus = "${workflowStatus}");

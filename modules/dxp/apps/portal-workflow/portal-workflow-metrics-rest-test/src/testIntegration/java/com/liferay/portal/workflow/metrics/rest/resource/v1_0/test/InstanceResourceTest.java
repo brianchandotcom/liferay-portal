@@ -65,7 +65,6 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		_process = _workflowMetricsRESTTestHelper.addProcess(
 			testGroup.getCompanyId());
-
 		_user = UserTestUtil.addUser();
 	}
 

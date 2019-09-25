@@ -254,7 +254,6 @@ public class WorkflowMetricsRESTTestHelper {
 				instanceCount = 1L;
 				key = RandomTestUtil.randomString();
 				name = key;
-
 				onTimeInstanceCount = 0L;
 				overdueInstanceCount = 0L;
 			}

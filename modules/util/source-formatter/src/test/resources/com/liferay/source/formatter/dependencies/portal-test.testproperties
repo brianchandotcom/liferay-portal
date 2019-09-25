@@ -3,21 +3,3 @@ include-and-override=portal-test-ext.properties
 announcements.email.to.address=noreply@liferay.com
 
 admin.email.from.address=test@liferay.com
-
-##
-## DB2
-##
-
-    #jdbc.default.driverClassName=com.ibm.db2.jcc.DB2Driver
-    #jdbc.default.url=jdbc:db2://localhost:50000/lportal:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;
-    #jdbc.default.username=db2admin
-    #jdbc.default.password=lportal
-
-##
-## MariaDB
-##
-
-    #jdbc.default.driverClassName=org.mariadb.jdbc.Driver
-    #jdbc.default.url=jdbc:mariadb://localhost/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-    #jdbc.default.username=
-    #jdbc.default.password=

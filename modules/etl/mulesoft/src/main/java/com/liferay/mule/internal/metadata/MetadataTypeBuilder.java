@@ -53,8 +53,12 @@ public class MetadataTypeBuilder {
 
 		JsonNode oasJsonNode = _getOASJsonNode(metadataContext.getConnection());
 
-		JsonNode referenceJsonNode = _getReferenceJsonNode(
+		JsonNode referenceJsonNode = _fetchReferenceJsonNode(
 			oasJsonNode, endpoint, operation);
+
+		if (referenceJsonNode.isNull()) {
+			return _resolveNothingMetadataType(metadataContext);
+		}
 
 		String schemaName = _getSchemaName(referenceJsonNode.textValue());
 
@@ -85,6 +89,18 @@ public class MetadataTypeBuilder {
 			_fetchRequiredJsonNode(schemaJsonNode));
 
 		return objectTypeBuilder.build();
+	}
+
+	private JsonNode _fetchReferenceJsonNode(
+		JsonNode openAPISpecJsonNode, String endpoint, String operation) {
+
+		String path = StringUtil.replace(
+			OASConstants.
+				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+
+		return _jsonNodeReader.fetchDescendantJsonNode(
+			openAPISpecJsonNode, path);
 	}
 
 	private JsonNode _fetchRequiredJsonNode(JsonNode schemaJsonNode) {
@@ -229,17 +245,6 @@ public class MetadataTypeBuilder {
 		).objectType();
 	}
 
-	private JsonNode _getReferenceJsonNode(
-		JsonNode openAPISpecJsonNode, String endpoint, String operation) {
-
-		String path = StringUtil.replace(
-			OASConstants.
-				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
-
-		return _jsonNodeReader.getDescendantJsonNode(openAPISpecJsonNode, path);
-	}
-
 	private JsonNode _getSchemaJsonNode(
 		JsonNode openAPISpecJsonNode, String schemaName) {
 
@@ -317,6 +322,21 @@ public class MetadataTypeBuilder {
 		_resolveObjectMetadataType(
 			nestedObjectTypeBuilder, oasJsonNode,
 			nestedObjectPropertiesJsonNode, nestedObjectRequiredJsonNode);
+	}
+
+	private MetadataType _resolveNothingMetadataType(
+		MetadataContext metadataContext) {
+
+		ObjectTypeBuilder objectTypeBuilder = _getObjectTypeBuilder(
+			metadataContext);
+
+		objectTypeBuilder.addField(
+		).key(
+			""
+		).value(
+		).nothingType();
+
+		return objectTypeBuilder.build();
 	}
 
 	private void _resolveObjectMetadataType(

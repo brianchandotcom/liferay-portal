@@ -9,13 +9,28 @@
 </thead>
 <tbody>
 <tr>
+	<td>ASSET_SELECT_BUTTON</td>
+	<td>//button[contains(@id,'asset-select-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION</td>
+	<td>//div[contains(@id,'asset-select-dropdown')]//button[contains(@data-asset-browser-window-title,'${assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD</td>
+	<td>//select[contains(@id,'floatingToolbarMappingPanelFieldSelect')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>URL</td>
 	<td>//div[contains(@class,'floating-toolbar-link-panel')]//input[contains(@id,'floatingToolbarLinkHrefPanelOption')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
+	<td>LINK_TYPE</td>
+	<td>//select[contains(@id,'floatingToolbarLinkTypePanelOption')]</td>
 	<td></td>
 </tr>
 <tr>

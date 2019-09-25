@@ -59,4 +59,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-96794. Mapped Web Content will appear in the sidebar in a Page Editor's edit mode."
+	@priority = "5"
+	test MapWebContentURLToLinkFragment {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "Test Content",
+			groupName = "Test Site Name",
+			title = "liferay.com");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Sections",
+			fragmentName = "Banner Center");
+
+		PageEditorEditableLink.gotoEditableFieldLink(
+			fragmentName = "Banner Center",
+			id = "link");
+
+		PageEditorEditableLink.mapURLToAsset(
+			assetName = "liferay.com",
+			assetType = "Web Content Article",
+			field = "Title");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert editable has the specified URL mapped correctly") {
+			AssertElementPresent(locator1 = "//a[contains(@class,'btn')][contains(@href,'liferay.com')]");
+		}
+	}
+
 }

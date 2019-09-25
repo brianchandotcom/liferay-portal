@@ -1,11 +1,50 @@
 definition {
 
+	@summary = "gotoEditableFieldLink must be called first"
+	macro _gotoFromContentField {
+		Select(
+			locator1 = "PageEditorEditableLink#LINK_TYPE",
+			value1 = "From Content Field");
+	}
+
+	macro _selectContent {
+		Click(locator1 = "PageEditorEditableLink#ASSET_SELECT_BUTTON");
+
+		Click(
+			assetType = "${assetType}",
+			locator1 = "PageEditorEditableLink#ASSET_SELECTION");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		LexiconEntry.gotoEntry(rowEntry = "${assetName}");
+
+		SelectFrameTop();
+	}
+
+	macro _selectField {
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "${field}");
+	}
+
 	macro gotoEditableFieldLink {
 		PageEditor.clickEditableField(
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_LINK_BUTTON");
+	}
+
+	macro mapURLToAsset {
+		Variables.assertDefined(parameterList = "${assetName},${assetType},${field}");
+
+		PageEditorEditableLink._gotoFromContentField();
+
+		PageEditorEditableLink._selectContent(
+			assetName = "${assetName}",
+			assetType = "${assetType}");
+
+		PageEditorEditableLink._selectField(field = "${field}");
 	}
 
 	macro updateURL {

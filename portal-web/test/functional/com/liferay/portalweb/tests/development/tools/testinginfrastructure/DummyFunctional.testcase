@@ -1,5 +1,6 @@
 @component-name = "portal-tools"
 definition {
+
 	property portal.smoke = "dummy";
 	property testray.main.component.name = "Tools";
 

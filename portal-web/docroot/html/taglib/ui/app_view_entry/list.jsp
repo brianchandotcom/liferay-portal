@@ -18,7 +18,7 @@
 
 <div class="app-view-entry app-view-entry-taglib display-<%= HtmlUtil.escapeAttribute(displayStyle) %> entry-display-style <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
 	<liferay-ui:icon
-		cssClass='<%= showCheckbox ? "pull-left app-view-entry app-view-entry-taglib entry-display-style selectable" : "pull-left app-view-entry app-view-entry-taglib entry-display-style" %>'
+		cssClass='<%= showCheckbox ? "app-view-entry app-view-entry-taglib entry-display-style float-left selectable" : "app-view-entry app-view-entry-taglib entry-display-style float-left" %>'
 		data="<%= data %>"
 		iconCssClass="<%= iconCssClass %>"
 		label="<%= true %>"

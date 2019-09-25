@@ -126,7 +126,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="run-the-garbage-collector-to-free-up-memory" /></h5>
 				</div>
 
@@ -135,7 +135,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="generate-thread-dump" /></h5>
 				</div>
 
@@ -157,7 +157,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clear-content-cached-by-this-vm" /></h5>
 				</div>
 
@@ -166,7 +166,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clear-content-cached-across-the-cluster" /></h5>
 				</div>
 
@@ -175,7 +175,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clear-the-database-cache" /></h5>
 				</div>
 
@@ -184,7 +184,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clear-the-direct-servlet-cache" /></h5>
 				</div>
 
@@ -206,7 +206,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="verify-database-tables-of-all-plugins" /></h5>
 				</div>
 
@@ -215,7 +215,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="verify-membership-policies" /></h5>
 				</div>
 
@@ -237,7 +237,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 	>
 		<ul class="list-group system-action-group">
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="reset-preview-and-thumbnail-files-for-documents-and-media" /></h5>
 				</div>
 
@@ -246,7 +246,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clean-up-permissions" /> <liferay-ui:icon-help message="clean-up-permissions-help" /></h5>
 				</div>
 
@@ -255,7 +255,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</div>
 			</li>
 			<li class="clearfix list-group-item">
-				<div class="pull-left">
+				<div class="float-left">
 					<h5><liferay-ui:message key="clean-up-portlet-preferences" /> <liferay-ui:icon-help message="clean-up-portlet-preferences-help" /></h5>
 				</div>
 

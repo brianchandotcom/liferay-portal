@@ -67,7 +67,7 @@ public class BatchEngineTaskLocalServiceImpl
 	public List<BatchEngineTask> getBatchEngineTasks(
 		BatchEngineTaskExecuteStatus executeStatus) {
 
-		return batchEngineTaskPersistence.findByexecuteStatus(
+		return batchEngineTaskPersistence.findByExecuteStatus(
 			executeStatus.toString());
 	}
 

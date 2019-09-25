@@ -15,6 +15,8 @@
 package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
+import com.liferay.mule.internal.metadata.DELETEEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.DELETEEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.GETEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.GETEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.POSTEndpointTypeKeysResolver;
@@ -46,9 +48,25 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
  */
 public class LiferayOperations {
 
-	@MediaType(strict = false, value = MediaType.ANY)
-	public String delete() {
-		throw new UnsupportedOperationException();
+	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@OutputResolver(output = DELETEEndpointTypeResolver.class)
+	public Result<InputStream, Void> delete(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
+				String endpoint)
+		throws IOException, TimeoutException {
+
+		HttpResponse httpResponse = connection.delete(
+			_pathParams, _queryParams, endpoint);
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		InputStream inputStream = httpEntity.getContent();
+
+		return Result.<InputStream, Void>builder(
+		).output(
+			inputStream
+		).build();
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)

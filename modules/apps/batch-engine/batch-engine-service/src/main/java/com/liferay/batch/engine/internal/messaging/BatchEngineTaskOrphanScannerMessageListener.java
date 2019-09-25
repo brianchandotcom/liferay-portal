@@ -45,22 +45,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true, property = {"heartbeat.period=300", "interval=60"},
+	immediate = true,
+	property = {"orphanage.threshold=300", "scan.interval=60"},
 	service = MessageListener.class
 )
-public class BatchEngineTaskListener extends BaseMessageListener {
+public class BatchEngineTaskOrphanScannerMessageListener
+	extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_heartbeatInterval =
-			GetterUtil.getLong(properties.get("heartbeat.period")) *
+		_orphanageThreshold =
+			GetterUtil.getLong(properties.get("orphanage.threshold")) *
 				Time.SECOND;
 
-		String className = BatchEngineTaskListener.class.getName();
+		String className =
+			BatchEngineTaskOrphanScannerMessageListener.class.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			GetterUtil.getInteger(properties.get("interval")), TimeUnit.SECOND);
+			GetterUtil.getInteger(properties.get("scan.interval")),
+			TimeUnit.SECOND);
 
 		_schedulerEngineHelper.register(
 			this, new SchedulerEntryImpl(className, trigger),
@@ -71,7 +75,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 	protected void deactivate() {
 		ExecutorService executorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineTaskListener.class.getName());
+				BatchEngineTaskOrphanScannerMessageListener.class.getName());
 
 		executorService.shutdownNow();
 
@@ -82,7 +86,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 	protected void doReceive(Message message) {
 		NoticeableExecutorService noticeableExecutorService =
 			_portalExecutorManager.getPortalExecutor(
-				BatchEngineTaskListener.class.getName());
+				BatchEngineTaskOrphanScannerMessageListener.class.getName());
 
 		long currentTime = System.currentTimeMillis();
 
@@ -92,7 +96,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 
 			Date modifiedDate = batchEngineTask.getModifiedDate();
 
-			if ((currentTime - modifiedDate.getTime()) > _heartbeatInterval) {
+			if ((currentTime - modifiedDate.getTime()) > _orphanageThreshold) {
 				noticeableExecutorService.submit(
 					() -> _batchEngineTaskExecutor.execute(batchEngineTask));
 			}
@@ -105,7 +109,7 @@ public class BatchEngineTaskListener extends BaseMessageListener {
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
-	private long _heartbeatInterval;
+	private long _orphanageThreshold;
 
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;

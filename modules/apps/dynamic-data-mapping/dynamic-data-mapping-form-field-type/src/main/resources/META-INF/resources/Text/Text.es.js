@@ -30,7 +30,9 @@ class Text extends Component {
 			}
 
 			this.animationFrameRequest = window.requestAnimationFrame(() => {
-				this.setState({_value});
+				if (!this.isDisposed()) {
+					this.setState({_value});
+				}
 			});
 		}, 300);
 	}

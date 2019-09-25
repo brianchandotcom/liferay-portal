@@ -20,7 +20,6 @@ import React, {
 	useRef,
 	useState,
 	useContext,
-	useCallback,
 	useLayoutEffect
 } from 'react';
 import renderSettingsForm, {
@@ -66,23 +65,21 @@ const SettingsSidebarBody = () => {
 	const settingsContext = hasFocusedCustomObjectField
 		? customObjectFieldSettingsContext
 		: fieldSettingsContext;
-	const dispatchEvent = useCallback(
-		(type, payload) => {
-			if (hasFocusedCustomObjectField && type === 'fieldEdited') {
-				dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
-			} else if (!hasFocusedCustomObjectField) {
-				dataLayoutBuilder.dispatch(type, payload);
-			}
-		},
-		[dataLayoutBuilder, dispatch, hasFocusedCustomObjectField]
-	);
 
 	useEffect(() => {
 		const filteredSettingsContext = getFilteredSettingsContext(
 			settingsContext
 		);
 
-		if (form === null) {
+		if (form === null || form.isDisposed()) {
+			const dispatchEvent = (type, payload) => {
+				if (hasFocusedCustomObjectField && type === 'fieldEdited') {
+					dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
+				} else if (!hasFocusedCustomObjectField) {
+					dataLayoutBuilder.dispatch(type, payload);
+				}
+			};
+
 			setForm(
 				renderSettingsForm(
 					{
@@ -95,11 +92,18 @@ const SettingsSidebarBody = () => {
 		} else {
 			form.pages = filteredSettingsContext.pages;
 		}
-	}, [dataLayoutBuilder, dispatchEvent, form, formRef, settingsContext]);
+	}, [
+		dataLayoutBuilder,
+		dispatch,
+		form,
+		formRef,
+		hasFocusedCustomObjectField,
+		settingsContext
+	]);
 
 	useEffect(() => {
 		return () => form && form.dispose();
-	}, [form]);
+	}, [form, hasFocusedCustomObjectField]);
 
 	const focusedFieldName = hasFocusedCustomObjectField
 		? focusedCustomObjectField.name

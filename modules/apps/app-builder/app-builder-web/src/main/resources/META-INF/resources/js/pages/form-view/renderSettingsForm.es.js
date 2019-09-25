@@ -38,13 +38,15 @@ export const getFilteredSettingsContext = settingsContext => {
 
 export default ({dispatchEvent, settingsContext}, container) => {
 	const handleFieldBlurred = ({fieldInstance, value}) => {
-		const {fieldName} = fieldInstance;
+		if (fieldInstance && !fieldInstance.isDisposed()) {
+			const {fieldName} = fieldInstance;
 
-		dispatchEvent('fieldBlurred', {
-			editingLanguageId: 'en_US',
-			propertyName: fieldName,
-			propertyValue: value
-		});
+			dispatchEvent('fieldBlurred', {
+				editingLanguageId: 'en_US',
+				propertyName: fieldName,
+				propertyValue: value
+			});
+		}
 	};
 
 	const handleFieldEdited = ({fieldInstance, value}) => {

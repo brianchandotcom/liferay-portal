@@ -55,6 +55,7 @@ public class WidgetAppDeployer implements AppDeployer {
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
 			key -> _deployAppPortlet(
+				appId,
 				appBuilderApp.getName(LocaleThreadLocal.getDefaultLocale()),
 				AppBuilderPortletKeys.WIDGET_APP + "_" + appId));
 
@@ -85,10 +86,10 @@ public class WidgetAppDeployer implements AppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployAppPortlet(
-		String appName, String portletName) {
+		long appId, String appName, String portletName) {
 
 		return _bundleContext.registerService(
-			Portlet.class, new WidgetAppPortlet(),
+			Portlet.class, new WidgetAppPortlet(appId),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("com.liferay.portlet.add-default-resource", true);
@@ -101,7 +102,9 @@ public class WidgetAppDeployer implements AppDeployer {
 					put(
 						"javax.portlet.init-param.template-path",
 						"/META-INF/resources/");
-					put("javax.portlet.init-param.view-template", "/view.jsp");
+					put(
+						"javax.portlet.init-param.view-template",
+						"/view_entries.jsp");
 					put(
 						"javax.portlet.security-role-ref",
 						"administrator,guest,power-user,user");

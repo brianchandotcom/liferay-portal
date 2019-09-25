@@ -19,12 +19,13 @@ import {
 	ADD_CUSTOM_OBJECT_FIELD,
 	EDIT_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION,
-	UPDATE_DATA_LAYOUT,
 	UPDATE_DATA_LAYOUT_NAME,
+	UPDATE_DATA_LAYOUT,
 	UPDATE_FIELD_TYPES,
+	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD,
+	UPDATE_FOCUSED_FIELD,
 	UPDATE_IDS,
-	UPDATE_PAGES,
-	UPDATE_FOCUSED_FIELD
+	UPDATE_PAGES
 } from './actions.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 
@@ -249,12 +250,44 @@ const createReducer = dataLayoutBuilder => {
 					fieldTypes: fieldTypes.filter(({system}) => !system)
 				};
 			}
-			case UPDATE_FOCUSED_FIELD: {
-				const {focusedField} = action.payload;
+			case UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD: {
+				const {dataDefinitionField} = action.payload;
+				let focusedCustomObjectField = {};
+
+				if (Object.keys(dataDefinitionField).length > 0) {
+					focusedCustomObjectField = {
+						...dataDefinitionField,
+						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
+							dataDefinitionField
+						)
+					};
+
+					return {
+						...state,
+						focusedCustomObjectField,
+						focusedField: {}
+					};
+				}
 
 				return {
 					...state,
-					focusedField
+					focusedCustomObjectField: {}
+				};
+			}
+			case UPDATE_FOCUSED_FIELD: {
+				const {focusedField} = action.payload;
+
+				if (Object.keys(focusedField).length > 0) {
+					return {
+						...state,
+						focusedCustomObjectField: {},
+						focusedField
+					};
+				}
+
+				return {
+					...state,
+					focusedField: {}
 				};
 			}
 			case UPDATE_IDS: {

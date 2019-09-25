@@ -28,7 +28,11 @@ import {useKeyDown} from '../../hooks/index.es';
 import CustomObjectFieldsList from './CustomObjectFieldsList.es';
 import FormViewContext from './FormViewContext.es';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import {ADD_CUSTOM_OBJECT_FIELD} from './actions.es';
+import {
+	ADD_CUSTOM_OBJECT_FIELD,
+	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+} from './actions.es';
+import isClickOutside from '../../utils/clickOutside.es';
 
 const DropDown = () => {
 	const [{fieldTypes}, dispatch] = useContext(FormViewContext);
@@ -200,8 +204,35 @@ const Header = ({keywords, onCloseSearch, onSearch}) => {
 };
 
 export default () => {
+	const [{focusedCustomObjectField}, dispatch] = useContext(FormViewContext);
 	const [keywords, setKeywords] = useState('');
 	const sidebarRef = useRef();
+
+	useKeyDown(() => {
+		if (Object.keys(focusedCustomObjectField).length > 0) {
+			dispatch({
+				payload: {dataDefinitionField: {}},
+				type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+			});
+		}
+	}, 27);
+
+	useEffect(() => {
+		const eventHandler = ({target}) => {
+			if (
+				isClickOutside(target, '.app-builder-sidebar', '.dropdown-menu')
+			) {
+				dispatch({
+					payload: {dataDefinitionField: {}},
+					type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+				});
+			}
+		};
+
+		window.addEventListener('click', eventHandler);
+
+		return () => window.removeEventListener('click', eventHandler);
+	}, [dispatch]);
 
 	return (
 		<Sidebar closeable={false} ref={sidebarRef}>

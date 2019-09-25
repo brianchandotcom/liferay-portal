@@ -46,7 +46,6 @@ import com.liferay.gradle.plugins.internal.TestIntegrationDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.UpgradeTableBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WSDDBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WatchOSGiPlugin;
-import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.IncludeResourceCompileIncludeInstruction;
@@ -72,7 +71,6 @@ import com.liferay.gradle.plugins.util.BndBuilderUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
-import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -998,7 +996,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
-		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
 		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
 		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
@@ -1016,7 +1013,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WatchOSGiPlugin.INSTANCE.apply(project);
-		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
 	}
 
 	private void _configureApplication(Project project) {

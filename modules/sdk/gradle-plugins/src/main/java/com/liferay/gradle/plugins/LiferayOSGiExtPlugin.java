@@ -22,10 +22,8 @@ import com.liferay.gradle.plugins.internal.CSSBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.EclipseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WatchOSGiPlugin;
-import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
-import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -152,13 +150,11 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
 		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
 		EclipseDefaultsPlugin.INSTANCE.apply(project);
 		IdeaDefaultsPlugin.INSTANCE.apply(project);
 		WatchOSGiPlugin.INSTANCE.apply(project);
-		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
 	}
 
 	private Configuration _configureConfigurationCompileOnly(

@@ -1520,13 +1520,7 @@ public class JournalDisplayContext {
 					JournalArticleLocalServiceUtil.fetchArticle(
 						groupId, articleId, version);
 
-				if (JournalChangeTrackingHelperUtil.
-						isJournalArticleInChangeList(
-							_themeDisplay.getCompanyId(),
-							_themeDisplay.getUserId(), article.getId())) {
-
-					results.add(article);
-				}
+				results.add(article);
 			}
 			else if (className.equals(JournalFolder.class.getName())) {
 				results.add(JournalFolderLocalServiceUtil.getFolder(classPK));

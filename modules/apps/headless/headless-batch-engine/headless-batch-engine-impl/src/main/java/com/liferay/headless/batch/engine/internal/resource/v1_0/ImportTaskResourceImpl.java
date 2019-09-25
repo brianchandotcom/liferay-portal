@@ -14,7 +14,7 @@
 
 package com.liferay.headless.batch.engine.internal.resource.v1_0;
 
-import com.liferay.headless.batch.engine.resource.v1_0.TaskResource;
+import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -23,8 +23,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Ivica Cardic
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/task.properties",
-	scope = ServiceScope.PROTOTYPE, service = TaskResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/import-task.properties",
+	scope = ServiceScope.PROTOTYPE, service = ImportTaskResource.class
 )
-public class TaskResourceImpl extends BaseTaskResourceImpl {
+public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 }

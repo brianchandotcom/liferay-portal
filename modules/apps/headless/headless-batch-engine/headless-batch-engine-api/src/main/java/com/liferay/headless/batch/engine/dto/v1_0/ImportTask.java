@@ -14,9 +14,11 @@
 
 package com.liferay.headless.batch.engine.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,12 +43,83 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Task")
+@GraphQLName("ImportTask")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Task")
-public class Task {
+@XmlRootElement(name = "ImportTask")
+public class ImportTask {
 
-	@Schema
+	@GraphQLName("ExecuteStatus")
+	public static enum ExecuteStatus {
+
+		COMPLETED("COMPLETED"), FAILED("FAILED"), INITIAL("INITIAL"),
+		STARTED("STARTED");
+
+		@JsonCreator
+		public static ExecuteStatus create(String value) {
+			for (ExecuteStatus executeStatus : values()) {
+				if (Objects.equals(executeStatus.getValue(), value)) {
+					return executeStatus;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ExecuteStatus(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("Operation")
+	public static enum Operation {
+
+		CREATE("CREATE"), DELETE("DELETE"), UPDATE("UPDATE");
+
+		@JsonCreator
+		public static Operation create(String value) {
+			for (Operation operation : values()) {
+				if (Objects.equals(operation.getValue(), value)) {
+					return operation;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Operation(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@Schema(
+		description = "The item class name for which data will be processed in batch."
+	)
 	public String getClassName() {
 		return className;
 	}
@@ -75,7 +148,7 @@ public class Task {
 	protected String className;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(description = "The end time of task operation.")
 	public Long getEndTime() {
 		return endTime;
 	}
@@ -103,7 +176,9 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long endTime;
 
-	@Schema
+	@Schema(
+		description = "The error message in case of task's failed execution."
+	)
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -131,18 +206,27 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String errorMessage;
 
-	@Schema
-	public String getExecuteStatus() {
+	@Schema(description = "The status of task's execution.")
+	public ExecuteStatus getExecuteStatus() {
 		return executeStatus;
 	}
 
-	public void setExecuteStatus(String executeStatus) {
+	@JsonIgnore
+	public String getExecuteStatusAsString() {
+		if (executeStatus == null) {
+			return null;
+		}
+
+		return executeStatus.toString();
+	}
+
+	public void setExecuteStatus(ExecuteStatus executeStatus) {
 		this.executeStatus = executeStatus;
 	}
 
 	@JsonIgnore
 	public void setExecuteStatus(
-		UnsafeSupplier<String, Exception> executeStatusUnsafeSupplier) {
+		UnsafeSupplier<ExecuteStatus, Exception> executeStatusUnsafeSupplier) {
 
 		try {
 			executeStatus = executeStatusUnsafeSupplier.get();
@@ -157,10 +241,10 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String executeStatus;
+	protected ExecuteStatus executeStatus;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(description = "The task's ID.")
 	public Long getId() {
 		return id;
 	}
@@ -186,18 +270,27 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
-	@Schema
-	public String getOperation() {
+	@Schema(description = "The operation of task.")
+	public Operation getOperation() {
 		return operation;
 	}
 
-	public void setOperation(String operation) {
+	@JsonIgnore
+	public String getOperationAsString() {
+		if (operation == null) {
+			return null;
+		}
+
+		return operation.toString();
+	}
+
+	public void setOperation(Operation operation) {
 		this.operation = operation;
 	}
 
 	@JsonIgnore
 	public void setOperation(
-		UnsafeSupplier<String, Exception> operationUnsafeSupplier) {
+		UnsafeSupplier<Operation, Exception> operationUnsafeSupplier) {
 
 		try {
 			operation = operationUnsafeSupplier.get();
@@ -212,10 +305,10 @@ public class Task {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String operation;
+	protected Operation operation;
 
 	@DecimalMin("0")
-	@Schema
+	@Schema(description = "The start time of task operation.")
 	public Long getStartTime() {
 		return startTime;
 	}
@@ -243,7 +336,7 @@ public class Task {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long startTime;
 
-	@Schema
+	@Schema(description = "The version of item class.")
 	public String getVersion() {
 		return version;
 	}
@@ -277,13 +370,13 @@ public class Task {
 			return true;
 		}
 
-		if (!(object instanceof Task)) {
+		if (!(object instanceof ImportTask)) {
 			return false;
 		}
 
-		Task task = (Task)object;
+		ImportTask importTask = (ImportTask)object;
 
-		return Objects.equals(toString(), task.toString());
+		return Objects.equals(toString(), importTask.toString());
 	}
 
 	@Override
@@ -345,7 +438,7 @@ public class Task {
 
 			sb.append("\"");
 
-			sb.append(_escape(executeStatus));
+			sb.append(executeStatus);
 
 			sb.append("\"");
 		}
@@ -369,7 +462,7 @@ public class Task {
 
 			sb.append("\"");
 
-			sb.append(_escape(operation));
+			sb.append(operation);
 
 			sb.append("\"");
 		}

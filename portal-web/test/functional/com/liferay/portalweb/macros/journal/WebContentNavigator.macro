@@ -56,6 +56,15 @@ definition {
 		AssertElementPresent(locator1 = "Icon#BACK");
 	}
 
+	macro gotoEditFeed {
+		AssertClick(
+			key_feedName = "${feedName}",
+			locator1 = "DDMSelectFeed#FEED_TABLE_NAME_LINK",
+			value1 = "${feedName}");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro gotoEditStructure {
 		AssertClick(
 			key_ddlDataDefinitionName = "${structureName}",

@@ -159,7 +159,10 @@ class DataLayoutBuilder extends Component {
 				if (
 					localizable &&
 					propertyValue &&
-					propertyValue[themeDisplay.getLanguageId()]
+					Object.prototype.hasOwnProperty.call(
+						propertyValue,
+						themeDisplay.getLanguageId()
+					)
 				) {
 					propertyValue = propertyValue[themeDisplay.getLanguageId()];
 				}

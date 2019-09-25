@@ -15,7 +15,13 @@
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import React, {useEffect, useRef, useState, useContext} from 'react';
+import React, {
+	useEffect,
+	useRef,
+	useState,
+	useContext,
+	useCallback
+} from 'react';
 import renderSettingsForm, {
 	getFilteredSettingsContext
 } from './renderSettingsForm.es';
@@ -26,6 +32,7 @@ import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
+import {EDIT_CUSTOM_OBJECT_FIELD} from './actions.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -48,14 +55,29 @@ const SettingsSidebarBody = () => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [
 		{
-			focusedCustomObjectField: {settingsContext: fieldSettingsContext},
-			focusedField: {settingsContext: customObjectFieldSettingsContext}
-		}
+			focusedCustomObjectField: {
+				settingsContext: customObjectFieldSettingsContext
+			},
+			focusedField: {settingsContext: fieldSettingsContext}
+		},
+		dispatch
 	] = useContext(FormViewContext);
 	const formRef = useRef();
 	const [form, setForm] = useState(null);
-	const settingsContext =
-		customObjectFieldSettingsContext || fieldSettingsContext;
+	const hasFocusedCustomObjectField = !!customObjectFieldSettingsContext;
+	const settingsContext = hasFocusedCustomObjectField
+		? customObjectFieldSettingsContext
+		: fieldSettingsContext;
+	const dispatchEvent = useCallback(
+		(type, payload) => {
+			if (hasFocusedCustomObjectField) {
+				dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
+			} else {
+				dataLayoutBuilder.dispatch(type, payload);
+			}
+		},
+		[dataLayoutBuilder, dispatch, hasFocusedCustomObjectField]
+	);
 
 	useEffect(() => {
 		const filteredSettingsContext = getFilteredSettingsContext(
@@ -66,7 +88,7 @@ const SettingsSidebarBody = () => {
 			setForm(
 				renderSettingsForm(
 					{
-						dataLayoutBuilder,
+						dispatchEvent,
 						settingsContext: filteredSettingsContext
 					},
 					formRef.current
@@ -75,7 +97,7 @@ const SettingsSidebarBody = () => {
 		} else {
 			form.pages = filteredSettingsContext.pages;
 		}
-	}, [dataLayoutBuilder, form, formRef, settingsContext]);
+	}, [dataLayoutBuilder, dispatchEvent, form, formRef, settingsContext]);
 
 	useEffect(() => {
 		return () => form && form.dispose();

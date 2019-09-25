@@ -17,6 +17,7 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
+	EDIT_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
 	UPDATE_DATA_LAYOUT_NAME,
@@ -60,6 +61,45 @@ const addCustomObjectField = ({
 			[themeDisplay.getLanguageId()]: fieldType.label
 		},
 		name: generateDataDefinitionFieldName(dataDefinition, fieldType.label)
+	};
+};
+
+const editFocusedCustomObjectField = ({
+	focusedCustomObjectField,
+	propertyName,
+	propertyValue
+}) => {
+	let localizableProperty = false;
+	const {settingsContext} = focusedCustomObjectField;
+	const visitor = new PagesVisitor(settingsContext.pages);
+	const newSettingsContext = {
+		...settingsContext,
+		pages: visitor.mapFields(field => {
+			const {fieldName, localizable} = field;
+
+			if (fieldName === propertyName) {
+				localizableProperty = localizable;
+
+				field = {
+					...field,
+					value: propertyValue
+				};
+			}
+
+			return field;
+		})
+	};
+
+	if (localizableProperty) {
+		propertyValue = {
+			[themeDisplay.getLanguageId()]: propertyValue
+		};
+	}
+
+	return {
+		...focusedCustomObjectField,
+		[propertyName]: propertyValue,
+		settingsContext: newSettingsContext
 	};
 };
 
@@ -125,6 +165,42 @@ const createReducer = dataLayoutBuilder => {
 						settingsContext: dataLayoutBuilder.getFieldSettingsContext(
 							newCustomObjectField
 						)
+					}
+				};
+			}
+			case EDIT_CUSTOM_OBJECT_FIELD: {
+				const {dataDefinition, focusedCustomObjectField} = state;
+				const editedFocusedCustomObjectField = editFocusedCustomObjectField(
+					{
+						...action.payload,
+						focusedCustomObjectField
+					}
+				);
+				const {
+					settingsContext,
+					...editedCustomObjectField
+				} = editedFocusedCustomObjectField;
+
+				return {
+					...state,
+					dataDefinition: {
+						...dataDefinition,
+						dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
+							dataDefinitionField => {
+								if (
+									dataDefinitionField.name ===
+									focusedCustomObjectField.name
+								) {
+									return editedCustomObjectField;
+								}
+
+								return dataDefinitionField;
+							}
+						)
+					},
+					focusedCustomObjectField: {
+						...editedFocusedCustomObjectField,
+						settingsContext
 					}
 				};
 			}

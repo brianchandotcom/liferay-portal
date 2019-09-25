@@ -71,8 +71,7 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static void populateNotificationsServiceContext(
-			ServiceContext serviceContext, String command)
-		throws Exception {
+		ServiceContext serviceContext, String command) {
 
 		serviceContext.setAttribute("entryURL", "http://localhost");
 
@@ -84,8 +83,7 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static void populateServiceContext(
-			ServiceContext serviceContext, long fileEntryTypeId)
-		throws Exception {
+		ServiceContext serviceContext, long fileEntryTypeId) {
 
 		if (fileEntryTypeId !=
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {

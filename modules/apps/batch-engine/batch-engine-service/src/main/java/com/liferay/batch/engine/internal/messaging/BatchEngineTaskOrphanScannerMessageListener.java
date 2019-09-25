@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true,
-	property = {"orphanage.threshold=300", "scan.interval=60"},
+	immediate = true, property = {"orphanage.threshold=30", "scan.interval=60"},
 	service = MessageListener.class
 )
 public class BatchEngineTaskOrphanScannerMessageListener
@@ -56,7 +55,7 @@ public class BatchEngineTaskOrphanScannerMessageListener
 	protected void activate(Map<String, Object> properties) {
 		_orphanageThreshold =
 			GetterUtil.getLong(properties.get("orphanage.threshold")) *
-				Time.SECOND;
+				Time.MINUTE;
 
 		String className =
 			BatchEngineTaskOrphanScannerMessageListener.class.getName();
@@ -64,7 +63,7 @@ public class BatchEngineTaskOrphanScannerMessageListener
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
 			GetterUtil.getInteger(properties.get("scan.interval")),
-			TimeUnit.SECOND);
+			TimeUnit.MINUTE);
 
 		_schedulerEngineHelper.register(
 			this, new SchedulerEntryImpl(className, trigger),

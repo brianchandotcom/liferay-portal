@@ -77,7 +77,8 @@ public class ExperimentUtilTest {
 			classPK, createDate, modifiedDate, name, description,
 			SegmentsExperienceConstants.ID_DEFAULT, segmentsExperimentKey,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
+			SegmentsExperienceConstants.KEY_DEFAULT);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, defaultSegmentsEntryName,
@@ -117,6 +118,7 @@ public class ExperimentUtilTest {
 			layoutFriendlyURL, experiment.getPageRelativePath());
 		Assert.assertEquals(layoutTitle, experiment.getPageTitle());
 		Assert.assertEquals(pageURL, experiment.getPageURL());
+		Assert.assertNull(experiment.getPublishedDXPVariantId());
 	}
 
 	@Test
@@ -170,7 +172,8 @@ public class ExperimentUtilTest {
 			classPK, createDate, modifiedDate, name, description,
 			segmentsExperienceId, segmentsExperimentKey,
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT);
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_DRAFT,
+			segmentsExperienceKey);
 
 		Experiment experiment = ExperimentUtil.toExperiment(
 			dataSourceId, RandomTestUtil.randomString(),
@@ -207,6 +210,102 @@ public class ExperimentUtilTest {
 			layoutFriendlyURL, experiment.getPageRelativePath());
 		Assert.assertEquals(layoutTitle, experiment.getPageTitle());
 		Assert.assertEquals(pageURL, experiment.getPageURL());
+		Assert.assertNull(experiment.getPublishedDXPVariantId());
+	}
+
+	@Test
+	public void testToExperimentWithSegmentsExperimentWithStatusCompleted()
+		throws PortalException {
+
+		Locale locale = LocaleUtil.ENGLISH;
+
+		Layout layout = _createLayout(
+			RandomTestUtil.randomString(), locale,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		SegmentsEntry segmentsEntry = _createSegmentsEntry(
+			locale, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		long segmentsEntryId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_segmentsEntryLocalService.getSegmentsEntry(segmentsEntryId)
+		).thenReturn(
+			segmentsEntry
+		);
+
+		SegmentsExperience segmentsExperience = _createSegmentsExperience(
+			locale, RandomTestUtil.randomString(), segmentsEntryId,
+			RandomTestUtil.randomString());
+
+		long segmentsExperienceId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperienceId)
+		).thenReturn(
+			segmentsExperience
+		);
+
+		SegmentsExperiment segmentsExperiment = _createSegmentsExperiment(
+			RandomTestUtil.randomLong(), RandomTestUtil.nextDate(),
+			RandomTestUtil.nextDate(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), segmentsExperienceId,
+			RandomTestUtil.randomString(),
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+			StringPool.BLANK, SegmentsExperimentConstants.STATUS_COMPLETED,
+			segmentsExperience.getSegmentsExperienceKey());
+
+		String dataSourceId = RandomTestUtil.randomString();
+		String pageURL = RandomTestUtil.randomString();
+
+		Experiment experiment = ExperimentUtil.toExperiment(
+			dataSourceId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), layout, LocaleUtil.ENGLISH, pageURL,
+			_segmentsEntryLocalService, _segmentsExperienceLocalService,
+			segmentsExperiment);
+
+		Assert.assertEquals(
+			segmentsExperiment.getCreateDate(), experiment.getCreateDate());
+		Assert.assertEquals(dataSourceId, experiment.getDataSourceId());
+		Assert.assertEquals(
+			segmentsExperiment.getDescription(), experiment.getDescription());
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceKey(),
+			experiment.getDXPExperienceId());
+		Assert.assertEquals(
+			segmentsExperience.getName(locale),
+			experiment.getDXPExperienceName());
+		Assert.assertEquals(layout.getUuid(), experiment.getDXPLayoutId());
+		Assert.assertEquals(
+			segmentsEntry.getSegmentsEntryKey(), experiment.getDXPSegmentId());
+		Assert.assertEquals(
+			segmentsEntry.getName(locale), experiment.getDXPSegmentName());
+		Assert.assertEquals(
+			ExperimentStatus.COMPLETED, experiment.getExperimentStatus());
+		Assert.assertEquals(ExperimentType.AB, experiment.getExperimentType());
+
+		Goal goal = experiment.getGoal();
+
+		GoalMetric goalMetric = goal.getGoalMetric();
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.Goal.BOUNCE_RATE.name(),
+			goalMetric.name());
+
+		Assert.assertEquals(
+			segmentsExperiment.getSegmentsExperimentKey(), experiment.getId());
+		Assert.assertEquals(
+			segmentsExperiment.getModifiedDate(), experiment.getModifiedDate());
+		Assert.assertEquals(segmentsExperiment.getName(), experiment.getName());
+		Assert.assertEquals(
+			layout.getFriendlyURL(), experiment.getPageRelativePath());
+		Assert.assertEquals(layout.getTitle(locale), experiment.getPageTitle());
+		Assert.assertEquals(pageURL, experiment.getPageURL());
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceKey(),
+			experiment.getPublishedDXPVariantId());
 	}
 
 	private Layout _createLayout(
@@ -293,7 +392,7 @@ public class ExperimentUtilTest {
 		long classPK, Date createDate, Date modifiedDate, String name,
 		String description, long segmentsExperienceId,
 		String segmentsExperimentKey, String goal, String goalTarget,
-		int status) {
+		int status, String winnerSegmentsExperienceKey) {
 
 		SegmentsExperiment segmentsExperiment = Mockito.mock(
 			SegmentsExperiment.class);
@@ -357,6 +456,12 @@ public class ExperimentUtilTest {
 		).when(
 			segmentsExperiment
 		).getStatus();
+
+		Mockito.doReturn(
+			winnerSegmentsExperienceKey
+		).when(
+			segmentsExperiment
+		).getWinnerSegmentsExperienceKey();
 
 		return segmentsExperiment;
 	}

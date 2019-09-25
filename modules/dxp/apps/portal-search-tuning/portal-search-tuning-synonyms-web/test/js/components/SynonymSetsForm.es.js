@@ -18,12 +18,15 @@ const FORM_NAME = 'testForm';
 
 const INPUT_NAME = 'testInput';
 
+const ORIGINAL_INPUT_NAME = 'testOriginalInput';
+
 describe('SynonymSetsForm', () => {
 	it('renders', () => {
 		const {container} = render(
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -36,6 +39,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -48,6 +52,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -64,6 +69,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -78,6 +84,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -90,6 +97,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three"
 			/>
 		);
@@ -102,6 +110,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets=""
 			/>
 		);
@@ -114,6 +123,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one"
 			/>
 		);
@@ -129,6 +139,7 @@ describe('SynonymSetsForm', () => {
 			<SynonymSetsForm
 				formName={FORM_NAME}
 				inputName={INPUT_NAME}
+				originalInputName={ORIGINAL_INPUT_NAME}
 				synonymSets="one,two,three,four,five"
 			/>
 		);

@@ -26,10 +26,14 @@ function filterEmptyStrings(list) {
 
 class SynonymSetsForm extends Component {
 	static propTypes = {
-		formName: PropTypes.string,
-		inputName: PropTypes.string,
-		originalInputName: PropTypes.string,
+		formName: PropTypes.string.isRequired,
+		inputName: PropTypes.string.isRequired,
+		originalInputName: PropTypes.string.isRequired,
 		synonymSets: PropTypes.string
+	};
+
+	static defaultProps = {
+		synonymSets: ''
 	};
 
 	state = {

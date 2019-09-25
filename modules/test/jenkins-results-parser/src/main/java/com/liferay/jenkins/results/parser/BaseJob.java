@@ -72,11 +72,6 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
-	public boolean isUsePreBuiltBundles() {
-		return false;
-	}
-
-	@Override
 	public void readJobProperties() {
 		_jobProperties.clear();
 

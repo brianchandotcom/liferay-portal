@@ -147,8 +147,8 @@ const Collaborators = ({
 
 Collaborators.propTypes = {
 	canManageCollaborators: PropTypes.bool,
-	classNameId: PropTypes.number,
-	classPK: PropTypes.number,
+	classNameId: PropTypes.string,
+	classPK: PropTypes.string,
 	collaboratorsURL: PropTypes.string
 };
 

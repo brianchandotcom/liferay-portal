@@ -17,6 +17,15 @@ components:
                     description: The user's full name.
                     readOnly: true
                     type: string
+                onTimeTaskCount:
+                    format: int64
+                    type: integer
+                overdueTaskCount:
+                    format: int64
+                    type: integer
+                taskCount:
+                    format: int64
+                    type: integer
             type: object
         Calendar:
             description: https://www.schema.org/Calendar
@@ -373,6 +382,24 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: taskKeys
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
             responses:
                 200:
                     content:

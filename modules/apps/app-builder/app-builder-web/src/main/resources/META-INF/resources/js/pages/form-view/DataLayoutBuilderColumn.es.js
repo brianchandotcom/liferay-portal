@@ -56,6 +56,7 @@ export default ({node}) => {
 						dataDefinition,
 						dataDefinitionFieldName: data.name,
 						dataLayoutBuilder,
+						generateNameFromLabel: false,
 						indexes
 					})
 				);

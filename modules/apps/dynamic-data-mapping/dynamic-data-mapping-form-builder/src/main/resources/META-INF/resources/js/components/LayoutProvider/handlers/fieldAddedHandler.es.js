@@ -13,6 +13,7 @@
  */
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {
 	generateInstanceId,
 	getFieldProperties
@@ -21,9 +22,27 @@ import {generateFieldName} from '../util/fields.es';
 import {normalizeSettingsContextPages} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {addedToPlaceholder, fieldType, indexes} = event;
+	const {
+		addedToPlaceholder,
+		fieldType,
+		indexes,
+		generateNameFromLabel = true
+	} = event;
 	const {defaultLanguageId, editingLanguageId, spritemap} = props;
-	const newFieldName = generateFieldName(state.pages, fieldType.label);
+	let originalFieldName = fieldType.label;
+
+	if (!generateNameFromLabel) {
+		const {settingsContext} = fieldType;
+		const visitor = new PagesVisitor(settingsContext.pages);
+
+		visitor.mapFields(({fieldName, value}) => {
+			if (fieldName === 'name') {
+				originalFieldName = value;
+			}
+		});
+	}
+
+	const newFieldName = generateFieldName(state.pages, originalFieldName);
 
 	const focusedField = {
 		...fieldType,

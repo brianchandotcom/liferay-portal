@@ -16,36 +16,22 @@ package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsHistoryDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
-import java.util.Map;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -75,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class ChangeListsHistoryPortlet extends MVCPortlet {
+public class ChangeListsHistoryPortlet extends BaseChangeListPortlet {
 
 	@Override
 	public void render(
@@ -115,45 +101,8 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ctConfiguration = ConfigurableUtil.createConfigurable(
-			CTConfiguration.class, properties);
-	}
-
-	@Override
-	protected void checkPermissions(PortletRequest portletRequest)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return;
-		}
-
-		String[] administratorRoleNames =
-			_ctConfiguration.administratorRoleNames();
-
-		UserBag userBag = permissionChecker.getUserBag();
-
-		for (Role role : userBag.getRoles()) {
-			if (ArrayUtil.contains(administratorRoleNames, role.getName())) {
-				return;
-			}
-		}
-
-		throw new PrincipalException(
-			String.format(
-				"User %s must have administrator role to access %s",
-				permissionChecker.getUserId(), getClass().getSimpleName()));
-	}
-
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	private CTConfiguration _ctConfiguration;
 
 	@Reference
 	private Portal _portal;

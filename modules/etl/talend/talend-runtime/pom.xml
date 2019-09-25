@@ -192,14 +192,6 @@
 				<version>${liferay.source.formatter.version}</version>
 			</plugin>
 			<plugin>
-				<groupId>com.liferay</groupId>
-				<artifactId>com.liferay.xml.formatter</artifactId>
-				<version>${liferay.xml.formatter.version}</version>
-				<configuration>
-					<fileName>pom.xml</fileName>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
 				<configuration>

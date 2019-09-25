@@ -132,7 +132,7 @@ public class AddPortletMVCActionCommandTest {
 			actionRequest, new MockActionResponse());
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	public void testCannotAddMultipleUninstanceableWidgets() throws Exception {
 		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
 
@@ -143,10 +143,12 @@ public class AddPortletMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			actionRequest, new MockActionResponse());
 
-		ReflectionTestUtil.invoke(
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_processAddPortlet",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			actionRequest, new MockActionResponse());
+
+		Assert.assertTrue(jsonObject.has("error"));
 	}
 
 	@Test

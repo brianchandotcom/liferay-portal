@@ -10,21 +10,20 @@
  */
 
 import React from 'react';
-import fetch from '../../../mock/fetch.es';
 import {AppContext} from '../../../../src/main/resources/META-INF/resources/js/components/AppContext.es';
 import {ErrorContext} from '../../../../src/main/resources/META-INF/resources/js/shared/components/request/Error.es';
 import {LoadingContext} from '../../../../src/main/resources/META-INF/resources/js/shared/components/request/Loading.es';
 import {MockRouter as Router} from '../../../mock/MockRouter.es';
 import {render} from '@testing-library/react';
-import {TimeRangeProvider} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
-import VelocityChart from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/VelocityChart.es';
-import {VelocityFiltersProvider} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/store/VelocityFiltersStore.es';
-import {VelocityUnitProvider} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/VelocityUnitStore.es';
-import {VelocityDataProvider} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/store/VelocityDataStore.es';
+import {TimeRangeContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/TimeRangeStore.es';
+import {VelocityDataContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/store/VelocityDataStore.es';
+import {VelocityUnitContext} from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/VelocityUnitStore.es';
 import {waitForElement} from '@testing-library/dom';
+import fetch from '../../../mock/fetch.es';
+import VelocityChart from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/completion-velocity/VelocityChart.es';
 import '@testing-library/jest-dom/extend-expect';
 
-test('Should render velocity data provider', async () => {
+test('Should render velocity chart', async () => {
 	const data = {
 		items: [
 			{
@@ -83,6 +82,28 @@ test('Should render velocity data provider', async () => {
 		totalCount: 7
 	};
 
+	const velocityData = {
+		histograms: [
+			{
+				key: '2019-06-27T00:00',
+				value: 0.0
+			},
+			{
+				key: '2019-07-01T00:00',
+				value: 0.0
+			},
+			{
+				key: '2019-08-01T00:00',
+				value: 0.0
+			},
+			{
+				key: '2019-09-01T00:00',
+				value: 0.0
+			}
+		],
+		value: 0.0
+	};
+
 	const AppContextState = {
 		client: fetch(data),
 		companyId: '12345',
@@ -97,23 +118,32 @@ test('Should render velocity data provider', async () => {
 		title: Liferay.Language.get('metrics')
 	};
 
+	const getSelectedTimeRange = () => true;
+
 	const Wrapper = () => (
 		<AppContext.Provider value={AppContextState}>
 			<Router client={fetch(data)}>
 				<ErrorContext.Provider value={{error: '', setError: () => {}}}>
 					<LoadingContext.Provider value={{setLoading: () => {}}}>
-						<TimeRangeProvider
-							processId="12345"
-							timeRangeKeys={['30']}
+						<TimeRangeContext.Provider
+							value={{
+								getSelectedTimeRange
+							}}
 						>
-							<VelocityUnitProvider velocityUnitKeys={[]}>
-								<VelocityFiltersProvider>
-									<VelocityDataProvider processId="12345">
-										<VelocityChart></VelocityChart>
-									</VelocityDataProvider>
-								</VelocityFiltersProvider>
-							</VelocityUnitProvider>
-						</TimeRangeProvider>
+							<VelocityUnitContext.Provider
+								value={{
+									getSelectedVelocityUnit: () => ({})
+								}}
+							>
+								<VelocityDataContext.Provider
+									value={{
+										velocityData
+									}}
+								>
+									<VelocityChart />
+								</VelocityDataContext.Provider>
+							</VelocityUnitContext.Provider>
+						</TimeRangeContext.Provider>
 					</LoadingContext.Provider>
 				</ErrorContext.Provider>
 			</Router>
@@ -127,4 +157,126 @@ test('Should render velocity data provider', async () => {
 	});
 
 	expect(element).toBeInTheDocument();
+});
+
+test('Should render velocity chart tooltip', async () => {
+	const timeRange = {
+		active: true,
+		dateEnd: '2019-09-25T17:06:52.000Z',
+		dateStart: '2019-06-28T00:00:00.000Z',
+		defaultTimeRange: false,
+		description: 'Jun 28 - Sep 25',
+		id: 90,
+		key: '90',
+		name: 'Last 90 Days'
+	};
+
+	const dataPoints = [
+		{
+			id: 'data_1',
+			index: 5,
+			name: 'data_1',
+			value: 0,
+			x: new Date('2019-09-24T05:00:00.000Z')
+		}
+	];
+
+	const text = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Months',
+		'Inst / Month'
+	)(dataPoints);
+
+	const textDefault = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'test',
+		'Inst / Month'
+	)(dataPoints);
+
+	const textHours = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Hours',
+		'Inst / Hours'
+	)(dataPoints);
+
+	const textHoursAmPm = VelocityChart.Tooltip(
+		false,
+		timeRange,
+		'Hours',
+		'Inst / Hours'
+	)(dataPoints);
+
+	const textMonths = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Months',
+		'Inst / Months'
+	)(dataPoints);
+
+	const textWeeks = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Weeks',
+		'Inst / Weeks'
+	)(dataPoints);
+
+	const textYears = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Years',
+		'Inst / Years'
+	)(dataPoints);
+
+	expect(textHours.includes('0 Inst / Hours')).toBe(true);
+	expect(textHoursAmPm.includes('0 Inst / Hours')).toBe(true);
+	expect(textMonths.includes('0 Inst / Months')).toBe(true);
+	expect(textWeeks.includes('0 Inst / Weeks')).toBe(true);
+	expect(textYears.includes('0 Inst / Years')).toBe(true);
+	expect(text.includes('0 Inst / Month')).toBe(true);
+	expect(textDefault.includes('0 Inst / Month')).toBe(true);
+});
+
+test('Should render velocity chart tooltip with invalid date', async () => {
+	const timeRange = {
+		active: true,
+		dateEnd: '2019-09-25T17:06:52.000Z',
+		dateStart: '2019-06-28T00:00:00.000Z',
+		defaultTimeRange: false,
+		description: 'Jun 28 - Sep 25',
+		id: 90,
+		key: '90',
+		name: 'Last 90 Days'
+	};
+
+	const dataPoints = [
+		{
+			id: 'data_1',
+			index: 5,
+			name: 'data_1',
+			value: 0,
+			x: new Date('1936-09-25T17:06:52.000Z')
+		}
+	];
+
+	const textHours = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Hours',
+		'Inst / Hours'
+	)(dataPoints);
+
+	dataPoints[0].x = null;
+
+	const textDefault = VelocityChart.Tooltip(
+		true,
+		timeRange,
+		'Hours',
+		'Inst / Hours'
+	)(dataPoints);
+
+	expect(textHours.includes('0 Inst / Hours')).toBe(true);
+	expect(textDefault.includes('0 Inst / Hours')).toBe(true);
 });

@@ -74,10 +74,6 @@ if (Validator.isNotNull(title)) {
 			<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 			<aui:input name="newFolderId" type="hidden" />
 
-			<%
-			request.setAttribute("view.jsp-journalManagementToolbarDisplayContext", journalManagementToolbarDisplayContext);
-			%>
-
 			<c:choose>
 				<c:when test="<%= !journalDisplayContext.isSearch() %>">
 					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />

@@ -22,15 +22,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
-import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -134,58 +131,6 @@ public class JournalManagementToolbarDisplayContext
 					});
 			}
 		};
-	}
-
-	public String getAvailableActions(JournalArticle article)
-		throws PortalException {
-
-		List<String> availableActions = new ArrayList<>();
-
-		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.DELETE)) {
-
-			availableActions.add("deleteEntries");
-		}
-
-		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.EXPIRE) &&
-			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
-
-			availableActions.add("expireEntries");
-		}
-
-		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.UPDATE)) {
-
-			availableActions.add("moveEntries");
-		}
-
-		return StringUtil.merge(availableActions, StringPool.COMMA);
-	}
-
-	public String getAvailableActions(JournalFolder folder)
-		throws PortalException {
-
-		List<String> availableActions = new ArrayList<>();
-
-		if (JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.UPDATE)) {
-
-			availableActions.add("deleteEntries");
-		}
-
-		if (JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(), folder,
-				ActionKeys.DELETE)) {
-
-			availableActions.add("moveEntries");
-		}
-
-		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
 	@Override

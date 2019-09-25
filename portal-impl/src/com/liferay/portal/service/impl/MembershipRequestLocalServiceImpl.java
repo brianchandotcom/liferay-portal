@@ -74,7 +74,7 @@ public class MembershipRequestLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validatePolicy(userId, groupId);
+		validateSiteMembershipPolicy(userId, groupId);
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -419,6 +419,31 @@ public class MembershipRequestLocalServiceImpl
 		}
 	}
 
+	protected void validateSiteMembershipPolicy(long userId, long groupId)
+		throws PortalException {
+
+		if (hasMembershipRequest(
+				userId, groupId, MembershipRequestConstants.STATUS_PENDING)) {
+
+			throw new PortalException(
+				StringBundler.concat(
+					"Pending MembershipRequest already exists for group ",
+					groupId, " and user ", userId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		if (!group.isManualMembership() ||
+			(group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) ||
+			!SiteMembershipPolicyUtil.isMembershipAllowed(userId, groupId)) {
+
+			throw new PortalException(
+				StringBundler.concat(
+					"MembershipRequest not allowed for group ", groupId,
+					" and user ", userId));
+		}
+	}
+
 	@BeanReference(type = MailService.class)
 	protected MailService mailService;
 
@@ -456,31 +481,6 @@ public class MembershipRequestLocalServiceImpl
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
-		}
-	}
-
-	private void validatePolicy(long userId, long groupId)
-		throws PortalException {
-
-		if (hasMembershipRequest(
-				userId, groupId, MembershipRequestConstants.STATUS_PENDING)) {
-
-			throw new PortalException(
-				StringBundler.concat(
-					"Pending MembershipRequest already exists for group ",
-					groupId, " and user ", userId));
-		}
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		if (!group.isManualMembership() ||
-			(group.getType() != GroupConstants.TYPE_SITE_RESTRICTED) ||
-			!SiteMembershipPolicyUtil.isMembershipAllowed(userId, groupId)) {
-
-			throw new PortalException(
-				StringBundler.concat(
-					"MembershipRequest not allowed for group ", groupId,
-					" and user ", userId));
 		}
 	}
 

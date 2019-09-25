@@ -67,7 +67,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				if (line.matches("^ *#.*")) {
+				if (line.matches(" *#.*")) {
 					continue;
 				}
 

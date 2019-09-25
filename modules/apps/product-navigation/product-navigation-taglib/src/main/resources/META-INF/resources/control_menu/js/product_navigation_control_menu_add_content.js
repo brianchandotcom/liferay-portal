@@ -50,7 +50,7 @@ AUI.add(
 							instance._refreshContentList,
 							instance
 						),
-						Liferay.on('AddContent:addPortlet', function(event) {
+						Liferay.once('AddContent:addPortlet', function(event) {
 							instance.addPortlet(event.node, event.options);
 						})
 					);

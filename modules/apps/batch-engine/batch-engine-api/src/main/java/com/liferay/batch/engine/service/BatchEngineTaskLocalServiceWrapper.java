@@ -276,9 +276,10 @@ public class BatchEngineTaskLocalServiceWrapper
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineTask>
 		getBatchEngineTasks(
 			com.liferay.batch.engine.BatchEngineTaskExecuteStatus
-				executeStatus) {
+				batchEngineTaskExecuteStatus) {
 
-		return _batchEngineTaskLocalService.getBatchEngineTasks(executeStatus);
+		return _batchEngineTaskLocalService.getBatchEngineTasks(
+			batchEngineTaskExecuteStatus);
 	}
 
 	/**

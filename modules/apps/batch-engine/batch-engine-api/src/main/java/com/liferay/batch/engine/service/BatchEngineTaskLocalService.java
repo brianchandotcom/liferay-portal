@@ -228,7 +228,7 @@ public interface BatchEngineTaskLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchEngineTask> getBatchEngineTasks(
-		BatchEngineTaskExecuteStatus executeStatus);
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus);
 
 	/**
 	 * Returns a range of all the batch engine tasks.

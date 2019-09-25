@@ -8,7 +8,7 @@
 	<theme id="porygon" name="Porygon">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,gray-dark,secondary,light,lighter,white" />
+			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,secondary,light,white" />
 			<setting configurable="true" key="show-footer" type="checkbox" value="true" />
 			<setting configurable="true" key="show-header" type="checkbox" value="true" />
 			<setting configurable="true" key="show-header-main-search" type="checkbox" value="true" />

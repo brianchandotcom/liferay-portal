@@ -8,7 +8,7 @@
 	<theme id="westeros-bank" name="Westeros Bank">
 		<template-extension>ftl</template-extension>
 		<settings>
-			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,gray-dark,secondary,light,lighter,white" />
+			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,secondary,light,white" />
 			<setting configurable="true" key="show-footer" type="checkbox" value="true" />
 			<setting configurable="true" key="show-global-menu-on" options="all-screens,big-screens,small-screen,no-screen" type="select" value="big-screens" />
 			<setting configurable="true" key="show-header" type="checkbox" value="true" />

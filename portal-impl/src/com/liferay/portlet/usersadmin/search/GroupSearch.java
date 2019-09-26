@@ -136,23 +136,17 @@ public class GroupSearch extends SearchContainer<Group> {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<Group> orderByComparator = null;
-
 		if (orderByCol.equals("descriptive-name")) {
-			orderByComparator = new GroupDescriptiveNameComparator(
-				orderByAsc, locale);
+			return new GroupDescriptiveNameComparator(orderByAsc, locale);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new GroupNameComparator(orderByAsc, locale);
+			return new GroupNameComparator(orderByAsc, locale);
 		}
 		else if (orderByCol.equals("type")) {
-			orderByComparator = new GroupTypeComparator(orderByAsc);
-		}
-		else {
-			orderByComparator = new GroupNameComparator(orderByAsc, locale);
+			return new GroupTypeComparator(orderByAsc);
 		}
 
-		return orderByComparator;
+		return new GroupNameComparator(orderByAsc, locale);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(GroupSearch.class);

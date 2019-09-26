@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("ExperimentRun")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"confidenceLevel", "variants"})
+@Schema(requiredProperties = {"confidenceLevel", "experimentVariants"})
 @XmlRootElement(name = "ExperimentRun")
 public class ExperimentRun {
 
@@ -107,6 +107,7 @@ public class ExperimentRun {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
 	protected ExperimentVariant[] experimentVariants;
 
 	@Schema

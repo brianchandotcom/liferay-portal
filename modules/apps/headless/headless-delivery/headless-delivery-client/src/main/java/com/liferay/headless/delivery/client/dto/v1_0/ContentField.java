@@ -110,26 +110,27 @@ public class ContentField {
 
 	protected String name;
 
-	public ContentField[] getNestedFields() {
-		return nestedFields;
+	public ContentField[] getNestedContentFields() {
+		return nestedContentFields;
 	}
 
-	public void setNestedFields(ContentField[] nestedFields) {
-		this.nestedFields = nestedFields;
+	public void setNestedContentFields(ContentField[] nestedContentFields) {
+		this.nestedContentFields = nestedContentFields;
 	}
 
-	public void setNestedFields(
-		UnsafeSupplier<ContentField[], Exception> nestedFieldsUnsafeSupplier) {
+	public void setNestedContentFields(
+		UnsafeSupplier<ContentField[], Exception>
+			nestedContentFieldsUnsafeSupplier) {
 
 		try {
-			nestedFields = nestedFieldsUnsafeSupplier.get();
+			nestedContentFields = nestedContentFieldsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ContentField[] nestedFields;
+	protected ContentField[] nestedContentFields;
 
 	public Boolean getRepeatable() {
 		return repeatable;

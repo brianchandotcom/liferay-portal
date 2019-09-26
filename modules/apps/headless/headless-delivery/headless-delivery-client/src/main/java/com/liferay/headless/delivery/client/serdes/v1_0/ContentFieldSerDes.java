@@ -112,19 +112,22 @@ public class ContentFieldSerDes {
 			sb.append("\"");
 		}
 
-		if (contentField.getNestedFields() != null) {
+		if (contentField.getNestedContentFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"nestedFields\": ");
+			sb.append("\"nestedContentFields\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < contentField.getNestedFields().length; i++) {
-				sb.append(String.valueOf(contentField.getNestedFields()[i]));
+			for (int i = 0; i < contentField.getNestedContentFields().length;
+				 i++) {
 
-				if ((i + 1) < contentField.getNestedFields().length) {
+				sb.append(
+					String.valueOf(contentField.getNestedContentFields()[i]));
+
+				if ((i + 1) < contentField.getNestedContentFields().length) {
 					sb.append(", ");
 				}
 			}
@@ -200,12 +203,13 @@ public class ContentFieldSerDes {
 			map.put("name", String.valueOf(contentField.getName()));
 		}
 
-		if (contentField.getNestedFields() == null) {
-			map.put("nestedFields", null);
+		if (contentField.getNestedContentFields() == null) {
+			map.put("nestedContentFields", null);
 		}
 		else {
 			map.put(
-				"nestedFields", String.valueOf(contentField.getNestedFields()));
+				"nestedContentFields",
+				String.valueOf(contentField.getNestedContentFields()));
 		}
 
 		if (contentField.getRepeatable() == null) {
@@ -263,9 +267,11 @@ public class ContentFieldSerDes {
 					contentField.setName((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "nestedFields")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "nestedContentFields")) {
+
 				if (jsonParserFieldValue != null) {
-					contentField.setNestedFields(
+					contentField.setNestedContentFields(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

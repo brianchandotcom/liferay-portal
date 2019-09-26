@@ -88,8 +88,10 @@ public class ConfigurableUtilTest {
 		FutureTask<TestConfiguration> futureTask1 = new FutureTask<>(callable);
 		FutureTask<TestConfiguration> futureTask2 = new FutureTask<>(callable);
 
-		Thread thread1 = new Thread(futureTask1, "Thread 1");
-		Thread thread2 = new Thread(futureTask2, "Thread 2");
+		Thread thread1 = new Thread(
+			futureTask1, "ConfigurableUtilTest Thread 1");
+		Thread thread2 = new Thread(
+			futureTask2, "ConfigurableUtilTest Thread 2");
 
 		thread1.start();
 		thread2.start();

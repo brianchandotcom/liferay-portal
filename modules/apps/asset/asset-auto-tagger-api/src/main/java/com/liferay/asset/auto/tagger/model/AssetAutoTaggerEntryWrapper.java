@@ -44,6 +44,7 @@ public class AssetAutoTaggerEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("assetAutoTaggerEntryId", getAssetAutoTaggerEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -57,6 +58,12 @@ public class AssetAutoTaggerEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long assetAutoTaggerEntryId = (Long)attributes.get(
 			"assetAutoTaggerEntryId");
 
@@ -172,6 +179,16 @@ public class AssetAutoTaggerEntryWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this asset auto tagger entry.
+	 *
+	 * @return the mvcc version of this asset auto tagger entry
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this asset auto tagger entry.
 	 *
 	 * @return the primary key of this asset auto tagger entry
@@ -259,6 +276,16 @@ public class AssetAutoTaggerEntryWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this asset auto tagger entry.
+	 *
+	 * @param mvccVersion the mvcc version of this asset auto tagger entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

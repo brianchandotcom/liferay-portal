@@ -3,10 +3,11 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry" />
-	<class name="com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl" table="AssetAutoTaggerEntry">
+	<class dynamic-update="true" name="com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryImpl" table="AssetAutoTaggerEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetAutoTaggerEntryId" type="long">
 			<generator class="assigned" />
 		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />

@@ -75,7 +75,7 @@ public class ConfigurableUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = TestConfigurableUtilAdvice.class)
+	@AdviseWith(adviceClasses = ConfigurableUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testConcurrentCreateConfigurable() throws Exception {
@@ -94,9 +94,9 @@ public class ConfigurableUtilTest {
 		thread1.start();
 		thread2.start();
 
-		TestConfigurableUtilAdvice.waitUntilBlock();
+		ConfigurableUtilAdvice.waitUntilBlock();
 
-		TestConfigurableUtilAdvice.unblock();
+		ConfigurableUtilAdvice.unblock();
 
 		_assertTestConfiguration(futureTask1.get(), "testReqiredString");
 		_assertTestConfiguration(futureTask2.get(), "testReqiredString");
@@ -158,22 +158,8 @@ public class ConfigurableUtilTest {
 		new ConfigurableUtil();
 	}
 
-	public static class TestClass {
-
-		public TestClass(String name) {
-			_name = name;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		private final String _name;
-
-	}
-
 	@Aspect
-	public static class TestConfigurableUtilAdvice {
+	public static class ConfigurableUtilAdvice {
 
 		public static void unblock() {
 			_blockingCountDownLatch.countDown();
@@ -202,6 +188,20 @@ public class ConfigurableUtilTest {
 			new CountDownLatch(1);
 		private static final CountDownLatch _waitingCountDownLatch =
 			new CountDownLatch(2);
+
+	}
+
+	public static class TestClass {
+
+		public TestClass(String name) {
+			_name = name;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		private final String _name;
 
 	}
 

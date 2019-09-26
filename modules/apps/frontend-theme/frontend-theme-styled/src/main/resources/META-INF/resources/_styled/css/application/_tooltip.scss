@@ -11,4 +11,44 @@
 
 .tooltip {
 	max-width: 200px;
+	
+	.tooltip-arrow {
+		background-color: $tooltip-bg;
+		height: 0.8rem;
+		left: 50%;
+		margin-left: 0.4rem;
+		position: absolute;
+		transform: rotate(45deg) translateX(-100%);
+		width: 0.8rem;
+	}
+}
+
+.tooltip.bottom {
+	margin-top: 2rem;
+
+	.tooltip-arrow {
+		top: 2px;
+	}
+}
+
+.tooltip.left {
+	.tooltip-arrow {
+		right: -12%;
+		top: 50%;
+	}
+}
+
+.tooltip.right {
+	.tooltip-arrow {
+		left: 0;
+		top: 50%;
+	}
+}
+
+.tooltip.top {
+	margin-bottom: 0.4rem;
+	
+	.tooltip-arrow {
+		bottom: -15px;
+	}
 }

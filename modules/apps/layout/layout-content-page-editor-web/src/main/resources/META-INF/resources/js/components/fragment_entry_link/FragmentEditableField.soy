@@ -6,6 +6,7 @@
 {template .render}
 	{@param content: html}
 	{@param type: string}
+	{@param? _activable: bool}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableFocus: any}
 	{@param? _highlighted: any}
@@ -82,14 +83,17 @@
 		class="{$editableClasses}"
 		data-editable-id="{$editableId}"
 		data-fragment-entry-link-id="{$fragmentEntryLinkId}"
-		data-fragments-editor-item-id="{$itemId}"
-		data-fragments-editor-item-type="fragments-editor-editable-field"
 		data-onfocus="{$_handleEditableFocus}"
 		id="{$itemId}"
 		ref="editable"
 		tabindex="0"
 		title="{$_mappedFieldLabel ?: ''}"
 		type="{$type}"
+
+		{if $_activable}
+			data-fragments-editor-item-id="{$itemId}"
+			data-fragments-editor-item-type="fragments-editor-editable-field"
+		{/if}
 
 		{if (not $_mapped) and ($activeItemId == $itemId) and ($activeItemType == $itemTypes.editable)}
 			data-onclick="{$_handleEditableClick}"

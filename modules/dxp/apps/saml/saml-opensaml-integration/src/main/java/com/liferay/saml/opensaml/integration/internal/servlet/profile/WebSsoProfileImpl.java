@@ -1220,14 +1220,17 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		InOutOperationContext inOutOperationContext =
 			messageContext.getSubcontext(InOutOperationContext.class, false);
 
-		MessageContext inboundMessageContext =
-			inOutOperationContext.getInboundMessageContext();
+		if (inOutOperationContext != null) {
+			MessageContext inboundMessageContext =
+				inOutOperationContext.getInboundMessageContext();
 
-		SAMLMessageInfoContext samlMessageInfoContext =
-			inboundMessageContext.getSubcontext(SAMLMessageInfoContext.class);
+			SAMLMessageInfoContext samlMessageInfoContext =
+				inboundMessageContext.getSubcontext(
+					SAMLMessageInfoContext.class);
 
-		subjectConfirmationData.setInResponseTo(
-			samlMessageInfoContext.getMessageId());
+			subjectConfirmationData.setInResponseTo(
+				samlMessageInfoContext.getMessageId());
+		}
 
 		subjectConfirmationData.setRecipient(
 			assertionConsumerService.getLocation());

@@ -771,6 +771,7 @@ public class InvokerPortletImpl
 		_expCache = portletModel.getExpCache();
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
 		_liferayPortletContext = (LiferayPortletContext)portletContext;
+
 		_portletId = _portletModel.getPortletId();
 
 		_errorKey = _portletId.concat(PortletException.class.getName());

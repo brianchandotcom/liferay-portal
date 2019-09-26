@@ -76,6 +76,7 @@ public class UpgradeTableBuilder {
 		throws Exception {
 
 		_baseDirName = baseDirName;
+
 		_osgiModule = osgiModule;
 
 		if (_osgiModule) {

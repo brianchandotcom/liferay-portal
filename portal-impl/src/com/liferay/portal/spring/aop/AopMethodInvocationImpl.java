@@ -105,6 +105,7 @@ public class AopMethodInvocationImpl implements AopMethodInvocation {
 		AopMethodInvocation nextAopMethodInvocation) {
 
 		_target = target;
+
 		_method = method;
 
 		_method.setAccessible(true);

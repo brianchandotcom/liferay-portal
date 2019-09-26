@@ -597,6 +597,7 @@ public class ExecutorIntrabandTest {
 		pipe = Pipe.open();
 
 		sourceChannel = pipe.source();
+
 		sinkChannel = pipe.sink();
 
 		writingCallable = _executorIntraband.new WritingCallable(
@@ -637,6 +638,7 @@ public class ExecutorIntrabandTest {
 		pipe = Pipe.open();
 
 		sourceChannel = pipe.source();
+
 		sinkChannel = pipe.sink();
 
 		writingCallable = _executorIntraband.new WritingCallable(
@@ -677,6 +679,7 @@ public class ExecutorIntrabandTest {
 		pipe = Pipe.open();
 
 		sourceChannel = pipe.source();
+
 		sinkChannel = pipe.sink();
 
 		sinkChannel.configureBlocking(false);

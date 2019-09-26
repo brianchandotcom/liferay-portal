@@ -75,6 +75,7 @@ public class SelectAssetDisplayPageDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
+
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_classNameId = GetterUtil.getLong(

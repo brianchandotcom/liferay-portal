@@ -146,6 +146,7 @@ public class DefaultExportImportContentProcessorTest {
 		_nondefaultLocale = getNondefaultLocale();
 
 		_externalGroup = GroupTestUtil.addGroup();
+
 		_liveGroup = GroupTestUtil.addGroup();
 
 		GroupTestUtil.enableLocalStaging(_liveGroup);
@@ -190,6 +191,7 @@ public class DefaultExportImportContentProcessorTest {
 		_portletDataContextExport.setExportDataRootElement(rootElement);
 
 		_stagingPrivateLayout = addMultiLocaleLayout(_stagingGroup, true);
+
 		_stagingPublicLayout = addMultiLocaleLayout(_stagingGroup, false);
 
 		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());

@@ -44,6 +44,7 @@ public class ConcurrentLFUCache<K, V> {
 		}
 
 		_maxSize = maxSize;
+
 		_expectedSize = (int)(maxSize * loadFactor);
 
 		if (_expectedSize == 0) {

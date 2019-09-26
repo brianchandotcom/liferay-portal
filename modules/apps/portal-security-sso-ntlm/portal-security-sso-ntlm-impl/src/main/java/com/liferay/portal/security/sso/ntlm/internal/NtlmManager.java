@@ -123,6 +123,7 @@ public class NtlmManager {
 		_domain = domain;
 		_domainController = domainController;
 		_domainControllerName = domainControllerName;
+
 		_ntlmServiceAccount = new NtlmServiceAccount(
 			serviceAccount, servicePassword);
 

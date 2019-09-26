@@ -57,6 +57,7 @@ public class OrganizationFinderTest {
 	public static void setUpClass() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_organization = OrganizationTestUtil.addOrganization();
+
 		_user = UserTestUtil.addUser();
 
 		_groupLocalService.addUserGroup(_user.getUserId(), _group);

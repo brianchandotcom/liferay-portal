@@ -87,6 +87,7 @@ public class Page<T> {
 	private Page(Collection<T> items) {
 		_items = items;
 		_page = 1;
+
 		_pageSize = items.size();
 
 		_totalCount = _pageSize;

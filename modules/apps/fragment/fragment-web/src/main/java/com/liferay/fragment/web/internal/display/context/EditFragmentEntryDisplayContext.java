@@ -56,6 +56,7 @@ public class EditFragmentEntryDisplayContext {
 		RenderResponse renderResponse, HttpServletRequest httpServletRequest) {
 
 		_renderResponse = renderResponse;
+
 		_httpServletRequest = httpServletRequest;
 
 		_fragmentCollectionContributorTracker =

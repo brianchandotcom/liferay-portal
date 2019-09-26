@@ -31,6 +31,7 @@ public class FileShortcutDisplayContextHelper {
 		PermissionChecker permissionChecker, FileShortcut fileShortcut) {
 
 		_permissionChecker = permissionChecker;
+
 		_fileShortcut = fileShortcut;
 
 		if (_fileShortcut == null) {

@@ -61,6 +61,7 @@ public class Element {
 
 		_text = _formatText(text);
 		_elementStack = new LinkedList<>();
+
 		_sb = new StringBundler();
 
 		if (addHeader) {

@@ -41,6 +41,7 @@ public class SoftReferencePool<V, P> {
 
 		_poolAction = poolAction;
 		_maxIdleSize = maxIdleSize;
+
 		_useWeakCounter = useWeakCounter;
 
 		if (_useWeakCounter) {

@@ -55,6 +55,7 @@ public class DLAdminNavigationDisplayContext {
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
+
 		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
 		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);

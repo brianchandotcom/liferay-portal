@@ -60,6 +60,7 @@ public class AssetTagsDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
 		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(

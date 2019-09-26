@@ -64,6 +64,7 @@ public class RecurrenceSerializer {
 
 			if (byDay != null) {
 				dayOfMonth = StringPool.QUESTION;
+
 				dayOfWeek = StringPool.BLANK;
 
 				for (int i = 0; i < byDay.length; i++) {

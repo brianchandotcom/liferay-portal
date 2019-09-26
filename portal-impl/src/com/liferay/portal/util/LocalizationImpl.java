@@ -994,6 +994,7 @@ public class LocalizationImpl implements Localization {
 
 				availableLocales = xmlStreamReader.getAttributeValue(
 					null, _AVAILABLE_LOCALES);
+
 				defaultLanguageId = xmlStreamReader.getAttributeValue(
 					null, _DEFAULT_LOCALE);
 

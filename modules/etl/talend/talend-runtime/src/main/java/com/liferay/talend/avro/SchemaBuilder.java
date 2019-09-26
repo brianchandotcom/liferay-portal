@@ -55,6 +55,7 @@ public class SchemaBuilder {
 
 		_endpoint = endpoint;
 		_oasJsonObject = oasJsonObject;
+
 		_operation = operation;
 
 		if (Objects.equals(_operation, OASConstants.OPERATION_DELETE)) {

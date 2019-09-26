@@ -44,21 +44,22 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		_generatorLowerCaseCharsetArray = getSortedCharArray(
 			PropsValues.
 				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_LOWERCASE);
-		_generatorNumbersCharsetArray = getSortedCharArray(
-			PropsValues.
-				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_NUMBERS);
-		_generatorSymbolsCharsetArray = getSortedCharArray(
-			PropsValues.
-				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_SYMBOLS);
 		_generatorUpperCaseCharsetArray = getSortedCharArray(
 			PropsValues.
 				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_UPPERCASE);
+		_generatorNumbersCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_NUMBERS);
 
 		_generatorAlphanumericCharsetArray = ArrayUtil.append(
 			_generatorLowerCaseCharsetArray, _generatorUpperCaseCharsetArray,
 			_generatorNumbersCharsetArray);
 
 		Arrays.sort(_generatorAlphanumericCharsetArray);
+
+		_generatorSymbolsCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_GENERATOR_CHARSET_SYMBOLS);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -80,21 +81,22 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		_validatorLowerCaseCharsetArray = getSortedCharArray(
 			PropsValues.
 				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_LOWERCASE);
-		_validatorNumbersCharsetArray = getSortedCharArray(
-			PropsValues.
-				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_NUMBERS);
-		_validatorSymbolsCharsetArray = getSortedCharArray(
-			PropsValues.
-				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_SYMBOLS);
 		_validatorUpperCaseCharsetArray = getSortedCharArray(
 			PropsValues.
 				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_UPPERCASE);
+		_validatorNumbersCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_NUMBERS);
 
 		_validatorAlphanumericCharsetArray = ArrayUtil.append(
 			_validatorLowerCaseCharsetArray, _validatorUpperCaseCharsetArray,
 			_validatorNumbersCharsetArray);
 
 		Arrays.sort(_validatorAlphanumericCharsetArray);
+
+		_validatorSymbolsCharsetArray = getSortedCharArray(
+			PropsValues.
+				PASSWORDS_PASSWORDPOLICYTOOLKIT_VALIDATOR_CHARSET_SYMBOLS);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ public class ParallelExecutor<T> {
 		Collection<Callable<T>> callables, ExecutorService executorService) {
 
 		_callables = callables;
+
 		_executorService = executorService;
 
 		if (_executorService == null) {

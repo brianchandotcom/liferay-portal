@@ -219,6 +219,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					_fragmentRendererTracker.getFragmentRenderer(rendererKey);
 
 				fragmentEntryKey = fragmentRenderer.getKey();
+
 				name = fragmentRenderer.getLabel(serviceContext.getLocale());
 
 				if (Validator.isNotNull(portletId)) {

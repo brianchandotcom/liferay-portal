@@ -107,6 +107,7 @@ public class EditAssetListDisplayContext {
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_properties = properties;
+
 		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
@@ -991,6 +992,7 @@ public class EditAssetListDisplayContext {
 			_httpServletRequest, "ddmStructureDisplayFieldValue",
 			_properties.getProperty(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
+
 		_ddmStructureFieldName = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureFieldName",
 			_properties.getProperty("ddmStructureFieldName", StringPool.BLANK));

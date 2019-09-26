@@ -127,6 +127,7 @@ public class ThemeContributorExtender
 		throws InvalidSyntaxException {
 
 		_bundleContext = bundleContext;
+
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(

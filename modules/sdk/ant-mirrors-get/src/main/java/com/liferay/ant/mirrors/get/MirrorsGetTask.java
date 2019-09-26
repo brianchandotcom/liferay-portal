@@ -92,6 +92,7 @@ public class MirrorsGetTask extends Task {
 		}
 
 		_fileName = matcher.group(2);
+
 		_path = matcher.group(1);
 
 		if (_path.startsWith("mirrors/")) {

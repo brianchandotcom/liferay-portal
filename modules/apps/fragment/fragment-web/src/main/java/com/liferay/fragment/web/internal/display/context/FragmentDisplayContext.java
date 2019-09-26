@@ -75,6 +75,7 @@ public class FragmentDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
 		_httpServletRequest = httpServletRequest;
 
 		_fragmentCollectionContributorTracker =

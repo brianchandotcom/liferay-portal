@@ -1830,6 +1830,7 @@ public class AssetPublisherDisplayContext {
 			_httpServletRequest, "ddmStructureDisplayFieldValue",
 			_portletPreferences.getValue(
 				"ddmStructureDisplayFieldValue", StringPool.BLANK));
+
 		_ddmStructureFieldName = ParamUtil.getString(
 			_httpServletRequest, "ddmStructureFieldName",
 			_portletPreferences.getValue(

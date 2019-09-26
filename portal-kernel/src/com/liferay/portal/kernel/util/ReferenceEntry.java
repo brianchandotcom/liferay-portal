@@ -29,6 +29,7 @@ public class ReferenceEntry {
 
 	public ReferenceEntry(Object object, Field field) {
 		_object = object;
+
 		_field = field;
 
 		_field.setAccessible(true);

@@ -3241,6 +3241,7 @@ public abstract class BaseBuild implements Build {
 
 			_duration = topLevelBuild.getDuration();
 			_startTime = topLevelBuild.getStartTime();
+
 			_timeline = new TimelineDataPoint[size];
 
 			for (int i = 0; i < size; i++) {

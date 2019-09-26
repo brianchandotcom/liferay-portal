@@ -99,6 +99,7 @@ public class TopHeadExtender
 		throws InvalidSyntaxException {
 
 		_bundleContext = bundleContext;
+
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(

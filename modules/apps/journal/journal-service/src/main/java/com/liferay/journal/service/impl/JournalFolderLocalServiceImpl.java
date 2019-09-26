@@ -95,6 +95,7 @@ public class JournalFolderLocalServiceImpl
 		// Folder
 
 		User user = userLocalService.getUser(userId);
+
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 
 		validateFolder(0, groupId, parentFolderId, name);

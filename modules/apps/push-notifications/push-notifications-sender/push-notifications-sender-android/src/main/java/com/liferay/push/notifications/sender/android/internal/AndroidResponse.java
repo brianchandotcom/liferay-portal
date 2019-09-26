@@ -35,6 +35,7 @@ public class AndroidResponse extends BaseResponse {
 		canonicalRegistrationId = result.getCanonicalRegistrationId();
 		id = result.getMessageId();
 		payload = payloadJSONObject.toString();
+
 		status = result.getErrorCodeName();
 
 		if (Validator.isNull(status)) {

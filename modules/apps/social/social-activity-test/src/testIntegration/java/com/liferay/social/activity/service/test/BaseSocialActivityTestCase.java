@@ -53,6 +53,7 @@ public abstract class BaseSocialActivityTestCase {
 		group = GroupTestUtil.addGroup();
 
 		actorUser = UserTestUtil.addUser("actor", group.getGroupId());
+
 		creatorUser = UserTestUtil.addUser("creator", group.getGroupId());
 
 		assetEntry = SocialActivityTestUtil.addAssetEntry(

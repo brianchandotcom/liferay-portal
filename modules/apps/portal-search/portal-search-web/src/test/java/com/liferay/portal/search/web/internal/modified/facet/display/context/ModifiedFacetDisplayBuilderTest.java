@@ -58,6 +58,7 @@ public class ModifiedFacetDisplayBuilderTest {
 		MockitoAnnotations.initMocks(this);
 
 		_calendarFactory = new CalendarFactoryImpl();
+
 		_dateFormatFactory = new DateFormatFactoryImpl();
 
 		_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);

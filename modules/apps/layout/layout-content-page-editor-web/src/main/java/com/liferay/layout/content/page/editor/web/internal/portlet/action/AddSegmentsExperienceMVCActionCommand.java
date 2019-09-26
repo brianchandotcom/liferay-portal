@@ -187,6 +187,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		if (segmentsExperiment != null) {
 			active = false;
+
 			segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
 
 			if (segmentsExperiment.getSegmentsExperienceId() !=

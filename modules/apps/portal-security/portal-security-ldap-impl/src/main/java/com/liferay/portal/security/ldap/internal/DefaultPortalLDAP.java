@@ -1139,10 +1139,13 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			int z = attributeId.indexOf(CharPool.DASH, y);
 
 			originalAttributeId = attributeId.substring(0, x);
+
 			start = GetterUtil.getInteger(attributeId.substring(y + 1, z));
-			end = GetterUtil.getInteger(attributeId.substring(z + 1));
 
 			start += systemLDAPConfiguration.rangeSize();
+
+			end = GetterUtil.getInteger(attributeId.substring(z + 1));
+
 			end += systemLDAPConfiguration.rangeSize();
 		}
 

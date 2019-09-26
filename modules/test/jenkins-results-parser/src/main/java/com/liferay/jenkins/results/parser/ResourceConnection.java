@@ -117,6 +117,7 @@ public class ResourceConnection implements Comparable {
 
 	protected ResourceConnection(String name, ResourceMonitor resourceMonitor) {
 		_name = name;
+
 		_resourceMonitor = resourceMonitor;
 
 		_key = JenkinsResultsParserUtil.combine(

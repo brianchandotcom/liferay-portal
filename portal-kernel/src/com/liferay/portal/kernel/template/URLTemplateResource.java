@@ -112,6 +112,7 @@ public class URLTemplateResource implements TemplateResource {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		_templateId = objectInput.readUTF();
+
 		_templateURLExternalForm = objectInput.readUTF();
 
 		_templateURL = new URL(_templateURLExternalForm);

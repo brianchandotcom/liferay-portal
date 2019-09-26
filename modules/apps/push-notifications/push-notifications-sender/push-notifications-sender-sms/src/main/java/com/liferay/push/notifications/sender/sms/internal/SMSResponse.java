@@ -32,6 +32,7 @@ public class SMSResponse extends BaseResponse {
 		id = sms.getSid();
 		payload = payloadJSONObject.toString();
 		price = sms.getPrice();
+
 		status = sms.getStatus();
 
 		if (Validator.isNotNull(status) && status.equals("queued")) {

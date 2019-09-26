@@ -542,6 +542,7 @@ public class SearchContainer<R> {
 			_cur, _delta);
 
 		_start = startAndEnd[0];
+
 		_end = startAndEnd[1];
 
 		_resultEnd = _end;

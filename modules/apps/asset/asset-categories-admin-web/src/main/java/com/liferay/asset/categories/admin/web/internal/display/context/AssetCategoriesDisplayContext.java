@@ -86,6 +86,7 @@ public class AssetCategoriesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
 		_httpServletRequest = httpServletRequest;
 
 		_assetCategoriesAdminWebConfiguration =

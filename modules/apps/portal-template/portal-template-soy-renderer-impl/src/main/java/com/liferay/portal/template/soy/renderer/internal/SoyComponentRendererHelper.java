@@ -54,6 +54,7 @@ public class SoyComponentRendererHelper {
 		_soyRenderer = soyRenderer;
 
 		_moduleName = _getModuleName(_componentDescriptor.getModule());
+
 		_wrapperId = _generateWrapperId(
 			(String)_context.get("id"), _componentDescriptor.getComponentId());
 

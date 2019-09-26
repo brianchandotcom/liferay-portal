@@ -131,6 +131,7 @@ public class LogAssertionTestRule
 		List<ExpectedLogs> expectedLogsList) {
 
 		_thread = Thread.currentThread();
+
 		_uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
 		Thread.setDefaultUncaughtExceptionHandler(

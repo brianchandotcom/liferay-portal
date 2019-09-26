@@ -72,6 +72,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		User user = userLocalService.getUser(userId);
 		allowedServiceSignatures = normalizeServiceSignatures(
 			allowedServiceSignatures);
+
 		name = StringUtil.trim(name);
 
 		validate(name, titleMap);

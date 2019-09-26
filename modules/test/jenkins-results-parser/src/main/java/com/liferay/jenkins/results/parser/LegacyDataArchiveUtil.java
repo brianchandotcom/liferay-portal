@@ -34,6 +34,7 @@ public class LegacyDataArchiveUtil {
 		GitWorkingDirectory legacyGitWorkingDirectory) {
 
 		_generatedArchiveDirectory = generatedArchiveDirectory;
+
 		_legacyGitWorkingDirectory = legacyGitWorkingDirectory;
 
 		LocalGitBranch upstreamLocalGitBranch =

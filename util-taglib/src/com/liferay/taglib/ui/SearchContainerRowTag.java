@@ -132,6 +132,7 @@ public class SearchContainerRowTag<R>
 		_searchContainer.setClassName(_className);
 
 		_resultRows = _searchContainer.getResultRows();
+
 		_results = _searchContainer.getResults();
 
 		if ((_results != null) && !_results.isEmpty()) {

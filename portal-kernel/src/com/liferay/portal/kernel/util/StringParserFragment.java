@@ -78,6 +78,7 @@ public class StringParserFragment {
 		}
 		else {
 			name = fragment.substring(1, index);
+
 			String pattern = fragment.substring(
 				index + 1, fragment.length() - 1);
 

@@ -79,10 +79,12 @@ definition {
 
 		var companyId = JSONCompany.getCompanyId();
 
+		var parentGroupId = JSONGroupSetter.setParentGroupId(parentGroupName = "${parentGroupName}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/${site} \
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
 				-u test@liferay.com:test
 		''';
 

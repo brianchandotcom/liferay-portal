@@ -52,15 +52,6 @@ public class BlogsEntryModelIndexerWriterContributor
 					"displayDate");
 
 				dynamicQuery.add(displayDateProperty.lt(new Date()));
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				Integer[] statuses = {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
-				};
-
-				dynamicQuery.add(statusProperty.in(statuses));
 			});
 		batchIndexingActionable.setPerformActionMethod(
 			(BlogsEntry blogsEntry) -> batchIndexingActionable.addDocuments(
@@ -88,6 +79,10 @@ public class BlogsEntryModelIndexerWriterContributor
 			(status == WorkflowConstants.STATUS_DRAFT)) {
 
 			return IndexerWriterMode.UPDATE;
+		}
+
+		if (!blogsEntry.isApproved() && !blogsEntry.isInTrash()) {
+			return IndexerWriterMode.SKIP;
 		}
 
 		return IndexerWriterMode.DELETE;

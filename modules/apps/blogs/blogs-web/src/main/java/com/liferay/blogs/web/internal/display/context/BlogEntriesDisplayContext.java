@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -179,30 +178,6 @@ public class BlogEntriesDisplayContext {
 		return entriesSearchContainer;
 	}
 
-	private int _getStatus() {
-		if (_status != null) {
-			return _status;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
-
-			_status = WorkflowConstants.STATUS_ANY;
-		}
-		else {
-			_status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		return _status;
-	}
-
 	private void _populateResults(SearchContainer searchContainer)
 		throws PortalException {
 
@@ -273,7 +248,8 @@ public class BlogEntriesDisplayContext {
 			SearchContext searchContext = SearchContextFactory.getInstance(
 				_httpServletRequest);
 
-			searchContext.setAttribute(Field.STATUS, _getStatus());
+			searchContext.setAttribute(
+				Field.STATUS, WorkflowConstants.STATUS_ANY);
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeDiscussions(true);
 			searchContext.setKeywords(keywords);
@@ -358,7 +334,6 @@ public class BlogEntriesDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortalPreferences _portalPreferences;
-	private Integer _status;
 	private final TrashHelper _trashHelper;
 
 }

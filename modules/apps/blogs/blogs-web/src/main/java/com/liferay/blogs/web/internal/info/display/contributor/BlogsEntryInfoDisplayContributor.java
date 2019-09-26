@@ -61,12 +61,12 @@ public class BlogsEntryInfoDisplayContributor
 		Map<String, Object> infoDisplayFieldValues = new HashMap<>();
 
 		infoDisplayFieldValues.putAll(
-			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
-				getClassName(), blogsEntry, locale));
-		infoDisplayFieldValues.putAll(
 			_assetEntryInfoDisplayFieldProvider.
 				getAssetEntryInfoDisplayFieldsValues(
 					getClassName(), blogsEntry.getEntryId(), locale));
+		infoDisplayFieldValues.putAll(
+			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
+				getClassName(), blogsEntry, locale));
 
 		return infoDisplayFieldValues;
 	}

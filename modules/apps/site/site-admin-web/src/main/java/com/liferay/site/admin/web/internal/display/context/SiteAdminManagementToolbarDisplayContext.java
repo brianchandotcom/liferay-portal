@@ -194,7 +194,7 @@ public class SiteAdminManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name"};
+		return new String[] {"descriptive-name"};
 	}
 
 	private boolean _hasDeleteGroupPermission(Group group)

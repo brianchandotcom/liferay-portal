@@ -26,7 +26,7 @@ import {
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
-import {getFragmentEntryLinkListElements} from './utils/FragmentsEditorGetUtils.es';
+import {getElements} from './utils/FragmentsEditorGetUtils.es';
 import {INITIAL_STATE} from './store/state.es';
 import {
 	startListeningWidgetConfigurationChange,
@@ -226,10 +226,7 @@ class FragmentsEditor extends Component {
 				hoveredItem.classList.remove(HOVERED_ITEM_CLASS);
 			});
 
-		const targetItems = getFragmentEntryLinkListElements(
-			targetItemId,
-			targetItemType
-		);
+		const targetItems = getElements(targetItemId, targetItemType);
 
 		if (targetItems.length === 0) {
 			const targetItemIsEditable =
@@ -243,7 +240,7 @@ class FragmentsEditor extends Component {
 					'fragments-editor__editable--highlighted'
 				)
 			) {
-				const fragment = getFragmentEntryLinkListElements(
+				const fragment = getElements(
 					targetItems[0].dataset.fragmentEntryLinkId,
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				)[0];

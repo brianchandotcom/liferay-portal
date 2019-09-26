@@ -312,7 +312,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		LAR.exportSiteCP();
 

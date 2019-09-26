@@ -272,13 +272,7 @@ renderResponse.setTitle(title);
 												<aui:option label="no-workflow" value="" />
 
 												<%
-												WorkflowDefinitionLink workflowDefinitionLink = null;
-
-												try {
-													workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId(), true);
-												}
-												catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-												}
+												WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, ddmStructure.getStructureId(), true);
 
 												for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 													boolean selected = false;
@@ -328,13 +322,7 @@ renderResponse.setTitle(title);
 								<aui:option label="no-workflow" value="" />
 
 								<%
-								WorkflowDefinitionLink workflowDefinitionLink = null;
-
-								try {
-									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
-								}
-								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-								}
+								WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, JournalFolder.class.getName(), folderId, JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
 
 								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 									boolean selected = false;

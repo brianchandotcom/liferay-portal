@@ -18,7 +18,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -72,11 +71,8 @@ public class BlogsEntryModelIndexerWriterContributor
 
 	@Override
 	public IndexerWriterMode getIndexerWriterMode(BlogsEntry blogsEntry) {
-		int status = blogsEntry.getStatus();
-
-		if ((status == WorkflowConstants.STATUS_APPROVED) ||
-			(status == WorkflowConstants.STATUS_IN_TRASH) ||
-			(status == WorkflowConstants.STATUS_DRAFT)) {
+		if (blogsEntry.isApproved() || blogsEntry.isInTrash() ||
+			blogsEntry.isDraft()) {
 
 			return IndexerWriterMode.UPDATE;
 		}

@@ -16,8 +16,6 @@ package com.liferay.talend;
 
 import com.liferay.talend.avro.EndpointSchemaInferrer;
 
-import java.io.InputStream;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -27,15 +25,13 @@ import org.apache.avro.Schema;
 /**
  * @author Igor Beslic
  */
-public class BaseTest {
+public abstract class BaseTestCase {
 
 	public JsonObject readObject(String fileName) {
-		Class<BaseTest> baseTestClass = BaseTest.class;
+		Class<BaseTestCase> baseTestClass = BaseTestCase.class;
 
-		InputStream resourceAsStream = baseTestClass.getResourceAsStream(
-			fileName);
-
-		JsonReader jsonReader = Json.createReader(resourceAsStream);
+		JsonReader jsonReader = Json.createReader(
+			baseTestClass.getResourceAsStream(fileName));
 
 		return jsonReader.readObject();
 	}

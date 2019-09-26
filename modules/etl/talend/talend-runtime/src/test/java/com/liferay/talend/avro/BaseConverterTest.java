@@ -14,7 +14,7 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.BaseTest;
+import com.liferay.talend.BaseTestCase;
 
 import javax.json.JsonObject;
 
@@ -23,7 +23,7 @@ import org.apache.avro.Schema;
 /**
  * @author Igor Beslic
  */
-public class BaseConverterTest extends BaseTest {
+public class BaseConverterTest extends BaseTestCase {
 
 	protected JsonObjectIndexedRecordConverter
 		getJsonObjectIndexedRecordConverter(

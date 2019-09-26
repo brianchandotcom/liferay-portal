@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.BaseTest;
+import com.liferay.talend.BaseTestCase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,10 +26,6 @@ import javax.json.JsonObject;
  */
 public class LiferayFixedResponseContentSource extends LiferaySource {
 
-	public LiferayFixedResponseContentSource() {
-		_jsonObject = null;
-	}
-
 	public LiferayFixedResponseContentSource(JsonObject jsonObject) {
 		_jsonObject = jsonObject;
 	}
@@ -40,7 +36,12 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 			return _jsonObject;
 		}
 
-		return _baseTest.readObject(_getResponseContentFileName(resourceURL));
+		return _baseTestCase.readObject(
+			_getResponseContentFileName(resourceURL));
+	}
+
+	public void setBaseTestCase(BaseTestCase baseTestCase) {
+		_baseTestCase = baseTestCase;
 	}
 
 	private String _getResponseContentFileName(String resourceURL) {
@@ -64,7 +65,7 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 		return sb.toString();
 	}
 
-	private final BaseTest _baseTest = new BaseTest();
+	private BaseTestCase _baseTestCase;
 	private final JsonObject _jsonObject;
 	private Pattern _resourceURLPattern = Pattern.compile(
 		"https?://.+(:\\d+)?/o/.+/v\\d+(.\\d+)*/([^/\\s]+)/.+\\?(page=\\d+)" +

@@ -16,7 +16,7 @@ package com.liferay.talend.avro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
-import com.liferay.talend.BaseTest;
+import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
 import java.util.List;
@@ -34,7 +34,7 @@ import org.talend.daikon.avro.AvroUtils;
 /**
  * @author Zoltán Takács
  */
-public class EndpointSchemaInferrerTest extends BaseTest {
+public class EndpointSchemaInferrerTest extends BaseTestCase {
 
 	@Before
 	public void setUp() {

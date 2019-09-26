@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime.writer;
 
-import com.liferay.talend.BaseTest;
+import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.runtime.LiferayRequestContentAggregatorSink;
 import com.liferay.talend.runtime.LiferaySink;
@@ -39,7 +39,7 @@ import org.talend.components.common.SchemaProperties;
 /**
  * @author Igor Beslic
  */
-public class LiferayWriterTest extends BaseTest {
+public class LiferayWriterTest extends BaseTestCase {
 
 	@Test
 	public void testWrite() throws Exception {

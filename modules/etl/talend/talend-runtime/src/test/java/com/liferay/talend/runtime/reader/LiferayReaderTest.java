@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime.reader;
 
-import com.liferay.talend.BaseTest;
+import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.resource.LiferayInputResourceProperties;
 import com.liferay.talend.runtime.LiferayFixedResponseContentSource;
@@ -24,6 +24,7 @@ import com.liferay.talend.tliferayoutput.Action;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+import javax.json.JsonObject;
 import javax.json.JsonValue;
 
 import org.junit.Assert;
@@ -34,7 +35,7 @@ import org.talend.components.common.SchemaProperties;
 /**
  * @author Igor Beslic
  */
-public class LiferayReaderTest extends BaseTest {
+public class LiferayReaderTest extends BaseTestCase {
 
 	@Test(expected = NoSuchElementException.class)
 	public void testNoSuchElementException() throws Exception {
@@ -60,7 +61,7 @@ public class LiferayReaderTest extends BaseTest {
 		String endpoint = "/v1.0/page-content/{id}/taxonomy-categories";
 
 		LiferayInputReader liferayInputReader = new LiferayInputReader(
-			null, new LiferayFixedResponseContentSource(),
+			null, _getLiferayFixedResponseContentSource(),
 			_getTLiferayInputProperties(
 				Action.Unavailable, _OAS_URL, endpoint));
 
@@ -85,7 +86,7 @@ public class LiferayReaderTest extends BaseTest {
 
 		LiferayInputReader liferayInputReader = new LiferayInputReader(
 			null,
-			new LiferayFixedResponseContentSource(
+			_getLiferayFixedResponseContentSource(
 				readObject("page_no_content.json")),
 			_getTLiferayInputProperties(
 				Action.Unavailable, _OAS_URL, endpoint));
@@ -102,7 +103,7 @@ public class LiferayReaderTest extends BaseTest {
 
 		LiferayInputReader liferayInputReader = new LiferayInputReader(
 			null,
-			new LiferayFixedResponseContentSource(
+			_getLiferayFixedResponseContentSource(
 				readObject("page_content.json")),
 			_getTLiferayInputProperties(
 				Action.Unavailable, _OAS_URL, endpoint));
@@ -122,6 +123,23 @@ public class LiferayReaderTest extends BaseTest {
 		Assert.assertFalse(
 			"Advance must not advance reader to next record",
 			liferayInputReader.advance());
+	}
+
+	private LiferayFixedResponseContentSource
+		_getLiferayFixedResponseContentSource() {
+
+		return _getLiferayFixedResponseContentSource(null);
+	}
+
+	private LiferayFixedResponseContentSource
+		_getLiferayFixedResponseContentSource(JsonObject jsonObject) {
+
+		LiferayFixedResponseContentSource liferayFixedResponseContentSource =
+			new LiferayFixedResponseContentSource(jsonObject);
+
+		liferayFixedResponseContentSource.setBaseTestCase(this);
+
+		return liferayFixedResponseContentSource;
 	}
 
 	private TLiferayInputProperties _getTLiferayInputProperties(

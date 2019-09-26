@@ -18,6 +18,7 @@ import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,8 @@ import java.util.Date;
  * @generated
  */
 public class AssetListEntrySegmentsEntryRelCacheModel
-	implements CacheModel<AssetListEntrySegmentsEntryRel>, Externalizable {
+	implements CacheModel<AssetListEntrySegmentsEntryRel>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,9 +51,11 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 			assetListEntrySegmentsEntryRelCacheModel =
 				(AssetListEntrySegmentsEntryRelCacheModel)obj;
 
-		if (assetListEntrySegmentsEntryRelId ==
+		if ((assetListEntrySegmentsEntryRelId ==
 				assetListEntrySegmentsEntryRelCacheModel.
-					assetListEntrySegmentsEntryRelId) {
+					assetListEntrySegmentsEntryRelId) &&
+			(mvccVersion ==
+				assetListEntrySegmentsEntryRelCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +65,28 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, assetListEntrySegmentsEntryRelId);
+		int hashCode = HashUtil.hash(0, assetListEntrySegmentsEntryRelId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", assetListEntrySegmentsEntryRelId=");
 		sb.append(assetListEntrySegmentsEntryRelId);
@@ -101,6 +119,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 	public AssetListEntrySegmentsEntryRel toEntityModel() {
 		AssetListEntrySegmentsEntryRelImpl assetListEntrySegmentsEntryRelImpl =
 			new AssetListEntrySegmentsEntryRelImpl();
+
+		assetListEntrySegmentsEntryRelImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetListEntrySegmentsEntryRelImpl.setUuid("");
@@ -164,6 +184,7 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		assetListEntrySegmentsEntryRelId = objectInput.readLong();
@@ -186,6 +207,8 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -225,6 +248,7 @@ public class AssetListEntrySegmentsEntryRelCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long assetListEntrySegmentsEntryRelId;
 	public long groupId;

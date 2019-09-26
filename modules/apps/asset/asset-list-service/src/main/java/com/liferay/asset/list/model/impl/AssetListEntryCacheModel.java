@@ -18,6 +18,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetListEntryCacheModel
-	implements CacheModel<AssetListEntry>, Externalizable {
+	implements CacheModel<AssetListEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AssetListEntryCacheModel
 		AssetListEntryCacheModel assetListEntryCacheModel =
 			(AssetListEntryCacheModel)obj;
 
-		if (assetListEntryId == assetListEntryCacheModel.assetListEntryId) {
+		if ((assetListEntryId == assetListEntryCacheModel.assetListEntryId) &&
+			(mvccVersion == assetListEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AssetListEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, assetListEntryId);
+		int hashCode = HashUtil.hash(0, assetListEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", assetListEntryId=");
 		sb.append(assetListEntryId);
@@ -96,6 +113,8 @@ public class AssetListEntryCacheModel
 	@Override
 	public AssetListEntry toEntityModel() {
 		AssetListEntryImpl assetListEntryImpl = new AssetListEntryImpl();
+
+		assetListEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetListEntryImpl.setUuid("");
@@ -160,6 +179,7 @@ public class AssetListEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		assetListEntryId = objectInput.readLong();
@@ -181,6 +201,8 @@ public class AssetListEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -224,6 +246,7 @@ public class AssetListEntryCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long assetListEntryId;
 	public long groupId;

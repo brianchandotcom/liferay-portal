@@ -71,19 +71,20 @@ public class AssetListEntryUsageModelImpl
 	public static final String TABLE_NAME = "AssetListEntryUsage";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"assetListEntryUsageId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetListEntryId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"portletId", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"assetListEntryUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"assetListEntryId", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"portletId", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetListEntryUsageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -100,7 +101,7 @@ public class AssetListEntryUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetListEntryUsage (uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
+		"create table AssetListEntryUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetListEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,assetListEntryId LONG,classNameId LONG,classPK LONG,portletId VARCHAR(200) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryUsage";
@@ -269,6 +270,12 @@ public class AssetListEntryUsageModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<AssetListEntryUsage, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", AssetListEntryUsage::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AssetListEntryUsage, Long>)
+				AssetListEntryUsage::setMvccVersion);
 		attributeGetterFunctions.put("uuid", AssetListEntryUsage::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -351,6 +358,16 @@ public class AssetListEntryUsageModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -665,6 +682,7 @@ public class AssetListEntryUsageModelImpl
 		AssetListEntryUsageImpl assetListEntryUsageImpl =
 			new AssetListEntryUsageImpl();
 
+		assetListEntryUsageImpl.setMvccVersion(getMvccVersion());
 		assetListEntryUsageImpl.setUuid(getUuid());
 		assetListEntryUsageImpl.setAssetListEntryUsageId(
 			getAssetListEntryUsageId());
@@ -781,6 +799,8 @@ public class AssetListEntryUsageModelImpl
 	public CacheModel<AssetListEntryUsage> toCacheModel() {
 		AssetListEntryUsageCacheModel assetListEntryUsageCacheModel =
 			new AssetListEntryUsageCacheModel();
+
+		assetListEntryUsageCacheModel.mvccVersion = getMvccVersion();
 
 		assetListEntryUsageCacheModel.uuid = getUuid();
 
@@ -925,6 +945,7 @@ public class AssetListEntryUsageModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetListEntryUsageId;

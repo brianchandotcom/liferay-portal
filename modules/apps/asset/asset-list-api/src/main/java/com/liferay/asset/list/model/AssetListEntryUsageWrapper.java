@@ -43,6 +43,7 @@ public class AssetListEntryUsageWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("assetListEntryUsageId", getAssetListEntryUsageId());
 		attributes.put("groupId", getGroupId());
@@ -62,6 +63,12 @@ public class AssetListEntryUsageWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -243,6 +250,16 @@ public class AssetListEntryUsageWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this asset list entry usage.
+	 *
+	 * @return the mvcc version of this asset list entry usage
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the portlet ID of this asset list entry usage.
 	 *
 	 * @return the portlet ID of this asset list entry usage
@@ -405,6 +422,16 @@ public class AssetListEntryUsageWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this asset list entry usage.
+	 *
+	 * @param mvccVersion the mvcc version of this asset list entry usage
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

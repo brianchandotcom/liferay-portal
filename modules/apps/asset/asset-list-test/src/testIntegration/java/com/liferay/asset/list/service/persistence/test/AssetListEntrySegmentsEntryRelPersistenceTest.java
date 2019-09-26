@@ -129,6 +129,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 		AssetListEntrySegmentsEntryRel newAssetListEntrySegmentsEntryRel =
 			_persistence.create(pk);
 
+		newAssetListEntrySegmentsEntryRel.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newAssetListEntrySegmentsEntryRel.setUuid(
 			RandomTestUtil.randomString());
 
@@ -167,6 +170,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newAssetListEntrySegmentsEntryRel.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingAssetListEntrySegmentsEntryRel.getMvccVersion(),
+			newAssetListEntrySegmentsEntryRel.getMvccVersion());
 		Assert.assertEquals(
 			existingAssetListEntrySegmentsEntryRel.getUuid(),
 			newAssetListEntrySegmentsEntryRel.getUuid());
@@ -293,7 +299,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"AssetListEntrySegmentsEntryRel", "uuid", true,
+			"AssetListEntrySegmentsEntryRel", "mvccVersion", true, "uuid", true,
 			"assetListEntrySegmentsEntryRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "assetListEntryId", true,
@@ -593,6 +599,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceTest {
 
 		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
 			_persistence.create(pk);
+
+		assetListEntrySegmentsEntryRel.setMvccVersion(
+			RandomTestUtil.nextLong());
 
 		assetListEntrySegmentsEntryRel.setUuid(RandomTestUtil.randomString());
 

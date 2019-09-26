@@ -1,4 +1,5 @@
 create table AssetListEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	assetListEntryId LONG not null primary key,
 	groupId LONG,
@@ -14,6 +15,7 @@ create table AssetListEntry (
 );
 
 create table AssetListEntryAssetEntryRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	assetListEntryAssetEntryRelId LONG not null primary key,
 	groupId LONG,
@@ -30,6 +32,7 @@ create table AssetListEntryAssetEntryRel (
 );
 
 create table AssetListEntrySegmentsEntryRel (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	alEntrySegmentsEntryRelId LONG not null primary key,
 	groupId LONG,
@@ -45,6 +48,7 @@ create table AssetListEntrySegmentsEntryRel (
 );
 
 create table AssetListEntryUsage (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	assetListEntryUsageId LONG not null primary key,
 	groupId LONG,

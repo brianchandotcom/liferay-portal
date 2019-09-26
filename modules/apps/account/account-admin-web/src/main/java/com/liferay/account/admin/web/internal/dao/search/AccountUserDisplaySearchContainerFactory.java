@@ -44,7 +44,7 @@ public class AccountUserDisplaySearchContainerFactory {
 			liferayPortletRequest, liferayPortletResponse.createRenderURL());
 
 		accountUserDisplaySearchContainer.setEmptyResultsMessage(
-			"there-are-no-users-associated-to-this-account");
+			"there-are-no-users-associated-with-this-account");
 		accountUserDisplaySearchContainer.setId("accountUsers");
 		accountUserDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));

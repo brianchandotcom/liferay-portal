@@ -273,7 +273,7 @@ public class LiferayCIPlugin implements Plugin<Project> {
 				public void execute(YarnInstallTask yarnInstallTask) {
 					String taskName = yarnInstallTask.getName();
 
-					if (taskName.equals(
+					if (taskName.startsWith(
 							LiferayYarnPlugin.YARN_INSTALL_TASK_NAME)) {
 
 						_configureTaskYarnInstall(yarnInstallTask);

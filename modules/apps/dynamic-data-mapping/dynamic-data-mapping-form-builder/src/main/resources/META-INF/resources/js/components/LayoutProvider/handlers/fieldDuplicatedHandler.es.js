@@ -13,11 +13,15 @@
  */
 
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
-import {generateFieldName, getFieldLocalizedValue} from '../util/fields.es';
+import {getFieldLocalizedValue} from '../util/fields.es';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {sub} from '../../../util/strings.es';
 
-const handleFieldDuplicated = (state, editingLanguageId, event) => {
+const handleFieldDuplicated = (
+	{editingLanguageId, fieldNameGenerator},
+	state,
+	event
+) => {
 	const {columnIndex, pageIndex, rowIndex} = event.indexes;
 	const {pages} = state;
 
@@ -30,7 +34,7 @@ const handleFieldDuplicated = (state, editingLanguageId, event) => {
 	);
 
 	const label = sub(Liferay.Language.get('copy-of-x'), [localizedLabel]);
-	const newFieldName = generateFieldName(pages, label);
+	const newFieldName = fieldNameGenerator(label);
 	const visitor = new PagesVisitor(field.settingsContext.pages);
 
 	const duplicatedField = {

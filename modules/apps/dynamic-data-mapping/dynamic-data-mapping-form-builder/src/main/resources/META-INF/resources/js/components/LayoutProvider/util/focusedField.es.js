@@ -12,7 +12,7 @@
  * details.
  */
 
-import {generateFieldName, updateFieldValidationProperty} from './fields.es';
+import {updateFieldValidationProperty} from './fields.es';
 import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer/js/util/fields.es';
 import {updateSettingsContextProperty} from './settings.es';
 
@@ -30,21 +30,20 @@ const shouldAutoGenerateName = (
 };
 
 export const updateFocusedFieldName = (
-	state,
 	editingLanguageId,
+	fieldNameGenerator,
 	focusedField,
 	value
 ) => {
 	const {fieldName, label} = focusedField;
 	const normalizedFieldName = normalizeFieldName(value);
 
-	const {pages} = state;
 	let newFieldName;
 
 	if (normalizedFieldName !== '') {
-		newFieldName = generateFieldName(pages, value, fieldName);
+		newFieldName = fieldNameGenerator(value, fieldName);
 	} else {
-		newFieldName = generateFieldName(pages, label, fieldName);
+		newFieldName = fieldNameGenerator(label, fieldName);
 	}
 
 	if (newFieldName) {
@@ -105,9 +104,9 @@ export const updateFocusedFieldDataType = (
 };
 
 export const updateFocusedFieldLabel = (
-	state,
 	defaultLanguageId,
 	editingLanguageId,
+	fieldNameGenerator,
 	focusedField,
 	value
 ) => {
@@ -121,8 +120,8 @@ export const updateFocusedFieldLabel = (
 		)
 	) {
 		const updates = updateFocusedFieldName(
-			state,
 			editingLanguageId,
+			fieldNameGenerator,
 			focusedField,
 			value
 		);
@@ -182,9 +181,8 @@ export const updateFocusedFieldOptions = (
 };
 
 export const updateFocusedField = (
+	{defaultLanguageId, editingLanguageId, fieldNameGenerator},
 	state,
-	defaultLanguageId,
-	editingLanguageId,
 	fieldName,
 	value
 ) => {
@@ -203,9 +201,9 @@ export const updateFocusedField = (
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldLabel(
-				state,
 				defaultLanguageId,
 				editingLanguageId,
+				fieldNameGenerator,
 				focusedField,
 				value
 			)
@@ -214,8 +212,8 @@ export const updateFocusedField = (
 		focusedField = {
 			...focusedField,
 			...updateFocusedFieldName(
-				state,
 				editingLanguageId,
+				fieldNameGenerator,
 				focusedField,
 				value
 			)

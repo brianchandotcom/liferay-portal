@@ -1393,8 +1393,8 @@ public class RESTBuilder {
 
 				String tmp = null;
 
-				if ((description != null) &&
-					description.startsWith("https://www.schema.org/")) {
+				if (StringUtil.startsWith(
+						description, "https://www.schema.org/")) {
 
 					tmp = description;
 				}

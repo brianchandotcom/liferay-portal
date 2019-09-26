@@ -47,9 +47,9 @@ public class BlogsEntryModelVisibilityContributor
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to check visibility for blogs entry ", pe);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	private boolean _isVisible(int entryStatus, int queryStatus) {

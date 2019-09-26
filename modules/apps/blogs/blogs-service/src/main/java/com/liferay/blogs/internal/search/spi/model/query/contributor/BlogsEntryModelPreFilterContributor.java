@@ -38,14 +38,6 @@ public class BlogsEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		_addWorkflowStatusFilter(
-			booleanFilter, modelSearchSettings, searchContext);
-	}
-
-	private void _addWorkflowStatusFilter(
-		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
-		SearchContext searchContext) {
-
 		_workflowStatusModelPreFilterContributor.contribute(
 			booleanFilter, modelSearchSettings, searchContext);
 	}

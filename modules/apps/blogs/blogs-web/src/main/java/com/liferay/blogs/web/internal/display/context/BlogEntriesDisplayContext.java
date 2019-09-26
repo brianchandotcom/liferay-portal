@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,8 +88,6 @@ public class BlogEntriesDisplayContext {
 	public List<String> getAvailableActions(BlogsEntry blogsEntry)
 		throws PortalException {
 
-		List<String> availableActions = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -97,10 +96,10 @@ public class BlogEntriesDisplayContext {
 				themeDisplay.getPermissionChecker(), blogsEntry,
 				ActionKeys.DELETE)) {
 
-			availableActions.add("deleteEntries");
+			return Collections.singletonList("deleteEntries");
 		}
 
-		return availableActions;
+		return Collections.emptyList();
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {
@@ -108,13 +107,14 @@ public class BlogEntriesDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put(
-			"trashEnabled",
-			_trashHelper.isTrashEnabled(themeDisplay.getScopeGroupId()));
-
-		return context;
+		return new HashMap<String, Object>() {
+			{
+				put(
+					"trashEnabled",
+					_trashHelper.isTrashEnabled(
+						themeDisplay.getScopeGroupId()));
+			}
+		};
 	}
 
 	public String getDisplayStyle() {
@@ -122,17 +122,16 @@ public class BlogEntriesDisplayContext {
 			_httpServletRequest, "displayStyle");
 
 		if (Validator.isNull(displayStyle)) {
-			displayStyle = _portalPreferences.getValue(
+			return _portalPreferences.getValue(
 				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style", "icon");
 		}
-		else {
-			_portalPreferences.setValue(
-				BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
-				displayStyle);
 
-			_httpServletRequest.setAttribute(
-				WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-		}
+		_portalPreferences.setValue(
+			BlogsPortletKeys.BLOGS_ADMIN, "entries-display-style",
+			displayStyle);
+
+		_httpServletRequest.setAttribute(
+			WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 
 		return displayStyle;
 	}

@@ -294,22 +294,23 @@ public abstract class BaseSubstringFieldQueryBuilderTestCase
 		addDocument("Who? When? Where?");
 		addDocument("Who. When. Where.");
 
-		assertSearch("AAA+???-CCC?DDD]", Arrays.asList("aaa+bbb-ccc{ddd]"));
-		assertSearch("AAA+*{DDD*", Arrays.asList("aaa+bbb-ccc{ddd]"));
-		assertSearch("AA?+BB?-CC?{DD?]", Arrays.asList("aaa+bbb-ccc{ddd]"));
-		assertSearch("AA*+BB*-CC*{DD*]", Arrays.asList("aaa+bbb-ccc{ddd]"));
-
-		assertSearch("M*A*S*H", Arrays.asList("m*a*s*h", "m... a... s... h"));
-		assertSearch(
+		assertSearchIgnoreRelevance(
+			"M*A*S*H", Arrays.asList("m*a*s*h", "m... a... s... h"));
+		assertSearchIgnoreRelevance(
 			"M A S H",
 			Arrays.asList(
 				"m*a*s*h", "m... a... s... h", "aaa+bbb-ccc{ddd]",
 				"aaa bbb ccc ddd", "who? when? where?", "who. when. where."));
-		assertSearch(
+		assertSearchIgnoreRelevance(
 			"M* A* *S *H",
 			Arrays.asList(
 				"m*a*s*h", "m... a... s... h", "aaa+bbb-ccc{ddd]",
 				"aaa bbb ccc ddd", "who? when? where?", "who. when. where."));
+
+		assertSearch("AAA+???-CCC?DDD]", Arrays.asList("aaa+bbb-ccc{ddd]"));
+		assertSearch("AAA+*{DDD*", Arrays.asList("aaa+bbb-ccc{ddd]"));
+		assertSearch("AA?+BB?-CC?{DD?]", Arrays.asList("aaa+bbb-ccc{ddd]"));
+		assertSearch("AA*+BB*-CC*{DD*]", Arrays.asList("aaa+bbb-ccc{ddd]"));
 
 		assertSearch(
 			"When?", Arrays.asList("who? when? where?", "who. when. where."));

@@ -1635,7 +1635,9 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					</gradle-execute>
 
 					<retry retrycount="5" retrydelay="10000">
-						<gradle-execute dir="${project.dir}/modules" task=":yarnInstall" />
+						<gradle-execute dir="${project.dir}/modules" task=":yarnInstall">
+							<arg if:set="build.binaries.cache.dir" value="-DyarnInstall.offline=true" />
+						</gradle-execute>
 					</retry>
 
 					<if>

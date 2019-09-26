@@ -27,7 +27,8 @@ import {
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FLOATING_TOOLBAR_BUTTONS,
-	FRAGMENTS_EDITOR_ITEM_TYPES
+	FRAGMENTS_EDITOR_ITEM_TYPES,
+	CREATE_PROCESSOR_EVENT_TYPES
 } from '../../utils/constants';
 import {
 	disableSavingChangesStatusAction,
@@ -365,7 +366,7 @@ class FragmentEditableField extends PortletBase {
 	 * @private
 	 * @review
 	 */
-	_createProcessor(event) {
+	_createProcessor(event, type = CREATE_PROCESSOR_EVENT_TYPES.editable) {
 		if (event) {
 			event.preventDefault();
 		}
@@ -388,7 +389,9 @@ class FragmentEditableField extends PortletBase {
 				this.portletNamespace,
 				this.processorsOptions,
 				this._handleEditableChanged,
-				this._handleProcessorDestroyed
+				this._handleProcessorDestroyed,
+				event,
+				type
 			);
 		}
 	}
@@ -461,7 +464,7 @@ class FragmentEditableField extends PortletBase {
 		const {type} = data;
 
 		if (type === 'editor') {
-			this._createProcessor(event);
+			this._createProcessor(event, CREATE_PROCESSOR_EVENT_TYPES.button);
 		}
 	}
 

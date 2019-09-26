@@ -74,6 +74,14 @@ export const COMPATIBLE_TYPES = {
 };
 
 /**
+ * Event types for creating the text editor processor
+ */
+export const CREATE_PROCESSOR_EVENT_TYPES = {
+	button: 'button',
+	editable: 'editable'
+};
+
+/**
  * Available editable field config keys
  */
 export const EDITABLE_FIELD_CONFIG_KEYS = {

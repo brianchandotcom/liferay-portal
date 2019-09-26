@@ -1,4 +1,5 @@
 create table AssetDisplayPageEntry (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	assetDisplayPageEntryId LONG not null primary key,
 	groupId LONG,

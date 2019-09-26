@@ -129,6 +129,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 		AssetDisplayPageEntry newAssetDisplayPageEntry = _persistence.create(
 			pk);
 
+		newAssetDisplayPageEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newAssetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
 
 		newAssetDisplayPageEntry.setGroupId(RandomTestUtil.nextLong());
@@ -161,6 +163,9 @@ public class AssetDisplayPageEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newAssetDisplayPageEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingAssetDisplayPageEntry.getMvccVersion(),
+			newAssetDisplayPageEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingAssetDisplayPageEntry.getUuid(),
 			newAssetDisplayPageEntry.getUuid());
@@ -283,11 +288,11 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 	protected OrderByComparator<AssetDisplayPageEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetDisplayPageEntry", "uuid", true, "assetDisplayPageEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "layoutPageTemplateEntryId",
-			true, "type", true, "plid", true);
+			"AssetDisplayPageEntry", "mvccVersion", true, "uuid", true,
+			"assetDisplayPageEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"layoutPageTemplateEntryId", true, "type", true, "plid", true);
 	}
 
 	@Test
@@ -572,6 +577,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AssetDisplayPageEntry assetDisplayPageEntry = _persistence.create(pk);
+
+		assetDisplayPageEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		assetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
 

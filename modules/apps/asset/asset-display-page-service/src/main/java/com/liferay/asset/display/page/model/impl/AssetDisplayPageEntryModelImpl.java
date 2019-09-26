@@ -76,19 +76,20 @@ public class AssetDisplayPageEntryModelImpl
 	public static final String TABLE_NAME = "AssetDisplayPageEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"assetDisplayPageEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"layoutPageTemplateEntryId", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"plid", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"assetDisplayPageEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"layoutPageTemplateEntryId", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"plid", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetDisplayPageEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -105,7 +106,7 @@ public class AssetDisplayPageEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetDisplayPageEntry (uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER,plid LONG)";
+		"create table AssetDisplayPageEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetDisplayPageEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutPageTemplateEntryId LONG,type_ INTEGER,plid LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetDisplayPageEntry";
@@ -159,6 +160,7 @@ public class AssetDisplayPageEntryModelImpl
 
 		AssetDisplayPageEntry model = new AssetDisplayPageEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setAssetDisplayPageEntryId(
 			soapModel.getAssetDisplayPageEntryId());
@@ -331,6 +333,12 @@ public class AssetDisplayPageEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<AssetDisplayPageEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", AssetDisplayPageEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AssetDisplayPageEntry, Long>)
+				AssetDisplayPageEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", AssetDisplayPageEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -413,6 +421,17 @@ public class AssetDisplayPageEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -725,6 +744,7 @@ public class AssetDisplayPageEntryModelImpl
 		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl =
 			new AssetDisplayPageEntryImpl();
 
+		assetDisplayPageEntryImpl.setMvccVersion(getMvccVersion());
 		assetDisplayPageEntryImpl.setUuid(getUuid());
 		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(
 			getAssetDisplayPageEntryId());
@@ -841,6 +861,8 @@ public class AssetDisplayPageEntryModelImpl
 	public CacheModel<AssetDisplayPageEntry> toCacheModel() {
 		AssetDisplayPageEntryCacheModel assetDisplayPageEntryCacheModel =
 			new AssetDisplayPageEntryCacheModel();
+
+		assetDisplayPageEntryCacheModel.mvccVersion = getMvccVersion();
 
 		assetDisplayPageEntryCacheModel.uuid = getUuid();
 
@@ -975,6 +997,7 @@ public class AssetDisplayPageEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _assetDisplayPageEntryId;

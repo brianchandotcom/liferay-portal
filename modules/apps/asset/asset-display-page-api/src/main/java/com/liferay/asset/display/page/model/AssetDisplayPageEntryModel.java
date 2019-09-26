@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -39,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetDisplayPageEntryModel
 	extends AttachedModel, BaseModel<AssetDisplayPageEntry>, GroupedModel,
-			ShardedModel, StagedAuditedModel {
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -60,6 +61,22 @@ public interface AssetDisplayPageEntryModel
 	 * @param primaryKey the primary key of this asset display page entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this asset display page entry.
+	 *
+	 * @return the mvcc version of this asset display page entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this asset display page entry.
+	 *
+	 * @param mvccVersion the mvcc version of this asset display page entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this asset display page entry.

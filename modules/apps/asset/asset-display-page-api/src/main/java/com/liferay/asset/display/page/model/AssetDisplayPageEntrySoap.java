@@ -33,6 +33,7 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 
 		AssetDisplayPageEntrySoap soapModel = new AssetDisplayPageEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setAssetDisplayPageEntryId(
 			model.getAssetDisplayPageEntryId());
@@ -108,6 +109,14 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setAssetDisplayPageEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -214,6 +223,7 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 		_plid = plid;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _assetDisplayPageEntryId;
 	private long _groupId;

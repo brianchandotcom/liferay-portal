@@ -227,6 +227,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101230. Global fragments are visible in fragment admin and added ones are visible in Test Site Name site."
+	@priority = "5"
+	test ViewGlobalFragments {
+		property osgi.module.configuration.file.names = "com.liferay.fragment.web.internal.configuration.FragmentGlobalPanelAppConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "global");
+		}
+
+		task ("Add a fragment collection") {
+			FragmentsAdmin.addCollection(collectionName = "Global Collection Name");
+		}
+
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		}
+
+		task ("Add a section fragment that uses the Button fragment code") {
+			FragmentsAdmin.addSection(fragmentName = "Global Fragment Name 1");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.html");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.css");
+
+			FragmentsEditor.typeFileContent(fileName = "fragment_button.js");
+		}
+
+		task ("Publish the section fragment") {
+			Button.clickPublish();
+		}
+
+		task ("Assert the fragment appears in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name");
+		}
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			JSONFragment.addSection(
+				collectionName = "Global Collection Name",
+				groupName = "Global",
+				name = "Global Fragment Name 2");
+		}
+
+		task ("Navigate to fragments admin") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Navigate to Global Collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Global Collection Name");
+		}
+
+		task ("Assert the fragments appear in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name 1");
+			FragmentsAdmin.viewEntryPresent(entry = "Global Fragment Name 2");
+		}
+	}
+
 	@description = "Once fragments are published, they can no longer be saved as draft."
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {

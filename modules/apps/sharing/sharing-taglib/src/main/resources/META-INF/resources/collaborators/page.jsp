@@ -31,6 +31,7 @@
 	data.put("classNameId", request.getAttribute("liferay-sharing:collaborators:classNameId"));
 	data.put("classPK", request.getAttribute("liferay-sharing:collaborators:classPK"));
 	data.put("collaboratorsResourceURL", request.getAttribute("liferay-sharing:collaborators:collaboratorsResourceURL"));
+	data.put("initialData", request.getAttribute("liferay-sharing:collaborators:collaboratorsJSONObject"));
 	%>
 
 	<react:component

@@ -26,17 +26,16 @@ const Collaborators = ({
 	canManageCollaborators,
 	classNameId,
 	classPK,
-	collaboratorsResourceURL
+	collaboratorsResourceURL,
+	initialData
 }) => {
-	const [data, setData] = useState(null);
+	const [data, setData] = useState(initialData);
 
 	const updateCollaborators = useCallback(() => {
 		fetch(collaboratorsResourceURL)
 			.then(res => res.json())
 			.then(setData);
 	}, [collaboratorsResourceURL]);
-
-	useEffect(() => updateCollaborators(), [updateCollaborators]);
 
 	useEffect(() => {
 		Liferay.on('sharing:changed', event => {

@@ -21,6 +21,7 @@ import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.display.field.ExpandoInfoDisplayFieldProvider;
 import com.liferay.info.display.field.InfoDisplayFieldProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -49,8 +50,16 @@ public class BlogsEntryInfoDisplayContributor
 			long classTypeId, Locale locale)
 		throws PortalException {
 
-		return _infoDisplayFieldProvider.getContributorInfoDisplayFields(
-			locale, AssetEntry.class.getName(), BlogsEntry.class.getName());
+		Set<InfoDisplayField> infoDisplayFields =
+			_infoDisplayFieldProvider.getContributorInfoDisplayFields(
+				locale, AssetEntry.class.getName(), BlogsEntry.class.getName());
+
+		infoDisplayFields.addAll(
+			expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFields(
+					BlogsEntry.class.getName(), locale));
+
+		return infoDisplayFields;
 	}
 
 	@Override
@@ -63,10 +72,15 @@ public class BlogsEntryInfoDisplayContributor
 		infoDisplayFieldValues.putAll(
 			_assetEntryInfoDisplayFieldProvider.
 				getAssetEntryInfoDisplayFieldsValues(
-					getClassName(), blogsEntry.getEntryId(), locale));
+					BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+					locale));
 		infoDisplayFieldValues.putAll(
 			_infoDisplayFieldProvider.getContributorInfoDisplayFieldsValues(
-				getClassName(), blogsEntry, locale));
+				BlogsEntry.class.getName(), blogsEntry, locale));
+		infoDisplayFieldValues.putAll(
+			expandoInfoDisplayFieldProvider.
+				getContributorExpandoInfoDisplayFieldsValues(
+					BlogsEntry.class.getName(), blogsEntry, locale));
 
 		return infoDisplayFieldValues;
 	}
@@ -103,6 +117,9 @@ public class BlogsEntryInfoDisplayContributor
 	public String getInfoURLSeparator() {
 		return "/b/";
 	}
+
+	@Reference
+	protected ExpandoInfoDisplayFieldProvider expandoInfoDisplayFieldProvider;
 
 	@Reference
 	private AssetEntryInfoDisplayFieldProvider

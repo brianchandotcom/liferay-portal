@@ -45,7 +45,7 @@ components:
                     type: string
             required:
                 - confidenceLevel
-                - variants
+                - experimentVariants
             type: object
         ExperimentVariant:
             properties:

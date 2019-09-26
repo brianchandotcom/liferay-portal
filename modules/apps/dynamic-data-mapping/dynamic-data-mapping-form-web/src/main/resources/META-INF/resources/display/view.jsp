@@ -28,7 +28,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 			<liferay-ui:message key="select-an-existing-form-or-add-a-form-to-be-displayed-in-this-application" />
 		</div>
 	</c:when>
-	<c:when test="<%= !ddmFormDisplayContext.hasViewPermission() %>">
+	<c:when test="<%= !ddmFormDisplayContext.hasViewPermission() && !ddmFormDisplayContext.hasAddFormInstanceRecordPermission() %>">
 		<div class="ddm-form-basic-info">
 			<div class="container-fluid-1280">
 				<clay:alert

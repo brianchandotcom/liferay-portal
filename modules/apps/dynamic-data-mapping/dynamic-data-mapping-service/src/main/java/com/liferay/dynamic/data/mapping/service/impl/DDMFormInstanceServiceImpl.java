@@ -101,6 +101,13 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			return null;
 		}
 
+		if (_ddmFormInstanceModelResourcePermission.contains(
+				getPermissionChecker(), ddmFormInstance.getFormInstanceId(),
+				DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
+
+			return ddmFormInstance;
+		}
+
 		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstance.getFormInstanceId(),
 			ActionKeys.VIEW);
@@ -111,6 +118,14 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	@Override
 	public DDMFormInstance getFormInstance(long ddmFormInstanceId)
 		throws PortalException {
+
+		if (_ddmFormInstanceModelResourcePermission.contains(
+				getPermissionChecker(), ddmFormInstanceId,
+				DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
+
+			return ddmFormInstanceLocalService.getFormInstance(
+				ddmFormInstanceId);
+		}
 
 		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);

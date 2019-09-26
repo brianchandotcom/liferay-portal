@@ -161,11 +161,23 @@ const Collaborators = ({
 	);
 };
 
+const userShape = PropTypes.shape({
+	displayURL: PropTypes.string,
+	fullName: PropTypes.string.isRequired,
+	portraitURL: PropTypes.string,
+	userId: PropTypes.string.isRequired
+});
+
 Collaborators.propTypes = {
 	canManageCollaborators: PropTypes.bool,
 	classNameId: PropTypes.string,
 	classPK: PropTypes.string,
-	collaboratorsURL: PropTypes.string
+	collaboratorsResourceURL: PropTypes.string,
+	initialData: PropTypes.shape({
+		collaborators: PropTypes.arrayOf(userShape).isRequired,
+		owner: userShape.isRequired,
+		total: PropTypes.number.isRequired
+	}).isRequired
 };
 
 export default Collaborators;

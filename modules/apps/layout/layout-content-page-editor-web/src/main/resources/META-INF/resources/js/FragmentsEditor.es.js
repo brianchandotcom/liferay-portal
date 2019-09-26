@@ -25,6 +25,7 @@ import {
 	CLEAR_HOVERED_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from './utils/constants';
 import {getFragmentEntryLinkListElements} from './utils/FragmentsEditorGetUtils.es';
 import {INITIAL_STATE} from './store/state.es';
 import {
@@ -216,6 +217,9 @@ class FragmentsEditor extends Component {
 			targetItemType
 		} = FragmentsEditor._getTargetItemData(event);
 
+		let hoveredItemId = targetItemId;
+		let hoveredItemType = targetItemType;
+
 		document
 			.querySelectorAll(`.${HOVERED_ITEM_CLASS}`)
 			.forEach(hoveredItem => {
@@ -227,17 +231,37 @@ class FragmentsEditor extends Component {
 			targetItemType
 		);
 
-		if (targetItems.length > 0) {
+		if (targetItems.length === 0) {
+			const targetItemIsEditable =
+				targetItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable ||
+				targetItemType ===
+					FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable;
+
+			if (
+				targetItemIsEditable &&
+				!targetItems[0].classList.contains(
+					'fragments-editor__editable--highlighted'
+				)
+			) {
+				const fragment = getFragmentEntryLinkListElements(
+					targetItems[0].dataset.fragmentEntryLinkId,
+					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				)[0];
+
+				hoveredItemId = fragment.dataset.fragmentsEditorItemId;
+				hoveredItemType = FRAGMENTS_EDITOR_ITEM_TYPES.fragment;
+			}
+		} else if (targetItems.length > 1) {
 			targetItems.forEach(targetItem => {
 				targetItem.classList.add(ITEM_CLASS);
 				targetItem.classList.add(HOVERED_ITEM_CLASS);
 			});
 		}
 
-		if (targetItemId && targetItemType) {
+		if (hoveredItemId && hoveredItemType) {
 			this.store.dispatch({
-				hoveredItemId: targetItemId,
-				hoveredItemType: targetItemType,
+				hoveredItemId,
+				hoveredItemType,
 				type: UPDATE_HOVERED_ITEM
 			});
 		} else {

@@ -29,6 +29,5 @@
 	},
 	"ignore": [
 		"**/document_library/js/legacy/*.js"
-	],
-	"output": "classes/META-INF/resources"
+	]
 }

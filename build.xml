@@ -997,6 +997,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
 	</target>
 
+	<target name="setup-binaries-cache">
+		<setup-binaries-cache />
+	</target>
+
 	<target depends="setup-jrebel-properties" name="setup-jrebel">
 		<copy
 			file="tools/jrebel/rebel.xml_GLOBAL"

@@ -1624,18 +1624,18 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					<if>
 						<isset property="env.FIX_PACKS_RELEASE_ENVIRONMENT" />
 						<then>
-							<gradle-execute dir="${project.dir}/modules" task="removeHotfixQualifier">
+							<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="removeHotfixQualifier">
 								<arg value="--build-file=${project.dir}/modules/util.gradle" />
 							</gradle-execute>
 						</then>
 					</if>
 
-					<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
+					<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="setUpYarnOfflineCache">
 						<arg value="--build-file=${project.dir}/modules/util.gradle" />
 					</gradle-execute>
 
 					<retry retrycount="5" retrydelay="10000">
-						<gradle-execute dir="${project.dir}/modules" task=":yarnInstall">
+						<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task=":yarnInstall">
 							<arg if:set="build.binaries.cache.dir" value="-DyarnInstall.offline=true" />
 						</gradle-execute>
 					</retry>
@@ -1643,7 +1643,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					<if>
 						<isset property="env.FIX_PACKS_RELEASE_ENVIRONMENT" />
 						<then>
-							<gradle-execute dir="${project.dir}/modules" task="appendHotfixQualifier">
+							<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="appendHotfixQualifier">
 								<arg value="--build-file=${project.dir}/modules/util.gradle" />
 							</gradle-execute>
 						</then>

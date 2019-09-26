@@ -41,8 +41,7 @@ import java.util.stream.Stream;
 public class CollaboratorsUtil {
 
 	public static JSONObject getCollaboratorsJSONObject(
-			long classNameId, long classPK, ThemeDisplay themeDisplay)
-		throws Exception {
+		long classNameId, long classPK, ThemeDisplay themeDisplay) {
 
 		return JSONUtil.put(
 			"collaborators",
@@ -57,17 +56,22 @@ public class CollaboratorsUtil {
 		);
 	}
 
-	private static User _getOwner(long classNameId, long classPK)
-		throws PortalException {
-
+	private static User _getOwner(long classNameId, long classPK) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameId);
 
-		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
-			classPK);
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
 
-		return UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
+			return UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return null;
 	}
 
 	private static String _getPortraitURL(

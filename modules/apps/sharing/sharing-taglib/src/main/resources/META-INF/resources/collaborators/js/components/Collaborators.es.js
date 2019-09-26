@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {fetch} from 'frontend-js-web';
 
 import UserIcon from './UserIcon.es';
@@ -26,17 +26,10 @@ const Collaborators = ({
 	canManageCollaborators,
 	classNameId,
 	classPK,
-	collaboratorsResourceURL
+	collaboratorsResourceURL,
+	initialData
 }) => {
-	const [data, setData] = useState(null);
-
-	const updateCollaborators = useCallback(() => {
-		fetch(collaboratorsResourceURL)
-			.then(res => res.json())
-			.then(setData);
-	}, [collaboratorsResourceURL]);
-
-	useEffect(() => updateCollaborators(), [updateCollaborators]);
+	const [data, setData] = useState(initialData);
 
 	useEffect(() => {
 		Liferay.on('sharing:changed', event => {
@@ -44,10 +37,12 @@ const Collaborators = ({
 				classNameId === event.classNameId &&
 				event.classPK === classPK
 			) {
-				updateCollaborators();
+				fetch(collaboratorsResourceURL)
+					.then(res => res.json())
+					.then(setData);
 			}
 		});
-	}, [classNameId, classPK, updateCollaborators]);
+	}, [classNameId, classPK, collaboratorsResourceURL]);
 
 	if (!data) {
 		return <ClayLoadingIndicator />;

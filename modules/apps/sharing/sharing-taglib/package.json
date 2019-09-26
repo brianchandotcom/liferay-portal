@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"@clayui/icon": "3.0.0",
-		"@clayui/loading-indicator": "3.0.0",
 		"@clayui/sticker": "3.0.0",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

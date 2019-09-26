@@ -15,19 +15,11 @@
 package com.liferay.change.tracking.web.internal.constants;
 
 /**
- * @author Zoltan Csaszi
+ * @author Samuel Trong Tran
  */
-public interface CTWebKeys {
+public class CTProductNavigationControlMenuCategoryKeys {
 
-	public static final String CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT =
-		"CHANGE_LISTS_CONFIGURATION_DISPLAY_CONTEXT";
-
-	public static final String CHANGE_LISTS_DISPLAY_CONTEXT =
-		"CHANGE_LISTS_DISPLAY_CONTEXT";
-
-	public static final String CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT =
-		"CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT";
-
-	public static final String CT_COLLECTION = "CT_COLLECTION";
+	public static final String PRODUCT_NAVIGATION_CONTROL_MENU_CATEGORY =
+		"change_tracking";
 
 }

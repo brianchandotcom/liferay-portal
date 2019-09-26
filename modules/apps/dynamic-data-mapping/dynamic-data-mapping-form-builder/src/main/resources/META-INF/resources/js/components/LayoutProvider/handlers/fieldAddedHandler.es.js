@@ -18,7 +18,6 @@ import {
 	generateInstanceId,
 	getFieldProperties
 } from '../../../util/fieldSupport.es';
-import {generateFieldName} from '../util/fields.es';
 import {normalizeSettingsContextPages} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
@@ -28,8 +27,13 @@ const handleFieldAdded = (props, state, event) => {
 		indexes,
 		generateNameFromLabel = true
 	} = event;
-	const {defaultLanguageId, editingLanguageId, spritemap} = props;
-	let originalFieldName = fieldType.label;
+	const {
+		defaultLanguageId,
+		editingLanguageId,
+		fieldNameGenerator,
+		spritemap
+	} = props;
+	let desiredFieldName = fieldType.label;
 
 	if (!generateNameFromLabel) {
 		const {settingsContext} = fieldType;
@@ -37,12 +41,12 @@ const handleFieldAdded = (props, state, event) => {
 
 		visitor.mapFields(({fieldName, value}) => {
 			if (fieldName === 'name') {
-				originalFieldName = value;
+				desiredFieldName = value;
 			}
 		});
 	}
 
-	const newFieldName = generateFieldName(state.pages, originalFieldName);
+	const newFieldName = fieldNameGenerator(desiredFieldName);
 
 	const focusedField = {
 		...fieldType,

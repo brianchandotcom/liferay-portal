@@ -22,6 +22,7 @@ import {
 	RulesVisitor
 } from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import {setLocalizedValue} from '../../util/i18n.es';
+import {generateFieldName} from './util/fields.es';
 
 import handleColumnResized from './handlers/columnResizedHandler.es';
 import handleFieldAdded from './handlers/fieldAddedHandler.es';
@@ -305,6 +306,14 @@ class LayoutProvider extends Component {
 		];
 	}
 
+	_fieldNameGeneratorValueFn() {
+		return (desiredName, currentName) => {
+			const {pages} = this.state;
+
+			return generateFieldName(pages, desiredName, currentName);
+		};
+	}
+
 	_handleActivePageUpdated(activePage) {
 		this.setState({
 			activePage
@@ -364,24 +373,11 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldDuplicated(event) {
-		const {defaultLanguageId} = this.props;
-
-		this.setState(
-			handleFieldDuplicated(this.state, defaultLanguageId, event)
-		);
+		this.setState(handleFieldDuplicated(this.props, this.state, event));
 	}
 
 	_handleFieldEdited(properties) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-
-		this.setState(
-			handleFieldEdited(
-				this.state,
-				defaultLanguageId,
-				editingLanguageId,
-				properties
-			)
-		);
+		this.setState(handleFieldEdited(this.props, this.state, properties));
 	}
 
 	_handleFieldMoved(event) {
@@ -664,6 +660,15 @@ LayoutProvider.PROPS = {
 	 */
 
 	fieldActions: Config.array().valueFn('_fieldActionsValueFn'),
+
+	/**
+	 * @default _fieldNameGeneratorValueFn
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?function}
+	 */
+
+	fieldNameGenerator: Config.func().valueFn('_fieldNameGeneratorValueFn'),
 
 	/**
 	 * @default undefined

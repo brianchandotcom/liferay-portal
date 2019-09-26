@@ -13,11 +13,15 @@
  */
 
 import React, {useContext} from 'react';
+import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import FormViewContext from './FormViewContext.es';
 import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {DRAG_CUSTOM_OBJECT_FIELD} from '../../utils/dragTypes.es';
-import {UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD} from './actions.es';
+import {
+	dropCustomObjectField,
+	UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
+} from './actions.es';
 
 const getFieldTypes = ({
 	dataDefinition,
@@ -48,10 +52,10 @@ const getFieldTypes = ({
 };
 
 export default ({keywords}) => {
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(FormViewContext);
-	const {
-		dataDefinition: {dataDefinitionFields}
-	} = state;
+	const {dataDefinition} = state;
+	const {dataDefinitionFields} = dataDefinition;
 	const fieldTypes = getFieldTypes(state);
 	const onClick = ({name}) => {
 		const dataDefinitionField = dataDefinitionFields.find(
@@ -63,12 +67,32 @@ export default ({keywords}) => {
 			type: UPDATE_FOCUSED_CUSTOM_OBJECT_FIELD
 		});
 	};
+	const onDoubleClick = ({name}) => {
+		const {activePage, pages} = dataLayoutBuilder.getStore();
+
+		dataLayoutBuilder.dispatch(
+			'fieldAdded',
+			dropCustomObjectField({
+				addedToPlaceholder: true,
+				dataDefinition,
+				dataDefinitionFieldName: name,
+				dataLayoutBuilder,
+				generateNameFromLabel: false,
+				indexes: {
+					columnIndex: 0,
+					pageIndex: activePage,
+					rowIndex: pages[activePage].rows.length
+				}
+			})
+		);
+	};
 
 	return (
 		<FieldTypeList
 			fieldTypes={fieldTypes}
 			keywords={keywords}
 			onClick={onClick}
+			onDoubleClick={onDoubleClick}
 		/>
 	);
 };

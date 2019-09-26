@@ -277,7 +277,7 @@ renderResponse.setTitle(title);
 												for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 													boolean selected = false;
 
-													if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+													if ((workflowDefinitionLink != null) && Objects.equals(workflowDefinitionLink.getWorkflowDefinitionName(), workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
 														selected = true;
 													}
 												%>
@@ -327,7 +327,7 @@ renderResponse.setTitle(title);
 								for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 									boolean selected = false;
 
-									if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+									if ((workflowDefinitionLink != null) && Objects.equals(workflowDefinitionLink.getWorkflowDefinitionName(), workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
 										selected = true;
 									}
 								%>

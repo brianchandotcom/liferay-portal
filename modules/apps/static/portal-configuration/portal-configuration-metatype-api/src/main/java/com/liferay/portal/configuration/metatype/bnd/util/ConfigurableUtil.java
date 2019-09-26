@@ -20,6 +20,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Dictionary;
@@ -67,9 +68,15 @@ public class ConfigurableUtil {
 				byte[] snapshotClassData = _generateSnapshotClassData(
 					interfaceClass, snapshotClassName);
 
-				snapshotClass = (Class<T>)_defineClassMethod.invoke(
-					classLoader, snapshotClassName, snapshotClassData, 0,
-					snapshotClassData.length);
+				try {
+					snapshotClass = (Class<T>)_defineClassMethod.invoke(
+						classLoader, snapshotClassName, snapshotClassData, 0,
+						snapshotClassData.length);
+				}
+				catch (InvocationTargetException ite) {
+					snapshotClass = (Class<T>)classLoader.loadClass(
+						snapshotClassName);
+				}
 			}
 
 			Constructor<T> snapshotClassConstructor =

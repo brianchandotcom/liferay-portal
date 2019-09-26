@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -25,8 +26,11 @@ import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
+import java.lang.reflect.Field;
+
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.concurrent.FutureTask;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -90,6 +94,35 @@ public class ConfigurableUtilTest {
 				Collections.singletonMap(
 					"testReqiredString", "testReqiredString2")),
 			"testReqiredString2");
+	}
+
+	@Test
+	public void testCreateConfigurablewithDefinedSnapshotClass()
+		throws Exception {
+
+		FutureTask<Void> futureTask1 = _createFutureTask();
+
+		_startThread(futureTask1, "thread1");
+
+		futureTask1.get();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			ConfigurableUtil.class, "_findLoadedClassMethod");
+
+		Object value = field.get(null);
+
+		field.set(
+			null,
+			ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "findBootstrapClass", String.class));
+
+		FutureTask<Void> futureTask2 = _createFutureTask();
+
+		_startThread(futureTask2, "thread2");
+
+		futureTask2.get();
+
+		field.set(null, value);
 	}
 
 	@Test
@@ -159,6 +192,26 @@ public class ConfigurableUtilTest {
 		TestClass testClass = testConfiguration.testClass();
 
 		Assert.assertEquals("test.class", testClass.getName());
+	}
+
+	private FutureTask<Void> _createFutureTask() {
+		return new FutureTask<>(
+			() -> {
+				_assertTestConfiguration(
+					ConfigurableUtil.createConfigurable(
+						TestConfiguration.class,
+						Collections.singletonMap(
+							"testReqiredString", "testReqiredString")),
+					"testReqiredString");
+
+				return null;
+			});
+	}
+
+	private void _startThread(FutureTask<Void> futureTask, String threadName) {
+		Thread thread = new Thread(futureTask, threadName);
+
+		thread.start();
 	}
 
 	private void _testBigString(int length) {

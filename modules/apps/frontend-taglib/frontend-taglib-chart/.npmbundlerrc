@@ -193,6 +193,6 @@
 		],
 		"xss-filters": true
 	},
-	"output": "classes/META-INF/resources",
+	"output": "build/node/packageRunBuild/resources",
 	"preset": "liferay-npm-bundler-preset-standard"
 }

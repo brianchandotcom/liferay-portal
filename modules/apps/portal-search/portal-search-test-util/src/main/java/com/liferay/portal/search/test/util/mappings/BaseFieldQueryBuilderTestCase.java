@@ -117,6 +117,22 @@ public abstract class BaseFieldQueryBuilderTestCase
 			});
 	}
 
+	protected void assertSearchIgnoreRelevance(
+			String keywords, List<String> values)
+		throws Exception {
+
+		assertSearch(
+			indexingTestHelper -> {
+				prepareSearch(indexingTestHelper, keywords);
+
+				indexingTestHelper.search();
+
+				indexingTestHelper.verify(
+					hits -> DocumentsAssert.assertValuesIgnoreRelevance(
+						keywords, hits.getDocs(), getField(), values));
+			});
+	}
+
 	protected void assertSearchNoHits(String keywords) throws Exception {
 		_assertCount(keywords, 0);
 	}

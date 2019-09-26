@@ -1264,6 +1264,8 @@ definition {
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
 			siteName = "Site Name");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException");
 	}
 
 	@priority = "4"

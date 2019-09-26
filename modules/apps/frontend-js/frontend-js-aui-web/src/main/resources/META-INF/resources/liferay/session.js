@@ -89,8 +89,6 @@ AUI.add(
 					);
 				},
 
-				_cookieKey: 'LFR_SESSION_STATE_' + themeDisplay.getUserId(),
-
 				_defActivatedFn(event) {
 					var instance = this;
 
@@ -354,6 +352,9 @@ AUI.add(
 
 				initializer() {
 					var instance = this;
+
+					instance._cookieKey =
+						'LFR_SESSION_STATE_' + themeDisplay.getUserId();
 
 					instance._cookieOptions = {
 						path: '/',

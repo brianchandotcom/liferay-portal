@@ -76,6 +76,8 @@ definition {
 
 	@priority = "4"
 	test EditExportTemplate {
+		property test.name.skip.portal.instance = "ExportImport#EditExportTemplate";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -324,6 +326,8 @@ definition {
 	@description = "This is a use case for LPS-96391."
 	@priority = "5"
 	test ExportImportContentPageWithWCDOnFragment {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportContentPageWithWCDOnFragment";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONFragment.addFragmentCollection(
@@ -510,6 +514,8 @@ definition {
 
 	@priority = "4"
 	test ExportImportDeletions {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportDeletions";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",

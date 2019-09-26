@@ -34,7 +34,9 @@ describe('The time range filter should', () => {
 	beforeEach(() => {
 		const renderResult = render(
 			<MockRouter>
-				<ProcessStepContext.Provider value={{processSteps}}>
+				<ProcessStepContext.Provider
+					value={{getSelectedProcessSteps: jest.fn(), processSteps}}
+				>
 					<ProcessStepFilter />
 				</ProcessStepContext.Provider>
 			</MockRouter>

@@ -16,6 +16,7 @@ import {
 	useProcessStep
 } from '../../../../../src/main/resources/META-INF/resources/js/components/process-metrics/filter/store/ProcessStepStore.es';
 import React, {useContext} from 'react';
+import {ErrorContext} from '../../../../../src/main/resources/META-INF/resources/js/shared/components/request/Error.es';
 import {MockRouter} from '../../../../mock/MockRouter.es';
 import {renderHook} from '@testing-library/react-hooks';
 import Request from '../../../../../src/main/resources/META-INF/resources/js/shared/components/request/Request.es';
@@ -130,6 +131,54 @@ describe('The process step store, when receiving "Review" and "Update" items, sh
 });
 
 describe('The time range store, when receiving no items, should', () => {
+	test('Call "setError" function when request fails', () => {
+		const setError = jest.fn();
+
+		const MockErrorContext = ({children}) => (
+			<MockAppContext>
+				<ErrorContext.Provider value={{setError}}>
+					{children}
+				</ErrorContext.Provider>
+			</MockAppContext>
+		);
+
+		clientMock.get.mockRejectedValueOnce(new Error('request-failure'));
+
+		const {unmount} = renderHook(
+			({processStepKeys}) => useProcessStep(12345, processStepKeys),
+			{
+				initialProps: {
+					processStepKeys: ['review']
+				},
+				wrapper: MockErrorContext
+			}
+		);
+
+		expect(setError).toBeCalled();
+
+		unmount();
+	});
+
+	test('Have "All Steps" item on processSteps array, when "withAllSteps" is true', async () => {
+		clientMock.get.mockResolvedValueOnce({data: {items: []}});
+
+		const {result, waitForNextUpdate, unmount} = renderHook(
+			({processStepKeys}) => useProcessStep(12345, processStepKeys, true),
+			{
+				initialProps: {
+					processStepKeys: []
+				},
+				wrapper: MockAppContext
+			}
+		);
+
+		await waitForNextUpdate();
+
+		expect(result.current.processSteps[0].key).toBe('allSteps');
+
+		unmount();
+	});
+
 	test('Have no items on processSteps array', async () => {
 		clientMock.get.mockResolvedValueOnce({data: {items: []}});
 

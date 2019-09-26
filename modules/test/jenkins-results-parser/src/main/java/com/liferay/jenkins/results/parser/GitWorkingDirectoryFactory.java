@@ -34,28 +34,26 @@ public class GitWorkingDirectoryFactory {
 				"Git repository directory and Git repository name are null");
 		}
 
+		String gitRepositoryDirName = gitRepositoryName;
+
 		if (gitRepositoryDir == null) {
 			if (gitRepositoryName.equals("liferay-portal") &&
 				!upstreamBranchName.equals("master")) {
 
 				gitRepositoryName += "-ee";
 
-				gitRepositoryDir = new File(
-					JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-					"liferay-portal-" + upstreamBranchName);
+				gitRepositoryDirName = "liferay-portal-" + upstreamBranchName;
 			}
 
 			if (gitRepositoryName.startsWith("com-liferay-") &&
 				!gitRepositoryName.endsWith("-private")) {
 
-				gitRepositoryDir = new File(
-					JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-					gitRepositoryName + "-private");
+				gitRepositoryDirName = gitRepositoryName + "-private";
 			}
 
 			gitRepositoryDir = new File(
 				JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
-				gitRepositoryName);
+				gitRepositoryDirName);
 		}
 
 		if (!gitRepositoryDir.exists()) {
@@ -74,7 +72,7 @@ public class GitWorkingDirectoryFactory {
 				return _gitWorkingDirectories.get(key);
 			}
 
-			String gitRepositoryDirName = gitRepositoryDir.getName();
+			gitRepositoryDirName = gitRepositoryDir.getName();
 
 			GitWorkingDirectory gitWorkingDirectory = null;
 

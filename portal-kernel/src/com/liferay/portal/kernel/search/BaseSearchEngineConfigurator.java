@@ -202,11 +202,15 @@ public abstract class BaseSearchEngineConfigurator
 	protected void destroySearchEngine(
 		SearchEngineRegistration searchEngineRegistration) {
 
-		_messageBus.removeDestination(
-			searchEngineRegistration.getSearchReaderDestinationName());
+		Destination searchReaderDestination = getSearchReaderDestination(
+			_messageBus, searchEngineRegistration.getSearchEngineId());
 
-		_messageBus.removeDestination(
-			searchEngineRegistration.getSearchWriterDestinationName());
+		searchReaderDestination.unregisterMessageListeners();
+
+		Destination searchWriterDestination = getSearchWriterDestination(
+			_messageBus, searchEngineRegistration.getSearchEngineId());
+
+		searchWriterDestination.unregisterMessageListeners();
 
 		SearchEngineHelper searchEngineHelper = getSearchEngineHelper();
 
@@ -214,21 +218,21 @@ public abstract class BaseSearchEngineConfigurator
 			searchEngineRegistration.getSearchEngineId());
 
 		if (!searchEngineRegistration.isOverride()) {
+			_messageBus.removeDestination(
+				searchEngineRegistration.getSearchReaderDestinationName());
+
+			_messageBus.removeDestination(
+				searchEngineRegistration.getSearchWriterDestinationName());
+
 			return;
 		}
 
 		SearchEngineProxyWrapper originalSearchEngineProxy =
 			searchEngineRegistration.getOriginalSearchEngineProxyWrapper();
 
-		Destination searchReaderDestination = getSearchReaderDestination(
-			_messageBus, searchEngineRegistration.getSearchEngineId());
-
 		registerInvokerMessageListener(
 			searchReaderDestination,
 			searchEngineRegistration.getOriginalSearchReaderMessageListeners());
-
-		Destination searchWriterDestination = getSearchWriterDestination(
-			_messageBus, searchEngineRegistration.getSearchEngineId());
 
 		registerInvokerMessageListener(
 			searchWriterDestination,
@@ -352,17 +356,8 @@ public abstract class BaseSearchEngineConfigurator
 				searchReaderDestination, searchWriterDestination,
 				searchEngineRegistration);
 
-			_messageBus.removeDestination(
-				searchReaderDestination.getName(), false);
-
-			searchReaderDestination = getSearchReaderDestination(
-				_messageBus, searchEngineId);
-
-			_messageBus.removeDestination(
-				searchWriterDestination.getName(), false);
-
-			searchWriterDestination = getSearchWriterDestination(
-				_messageBus, searchEngineId);
+			searchReaderDestination.unregisterMessageListeners();
+			searchWriterDestination.unregisterMessageListeners();
 		}
 
 		createSearchEngineListeners(

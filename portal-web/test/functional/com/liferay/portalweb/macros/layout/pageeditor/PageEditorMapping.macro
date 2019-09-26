@@ -11,7 +11,40 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
+		if (isSet(imageFrament)) {
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
+	}
+
+	macro mapEditableFieldToAsset {
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN");
+
+		Click(
+			key_assetField = "${assetField}",
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_DROPDOWN_ASSET");
+
+		if (isSet(webContentTitle)) {
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			AssertClick(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "Link#WEB_CONTENT_ARTICLE",
+				value1 = "${webContentTitle}");
+
+			SelectFrameTop();
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Image");
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro mapEditableTextToField {

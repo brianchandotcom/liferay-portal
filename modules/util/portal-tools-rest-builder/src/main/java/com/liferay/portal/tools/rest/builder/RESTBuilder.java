@@ -1548,6 +1548,30 @@ public class RESTBuilder {
 					System.out.println(sb.toString());
 				}
 			}
+
+			if (schema.getRequiredPropertySchemaNames() == null) {
+				continue;
+			}
+
+			List<String> requiredPropertySchemaNames =
+				schema.getRequiredPropertySchemaNames();
+
+			Set<String> propertySchemaNames = propertySchemas.keySet();
+
+			for (String requiredPropertySchemaName :
+					requiredPropertySchemaNames) {
+
+				if (!propertySchemaNames.contains(requiredPropertySchemaName)) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("The required property \"");
+					sb.append(requiredPropertySchemaName);
+					sb.append("\" is not defined in ");
+					sb.append(entry1.getKey());
+
+					System.out.println(sb.toString());
+				}
+			}
 		}
 	}
 

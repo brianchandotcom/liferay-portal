@@ -13,10 +13,10 @@
  */
 
 export function containsField(dataLayoutPages, fieldName) {
-	return dataLayoutPages.some(({dataLayoutRows}) => {
-		return dataLayoutRows.some(({dataLayoutColumns}) => {
-			return dataLayoutColumns.some(({fieldNames}) => {
-				return fieldNames.some(name => name === fieldName);
+	return (dataLayoutPages || []).some(({dataLayoutRows}) => {
+		return (dataLayoutRows || []).some(({dataLayoutColumns}) => {
+			return (dataLayoutColumns || []).some(({fieldNames}) => {
+				return (fieldNames || []).some(name => name === fieldName);
 			});
 		});
 	});

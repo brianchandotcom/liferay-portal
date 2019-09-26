@@ -14,7 +14,7 @@ import React from 'react';
 
 export default class AlertMessage extends React.Component {
 	render() {
-		const {children, iconName, type = 'danger'} = this.props;
+		const {children, className, iconName, type = 'danger'} = this.props;
 		let typeText = Liferay.Language.get('warning');
 
 		if (type === 'danger') {
@@ -24,7 +24,7 @@ export default class AlertMessage extends React.Component {
 		return (
 			<div className="container-fluid-1280">
 				<div
-					className={`alert alert-dismissible alert-${type}`}
+					className={`alert alert-dismissible alert-${type} ${className}`}
 					role="alert"
 				>
 					<span className="alert-indicator">

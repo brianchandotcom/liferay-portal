@@ -24,6 +24,7 @@ import React from 'react';
 import {sub} from '../../shared/util/lang.es';
 import Tabs from '../../shared/components/tabs/Tabs.es';
 import {withParams} from '../../shared/components/router/routerUtil.es';
+import WorkloadByAssigneeCard from './workload-by-assignee/WorkloadByAssigneeCard.es';
 import WorkloadByStepCard from './workload-by-step/WorkloadByStepCard.es';
 
 class ProcessMetrics extends React.Component {
@@ -118,7 +119,7 @@ class ProcessMetrics extends React.Component {
 				<Tabs tabs={[dashboardTab, performanceTab]} />
 
 				{!!blockedSLACount && (
-					<AlertMessage iconName="exclamation-full">
+					<AlertMessage className="mb-0" iconName="exclamation-full">
 						<>
 							{`${sub(blockedSLAText, [
 								blockedSLACount
@@ -138,7 +139,11 @@ class ProcessMetrics extends React.Component {
 				)}
 
 				{slaCount === 0 && (
-					<AlertMessage iconName="warning-full" type="warning">
+					<AlertMessage
+						className="mb-0"
+						iconName="warning-full"
+						type="warning"
+					>
 						<>
 							{`${Liferay.Language.get(
 								'no-slas-are-defined-for-this-process'
@@ -167,10 +172,7 @@ class ProcessMetrics extends React.Component {
 						<Route
 							exact
 							path={dashboardTab.path}
-							render={withParams(
-								PendingItemsCard,
-								WorkloadByStepCard
-							)}
+							render={withParams(DashboardTab)}
 						/>
 
 						<Route
@@ -188,6 +190,24 @@ class ProcessMetrics extends React.Component {
 		);
 	}
 }
+
+const DashboardTab = props => {
+	return (
+		<div className="container-fluid-1280">
+			<div className="row">
+				<div className="col-md-9 p-0">
+					<PendingItemsCard {...props} />
+
+					<WorkloadByStepCard {...props} />
+				</div>
+
+				<div className="col-md-3 p-0">
+					<WorkloadByAssigneeCard {...props} />
+				</div>
+			</div>
+		</div>
+	);
+};
 
 ProcessMetrics.contextType = AppContext;
 export default ProcessMetrics;

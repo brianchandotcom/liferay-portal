@@ -167,6 +167,12 @@ definition {
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 	}
 
+	macro clickConfigurableField {
+		Click(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#CONFIGURABLE_FIELD");
+	}
+
 	macro clickDiscardDraft {
 		Button.clickNoError(button = "Discard Draft");
 
@@ -190,6 +196,44 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
 
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
+	}
+
+	macro configureFragment {
+		if (isSet(align)) {
+			Select(
+				key_fieldLabel = "Align",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${align}");
+		}
+
+		if (isSet(headingLevel)) {
+			Select(
+				key_fieldLabel = "Heading Level",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${headingLevel}");
+		}
+
+		if (isSet(size)) {
+			Select(
+				key_fieldLabel = "Size",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${size}");
+		}
+
+		if (isSet(textColor)) {
+			Click(
+				key_paletteItem = "${textColor}",
+				locator1 = "Button#PALETTE_ITEM");
+		}
+
+		if (isSet(type)) {
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${type}");
+		}
+
+		PageEditor.waitForAutoSave();
 	}
 
 	macro deleteComment {
@@ -346,6 +390,30 @@ definition {
 			locator1 = "Fragment#FRAGMENT");
 
 		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
+	}
+
+	macro gotoConfigurate {
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		Click(
+			key_text = "${fragmentName}",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
+	}
+
+	macro gotoDuplicate {
+		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
+
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		Click(
+			key_text = "${fragmentName}",
+			locator1 = "Button#ANY");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_DUPLICATE_BUTTON");
 	}
 
 	macro gotoEditableFieldEdit {
@@ -535,6 +603,12 @@ definition {
 			value1 = "${user}");
 	}
 
+	macro viewDuplicateFragment {
+		AssertElementPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER_2");
+	}
+
 	macro viewEditorEmpty {
 		AssertElementPresent(locator1 = "PageEditor#EMPTY_MESSAGE");
 	}
@@ -558,6 +632,43 @@ definition {
 			key_fragmentName = "${fragmentName}",
 			key_position = "${position}",
 			locator1 = "Fragment#FRAGMENT_HEADER_POSITION");
+	}
+
+	macro viewFragmentStyle {
+		if (isSet(align)) {
+			AssertElementPresent(
+				key_align = "${align}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_ALIGN");
+		}
+
+		if (isSet(headingLevel)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_headingLevel = "${headingLevel}",
+				locator1 = "Fragment#FRAGMENT_HEADING_LEVEL_H2");
+		}
+
+		if (isSet(size)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_size = "${size}",
+				locator1 = "Fragment#FRAGMENT_SIZE");
+		}
+
+		if (isSet(textColor)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_textColor = "${textColor}",
+				locator1 = "Fragment#FRAGMENT_TEXT_COLOR");
+		}
+
+		if (isSet(type)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_type = "${type}",
+				locator1 = "Fragment#FRAGMENT_TYPE");
+		}
 	}
 
 	macro waitForAutoSave {

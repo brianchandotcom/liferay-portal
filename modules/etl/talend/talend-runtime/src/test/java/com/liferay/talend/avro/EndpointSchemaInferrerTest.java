@@ -132,6 +132,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._long()));
 
 		field = schema.getField("subscriptionConfiguration_numberOfLength");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
@@ -163,6 +164,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("taxConfiguration_taxCategory");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
@@ -170,6 +172,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("description");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
@@ -177,6 +180,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("expando");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
@@ -184,6 +188,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("categories");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
@@ -205,6 +210,7 @@ public class EndpointSchemaInferrerTest extends BaseTest {
 			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
 
 		field = schema.getField("subscriptionConfiguration_enable");
+
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(

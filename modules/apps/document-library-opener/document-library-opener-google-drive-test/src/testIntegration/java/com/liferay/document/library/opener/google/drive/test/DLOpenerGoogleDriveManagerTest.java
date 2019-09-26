@@ -64,6 +64,7 @@ public class DLOpenerGoogleDriveManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+
 		_user = UserTestUtil.addUser(_company);
 	}
 

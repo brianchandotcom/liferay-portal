@@ -49,6 +49,7 @@ public class AMImageMimeTypeProviderImpl implements AMImageMimeTypeProvider {
 	protected void activate(Map<String, Object> properties) {
 		_amImageConfiguration = ConfigurableUtil.createConfigurable(
 			AMImageConfiguration.class, properties);
+
 		_supportedMimeTypes = new HashSet<>(
 			Arrays.asList(_amImageConfiguration.supportedMimeTypes()));
 	}

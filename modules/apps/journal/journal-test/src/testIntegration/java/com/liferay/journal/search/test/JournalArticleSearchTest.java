@@ -347,6 +347,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		searchContext.setAttribute(Field.CONTENT, "some");
 
 		hits = indexer.search(searchContext);
+
 		documents = hits.getDocs();
 
 		Assert.assertEquals(

@@ -79,6 +79,7 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
 		_user = UserTestUtil.addUser(_group.getGroupId());
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());

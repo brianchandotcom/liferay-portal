@@ -18,8 +18,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
+import com.liferay.document.library.opener.onedrive.web.internal.exception.mapper.GraphServiceExceptionPortalExceptionMapper;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
@@ -35,29 +37,40 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import com.microsoft.graph.concurrency.ChunkedUploadProvider;
 import com.microsoft.graph.concurrency.IProgressCallback;
 import com.microsoft.graph.core.ClientException;
 import com.microsoft.graph.core.DefaultClientConfig;
 import com.microsoft.graph.http.CustomRequest;
+import com.microsoft.graph.http.GraphServiceException;
 import com.microsoft.graph.models.extensions.DriveItem;
 import com.microsoft.graph.models.extensions.DriveItemUploadableProperties;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import com.microsoft.graph.requests.extensions.IDriveItemCreateUploadSessionRequest;
+import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,12 +106,15 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
+		Locale locale = (Locale)taskContextMap.getOrDefault(
+			OneDriveBackgroundTaskConstants.LOCALE, LocaleUtil.getDefault());
 		long fileEntryId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID));
 		long userId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.USER_ID));
 
-		_uploadFile(userId, _dlAppLocalService.getFileEntry(fileEntryId));
+		_uploadFile(
+			locale, userId, _dlAppLocalService.getFileEntry(fileEntryId));
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -130,6 +146,14 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 
 		return StringPool.BLANK;
 	}
+
+	@Reference
+	protected Language language;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	protected ResourceBundleLoader resourceBundleLoader;
 
 	private IProgressCallback _createIProgressCallback(FileEntry fileEntry) {
 		return new IProgressCallback<DriveItem>() {
@@ -184,7 +208,14 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			message);
 	}
 
-	private void _uploadFile(long userId, FileEntry fileEntry)
+	private String _translate(Locale locale, String key) {
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		return language.get(resourceBundle, key);
+	}
+
+	private void _uploadFile(Locale locale, long userId, FileEntry fileEntry)
 		throws PortalException {
 
 		AccessToken accessToken = _getAccessToken(
@@ -244,6 +275,37 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 				_sendStatusMessage(
 					OneDriveBackgroundTaskConstants.PORTAL_END, fileEntry,
 					BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
+		}
+		else if (Objects.equals(
+					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
+					fileEntry.getMimeType())) {
+
+			IDriveItemStreamRequest iDriveItemStreamRequest =
+				iGraphServiceClientBuilder.me(
+				).drive(
+				).items(
+					jsonPrimitive.getAsString()
+				).content(
+				).buildRequest();
+
+			try (ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream();
+				XSSFWorkbook xssfWorkbook = new XSSFWorkbook()) {
+
+				xssfWorkbook.createSheet(
+					_translate(locale, "onedrive-excel-sheet"));
+
+				xssfWorkbook.write(byteArrayOutputStream);
+
+				iDriveItemStreamRequest.put(
+					byteArrayOutputStream.toByteArray());
+			}
+			catch (GraphServiceException gse) {
+				throw GraphServiceExceptionPortalExceptionMapper.map(gse);
 			}
 			catch (IOException ioe) {
 				throw new PortalException(ioe);

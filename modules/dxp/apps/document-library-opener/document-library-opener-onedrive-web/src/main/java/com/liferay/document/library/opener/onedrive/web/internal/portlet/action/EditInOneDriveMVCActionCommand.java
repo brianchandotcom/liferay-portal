@@ -111,7 +111,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 
 		return dlOpenerOneDriveManager.checkOut(
-			serviceContext.getUserId(), dlAppService.getFileEntry(fileEntryId));
+			serviceContext.getLocale(), serviceContext.getUserId(),
+			dlAppService.getFileEntry(fileEntryId));
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)

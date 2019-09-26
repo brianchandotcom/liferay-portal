@@ -16,7 +16,6 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
@@ -25,7 +24,6 @@ import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Con
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2ControllerFactory;
 import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.OneDriveURLUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -46,18 +44,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,33 +123,16 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		String sourceFileName = uniqueTitle + mimeTypeExtension;
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		if (Objects.equals(DLOpenerMimeTypes.APPLICATION_VND_XLSX, mimeType)) {
-			try (XSSFWorkbook xssfWorkbook = new XSSFWorkbook()) {
-				xssfWorkbook.createSheet(
-					_translate(locale, "onedrive-excel-sheet"));
-
-				xssfWorkbook.write(byteArrayOutputStream);
-			}
-			catch (IOException ioe) {
-				throw new PortalException(ioe);
-			}
-		}
-
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
-		FileEntry fileEntry = _runWithDLProcessorDisabled(
-			() -> dlAppService.addFileEntry(
-				repositoryId, folderId, sourceFileName, mimeType, uniqueTitle,
-				StringPool.BLANK, StringPool.BLANK,
-				byteArrayOutputStream.toByteArray(), serviceContext));
+		FileEntry fileEntry = dlAppService.addFileEntry(
+			repositoryId, folderId, sourceFileName, mimeType, uniqueTitle,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], serviceContext);
 
 		dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		return dlOpenerOneDriveManager.createFile(userId, fileEntry);
+		return dlOpenerOneDriveManager.createFile(locale, userId, fileEntry);
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)
@@ -221,22 +196,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			"/document_library/create_in_office365_and_redirect");
 
 		return liferayPortletURL.toString();
-	}
-
-	private <T, E extends Throwable> T _runWithDLProcessorDisabled(
-			UnsafeSupplier<T, E> unsafeSupplier)
-		throws E {
-
-		boolean enabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			return unsafeSupplier.get();
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(enabled);
-		}
 	}
 
 	private String _translate(Locale locale, String key) {

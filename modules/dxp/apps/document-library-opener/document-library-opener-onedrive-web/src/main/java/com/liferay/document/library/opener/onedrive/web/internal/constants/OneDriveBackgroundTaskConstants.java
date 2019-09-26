@@ -31,6 +31,13 @@ public class OneDriveBackgroundTaskConstants {
 	public static final String FILE_ENTRY_ID = "fileEntryId";
 
 	/**
+	 * Provides the ID of the locale used in this background task.
+	 *
+	 * @review
+	 */
+	public static final String LOCALE = "locale";
+
+	/**
 	 * Indicates the phase of the upload process. There are two possible values:
 	 *
 	 * <ul>

@@ -60,6 +60,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -73,10 +74,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DLOpenerOneDriveManager {
 
 	public DLOpenerOneDriveFileReference checkOut(
-			long userId, FileEntry fileEntry)
+			Locale locale, long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		BackgroundTask backgroundTask = _addBackgroundTask(fileEntry, userId);
+		BackgroundTask backgroundTask = _addBackgroundTask(
+			locale, fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -92,10 +94,11 @@ public class DLOpenerOneDriveManager {
 	}
 
 	public DLOpenerOneDriveFileReference createFile(
-			long userId, FileEntry fileEntry)
+			Locale locale, long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		BackgroundTask backgroundTask = _addBackgroundTask(fileEntry, userId);
+		BackgroundTask backgroundTask = _addBackgroundTask(
+			locale, fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -258,7 +261,8 @@ public class DLOpenerOneDriveManager {
 			() -> _getContentFile(userId, fileEntry));
 	}
 
-	private BackgroundTask _addBackgroundTask(FileEntry fileEntry, long userId)
+	private BackgroundTask _addBackgroundTask(
+			Locale locale, FileEntry fileEntry, long userId)
 		throws PortalException {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>(3);
@@ -268,6 +272,7 @@ public class DLOpenerOneDriveManager {
 		taskContextMap.put(
 			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
 			fileEntry.getFileEntryId());
+		taskContextMap.put(OneDriveBackgroundTaskConstants.LOCALE, locale);
 		taskContextMap.put(OneDriveBackgroundTaskConstants.USER_ID, userId);
 
 		return _backgroundTaskManager.addBackgroundTask(

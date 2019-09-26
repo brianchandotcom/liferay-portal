@@ -63,10 +63,10 @@ public class BlogsEntryModelVisibilityContributor
 		return false;
 	}
 
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryModelVisibilityContributor.class);
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

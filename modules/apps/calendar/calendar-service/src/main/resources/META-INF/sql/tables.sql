@@ -1,4 +1,5 @@
 create table Calendar (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	calendarId LONG not null primary key,
 	groupId LONG,
@@ -19,6 +20,7 @@ create table Calendar (
 );
 
 create table CalendarBooking (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	calendarBookingId LONG not null primary key,
 	groupId LONG,
@@ -51,6 +53,7 @@ create table CalendarBooking (
 );
 
 create table CalendarNotificationTemplate (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	calendarNotificationTemplateId LONG not null primary key,
 	groupId LONG,
@@ -69,6 +72,7 @@ create table CalendarNotificationTemplate (
 );
 
 create table CalendarResource (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	calendarResourceId LONG not null primary key,
 	groupId LONG,

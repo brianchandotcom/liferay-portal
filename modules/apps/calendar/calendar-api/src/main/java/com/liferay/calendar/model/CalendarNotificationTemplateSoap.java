@@ -34,6 +34,7 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		CalendarNotificationTemplateSoap soapModel =
 			new CalendarNotificationTemplateSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCalendarNotificationTemplateId(
 			model.getCalendarNotificationTemplateId());
@@ -112,6 +113,14 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCalendarNotificationTemplateId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -236,6 +245,7 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;

@@ -16,6 +16,7 @@ package com.liferay.calendar.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarNotificationTemplateModel
-	extends BaseModel<CalendarNotificationTemplate>, ShardedModel,
+	extends BaseModel<CalendarNotificationTemplate>, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
 	/**
@@ -58,6 +59,22 @@ public interface CalendarNotificationTemplateModel
 	 * @param primaryKey the primary key of this calendar notification template
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this calendar notification template.
+	 *
+	 * @return the mvcc version of this calendar notification template
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this calendar notification template.
+	 *
+	 * @param mvccVersion the mvcc version of this calendar notification template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this calendar notification template.

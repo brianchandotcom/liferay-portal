@@ -85,11 +85,12 @@ public class CalendarBookingModelImpl
 	public static final String TABLE_NAME = "CalendarBooking";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"calendarBookingId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"calendarId", Types.BIGINT}, {"calendarResourceId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"calendarBookingId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"calendarId", Types.BIGINT},
+		{"calendarResourceId", Types.BIGINT},
 		{"parentCalendarBookingId", Types.BIGINT},
 		{"recurringCalendarBookingId", Types.BIGINT},
 		{"vEventUid", Types.VARCHAR}, {"title", Types.VARCHAR},
@@ -107,6 +108,7 @@ public class CalendarBookingModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarBookingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -139,7 +141,7 @@ public class CalendarBookingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CalendarBooking (uuid_ VARCHAR(75) null,calendarBookingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,calendarResourceId LONG,parentCalendarBookingId LONG,recurringCalendarBookingId LONG,vEventUid VARCHAR(255) null,title STRING null,description TEXT null,location STRING null,startTime LONG,endTime LONG,allDay BOOLEAN,recurrence STRING null,firstReminder LONG,firstReminderType VARCHAR(75) null,secondReminder LONG,secondReminderType VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CalendarBooking (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,calendarBookingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,calendarResourceId LONG,parentCalendarBookingId LONG,recurringCalendarBookingId LONG,vEventUid VARCHAR(255) null,title STRING null,description TEXT null,location STRING null,startTime LONG,endTime LONG,allDay BOOLEAN,recurrence STRING null,firstReminder LONG,firstReminderType VARCHAR(75) null,secondReminder LONG,secondReminderType VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CalendarBooking";
 
@@ -198,6 +200,7 @@ public class CalendarBookingModelImpl
 
 		CalendarBooking model = new CalendarBookingImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarBookingId(soapModel.getCalendarBookingId());
 		model.setGroupId(soapModel.getGroupId());
@@ -382,6 +385,11 @@ public class CalendarBookingModelImpl
 		Map<String, BiConsumer<CalendarBooking, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CalendarBooking, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", CalendarBooking::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<CalendarBooking, Long>)CalendarBooking::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CalendarBooking::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -539,6 +547,17 @@ public class CalendarBookingModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1598,6 +1617,7 @@ public class CalendarBookingModelImpl
 	public Object clone() {
 		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
 
+		calendarBookingImpl.setMvccVersion(getMvccVersion());
 		calendarBookingImpl.setUuid(getUuid());
 		calendarBookingImpl.setCalendarBookingId(getCalendarBookingId());
 		calendarBookingImpl.setGroupId(getGroupId());
@@ -1752,6 +1772,8 @@ public class CalendarBookingModelImpl
 	public CacheModel<CalendarBooking> toCacheModel() {
 		CalendarBookingCacheModel calendarBookingCacheModel =
 			new CalendarBookingCacheModel();
+
+		calendarBookingCacheModel.mvccVersion = getMvccVersion();
 
 		calendarBookingCacheModel.uuid = getUuid();
 
@@ -1981,6 +2003,7 @@ public class CalendarBookingModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _calendarBookingId;

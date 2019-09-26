@@ -124,6 +124,8 @@ public class CalendarPersistenceTest {
 
 		Calendar newCalendar = _persistence.create(pk);
 
+		newCalendar.setMvccVersion(RandomTestUtil.nextLong());
+
 		newCalendar.setUuid(RandomTestUtil.randomString());
 
 		newCalendar.setGroupId(RandomTestUtil.nextLong());
@@ -161,6 +163,8 @@ public class CalendarPersistenceTest {
 		Calendar existingCalendar = _persistence.findByPrimaryKey(
 			newCalendar.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingCalendar.getMvccVersion(), newCalendar.getMvccVersion());
 		Assert.assertEquals(existingCalendar.getUuid(), newCalendar.getUuid());
 		Assert.assertEquals(
 			existingCalendar.getCalendarId(), newCalendar.getCalendarId());
@@ -270,12 +274,13 @@ public class CalendarPersistenceTest {
 
 	protected OrderByComparator<Calendar> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Calendar", "uuid", true, "calendarId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "calendarResourceId", true, "name",
-			true, "description", true, "timeZoneId", true, "color", true,
-			"defaultCalendar", true, "enableComments", true, "enableRatings",
-			true, "lastPublishDate", true);
+			"Calendar", "mvccVersion", true, "uuid", true, "calendarId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"calendarResourceId", true, "name", true, "description", true,
+			"timeZoneId", true, "color", true, "defaultCalendar", true,
+			"enableComments", true, "enableRatings", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -509,6 +514,8 @@ public class CalendarPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		Calendar calendar = _persistence.create(pk);
+
+		calendar.setMvccVersion(RandomTestUtil.nextLong());
 
 		calendar.setUuid(RandomTestUtil.randomString());
 

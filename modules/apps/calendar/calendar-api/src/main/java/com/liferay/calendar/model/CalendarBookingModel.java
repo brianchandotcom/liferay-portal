@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -43,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CalendarBookingModel
-	extends BaseModel<CalendarBooking>, LocalizedModel, ShardedModel,
+	extends BaseModel<CalendarBooking>, LocalizedModel, MVCCModel, ShardedModel,
 			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/**
@@ -65,6 +66,22 @@ public interface CalendarBookingModel
 	 * @param primaryKey the primary key of this calendar booking
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this calendar booking.
+	 *
+	 * @return the mvcc version of this calendar booking
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this calendar booking.
+	 *
+	 * @param mvccVersion the mvcc version of this calendar booking
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this calendar booking.

@@ -31,6 +31,7 @@ public class CalendarBookingSoap implements Serializable {
 	public static CalendarBookingSoap toSoapModel(CalendarBooking model) {
 		CalendarBookingSoap soapModel = new CalendarBookingSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCalendarBookingId(model.getCalendarBookingId());
 		soapModel.setGroupId(model.getGroupId());
@@ -119,6 +120,14 @@ public class CalendarBookingSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCalendarBookingId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -357,6 +366,7 @@ public class CalendarBookingSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _calendarBookingId;
 	private long _groupId;

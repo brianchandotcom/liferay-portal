@@ -18,6 +18,7 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class CalendarBookingCacheModel
-	implements CacheModel<CalendarBooking>, Externalizable {
+	implements CacheModel<CalendarBooking>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,10 @@ public class CalendarBookingCacheModel
 		CalendarBookingCacheModel calendarBookingCacheModel =
 			(CalendarBookingCacheModel)obj;
 
-		if (calendarBookingId == calendarBookingCacheModel.calendarBookingId) {
+		if ((calendarBookingId ==
+				calendarBookingCacheModel.calendarBookingId) &&
+			(mvccVersion == calendarBookingCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +61,28 @@ public class CalendarBookingCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, calendarBookingId);
+		int hashCode = HashUtil.hash(0, calendarBookingId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", calendarBookingId=");
 		sb.append(calendarBookingId);
@@ -130,6 +148,8 @@ public class CalendarBookingCacheModel
 	@Override
 	public CalendarBooking toEntityModel() {
 		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
+
+		calendarBookingImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			calendarBookingImpl.setUuid("");
@@ -258,6 +278,7 @@ public class CalendarBookingCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		calendarBookingId = objectInput.readLong();
@@ -306,6 +327,8 @@ public class CalendarBookingCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -414,6 +437,7 @@ public class CalendarBookingCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long calendarBookingId;
 	public long groupId;

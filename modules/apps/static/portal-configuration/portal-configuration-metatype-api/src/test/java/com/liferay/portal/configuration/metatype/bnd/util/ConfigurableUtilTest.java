@@ -98,9 +98,6 @@ public class ConfigurableUtilTest {
 
 		TestConfigurableUtilAdvice.unblock();
 
-		thread1.join();
-		thread2.join();
-
 		_assertTestConfiguration(futureTask1.get(), "testReqiredString");
 		_assertTestConfiguration(futureTask2.get(), "testReqiredString");
 	}

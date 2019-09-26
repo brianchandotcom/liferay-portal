@@ -13,23 +13,33 @@
  */
 
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import Button from '../button/Button.es';
 
 const Sidebar = React.forwardRef(
 	(
-		{children, closeable = true, onSearch = null, onToggle = () => {}},
+		{
+			children,
+			closeable = true,
+			closed = false,
+			onSearch = null,
+			onToggle = () => {}
+		},
 		ref
 	) => {
-		const [isClosed, setClosed] = useState(false);
+		const [isClosed, setClosed] = useState(closed);
 
 		const handleToggle = () => {
 			const closed = !isClosed;
 			setClosed(closed);
 			onToggle(closed);
 		};
+
+		useEffect(() => {
+			setClosed(closed);
+		}, [closed]);
 
 		return (
 			<div ref={ref}>

@@ -23,14 +23,20 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.GroupDescriptiveNameComparator;
+import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
+import com.liferay.portal.kernel.util.comparator.GroupTypeComparator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -98,9 +104,18 @@ public class GroupSearch extends SearchContainer<Group> {
 					portletId, "groups-order-by-type", "asc");
 			}
 
+			Locale locale = LocaleUtil.getDefault();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (themeDisplay != null) {
+				locale = themeDisplay.getLocale();
+			}
+
 			OrderByComparator<Group> orderByComparator =
-				UsersAdminUtil.getGroupOrderByComparator(
-					orderByCol, orderByType);
+				_getGroupOrderByComparator(orderByCol, orderByType, locale);
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
@@ -110,6 +125,30 @@ public class GroupSearch extends SearchContainer<Group> {
 		catch (Exception e) {
 			_log.error("Unable to initialize group search", e);
 		}
+	}
+
+	private OrderByComparator<Group> _getGroupOrderByComparator(
+		String orderByCol, String orderByType, Locale locale) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Group> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new GroupNameComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("type")) {
+			orderByComparator = new GroupTypeComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new GroupNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(GroupSearch.class);

@@ -145,6 +145,84 @@ definition {
 		DMDocument.viewCategories(categoryNameList = "category");
 	}
 
+	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
+	@priority = "5"
+	test AddAutoAssertionTagViaDMDocument {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMDocument.addMultiplePG(dmDocumentFileList = "Document_1.doc,Document_2.docx");
+
+		for (var tagName : list "tagone,tagtwo,tagthree") {
+
+			var key_dmDocumentTitle = "Document_1.doc";
+
+			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+			Click(locator1 = "Icon#EDIT_TAGS");
+
+			DMDocument.editTags(tagName = "${tagName}");
+
+			DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.doc");
+
+			DMDocument.viewTag(tagName = "${tagName}");
+
+			Navigator.gotoPage(pageName = "Documents and Media Page");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_dmDocumentTitle = "Document_2.docx";
+
+		Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Edit Tags");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "You're editing the tags for the selected item.");
+
+		Click(locator1 = "Modal#BODY");
+
+		Type.sendKeys(
+			locator1 = "DocumentsAndMedia#EDIT_TAGS_FIELD",
+			value1 = "ta");
+
+		AssertClick(
+			key_tagName = "tagtwo",
+			locator1 = "AssetCategorization#TAG_AUTOCOMPLETE_SPECIFIC",
+			value1 = "tagtwo");
+
+		Button.clickSave();
+
+		SelectFrame(value1 = "relative=top");
+
+		Alert.viewSuccessMessageText(successMessage = "Changes saved.");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_2.docx");
+
+		DMDocument.viewTag(tagName = "tagtwo");
+	}
+
 	@priority = "5"
 	test AddDocumentTypeAndMetadata {
 		property testray.component.names = "Training";

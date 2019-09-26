@@ -41,7 +41,7 @@ export default ({
 			dataRecord.dataRecordValues[fieldName] = value;
 		});
 
-		if (dataRecordId) {
+		if (dataRecordId !== "0") {
 			updateItem(
 				`/o/data-engine/v1.0/data-records/${dataRecordId}`,
 				dataRecord

@@ -23,19 +23,8 @@
 </liferay-util:html-top>
 
 <div class="collaborators" id="<portlet:namespace/>collaborators-root">
-
-	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("canManageCollaborators", request.getAttribute("liferay-sharing:collaborators:canManageCollaborators"));
-	data.put("classNameId", request.getAttribute("liferay-sharing:collaborators:classNameId"));
-	data.put("classPK", request.getAttribute("liferay-sharing:collaborators:classPK"));
-	data.put("collaboratorsResourceURL", request.getAttribute("liferay-sharing:collaborators:collaboratorsResourceURL"));
-	data.put("initialData", request.getAttribute("liferay-sharing:collaborators:collaboratorsJSONObject"));
-	%>
-
 	<react:component
-		data="<%= data %>"
+		data='<%= (Map<String, Object>)request.getAttribute("liferay-sharing:collaborators:data") %>'
 		module="collaborators/js/index.es"
 	/>
 </div>

@@ -126,7 +126,7 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 		// Segments experience
 
-		if ((force || !segmentsExperimentRel.isActive()) &&
+		if (!segmentsExperimentRel.isActive() &&
 			(segmentsExperimentRel.getSegmentsExperienceId() !=
 				SegmentsExperienceConstants.ID_DEFAULT)) {
 

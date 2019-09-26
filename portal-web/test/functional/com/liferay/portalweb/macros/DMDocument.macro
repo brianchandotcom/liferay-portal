@@ -1005,11 +1005,22 @@ definition {
 	}
 
 	macro moveToFolderCP {
-		var key_dmDocumentTitle = "${dmDocumentTitle}";
+		if (isSet(selectAll)) {
+			PortletEntry.selectAll();
 
-		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+			AssertClick(
+				locator1 = "Button#SELECT_ALL",
+				value1 = "Select All");
 
-		MenuItem.click(menuItem = "Move");
+			Click(locator1 = "Icon#MOVE");
+		}
+		else {
+			var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Move");
+		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME");
 

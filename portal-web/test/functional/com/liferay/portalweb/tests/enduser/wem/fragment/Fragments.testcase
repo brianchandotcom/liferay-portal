@@ -73,6 +73,151 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98241. Basic Component Button can be configured."
+	@priority = "4"
+	test ConfigureBasicComponentButton {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Button");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfigurate(fragmentName = "Button");
+
+			PageEditor.configureFragment(
+				align = "Center",
+				size = "Large",
+				type = "Link");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				align = "center",
+				fragmentName = "button",
+				size = "lg",
+				type = "link");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Button");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Button");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Button",
+				id = "Button");
+		}
+	}
+
+	@description = "This is a test for LPS-98241. Contributed fragment components Heading can be configured."
+	@priority = "4"
+	test ConfigureBasicComponentHeading {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Heading");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfigurate(fragmentName = "Heading");
+
+			PageEditor.configureFragment(
+				align = "Right",
+				headingLevel = "H2",
+				textColor = "secondary");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				align = "right",
+				fragmentName = "heading",
+				headingLevel = "h2",
+				textColor = "secondary");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Heading");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Heading");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Heading");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Heading",
+				id = "Heading");
+		}
+	}
+
+	@description = "This is a test for LPS-98241. Contributed fragment components Paragraph can be configured."
+	@priority = "4"
+	test ConfigureBasicComponentParagraph {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Paragraph");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfigurate(fragmentName = "Paragraph");
+
+			PageEditor.configureFragment(
+				align = "Right",
+				textColor = "warning");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				align = "right",
+				fragmentName = "paragraph",
+				textColor = "warning");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Paragraph");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Paragraph");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Paragraph");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Paragraph",
+				id = "Paragraph");
+		}
+	}
+
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
 	@priority = "5"
 	test CopyFragment {

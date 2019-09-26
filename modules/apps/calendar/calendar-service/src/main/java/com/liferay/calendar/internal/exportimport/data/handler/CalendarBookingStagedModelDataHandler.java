@@ -292,7 +292,7 @@ public class CalendarBookingStagedModelDataHandler
 					calendarBooking.getSecondReminderType(), serviceContext);
 		}
 
-		_calendarBookingLocalService.updateStatus(
+		importedCalendarBooking = _calendarBookingLocalService.updateStatus(
 			userId, importedCalendarBooking, calendarBooking.getStatus(),
 			serviceContext);
 

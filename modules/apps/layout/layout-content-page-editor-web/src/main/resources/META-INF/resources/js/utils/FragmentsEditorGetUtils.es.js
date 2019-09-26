@@ -83,8 +83,6 @@ function editableIsMappedToAssetEntry(editableValues) {
  * @param {string} activeItemId
  * @param {string} activeItemType
  * @param {string} fragmentEntryLinkId
- * @param {string} hoveredItemId
- * @param {string} hoveredItemType
  * @param {object} structure
  * @private
  * @return {boolean}
@@ -94,8 +92,6 @@ function editableShouldBeHighlighted(
 	activeItemId,
 	activeItemType,
 	fragmentEntryLinkId,
-	hoveredItemId,
-	hoveredItemType,
 	structure
 ) {
 	const parentFragmentIsInActiveItemPath = itemIsInPath(
@@ -104,15 +100,7 @@ function editableShouldBeHighlighted(
 		FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 	);
 
-	const parentFragmentIsInHoveredItemPath = itemIsInPath(
-		getItemPath(hoveredItemId, hoveredItemType, structure),
-		fragmentEntryLinkId,
-		FRAGMENTS_EDITOR_ITEM_TYPES.fragment
-	);
-
-	return (
-		parentFragmentIsInActiveItemPath || parentFragmentIsInHoveredItemPath
-	);
+	return parentFragmentIsInActiveItemPath;
 }
 
 /**
@@ -160,7 +148,7 @@ function getDropRowPosition(structure, targetRowId, targetBorder) {
  */
 function getFragmentEntryLinkListElements(itemId, itemType) {
 	return document.querySelectorAll(
-		`.fragment-entry-link-list [data-fragments-editor-item-id="${itemId}"][data-fragments-editor-item-type="${itemType}"]`
+		`[data-fragments-editor-item-id="${itemId}"][data-fragments-editor-item-type="${itemType}"]`
 	);
 }
 

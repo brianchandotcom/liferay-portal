@@ -24,7 +24,7 @@
 	},
 	"jest": {
 		"collectCoverageFrom": [
-			"src/main/resources/META-INF/resources/js/**/components/**/*.es.js"
+			"src/main/resources/META-INF/resources/js/**/*.es.js"
 		],
 		"coverageDirectory": "build/coverage",
 		"moduleNameMapper": {

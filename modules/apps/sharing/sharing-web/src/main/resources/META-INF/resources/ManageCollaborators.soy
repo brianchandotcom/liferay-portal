@@ -34,7 +34,7 @@
 	{@param? expandedCollaboratorId: string}
 
 	<div id="{$id}">
-		<div class="inline-scroller modal-body">
+		<div>
 			{if length($collaborators) > 0}
 				{if $expirationDateError}
 					{call .showError}
@@ -150,8 +150,8 @@
 
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">
-				<strong class="text-truncate-inline">
-					<span class="text-truncate">{$collaborator.fullName}</span>
+				<strong>
+					<span>{$collaborator.fullName}</span>
 				</strong>
 			</div>
 

@@ -138,14 +138,18 @@ public class GroupSearch extends SearchContainer<Group> {
 
 		OrderByComparator<Group> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
-			orderByComparator = new GroupNameComparator(orderByAsc);
+		if (orderByCol.equals("descriptive-name")) {
+			orderByComparator = new GroupDescriptiveNameComparator(
+				orderByAsc, locale);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new GroupNameComparator(orderByAsc, locale);
 		}
 		else if (orderByCol.equals("type")) {
 			orderByComparator = new GroupTypeComparator(orderByAsc);
 		}
 		else {
-			orderByComparator = new GroupNameComparator(orderByAsc);
+			orderByComparator = new GroupNameComparator(orderByAsc, locale);
 		}
 
 		return orderByComparator;

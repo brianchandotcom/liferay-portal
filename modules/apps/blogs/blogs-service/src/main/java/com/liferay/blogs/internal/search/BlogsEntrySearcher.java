@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BlogsEntrySearcher extends BaseSearcher {
 
-	public static final String CLASS_NAME = BlogsEntry.class.getName();
+	private static final String _CLASS_NAME = BlogsEntry.class.getName();
 
 	public BlogsEntrySearcher() {
 		setDefaultSelectedFieldNames(
@@ -43,7 +43,7 @@ public class BlogsEntrySearcher extends BaseSearcher {
 
 	@Override
 	public String getClassName() {
-		return CLASS_NAME;
+		return _CLASS_NAME;
 	}
 
 }

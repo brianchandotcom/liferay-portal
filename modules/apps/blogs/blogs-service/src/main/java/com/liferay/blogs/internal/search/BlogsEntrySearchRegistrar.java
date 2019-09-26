@@ -36,7 +36,7 @@ public class BlogsEntrySearchRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceRegistration = modelSearchRegistrarHelper.register(
+		_serviceRegistration = _modelSearchRegistrarHelper.register(
 			BlogsEntry.class, bundleContext,
 			modelSearchDefinition -> {
 				modelSearchDefinition.setDefaultSelectedFieldNames(
@@ -47,11 +47,11 @@ public class BlogsEntrySearchRegistrar {
 				modelSearchDefinition.setDefaultSelectedLocalizedFieldNames(
 					Field.CONTENT, Field.TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
-					modelIndexWriterContributor);
+					_modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(
-					modelSummaryContributor);
+					_modelSummaryContributor);
 				modelSearchDefinition.setModelVisibilityContributor(
-					modelVisibilityContributor);
+					_modelVisibilityContributor);
 			});
 	}
 
@@ -63,21 +63,21 @@ public class BlogsEntrySearchRegistrar {
 	@Reference(
 		target = "(indexer.class.name=com.liferay.blogs.model.BlogsEntry)"
 	)
-	protected ModelIndexerWriterContributor<BlogsEntry>
-		modelIndexWriterContributor;
+	private ModelIndexerWriterContributor<BlogsEntry>
+		_modelIndexWriterContributor;
 
 	@Reference
-	protected ModelSearchRegistrarHelper modelSearchRegistrarHelper;
+	private ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.blogs.model.BlogsEntry)"
 	)
-	protected ModelSummaryContributor modelSummaryContributor;
+	private ModelSummaryContributor _modelSummaryContributor;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.blogs.model.BlogsEntry)"
 	)
-	protected ModelVisibilityContributor modelVisibilityContributor;
+	private ModelVisibilityContributor _modelVisibilityContributor;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

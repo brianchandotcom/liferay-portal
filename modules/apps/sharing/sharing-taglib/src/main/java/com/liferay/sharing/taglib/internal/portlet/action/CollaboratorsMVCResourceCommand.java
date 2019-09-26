@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharing.web.internal.portlet.action;
+package com.liferay.sharing.taglib.internal.portlet.action;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;

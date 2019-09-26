@@ -16,7 +16,6 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -26,11 +25,15 @@ import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
-import java.lang.reflect.Field;
-
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.Semaphore;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -96,33 +99,36 @@ public class ConfigurableUtilTest {
 			"testReqiredString2");
 	}
 
+	@AdviseWith(adviceClasses = TestConfigurableUtilAdvice.class)
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testCreateConfigurablewithDefinedSnapshotClass()
 		throws Exception {
 
-		FutureTask<Void> futureTask1 = _createFutureTask();
+		Callable<TestConfiguration> callable =
+			() -> ConfigurableUtil.createConfigurable(
+				TestConfiguration.class,
+				Collections.singletonMap(
+					"testReqiredString", "testReqiredString"));
 
-		_startThread(futureTask1, "thread1");
+		FutureTask<TestConfiguration> futureTask1 = new FutureTask<>(callable);
+		FutureTask<TestConfiguration> futureTask2 = new FutureTask<>(callable);
 
-		futureTask1.get();
+		Thread thread1 = new Thread(futureTask1, "Thread 1");
+		Thread thread2 = new Thread(futureTask2, "Thread 2");
 
-		Field field = ReflectionUtil.getDeclaredField(
-			ConfigurableUtil.class, "_findLoadedClassMethod");
+		thread1.start();
+		thread2.start();
 
-		Object value = field.get(null);
+		TestConfigurableUtilAdvice.waitUntilBlock();
 
-		field.set(
-			null,
-			ReflectionUtil.getDeclaredMethod(
-				ClassLoader.class, "findBootstrapClass", String.class));
+		TestConfigurableUtilAdvice.unblock();
 
-		FutureTask<Void> futureTask2 = _createFutureTask();
+		thread1.join();
+		thread2.join();
 
-		_startThread(futureTask2, "thread2");
-
-		futureTask2.get();
-
-		field.set(null, value);
+		_assertTestConfiguration(futureTask1.get(), "testReqiredString");
+		_assertTestConfiguration(futureTask2.get(), "testReqiredString");
 	}
 
 	@Test
@@ -171,6 +177,34 @@ public class ConfigurableUtilTest {
 
 	}
 
+	@Aspect
+	public static class TestConfigurableUtilAdvice {
+
+		public static void unblock() {
+			_semaphore.release(2);
+		}
+
+		public static void waitUntilBlock() {
+			while (_semaphore.getQueueLength() < 2);
+		}
+
+		@Around(
+			"execution(private * com.liferay.portal.configuration.metatype." +
+				"bnd.util.ConfigurableUtil._generateSnapshotClassData(..))"
+		)
+		public Object generateSnapshotClassData(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			_semaphore.acquire();
+
+			return proceedingJoinPoint.proceed();
+		}
+
+		private static final Semaphore _semaphore = new Semaphore(0);
+
+	}
+
 	private void _assertTestConfiguration(
 		TestConfiguration testConfiguration, String requiredString) {
 
@@ -192,26 +226,6 @@ public class ConfigurableUtilTest {
 		TestClass testClass = testConfiguration.testClass();
 
 		Assert.assertEquals("test.class", testClass.getName());
-	}
-
-	private FutureTask<Void> _createFutureTask() {
-		return new FutureTask<>(
-			() -> {
-				_assertTestConfiguration(
-					ConfigurableUtil.createConfigurable(
-						TestConfiguration.class,
-						Collections.singletonMap(
-							"testReqiredString", "testReqiredString")),
-					"testReqiredString");
-
-				return null;
-			});
-	}
-
-	private void _startThread(FutureTask<Void> futureTask, String threadName) {
-		Thread thread = new Thread(futureTask, threadName);
-
-		thread.start();
 	}
 
 	private void _testBigString(int length) {

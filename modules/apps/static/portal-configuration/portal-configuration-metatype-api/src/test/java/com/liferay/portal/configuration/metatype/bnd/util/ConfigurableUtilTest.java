@@ -28,8 +28,8 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.Semaphore;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -176,11 +176,11 @@ public class ConfigurableUtilTest {
 	public static class TestConfigurableUtilAdvice {
 
 		public static void unblock() {
-			_semaphore.release(2);
+			_blockingCountDownLatch.countDown();
 		}
 
-		public static void waitUntilBlock() {
-			while (_semaphore.getQueueLength() < 2);
+		public static void waitUntilBlock() throws InterruptedException {
+			_waitingCountDownLatch.await();
 		}
 
 		@Around(
@@ -191,12 +191,17 @@ public class ConfigurableUtilTest {
 				ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
-			_semaphore.acquire();
+			_waitingCountDownLatch.countDown();
+
+			_blockingCountDownLatch.await();
 
 			return proceedingJoinPoint.proceed();
 		}
 
-		private static final Semaphore _semaphore = new Semaphore(0);
+		private static final CountDownLatch _blockingCountDownLatch =
+			new CountDownLatch(1);
+		private static final CountDownLatch _waitingCountDownLatch =
+			new CountDownLatch(2);
 
 	}
 

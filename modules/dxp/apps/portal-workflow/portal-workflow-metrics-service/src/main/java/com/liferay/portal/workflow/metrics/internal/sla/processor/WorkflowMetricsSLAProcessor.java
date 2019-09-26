@@ -85,6 +85,7 @@ public class WorkflowMetricsSLAProcessor {
 
 		if (lastWorkflowMetricsSLAProcessResult != null) {
 			elapsedTime = lastWorkflowMetricsSLAProcessResult.getElapsedTime();
+
 			lastCheckLocalDateTime =
 				lastWorkflowMetricsSLAProcessResult.getLastCheckLocalDateTime();
 			workfowMetricsSLAStatus =

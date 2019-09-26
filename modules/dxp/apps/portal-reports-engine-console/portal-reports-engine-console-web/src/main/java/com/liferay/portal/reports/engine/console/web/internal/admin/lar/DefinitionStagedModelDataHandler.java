@@ -163,6 +163,7 @@ public class DefinitionStagedModelDataHandler
 
 		if (attachmentElement != null) {
 			binPath = attachmentElement.attributeValue("bin-path");
+
 			String fullFileName = attachmentElement.attributeValue(
 				"full-file-name");
 

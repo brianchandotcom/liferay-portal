@@ -628,6 +628,7 @@ public class DefaultAttributeResolver implements AttributeResolver {
 			String[] values = StringUtil.split(attributeName, "=");
 
 			attributeName = values[0];
+
 			attributeValue = values[1];
 
 			if (values.length > 2) {

@@ -221,6 +221,42 @@ export default ({dataLayoutBuilderElementId}) => {
 		return () => window.removeEventListener('click', eventHandler);
 	}, [dataLayoutBuilder, sidebarRef]);
 
+	useEffect(() => {
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
+		);
+
+		if (productMenuToggle) {
+			const sidenav = Liferay.SideNavigation.instance(productMenuToggle);
+
+			if (!sidebarClosed) {
+				sidenav.hide();
+			}
+		}
+	}, [sidebarClosed]);
+
+	useLayoutEffect(() => {
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
+		);
+
+		if (productMenuToggle) {
+			Liferay.SideNavigation.hide(productMenuToggle);
+
+			const sidenav = Liferay.SideNavigation.instance(productMenuToggle);
+			const openEventListener = sidenav.on(
+				'openStart.lexicon.sidenav',
+				() => {
+					setSidebarClosed(true);
+				}
+			);
+
+			return () => {
+				openEventListener.removeListener();
+			};
+		}
+	}, []);
+
 	const hasFocusedField = Object.keys(focusedField).length > 0;
 	const hasFocusedCustomObjectField =
 		Object.keys(focusedCustomObjectField).length > 0;
@@ -228,7 +264,8 @@ export default ({dataLayoutBuilderElementId}) => {
 
 	return (
 		<Sidebar
-			closeable={!displaySettings}
+			closeable={!displaySettings || sidebarClosed}
+			closed={sidebarClosed}
 			onSearch={displaySettings ? false : setKeywords}
 			onToggle={closed => setSidebarClosed(closed)}
 			ref={sidebarRef}

@@ -34,7 +34,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 
 		<portlet:renderURL var="basePortletURL" />
 
-		<div id="<%= editFormViewRootElementId %>">
+		<div class="app-builder-form-view-app" id="<%= editFormViewRootElementId %>">
 
 			<%
 			Map<String, Object> data = new HashMap<>();

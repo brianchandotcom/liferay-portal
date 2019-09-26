@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="FactoryCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-forms-service/src/main/java/com/liferay/portal/workflow/kaleo/forms/internal/upgrade/v1_1_0/UpgradeKaleoProcess\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="modules/private/apps/portal-workflow/portal-workflow-metrics-rest-impl/src/main/java/com/liferay/portal/workflow/metrics/rest/internal/resource/v1_0/SLAResourceImpl\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JSONPackageJSONCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-designer-web/package\.json" />

@@ -45,7 +45,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 		return LanguageUtil.format(
 			locale,
 			"the-screen-name-cannot-be-an-email-address-or-a-reserved-word",
-			new String[] {POSTFIX, getDescriptionSpecialChars()}, false);
+			new String[] {POSTFIX, getSpecialChars()}, false);
 	}
 
 	@Override
@@ -60,21 +60,9 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 		return true;
 	}
 
-	protected String getDescriptionSpecialChars() {
-		if (_descriptionSpecialChars == null) {
-			String descriptionSpecialChars = PropsUtil.get(
-				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
-
-			_descriptionSpecialChars = StringUtil.removeChar(
-				descriptionSpecialChars, CharPool.SLASH);
-		}
-
-		return _descriptionSpecialChars;
-	}
-
 	protected String getJSEscapedSpecialChars() {
 		if (_jsEscapedSpecialChars == null) {
-			_jsEscapedSpecialChars = HtmlUtil.escapeJS(getSpecialChars());
+			_jsEscapedSpecialChars = HtmlUtil.escapeJS(getSpecialCharsRegex());
 		}
 
 		return _jsEscapedSpecialChars;
@@ -85,25 +73,32 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 			String specialChars = PropsUtil.get(
 				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
 
-			specialChars = StringUtil.removeChar(specialChars, CharPool.SLASH);
-
-			Matcher matcher = _escapeRegexPattern.matcher(specialChars);
-
-			_specialChars = matcher.replaceAll("\\\\$0");
+			_specialChars = StringUtil.removeChar(specialChars, CharPool.SLASH);
 		}
 
 		return _specialChars;
 	}
 
+	protected String getSpecialCharsRegex() {
+		if (_specialCharsRegex == null) {
+			Matcher matcher = _escapeRegexPattern.matcher(getSpecialChars());
+
+			_specialCharsRegex = matcher.replaceAll("\\\\$0");
+		}
+
+		return _specialCharsRegex;
+	}
+
 	protected boolean hasInvalidChars(String screenName) {
-		return !screenName.matches("[A-Za-z0-9" + getSpecialChars() + "]+");
+		return !screenName.matches(
+			"[A-Za-z0-9" + getSpecialCharsRegex() + "]+");
 	}
 
 	private static final Pattern _escapeRegexPattern = Pattern.compile(
 		"[-+\\\\\\[\\]]");
 
-	private String _descriptionSpecialChars;
 	private String _jsEscapedSpecialChars;
 	private String _specialChars;
+	private String _specialCharsRegex;
 
 }

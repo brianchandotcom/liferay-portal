@@ -34,7 +34,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 
 		<portlet:renderURL var="basePortletURL" />
 
-		<div id="<%= editFormViewRootElementId %>">
+		<div class="app-builder-form-view-app" id="<%= editFormViewRootElementId %>">
 
 			<%
 			Map<String, Object> data = new HashMap<>();
@@ -57,7 +57,16 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		<div class="app-builder-form-view-body">
 			<div class="app-builder-custom-object-sidebar" id="<%= customObjectSidebarElementId %>"></div>
 
-			<div class="app-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
+			<%
+			String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_productMenuState", "closed");
+			String sidebarContentState = "open";
+
+			if (productMenuState.equals("open")) {
+				sidebarContentState = "closed";
+			}
+			%>
+
+			<div class="app-builder-sidebar-content <%= sidebarContentState %>" id="<%= dataLayoutBuilderElementId %>">
 				<liferay-data-engine:data-layout-builder
 					componentId="<%= componentId %>"
 					dataDefinitionInputId="dataDefinition"

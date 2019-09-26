@@ -23,7 +23,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %>
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.SessionClicks" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>

@@ -44,6 +44,7 @@ public class AssetEntryAssetCategoryRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"assetEntryAssetCategoryRelId", getAssetEntryAssetCategoryRelId());
 		attributes.put("assetEntryId", getAssetEntryId());
@@ -55,6 +56,12 @@ public class AssetEntryAssetCategoryRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long assetEntryAssetCategoryRelId = (Long)attributes.get(
 			"assetEntryAssetCategoryRelId");
 
@@ -109,6 +116,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	@Override
 	public long getAssetEntryId() {
 		return model.getAssetEntryId();
+	}
+
+	/**
+	 * Returns the mvcc version of this asset entry asset category rel.
+	 *
+	 * @return the mvcc version of this asset entry asset category rel
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -171,6 +188,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	@Override
 	public void setAssetEntryId(long assetEntryId) {
 		model.setAssetEntryId(assetEntryId);
+	}
+
+	/**
+	 * Sets the mvcc version of this asset entry asset category rel.
+	 *
+	 * @param mvccVersion the mvcc version of this asset entry asset category rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

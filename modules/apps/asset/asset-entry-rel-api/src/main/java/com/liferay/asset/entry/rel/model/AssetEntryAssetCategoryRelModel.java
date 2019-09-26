@@ -15,6 +15,7 @@
 package com.liferay.asset.entry.rel.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetEntryAssetCategoryRelModel
-	extends BaseModel<AssetEntryAssetCategoryRel> {
+	extends BaseModel<AssetEntryAssetCategoryRel>, MVCCModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,22 @@ public interface AssetEntryAssetCategoryRelModel
 	 * @param primaryKey the primary key of this asset entry asset category rel
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this asset entry asset category rel.
+	 *
+	 * @return the mvcc version of this asset entry asset category rel
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this asset entry asset category rel.
+	 *
+	 * @param mvccVersion the mvcc version of this asset entry asset category rel
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the asset entry asset category rel ID of this asset entry asset category rel.

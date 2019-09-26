@@ -63,6 +63,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 	public static final String TABLE_NAME = "AssetEntryAssetCategoryRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"assetEntryAssetCategoryRelId", Types.BIGINT},
 		{"assetEntryId", Types.BIGINT}, {"assetCategoryId", Types.BIGINT},
 		{"priority", Types.INTEGER}
@@ -72,6 +73,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryAssetCategoryRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetCategoryId", Types.BIGINT);
@@ -79,7 +81,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryAssetCategoryRel (assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
+		"create table AssetEntryAssetCategoryRel (mvccVersion LONG default 0 not null,assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetEntryAssetCategoryRel";
@@ -244,6 +246,12 @@ public class AssetEntryAssetCategoryRelModelImpl
 					<String, BiConsumer<AssetEntryAssetCategoryRel, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", AssetEntryAssetCategoryRel::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+				AssetEntryAssetCategoryRel::setMvccVersion);
+		attributeGetterFunctions.put(
 			"assetEntryAssetCategoryRelId",
 			AssetEntryAssetCategoryRel::getAssetEntryAssetCategoryRelId);
 		attributeSetterBiConsumers.put(
@@ -273,6 +281,16 @@ public class AssetEntryAssetCategoryRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -378,6 +396,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl =
 			new AssetEntryAssetCategoryRelImpl();
 
+		assetEntryAssetCategoryRelImpl.setMvccVersion(getMvccVersion());
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
 			getAssetEntryAssetCategoryRelId());
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(getAssetEntryId());
@@ -467,6 +486,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 		AssetEntryAssetCategoryRelCacheModel
 			assetEntryAssetCategoryRelCacheModel =
 				new AssetEntryAssetCategoryRelCacheModel();
+
+		assetEntryAssetCategoryRelCacheModel.mvccVersion = getMvccVersion();
 
 		assetEntryAssetCategoryRelCacheModel.assetEntryAssetCategoryRelId =
 			getAssetEntryAssetCategoryRelId();
@@ -560,6 +581,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _assetEntryAssetCategoryRelId;
 	private long _assetEntryId;
 	private long _originalAssetEntryId;

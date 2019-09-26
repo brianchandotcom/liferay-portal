@@ -49,7 +49,13 @@ const Header = props => {
 };
 
 const HeaderWithOptions = props => {
-	const {children, description, elementClasses, title} = props;
+	const {
+		children,
+		description,
+		elementClasses,
+		title,
+		tooltipPosition = 'right'
+	} = props;
 
 	return (
 		<Header elementClasses={elementClasses}>
@@ -57,7 +63,11 @@ const HeaderWithOptions = props => {
 				<div className="autofit-col autofit-col-expand flex-row">
 					<span className="mr-2">{title}</span>
 
-					<Tooltip message={description} position="right" width="288">
+					<Tooltip
+						message={description}
+						position={tooltipPosition}
+						width="288"
+					>
 						<Icon iconName={'question-circle-full'} />
 					</Tooltip>
 				</div>

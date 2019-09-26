@@ -43,8 +43,16 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		return GradleUtil.toBoolean(_frozenLockFile);
 	}
 
+	public boolean isOffline() {
+		return GradleUtil.toBoolean(_offline);
+	}
+
 	public void setFrozenLockFile(Object frozenLockFile) {
 		_frozenLockFile = frozenLockFile;
+	}
+
+	public void setOffline(Object offline) {
+		_offline = offline;
 	}
 
 	@Override
@@ -55,6 +63,10 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 
 		if (isFrozenLockFile()) {
 			completeArgs.add("--frozen-lockfile");
+		}
+
+		if (isOffline()) {
+			completeArgs.add("--offline");
 		}
 
 		return completeArgs;
@@ -77,5 +89,6 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 	}
 
 	private Object _frozenLockFile;
+	private Object _offline;
 
 }

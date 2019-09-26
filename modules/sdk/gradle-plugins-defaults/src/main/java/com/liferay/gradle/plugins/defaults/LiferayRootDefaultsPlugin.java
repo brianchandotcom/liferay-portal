@@ -60,7 +60,7 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if ((portalRootDir == null) && _hasYarnScriptFile(project)) {
-			GradleUtil.applyPlugin(project, LiferayYarnPlugin.class);
+			GradleUtil.applyPlugin(project, LiferayYarnDefaultsPlugin.class);
 
 			for (Project subproject : project.getSubprojects()) {
 				_configureTasksNpmInstall(project, subproject);

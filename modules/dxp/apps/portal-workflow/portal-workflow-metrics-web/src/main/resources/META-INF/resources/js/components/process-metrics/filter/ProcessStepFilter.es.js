@@ -9,24 +9,46 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Filter from '../../../shared/components/filter/Filter.es';
 import {ProcessStepContext} from './store/ProcessStepStore.es';
 
 const ProcessStepFilter = ({
 	filterKey = 'taskKeys',
 	hideControl = false,
-	position = 'left'
+	multiple = true,
+	position = 'left',
+	showFilterName = true
 }) => {
-	const {processSteps} = useContext(ProcessStepContext);
+	const {
+		defaultProcessStep,
+		getSelectedProcessSteps,
+		processSteps
+	} = useContext(ProcessStepContext);
+
+	const selectedProcessSteps = getSelectedProcessSteps();
+
+	const filterName = useMemo(() => {
+		if (
+			!multiple &&
+			!showFilterName &&
+			selectedProcessSteps &&
+			selectedProcessSteps.length
+		) {
+			return selectedProcessSteps[0].name;
+		}
+
+		return Liferay.Language.get('process-step');
+	}, [multiple, selectedProcessSteps, showFilterName]);
 
 	return (
 		<Filter
+			defaultItem={defaultProcessStep}
 			filterKey={filterKey}
 			hideControl={hideControl}
 			items={processSteps}
-			multiple={true}
-			name={Liferay.Language.get('process-step')}
+			multiple={multiple}
+			name={filterName}
 			position={position}
 		/>
 	);

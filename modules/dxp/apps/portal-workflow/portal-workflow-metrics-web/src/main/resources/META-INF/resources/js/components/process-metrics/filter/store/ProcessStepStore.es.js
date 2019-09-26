@@ -10,7 +10,13 @@
  * distribution rights of the Software.
  */
 
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
 import {AppContext} from '../../../AppContext.es';
 import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents.es';
 import {compareArrays} from '../../../../shared/util/array.es';
@@ -18,11 +24,13 @@ import {ErrorContext} from '../../../../shared/components/request/Error.es';
 import {LoadingContext} from '../../../../shared/components/request/Loading.es';
 import {usePrevious} from '../../../../shared/util/hooks.es';
 
-const useProcessStep = (processId, processStepKeys) => {
+const useProcessStep = (processId, processStepKeys, withAllSteps = false) => {
 	const {client} = useContext(AppContext);
 	const [processSteps, setProcessSteps] = useState([]);
 	const {setError} = useContext(ErrorContext);
 	const {setLoading} = useContext(LoadingContext);
+
+	const defaultProcessStep = useMemo(() => processSteps[0], [processSteps]);
 
 	const fetchData = () => {
 		setError(null);
@@ -32,11 +40,18 @@ const useProcessStep = (processId, processStepKeys) => {
 			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
 			.then(({data}) => {
 				const items = data.items || [];
+				let processSteps = [];
 
-				const processSteps = items.map(processStep => ({
-					...processStep,
-					active: processStepKeys.includes(processStep.key)
-				}));
+				if (withAllSteps) {
+					processSteps.push(getAllStepsItem(processStepKeys));
+				}
+
+				processSteps = processSteps.concat(
+					items.map(processStep => ({
+						...processStep,
+						active: processStepKeys.includes(processStep.key)
+					}))
+				);
 
 				setProcessSteps(processSteps);
 			})
@@ -80,18 +95,36 @@ const useProcessStep = (processId, processStepKeys) => {
 	}, [processStepKeys]);
 
 	return {
+		defaultProcessStep,
 		fetchData,
 		getSelectedProcessSteps,
 		processSteps
 	};
 };
 
+const getAllStepsItem = processStepKeys => {
+	const itemKey = 'allSteps';
+
+	const allStepsItem = {
+		active: processStepKeys.includes(itemKey),
+		key: itemKey,
+		name: Liferay.Language.get('all-steps')
+	};
+
+	return allStepsItem;
+};
+
 const ProcessStepContext = createContext(null);
 
-const ProcessStepProvider = ({children, processId, processStepKeys}) => {
+const ProcessStepProvider = ({
+	children,
+	processId,
+	processStepKeys,
+	withAllSteps = false
+}) => {
 	return (
 		<ProcessStepContext.Provider
-			value={useProcessStep(processId, processStepKeys)}
+			value={useProcessStep(processId, processStepKeys, withAllSteps)}
 		>
 			{children}
 		</ProcessStepContext.Provider>

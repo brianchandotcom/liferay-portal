@@ -116,8 +116,7 @@ class JournalPortlet extends PortletBase {
 	 */
 	_onLocaleChange(event) {
 		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
-		const selectedLanguageId =
-			event.source && event.source.getSelectedLanguageId();
+		const selectedLanguageId = event.item.getAttribute('data-value');
 
 		if (selectedLanguageId) {
 			this._updateLocalizableInput(

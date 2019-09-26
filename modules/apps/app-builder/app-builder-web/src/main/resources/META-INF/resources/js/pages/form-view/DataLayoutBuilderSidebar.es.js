@@ -199,7 +199,8 @@ export default ({dataLayoutBuilderElementId}) => {
 		FormViewContext
 	);
 	const [keywords, setKeywords] = useState('');
-	const [sidebarClosed, setSidebarClosed] = useState(false);
+	const productMenuOpen = document.body.classList.contains('open');
+	const [sidebarClosed, setSidebarClosed] = useState(productMenuOpen);
 
 	const builderElementRef = useRef(
 		document.querySelector(`#${dataLayoutBuilderElementId}`)
@@ -221,6 +222,24 @@ export default ({dataLayoutBuilderElementId}) => {
 		return () => window.removeEventListener('click', eventHandler);
 	}, [dataLayoutBuilder, sidebarRef]);
 
+	useLayoutEffect(() => {
+		const productMenuToggle = document.querySelector(
+			'.product-menu-toggle'
+		);
+
+		if (productMenuToggle) {
+			const sidenav = Liferay.SideNavigation.instance(productMenuToggle);
+			const eventListener = sidenav.on(
+				'openStart.lexicon.sidenav',
+				() => {
+					setSidebarClosed(true);
+				}
+			);
+
+			return () => eventListener.removeListener();
+		}
+	}, []);
+
 	const hasFocusedField = Object.keys(focusedField).length > 0;
 	const hasFocusedCustomObjectField =
 		Object.keys(focusedCustomObjectField).length > 0;
@@ -228,7 +247,8 @@ export default ({dataLayoutBuilderElementId}) => {
 
 	return (
 		<Sidebar
-			closeable={!displaySettings}
+			closeable={!displaySettings || sidebarClosed}
+			closed={sidebarClosed}
 			onSearch={displaySettings ? false : setKeywords}
 			onToggle={closed => setSidebarClosed(closed)}
 			ref={sidebarRef}

@@ -404,6 +404,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PALETTE_ITEM</td>
+	<td>//li[contains(@class,'palette-item')]//button[contains(@class,'bg-${key_paletteItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PARENT_FOLDER_SELECT</td>
 	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td></td>

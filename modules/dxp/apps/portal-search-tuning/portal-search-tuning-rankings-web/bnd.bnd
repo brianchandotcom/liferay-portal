@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Tuning Rankings Web
 Bundle-SymbolicName: com.liferay.portal.search.tuning.rankings.web
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	soy;\
 		type="portal-search-ranking-web";\

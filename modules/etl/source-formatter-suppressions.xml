@@ -7,6 +7,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaComponentAnnotationsCheck" files="modules/etl/talend/talend-definition/src/main/java/org/talend/components/liferay/LiferayFamilyDefinition\.java" />
-		<suppress checks="JavaModuleTestCheck" files="modules/etl/talend/.*" />
+		<suppress checks="JavaModuleTestCheck" files="modules/etl/talend/talend-definition/src/test/java/com/liferay/talend/OSGiTLiferayInputTestIT\.java" />
 	</source-check>
 </suppressions>

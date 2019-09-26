@@ -9,8 +9,8 @@
 			"to": "bridge/$1"
 		},
 		"file-globs": "**/lib/**/*.js",
-		"input": "classes/META-INF/resources/node_modules",
-		"output": "classes/META-INF/resources/bridge",
+		"input": "build/node/packageRunBuild/resources/node_modules",
+		"output": "build/node/packageRunBuild/resources/bridge",
 		"src-mod-name-mapper": {
 			"from": "(.*)@[^/]*(.*)\\.js$",
 			"to": "$1$2"

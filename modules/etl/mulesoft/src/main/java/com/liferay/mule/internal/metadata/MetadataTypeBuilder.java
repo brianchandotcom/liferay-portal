@@ -134,84 +134,50 @@ public class MetadataTypeBuilder {
 		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
 			oasType, oasFormatValue);
 
+		BaseTypeBuilder baseTypeBuilder = BaseTypeBuilder.create(
+			MetadataFormat.JSON);
+
 		if (oasFormat == OASFormat.BIGDECIMAL) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.BINARY) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).binaryType(
-			).build();
+			baseTypeBuilder.binaryType();
 		}
 		else if (oasFormat == OASFormat.BOOLEAN) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).booleanType(
-			).build();
+			baseTypeBuilder.booleanType();
 		}
 		else if (oasFormat == OASFormat.BYTE) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.DATE) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).dateType(
-			).build();
+			baseTypeBuilder.dateType();
 		}
 		else if (oasFormat == OASFormat.DATE_TIME) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).dateTimeType(
-			).build();
+			baseTypeBuilder.dateTimeType();
 		}
 		else if (oasFormat == OASFormat.DICTIONARY) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).stringType(
-			).build();
+			baseTypeBuilder.stringType();
 		}
 		else if (oasFormat == OASFormat.DOUBLE) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.FLOAT) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.INT32) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.INT64) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).numberType(
-			).build();
+			baseTypeBuilder.numberType();
 		}
 		else if (oasFormat == OASFormat.STRING) {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).stringType(
-			).build();
+			baseTypeBuilder.stringType();
 		}
 		else {
-			return BaseTypeBuilder.create(
-				MetadataFormat.JSON
-			).nullType(
-			).build();
+			baseTypeBuilder.nullType();
 		}
+
+		return baseTypeBuilder.build();
 	}
 
 	private JsonNode _getOASJsonNode(

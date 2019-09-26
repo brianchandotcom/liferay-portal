@@ -88,6 +88,21 @@ $c: '.workflow-process-dashboard';
 		}
 	}
 
+	.table-fit-panel {
+		margin-left: -1.25rem;
+		margin-right: -1.25rem;
+
+		tr {
+			td:first-child {
+				padding-left: 1.25rem;
+			}
+
+			td:last-child {
+				padding-right: 1.25rem;
+			}
+		}
+	}
+
 	.table-list {
 		td:last-child,
 		th:last-child,
@@ -140,5 +155,31 @@ $c: '.workflow-process-dashboard';
 		h4 {
 			margin-bottom: 2rem;
 		}
+	}
+}
+
+.workload-by-assignee-card {
+	.assignee-name {
+		font-size: 0.75rem;
+		font-weight: bold;
+	}
+
+	.empty-message {
+		color: #6b6c7e;
+		font-size: 0.875rem;
+	}
+
+	.nav-item {
+		cursor: pointer;
+	}
+
+	.task-count-percentage {
+		color: #6b6c7e;
+		font-size: 0.75rem;
+	}
+
+	.task-count-value {
+		font-size: 0.875rem;
+		font-weight: bold;
 	}
 }

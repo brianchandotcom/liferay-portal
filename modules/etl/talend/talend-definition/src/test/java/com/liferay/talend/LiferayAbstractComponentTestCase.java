@@ -14,13 +14,7 @@
 
 package com.liferay.talend;
 
-import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
-import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
-import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
-
 import javax.inject.Inject;
-
-import org.junit.Test;
 
 import org.talend.components.api.component.ComponentDefinition;
 import org.talend.components.api.service.common.DefinitionRegistry;
@@ -31,7 +25,8 @@ import org.talend.daikon.definition.service.DefinitionRegistryService;
 /**
  * @author Zoltán Takács
  */
-public class LiferayTestBase extends AbstractComponentTest2 {
+public abstract class LiferayAbstractComponentTestCase
+	extends AbstractComponentTest2 {
 
 	@Override
 	public DefinitionRegistryService getDefinitionRegistry() {
@@ -45,18 +40,11 @@ public class LiferayTestBase extends AbstractComponentTest2 {
 		return _definitionRegistry;
 	}
 
-	@Test
-	public void testComponentHasBeenRegistered() {
+	protected void assertComponentIsRegistered(
+		Class componentClass, String name) {
+
 		assertComponentIsRegistered(
-			ComponentDefinition.class,
-			TLiferayConnectionDefinition.COMPONENT_NAME,
-			TLiferayConnectionDefinition.class);
-		assertComponentIsRegistered(
-			ComponentDefinition.class, TLiferayInputDefinition.COMPONENT_NAME,
-			TLiferayInputDefinition.class);
-		assertComponentIsRegistered(
-			ComponentDefinition.class, TLiferayOutputDefinition.COMPONENT_NAME,
-			TLiferayOutputDefinition.class);
+			ComponentDefinition.class, name, componentClass);
 	}
 
 	@Inject

@@ -14,6 +14,11 @@
 
 package com.liferay.talend;
 
+import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
+import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
+import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,5 +31,19 @@ import org.talend.components.service.spring.SpringTestApp;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringTestApp.class)
-public class SpringTLiferayInputTestIT extends LiferayTestBase {
+public class SpringTLiferayInputTest extends LiferayAbstractComponentTestCase {
+
+	@Test
+	public void testComponentHasBeenRegistered() {
+		assertComponentIsRegistered(
+			TLiferayConnectionDefinition.class,
+			TLiferayConnectionDefinition.COMPONENT_NAME);
+		assertComponentIsRegistered(
+			TLiferayInputDefinition.class,
+			TLiferayInputDefinition.COMPONENT_NAME);
+		assertComponentIsRegistered(
+			TLiferayOutputDefinition.class,
+			TLiferayOutputDefinition.COMPONENT_NAME);
+	}
+
 }

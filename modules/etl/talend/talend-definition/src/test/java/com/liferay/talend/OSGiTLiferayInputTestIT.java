@@ -19,6 +19,11 @@ import static org.ops4j.pax.exam.CoreOptions.linkBundle;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 
+import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
+import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
+import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.ops4j.pax.exam.Configuration;
@@ -36,7 +41,7 @@ import org.talend.components.api.ComponentsPaxExamOptions;
  */
 @ExamReactorStrategy(PerClass.class)
 @RunWith(PaxExam.class)
-public class OSGiTLiferayInputTestIT extends LiferayTestBase {
+public class OSGiTLiferayInputTestIT extends LiferayAbstractComponentTestCase {
 
 	@Configuration
 	public Option[] config() {
@@ -63,6 +68,19 @@ public class OSGiTLiferayInputTestIT extends LiferayTestBase {
 		return options(
 			composite(updatedOptions), apacheFelixOption, bundleOption1,
 			bundleOption2);
+	}
+
+	@Test
+	public void testComponentHasBeenRegistered() {
+		assertComponentIsRegistered(
+			TLiferayConnectionDefinition.class,
+			TLiferayConnectionDefinition.COMPONENT_NAME);
+		assertComponentIsRegistered(
+			TLiferayInputDefinition.class,
+			TLiferayInputDefinition.COMPONENT_NAME);
+		assertComponentIsRegistered(
+			TLiferayOutputDefinition.class,
+			TLiferayOutputDefinition.COMPONENT_NAME);
 	}
 
 }

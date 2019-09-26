@@ -19,6 +19,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -61,36 +62,26 @@ public abstract class BaseMoreLikeThisQueryTestCase
 
 	@Test
 	public void testMoreLikeThisWithDocumentIdentifier() throws Exception {
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		String id = indexDocumentWithNoFieldsExceptTitle("java");
 
-		documentBuilder.setValue(_FIELD_TITLE, "java");
+		try {
+			addDocuments(
+				"java eclipse", "eclipse liferay", "java liferay eclipse");
 
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			String.valueOf(getCompanyId()), "1", documentBuilder.build());
+			MoreLikeThisQuery.DocumentIdentifier documentIdentifier =
+				queries.documentIdentifier(
+					String.valueOf(getCompanyId()), "LiferayDocumentType", id);
 
-		indexDocumentRequest.setType("LiferayDocumentType");
+			MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
+				Collections.singleton(documentIdentifier));
 
-		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
-
-		searchEngineAdapter.execute(indexDocumentRequest);
-
-		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
-
-		MoreLikeThisQuery.DocumentIdentifier documentIdentifier =
-			queries.documentIdentifier(
-				String.valueOf(getCompanyId()), "LiferayDocumentType", "1");
-
-		MoreLikeThisQuery moreLikeThisQuery = queries.moreLikeThis(
-			Collections.singleton(documentIdentifier));
-
-		assertSearch(
-			moreLikeThisQuery,
-			Arrays.asList("java eclipse", "java liferay eclipse"));
-
-		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
-			String.valueOf(getCompanyId()), "LiferayDocumentType", "1");
-
-		searchEngineAdapter.execute(deleteDocumentRequest);
+			assertSearch(
+				moreLikeThisQuery,
+				Arrays.asList("java eclipse", "java liferay eclipse"));
+		}
+		finally {
+			deleteDocumentById(id);
+		}
 	}
 
 	@Test
@@ -176,15 +167,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 
 				SearchHits searchHits = searchSearchResponse.getSearchHits();
 
-				Assert.assertEquals(
-					"Total hits", expectedValues.size(),
-					searchHits.getTotalHits());
-
 				List<SearchHit> searchHitsList = searchHits.getSearchHits();
-
-				Assert.assertEquals(
-					"Retrieved hits", expectedValues.size(),
-					searchHitsList.size());
 
 				List<String> actualValues = new ArrayList<>();
 
@@ -209,6 +192,14 @@ public abstract class BaseMoreLikeThisQueryTestCase
 				Assert.assertEquals(
 					"Retrieved hits ->" + actualValues,
 					expectedValues.toString(), actualValues.toString());
+
+				Assert.assertEquals(
+					"Total hits", expectedValues.size(),
+					searchHits.getTotalHits());
+
+				Assert.assertEquals(
+					"Retrieved hits", expectedValues.size(),
+					searchHitsList.size());
 			});
 	}
 
@@ -219,6 +210,35 @@ public abstract class BaseMoreLikeThisQueryTestCase
 		moreLikeThisQuery.setMinTermFrequency(Integer.valueOf(1));
 
 		assertSearch(null, moreLikeThisQuery, expectedValues);
+	}
+
+	protected void deleteDocumentById(String id) {
+		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
+
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			String.valueOf(getCompanyId()), "LiferayDocumentType", id);
+
+		searchEngineAdapter.execute(deleteDocumentRequest);
+	}
+
+	protected String indexDocumentWithNoFieldsExceptTitle(String title) {
+		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
+
+		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+
+		documentBuilder.setString(_FIELD_TITLE, title);
+
+		Document document = documentBuilder.build();
+
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			String.valueOf(getCompanyId()), document);
+
+		indexDocumentRequest.setType("LiferayDocumentType");
+
+		IndexDocumentResponse indexDocumentResponse =
+			searchEngineAdapter.execute(indexDocumentRequest);
+
+		return indexDocumentResponse.getUid();
 	}
 
 	private static final String _FIELD_DESCRIPTION = "description";

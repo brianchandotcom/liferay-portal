@@ -75,36 +75,10 @@ public class ConfigurableUtilTest {
 		}
 	}
 
-	@Test
-	public void testCreateConfigurable() {
-
-		// Test dictionary
-
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		dictionary.put("testReqiredString", "testReqiredString1");
-
-		_assertTestConfiguration(
-			ConfigurableUtil.createConfigurable(
-				TestConfiguration.class, dictionary),
-			"testReqiredString1");
-
-		// Test map
-
-		_assertTestConfiguration(
-			ConfigurableUtil.createConfigurable(
-				TestConfiguration.class,
-				Collections.singletonMap(
-					"testReqiredString", "testReqiredString2")),
-			"testReqiredString2");
-	}
-
 	@AdviseWith(adviceClasses = TestConfigurableUtilAdvice.class)
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testCreateConfigurablewithDefinedSnapshotClass()
-		throws Exception {
-
+	public void testConcurrentCreateConfigurable() throws Exception {
 		Callable<TestConfiguration> callable =
 			() -> ConfigurableUtil.createConfigurable(
 				TestConfiguration.class,
@@ -129,6 +103,30 @@ public class ConfigurableUtilTest {
 
 		_assertTestConfiguration(futureTask1.get(), "testReqiredString");
 		_assertTestConfiguration(futureTask2.get(), "testReqiredString");
+	}
+
+	@Test
+	public void testCreateConfigurable() {
+
+		// Test dictionary
+
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("testReqiredString", "testReqiredString1");
+
+		_assertTestConfiguration(
+			ConfigurableUtil.createConfigurable(
+				TestConfiguration.class, dictionary),
+			"testReqiredString1");
+
+		// Test map
+
+		_assertTestConfiguration(
+			ConfigurableUtil.createConfigurable(
+				TestConfiguration.class,
+				Collections.singletonMap(
+					"testReqiredString", "testReqiredString2")),
+			"testReqiredString2");
 	}
 
 	@Test

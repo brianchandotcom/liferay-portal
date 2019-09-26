@@ -1,4 +1,5 @@
 create table AssetCategoryProperty (
+	mvccVersion LONG default 0 not null,
 	categoryPropertyId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

@@ -8,6 +8,5 @@
 	},
 	"ignore": [
 		"**/__tests__/*.js"
-	],
-	"preset": "liferay-npm-bundler-preset-liferay-dev"
+	]
 }

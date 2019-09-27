@@ -1414,15 +1414,30 @@ public class RESTBuilder {
 
 				int z = s.indexOf(':', y);
 
+				String propertyName = entry2.getKey();
 				String schemaVarName = freeMarkerTool.getSchemaVarName(
 					reference.substring(reference.lastIndexOf('/') + 1));
 
 				if (Objects.equals(propertySchema.getType(), "array")) {
 					String plural = TextFormatter.formatPlural(schemaVarName);
 
+					if (propertyName.endsWith(
+							StringUtil.upperCaseFirstLetter(plural)) &&
+						propertyName.matches("[a-zA-Z]+")) {
+
+						continue;
+					}
+
 					s = s.substring(0, y + 1) + plural + s.substring(z);
 				}
 				else {
+					if (propertyName.endsWith(
+							StringUtil.upperCaseFirstLetter(schemaVarName)) &&
+						propertyName.matches("[a-zA-Z]+")) {
+
+						continue;
+					}
+
 					s = s.substring(0, y + 1) + schemaVarName + s.substring(z);
 				}
 			}

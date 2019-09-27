@@ -870,6 +870,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description><![CDATA[Selected language ID, for the case when input is localized.]]></description>
+			<name>selectedLanguageId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether to show the input's required label, if an input value is required.]]></description>
 			<name>showRequiredLabel</name>
 			<required>false</required>

@@ -224,7 +224,7 @@ public class GitUtil {
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+			3, GitUtil.MILLIS_RETRY_DELAY,
 			1000 * 60 * 10, workingDirectory, command);
 
 		if (executionResult.getExitValue() != 0) {

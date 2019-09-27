@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetCategoryCacheModel
-	implements CacheModel<AssetCategory>, Externalizable {
+	implements CacheModel<AssetCategory>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AssetCategoryCacheModel
 		AssetCategoryCacheModel assetCategoryCacheModel =
 			(AssetCategoryCacheModel)obj;
 
-		if (categoryId == assetCategoryCacheModel.categoryId) {
+		if ((categoryId == assetCategoryCacheModel.categoryId) &&
+			(mvccVersion == assetCategoryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AssetCategoryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, categoryId);
+		int hashCode = HashUtil.hash(0, categoryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -106,6 +123,8 @@ public class AssetCategoryCacheModel
 	@Override
 	public AssetCategory toEntityModel() {
 		AssetCategoryImpl assetCategoryImpl = new AssetCategoryImpl();
+
+		assetCategoryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetCategoryImpl.setUuid("");
@@ -188,6 +207,7 @@ public class AssetCategoryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -217,6 +237,8 @@ public class AssetCategoryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -280,6 +302,7 @@ public class AssetCategoryCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long categoryId;

@@ -123,6 +123,8 @@ public class AssetCategoryPersistenceTest {
 
 		AssetCategory newAssetCategory = _persistence.create(pk);
 
+		newAssetCategory.setMvccVersion(RandomTestUtil.nextLong());
+
 		newAssetCategory.setUuid(RandomTestUtil.randomString());
 
 		newAssetCategory.setExternalReferenceCode(
@@ -159,6 +161,9 @@ public class AssetCategoryPersistenceTest {
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(
 			newAssetCategory.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingAssetCategory.getMvccVersion(),
+			newAssetCategory.getMvccVersion());
 		Assert.assertEquals(
 			existingAssetCategory.getUuid(), newAssetCategory.getUuid());
 		Assert.assertEquals(
@@ -391,12 +396,13 @@ public class AssetCategoryPersistenceTest {
 
 	protected OrderByComparator<AssetCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AssetCategory", "uuid", true, "externalReferenceCode", true,
-			"categoryId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"parentCategoryId", true, "leftCategoryId", true, "rightCategoryId",
-			true, "name", true, "title", true, "description", true,
-			"vocabularyId", true, "lastPublishDate", true);
+			"AssetCategory", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "categoryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "parentCategoryId", true,
+			"leftCategoryId", true, "rightCategoryId", true, "name", true,
+			"title", true, "description", true, "vocabularyId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -666,6 +672,8 @@ public class AssetCategoryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AssetCategory assetCategory = _persistence.create(pk);
+
+		assetCategory.setMvccVersion(RandomTestUtil.nextLong());
 
 		assetCategory.setUuid(RandomTestUtil.randomString());
 
@@ -984,6 +992,8 @@ public class AssetCategoryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		AssetCategory assetCategory = _persistence.create(pk);
+
+		assetCategory.setMvccVersion(RandomTestUtil.nextLong());
 
 		assetCategory.setUuid(RandomTestUtil.randomString());
 

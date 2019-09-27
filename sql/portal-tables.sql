@@ -81,6 +81,7 @@ create table AnnouncementsFlag (
 );
 
 create table AssetCategory (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	categoryId LONG not null primary key,
@@ -115,6 +116,7 @@ create table AssetEntries_AssetTags (
 );
 
 create table AssetEntry (
+	mvccVersion LONG default 0 not null,
 	entryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -145,6 +147,7 @@ create table AssetEntry (
 );
 
 create table AssetLink (
+	mvccVersion LONG default 0 not null,
 	linkId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -157,6 +160,7 @@ create table AssetLink (
 );
 
 create table AssetTag (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	tagId LONG not null primary key,
 	groupId LONG,
@@ -171,6 +175,7 @@ create table AssetTag (
 );
 
 create table AssetVocabulary (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	vocabularyId LONG not null primary key,

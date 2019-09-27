@@ -31,6 +31,7 @@ public class AssetVocabularySoap implements Serializable {
 	public static AssetVocabularySoap toSoapModel(AssetVocabulary model) {
 		AssetVocabularySoap soapModel = new AssetVocabularySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setVocabularyId(model.getVocabularyId());
@@ -102,6 +103,14 @@ public class AssetVocabularySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setVocabularyId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -216,6 +225,7 @@ public class AssetVocabularySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _vocabularyId;

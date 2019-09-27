@@ -16,6 +16,7 @@ package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AssetTagModel
-	extends BaseModel<AssetTag>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<AssetTag>, MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +58,22 @@ public interface AssetTagModel
 	 * @param primaryKey the primary key of this asset tag
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this asset tag.
+	 *
+	 * @return the mvcc version of this asset tag
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this asset tag.
+	 *
+	 * @param mvccVersion the mvcc version of this asset tag
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this asset tag.

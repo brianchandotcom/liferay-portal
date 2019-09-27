@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -42,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetEntryModel
 	extends AttachedModel, BaseModel<AssetEntry>, GroupedModel, LocalizedModel,
-			ShardedModel {
+			MVCCModel, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface AssetEntryModel
 	 * @param primaryKey the primary key of this asset entry
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this asset entry.
+	 *
+	 * @return the mvcc version of this asset entry
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this asset entry.
+	 *
+	 * @param mvccVersion the mvcc version of this asset entry
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the entry ID of this asset entry.

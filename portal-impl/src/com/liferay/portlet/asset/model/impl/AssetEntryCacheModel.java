@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetEntryCacheModel
-	implements CacheModel<AssetEntry>, Externalizable {
+	implements CacheModel<AssetEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -47,7 +48,9 @@ public class AssetEntryCacheModel
 
 		AssetEntryCacheModel assetEntryCacheModel = (AssetEntryCacheModel)obj;
 
-		if (entryId == assetEntryCacheModel.entryId) {
+		if ((entryId == assetEntryCacheModel.entryId) &&
+			(mvccVersion == assetEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -56,14 +59,28 @@ public class AssetEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, entryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
-		sb.append("{entryId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", entryId=");
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -126,6 +143,7 @@ public class AssetEntryCacheModel
 	public AssetEntry toEntityModel() {
 		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
 
+		assetEntryImpl.setMvccVersion(mvccVersion);
 		assetEntryImpl.setEntryId(entryId);
 		assetEntryImpl.setGroupId(groupId);
 		assetEntryImpl.setCompanyId(companyId);
@@ -248,6 +266,8 @@ public class AssetEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		entryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -291,6 +311,8 @@ public class AssetEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(entryId);
 
 		objectOutput.writeLong(groupId);
@@ -381,6 +403,7 @@ public class AssetEntryCacheModel
 		objectOutput.writeInt(viewCount);
 	}
 
+	public long mvccVersion;
 	public long entryId;
 	public long groupId;
 	public long companyId;

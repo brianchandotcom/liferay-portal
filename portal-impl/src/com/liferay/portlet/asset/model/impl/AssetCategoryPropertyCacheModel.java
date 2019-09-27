@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import java.util.Date;
  */
 @Deprecated
 public class AssetCategoryPropertyCacheModel
-	implements CacheModel<AssetCategoryProperty>, Externalizable {
+	implements CacheModel<AssetCategoryProperty>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,8 +51,9 @@ public class AssetCategoryPropertyCacheModel
 		AssetCategoryPropertyCacheModel assetCategoryPropertyCacheModel =
 			(AssetCategoryPropertyCacheModel)obj;
 
-		if (categoryPropertyId ==
-				assetCategoryPropertyCacheModel.categoryPropertyId) {
+		if ((categoryPropertyId ==
+				assetCategoryPropertyCacheModel.categoryPropertyId) &&
+			(mvccVersion == assetCategoryPropertyCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -61,14 +63,28 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, categoryPropertyId);
+		int hashCode = HashUtil.hash(0, categoryPropertyId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{categoryPropertyId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", categoryPropertyId=");
 		sb.append(categoryPropertyId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -96,6 +112,7 @@ public class AssetCategoryPropertyCacheModel
 		AssetCategoryPropertyImpl assetCategoryPropertyImpl =
 			new AssetCategoryPropertyImpl();
 
+		assetCategoryPropertyImpl.setMvccVersion(mvccVersion);
 		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
 		assetCategoryPropertyImpl.setCompanyId(companyId);
 		assetCategoryPropertyImpl.setUserId(userId);
@@ -144,6 +161,8 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		categoryPropertyId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -160,6 +179,8 @@ public class AssetCategoryPropertyCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(categoryPropertyId);
 
 		objectOutput.writeLong(companyId);
@@ -193,6 +214,7 @@ public class AssetCategoryPropertyCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public long categoryPropertyId;
 	public long companyId;
 	public long userId;

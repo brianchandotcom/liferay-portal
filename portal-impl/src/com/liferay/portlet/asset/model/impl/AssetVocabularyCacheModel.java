@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class AssetVocabularyCacheModel
-	implements CacheModel<AssetVocabulary>, Externalizable {
+	implements CacheModel<AssetVocabulary>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class AssetVocabularyCacheModel
 		AssetVocabularyCacheModel assetVocabularyCacheModel =
 			(AssetVocabularyCacheModel)obj;
 
-		if (vocabularyId == assetVocabularyCacheModel.vocabularyId) {
+		if ((vocabularyId == assetVocabularyCacheModel.vocabularyId) &&
+			(mvccVersion == assetVocabularyCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class AssetVocabularyCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, vocabularyId);
+		int hashCode = HashUtil.hash(0, vocabularyId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -100,6 +117,8 @@ public class AssetVocabularyCacheModel
 	@Override
 	public AssetVocabulary toEntityModel() {
 		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
+
+		assetVocabularyImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			assetVocabularyImpl.setUuid("");
@@ -183,6 +202,7 @@ public class AssetVocabularyCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -205,6 +225,8 @@ public class AssetVocabularyCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -268,6 +290,7 @@ public class AssetVocabularyCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long vocabularyId;

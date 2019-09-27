@@ -42,6 +42,7 @@ public class AssetLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("linkId", getLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -57,6 +58,12 @@ public class AssetLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long linkId = (Long)attributes.get("linkId");
 
 		if (linkId != null) {
@@ -160,6 +167,16 @@ public class AssetLinkWrapper
 	@Override
 	public long getLinkId() {
 		return model.getLinkId();
+	}
+
+	/**
+	 * Returns the mvcc version of this asset link.
+	 *
+	 * @return the mvcc version of this asset link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -280,6 +297,16 @@ public class AssetLinkWrapper
 	@Override
 	public void setLinkId(long linkId) {
 		model.setLinkId(linkId);
+	}
+
+	/**
+	 * Sets the mvcc version of this asset link.
+	 *
+	 * @param mvccVersion the mvcc version of this asset link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

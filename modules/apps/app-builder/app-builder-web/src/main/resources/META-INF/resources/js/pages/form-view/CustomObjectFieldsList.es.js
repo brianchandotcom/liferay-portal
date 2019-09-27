@@ -77,12 +77,12 @@ export default ({keywords}) => {
 				dataDefinition,
 				dataDefinitionFieldName: name,
 				dataLayoutBuilder,
-				generateNameFromLabel: false,
 				indexes: {
 					columnIndex: 0,
 					pageIndex: activePage,
 					rowIndex: pages[activePage].rows.length
-				}
+				},
+				skipFieldNameGeneration: true
 			})
 		);
 	};

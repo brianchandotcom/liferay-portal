@@ -20,6 +20,7 @@ import {
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES
 } from './actions.es';
+import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
 
 export default ({dataLayoutBuilder, children}) => {
 	useEffect(() => {
@@ -46,7 +47,14 @@ export default ({dataLayoutBuilder, children}) => {
 		];
 	}, [dataLayoutBuilder]);
 
-	const [, dispatch] = useContext(FormViewContext);
+	const [{dataDefinition}, dispatch] = useContext(FormViewContext);
+
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getProvider();
+
+		provider.props.fieldNameGenerator = desiredFieldName =>
+			generateDataDefinitionFieldName(dataDefinition, desiredFieldName);
+	}, [dataDefinition, dataLayoutBuilder]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();

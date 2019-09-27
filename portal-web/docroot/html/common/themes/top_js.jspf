@@ -269,13 +269,13 @@
 				return '<%= HtmlUtil.escapeJS(themeDisplay.getURLHome()) %>';
 			},
 			getUserEmailAddress: function() {
-				return '<%= themeDisplay.isSignedIn() ? user.getEmailAddress() : StringPool.BLANK %>';
+				return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(user.getEmailAddress()) : StringPool.BLANK %>';
 			},
 			getUserId: function() {
 				return '<%= themeDisplay.getUserId() %>';
 			},
 			getUserName: function() {
-				return '<%= themeDisplay.isSignedIn() ? UnicodeFormatter.toString(user.getFullName()) : StringPool.BLANK %>';
+				return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(UnicodeFormatter.toString(user.getFullName())) : StringPool.BLANK %>';
 			},
 			isAddSessionIdToURL: function() {
 				return <%= themeDisplay.isAddSessionIdToURL() %>;

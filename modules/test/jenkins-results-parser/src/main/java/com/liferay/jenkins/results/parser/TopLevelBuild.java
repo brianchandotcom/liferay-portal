@@ -391,6 +391,21 @@ public abstract class TopLevelBuild extends BaseBuild {
 						"build_slave_usage_gauge", 1, getMetricLabels()));
 			}
 		}
+
+		try {
+			String testSuiteName = getTestSuiteName();
+
+			if (jobName.contains("test-portal-acceptance-pullrequest(") &&
+				testSuiteName.equals("relevant")) {
+
+				_stableJob = JobFactory.newJob(jobName, "stable", branchName);
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Unable to create stable job for " + jobName);
+
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -1531,6 +1546,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
 
 	private boolean _compareToUpstream = true;
+	private Job _stableJob;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;
 	private int _metricsHostPort;

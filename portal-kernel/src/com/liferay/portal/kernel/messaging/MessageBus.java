@@ -21,6 +21,10 @@ import java.util.Collection;
  */
 public interface MessageBus {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void addDestination(Destination destination);
 
 	public boolean addMessageBusEventListener(
@@ -41,16 +45,32 @@ public interface MessageBus {
 	public boolean registerMessageListener(
 		String destinationName, MessageListener messageListener);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public Destination removeDestination(String destinationName);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public Destination removeDestination(
 		String destinationName, boolean closeOnRemove);
 
 	public boolean removeMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void replace(Destination destination);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	public void replace(Destination destination, boolean closeOnReplace);
 
 	public void sendMessage(String destinationName, Message message);

@@ -139,6 +139,10 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		_messageListenerServiceTracker.open();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public synchronized void addDestination(Destination destination) {
 		doAddDestination(destination);
@@ -231,11 +235,19 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Destination removeDestination(String destinationName) {
 		return removeDestination(destinationName, true);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public synchronized Destination removeDestination(
 		String destinationName, boolean closeOnRemove) {
@@ -250,11 +262,19 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		return _messageBusEventListeners.remove(messageBusEventListener);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void replace(Destination destination) {
 		replace(destination, true);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public synchronized void replace(
 		Destination destination, boolean closeOnRemove) {

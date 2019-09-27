@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -44,15 +46,19 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.resource.v1_0.AssigneeUserResource;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +70,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -191,7 +199,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 	public void testGetProcessAssigneeUsersPage() throws Exception {
 		Page<AssigneeUser> page =
 			assigneeUserResource.getProcessAssigneeUsersPage(
-				testGetProcessAssigneeUsersPage_getProcessId());
+				testGetProcessAssigneeUsersPage_getProcessId(), null,
+				Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -205,7 +214,7 @@ public abstract class BaseAssigneeUserResourceTestCase {
 					irrelevantProcessId, randomIrrelevantAssigneeUser());
 
 			page = assigneeUserResource.getProcessAssigneeUsersPage(
-				irrelevantProcessId);
+				irrelevantProcessId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -223,7 +232,8 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			testGetProcessAssigneeUsersPage_addAssigneeUser(
 				processId, randomAssigneeUser());
 
-		page = assigneeUserResource.getProcessAssigneeUsersPage(processId);
+		page = assigneeUserResource.getProcessAssigneeUsersPage(
+			processId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -231,6 +241,161 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			Arrays.asList(assigneeUser1, assigneeUser2),
 			(List<AssigneeUser>)page.getItems());
 		assertValid(page);
+	}
+
+	@Test
+	public void testGetProcessAssigneeUsersPageWithPagination()
+		throws Exception {
+
+		Long processId = testGetProcessAssigneeUsersPage_getProcessId();
+
+		AssigneeUser assigneeUser1 =
+			testGetProcessAssigneeUsersPage_addAssigneeUser(
+				processId, randomAssigneeUser());
+
+		AssigneeUser assigneeUser2 =
+			testGetProcessAssigneeUsersPage_addAssigneeUser(
+				processId, randomAssigneeUser());
+
+		AssigneeUser assigneeUser3 =
+			testGetProcessAssigneeUsersPage_addAssigneeUser(
+				processId, randomAssigneeUser());
+
+		Page<AssigneeUser> page1 =
+			assigneeUserResource.getProcessAssigneeUsersPage(
+				processId, null, Pagination.of(1, 2), null);
+
+		List<AssigneeUser> assigneeUsers1 =
+			(List<AssigneeUser>)page1.getItems();
+
+		Assert.assertEquals(
+			assigneeUsers1.toString(), 2, assigneeUsers1.size());
+
+		Page<AssigneeUser> page2 =
+			assigneeUserResource.getProcessAssigneeUsersPage(
+				processId, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<AssigneeUser> assigneeUsers2 =
+			(List<AssigneeUser>)page2.getItems();
+
+		Assert.assertEquals(
+			assigneeUsers2.toString(), 1, assigneeUsers2.size());
+
+		Page<AssigneeUser> page3 =
+			assigneeUserResource.getProcessAssigneeUsersPage(
+				processId, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(assigneeUser1, assigneeUser2, assigneeUser3),
+			(List<AssigneeUser>)page3.getItems());
+	}
+
+	@Test
+	public void testGetProcessAssigneeUsersPageWithSortDateTime()
+		throws Exception {
+
+		testGetProcessAssigneeUsersPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, assigneeUser1, assigneeUser2) -> {
+				BeanUtils.setProperty(
+					assigneeUser1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProcessAssigneeUsersPageWithSortInteger()
+		throws Exception {
+
+		testGetProcessAssigneeUsersPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, assigneeUser1, assigneeUser2) -> {
+				BeanUtils.setProperty(assigneeUser1, entityField.getName(), 0);
+				BeanUtils.setProperty(assigneeUser2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetProcessAssigneeUsersPageWithSortString()
+		throws Exception {
+
+		testGetProcessAssigneeUsersPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, assigneeUser1, assigneeUser2) -> {
+				Class<?> clazz = assigneeUser1.getClass();
+
+				Method method = clazz.getMethod(
+					"get" +
+						StringUtil.upperCaseFirstLetter(entityField.getName()));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						assigneeUser1, entityField.getName(),
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						assigneeUser2, entityField.getName(),
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else {
+					BeanUtils.setProperty(
+						assigneeUser1, entityField.getName(), "Aaa");
+					BeanUtils.setProperty(
+						assigneeUser2, entityField.getName(), "Bbb");
+				}
+			});
+	}
+
+	protected void testGetProcessAssigneeUsersPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, AssigneeUser, AssigneeUser, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long processId = testGetProcessAssigneeUsersPage_getProcessId();
+
+		AssigneeUser assigneeUser1 = randomAssigneeUser();
+		AssigneeUser assigneeUser2 = randomAssigneeUser();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, assigneeUser1, assigneeUser2);
+		}
+
+		assigneeUser1 = testGetProcessAssigneeUsersPage_addAssigneeUser(
+			processId, assigneeUser1);
+
+		assigneeUser2 = testGetProcessAssigneeUsersPage_addAssigneeUser(
+			processId, assigneeUser2);
+
+		for (EntityField entityField : entityFields) {
+			Page<AssigneeUser> ascPage =
+				assigneeUserResource.getProcessAssigneeUsersPage(
+					processId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(assigneeUser1, assigneeUser2),
+				(List<AssigneeUser>)ascPage.getItems());
+
+			Page<AssigneeUser> descPage =
+				assigneeUserResource.getProcessAssigneeUsersPage(
+					processId, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(assigneeUser2, assigneeUser1),
+				(List<AssigneeUser>)descPage.getItems());
+		}
 	}
 
 	protected AssigneeUser testGetProcessAssigneeUsersPage_addAssigneeUser(
@@ -357,6 +522,30 @@ public abstract class BaseAssigneeUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
+				if (assigneeUser.getOnTimeTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
+				if (assigneeUser.getOverdueTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", additionalAssertFieldName)) {
+				if (assigneeUser.getTaskCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -442,6 +631,39 @@ public abstract class BaseAssigneeUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("onTimeTaskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser1.getOnTimeTaskCount(),
+						assigneeUser2.getOnTimeTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueTaskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser1.getOverdueTaskCount(),
+						assigneeUser2.getOverdueTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser1.getTaskCount(),
+						assigneeUser2.getTaskCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -478,6 +700,39 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			if (Objects.equals("name", fieldName)) {
 				if (!Objects.deepEquals(
 						assigneeUser.getName(), jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("onTimeTaskCount", fieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser.getOnTimeTaskCount(),
+						jsonObject.getLong("onTimeTaskCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueTaskCount", fieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser.getOverdueTaskCount(),
+						jsonObject.getLong("overdueTaskCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("taskCount", fieldName)) {
+				if (!Objects.deepEquals(
+						assigneeUser.getTaskCount(),
+						jsonObject.getLong("taskCount"))) {
 
 					return false;
 				}
@@ -563,6 +818,21 @@ public abstract class BaseAssigneeUserResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("onTimeTaskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("overdueTaskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("taskCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -590,6 +860,9 @@ public abstract class BaseAssigneeUserResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				image = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
+				onTimeTaskCount = RandomTestUtil.randomLong();
+				overdueTaskCount = RandomTestUtil.randomLong();
+				taskCount = RandomTestUtil.randomLong();
 			}
 		};
 	}

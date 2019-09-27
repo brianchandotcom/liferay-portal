@@ -93,6 +93,36 @@ public class AssigneeUserSerDes {
 			sb.append("\"");
 		}
 
+		if (assigneeUser.getOnTimeTaskCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"onTimeTaskCount\": ");
+
+			sb.append(assigneeUser.getOnTimeTaskCount());
+		}
+
+		if (assigneeUser.getOverdueTaskCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"overdueTaskCount\": ");
+
+			sb.append(assigneeUser.getOverdueTaskCount());
+		}
+
+		if (assigneeUser.getTaskCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taskCount\": ");
+
+			sb.append(assigneeUser.getTaskCount());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -133,6 +163,31 @@ public class AssigneeUserSerDes {
 			map.put("name", String.valueOf(assigneeUser.getName()));
 		}
 
+		if (assigneeUser.getOnTimeTaskCount() == null) {
+			map.put("onTimeTaskCount", null);
+		}
+		else {
+			map.put(
+				"onTimeTaskCount",
+				String.valueOf(assigneeUser.getOnTimeTaskCount()));
+		}
+
+		if (assigneeUser.getOverdueTaskCount() == null) {
+			map.put("overdueTaskCount", null);
+		}
+		else {
+			map.put(
+				"overdueTaskCount",
+				String.valueOf(assigneeUser.getOverdueTaskCount()));
+		}
+
+		if (assigneeUser.getTaskCount() == null) {
+			map.put("taskCount", null);
+		}
+		else {
+			map.put("taskCount", String.valueOf(assigneeUser.getTaskCount()));
+		}
+
 		return map;
 	}
 
@@ -168,6 +223,24 @@ public class AssigneeUserSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					assigneeUser.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "onTimeTaskCount")) {
+				if (jsonParserFieldValue != null) {
+					assigneeUser.setOnTimeTaskCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "overdueTaskCount")) {
+				if (jsonParserFieldValue != null) {
+					assigneeUser.setOverdueTaskCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "taskCount")) {
+				if (jsonParserFieldValue != null) {
+					assigneeUser.setTaskCount(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

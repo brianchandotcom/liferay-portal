@@ -139,18 +139,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processAssigneeUsers(processId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processAssigneeUsers(page: ___, pageSize: ___, processId: ___, sorts: ___, taskKeys: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AssigneeUserPage processAssigneeUsers(
-			@GraphQLName("processId") Long processId)
+			@GraphQLName("processId") Long processId,
+			@GraphQLName("taskKeys") String[] taskKeys,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_assigneeUserResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			assigneeUserResource -> new AssigneeUserPage(
-				assigneeUserResource.getProcessAssigneeUsersPage(processId)));
+				assigneeUserResource.getProcessAssigneeUsersPage(
+					processId, taskKeys, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						assigneeUserResource, sortsString))));
 	}
 
 	/**

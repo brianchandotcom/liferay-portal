@@ -87,6 +87,69 @@ public class AssigneeUser {
 
 	protected String name;
 
+	public Long getOnTimeTaskCount() {
+		return onTimeTaskCount;
+	}
+
+	public void setOnTimeTaskCount(Long onTimeTaskCount) {
+		this.onTimeTaskCount = onTimeTaskCount;
+	}
+
+	public void setOnTimeTaskCount(
+		UnsafeSupplier<Long, Exception> onTimeTaskCountUnsafeSupplier) {
+
+		try {
+			onTimeTaskCount = onTimeTaskCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long onTimeTaskCount;
+
+	public Long getOverdueTaskCount() {
+		return overdueTaskCount;
+	}
+
+	public void setOverdueTaskCount(Long overdueTaskCount) {
+		this.overdueTaskCount = overdueTaskCount;
+	}
+
+	public void setOverdueTaskCount(
+		UnsafeSupplier<Long, Exception> overdueTaskCountUnsafeSupplier) {
+
+		try {
+			overdueTaskCount = overdueTaskCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long overdueTaskCount;
+
+	public Long getTaskCount() {
+		return taskCount;
+	}
+
+	public void setTaskCount(Long taskCount) {
+		this.taskCount = taskCount;
+	}
+
+	public void setTaskCount(
+		UnsafeSupplier<Long, Exception> taskCountUnsafeSupplier) {
+
+		try {
+			taskCount = taskCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long taskCount;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

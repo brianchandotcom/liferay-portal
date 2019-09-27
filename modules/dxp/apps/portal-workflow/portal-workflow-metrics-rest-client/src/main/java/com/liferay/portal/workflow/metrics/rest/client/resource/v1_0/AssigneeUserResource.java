@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.client.resource.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
+import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.AssigneeUserSerDes;
 
 import java.util.LinkedHashMap;
@@ -37,11 +38,14 @@ public interface AssigneeUserResource {
 		return new Builder();
 	}
 
-	public Page<AssigneeUser> getProcessAssigneeUsersPage(Long processId)
+	public Page<AssigneeUser> getProcessAssigneeUsersPage(
+			Long processId, String[] taskKeys, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessAssigneeUsersPageHttpResponse(
-			Long processId)
+			Long processId, String[] taskKeys, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -100,11 +104,14 @@ public interface AssigneeUserResource {
 	public static class AssigneeUserResourceImpl
 		implements AssigneeUserResource {
 
-		public Page<AssigneeUser> getProcessAssigneeUsersPage(Long processId)
+		public Page<AssigneeUser> getProcessAssigneeUsersPage(
+				Long processId, String[] taskKeys, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getProcessAssigneeUsersPageHttpResponse(processId);
+				getProcessAssigneeUsersPageHttpResponse(
+					processId, taskKeys, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -118,7 +125,8 @@ public interface AssigneeUserResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessAssigneeUsersPageHttpResponse(
-				Long processId)
+				Long processId, String[] taskKeys, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -141,6 +149,24 @@ public interface AssigneeUserResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (taskKeys != null) {
+				for (int i = 0; i < taskKeys.length; i++) {
+					httpInvoker.parameter(
+						"taskKeys", String.valueOf(taskKeys[i]));
+				}
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

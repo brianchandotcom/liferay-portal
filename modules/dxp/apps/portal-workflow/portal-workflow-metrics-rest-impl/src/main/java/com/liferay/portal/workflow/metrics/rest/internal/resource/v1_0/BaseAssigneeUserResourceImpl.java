@@ -17,8 +17,10 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeUser;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.AssigneeUserResource;
@@ -43,6 +45,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -61,13 +65,23 @@ public abstract class BaseAssigneeUserResourceImpl
 	 */
 	@Override
 	@GET
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "processId")})
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
 	@Path("/processes/{processId}/assignee-users")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AssigneeUser")})
 	public Page<AssigneeUser> getProcessAssigneeUsersPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
-				processId)
+				processId,
+			@Parameter(hidden = true) @QueryParam("taskKeys") String[] taskKeys,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

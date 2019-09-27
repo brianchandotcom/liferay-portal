@@ -71,7 +71,7 @@ public class AddResourceVerifierPlugin implements VerifierPlugin {
 						String relativePathString = relativePath.toString();
 
 						relativePathString = relativePathString.replace(
-							"\\", "/");
+							'\\', '/');
 
 						jar.putResource(relativePathString, resource, true);
 

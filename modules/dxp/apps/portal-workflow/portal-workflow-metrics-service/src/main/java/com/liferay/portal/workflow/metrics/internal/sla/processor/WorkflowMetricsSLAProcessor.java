@@ -527,6 +527,7 @@ public class WorkflowMetricsSLAProcessor {
 
 		return new WorkflowMetricsSLATaskResult() {
 			{
+				setAssigneeId(document.getLong("assigneeId"));
 				setBreached(
 					WorkflowMetricsSLAProcessor.this.isBreached(
 						document, nowLocalDateTime,

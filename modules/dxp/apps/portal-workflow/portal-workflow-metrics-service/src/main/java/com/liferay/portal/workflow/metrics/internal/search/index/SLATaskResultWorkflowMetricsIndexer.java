@@ -82,6 +82,11 @@ public class SLATaskResultWorkflowMetricsIndexer
 				workflowMetricsSLATaskResult.getTaskId(),
 				workflowMetricsSLATaskResult.getTokenId()));
 
+		if (workflowMetricsSLATaskResult.getAssigneeId() != null) {
+			document.addKeyword(
+				"assigneeId", workflowMetricsSLATaskResult.getAssigneeId());
+		}
+
 		document.addKeyword(
 			"companyId", workflowMetricsSLATaskResult.getCompanyId());
 		document.addKeyword(

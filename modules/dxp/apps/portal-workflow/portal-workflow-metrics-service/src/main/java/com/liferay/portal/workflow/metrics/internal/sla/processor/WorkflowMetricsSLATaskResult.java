@@ -23,6 +23,10 @@ import java.time.LocalDateTime;
  */
 public class WorkflowMetricsSLATaskResult {
 
+	public Long getAssigneeId() {
+		return _assigneeId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -65,6 +69,10 @@ public class WorkflowMetricsSLATaskResult {
 
 	public boolean isOnTime() {
 		return _onTime;
+	}
+
+	public void setAssigneeId(Long assigneeId) {
+		_assigneeId = assigneeId;
 	}
 
 	public void setBreached(boolean breached) {
@@ -115,6 +123,7 @@ public class WorkflowMetricsSLATaskResult {
 		_workfowMetricsSLAStatus = workfowMetricsSLAStatus;
 	}
 
+	private Long _assigneeId;
 	private boolean _breached;
 	private long _companyId;
 	private long _instanceId;

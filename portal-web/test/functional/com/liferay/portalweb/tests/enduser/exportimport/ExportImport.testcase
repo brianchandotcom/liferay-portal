@@ -1167,6 +1167,101 @@ definition {
 			voteCount = "1");
 	}
 
+	@description = "This is a use case for LPS-88331."
+	@priority = "3"
+	test ExportImportSiteWithNestedDocumentsAndMediaField {
+		JSONGroup.addGroup(groupName = "Site A");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-a");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "DM Document Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DynamicDataMapping.addFieldNested(
+			field = "Documents and Media",
+			fieldFieldLabel = "Documents and Media",
+			fieldName = "DocumentsAndMedia");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text,Documents and Media",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-a");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "DocumentsAndMedia",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentDocumentsAndMedia = "DM Document Title.txt",
+			webContentText = "Web Content Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site A");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteAllCP();
+
+		JSONGroup.addGroup(groupName = "Site B");
+
+		SitePages.openPagesAdmin(siteURLKey = "Site B");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site B");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-b");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		WebContent.viewCP(
+			webContentDocumentsAndMedia = "DM Document Title",
+			webContentText = "Web Content Text",
+			webContentTitle = "Web Content Title");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.repository.InvalidRepositoryIdException");
+	}
+
 	@description = "This is a use case for LPS-54392 and LPS-88014."
 	@priority = "3"
 	test ExportImportSiteWithReferencedWebContent {

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -193,8 +194,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	private Optional<Cookie> _getCookieOptional(
 		HttpServletRequest httpServletRequest) {
 
+		Cookie[] cookies = httpServletRequest.getCookies();
+
+		if (ArrayUtil.isEmpty(cookies)) {
+			return Optional.empty();
+		}
+
 		return Stream.of(
-			httpServletRequest.getCookies()
+			cookies
 		).filter(
 			cookie -> Objects.equals(
 				cookie.getName(), _AB_TEST_VARIANT_ID_COOKIE_NAME)

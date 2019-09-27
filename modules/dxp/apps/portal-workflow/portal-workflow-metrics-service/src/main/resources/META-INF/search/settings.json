@@ -1,5 +1,4 @@
 {
-
 	"analysis": {
 		"normalizer": {
 			"keyword_lowercase": {

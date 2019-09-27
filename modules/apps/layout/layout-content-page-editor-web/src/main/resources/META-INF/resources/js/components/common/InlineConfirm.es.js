@@ -78,6 +78,7 @@ const InlineConfirm = props => {
 	return (
 		<div
 			className="fragments-editor__inline-confirm"
+			onKeyDown={e => e.key === 'Escape' && onCancelButtonClick()}
 			ref={wrapper}
 			role="alertdialog"
 			tabIndex="-1"

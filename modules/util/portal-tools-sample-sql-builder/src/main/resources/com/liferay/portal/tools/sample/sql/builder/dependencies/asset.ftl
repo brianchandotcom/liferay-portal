@@ -9,7 +9,3 @@
 <#list dataFactory.assetTagModels as assetTagModel>
 	${dataFactory.toInsertSQL(assetTagModel)}
 </#list>
-
-<#list dataFactory.assetTagStatsModels as assetTagStatsModel>
-	${dataFactory.toInsertSQL(assetTagStatsModel)}
-</#list>

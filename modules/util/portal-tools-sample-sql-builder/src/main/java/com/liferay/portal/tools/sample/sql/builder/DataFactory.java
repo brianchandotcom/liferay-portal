@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
-import com.liferay.asset.kernel.model.AssetTagStatsModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.blogs.constants.BlogsPortletKeys;
@@ -203,7 +202,6 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
-import com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl;
 import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
@@ -492,18 +490,6 @@ public class DataFactory {
 		}
 
 		return allAssetTagModels;
-	}
-
-	public List<AssetTagStatsModel> getAssetTagStatsModels() {
-		List<AssetTagStatsModel> allAssetTagStatsModels = new ArrayList<>();
-
-		for (List<AssetTagStatsModel> assetTagStatsModels :
-				_assetTagStatsModelsArray) {
-
-			allAssetTagStatsModels.addAll(assetTagStatsModels);
-		}
-
-		return allAssetTagStatsModels;
 	}
 
 	public List<AssetVocabularyModel> getAssetVocabularyModels() {
@@ -864,14 +850,10 @@ public class DataFactory {
 		_assetTagModelsMaps =
 			(Map<Long, List<AssetTagModel>>[])
 				new HashMap<?, ?>[_maxGroupsCount];
-		_assetTagStatsModelsArray =
-			(List<AssetTagStatsModel>[])new List<?>[_maxGroupsCount];
 
 		for (int i = 1; i <= _maxGroupsCount; i++) {
 			List<AssetTagModel> assetTagModels = new ArrayList<>(
 				_maxAssetTagCount);
-			List<AssetTagStatsModel> assetTagStatsModels = new ArrayList<>(
-				_maxAssetTagCount * 3);
 
 			for (int j = 0; j < _maxAssetTagCount; j++) {
 				AssetTagModel assetTagModel = new AssetTagModelImpl();
@@ -890,26 +872,9 @@ public class DataFactory {
 				assetTagModel.setLastPublishDate(new Date());
 
 				assetTagModels.add(assetTagModel);
-
-				AssetTagStatsModel assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(), getClassNameId(BlogsEntry.class));
-
-				assetTagStatsModels.add(assetTagStatsModel);
-
-				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(),
-					getClassNameId(JournalArticle.class));
-
-				assetTagStatsModels.add(assetTagStatsModel);
-
-				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(), getClassNameId(WikiPage.class));
-
-				assetTagStatsModels.add(assetTagStatsModel);
 			}
 
 			_assetTagModelsArray[i - 1] = assetTagModels;
-			_assetTagStatsModelsArray[i - 1] = assetTagStatsModels;
 
 			Map<Long, List<AssetTagModel>> assetTagModelsMap = new HashMap<>();
 
@@ -3167,18 +3132,6 @@ public class DataFactory {
 		return assetEntryModel;
 	}
 
-	protected AssetTagStatsModel newAssetTagStatsModel(
-		long tagId, long classNameId) {
-
-		AssetTagStatsModel assetTagStatsModel = new AssetTagStatsModelImpl();
-
-		assetTagStatsModel.setTagStatsId(_counter.get());
-		assetTagStatsModel.setTagId(tagId);
-		assetTagStatsModel.setClassNameId(classNameId);
-
-		return assetTagStatsModel;
-	}
-
 	protected AssetVocabularyModel newAssetVocabularyModel(
 		long grouId, long userId, String userName, String name) {
 
@@ -3904,7 +3857,6 @@ public class DataFactory {
 	private Map<Long, SimpleCounter>[] _assetTagCounters;
 	private List<AssetTagModel>[] _assetTagModelsArray;
 	private Map<Long, List<AssetTagModel>>[] _assetTagModelsMaps;
-	private List<AssetTagStatsModel>[] _assetTagStatsModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
 	private final Map<String, ClassNameModel> _classNameModels =
 		new HashMap<>();

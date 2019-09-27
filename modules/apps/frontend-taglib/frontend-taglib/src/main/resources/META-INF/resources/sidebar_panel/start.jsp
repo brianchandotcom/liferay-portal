@@ -18,6 +18,6 @@
 
 <div class="info-panel sidenav-menu-slider">
 	<div class="sidebar sidebar-default sidenav-menu">
-		<aui:icon cssClass="icon-monospaced sidenav-close visible-xs-block" image="times" markupView="lexicon" url="javascript:;" />
+		<aui:icon cssClass="icon-monospaced d-block d-sm-none sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 
 		<div id="<%= namespace %>sidebarPanel">

@@ -147,7 +147,7 @@ definition {
 
 	@description = "This test covers LPS-94508. It ensures that a tag can be created when selecting an item from autocomplete."
 	@priority = "5"
-	test AddAutoAssertionTagViaDMDocument {
+	test CreateTagUsingAutocomplete {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Documents and Media Page");

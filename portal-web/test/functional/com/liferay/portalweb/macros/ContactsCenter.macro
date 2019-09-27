@@ -18,4 +18,16 @@ definition {
 			value1 = "You have successfully added a new contact.");
 	}
 
-} 
+	macro viewPG {
+		AssertTextEquals(
+			key_contactText = "${contactName}",
+			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
+			value1 = "${contactName}");
+
+		AssertTextEquals(
+			key_contactText = "${emailAddress}",
+			locator1 = "ContactsCenter#CONTACT_CONTAINER_TEXT",
+			value1 = "${emailAddress}");
+	}
+
+}

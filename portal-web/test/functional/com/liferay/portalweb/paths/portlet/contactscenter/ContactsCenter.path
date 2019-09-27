@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTACT_CONTAINER_TEXT</td>
+	<td>//div[contains(@class,'contacts-container')]//*[contains(text(),'${key_contactText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

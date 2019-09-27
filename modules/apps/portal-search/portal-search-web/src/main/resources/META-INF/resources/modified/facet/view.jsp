@@ -22,7 +22,6 @@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetCalendarDisplayContext" %><%@
@@ -157,73 +156,14 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 	</liferay-ui:panel-container>
 
 	<aui:script use="liferay-search-modified-facet">
-		new Liferay.Search.ModifiedFacetFilter(A.one('#<portlet:namespace/>modifiedFacetForm'), Liferay.component('<portlet:namespace />fromInputDatePicker'), Liferay.component('<portlet:namespace />toInputDatePicker'));
+		new Liferay.Search.ModifiedFacetFilter({
+			form: A.one('#<portlet:namespace/>modifiedFacetForm'),
+			fromInputDatePicker: Liferay.component('<portlet:namespace />fromInputDatePicker'),
+			fromInputName: '<portlet:namespace />fromInput',
+			namespace: '<portlet:namespace />',
+			searchCustomRangeButton: A.one('#<portlet:namespace />searchCustomRangeButton'),
+			toInputDatePicker: Liferay.component('<portlet:namespace />toInputDatePicker'),
+			toInputName: '<portlet:namespace />toInput'
+		});
 	</aui:script>
 </c:if>
-
-<aui:script use="aui-form-validator">
-	var Util = Liferay.Util;
-
-	var customRangeFrom = Liferay.component('<%= renderResponse.getNamespace() %>fromInputDatePicker');
-	var customRangeTo = Liferay.component('<%= renderResponse.getNamespace() %>toInputDatePicker');
-	var searchButton = A.one('#<portlet:namespace />searchCustomRangeButton');
-
-	var preventKeyboardDateChange = function(event) {
-		if (!event.isKey('TAB')) {
-			event.preventDefault();
-		}
-	};
-
-	A.one('#<portlet:namespace />fromInput').on('keydown', preventKeyboardDateChange);
-	A.one('#<portlet:namespace />toInput').on('keydown', preventKeyboardDateChange);
-
-	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
-
-	A.mix(
-		DEFAULTS_FORM_VALIDATOR.STRINGS,
-		{
-			<portlet:namespace />dateRange: '<%= UnicodeLanguageUtil.get(request, "search-custom-range-invalid-date-range") %>'
-		},
-		true
-	);
-
-	A.mix(
-		DEFAULTS_FORM_VALIDATOR.RULES,
-		{
-			<portlet:namespace />dateRange: function(val, fieldNode, ruleValue) {
-				return A.Date.isGreaterOrEqual(customRangeTo.getDate(), customRangeFrom.getDate());
-			}
-		},
-		true
-	);
-
-	var customRangeValidator = new A.FormValidator(
-		{
-			boundingBox: document.<portlet:namespace />modifiedFacetForm,
-			fieldContainer: 'div',
-			on: {
-				errorField: function(event) {
-					Util.toggleDisabled(searchButton, true);
-				},
-				validField: function(event) {
-					Util.toggleDisabled(searchButton, false);
-				}
-			},
-			rules: {
-				'<portlet:namespace />fromInput': {
-					<portlet:namespace />dateRange: true
-				},
-				'<portlet:namespace />toInput': {
-					<portlet:namespace />dateRange: true
-				}
-			}
-		}
-	);
-
-	var onRangeSelectionChange = function(event) {
-		customRangeValidator.validate();
-	};
-
-	customRangeFrom.on('selectionChange', onRangeSelectionChange);
-	customRangeTo.on('selectionChange', onRangeSelectionChange);
-</aui:script>

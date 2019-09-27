@@ -15,27 +15,114 @@
 AUI.add(
 	'liferay-search-modified-facet',
 	function(A) {
-		var FacetUtil = Liferay.Search.FacetUtil;
+		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		var ModifiedFacetFilter = function(
-			form,
-			fromInputDatePicker,
-			toInputDatePicker
-		) {
+		var FacetUtil = Liferay.Search.FacetUtil;
+		var Language = Liferay.Language;
+		var Util = Liferay.Util;
+
+		var ModifiedFacetFilter = function(config) {
 			var instance = this;
 
-			instance.form = form;
-			instance.fromInputDatePicker = fromInputDatePicker;
-			instance.toInputDatePicker = toInputDatePicker;
+			instance.form = config.form;
+			instance.fromInputDatePicker = config.fromInputDatePicker;
+			instance.fromInputName = config.fromInputName;
+			instance.namespace = config.namespace;
+			instance.searchCustomRangeButton = config.searchCustomRangeButton;
+			instance.toInputDatePicker = config.toInputDatePicker;
+			instance.toInputName = config.toInputName;
 
-			var filterButton = instance.form.one(
-				'.modified-facet-custom-range-filter-button'
+			instance.fromInput = A.one('#' + instance.fromInputName);
+			instance.toInput = A.one('#' + instance.toInputName);
+
+			instance._initializeFormValidator();
+
+			instance.searchCustomRangeButton.on(
+				'click',
+				A.bind(instance.filter, instance)
 			);
 
-			filterButton.on('click', A.bind(instance.filter, instance));
+			instance.fromInput.on('keydown', instance._onDateInputKeyDown);
+			instance.toInput.on('keydown', instance._onDateInputKeyDown);
 		};
 
 		A.mix(ModifiedFacetFilter.prototype, {
+			_initializeFormValidator() {
+				var instance = this;
+
+				var dateRangeRuleName = instance.namespace + 'dateRange';
+
+				A.mix(
+					DEFAULTS_FORM_VALIDATOR.STRINGS,
+					{
+						[dateRangeRuleName]: Language.get(
+							'search-custom-range-invalid-date-range'
+						)
+					},
+					true
+				);
+
+				A.mix(
+					DEFAULTS_FORM_VALIDATOR.RULES,
+					{
+						[dateRangeRuleName]() {
+							return A.Date.isGreaterOrEqual(
+								instance.toInputDatePicker.getDate(),
+								instance.fromInputDatePicker.getDate()
+							);
+						}
+					},
+					true
+				);
+
+				var customRangeValidator = new A.FormValidator({
+					boundingBox: instance.form,
+					fieldContainer: 'div',
+					on: {
+						errorField() {
+							Util.toggleDisabled(
+								instance.searchCustomRangeButton,
+								true
+							);
+						},
+						validField() {
+							Util.toggleDisabled(
+								instance.searchCustomRangeButton,
+								false
+							);
+						}
+					},
+					rules: {
+						[instance.fromInputName]: {
+							[dateRangeRuleName]: true
+						},
+						[instance.toInputName]: {
+							[dateRangeRuleName]: true
+						}
+					}
+				});
+
+				var onRangeSelectionChange = function() {
+					customRangeValidator.validate();
+				};
+
+				instance.fromInputDatePicker.on(
+					'selectionChange',
+					onRangeSelectionChange
+				);
+
+				instance.toInputDatePicker.on(
+					'selectionChange',
+					onRangeSelectionChange
+				);
+			},
+
+			_onDateInputKeyDown(event) {
+				if (!event.isKey('TAB')) {
+					event.preventDefault();
+				}
+			},
+
 			filter() {
 				var instance = this;
 
@@ -150,6 +237,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-search-facet-util']
+		requires: ['aui-form-validator', 'liferay-search-facet-util']
 	}
 );

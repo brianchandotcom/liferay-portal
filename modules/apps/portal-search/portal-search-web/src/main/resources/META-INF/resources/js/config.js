@@ -34,7 +34,10 @@
 					},
 					'liferay-search-modified-facet': {
 						path: 'modified_facet.js',
-						requires: ['liferay-search-facet-util']
+						requires: [
+							'aui-form-validator',
+							'liferay-search-facet-util'
+						]
 					},
 					'liferay-search-modified-facet-configuration': {
 						path: 'modified_facet_configuration.js',

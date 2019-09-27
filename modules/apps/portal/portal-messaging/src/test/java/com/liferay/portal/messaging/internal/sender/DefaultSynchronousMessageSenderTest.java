@@ -33,6 +33,8 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,13 +80,17 @@ public class DefaultSynchronousMessageSenderTest {
 
 		_messageBus = new DefaultMessageBus();
 
+		_destinationMap = ReflectionTestUtil.getFieldValue(
+			_messageBus, "_destinations");
+
 		SynchronousDestination synchronousDestination =
 			new SynchronousDestination();
 
 		synchronousDestination.setName(
 			DestinationNames.MESSAGE_BUS_DEFAULT_RESPONSE);
 
-		_messageBus.addDestination(synchronousDestination);
+		_destinationMap.put(
+			synchronousDestination.getName(), synchronousDestination);
 
 		_defaultSynchronousMessageSender =
 			new DefaultSynchronousMessageSender();
@@ -165,7 +171,7 @@ public class DefaultSynchronousMessageSenderTest {
 
 		destination.register(new ReplayMessageListener(response));
 
-		_messageBus.addDestination(destination);
+		_destinationMap.put(destination.getName(), destination);
 
 		try {
 			Assert.assertSame(
@@ -174,13 +180,14 @@ public class DefaultSynchronousMessageSenderTest {
 					destination.getName(), new Message()));
 		}
 		finally {
-			_messageBus.removeDestination(destination.getName());
+			_destinationMap.remove(destination.getName());
 
-			destination.close(true);
+			destination.destroy();
 		}
 	}
 
 	private DefaultSynchronousMessageSender _defaultSynchronousMessageSender;
+	private Map<String, Destination> _destinationMap;
 	private MessageBus _messageBus;
 	private PortalExecutorManager _portalExecutorManager;
 

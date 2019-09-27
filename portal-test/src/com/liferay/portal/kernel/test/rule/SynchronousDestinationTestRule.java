@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHandler;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -44,6 +44,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
@@ -160,6 +161,9 @@ public class SynchronousDestinationTestRule
 
 			serviceDependencyManager.waitForDependencies();
 
+			_destinationMap = ReflectionTestUtil.getFieldValue(
+				MessageBusUtil.getMessageBus(), "_destinations");
+
 			ProxyModeThreadLocal.setForceSync(true);
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
@@ -199,10 +203,8 @@ public class SynchronousDestinationTestRule
 						searchEngineId));
 			}
 
-			MessageBus messageBus = MessageBusUtil.getMessageBus();
-
 			BaseAsyncDestination schedulerDestination =
-				(BaseAsyncDestination)messageBus.getDestination(
+				(BaseAsyncDestination)_destinationMap.get(
 					DestinationNames.SCHEDULER_DISPATCH);
 
 			if (schedulerDestination == null) {
@@ -262,22 +264,26 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void replaceDestination(String destinationName) {
-			MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-			Destination destination = messageBus.getDestination(
-				destinationName);
+			Destination destination = _destinationMap.get(destinationName);
 
 			if (destination instanceof BaseAsyncDestination) {
 				_asyncServiceDestinations.add(destination);
 
-				messageBus.replace(
-					createSynchronousDestination(destinationName), false);
+				Destination synchronousDestination =
+					createSynchronousDestination(destinationName);
+
+				destination.copyDestinationEventListeners(
+					synchronousDestination);
+				destination.copyMessageListeners(synchronousDestination);
+
+				_destinationMap.put(destinationName, synchronousDestination);
 			}
 
 			if (destination == null) {
 				_absentDestinationNames.add(destinationName);
 
-				messageBus.addDestination(
+				_destinationMap.put(
+					destinationName,
 					createSynchronousDestination(destinationName));
 			}
 		}
@@ -285,19 +291,17 @@ public class SynchronousDestinationTestRule
 		public void restorePreviousSync() {
 			ProxyModeThreadLocal.setForceSync(_forceSync);
 
-			MessageBus messageBus = MessageBusUtil.getMessageBus();
-
 			for (Destination destination : _asyncServiceDestinations) {
-				messageBus.replace(destination);
+				_destinationMap.put(destination.getName(), destination);
 			}
 
 			_asyncServiceDestinations.clear();
 
 			for (String absentDestinationName : _absentDestinationNames) {
-				messageBus.removeDestination(absentDestinationName);
+				_destinationMap.remove(absentDestinationName);
 			}
 
-			Destination destination = messageBus.getDestination(
+			Destination destination = _destinationMap.get(
 				DestinationNames.SCHEDULER_DISPATCH);
 
 			if (destination == null) {
@@ -333,6 +337,7 @@ public class SynchronousDestinationTestRule
 		private final List<String> _absentDestinationNames = new ArrayList<>();
 		private final List<Destination> _asyncServiceDestinations =
 			new ArrayList<>();
+		private Map<String, Destination> _destinationMap;
 		private boolean _forceSync;
 		private final List<InvokerMessageListener>
 			_schedulerInvokerMessageListeners = new ArrayList<>();

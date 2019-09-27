@@ -1391,20 +1391,20 @@ public class RESTBuilder {
 
 				String description = propertySchema.getDescription();
 
-				String tmp = null;
+				String reference = null;
 
 				if (StringUtil.startsWith(
 						description, "https://www.schema.org/")) {
 
-					tmp = description;
+					reference = description;
 				}
 				else if (propertySchema.getItems() != null) {
 					Items items = propertySchema.getItems();
 
-					tmp = items.getReference();
+					reference = items.getReference();
 				}
 
-				if (tmp == null) {
+				if (reference == null) {
 					continue;
 				}
 
@@ -1415,7 +1415,7 @@ public class RESTBuilder {
 				int z = s.indexOf(':', y);
 
 				String schemaVarName = freeMarkerTool.getSchemaVarName(
-					tmp.substring(tmp.lastIndexOf('/') + 1));
+					reference.substring(reference.lastIndexOf('/') + 1));
 
 				if (Objects.equals(propertySchema.getType(), "array")) {
 					String plural = TextFormatter.formatPlural(schemaVarName);

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <div class="app-builder-root">
-	<div class="edit-entry-root">
+	<div class="edit-entry">
 		<div class="card card-root mb-0 shadowless-card">
 			<div class="card-body">
 				<div class="row">
@@ -30,7 +30,7 @@
 								namespace="<%= renderResponse.getNamespace() %>"
 							/>
 
-							<div id="<portlet:namespace />-app-builder-edit-entry">
+							<div id="<portlet:namespace />-edit-entry-app">
 
 								<%
 								Map<String, Object> data = new HashMap<>();

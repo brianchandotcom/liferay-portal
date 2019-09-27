@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 import React, {useContext} from 'react';
 import {AppContext} from '../../AppContext.es';
@@ -54,5 +55,12 @@ export default ({
 		}
 	};
 
-	return <Button onClick={onSave}>{Liferay.Language.get('save')}</Button>;
+	return (
+		<ClayButton.Group spaced>
+			<Button onClick={onSave}>{Liferay.Language.get('save')}</Button>
+			<Button displayType="secondary" onClick={onCancel}>
+				{Liferay.Language.get('cancel')}
+			</Button>
+		</ClayButton.Group>
+	);
 };

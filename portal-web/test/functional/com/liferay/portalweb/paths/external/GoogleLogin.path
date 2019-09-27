@@ -57,7 +57,7 @@
 <!--ACCOUNT_MENULIST-->
 <tr>
 	<td>ACCOUNT_MENULIST_USE_ANOTHER_ACCOUNT</td>
-	<td>//div[@role='button']//p[contains(.,'Use another account')]</td>
+	<td>//div[@class='pQ0lne']//li[contains(@class,'JDAKTe')]//div[contains(.,'Use another account')]</td>
 	<td></td>
 </tr>
 </tbody>

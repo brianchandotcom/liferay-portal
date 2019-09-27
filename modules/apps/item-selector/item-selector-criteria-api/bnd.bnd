@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.item.selector.criteria.audio.criterion,\
 	com.liferay.item.selector.criteria.file.criterion,\
 	com.liferay.item.selector.criteria.image.criterion,\
+	com.liferay.item.selector.criteria.info.item.criterion,\
 	com.liferay.item.selector.criteria.upload.criterion,\
 	com.liferay.item.selector.criteria.url.criterion,\
 	com.liferay.item.selector.criteria.video.criterion

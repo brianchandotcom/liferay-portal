@@ -358,13 +358,6 @@ public interface BaseProjectTemplatesTestCase {
 
 		List<String> arguments = new ArrayList<>(taskPaths.length + 5);
 
-		if (debug) {
-			arguments.add("--debug");
-		}
-		else {
-			arguments.add("--stacktrace");
-		}
-
 		String httpProxyHost =
 			ProjectTemplatesTest.mavenExecutor.getHttpProxyHost();
 		int httpProxyPort =
@@ -374,6 +367,8 @@ public interface BaseProjectTemplatesTestCase {
 			arguments.add("-Dhttp.proxyHost=" + httpProxyHost);
 			arguments.add("-Dhttp.proxyPort=" + httpProxyPort);
 		}
+
+		arguments.add("--stacktrace");
 
 		for (String taskPath : taskPaths) {
 			arguments.add(taskPath);
@@ -385,6 +380,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		if (debug) {
 			gradleRunner.forwardStdOutput(stringWriter);
+			gradleRunner.withDebug(true);
 		}
 
 		gradleRunner.withArguments(arguments);

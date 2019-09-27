@@ -1601,7 +1601,7 @@ definition {
 			dmDocumentTitle = "Document_1.doc");
 	}
 
-	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check current pagination whole files Via toolbar Checkbox in the DM widget and can move multiple pagination documents to another folder."
+	@description = "This test covers LPS-93601 and LPS-91661. It ensures that the user can check all files in the current pagination using the DM toolbar and can move documents not on the current pagination to another folder."
 	@priority = "4"
 	test ViewPaginationToolbarCheckboxAndMoveMultiplePaginationDocuments {
 		JSONLayout.addPublicLayout(

@@ -240,27 +240,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	public synchronized Destination removeDestination(
 		String destinationName, boolean closeOnRemove) {
 
-		Destination destination = _destinations.remove(destinationName);
-
-		if (destination == null) {
-			return null;
-		}
-
-		if (closeOnRemove) {
-			destination.close(true);
-		}
-
-		destination.removeDestinationEventListeners();
-
-		destination.unregisterMessageListeners();
-
-		for (MessageBusEventListener messageBusEventListener :
-				_messageBusEventListeners) {
-
-			messageBusEventListener.destinationRemoved(destination);
-		}
-
-		return destination;
+		return _removeDestination(destinationName, closeOnRemove);
 	}
 
 	@Override
@@ -480,7 +460,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	protected synchronized void unregisterDestination(
 		Destination destination, Map<String, Object> properties) {
 
-		removeDestination(destination.getName());
+		_removeDestination(destination.getName(), true);
 
 		destination.destroy();
 	}
@@ -532,6 +512,32 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			baseAsyncDestination.setWorkersMaxSize(
 				destinationWorkerConfiguration.workerMaxSize());
 		}
+	}
+
+	private Destination _removeDestination(
+		String destinationName, boolean closeOnRemove) {
+
+		Destination destination = _destinations.remove(destinationName);
+
+		if (destination == null) {
+			return null;
+		}
+
+		if (closeOnRemove) {
+			destination.close(true);
+		}
+
+		destination.removeDestinationEventListeners();
+
+		destination.unregisterMessageListeners();
+
+		for (MessageBusEventListener messageBusEventListener :
+				_messageBusEventListeners) {
+
+			messageBusEventListener.destinationRemoved(destination);
+		}
+
+		return destination;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

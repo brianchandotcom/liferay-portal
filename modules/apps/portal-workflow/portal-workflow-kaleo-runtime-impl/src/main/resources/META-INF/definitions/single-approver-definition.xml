@@ -47,6 +47,9 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
@@ -72,6 +75,9 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
+				<recipients receptionType="to">
+					<assignees />
+				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 			<notification>
@@ -79,7 +85,7 @@
 				<template><![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.]]></template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
-				<recipients>
+				<recipients receptionType="to">
 					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>

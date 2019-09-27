@@ -14,6 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -68,6 +71,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -1289,6 +1293,28 @@ public class LayoutsAdminDisplayContext {
 			ActionKeys.ADD_LAYOUT);
 	}
 
+	public boolean isShowCategorization() {
+		long classNameId = PortalUtil.getClassNameId(Layout.class);
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
+
+		for (AssetVocabulary vocabulary : vocabularies) {
+			if (vocabulary.isAssociatedToClassNameId(
+					classNameId) && vocabulary.isRequired(classNameId, 0)) {
+				int vocabularyCategoriesCount =
+					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+						vocabulary.getGroupId(), vocabulary.getVocabularyId());
+
+				if (vocabularyCategoriesCount > 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isShowConfigureAction(Layout layout) throws PortalException {
 		return LayoutPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
@@ -1602,6 +1628,17 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return jsonObject;
+	}
+
+	private long[] _getGroupIds() {
+		try {
+			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				_themeDisplay.getScopeGroupId());
+		}
+		catch (Exception e) {
+		}
+
+		return new long[0];
 	}
 
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {

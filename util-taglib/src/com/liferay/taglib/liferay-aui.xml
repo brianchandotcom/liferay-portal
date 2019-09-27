@@ -879,6 +879,12 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<description>Selected language ID, for the case when input is localized.</description>
+				<name>selectedLanguageId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>Whether to show the input's required label, if an input value is required.</description>
 				<name>showRequiredLabel</name>
 				<inputType>boolean</inputType>

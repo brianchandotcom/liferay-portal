@@ -76,19 +76,23 @@ class FloatingToolbar extends Component {
 	 * @review
 	 */
 	static _getElementAlign(element, anchor) {
-		const languageId = Liferay.ThemeDisplay.getLanguageId();
-		const languageDirection = Liferay.Language.direction[languageId];
-		const isRtl = languageDirection === 'rtl';
-
-		const fallbackHorizontal = isRtl ? 'right' : 'left';
-		const fallbackVertical = 'top';
-		let horizontal = isRtl ? 'left' : 'right';
-		let vertical = 'bottom';
-
 		const alignFits = (align, availableAlign) =>
 			availableAlign.includes(
 				Align.suggestAlignBestRegion(element, anchor, align).position
 			);
+
+		const anchorRect = anchor.getBoundingClientRect();
+		const fragmentEntryLinkListWidth = document.querySelector(
+			'.fragment-entry-link-list'
+		).offsetWidth;
+
+		const horizontal =
+			anchorRect.right > fragmentEntryLinkListWidth / 2
+				? 'right'
+				: 'left';
+
+		const fallbackVertical = 'top';
+		let vertical = 'bottom';
 
 		if (
 			!alignFits(
@@ -101,19 +105,6 @@ class FloatingToolbar extends Component {
 			)
 		) {
 			vertical = fallbackVertical;
-		}
-
-		if (
-			!alignFits(
-				ELEMENT_POSITION[vertical][horizontal],
-				ELEMENT_AVAILABLE_POSITIONS[horizontal]
-			) &&
-			alignFits(
-				ELEMENT_POSITION[vertical][fallbackHorizontal],
-				ELEMENT_AVAILABLE_POSITIONS[fallbackHorizontal]
-			)
-		) {
-			horizontal = fallbackHorizontal;
 		}
 
 		return ELEMENT_POSITION[vertical][horizontal];

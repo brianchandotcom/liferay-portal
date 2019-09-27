@@ -1,0 +1,36 @@
+def map = new HashMap();
+
+for (state in states) {
+	if (state == null) {
+		continue;
+	}
+
+	for (entry in state.entrySet()) {
+		map.merge(
+			entry.key, entry.value,
+			(taskMap1, taskMap2) -> { 
+				for (taskMapEntry in taskMap2.entrySet()) {
+					taskMap1.merge(
+						taskMapEntry.getKey(), taskMapEntry.getValue(),
+						(onTime1, onTime2) -> onTime1 && onTime2);
+				}
+
+				return taskMap1;
+			});
+	}
+}
+
+def taskCount = 0;
+def taskMap;
+
+for (entry in map.entrySet()) {
+	taskMap = entry.value;
+
+	for (taskMapEntry in taskMap.entrySet()) {
+		if (taskMapEntry.value == false) {
+			taskCount += 1;
+		}
+	}
+}
+
+return taskCount;

@@ -109,6 +109,24 @@ public class ResourceHelper {
 		return scriptedMetricAggregation;
 	}
 
+	public ScriptedMetricAggregation
+		createOnTimeTaskByAssigneeScriptedMetricAggregation() {
+
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric("taskCount");
+
+		scriptedMetricAggregation.setCombineScript(
+			_workflowMetricsSlaTaskAssigneeCombineScript);
+		scriptedMetricAggregation.setInitScript(
+			_workflowMetricsSlaTaskAssigneeInitScript);
+		scriptedMetricAggregation.setMapScript(
+			_workflowMetricsSlaTaskAssigneeMapScript);
+		scriptedMetricAggregation.setReduceScript(
+			_workflowMetricsSlaTaskAssigneeOnTimeReduceScript);
+
+		return scriptedMetricAggregation;
+	}
+
 	public ScriptedMetricAggregation createOverdueScriptedMetricAggregation() {
 		ScriptedMetricAggregation scriptedMetricAggregation =
 			_aggregations.scriptedMetric("instanceCount");
@@ -119,6 +137,24 @@ public class ResourceHelper {
 		scriptedMetricAggregation.setMapScript(_workflowMetricsSlaMapScript);
 		scriptedMetricAggregation.setReduceScript(
 			_workflowMetricsSlaOverdueReduceScript);
+
+		return scriptedMetricAggregation;
+	}
+
+	public ScriptedMetricAggregation
+		createOverdueTaskByAssigneeScriptedMetricAggregation() {
+
+		ScriptedMetricAggregation scriptedMetricAggregation =
+			_aggregations.scriptedMetric("taskCount");
+
+		scriptedMetricAggregation.setCombineScript(
+			_workflowMetricsSlaTaskAssigneeCombineScript);
+		scriptedMetricAggregation.setInitScript(
+			_workflowMetricsSlaTaskAssigneeInitScript);
+		scriptedMetricAggregation.setMapScript(
+			_workflowMetricsSlaTaskAssigneeMapScript);
+		scriptedMetricAggregation.setReduceScript(
+			_workflowMetricsSlaTaskAssigneeOverdueReduceScript);
 
 		return scriptedMetricAggregation;
 	}
@@ -247,6 +283,17 @@ public class ResourceHelper {
 		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
 	}
 
+	public long getOnTimeTaskCount(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult("onTime");
+
+		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
+			(ScriptedMetricAggregationResult)
+				filterAggregationResult.getChildAggregationResult("taskCount");
+
+		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+	}
+
 	public long getOverdueInstanceCount(Bucket bucket) {
 		FilterAggregationResult filterAggregationResult =
 			(FilterAggregationResult)bucket.getChildAggregationResult(
@@ -256,6 +303,18 @@ public class ResourceHelper {
 			(ScriptedMetricAggregationResult)
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
+
+		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
+	}
+
+	public long getOverdueTaskCount(Bucket bucket) {
+		FilterAggregationResult filterAggregationResult =
+			(FilterAggregationResult)bucket.getChildAggregationResult(
+				"overdue");
+
+		ScriptedMetricAggregationResult scriptedMetricAggregationResult =
+			(ScriptedMetricAggregationResult)
+				filterAggregationResult.getChildAggregationResult("taskCount");
 
 		return GetterUtil.getLong(scriptedMetricAggregationResult.getValue());
 	}
@@ -294,6 +353,19 @@ public class ResourceHelper {
 			getClass(), "workflow-metrics-sla-on-time-reduce-script.painless");
 		_workflowMetricsSlaOverdueReduceScript = createScript(
 			getClass(), "workflow-metrics-sla-overdue-reduce-script.painless");
+		_workflowMetricsSlaTaskAssigneeCombineScript = createScript(
+			getClass(),
+			"workflow-metrics-sla-assignee-combine-script.painless");
+		_workflowMetricsSlaTaskAssigneeInitScript = createScript(
+			getClass(), "workflow-metrics-sla-assignee-init-script.painless");
+		_workflowMetricsSlaTaskAssigneeMapScript = createScript(
+			getClass(), "workflow-metrics-sla-assignee-map-script.painless");
+		_workflowMetricsSlaTaskAssigneeOnTimeReduceScript = createScript(
+			getClass(),
+			"workflow-metrics-sla-assignee-on-time-reduce-script.painless");
+		_workflowMetricsSlaTaskAssigneeOverdueReduceScript = createScript(
+			getClass(),
+			"workflow-metrics-sla-assignee-overdue-reduce-script.painless");
 	}
 
 	@Reference
@@ -321,5 +393,10 @@ public class ResourceHelper {
 	private Script _workflowMetricsSlaMapScript;
 	private Script _workflowMetricsSlaOnTimeReduceScript;
 	private Script _workflowMetricsSlaOverdueReduceScript;
+	private Script _workflowMetricsSlaTaskAssigneeCombineScript;
+	private Script _workflowMetricsSlaTaskAssigneeInitScript;
+	private Script _workflowMetricsSlaTaskAssigneeMapScript;
+	private Script _workflowMetricsSlaTaskAssigneeOnTimeReduceScript;
+	private Script _workflowMetricsSlaTaskAssigneeOverdueReduceScript;
 
 }

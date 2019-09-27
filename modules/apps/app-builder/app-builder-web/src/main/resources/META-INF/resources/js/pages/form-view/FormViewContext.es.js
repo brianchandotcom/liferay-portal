@@ -14,7 +14,6 @@
 
 import {createContext} from 'react';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
-import {containsField} from '../../utils/dataLayoutVisitor.es';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
 	EDIT_CUSTOM_OBJECT_FIELD,
@@ -108,14 +107,8 @@ const editFocusedCustomObjectField = ({
 	};
 };
 
-const setDataDefinitionFields = (
-	dataLayoutBuilder,
-	dataDefinition,
-	dataLayout
-) => {
+const setDataDefinitionFields = (dataLayoutBuilder, dataDefinition) => {
 	const {dataDefinitionFields} = dataDefinition;
-	const {dataLayoutPages} = dataLayout;
-
 	const {pages} = dataLayoutBuilder.getStore();
 	const visitor = new PagesVisitor(pages);
 
@@ -129,9 +122,7 @@ const setDataDefinitionFields = (
 
 	return newFields.concat(
 		dataDefinitionFields.filter(
-			field =>
-				!containsField(dataLayoutPages, field.name) &&
-				!newFields.some(({name}) => name === field.name)
+			field => !newFields.some(({name}) => name === field.name)
 		)
 	);
 };
@@ -308,8 +299,7 @@ const createReducer = dataLayoutBuilder => {
 						...dataDefinition,
 						dataDefinitionFields: setDataDefinitionFields(
 							dataLayoutBuilder,
-							dataDefinition,
-							dataLayout
+							dataDefinition
 						)
 					},
 					dataLayout: {

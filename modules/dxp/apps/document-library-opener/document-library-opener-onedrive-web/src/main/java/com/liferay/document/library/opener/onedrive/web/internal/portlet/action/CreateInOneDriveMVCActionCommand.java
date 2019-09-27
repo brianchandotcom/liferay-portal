@@ -111,8 +111,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	protected UniqueFileEntryTitleProvider uniqueFileEntryTitleProvider;
 
 	private DLOpenerOneDriveFileReference _addDLOpenerOneDriveFileReference(
-			Locale locale, long userId, long repositoryId, long folderId,
-			String mimeType, String title, ServiceContext serviceContext)
+			long userId, long repositoryId, long folderId, String mimeType,
+			String title, ServiceContext serviceContext)
 		throws PortalException {
 
 		String uniqueTitle = uniqueFileEntryTitleProvider.provide(
@@ -132,7 +132,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
 
-		return dlOpenerOneDriveManager.createFile(locale, userId, fileEntry);
+		return dlOpenerOneDriveManager.createFile(
+			userId, fileEntry, serviceContext.getLocale());
 	}
 
 	private JSONObject _executeCommand(PortletRequest portletRequest)
@@ -156,7 +157,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				TransactionInvokerUtil.invoke(
 					_transactionConfig,
 					() -> _addDLOpenerOneDriveFileReference(
-						portal.getLocale(portletRequest),
 						portal.getUserId(portletRequest), repositoryId,
 						folderId, contentType, title, serviceContext));
 

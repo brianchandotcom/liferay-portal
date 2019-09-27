@@ -106,15 +106,15 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		Locale locale = (Locale)taskContextMap.getOrDefault(
-			OneDriveBackgroundTaskConstants.LOCALE, LocaleUtil.getDefault());
 		long fileEntryId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID));
+		Locale locale = (Locale)taskContextMap.getOrDefault(
+			OneDriveBackgroundTaskConstants.LOCALE, LocaleUtil.getDefault());
 		long userId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.USER_ID));
 
 		_uploadFile(
-			locale, userId, _dlAppLocalService.getFileEntry(fileEntryId));
+			userId, _dlAppLocalService.getFileEntry(fileEntryId), locale);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -215,7 +215,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		return language.get(resourceBundle, key);
 	}
 
-	private void _uploadFile(Locale locale, long userId, FileEntry fileEntry)
+	private void _uploadFile(long userId, FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
 		AccessToken accessToken = _getAccessToken(

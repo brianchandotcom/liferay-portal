@@ -74,11 +74,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DLOpenerOneDriveManager {
 
 	public DLOpenerOneDriveFileReference checkOut(
-			Locale locale, long userId, FileEntry fileEntry)
+			long userId, FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
 		BackgroundTask backgroundTask = _addBackgroundTask(
-			locale, fileEntry, userId);
+			userId, fileEntry, locale);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -94,11 +94,11 @@ public class DLOpenerOneDriveManager {
 	}
 
 	public DLOpenerOneDriveFileReference createFile(
-			Locale locale, long userId, FileEntry fileEntry)
+			long userId, FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
 		BackgroundTask backgroundTask = _addBackgroundTask(
-			locale, fileEntry, userId);
+			userId, fileEntry, locale);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -262,7 +262,7 @@ public class DLOpenerOneDriveManager {
 	}
 
 	private BackgroundTask _addBackgroundTask(
-			Locale locale, FileEntry fileEntry, long userId)
+			long userId, FileEntry fileEntry, Locale locale)
 		throws PortalException {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>(3);

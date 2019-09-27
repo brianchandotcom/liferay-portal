@@ -50,6 +50,7 @@ import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
+import com.liferay.portal.search.query.WrapperQuery;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -250,6 +251,11 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visit(WildcardQuery wildcardQuery) {
 		return _wildcardQueryTranslator.translate(wildcardQuery);
+	}
+
+	@Override
+	public QueryBuilder visit(WrapperQuery wrapperQuery) {
+		return _wrapperQueryTranslator.translate(wrapperQuery);
 	}
 
 	@Reference(unbind = "-")
@@ -516,5 +522,6 @@ public class ElasticsearchQueryTranslator
 	private TermsQueryTranslator _termsQueryTranslator;
 	private TermsSetQueryTranslator _termsSetQueryTranslator;
 	private WildcardQueryTranslator _wildcardQueryTranslator;
+	private WrapperQueryTranslator _wrapperQueryTranslator;
 
 }

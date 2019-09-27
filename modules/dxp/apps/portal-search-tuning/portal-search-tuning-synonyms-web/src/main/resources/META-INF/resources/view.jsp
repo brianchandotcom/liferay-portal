@@ -39,7 +39,7 @@ String tabs = ParamUtil.getString(request, "tabs", "synonym-sets");
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -50,7 +50,7 @@ String tabs = ParamUtil.getString(request, "tabs", "synonym-sets");
 					});
 			}
 		}
-	%>"
+	%>'
 />
 
 <c:choose>

@@ -287,7 +287,6 @@
 		<check name="CompatClassImportsCheck" />
 	</source-processor>
 	<source-processor name="JSONSourceProcessor">
-		<check name="JSONEmptyLinesCheck" />
 		<check name="JSONIndentationCheck" />
 		<check name="JSONLineBreakCheck" />
 		<check name="JSONPropertyOrderCheck" />

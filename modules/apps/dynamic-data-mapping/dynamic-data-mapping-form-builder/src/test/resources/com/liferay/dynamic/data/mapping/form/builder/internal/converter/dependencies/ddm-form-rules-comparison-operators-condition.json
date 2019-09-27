@@ -8,7 +8,6 @@
 		],
 		"conditions": [
 			{
-
 				"operands": [
 					{
 						"type": "field",
@@ -22,7 +21,6 @@
 				"operator": "greater-than"
 			},
 			{
-
 				"operands": [
 					{
 						"type": "field",

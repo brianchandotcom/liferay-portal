@@ -8,7 +8,6 @@
 		],
 		"conditions": [
 			{
-
 				"operands": [
 					{
 						"type": "field",

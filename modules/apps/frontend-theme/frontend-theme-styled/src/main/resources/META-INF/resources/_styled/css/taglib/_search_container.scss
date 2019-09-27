@@ -1,14 +1,15 @@
+$table-responsive-margin-left-md: 375px !default;
+
 .lfr-search-container-wrapper {
 	&.lfr-search-container-fixed-first-column {
 		position: relative;
 
 		.table-responsive {
-			margin-left: 375px;
 			overflow-x: auto;
 			width: auto;
 
-			@include media-breakpoint-down(sm) {
-				margin-left: 0;
+			@include media-breakpoint-up(sm) {
+				margin-left: $table-responsive-margin-left-md;
 			}
 
 			.table {
@@ -26,11 +27,10 @@
 						padding: 0;
 
 						.lfr-search-iterator-fixed-header-inner-wrapper {
-							margin-left: 375px;
 							overflow-x: hidden;
 
-							@include media-breakpoint-down(sm) {
-								margin-left: 0;
+							@include media-breakpoint-up(sm) {
+								margin-left: $table-responsive-margin-left-md;
 							}
 
 							table {
@@ -50,12 +50,10 @@
 					width: auto;
 
 					&:first-child {
-						left: 0;
-						position: absolute;
-						right: 15px;
-
-						@include media-breakpoint-down(sm) {
-							position: static;
+						@include media-breakpoint-up(sm) {
+							left: 0;
+							position: absolute;
+							right: 15px;
 						}
 					}
 				}
@@ -184,8 +182,8 @@
 
 .lfr-description-column,
 .lfr-role-column {
-	max-width: 375px;
-	min-width: 375px;
+	max-width: $table-responsive-margin-left-md;
+	min-width: $table-responsive-margin-left-md;
 }
 
 .lfr-email-address-column,

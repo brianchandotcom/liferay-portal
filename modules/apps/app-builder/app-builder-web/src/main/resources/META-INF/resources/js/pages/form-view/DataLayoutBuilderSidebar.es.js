@@ -32,10 +32,28 @@ import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
-import {EDIT_CUSTOM_OBJECT_FIELD} from './actions.es';
+import {EDIT_CUSTOM_OBJECT_FIELD, dropLayoutBuilderField} from './actions.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+
+	const onDoubleClick = ({name}) => {
+		const {activePage, pages} = dataLayoutBuilder.getStore();
+
+		dataLayoutBuilder.dispatch(
+			'fieldAdded',
+			dropLayoutBuilderField({
+				addedToPlaceholder: true,
+				dataLayoutBuilder,
+				fieldTypeName: name,
+				indexes: {
+					columnIndex: 0,
+					pageIndex: activePage,
+					rowIndex: pages[activePage].rows.length
+				}
+			})
+		);
+	};
 
 	return (
 		<>
@@ -45,6 +63,7 @@ const DefaultSidebarBody = ({keywords}) => {
 				<FieldTypeList
 					fieldTypes={dataLayoutBuilder.getFieldTypes()}
 					keywords={keywords}
+					onDoubleClick={onDoubleClick}
 				/>
 			</Sidebar.TabContent>
 		</>

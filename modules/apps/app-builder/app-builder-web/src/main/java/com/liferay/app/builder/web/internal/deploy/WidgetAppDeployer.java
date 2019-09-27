@@ -96,6 +96,9 @@ public class WidgetAppDeployer implements AppDeployer {
 					put(
 						"com.liferay.portlet.display-category",
 						"category.collaboration");
+					put(
+						"com.liferay.portlet.header-portlet-css",
+						"/css/main.css");
 					put("com.liferay.portlet.use-default-template", "true");
 					put("javax.portlet.display-name", appName);
 					put("javax.portlet.name", portletName);

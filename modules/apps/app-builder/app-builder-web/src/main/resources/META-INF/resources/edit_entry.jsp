@@ -17,29 +17,39 @@
 <%@ include file="/init.jsp" %>
 
 <div class="app-builder-root">
-	<aui:form>
-		<liferay-data-engine:data-layout-renderer
-			containerId='<%= renderResponse.getNamespace() + "container" %>'
-			dataLayoutId='<%= ParamUtil.getLong(request, "dataLayoutId") %>'
-			dataRecordId='<%= ParamUtil.getLong(request, "dataRecordId") %>'
-			namespace="<%= renderResponse.getNamespace() %>"
-		/>
+	<div class="edit-entry-root">
+		<div class="card card-root mb-0 shadowless-card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-12">
+						<aui:form>
+							<liferay-data-engine:data-layout-renderer
+								containerId='<%= renderResponse.getNamespace() + "container" %>'
+								dataLayoutId='<%= ParamUtil.getLong(request, "dataLayoutId") %>'
+								dataRecordId='<%= ParamUtil.getLong(request, "dataRecordId") %>'
+								namespace="<%= renderResponse.getNamespace() %>"
+							/>
 
-		<div id="<portlet:namespace />-app-builder-edit-entry">
+							<div id="<portlet:namespace />-app-builder-edit-entry">
 
-			<%
-			Map<String, Object> data = new HashMap<>();
+								<%
+								Map<String, Object> data = new HashMap<>();
 
-			data.put("basePortletURL", String.valueOf(renderResponse.createRenderURL()));
-			data.put("dataDefinitionId", ParamUtil.getLong(request, "dataDefinitionId"));
-			data.put("dataRecordId", ParamUtil.getLong(request, "dataRecordId"));
-			data.put("editEntryContainerElementId", renderResponse.getNamespace() + "container");
-			%>
+								data.put("basePortletURL", String.valueOf(renderResponse.createRenderURL()));
+								data.put("dataDefinitionId", ParamUtil.getLong(request, "dataDefinitionId"));
+								data.put("dataRecordId", ParamUtil.getLong(request, "dataRecordId"));
+								data.put("editEntryContainerElementId", renderResponse.getNamespace() + "container");
+								%>
 
-			<react:component
-				data="<%= data %>"
-				module="js/pages/entry/EditEntryApp.es"
-			/>
+								<react:component
+									data="<%= data %>"
+									module="js/pages/entry/EditEntryApp.es"
+								/>
+							</div>
+						</aui:form>
+					</div>
+				</div>
+			</div>
 		</div>
-	</aui:form>
+	</div>
 </div>

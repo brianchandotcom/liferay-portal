@@ -8,3 +8,8 @@
 body.open .app-builder-upper-toolbar {
 	width: calc(100% - #{$productMenuWidth});
 }
+
+.shadowless-card {
+	border: 1px solid #e7e7ed;
+	box-shadow: none;
+}

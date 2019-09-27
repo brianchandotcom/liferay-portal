@@ -124,6 +124,8 @@ public class KBCommentPersistenceTest {
 
 		KBComment newKBComment = _persistence.create(pk);
 
+		newKBComment.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKBComment.setUuid(RandomTestUtil.randomString());
 
 		newKBComment.setGroupId(RandomTestUtil.nextLong());
@@ -155,6 +157,8 @@ public class KBCommentPersistenceTest {
 		KBComment existingKBComment = _persistence.findByPrimaryKey(
 			newKBComment.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingKBComment.getMvccVersion(), newKBComment.getMvccVersion());
 		Assert.assertEquals(
 			existingKBComment.getUuid(), newKBComment.getUuid());
 		Assert.assertEquals(
@@ -296,11 +300,11 @@ public class KBCommentPersistenceTest {
 
 	protected OrderByComparator<KBComment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBComment", "uuid", true, "kbCommentId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"content", true, "userRating", true, "lastPublishDate", true,
-			"status", true);
+			"KBComment", "mvccVersion", true, "uuid", true, "kbCommentId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "content", true, "userRating", true,
+			"lastPublishDate", true, "status", true);
 	}
 
 	@Test
@@ -536,6 +540,8 @@ public class KBCommentPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KBComment kbComment = _persistence.create(pk);
+
+		kbComment.setMvccVersion(RandomTestUtil.nextLong());
 
 		kbComment.setUuid(RandomTestUtil.randomString());
 

@@ -76,11 +76,11 @@ public class KBArticleModelImpl
 	public static final String TABLE_NAME = "KBArticle";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"kbArticleId", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"kbArticleId", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"rootResourcePrimKey", Types.BIGINT},
 		{"parentResourceClassNameId", Types.BIGINT},
 		{"parentResourcePrimKey", Types.BIGINT}, {"kbFolderId", Types.BIGINT},
@@ -98,6 +98,7 @@ public class KBArticleModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kbArticleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
@@ -130,7 +131,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,viewCount INTEGER,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -193,6 +194,7 @@ public class KBArticleModelImpl
 
 		KBArticle model = new KBArticleImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setKbArticleId(soapModel.getKbArticleId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
@@ -371,6 +373,10 @@ public class KBArticleModelImpl
 		Map<String, BiConsumer<KBArticle, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<KBArticle, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", KBArticle::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<KBArticle, Long>)KBArticle::setMvccVersion);
 		attributeGetterFunctions.put("uuid", KBArticle::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<KBArticle, String>)KBArticle::setUuid);
@@ -488,6 +494,17 @@ public class KBArticleModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1171,6 +1188,7 @@ public class KBArticleModelImpl
 	public Object clone() {
 		KBArticleImpl kbArticleImpl = new KBArticleImpl();
 
+		kbArticleImpl.setMvccVersion(getMvccVersion());
 		kbArticleImpl.setUuid(getUuid());
 		kbArticleImpl.setKbArticleId(getKbArticleId());
 		kbArticleImpl.setResourcePrimKey(getResourcePrimKey());
@@ -1316,6 +1334,8 @@ public class KBArticleModelImpl
 	@Override
 	public CacheModel<KBArticle> toCacheModel() {
 		KBArticleCacheModel kbArticleCacheModel = new KBArticleCacheModel();
+
+		kbArticleCacheModel.mvccVersion = getMvccVersion();
 
 		kbArticleCacheModel.uuid = getUuid();
 
@@ -1534,6 +1554,7 @@ public class KBArticleModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _kbArticleId;

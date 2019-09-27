@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -37,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KBCommentModel
-	extends AttachedModel, BaseModel<KBComment>, ShardedModel,
+	extends AttachedModel, BaseModel<KBComment>, MVCCModel, ShardedModel,
 			StagedGroupedModel {
 
 	/**
@@ -59,6 +60,22 @@ public interface KBCommentModel
 	 * @param primaryKey the primary key of this kb comment
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this kb comment.
+	 *
+	 * @return the mvcc version of this kb comment
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this kb comment.
+	 *
+	 * @param mvccVersion the mvcc version of this kb comment
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this kb comment.

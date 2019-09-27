@@ -76,19 +76,21 @@ public class KBCommentModelImpl
 	public static final String TABLE_NAME = "KBComment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"kbCommentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"content", Types.VARCHAR}, {"userRating", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"kbCommentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"content", Types.VARCHAR},
+		{"userRating", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kbCommentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -106,7 +108,7 @@ public class KBCommentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBComment (uuid_ VARCHAR(75) null,kbCommentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content STRING null,userRating INTEGER,lastPublishDate DATE null,status INTEGER)";
+		"create table KBComment (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbCommentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,content STRING null,userRating INTEGER,lastPublishDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBComment";
 
@@ -159,6 +161,7 @@ public class KBCommentModelImpl
 
 		KBComment model = new KBCommentImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setKbCommentId(soapModel.getKbCommentId());
 		model.setGroupId(soapModel.getGroupId());
@@ -321,6 +324,10 @@ public class KBCommentModelImpl
 		Map<String, BiConsumer<KBComment, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<KBComment, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", KBComment::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<KBComment, Long>)KBComment::setMvccVersion);
 		attributeGetterFunctions.put("uuid", KBComment::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<KBComment, String>)KBComment::setUuid);
@@ -376,6 +383,17 @@ public class KBCommentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -716,6 +734,7 @@ public class KBCommentModelImpl
 	public Object clone() {
 		KBCommentImpl kbCommentImpl = new KBCommentImpl();
 
+		kbCommentImpl.setMvccVersion(getMvccVersion());
 		kbCommentImpl.setUuid(getUuid());
 		kbCommentImpl.setKbCommentId(getKbCommentId());
 		kbCommentImpl.setGroupId(getGroupId());
@@ -828,6 +847,8 @@ public class KBCommentModelImpl
 	@Override
 	public CacheModel<KBComment> toCacheModel() {
 		KBCommentCacheModel kbCommentCacheModel = new KBCommentCacheModel();
+
+		kbCommentCacheModel.mvccVersion = getMvccVersion();
 
 		kbCommentCacheModel.uuid = getUuid();
 
@@ -972,6 +993,7 @@ public class KBCommentModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _kbCommentId;

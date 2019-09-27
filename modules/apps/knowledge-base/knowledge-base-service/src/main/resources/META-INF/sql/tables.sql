@@ -1,4 +1,5 @@
 create table KBArticle (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	kbArticleId LONG not null primary key,
 	resourcePrimKey LONG,
@@ -31,6 +32,7 @@ create table KBArticle (
 );
 
 create table KBComment (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	kbCommentId LONG not null primary key,
 	groupId LONG,
@@ -48,6 +50,7 @@ create table KBComment (
 );
 
 create table KBFolder (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	kbFolderId LONG not null primary key,
 	groupId LONG,
@@ -64,6 +67,7 @@ create table KBFolder (
 );
 
 create table KBTemplate (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	kbTemplateId LONG not null primary key,
 	groupId LONG,

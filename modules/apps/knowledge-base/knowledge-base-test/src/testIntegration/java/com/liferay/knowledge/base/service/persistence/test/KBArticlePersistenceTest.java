@@ -125,6 +125,8 @@ public class KBArticlePersistenceTest {
 
 		KBArticle newKBArticle = _persistence.create(pk);
 
+		newKBArticle.setMvccVersion(RandomTestUtil.nextLong());
+
 		newKBArticle.setUuid(RandomTestUtil.randomString());
 
 		newKBArticle.setResourcePrimKey(RandomTestUtil.nextLong());
@@ -186,6 +188,8 @@ public class KBArticlePersistenceTest {
 		KBArticle existingKBArticle = _persistence.findByPrimaryKey(
 			newKBArticle.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingKBArticle.getMvccVersion(), newKBArticle.getMvccVersion());
 		Assert.assertEquals(
 			existingKBArticle.getUuid(), newKBArticle.getUuid());
 		Assert.assertEquals(
@@ -702,16 +706,16 @@ public class KBArticlePersistenceTest {
 
 	protected OrderByComparator<KBArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBArticle", "uuid", true, "kbArticleId", true, "resourcePrimKey",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"rootResourcePrimKey", true, "parentResourceClassNameId", true,
-			"parentResourcePrimKey", true, "kbFolderId", true, "version", true,
-			"title", true, "urlTitle", true, "description", true, "priority",
-			true, "sections", true, "viewCount", true, "latest", true, "main",
-			true, "sourceURL", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"KBArticle", "mvccVersion", true, "uuid", true, "kbArticleId", true,
+			"resourcePrimKey", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "rootResourcePrimKey", true,
+			"parentResourceClassNameId", true, "parentResourcePrimKey", true,
+			"kbFolderId", true, "version", true, "title", true, "urlTitle",
+			true, "description", true, "priority", true, "sections", true,
+			"viewCount", true, "latest", true, "main", true, "sourceURL", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -971,6 +975,8 @@ public class KBArticlePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		KBArticle kbArticle = _persistence.create(pk);
+
+		kbArticle.setMvccVersion(RandomTestUtil.nextLong());
 
 		kbArticle.setUuid(RandomTestUtil.randomString());
 

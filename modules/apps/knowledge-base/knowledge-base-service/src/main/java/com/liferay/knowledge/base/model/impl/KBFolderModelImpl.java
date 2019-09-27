@@ -74,19 +74,20 @@ public class KBFolderModelImpl
 	public static final String TABLE_NAME = "KBFolder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"kbFolderId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentKBFolderId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"urlTitle", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"kbFolderId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"parentKBFolderId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kbFolderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -103,7 +104,7 @@ public class KBFolderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBFolder (uuid_ VARCHAR(75) null,kbFolderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentKBFolderId LONG,name VARCHAR(75) null,urlTitle VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+		"create table KBFolder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbFolderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentKBFolderId LONG,name VARCHAR(75) null,urlTitle VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBFolder";
 
@@ -154,6 +155,7 @@ public class KBFolderModelImpl
 
 		KBFolder model = new KBFolderImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setKbFolderId(soapModel.getKbFolderId());
 		model.setGroupId(soapModel.getGroupId());
@@ -315,6 +317,10 @@ public class KBFolderModelImpl
 		Map<String, BiConsumer<KBFolder, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<KBFolder, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", KBFolder::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<KBFolder, Long>)KBFolder::setMvccVersion);
 		attributeGetterFunctions.put("uuid", KBFolder::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<KBFolder, String>)KBFolder::setUuid);
@@ -365,6 +371,17 @@ public class KBFolderModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -665,6 +682,7 @@ public class KBFolderModelImpl
 	public Object clone() {
 		KBFolderImpl kbFolderImpl = new KBFolderImpl();
 
+		kbFolderImpl.setMvccVersion(getMvccVersion());
 		kbFolderImpl.setUuid(getUuid());
 		kbFolderImpl.setKbFolderId(getKbFolderId());
 		kbFolderImpl.setGroupId(getGroupId());
@@ -767,6 +785,8 @@ public class KBFolderModelImpl
 	@Override
 	public CacheModel<KBFolder> toCacheModel() {
 		KBFolderCacheModel kbFolderCacheModel = new KBFolderCacheModel();
+
+		kbFolderCacheModel.mvccVersion = getMvccVersion();
 
 		kbFolderCacheModel.uuid = getUuid();
 
@@ -921,6 +941,7 @@ public class KBFolderModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _kbFolderId;

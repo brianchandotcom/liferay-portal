@@ -304,7 +304,7 @@ definition {
 
 	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."
 	@priority = "5"
-	test MapWebContentImage {
+	test MapWebContentImageToFragmentBackground {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -373,7 +373,7 @@ definition {
 
 	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
 	@priority = "5"
-	test MapWebContentImageViaLayoutSection {
+	test MapWebContentImageToLayoutSection {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();

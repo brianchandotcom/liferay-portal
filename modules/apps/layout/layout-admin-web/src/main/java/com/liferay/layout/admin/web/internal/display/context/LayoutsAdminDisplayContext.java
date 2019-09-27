@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -1300,8 +1299,9 @@ public class LayoutsAdminDisplayContext {
 			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
 
 		for (AssetVocabulary vocabulary : vocabularies) {
-			if (vocabulary.isAssociatedToClassNameId(
-					classNameId) && vocabulary.isRequired(classNameId, 0)) {
+			if (vocabulary.isAssociatedToClassNameId(classNameId) &&
+				vocabulary.isRequired(classNameId, 0)) {
+
 				int vocabularyCategoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
 						vocabulary.getGroupId(), vocabulary.getVocabularyId());

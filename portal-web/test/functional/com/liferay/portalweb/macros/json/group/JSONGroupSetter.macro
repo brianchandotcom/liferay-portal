@@ -1,5 +1,16 @@
 definition {
 
+	macro setGrandParentGroupId {
+		if (isSet(grandParentGroupName)) {
+			var grandParentGroupId = JSONGroupAPI._getGroupIdByName(groupName = "${grandParentGroupName}");
+		}
+		else {
+			var grandParentGroupId = "0";
+		}
+
+		return "${grandParentGroupId}";
+	}
+
 	macro setGroupDescriptionMap {
 		if (isSet(groupDescription)) {
 			var groupDescription = URLUtil.encodeUTF8("${groupDescription}");
@@ -33,7 +44,7 @@ definition {
 
 	macro setParentGroupId {
 		if (isSet(parentGroupName)) {
-			var parentGroupId = JSONGroupAPI._getGroupIdByName(groupName = "${parentGroupName}");
+			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(groupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
 		}
 		else {
 			var parentGroupId = "0";

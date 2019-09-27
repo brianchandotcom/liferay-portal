@@ -74,6 +74,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/search"
 	},

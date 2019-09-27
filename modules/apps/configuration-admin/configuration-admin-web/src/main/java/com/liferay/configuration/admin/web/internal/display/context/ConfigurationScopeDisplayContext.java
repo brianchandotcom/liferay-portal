@@ -46,6 +46,17 @@ public class ConfigurationScopeDisplayContext {
 
 			scopePK = themeDisplay.getCompanyId();
 		}
+		else if (portletId.equals(
+					ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
+
+			scope = ExtendedObjectClassDefinition.Scope.GROUP;
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			scopePK = themeDisplay.getScopeGroupId();
+		}
 
 		_scope = scope;
 		_scopePK = scopePK;

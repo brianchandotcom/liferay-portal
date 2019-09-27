@@ -313,6 +313,10 @@ public class ConfigurationModelRetrieverImpl
 			return null;
 		}
 
+		if (scope.equals(scope.GROUP) && !configurationModel.isGroupScope()) {
+			return null;
+		}
+
 		if (!scope.equals(scope.SYSTEM) && configurationModel.isFactory()) {
 			return null;
 		}

@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -95,11 +96,13 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -124,6 +127,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Brian Wing Shun Chan
@@ -913,7 +921,14 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 			serialDestination.open();
 
-			MessageBusUtil.addDestination(serialDestination);
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			properties.put("destination.name", serialDestination.getName());
+
+			destinationServiceRegistrations.put(
+				serialDestination.getName(),
+				_bundleContext.registerService(
+					Destination.class, serialDestination, properties));
 		}
 
 		try {
@@ -1647,6 +1662,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected Company company;
 	protected MessageListener controllerMessageListener;
 	protected String controllerPath;
+	protected Map<String, ServiceRegistration<Destination>>
+		destinationServiceRegistrations = new ConcurrentHashMap<>();
 	protected EventRequest eventRequest;
 	protected EventResponse eventResponse;
 	protected String format;
@@ -1680,6 +1697,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected User user;
 	protected String viewPath;
 
+	private static final BundleContext _bundleContext;
 	private static final TransactionConfig _transactionConfig;
 
 	static {
@@ -1690,6 +1708,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		builder.setRollbackForClasses(Exception.class);
 
 		_transactionConfig = builder.build();
+
+		Bundle bundle = FrameworkUtil.getBundle(BaseAlloyControllerImpl.class);
+
+		_bundleContext = bundle.getBundleContext();
 	}
 
 }

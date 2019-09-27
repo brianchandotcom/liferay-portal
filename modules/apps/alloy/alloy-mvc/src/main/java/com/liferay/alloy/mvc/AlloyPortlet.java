@@ -18,7 +18,7 @@ import com.liferay.alloy.mvc.internal.json.web.service.AlloyControllerInvokerMan
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -51,6 +51,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.framework.ServiceRegistration;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -67,12 +69,20 @@ public abstract class AlloyPortlet extends GenericPortlet {
 				IndexerRegistryUtil.unregister(indexer);
 			}
 
+			Map<String, ServiceRegistration<Destination>> serviceRegistrations =
+				baseAlloyControllerImpl.destinationServiceRegistrations;
+
 			MessageListener controllerMessageListener =
 				baseAlloyControllerImpl.controllerMessageListener;
 
 			if (controllerMessageListener != null) {
-				MessageBusUtil.removeDestination(
-					baseAlloyControllerImpl.getControllerDestinationName());
+				ServiceRegistration<Destination> serviceRegistration =
+					serviceRegistrations.remove(
+						baseAlloyControllerImpl.getControllerDestinationName());
+
+				if (serviceRegistration != null) {
+					serviceRegistration.unregister();
+				}
 			}
 
 			MessageListener schedulerMessageListener =
@@ -85,8 +95,14 @@ public abstract class AlloyPortlet extends GenericPortlet {
 						baseAlloyControllerImpl.getMessageListenerGroupName(),
 						StorageType.MEMORY_CLUSTERED);
 
-					MessageBusUtil.removeDestination(
-						baseAlloyControllerImpl.getSchedulerDestinationName());
+					ServiceRegistration<Destination> serviceRegistration =
+						serviceRegistrations.remove(
+							baseAlloyControllerImpl.
+								getSchedulerDestinationName());
+
+					if (serviceRegistration != null) {
+						serviceRegistration.unregister();
+					}
 				}
 				catch (Exception e) {
 					_log.error(e, e);

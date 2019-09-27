@@ -3216,11 +3216,11 @@ ${tomcat-gc-log}
 					<echo file="@{properties.file}" append="true"><![CDATA[
 module.framework.base.dir=${liferay.home}/osgi
 
-sprite.root.dir=/tmp/sprite
-
 memory.scheduler.org.quartz.threadPool.threadCount=1
 
-persisted.scheduler.org.quartz.threadPool.threadCount=1]]></echo>
+persisted.scheduler.org.quartz.threadPool.threadCount=1
+
+sprite.root.dir=/tmp/sprite]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
 		</sequential>

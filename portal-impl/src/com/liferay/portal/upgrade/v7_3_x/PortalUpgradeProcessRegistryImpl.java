@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -33,6 +34,20 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(6, 0, 0), new UpgradeLayout());
 
 		upgradeProcesses.put(new Version(6, 0, 1), new UpgradeLayoutSet());
+
+		upgradeProcesses.put(
+			new Version(6, 0, 2),
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"AssetCategory", "AssetEntry", "AssetLink", "AssetTag",
+						"AssetVocabulary"
+					};
+				}
+
+			});
 	}
 
 }

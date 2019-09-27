@@ -21,11 +21,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CSVUtil;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,17 +50,13 @@ public class DDMFormInstanceRecordCSVWriter
 		Map<String, String> ddmFormFieldsLabel =
 			ddmFormInstanceRecordWriterRequest.getDDMFormFieldsLabel();
 
-		List<String> labels = _getDistinctLabels(ddmFormFieldsLabel);
-
-		sb.append(writeValues(labels));
+		sb.append(writeValues(ddmFormFieldsLabel.values()));
 
 		sb.append(StringPool.NEW_LINE);
 
 		sb.append(
 			writeRecords(
-				ddmFormFieldsLabel,
-				ddmFormInstanceRecordWriterRequest.getDDMFormFieldValues(),
-				labels));
+				ddmFormInstanceRecordWriterRequest.getDDMFormFieldValues()));
 
 		String csv = sb.toString();
 
@@ -73,33 +67,15 @@ public class DDMFormInstanceRecordCSVWriter
 		return builder.build();
 	}
 
-	protected String writeRecord(
-		Map<String, String> ddmFormFieldsLabel,
-		Map<String, String> ddmFormFieldValue, List<String> labels) {
-
-		Set<Map.Entry<String, String>> entrySet = ddmFormFieldsLabel.entrySet();
-
-		Stream<Map.Entry<String, String>> stream = entrySet.stream();
-
-		return stream.filter(
-			entry ->
-				labels.contains(entry.getValue()) &&
-				ddmFormFieldValue.containsKey(entry.getKey())
-		).map(
-			entry -> CSVUtil.encode(ddmFormFieldValue.get(entry.getKey()))
-		).collect(
-			Collectors.joining(StringPool.COMMA)
-		);
-	}
-
 	protected String writeRecords(
-		Map<String, String> ddmFormFieldsLabel,
-		List<Map<String, String>> ddmFormFieldsValue, List<String> labels) {
+		List<Map<String, String>> ddmFormFieldValues) {
 
-		Stream<Map<String, String>> stream = ddmFormFieldsValue.stream();
+		Stream<Map<String, String>> stream = ddmFormFieldValues.stream();
 
 		return stream.map(
-			values -> writeRecord(ddmFormFieldsLabel, values, labels)
+			Map::values
+		).map(
+			this::writeValues
 		).collect(
 			Collectors.joining(StringPool.NEW_LINE)
 		);
@@ -113,20 +89,6 @@ public class DDMFormInstanceRecordCSVWriter
 		).collect(
 			Collectors.joining(StringPool.COMMA)
 		);
-	}
-
-	private List<String> _getDistinctLabels(
-		Map<String, String> ddmFormFieldsLabel) {
-
-		List<String> labels = new ArrayList<>();
-
-		for (String label : ddmFormFieldsLabel.values()) {
-			if (!labels.contains(label)) {
-				labels.add(label);
-			}
-		}
-
-		return labels;
 	}
 
 }

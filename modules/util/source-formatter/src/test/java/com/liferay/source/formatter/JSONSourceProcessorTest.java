@@ -61,6 +61,11 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectEmptyLines() throws Exception {
+		test("IncorrectEmptyLines.testjson");
+	}
+
+	@Test
 	public void testJSONDeprecatedPackagesCheck() throws Exception {
 		test(
 			"JSONDeprecatedPackages/package.testjson",

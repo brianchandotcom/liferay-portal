@@ -371,6 +371,67 @@ definition {
 		}
 	}
 
+	@description = "This case ensures a user can map the layout of a fragment to an existing image content."
+	@priority = "5"
+	test MapWebContentImageViaLayoutSection {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Image",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentImage = "Document_2.jpeg",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addLayoutSection(columnCount = "2");
+
+		PageEditor.editLayoutSectionImage(
+			assetField = "Web Content Article",
+			webContentTitle = "WC WebContent Title");
+
+		task ("Assert the layout background field contains the mapped image.") {
+			PageEditor.clickPublish();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+			AssertElementPresent(
+				key_imageName = "Document_2.jpeg",
+				locator1 = "Fragment#FRAGMENT_LAYOUT_BACKGROUND_IMAGE");
+		}
+	}
+
 	@description = "This is a test for LPS-86550. Users should be able to map last editor name and author profile image to a fragment editable field in a display page."
 	@priority = "5"
 	test MapWebContentLastEditor {

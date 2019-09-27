@@ -106,15 +106,16 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long fileEntryId = GetterUtil.getLong(
-			taskContextMap.get(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID));
-		Locale locale = (Locale)taskContextMap.getOrDefault(
-			OneDriveBackgroundTaskConstants.LOCALE, LocaleUtil.getDefault());
-		long userId = GetterUtil.getLong(
-			taskContextMap.get(OneDriveBackgroundTaskConstants.USER_ID));
-
 		_uploadFile(
-			userId, _dlAppLocalService.getFileEntry(fileEntryId), locale);
+			GetterUtil.getLong(
+				taskContextMap.get(OneDriveBackgroundTaskConstants.USER_ID)),
+			_dlAppLocalService.getFileEntry(
+				GetterUtil.getLong(
+					taskContextMap.get(
+						OneDriveBackgroundTaskConstants.FILE_ENTRY_ID))),
+			(Locale)taskContextMap.getOrDefault(
+				OneDriveBackgroundTaskConstants.LOCALE,
+				LocaleUtil.getDefault()));
 
 		return BackgroundTaskResult.SUCCESS;
 	}

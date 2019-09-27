@@ -2,6 +2,8 @@ alter table SegmentsExperience add segmentsExperienceKey VARCHAR(75) null;
 
 create unique index IX_B8F358EB on SegmentsExperience (groupId, segmentsExperienceKey[$COLUMN_LENGTH:75$]);
 
+update SegmentsExperience set segmentsExperienceKey = segmentsExperienceId;
+
 create table SegmentsExperiment (
 	uuid_ VARCHAR(75) null,
 	segmentsExperimentId LONG not null primary key,

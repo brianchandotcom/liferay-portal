@@ -1,8 +1,8 @@
-.hide {
-	@extend .d-none;
-}
-
 @if $compat-utilities {
+	.hide {
+		@extend .d-none;
+	}
+
 	.pull-left {
 		@extend .float-left;
 	}

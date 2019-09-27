@@ -1167,7 +1167,7 @@ definition {
 			voteCount = "1");
 	}
 
-	@description = "This is a use case for LPS-54392."
+	@description = "This is a use case for LPS-54392 and LPS-88014."
 	@priority = "3"
 	test ExportImportSiteWithReferencedWebContent {
 		JSONGroup.addGroup(groupName = "Site Name A");
@@ -1242,6 +1242,8 @@ definition {
 		LAR.importSiteCP(
 			larFileName = "${larFileName2}",
 			siteName = "Site Name D");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
 	}
 
 	@priority = "5"

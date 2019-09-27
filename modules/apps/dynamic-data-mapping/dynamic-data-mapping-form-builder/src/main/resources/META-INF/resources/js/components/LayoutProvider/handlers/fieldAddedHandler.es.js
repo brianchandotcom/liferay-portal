@@ -25,7 +25,7 @@ const handleFieldAdded = (props, state, event) => {
 		addedToPlaceholder,
 		fieldType,
 		indexes,
-		generateNameFromLabel = true
+		skipFieldNameGeneration = false
 	} = event;
 	const {
 		defaultLanguageId,
@@ -33,20 +33,20 @@ const handleFieldAdded = (props, state, event) => {
 		fieldNameGenerator,
 		spritemap
 	} = props;
-	let desiredFieldName = fieldType.label;
+	let newFieldName;
 
-	if (!generateNameFromLabel) {
+	if (skipFieldNameGeneration) {
 		const {settingsContext} = fieldType;
 		const visitor = new PagesVisitor(settingsContext.pages);
 
 		visitor.mapFields(({fieldName, value}) => {
 			if (fieldName === 'name') {
-				desiredFieldName = value;
+				newFieldName = value;
 			}
 		});
+	} else {
+		newFieldName = fieldNameGenerator(fieldType.label);
 	}
-
-	const newFieldName = fieldNameGenerator(desiredFieldName);
 
 	const focusedField = {
 		...fieldType,

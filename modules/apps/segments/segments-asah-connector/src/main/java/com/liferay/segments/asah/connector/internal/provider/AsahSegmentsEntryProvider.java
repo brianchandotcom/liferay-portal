@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.constants.SegmentsAsahDestinationNames;
@@ -33,9 +34,12 @@ import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -118,7 +122,7 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
@@ -127,13 +131,17 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		_messageBus.addDestination(destination);
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("destination.name", destination.getName());
+
+		_destinationServiceRegistration = bundleContext.registerService(
+			Destination.class, destination, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_messageBus.removeDestination(
-			SegmentsAsahDestinationNames.INDIVIDUAL_SEGMENTS);
+		_destinationServiceRegistration.unregister();
 	}
 
 	private void _sendMessage(String userId) {
@@ -153,6 +161,8 @@ public class AsahSegmentsEntryProvider implements SegmentsEntryProvider {
 
 	@Reference
 	private DestinationFactory _destinationFactory;
+
+	private ServiceRegistration<Destination> _destinationServiceRegistration;
 
 	@Reference
 	private MessageBus _messageBus;

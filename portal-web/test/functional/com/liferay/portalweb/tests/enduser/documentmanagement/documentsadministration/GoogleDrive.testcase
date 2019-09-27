@@ -462,6 +462,48 @@ definition {
 			status = "Draft");
 	}
 
+	@description = "This test covers LPS-93897. It ensures that user is able to clear his google credentials that were previously entered."
+	@priority = "5"
+	test RevokeGoogleDriveCredentials {
+		property test.name.skip.portal.instance = "GoogleDrive#RevokeGoogleDriveCredential";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.saveAndExit();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		UserNavigator.gotoGeneral();
+
+		Navigator.gotoNavNested(navNested = "Apps");
+
+		Click(
+			key_text = "Revoke",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
+
+		task ("Assert the request for credentials to be reentered") {
+			Google.signIn(
+				userEmailAddress = PropsUtil.get("email.address.3"),
+				userPassword = PropsUtil.get("email.password.3"),
+				windowTitle = "Documents and Media Page - Liferay");
+
+			GoogleDoc.saveAndExit();
+		}
+	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

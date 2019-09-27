@@ -99,7 +99,7 @@ else {
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
 				<div class="sidebar-header">
-					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
+					<aui:icon cssClass="icon-monospaced d-inline-block d-sm-none sidenav-close text-default" image="times" markupView="lexicon" url="javascript:;" />
 				</div>
 
 				<liferay-ui:tabs

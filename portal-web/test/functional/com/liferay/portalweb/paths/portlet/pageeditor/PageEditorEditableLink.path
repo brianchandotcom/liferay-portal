@@ -33,6 +33,17 @@
 	<td>//select[contains(@id,'floatingToolbarLinkTypePanelOption')]</td>
 	<td></td>
 </tr>
+<!--LAYOUT_BACKGROUND_IMAGE-->
+<tr>
+	<td>LAYOUT_BACKGROUND_IMAGE_FIELD</td>
+	<td>//select[contains(@id,'floatingToolbarLayoutBackgroundImagePanelFieldSelect')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAYOUT_BACKGROUND_IMAGE_SOURCE_FIELD</td>
+	<td>//select[contains(@id,'floatingToolbarLayoutBackgroundImagePanelImageSourceTypeSelect')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

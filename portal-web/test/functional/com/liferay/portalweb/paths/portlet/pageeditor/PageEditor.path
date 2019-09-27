@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDITABLE_FIELD_TOOLBAR_LAYOUT_BACKGROUND_IMAGE_BUTTON</td>
+	<td>//button[@data-panel-id='layout_background_image']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

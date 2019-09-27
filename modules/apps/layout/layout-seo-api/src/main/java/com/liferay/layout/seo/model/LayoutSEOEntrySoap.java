@@ -31,6 +31,7 @@ public class LayoutSEOEntrySoap implements Serializable {
 	public static LayoutSEOEntrySoap toSoapModel(LayoutSEOEntry model) {
 		LayoutSEOEntrySoap soapModel = new LayoutSEOEntrySoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutSEOEntryId(model.getLayoutSEOEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -100,6 +101,14 @@ public class LayoutSEOEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setLayoutSEOEntryId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -214,6 +223,7 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutSEOEntryId;
 	private long _groupId;

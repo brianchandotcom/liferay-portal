@@ -18,6 +18,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class LayoutSEOEntryCacheModel
-	implements CacheModel<LayoutSEOEntry>, Externalizable {
+	implements CacheModel<LayoutSEOEntry>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -48,7 +49,9 @@ public class LayoutSEOEntryCacheModel
 		LayoutSEOEntryCacheModel layoutSEOEntryCacheModel =
 			(LayoutSEOEntryCacheModel)obj;
 
-		if (layoutSEOEntryId == layoutSEOEntryCacheModel.layoutSEOEntryId) {
+		if ((layoutSEOEntryId == layoutSEOEntryCacheModel.layoutSEOEntryId) &&
+			(mvccVersion == layoutSEOEntryCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, layoutSEOEntryId);
+		int hashCode = HashUtil.hash(0, layoutSEOEntryId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", layoutSEOEntryId=");
 		sb.append(layoutSEOEntryId);
@@ -98,6 +115,8 @@ public class LayoutSEOEntryCacheModel
 	@Override
 	public LayoutSEOEntry toEntityModel() {
 		LayoutSEOEntryImpl layoutSEOEntryImpl = new LayoutSEOEntryImpl();
+
+		layoutSEOEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			layoutSEOEntryImpl.setUuid("");
@@ -157,6 +176,7 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		layoutSEOEntryId = objectInput.readLong();
@@ -181,6 +201,8 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -222,6 +244,7 @@ public class LayoutSEOEntryCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long layoutSEOEntryId;
 	public long groupId;

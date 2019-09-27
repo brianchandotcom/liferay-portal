@@ -124,6 +124,8 @@ public class LayoutSEOEntryPersistenceTest {
 
 		LayoutSEOEntry newLayoutSEOEntry = _persistence.create(pk);
 
+		newLayoutSEOEntry.setMvccVersion(RandomTestUtil.nextLong());
+
 		newLayoutSEOEntry.setUuid(RandomTestUtil.randomString());
 
 		newLayoutSEOEntry.setGroupId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class LayoutSEOEntryPersistenceTest {
 		LayoutSEOEntry existingLayoutSEOEntry = _persistence.findByPrimaryKey(
 			newLayoutSEOEntry.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingLayoutSEOEntry.getMvccVersion(),
+			newLayoutSEOEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingLayoutSEOEntry.getUuid(), newLayoutSEOEntry.getUuid());
 		Assert.assertEquals(
@@ -252,11 +257,11 @@ public class LayoutSEOEntryPersistenceTest {
 
 	protected OrderByComparator<LayoutSEOEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"LayoutSEOEntry", "uuid", true, "layoutSEOEntryId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "privateLayout", true,
-			"layoutId", true, "enabled", true, "canonicalURL", true,
-			"lastPublishDate", true);
+			"LayoutSEOEntry", "mvccVersion", true, "uuid", true,
+			"layoutSEOEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "privateLayout", true, "layoutId", true,
+			"enabled", true, "canonicalURL", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -513,6 +518,8 @@ public class LayoutSEOEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		LayoutSEOEntry layoutSEOEntry = _persistence.create(pk);
+
+		layoutSEOEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		layoutSEOEntry.setUuid(RandomTestUtil.randomString());
 

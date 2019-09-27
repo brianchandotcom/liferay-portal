@@ -81,19 +81,20 @@ public class LayoutSEOEntryModelImpl
 	public static final String TABLE_NAME = "LayoutSEOEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"layoutSEOEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"privateLayout", Types.BOOLEAN}, {"layoutId", Types.BIGINT},
-		{"enabled", Types.BOOLEAN}, {"canonicalURL", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"layoutSEOEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
+		{"layoutId", Types.BIGINT}, {"enabled", Types.BOOLEAN},
+		{"canonicalURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutSEOEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -110,7 +111,7 @@ public class LayoutSEOEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,enabled BOOLEAN,canonicalURL STRING null,lastPublishDate DATE null)";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,enabled BOOLEAN,canonicalURL STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -159,6 +160,7 @@ public class LayoutSEOEntryModelImpl
 
 		LayoutSEOEntry model = new LayoutSEOEntryImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setLayoutSEOEntryId(soapModel.getLayoutSEOEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -324,6 +326,11 @@ public class LayoutSEOEntryModelImpl
 		Map<String, BiConsumer<LayoutSEOEntry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<LayoutSEOEntry, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", LayoutSEOEntry::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<LayoutSEOEntry, Long>)LayoutSEOEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", LayoutSEOEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -391,6 +398,17 @@ public class LayoutSEOEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -845,6 +863,7 @@ public class LayoutSEOEntryModelImpl
 	public Object clone() {
 		LayoutSEOEntryImpl layoutSEOEntryImpl = new LayoutSEOEntryImpl();
 
+		layoutSEOEntryImpl.setMvccVersion(getMvccVersion());
 		layoutSEOEntryImpl.setUuid(getUuid());
 		layoutSEOEntryImpl.setLayoutSEOEntryId(getLayoutSEOEntryId());
 		layoutSEOEntryImpl.setGroupId(getGroupId());
@@ -951,6 +970,8 @@ public class LayoutSEOEntryModelImpl
 	public CacheModel<LayoutSEOEntry> toCacheModel() {
 		LayoutSEOEntryCacheModel layoutSEOEntryCacheModel =
 			new LayoutSEOEntryCacheModel();
+
+		layoutSEOEntryCacheModel.mvccVersion = getMvccVersion();
 
 		layoutSEOEntryCacheModel.uuid = getUuid();
 
@@ -1094,6 +1115,7 @@ public class LayoutSEOEntryModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _layoutSEOEntryId;

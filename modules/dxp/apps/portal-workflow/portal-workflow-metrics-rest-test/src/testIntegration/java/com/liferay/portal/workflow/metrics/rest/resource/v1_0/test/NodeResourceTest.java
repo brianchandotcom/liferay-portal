@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -44,7 +45,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 		BaseNodeResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_queries, _searchEngineAdapter);
+			_documentBuilderFactory, _queries, _searchEngineAdapter);
 	}
 
 	@Before
@@ -141,6 +142,9 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 				testGroup.getCompanyId(), node, _process.getId());
 		}
 	}
+
+	@Inject
+	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static Queries _queries;

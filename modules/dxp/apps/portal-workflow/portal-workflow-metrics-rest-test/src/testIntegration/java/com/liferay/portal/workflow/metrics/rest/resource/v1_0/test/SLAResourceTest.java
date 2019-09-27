@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -54,7 +55,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 		BaseSLAResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_queries, _searchEngineAdapter);
+			_documentBuilderFactory, _queries, _searchEngineAdapter);
 	}
 
 	@Before
@@ -244,6 +245,9 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 		unsafeTriConsumer.accept(sla1, sla2, page);
 	}
+
+	@Inject
+	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static Queries _queries;

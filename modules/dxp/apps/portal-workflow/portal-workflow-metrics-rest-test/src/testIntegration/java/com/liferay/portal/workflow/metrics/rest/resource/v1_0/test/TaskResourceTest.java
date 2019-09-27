@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -51,7 +52,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		BaseTaskResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_queries, _searchEngineAdapter);
+			_documentBuilderFactory, _queries, _searchEngineAdapter);
 	}
 
 	@Before
@@ -264,6 +265,9 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 				testGroup.getCompanyId(), _process.getId(), task);
 		}
 	}
+
+	@Inject
+	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static Queries _queries;

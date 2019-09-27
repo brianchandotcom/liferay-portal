@@ -19,6 +19,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -50,7 +51,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		BaseProcessResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_queries, _searchEngineAdapter);
+			_documentBuilderFactory, _queries, _searchEngineAdapter);
 	}
 
 	@Before
@@ -239,6 +240,9 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 		unsafeBiConsumer.accept(postProcess, getProcess);
 	}
+
+	@Inject
+	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	private static Document[] _documents;
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.test.rule.Inject;
@@ -55,7 +56,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		BaseInstanceResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
-			_queries, _searchEngineAdapter);
+			_documentBuilderFactory, _queries, _searchEngineAdapter);
 	}
 
 	@Before
@@ -216,6 +217,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		unsafeTriConsumer.accept(instance1, instance2, page);
 	}
+
+	@Inject
+	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static Queries _queries;

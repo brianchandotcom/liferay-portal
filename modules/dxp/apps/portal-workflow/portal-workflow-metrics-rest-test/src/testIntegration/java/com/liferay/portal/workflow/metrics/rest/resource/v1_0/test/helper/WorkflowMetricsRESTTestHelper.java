@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -21,11 +22,15 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -41,9 +46,11 @@ import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -60,8 +67,10 @@ import org.osgi.framework.ServiceReference;
 public class WorkflowMetricsRESTTestHelper {
 
 	public WorkflowMetricsRESTTestHelper(
-		Queries queries, SearchEngineAdapter searchEngineAdapter) {
+		DocumentBuilderFactory documentBuilderFactory, Queries queries,
+		SearchEngineAdapter searchEngineAdapter) {
 
+		_documentBuilderFactory = documentBuilderFactory;
 		_queries = queries;
 		_searchEngineAdapter = searchEngineAdapter;
 	}
@@ -226,8 +235,9 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public void addSLATaskResult(
-			boolean breached, long companyId, Instance instance, boolean onTime,
-			String status, long taskId, String taskName)
+			long assigneeId, boolean breached, long companyId,
+			Instance instance, boolean onTime, String status, long taskId,
+			String taskName)
 		throws Exception {
 
 		long slaDefinitionId = RandomTestUtil.randomLong();
@@ -236,14 +246,14 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_SLA_TASK_RESULT_INDEXER),
 			_creatWorkflowMetricsSLATaskResultDocument(
-				breached, companyId, instance.getId(), onTime,
+				assigneeId, breached, companyId, instance.getId(), onTime,
 				instance.getProcessId(), slaDefinitionId, status, taskId,
 				taskName, tokenId));
 
 		_retryAssertCount(
 			"workflow-metrics-sla-task-results", "breached", breached,
-			"companyId", companyId, "deleted", false, "instanceId",
-			instance.getId(), "onTime", onTime, "processId",
+			"assigneeId", assigneeId, "companyId", companyId, "deleted", false,
+			"instanceId", instance.getId(), "onTime", onTime, "processId",
 			instance.getProcessId(), "slaDefinitionId", slaDefinitionId,
 			"taskId", taskId, "taskName", taskName);
 	}
@@ -273,6 +283,18 @@ public class WorkflowMetricsRESTTestHelper {
 			Task task, String version)
 		throws Exception {
 
+		return addTask(
+			assigneeId, companyId,
+			() -> addInstance(companyId, false, processId), processId, status,
+			task, version);
+	}
+
+	public Task addTask(
+			long assigneeId, long companyId,
+			UnsafeSupplier<Instance, Exception> instanceSuplier, long processId,
+			String status, Task task, String version)
+		throws Exception {
+
 		long taskId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
@@ -284,19 +306,19 @@ public class WorkflowMetricsRESTTestHelper {
 		Long overdueInstanceCount = task.getOverdueInstanceCount();
 
 		for (int i = 0; i < task.getInstanceCount(); i++) {
-			Instance instance = addInstance(companyId, false, processId);
+			Instance instance = instanceSuplier.get();
 
 			if (onTimeInstanceCount > 0) {
 				addSLATaskResult(
-					false, companyId, instance, true, status, taskId,
-					task.getKey());
+					assigneeId, false, companyId, instance, true, status,
+					taskId, task.getKey());
 
 				onTimeInstanceCount--;
 			}
 			else if (overdueInstanceCount > 0) {
 				addSLATaskResult(
-					true, companyId, instance, false, status, taskId,
-					task.getKey());
+					assigneeId, true, companyId, instance, false, status,
+					taskId, task.getKey());
 
 				overdueInstanceCount--;
 			}
@@ -326,19 +348,29 @@ public class WorkflowMetricsRESTTestHelper {
 			Instance instance, long taskId, String taskName)
 		throws Exception {
 
+		addToken(
+			assigneeId, companyId, durationAvg, instance.getId(),
+			instance.getProcessId(), taskId, taskName);
+	}
+
+	public void addToken(
+			long assigneeId, long companyId, long durationAvg, long instanceId,
+			long processId, long taskId, String taskName)
+		throws Exception {
+
 		long tokenId = RandomTestUtil.randomLong();
 
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_TOKEN_INDEXER),
 			_creatWorkflowMetricsTokenDocument(
-				assigneeId, companyId, durationAvg, instance.getId(),
-				instance.getProcessId(), taskId, taskName, tokenId, "1.0"));
+				assigneeId, companyId, durationAvg, instanceId, processId,
+				taskId, taskName, tokenId, "1.0"));
 
 		_retryAssertCount(
 			"workflow-metrics-tokens", "assigneeId", assigneeId, "companyId",
-			companyId, "deleted", false, "instanceId", instance.getId(),
-			"processId", instance.getProcessId(), "taskId", taskId, "taskName",
-			taskName, "tokenId", tokenId);
+			companyId, "deleted", false, "instanceId", instanceId, "processId",
+			processId, "taskId", taskId, "taskName", taskName, "tokenId",
+			tokenId);
 	}
 
 	public void deleteInstance(long companyId, Instance instance)
@@ -393,6 +425,15 @@ public class WorkflowMetricsRESTTestHelper {
 				companyId, process.getId(), process.getTitle(), "1.0"));
 	}
 
+	public void deleteSLATaskResults(long companyId, long processId)
+		throws Exception {
+
+		_deleteDocuments(
+			"workflow-metrics-sla-task-results",
+			"WorkflowMetricsSLATaskResultType", "companyId", companyId,
+			"processId", processId);
+	}
+
 	public void deleteTask(long companyId, long processId, Task task)
 		throws Exception {
 
@@ -404,6 +445,12 @@ public class WorkflowMetricsRESTTestHelper {
 		_retryAssertCount(
 			"workflow-metrics-nodes", "companyId", companyId, "deleted", true,
 			"name", task.getKey(), "processId", processId);
+	}
+
+	public void deleteTokens(long companyId, long processId) throws Exception {
+		_deleteDocuments(
+			"workflow-metrics-tokens", "WorkflowMetricsTokenType", "companyId",
+			companyId, "processId", processId);
 	}
 
 	public Document[] getDocuments(long companyId) throws Exception {
@@ -563,15 +610,16 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsSLATaskResultDocument(
-		boolean breached, long companyId, long instanceId, boolean onTime,
-		long processId, long slaDefinitionId, String status, long taskId,
-		String taskName, long tokenId) {
+		long assigneeId, boolean breached, long companyId, long instanceId,
+		boolean onTime, long processId, long slaDefinitionId, String status,
+		long taskId, String taskName, long tokenId) {
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
 			"WorkflowMetricsSLATaskResult",
 			_digest(companyId, instanceId, processId, slaDefinitionId, taskId));
+		document.addKeyword("assigneeId", assigneeId);
 		document.addKeyword("breached", breached);
 		document.addKeyword("companyId", companyId);
 		document.addKeyword("deleted", false);
@@ -613,6 +661,68 @@ public class WorkflowMetricsRESTTestHelper {
 		document.addKeyword("version", version);
 
 		return document;
+	}
+
+	private void _deleteDocuments(
+			String indexName, String indexType, Object... parameters)
+		throws Exception {
+
+		if (_searchEngineAdapter == null) {
+			return;
+		}
+
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
+
+		searchSearchRequest.setIndexNames(indexName);
+
+		BooleanQuery booleanQuery = _queries.booleanQuery();
+
+		for (int j = 0; j < parameters.length; j = j + 2) {
+			booleanQuery.addMustQueryClauses(
+				_queries.term(
+					String.valueOf(parameters[j]), parameters[j + 1]));
+		}
+
+		searchSearchRequest.setQuery(booleanQuery);
+
+		searchSearchRequest.setTypes(indexType);
+
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
+
+		Stream.of(
+			searchSearchResponse
+		).map(
+			SearchSearchResponse::getSearchHits
+		).map(
+			SearchHits::getSearchHits
+		).flatMap(
+			List::stream
+		).map(
+			SearchHit::getDocument
+		).map(
+			_documentBuilderFactory::builder
+		).map(
+			documentBuilder -> {
+				documentBuilder.setValue("deleted", true);
+
+				return documentBuilder.build();
+			}
+		).forEach(
+			document -> {
+				UpdateDocumentRequest updateDocumentRequest =
+					new UpdateDocumentRequest(
+						indexName, document.getString("uid"), document);
+
+				updateDocumentRequest.setType(indexType);
+
+				_searchEngineAdapter.execute(updateDocumentRequest);
+			}
+		);
+
+		_retryAssertCount(
+			searchSearchResponse.getCount(), indexName,
+			ArrayUtil.append(new Object[] {"deleted", true}, parameters));
 	}
 
 	private String _digest(Serializable... parts) {
@@ -706,7 +816,8 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeMethod(indexer, "updateDocument", document);
 	}
 
-	private void _retryAssertCount(String indexName, Object... parameters)
+	private void _retryAssertCount(
+			long expectedCount, String indexName, Object... parameters)
 		throws Exception {
 
 		if (_searchEngineAdapter == null) {
@@ -741,11 +852,18 @@ public class WorkflowMetricsRESTTestHelper {
 					CountSearchResponse countSearchResponse =
 						_searchEngineAdapter.execute(countSearchRequest);
 
-					Assert.assertEquals(1, countSearchResponse.getCount());
+					Assert.assertEquals(
+						expectedCount, countSearchResponse.getCount());
 
 					return null;
 				});
 		}
+	}
+
+	private void _retryAssertCount(String indexName, Object... parameters)
+		throws Exception {
+
+		_retryAssertCount(1, indexName, parameters);
 	}
 
 	private static final String _CLASS_NAME_INSTANCE_INDEXER =
@@ -774,6 +892,7 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private static Map<String, Object> _indexers = new HashMap<>();
 
+	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final Queries _queries;
 	private final SearchEngineAdapter _searchEngineAdapter;
 

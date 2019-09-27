@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -136,6 +137,19 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 					KBArticleTable.class, KBCommentTable.class,
 					KBFolderTable.class, KBTemplateTable.class
 				}));
+
+		registry.register(
+			"3.0.0", "3.1.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"KBArticle", "KBComment", "KBFolder", "KBTemplate"
+					};
+				}
+
+			});
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

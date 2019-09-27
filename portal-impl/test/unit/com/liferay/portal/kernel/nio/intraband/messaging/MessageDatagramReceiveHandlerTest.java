@@ -138,8 +138,6 @@ public class MessageDatagramReceiveHandlerTest {
 		baseDestination.setName(
 			MessageDatagramReceiveHandlerTest.class.getName());
 
-		messageBus.addDestination(baseDestination);
-
 		Mockito.when(
 			messageBus.getDestination(Matchers.anyString())
 		).thenReturn(
@@ -249,8 +247,6 @@ public class MessageDatagramReceiveHandlerTest {
 				}
 
 			};
-
-		messageBus.addDestination(intrabandBridgeDestination);
 
 		Mockito.when(
 			messageBus.getDestination(Matchers.anyString())

@@ -112,9 +112,11 @@ public class FreeMarkerTool {
 	public String getEnumFieldName(String value) {
 		String fieldName = TextFormatter.format(value, TextFormatter.H);
 
-		fieldName = fieldName.replace(' ', '_');
-		fieldName = fieldName.replace('-', '_');
-		fieldName = fieldName.replace(".", "");
+		fieldName = fieldName.replaceAll("[ \\-\\/]", "_");
+
+		fieldName = fieldName.replaceAll("[^a-zA-Z0-9_]", "");
+
+		fieldName = fieldName.replaceAll("_+", "_");
 
 		return StringUtil.toUpperCase(fieldName);
 	}

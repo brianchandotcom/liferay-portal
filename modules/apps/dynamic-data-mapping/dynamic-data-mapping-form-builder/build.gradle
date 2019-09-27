@@ -25,7 +25,3 @@ dependencies {
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-memory")
 }
-
-replaceSoyTranslation {
-	enabled = true
-}

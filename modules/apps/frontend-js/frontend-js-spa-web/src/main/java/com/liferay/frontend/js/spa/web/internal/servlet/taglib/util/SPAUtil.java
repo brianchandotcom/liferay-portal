@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -179,6 +180,16 @@ public class SPAUtil {
 	}
 
 	public boolean isDisabled(HttpServletRequest httpServletRequest) {
+		int loadSPA = SessionParamUtil.getInteger(
+			httpServletRequest, "load_spa", -1);
+
+		if (loadSPA == 0) {
+			return true;
+		}
+		else if (loadSPA == 1) {
+			return false;
+		}
+
 		if (BrowserSnifferUtil.isIe(httpServletRequest)) {
 			if (_spaConfiguration.disableInInternetExplorer()) {
 				return true;

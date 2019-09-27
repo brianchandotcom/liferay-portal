@@ -9,7 +9,11 @@ classes {
 }
 
 dependencies {
-	compileInclude group: "com.liferay", name: "javax.servlet.jsp", version: "2.3.3-b02.LIFERAY-PATCHED-10"
+	compileInclude group: "org.apache.tomcat", name: "tomcat-api", version: "9.0.90"
+	compileInclude group: "org.apache.tomcat", name: "tomcat-jasper", version: "9.0.90"
+	compileInclude group: "org.apache.tomcat", name: "tomcat-juli", version: "9.0.90"
+	compileInclude group: "org.apache.tomcat", name: "tomcat-util", version: "9.0.90"
+	compileInclude group: "org.apache.tomcat", name: "tomcat-util-scan", version: "9.0.90"
 
 	compileOnly group: "com.liferay", name: "com.sun.el.javax.el", version: "3.0.1.LIFERAY-PATCHED-3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

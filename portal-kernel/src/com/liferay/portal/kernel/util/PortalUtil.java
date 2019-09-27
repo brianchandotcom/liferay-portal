@@ -1952,11 +1952,10 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Return the portal work directory override path. This directory is
-	 * only used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to
-	 * true.
+	 * Returns the portal work directory override path. This directory is only
+	 * used when the PropsValue.WORK_DIR_OVERRIDE_ENABLED is set to true.
 	 *
-	 * @return the portal work directory override path.
+	 * @return the portal work directory override path
 	 */
 	public static String getWorkDirOverride() {
 		return getPortal().getWorkDirOverride();

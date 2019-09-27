@@ -14,8 +14,10 @@
 
 import {createContext} from 'react';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
+import * as DataLayoutVisistor from '../../utils/dataLayoutVisitor.es';
 import {
 	ADD_CUSTOM_OBJECT_FIELD,
+	DELETE_DATA_LAYOUT_FIELD,
 	EDIT_CUSTOM_OBJECT_FIELD,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT_NAME,
@@ -64,6 +66,16 @@ const addCustomObjectField = ({
 	};
 };
 
+const deleteDataLayoutField = (dataLayout, fieldName) => {
+	return {
+		...dataLayout,
+		dataLayoutPages: DataLayoutVisistor.deleteField(
+			dataLayout.dataLayoutPages,
+			fieldName
+		)
+	};
+};
+
 const editFocusedCustomObjectField = ({
 	focusedCustomObjectField,
 	propertyName,
@@ -107,8 +119,14 @@ const editFocusedCustomObjectField = ({
 	};
 };
 
-const setDataDefinitionFields = (dataLayoutBuilder, dataDefinition) => {
+const setDataDefinitionFields = (
+	dataLayoutBuilder,
+	dataDefinition,
+	dataLayout
+) => {
 	const {dataDefinitionFields} = dataDefinition;
+	const {dataLayoutPages} = dataLayout;
+
 	const {pages} = dataLayoutBuilder.getStore();
 	const visitor = new PagesVisitor(pages);
 
@@ -122,7 +140,11 @@ const setDataDefinitionFields = (dataLayoutBuilder, dataDefinition) => {
 
 	return newFields.concat(
 		dataDefinitionFields.filter(
-			field => !newFields.some(({name}) => name === field.name)
+			field =>
+				!DataLayoutVisistor.containsField(
+					dataLayoutPages,
+					field.name
+				) && !newFields.some(({name}) => name === field.name)
 		)
 	);
 };
@@ -162,6 +184,15 @@ const createReducer = dataLayoutBuilder => {
 							newCustomObjectField
 						)
 					}
+				};
+			}
+			case DELETE_DATA_LAYOUT_FIELD: {
+				const {fieldName} = action.payload;
+				const {dataLayout} = state;
+
+				return {
+					...state,
+					dataLayout: deleteDataLayoutField(dataLayout, fieldName)
 				};
 			}
 			case EDIT_CUSTOM_OBJECT_FIELD: {
@@ -299,7 +330,8 @@ const createReducer = dataLayoutBuilder => {
 						...dataDefinition,
 						dataDefinitionFields: setDataDefinitionFields(
 							dataLayoutBuilder,
-							dataDefinition
+							dataDefinition,
+							dataLayout
 						)
 					},
 					dataLayout: {

@@ -21,3 +21,51 @@ export function containsField(dataLayoutPages, fieldName) {
 		});
 	});
 }
+
+export function mapDataLayoutColumns(dataLayoutPages, fn = () => {}) {
+	return (dataLayoutPages || []).map(
+		({dataLayoutRows, ...dataLayoutPage}, pageIndex) => {
+			return {
+				...dataLayoutPage,
+				dataLayoutRows: (dataLayoutRows || []).map(
+					({dataLayoutColumns, ...dataLayoutRow}, rowIndex) => {
+						return {
+							...dataLayoutRow,
+							dataLayoutColumns: dataLayoutColumns.map(
+								(dataLayoutColumn, columnIndex) =>
+									fn(
+										dataLayoutColumn,
+										columnIndex,
+										rowIndex,
+										pageIndex
+									)
+							)
+						};
+					}
+				)
+			};
+		}
+	);
+}
+
+export function deleteField(dataLayoutPages, fieldName) {
+	return mapDataLayoutColumns(
+		dataLayoutPages,
+		({fieldNames, ...dataLayoutColumn}) => {
+			return {
+				...dataLayoutColumn,
+				fieldNames: (fieldNames || []).filter(
+					name => name !== fieldName
+				)
+			};
+		}
+	);
+}
+
+export function getFieldNameFromIndexes(
+	{dataLayoutPages},
+	{columnIndex, pageIndex, rowIndex, fieldIndex = 0}
+) {
+	return dataLayoutPages[pageIndex].dataLayoutRows[rowIndex]
+		.dataLayoutColumns[columnIndex].fieldNames[fieldIndex];
+}

@@ -16,13 +16,19 @@ import React, {useEffect, useContext} from 'react';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
 import {
+	DELETE_DATA_LAYOUT_FIELD,
 	UPDATE_FIELD_TYPES,
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES
 } from './actions.es';
 import generateDataDefinitionFieldName from '../../utils/generateDataDefinitionFieldName.es';
+import {getFieldNameFromIndexes} from '../../utils/dataLayoutVisitor.es';
 
 export default ({dataLayoutBuilder, children}) => {
+	const [{dataDefinition, dataLayout}, dispatch] = useContext(
+		FormViewContext
+	);
+
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();
 
@@ -33,8 +39,19 @@ export default ({dataLayoutBuilder, children}) => {
 				label: Liferay.Language.get('duplicate')
 			},
 			{
-				action: indexes =>
-					dataLayoutBuilder.dispatch('fieldDeleted', {indexes}),
+				action: indexes => {
+					const fieldName = getFieldNameFromIndexes(
+						dataLayout,
+						indexes
+					);
+
+					dispatch({
+						payload: {fieldName},
+						type: DELETE_DATA_LAYOUT_FIELD
+					});
+
+					dataLayoutBuilder.dispatch('fieldDeleted', {indexes});
+				},
 				label: Liferay.Language.get('remove'),
 				separator: true
 			},
@@ -45,9 +62,7 @@ export default ({dataLayoutBuilder, children}) => {
 				style: 'danger'
 			}
 		];
-	}, [dataLayoutBuilder]);
-
-	const [{dataDefinition}, dispatch] = useContext(FormViewContext);
+	}, [dataLayout, dataLayoutBuilder, dispatch]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getProvider();

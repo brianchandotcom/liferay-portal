@@ -1243,6 +1243,15 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement("h3", null, sb.toString());
 	}
 
+	protected List<Build> getStableDownstreamBuilds() {
+		if (_stableJob != null) {
+			return getJobVariantsDownstreamBuilds(
+				new ArrayList(_stableJob.getBatchNames()));
+		}
+
+		return new ArrayList();
+	}
+
 	@Override
 	protected String getStartPropertiesTempMapURL() {
 		if (fromArchive) {
@@ -1546,11 +1555,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);
 
 	private boolean _compareToUpstream = true;
-	private Job _stableJob;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
+	private Job _stableJob;
 	private long _updateDuration;
 
 }

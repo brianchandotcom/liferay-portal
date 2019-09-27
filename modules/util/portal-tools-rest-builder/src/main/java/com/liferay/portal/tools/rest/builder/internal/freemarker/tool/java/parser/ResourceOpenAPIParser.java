@@ -491,19 +491,8 @@ public class ResourceOpenAPIParser {
 				pathName = StringUtil.upperCaseFirstLetter(pathName);
 			}
 
-			if (pathSegment.contains("{")) {
-				String previousMethodNameSegment = methodNameSegments.get(
-					methodNameSegments.size() - 1);
-
-				if (!previousMethodNameSegment.endsWith(pathName) &&
-					!previousMethodNameSegment.endsWith(schemaName)) {
-
-					methodNameSegments.add(pathName);
-				}
-			}
-			else if ((i == (pathSegments.length - 1)) &&
-					 StringUtil.startsWith(
-						 returnType, Page.class.getName() + "<")) {
+			if ((i == (pathSegments.length - 1)) &&
+				StringUtil.startsWith(returnType, Page.class.getName() + "<")) {
 
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
@@ -529,6 +518,16 @@ public class ResourceOpenAPIParser {
 				}
 
 				methodNameSegments.add(pathName + "Page");
+			}
+			else if (pathSegment.contains("{")) {
+				String previousMethodNameSegment = methodNameSegments.get(
+					methodNameSegments.size() - 1);
+
+				if (!previousMethodNameSegment.endsWith(pathName) &&
+					!previousMethodNameSegment.endsWith(schemaName)) {
+
+					methodNameSegments.add(pathName);
+				}
 			}
 			else if (Objects.equals(pathName, schemaName)) {
 				methodNameSegments.add(pathName);

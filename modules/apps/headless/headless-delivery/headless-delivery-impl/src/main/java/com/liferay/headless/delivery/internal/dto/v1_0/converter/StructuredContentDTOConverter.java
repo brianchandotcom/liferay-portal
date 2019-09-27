@@ -181,7 +181,7 @@ public class StructuredContentDTOConverter implements DTOConverter {
 				inputControl = ContentStructureUtil.toInputControl(
 					ddmFormField);
 				name = ddmFormField.getName();
-				nestedFields = TransformUtil.transformToArray(
+				nestedContentFields = TransformUtil.transformToArray(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
 					value -> _toContentField(
 						value, locale, dlAppService, dlURLHelper,

@@ -809,7 +809,8 @@ public class StructuredContentResourceImpl
 				contextAcceptLanguage.getPreferredLocale(),
 				value.getString(contextAcceptLanguage.getPreferredLocale()));
 
-			ContentField[] nestedContentFields = contentField.getNestedFields();
+			ContentField[] nestedContentFields =
+				contentField.getNestedContentFields();
 
 			if (nestedContentFields != null) {
 				_toPatchedFields(nestedContentFields, journalArticle);
@@ -866,7 +867,7 @@ public class StructuredContentResourceImpl
 			}
 
 			_validateContentFields(
-				contentField.getNestedFields(), ddmStructure);
+				contentField.getNestedContentFields(), ddmStructure);
 		}
 	}
 

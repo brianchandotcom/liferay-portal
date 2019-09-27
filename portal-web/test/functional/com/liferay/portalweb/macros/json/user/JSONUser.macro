@@ -93,6 +93,8 @@ definition {
 	}
 
 	macro setFirstPassword {
+		// Using this macro will require reconfiguring Portal properties. See LRQA-52401
+
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		if (!(isSet(newPassword))) {

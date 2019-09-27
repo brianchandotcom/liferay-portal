@@ -950,6 +950,8 @@ definition {
 
 	@priority = "4"
 	test ViewAPPortletAsNewUserSiteAdministratorViaUserSite {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		task ("Add a new user with Site Administrator role") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
@@ -1081,6 +1083,8 @@ definition {
 
 	@priority = "3"
 	test ViewAuthorChangeViaAP {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
 			siteName = "Test Site Name");

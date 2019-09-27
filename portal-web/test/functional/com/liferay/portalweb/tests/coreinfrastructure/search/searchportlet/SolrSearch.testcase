@@ -1318,6 +1318,8 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewCreatedSearchPagePermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -1403,6 +1405,8 @@ definition {
 	@description = "This is a use case for LPS-84035."
 	@priority = "5"
 	test ViewDefaultSearchPagePermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

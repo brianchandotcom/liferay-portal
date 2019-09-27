@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -69,7 +70,11 @@ public class PortalWebResourcesUtil {
 		for (PortalWebResources portalWebResources :
 				_portalWebResourcesMap.values()) {
 
-			if (requestURI.startsWith(portalWebResources.getContextPath())) {
+			String contextPath = portalWebResources.getContextPath();
+
+			if (requestURI.equals(Portal.PATH_MODULE) ||
+				contextPath.startsWith(requestURI)) {
+
 				return portalWebResources.getLastModified();
 			}
 		}

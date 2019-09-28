@@ -245,7 +245,9 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			return true;
 		}
 
-		if (Scope.SYSTEM.equals(scope.getValue())) {
+		if (Scope.GROUP.equals(scope.getValue()) ||
+			Scope.SYSTEM.equals(scope.getValue())) {
+
 			return true;
 		}
 

@@ -122,7 +122,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 		Configuration configuration =
 			_configurationModelRetriever.getConfiguration(
-				pid, configurationScopeDisplayContext.getScope(),
+				factoryPid, configurationScopeDisplayContext.getScope(),
 				configurationScopeDisplayContext.getScopePK());
 
 		if (configuration != null) {

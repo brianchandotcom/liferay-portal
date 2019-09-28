@@ -99,7 +99,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 			Configuration configuration =
 				_configurationModelRetriever.getConfiguration(
-					pid, configurationScopeDisplayContext.getScope(),
+					factoryPid, configurationScopeDisplayContext.getScope(),
 					configurationScopeDisplayContext.getScopePK());
 
 			configurationModel = new ConfigurationModel(

@@ -48,7 +48,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.legacy.searcher.SearchResponseBuilderFactory;
-import com.liferay.portal.search.rescore.RescoreBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchResponseBuilder;
@@ -504,9 +503,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		_searchResponseBuilderFactory = searchResponseBuilderFactory;
 	}
-
-	@Reference
-	protected RescoreBuilderFactory rescoreBuilderFactory;
 
 	private SearchRequestBuilder _getSearchRequestBuilder(
 		SearchContext searchContext) {

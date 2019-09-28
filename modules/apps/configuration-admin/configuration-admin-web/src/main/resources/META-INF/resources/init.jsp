@@ -43,6 +43,7 @@ page import="com.liferay.configuration.admin.web.internal.util.ConfigurationEntr
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator" %><%@
 page import="com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition" %><%@
 page import="com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

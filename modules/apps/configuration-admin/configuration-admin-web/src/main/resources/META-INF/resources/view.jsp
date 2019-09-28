@@ -19,6 +19,7 @@
 <%
 List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays = (List<ConfigurationCategorySectionDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SECTION_DISPLAYS);
 ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);
+ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
 %>
 
 <portlet:renderURL var="redirectURL" />
@@ -35,7 +36,13 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 />
 
 <div class="container-fluid container-fluid-max-xl container-view">
-	<ul class="list-group">
+	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
+		<liferay-ui:empty-result-message
+			message="no-configurations-were-found"
+		/>
+	</c:if>
+
+	<ul class="list-group <%= configurationCategorySectionDisplays.isEmpty() ? "hide" : StringPool.BLANK %>">
 
 		<%
 		for (ConfigurationCategorySectionDisplay configurationCategorySectionDisplay : configurationCategorySectionDisplays) {
@@ -50,8 +57,6 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 				<ul class="list-group">
 
 					<%
-					ConfigurationScopeDisplayContext configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
-
 					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySectionDisplay.getConfigurationCategoryDisplays()) {
 						ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategoryDisplay.getCategoryKey(), themeDisplay.getLanguageId(), configurationScopeDisplayContext.getScope(), configurationScopeDisplayContext.getScopePK());
 

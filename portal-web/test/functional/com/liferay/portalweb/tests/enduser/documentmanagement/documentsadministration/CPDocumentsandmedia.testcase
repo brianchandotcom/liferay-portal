@@ -62,7 +62,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test covers LPS-88313 and LPS-92145, It ensures that a user can check in a document without changing versions."
+	@description = "This test covers LPS-88313 and LPS-92145. It ensures that a user can check in a document without changing versions."
 	@priority = "5"
 	test CheckInDocumentAsCurrentVersion {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

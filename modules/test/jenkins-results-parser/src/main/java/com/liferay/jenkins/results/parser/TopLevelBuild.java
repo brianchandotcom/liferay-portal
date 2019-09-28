@@ -1252,6 +1252,39 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return new ArrayList();
 	}
 
+	protected Element getStableResultElement() {
+		if (_stableJob == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		List<String> stableBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
+
+		int successCount = getJobVariantsDownstreamBuildCountByResult(
+			stableBatchNames, "SUCCESS");
+
+		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
+
+		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
+
+		if (successCount == stableDownstreamBuildsSize) {
+			sb.append(":heavy_check_mark: ");
+		}
+		else {
+			sb.append(":x: ");
+		}
+
+		sb.append("ci:test:stable - ");
+		sb.append(String.valueOf(successCount));
+		sb.append(" out of ");
+		sb.append(String.valueOf(stableDownstreamBuildsSize));
+		sb.append(" jobs passed");
+
+		return Dom4JUtil.getNewElement("h3", null, sb.toString());
+	}
+
 	@Override
 	protected String getStartPropertiesTempMapURL() {
 		if (fromArchive) {

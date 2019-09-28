@@ -2558,6 +2558,30 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
+	protected int getJobVariantsDownstreamBuildCountByResult(
+		List<String> jobVariants, String result) {
+
+		List<Build> jobVariantsDownstreamBuilds =
+			getJobVariantsDownstreamBuilds(jobVariants);
+
+		if (result == null) {
+			return jobVariantsDownstreamBuilds.size();
+		}
+
+		int count = 0;
+
+		for (Build jobVariantsDownstreamBuild : jobVariantsDownstreamBuilds) {
+			String jobVariantsDownstreamBuildResult =
+				jobVariantsDownstreamBuild.getResult();
+
+			if (jobVariantsDownstreamBuildResult.equals(result)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	protected Map<String, String> getParameters(JSONArray jsonArray) {
 		Map<String, String> parameters = new HashMap<>(jsonArray.length());
 

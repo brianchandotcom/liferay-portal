@@ -652,7 +652,7 @@ AUI.add(
 					'<div class="sidebar-header">' +
 					'<a class="' +
 					CSS_ICON_MONOSPACED +
-					' image-viewer-sidenav-close sidenav-close visible-xs" href="">' +
+					' d-block d-sm-none image-viewer-sidenav-close sidenav-close " href="">' +
 					Liferay.Util.getLexiconIconTpl('times') +
 					'</a>' +
 					'<h4 class="image-viewer-sidenav-header">' +

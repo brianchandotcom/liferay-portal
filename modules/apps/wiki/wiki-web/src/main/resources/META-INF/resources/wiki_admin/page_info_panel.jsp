@@ -60,7 +60,7 @@ request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayCon
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="sidebar-header visible-xs">
+		<div class="d-block d-sm-none sidebar-header">
 
 			<%
 			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();

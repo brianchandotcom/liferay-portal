@@ -97,9 +97,14 @@ definition {
 	}
 
 	macro viewCannotEditFormEntries {
-		AssertElementNotPresent(locator1 = "Button#SUBMIT");
+		if ("${onSitePage}" == "true") {
+			AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "Button#SUBMIT");
 
-		AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
+			AssertElementNotPresent(locator1 = "FormFields#FIELD_ADD");
+		}
 	}
 
 	macro viewCheckboxEntry {
@@ -201,7 +206,7 @@ definition {
 	}
 
 	macro viewRadioEntry {
-		FormsAdmin.viewCannotEditFormEntries();
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
 		FormFields.viewRadioLabel(
 			fieldLabel = "${fieldLabel}",
@@ -213,7 +218,7 @@ definition {
 	}
 
 	macro viewSelectEntry {
-		FormsAdmin.viewCannotEditFormEntries();
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "${fieldLabel}",
@@ -230,7 +235,7 @@ definition {
 	}
 
 	macro viewTextEntry {
-		FormsAdmin.viewCannotEditFormEntries();
+		FormsAdmin.viewCannotEditFormEntries(onSitePage = "${onSitePage}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "${fieldLabel}",

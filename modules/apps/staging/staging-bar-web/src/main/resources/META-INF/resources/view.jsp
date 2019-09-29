@@ -36,7 +36,7 @@ if (liveLayout != null) {
 <c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 	<c:if test="<%= liveGroup != null %>">
 		<ul class="control-menu-nav">
-			<li class="control-menu-nav-item dropdown staging-options-toggle visible-xs">
+			<li class="control-menu-nav-item d-block d-sm-none dropdown staging-options-toggle">
 				<a class="control-menu-icon dropdown-toggle" data-toggle="dropdown" href="javascript:;" value="staging">
 					<span class="control-menu-icon-label">
 						<c:choose>
@@ -179,7 +179,7 @@ if (liveLayout != null) {
 				<li class="control-menu-nav-item staging-bar">
 					<div class="control-menu-level-2">
 						<div class="container-fluid container-fluid-max-xl">
-							<div class="control-menu-level-2-heading visible-xs">
+							<div class="control-menu-level-2-heading d-block d-sm-none">
 								<liferay-ui:message key="staging-options" />
 
 								<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="closeStagingOptions" type="button">

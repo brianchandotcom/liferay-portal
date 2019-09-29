@@ -729,6 +729,8 @@ definition {
 	@description = "This is a use case for LPS-82757."
 	@priority = "3"
 	test PublishWebContentWithFeeds {
+		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

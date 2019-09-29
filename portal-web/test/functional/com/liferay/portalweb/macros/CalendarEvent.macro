@@ -1503,7 +1503,7 @@ definition {
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",
 			value1 = "${siteCalendarName}");
 
-		CalendarScheduler.viewSpecificEventNotVisible(eventTitle = "${eventTitle}");
+		CalendarScheduler.viewSpecificEventNotPresent(eventTitle = "${eventTitle}");
 
 		AssertClick(
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR",

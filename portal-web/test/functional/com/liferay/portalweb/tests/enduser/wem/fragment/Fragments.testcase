@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.gotoConfigurate(fragmentName = "Button");
+			PageEditor.gotoConfiguration(fragmentName = "Button");
 
 			PageEditor.configureFragment(
 				align = "Center",
@@ -136,7 +136,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.gotoConfigurate(fragmentName = "Heading");
+			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
 			PageEditor.configureFragment(
 				align = "Right",
@@ -185,7 +185,7 @@ definition {
 		}
 
 		task ("Configure the fragment") {
-			PageEditor.gotoConfigurate(fragmentName = "Paragraph");
+			PageEditor.gotoConfiguration(fragmentName = "Paragraph");
 
 			PageEditor.configureFragment(
 				align = "Right",

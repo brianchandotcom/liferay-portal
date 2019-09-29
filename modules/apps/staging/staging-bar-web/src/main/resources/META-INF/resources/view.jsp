@@ -93,7 +93,7 @@ if (liveLayout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<li class="active control-menu-link control-menu-nav-item hidden-xs staging-link">
+						<li class="active control-menu-link control-menu-nav-item d-none d-sm-block staging-link">
 							<a class="control-menu-icon" id="stagingLink" value="staging">
 								<liferay-ui:message key="staging" />
 							</a>
@@ -101,7 +101,7 @@ if (liveLayout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="control-menu-link control-menu-nav-item hidden-xs staging-link">
+					<li class="control-menu-link control-menu-nav-item d-none d-sm-block staging-link">
 						<a class="control-menu-icon" href="<%= (layoutSetBranches != null) ? null : stagingURL %>" value="staging">
 							<liferay-ui:message key="staging" />
 						</a>
@@ -111,7 +111,7 @@ if (liveLayout != null) {
 
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
-					<li class="control-menu-link control-menu-nav-item hidden-xs live-link">
+					<li class="control-menu-link control-menu-nav-item d-none d-sm-block live-link">
 						<c:choose>
 							<c:when test="<%= !remoteSiteURL.isEmpty() %>">
 								<a class="control-menu-icon" href="<%= HtmlUtil.escape(remoteSiteURL) %>" value="go-to-remote-live">
@@ -159,7 +159,7 @@ if (liveLayout != null) {
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
 					<c:if test="<%= Validator.isNotNull(liveURL) %>">
-						<li class="control-menu-link control-menu-nav-item hidden-xs live-link">
+						<li class="control-menu-link control-menu-nav-item d-none d-sm-block live-link">
 							<a class="control-menu-icon" href="<%= HtmlUtil.escape(liveURL) %>" value="live">
 								<liferay-ui:message key="live" />
 							</a>
@@ -167,7 +167,7 @@ if (liveLayout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<li class="active control-menu-link control-menu-nav-item hidden-xs live-link">
+					<li class="active control-menu-link control-menu-nav-item d-none d-sm-block live-link">
 						<a class="control-menu-icon taglib-icon" id="liveLink" value="live">
 							<liferay-ui:message key="live" />
 						</a>

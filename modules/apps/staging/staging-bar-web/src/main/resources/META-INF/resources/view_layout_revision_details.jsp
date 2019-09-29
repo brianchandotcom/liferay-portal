@@ -154,7 +154,7 @@ else {
 	/>
 
 	<li class="control-menu-nav-item">
-		<div class="dropdown hidden-xs">
+		<div class="d-none d-sm-block dropdown">
 			<a class="dropdown-toggle taglib-icon" data-toggle="dropdown" href="javascript:;">
 				<aui:icon cssClass="icon-monospaced" image="ellipsis-v" markupView="lexicon" />
 

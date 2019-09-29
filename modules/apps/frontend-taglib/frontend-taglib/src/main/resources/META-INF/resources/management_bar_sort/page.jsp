@@ -42,7 +42,7 @@ orderByColAscURL.setParameter("orderByType", "asc");
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("asc") %>'
-		cssClass="hidden-xs"
+		cssClass="d-none d-sm-block"
 		disabled="<%= disabled %>"
 		href="<%= orderByColAscURL.toString() %>"
 		icon="caret-top"
@@ -60,7 +60,7 @@ orderByColDescURL.setParameter("orderByType", "desc");
 <li>
 	<liferay-frontend:management-bar-button
 		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("desc") %>'
-		cssClass="hidden-xs"
+		cssClass="d-none d-sm-block"
 		disabled="<%= disabled %>"
 		href="<%= orderByColDescURL.toString() %>"
 		icon="caret-bottom"

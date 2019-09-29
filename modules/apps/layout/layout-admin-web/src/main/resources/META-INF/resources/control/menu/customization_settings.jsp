@@ -132,7 +132,7 @@ data.put("qa-id", "customizations");
 				String toggleCustomizationViewURL = HttpUtil.addParameter(toggleCustomizationViewPortletURL.toString(), "customized_view", !layoutTypePortlet.isCustomizedView());
 				%>
 
-				<li class="control-menu-nav-item hidden-xs">
+				<li class="control-menu-nav-item d-none d-sm-block">
 					<liferay-ui:icon-menu
 						direction="left-side"
 						icon="<%= StringPool.BLANK %>"

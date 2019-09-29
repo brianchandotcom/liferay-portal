@@ -29,7 +29,7 @@ for (String displayStyle : defaultViews) {
 	String cssClass = StringPool.BLANK;
 
 	if (displayStyle.equals("list")) {
-		cssClass = "hidden-xs";
+		cssClass = "d-none d-sm-block";
 	}
 
 	displayStyleURL.setParameter("displayStyle", displayStyle);

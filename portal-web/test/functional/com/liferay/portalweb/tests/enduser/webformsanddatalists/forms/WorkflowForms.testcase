@@ -411,22 +411,26 @@ definition {
 		FormsAdmin.viewSelectEntry(
 			fieldLabel = "Select",
 			fieldName = "Select",
+			onSitePage = "true",
 			selectOption = "Select 1");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text One",
 			fieldName = "TextOne",
-			fieldValue = "Text One Input");
+			fieldValue = "Text One Input",
+			onSitePage = "true");
 
 		FormsAdmin.viewRadioEntry(
 			fieldLabel = "Radio",
 			fieldName = "Radio",
-			fieldValue = "Option 1");
+			fieldValue = "Option 1",
+			onSitePage = "true");
 
 		FormsAdmin.viewTextEntry(
 			fieldLabel = "Text Two",
 			fieldName = "TextTwo",
-			fieldValue = "Text Two Input");
+			fieldValue = "Text Two Input",
+			onSitePage = "true");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 

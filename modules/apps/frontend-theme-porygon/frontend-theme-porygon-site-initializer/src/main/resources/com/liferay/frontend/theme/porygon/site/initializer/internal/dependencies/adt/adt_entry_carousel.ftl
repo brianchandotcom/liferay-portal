@@ -1,7 +1,7 @@
 <#if entries?has_content>
 	<section class="blog-carousel main-carousel-wrapper" id="<@portlet.namespace />">
 		<div class="carousel slide" data-ride="carousel" id="<@portlet.namespace />-main-carousel">
-			<ol class="carousel-indicators hidden-sm hidden-xs">
+			<ol class="carousel-indicators d-none d-md-block">
 				<#list entries as indiEntry>
 					<li class="${(indiEntry?counter == 1)?then('active', '')}" data-slide-to="${(indiEntry?counter == 1)?then(0, (indiEntry?counter - 1))}" data-target="<@portlet.namespace />-main-carousel"></li>
 				</#list>

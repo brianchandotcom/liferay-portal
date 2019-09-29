@@ -85,7 +85,7 @@ definition {
 
 		var siteName = TestCase.getSiteName();
 
-		CalendarNavigator.gotoView(viewType = "Day");
+		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarEvent.viewSiteRSVPWithUnapprovedWorkflow(
 			eventTitle = "Calendar Event Title",

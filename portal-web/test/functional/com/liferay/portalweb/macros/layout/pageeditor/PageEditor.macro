@@ -635,39 +635,39 @@ definition {
 	}
 
 	macro viewFragmentStyle {
-		if (isSet(align)) {
+		if (isSet(alignment)) {
 			AssertElementPresent(
-				key_align = "${align}",
+				key_alignment = "${alignment}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_ALIGN");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT");
 		}
 
 		if (isSet(headingLevel)) {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_headingLevel = "${headingLevel}",
-				locator1 = "Fragment#FRAGMENT_HEADING_LEVEL_H2");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER_H2");
 		}
 
 		if (isSet(size)) {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_size = "${size}",
-				locator1 = "Fragment#FRAGMENT_SIZE");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_SIZE");
 		}
 
 		if (isSet(textColor)) {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_textColor = "${textColor}",
-				locator1 = "Fragment#FRAGMENT_TEXT_COLOR");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR");
 		}
 
 		if (isSet(type)) {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				key_type = "${type}",
-				locator1 = "Fragment#FRAGMENT_TYPE");
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TYPE");
 		}
 	}
 

@@ -81,27 +81,27 @@
 </tr>
 <!--FRAGMENT_CONFIGURAION-->
 <tr>
-	<td>FRAGMENT_ALIGN</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_align}')]</td>
+	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_alignment}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_HEADING_LEVEL_H2</td>
+	<td>FRAGMENT_CONFIGURATION_HEADER_H2</td>
 	<td>//h2[contains(@class,'component-${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIZE</td>
+	<td>FRAGMENT_CONFIGURATION_SIZE</td>
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_size}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_TEXT_COLOR</td>
+	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
 	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'text-${key_textColor}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_TYPE</td>
+	<td>FRAGMENT_CONFIGURATION_TYPE</td>
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
 	<td></td>
 </tr>

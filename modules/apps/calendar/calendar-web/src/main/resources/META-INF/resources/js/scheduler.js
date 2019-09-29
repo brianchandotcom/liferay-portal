@@ -681,7 +681,7 @@ AUI.add(
 
 					Scheduler.superclass.renderUI.apply(this, arguments);
 
-					instance.navDateNode.replaceClass('hidden-xs', 'hidden');
+					instance.navDateNode.replaceClass('d-none d-sm-block', 'd-none');
 					instance.viewDateNode.removeClass('d-block d-sm-none');
 
 					var showAddEventBtn = instance.get('showAddEventBtn');

@@ -176,6 +176,10 @@ definition {
 	macro clickEditableField {
 		Click(
 			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_BODY");
+
+		Click(
+			key_fragmentName = "${fragmentName}",
 			key_id = "${id}",
 			locator1 = "Fragment#EDITABLE_FIELD");
 	}
@@ -388,7 +392,7 @@ definition {
 			fragmentName = "${fragmentName}",
 			id = "${id}");
 
-		DoubleClick(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_EDIT_BUTTON");
 	}
 
 	macro gotoEditableFieldImageProperties {

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery.PerformActionMethod;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -326,16 +325,9 @@ public class UpgradeAssetDisplayPageEntryTest {
 			});
 
 		adq.setPerformActionMethod(
-			new PerformActionMethod<AssetDisplayPageEntry>() {
-
-				@Override
-				public void performAction(AssetDisplayPageEntry t)
-					throws PortalException {
-
-					assetDisplayPageEntries.add(t);
-				}
-
-			});
+			(PerformActionMethod<AssetDisplayPageEntry>)
+				assetDisplayPageEntry -> assetDisplayPageEntries.add(
+					assetDisplayPageEntry));
 
 		adq.performActions();
 

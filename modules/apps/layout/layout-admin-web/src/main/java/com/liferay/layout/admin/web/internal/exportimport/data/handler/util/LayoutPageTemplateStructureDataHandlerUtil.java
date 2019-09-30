@@ -50,6 +50,12 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 			long classPK, Element layoutPageTemplateStructureElement)
 		throws Exception {
 
+		layoutPageTemplateStructureElement.addAttribute(
+			"classPk", String.valueOf(classPK));
+
+		layoutPageTemplateStructureElement.addAttribute(
+			"classNameId", String.valueOf(classNameId));
+
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, layoutPageTemplateStructureElement);
 
@@ -75,13 +81,6 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		if (existingLayoutPageTemplateStructure == null) {
 			return;
 		}
-
-		existingLayoutPageTemplateStructure.setClassNameId(classNameId);
-		existingLayoutPageTemplateStructure.setClassPK(classPK);
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				existingLayoutPageTemplateStructure);
 
 		List<LayoutPageTemplateStructureRel>
 			existingLayoutPageTemplateStructureRels =

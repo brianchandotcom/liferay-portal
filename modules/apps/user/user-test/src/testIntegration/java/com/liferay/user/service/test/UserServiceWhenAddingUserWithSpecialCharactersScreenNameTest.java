@@ -55,12 +55,9 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		_screenNameValidator = ScreenNameValidatorFactory.getInstance();
 
 		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
-			_originalSpecialCharacters = ReflectionTestUtil.getFieldValue(
-				_screenNameValidator, _FIELD_KEY);
-
-			ReflectionTestUtil.setFieldValue(
-				_screenNameValidator, _FIELD_KEY, _SPECIAL_CHARACTERS);
-
+			_originalSpecialChars = ReflectionTestUtil.getAndSetFieldValue(
+				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS,
+				_SPECIAL_CHARACTERS);
 			_originalSpecialCharsRegex = ReflectionTestUtil.getAndSetFieldValue(
 				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS_REGEX, null);
 		}
@@ -70,7 +67,8 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 	public void tearDown() {
 		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
 			ReflectionTestUtil.setFieldValue(
-				_screenNameValidator, _FIELD_KEY, _originalSpecialCharacters);
+				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS,
+				_originalSpecialChars);
 			ReflectionTestUtil.setFieldValue(
 				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS_REGEX,
 				_originalSpecialCharsRegex);
@@ -116,14 +114,14 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		return group.getFriendlyURL();
 	}
 
-	private static final String _FIELD_KEY = "_specialChars";
+	private static final String _FIELD_KEY_SPECIAL_CHARS = "_specialChars";
 
 	private static final String _FIELD_KEY_SPECIAL_CHARS_REGEX =
 		"_specialCharsRegex";
 
 	private static final String _SPECIAL_CHARACTERS = "-._\\'#";
 
-	private String _originalSpecialCharacters;
+	private String _originalSpecialChars;
 	private String _originalSpecialCharsRegex;
 	private ScreenNameValidator _screenNameValidator;
 

@@ -14,18 +14,16 @@
 
 package com.liferay.talend;
 
+import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.properties.ExceptionUtils;
-import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
-import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
+import com.liferay.talend.source.LiferayOASSource;
 
 import org.talend.components.api.component.AbstractComponentDefinition;
 import org.talend.components.api.component.runtime.DependenciesReader;
 import org.talend.components.api.component.runtime.ExecutionEngine;
 import org.talend.components.api.component.runtime.JarRuntimeInfo;
 import org.talend.components.api.properties.ComponentProperties;
-import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.runtime.RuntimeInfo;
 import org.talend.daikon.runtime.RuntimeUtil;
@@ -33,6 +31,7 @@ import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public abstract class LiferayBaseComponentDefinition
 	extends AbstractComponentDefinition {
@@ -54,35 +53,19 @@ public abstract class LiferayBaseComponentDefinition
 			className);
 	}
 
-	public static ValidatedSoSSandboxRuntime initializeSandboxedRuntime(
+	public static LiferayOASSource getLiferayOASSource(
 		LiferayConnectionProperties liferayConnectionProperties) {
 
 		try (SandboxedInstance sandboxedInstance = _getSandboxedInstance(
 				RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
-			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+			OASSource oasSource = (OASSource)sandboxedInstance.getInstance();
 
-			ValidationResultMutable validationResultMutable =
-				new ValidationResultMutable(
-					liferaySourceOrSinkRuntime.initialize(
-						null, liferayConnectionProperties));
-
-			if (validationResultMutable.getStatus() ==
-					ValidationResult.Result.ERROR) {
-
-				return new ValidatedSoSSandboxRuntime(
-					liferaySourceOrSinkRuntime, validationResultMutable);
-			}
-
-			validationResultMutable = new ValidationResultMutable(
-				liferaySourceOrSinkRuntime.validate(null));
-
-			return new ValidatedSoSSandboxRuntime(
-				liferaySourceOrSinkRuntime, validationResultMutable);
+			return new LiferayOASSource(
+				oasSource, oasSource.initialize(liferayConnectionProperties));
 		}
 		catch (Exception e) {
-			return new ValidatedSoSSandboxRuntime(
+			return new LiferayOASSource(
 				null, ExceptionUtils.exceptionToValidationResult(e));
 		}
 	}

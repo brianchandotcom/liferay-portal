@@ -91,8 +91,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_BOTTOM_SPACING</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'pb-${bottomSpacing}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_HEADER_H2</td>
 	<td>//h2[contains(@class,'component-${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_CONFIGURATION_IMAGE_SIZE</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//img[contains(@class,'w-${key_imageSize}')]</td>
 	<td></td>
 </tr>
 <tr>

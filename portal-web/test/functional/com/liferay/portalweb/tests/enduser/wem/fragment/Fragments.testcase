@@ -171,6 +171,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98241. Basic Component Image can be configured."
+	@priority = "3"
+	test ConfigureBasicComponentImage {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Image");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Image");
+
+			PageEditor.configureFragment(
+				align = "Center",
+				bottomSpacing = "2",
+				imageSize = "Original Size");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				align = "center",
+				bottomSpacing = "2",
+				fragmentName = "image",
+				imageSize = "0");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Image");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Image");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Image");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Image",
+				id = "Image");
+		}
+	}
+
 	@description = "This is a test for LPS-98241. Contributed fragment components Paragraph can be configured."
 	@priority = "4"
 	test ConfigureBasicComponentParagraph {

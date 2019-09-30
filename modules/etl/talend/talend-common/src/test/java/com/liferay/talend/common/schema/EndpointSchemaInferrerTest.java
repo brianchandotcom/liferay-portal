@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.avro;
+package com.liferay.talend.common.schema;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
@@ -33,6 +33,7 @@ import org.talend.daikon.avro.AvroUtils;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class EndpointSchemaInferrerTest extends BaseTestCase {
 
@@ -224,12 +225,10 @@ public class EndpointSchemaInferrerTest extends BaseTestCase {
 
 		Assert.assertTrue(endpointsJsonObject.containsKey(endpoint));
 
-		return _endpointSchemaInferrer.inferSchema(
-			endpoint, operation, _oasJsonObject);
+		return _schemaBuilder.inferSchema(endpoint, operation, _oasJsonObject);
 	}
 
-	private final EndpointSchemaInferrer _endpointSchemaInferrer =
-		new EndpointSchemaInferrer();
 	private JsonObject _oasJsonObject;
+	private final SchemaBuilder _schemaBuilder = new SchemaBuilder();
 
 }

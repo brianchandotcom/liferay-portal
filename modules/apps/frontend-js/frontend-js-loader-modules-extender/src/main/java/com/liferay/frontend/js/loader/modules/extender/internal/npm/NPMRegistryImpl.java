@@ -306,59 +306,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			_applyVersioning = details.applyVersioning();
 
-			_serviceTracker = ServiceTrackerFactory.open(
-				bundleContext,
-				"(&(objectClass=" + ServletContext.class.getName() +
-					")(osgi.web.contextpath=*))",
-				new ServiceTrackerCustomizer
-					<ServletContext, JSConfigGeneratorPackage>() {
-
-					@Override
-					public JSConfigGeneratorPackage addingService(
-						ServiceReference<ServletContext> serviceReference) {
-
-						Bundle bundle = serviceReference.getBundle();
-
-						URL url = bundle.getEntry(Details.CONFIG_JSON);
-
-						if (url == null) {
-							return null;
-						}
-
-						JSConfigGeneratorPackage jsConfigGeneratorPackage =
-							new JSConfigGeneratorPackage(
-								details.applyVersioning(),
-								serviceReference.getBundle(),
-								(String)serviceReference.getProperty(
-									"osgi.web.contextpath"));
-
-						String jsConfigGeneratorPackageResolvedId =
-							jsConfigGeneratorPackage.getName() + StringPool.AT +
-								jsConfigGeneratorPackage.getVersion();
-
-						_partialMatchMap.put(
-							jsConfigGeneratorPackage.getName(),
-							jsConfigGeneratorPackageResolvedId);
-
-						return jsConfigGeneratorPackage;
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<ServletContext> serviceReference,
-						JSConfigGeneratorPackage jsConfigGeneratorPackage) {
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<ServletContext> serviceReference,
-						JSConfigGeneratorPackage jsConfigGeneratorPackage) {
-
-						_partialMatchMap.remove(
-							jsConfigGeneratorPackage.getName());
-					}
-
-				});
+			_serviceTracker = _openServiceTracker();
 		}
 	}
 
@@ -388,6 +336,62 @@ public class NPMRegistryImpl implements NPMRegistry {
 		catch (Exception e) {
 			return null;
 		}
+	}
+
+	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
+		_openServiceTracker() {
+
+		return ServiceTrackerFactory.open(
+			_bundleContext,
+			"(&(objectClass=" + ServletContext.class.getName() +
+				")(osgi.web.contextpath=*))",
+			new ServiceTrackerCustomizer
+				<ServletContext, JSConfigGeneratorPackage>() {
+
+				@Override
+				public JSConfigGeneratorPackage addingService(
+					ServiceReference<ServletContext> serviceReference) {
+
+					Bundle bundle = serviceReference.getBundle();
+
+					URL url = bundle.getEntry(Details.CONFIG_JSON);
+
+					if (url == null) {
+						return null;
+					}
+
+					JSConfigGeneratorPackage jsConfigGeneratorPackage =
+						new JSConfigGeneratorPackage(
+							_applyVersioning, serviceReference.getBundle(),
+							(String)serviceReference.getProperty(
+								"osgi.web.contextpath"));
+
+					String jsConfigGeneratorPackageResolvedId =
+						jsConfigGeneratorPackage.getName() + StringPool.AT +
+							jsConfigGeneratorPackage.getVersion();
+
+					_partialMatchMap.put(
+						jsConfigGeneratorPackage.getName(),
+						jsConfigGeneratorPackageResolvedId);
+
+					return jsConfigGeneratorPackage;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<ServletContext> serviceReference,
+					JSConfigGeneratorPackage jsConfigGeneratorPackage) {
+
+					_partialMatchMap.remove(jsConfigGeneratorPackage.getName());
+				}
+
+			});
 	}
 
 	private void _processLegacyBridges(Bundle bundle) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.avro;
+package com.liferay.talend.common.schema;
 
 import com.liferay.talend.common.avro.constants.AvroConstants;
 import com.liferay.talend.common.json.JsonFinder;
@@ -26,9 +26,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -40,6 +42,7 @@ import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 import org.talend.daikon.avro.SchemaConstants;
@@ -50,66 +53,25 @@ import org.talend.daikon.exception.TalendRuntimeException;
  */
 public class SchemaBuilder {
 
-	public Schema build(
+	public String extractEndpointSchemaName(
 		String endpoint, String operation, JsonObject oasJsonObject) {
 
-		_endpoint = endpoint;
-		_oasJsonObject = oasJsonObject;
-		_operation = operation;
-
-		if (Objects.equals(_operation, OASConstants.OPERATION_DELETE)) {
-			return _getDeleteSchema();
-		}
-
-		return _getSchema();
-	}
-
-	private static Schema _getDeleteSchema() {
-		List<Schema.Field> schemaFields = new ArrayList<>(1);
-
-		Schema.Field designField = new Schema.Field(
-			AvroConstants.ID, AvroUtils._long(), null, (Object)null);
-
-		designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
-
-		schemaFields.add(designField);
-
-		return Schema.createRecord("Runtime", null, null, false, schemaFields);
-	}
-
-	private Set<String> _asSet(JsonArray jsonArray) {
-		if ((jsonArray == null) || jsonArray.isEmpty()) {
-			return Collections.emptySet();
-		}
-
-		List<JsonString> jsonStrings = jsonArray.getValuesAs(JsonString.class);
-
-		Set<String> strings = new HashSet<>();
-
-		for (JsonString jsonString : jsonStrings) {
-			strings.add(jsonString.getString());
-		}
-
-		return strings;
-	}
-
-	private String _extractEndpointSchemaName() {
 		String schemaName = null;
 
-		if (Objects.equals(_operation, OASConstants.OPERATION_GET)) {
+		if (Objects.equals(operation, OASConstants.OPERATION_GET)) {
 			String jsonFinderPath = StringUtil.replace(
 				OASConstants.
 					PATH_RESPONSES_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-				"ENDPOINT_TPL", _endpoint, "OPERATION_TPL", _operation);
+				"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 			JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
-				jsonFinderPath, _oasJsonObject);
+				jsonFinderPath, oasJsonObject);
 
 			schemaName = _stripSchemaName(
 				schemaJsonObject.getString(OASConstants.REF));
 
 			JsonObject schemaDefinitionJsonObject = _extractSchemaJsonObject(
-				schemaName);
+				schemaName, oasJsonObject);
 
 			JsonObject itemsPropertiesJsonObject =
 				_jsonFinder.getDescendantJsonObject(
@@ -126,8 +88,8 @@ public class SchemaBuilder {
 			return schemaName;
 		}
 
-		if (!Objects.equals(_operation, OASConstants.OPERATION_PATCH) &&
-			!Objects.equals(_operation, OASConstants.OPERATION_POST)) {
+		if (!Objects.equals(operation, OASConstants.OPERATION_PATCH) &&
+			!Objects.equals(operation, OASConstants.OPERATION_POST)) {
 
 			return null;
 		}
@@ -135,10 +97,10 @@ public class SchemaBuilder {
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.
 				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-			"ENDPOINT_TPL", _endpoint, "OPERATION_TPL", _operation);
+			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
 
 		JsonObject schemaJsonObject = _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, _oasJsonObject);
+			jsonFinderPath, oasJsonObject);
 
 		schemaName = _stripSchemaName(
 			schemaJsonObject.getString(OASConstants.REF));
@@ -146,16 +108,48 @@ public class SchemaBuilder {
 		return schemaName;
 	}
 
-	private JsonObject _extractSchemaJsonObject(String schemaName) {
+	public Schema inferSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
+
+		operation = operation.toLowerCase(Locale.US);
+
+		Schema schema = SchemaProperties.EMPTY_SCHEMA;
+
+		if (operation.equals(OASConstants.OPERATION_DELETE)) {
+			schema = _getDeleteSchema();
+		}
+		else {
+			schema = _getSchema(endpoint, operation, apiSpecJsonObject);
+		}
+
+		return schema;
+	}
+
+	private static JsonObject _extractSchemaJsonObject(
+		String schemaName, JsonObject oasJsonObject) {
+
 		String jsonFinderPath = StringUtil.replace(
 			OASConstants.PATH_COMPONENTS_SCHEMAS_PATTERN, "SCHEMA_TPL",
 			schemaName);
 
 		return _jsonFinder.getDescendantJsonObject(
-			jsonFinderPath, _oasJsonObject);
+			jsonFinderPath, oasJsonObject);
 	}
 
-	private Schema.Field _getDesignField(
+	private static Schema _getDeleteSchema() {
+		List<Schema.Field> schemaFields = new ArrayList<>(1);
+
+		Schema.Field designField = new Schema.Field(
+			AvroConstants.ID, AvroUtils._long(), null, (Object)null);
+
+		designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+
+		schemaFields.add(designField);
+
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
+	}
+
+	private static Schema.Field _getDesignField(
 		String fieldName, JsonObject propertyJsonObject) {
 
 		Schema.Field designField = new Schema.Field(
@@ -166,6 +160,9 @@ public class SchemaBuilder {
 			propertyJsonObject.getString(OASConstants.TYPE));
 
 		if (oasType == OASType.ARRAY) {
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_ARRAY);
+
 			return designField;
 		}
 
@@ -178,6 +175,9 @@ public class SchemaBuilder {
 		else if ((oasType == OASType.OBJECT) &&
 				 propertyJsonObject.containsKey(
 					 OASConstants.ADDITIONAL_PROPERTIES)) {
+
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_OBJECT);
 
 			JsonObject additionalPropertiesJsonObject =
 				propertyJsonObject.getJsonObject(
@@ -192,7 +192,12 @@ public class SchemaBuilder {
 		OASFormat oasFormat = OASFormat.fromOpenAPITypeAndFormat(
 			oasType, openAPIFormatDefinition);
 
-		if (oasFormat == OASFormat.BOOLEAN) {
+		if (oasFormat == OASFormat.BIGDECIMAL) {
+			designField = new Schema.Field(
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._decimal()), null,
+				(Object)null);
+		}
+		else if (oasFormat == OASFormat.BOOLEAN) {
 			designField = new Schema.Field(
 				fieldName, AvroUtils.wrapAsNullable(AvroUtils._boolean()), null,
 				(Object)null);
@@ -215,8 +220,12 @@ public class SchemaBuilder {
 		}
 		else if (oasFormat == OASFormat.DICTIONARY) {
 			designField = new Schema.Field(
-				fieldName, AvroUtils.wrapAsNullable(_getDictionarySchema()),
-				null, (Object)null);
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
+
+			designField.addProp("oas.dictionary", "true");
+			designField.addProp(
+				_PROPERTY_KEY_TABLE_COMMENT, _COMPLEX_TYPE_DICTIONARY);
 		}
 		else if (oasFormat == OASFormat.DOUBLE) {
 			designField = new Schema.Field(
@@ -247,26 +256,35 @@ public class SchemaBuilder {
 		return designField;
 	}
 
-	private Schema _getDictionarySchema() {
-		List<Schema.Field> fields = new ArrayList<>();
-
-		fields.add(
-			new Schema.Field("key", AvroUtils._string(), null, (Object)null));
-		fields.add(
-			new Schema.Field("value", AvroUtils._string(), null, (Object)null));
-
-		Schema dictionarySchema = Schema.createRecord(
-			"Dictionary", null, null, false, fields);
-
-		dictionarySchema.addProp(SchemaConstants.JAVA_CLASS_FLAG, "true");
-
-		return dictionarySchema;
+	private static String _stripSchemaName(String reference) {
+		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
 	}
 
-	private Schema _getSchema() {
+	private Set<String> _asSet(JsonArray jsonArray) {
+		if ((jsonArray == null) || jsonArray.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		List<JsonString> jsonStrings = jsonArray.getValuesAs(JsonString.class);
+
+		Set<String> strings = new HashSet<>();
+
+		for (JsonString jsonString : jsonStrings) {
+			strings.add(jsonString.getString());
+		}
+
+		return strings;
+	}
+
+	private Schema _getSchema(
+		String endpoint, String operation, JsonObject apiSpecJsonObject) {
+
+		AtomicInteger index = new AtomicInteger();
+		List<Schema.Field> schemaFields = new ArrayList<>();
 		Set<String> previousFieldNames = new HashSet<>();
 
-		String schemaName = _extractEndpointSchemaName();
+		String schemaName = extractEndpointSchemaName(
+			endpoint, operation, apiSpecJsonObject);
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Schema name: {}", schemaName);
@@ -274,23 +292,23 @@ public class SchemaBuilder {
 
 		if (StringUtil.isEmpty(schemaName)) {
 			throw TalendRuntimeException.createUnexpectedException(
-				"Unable to determine the schema for the selected endpoint");
+				"Unable to determine the Schema for the selected endpoint");
 		}
 
-		JsonObject schemaJsonObject = _extractSchemaJsonObject(schemaName);
+		JsonObject schemaJsonObject = _extractSchemaJsonObject(
+			schemaName, apiSpecJsonObject);
 
-		return _toSchema(schemaName, schemaJsonObject, previousFieldNames);
+		_processSchemaJsonObject(
+			null, schemaJsonObject, index, previousFieldNames, schemaFields,
+			apiSpecJsonObject);
+
+		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}
 
-	private String _stripSchemaName(String reference) {
-		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
-	}
-
-	private Schema _toSchema(
-		String schemaName, JsonObject schemaJsonObject,
-		Set<String> previousFieldNames) {
-
-		List<Schema.Field> schemaFields = new ArrayList<>();
+	private void _processSchemaJsonObject(
+		String parentPropertyName, JsonObject schemaJsonObject,
+		AtomicInteger index, Set<String> previousFieldNames,
+		List<Schema.Field> schemaFields, JsonObject apiSpecJsonObject) {
 
 		Set<String> required = _asSet(
 			schemaJsonObject.getJsonArray(OASConstants.REQUIRED));
@@ -301,10 +319,8 @@ public class SchemaBuilder {
 		Set<Map.Entry<String, JsonValue>> entries =
 			schemaPropertiesJsonObject.entrySet();
 
-		int fieldIdx = 0;
-
 		for (Iterator<Map.Entry<String, JsonValue>> it = entries.iterator();
-			 it.hasNext(); fieldIdx++) {
+			 it.hasNext(); index.incrementAndGet()) {
 
 			Map.Entry<String, JsonValue> propertyEntry = it.next();
 
@@ -312,29 +328,29 @@ public class SchemaBuilder {
 
 			JsonObject propertyJsonObject = propertyJsonValue.asJsonObject();
 
-			String fieldName = NameUtil.correct(
-				propertyEntry.getKey(), fieldIdx, previousFieldNames);
+			if (propertyJsonObject.containsKey(OASConstants.REF) &&
+				(parentPropertyName == null)) {
 
-			if (propertyJsonObject.containsKey(OASConstants.REF)) {
-				String nestedSchemaName = _stripSchemaName(
+				String referenceSchemaName = _stripSchemaName(
 					propertyJsonObject.getString(OASConstants.REF));
 
 				JsonObject referenceSchemaJsonObject = _extractSchemaJsonObject(
-					nestedSchemaName);
+					referenceSchemaName, apiSpecJsonObject);
 
-				Schema nestedSchema = _toSchema(
-					nestedSchemaName, referenceSchemaJsonObject,
-					previousFieldNames);
-
-				nestedSchema.addProp(SchemaConstants.JAVA_CLASS_FLAG, "true");
-
-				Schema.Field schemaField = new Schema.Field(
-					fieldName, AvroUtils.wrapAsNullable(nestedSchema), null,
-					(Object)null);
-
-				schemaFields.add(schemaField);
+				_processSchemaJsonObject(
+					propertyEntry.getKey(), referenceSchemaJsonObject, index,
+					previousFieldNames, schemaFields, apiSpecJsonObject);
 
 				continue;
+			}
+
+			String fieldName = NameUtil.correct(
+				propertyEntry.getKey(), index.get(), previousFieldNames);
+
+			if (parentPropertyName != null) {
+				fieldName = NameUtil.correct(
+					parentPropertyName + "_" + propertyEntry.getKey(),
+					index.get(), previousFieldNames);
 			}
 
 			previousFieldNames.add(fieldName);
@@ -348,17 +364,21 @@ public class SchemaBuilder {
 
 			schemaFields.add(designField);
 		}
-
-		return Schema.createRecord(schemaName, null, null, false, schemaFields);
 	}
+
+	private static final String _COMPLEX_TYPE_ARRAY = "complex: Array";
+
+	private static final String _COMPLEX_TYPE_DICTIONARY =
+		"complex: Dictionary";
+
+	private static final String _COMPLEX_TYPE_OBJECT = "complex: Object";
+
+	private static final String _PROPERTY_KEY_TABLE_COMMENT =
+		"di.table.comment";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		SchemaBuilder.class);
 
 	private static final JsonFinder _jsonFinder = new JsonFinder();
-
-	private String _endpoint;
-	private JsonObject _oasJsonObject;
-	private String _operation;
 
 }

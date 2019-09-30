@@ -14,7 +14,7 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.avro.constants.AvroConstants;
+import com.liferay.talend.common.avro.constants.AvroConstants;
 import com.liferay.talend.common.json.JsonFinder;
 import com.liferay.talend.common.oas.OASFormat;
 import com.liferay.talend.common.oas.OASType;

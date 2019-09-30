@@ -71,8 +71,13 @@ public class LiferayReaderTest extends BaseTestCase {
 			"Liferay input reader advanced to next page",
 			liferayInputReader.advance());
 
-		Assert.assertNotNull(
-			"Current JSON value", liferayInputReader.getCurrentJsonValue());
+		JsonValue currentJsonValue = liferayInputReader.getCurrentJsonValue();
+
+		Assert.assertNotNull("Current JSON value", currentJsonValue);
+
+		JsonObject jsonObject = currentJsonValue.asJsonObject();
+
+		Assert.assertEquals("Item id value", 80350, jsonObject.getInt("id"));
 
 		Assert.assertFalse(
 			"Liferay input reader advanced to next page",

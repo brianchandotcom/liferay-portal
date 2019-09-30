@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime.reader;
 
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
+import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
 
 import java.net.URI;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.json.Json;
@@ -37,6 +39,8 @@ import org.apache.avro.generic.IndexedRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.talend.components.api.component.runtime.AbstractBoundedReader;
+import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.exception.ComponentException;
 
@@ -44,15 +48,15 @@ import org.talend.components.api.exception.ComponentException;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
+public class LiferayInputReader extends AbstractBoundedReader<IndexedRecord> {
 
 	public LiferayInputReader(
 		RuntimeContainer runtimeContainer, LiferaySource liferaySource,
 		TLiferayInputProperties tLiferayInputProperties) {
 
-		super(runtimeContainer, liferaySource);
+		super(liferaySource);
 
-		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
+		_liferayConnectionResourceBaseProperties = tLiferayInputProperties;
 
 		_jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(
@@ -68,17 +72,19 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		_currentItemIndex++;
 
 		if (_currentItemIndex < _itemsJsonArray.size()) {
-			dataCount++;
+			_dataCount++;
 			_hasMore = true;
 
 			return true;
 		}
 
-		if (_currentPage > _lastPage) {
+		if (_currentPage >= _lastPage) {
 			_hasMore = false;
 
 			return false;
 		}
+
+		_currentPage++;
 
 		_readEndpointJsonObject();
 
@@ -90,7 +96,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_hasMore = true;
 
-		dataCount++;
+		_dataCount++;
 
 		return true;
 	}
@@ -134,6 +140,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	@Override
+	public Map<String, Object> getReturnValues() {
+		Result result = new Result();
+
+		result.totalCount = _dataCount;
+
+		return result.toMap();
+	}
+
+	@Override
 	public boolean start() throws IOException {
 		if (_started) {
 			throw new IllegalStateException("Reader has already started");
@@ -148,7 +163,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return false;
 		}
 
-		dataCount = 0;
+		_dataCount = 0;
 		_hasMore = true;
 		_started = true;
 
@@ -157,13 +172,13 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	private void _readEndpointJsonObject() {
 		UriBuilder uriBuilder = UriBuilder.fromUri(
-			liferayConnectionResourceBaseProperties.resource.getEndpointURI());
+			_liferayConnectionResourceBaseProperties.resource.getEndpointURI());
 
 		URI resourceURI = uriBuilder.queryParam(
-			"page", _currentPage++
+			"page", _currentPage
 		).queryParam(
 			"pageSize",
-			liferayConnectionResourceBaseProperties.getItemsPerPage()
+			_liferayConnectionResourceBaseProperties.getItemsPerPage()
 		).build();
 
 		_currentItemIndex = 0;
@@ -194,7 +209,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 			_itemsJsonArray = jsonArrayBuilder.build();
 
-			_currentPage = 1;
 			_lastPage = 1;
 
 			return;
@@ -206,7 +220,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		_itemsJsonArray = jsonArrayBuilder.build();
 
-		_currentPage = 1;
 		_lastPage = 1;
 	}
 
@@ -215,11 +228,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	private transient int _currentItemIndex;
 	private int _currentPage;
+	private int _dataCount;
 	private boolean _hasMore;
 	private transient JsonArray _itemsJsonArray;
 	private final JsonObjectIndexedRecordConverter
 		_jsonObjectIndexedRecordConverter;
 	private int _lastPage;
+	private final LiferayConnectionResourceBaseProperties
+		_liferayConnectionResourceBaseProperties;
 	private boolean _started;
 
 }

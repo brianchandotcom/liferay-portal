@@ -16,12 +16,6 @@ package com.liferay.talend.tliferayoutput;
 
 import com.liferay.talend.common.oas.constants.OASConstants;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * @author Zoltán Takács
  */
@@ -30,18 +24,14 @@ public enum Action {
 	Delete(OASConstants.OPERATION_DELETE), Insert(OASConstants.OPERATION_POST),
 	Unavailable("noop"), Update(OASConstants.OPERATION_PATCH);
 
-	public static Stream<Action> getActionsStream() {
-		return _actionsStreamSupplier.get();
-	}
+	public static Action toAction(String methodName) {
+		for (Action action : values()) {
+			if (methodName.equals(action._method)) {
+				return action;
+			}
+		}
 
-	public static Set<String> getAvailableMethodNames() {
-		Stream<Action> actionsStream = getActionsStream();
-
-		return actionsStream.map(
-			Action::getMethodName
-		).collect(
-			Collectors.toSet()
-		);
+		return Unavailable;
 	}
 
 	public String getMethodName() {
@@ -51,9 +41,6 @@ public enum Action {
 	private Action(String method) {
 		_method = method;
 	}
-
-	private static final Supplier<Stream<Action>> _actionsStreamSupplier =
-		() -> Arrays.stream(values());
 
 	private final String _method;
 

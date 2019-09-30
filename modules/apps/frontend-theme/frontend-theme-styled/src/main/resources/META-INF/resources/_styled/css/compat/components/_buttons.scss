@@ -137,17 +137,4 @@
 		white-space: normal;
 		word-wrap: break-word;
 	}
-
-	.button-holder {
-		display: flex;
-		margin: 20px 0;
-
-		.btn:not(:last-child) {
-			margin-right: 12px;
-		}
-
-		&.btn-group {
-			display: inline-flex;
-		}
-	}
 }

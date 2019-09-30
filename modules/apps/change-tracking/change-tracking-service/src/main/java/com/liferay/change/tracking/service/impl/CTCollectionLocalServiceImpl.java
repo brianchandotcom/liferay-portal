@@ -27,16 +27,10 @@ import com.liferay.change.tracking.service.base.CTCollectionLocalServiceBaseImpl
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -52,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
+ * @author Preston Crary
  */
 @Component(
 	property = "model.class.name=com.liferay.change.tracking.model.CTCollection",
@@ -62,22 +57,19 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public CTCollection addCTCollection(
-			long userId, String name, String description)
+			long companyId, long userId, String name, String description)
 		throws PortalException {
-
-		User user = userLocalService.getUser(userId);
 
 		_validate(name, description);
 
-		long ctCollectionId = counterLocalService.increment();
+		long ctCollectionId = counterLocalService.increment(
+			CTCollection.class.getName());
 
 		CTCollection ctCollection = ctCollectionPersistence.create(
 			ctCollectionId);
 
-		ctCollection.setCompanyId(user.getCompanyId());
-		ctCollection.setUserId(user.getUserId());
-		ctCollection.setUserName(user.getFullName());
-
+		ctCollection.setCompanyId(companyId);
+		ctCollection.setUserId(userId);
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -86,14 +78,12 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCompanyCTCollections(long companyId)
-		throws PortalException {
-
+	public void deleteCompanyCTCollections(long companyId) {
 		List<CTCollection> ctCollections =
 			ctCollectionPersistence.findByCompanyId(companyId);
 
 		for (CTCollection ctCollection : ctCollections) {
-			ctCollectionLocalService.deleteCTCollection(ctCollection);
+			deleteCTCollection(ctCollection);
 		}
 	}
 
@@ -154,71 +144,9 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
-	public List<CTCollection> getCTCollections(
-		long companyId, QueryDefinition<CTCollection> queryDefinition) {
-
-		if (queryDefinition == null) {
-			return ctCollectionPersistence.findByCompanyId(companyId);
-		}
-
-		return ctCollectionPersistence.findByCompanyId(
-			companyId, queryDefinition.getStart(), queryDefinition.getEnd(),
-			queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTCollection> getCTCollections(
-		long companyId, QueryDefinition<CTCollection> queryDefinition,
-		boolean includeProduction) {
-
-		if (includeProduction) {
-			return ctCollectionLocalService.getCTCollections(
-				companyId, queryDefinition);
-		}
-
-		DynamicQuery dynamicQuery = ctCollectionLocalService.dynamicQuery();
-
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		boolean includeActive = GetterUtil.getBoolean(
-			queryDefinition.getAttribute("includeActive"));
-
-		if (!includeActive) {
-			Property ctCollectionIdProperty = PropertyFactoryUtil.forName(
-				"ctCollectionId");
-
-			long activeCTCollectionId = GetterUtil.getLong(
-				queryDefinition.getAttribute("activeCTCollectionId"));
-
-			dynamicQuery.add(ctCollectionIdProperty.ne(activeCTCollectionId));
-		}
-
-		int status = queryDefinition.getStatus();
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			Property statusProperty = PropertyFactoryUtil.forName("status");
-
-			if (queryDefinition.isExcludeStatus()) {
-				dynamicQuery.add(statusProperty.ne(status));
-			}
-			else {
-				dynamicQuery.add(statusProperty.eq(status));
-			}
-		}
-
-		return ctCollectionLocalService.dynamicQuery(
-			dynamicQuery, queryDefinition.getStart(), queryDefinition.getEnd(),
-			queryDefinition.getOrderByComparator());
-	}
-
-	@Override
 	public CTCollection updateCTCollection(
 			long userId, long ctCollectionId, String name, String description)
 		throws PortalException {
-
-		User user = userLocalService.getUser(userId);
 
 		_validate(name, description);
 
@@ -231,29 +159,7 @@ public class CTCollectionLocalServiceImpl
 
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
-		ctCollection.setStatusByUserId(user.getUserId());
-		ctCollection.setStatusByUserName(user.getFullName());
-		ctCollection.setStatusDate(modifiedDate);
-
-		return ctCollectionPersistence.update(ctCollection);
-	}
-
-	@Override
-	public CTCollection updateStatus(
-			long userId, CTCollection ctCollection, int status)
-		throws PortalException {
-
-		Date modifiedDate = new Date();
-
-		ctCollection.setModifiedDate(modifiedDate);
-
-		ctCollection.setStatus(status);
-
-		User user = userLocalService.getUser(userId);
-
-		ctCollection.setStatusByUserId(user.getUserId());
-		ctCollection.setStatusByUserName(user.getFullName());
-
+		ctCollection.setStatusByUserId(userId);
 		ctCollection.setStatusDate(modifiedDate);
 
 		return ctCollectionPersistence.update(ctCollection);

@@ -267,6 +267,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98241. Contributed fragment components Spacer can be configured."
+	@priority = "4"
+	test ConfigureBasicComponentSpacer {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Spacer");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Spacer");
+
+			PageEditor.configureFragment(height = "Medium");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(height = "4");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Spacer");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Spacer");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Spacer");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Spacer",
+				id = "Spacer");
+		}
+	}
+
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
 	@priority = "5"
 	test CopyFragment {

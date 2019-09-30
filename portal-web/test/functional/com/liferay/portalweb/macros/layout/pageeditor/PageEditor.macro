@@ -224,6 +224,13 @@ definition {
 				value1 = "${headingLevel}");
 		}
 
+		if (isSet(height)) {
+			Select(
+				key_fieldLabel = "Height",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${height}");
+		}
+
 		if (isSet(imageSize)) {
 			Select(
 				key_fieldLabel = "Image Size",
@@ -707,6 +714,12 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				key_headingLevel = "${headingLevel}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER_H2");
+		}
+
+		if (isSet(height)) {
+			AssertElementPresent(
+				key_height = "${height}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEIGHT");
 		}
 
 		if (isSet(imageSize)) {

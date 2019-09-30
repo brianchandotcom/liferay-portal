@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_HEIGHT</td>
+	<td>//div[contains(@class,'fragment-entry-link-content')]//div//div[contains(@class,'py-${key_height}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_IMAGE_SIZE</td>
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//img[contains(@class,'w-${key_imageSize}')]</td>
 	<td></td>

@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node;
 
-import com.liferay.gradle.plugins.node.internal.util.DigestUtil;
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
@@ -45,7 +44,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.file.CopySpec;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -56,7 +54,6 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
-import org.gradle.language.jvm.tasks.ProcessResources;
 import org.gradle.util.VersionNumber;
 
 /**
@@ -277,7 +274,6 @@ public class NodePlugin implements Plugin<Project> {
 		packageRunBuildTask.setDescription(
 			"Runs the \"build\" package.json script.");
 		packageRunBuildTask.setGroup(BasePlugin.BUILD_GROUP);
-		packageRunBuildTask.setNodeVersion(nodeExtension.getNodeVersion());
 
 		packageRunBuildTask.doLast(
 			new Action<Task>() {
@@ -290,8 +286,6 @@ public class NodePlugin implements Plugin<Project> {
 					String result = packageRunBuildTask.getResult();
 
 					if (result.contains("errors during Soy compilation")) {
-						project.delete(packageRunBuildTask.getDigestFile());
-
 						throw new GradleException("Soy compile error");
 					}
 				}
@@ -647,82 +641,6 @@ public class NodePlugin implements Plugin<Project> {
 			packageRunBuildTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(packageRunBuildTask);
-
-		final File digestFile = packageRunBuildTask.getDigestFile();
-
-		String newDigest = DigestUtil.getDigest(
-			packageRunBuildTask.getSourceFiles());
-		String oldDigest = DigestUtil.getDigest(digestFile);
-
-		if (Objects.equals(oldDigest, newDigest)) {
-			Project project = packageRunBuildTask.getProject();
-
-			ProcessResources processResourcesTask =
-				(ProcessResources)GradleUtil.getTask(
-					project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-			processResourcesTask.doFirst(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
-
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
-
-						final File outputsDir = new File(
-							digestFile.getParentFile(), "outputs");
-
-						project.delete(outputsDir);
-
-						outputsDir.mkdirs();
-
-						project.copy(
-							new Action<CopySpec>() {
-
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(processResourcesDir);
-									copySpec.include("**/*.js");
-									copySpec.into(outputsDir);
-									copySpec.setIncludeEmptyDirs(false);
-								}
-
-							});
-					}
-
-				});
-
-			processResourcesTask.doLast(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						ProcessResources processResourcesTask =
-							(ProcessResources)task;
-
-						final File processResourcesDir =
-							processResourcesTask.getDestinationDir();
-
-						final File outputsDir = new File(
-							digestFile.getParentFile(), "outputs");
-
-						project.copy(
-							new Action<CopySpec>() {
-
-								@Override
-								public void execute(CopySpec copySpec) {
-									copySpec.from(outputsDir);
-									copySpec.into(processResourcesDir);
-								}
-
-							});
-					}
-
-				});
-		}
 	}
 
 	private void _configureTaskPackageRunTestForLifecycleBasePlugin(

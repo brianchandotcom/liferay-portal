@@ -210,6 +210,12 @@ definition {
 				value1 = "${alignment}");
 		}
 
+		if (isSet(borderColor)) {
+			Click(
+				key_paletteItem = "${borderColor}",
+				locator1 = "Button#PALETTE_ITEM");
+		}
+
 		if (isSet(borderRadius)) {
 			Select(
 				key_fieldLabel = "Border Radius",
@@ -270,6 +276,13 @@ definition {
 				key_fieldLabel = "Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${type}");
+		}
+
+		if (isSet(verticalSpace)) {
+			Select(
+				key_fieldLabel = "Vertical Space",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${verticalSpace}");
 		}
 
 		PageEditor.waitForAutoSave();
@@ -716,6 +729,13 @@ definition {
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT");
 		}
 
+		if (isSet(borderColor)) {
+			AssertElementPresent(
+				key_borderColor = "${borderColor}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_COLOR");
+		}
+
 		if (isSet(borderRadius)) {
 			AssertElementPresent(
 				key_borderRadius = "${borderRadius}",
@@ -776,6 +796,13 @@ definition {
 				key_fragmentName = "${fragmentName}",
 				key_type = "${type}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TYPE");
+		}
+
+		if (isSet(verticalSpace)) {
+			AssertElementPresent(
+				key_fragmentName = "${fragmentName}",
+				key_verticalSpace = "${verticalSpace}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_VERTICAL_SPACE");
 		}
 	}
 

@@ -320,6 +320,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98241. Contributed fragment components Separator can be configured."
+	@priority = "4"
+	test ConfigureBasicComponentSeparator {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Separator");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Separator");
+
+			PageEditor.configureFragment(
+				borderColor = "lighter",
+				verticalSpace = "Small");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				borderColor = "247, 248, 249",
+				fragmentName = "separtor",
+				verticalSpace = "3");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Separator");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Separator");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Separator");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Separator",
+				id = "Separator");
+		}
+	}
+
 	@description = "This is a test for LPS-98241. Contributed fragment components Spacer can be configured."
 	@priority = "4"
 	test ConfigureBasicComponentSpacer {

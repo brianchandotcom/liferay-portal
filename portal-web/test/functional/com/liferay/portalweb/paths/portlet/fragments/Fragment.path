@@ -91,6 +91,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_BORDER_COLOR</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@style,'border-color:rgb(${key_borderColor})')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
 	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@style,'border-radius: ${key_borderRadius}')]</td>
 	<td></td>
@@ -133,6 +138,11 @@
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TYPE</td>
 	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_CONFIGURATION_VERTICAL_SPACE</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//hr[contains(@class,'mb-${key_verticalSpace}')]</td>
 	<td></td>
 </tr>
 <!--FRAGMENT_HEADER-->

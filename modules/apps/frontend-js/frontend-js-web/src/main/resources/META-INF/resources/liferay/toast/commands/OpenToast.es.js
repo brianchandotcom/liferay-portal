@@ -12,8 +12,53 @@
  * details.
  */
 
+import {render} from 'frontend-js-react-web';
+import ClayAlert from '@clayui/alert';
 import dom from 'metal-dom';
-import {ClayToast} from 'clay-alert';
+import React, {useState, useLayoutEffect} from 'react';
+import {unmountComponentAtNode} from 'react-dom';
+
+const DEFAULT_RENDER_DATA = {
+	portletId: 'UNKNOWN_PPID'
+};
+
+const Toast = ({
+	displayType,
+	message,
+	onUnmount,
+	spritemap,
+	title,
+	toastProps,
+	variant
+}) => {
+	const [showDismissible, setShowDismissible] = useState(true);
+
+	useLayoutEffect(() => {
+		return () => {
+			onUnmount();
+		};
+	}, [onUnmount, showDismissible]);
+
+	if (showDismissible) {
+		return (
+			<ClayAlert.ToastContainer>
+				<ClayAlert
+					autoClose={5000}
+					displayType={displayType}
+					onClose={() => setShowDismissible(false)}
+					spritemap={spritemap}
+					title={title}
+					variant={variant}
+					{...toastProps}
+				>
+					{message}
+				</ClayAlert>
+			</ClayAlert.ToastContainer>
+		);
+	}
+
+	return null;
+};
 
 /**
  * Function that implements the Toast pattern, which allows to present feedback
@@ -21,64 +66,53 @@ import {ClayToast} from 'clay-alert';
  *
  * @param {string} message The message to show in the toast notification
  * @param {string} title The title associated with the message
- * @param {string} type The type of notification to show. It can be one of the
+ * @param {string} displayType The displayType of notification to show. It can be one of the
  * following: 'danger', 'info', 'success', 'warning'
  * @return {ClayToast} The Alert toast created
  * @review
  */
 
 function openToast({
-	events = {},
+	containerId,
 	message = '',
+	renderData = DEFAULT_RENDER_DATA,
 	title = Liferay.Language.get('success'),
-	type = 'success'
-} = {}) {
-	var alertContainer = document.getElementById('alertContainer');
+	toastProps = {},
+	type = 'success',
+	variant
+}) {
+	const containerElement = document.getElementById(containerId);
+	let alertContainer = document.getElementById('alertContainer');
 
-	if (!alertContainer) {
-		alertContainer = document.createElement('div');
-		alertContainer.id = 'alertContainer';
+	if (!containerElement) {
+		if (!alertContainer) {
+			alertContainer = document.createElement('div');
+			alertContainer.id = 'alertContainer';
 
-		dom.addClasses(
-			alertContainer,
-			'alert-notifications alert-notifications-fixed'
-		);
-		dom.enterDocument(alertContainer);
-	} else {
-		dom.removeChildren(alertContainer);
+			dom.enterDocument(alertContainer);
+		}
 	}
 
-	const mergedEvents = Object.assign(
-		{
-			disposed() {
-				if (!alertContainer.hasChildNodes()) {
-					dom.exitDocument(alertContainer);
-				}
-			}
-		},
-		events
+	const container = containerElement ? containerElement : alertContainer;
+
+	const ToastComponent = () => (
+		<Toast
+			displayType={type}
+			message={message}
+			onUnmount={() => {
+				unmountComponentAtNode(container);
+			}}
+			title={title}
+			toastProps={toastProps}
+			variant={variant}
+		/>
 	);
 
-	const clayToast = new ClayToast(
-		{
-			autoClose: true,
-			destroyOnHide: true,
-			events: mergedEvents,
-			message,
-			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-			style: type,
-			title
-		},
-		alertContainer
-	);
+	if (containerElement) {
+		unmountComponentAtNode(container);
+	}
 
-	dom.removeClasses(clayToast.element, 'show');
-
-	requestAnimationFrame(function() {
-		dom.addClasses(clayToast.element, 'show');
-	});
-
-	return clayToast;
+	render(ToastComponent, renderData, container);
 }
 
 export {openToast};

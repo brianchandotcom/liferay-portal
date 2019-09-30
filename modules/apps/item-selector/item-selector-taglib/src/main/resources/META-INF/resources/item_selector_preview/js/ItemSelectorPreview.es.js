@@ -28,13 +28,18 @@ const KEY_CODE = {
 	RIGTH: 39
 };
 
+const TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
+
 class ItemSelectorPreview extends Component {
 	static propTypes = {
 		container: PropTypes.node,
 		currentIndex: PropTypes.number.isRequired,
+		editItemURL: PropTypes.string.isRequired,
 		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
 		items: PropTypes.array.isRequired,
+		uploadItemURL: PropTypes.string.isRequired,
+		uploadItemReturnType: PropTypes.string.isRequired
 	};
 
 	constructor(props) {
@@ -45,7 +50,8 @@ class ItemSelectorPreview extends Component {
 
 		this.state = {
 			currentItem: currentItem,
-			currentItemIndex: currentIndex
+			currentItemIndex: currentIndex,
+			items: items
 		}
 	}
 
@@ -90,11 +96,54 @@ class ItemSelectorPreview extends Component {
 		this.close();
 	};
 
+	handleClickEdit = () => {
+		const { currentItem } = this.state;
+
+		const itemTitle = currentItem.title;
+
+		let editDialogTitle = Liferay.Util.sub(TPL_EDIT_DIALOG_TITLE, {
+			copy: Liferay.Language.get('copy'),
+			edit: Liferay.Language.get('edit'),
+			title: itemTitle
+		});
+
+		let editEntityBaseZIndex = Liferay.zIndex.WINDOW;
+
+		const iframeModalEl = window.parent.document.getElementsByClassName(
+			'dialog-iframe-modal'
+		);
+
+		if (iframeModalEl) {
+			editEntityBaseZIndex = window
+				.getComputedStyle(iframeModalEl[0])
+				.getPropertyValue('z-index');
+		}
+
+		Liferay.Util.editEntity(
+			{
+				dialog: {
+					destroyOnHide: true,
+					zIndex: editEntityBaseZIndex + 100
+				},
+				id: 'Edit_' + itemTitle,
+				stack: false,
+				title: editDialogTitle,
+				uri: this.props.editItemURL,
+				urlParams: {
+					entityURL: currentItem.url,
+					saveFileName: itemTitle,
+					saveParamName: 'imageSelectorFileName',
+					saveURL: this.props.uploadItemURL
+				}
+			},
+			this.handleSaveEdit.bind(this)
+		);
+	}
+
 	handleClickNext = () => {
-		const items = this.props.items;
+		const {currentItemIndex, items } = this.state;
 
 		const lastIndex = items.length - 1;
-		const { currentItemIndex } = this.state;
 		const shouldResetIndex = currentItemIndex === lastIndex;
 		const index = shouldResetIndex ? 0 : currentItemIndex + 1;
 
@@ -107,10 +156,9 @@ class ItemSelectorPreview extends Component {
 	};
 
 	handleClickPrevious = () => {
-		const items = this.props.items;
+		const {currentItemIndex, items } = this.state;
 
 		const lastIndex = items.length - 1;
-		const { currentItemIndex } = this.state;
 		const shouldResetIndex = currentItemIndex === 0;
 		const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
 
@@ -138,9 +186,46 @@ class ItemSelectorPreview extends Component {
 		}
 	};
 
+	handleSaveEdit = e => {
+		let { items }  = this.state;
+		let itemData = e.data.file;
+
+		let editedItemMetadata = {
+			groups: [
+				{
+					data: [
+						{
+							key: Liferay.Language.get('format'),
+							value: itemData.type
+						},
+						{
+							key: Liferay.Language.get('name'),
+							value: itemData.title
+						}
+					],
+					title: Liferay.Language.get('file-info')
+				}
+			]
+		};
+
+		let editedItem = {
+			metadata: editedItemMetadata,
+			returnType: this.props.uploadItemReturnType,
+			value: itemData.resolvedValue,
+			url: itemData.url
+		}
+
+		items.push(editedItem);
+
+		this.setState({
+			currentItem: editedItem,
+			currentItemIndex: items.length - 1,
+			items: items
+		});
+	}
+
 	render() {
-		const {currentItemIndex, currentItem} = this.state;
-		const {items} = this.props;
+		const {currentItemIndex, currentItem, items} = this.state;
 
 		const spritemap =
 			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
@@ -151,6 +236,7 @@ class ItemSelectorPreview extends Component {
 					<Header
 						handleClickClose={this.handleClickClose}
 						handleClickDone={this.handleClickDone}
+						handleClickEdit={this.handleClickEdit}
 						headerTitle={this.props.headerTitle}
 					/>
 

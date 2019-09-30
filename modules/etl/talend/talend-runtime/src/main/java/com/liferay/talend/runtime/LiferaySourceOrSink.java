@@ -285,16 +285,15 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
+		String target = liferayConnectionProperties.getApiSpecURL();
+
 		try {
-			URIUtil.validateOpenAPISpecURL(
-				liferayConnectionProperties.getApiSpecURL());
+			URIUtil.validateOpenAPISpecURL(target);
 		}
 		catch (MalformedURLException murle) {
 			return new ValidationResult(
 				ValidationResult.Result.ERROR, murle.getMessage());
 		}
-
-		String target = liferayConnectionProperties.getApiSpecURL();
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
@@ -305,20 +304,26 @@ public class LiferaySourceOrSink
 				liferayConnectionProperties.getUserId());
 		}
 
-		if (_isNullString(target)) {
-			return new ValidationResult(
-				ValidationResult.Result.ERROR,
-				i18nMessages.getMessage(
-					"error.validation.connection.apiSpecURL"));
+		if (liferayConnectionProperties.isBasicAuthorization()) {
+			if (_isNullString(liferayConnectionProperties.getUserId()) ||
+				_isNullString(liferayConnectionProperties.getPassword())) {
+
+				return new ValidationResult(
+					ValidationResult.Result.ERROR,
+					i18nMessages.getMessage(
+						"error.validation.connection.credentials"));
+			}
 		}
+		else {
+			if (_isNullString(liferayConnectionProperties.getOAuthClientId()) ||
+				_isNullString(
+					liferayConnectionProperties.getOAuthClientSecret())) {
 
-		if (_isNullString(liferayConnectionProperties.getUserId()) ||
-			_isNullString(liferayConnectionProperties.getPassword())) {
-
-			return new ValidationResult(
-				ValidationResult.Result.ERROR,
-				i18nMessages.getMessage(
-					"error.validation.connection.credentials"));
+				return new ValidationResult(
+					ValidationResult.Result.ERROR,
+					i18nMessages.getMessage(
+						"error.validation.connection.credentials"));
+			}
 		}
 
 		return validateConnection(runtimeContainer);

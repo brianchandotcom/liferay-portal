@@ -68,7 +68,7 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 	private BaseTestCase _baseTestCase;
 	private final JsonObject _jsonObject;
 	private Pattern _resourceURLPattern = Pattern.compile(
-		"https?://.+(:\\d+)?/o/.+/v\\d+(.\\d+)*/([^/\\s]+)/.+\\?(page=\\d+)" +
-			"&.+");
+		"https?://.+(:\\d+)?/o/.+/v\\d+(.\\d+)*/([^/\\s]+)/.+\\?.*(page=\\d+)" +
+			".*");
 
 }

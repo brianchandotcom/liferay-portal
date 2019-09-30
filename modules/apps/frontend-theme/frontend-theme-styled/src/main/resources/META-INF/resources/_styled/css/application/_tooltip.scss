@@ -14,41 +14,57 @@
 	
 	.tooltip-arrow {
 		background-color: $tooltip-bg;
-		height: 0.8rem;
-		left: 50%;
-		margin-left: 0.4rem;
+		height: 0.6rem;
 		position: absolute;
-		transform: rotate(45deg) translateX(-100%);
-		width: 0.8rem;
+		transform: rotate(45deg);
+		width: 0.6rem;
+	}
+}
+
+.tooltip.top,
+.tooltip.bottom {
+	.tooltip-arrow {
+		left: 50%;
+		margin-left: -0.3rem;
+	}
+}
+
+.tooltip.right,
+.tooltip.left {
+	.tooltip-arrow {
+		top: 50%;
+		margin-top: -0.3rem;
 	}
 }
 
 .tooltip.bottom {
-	margin-top: 2rem;
+	padding-top: 0.3rem;
 
 	.tooltip-arrow {
-		top: 2px;
+		top: 0;
 	}
 }
 
 .tooltip.left {
+	padding-right: 0.3rem;
+
 	.tooltip-arrow {
-		right: -12%;
-		top: 50%;
+		right: 0;
 	}
 }
 
 .tooltip.right {
+	padding-left: 0.3rem;
+
 	.tooltip-arrow {
 		left: 0;
-		top: 50%;
 	}
 }
 
 .tooltip.top {
-	margin-bottom: 0.4rem;
-	
+	padding-bottom: 0.3rem;
+
 	.tooltip-arrow {
-		bottom: -15px;
+		bottom: 0;
 	}
 }

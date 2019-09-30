@@ -153,6 +153,7 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 					portletDataContext, importedRecord, ddmFormValues);
 		}
 		else {
+			importedRecord.setMvccVersion(existingRecord.getMvccVersion());
 			importedRecord.setFormInstanceRecordId(
 				existingRecord.getFormInstanceRecordId());
 

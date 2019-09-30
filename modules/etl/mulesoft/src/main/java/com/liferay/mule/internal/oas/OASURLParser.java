@@ -28,6 +28,17 @@ public class OASURLParser {
 		_oasURL = oasURL;
 	}
 
+	public String getAuthorityWithScheme() throws MalformedURLException {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getScheme());
+		sb.append("://");
+		sb.append(getHost());
+		sb.append(getPort());
+
+		return sb.toString();
+	}
+
 	public String getHost() throws MalformedURLException {
 		return _getGroup(2);
 	}
@@ -40,17 +51,14 @@ public class OASURLParser {
 		return _getGroup(3);
 	}
 
-	public String getProtocol() throws MalformedURLException {
+	public String getScheme() throws MalformedURLException {
 		return _getGroup(1);
 	}
 
 	public String getServerBaseURL() throws MalformedURLException {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getProtocol());
-		sb.append("://");
-		sb.append(getHost());
-		sb.append(getPort());
+		sb.append(getAuthorityWithScheme());
 		sb.append("/o/");
 		sb.append(getJaxRSAppBase());
 

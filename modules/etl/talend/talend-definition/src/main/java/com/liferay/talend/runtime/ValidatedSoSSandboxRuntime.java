@@ -14,6 +14,7 @@
 
 package com.liferay.talend.runtime;
 
+import com.liferay.talend.common.json.JsonClient;
 import org.talend.daikon.properties.ValidationResultMutable;
 
 /**
@@ -22,26 +23,26 @@ import org.talend.daikon.properties.ValidationResultMutable;
 public class ValidatedSoSSandboxRuntime {
 
 	public ValidatedSoSSandboxRuntime(
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
+		JsonClient jsonClient,
 		ValidationResultMutable validationResultMutable) {
 
 		if (validationResultMutable == null) {
 			throw new NullPointerException("Validation result mutable is null");
 		}
 
-		_liferaySourceOrSinkRuntime = liferaySourceOrSinkRuntime;
+		_jsonClient = jsonClient;
 		_validationResultMutable = validationResultMutable;
 	}
 
-	public LiferaySourceOrSinkRuntime getLiferaySourceOrSinkRuntime() {
-		return _liferaySourceOrSinkRuntime;
+	public JsonClient getJsonClient() {
+		return _jsonClient;
 	}
 
 	public ValidationResultMutable getValidationResultMutable() {
 		return _validationResultMutable;
 	}
 
-	private final LiferaySourceOrSinkRuntime _liferaySourceOrSinkRuntime;
+	private final JsonClient _jsonClient;
 	private final ValidationResultMutable _validationResultMutable;
 
 }

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@claui/alert": "3.0.0",
+		"@clayui/alert": "3.0.0",
 		"clay": "2.18.1",
 		"clay-alert": "2.18.1",
 		"liferay-amd-loader": "4.2.0",

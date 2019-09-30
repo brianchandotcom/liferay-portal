@@ -84,7 +84,7 @@ public class SegmentsExperimentConstants {
 
 		COMPLETED(
 			STATUS_COMPLETED, "COMPLETED", "completed", true, false, true,
-			true),
+			false),
 		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true) {
 
 			@Override

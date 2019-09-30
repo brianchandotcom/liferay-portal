@@ -87,6 +87,14 @@ AUI.add(
 					} else {
 						instance._selectedFileEntries = [];
 					}
+
+					var bulkSelection =
+						instance._searchContainer.select &&
+						instance._searchContainer.select.get('bulkSelection');
+
+					var form = instance.get('form').node;
+
+					form.get(instance.NS + 'selectAll').val(bulkSelection);
 				},
 
 				_moveCurrentSelection(newFolderId) {

@@ -1,15 +1,11 @@
-$table-responsive-margin-left-md: 375px !default;
-
 .lfr-search-container-wrapper {
 	&.lfr-search-container-fixed-first-column {
 		position: relative;
 
 		.table-responsive {
-			overflow-x: auto;
-			width: auto;
-
 			@include media-breakpoint-up(sm) {
 				margin-left: $table-responsive-margin-left-md;
+				width: auto;
 			}
 
 			.table {

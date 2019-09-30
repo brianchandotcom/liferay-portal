@@ -298,15 +298,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	@Modified
-	protected void modified(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void modified(Map<String, Object> properties) {
 		Details details = ConfigurableUtil.createConfigurable(
 			Details.class, properties);
 
-		if ((_applyVersioning == null) ||
-			(details.applyVersioning() != _applyVersioning)) {
-
+		if (details.applyVersioning() != _applyVersioning) {
 			_applyVersioning = details.applyVersioning();
 
 			_serviceTracker = _openServiceTracker();

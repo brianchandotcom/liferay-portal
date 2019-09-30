@@ -85,9 +85,9 @@ public class PoshiEmptyLinesCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _missingEmptyLineAfterCommentPattern =
-		Pattern.compile("\n\t*(//) .*\n[\t ]*(?!// )\\S");
+		Pattern.compile("\n\t*(//).*\n[\t ]*(?!//)\\S");
 	private static final Pattern _missingEmptyLineBeforeCommentPattern =
-		Pattern.compile("\n[\t ]*(?!// )\\S.*\n\t*(//) ");
+		Pattern.compile("\n[\t ]*(?!//)\\S.*\n\t*(//)");
 	private static final Pattern _multiLineCommentsPattern = Pattern.compile(
 		"[ \t]/\\*.*?\\*/", Pattern.DOTALL);
 	private static final Pattern _multiLineStringPattern = Pattern.compile(

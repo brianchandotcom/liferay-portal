@@ -67,23 +67,22 @@ class FloatingToolbar extends Component {
 	 * - Vertically, if the element fits at bottom, it's placed there, otherwise
 	 *   it is placed at top.
 	 * - Horizontally, the element is placed depending on the anchor position
-	 *   relative to the fragment entry link list.
+	 *   relative to the wrapper.
+	 * @param {HTMLElement} wrapper
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
 	 * @private
 	 * @return {number} Selected align
 	 * @review
 	 */
-	static _getElementAlign(element, anchor) {
+	static _getElementAlign(wrapper, element, anchor) {
 		const alignFits = (align, availableAlign) =>
 			availableAlign.includes(
 				Align.suggestAlignBestRegion(element, anchor, align).position
 			);
 
 		const anchorRect = anchor.getBoundingClientRect();
-		const fragmentEntryLinkListWidth = document.querySelector(
-			'.fragment-entry-link-list'
-		).offsetWidth;
+		const fragmentEntryLinkListWidth = wrapper.offsetWidth;
 
 		const horizontal =
 			anchorRect.right > fragmentEntryLinkListWidth / 2
@@ -144,13 +143,11 @@ class FloatingToolbar extends Component {
 
 		window.addEventListener('resize', this._handleWindowResize);
 
-		const wrapper = document.querySelector(
+		this._wrapper = document.querySelector(
 			'.fragment-entry-link-list-wrapper'
 		);
 
-		if (wrapper) {
-			wrapper.addEventListener('scroll', this._handleWrapperScroll);
-		}
+		this._wrapper.addEventListener('scroll', this._handleWrapperScroll);
 	}
 
 	/**
@@ -167,13 +164,7 @@ class FloatingToolbar extends Component {
 	disposed() {
 		window.removeEventListener('resize', this._handleWindowResize);
 
-		const wrapper = document.querySelector(
-			'.fragment-entry-link-list-wrapper'
-		);
-
-		if (wrapper) {
-			wrapper.removeEventListener('scroll', this._handleWrapperScroll);
-		}
+		this._wrapper.removeEventListener('scroll', this._handleWrapperScroll);
 	}
 
 	/**
@@ -315,6 +306,7 @@ class FloatingToolbar extends Component {
 		AUI().use('portal-available-languages', () => {
 			if (this.refs.buttons && this.anchorElement) {
 				const buttonsAlign = FloatingToolbar._getElementAlign(
+					this._wrapper,
 					this.refs.panel || this.refs.buttons,
 					this.anchorElement
 				);
@@ -343,6 +335,7 @@ class FloatingToolbar extends Component {
 	_alignPanel() {
 		if (this.refs.panel && this.anchorElement) {
 			const panelAlign = FloatingToolbar._getElementAlign(
+				this._wrapper,
 				this.refs.panel,
 				this.refs.buttons || this.anchorElement
 			);
@@ -411,6 +404,18 @@ FloatingToolbar.STATE = {
 	_productMenuHeight: Config.number()
 		.internal()
 		.value(0),
+
+	/**
+	 * @default null
+	 * @instance
+	 * @memberof FloatingToolbar
+	 * @private
+	 * @review
+	 * @type {object}
+	 */
+	_wrapper: Config.object()
+		.internal()
+		.value(null),
 
 	/**
 	 * Element where the floating toolbar is positioned with

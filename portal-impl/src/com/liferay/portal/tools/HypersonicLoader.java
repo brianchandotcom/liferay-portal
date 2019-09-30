@@ -71,17 +71,32 @@ public class HypersonicLoader {
 		String databaseName = arguments.get("db.database.name");
 		String sqlDir = arguments.get("db.sql.dir");
 		String fileNames = arguments.get("db.file.names");
+		String username = arguments.get("db.database.username");
+		String password = arguments.get("db.database.password");
 
 		try {
-			new HypersonicLoader(databaseName, sqlDir, fileNames);
+			new HypersonicLoader(
+				databaseName, sqlDir, fileNames, username, password);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #HypersonicLoader(String, String, String, String, String)}
+	 */
+	@Deprecated
 	public HypersonicLoader(
-			String databaseName, String sqlDir, String fileNames)
+		String databaseName, String sqlDir, String fileNames) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public HypersonicLoader(
+			String databaseName, String sqlDir, String fileNames,
+			String username, String password)
 		throws Exception {
 
 		ToolDependencies.wireBasic();
@@ -95,7 +110,7 @@ public class HypersonicLoader {
 				StringBundler.concat(
 					"jdbc:hsqldb:", sqlDir, "/", databaseName,
 					";hsqldb.write_delay=false;shutdown=true"),
-				"sa", "")) {
+				username, password)) {
 
 			if (Validator.isNull(fileNames)) {
 				loadHypersonic(con, sqlDir + "/portal/portal-hypersonic.sql");

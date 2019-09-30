@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Time;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -49,10 +51,13 @@ public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 		String className =
 			BatchEngineTaskCleanerMessageListener.class.getName();
 
+		int scanInterval = GetterUtil.getInteger(
+			properties.get("scan.interval"));
+
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null,
-			GetterUtil.getInteger(properties.get("scan.interval")),
-			TimeUnit.DAY);
+			className, className,
+			new Date(System.currentTimeMillis() + scanInterval * Time.DAY),
+			null, scanInterval, TimeUnit.DAY);
 
 		_schedulerEngineHelper.register(
 			this, new SchedulerEntryImpl(className, trigger),

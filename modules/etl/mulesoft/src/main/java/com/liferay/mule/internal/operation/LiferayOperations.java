@@ -19,6 +19,8 @@ import com.liferay.mule.internal.metadata.DELETEEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.DELETEEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.GETEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.GETEndpointTypeResolver;
+import com.liferay.mule.internal.metadata.PATCHEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.PATCHEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.POSTEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.POSTEndpointTypeResolver;
 
@@ -89,9 +91,23 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@MediaType(strict = false, value = MediaType.ANY)
-	public String patch() {
-		throw new UnsupportedOperationException();
+	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	public Result<InputStream, Void> patch(
+			@Connection LiferayConnection connection,
+			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
+			@Content @TypeResolver(value = PATCHEndpointTypeResolver.class)
+				InputStream inputStream)
+		throws IOException, TimeoutException {
+
+		HttpResponse httpResponse = connection.patch(
+			inputStream, _pathParams, _queryParams, endpoint);
+
+		HttpEntity httpEntity = httpResponse.getEntity();
+
+		return Result.<InputStream, Void>builder(
+		).output(
+			httpEntity.getContent()
+		).build();
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)

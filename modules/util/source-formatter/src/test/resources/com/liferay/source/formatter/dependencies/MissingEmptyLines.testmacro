@@ -10,9 +10,9 @@ definition {
 	@description = "Validate if the user can create a Experience"
 	@priority = "5"
 	test AddDefaultExperienceWithBannerCenter {
-		// Call Navigator.openWithAppendToBaseURL()
+		//Call Navigator.openWithAppendToBaseURL()
 
-		// Paremater: urlAppend
+		//	Paremater: urlAppend
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 		// Call ContentPages.clickPencil()
 		ContentPages.clickPencil();

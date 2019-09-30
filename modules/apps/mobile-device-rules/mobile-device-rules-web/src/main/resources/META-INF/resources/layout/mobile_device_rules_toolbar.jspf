@@ -41,7 +41,7 @@
 				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			</liferay-portlet:resourceURL>
 
-			'<%= HtmlUtil.escapeJS(viewRuleGroupInstancesURL.toString()) %>',
+			'<%= HtmlUtil.escapeJS(viewRuleGroupInstancesURL.toString()) %>'
 		).then(
 			function(response) {
 				return response.text();

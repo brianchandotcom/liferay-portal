@@ -15,6 +15,7 @@
 package com.liferay.talend.source;
 
 import com.liferay.talend.common.oas.OASSource;
+
 import org.talend.daikon.properties.ValidationResult;
 
 /**
@@ -29,20 +30,20 @@ public class LiferayOASSource {
 		_validationResult = validationResult;
 	}
 
-	public boolean isValid() {
-		if (_validationResult.getStatus() == ValidationResult.Result.ERROR) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public OASSource getOASSource() {
 		return _oasSource;
 	}
 
 	public ValidationResult getValidationResult() {
 		return _validationResult;
+	}
+
+	public boolean isValid() {
+		if (_validationResult.getStatus() == ValidationResult.Result.ERROR) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private final OASSource _oasSource;

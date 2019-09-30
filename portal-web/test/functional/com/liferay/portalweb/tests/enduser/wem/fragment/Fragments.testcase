@@ -122,6 +122,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98241. Basic Component Card can be configured."
+	@priority = "3"
+	test ConfigureBasicComponentCard {
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Card");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Card");
+
+			PageEditor.configureFragment(
+				alignment = "Center",
+				borderRadius = "None",
+				bottomSpacing = "5",
+				boxShadow = "Large",
+				imageSize = "Fit");
+		}
+
+		task ("View the fragment style") {
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				borderRadius = "0",
+				bottomSpacing = "5",
+				boxShadow = "lg",
+				fragmentName = "card",
+				imageSize = "100");
+		}
+
+		task ("Remove the fragment") {
+			PageEditor.removeFragment(fragmentName = "Card");
+		}
+
+		task ("Add a basic component") {
+			PageEditor.addBasicComponent(fragmentName = "Card");
+		}
+
+		task ("Duplicate the fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Card");
+		}
+
+		task ("View the duplicate fragment") {
+			PageEditor.viewDuplicateFragment(
+				fragmentName = "Card",
+				id = "Card");
+		}
+	}
+
 	@description = "This is a test for LPS-98241. Contributed fragment components Heading can be configured."
 	@priority = "4"
 	test ConfigureBasicComponentHeading {

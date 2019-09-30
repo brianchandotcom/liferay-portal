@@ -91,8 +91,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@style,'border-radius: ${key_borderRadius}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_CONFIGURATION_BOTTOM_SPACING</td>
-	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'pb-${bottomSpacing}')]</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')][contains(@class,'pb-${key_bottomSpacing}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
+	<td>//*[contains(@class,'component-${key_fragmentName}')]//div[contains(@class,'shadow-${key_boxShadow}')]</td>
 	<td></td>
 </tr>
 <tr>

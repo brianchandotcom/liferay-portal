@@ -203,11 +203,18 @@ definition {
 	}
 
 	macro configureFragment {
-		if (isSet(align)) {
+		if (isSet(alignment)) {
 			Select(
 				key_fieldLabel = "Align",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${align}");
+				value1 = "${alignment}");
+		}
+
+		if (isSet(borderRadius)) {
+			Select(
+				key_fieldLabel = "Border Radius",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${borderRadius}");
 		}
 
 		if (isSet(bottomSpacing)) {
@@ -215,6 +222,13 @@ definition {
 				key_fieldLabel = "Bottom Spacing",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${bottomSpacing}");
+		}
+
+		if (isSet(boxShadow)) {
+			Select(
+				key_fieldLabel = "Box Shadow",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${boxShadow}");
 		}
 
 		if (isSet(headingLevel)) {
@@ -702,11 +716,25 @@ definition {
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT");
 		}
 
+		if (isSet(borderRadius)) {
+			AssertElementPresent(
+				key_borderRadius = "${borderRadius}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS");
+		}
+
 		if (isSet(bottomSpacing)) {
 			AssertElementPresent(
-				key_alignment = "${bottomSpacing}",
+				key_bottomSpacing = "${bottomSpacing}",
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOTTOM_SPACING");
+		}
+
+		if (isSet(boxShadow)) {
+			AssertElementPresent(
+				key_boxShadow = "${boxShadow}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW");
 		}
 
 		if (isSet(headingLevel)) {

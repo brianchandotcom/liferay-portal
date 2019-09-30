@@ -14,7 +14,6 @@
 
 package com.liferay.talend.common.schema;
 
-import com.liferay.talend.common.avro.constants.AvroConstants;
 import com.liferay.talend.common.json.JsonFinder;
 import com.liferay.talend.common.oas.OASFormat;
 import com.liferay.talend.common.oas.OASType;
@@ -140,7 +139,7 @@ public class SchemaBuilder {
 		List<Schema.Field> schemaFields = new ArrayList<>(1);
 
 		Schema.Field designField = new Schema.Field(
-			AvroConstants.ID, AvroUtils._long(), null, (Object)null);
+			"_id", AvroUtils._long(), null, (Object)null);
 
 		designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
 

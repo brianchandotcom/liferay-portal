@@ -231,8 +231,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	@Reference
 	protected Props props;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	protected volatile XPackSecuritySettings xPackSecuritySettings;
+	@Reference
+	protected XPackSecuritySettings xPackSecuritySettings;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);

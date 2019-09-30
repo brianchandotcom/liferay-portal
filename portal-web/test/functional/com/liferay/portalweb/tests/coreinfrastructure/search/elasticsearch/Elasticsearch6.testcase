@@ -65,6 +65,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AssertSystemSettingsPropogateToModule {
+
 		// Ignoring test until LPS-65459 is resolved
 
 		property test.name.skip.portal.instance = "Elasticsearch6#AssertSystemSettingsPropogateToModule";

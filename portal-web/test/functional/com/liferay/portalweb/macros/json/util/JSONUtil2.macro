@@ -5,7 +5,9 @@ definition {
 		if ((!(isSet(JSON))) || (!(isSet(key)))) {
 			fail("Error, 'JSON' and 'key' must all be set");
 		}
+
 		//check if object already exists
+
 		var bool = JSONUtil2._isJSONArrayPresent(
 			JSON = "${JSON}",
 			key = "${key}");
@@ -47,7 +49,9 @@ definition {
 			}
 
 			if ("${temp}" == "[]") {
+
 				//if empty no need to add comma
+
 				var JSON = StringUtil.regexReplaceFirst("${JSON}","(\"${key}\"\s*:\s*)\[\]", "$1["${value}"]");
 			}
 			else {
@@ -84,6 +88,7 @@ definition {
 
 	@summary = "Helper function to convert a localized list into JSON"
 	macro _convertLocalizedListToMap {
+
 		// Create list using '${listMap'
 
 		var localizedMap = "{";

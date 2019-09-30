@@ -2,6 +2,7 @@ definition {
 
 	@description = "Configures Liferay SAML as the IdP and Liferay SAML as the SP."
 	macro configureLiferaySAMLAsIdP {
+
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
 		if (isSet(idpURL)) {
@@ -87,6 +88,7 @@ definition {
 	}
 
 	macro connectSPAndIdP {
+
 		// Add a configured IdP connection to an SP
 
 		Navigator.openSpecificURL(url = "${spURL}");

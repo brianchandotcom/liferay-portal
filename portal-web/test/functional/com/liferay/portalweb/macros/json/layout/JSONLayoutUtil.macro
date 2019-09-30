@@ -1,7 +1,9 @@
 definition {
 
 	macro _addWidgetToTypeSettings {
+
 		//get column # we want to set to (can only be 1-3), default is 1
+
 		if (!(isSet(column))) {
 			var column = "1";
 		}

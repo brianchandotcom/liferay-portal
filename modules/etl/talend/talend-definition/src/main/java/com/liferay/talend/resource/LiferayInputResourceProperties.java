@@ -15,19 +15,21 @@
 package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
+import com.liferay.talend.common.oas.OASExplorer;
+import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.common.oas.constants.OASConstants;
+import com.liferay.talend.common.schema.SchemaBuilder;
 import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.properties.ExceptionUtils;
-import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
-import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
-
-import java.io.IOException;
+import com.liferay.talend.source.LiferayOASSource;
 
 import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import javax.json.JsonObject;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -43,7 +45,6 @@ import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.StringProperty;
@@ -51,6 +52,7 @@ import org.talend.daikon.properties.property.StringProperty;
 /**
  * @author Zoltán Takács
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class LiferayInputResourceProperties
 	extends BaseLiferayResourceProperties {
@@ -67,33 +69,27 @@ public class LiferayInputResourceProperties
 	}
 
 	public ValidationResult beforeEndpoint() throws Exception {
-		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
-			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+		LiferayOASSource liferayOASSource =
+			LiferayBaseComponentDefinition.getLiferayOASSource(
 				getEffectiveLiferayConnectionProperties());
 
-		ValidationResultMutable validationResultMutable =
-			validatedSoSSandboxRuntime.getValidationResultMutable();
-
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-
-			return validationResultMutable;
+		if (!liferayOASSource.isValid()) {
+			return liferayOASSource.getValidationResult();
 		}
 
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
-			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime();
+		OASSource jsonClient = liferayOASSource.getOASSource();
 
 		try {
-			Set<String> endpoints = liferaySourceOrSinkRuntime.getEndpointList(
-				OASConstants.OPERATION_GET);
+			OASExplorer oasExplorer = new OASExplorer();
+
+			Set<String> endpoints = oasExplorer.getEndpointList(
+				OASConstants.OPERATION_GET,
+				jsonClient.getOASJsonObject(connection.getApiSpecURL()));
 
 			if (endpoints.isEmpty()) {
-				validationResultMutable.setMessage(
+				return new ValidationResult(
+					ValidationResult.Result.ERROR,
 					_i18nMessages.getMessage("error.validation.resources"));
-				validationResultMutable.setStatus(
-					ValidationResult.Result.ERROR);
-
-				return validationResultMutable;
 			}
 
 			List<NamedThing> endpointsNamedThing = new ArrayList<>();
@@ -133,39 +129,38 @@ public class LiferayInputResourceProperties
 	}
 
 	@Override
-	protected ValidationResult doAfterEndpoint(
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-		ValidationResultMutable validationResultMutable) {
-
+	protected ValidationResult doAfterEndpoint(OASSource oasSource) {
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Endpoint: " + endpoint.getValue());
 		}
 
+		JsonObject oasJsonObject = oasSource.getOASJsonObject(
+			connection.getApiSpecURL());
+
 		try {
-			Schema endpointSchema =
-				liferaySourceOrSinkRuntime.getEndpointSchema(
-					endpoint.getValue(), OASConstants.OPERATION_GET);
+			SchemaBuilder schemaBuilder = new SchemaBuilder();
+
+			Schema endpointSchema = schemaBuilder.inferSchema(
+				endpoint.getValue(), OASConstants.OPERATION_GET, oasJsonObject);
 
 			main.schema.setValue(endpointSchema);
 		}
-		catch (IOException | TalendRuntimeException e) {
-			validationResultMutable.setMessage(
+		catch (TalendRuntimeException tre) {
+			_logger.error("Unable to generate schema", tre);
+
+			return new ValidationResult(
+				ValidationResult.Result.ERROR,
 				_i18nMessages.getMessage("error.validation.schema"));
-			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
-
-			_logger.error("Unable to generate schema", e);
 		}
 
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-
-			endpoint.setValue(null);
-		}
+		OASExplorer oasExplorer = new OASExplorer();
 
 		populateParametersTable(
-			liferaySourceOrSinkRuntime, OASConstants.OPERATION_GET);
+			oasExplorer.getParameters(
+				endpoint.getValue(), OASConstants.OPERATION_GET,
+				oasJsonObject));
 
-		return validationResultMutable;
+		return ValidationResult.OK;
 	}
 
 	private void _addNestedFields(UriBuilder uriBuilder) {

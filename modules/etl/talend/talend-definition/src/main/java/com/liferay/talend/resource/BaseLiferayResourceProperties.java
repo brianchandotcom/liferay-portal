@@ -16,11 +16,11 @@ package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.oas.OASParameter;
+import com.liferay.talend.common.oas.OASSource;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
-import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
-import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 import com.liferay.talend.schema.SchemaListener;
+import com.liferay.talend.source.LiferayOASSource;
 import com.liferay.talend.tliferayoutput.Action;
 
 import java.net.URI;
@@ -44,7 +44,6 @@ import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
@@ -62,27 +61,20 @@ public abstract class BaseLiferayResourceProperties
 		super(name);
 	}
 
-	public ValidationResult afterEndpoint() throws Exception {
+	public ValidationResult afterEndpoint() {
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Endpoint: " + endpoint.getValue());
 		}
 
-		ValidatedSoSSandboxRuntime validatedSoSSandboxRuntime =
-			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+		LiferayOASSource liferayOASSource =
+			LiferayBaseComponentDefinition.getLiferayOASSource(
 				getEffectiveLiferayConnectionProperties());
 
-		ValidationResultMutable validationResultMutable =
-			validatedSoSSandboxRuntime.getValidationResultMutable();
-
-		if (validationResultMutable.getStatus() ==
-				ValidationResult.Result.ERROR) {
-
-			return validationResultMutable;
+		if (!liferayOASSource.isValid()) {
+			return liferayOASSource.getValidationResult();
 		}
 
-		return doAfterEndpoint(
-			validatedSoSSandboxRuntime.getLiferaySourceOrSinkRuntime(),
-			validationResultMutable);
+		return doAfterEndpoint(liferayOASSource.getOASSource());
 	}
 
 	public String getEndpoint() {
@@ -234,9 +226,7 @@ public abstract class BaseLiferayResourceProperties
 		return uriBuilder.build();
 	}
 
-	protected abstract ValidationResult doAfterEndpoint(
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-		ValidationResultMutable validationResultMutable);
+	protected abstract ValidationResult doAfterEndpoint(OASSource oasSource);
 
 	protected LiferayConnectionProperties
 		getEffectiveLiferayConnectionProperties() {
@@ -276,56 +266,50 @@ public abstract class BaseLiferayResourceProperties
 		return liferayConnectionProperties;
 	}
 
-	protected void populateParametersTable(
-		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
-		String operation) {
-
+	protected void populateParametersTable(List<OASParameter> oasParameters) {
 		List<String> parameterNames = new ArrayList<>();
 		List<String> parameterValues = new ArrayList<>();
 		List<String> parameterTypes = new ArrayList<>();
-
-		List<OASParameter> oasParameters =
-			liferaySourceOrSinkRuntime.getParameters(
-				endpoint.getValue(), operation);
 
 		if (oasParameters.isEmpty()) {
 			parametersTable.columnName.setValue(Collections.emptyList());
 			parametersTable.valueColumnName.setValue(Collections.emptyList());
 			parametersTable.typeColumnName.setValue(Collections.emptyList());
+
+			return;
 		}
-		else {
-			for (OASParameter oasParameter : oasParameters) {
-				String name = oasParameter.getName();
 
-				if (Objects.equals(name, "page") ||
-					Objects.equals(name, "pageSize")) {
+		for (OASParameter oasParameter : oasParameters) {
+			String name = oasParameter.getName();
 
-					continue;
-				}
+			if (Objects.equals(name, "page") ||
+				Objects.equals(name, "pageSize")) {
 
-				if (oasParameter.isRequired() ||
-					(OASParameter.Type.PATH == oasParameter.getType())) {
-
-					name = name + "*";
-				}
-
-				parameterNames.add(name);
-
-				OASParameter.Type type = oasParameter.getType();
-
-				String typeString = type.toString();
-
-				typeString = typeString.toLowerCase();
-
-				parameterTypes.add(typeString);
-
-				parameterValues.add("");
+				continue;
 			}
 
-			parametersTable.columnName.setValue(parameterNames);
-			parametersTable.typeColumnName.setValue(parameterTypes);
-			parametersTable.valueColumnName.setValue(parameterValues);
+			if (oasParameter.isRequired() ||
+				(OASParameter.Type.PATH == oasParameter.getType())) {
+
+				name = name + "*";
+			}
+
+			parameterNames.add(name);
+
+			OASParameter.Type type = oasParameter.getType();
+
+			String typeString = type.toString();
+
+			typeString = typeString.toLowerCase();
+
+			parameterTypes.add(typeString);
+
+			parameterValues.add("");
 		}
+
+		parametersTable.columnName.setValue(parameterNames);
+		parametersTable.typeColumnName.setValue(parameterTypes);
+		parametersTable.valueColumnName.setValue(parameterValues);
 	}
 
 	private void _setupReferenceForm() {

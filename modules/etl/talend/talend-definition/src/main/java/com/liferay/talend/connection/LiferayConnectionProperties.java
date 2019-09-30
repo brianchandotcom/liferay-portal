@@ -16,7 +16,7 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.util.URIUtil;
-import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
+import com.liferay.talend.source.LiferayOASSource;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
 
@@ -36,7 +36,6 @@ import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.Properties;
 import org.talend.daikon.properties.ValidationResult;
-import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
@@ -299,24 +298,22 @@ public class LiferayConnectionProperties
 	}
 
 	public ValidationResult validateTestConnection() {
-		ValidatedSoSSandboxRuntime sandboxRuntime =
-			LiferayBaseComponentDefinition.initializeSandboxedRuntime(
+		LiferayOASSource liferayOASSource =
+			LiferayBaseComponentDefinition.getLiferayOASSource(
 				getReferencedConnectionProperties());
-
-		ValidationResultMutable validationResultMutable =
-			sandboxRuntime.getValidationResultMutable();
 
 		Form form = getForm(UIKeys.FORM_WIZARD);
 
-		if (validationResultMutable.getStatus() == ValidationResult.Result.OK) {
-			form.setAllowFinish(true);
-			form.setAllowForward(true);
-		}
-		else {
+		if (!liferayOASSource.isValid()) {
 			form.setAllowForward(false);
+
+			return liferayOASSource.getValidationResult();
 		}
 
-		return validationResultMutable;
+		form.setAllowFinish(true);
+		form.setAllowForward(true);
+
+		return liferayOASSource.getValidationResult();
 	}
 
 	public PresentationItem advanced = new PresentationItem("advanced");

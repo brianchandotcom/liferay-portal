@@ -46,12 +46,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -649,14 +647,6 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setConfigurationAdmin(
-		ConfigurationAdmin configurationAdmin) {
-
-		this.configurationAdmin = configurationAdmin;
-	}
-
-	protected ConfigurationAdmin configurationAdmin;
 	protected FileSystemHelper fileSystemHelper;
 
 	private static volatile FileSystemStoreConfiguration

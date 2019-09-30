@@ -18,11 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,30 +42,18 @@ public class DDMStructureLayoutModelDocumentContributor
 		document.addKeyword(
 			Field.CLASS_NAME_ID,
 			classNameLocalService.getClassNameId(DDMStructureLayout.class));
-
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
-
-		String[] descriptionLanguageIds = getLanguageIds(
-			defaultLanguageId, ddmStructureLayout.getDescription());
-
-		for (String descriptionLanguageId : descriptionLanguageIds) {
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, descriptionLanguageId),
-				ddmStructureLayout.getDescription(descriptionLanguageId));
-		}
-
-		String[] nameLanguageIds = getLanguageIds(
-			defaultLanguageId, ddmStructureLayout.getName());
-
-		for (String nameLanguageId : nameLanguageIds) {
-			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, nameLanguageId),
-				ddmStructureLayout.getName(nameLanguageId));
-		}
-
+		document.addLocalizedText(
+			Field.DESCRIPTION,
+			LocalizationUtil.populateLocalizationMap(
+				ddmStructureLayout.getDescriptionMap(),
+				ddmStructureLayout.getDefaultLanguageId(),
+				ddmStructureLayout.getGroupId()));
+		document.addLocalizedText(
+			Field.NAME,
+			LocalizationUtil.populateLocalizationMap(
+				ddmStructureLayout.getNameMap(),
+				ddmStructureLayout.getDefaultLanguageId(),
+				ddmStructureLayout.getGroupId()));
 		document.addLocalizedKeyword(
 			"localized_name",
 			LocalizationUtil.populateLocalizationMap(

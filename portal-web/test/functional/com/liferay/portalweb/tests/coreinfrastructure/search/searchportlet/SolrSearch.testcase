@@ -1250,9 +1250,9 @@ definition {
 			key_day = "1",
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
 
-		Click(locator1 = "Button#SEARCH");
+		AssertElementPresent(locator1 = "Message#ERROR_SELECT_VALID_DATE_RANGE");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
+		AssertVisible(locator1 = "Button#SEARCH_DISABLED");
 
 		// Workaround for LPS-82584
 

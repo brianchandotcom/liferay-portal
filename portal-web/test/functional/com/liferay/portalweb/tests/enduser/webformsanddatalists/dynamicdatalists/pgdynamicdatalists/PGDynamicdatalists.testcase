@@ -790,7 +790,7 @@ definition {
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -805,7 +805,7 @@ definition {
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewSecondRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -922,7 +922,7 @@ definition {
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List:");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",

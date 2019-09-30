@@ -154,6 +154,8 @@ public class DDMFormInstanceStagedModelDataHandler
 				portletDataContext, importedFormInstance);
 		}
 		else {
+			importedFormInstance.setMvccVersion(
+				existingFormInstance.getMvccVersion());
 			importedFormInstance.setFormInstanceId(
 				existingFormInstance.getFormInstanceId());
 

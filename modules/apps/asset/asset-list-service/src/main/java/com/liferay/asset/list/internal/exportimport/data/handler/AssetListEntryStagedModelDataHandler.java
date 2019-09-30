@@ -146,6 +146,8 @@ public class AssetListEntryStagedModelDataHandler
 				portletDataContext, importedAssetListEntry);
 		}
 		else {
+			importedAssetListEntry.setMvccVersion(
+				existingAssetListEntry.getMvccVersion());
 			importedAssetListEntry.setAssetListEntryId(
 				existingAssetListEntry.getAssetListEntryId());
 

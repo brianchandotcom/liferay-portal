@@ -158,6 +158,8 @@ public class SegmentsExperienceStagedModelDataHandler
 				portletDataContext, importedSegmentsExperience);
 		}
 		else {
+			importedSegmentsExperience.setMvccVersion(
+				existingSegmentsExperience.getMvccVersion());
 			importedSegmentsExperience.setSegmentsExperienceId(
 				existingSegmentsExperience.getSegmentsExperienceId());
 

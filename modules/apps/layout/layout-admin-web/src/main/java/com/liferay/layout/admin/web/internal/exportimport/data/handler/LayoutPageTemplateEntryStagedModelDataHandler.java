@@ -320,6 +320,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 					importedLayoutPageTemplateEntry, layoutPrototype);
 			}
 			else {
+				importedLayoutPageTemplateEntry.setMvccVersion(
+					existingLayoutPageTemplateEntry.getMvccVersion());
 				importedLayoutPageTemplateEntry.setLayoutPageTemplateEntryId(
 					existingLayoutPageTemplateEntry.
 						getLayoutPageTemplateEntryId());

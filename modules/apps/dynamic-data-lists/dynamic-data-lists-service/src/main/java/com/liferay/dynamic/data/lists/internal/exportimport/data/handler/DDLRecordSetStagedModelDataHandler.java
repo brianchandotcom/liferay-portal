@@ -152,6 +152,8 @@ public class DDLRecordSetStagedModelDataHandler
 				portletDataContext, importedRecordSet);
 		}
 		else {
+			importedRecordSet.setMvccVersion(
+				existingRecordSet.getMvccVersion());
 			importedRecordSet.setRecordSetId(
 				existingRecordSet.getRecordSetId());
 

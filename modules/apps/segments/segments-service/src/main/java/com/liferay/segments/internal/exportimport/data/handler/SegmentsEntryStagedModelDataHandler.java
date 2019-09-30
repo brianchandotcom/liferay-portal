@@ -135,6 +135,8 @@ public class SegmentsEntryStagedModelDataHandler
 				portletDataContext, importedSegmentsEntry);
 		}
 		else {
+			importedSegmentsEntry.setMvccVersion(
+				existingSegmentsEntry.getMvccVersion());
 			importedSegmentsEntry.setSegmentsEntryId(
 				existingSegmentsEntry.getSegmentsEntryId());
 

@@ -147,6 +147,7 @@ public class DDLRecordStagedModelDataHandler
 				portletDataContext, importedRecord, ddmFormValues);
 		}
 		else {
+			importedRecord.setMvccVersion(existingRecord.getMvccVersion());
 			importedRecord.setRecordId(existingRecord.getRecordId());
 
 			importedRecord = _ddlRecordStagedModelRepository.updateStagedModel(

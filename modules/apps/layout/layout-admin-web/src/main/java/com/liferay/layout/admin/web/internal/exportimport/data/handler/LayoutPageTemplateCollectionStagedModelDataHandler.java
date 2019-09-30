@@ -89,6 +89,8 @@ public class LayoutPageTemplateCollectionStagedModelDataHandler
 					portletDataContext, importedLayoutPageTemplateCollection);
 		}
 		else {
+			importedLayoutPageTemplateCollection.setMvccVersion(
+				existingLayoutPageTemplateCollection.getMvccVersion());
 			importedLayoutPageTemplateCollection.
 				setLayoutPageTemplateCollectionId(
 					existingLayoutPageTemplateCollection.

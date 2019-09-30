@@ -204,6 +204,8 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 					dataProviderInstance.getType(), serviceContext);
 		}
 		else {
+			importedDataProviderInstance.setMvccVersion(
+				existingDataProviderInstance.getMvccVersion());
 			importedDataProviderInstance.setDataProviderInstanceId(
 				existingDataProviderInstance.getDataProviderInstanceId());
 

@@ -85,6 +85,8 @@ public class SiteNavigationMenuStagedModelDataHandler
 				portletDataContext, importedSiteNavigationMenu);
 		}
 		else {
+			importedSiteNavigationMenu.setMvccVersion(
+				existingSiteNavigationMenu.getMvccVersion());
 			importedSiteNavigationMenu.setSiteNavigationMenuId(
 				existingSiteNavigationMenu.getSiteNavigationMenuId());
 

@@ -99,6 +99,7 @@ public class BookmarksFolderStagedModelDataHandler
 				portletDataContext, importedFolder);
 		}
 		else {
+			importedFolder.setMvccVersion(existingFolder.getMvccVersion());
 			importedFolder.setFolderId(existingFolder.getFolderId());
 
 			importedFolder = _stagedModelRepository.updateStagedModel(

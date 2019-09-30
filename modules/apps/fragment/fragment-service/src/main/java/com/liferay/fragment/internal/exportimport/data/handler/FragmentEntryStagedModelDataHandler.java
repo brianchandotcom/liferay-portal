@@ -151,6 +151,8 @@ public class FragmentEntryStagedModelDataHandler
 				portletDataContext, importedFragmentEntry);
 		}
 		else {
+			importedFragmentEntry.setMvccVersion(
+				existingFragmentEntry.getMvccVersion());
 			importedFragmentEntry.setFragmentEntryId(
 				existingFragmentEntry.getFragmentEntryId());
 

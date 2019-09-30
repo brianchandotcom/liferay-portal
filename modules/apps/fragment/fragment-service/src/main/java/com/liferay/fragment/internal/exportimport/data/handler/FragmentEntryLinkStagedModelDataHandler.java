@@ -202,6 +202,8 @@ public class FragmentEntryLinkStagedModelDataHandler
 				portletDataContext, importedFragmentEntryLink);
 		}
 		else {
+			importedFragmentEntryLink.setMvccVersion(
+				existingFragmentEntryLink.getMvccVersion());
 			importedFragmentEntryLink.setFragmentEntryLinkId(
 				existingFragmentEntryLink.getFragmentEntryLinkId());
 

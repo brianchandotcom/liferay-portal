@@ -85,6 +85,21 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			return new long[] {segmentsExperienceId};
 		}
 
+		String segmentsExperimentKey = _getSelectedSegmentsExperimentKey(
+			httpServletRequest);
+
+		if (Validator.isNotNull(segmentsExperimentKey)) {
+			SegmentsExperiment segmentsExperiment =
+				_segmentsExperimentLocalService.fetchSegmentsExperiment(
+					themeDisplay.getScopeGroupId(), segmentsExperimentKey);
+
+			if (segmentsExperiment != null) {
+				return new long[] {
+					segmentsExperiment.getSegmentsExperienceId()
+				};
+			}
+		}
+
 		segmentsExperienceId = _getCurrentSegmentsExperienceId(
 			httpServletRequest, groupId);
 
@@ -291,6 +306,16 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		return _getSegmentsExperienceId(
 			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey);
+	}
+
+	private String _getSelectedSegmentsExperimentKey(
+		HttpServletRequest httpServletRequest) {
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		return ParamUtil.getString(
+			originalHttpServletRequest, "segmentsExperimentKey");
 	}
 
 	private void _setCookie(

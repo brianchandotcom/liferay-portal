@@ -40,10 +40,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -53,12 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	@Activate
-	public void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
-		_batchEngineTaskMethodServiceRegistry =
-			new BatchEngineTaskMethodRegistry(bundleContext);
-
+	public void activate(BundleContext bundleContext) {
 		_batchEngineTaskItemReaderFactory =
 			new BatchEngineTaskItemReaderFactory(
 				_batchEngineTaskMethodServiceRegistry);
@@ -67,11 +60,6 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			new BatchEngineTaskItemWriterFactory(
 				_batchEngineTaskMethodServiceRegistry, _companyLocalService,
 				_userLocalService);
-	}
-
-	@Deactivate
-	public void deactivate() {
-		_batchEngineTaskMethodServiceRegistry.destroy();
 	}
 
 	@Override
@@ -186,6 +174,7 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
+	@Reference
 	private BatchEngineTaskMethodRegistry _batchEngineTaskMethodServiceRegistry;
 
 	@Reference

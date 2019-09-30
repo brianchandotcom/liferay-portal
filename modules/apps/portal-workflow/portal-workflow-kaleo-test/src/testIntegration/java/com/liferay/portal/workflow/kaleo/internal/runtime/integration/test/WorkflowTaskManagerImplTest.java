@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -68,6 +69,7 @@ import org.junit.runner.RunWith;
 public class WorkflowTaskManagerImplTest
 	extends BaseWorkflowTaskManagerTestCase {
 
+	@Sync
 	@Test
 	public void testApproveDLFileEntryInDLFolderWhenHomeDLFolderHasWorkflow()
 		throws Exception {
@@ -117,6 +119,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(DLFolder.class.getName(), 0, -1);
 	}
 
+	@Sync
 	@Test
 	public void testApproveDLFileEntryInDLFolderWithoutWorkflowWhenHomeDLFolderHasWorkflow()
 		throws Exception {
@@ -156,6 +159,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(DLFolder.class.getName(), 0, -1);
 	}
 
+	@Sync
 	@Test
 	public void testApproveDLFileEntryInDLFolderWithSpecificType()
 		throws Exception {
@@ -213,6 +217,7 @@ public class WorkflowTaskManagerImplTest
 			WorkflowConstants.STATUS_APPROVED, fileVersion1.getStatus());
 	}
 
+	@Sync
 	@Test
 	public void testApproveDLFileEntryInDLFolderWithWorkflow()
 		throws Exception {
@@ -255,6 +260,7 @@ public class WorkflowTaskManagerImplTest
 			WorkflowConstants.STATUS_APPROVED, fileVersion2.getStatus());
 	}
 
+	@Sync
 	@Test
 	public void testApproveJoinXorWorkflow() throws Exception {
 		activateWorkflow(BlogsEntry.class.getName(), 0, 0, JOIN_XOR, 1);
@@ -280,6 +286,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testApproveJournalArticleAsAdmin() throws Exception {
 		activateSingleApproverWorkflow(
@@ -313,6 +320,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testApproveJournalArticleInFolderInheritedWorkflow()
 		throws Exception {
@@ -349,6 +357,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testApproveJournalArticleInFolderStructureSpecificWorkflow()
 		throws Exception {
@@ -390,6 +399,7 @@ public class WorkflowTaskManagerImplTest
 			ddmStructure.getStructureId());
 	}
 
+	@Sync
 	@Test
 	public void testApproveJournalArticleUsingFolderSpecificWorkflow()
 		throws Exception {
@@ -425,6 +435,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testApproveOrganizationParentReviewer() throws Exception {
 		Organization parentOrganization = createOrganization(true);
@@ -472,6 +483,7 @@ public class WorkflowTaskManagerImplTest
 			group.getGroupId());
 	}
 
+	@Sync
 	@Test
 	public void testApproveOrganizationParentReviewerWithoutSite()
 		throws Exception {
@@ -521,6 +533,7 @@ public class WorkflowTaskManagerImplTest
 			group.getGroupId());
 	}
 
+	@Sync
 	@Test
 	public void testApproveScriptAssignmentOrganizationAndSiteReviewer()
 		throws Exception {
@@ -566,6 +579,7 @@ public class WorkflowTaskManagerImplTest
 			group.getGroupId());
 	}
 
+	@Sync
 	@Test
 	public void testApproveSiteMember() throws Exception {
 		activateWorkflow(
@@ -601,6 +615,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testApproveWorkflowBlogsEntryAsSiteAdmin() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
@@ -623,6 +638,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testApproveWorkflowDDLRecordAsAdmin() throws Exception {
 		DDLRecordSet recordSet = addRecordSet();
@@ -656,6 +672,7 @@ public class WorkflowTaskManagerImplTest
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0);
 	}
 
+	@Sync
 	@Test
 	public void testAssignApproveWorkflowBlogsEntryAsPortalContentReviewer()
 		throws Exception {
@@ -686,6 +703,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testMovetoTrashAndRestoreFromTrashPendingDLFileEntryInDLFolderWithWorkflow()
 		throws Exception {
@@ -744,6 +762,7 @@ public class WorkflowTaskManagerImplTest
 			WorkflowConstants.STATUS_DRAFT, fileVersion.getStatus());
 	}
 
+	@Sync
 	@Test
 	public void testRejectDLFileEntry() throws Exception {
 		activateSingleApproverWorkflow(DLFolder.class.getName(), 0, -1);
@@ -775,6 +794,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(DLFolder.class.getName(), 0, -1);
 	}
 
+	@Sync
 	@Test
 	public void testRejectWorkflowBlogsEntryAndViewAssignee() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
@@ -806,6 +826,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testSearchWorkflowTaskByAssetTitle1() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
@@ -823,6 +844,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testSearchWorkflowTaskByAssetTitle2() throws Exception {
 		activateSingleApproverWorkflow(
@@ -847,6 +869,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testSearchWorkflowTaskByDeletedAsset() throws Exception {
 		activateSingleApproverWorkflow(
@@ -873,6 +896,7 @@ public class WorkflowTaskManagerImplTest
 			JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
 	}
 
+	@Sync
 	@Test
 	public void testSearchWorkflowTaskByUserRoles() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);
@@ -886,6 +910,7 @@ public class WorkflowTaskManagerImplTest
 		deactivateWorkflow(BlogsEntry.class.getName(), 0, 0);
 	}
 
+	@Sync
 	@Test
 	public void testUpdateDueDate() throws Exception {
 		activateSingleApproverWorkflow(BlogsEntry.class.getName(), 0, 0);

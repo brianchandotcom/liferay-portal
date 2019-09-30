@@ -89,10 +89,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
@@ -107,6 +109,7 @@ import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 
 import java.util.ArrayList;
@@ -155,12 +158,18 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 				}
 			});
 
+		_schedulerEnabled = PropsUtil.get(PropsKeys.SCHEDULER_ENABLED);
 
+		PropsUtil.set(PropsKeys.SCHEDULER_ENABLED, Boolean.TRUE.toString());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(_configuration);
+
+		PropsUtil.set(
+			PropsKeys.SCHEDULER_ENABLED,
+			GetterUtil.getString(_schedulerEnabled));
 	}
 
 	@Before
@@ -940,6 +949,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
+
+	private static String _schedulerEnabled;
 
 	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();

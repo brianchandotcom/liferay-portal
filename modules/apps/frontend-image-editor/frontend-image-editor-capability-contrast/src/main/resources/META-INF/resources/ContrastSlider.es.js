@@ -65,6 +65,7 @@ class ContrastSlider extends Component {
 	 */
 
 	constrainToRail_(region) {
+		// eslint-disable-next-line react/no-string-refs
 		const constrain = Position.getRegion(this.refs.rail, true);
 		if (region.left < constrain.left) {
 			region.left = constrain.left;
@@ -119,6 +120,7 @@ class ContrastSlider extends Component {
 			const prevValue = this.value;
 			this.updateValue_(event.offsetX, 0, true);
 			if (prevValue === this.value) {
+				// eslint-disable-next-line react/no-string-refs
 				const handleRegion = Position.getRegion(this.refs.handle);
 				if (event.offsetX < handleRegion.left) {
 					this.value -= 1;

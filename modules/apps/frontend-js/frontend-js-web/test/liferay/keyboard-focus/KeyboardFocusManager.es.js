@@ -18,6 +18,7 @@ import IncrementalDomRenderer from 'metal-incremental-dom';
 import KeyboardFocusManager from '../../../src/main/resources/META-INF/resources/liferay/keyboard-focus/KeyboardFocusManager.es';
 
 class TestComponent extends Component {
+	// eslint-disable-next-line react/require-render-return
 	render() {
 		IncrementalDOM.elementOpen('div');
 		IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-0');
@@ -133,6 +134,7 @@ describe('KeyboardFocusManager', function() {
 
 	it('does not change focus when key is pressed on element without ref', function() {
 		class TestComponentNoRef extends Component {
+			// eslint-disable-next-line react/require-render-return
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid('button');
@@ -155,6 +157,7 @@ describe('KeyboardFocusManager', function() {
 
 	it('does not change focus when key is pressed on element with ref outside expected format', function() {
 		class TestComponentDifferentRef extends Component {
+			// eslint-disable-next-line react/require-render-return
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid(
@@ -200,6 +203,7 @@ describe('KeyboardFocusManager', function() {
 
 	it('change focus accordingly when key is pressed on any element when no selector is given', function() {
 		class TestComponentNoSelector extends Component {
+			// eslint-disable-next-line react/require-render-return
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-0');
@@ -229,6 +233,7 @@ describe('KeyboardFocusManager', function() {
 
 	it('skip elements with "data-unfocusable" set to true when focusing', function() {
 		class TestComponentUnfocusable extends Component {
+			// eslint-disable-next-line react/require-render-return
 			render() {
 				IncrementalDOM.elementOpen('div');
 				IncrementalDOM.elementVoid('button', null, null, 'ref', 'el-0');

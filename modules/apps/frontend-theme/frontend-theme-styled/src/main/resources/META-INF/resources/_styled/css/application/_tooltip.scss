@@ -11,7 +11,7 @@
 
 .tooltip {
 	max-width: 200px;
-	
+
 	.tooltip-arrow {
 		background-color: $tooltip-bg;
 		height: 0.6rem;
@@ -32,8 +32,8 @@
 .tooltip.right,
 .tooltip.left {
 	.tooltip-arrow {
-		top: 50%;
 		margin-top: -0.3rem;
+		top: 50%;
 	}
 }
 

@@ -3,11 +3,7 @@
 	"bugs": {
 		"url": "https://issues.liferay.com/"
 	},
-	"dependencies": {
-		"metal": "2.16.8",
-		"metal-dom": "2.16.8",
-		"metal-state": "2.16.8"
-	},
+	"dependencies": {},
 	"keywords": [
 		"liferay-theme"
 	],
@@ -15,9 +11,6 @@
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"distName": "porygon-theme",
-		"hookModules": [
-			"liferay-theme-es2015-hook"
-		],
 		"rubySass": false,
 		"version": "7.2"
 	},

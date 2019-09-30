@@ -21,9 +21,22 @@
 		}
 	});
 
-	Liferay.Loader.require('porygon-theme/js/top_search.es', function(
-		TopSearch
-	) {
-		new TopSearch.default();
-	});
+	var porygonSearch = document.querySelector('.porygon-search');
+	var porygonSearchButton = document.querySelector('.porygon-search-button');
+	var porygonSearchInput = document.querySelector(
+		'.porygon-search .search-portlet-keywords-input'
+	);
+
+	if (porygonSearch && porygonSearchButton && porygonSearchInput) {
+		porygonSearchButton.addEventListener('click', function(_event) {
+			porygonSearch.classList.toggle('active');
+			porygonSearchInput.focus();
+		});
+
+		porygonSearch.addEventListener('keydown', function(event) {
+			if (event.keyCode === 27) {
+				porygonSearch.classList.remove('active');
+			}
+		});
+	}
 })();

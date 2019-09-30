@@ -17,6 +17,7 @@ package com.liferay.mule.internal.config;
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
+import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.annotation.param.display.Placement;
 
 /**
@@ -40,11 +41,13 @@ public class OAuth2AuthenticationConfig {
 		_consumerSecret = consumerSecret;
 	}
 
+	@DisplayName("Consumer key")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 1)
 	private String _consumerKey;
 
+	@DisplayName("Consumer secret")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@Parameter
 	@Placement(order = 2)

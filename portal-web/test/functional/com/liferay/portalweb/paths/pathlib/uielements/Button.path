@@ -569,6 +569,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_DISABLED</td>
+	<td>//button[contains(.,'Search')][@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//a[contains(.,'Select') and contains(@class,'btn')] | //button[contains(.,'Select')]</td>
 	<td></td>

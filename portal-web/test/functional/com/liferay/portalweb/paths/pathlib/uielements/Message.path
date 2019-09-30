@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_SELECT_VALID_DATE_RANGE</td>
+	<td>//div[@role='alert' and contains(.,'Please select a valid date range.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERIC</td>
 	<td>//div[contains(@class,'alert')]</td>
 	<td></td>

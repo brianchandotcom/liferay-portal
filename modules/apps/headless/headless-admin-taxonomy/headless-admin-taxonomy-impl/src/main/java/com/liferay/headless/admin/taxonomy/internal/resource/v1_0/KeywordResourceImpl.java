@@ -15,18 +15,21 @@
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.KeywordEntityModel;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -109,7 +112,6 @@ public class KeywordResourceImpl
 				dateCreated = assetTag.getCreateDate();
 				dateModified = assetTag.getModifiedDate();
 				id = assetTag.getTagId();
-				keywordUsageCount = assetTag.getAssetCount();
 				name = assetTag.getName();
 				siteId = assetTag.getGroupId();
 
@@ -124,11 +126,30 @@ public class KeywordResourceImpl
 
 						return null;
 					});
+				setKeywordUsageCount(
+					() -> {
+						Hits hits = _assetEntryLocalService.search(
+							assetTag.getCompanyId(),
+							new long[] {assetTag.getGroupId()},
+							assetTag.getUserId(), null, 0, null, null, null,
+							null, assetTag.getName(), true,
+							new int[] {
+								WorkflowConstants.STATUS_APPROVED,
+								WorkflowConstants.STATUS_PENDING,
+								WorkflowConstants.STATUS_SCHEDULED
+							},
+							false, 0, 1);
+
+						return hits.getLength();
+					});
 			}
 		};
 	}
 
 	private static final EntityModel _entityModel = new KeywordEntityModel();
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetTagService _assetTagService;

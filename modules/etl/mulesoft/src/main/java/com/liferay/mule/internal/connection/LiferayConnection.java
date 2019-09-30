@@ -16,6 +16,7 @@ package com.liferay.mule.internal.connection;
 
 import com.liferay.mule.internal.connection.authentication.BasicAuthentication;
 import com.liferay.mule.internal.connection.authentication.HttpAuthentication;
+import com.liferay.mule.internal.connection.authentication.OAuth2Authentication;
 import com.liferay.mule.internal.oas.OASURLParser;
 
 import java.io.IOException;
@@ -54,10 +55,12 @@ public final class LiferayConnection {
 	}
 
 	public static LiferayConnection withOAuth2Authentication(
-		HttpService httpService, String openApiSpecPath, String consumerKey,
-		String consumerSecret) {
+			HttpService httpService, String openApiSpecPath, String consumerKey,
+			String consumerSecret)
+		throws ConnectionException {
 
-		throw new UnsupportedOperationException();
+		return new LiferayConnection(
+			httpService, openApiSpecPath, consumerKey, consumerSecret);
 	}
 
 	public HttpResponse delete(
@@ -113,19 +116,39 @@ public final class LiferayConnection {
 
 	private LiferayConnection(
 			HttpService httpService, String openApiSpecPath,
-			HttpAuthentication httpAuthentication)
+			BasicAuthentication basicAuthentication)
 		throws ConnectionException {
 
 		_openAPISpecPath = openApiSpecPath;
 		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
-		_httpAuthentication = httpAuthentication;
+		_httpAuthentication = basicAuthentication;
 
 		_initHttpClient(httpService);
 	}
 
+	private LiferayConnection(
+			HttpService httpService, String openApiSpecPath, String consumerKey,
+			String consumerSecret)
+		throws ConnectionException {
+
+		_openAPISpecPath = openApiSpecPath;
+		_serverBaseURL = _getServerBaseURL(openApiSpecPath);
+
+		_initHttpClient(httpService);
+
+		try {
+			_httpAuthentication = new OAuth2Authentication(
+				consumerKey, consumerSecret, _httpClient, _openAPISpecPath);
+		}
+		catch (MalformedURLException murle) {
+			throw new ConnectionException(murle);
+		}
+	}
+
 	private HttpRequest _getHttpRequest(
-		HttpConstants.Method method, String uri,
-		MultiMap<String, String> queryParams, InputStream inputStream) {
+			HttpConstants.Method method, String uri,
+			MultiMap<String, String> queryParams, InputStream inputStream)
+		throws IOException, TimeoutException {
 
 		HttpRequestBuilder httpRequestBuilder = HttpRequest.builder();
 

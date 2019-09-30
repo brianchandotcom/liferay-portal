@@ -14,15 +14,13 @@
 
 package com.liferay.mule.internal.connection.authentication;
 
-import java.io.IOException;
-
-import java.util.concurrent.TimeoutException;
-
 /**
  * @author Matija Petanjek
  */
-public interface HttpAuthentication {
+public class OAuth2Exception extends RuntimeException {
 
-	public String getAuthorizationHeader() throws IOException, TimeoutException;
+	public OAuth2Exception(String message) {
+		super(message);
+	}
 
 }

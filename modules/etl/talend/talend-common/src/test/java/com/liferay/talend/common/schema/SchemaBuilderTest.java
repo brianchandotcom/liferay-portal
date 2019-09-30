@@ -35,7 +35,7 @@ import org.talend.daikon.avro.AvroUtils;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class EndpointSchemaInferrerTest extends BaseTestCase {
+public class SchemaBuilderTest extends BaseTestCase {
 
 	@Before
 	public void setUp() {

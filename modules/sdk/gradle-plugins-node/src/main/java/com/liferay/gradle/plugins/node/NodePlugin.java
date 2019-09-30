@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.node;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.plugins.node.internal.util.StringUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
@@ -104,7 +103,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
-		_addTasksPackageRun(npmInstallTask, packageJsonMap, nodeExtension);
+		_addTasksPackageRun(npmInstallTask, packageJsonMap);
 
 		_configureTasksDownloadNodeModule(
 			project, npmInstallTask, packageJsonMap);
@@ -263,7 +262,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private PackageRunBuildTask _addTaskPackageRunBuild(
-		NpmInstallTask npmInstallTask, NodeExtension nodeExtension) {
+		NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
 
@@ -341,8 +340,7 @@ public class NodePlugin implements Plugin<Project> {
 
 	@SuppressWarnings("unchecked")
 	private void _addTasksPackageRun(
-		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap,
-		NodeExtension nodeExtension) {
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
 
 		if (packageJsonMap == null) {
 			return;
@@ -354,7 +352,7 @@ public class NodePlugin implements Plugin<Project> {
 		if (scriptsJsonMap != null) {
 			for (String scriptName : scriptsJsonMap.keySet()) {
 				if (Objects.equals(scriptName, "build")) {
-					_addTaskPackageRunBuild(npmInstallTask, nodeExtension);
+					_addTaskPackageRunBuild(npmInstallTask);
 				}
 				else if (Objects.equals(scriptName, "test")) {
 					_addTaskPackageRunTest(npmInstallTask);
@@ -560,19 +558,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File nodeDir = nodeExtension.getNodeDir();
-
-					if (nodeDir == null) {
-						return null;
-					}
-
-					if (nodeExtension.isUseNpm()) {
-						File npmDir = NodePluginUtil.getNpmDir(nodeDir);
-
-						return new File(npmDir, "bin/npm-cli.js");
-					}
-
-					return nodeExtension.getYarnScriptFile();
+					return nodeExtension.getScriptFile();
 				}
 
 			});

@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.node;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
@@ -155,7 +156,15 @@ public class NodeExtension {
 					return true;
 				}
 
-				if (getYarnScriptFile() == null) {
+				File scriptFile = getScriptFile();
+
+				if (scriptFile == null) {
+					return true;
+				}
+
+				String scriptFileName = scriptFile.getName();
+
+				if (scriptFileName.startsWith("npm-")) {
 					return true;
 				}
 
@@ -164,25 +173,37 @@ public class NodeExtension {
 
 		};
 
-		_yarnScriptFile = new Callable<File>() {
+		_scriptFile = new Callable<File>() {
 
 			@Override
 			public File call() throws Exception {
-				File dir = project.getProjectDir();
+				File nodeDir = getNodeDir();
 
-				while (true) {
-					File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
+				if (nodeDir == null) {
+					return null;
+				}
 
-					if ((files != null) && (files.length > 0)) {
-						return files[0];
-					}
+				if (!FileUtil.exists(project, "package-lock.json")) {
+					File dir = project.getProjectDir();
 
-					dir = dir.getParentFile();
+					while (true) {
+						File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
 
-					if (dir == null) {
-						return null;
+						if ((files != null) && (files.length > 0)) {
+							return files[0];
+						}
+
+						dir = dir.getParentFile();
+
+						if (dir == null) {
+							break;
+						}
 					}
 				}
+
+				File npmDir = NodePluginUtil.getNpmDir(nodeDir);
+
+				return new File(npmDir, "bin/npm-cli.js");
 			}
 
 		};
@@ -212,8 +233,8 @@ public class NodeExtension {
 		return GradleUtil.toString(_npmVersion);
 	}
 
-	public File getYarnScriptFile() {
-		return GradleUtil.toFile(_project, _yarnScriptFile);
+	public File getScriptFile() {
+		return GradleUtil.toFile(_project, _scriptFile);
 	}
 
 	public boolean isDownload() {
@@ -280,8 +301,8 @@ public class NodeExtension {
 		_useNpm = useNpm;
 	}
 
-	public void setYarnScriptFile(Object yarnScriptFile) {
-		_yarnScriptFile = yarnScriptFile;
+	public void setScriptFile(Object scriptFile) {
+		_scriptFile = scriptFile;
 	}
 
 	private static final Map<String, String> _npmVersions =
@@ -315,6 +336,6 @@ public class NodeExtension {
 	private Object _npmVersion;
 	private final Project _project;
 	private Object _useNpm;
-	private Object _yarnScriptFile;
+	private Object _scriptFile;
 
 }

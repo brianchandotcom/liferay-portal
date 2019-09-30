@@ -60,6 +60,9 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 
 			ReflectionTestUtil.setFieldValue(
 				_screenNameValidator, _FIELD_KEY, _SPECIAL_CHARACTERS);
+
+			_originalSpecialCharsRegex = ReflectionTestUtil.getAndSetFieldValue(
+				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS_REGEX, null);
 		}
 	}
 
@@ -68,6 +71,9 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 		if (_screenNameValidator instanceof DefaultScreenNameValidator) {
 			ReflectionTestUtil.setFieldValue(
 				_screenNameValidator, _FIELD_KEY, _originalSpecialCharacters);
+			ReflectionTestUtil.setFieldValue(
+				_screenNameValidator, _FIELD_KEY_SPECIAL_CHARS_REGEX,
+				_originalSpecialCharsRegex);
 		}
 	}
 
@@ -112,9 +118,13 @@ public class UserServiceWhenAddingUserWithSpecialCharactersScreenNameTest {
 
 	private static final String _FIELD_KEY = "_specialChars";
 
+	private static final String _FIELD_KEY_SPECIAL_CHARS_REGEX =
+		"_specialCharsRegex";
+
 	private static final String _SPECIAL_CHARACTERS = "-._\\'#";
 
 	private String _originalSpecialCharacters;
+	private String _originalSpecialCharsRegex;
 	private ScreenNameValidator _screenNameValidator;
 
 	@DeleteAfterTestRun

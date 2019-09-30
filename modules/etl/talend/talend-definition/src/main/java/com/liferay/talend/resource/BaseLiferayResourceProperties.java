@@ -267,10 +267,6 @@ public abstract class BaseLiferayResourceProperties
 	}
 
 	protected void populateParametersTable(List<OASParameter> oasParameters) {
-		List<String> parameterNames = new ArrayList<>();
-		List<String> parameterValues = new ArrayList<>();
-		List<String> parameterTypes = new ArrayList<>();
-
 		if (oasParameters.isEmpty()) {
 			parametersTable.columnName.setValue(Collections.emptyList());
 			parametersTable.valueColumnName.setValue(Collections.emptyList());
@@ -278,6 +274,10 @@ public abstract class BaseLiferayResourceProperties
 
 			return;
 		}
+
+		List<String> parameterNames = new ArrayList<>();
+		List<String> parameterValues = new ArrayList<>();
+		List<String> parameterTypes = new ArrayList<>();
 
 		for (OASParameter oasParameter : oasParameters) {
 			String name = oasParameter.getName();

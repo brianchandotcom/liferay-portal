@@ -16,6 +16,8 @@ package com.liferay.talend.connection;
 
 import com.liferay.talend.resource.BaseLiferayResourceProperties;
 
+import java.net.URI;
+
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
@@ -41,6 +43,12 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	public String getEndpoint() {
 		return resource.getEndpoint();
+	}
+
+	public String getEndpointURI() {
+		URI endpointURI = resource.getEndpointURI();
+
+		return endpointURI.toString();
 	}
 
 	public int getItemsPerPage() {

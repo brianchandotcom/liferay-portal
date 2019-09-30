@@ -15,6 +15,7 @@
 package com.liferay.talend.runtime.reader;
 
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
+import com.liferay.talend.common.util.URIUtil;
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 import com.liferay.talend.runtime.LiferaySource;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
@@ -23,6 +24,7 @@ import java.io.IOException;
 
 import java.net.URI;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -31,8 +33,6 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
-
-import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.generic.IndexedRecord;
 
@@ -170,16 +170,22 @@ public class LiferayInputReader extends AbstractBoundedReader<IndexedRecord> {
 		return true;
 	}
 
-	private void _readEndpointJsonObject() {
-		UriBuilder uriBuilder = UriBuilder.fromUri(
-			_liferayConnectionResourceBaseProperties.resource.getEndpointURI());
+	private Map<String, String> _getPageQueryParameters() {
+		Map<String, String> parameters = new HashMap<>();
 
-		URI resourceURI = uriBuilder.queryParam(
-			"page", _currentPage
-		).queryParam(
+		parameters.put("page", String.valueOf(_currentPage));
+		parameters.put(
 			"pageSize",
-			_liferayConnectionResourceBaseProperties.getItemsPerPage()
-		).build();
+			String.valueOf(
+				_liferayConnectionResourceBaseProperties.getItemsPerPage()));
+
+		return parameters;
+	}
+
+	private void _readEndpointJsonObject() {
+		URI resourceURI = URIUtil.updateWithQueryParameters(
+			_liferayConnectionResourceBaseProperties.getEndpointURI(),
+			_getPageQueryParameters());
 
 		_currentItemIndex = 0;
 

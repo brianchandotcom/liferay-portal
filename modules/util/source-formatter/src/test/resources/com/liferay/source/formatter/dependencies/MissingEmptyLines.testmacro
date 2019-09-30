@@ -7,6 +7,30 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 	}
+	@description = "Validate if the user can create a Experience"
+	@priority = "5"
+	test AddDefaultExperienceWithBannerCenter {
+		// Call Navigator.openWithAppendToBaseURL()
+
+		// Paremater: urlAppend
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+		// Call ContentPages.clickPencil()
+		ContentPages.clickPencil();
+
+		Experience.clickBasicSections();
+		Experience.addBannerCenterElement();
+
+		Button.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		// Call AssertTextEquals()
+		// Parameter1: locator1
+		// Parameter2: value1
+		AssertTextEquals(
+			locator1 = "Experience#BANNER_CENTER_TITLE_EXAMPLE_PORTLET",
+			value1 = "Banner Title Example");
+	}
 	@description = "This is the description for TestA."
 	@priority = "5"
 	test TestA

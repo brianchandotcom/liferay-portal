@@ -23,7 +23,6 @@ const Arrow = ({ direction, handleClick }) => (
 			borderless
 			className="icon-arrow"
 			displayType="secondary"
-			monospaced
 			onClick={handleClick}
 			size="lg"
 		>

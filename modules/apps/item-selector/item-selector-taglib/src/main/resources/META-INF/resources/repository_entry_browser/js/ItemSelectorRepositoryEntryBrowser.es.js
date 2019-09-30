@@ -90,9 +90,12 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						<ItemSelectorPreview
 							container = {container}
 							currentIndex = {index}
+							editItemURL = {this.editItemURL}
 							handleSelectedItem = {this._onItemSelected.bind(this)}
 							headerTitle = {this.closeCaption}
 							items = {items}
+							uploadItemReturnType = {this.uploadItemReturnType}
+							uploadItemURL = {this.uploadItemURL}
 						/>,
 						container
 					);

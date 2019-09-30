@@ -18,7 +18,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = ({handleClickClose, handleClickDone, headerTitle}) => (
+const Header = ({handleClickClose, handleClickDone, handleClickEdit, headerTitle}) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
 			<ClayNavigationBar>
@@ -45,6 +45,7 @@ const Header = ({handleClickClose, handleClickDone, headerTitle}) => (
 						borderless
 						displayType="secondary"
 						monospaced
+						onClick={handleClickEdit}
 					>
 						<ClayIcon symbol="pencil"  />
 					</ClayButton>

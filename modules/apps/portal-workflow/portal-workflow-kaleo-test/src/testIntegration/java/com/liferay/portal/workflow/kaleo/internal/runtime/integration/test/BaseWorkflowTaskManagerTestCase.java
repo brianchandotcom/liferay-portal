@@ -106,6 +106,7 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -136,8 +137,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_configuration = _configurationAdmin.getConfiguration(
-			"com.liferay.portal.workflow.configuration." +
-				"WorkflowDefinitionConfiguration",
+			WorkflowDefinitionConfiguration.class.getName(),
 			StringPool.QUESTION);
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();

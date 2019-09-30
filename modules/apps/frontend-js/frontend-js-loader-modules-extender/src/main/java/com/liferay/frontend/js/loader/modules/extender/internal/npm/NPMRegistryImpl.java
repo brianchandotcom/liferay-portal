@@ -305,6 +305,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		if (details.applyVersioning() != _applyVersioning) {
 			_applyVersioning = details.applyVersioning();
 
+			_serviceTracker.close();
+
 			_serviceTracker = _openServiceTracker();
 		}
 	}

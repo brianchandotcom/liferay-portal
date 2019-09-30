@@ -111,7 +111,6 @@ import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -148,11 +147,15 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 			WorkflowDefinitionConfiguration.class.getName(),
 			StringPool.QUESTION);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
+		ConfigurationTestUtil.saveConfiguration(
+			_configuration,
+			new HashMapDictionary<String, Object>() {
+				{
+					put("company.administrator.can.publish", true);
+				}
+			});
 
-		properties.put("company.administrator.can.publish", true);
 
-		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
 	}
 
 	@AfterClass

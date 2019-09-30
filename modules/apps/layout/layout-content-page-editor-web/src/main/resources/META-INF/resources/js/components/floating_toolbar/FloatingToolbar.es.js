@@ -66,9 +66,8 @@ class FloatingToolbar extends Component {
 	 * Gets a suggested align of an element to an anchor, following this logic:
 	 * - Vertically, if the element fits at bottom, it's placed there, otherwise
 	 *   it is placed at top.
-	 * - Horizontally, if the element fits at right, it's placed there,
-	 *   otherwise it is placed at left. If language is RTL, this will happen
-	 *   the other way around.
+	 * - Horizontally, the element is placed depending on the anchor position
+	 *   relative to the fragment entry link list.
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
 	 * @private

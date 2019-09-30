@@ -148,31 +148,6 @@ public class NodeExtension {
 
 		_project = project;
 
-		_useNpm = new Callable<Boolean>() {
-
-			@Override
-			public Boolean call() throws Exception {
-				if (FileUtil.exists(project, "package-lock.json")) {
-					return true;
-				}
-
-				File scriptFile = getScriptFile();
-
-				if (scriptFile == null) {
-					return true;
-				}
-
-				String scriptFileName = scriptFile.getName();
-
-				if (scriptFileName.startsWith("npm-")) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
 		_scriptFile = new Callable<File>() {
 
 			@Override
@@ -204,6 +179,31 @@ public class NodeExtension {
 				File npmDir = NodePluginUtil.getNpmDir(nodeDir);
 
 				return new File(npmDir, "bin/npm-cli.js");
+			}
+
+		};
+
+		_useNpm = new Callable<Boolean>() {
+
+			@Override
+			public Boolean call() throws Exception {
+				if (FileUtil.exists(project, "package-lock.json")) {
+					return true;
+				}
+
+				File scriptFile = getScriptFile();
+
+				if (scriptFile == null) {
+					return true;
+				}
+
+				String scriptFileName = scriptFile.getName();
+
+				if (scriptFileName.startsWith("npm-")) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};
@@ -297,12 +297,12 @@ public class NodeExtension {
 		_npmVersion = npmVersion;
 	}
 
-	public void setUseNpm(Object useNpm) {
-		_useNpm = useNpm;
-	}
-
 	public void setScriptFile(Object scriptFile) {
 		_scriptFile = scriptFile;
+	}
+
+	public void setUseNpm(Object useNpm) {
+		_useNpm = useNpm;
 	}
 
 	private static final Map<String, String> _npmVersions =
@@ -335,7 +335,7 @@ public class NodeExtension {
 	private Object _npmUrl;
 	private Object _npmVersion;
 	private final Project _project;
-	private Object _useNpm;
 	private Object _scriptFile;
+	private Object _useNpm;
 
 }

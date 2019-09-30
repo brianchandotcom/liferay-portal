@@ -14,12 +14,10 @@
 
 package com.liferay.talend.common.json;
 
-import java.io.InputStream;
+import com.liferay.talend.BaseTestCase;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.json.JsonValue;
 
 import org.junit.Assert;
@@ -29,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class JsonFinderTest {
+public class JsonFinderTest extends BaseTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,7 +37,7 @@ public class JsonFinderTest {
 	public void testGetDescendantJsonArray() {
 		JsonFinder jsonFinder = new JsonFinder();
 
-		JsonObject jsonObject = _getTestOASJsonObject();
+		JsonObject jsonObject = readObject("openapi.json");
 
 		JsonArray descendantJsonArray = jsonFinder.getDescendantJsonArray(
 			"invalid>path>to>array", jsonObject);
@@ -61,7 +59,7 @@ public class JsonFinderTest {
 	public void testGetDescendantJsonObject() {
 		JsonFinder jsonFinder = new JsonFinder();
 
-		JsonObject jsonObject = _getTestOASJsonObject();
+		JsonObject jsonObject = readObject("openapi.json");
 
 		JsonObject descendantJsonObject = jsonFinder.getDescendantJsonObject(
 			"invalid>path>to>object", jsonObject);
@@ -78,7 +76,7 @@ public class JsonFinderTest {
 	public void testHasPath() {
 		JsonFinder jsonFinder = new JsonFinder();
 
-		JsonObject jsonObject = _getTestOASJsonObject();
+		JsonObject jsonObject = readObject("openapi.json");
 
 		Assert.assertFalse(
 			"Expect path \"invalid>path\" is invalid",
@@ -94,17 +92,6 @@ public class JsonFinderTest {
 		Assert.assertTrue(
 			"Expect path \"info>description\" is valid",
 			jsonFinder.hasPath("info>description", jsonObject));
-	}
-
-	private JsonObject _getTestOASJsonObject() {
-		Class<?> clazz = getClass();
-
-		InputStream resourceAsStream = clazz.getResourceAsStream(
-			"openapi.json");
-
-		JsonReader jsonReader = Json.createReader(resourceAsStream);
-
-		return jsonReader.readObject();
 	}
 
 }

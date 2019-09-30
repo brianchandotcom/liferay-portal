@@ -101,6 +101,19 @@ public final class LiferayConnection {
 		_httpClient.stop();
 	}
 
+	public HttpResponse patch(
+			InputStream inputStream, MultiMap<String, String> pathParams,
+			MultiMap<String, String> queryParams, String endpoint)
+		throws IOException, TimeoutException {
+
+		return _httpClient.send(
+			_getHttpRequest(
+				HttpConstants.Method.PATCH,
+				_serverBaseURL + _resolvePathParams(endpoint, pathParams),
+				queryParams, inputStream),
+			10000, true, null);
+	}
+
 	public HttpResponse post(
 			InputStream inputStream, MultiMap<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)

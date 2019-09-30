@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.experiment.web.internal.util.comparator.SegmentsExperimentModifiedDateComparator;
@@ -52,9 +53,9 @@ import com.liferay.segments.service.SegmentsExperimentService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
@@ -304,16 +305,20 @@ public class SegmentsExperimentDisplayContext {
 		return segmentsExperimentRelsJSONArray;
 	}
 
-	public long getSelectedSegmentsExperienceId() throws PortalException {
+	public long getSelectedSegmentsExperienceId() {
 		if (Validator.isNotNull(_segmentsExperienceId)) {
 			return _segmentsExperienceId;
 		}
 
-		_segmentsExperienceId = _getRequestSegmentsExperienceId();
+		LongStream stream = Arrays.stream(
+			GetterUtil.getLongValues(
+				_httpServletRequest.getAttribute(
+					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS)));
 
-		if (_segmentsExperienceId == -1) {
-			_segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
-		}
+		_segmentsExperienceId = stream.findFirst(
+		).orElse(
+			SegmentsExperienceConstants.ID_DEFAULT
+		);
 
 		return _segmentsExperienceId;
 	}
@@ -377,87 +382,19 @@ public class SegmentsExperimentDisplayContext {
 			actionURL.toString(), "p_l_mode", Constants.EDIT);
 	}
 
-	private long _getRequestSegmentsExperienceId() throws PortalException {
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(_httpServletRequest);
+	private long _getSegmentsExperienceId() throws PortalException {
+		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment();
 
-		long segmentsExperienceId = ParamUtil.getLong(
-			originalHttpServletRequest, "segmentsExperienceId", -1);
-
-		if (segmentsExperienceId != -1) {
-			return segmentsExperienceId;
+		if (segmentsExperiment != null) {
+			return segmentsExperiment.getSegmentsExperienceId();
 		}
 
-		String segmentsExperienceKey = ParamUtil.getString(
-			originalHttpServletRequest, "segmentsExperienceKey");
-
-		return _getSegmentsExperienceId(
-			_themeDisplay.getScopeGroupId(), segmentsExperienceKey);
-	}
-
-	private String _getRequestSegmentsExperimentKey() {
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(_httpServletRequest);
-
-		return ParamUtil.getString(
-			originalHttpServletRequest, "segmentsExperimentKey");
-	}
-
-	private long _getSegmentsExperienceId(
-			long groupId, String segmentsExperienceKey)
-		throws PortalException {
-
-		if (Objects.equals(
-				segmentsExperienceKey,
-				SegmentsExperienceConstants.KEY_DEFAULT)) {
-
-			return SegmentsExperienceConstants.ID_DEFAULT;
-		}
-
-		if (Validator.isNotNull(segmentsExperienceKey)) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceService.fetchSegmentsExperience(
-					groupId, segmentsExperienceKey);
-
-			if (segmentsExperience != null) {
-				return segmentsExperience.getSegmentsExperienceId();
-			}
-		}
-
-		return -1;
+		return getSelectedSegmentsExperienceId();
 	}
 
 	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {
 		if (_segmentsExperiment != null) {
 			return _segmentsExperiment;
-		}
-
-		long requestSegmentsExperienceId = _getRequestSegmentsExperienceId();
-
-		if (requestSegmentsExperienceId != -1) {
-			_segmentsExperiment = _getActiveSegmentsExperimentOptional(
-				getSelectedSegmentsExperienceId()
-			).orElse(
-				null
-			);
-
-			return _segmentsExperiment;
-		}
-
-		String requestSegmentsExperimentKey =
-			_getRequestSegmentsExperimentKey();
-
-		if (Validator.isNotNull(requestSegmentsExperimentKey)) {
-			SegmentsExperiment segmentsExperiment =
-				_segmentsExperimentService.fetchSegmentsExperiment(
-					_themeDisplay.getScopeGroupId(),
-					requestSegmentsExperimentKey);
-
-			if (segmentsExperiment != null) {
-				_segmentsExperiment = segmentsExperiment;
-
-				return _segmentsExperiment;
-			}
 		}
 
 		_segmentsExperiment = _getActiveSegmentsExperimentOptional(

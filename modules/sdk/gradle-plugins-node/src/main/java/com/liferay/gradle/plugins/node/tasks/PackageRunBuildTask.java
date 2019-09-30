@@ -14,6 +14,10 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+
+import java.io.File;
+
 /**
  * @author Peter Shin
  */
@@ -22,5 +26,33 @@ public class PackageRunBuildTask extends PackageRunTask {
 	public PackageRunBuildTask() {
 		setScriptName("build");
 	}
+
+	public File getDestinationDir() {
+		return GradleUtil.toFile(getProject(), _destinationDir);
+	}
+
+	public File getSourceDir() {
+		return GradleUtil.toFile(getProject(), _sourceDir);
+	}
+
+	public File getYarnWorkingDir() {
+		return GradleUtil.toFile(getProject(), _yarnWorkingDir);
+	}
+
+	public void setDestinationDir(Object destinationDir) {
+		_destinationDir = destinationDir;
+	}
+
+	public void setSourceDir(Object sourceDir) {
+		_sourceDir = sourceDir;
+	}
+
+	public void setYarnWorkingDir(Object yarnWorkingDir) {
+		_yarnWorkingDir = yarnWorkingDir;
+	}
+
+	private Object _destinationDir;
+	private Object _sourceDir;
+	private Object _yarnWorkingDir;
 
 }

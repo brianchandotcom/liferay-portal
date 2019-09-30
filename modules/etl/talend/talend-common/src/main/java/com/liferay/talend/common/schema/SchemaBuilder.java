@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.avro;
+package com.liferay.talend.common.schema;
 
 import com.liferay.talend.common.avro.constants.AvroConstants;
 import com.liferay.talend.common.json.JsonFinder;
@@ -20,7 +20,6 @@ import com.liferay.talend.common.oas.OASFormat;
 import com.liferay.talend.common.oas.OASType;
 import com.liferay.talend.common.oas.constants.OASConstants;
 import com.liferay.talend.common.util.StringUtil;
-import com.liferay.talend.tliferayoutput.Action;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,10 +49,9 @@ import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.exception.TalendRuntimeException;
 
 /**
- * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class EndpointSchemaInferrer {
+public class SchemaBuilder {
 
 	public String extractEndpointSchemaName(
 		String endpoint, String operation, JsonObject oasJsonObject) {
@@ -117,7 +115,7 @@ public class EndpointSchemaInferrer {
 
 		Schema schema = SchemaProperties.EMPTY_SCHEMA;
 
-		if (operation.equals(Action.Delete.getMethodName())) {
+		if (operation.equals(OASConstants.OPERATION_DELETE)) {
 			schema = _getDeleteSchema();
 		}
 		else {
@@ -379,7 +377,7 @@ public class EndpointSchemaInferrer {
 		"di.table.comment";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		EndpointSchemaInferrer.class);
+		SchemaBuilder.class);
 
 	private static final JsonFinder _jsonFinder = new JsonFinder();
 

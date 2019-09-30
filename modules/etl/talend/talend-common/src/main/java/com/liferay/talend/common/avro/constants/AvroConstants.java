@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.avro.constants;
+package com.liferay.talend.common.avro.constants;
 
 /**
  * @author Zoltán Takács

@@ -737,9 +737,9 @@ definition {
 
 		if ("${testRunEnvironment}" == "EE") {
 			ProductMenu.gotoPortlet(
-				category = "Configuration",
+				category = "Workflow",
 				panel = "Control Panel",
-				portlet = "Workflow");
+				portlet = "Process Builder");
 
 			Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Draft");
 

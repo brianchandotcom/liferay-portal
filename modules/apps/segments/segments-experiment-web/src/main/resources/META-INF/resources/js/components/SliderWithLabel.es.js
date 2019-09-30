@@ -21,8 +21,8 @@ function SliderWithLabel({
 	subTitle,
 	value,
 	onValueChange,
-	max = 100,
-	min = 0
+	max = 99,
+	min = 1
 }) {
 	return (
 		<label className="form-group-autofit">

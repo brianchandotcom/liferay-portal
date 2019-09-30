@@ -282,9 +282,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		_refreshJSModuleCaches(tracked.values());
 
-		_applyVersioning = null;
+		Details details = ConfigurableUtil.createConfigurable(
+			Details.class, properties);
 
-		modified(bundleContext, properties);
+		_applyVersioning = details.applyVersioning();
+
+		_serviceTracker = _openServiceTracker();
 	}
 
 	@Deactivate

@@ -75,7 +75,6 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 		taskContextMap.put("ctCollectionId", ctCollectionId);
 		taskContextMap.put("ctProcessId", ctProcessId);
-		taskContextMap.put("ignoreCollision", ignoreCollision);
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.addBackgroundTask(

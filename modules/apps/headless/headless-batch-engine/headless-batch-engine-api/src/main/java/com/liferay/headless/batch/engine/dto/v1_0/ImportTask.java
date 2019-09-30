@@ -27,6 +27,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -147,19 +151,18 @@ public class ImportTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String className;
 
-	@DecimalMin("0")
 	@Schema(description = "The end time of import task operation.")
-	public Long getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Long endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
 	@JsonIgnore
 	public void setEndTime(
-		UnsafeSupplier<Long, Exception> endTimeUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> endTimeUnsafeSupplier) {
 
 		try {
 			endTime = endTimeUnsafeSupplier.get();
@@ -174,7 +177,7 @@ public class ImportTask {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long endTime;
+	protected Date endTime;
 
 	@Schema(
 		description = "The error message in case of import task's failed execution."
@@ -307,19 +310,18 @@ public class ImportTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Operation operation;
 
-	@DecimalMin("0")
 	@Schema(description = "The start time of import task operation.")
-	public Long getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Long startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
 	@JsonIgnore
 	public void setStartTime(
-		UnsafeSupplier<Long, Exception> startTimeUnsafeSupplier) {
+		UnsafeSupplier<Date, Exception> startTimeUnsafeSupplier) {
 
 		try {
 			startTime = startTimeUnsafeSupplier.get();
@@ -334,7 +336,7 @@ public class ImportTask {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long startTime;
+	protected Date startTime;
 
 	@Schema(description = "The version of item class.")
 	public String getVersion() {
@@ -391,6 +393,9 @@ public class ImportTask {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
 		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -412,7 +417,11 @@ public class ImportTask {
 
 			sb.append("\"endTime\": ");
 
-			sb.append(endTime);
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(endTime));
+
+			sb.append("\"");
 		}
 
 		if (errorMessage != null) {
@@ -474,7 +483,11 @@ public class ImportTask {
 
 			sb.append("\"startTime\": ");
 
-			sb.append(startTime);
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(startTime));
+
+			sb.append("\"");
 		}
 
 		if (version != null) {

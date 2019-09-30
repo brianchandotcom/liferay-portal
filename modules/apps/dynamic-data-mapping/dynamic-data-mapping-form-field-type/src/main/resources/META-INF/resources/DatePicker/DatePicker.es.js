@@ -23,6 +23,7 @@ import moment from 'moment';
 import Soy from 'metal-soy';
 import templates from './DatePicker.soy.js';
 import vanillaTextMask from 'vanilla-text-mask';
+import {createAutoCorrectedDatePipe} from 'text-mask-addons';
 import {Config} from 'metal-state';
 import {EventHandler} from 'metal-events';
 
@@ -84,6 +85,23 @@ class DatePicker extends Component {
 		return dateFormat;
 	}
 
+	getDateMask() {
+		const dateFormat = this.getDateFormat();
+
+		return dateFormat
+			.split('')
+			.map((item, index) => {
+				if (item === this._dateDelimiter) {
+					return this._dateDelimiter;
+				} else if (item === '%') {
+					return dateFormat[index + 1];
+				}
+
+				return item;
+			})
+			.join('');
+	}
+
 	getInputMask() {
 		const dateFormat = this.getDateFormat();
 		const inputMaskArray = [];
@@ -117,9 +135,11 @@ class DatePicker extends Component {
 	}
 
 	isEmptyValue(string) {
-		const inputMask = this.getInputMask();
+		if (!string) {
+			return true;
+		}
 
-		return !inputMask.some((validator, index) => {
+		return !this.getInputMask().some((validator, index) => {
 			let hasValue = false;
 
 			if (typeof validator !== 'string') {
@@ -181,11 +201,14 @@ class DatePicker extends Component {
 		if (this.visible) {
 			const {base} = this.refs;
 			const {inputElement} = base.refs;
+			const dateMask = this._dateFormatValueFn().toLowerCase();
 
 			this._vanillaTextMask = vanillaTextMask({
+				guide: true,
 				inputElement,
+				keepCharPositions: true,
 				mask: this.getInputMask(),
-				placeholderChar: '_',
+				pipe: createAutoCorrectedDatePipe(dateMask),
 				showMask: true
 			});
 		} else if (this._vanillaTextMask) {
@@ -245,6 +268,7 @@ class DatePicker extends Component {
 		if (this.element.contains(event.target)) {
 			return;
 		}
+
 		this.expanded = false;
 	}
 
@@ -258,7 +282,10 @@ class DatePicker extends Component {
 	_handleFieldEdited() {
 		let value = Helpers.formatDate(this._daySelected);
 
-		if (this.isEmptyValue(this.value)) {
+		const {base} = this.refs;
+		const {inputElement} = base.refs;
+
+		if (this.isEmptyValue(inputElement.value)) {
 			value = '';
 		}
 
@@ -278,8 +305,6 @@ class DatePicker extends Component {
 			this.currentMonth = date.toDate();
 			this._daySelected = Helpers.setDateSelected(this.currentMonth);
 		}
-
-		this.value = value;
 
 		if (!value) {
 			this._daySelected = '';

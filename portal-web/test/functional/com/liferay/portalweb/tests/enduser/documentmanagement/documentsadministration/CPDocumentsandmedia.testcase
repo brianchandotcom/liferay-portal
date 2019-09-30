@@ -594,6 +594,37 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
+	@description = "This is a test for LPS-91751. It ensures that user can not preview too large file."
+	@priority = "5"
+	test PreviewTooLargeFile {
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "File Entries",
+			configurationScope = "System Scope");
+
+		Type(
+			key_fieldLabel = "Previewable Processor Maximum Size",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "1024");
+
+		SystemSettings.saveConfiguration();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description1",
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		AssertVisible(
+			key_title = "File too big to preview",
+			locator1 = "Header#H3_TITLE");
+	}
+
 	@priority = "4"
 	test RotateImageViaDMSiteAdmin {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

@@ -32,6 +32,8 @@ public class OASConstants {
 
 	public static final String OPERATION_GET = "get";
 
+	public static final String OPERATION_PATCH = "patch";
+
 	public static final String OPERATION_POST = "post";
 
 	public static final String PATH_COMPONENTS_SCHEMAS_PATTERN =

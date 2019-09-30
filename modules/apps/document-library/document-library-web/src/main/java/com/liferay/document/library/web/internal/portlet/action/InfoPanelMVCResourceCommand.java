@@ -21,9 +21,7 @@ import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,23 +51,13 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		if (ParamUtil.getBoolean(resourceRequest, "selectAll")) {
-			BulkSelection<FileEntry> fileEntryBulkSelection =
-				_fileEntryBulkSelectionFactory.create(
-					resourceRequest.getParameterMap());
-
-			BulkSelection<FileShortcut> fileShortcutBulkSelection =
-				_fileShortcutBulkSelectionFactory.create(
-					resourceRequest.getParameterMap());
-
-			BulkSelection<Folder> folderBulkSelection =
-				_folderBulkSelectionFactory.create(
+			BulkSelection<RepositoryModel> repositoryModelBulkSelection =
+				_repositoryModelBulkSelectionFactory.create(
 					resourceRequest.getParameterMap());
 
 			resourceRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_SELECT_ALL_COUNT,
-				fileEntryBulkSelection.getSize() +
-					fileShortcutBulkSelection.getSize() +
-						folderBulkSelection.getSize());
+				repositoryModelBulkSelection.getSize());
 
 			include(
 				resourceRequest, resourceResponse,
@@ -99,19 +87,9 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	private DLTrashUtil _dlTrashUtil;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.RepositoryModel)"
 	)
-	private BulkSelectionFactory<FileEntry> _fileEntryBulkSelectionFactory;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileShortcut)"
-	)
-	private BulkSelectionFactory<FileShortcut>
-		_fileShortcutBulkSelectionFactory;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFolder)"
-	)
-	private BulkSelectionFactory<Folder> _folderBulkSelectionFactory;
+	private BulkSelectionFactory<RepositoryModel>
+		_repositoryModelBulkSelectionFactory;
 
 }

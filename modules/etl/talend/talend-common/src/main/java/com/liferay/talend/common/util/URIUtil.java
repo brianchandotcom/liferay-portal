@@ -33,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Zoltán Takács
+ * @author Igor Beslic
  */
 public class URIUtil {
 
@@ -178,38 +179,22 @@ public class URIUtil {
 			return toURI(url);
 		}
 
-		URI uri = null;
+		UriBuilder uriBuilder = UriBuilder.fromUri(url);
 
 		for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
-			UriBuilder uriBuilder = UriBuilder.fromUri(url);
-
-			uri = uriBuilder.replaceQueryParam(
-				parameter.getKey(), parameter.getValue()
-			).build();
+			uriBuilder.replaceQueryParam(
+				parameter.getKey(), parameter.getValue());
 		}
 
-		return uri;
-	}
-
-	public static URI updateWithQueryParameters(
-		URI uri, Map<String, String> queryParameters) {
-
-		if ((queryParameters == null) || queryParameters.isEmpty()) {
-			return uri;
-		}
-
-		for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
-			UriBuilder uriBuilder = UriBuilder.fromUri(uri);
-
-			uri = uriBuilder.replaceQueryParam(
-				parameter.getKey(), parameter.getValue()
-			).build();
-		}
-
-		return uri;
+		return uriBuilder.build();
 	}
 
 	public static void validateOpenAPISpecURL(String openAPISpecURL) {
+		if (openAPISpecURL == null) {
+			throw new MalformedURLException(
+				"Open API spec URL must not be null");
+		}
+
 		if (!isValidOpenAPISpecURL(openAPISpecURL)) {
 			throw new MalformedURLException(
 				"Provided OpenAPI specification URL does not match pattern: " +

@@ -139,8 +139,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Unable to acquire lock, queuing background task " +
-						backgroundTaskId,
-					dle);
+						backgroundTaskId);
 			}
 		}
 		catch (Exception e) {

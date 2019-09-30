@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -287,6 +288,14 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.2.0", "3.2.1", new UpgradeDDMDataProviderInstance(_jsonFactory));
+
+		registry.register(
+			"3.2.1", "3.3.0", new UpgradeCTModel(DDMStructureTable.class),
+			new UpgradeCTModel(
+				com.liferay.dynamic.data.mapping.internal.upgrade.v3_3_0.util.
+					DDMStructureVersionTable.class),
+			new UpgradeCTModel(DDMTemplateTable.class),
+			new UpgradeCTModel(DDMTemplateVersionTable.class));
 	}
 
 	protected DDMFormDeserializer getDDMFormJSONDeserializer() {

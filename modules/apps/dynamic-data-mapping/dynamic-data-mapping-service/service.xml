@@ -333,7 +333,7 @@
 		<!-- References -->
 
 	</entity>
-	<entity local-service="true" name="DDMStructure" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMStructure" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -511,7 +511,7 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDMStructureVersion" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMStructureVersion" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -557,7 +557,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -690,7 +690,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="DDMTemplateVersion" remote-service="true">
+	<entity change-tracking-enabled="true" local-service="true" name="DDMTemplateVersion" remote-service="true">
 
 		<!-- PK fields -->
 

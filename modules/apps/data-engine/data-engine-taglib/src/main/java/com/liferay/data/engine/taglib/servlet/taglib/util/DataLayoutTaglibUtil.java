@@ -354,6 +354,10 @@ public class DataLayoutTaglibUtil {
 					fieldTypeProperties, "data.engine.field.type.description"),
 				LocaleThreadLocal.getThemeDisplayLocale())
 		).put(
+			"displayOrder",
+			MapUtil.getInteger(
+				fieldTypeProperties, "data.engine.field.type.display.order")
+		).put(
 			"group",
 			MapUtil.getString(
 				fieldTypeProperties, "data.engine.field.type.group")

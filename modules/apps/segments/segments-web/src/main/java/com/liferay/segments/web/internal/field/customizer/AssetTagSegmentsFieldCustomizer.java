@@ -46,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"segments.field.customizer.entity.name=Organization",
 		"segments.field.customizer.entity.name=User",
 		"segments.field.customizer.key=" + AssetTagSegmentsFieldCustomizer.KEY,
 		"segments.field.customizer.priority:Integer=50"

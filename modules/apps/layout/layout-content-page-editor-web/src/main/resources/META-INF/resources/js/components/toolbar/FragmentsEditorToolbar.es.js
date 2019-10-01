@@ -158,6 +158,7 @@ const ConnectedFragmentsEditorToolbar = getConnectedComponent(
 		'classPK',
 		'discardDraftRedirectURL',
 		'discardDraftURL',
+		'hasUpdatePermissions',
 		'lastSaveDate',
 		'portletNamespace',
 		'publishURL',

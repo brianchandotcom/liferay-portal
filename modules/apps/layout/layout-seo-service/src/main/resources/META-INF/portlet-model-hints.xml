@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.layout.seo.model.LayoutSEOEntry">
+	<model name="com.liferay.layout.seo.model.LayoutSEOOpenGraphEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="layoutSEOEntryId" type="long" />

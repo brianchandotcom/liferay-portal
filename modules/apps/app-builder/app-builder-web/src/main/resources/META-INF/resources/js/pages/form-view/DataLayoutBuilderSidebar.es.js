@@ -55,13 +55,19 @@ const DefaultSidebarBody = ({keywords}) => {
 		);
 	};
 
+	const fieldTypes = dataLayoutBuilder
+		.getFieldTypes()
+		.filter(({group}) => group === 'basic');
+
+	fieldTypes.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
+
 	return (
 		<>
 			<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
 
 			<Sidebar.TabContent>
 				<FieldTypeList
-					fieldTypes={dataLayoutBuilder.getFieldTypes()}
+					fieldTypes={fieldTypes}
 					keywords={keywords}
 					onDoubleClick={onDoubleClick}
 				/>

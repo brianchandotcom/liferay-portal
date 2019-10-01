@@ -14,10 +14,11 @@
 
 package com.liferay.portal.search.test.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,8 +111,8 @@ public class AssertUtils {
 	}
 
 	private static String _toString(String string) {
-		String escapedString = string.replace(
-			StringPool.QUOTE, StringPool.BACK_SLASH + StringPool.QUOTE);
+		String escapedString = StringUtil.replace(
+			string, CharPool.QUOTE, StringPool.BACK_SLASH + StringPool.QUOTE);
 
 		return StringPool.QUOTE + escapedString + StringPool.QUOTE;
 	}

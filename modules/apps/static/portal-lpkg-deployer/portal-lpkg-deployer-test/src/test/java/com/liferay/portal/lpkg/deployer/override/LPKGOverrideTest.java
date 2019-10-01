@@ -16,9 +16,9 @@ package com.liferay.portal.lpkg.deployer.override;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -133,8 +133,8 @@ public class LPKGOverrideTest {
 							if (name.endsWith(".war")) {
 								String fileName = matcher.group(1);
 
-								fileName = fileName.replace(
-									"-dxp", StringPool.BLANK);
+								fileName = StringUtil.replace(
+									fileName, "-dxp", StringPool.BLANK);
 
 								overrides.put("war.".concat(fileName), null);
 

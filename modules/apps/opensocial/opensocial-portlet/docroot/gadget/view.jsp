@@ -53,7 +53,7 @@ String userPrefsJSON = "{}";
 if (userPrefsJSONObject != null) {
 	userPrefsJSON = String.valueOf(userPrefsJSONObject);
 
-	userPrefsJSON = userPrefsJSON.replace(StringPool.BACK_SLASH, StringPool.DOUBLE_BACK_SLASH);
+	userPrefsJSON = StringUtil.replace(userPrefsJSON, CharPool.BACK_SLASH, StringPool.DOUBLE_BACK_SLASH);
 }
 %>
 

@@ -214,7 +214,7 @@ private StringBundler _getResourceHtmlId(String resource) {
 	StringBundler sb = new StringBundler(2);
 
 	sb.append("resource_");
-	sb.append(resource.replace('.', '_'));
+	sb.append(StringUtil.replace(resource, '.', '_'));
 
 	return sb;
 }

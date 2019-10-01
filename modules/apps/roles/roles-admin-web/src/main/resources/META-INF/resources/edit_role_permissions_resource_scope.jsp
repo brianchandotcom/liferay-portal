@@ -64,7 +64,7 @@ List groupNames = (List)objArray[8];
 	</span>
 
 	<%
-	String targetId = target.replace(".", "");
+	String targetId = StringUtil.replace(target, '.', '');
 	%>
 
 	<c:if test="<%= supportsFilterByGroup %>">

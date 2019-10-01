@@ -439,7 +439,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 	static {
 		String path = BuildAutoUpgradeTestEntityModelImpl.class.getName();
 
-		path = path.replace('.', '/');
+		path = StringUtil.replace(path, '.', '/');
 
 		ENTITY_PATH = path.concat(".class");
 	}

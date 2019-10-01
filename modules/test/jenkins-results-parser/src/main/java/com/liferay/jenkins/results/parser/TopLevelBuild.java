@@ -1312,10 +1312,11 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getStableJobSummaryElement() {
-		int successCount = getJobVariantsDownstreamBuildCountByResult(
-			new ArrayList<>(_stableJob.getBatchNames()), "SUCCESS");
+		List<String> stableBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
 
-		String result = getResult();
+		int successCount = getJobVariantsDownstreamBuildCountByResult(
+			stableBatchNames, "SUCCESS");
 
 		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
 
@@ -1329,14 +1330,17 @@ public abstract class TopLevelBuild extends BaseBuild {
 					String.valueOf(stableDownstreamBuilds.size()),
 					" jobs PASSED")));
 
-		if ((result != null) && !result.equals("SUCCESS")) {
+		int stableBuildCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames);
+
+		if (successCount < stableBuildCount) {
 			Dom4JUtil.addToElement(
-				detailsElement, getFailedJobSummaryElement());
+				detailsElement, getFailedStableJobSummaryElement());
 		}
 
-		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
+		if (successCount > 0) {
 			Dom4JUtil.addToElement(
-				detailsElement, getSuccessfulJobSummaryElement());
+				detailsElement, getSuccessfulStableJobSummaryElement());
 		}
 
 		return detailsElement;

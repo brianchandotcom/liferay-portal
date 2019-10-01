@@ -65,7 +65,7 @@ public abstract class BaseContentSetElementResourceImpl
 	@Override
 	@GET
 	@Operation(
-		description = "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated."
+		description = "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated. The set of available headers are: Accept-Language (string), Host (string), User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the request."
 	)
 	@Parameters(
 		value = {

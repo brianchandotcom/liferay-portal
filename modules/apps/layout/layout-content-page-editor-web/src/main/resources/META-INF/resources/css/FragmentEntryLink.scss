@@ -21,8 +21,8 @@
 		}
 
 		@include media-breakpoint-up(sm) {
-			&:hover,
-			&.focus {
+			.fragments-editor--with-update-permissions &:hover,
+			.fragments-editor--with-update-permissions &.focus {
 				> .portlet-topper {
 					opacity: 1;
 					pointer-events: all;

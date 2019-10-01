@@ -1147,6 +1147,38 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return topLevelTableElement;
 	}
 
+	protected Element getJobSummaryElement() {
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		String result = getResult();
+
+		if ((result != null) && result.equals("SUCCESS")) {
+			successCount++;
+		}
+
+		Element detailsElement = Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, getTestSuiteName(), " - ",
+					String.valueOf(successCount), " out of ",
+					String.valueOf(getDownstreamBuildCount(null) + 1),
+					" jobs PASSED")));
+
+		if ((result != null) && !result.equals("SUCCESS")) {
+			Dom4JUtil.addToElement(
+				detailsElement, getFailedJobSummaryElement());
+		}
+
+		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
+			Dom4JUtil.addToElement(
+				detailsElement, getSuccessfulJobSummaryElement());
+		}
+
+		return detailsElement;
+	}
+
 	protected Element getJobSummaryListElement() {
 		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
 
@@ -1250,6 +1282,37 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 
 		return new ArrayList();
+	}
+
+	protected Element getStableJobSummaryElement() {
+		int successCount = getJobVariantsDownstreamBuildCountByResult(
+			new ArrayList<>(_stableJob.getBatchNames()), "SUCCESS");
+
+		String result = getResult();
+
+		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
+
+		Element detailsElement = Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, "ci:test:stable - ",
+					String.valueOf(successCount), " out of ",
+					String.valueOf(stableDownstreamBuilds.size()),
+					" jobs PASSED")));
+
+		if ((result != null) && !result.equals("SUCCESS")) {
+			Dom4JUtil.addToElement(
+				detailsElement, getFailedJobSummaryElement());
+		}
+
+		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
+			Dom4JUtil.addToElement(
+				detailsElement, getSuccessfulJobSummaryElement());
+		}
+
+		return detailsElement;
 	}
 
 	protected Element getStableResultElement() {
@@ -1387,8 +1450,19 @@ public abstract class TopLevelBuild extends BaseBuild {
 	protected Element getTopGitHubMessageElement() {
 		update();
 
-		Element rootElement = Dom4JUtil.getNewElement(
-			"html", null, getResultElement());
+		Element rootElement = Dom4JUtil.getNewElement("html");
+
+		List<Build> stableDownstreamBuilds = new ArrayList<>();
+
+		if (_stableJob != null) {
+			stableDownstreamBuilds.addAll(getStableDownstreamBuilds());
+		}
+
+		if (!stableDownstreamBuilds.isEmpty()) {
+			rootElement.add(getStableResultElement());
+		}
+
+		rootElement.add(getResultElement());
 
 		Element detailsElement = Dom4JUtil.getNewElement(
 			"details", rootElement,
@@ -1418,30 +1492,15 @@ public abstract class TopLevelBuild extends BaseBuild {
 			}
 		}
 
-		int successCount = getDownstreamBuildCountByResult("SUCCESS");
-
-		String result = getResult();
-
-		if ((result != null) && result.equals("SUCCESS")) {
-			successCount++;
+		if (!stableDownstreamBuilds.isEmpty()) {
+			Dom4JUtil.addToElement(
+				detailsElement, getStableJobSummaryElement());
 		}
 
 		Dom4JUtil.addToElement(
-			detailsElement, String.valueOf(successCount), " out of ",
-			String.valueOf(getDownstreamBuildCountByResult(null) + 1),
-			" jobs PASSED");
+			detailsElement, getJobSummaryElement(), getMoreDetailsElement());
 
-		if ((result != null) && !result.equals("SUCCESS")) {
-			Dom4JUtil.addToElement(
-				detailsElement, getFailedJobSummaryElement());
-		}
-
-		if (getDownstreamBuildCountByResult("SUCCESS") > 0) {
-			Dom4JUtil.addToElement(
-				detailsElement, getSuccessfulJobSummaryElement());
-		}
-
-		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());
+		String result = getResult();
 
 		if ((result != null) && !result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(

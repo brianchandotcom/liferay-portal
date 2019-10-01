@@ -27,7 +27,7 @@ LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId,
 
 //// The list of locales available for the site
 
-// Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(liveGroupId);
+Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(liveGroupId);
 
 //// Conversions to/from Local/languageId
 
@@ -35,10 +35,16 @@ LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId,
 // Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 TreeMap<String, String> publicVirtualHosts = publicLayoutSet.getVirtualHostnames();
-String publicVirtualHostsString = publicVirtualHosts.entrySet().stream().map(entry -> entry.getKey() + (Validator.isNotNull(entry.getValue()) ? ";" + entry.getValue() : "")).collect(Collectors.joining(","));
+
+if (publicVirtualHosts.size() == 0) {
+	publicVirtualHosts.put(StringPool.BLANK, StringPool.BLANK);
+}
 
 TreeMap<String, String> privateVirtualHosts = privateLayoutSet.getVirtualHostnames();
-String privateVirtualHostsString = privateVirtualHosts.entrySet().stream().map(entry -> entry.getKey() + (Validator.isNotNull(entry.getValue()) ? ";" + entry.getValue() : "")).collect(Collectors.joining(","));
+
+if (privateVirtualHosts.size() == 0) {
+	privateVirtualHosts.put(StringPool.BLANK, StringPool.BLANK);
+}
 %>
 
 <liferay-ui:error-marker
@@ -139,15 +145,73 @@ String privateVirtualHostsString = privateVirtualHosts.entrySet().stream().map(e
 		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
 	</p>
 
-	<aui:input label="public-pages" maxlength="200" name="publicVirtualHost" placeholder="public-pages" type="text" value="<%= publicVirtualHostsString %>" />
+	<div id="<portlet:namespace />publicVirtualHostFields">
+		<%
+		Set publicVirtualHostsSet = publicVirtualHosts.entrySet();
 
-	<aui:input label="private-pages" maxlength="200" name="privateVirtualHost" placeholder="private-pages" type="text" value="<%= privateVirtualHostsString %>">
-		<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
-			function(val, fieldNode, ruleValue) {
-				return (val != A.one('#<portlet:namespace />publicVirtualHost').val());
-			}
-		</aui:validator>
-	</aui:input>
+		for (Map.Entry<String, String> entry : publicVirtualHosts.entrySet()) {
+			String hostName = entry.getKey();
+
+			String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
+		%>
+				<div class="container-fluid lfr-form-row">
+					<div class="row">
+						<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "publicVirtualHostName[]" %>' placeholder="public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "publicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+							<aui:option label="default-language" value="" />
+
+						<%
+						for (Locale localeEntry : availableLocales) {
+							String languageId = LocaleUtil.toLanguageId(localeEntry);
+						%>
+
+							<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+
+						<%
+						}
+						%>
+						</aui:select>
+					</div>
+				</div>
+		<%
+		}
+		%>
+	</div>
+
+	<div id="<portlet:namespace />privateVirtualHostFields">
+		<%
+		Set privateVirtualHostsSet = privateVirtualHosts.entrySet();
+
+		for (Map.Entry<String, String> entry : privateVirtualHosts.entrySet()) {
+			String hostName = entry.getKey();
+
+			String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
+		%>
+				<div class="container-fluid lfr-form-row">
+					<div class="row">
+						<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "privateVirtualHostName[]" %>' placeholder="private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "privateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+							<aui:option label="default-language" value="" />
+
+						<%
+						for (Locale localeEntry : availableLocales) {
+							String languageId = LocaleUtil.toLanguageId(localeEntry);
+						%>
+
+							<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+
+						<%
+						}
+						%>
+						</aui:select>
+					</div>
+				</div>
+		<%
+		}
+		%>
+	</div>
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
 
@@ -155,27 +219,124 @@ String privateVirtualHostsString = privateVirtualHosts.entrySet().stream().map(e
 		LayoutSet stagingPublicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(stagingGroupId, false);
 
 		TreeMap<String, String> stagingPublicVirtualHosts = stagingPublicLayoutSet.getVirtualHostnames();
-		String stagingPublicVirtualHostsString = stagingPublicVirtualHosts.entrySet().stream().map(entry -> entry.getKey() + (Validator.isNotNull(entry.getValue()) ? ";" + entry.getValue() : "")).collect(Collectors.joining(","));
+
+		if (stagingPublicVirtualHosts.size() == 0) {
+			stagingPublicVirtualHosts.put(StringPool.BLANK, StringPool.BLANK);
+		}
 		%>
 
-		<aui:input label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHost" type="text" value="<%= stagingPublicVirtualHostsString %>" />
+		<div id="<portlet:namespace />stagingPublicVirtualHostFields">
+			<%
+			Set stagingPublicVirtualHostsSet = stagingPublicVirtualHosts.entrySet();
+
+			for (Map.Entry<String, String> entry : stagingPublicVirtualHosts.entrySet()) {
+				String hostName = entry.getKey();
+
+				String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
+			%>
+					<div class="container-fluid lfr-form-row">
+						<div class="row">
+							<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostName[]" %>' placeholder="staging-public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+							<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+								<aui:option label="default-language" value="" />
+
+							<%
+							for (Locale localeEntry : availableLocales) {
+								String languageId = LocaleUtil.toLanguageId(localeEntry);
+							%>
+
+								<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+
+							<%
+							}
+							%>
+							</aui:select>
+						</div>
+					</div>
+			<%
+			}
+			%>
+		</div>
 
 		<%
 		LayoutSet stagingPrivateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(stagingGroupId, true);
 
 		TreeMap<String, String> stagingPrivateVirtualHosts = stagingPrivateLayoutSet.getVirtualHostnames();
-		String stagingPrivateVirtualHostsString = stagingPrivateVirtualHosts.entrySet().stream().map(entry -> entry.getKey() + (Validator.isNotNull(entry.getValue()) ? ";" + entry.getValue() : "")).collect(Collectors.joining(","));
+
+		if (stagingPrivateVirtualHosts.size() == 0) {
+			stagingPrivateVirtualHosts.put(StringPool.BLANK, StringPool.BLANK);
+		}
 		%>
 
-		<aui:input label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHost" type="text" value="<%= stagingPrivateVirtualHostsString %>">
-			<aui:validator errorMessage="please-enter-a-unique-virtual-host" name="custom">
-				function(val, fieldNode, ruleValue) {
-					return (val != A.one('#<portlet:namespace />stagingPublicVirtualHost').val());
-				}
-			</aui:validator>
-		</aui:input>
+		<div id="<portlet:namespace />stagingPrivateVirtualHostFields">
+			<%
+			Set stagingPrivateVirtualHostsSet = stagingPrivateVirtualHosts.entrySet();
+
+			for (Map.Entry<String, String> entry : stagingPrivateVirtualHosts.entrySet()) {
+				String hostName = entry.getKey();
+
+				String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
+			%>
+					<div class="container-fluid lfr-form-row">
+						<div class="row">
+							<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostName[]" %>' placeholder="staging-private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+							<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+								<aui:option label="default-language" value="" />
+
+							<%
+							for (Locale localeEntry : availableLocales) {
+								String languageId = LocaleUtil.toLanguageId(localeEntry);
+							%>
+
+								<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+
+							<%
+							}
+							%>
+							</aui:select>
+						</div>
+					</div>
+			<%
+			}
+			%>
+		</div>
+
 	</c:if>
 </aui:fieldset>
+
+<aui:script use="liferay-auto-fields">
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />publicVirtualHostFields',
+			namespace: '<portlet:namespace />'
+		}
+	).render();
+
+	new Liferay.AutoFields(
+		{
+			contentBox: '#<portlet:namespace />privateVirtualHostFields',
+			namespace: '<portlet:namespace />'
+		}
+	).render();
+
+	<c:if test="<%= liveGroup.hasStagingGroup() %>">
+		new Liferay.AutoFields(
+			{
+				contentBox: '#<portlet:namespace />stagingPublicVirtualHostFields',
+				namespace: '<portlet:namespace />'
+			}
+		).render();
+
+		new Liferay.AutoFields(
+			{
+				contentBox: '#<portlet:namespace />stagingPrivateVirtualHostFields',
+				namespace: '<portlet:namespace />'
+			}
+		).render();
+	</c:if>
+</aui:script>
 
 <script>
 	var friendlyURL = document.getElementById('<portlet:namespace />groupFriendlyURL');

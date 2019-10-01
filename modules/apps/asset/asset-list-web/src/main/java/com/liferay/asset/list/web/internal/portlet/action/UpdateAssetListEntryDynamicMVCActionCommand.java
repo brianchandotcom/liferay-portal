@@ -116,6 +116,10 @@ public class UpdateAssetListEntryDynamicMVCActionCommand
 			values = ParamUtil.getStringValues(
 				actionRequest, "queryTagNames" + index);
 		}
+		else if (name.equals("keywords")) {
+			values = ParamUtil.getStringValues(
+				actionRequest, "keywords" + index);
+		}
 		else {
 			values = ParamUtil.getStringValues(
 				actionRequest, "queryCategoryIds" + index);

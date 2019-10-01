@@ -137,6 +137,7 @@
 					>
 						<option class="" {if $rule.type == 'assetCategories'}selected="selected"{/if} value="assetCategories">{msg desc=""}categories{/msg}</option>
 						<option class="" {if $rule.type == 'assetTags'}selected="selected"{/if} value="assetTags">{msg desc=""}tags{/msg}</option>
+						<option class="" {if $rule.type == 'keywords'}selected="selected"{/if} value="keywords">{msg desc=""}keywords{/msg}</option>
 					</select>
 				</div>
 
@@ -152,6 +153,19 @@
 						{param selectedItems: $rule.selectedItems ?: [] /}
 						{param vocabularyIds: $vocabularyIds /}
 					{/call}
+				{elseif $rule.type == 'keywords'}
+					<div class="form-group">
+						<label for="{$namespace + 'keywords' + $index}">{msg desc=""}keywords{/msg}</label>
+
+						<input
+							type="text"
+							class="form-control asset-query-keywords"
+							data-item-index="{$index}"
+							id="{$namespace + 'keywords' + $index}"
+							name="{$namespace + 'keywords' + $index}"
+							value="{$rule.queryValues ?: ''}"
+						/>
+					</div>
 				{else}
 					{call com.liferay.asset.taglib.AssetTagsSelector.render}
 						{param eventName: $namespace + 'selectTag' /}

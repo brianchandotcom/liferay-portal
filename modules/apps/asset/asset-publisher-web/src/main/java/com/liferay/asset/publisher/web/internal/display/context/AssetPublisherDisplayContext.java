@@ -246,6 +246,33 @@ public class AssetPublisherDisplayContext {
 		return _allAssetTagNames;
 	}
 
+	public String[] getAllKeywords() {
+		if (_allKeywords != null) {
+			return _allKeywords;
+		}
+
+		_allKeywords = new String[0];
+
+		String keyword = ParamUtil.getString(_httpServletRequest, "keyword");
+
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("dynamic")) {
+			_allKeywords = _assetPublisherHelper.getKeywords(
+				_portletPreferences);
+		}
+
+		if (Validator.isNotNull(keyword) &&
+			!ArrayUtil.contains(_allKeywords, keyword)) {
+
+			_allKeywords = ArrayUtil.append(_allKeywords, keyword);
+		}
+
+		_allKeywords = ArrayUtil.distinct(_allKeywords, new StringComparator());
+
+		return _allKeywords;
+	}
+
 	public long getAssetCategoryId() {
 		if (_assetCategoryId != null) {
 			return _assetCategoryId;
@@ -335,7 +362,7 @@ public class AssetPublisherDisplayContext {
 			_assetEntryQuery = _assetPublisherHelper.getAssetEntryQuery(
 				_portletPreferences, _themeDisplay.getScopeGroupId(),
 				_themeDisplay.getLayout(), getAllAssetCategoryIds(),
-				getAllAssetTagNames());
+				getAllKeywords(), getAllAssetTagNames());
 		}
 
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
@@ -543,6 +570,30 @@ public class AssetPublisherDisplayContext {
 					item.put("value", tagName);
 
 					selectedItems.add(item);
+				}
+
+				ruleJSONObject.put("selectedItems", selectedItems);
+			}
+			else if (Objects.equals(queryName, "keywords")) {
+				queryValues = ParamUtil.getString(
+					_httpServletRequest, "keywords" + queryLogicIndex,
+					queryValues);
+
+				String[] keywords = StringUtil.split(queryValues, " ");
+
+				if (ArrayUtil.isEmpty(keywords)) {
+					continue;
+				}
+
+				List<HashMap<String, String>> selectedItems = new ArrayList<>();
+
+				for (String keyword : keywords) {
+					HashMap<String, String> selectedCategory = new HashMap<>();
+
+					selectedCategory.put("label", keyword);
+					selectedCategory.put("value", keyword);
+
+					selectedItems.add(selectedCategory);
 				}
 
 				ruleJSONObject.put("selectedItems", selectedItems);
@@ -1891,6 +1942,7 @@ public class AssetPublisherDisplayContext {
 	private Integer _abstractLength;
 	private long[] _allAssetCategoryIds;
 	private String[] _allAssetTagNames;
+	private String[] _allKeywords;
 	private Boolean _anyAssetType;
 	private Long _assetCategoryId;
 	private final AssetEntryActionRegistry _assetEntryActionRegistry;

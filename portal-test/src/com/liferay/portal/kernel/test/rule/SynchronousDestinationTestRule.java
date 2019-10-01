@@ -34,9 +34,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -134,6 +131,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.BACKGROUND_TASK);
 			Filter backgroundTaskStatusFilter = _registerDestinationFilter(
 				DestinationNames.BACKGROUND_TASK_STATUS);
+			Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
+				"liferay/kaleo_graph_walker");
 			Filter mailFilter = _registerDestinationFilter(
 				DestinationNames.MAIL);
 			Filter pdfProcessorFilter = _registerDestinationFilter(
@@ -145,19 +144,8 @@ public class SynchronousDestinationTestRule
 
 			serviceDependencyManager.registerDependencies(
 				asyncFilter, backgroundTaskFilter, backgroundTaskStatusFilter,
-				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
-				subscrpitionSenderFilter);
-
-			boolean schedulerEnabled = GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.SCHEDULER_ENABLED));
-
-			if (schedulerEnabled) {
-				Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
-					"liferay/kaleo_graph_walker");
-
-				serviceDependencyManager.registerDependencies(
-					kaleoGraphWalkerFilter);
-			}
+				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
+				rawMetaDataProcessorFilter, subscrpitionSenderFilter);
 
 			serviceDependencyManager.waitForDependencies();
 
@@ -179,6 +167,7 @@ public class SynchronousDestinationTestRule
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 			replaceDestination("liferay/adaptive_media_processor");
 			replaceDestination("liferay/asset_auto_tagger");
+			replaceDestination("liferay/kaleo_graph_walker");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 
@@ -186,10 +175,6 @@ public class SynchronousDestinationTestRule
 				for (String name : _sync.destinationNames()) {
 					replaceDestination(name);
 				}
-			}
-
-			if (schedulerEnabled) {
-				replaceDestination("liferay/kaleo_graph_walker");
 			}
 
 			for (String searchEngineId :

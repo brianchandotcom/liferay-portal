@@ -235,6 +235,7 @@
 		<check name="JavaServiceObjectCheck" />
 		<check name="JavaServiceTrackerFactoryCheck" />
 		<check name="JavaServiceUtilCheck" />
+		<check name="JavaStagedModelDataHandlerCheck" />
 		<check name="JavaStringBundlerConcatCheck" />
 		<check name="JavaStringBundlerInitialCapacityCheck" />
 		<check name="JavaSwitchCheck" />

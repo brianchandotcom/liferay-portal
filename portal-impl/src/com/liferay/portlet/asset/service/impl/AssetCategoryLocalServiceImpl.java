@@ -318,8 +318,8 @@ public class AssetCategoryLocalServiceImpl
 	public AssetCategory fetchCategory(
 		long groupId, long parentCategoryId, String name, long vocabularyId) {
 
-		return assetCategoryPersistence.fetchByG_P_N_V_First(
-			groupId, parentCategoryId, name, vocabularyId, null);
+		return assetCategoryPersistence.fetchByP_N_V(
+			parentCategoryId, name, vocabularyId);
 	}
 
 	@Override

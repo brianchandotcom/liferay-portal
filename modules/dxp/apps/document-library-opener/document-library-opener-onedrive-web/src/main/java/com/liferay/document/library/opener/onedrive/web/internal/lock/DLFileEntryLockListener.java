@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.BaseLockListener;
 import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;

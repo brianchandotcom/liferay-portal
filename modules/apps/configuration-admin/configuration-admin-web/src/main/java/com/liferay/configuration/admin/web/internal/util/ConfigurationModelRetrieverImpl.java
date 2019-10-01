@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -106,6 +108,19 @@ public class ConfigurationModelRetrieverImpl
 
 				return getConfiguration(
 					pid, ExtendedObjectClassDefinition.Scope.SYSTEM, null);
+			}
+			else if (scope.equals(ExtendedObjectClassDefinition.Scope.GROUP)) {
+				long companyId = 0;
+
+				Group group = _groupLocalService.fetchGroup((Long)scopePK);
+
+				if (group != null) {
+					companyId = group.getCompanyId();
+				}
+
+				return getConfiguration(
+					pid, ExtendedObjectClassDefinition.Scope.COMPANY,
+					companyId);
 			}
 		}
 		catch (InvalidSyntaxException | IOException e) {
@@ -409,6 +424,9 @@ public class ConfigurationModelRetrieverImpl
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private static class ConfigurationModelComparator
 		implements Comparator<ConfigurationModel> {

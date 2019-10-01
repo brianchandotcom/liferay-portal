@@ -55,7 +55,6 @@
 />
 
 <liferay-ui:search-container-column-user
-	cssClass="user-info-with-details"
 	date="<%= thread.getLastPostDate() %>"
 	name="last-post"
 	property="lastPostByUserId"

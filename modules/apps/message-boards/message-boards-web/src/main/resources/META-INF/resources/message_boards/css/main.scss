@@ -324,22 +324,6 @@
 		color: #999;
 		float: right;
 	}
-
-	.user-info-with-details .user-info {
-		display: flex;
-
-		.user-details {
-			.user-name {
-				color: $dark;
-				font-weight: 600;
-			}
-
-			.date-info {
-				color: $secondary;
-				font-size: 0.875rem;
-			}
-		}
-	}
 }
 
 .trash-restore-popup {

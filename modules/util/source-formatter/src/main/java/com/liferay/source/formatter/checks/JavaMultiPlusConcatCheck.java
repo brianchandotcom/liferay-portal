@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -119,7 +117,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 
 				if (absolutePath.contains("/modules/") &&
 					!absolutePath.contains("/modules/apps/") &&
-					!_hasKernelOrPetraStringDependency(fileName)) {
+					!_hasKernelOrPetraStringDependency(absolutePath)) {
 
 					return;
 				}
@@ -237,37 +235,21 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private boolean _hasKernelOrPetraStringDependency(String fileName)
+	private boolean _hasKernelOrPetraStringDependency(String absolutePath)
 		throws IOException {
 
-		int x = fileName.length();
+		String buildGradleContent = getBuildGradleContent(absolutePath);
 
-		while (true) {
-			x = fileName.lastIndexOf("/", x - 1);
+		if ((buildGradleContent != null) &&
+			(buildGradleContent.contains(
+				"name: \"com.liferay.petra.string\"") ||
+			 buildGradleContent.contains(
+				 "name: \"com.liferay.portal.kernel\""))) {
 
-			if (x == -1) {
-				return false;
-			}
-
-			String buildGradleFileName =
-				fileName.substring(0, x + 1) + "build.gradle";
-
-			File file = new File(buildGradleFileName);
-
-			if (!file.exists()) {
-				continue;
-			}
-
-			String content = FileUtil.read(file);
-
-			if (content.contains("name: \"com.liferay.petra.string\"") ||
-				content.contains("name: \"com.liferay.portal.kernel\"")) {
-
-				return true;
-			}
-
-			return false;
+			return true;
 		}
+
+		return false;
 	}
 
 	private boolean _isInsideAnnotation(String content, int x) {

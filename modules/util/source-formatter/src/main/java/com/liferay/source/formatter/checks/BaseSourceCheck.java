@@ -245,6 +245,29 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 	}
 
+	protected String getBuildGradleContent(String absolutePath)
+		throws IOException {
+
+		int x = absolutePath.length();
+
+		while (true) {
+			x = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String buildGradleFileName =
+				absolutePath.substring(0, x + 1) + "build.gradle";
+
+			File file = new File(buildGradleFileName);
+
+			if (file.exists()) {
+				return FileUtil.read(file);
+			}
+		}
+	}
+
 	protected String getContent(String fileName, int level) throws IOException {
 		File file = getFile(fileName, level);
 

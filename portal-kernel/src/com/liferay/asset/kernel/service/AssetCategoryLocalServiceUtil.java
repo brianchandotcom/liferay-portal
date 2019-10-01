@@ -700,10 +700,6 @@ public class AssetCategoryLocalServiceUtil {
 			categoryId, parentCategoryId, vocabularyId, serviceContext);
 	}
 
-	public static void rebuildTree(long groupId, boolean force) {
-		getService().rebuildTree(groupId, force);
-	}
-
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory>
 		search(
 			long groupId, String name, String[] categoryProperties, int start,

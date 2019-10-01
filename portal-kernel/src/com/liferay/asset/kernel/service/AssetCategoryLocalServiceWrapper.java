@@ -783,11 +783,6 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public void rebuildTree(long groupId, boolean force) {
-		_assetCategoryLocalService.rebuildTree(groupId, force);
-	}
-
-	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> search(
 		long groupId, String name, String[] categoryProperties, int start,
 		int end) {

@@ -21,6 +21,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationCategor
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -69,7 +70,7 @@ public class ViewConfigurationScreenMVCRenderCommand
 				configurationScreenKey);
 
 		ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-			new ConfigurationScopeDisplayContext(renderRequest);
+			ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(

@@ -109,7 +109,7 @@ renderResponse.setTitle(categoryDisplayName);
 					String configurationTitle = null;
 
 					ConfigurationScopeDisplayContext
-						configurationScopeDisplayContext = new ConfigurationScopeDisplayContext(renderRequest);
+						configurationScopeDisplayContext = ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 					if (configurationModel.isFactory() && !configurationModel.isCompanyFactory()) {
 						if (configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope())) {

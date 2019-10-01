@@ -48,9 +48,9 @@ import org.talend.components.api.exception.ComponentException;
  * @author Zoltán Takács
  * @author Igor Beslic
  */
-public class LiferayInputReader extends AbstractBoundedReader<IndexedRecord> {
+public class LiferayReader extends AbstractBoundedReader<IndexedRecord> {
 
-	public LiferayInputReader(
+	public LiferayReader(
 		RuntimeContainer runtimeContainer, LiferaySource liferaySource,
 		TLiferayInputProperties tLiferayInputProperties) {
 
@@ -230,7 +230,7 @@ public class LiferayInputReader extends AbstractBoundedReader<IndexedRecord> {
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		LiferayInputReader.class);
+		LiferayReader.class);
 
 	private transient int _currentItemIndex;
 	private int _currentPage;

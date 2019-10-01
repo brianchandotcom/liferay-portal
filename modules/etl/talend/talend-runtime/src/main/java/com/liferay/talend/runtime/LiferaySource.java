@@ -14,7 +14,7 @@
 
 package com.liferay.talend.runtime;
 
-import com.liferay.talend.runtime.reader.LiferayInputReader;
+import com.liferay.talend.runtime.reader.LiferayReader;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class LiferaySource
 				"Creating reader for fetching data from the datastore");
 		}
 
-		return new LiferayInputReader(
+		return new LiferayReader(
 			runtimeContainer, this, _tLiferayInputProperties);
 	}
 

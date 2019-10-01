@@ -867,15 +867,6 @@ public class WorkflowTaskDisplayContext {
 				PortletKeys.MY_WORKFLOW_TASK, "order-by-col",
 				"last-activity-date");
 		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(
-				_httpServletRequest, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portalPreferences.setValue(
-					PortletKeys.MY_WORKFLOW_TASK, "order-by-col", _orderByCol);
-			}
-		}
 
 		return _orderByCol;
 	}

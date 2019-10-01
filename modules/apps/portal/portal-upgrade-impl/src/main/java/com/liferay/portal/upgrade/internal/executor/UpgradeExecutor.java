@@ -99,7 +99,7 @@ public class UpgradeExecutor {
 
 		UpgradeInfosRunnable upgradeInfosRunnable = new UpgradeInfosRunnable(
 			bundleSymbolicName, upgradeInfos,
-			() -> _swappedLogExecutor.getOutputStream());
+			_swappedLogExecutor::getOutputStream);
 
 		_swappedLogExecutor.execute(
 			bundleSymbolicName, upgradeInfosRunnable,

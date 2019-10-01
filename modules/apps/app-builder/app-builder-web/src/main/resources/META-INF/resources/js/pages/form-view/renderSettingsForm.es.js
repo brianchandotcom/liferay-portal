@@ -17,7 +17,14 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 
 const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
-const UNIMPLIMENTED_PROPERTIES = ['indexType', 'validation'];
+const UNIMPLIMENTED_PROPERTIES = [
+	'fieldNamespace',
+	'indexType',
+	'readOnly',
+	'type',
+	'validation',
+	'visibilityExpression'
+];
 
 export const getFilteredSettingsContext = settingsContext => {
 	const visitor = new PagesVisitor(settingsContext.pages);
@@ -29,9 +36,9 @@ export const getFilteredSettingsContext = settingsContext => {
 				...column,
 				fields: column.fields
 					.filter(
-					({fieldName}) =>
-						UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
-				)
+						({fieldName}) =>
+							UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
+					)
 					.map(field => ({
 						...field,
 						defaultLanguageId: themeDisplay.getLanguageId(),

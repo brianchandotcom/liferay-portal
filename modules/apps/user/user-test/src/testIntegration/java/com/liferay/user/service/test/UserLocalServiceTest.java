@@ -16,6 +16,7 @@ package com.liferay.user.service.test;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -23,19 +24,26 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -278,6 +286,48 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(
 			userGroupUsers.toString(), delta, userGroupUsers.size());
 		Assert.assertTrue(_users.containsAll(userGroupUsers));
+	}
+
+	@Test
+	public void testUpdateUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		TransactionConfig transactionConfig = TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+		// Update user twice in same transaction (with email address change)
+
+		try {
+			TransactionInvokerUtil.invoke(
+				transactionConfig,
+				() -> {
+					_userLocalService.updateUser(user);
+
+					ServiceContext serviceContext =
+						ServiceContextTestUtil.getServiceContext(
+							user.getGroupId(), user.getUserId());
+
+					return _userLocalService.updateUser(
+						user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, false, StringPool.BLANK,
+						StringPool.BLANK,
+						"TestUser" + RandomTestUtil.nextLong(),
+						"UserServiceTest." + RandomTestUtil.nextLong() +
+							"@liferay.com",
+						0, StringPool.BLANK, false, null, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						"UserServiceTest", StringPool.BLANK, "UserServiceTest",
+						0, 0, true, Calendar.JANUARY, 1, 1970, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+						StringPool.BLANK, StringPool.BLANK, null, null, null,
+						null, null, serviceContext);
+				});
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
 	}
 
 	private long[] _addUsers(int numberOfUsers) throws Exception {

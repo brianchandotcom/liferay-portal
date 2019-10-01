@@ -29,20 +29,6 @@ page import="com.liferay.portal.search.web.internal.facet.display.context.UserSe
 
 <portlet:defineObjects />
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-
-	.facet-term-selected {
-		font-weight: 600;
-	}
-
-	.facet-term-unselected {
-		font-weight: 400;
-	}
-</style>
-
 <%
 UserSearchFacetDisplayContext userSearchFacetDisplayContext = (UserSearchFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
@@ -81,19 +67,21 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = (UserSearchFacetDi
 							%>
 
 								<li class="facet-value">
-									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input class="facet-term" data-term-id="<%= userSearchFacetTermDisplayContext.getUserName() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= userSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+									<div class="custom-checkbox custom-control">
+										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+											<input class="custom-control-input facet-term" data-term-id="<%= userSearchFacetTermDisplayContext.getUserName() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= userSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
-										<span class="term-name <%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-											<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %>
-										</span>
+											<span class="custom-control-label term-name <%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+												<span class="custom-control-label-text"><%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %></span>
+											</span>
 
-										<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
-											<small class="term-count">
-												(<%= userSearchFacetTermDisplayContext.getFrequency() %>)
-											</small>
-										</c:if>
-									</label>
+											<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+												<small class="term-count">
+													(<%= userSearchFacetTermDisplayContext.getFrequency() %>)
+												</small>
+											</c:if>
+										</label>
+									</div>
 								</li>
 
 							<%
@@ -104,7 +92,7 @@ UserSearchFacetDisplayContext userSearchFacetDisplayContext = (UserSearchFacetDi
 					</aui:fieldset>
 
 					<c:if test="<%= !userSearchFacetDisplayContext.isNothingSelected() %>">
-						<a class="text-default" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><small><liferay-ui:message key="clear" /></small></a>
+						<a class="single-link" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);" role="button"><liferay-ui:message key="clear" /></a>
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>

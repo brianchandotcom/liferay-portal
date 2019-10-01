@@ -18,8 +18,6 @@
 }
 
 .tag-cloud {
-	line-height: 2.5em;
-
 	$tag-popularity-font-size: 0.7em;
 
 	@for $i from 1 through 6 {

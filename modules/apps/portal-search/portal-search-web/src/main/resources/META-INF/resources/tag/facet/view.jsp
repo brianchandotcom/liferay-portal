@@ -29,20 +29,6 @@ page import="com.liferay.portal.search.web.internal.facet.display.context.AssetT
 
 <portlet:defineObjects />
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-
-	.facet-term-selected {
-		font-weight: 600;
-	}
-
-	.facet-term-unselected {
-		font-weight: 400;
-	}
-</style>
-
 <%
 AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTagsSearchFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
@@ -81,19 +67,21 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTa
 							%>
 
 								<li class="facet-value tag-popularity-<%= assetTagsSearchFacetTermDisplayContext.getPopularity() %>">
-									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input class="facet-term" data-term-id="<%= assetTagsSearchFacetTermDisplayContext.getValue() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+									<div class="custom-checkbox custom-control">
+										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+											<input class="custom-control-input facet-term" data-term-id="<%= assetTagsSearchFacetTermDisplayContext.getValue() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
-										<span class="term-name <%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-											<%= HtmlUtil.escape(assetTagsSearchFacetTermDisplayContext.getDisplayName()) %>
-										</span>
+											<span class="custom-control-label term-name <%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+												<span class="custom-control-label-text"><%= HtmlUtil.escape(assetTagsSearchFacetTermDisplayContext.getDisplayName()) %></span>
+											</span>
 
-										<c:if test="<%= assetTagsSearchFacetTermDisplayContext.isFrequencyVisible() %>">
-											<small class="term-count">
-												(<%= assetTagsSearchFacetTermDisplayContext.getFrequency() %>)
-											</small>
-										</c:if>
-									</label>
+											<c:if test="<%= assetTagsSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+												<small class="term-count">
+													(<%= assetTagsSearchFacetTermDisplayContext.getFrequency() %>)
+												</small>
+											</c:if>
+										</label>
+									</div>
 								</li>
 
 							<%
@@ -104,7 +92,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = (AssetTa
 					</aui:fieldset>
 
 					<c:if test="<%= !assetTagsSearchFacetDisplayContext.isNothingSelected() %>">
-						<aui:a cssClass="text-default" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><small><liferay-ui:message key="clear" /></small></aui:a>
+						<aui:a ariaRole="button" cssClass="single-link" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><liferay-ui:message key="clear" /></aui:a>
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>

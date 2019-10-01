@@ -30,20 +30,6 @@ page import="com.liferay.portal.search.web.internal.modified.facet.display.conte
 
 <portlet:defineObjects />
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-
-	.facet-term-selected {
-		font-weight: 600;
-	}
-
-	.facet-term-unselected {
-		font-weight: 400;
-	}
-</style>
-
 <%
 ModifiedFacetDisplayContext modifiedFacetDisplayContext = (ModifiedFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 
@@ -147,8 +133,8 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 				</aui:field-wrapper>
 
 				<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
-					<aui:a cssClass="modified-facet-a-clear text-default" href="javascript:;" onClick="Liferay.Search.ModifiedFacetFilterUtil.clearSelections(event);">
-						<small><liferay-ui:message key="clear" /></small>
+					<aui:a ariaRole="button" cssClass="modified-facet-a-clear single-link" href="javascript:;" onClick="Liferay.Search.ModifiedFacetFilterUtil.clearSelections(event);">
+						<liferay-ui:message key="clear" />
 					</aui:a>
 				</c:if>
 			</aui:form>

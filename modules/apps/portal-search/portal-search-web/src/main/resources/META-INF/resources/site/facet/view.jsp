@@ -29,20 +29,6 @@ page import="com.liferay.portal.search.web.internal.facet.display.context.ScopeS
 
 <portlet:defineObjects />
 
-<style>
-	.facet-checkbox-label {
-		display: block;
-	}
-
-	.facet-term-selected {
-		font-weight: 600;
-	}
-
-	.facet-term-unselected {
-		font-weight: 400;
-	}
-</style>
-
 <%
 ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 %>
@@ -81,19 +67,21 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFace
 							%>
 
 								<li class="facet-value">
-									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-										<input class="facet-term" data-term-id="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= scopeSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+									<div class="custom-checkbox custom-control">
+										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+											<input class="custom-control-input facet-term" data-term-id="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= scopeSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
-										<span class="term-name <%= scopeSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-											<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getDescriptiveName()) %>
-										</span>
+											<span class="custom-control-label term-name <%= scopeSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+												<span class="custom-control-label-text"><%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getDescriptiveName()) %></span>
+											</span>
 
-										<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
-											<small class="term-count">
-												(<%= scopeSearchFacetTermDisplayContext.getCount() %>)
-											</small>
-										</c:if>
-									</label>
+											<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
+												<small class="term-count">
+													(<%= scopeSearchFacetTermDisplayContext.getCount() %>)
+												</small>
+											</c:if>
+										</label>
+									</div>
 								</li>
 
 							<%
@@ -104,7 +92,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = (ScopeSearchFace
 					</aui:fieldset>
 
 					<c:if test="<%= !scopeSearchFacetDisplayContext.isNothingSelected() %>">
-						<aui:a cssClass="text-default" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><small><liferay-ui:message key="clear" /></small></aui:a>
+						<aui:a ariaRole="button" cssClass="single-link" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><liferay-ui:message key="clear" /></aui:a>
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>

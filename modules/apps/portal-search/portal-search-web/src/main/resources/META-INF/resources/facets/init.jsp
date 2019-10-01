@@ -57,13 +57,3 @@ String cssClass = "search-facet search-";
 <%!
 private static final String _RANDOM_KEY_INPUT = "portlet_search_facets_" + StringUtil.randomString();
 %>
-
-<style>
-	.facet-term-selected {
-		font-weight: 600;
-	}
-
-	.facet-term-unselected {
-		font-weight: 400;
-	}
-</style>

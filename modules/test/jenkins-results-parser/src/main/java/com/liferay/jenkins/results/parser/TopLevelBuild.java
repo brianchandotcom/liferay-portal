@@ -823,6 +823,26 @@ public abstract class TopLevelBuild extends BaseBuild {
 			jobSummaryListElement);
 	}
 
+	protected Element getFailedStableJobSummaryElement() {
+		List<String> stableBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
+
+		Element jobSummaryListElement = getJobSummaryListElement(
+			false, stableBatchNames);
+
+		int successCount = getJobVariantsDownstreamBuildCountByResult(
+			stableBatchNames, "SUCCESS");
+
+		int failCount =
+			getJobVariantsDownstreamBuildCount(stableBatchNames) - successCount;
+
+		return Dom4JUtil.getNewElement(
+			"div", null,
+			Dom4JUtil.getNewElement(
+				"h4", null, String.valueOf(failCount), " Failed Jobs:"),
+			jobSummaryListElement);
+	}
+
 	@Override
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _FAILURE_MESSAGE_GENERATORS;
@@ -1393,6 +1413,26 @@ public abstract class TopLevelBuild extends BaseBuild {
 		if ((result != null) && result.equals("SUCCESS")) {
 			successCount++;
 		}
+
+		return Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, String.valueOf(successCount),
+					" Successful Jobs:")),
+			jobSummaryListElement);
+	}
+
+	protected Element getSuccessfulStableJobSummaryElement() {
+		List<String> stableBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
+
+		Element jobSummaryListElement = getJobSummaryListElement(
+			true, stableBatchNames);
+
+		int successCount = getJobVariantsDownstreamBuildCountByResult(
+			stableBatchNames, "SUCCESS");
 
 		return Dom4JUtil.getNewElement(
 			"details", null,

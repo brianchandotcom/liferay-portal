@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Content Repository Web
+Bundle-SymbolicName: com.liferay.content.repository.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /content-repository-web
+-dsannotations-options: inherit

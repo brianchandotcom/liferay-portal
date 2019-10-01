@@ -14,27 +14,18 @@
 
 package com.liferay.portal.upgrade.v7_3_x;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
-
 /**
- * @author Alicia García
+ * @author Shuyang Zhou
  */
-public class PortalUpgradeProcessRegistryImpl
-	implements PortalUpgradeProcessRegistry {
+public class UpgradeMVCCVersion
+	extends com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
-
-		upgradeProcesses.put(new Version(6, 0, 0), new UpgradeLayout());
-
-		upgradeProcesses.put(new Version(6, 0, 1), new UpgradeLayoutSet());
-
-		upgradeProcesses.put(new Version(6, 0, 2), new UpgradeMVCCVersion());
+	protected String[] getModuleTableNames() {
+		return new String[] {
+			"AssetCategory", "AssetEntry", "AssetLink", "AssetTag",
+			"AssetVocabulary"
+		};
 	}
 
 }

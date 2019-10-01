@@ -61,15 +61,6 @@ long accountEntryId = accountDisplay.getAccountId();
 	</c:if>
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon-delete
-			url="<%= deleteAccountURL %>"
-		/>
-
 		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "active") %>'>
 			<portlet:actionURL name="/account_admin/update_account_status" var="deactivateAccountURL">
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
@@ -94,5 +85,14 @@ long accountEntryId = accountDisplay.getAccountId();
 				url="<%= activateAccountURL %>"
 			/>
 		</c:if>
+
+		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			url="<%= deleteAccountURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

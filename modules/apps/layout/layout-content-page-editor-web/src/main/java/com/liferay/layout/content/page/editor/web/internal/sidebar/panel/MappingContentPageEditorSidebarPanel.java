@@ -16,6 +16,11 @@ package com.liferay.layout.content.page.editor.web.internal.sidebar.panel;
 
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -55,5 +60,29 @@ public class MappingContentPageEditorSidebarPanel
 	public boolean isVisible(boolean pageIsDisplayPage) {
 		return pageIsDisplayPage;
 	}
+
+	@Override
+	public boolean isVisible(
+		PermissionChecker permissionChecker, long plid,
+		boolean pageIsDisplayPage) {
+
+		try {
+			if (LayoutPermissionUtil.contains(
+					permissionChecker, plid, ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MappingContentPageEditorSidebarPanel.class);
 
 }

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -63,14 +66,22 @@ public class CommentsContentPageEditorSidebarPanel
 	}
 
 	@Override
-	public boolean isVisible(boolean pageIsDisplayPage) {
+	public boolean isVisible(
+		PermissionChecker permissionChecker, long plid,
+		boolean pageIsDisplayPage) {
+
 		try {
 			ContentPageEditorConfiguration companyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
 					ContentPageEditorConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-			return companyConfiguration.commentsEnabled();
+			if (companyConfiguration.commentsEnabled() &&
+				LayoutPermissionUtil.contains(
+					permissionChecker, plid, ActionKeys.UPDATE)) {
+
+				return true;
+			}
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

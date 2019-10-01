@@ -53,10 +53,10 @@ public class StringUtilCheck extends BaseFileCheck {
 			}
 
 			List<String> parametersList = JavaSourceUtil.getParameterList(
-				matcher.group());
+				content.substring(matcher.start()));
 
 			if (parametersList.size() != 3) {
-				return;
+				continue;
 			}
 
 			String secondParameter = parametersList.get(1);
@@ -99,6 +99,6 @@ public class StringUtilCheck extends BaseFileCheck {
 	private static final Pattern _singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	private static final Pattern _stringUtilReplacePattern = Pattern.compile(
-		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
+		"StringUtil\\.(replace(First|Last)?)\\(");
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
 )
 @ProviderType
 public interface AssetCategory
-	extends AssetCategoryModel, NestedSetsTreeNodeModel, PersistedModel {
+	extends AssetCategoryModel, PersistedModel, TreeModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

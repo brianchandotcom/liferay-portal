@@ -254,32 +254,19 @@ public interface AssetCategoryModel
 	public void setParentCategoryId(long parentCategoryId);
 
 	/**
-	 * Returns the left category ID of this asset category.
+	 * Returns the tree path of this asset category.
 	 *
-	 * @return the left category ID of this asset category
+	 * @return the tree path of this asset category
 	 */
-	public long getLeftCategoryId();
+	@AutoEscape
+	public String getTreePath();
 
 	/**
-	 * Sets the left category ID of this asset category.
+	 * Sets the tree path of this asset category.
 	 *
-	 * @param leftCategoryId the left category ID of this asset category
+	 * @param treePath the tree path of this asset category
 	 */
-	public void setLeftCategoryId(long leftCategoryId);
-
-	/**
-	 * Returns the right category ID of this asset category.
-	 *
-	 * @return the right category ID of this asset category
-	 */
-	public long getRightCategoryId();
-
-	/**
-	 * Sets the right category ID of this asset category.
-	 *
-	 * @param rightCategoryId the right category ID of this asset category
-	 */
-	public void setRightCategoryId(long rightCategoryId);
+	public void setTreePath(String treePath);
 
 	/**
 	 * Returns the name of this asset category.

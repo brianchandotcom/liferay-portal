@@ -42,8 +42,7 @@ public class AssetCategorySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setParentCategoryId(model.getParentCategoryId());
-		soapModel.setLeftCategoryId(model.getLeftCategoryId());
-		soapModel.setRightCategoryId(model.getRightCategoryId());
+		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
@@ -190,20 +189,12 @@ public class AssetCategorySoap implements Serializable {
 		_parentCategoryId = parentCategoryId;
 	}
 
-	public long getLeftCategoryId() {
-		return _leftCategoryId;
+	public String getTreePath() {
+		return _treePath;
 	}
 
-	public void setLeftCategoryId(long leftCategoryId) {
-		_leftCategoryId = leftCategoryId;
-	}
-
-	public long getRightCategoryId() {
-		return _rightCategoryId;
-	}
-
-	public void setRightCategoryId(long rightCategoryId) {
-		_rightCategoryId = rightCategoryId;
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	public String getName() {
@@ -257,8 +248,7 @@ public class AssetCategorySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentCategoryId;
-	private long _leftCategoryId;
-	private long _rightCategoryId;
+	private String _treePath;
 	private String _name;
 	private String _title;
 	private String _description;

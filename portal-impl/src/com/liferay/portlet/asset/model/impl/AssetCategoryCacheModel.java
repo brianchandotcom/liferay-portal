@@ -77,7 +77,7 @@ public class AssetCategoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,10 +101,8 @@ public class AssetCategoryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", parentCategoryId=");
 		sb.append(parentCategoryId);
-		sb.append(", leftCategoryId=");
-		sb.append(leftCategoryId);
-		sb.append(", rightCategoryId=");
-		sb.append(rightCategoryId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", title=");
@@ -167,8 +165,13 @@ public class AssetCategoryCacheModel
 		}
 
 		assetCategoryImpl.setParentCategoryId(parentCategoryId);
-		assetCategoryImpl.setLeftCategoryId(leftCategoryId);
-		assetCategoryImpl.setRightCategoryId(rightCategoryId);
+
+		if (treePath == null) {
+			assetCategoryImpl.setTreePath("");
+		}
+		else {
+			assetCategoryImpl.setTreePath(treePath);
+		}
 
 		if (name == null) {
 			assetCategoryImpl.setName("");
@@ -223,10 +226,7 @@ public class AssetCategoryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		parentCategoryId = objectInput.readLong();
-
-		leftCategoryId = objectInput.readLong();
-
-		rightCategoryId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -273,9 +273,12 @@ public class AssetCategoryCacheModel
 
 		objectOutput.writeLong(parentCategoryId);
 
-		objectOutput.writeLong(leftCategoryId);
-
-		objectOutput.writeLong(rightCategoryId);
+		if (treePath == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -313,8 +316,7 @@ public class AssetCategoryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long parentCategoryId;
-	public long leftCategoryId;
-	public long rightCategoryId;
+	public String treePath;
 	public String name;
 	public String title;
 	public String description;

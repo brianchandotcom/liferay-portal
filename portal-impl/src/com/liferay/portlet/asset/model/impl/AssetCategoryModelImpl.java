@@ -86,10 +86,10 @@ public class AssetCategoryModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"parentCategoryId", Types.BIGINT}, {"leftCategoryId", Types.BIGINT},
-		{"rightCategoryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"vocabularyId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"parentCategoryId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"vocabularyId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,8 +107,7 @@ public class AssetCategoryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("parentCategoryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("leftCategoryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("rightCategoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
@@ -117,7 +116,7 @@ public class AssetCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetCategory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
+		"create table AssetCategory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,treePath VARCHAR(75) null,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 
@@ -158,9 +157,11 @@ public class AssetCategoryModelImpl
 
 	public static final long PARENTCATEGORYID_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TREEPATH_COLUMN_BITMASK = 32L;
 
-	public static final long VOCABULARYID_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long VOCABULARYID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -186,8 +187,7 @@ public class AssetCategoryModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setParentCategoryId(soapModel.getParentCategoryId());
-		model.setLeftCategoryId(soapModel.getLeftCategoryId());
-		model.setRightCategoryId(soapModel.getRightCategoryId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
@@ -418,16 +418,10 @@ public class AssetCategoryModelImpl
 			"parentCategoryId",
 			(BiConsumer<AssetCategory, Long>)
 				AssetCategory::setParentCategoryId);
-		attributeGetterFunctions.put(
-			"leftCategoryId", AssetCategory::getLeftCategoryId);
+		attributeGetterFunctions.put("treePath", AssetCategory::getTreePath);
 		attributeSetterBiConsumers.put(
-			"leftCategoryId",
-			(BiConsumer<AssetCategory, Long>)AssetCategory::setLeftCategoryId);
-		attributeGetterFunctions.put(
-			"rightCategoryId", AssetCategory::getRightCategoryId);
-		attributeSetterBiConsumers.put(
-			"rightCategoryId",
-			(BiConsumer<AssetCategory, Long>)AssetCategory::setRightCategoryId);
+			"treePath",
+			(BiConsumer<AssetCategory, String>)AssetCategory::setTreePath);
 		attributeGetterFunctions.put("name", AssetCategory::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<AssetCategory, String>)AssetCategory::setName);
@@ -673,24 +667,28 @@ public class AssetCategoryModelImpl
 
 	@JSON
 	@Override
-	public long getLeftCategoryId() {
-		return _leftCategoryId;
+	public String getTreePath() {
+		if (_treePath == null) {
+			return "";
+		}
+		else {
+			return _treePath;
+		}
 	}
 
 	@Override
-	public void setLeftCategoryId(long leftCategoryId) {
-		_leftCategoryId = leftCategoryId;
+	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
+		_treePath = treePath;
 	}
 
-	@JSON
-	@Override
-	public long getRightCategoryId() {
-		return _rightCategoryId;
-	}
-
-	@Override
-	public void setRightCategoryId(long rightCategoryId) {
-		_rightCategoryId = rightCategoryId;
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -966,26 +964,6 @@ public class AssetCategoryModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public long getNestedSetsTreeNodeLeft() {
-		return _leftCategoryId;
-	}
-
-	public long getNestedSetsTreeNodeRight() {
-		return _rightCategoryId;
-	}
-
-	public long getNestedSetsTreeNodeScopeId() {
-		return _groupId;
-	}
-
-	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
-		_leftCategoryId = nestedSetsTreeNodeLeft;
-	}
-
-	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
-		_rightCategoryId = nestedSetsTreeNodeRight;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1127,8 +1105,7 @@ public class AssetCategoryModelImpl
 		assetCategoryImpl.setCreateDate(getCreateDate());
 		assetCategoryImpl.setModifiedDate(getModifiedDate());
 		assetCategoryImpl.setParentCategoryId(getParentCategoryId());
-		assetCategoryImpl.setLeftCategoryId(getLeftCategoryId());
-		assetCategoryImpl.setRightCategoryId(getRightCategoryId());
+		assetCategoryImpl.setTreePath(getTreePath());
 		assetCategoryImpl.setName(getName());
 		assetCategoryImpl.setTitle(getTitle());
 		assetCategoryImpl.setDescription(getDescription());
@@ -1216,6 +1193,9 @@ public class AssetCategoryModelImpl
 
 		assetCategoryModelImpl._setOriginalParentCategoryId = false;
 
+		assetCategoryModelImpl._originalTreePath =
+			assetCategoryModelImpl._treePath;
+
 		assetCategoryModelImpl._originalName = assetCategoryModelImpl._name;
 
 		assetCategoryModelImpl._originalVocabularyId =
@@ -1289,9 +1269,13 @@ public class AssetCategoryModelImpl
 
 		assetCategoryCacheModel.parentCategoryId = getParentCategoryId();
 
-		assetCategoryCacheModel.leftCategoryId = getLeftCategoryId();
+		assetCategoryCacheModel.treePath = getTreePath();
 
-		assetCategoryCacheModel.rightCategoryId = getRightCategoryId();
+		String treePath = assetCategoryCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			assetCategoryCacheModel.treePath = null;
+		}
 
 		assetCategoryCacheModel.name = getName();
 
@@ -1421,8 +1405,8 @@ public class AssetCategoryModelImpl
 	private long _parentCategoryId;
 	private long _originalParentCategoryId;
 	private boolean _setOriginalParentCategoryId;
-	private long _leftCategoryId;
-	private long _rightCategoryId;
+	private String _treePath;
+	private String _originalTreePath;
 	private String _name;
 	private String _originalName;
 	private String _title;

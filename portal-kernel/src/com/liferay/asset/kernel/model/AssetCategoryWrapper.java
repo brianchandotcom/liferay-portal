@@ -54,8 +54,7 @@ public class AssetCategoryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentCategoryId", getParentCategoryId());
-		attributes.put("leftCategoryId", getLeftCategoryId());
-		attributes.put("rightCategoryId", getRightCategoryId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -134,16 +133,10 @@ public class AssetCategoryWrapper
 			setParentCategoryId(parentCategoryId);
 		}
 
-		Long leftCategoryId = (Long)attributes.get("leftCategoryId");
+		String treePath = (String)attributes.get("treePath");
 
-		if (leftCategoryId != null) {
-			setLeftCategoryId(leftCategoryId);
-		}
-
-		Long rightCategoryId = (Long)attributes.get("rightCategoryId");
-
-		if (rightCategoryId != null) {
-			setRightCategoryId(rightCategoryId);
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -175,6 +168,13 @@ public class AssetCategoryWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+	}
+
+	@Override
+	public String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.buildTreePath();
 	}
 
 	@Override
@@ -331,16 +331,6 @@ public class AssetCategoryWrapper
 	}
 
 	/**
-	 * Returns the left category ID of this asset category.
-	 *
-	 * @return the left category ID of this asset category
-	 */
-	@Override
-	public long getLeftCategoryId() {
-		return model.getLeftCategoryId();
-	}
-
-	/**
 	 * Returns the modified date of this asset category.
 	 *
 	 * @return the modified date of this asset category
@@ -407,16 +397,6 @@ public class AssetCategoryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the right category ID of this asset category.
-	 *
-	 * @return the right category ID of this asset category
-	 */
-	@Override
-	public long getRightCategoryId() {
-		return model.getRightCategoryId();
 	}
 
 	/**
@@ -493,6 +473,16 @@ public class AssetCategoryWrapper
 	@Override
 	public Map<java.util.Locale, String> getTitleMap() {
 		return model.getTitleMap();
+	}
+
+	/**
+	 * Returns the tree path of this asset category.
+	 *
+	 * @return the tree path of this asset category
+	 */
+	@Override
+	public String getTreePath() {
+		return model.getTreePath();
 	}
 
 	/**
@@ -703,16 +693,6 @@ public class AssetCategoryWrapper
 	}
 
 	/**
-	 * Sets the left category ID of this asset category.
-	 *
-	 * @param leftCategoryId the left category ID of this asset category
-	 */
-	@Override
-	public void setLeftCategoryId(long leftCategoryId) {
-		model.setLeftCategoryId(leftCategoryId);
-	}
-
-	/**
 	 * Sets the modified date of this asset category.
 	 *
 	 * @param modifiedDate the modified date of this asset category
@@ -760,16 +740,6 @@ public class AssetCategoryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the right category ID of this asset category.
-	 *
-	 * @param rightCategoryId the right category ID of this asset category
-	 */
-	@Override
-	public void setRightCategoryId(long rightCategoryId) {
-		model.setRightCategoryId(rightCategoryId);
 	}
 
 	/**
@@ -837,6 +807,16 @@ public class AssetCategoryWrapper
 	}
 
 	/**
+	 * Sets the tree path of this asset category.
+	 *
+	 * @param treePath the tree path of this asset category
+	 */
+	@Override
+	public void setTreePath(String treePath) {
+		model.setTreePath(treePath);
+	}
+
+	/**
 	 * Sets the user ID of this asset category.
 	 *
 	 * @param userId the user ID of this asset category
@@ -887,28 +867,8 @@ public class AssetCategoryWrapper
 	}
 
 	@Override
-	public long getNestedSetsTreeNodeLeft() {
-		return model.getNestedSetsTreeNodeLeft();
-	}
-
-	@Override
-	public long getNestedSetsTreeNodeRight() {
-		return model.getNestedSetsTreeNodeRight();
-	}
-
-	@Override
-	public long getNestedSetsTreeNodeScopeId() {
-		return model.getNestedSetsTreeNodeScopeId();
-	}
-
-	@Override
-	public void setNestedSetsTreeNodeLeft(long nestedSetsTreeNodeLeft) {
-		model.setNestedSetsTreeNodeLeft(nestedSetsTreeNodeLeft);
-	}
-
-	@Override
-	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
-		model.setNestedSetsTreeNodeRight(nestedSetsTreeNodeRight);
+	public void updateTreePath(String treePath) {
+		model.updateTreePath(treePath);
 	}
 
 	@Override

@@ -58,7 +58,7 @@ public class MetadataTypeBuilder {
 			oasJsonNode, endpoint, operation, referencePath);
 
 		if (referenceJsonNode.isNull()) {
-			return _resolveNothingMetadataType(metadataContext);
+			return _resolveAnyMetadataType(metadataContext);
 		}
 
 		String schemaName = _getSchemaName(referenceJsonNode.textValue());
@@ -175,7 +175,7 @@ public class MetadataTypeBuilder {
 			baseTypeBuilder.stringType();
 		}
 		else {
-			baseTypeBuilder.nullType();
+			baseTypeBuilder.anyType();
 		}
 
 		return baseTypeBuilder.build();
@@ -224,6 +224,15 @@ public class MetadataTypeBuilder {
 
 	private String _getSchemaName(String reference) {
 		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
+	}
+
+	private MetadataType _resolveAnyMetadataType(
+		MetadataContext metadataContext) {
+
+		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
+
+		return baseTypeBuilder.anyType(
+		).build();
 	}
 
 	private void _resolveArrayMetadataType(
@@ -289,21 +298,6 @@ public class MetadataTypeBuilder {
 		_resolveObjectMetadataType(
 			nestedObjectTypeBuilder, oasJsonNode,
 			nestedObjectPropertiesJsonNode, nestedObjectRequiredJsonNode);
-	}
-
-	private MetadataType _resolveNothingMetadataType(
-		MetadataContext metadataContext) {
-
-		ObjectTypeBuilder objectTypeBuilder = _getObjectTypeBuilder(
-			metadataContext);
-
-		objectTypeBuilder.addField(
-		).key(
-			""
-		).value(
-		).nothingType();
-
-		return objectTypeBuilder.build();
 	}
 
 	private void _resolveObjectMetadataType(

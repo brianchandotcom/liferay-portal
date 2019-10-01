@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -252,8 +251,7 @@ public class LayoutCTTest {
 					Level.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
-				_ctCollection.getUserId(), _ctCollection.getCtCollectionId(),
-				false, new ServiceContext());
+				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -312,8 +310,7 @@ public class LayoutCTTest {
 					Level.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
-				_ctCollection.getUserId(), _ctCollection.getCtCollectionId(),
-				false, new ServiceContext());
+				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -370,8 +367,7 @@ public class LayoutCTTest {
 		}
 
 		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
-			new ServiceContext());
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		Layout productionLayout = _layoutLocalService.fetchLayout(
 			layout.getPlid());
@@ -404,8 +400,7 @@ public class LayoutCTTest {
 					Level.ERROR)) {
 
 			_ctProcessLocalService.addCTProcess(
-				_ctCollection.getUserId(), _ctCollection.getCtCollectionId(),
-				false, new ServiceContext());
+				_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -443,8 +438,7 @@ public class LayoutCTTest {
 		}
 
 		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
-			new ServiceContext());
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		Assert.assertEquals(
 			layout, _layoutLocalService.fetchLayout(layout.getPlid()));
@@ -462,8 +456,7 @@ public class LayoutCTTest {
 		}
 
 		_ctProcessLocalService.addCTProcess(
-			_ctCollection.getUserId(), _ctCollection.getCtCollectionId(), false,
-			new ServiceContext());
+			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
 		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 	}

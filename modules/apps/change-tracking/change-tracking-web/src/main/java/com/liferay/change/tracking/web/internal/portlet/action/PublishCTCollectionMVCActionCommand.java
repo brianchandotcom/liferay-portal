@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -70,8 +69,7 @@ public class PublishCTCollectionMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_ctProcessLocalService.addCTProcess(
-				themeDisplay.getUserId(), ctCollectionId, true,
-				new ServiceContext());
+				themeDisplay.getUserId(), ctCollectionId);
 		}
 		catch (PortalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());

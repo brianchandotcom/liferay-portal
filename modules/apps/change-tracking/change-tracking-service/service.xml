@@ -133,13 +133,16 @@
 		<column name="ctCollectionId" type="long" />
 		<column name="backgroundTaskId" type="long" />
 
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
 		<!-- Finder methods -->
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-		</finder>
-		<finder name="UserId" return-type="Collection">
-			<finder-column name="userId" />
 		</finder>
 		<finder name="CollectionId" return-type="Collection">
 			<finder-column name="ctCollectionId" />
@@ -149,7 +152,6 @@
 
 		<reference entity="CTCollection" package-path="com.liferay.change.tracking" />
 		<reference entity="Company" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>CTCollectionDescription</exception>

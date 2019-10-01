@@ -43,9 +43,17 @@ public class AssetTagsSelectorDisplayContext {
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest httpServletRequest) {
 
+		this(renderRequest, renderResponse, httpServletRequest, true);
+	}
+
+	public AssetTagsSelectorDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest httpServletRequest, boolean rowChecker) {
+
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
+		_rowChecker = rowChecker;
 	}
 
 	public String getEventName() {
@@ -71,6 +79,18 @@ public class AssetTagsSelectorDisplayContext {
 		return _orderByType;
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("eventName", getEventName());
+		portletURL.setParameter("groupIds", StringUtil.merge(_getGroupIds()));
+		portletURL.setParameter("mvcPath", _getMvcPath());
+		portletURL.setParameter(
+			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
+
+		return portletURL;
+	}
+
 	public String[] getSelectedTagNames() {
 		if (ArrayUtil.isNotEmpty(_selectedTagNames)) {
 			return _selectedTagNames;
@@ -92,7 +112,7 @@ public class AssetTagsSelectorDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		SearchContainer tagsSearchContainer = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, "there-are-no-tags");
+			_renderRequest, getPortletURL(), null, "there-are-no-tags");
 
 		String orderByCol = _getOrderByCol();
 
@@ -111,8 +131,10 @@ public class AssetTagsSelectorDisplayContext {
 
 		tagsSearchContainer.setOrderByType(orderByType);
 
-		tagsSearchContainer.setRowChecker(
-			new EntriesChecker(_renderRequest, _renderResponse));
+		if (_rowChecker) {
+			tagsSearchContainer.setRowChecker(
+				new EntriesChecker(_renderRequest, _renderResponse));
+		}
 
 		int tagsCount = AssetTagServiceUtil.getTagsCount(
 			themeDisplay.getScopeGroupId(), _getKeywords());
@@ -160,6 +182,17 @@ public class AssetTagsSelectorDisplayContext {
 		return _keywords;
 	}
 
+	private String _getMvcPath() {
+		if (Validator.isNotNull(_mvcPath)) {
+			return _mvcPath;
+		}
+
+		_mvcPath = ParamUtil.getString(
+			_httpServletRequest, "mvcPath", "/view.jsp");
+
+		return _mvcPath;
+	}
+
 	private String _getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -171,24 +204,16 @@ public class AssetTagsSelectorDisplayContext {
 		return _orderByCol;
 	}
 
-	private PortletURL _getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("eventName", getEventName());
-		portletURL.setParameter(
-			"selectedTagNames", StringUtil.merge(getSelectedTagNames()));
-
-		return portletURL;
-	}
-
 	private String _eventName;
 	private long[] _groupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
+	private String _mvcPath;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final boolean _rowChecker;
 	private String[] _selectedTagNames;
 	private SearchContainer _tagsSearchContainer;
 

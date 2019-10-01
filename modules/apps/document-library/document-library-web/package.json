@@ -1,14 +1,24 @@
 {
 	"dependencies": {
-		"clay-alert": "2.18.3",
+		"@clayui/alert": "3.0.0",
+		"@clayui/button": "3.0.0",
+		"@clayui/css": "3.0.0",
+		"@clayui/form": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"@clayui/loading-indicator": "3.0.0",
+		"@clayui/modal": "3.0.0",
+		"asset-taglib": "*",
 		"clay-button": "2.18.3",
 		"clay-multi-select": "2.18.3",
 		"clay-radio": "2.18.3",
 		"clipboard": "2.0.4",
-		"frontend-js-web": "*",
+		"frontend-js-react-web": "*",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "15.7.2",
+		"react": "16.9.0",
+		"react-dom": "16.9.0"
 	},
 	"name": "document-library-web",
 	"scripts": {

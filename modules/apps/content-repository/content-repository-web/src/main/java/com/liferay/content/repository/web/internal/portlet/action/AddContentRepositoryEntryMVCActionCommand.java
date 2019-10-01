@@ -1,0 +1,102 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.content.repository.web.internal.portlet.action;
+
+import com.liferay.content.repository.model.ContentRepositoryEntry;
+import com.liferay.content.repository.service.ContentRepositoryEntryLocalService;
+import com.liferay.content.repository.web.internal.constants.ContentRepositoryPortletKeys;
+import com.liferay.content.repository.web.internal.util.ContentRepositoryEntryURLUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Alejandro Tardín
+ */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + ContentRepositoryPortletKeys.CONTENT_REPOSITORY_ADMIN,
+		"mvc.command.name=/content_repository_entry/add"
+	},
+	service = MVCActionCommand.class
+)
+public class AddContentRepositoryEntryMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		if (Validator.isNotNull(name)) {
+			nameMap.put(LocaleUtil.getDefault(), name);
+		}
+
+		ContentRepositoryEntry contentRepositoryEntry =
+			_contentRepositoryEntryLocalService.addContentRepositoryEntry(
+				nameMap, descriptionMap,
+				ServiceContextFactory.getInstance(
+					ContentRepositoryEntry.class.getName(), actionRequest));
+
+		PortletURL editContentRepositoryURL =
+			ContentRepositoryEntryURLUtil.
+				getEditContentRepositoryEntryRenderURL(
+					contentRepositoryEntry.getContentRepositoryEntryId(),
+					ParamUtil.getString(actionRequest, "redirect"),
+					_portal.getLiferayPortletResponse(actionResponse));
+
+		MultiSessionMessages.add(
+			actionRequest,
+			ContentRepositoryPortletKeys.CONTENT_REPOSITORY_ADMIN +
+				"requestProcessed");
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse,
+			JSONUtil.put("redirectURL", editContentRepositoryURL.toString()));
+	}
+
+	@Reference
+	private ContentRepositoryEntryLocalService
+		_contentRepositoryEntryLocalService;
+
+	@Reference
+	private Portal _portal;
+
+}

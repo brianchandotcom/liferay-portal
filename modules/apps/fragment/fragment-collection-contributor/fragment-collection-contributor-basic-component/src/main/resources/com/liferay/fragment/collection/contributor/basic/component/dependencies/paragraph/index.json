@@ -4,6 +4,29 @@
 			"fields": [
 				{
 					"dataType": "string",
+					"defaultValue": "left",
+					"label": "text-align",
+					"name": "textAlign",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "left"
+							},
+							{
+								"value": "center"
+							},
+							{
+								"value": "right"
+							},
+							{
+								"value": "justify"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
 					"defaultValue": "3",
 					"label": "bottom-spacing",
 					"name": "bottomSpacing",
@@ -24,29 +47,9 @@
 							},
 							{
 								"value": "4"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "left",
-					"label": "text-align",
-					"name": "textAlign",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "left"
 							},
 							{
-								"value": "center"
-							},
-							{
-								"value": "right"
-							},
-							{
-								"value": "justify"
+								"value": "5"
 							}
 						]
 					}

@@ -4,32 +4,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "3",
-					"label": "bottom-spacing",
-					"name": "bottomSpacing",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "0"
-							},
-							{
-								"value": "1"
-							},
-							{
-								"value": "2"
-							},
-							{
-								"value": "3"
-							},
-							{
-								"value": "4"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
 					"defaultValue": "h1",
 					"label": "heading-level",
 					"name": "headingLevel",
@@ -67,6 +41,35 @@
 							},
 							{
 								"value": "right"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "3",
+					"label": "bottom-spacing",
+					"name": "bottomSpacing",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "0"
+							},
+							{
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "4"
+							},
+							{
+								"value": "5"
 							}
 						]
 					}

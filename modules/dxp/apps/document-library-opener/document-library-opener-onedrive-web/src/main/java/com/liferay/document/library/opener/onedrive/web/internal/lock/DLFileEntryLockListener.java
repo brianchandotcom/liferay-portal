@@ -83,8 +83,8 @@ public class DLFileEntryLockListener extends BaseLockListener {
 				}
 			}
 		}
-		catch (PortalException pe) {
-			_log.error("Error trying to execute onAfterExpire on " + key, pe);
+		catch (Exception e) {
+			_log.error("Unable to execute onAfterExpire for " + key, e);
 		}
 	}
 

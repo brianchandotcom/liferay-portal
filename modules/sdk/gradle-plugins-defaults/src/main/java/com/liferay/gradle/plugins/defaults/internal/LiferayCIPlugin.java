@@ -331,10 +331,13 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						".lfrbuild-portal-deprecated");
 					File lfrBuildPortalFile = dependencyProject.file(
 						".lfrbuild-portal");
+					File lfrBuildPortalPrivateFile = dependencyProject.file(
+						".lfrbuild-portal-private");
 
 					if (lfrBuildCISkipTestIntegrationCheckFile.exists()) {
 						if (lfrBuildCIFile.exists() ||
-							lfrBuildPortalFile.exists()) {
+							lfrBuildPortalFile.exists() ||
+							lfrBuildPortalPrivateFile.exists()) {
 
 							throw new GradleException(
 								"Please delete marker file " +
@@ -343,10 +346,19 @@ public class LiferayCIPlugin implements Plugin<Project> {
 					}
 					else if (!lfrBuildCIFile.exists() &&
 							 !lfrBuildPortalDeprecatedFile.exists() &&
-							 !lfrBuildPortalFile.exists()) {
+							 !lfrBuildPortalFile.exists() &&
+							 !lfrBuildPortalPrivateFile.exists()) {
+
+						String path = dependencyProject.getPath();
+
+						File file = lfrBuildPortalFile;
+
+						if (path.startsWith(":private:")) {
+							file = lfrBuildPortalPrivateFile;
+						}
 
 						throw new GradleException(
-							"Please create marker file " + lfrBuildPortalFile);
+							"Please create marker file " + file);
 					}
 				}
 			}

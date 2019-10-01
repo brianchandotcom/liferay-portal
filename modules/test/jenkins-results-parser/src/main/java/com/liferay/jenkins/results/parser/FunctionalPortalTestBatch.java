@@ -57,7 +57,7 @@ public class FunctionalPortalTestBatch
 			String poshiResultsDirName = poshiResultsDir.getName();
 
 			for (String test : portalBatchBuildData.getTestList()) {
-				if (!poshiResultsDirName.contains(test.replace("#", "_"))) {
+				if (!poshiResultsDirName.contains(test.replace('#', '_'))) {
 					continue;
 				}
 
@@ -89,7 +89,7 @@ public class FunctionalPortalTestBatch
 		sb.append("<ul>");
 
 		for (String test : portalBatchBuildData.getTestList()) {
-			String testName = test.replace("#", "_");
+			String testName = test.replace('#', '_');
 
 			if (!testName.matches("[^\\.]+\\.[^_]+_.+")) {
 				testName = "LocalFile." + testName;

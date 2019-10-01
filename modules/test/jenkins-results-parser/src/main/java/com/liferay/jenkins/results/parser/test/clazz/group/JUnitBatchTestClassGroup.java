@@ -142,7 +142,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return null;
 			}
 
-			String packagePath = fullClassName.replace(".", "/");
+			String packagePath = fullClassName.replace('.', '/');
 
 			packagePath = packagePath + ".class";
 

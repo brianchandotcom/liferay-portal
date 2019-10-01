@@ -57,7 +57,7 @@ public class LiferayFixedResponseContentSource extends LiferaySource {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(fileName.replace("-", "_"));
+		sb.append(fileName.replace('-', '_'));
 		sb.append("_");
 		sb.append(fileNumber.substring(fileNumber.indexOf("=") + 1));
 		sb.append(".json");

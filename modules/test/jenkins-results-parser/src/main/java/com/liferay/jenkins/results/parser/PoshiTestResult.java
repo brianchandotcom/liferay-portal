@@ -82,7 +82,7 @@ public class PoshiTestResult extends BaseTestResult {
 
 		sb.append(getTestrayLogsURL());
 		sb.append("/");
-		sb.append(name.replace("#", "_"));
+		sb.append(name.replace('#', '_'));
 		sb.append("/liferay-log.txt.gz");
 
 		return sb.toString();
@@ -95,7 +95,7 @@ public class PoshiTestResult extends BaseTestResult {
 
 		sb.append(getTestrayLogsURL());
 		sb.append("/");
-		sb.append(name.replace("#", "_"));
+		sb.append(name.replace('#', '_'));
 		sb.append("/index.html.gz");
 
 		return sb.toString();
@@ -108,7 +108,7 @@ public class PoshiTestResult extends BaseTestResult {
 
 		sb.append(getTestrayLogsURL());
 		sb.append("/");
-		sb.append(name.replace("#", "_"));
+		sb.append(name.replace('#', '_'));
 		sb.append("/summary.html.gz");
 
 		return sb.toString();

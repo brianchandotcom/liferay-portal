@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -235,6 +236,16 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			return false;
 		}
 
+		long groupId = GetterUtil.getLong(
+			properties.get(Scope.GROUP.getPropertyKey()),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		if ((groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) &&
+			Scope.GROUP.equals(scope.getValue())) {
+
+			return true;
+		}
+
 		long companyId = GetterUtil.getLong(
 			properties.get(Scope.COMPANY.getPropertyKey()),
 			CompanyConstants.SYSTEM);
@@ -245,9 +256,7 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			return true;
 		}
 
-		if (Scope.GROUP.equals(scope.getValue()) ||
-			Scope.SYSTEM.equals(scope.getValue())) {
-
+		if (Scope.SYSTEM.equals(scope.getValue())) {
 			return true;
 		}
 

@@ -18,7 +18,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.10</version>
+				<version>1.1.13</version>
 				<project-name>Alloy TagLibs</project-name>
 				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
 				<licenses>
@@ -78,7 +78,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.jenkins.results.parser.jar</file-name>
-				<version>1.0.238</version>
+				<version>1.0.428</version>
 				<project-name>Liferay Jenkins Results Parser</project-name>
 				<licenses>
 					<license>
@@ -89,7 +89,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/deployment.jar</file-name>
-				<version>1.1</version>
+				<version>1.2-rev-1</version>
 				<project-name>J2EE Application Deployment Library</project-name>
 				<project-url>http://java.sun.com/j2ee/tools/deployment</project-url>
 				<licenses>
@@ -224,7 +224,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jacocoagent.jar</file-name>
-				<version>0.7.9</version>
+				<version>0.8.4</version>
 				<project-name>JaCoCo</project-name>
 				<project-url>http://www.jacoco.org/</project-url>
 				<licenses>
@@ -236,7 +236,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jacocoant.jar</file-name>
-				<version>0.7.9</version>
+				<version>0.8.4</version>
 				<project-name>JaCoCo</project-name>
 				<project-url>http://www.jacoco.org/</project-url>
 				<licenses>
@@ -248,7 +248,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jacococore.jar</file-name>
-				<version>0.7.9</version>
+				<version>0.8.4</version>
 				<project-name>JaCoCo</project-name>
 				<project-url>http://www.jacoco.org/</project-url>
 				<licenses>
@@ -260,7 +260,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jacocoreport.jar</file-name>
-				<version>0.7.9</version>
+				<version>0.8.4</version>
 				<project-name>JaCoCo</project-name>
 				<project-url>http://www.jacoco.org/</project-url>
 				<licenses>
@@ -313,7 +313,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jarjar.jar</file-name>
-				<version>1.2</version>
+				<version>1.3</version>
 				<project-name>Jar Jar Links</project-name>
 				<project-url>http://code.google.com/p/jarjar</project-url>
 				<licenses>
@@ -337,7 +337,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jbi_rt.jar</file-name>
-				<version>2.0 UR1</version>
+				<version>2.4.3</version>
 				<project-name>Glassfish</project-name>
 				<project-url>http://glassfish.dev.java.net</project-url>
 				<licenses>
@@ -349,7 +349,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jetty-server.jar</file-name>
-				<version>8.1.10</version>
+				<version>9.3.25.v20180904</version>
 				<project-name>Jetty</project-name>
 				<project-url>http://www.eclipse.org/jetty</project-url>
 				<licenses>
@@ -365,7 +365,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/jetty-util.jar</file-name>
-				<version>8.1.10</version>
+				<version>9.3.25.v20180904</version>
 				<project-name>Jetty</project-name>
 				<project-url>http://www.eclipse.org/jetty</project-url>
 				<licenses>
@@ -600,7 +600,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/persistence.jar</file-name>
-				<version>2.0</version>
+				<version>2.1.1</version>
 				<project-name>Java Persistence</project-name>
 				<project-url>http://java.sun.com/javaee/overview/faq/persistence.jsp</project-url>
 				<licenses>
@@ -612,7 +612,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/postgresql.jar</file-name>
-				<version>9.4-1201 JDBC 41</version>
+				<version>42.0.0</version>
 				<project-name>PostgreSQL JDBC Driver</project-name>
 				<project-url>http://jdbc.postgresql.org</project-url>
 				<licenses>
@@ -732,7 +732,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/servlet-api.jar</file-name>
-				<version>3.0.1</version>
+				<version>3.1.0</version>
 				<project-name>Java Servlet</project-name>
 				<project-url>http://java.sun.com/products/servlet</project-url>
 				<licenses>
@@ -757,7 +757,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/smtp.jar</file-name>
-				<version>1.4</version>
+				<version>1.5.4</version>
 				<project-name>JavaMail</project-name>
 				<project-url>http://java.sun.com/products/javamail</project-url>
 				<licenses>
@@ -888,7 +888,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/websocket-api.jar</file-name>
-				<version>1.12</version>
+				<version>1.1</version>
 				<project-name>WebSocket</project-name>
 				<project-url>http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html</project-url>
 				<licenses>

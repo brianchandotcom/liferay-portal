@@ -1,0 +1,110 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.batch.engine.internal.reader;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.time.ZoneId;
+
+import java.util.Date;
+import java.util.Map;
+import java.util.TimeZone;
+
+import org.junit.Assert;
+import org.junit.Before;
+
+/**
+ * @author Ivica Cardic
+ */
+public abstract class BaseBatchEngineTaskItemReaderTestCase {
+
+	@Before
+	public void setUp() {
+		createDate = new Date();
+
+		_dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+		_dateFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
+
+		createDateString = _dateFormat.format(createDate);
+	}
+
+	public static class Item {
+
+		public Date getCreateDate() {
+			return _createDate;
+		}
+
+		public String getDescription() {
+			return _description;
+		}
+
+		public Long getId() {
+			return _id;
+		}
+
+		public Map<String, String> getName() {
+			return _name;
+		}
+
+		public void setCreateDate(Date createDate) {
+			_createDate = createDate;
+		}
+
+		public void setDescription(String description) {
+			_description = description;
+		}
+
+		public void setId(Long id) {
+			_id = id;
+		}
+
+		public void setName(Map<String, String> name) {
+			_name = name;
+		}
+
+		private Date _createDate;
+		private String _description;
+		private Long _id;
+		private Map<String, String> _name;
+
+	}
+
+	protected void validate(
+		String createDateString, String description, Long id,
+		Map<String, String> name, Item item) {
+
+		Assert.assertEquals(description, item.getDescription());
+
+		if (item.getCreateDate() != null) {
+			Assert.assertEquals(
+				createDateString, _dateFormat.format(item.getCreateDate()));
+		}
+
+		Assert.assertEquals(id, item.getId());
+		Assert.assertEquals(name, item.getName());
+	}
+
+	protected static final String[] CELL_NAMES = {
+		"createDate", "description", "id", "name_en", "name_hr"
+	};
+
+	protected Date createDate;
+	protected String createDateString;
+
+	private static DateFormat _dateFormat;
+
+}

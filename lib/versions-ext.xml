@@ -1915,7 +1915,7 @@
 					</license>
 				</licenses>
 			</library>
-			<lirbary>
+			<library>
 				<file-name>lib/portal/jaxws-api.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>JAX-WS (JSR 224) API</project-name>
@@ -1926,7 +1926,7 @@
 						<license-url>https://oss.oracle.com/licenses/CDDL-1.1</license-url>
 					</license>
 				</licenses>
-			</lirbary>
+			</library>
 			<library>
 				<file-name>lib/portal/jaxws-rt.jar</file-name>
 				<version>2.1.7</version>

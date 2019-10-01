@@ -24,8 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="parentCategoryId" type="long" />
-		<column name="leftCategoryId" type="long" />
-		<column name="rightCategoryId" type="long" />
+		<column name="treePath" type="String" />
 		<column accessor="true" name="name" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
@@ -76,6 +75,11 @@
 		<finder name="G_P_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentCategoryId" />
+			<finder-column name="vocabularyId" />
+		</finder>
+		<finder db-index="false" name="G_LikeT_V" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="LIKE" name="treePath" />
 			<finder-column name="vocabularyId" />
 		</finder>
 		<finder name="G_LikeN_V" return-type="Collection">

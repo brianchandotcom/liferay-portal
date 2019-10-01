@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata;
+package com.liferay.mule.internal.metadata.key;
 
+import com.liferay.mule.internal.metadata.MetadataKeysBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
 
 import java.util.Set;
@@ -27,11 +28,11 @@ import org.mule.runtime.api.metadata.resolving.TypeKeysResolver;
 /**
  * @author Matija Petanjek
  */
-public class PATCHEndpointTypeKeysResolver implements TypeKeysResolver {
+public class POSTEndpointTypeKeysResolver implements TypeKeysResolver {
 
 	@Override
 	public String getCategoryName() {
-		return "liferay-patch";
+		return "liferay-post";
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class PATCHEndpointTypeKeysResolver implements TypeKeysResolver {
 		throws ConnectionException, MetadataResolvingException {
 
 		return _metadataKeysBuilder.buildMetadataKeys(
-			metadataContext, OASConstants.OPERATION_PATCH);
+			metadataContext, OASConstants.OPERATION_POST);
 	}
 
 	private static final MetadataKeysBuilder _metadataKeysBuilder =

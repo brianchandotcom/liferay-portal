@@ -15,13 +15,13 @@
 package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
-import com.liferay.mule.internal.metadata.DELETEEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.DELETEEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.DELETEEndpointTypeResolver;
-import com.liferay.mule.internal.metadata.GETEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.GETEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.GETEndpointTypeResolver;
-import com.liferay.mule.internal.metadata.PATCHEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.PATCHEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.PATCHEndpointTypeResolver;
-import com.liferay.mule.internal.metadata.POSTEndpointTypeKeysResolver;
+import com.liferay.mule.internal.metadata.key.POSTEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.POSTEndpointTypeResolver;
 
 import java.io.IOException;

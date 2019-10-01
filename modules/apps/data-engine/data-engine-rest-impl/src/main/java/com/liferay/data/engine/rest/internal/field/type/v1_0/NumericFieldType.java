@@ -47,8 +47,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"data.engine.field.type.data.domain=number",
 		"data.engine.field.type.description=numeric-field-type-description",
-		"data.engine.field.type.display.order:Integer=8",
-		"data.engine.field.type.group=customized",
+		"data.engine.field.type.display.order:Integer=7",
+		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=caret-double",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Numeric/Numeric.es",
 		"data.engine.field.type.label=numeric-field-type-label"

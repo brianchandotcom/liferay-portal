@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"data.engine.field.type.description=paragraph-field-type-description",
 		"data.engine.field.type.display.order:Integer=1",
-		"data.engine.field.type.group=basic",
+		"data.engine.field.type.group=interface",
 		"data.engine.field.type.icon=paragraph",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Paragraph/Paragraph.es",
 		"data.engine.field.type.label=paragraph-field-type-label"

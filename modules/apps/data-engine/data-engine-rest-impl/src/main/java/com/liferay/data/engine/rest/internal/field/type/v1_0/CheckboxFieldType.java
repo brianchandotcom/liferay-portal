@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"data.engine.field.type.data.domain=boolean",
 		"data.engine.field.type.description=checkbox-field-type-description",
-		"data.engine.field.type.display.order:Integer=6",
+		"data.engine.field.type.display.order:Integer=8",
 		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=check-circle",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Checkbox/Checkbox.es",

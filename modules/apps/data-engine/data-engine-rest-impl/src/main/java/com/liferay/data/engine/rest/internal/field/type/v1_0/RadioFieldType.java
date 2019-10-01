@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"data.engine.field.type.description=radio-field-type-description",
-		"data.engine.field.type.display.order:Integer=4",
+		"data.engine.field.type.display.order:Integer=3",
 		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=radio-button",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Radio/Radio.es",

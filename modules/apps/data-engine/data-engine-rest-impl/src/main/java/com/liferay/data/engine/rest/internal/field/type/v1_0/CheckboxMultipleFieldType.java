@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"data.engine.field.type.data.domain=list",
 		"data.engine.field.type.description=checkbox-multiple-field-type-description",
-		"data.engine.field.type.display.order:Integer=7",
+		"data.engine.field.type.display.order:Integer=4",
 		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=select-from-list",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/CheckboxMultiple/CheckboxMultiple.es",

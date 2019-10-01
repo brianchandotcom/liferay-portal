@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"data.engine.field.type.description=document-library-field-type-description",
 		"data.engine.field.type.display.order:Integer=9",
-		"data.engine.field.type.group=customized",
+		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=upload",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/DocumentLibrary/DocumentLibrary.es",
 		"data.engine.field.type.label=document-library-field-type-label"

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"data.engine.field.type.description=text-field-type-description",
-		"data.engine.field.type.display.order:Integer=2",
+		"data.engine.field.type.display.order:Integer=1",
 		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=text",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Text/Text.es",

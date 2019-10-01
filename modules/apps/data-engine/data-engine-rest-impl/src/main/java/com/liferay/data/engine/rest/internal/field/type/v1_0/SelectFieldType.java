@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"data.engine.field.type.data.domain=list",
 		"data.engine.field.type.description=select-field-type-description",
-		"data.engine.field.type.display.order:Integer=3",
+		"data.engine.field.type.display.order:Integer=2",
 		"data.engine.field.type.group=basic",
 		"data.engine.field.type.icon=list",
 		"data.engine.field.type.js.module=dynamic-data-mapping-form-field-type/Select/Select.es",

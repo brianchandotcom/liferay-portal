@@ -53,6 +53,8 @@ public class OrganizationEntityModel implements EntityModel {
 			new IdEntityField(
 				"parentOrganizationId", locale -> "parentOrganizationId",
 				String::valueOf),
+			new StringEntityField("country", locale -> "country"),
+			new StringEntityField("region", locale -> "region"),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName(Field.NAME)),
 			new StringEntityField(

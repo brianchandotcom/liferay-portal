@@ -85,9 +85,11 @@ public class AssetEntryQuery {
 
 	public AssetEntryQuery(AssetEntryQuery assetEntryQuery) {
 		setAllCategoryIds(assetEntryQuery.getAllCategoryIds());
+		setAllKeywords(assetEntryQuery.getAllKeywords());
 		setAllTagIdsArray(assetEntryQuery.getAllTagIdsArray());
 		setAndOperator(assetEntryQuery.isAndOperator());
 		setAnyCategoryIds(assetEntryQuery.getAnyCategoryIds());
+		setAnyKeywords(assetEntryQuery.getAnyKeywords());
 		setAnyTagIds(assetEntryQuery.getAnyTagIds());
 		setAttributes(assetEntryQuery.getAttributes());
 		setClassNameIds(assetEntryQuery.getClassNameIds());
@@ -103,8 +105,10 @@ public class AssetEntryQuery {
 		setLinkedAssetEntryId(assetEntryQuery.getLinkedAssetEntryId());
 		setListable(assetEntryQuery.isListable());
 		setNotAllCategoryIds(assetEntryQuery.getNotAllCategoryIds());
+		setNotAllKeywords(assetEntryQuery.getNotAllKeywords());
 		setNotAllTagIdsArray(assetEntryQuery.getNotAllTagIdsArray());
 		setNotAnyCategoryIds(assetEntryQuery.getNotAnyCategoryIds());
+		setNotAnyKeywords(assetEntryQuery.getNotAnyKeywords());
 		setNotAnyTagIds(assetEntryQuery.getNotAnyTagIds());
 		setOrderByCol1(assetEntryQuery.getOrderByCol1());
 		setOrderByCol2(assetEntryQuery.getOrderByCol2());
@@ -192,6 +196,10 @@ public class AssetEntryQuery {
 		return _allCategoryIds;
 	}
 
+	public String[] getAllKeywords() {
+		return _allKeywords;
+	}
+
 	public long[] getAllLeftAndRightCategoryIds() {
 		return _getLeftAndRightCategoryIds(_allCategoryIds);
 	}
@@ -206,6 +214,10 @@ public class AssetEntryQuery {
 
 	public long[] getAnyCategoryIds() {
 		return _anyCategoryIds;
+	}
+
+	public String[] getAnyKeywords() {
+		return _anyKeywords;
 	}
 
 	public long[] getAnyLeftAndRightCategoryIds() {
@@ -248,6 +260,11 @@ public class AssetEntryQuery {
 		return _groupIds;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getAllKeywords())}
+	 */
+	@Deprecated
 	public String getKeywords() {
 		return _keywords;
 	}
@@ -264,6 +281,10 @@ public class AssetEntryQuery {
 		return _notAllCategoryIds;
 	}
 
+	public String[] getNotAllKeywords() {
+		return _notAllKeywords;
+	}
+
 	public long[] getNotAllLeftAndRightCategoryIds() {
 		return _getLeftAndRightCategoryIds(_notAllCategoryIds);
 	}
@@ -278,6 +299,10 @@ public class AssetEntryQuery {
 
 	public long[] getNotAnyCategoryIds() {
 		return _notAnyCategoryIds;
+	}
+
+	public String[] getNotAnyKeywords() {
+		return _notAnyKeywords;
 	}
 
 	public long[] getNotAnyLeftAndRightCategoryIds() {
@@ -350,6 +375,12 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
+	public void setAllKeywords(String[] allKeywords) {
+		_allKeywords = allKeywords;
+
+		_toString = null;
+	}
+
 	public void setAllTagIds(long[] allTagIds) {
 		_allTagIds = allTagIds;
 
@@ -372,6 +403,12 @@ public class AssetEntryQuery {
 
 	public void setAnyCategoryIds(long[] anyCategoryIds) {
 		_anyCategoryIds = anyCategoryIds;
+
+		_toString = null;
+	}
+
+	public void setAnyKeywords(String[] anyKeywords) {
+		_anyKeywords = anyKeywords;
 
 		_toString = null;
 	}
@@ -445,6 +482,11 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setAllKeywords(String[] keywords))}
+	 */
+	@Deprecated
 	public void setKeywords(String keywords) {
 		_keywords = keywords;
 	}
@@ -471,6 +513,12 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
+	public void setNotAllKeywords(String[] notAllKeywords) {
+		_notAllKeywords = notAllKeywords;
+
+		_toString = null;
+	}
+
 	public void setNotAllTagIds(long[] notAllTagIds) {
 		_notAllTagIds = notAllTagIds;
 
@@ -489,6 +537,12 @@ public class AssetEntryQuery {
 
 	public void setNotAnyCategoryIds(long[] notAnyCategoryIds) {
 		_notAnyCategoryIds = notAnyCategoryIds;
+
+		_toString = null;
+	}
+
+	public void setNotAnyKeywords(String[] notAnyKeywords) {
+		_notAnyKeywords = notAnyKeywords;
 
 		_toString = null;
 	}
@@ -561,16 +615,20 @@ public class AssetEntryQuery {
 			return _toString;
 		}
 
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{allCategoryIds=");
 		sb.append(StringUtil.merge(_allCategoryIds));
+		sb.append(", allKeywords=");
+		sb.append(StringUtil.merge(_allKeywords));
 		sb.append(", allTagIds=");
 		sb.append(StringUtil.merge(_allTagIds));
 		sb.append(", andOperator=");
 		sb.append(_andOperator);
 		sb.append(", anyCategoryIds=");
 		sb.append(StringUtil.merge(_anyCategoryIds));
+		sb.append(", anyKeywords=");
+		sb.append(StringUtil.merge(_anyKeywords));
 		sb.append(", anyTagIds=");
 		sb.append(StringUtil.merge(_anyTagIds));
 		sb.append(", classNameIds=");
@@ -601,10 +659,14 @@ public class AssetEntryQuery {
 		sb.append(_listable);
 		sb.append(", notAllCategoryIds=");
 		sb.append(StringUtil.merge(_notAllCategoryIds));
+		sb.append(", notAllKeywords=");
+		sb.append(StringUtil.merge(_notAllKeywords));
 		sb.append(", notAllTagIds=");
 		sb.append(StringUtil.merge(_notAllTagIds));
 		sb.append(", notAnyCategoryIds=");
 		sb.append(StringUtil.merge(_notAnyCategoryIds));
+		sb.append(", notAnyKeywords=");
+		sb.append(StringUtil.merge(_notAnyKeywords));
 		sb.append(", notAnyTagIds=");
 		sb.append(StringUtil.merge(_notAnyTagIds));
 		sb.append(", orderByCol1=");
@@ -684,10 +746,12 @@ public class AssetEntryQuery {
 		AssetEntryQuery.class);
 
 	private long[] _allCategoryIds = new long[0];
+	private String[] _allKeywords = new String[0];
 	private long[] _allTagIds = new long[0];
 	private long[][] _allTagIdsArray = new long[0][];
 	private boolean _andOperator;
 	private long[] _anyCategoryIds = new long[0];
+	private String[] _anyKeywords = new String[0];
 	private long[] _anyTagIds = new long[0];
 	private Map<String, Serializable> _attributes = new HashMap<>();
 	private long[] _classNameIds = new long[0];
@@ -703,9 +767,11 @@ public class AssetEntryQuery {
 	private long _linkedAssetEntryId;
 	private Boolean _listable = true;
 	private long[] _notAllCategoryIds = new long[0];
+	private String[] _notAllKeywords = new String[0];
 	private long[] _notAllTagIds = new long[0];
 	private long[][] _notAllTagIdsArray = new long[0][];
 	private long[] _notAnyCategoryIds = new long[0];
+	private String[] _notAnyKeywords = new String[0];
 	private long[] _notAnyTagIds = new long[0];
 	private String _orderByCol1;
 	private String _orderByCol2;

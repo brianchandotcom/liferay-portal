@@ -366,13 +366,26 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			String[] overrideAllAssetTagNames)
 		throws PortalException {
 
+		return getAssetEntryQuery(
+			portletPreferences, groupId, layout, overrideAllAssetCategoryIds,
+			null, overrideAllAssetTagNames);
+	}
+
+	@Override
+	public AssetEntryQuery getAssetEntryQuery(
+			PortletPreferences portletPreferences, long groupId, Layout layout,
+			long[] overrideAllAssetCategoryIds, String[] overrideAllKeywords,
+			String[] overrideAllAssetTagNames)
+		throws PortalException {
+
 		long[] groupIds = getGroupIds(portletPreferences, groupId, layout);
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		_setCategoriesAndTags(
+		_setCategoriesAndKeywordsAndTags(
 			assetEntryQuery, portletPreferences, groupIds,
-			overrideAllAssetCategoryIds, overrideAllAssetTagNames);
+			overrideAllAssetCategoryIds, overrideAllKeywords,
+			overrideAllAssetTagNames);
 
 		assetEntryQuery.setGroupIds(groupIds);
 
@@ -491,8 +504,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			String queryName = portletPreferences.getValue(
 				"queryName" + i, StringPool.BLANK);
 
-			if (!Objects.equals(queryName, "assetCategories") &&
-				queryContains &&
+			if (Objects.equals(queryName, "assetTags") && queryContains &&
 				(queryAndOperator || (queryValues.length == 1))) {
 
 				allAssetTagNames = queryValues;
@@ -729,6 +741,37 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
+	}
+
+	@Override
+	public String[] getKeywords(PortletPreferences portletPreferences) {
+		String[] allKeywords = new String[0];
+
+		for (int i = 0; true; i++) {
+			String[] queryValues = portletPreferences.getValues(
+				"queryValues" + i, null);
+
+			if (ArrayUtil.isEmpty(queryValues)) {
+				break;
+			}
+
+			boolean queryContains = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryContains" + i, StringPool.BLANK));
+			boolean queryAndOperator = GetterUtil.getBoolean(
+				portletPreferences.getValue(
+					"queryAndOperator" + i, StringPool.BLANK));
+			String queryName = portletPreferences.getValue(
+				"queryName" + i, StringPool.BLANK);
+
+			if (Objects.equals(queryName, "keywords") && queryContains &&
+				(queryAndOperator || (queryValues.length == 1))) {
+
+				allKeywords = queryValues;
+			}
+		}
+
+		return allKeywords;
 	}
 
 	@Override
@@ -1092,15 +1135,20 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		portletPreferences.store();
 	}
 
-	private void _setCategoriesAndTags(
+	private void _setCategoriesAndKeywordsAndTags(
 		AssetEntryQuery assetEntryQuery, PortletPreferences portletPreferences,
 		long[] scopeGroupIds, long[] overrideAllAssetCategoryIds,
-		String[] overrideAllAssetTagNames) {
+		String[] overrideAllKeywords, String[] overrideAllAssetTagNames) {
 
 		long[] allAssetCategoryIds = new long[0];
 		long[] anyAssetCategoryIds = new long[0];
 		long[] notAllAssetCategoryIds = new long[0];
 		long[] notAnyAssetCategoryIds = new long[0];
+
+		String[] allKeywords = new String[0];
+		String[] anyKeywords = new String[0];
+		String[] notAllKeywords = new String[0];
+		String[] notAnyKeywords = new String[0];
 
 		String[] allAssetTagNames = new String[0];
 		String[] anyAssetTagNames = new String[0];
@@ -1140,6 +1188,20 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 					notAnyAssetCategoryIds = assetCategoryIds;
 				}
 			}
+			else if (Objects.equals(queryName, "keywords")) {
+				if (queryContains && queryAndOperator) {
+					allKeywords = queryValues;
+				}
+				else if (queryContains && !queryAndOperator) {
+					anyKeywords = queryValues;
+				}
+				else if (!queryContains && queryAndOperator) {
+					notAllKeywords = queryValues;
+				}
+				else {
+					notAnyKeywords = queryValues;
+				}
+			}
 			else {
 				if (queryContains && queryAndOperator) {
 					allAssetTagNames = queryValues;
@@ -1164,6 +1226,12 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
 
+		if (overrideAllKeywords != null) {
+			allKeywords = overrideAllKeywords;
+		}
+
+		assetEntryQuery.setAllKeywords(allKeywords);
+
 		if (overrideAllAssetTagNames != null) {
 			allAssetTagNames = overrideAllAssetTagNames;
 		}
@@ -1181,12 +1249,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		assetEntryQuery.setAnyCategoryIds(anyAssetCategoryIds);
 
+		assetEntryQuery.setAnyKeywords(anyKeywords);
+
 		long[] anyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupIds, anyAssetTagNames);
 
 		assetEntryQuery.setAnyTagIds(anyAssetTagIds);
 
 		assetEntryQuery.setNotAllCategoryIds(notAllAssetCategoryIds);
+
+		assetEntryQuery.setNotAllKeywords(notAllKeywords);
 
 		for (String assetTagName : notAllAssetTagNames) {
 			long[] notAllAssetTagIds = _assetTagLocalService.getTagIds(
@@ -1196,6 +1268,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		}
 
 		assetEntryQuery.setNotAnyCategoryIds(notAnyAssetCategoryIds);
+
+		assetEntryQuery.setNotAnyKeywords(notAnyKeywords);
 
 		long[] notAnyAssetTagIds = _assetTagLocalService.getTagIds(
 			siteGroupIds, notAnyAssetTagNames);

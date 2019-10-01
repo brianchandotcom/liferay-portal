@@ -41,7 +41,6 @@ import org.apache.avro.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 import org.talend.daikon.avro.SchemaConstants;
@@ -112,16 +111,11 @@ public class SchemaBuilder {
 
 		operation = operation.toLowerCase(Locale.US);
 
-		Schema schema = SchemaProperties.EMPTY_SCHEMA;
-
 		if (operation.equals(OASConstants.OPERATION_DELETE)) {
-			schema = _getDeleteSchema();
-		}
-		else {
-			schema = _getSchema(endpoint, operation, apiSpecJsonObject);
+			return _getDeleteSchema();
 		}
 
-		return schema;
+		return _getSchema(endpoint, operation, apiSpecJsonObject);
 	}
 
 	private static JsonObject _extractSchemaJsonObject(

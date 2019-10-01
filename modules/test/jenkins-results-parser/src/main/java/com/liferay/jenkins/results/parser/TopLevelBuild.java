@@ -810,7 +810,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getFailedJobSummaryElement() {
-		Element jobSummaryListElement = getJobSummaryListElement(false);
+		Element jobSummaryListElement = getJobSummaryListElement(false, null);
 
 		int failCount =
 			getDownstreamBuildCount(null) -
@@ -1199,14 +1199,21 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return jobSummaryListElement;
 	}
 
-	protected Element getJobSummaryListElement(boolean success) {
+	protected Element getJobSummaryListElement(
+		boolean success, List<String> jobVariants) {
+
 		Element jobSummaryListElement = Dom4JUtil.getNewElement("ul");
 
 		List<Build> builds = new ArrayList<>();
 
-		builds.add(this);
+		if (jobVariants != null) {
+			builds.addAll(getJobVariantsDownstreamBuilds(jobVariants));
+		}
+		else {
+			builds.add(this);
 
-		builds.addAll(getDownstreamBuilds(null));
+			builds.addAll(getDownstreamBuilds(null));
+		}
 
 		for (Build build : builds) {
 			String result = build.getResult();
@@ -1377,7 +1384,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	protected Element getSuccessfulJobSummaryElement() {
-		Element jobSummaryListElement = getJobSummaryListElement(true);
+		Element jobSummaryListElement = getJobSummaryListElement(true, null);
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 

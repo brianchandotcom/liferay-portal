@@ -46,7 +46,7 @@ const _handleFieldEdited = function(properties) {
 				}
 			}
 		);
-	});
+	}).catch(error => this.emit('evaluationError', error));
 };
 
 const _handleFieldBlurred = function(properties) {

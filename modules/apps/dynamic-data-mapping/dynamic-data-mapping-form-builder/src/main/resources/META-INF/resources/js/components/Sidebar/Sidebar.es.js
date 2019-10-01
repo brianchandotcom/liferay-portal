@@ -328,15 +328,18 @@ class Sidebar extends Component {
 		const {focusedField} = this.props;
 
 		if (evaluableForm) {
-			evaluableForm.evaluate().then(pages => {
-				dispatch('focusedFieldUpdated', {
-					...focusedField,
-					settingsContext: {
-						...focusedField.settingsContext,
-						pages
-					}
-				});
-			});
+			evaluableForm
+				.evaluate()
+				.then(pages => {
+					dispatch('focusedFieldUpdated', {
+						...focusedField,
+						settingsContext: {
+							...focusedField.settingsContext,
+							pages
+						}
+					});
+				})
+				.catch(error => dispatch('evaluationError', error));
 		}
 	}
 

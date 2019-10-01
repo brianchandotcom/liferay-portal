@@ -146,20 +146,20 @@ if (privateVirtualHosts.size() == 0) {
 	</p>
 
 	<div id="<portlet:namespace />publicVirtualHostFields">
-		<%
-		Set publicVirtualHostsSet = publicVirtualHosts.entrySet();
 
+		<%
 		for (Map.Entry<String, String> entry : publicVirtualHosts.entrySet()) {
 			String hostName = entry.getKey();
 
 			String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
-				<div class="container-fluid lfr-form-row">
-					<div class="row">
-						<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "publicVirtualHostName[]" %>' placeholder="public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
-						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "publicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
-							<aui:option label="default-language" value="" />
+			<div class="container-fluid lfr-form-row">
+				<div class="row">
+					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "publicVirtualHostName[]" %>' placeholder="public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+					<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "publicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+						<aui:option label="default-language" value="" />
 
 						<%
 						for (Locale localeEntry : availableLocales) {
@@ -171,29 +171,32 @@ if (privateVirtualHosts.size() == 0) {
 						<%
 						}
 						%>
-						</aui:select>
-					</div>
+
+					</aui:select>
 				</div>
+			</div>
+
 		<%
 		}
 		%>
+
 	</div>
 
 	<div id="<portlet:namespace />privateVirtualHostFields">
-		<%
-		Set privateVirtualHostsSet = privateVirtualHosts.entrySet();
 
+		<%
 		for (Map.Entry<String, String> entry : privateVirtualHosts.entrySet()) {
 			String hostName = entry.getKey();
 
 			String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 		%>
-				<div class="container-fluid lfr-form-row">
-					<div class="row">
-						<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "privateVirtualHostName[]" %>' placeholder="private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
-						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "privateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
-							<aui:option label="default-language" value="" />
+			<div class="container-fluid lfr-form-row">
+				<div class="row">
+					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "privateVirtualHostName[]" %>' placeholder="private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+					<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "privateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+						<aui:option label="default-language" value="" />
 
 						<%
 						for (Locale localeEntry : availableLocales) {
@@ -205,12 +208,15 @@ if (privateVirtualHosts.size() == 0) {
 						<%
 						}
 						%>
-						</aui:select>
-					</div>
+
+					</aui:select>
 				</div>
+			</div>
+
 		<%
 		}
 		%>
+
 	</div>
 
 	<c:if test="<%= liveGroup.hasStagingGroup() %>">
@@ -226,20 +232,20 @@ if (privateVirtualHosts.size() == 0) {
 		%>
 
 		<div id="<portlet:namespace />stagingPublicVirtualHostFields">
-			<%
-			Set stagingPublicVirtualHostsSet = stagingPublicVirtualHosts.entrySet();
 
+			<%
 			for (Map.Entry<String, String> entry : stagingPublicVirtualHosts.entrySet()) {
 				String hostName = entry.getKey();
 
 				String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
-					<div class="container-fluid lfr-form-row">
-						<div class="row">
-							<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostName[]" %>' placeholder="staging-public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
-							<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
-								<aui:option label="default-language" value="" />
+				<div class="container-fluid lfr-form-row">
+					<div class="row">
+						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostName[]" %>' placeholder="staging-public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPublicVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+							<aui:option label="default-language" value="" />
 
 							<%
 							for (Locale localeEntry : availableLocales) {
@@ -251,12 +257,15 @@ if (privateVirtualHosts.size() == 0) {
 							<%
 							}
 							%>
-							</aui:select>
-						</div>
+
+						</aui:select>
 					</div>
+				</div>
+
 			<%
 			}
 			%>
+
 		</div>
 
 		<%
@@ -270,20 +279,20 @@ if (privateVirtualHosts.size() == 0) {
 		%>
 
 		<div id="<portlet:namespace />stagingPrivateVirtualHostFields">
-			<%
-			Set stagingPrivateVirtualHostsSet = stagingPrivateVirtualHosts.entrySet();
 
+			<%
 			for (Map.Entry<String, String> entry : stagingPrivateVirtualHosts.entrySet()) {
 				String hostName = entry.getKey();
 
 				String hostLocale = Validator.isNotNull(entry.getValue()) ? entry.getValue() : StringPool.BLANK;
 			%>
-					<div class="container-fluid lfr-form-row">
-						<div class="row">
-							<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostName[]" %>' placeholder="staging-private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
-							<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
-								<aui:option label="default-language" value="" />
+				<div class="container-fluid lfr-form-row">
+					<div class="row">
+						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostName[]" %>' placeholder="staging-private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+
+						<aui:select inlineField="<%= true %>" label="language" name='<%= renderResponse.getNamespace() + "stagingPrivateVirtualHostLocale[]" %>' wrapperCssClass="col-sm-6">
+							<aui:option label="default-language" value="" />
 
 							<%
 							for (Locale localeEntry : availableLocales) {
@@ -295,14 +304,16 @@ if (privateVirtualHosts.size() == 0) {
 							<%
 							}
 							%>
-							</aui:select>
-						</div>
+
+						</aui:select>
 					</div>
+				</div>
+
 			<%
 			}
 			%>
-		</div>
 
+		</div>
 	</c:if>
 </aui:fieldset>
 

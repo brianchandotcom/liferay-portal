@@ -32,7 +32,11 @@ import Button from '../../components/button/Button.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 import FormViewContext from './FormViewContext.es';
-import {EDIT_CUSTOM_OBJECT_FIELD, dropLayoutBuilderField} from './actions.es';
+import {
+	dropLayoutBuilderField,
+	EDIT_CUSTOM_OBJECT_FIELD,
+	EVALUATION_ERROR
+} from './actions.es';
 
 const DefaultSidebarBody = ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -115,7 +119,30 @@ const SettingsSidebarBody = () => {
 				)
 			);
 		} else {
-			form.pages = filteredSettingsContext.pages;
+			const {pages} = filteredSettingsContext;
+
+			form.setState({pages}, () => {
+				let evaluableForm = false;
+				const visitor = new PagesVisitor(pages);
+
+				visitor.mapFields(({evaluable}) => {
+					if (evaluable) {
+						evaluableForm = true;
+					}
+				});
+
+				if (evaluableForm) {
+					form.evaluate()
+						.then(pages => {
+							if (form.isDisposed()) {
+								return;
+							}
+
+							form.setState({pages});
+						})
+						.catch(error => dispatch(EVALUATION_ERROR, error));
+				}
+			});
 		}
 	}, [
 		dataLayoutBuilder,

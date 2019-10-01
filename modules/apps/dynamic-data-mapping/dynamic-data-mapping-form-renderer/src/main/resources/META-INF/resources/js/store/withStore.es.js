@@ -31,22 +31,24 @@ const _handleFieldEdited = function(properties) {
 	const {evaluable} = fieldInstance;
 	const evaluatorContext = this.getEvaluatorContext();
 
-	handleFieldEdited(evaluatorContext, properties).then(evaluatedPages => {
-		if (fieldInstance.isDisposed()) {
-			return;
-		}
-
-		this.setState(
-			{
-				pages: evaluatedPages
-			},
-			() => {
-				if (evaluable) {
-					this.emit('evaluated', evaluatedPages);
-				}
+	handleFieldEdited(evaluatorContext, properties)
+		.then(evaluatedPages => {
+			if (fieldInstance.isDisposed()) {
+				return;
 			}
-		);
-	});
+
+			this.setState(
+				{
+					pages: evaluatedPages
+				},
+				() => {
+					if (evaluable) {
+						this.emit('evaluated', evaluatedPages);
+					}
+				}
+			);
+		})
+		.catch(error => this.emit('evaluationError', error));
 };
 
 const _handleFieldBlurred = function(properties) {

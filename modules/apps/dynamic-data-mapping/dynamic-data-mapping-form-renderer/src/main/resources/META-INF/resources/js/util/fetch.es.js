@@ -19,14 +19,16 @@ const defaultHeaders = {
 };
 
 export const makeFetch = ({
-	url,
 	body,
 	headers = defaultHeaders,
-	method = 'POST'
+	method = 'POST',
+	url,
+	...otherProps
 }) => {
 	const fetchData = {
 		headers,
-		method
+		method,
+		...otherProps
 	};
 
 	if (method === 'POST') {
@@ -40,6 +42,8 @@ export const makeFetch = ({
 
 			if (sessionStatus === 'expired' || error.status === 401) {
 				window.location.reload();
+			} else {
+				throw error;
 			}
 		});
 };

@@ -264,7 +264,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 	<c:otherwise>
 		<div class="sidebar-header">
 			<h1 class="sidebar-title">
-				<liferay-ui:message arguments="<%= folders.size() + fileEntries.size() + fileShortcuts.size() %>" key="x-items-are-selected" />
+				<liferay-ui:message key="selection" />
 			</h1>
 		</div>
 

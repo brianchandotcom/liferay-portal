@@ -22,7 +22,7 @@ long selectAllCount = GetterUtil.getLong(request.getAttribute(DLWebKeys.DOCUMENT
 
 <div class="sidebar-header">
 	<h1 class="sidebar-title">
-		<liferay-ui:message arguments="<%= selectAllCount %>" key="x-items-are-selected" />
+		<liferay-ui:message key="selection" />
 	</h1>
 </div>
 

@@ -26,7 +26,6 @@ import com.liferay.portal.store.file.system.configuration.AdvancedFileSystemStor
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -103,21 +102,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 				return;
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getFileNames(List, String, String)}
-	 */
-	@Deprecated
-	protected List<String> getAdvancedFileNames(
-		long companyId, long repositoryId, String fileName) {
-
-		List<String> fileNames = new ArrayList<>();
-
-		getFileNames(fileNames, StringPool.BLANK, fileName);
-
-		return fileNames;
 	}
 
 	protected int getDepth(String path) {

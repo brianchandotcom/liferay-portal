@@ -23,6 +23,8 @@ import com.liferay.mule.internal.metadata.key.PATCHEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.key.POSTEndpointTypeKeysResolver;
 import com.liferay.mule.internal.metadata.output.DELETEEndpointOutputTypeResolver;
 import com.liferay.mule.internal.metadata.output.GETEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.PATCHEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.POSTEndpointOutputTypeResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,6 +94,7 @@ public class LiferayOperations {
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> patch(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
@@ -111,6 +114,7 @@ public class LiferayOperations {
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> post(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,

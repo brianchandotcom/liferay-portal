@@ -88,21 +88,21 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Task task1 = randomTask();
 
+		task1.setBreachedInstanceCount(0L);
 		task1.setDurationAvg(1000L);
 		task1.setInstanceCount(1L);
 		task1.setOnTimeInstanceCount(0L);
 		task1.setOverdueInstanceCount(0L);
-		task1.setBreachedInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(_process.getId(), task1, "2.0");
 
 		Task task2 = randomTask();
 
+		task2.setBreachedInstanceCount(0L);
 		task2.setDurationAvg(2000L);
 		task2.setInstanceCount(1L);
 		task2.setOnTimeInstanceCount(0L);
 		task2.setOverdueInstanceCount(0L);
-		task2.setBreachedInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(_process.getId(), task2, "2.0");
 
@@ -144,22 +144,22 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Task task3 = randomTask();
 
+		task3.setBreachedInstanceCount(2L);
 		task3.setDurationAvg(3000L);
 		task3.setInstanceCount(2L);
 		task3.setOnTimeInstanceCount(0L);
 		task3.setOverdueInstanceCount(2L);
-		task3.setBreachedInstanceCount(2L);
 
 		testGetProcessTasksPage_addTask(
 			_process.getId(), "COMPLETED", task3, "2.0");
 
 		Task task4 = randomTask();
 
+		task4.setBreachedInstanceCount(0L);
 		task4.setDurationAvg(4000L);
 		task4.setInstanceCount(1L);
 		task4.setOnTimeInstanceCount(1L);
 		task4.setOverdueInstanceCount(0L);
-		task4.setBreachedInstanceCount(0L);
 
 		testGetProcessTasksPage_addTask(
 			_process.getId(), "COMPLETED", task4, "2.0");

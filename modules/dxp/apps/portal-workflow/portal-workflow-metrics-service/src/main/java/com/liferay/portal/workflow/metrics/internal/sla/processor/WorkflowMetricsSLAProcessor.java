@@ -269,7 +269,7 @@ public class WorkflowMetricsSLAProcessor {
 		);
 	}
 
-	protected boolean hasBreachedSLA(
+	protected boolean isBreached(
 		Document document, LocalDateTime nowLocalDateTime,
 		LocalDateTime overdueLocalDateTime) {
 
@@ -298,7 +298,7 @@ public class WorkflowMetricsSLAProcessor {
 		return false;
 	}
 
-	protected boolean isOntime(
+	protected boolean isOnTime(
 		Document document, LocalDateTime nowLocalDateTime,
 		LocalDateTime overdueLocalDateTime) {
 
@@ -528,7 +528,7 @@ public class WorkflowMetricsSLAProcessor {
 		return new WorkflowMetricsSLATaskResult() {
 			{
 				setBreached(
-					hasBreachedSLA(
+					WorkflowMetricsSLAProcessor.this.isBreached(
 						document, nowLocalDateTime,
 						workflowMetricsSLAProcessResult.
 							getOverdueLocalDateTime()));
@@ -538,7 +538,7 @@ public class WorkflowMetricsSLAProcessor {
 					workflowMetricsSLAProcessResult.
 						getLastCheckLocalDateTime());
 				setOnTime(
-					isOntime(
+					WorkflowMetricsSLAProcessor.this.isOnTime(
 						document, nowLocalDateTime,
 						workflowMetricsSLAProcessResult.
 							getOverdueLocalDateTime()));

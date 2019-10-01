@@ -55,10 +55,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testHasBreachedSLA() {
+	public void testIsBreached() {
 		LocalDateTime nowLocalDateTime = _createLocalDateTime();
 
-		_assertHasBreachedSLA(
+		_assertIsBreached(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -67,7 +67,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.plusHours(1));
-		_assertHasBreachedSLA(
+		_assertIsBreached(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -78,7 +78,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(2));
-		_assertHasBreachedSLA(
+		_assertIsBreached(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -92,7 +92,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
-		_assertHasBreachedSLA(
+		_assertIsBreached(
 			true,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -103,7 +103,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
-		_assertHasBreachedSLA(
+		_assertIsBreached(
 			true,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -118,10 +118,10 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 	}
 
 	@Test
-	public void testIsOntime() {
+	public void testIsOnTime() {
 		LocalDateTime nowLocalDateTime = _createLocalDateTime();
 
-		_assertIsOntime(
+		_assertIsOnTime(
 			true,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -130,7 +130,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.plusHours(1));
-		_assertIsOntime(
+		_assertIsOnTime(
 			true,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -144,7 +144,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
-		_assertIsOntime(
+		_assertIsOnTime(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -155,7 +155,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(2));
-		_assertIsOntime(
+		_assertIsOnTime(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -166,7 +166,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 					}
 				}),
 			nowLocalDateTime, nowLocalDateTime.minusHours(1));
-		_assertIsOntime(
+		_assertIsOnTime(
 			false,
 			_createDocument(
 				new HashMap<String, Object>() {
@@ -504,7 +504,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		return metricsSLACalendarTrackerImpl;
 	}
 
-	private void _assertHasBreachedSLA(
+	private void _assertIsBreached(
 		boolean breached, Document document, LocalDateTime nowLocalDateTime,
 		LocalDateTime overdueLocalDateTime) {
 
@@ -513,11 +513,11 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		Assert.assertEquals(
 			breached,
-			workflowMetricsSLAProcessor.hasBreachedSLA(
+			workflowMetricsSLAProcessor.isBreached(
 				document, nowLocalDateTime, overdueLocalDateTime));
 	}
 
-	private void _assertIsOntime(
+	private void _assertIsOnTime(
 		boolean breached, Document document, LocalDateTime nowLocalDateTime,
 		LocalDateTime overdueLocalDateTime) {
 
@@ -526,7 +526,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 
 		Assert.assertEquals(
 			breached,
-			workflowMetricsSLAProcessor.isOntime(
+			workflowMetricsSLAProcessor.isOnTime(
 				document, nowLocalDateTime, overdueLocalDateTime));
 	}
 

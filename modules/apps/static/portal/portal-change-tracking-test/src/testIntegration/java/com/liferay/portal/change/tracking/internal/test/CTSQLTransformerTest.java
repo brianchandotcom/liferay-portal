@@ -32,12 +32,13 @@ import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
@@ -1037,30 +1038,28 @@ public class CTSQLTransformerTest {
 			_ctCollections.add(ctCollection);
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		if (addedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				TestPropsValues.getUserId(),
-				_classNameLocalService.getClassNameId(modelClass), addedPK, 0,
-				CTConstants.CT_CHANGE_TYPE_ADDITION,
-				ctCollection.getCtCollectionId(), serviceContext);
+				ctCollection.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(modelClass),
+				_getCTModelProxy(addedPK), TestPropsValues.getUserId(),
+				CTConstants.CT_CHANGE_TYPE_ADDITION);
 		}
 
 		if (modifiedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				TestPropsValues.getUserId(),
-				_classNameLocalService.getClassNameId(modelClass), modifiedPK,
-				0, CTConstants.CT_CHANGE_TYPE_MODIFICATION,
-				ctCollection.getCtCollectionId(), serviceContext);
+				ctCollection.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(modelClass),
+				_getCTModelProxy(modifiedPK), TestPropsValues.getUserId(),
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION);
 		}
 
 		if (removedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				TestPropsValues.getUserId(),
-				_classNameLocalService.getClassNameId(modelClass), removedPK, 0,
-				CTConstants.CT_CHANGE_TYPE_DELETION,
-				ctCollection.getCtCollectionId(), serviceContext);
+				ctCollection.getCtCollectionId(),
+				_classNameLocalService.getClassNameId(modelClass),
+				_getCTModelProxy(removedPK), TestPropsValues.getUserId(),
+				CTConstants.CT_CHANGE_TYPE_DELETION);
 		}
 
 		return ctCollection.getCtCollectionId();
@@ -1074,6 +1073,25 @@ public class CTSQLTransformerTest {
 		CTCollection ctCollection = _ctCollections.get(ctCollectionIndex - 1);
 
 		return ctCollection.getCtCollectionId();
+	}
+
+	private static CTModel<?> _getCTModelProxy(long primaryKey) {
+		return (CTModel<?>)ProxyUtil.newProxyInstance(
+			CTSQLTransformer.class.getClassLoader(),
+			new Class<?>[] {CTModel.class},
+			(proxy, method, args) -> {
+				String methodName = method.getName();
+
+				if (methodName.equals("getPrimaryKey")) {
+					return primaryKey;
+				}
+
+				if (methodName.equals("getMvccVersion")) {
+					return 0L;
+				}
+
+				throw new UnsupportedOperationException(method.toString());
+			});
 	}
 
 	@SafeVarargs

@@ -21,7 +21,6 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,21 +100,14 @@ public class ChangeListsHistoryDetailsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"CTEntry", _getOrderByCol(), getOrderByType().equals("asc"));
 
-		QueryDefinition<CTEntry> queryDefinition = new QueryDefinition<>(
-			WorkflowConstants.STATUS_DRAFT, true, searchContainer.getStart(),
-			searchContainer.getEnd(), orderByComparator);
-
-		queryDefinition.setEnd(searchContainer.getEnd());
-		queryDefinition.setOrderByComparator(orderByComparator);
-		queryDefinition.setStart(searchContainer.getStart());
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-
 		searchContainer.setResults(
 			CTEntryLocalServiceUtil.getCTCollectionCTEntries(
-				ctCollection.getCtCollectionId()));
+				ctCollection.getCtCollectionId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator));
+
 		searchContainer.setTotal(
-			CTEntryLocalServiceUtil.getCTEntriesCount(
-				ctCollection.getCtCollectionId(), queryDefinition));
+			CTEntryLocalServiceUtil.getCTCollectionCTEntriesCount(
+				ctCollection.getCtCollectionId()));
 
 		return searchContainer;
 	}

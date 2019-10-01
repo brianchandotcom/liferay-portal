@@ -69,10 +69,7 @@
 		<column name="modelClassNameId" type="long" />
 		<column name="modelClassPK" type="long" />
 		<column name="modelMvccVersion" type="long" />
-		<column name="modelResourcePrimKey" type="long" />
 		<column name="changeType" type="int" />
-		<column name="collision" type="boolean" />
-		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 
@@ -83,28 +80,10 @@
 			<finder-column name="ctCollectionId" />
 			<finder-column name="modelClassNameId" />
 		</finder>
-		<finder name="C_MRPK" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-			<finder-column name="modelResourcePrimKey" />
-		</finder>
-		<finder name="C_S" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="C_MCNI_MCPK" return-type="CTEntry" unique="true">
 			<finder-column name="ctCollectionId" />
 			<finder-column name="modelClassNameId" />
 			<finder-column name="modelClassPK" />
-		</finder>
-		<finder name="C_MCNI_S" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-			<finder-column name="modelClassNameId" />
-			<finder-column name="status" />
-		</finder>
-		<finder name="C_MRPK_S" return-type="Collection">
-			<finder-column name="ctCollectionId" />
-			<finder-column name="modelResourcePrimKey" />
-			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

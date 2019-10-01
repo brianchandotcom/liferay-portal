@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.sidebar.panel;
 
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
 import java.util.Locale;
 
 /**
@@ -32,6 +34,13 @@ public interface ContentPageEditorSidebarPanel {
 	}
 
 	public default boolean isVisible(boolean pageIsDisplayPage) {
+		return true;
+	}
+
+	public default boolean isVisible(
+		PermissionChecker permissionChecker, long plid,
+		boolean pageIsDisplayPage) {
+
 		return true;
 	}
 

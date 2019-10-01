@@ -17,6 +17,7 @@ package com.liferay.batch.engine.internal.reader;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
 import com.liferay.batch.engine.model.BatchEngineTask;
+import com.liferay.petra.string.StringPool;
 
 import java.sql.Blob;
 
@@ -45,7 +46,7 @@ public class BatchEngineTaskItemReaderFactory {
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineTaskItemReader(
-				content.getBinaryStream(), itemClass);
+				StringPool.COMMA, content.getBinaryStream(), itemClass);
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {

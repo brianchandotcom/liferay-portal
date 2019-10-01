@@ -11,15 +11,18 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
+								"value": "1"
+							},
+							{
+								"value": "2"
+							},
+							{
 								"value": "3"
 							},
 							{
-								"label": "medium",
 								"value": "4"
 							},
 							{
-								"label": "large",
 								"value": "5"
 							}
 						]

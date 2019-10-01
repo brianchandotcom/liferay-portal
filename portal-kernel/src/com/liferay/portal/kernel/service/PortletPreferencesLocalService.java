@@ -329,13 +329,8 @@ public interface PortletPreferencesLocalService
 	public int getPortletPreferencesesCount();
 
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(
@@ -343,13 +338,8 @@ public interface PortletPreferencesLocalService
 		String portletId);
 
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(
@@ -357,13 +347,8 @@ public interface PortletPreferencesLocalService
 		String portletId, String defaultPreferences);
 
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(

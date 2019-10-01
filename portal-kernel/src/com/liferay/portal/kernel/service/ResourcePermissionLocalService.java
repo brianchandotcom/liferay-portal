@@ -135,13 +135,8 @@ public interface ResourcePermissionLocalService
 	 * @param actionId the action ID
 	 */
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	public void addResourcePermission(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -773,13 +768,8 @@ public interface ResourcePermissionLocalService
 	 * @param actionIds the action IDs of the actions
 	 */
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	public void setOwnerResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -811,13 +801,8 @@ public interface ResourcePermissionLocalService
 	 * @param actionIds the action IDs of the actions
 	 */
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	public void setResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -848,13 +833,8 @@ public interface ResourcePermissionLocalService
 	 * @param roleIdsToActionIds a map of role IDs to action IDs of the actions
 	 */
 	@Retry(
-		acceptor = ExceptionRetryAcceptor.class,
-		properties = {
-			@Property(
-				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
-				value = "java.sql.SQLIntegrityConstraintViolationException"
-			)
-		}
+		acceptor = SQLStateAcceptor.class,
+		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
 	)
 	public void setResourcePermissions(
 			long companyId, String name, int scope, String primKey,

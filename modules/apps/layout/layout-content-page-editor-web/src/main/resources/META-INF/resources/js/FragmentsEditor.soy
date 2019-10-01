@@ -12,11 +12,20 @@
 	{@param layoutData: ?}
 	{@param portletNamespace: string}
 	{@param? defaultSegmentsExperienceId: string}
+	{@param? hasUpdatePermissions: bool}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
 	{@param? store: ?}
 
-	<div class="fragments-editor" id="{$id}">
+	{let $fragmentsEditorClasses kind="text"}
+		fragments-editor
+
+		{if $hasUpdatePermissions}
+			{sp}fragments-editor--with-update-permissions
+		{/if}
+	{/let}
+
+	<div class="{$fragmentsEditorClasses}" id="{$id}">
 		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebar.render}
 			{param ref: 'sidebar' /}
 			{param store: $store /}

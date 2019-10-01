@@ -48,13 +48,14 @@ import org.mule.runtime.api.metadata.resolving.FailureCode;
 public class MetadataTypeBuilder {
 
 	public MetadataType buildMetadataType(
-			MetadataContext metadataContext, String endpoint, String operation)
+			MetadataContext metadataContext, String endpoint, String operation,
+			String referencePath)
 		throws ConnectionException, MetadataResolvingException {
 
 		JsonNode oasJsonNode = _getOASJsonNode(metadataContext.getConnection());
 
 		JsonNode referenceJsonNode = _fetchReferenceJsonNode(
-			oasJsonNode, endpoint, operation);
+			oasJsonNode, endpoint, operation, referencePath);
 
 		if (referenceJsonNode.isNull()) {
 			return _resolveNothingMetadataType(metadataContext);
@@ -92,12 +93,12 @@ public class MetadataTypeBuilder {
 	}
 
 	private JsonNode _fetchReferenceJsonNode(
-		JsonNode openAPISpecJsonNode, String endpoint, String operation) {
+		JsonNode openAPISpecJsonNode, String endpoint, String operation,
+		String referencePath) {
 
 		String path = StringUtil.replace(
-			OASConstants.
-				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN,
-			"ENDPOINT_TPL", endpoint, "OPERATION_TPL", operation);
+			referencePath, "ENDPOINT_TPL", endpoint, "OPERATION_TPL",
+			operation);
 
 		return _jsonNodeReader.fetchDescendantJsonNode(
 			openAPISpecJsonNode, path);

@@ -40,7 +40,9 @@ public class GETEndpointOutputTypeResolver
 		throws ConnectionException, MetadataResolvingException {
 
 		return _metadataTypeBuilder.buildMetadataType(
-			metadataContext, endpoint, OASConstants.OPERATION_GET);
+			metadataContext, endpoint, OASConstants.OPERATION_GET,
+			OASConstants.
+				PATH_RESPONSES_DEFAULT_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
 	private static final MetadataTypeBuilder _metadataTypeBuilder =

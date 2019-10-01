@@ -40,7 +40,9 @@ public class POSTEndpointInputTypeResolver
 		throws ConnectionException, MetadataResolvingException {
 
 		return _metadataTypeBuilder.buildMetadataType(
-			metadataContext, endpoint, OASConstants.OPERATION_POST);
+			metadataContext, endpoint, OASConstants.OPERATION_POST,
+			OASConstants.
+				PATH_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_PATTERN);
 	}
 
 	private static final MetadataTypeBuilder _metadataTypeBuilder =

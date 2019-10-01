@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata;
+package com.liferay.mule.internal.metadata.output;
 
+import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
 
 import org.mule.metadata.api.model.MetadataType;
@@ -25,7 +26,8 @@ import org.mule.runtime.api.metadata.resolving.OutputTypeResolver;
 /**
  * @author Matija Petanjek
  */
-public class GETEndpointTypeResolver implements OutputTypeResolver<String> {
+public class GETEndpointOutputTypeResolver
+	implements OutputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {

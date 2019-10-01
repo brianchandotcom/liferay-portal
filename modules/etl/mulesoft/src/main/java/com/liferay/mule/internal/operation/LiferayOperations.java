@@ -15,14 +15,14 @@
 package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
+import com.liferay.mule.internal.metadata.input.PATCHEndpointInputTypeResolver;
+import com.liferay.mule.internal.metadata.input.POSTEndpointInputTypeResolver;
 import com.liferay.mule.internal.metadata.key.DELETEEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.DELETEEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.key.GETEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.GETEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.key.PATCHEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.PATCHEndpointTypeResolver;
 import com.liferay.mule.internal.metadata.key.POSTEndpointTypeKeysResolver;
-import com.liferay.mule.internal.metadata.POSTEndpointTypeResolver;
+import com.liferay.mule.internal.metadata.output.DELETEEndpointOutputTypeResolver;
+import com.liferay.mule.internal.metadata.output.GETEndpointOutputTypeResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,7 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 public class LiferayOperations {
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
-	@OutputResolver(output = DELETEEndpointTypeResolver.class)
+	@OutputResolver(output = DELETEEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> delete(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
@@ -72,7 +72,7 @@ public class LiferayOperations {
 	}
 
 	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
-	@OutputResolver(output = GETEndpointTypeResolver.class)
+	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> get(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
@@ -95,7 +95,7 @@ public class LiferayOperations {
 	public Result<InputStream, Void> patch(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
-			@Content @TypeResolver(value = PATCHEndpointTypeResolver.class)
+			@Content @TypeResolver(value = PATCHEndpointInputTypeResolver.class)
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
@@ -114,7 +114,7 @@ public class LiferayOperations {
 	public Result<InputStream, Void> post(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
-			@Content @TypeResolver(value = POSTEndpointTypeResolver.class)
+			@Content @TypeResolver(value = POSTEndpointInputTypeResolver.class)
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 

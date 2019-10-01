@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mule.internal.metadata;
+package com.liferay.mule.internal.metadata.input;
 
+import com.liferay.mule.internal.metadata.MetadataTypeBuilder;
 import com.liferay.mule.internal.oas.OASConstants;
 
 import org.mule.metadata.api.model.MetadataType;
@@ -25,7 +26,8 @@ import org.mule.runtime.api.metadata.resolving.InputTypeResolver;
 /**
  * @author Matija Petanjek
  */
-public class POSTEndpointTypeResolver implements InputTypeResolver<String> {
+public class POSTEndpointInputTypeResolver
+	implements InputTypeResolver<String> {
 
 	@Override
 	public String getCategoryName() {

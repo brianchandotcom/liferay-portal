@@ -17,11 +17,8 @@ package com.liferay.portal.store.file.system;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,11 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
@@ -58,16 +50,18 @@ import org.osgi.service.component.annotations.Modified;
  * @author Edward Han
  * @author Manuel de la Peña
  */
-@Component(
-	configurationPid = "com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {
-		"service.ranking:Integer=0",
-		"store.type=com.liferay.portal.store.file.system.FileSystemStore"
-	},
-	service = Store.class
-)
 public class FileSystemStore extends BaseStore {
+
+	public FileSystemStore(
+		FileSystemStoreConfiguration fileSystemStoreConfiguration) {
+
+		_fileSystemStoreConfiguration = fileSystemStoreConfiguration;
+
+		initializeRootDir();
+
+		fileSystemHelper = new FileSystemHelper(
+			_fileSystemStoreConfiguration.useHardLinks(), getRootDirPath());
+	}
 
 	@Override
 	public void addDirectory(
@@ -465,24 +459,6 @@ public class FileSystemStore extends BaseStore {
 		fileSystemHelper.move(fromFileNameVersionFile, toFileNameVersionFile);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_fileSystemStoreConfiguration = ConfigurableUtil.createConfigurable(
-			FileSystemStoreConfiguration.class, properties);
-
-		if (Validator.isBlank(_fileSystemStoreConfiguration.rootDir())) {
-			throw new IllegalArgumentException(
-				"File system root directory is not set",
-				new FileSystemStoreRootDirException());
-		}
-
-		initializeRootDir();
-
-		fileSystemHelper = new FileSystemHelper(
-			_fileSystemStoreConfiguration.useHardLinks(), getRootDirPath());
-	}
-
 	protected void deleteEmptyAncestors(File file) {
 		deleteEmptyAncestors(-1, -1, file);
 	}
@@ -647,11 +623,9 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
-	protected FileSystemHelper fileSystemHelper;
+	protected final FileSystemHelper fileSystemHelper;
 
-	private static volatile FileSystemStoreConfiguration
-		_fileSystemStoreConfiguration;
-
+	private final FileSystemStoreConfiguration _fileSystemStoreConfiguration;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private File _rootDir;

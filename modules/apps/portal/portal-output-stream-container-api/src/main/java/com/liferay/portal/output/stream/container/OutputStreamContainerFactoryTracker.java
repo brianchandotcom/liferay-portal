@@ -33,11 +33,21 @@ public interface OutputStreamContainerFactoryTracker {
 
 	public Set<String> getOutputStreamContainerFactoryNames();
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 */
+	@Deprecated
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint);
 
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamName, OutputStream outputStream);
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *			   #runWithSwappedLog(Runnable, String, OutputStream)}
+	 */
+	@Deprecated
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamHint,
 		String outputStreamContainerName);

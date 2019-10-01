@@ -6265,17 +6265,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId, true);
 
-		Company company = null;
-		String portalURL = null;
-
-		try {
-			company = companyLocalService.getCompany(user.getCompanyId());
-
-			portalURL = company.getPortalURL(0);
-		}
-		catch (PortalException pe) {
-			ReflectionUtil.throwException(pe);
-		}
+		String portalURL = serviceContext.getPortalURL();
 
 		final String bodyProperty;
 		final String prefix;

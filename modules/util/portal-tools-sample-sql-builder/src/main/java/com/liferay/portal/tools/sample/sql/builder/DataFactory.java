@@ -796,8 +796,6 @@ public class DataFactory {
 			List<AssetCategoryModel> assetCategoryModels = new ArrayList<>(
 				_maxAssetVocabularyCount * _maxAssetCategoryCount);
 
-			long lastRightCategoryId = 2;
-
 			for (int j = 0; j < _maxAssetVocabularyCount; j++) {
 				sb.setIndex(0);
 
@@ -822,10 +820,8 @@ public class DataFactory {
 
 					AssetCategoryModel assetCategoryModel =
 						newAssetCategoryModel(
-							i, lastRightCategoryId, sb.toString(),
+							i, sb.toString(),
 							assetVocabularyModel.getVocabularyId());
-
-					lastRightCategoryId += 2;
 
 					assetCategoryModels.add(assetCategoryModel);
 				}
@@ -3103,8 +3099,7 @@ public class DataFactory {
 	}
 
 	protected AssetCategoryModel newAssetCategoryModel(
-		long groupId, long lastRightCategoryId, String name,
-		long vocabularyId) {
+		long groupId, String name, long vocabularyId) {
 
 		AssetCategoryModel assetCategoryModel = new AssetCategoryModelImpl();
 
@@ -3118,8 +3113,8 @@ public class DataFactory {
 		assetCategoryModel.setModifiedDate(new Date());
 		assetCategoryModel.setParentCategoryId(
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		assetCategoryModel.setLeftCategoryId(lastRightCategoryId++);
-		assetCategoryModel.setRightCategoryId(lastRightCategoryId++);
+		assetCategoryModel.setTreePath(
+			"/" + assetCategoryModel.getCategoryId() + "/");
 		assetCategoryModel.setName(name);
 
 		StringBundler sb = new StringBundler(4);

@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -55,7 +53,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 
 import java.io.Serializable;
 
@@ -65,7 +62,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Provides the local service for accessing, adding, deleting, merging, moving,
@@ -103,8 +99,11 @@ public class AssetCategoryLocalServiceImpl
 
 		validate(0, parentCategoryId, name, vocabularyId);
 
+		AssetCategory parentCategory = null;
+
 		if (parentCategoryId > 0) {
-			assetCategoryPersistence.findByPrimaryKey(parentCategoryId);
+			parentCategory = assetCategoryPersistence.findByPrimaryKey(
+				parentCategoryId);
 		}
 
 		assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
@@ -119,6 +118,15 @@ public class AssetCategoryLocalServiceImpl
 		category.setUserId(user.getUserId());
 		category.setUserName(user.getFullName());
 		category.setParentCategoryId(parentCategoryId);
+
+		if (parentCategory == null) {
+			category.setTreePath("/" + categoryId + "/");
+		}
+		else {
+			category.setTreePath(
+				parentCategory.getTreePath() + categoryId + "/");
+		}
+
 		category.setName(name);
 		category.setTitleMap(titleMap);
 		category.setDescriptionMap(descriptionMap);
@@ -192,30 +200,7 @@ public class AssetCategoryLocalServiceImpl
 	public void deleteCategories(List<AssetCategory> categories)
 		throws PortalException {
 
-		List<Long> rebuildTreeGroupIds = new ArrayList<>();
-
 		for (AssetCategory category : categories) {
-			if (!rebuildTreeGroupIds.contains(category.getGroupId()) &&
-				(getChildCategoriesCount(category.getCategoryId()) > 0)) {
-
-				final long groupId = category.getGroupId();
-
-				TransactionCommitCallbackUtil.registerCallback(
-					new Callable<Void>() {
-
-						@Override
-						public Void call() throws Exception {
-							assetCategoryLocalService.rebuildTree(
-								groupId, true);
-
-							return null;
-						}
-
-					});
-
-				rebuildTreeGroupIds.add(groupId);
-			}
-
 			assetCategoryLocalService.deleteCategory(category, true);
 		}
 	}
@@ -258,22 +243,6 @@ public class AssetCategoryLocalServiceImpl
 			assetCategoryLocalService.deleteCategory(curCategory, true);
 		}
 
-		if (!categories.isEmpty() && !skipRebuildTree) {
-			final long groupId = category.getGroupId();
-
-			TransactionCommitCallbackUtil.registerCallback(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						assetCategoryLocalService.rebuildTree(groupId, true);
-
-						return null;
-					}
-
-				});
-		}
-
 		// Category
 
 		assetCategoryPersistence.remove(category);
@@ -302,9 +271,7 @@ public class AssetCategoryLocalServiceImpl
 		throws PortalException {
 
 		List<AssetCategory> categories = assetCategoryPersistence.findByP_V(
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new AssetCategoryLeftCategoryIdComparator(false));
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, vocabularyId);
 
 		assetCategoryLocalService.deleteCategories(categories);
 	}
@@ -425,7 +392,9 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public List<AssetCategory> getDescendantCategories(AssetCategory category) {
-		return assetCategoryPersistence.getDescendants(category);
+		return assetCategoryPersistence.findByG_LikeT_V(
+			category.getGroupId(), category.getTreePath() + "%",
+			category.getVocabularyId());
 	}
 
 	@Override
@@ -443,7 +412,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 
 		return ListUtil.toList(
-			assetCategoryPersistence.getDescendants(parentAssetCategory),
+			getDescendantCategories(parentAssetCategory),
 			AssetCategory.CATEGORY_ID_ACCESSOR);
 	}
 
@@ -541,14 +510,15 @@ public class AssetCategoryLocalServiceImpl
 			throw new InvalidAssetCategoryException(parentCategoryId, 2);
 		}
 
+		AssetCategory parentCategory = null;
+
 		if (parentCategoryId > 0) {
-			AssetCategory parentCategory =
-				assetCategoryPersistence.findByPrimaryKey(parentCategoryId);
+			parentCategory = assetCategoryPersistence.findByPrimaryKey(
+				parentCategoryId);
 
-			List<AssetCategory> childrenCategories =
-				_getNestedChildrenCategories(categoryId);
+			String treePath = parentCategory.getTreePath();
 
-			if (childrenCategories.contains(parentCategory)) {
+			if (treePath.startsWith(category.getTreePath())) {
 				throw new InvalidAssetCategoryException(categoryId, 1);
 			}
 		}
@@ -561,16 +531,15 @@ public class AssetCategoryLocalServiceImpl
 			updateChildrenVocabularyId(category, vocabularyId);
 		}
 
-		category.setParentCategoryId(parentCategoryId);
+		if (parentCategoryId != category.getParentCategoryId()) {
+			_rebuildTreePath(category, parentCategory);
+
+			category.setParentCategoryId(parentCategoryId);
+		}
 
 		assetCategoryPersistence.update(category);
 
 		return category;
-	}
-
-	@Override
-	public void rebuildTree(long groupId, boolean force) {
-		assetCategoryPersistence.rebuildTree(groupId, force);
 	}
 
 	@Override
@@ -654,8 +623,11 @@ public class AssetCategoryLocalServiceImpl
 
 		validate(categoryId, parentCategoryId, name, vocabularyId);
 
+		AssetCategory parentCategory = null;
+
 		if (parentCategoryId > 0) {
-			assetCategoryPersistence.findByPrimaryKey(parentCategoryId);
+			parentCategory = assetCategoryPersistence.findByPrimaryKey(
+				parentCategoryId);
 		}
 
 		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
@@ -672,7 +644,12 @@ public class AssetCategoryLocalServiceImpl
 			updateChildrenVocabularyId(category, vocabularyId);
 		}
 
-		category.setParentCategoryId(parentCategoryId);
+		if (parentCategoryId != category.getParentCategoryId()) {
+			_rebuildTreePath(category, parentCategory);
+
+			category.setParentCategoryId(parentCategoryId);
+		}
+
 		category.setName(name);
 		category.setTitleMap(titleMap);
 		category.setDescriptionMap(descriptionMap);
@@ -745,18 +722,10 @@ public class AssetCategoryLocalServiceImpl
 	protected void updateChildrenVocabularyId(
 		AssetCategory category, long vocabularyId) {
 
-		List<AssetCategory> childrenCategories =
-			assetCategoryPersistence.findByParentCategoryId(
-				category.getCategoryId());
+		for (AssetCategory childCategory : getDescendantCategories(category)) {
+			childCategory.setVocabularyId(vocabularyId);
 
-		if (!childrenCategories.isEmpty()) {
-			for (AssetCategory childCategory : childrenCategories) {
-				childCategory.setVocabularyId(vocabularyId);
-
-				assetCategoryPersistence.update(childCategory);
-
-				updateChildrenVocabularyId(childCategory, vocabularyId);
-			}
+			assetCategoryPersistence.update(childCategory);
 		}
 	}
 
@@ -796,26 +765,35 @@ public class AssetCategoryLocalServiceImpl
 		}
 	}
 
-	private List<AssetCategory> _getNestedChildrenCategories(long categoryId) {
-		List<AssetCategory> categories = new ArrayList<>();
+	private void _rebuildTreePath(
+		AssetCategory category, AssetCategory parentCategory) {
 
-		List<AssetCategory> childrenCategories =
-			assetCategoryPersistence.findByParentCategoryId(categoryId);
+		String oldTreePath = category.getTreePath();
+		String newTreePath = null;
 
-		if (!childrenCategories.isEmpty()) {
-			for (AssetCategory childCategory : childrenCategories) {
-				categories.add(childCategory);
+		long categoryId = category.getCategoryId();
 
-				List<AssetCategory> nestedChildrenCategories =
-					_getNestedChildrenCategories(childCategory.getCategoryId());
-
-				if (!nestedChildrenCategories.isEmpty()) {
-					categories.addAll(nestedChildrenCategories);
-				}
-			}
+		if (parentCategory == null) {
+			newTreePath = "/" + categoryId + "/";
+		}
+		else {
+			newTreePath = parentCategory.getTreePath() + categoryId + "/";
 		}
 
-		return categories;
+		List<AssetCategory> childrenCategories = getDescendantCategories(
+			category);
+
+		for (AssetCategory childCategory : childrenCategories) {
+			String childTreePath = childCategory.getTreePath();
+
+			childCategory.setTreePath(
+				newTreePath.concat(
+					childTreePath.substring(oldTreePath.length())));
+
+			assetCategoryPersistence.update(childCategory);
+		}
+
+		category.setTreePath(newTreePath);
 	}
 
 }

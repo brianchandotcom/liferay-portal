@@ -12,46 +12,47 @@
  * details.
  */
 
-package com.liferay.portlet.asset.util.comparator;
+package com.liferay.asset.categories.admin.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Shuyang Zhou
+ * @author Preston Crary
  */
-public class AssetCategoryLeftCategoryIdComparator
+public class AssetCategoryTreePathComparator
 	extends OrderByComparator<AssetCategory> {
 
-	public static final String ORDER_BY_ASC = "leftCategoryId ASC";
+	public static final AssetCategoryTreePathComparator INSTANCE_ASCENDING =
+		new AssetCategoryTreePathComparator(true);
 
-	public static final String ORDER_BY_DESC = "leftCategoryId DESC";
+	public static final AssetCategoryTreePathComparator INSTANCE_DESCENDING =
+		new AssetCategoryTreePathComparator(false);
 
-	public static final String[] ORDER_BY_FIELDS = {"leftCategoryId"};
+	public static final String ORDER_BY_ASC = "treePath ASC";
 
-	public AssetCategoryLeftCategoryIdComparator() {
-		this(false);
-	}
+	public static final String ORDER_BY_DESC = "treePath DESC";
 
-	public AssetCategoryLeftCategoryIdComparator(boolean ascending) {
-		_ascending = ascending;
+	public static final String[] ORDER_BY_FIELDS = {"treePath"};
+
+	public static AssetCategoryTreePathComparator getInstance(
+		boolean ascending) {
+
+		if (ascending) {
+			return INSTANCE_ASCENDING;
+		}
+
+		return INSTANCE_DESCENDING;
 	}
 
 	@Override
 	public int compare(
 		AssetCategory assetCategory1, AssetCategory assetCategory2) {
 
-		long leftCategoryId1 = assetCategory1.getLeftCategoryId();
-		long leftCategoryId2 = assetCategory2.getLeftCategoryId();
+		String treePath1 = assetCategory1.getTreePath();
+		String treePath2 = assetCategory2.getTreePath();
 
-		int value = 0;
-
-		if (leftCategoryId1 < leftCategoryId2) {
-			value = -1;
-		}
-		else if (leftCategoryId1 > leftCategoryId2) {
-			value = 1;
-		}
+		int value = treePath1.compareTo(treePath2);
 
 		if (_ascending) {
 			return value;
@@ -77,6 +78,10 @@ public class AssetCategoryLeftCategoryIdComparator
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	private AssetCategoryTreePathComparator(boolean ascending) {
+		_ascending = ascending;
 	}
 
 	private final boolean _ascending;

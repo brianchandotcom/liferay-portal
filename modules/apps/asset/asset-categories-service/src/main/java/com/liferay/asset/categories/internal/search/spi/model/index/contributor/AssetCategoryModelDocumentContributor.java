@@ -77,8 +77,7 @@ public class AssetCategoryModelDocumentContributor
 			document, Field.TITLE, siteDefaultLocale,
 			assetCategory.getTitleMap());
 
-		document.addKeyword(
-			"leftCategoryId", assetCategory.getLeftCategoryId());
+		document.addKeyword("treePath", assetCategory.getTreePath());
 		document.addLocalizedKeyword(
 			"localized_title",
 			LocalizationUtil.populateLocalizationMap(

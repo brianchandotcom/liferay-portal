@@ -175,9 +175,6 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		map.put(
 			"assetCategoryTitle_ja_JP",
 			StringUtil.lowerCase(assetCategory.getName()));
-		map.put(
-			"leftCategoryId",
-			String.valueOf(assetCategory.getLeftCategoryId()));
 		map.put("name_sortable", StringUtil.lowerCase(assetCategory.getName()));
 		map.put(
 			"parentCategoryId",
@@ -185,6 +182,7 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 		map.put("title_ja_JP", assetCategory.getName());
 		map.put(
 			"title_sortable", StringUtil.lowerCase(assetCategory.getName()));
+		map.put("treePath", assetCategory.getTreePath());
 
 		indexedFieldsFixture.populateUID(
 			AssetCategory.class.getName(), assetCategory.getCategoryId(), map);

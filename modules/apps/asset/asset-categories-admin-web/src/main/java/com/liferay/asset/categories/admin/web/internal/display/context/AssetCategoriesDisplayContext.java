@@ -18,6 +18,7 @@ import com.liferay.asset.categories.admin.web.internal.configuration.AssetCatego
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminDisplayStyleKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
+import com.liferay.asset.categories.admin.web.internal.util.AssetCategoryTreePathComparator;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -64,7 +65,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
-import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
 import java.util.List;
@@ -260,7 +260,7 @@ public class AssetCategoriesDisplayContext {
 			Sort sort = null;
 
 			if (isFlattenedNavigationAllowed()) {
-				sort = new Sort("leftCategoryId", Sort.INT_TYPE, !orderByAsc);
+				sort = new Sort("treePath", Sort.INT_TYPE, !orderByAsc);
 			}
 			else {
 				sort = new Sort("createDate", Sort.LONG_TYPE, !orderByAsc);
@@ -290,7 +290,7 @@ public class AssetCategoriesDisplayContext {
 				categories = AssetCategoryServiceUtil.getVocabularyCategories(
 					getVocabularyId(), categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(),
-					new AssetCategoryLeftCategoryIdComparator(orderByAsc));
+					AssetCategoryTreePathComparator.getInstance(orderByAsc));
 			}
 			else {
 				categoriesCount =
@@ -302,7 +302,7 @@ public class AssetCategoriesDisplayContext {
 					category.getCategoryId(), getVocabularyId(),
 					categoriesSearchContainer.getStart(),
 					categoriesSearchContainer.getEnd(),
-					new AssetCategoryLeftCategoryIdComparator(orderByAsc));
+					AssetCategoryTreePathComparator.getInstance(orderByAsc));
 			}
 
 			categoriesSearchContainer.setTotal(categoriesCount);

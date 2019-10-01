@@ -30,31 +30,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SwappedLogExecutor.class)
 public class SwappedLogExecutor {
 
-	public void execute(String bundleSymbolicName, Runnable runnable) {
-		_execute(
-			bundleSymbolicName, runnable,
-			_outputStreamContainerFactoryTracker.
-				getOutputStreamContainerFactory());
-	}
-
 	public void execute(
 		String bundleSymbolicName, Runnable runnable,
 		String outputStreamContainerFactoryName) {
 
-		_execute(
-			bundleSymbolicName, runnable,
+		OutputStreamContainerFactory outputStreamContainerFactory =
 			_outputStreamContainerFactoryTracker.
 				getOutputStreamContainerFactory(
-					outputStreamContainerFactoryName));
-	}
-
-	public OutputStream getOutputStream() {
-		return _outputStreamThreadLocal.get();
-	}
-
-	private void _execute(
-		String bundleSymbolicName, Runnable runnable,
-		OutputStreamContainerFactory outputStreamContainerFactory) {
+					outputStreamContainerFactoryName);
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create(
@@ -74,6 +57,10 @@ public class SwappedLogExecutor {
 		finally {
 			_outputStreamThreadLocal.remove();
 		}
+	}
+
+	public OutputStream getOutputStream() {
+		return _outputStreamThreadLocal.get();
 	}
 
 	@Reference

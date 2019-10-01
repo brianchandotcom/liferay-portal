@@ -26,6 +26,11 @@ public interface OutputStreamContainerFactoryTracker {
 	public static final String DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME =
 		"dummy";
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *			   #getOutputStreamContainerFactory(String)}
+	 */
+	@Deprecated
 	public OutputStreamContainerFactory getOutputStreamContainerFactory();
 
 	public OutputStreamContainerFactory getOutputStreamContainerFactory(

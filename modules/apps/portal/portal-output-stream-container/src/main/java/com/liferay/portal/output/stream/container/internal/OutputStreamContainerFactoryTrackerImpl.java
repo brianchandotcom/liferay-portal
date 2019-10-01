@@ -55,6 +55,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class OutputStreamContainerFactoryTrackerImpl
 	implements OutputStreamContainerFactoryTracker {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *			   #getOutputStreamContainerFactory(String)}
+	 */
+	@Deprecated
 	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory() {
 		OutputStreamContainerFactory outputStreamContainerFactory =
@@ -70,6 +75,17 @@ public class OutputStreamContainerFactoryTrackerImpl
 	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory(
 		String outputStreamContainerFactoryName) {
+
+		if (outputStreamContainerFactoryName == null) {
+			OutputStreamContainerFactory outputStreamContainerFactory =
+				_outputStreamContainerFactory;
+
+			if (outputStreamContainerFactory != null) {
+				return outputStreamContainerFactory;
+			}
+
+			return _consoleOutputStreamContainerFactory;
+		}
 
 		OutputStreamContainerFactory outputStreamContainerFactory =
 			_outputStreamContainerFactories.getService(
@@ -97,7 +113,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 	@Override
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint) {
 		OutputStreamContainerFactory outputStreamContainerFactory =
-			getOutputStreamContainerFactory();
+			getOutputStreamContainerFactory(null);
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create(outputStreamHint);
@@ -148,12 +164,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 		String outputStreamContainerName) {
 
 		OutputStreamContainerFactory outputStreamContainerFactory =
-			_outputStreamContainerFactories.getService(
-				outputStreamContainerName);
-
-		if (outputStreamContainerFactory == null) {
-			outputStreamContainerFactory = getOutputStreamContainerFactory();
-		}
+			getOutputStreamContainerFactory(outputStreamContainerName);
 
 		OutputStreamContainer outputStreamContainer =
 			outputStreamContainerFactory.create(outputStreamHint);

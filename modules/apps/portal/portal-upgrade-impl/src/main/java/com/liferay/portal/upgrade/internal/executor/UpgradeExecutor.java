@@ -50,12 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeExecutor {
 
 	public void execute(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
-
-		execute(bundleSymbolicName, upgradeInfos, null);
-	}
-
-	public void execute(
 		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos,
 		String outputStreamContainerFactoryName) {
 
@@ -107,15 +101,9 @@ public class UpgradeExecutor {
 			bundleSymbolicName, upgradeInfos,
 			() -> _swappedLogExecutor.getOutputStream());
 
-		if (Validator.isNotNull(outputStreamContainerFactoryName)) {
-			_swappedLogExecutor.execute(
-				bundleSymbolicName, upgradeInfosRunnable,
-				outputStreamContainerFactoryName);
-		}
-		else {
-			_swappedLogExecutor.execute(
-				bundleSymbolicName, upgradeInfosRunnable);
-		}
+		_swappedLogExecutor.execute(
+			bundleSymbolicName, upgradeInfosRunnable,
+			outputStreamContainerFactoryName);
 
 		release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 

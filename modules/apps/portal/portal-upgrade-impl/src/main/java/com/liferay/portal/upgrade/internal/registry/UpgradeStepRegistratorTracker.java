@@ -189,7 +189,8 @@ public class UpgradeStepRegistratorTracker {
 						() -> _log.error(
 							"Failed upgrade process for module ".concat(
 								bundleSymbolicName),
-							t));
+							t),
+						null);
 				}
 			}
 

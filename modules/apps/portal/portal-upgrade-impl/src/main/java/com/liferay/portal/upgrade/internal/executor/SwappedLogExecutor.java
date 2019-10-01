@@ -50,14 +50,6 @@ public class SwappedLogExecutor {
 					outputStreamContainerFactoryName));
 	}
 
-	public String getDummyOutputStreamContainerFactoryName() {
-		OutputStreamContainerFactory dummyOutputStreamContainerFactory =
-			_outputStreamContainerFactoryTracker.
-				getDummyOutputStreamContainerFactory();
-
-		return dummyOutputStreamContainerFactory.getFactoryName();
-	}
-
 	public OutputStream getOutputStream() {
 		return _outputStreamThreadLocal.get();
 	}

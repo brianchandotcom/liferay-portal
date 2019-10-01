@@ -474,13 +474,11 @@ public class VerifyProcessTrackerOSGiCommands {
 			String key, VerifyProcess serviceVerifyProcess,
 			List<VerifyProcess> contentVerifyProcesses) {
 
-			OutputStreamContainerFactory dummyOutputStreamContainerFactory =
-				outputStreamContainerFactoryTracker.
-					getDummyOutputStreamContainerFactory();
-
 			_execute(
 				verifyProcessTrackerMap, key,
-				dummyOutputStreamContainerFactory.getFactoryName(), false);
+				OutputStreamContainerFactoryTracker.
+					DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME,
+				false);
 		}
 
 		@Override

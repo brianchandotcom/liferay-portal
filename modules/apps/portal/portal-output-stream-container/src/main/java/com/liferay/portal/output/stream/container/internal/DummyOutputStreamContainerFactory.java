@@ -17,6 +17,7 @@ package com.liferay.portal.output.stream.container.internal;
 import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
+import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 
 import java.io.OutputStream;
 
@@ -28,15 +29,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"name=" + DummyOutputStreamContainerFactory.FACTORY_NAME,
+		"name=" + OutputStreamContainerFactoryTracker.DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME,
 		"service.ranking:Integer=-100"
 	},
 	service = OutputStreamContainerFactory.class
 )
 public class DummyOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
-
-	public static final String FACTORY_NAME = "dummy";
 
 	@Override
 	public OutputStreamContainer create(String hint) {
@@ -53,11 +52,6 @@ public class DummyOutputStreamContainerFactory
 			}
 
 		};
-	}
-
-	@Override
-	public String getFactoryName() {
-		return FACTORY_NAME;
 	}
 
 	private static final DummyOutputStream _DUMMY_OUTPUT_STREAM =

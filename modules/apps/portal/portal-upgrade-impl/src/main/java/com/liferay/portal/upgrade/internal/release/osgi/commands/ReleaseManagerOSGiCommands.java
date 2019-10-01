@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
@@ -283,8 +284,8 @@ public class ReleaseManagerOSGiCommands {
 
 					_upgradeExecutor.execute(
 						bundleSymbolicName, upgradeSteps,
-						_swappedLogExecutor.
-							getDummyOutputStreamContainerFactoryName());
+						OutputStreamContainerFactoryTracker.
+							DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME);
 				}
 
 				bundleSymbolicNames = _serviceTrackerMap.keySet();

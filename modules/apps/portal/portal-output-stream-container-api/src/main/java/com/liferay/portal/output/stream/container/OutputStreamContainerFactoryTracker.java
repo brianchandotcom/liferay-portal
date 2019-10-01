@@ -23,11 +23,8 @@ import java.util.Set;
  */
 public interface OutputStreamContainerFactoryTracker {
 
-	public default OutputStreamContainerFactory
-		getDummyOutputStreamContainerFactory() {
-
-		throw new UnsupportedOperationException();
-	}
+	public static final String DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME =
+		"dummy";
 
 	public OutputStreamContainerFactory getOutputStreamContainerFactory();
 

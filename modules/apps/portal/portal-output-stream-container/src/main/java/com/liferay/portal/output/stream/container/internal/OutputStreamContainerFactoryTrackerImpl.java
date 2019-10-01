@@ -55,10 +55,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class OutputStreamContainerFactoryTrackerImpl
 	implements OutputStreamContainerFactoryTracker {
 
-	public OutputStreamContainerFactory getDummyOutputStreamContainerFactory() {
-		return _dummyOutputStreamContainerFactory;
-	}
-
 	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory() {
 		OutputStreamContainerFactory outputStreamContainerFactory =
@@ -201,9 +197,6 @@ public class OutputStreamContainerFactoryTrackerImpl
 	private final OutputStreamContainerFactory
 		_consoleOutputStreamContainerFactory =
 			new ConsoleOutputStreamContainerFactory();
-	private final OutputStreamContainerFactory
-		_dummyOutputStreamContainerFactory =
-			new DummyOutputStreamContainerFactory();
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
 

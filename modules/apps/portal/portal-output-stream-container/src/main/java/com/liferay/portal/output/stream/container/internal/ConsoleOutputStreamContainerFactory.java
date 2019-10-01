@@ -27,16 +27,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"name=" + ConsoleOutputStreamContainerFactory.FACTORY_NAME,
-		"service.ranking:Integer=100"
-	},
+	property = {"name=console", "service.ranking:Integer=100"},
 	service = OutputStreamContainerFactory.class
 )
 public class ConsoleOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
-
-	public static final String FACTORY_NAME = "console";
 
 	@Override
 	public OutputStreamContainer create(String hint) {
@@ -53,11 +48,6 @@ public class ConsoleOutputStreamContainerFactory
 			}
 
 		};
-	}
-
-	@Override
-	public String getFactoryName() {
-		return FACTORY_NAME;
 	}
 
 }

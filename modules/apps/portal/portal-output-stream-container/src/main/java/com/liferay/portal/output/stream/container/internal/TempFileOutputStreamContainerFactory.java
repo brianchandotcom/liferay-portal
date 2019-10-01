@@ -32,14 +32,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
-	property = "name=" + TempFileOutputStreamContainerFactory.FACTORY_NAME,
+	immediate = true, property = "name=temp_file",
 	service = OutputStreamContainerFactory.class
 )
 public class TempFileOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
-
-	public static final String FACTORY_NAME = "temp_file";
 
 	@Override
 	public OutputStreamContainer create(String hint) {
@@ -76,11 +73,6 @@ public class TempFileOutputStreamContainerFactory
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-	}
-
-	@Override
-	public String getFactoryName() {
-		return FACTORY_NAME;
 	}
 
 }

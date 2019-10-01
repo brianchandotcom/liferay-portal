@@ -15,6 +15,7 @@
 package com.liferay.portal.search.test.util.query;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -24,10 +25,10 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermQuery;
+import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -242,18 +243,11 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 
 				List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
-				List<String> actualValues = new ArrayList<>();
+				Hits hits = searchSearchResponse.getHits();
 
-				searchHitsList.forEach(
-					searchHit -> {
-						Document document = searchHit.getDocument();
-
-						actualValues.add(document.getString(_FIELD_NAME));
-					});
-
-				Assert.assertEquals(
-					"Retrieved hits ->" + actualValues,
-					expectedValues.toString(), actualValues.toString());
+				DocumentsAssert.assertValuesIgnoreRelevance(
+					"Retrieved hits ->", hits.getDocs(), _FIELD_NAME,
+					expectedValues);
 
 				Assert.assertEquals(
 					"Retrieved hits", expectedValues.size(),

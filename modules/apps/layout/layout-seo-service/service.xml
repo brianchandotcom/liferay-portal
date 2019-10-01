@@ -3,7 +3,50 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.layout.seo">
 	<namespace>LayoutSEO</namespace>
-	<entity local-service="true" name="LayoutSEOEntry" remote-service="true" uuid="true">
+	<entity local-service="true" name="LayoutSEOOpenGraphEntry" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutSEOOpenGraphEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="privateLayout" type="boolean" />
+		<column name="layoutId" type="long" />
+		<column name="enabled" type="boolean" />
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="imageFileEntryId" type="long" />
+		<column name="imageId" type="long" uad-nonanonymizable="true" />
+		<column name="imageURL" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_P_L" return-type="LayoutSEOEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="layoutId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Layout" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="LayoutSEOOpenGraphEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

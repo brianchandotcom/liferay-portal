@@ -45,3 +45,15 @@ export const KEY_CODES = {
 	SPACE: ' ',
 	TAB: 'Tab'
 };
+
+/**
+ * Fetch options to pass to ClayDataProvider.
+ * Match fetch options from frontend-js-web's fetch.es.js.
+ * @see https://github.com/liferay/liferay-portal/blob/master/modules/apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/fetch.es.js
+ */
+export const FETCH_OPTIONS = {
+	credentials: 'include',
+	...(typeof Liferay !== 'undefined' && {
+		headers: new Headers({'x-csrf-token': Liferay.authToken})
+	})
+};

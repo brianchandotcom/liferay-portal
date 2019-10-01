@@ -22,7 +22,12 @@ import React, {useContext, useState} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import {ClayCheckbox} from '@clayui/form';
 import {buildUrl, resultsDataToMap, toggleListItem} from '../../utils/util.es';
-import {DELTAS, DEFAULT_DELTA, KEY_CODES} from '../../utils/constants.es';
+import {
+	DELTAS,
+	DEFAULT_DELTA,
+	FETCH_OPTIONS,
+	KEY_CODES
+} from '../../utils/constants.es';
 import {getPluralMessage} from '../../utils/language.es';
 import {useResource} from '@clayui/data-provider';
 
@@ -65,6 +70,7 @@ function AddResultModal({
 	});
 
 	const {resource, refetch} = useResource({
+		fetchOptions: FETCH_OPTIONS,
 		link: buildUrl(fetchDocumentsSearchUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: page * delta - delta,

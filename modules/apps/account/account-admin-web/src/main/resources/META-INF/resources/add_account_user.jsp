@@ -37,6 +37,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	action="<%= addAccountUsersURL %>"
 >
 	<liferay-frontend:edit-form-body>
+		<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
 		<aui:input name="accountEntryId" type="hidden" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
 
 		<h2 class="sheet-title">

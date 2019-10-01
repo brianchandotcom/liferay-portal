@@ -103,10 +103,15 @@ class FragmentsEditor extends Component {
 			this
 		);
 
-		document.addEventListener('click', this._handleDocumentClick, true);
-		document.addEventListener('keydown', this._handleDocumentKeyDown);
-		document.addEventListener('keyup', this._handleDocumentKeyUp);
-		document.addEventListener('mouseover', this._handleDocumentMouseOver);
+		if (this.hasUpdatePermissions) {
+			document.addEventListener('click', this._handleDocumentClick, true);
+			document.addEventListener('keydown', this._handleDocumentKeyDown);
+			document.addEventListener('keyup', this._handleDocumentKeyUp);
+			document.addEventListener(
+				'mouseover',
+				this._handleDocumentMouseOver
+			);
+		}
 	}
 
 	/**

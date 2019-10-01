@@ -791,10 +791,11 @@ SegmentsExperienceSelector.STATE = {
 const ConnectedSegmentsExperienceSelector = getConnectedComponent(
 	SegmentsExperienceSelector,
 	[
-		'classPK',
 		'availableSegmentsExperiences',
-		'segmentsExperienceId',
-		'defaultSegmentsEntryId'
+		'classPK',
+		'defaultSegmentsEntryId',
+		'hasUpdatePermissions',
+		'segmentsExperienceId'
 	]
 );
 

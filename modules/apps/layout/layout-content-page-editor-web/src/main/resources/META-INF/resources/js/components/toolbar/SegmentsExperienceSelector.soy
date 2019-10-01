@@ -18,6 +18,7 @@
 		]
 	]>}
 	{@param? hasEditSegmentsEntryPermission: bool }
+	{@param? hasUpdatePermissions: bool }
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? _closeEditModal: any }
 	{@param? _closeCreateModal: any }
@@ -96,7 +97,7 @@
 				<div class="align-items-end d-flex justify-content-between mb-4">
 					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
 
-					{if $canCreateExperiences == true}
+					{if $canCreateExperiences == true and $hasUpdatePermissions}
 						{let $newExperience kind="text"}
 							{msg desc=""}new-experience{/msg}
 						{/let}
@@ -133,34 +134,36 @@
 					{/call}
 				{/if}
 
-				{let $experiencesHelpMessage kind="text"}
-					{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
-						{msg desc=""}experience-help-message-empty-state{/msg}
-					{else}
-						{msg desc=""}experience-help-message-started-state{/msg}
-					{/if}
-				{/let}
+				{if $hasUpdatePermissions}
+					{let $experiencesHelpMessage kind="text"}
+						{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
+							{msg desc=""}experience-help-message-empty-state{/msg}
+						{else}
+							{msg desc=""}experience-help-message-started-state{/msg}
+						{/if}
+					{/let}
 
-				<p class="mb-4 text-secondary">
-					{$experiencesHelpMessage}
-				</p>
+					<p class="mb-4 text-secondary">
+						{$experiencesHelpMessage}
+					</p>
 
-				{let $experiencesWarning kind="text"}
-					{msg desc=""}changes-to-experiences-are-applied-immediately{/msg}
-				{/let}
+					{let $experiencesWarning kind="text"}
+						{msg desc=""}changes-to-experiences-are-applied-immediately{/msg}
+					{/let}
 
-				{let $warning kind="text"}
-					{msg desc=""}warning{/msg}:
-				{/let}
+					{let $warning kind="text"}
+						{msg desc=""}warning{/msg}:
+					{/let}
 
-				{call ClayAlert.render}
-					{param elementClasses: 'mx-0  mt-4' /}
-					{param closeable: false /}
-					{param message: $experiencesWarning /}
-					{param spritemap: $spritemap /}
-					{param style: 'warning' /}
-					{param title: $warning /}
-				{/call}
+					{call ClayAlert.render}
+						{param elementClasses: 'mx-0  mt-4' /}
+						{param closeable: false /}
+						{param message: $experiencesWarning /}
+						{param spritemap: $spritemap /}
+						{param style: 'warning' /}
+						{param title: $warning /}
+					{/call}
+				{/if}
 
 				{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
 				{if length($availableSegmentsExperiences) > 1}
@@ -221,7 +224,7 @@
 									</button>
 								</span>
 
-								{if ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
+								{if $hasUpdatePermissions and ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
 									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
 										{let $disbledMoveUp: (isFirst($experience)) /}
 										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}

@@ -41,11 +41,10 @@ public class RankingSearchRequestContributor
 
 	@Override
 	public SearchRequest contribute(SearchRequest searchRequest) {
-		
 		if (isSearchEngine("Solr")) {
 			return searchRequest;
 		}
-		
+
 		Optional<Ranking> optional =
 			rankingIndexReader.fetchByQueryStringOptional(
 				searchRequest.getQueryString());
@@ -67,7 +66,7 @@ public class RankingSearchRequestContributor
 
 		return searchRequestBuilder.build();
 	}
-	
+
 	protected boolean isSearchEngine(String engine) {
 		SearchEngine searchEngine = searchEngineHelper.getSearchEngine(
 			searchEngineHelper.getDefaultSearchEngineId());
@@ -84,9 +83,9 @@ public class RankingSearchRequestContributor
 	protected RankingSearchRequestHelper rankingSearchRequestHelper;
 
 	@Reference
-	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
-	
-	@Reference
 	protected SearchEngineHelper searchEngineHelper;
+
+	@Reference
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 }

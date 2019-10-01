@@ -180,7 +180,9 @@ SERVER_URL=http://test.able.com:8080</echo>
 		<echo>${curl.output}</echo>
 
 		<if>
-			<contains string="${curl.output}" substring="Test Test" />
+			<not>
+				<contains string="${curl.output}" substring="Sign In" />
+			</not>
 			<then>
 				<echo>Signed in successfully.</echo>
 			</then>

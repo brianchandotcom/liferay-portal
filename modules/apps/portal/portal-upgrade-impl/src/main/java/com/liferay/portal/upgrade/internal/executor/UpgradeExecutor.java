@@ -88,20 +88,9 @@ public class UpgradeExecutor {
 			return;
 		}
 
-		if (Validator.isNotNull(outputStreamContainerFactoryName)) {
-			executeUpgradeInfos(
-				bundleSymbolicName, upgradeInfosList.get(0),
-				outputStreamContainerFactoryName);
-		}
-		else {
-			executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
-		}
-	}
-
-	public void executeUpgradeInfos(
-		String bundleSymbolicName, List<UpgradeInfo> upgradeInfos) {
-
-		executeUpgradeInfos(bundleSymbolicName, upgradeInfos, null);
+		executeUpgradeInfos(
+			bundleSymbolicName, upgradeInfosList.get(0),
+			outputStreamContainerFactoryName);
 	}
 
 	public void executeUpgradeInfos(

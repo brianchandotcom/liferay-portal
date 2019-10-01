@@ -142,9 +142,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 				outputStreamContainerName);
 
 		if (outputStreamContainerFactory == null) {
-			runWithSwappedLog(runnable, outputStreamHint);
-
-			return;
+			outputStreamContainerFactory = getOutputStreamContainerFactory();
 		}
 
 		OutputStreamContainer outputStreamContainer =

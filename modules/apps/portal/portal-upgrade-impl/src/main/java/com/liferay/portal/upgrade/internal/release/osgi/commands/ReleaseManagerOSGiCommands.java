@@ -168,7 +168,8 @@ public class ReleaseManagerOSGiCommands {
 		_upgradeExecutor.executeUpgradeInfos(
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
-				schemaVersionString, toVersionString));
+				schemaVersionString, toVersionString),
+			null);
 
 		return null;
 	}

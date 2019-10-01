@@ -30,10 +30,9 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Dictionary;
 import java.util.concurrent.Callable;
 
 import org.osgi.framework.BundleContext;
@@ -110,12 +109,10 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("destination.name", destination.getName());
-
 		_destinationServiceRegistration = bundleContext.registerService(
-			Destination.class, destination, properties);
+			Destination.class, destination,
+			MapUtil.singletonDictionary(
+				"destination.name", destination.getName()));
 	}
 
 	@Deactivate

@@ -27,7 +27,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "advanced-file-system-store-configuration-name"
 )
-public interface AdvancedFileSystemStoreConfiguration {
+public interface AdvancedFileSystemStoreConfiguration
+	extends FileSystemStoreConfiguration {
 
 	@Meta.AD(
 		deflt = "data/document_library",

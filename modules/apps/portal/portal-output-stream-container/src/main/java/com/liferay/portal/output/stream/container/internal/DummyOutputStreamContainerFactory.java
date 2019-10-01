@@ -17,23 +17,12 @@ package com.liferay.portal.output.stream.container.internal;
 import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
-import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 
 import java.io.OutputStream;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
-@Component(
-	immediate = true,
-	property = {
-		"name=" + OutputStreamContainerFactoryTracker.DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME,
-		"service.ranking:Integer=-100"
-	},
-	service = OutputStreamContainerFactory.class
-)
 public class DummyOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
 

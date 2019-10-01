@@ -20,16 +20,9 @@ import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 
 import java.io.OutputStream;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true,
-	property = {"name=console", "service.ranking:Integer=100"},
-	service = OutputStreamContainerFactory.class
-)
 public class ConsoleOutputStreamContainerFactory
 	implements OutputStreamContainerFactory {
 

@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.output.stream.container.OutputStreamContainer;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
@@ -30,6 +31,9 @@ import java.io.Writer;
 
 import java.nio.charset.Charset;
 
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Level;
@@ -38,6 +42,7 @@ import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.WriterAppender;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -62,14 +67,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 	@Deprecated
 	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory() {
-		OutputStreamContainerFactory outputStreamContainerFactory =
-			_outputStreamContainerFactory;
-
-		if (outputStreamContainerFactory != null) {
-			return outputStreamContainerFactory;
-		}
-
-		return _consoleOutputStreamContainerFactory;
+		return _outputStreamContainerFactory;
 	}
 
 	@Override
@@ -77,14 +75,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 		String outputStreamContainerFactoryName) {
 
 		if (outputStreamContainerFactoryName == null) {
-			OutputStreamContainerFactory outputStreamContainerFactory =
-				_outputStreamContainerFactory;
-
-			if (outputStreamContainerFactory != null) {
-				return outputStreamContainerFactory;
-			}
-
-			return _consoleOutputStreamContainerFactory;
+			return _outputStreamContainerFactory;
 		}
 
 		OutputStreamContainerFactory outputStreamContainerFactory =
@@ -187,6 +178,32 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 		rootLogger.addAppender(_writerAppender);
 
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("name", "console");
+		dictionary.put("service.ranking:Integer", "100");
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				OutputStreamContainerFactory.class,
+				new ConsoleOutputStreamContainerFactory(), dictionary));
+
+		dictionary.put("name", DUMMY_OUTPUT_STREAM_CONTAINER_FACTORY_NAME);
+		dictionary.put("service.ranking:Integer", "-100");
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				OutputStreamContainerFactory.class,
+				new DummyOutputStreamContainerFactory(), dictionary));
+
+		dictionary.put("name", "temp_file");
+		dictionary.remove("service.ranking:Integer");
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				OutputStreamContainerFactory.class,
+				new TempFileOutputStreamContainerFactory(), dictionary));
+
 		_outputStreamContainerFactories =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, OutputStreamContainerFactory.class, "name");
@@ -194,11 +211,19 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		Logger rootLogger = Logger.getRootLogger();
-
 		if (_outputStreamContainerFactories != null) {
 			_outputStreamContainerFactories.close();
 		}
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
+
+		Logger rootLogger = Logger.getRootLogger();
 
 		if (rootLogger != null) {
 			rootLogger.removeAppender(_writerAppender);
@@ -213,9 +238,6 @@ public class OutputStreamContainerFactoryTrackerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		OutputStreamContainerFactoryTrackerImpl.class);
 
-	private final OutputStreamContainerFactory
-		_consoleOutputStreamContainerFactory =
-			new ConsoleOutputStreamContainerFactory();
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
 
@@ -226,6 +248,8 @@ public class OutputStreamContainerFactoryTrackerImpl
 	)
 	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
 
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 	private WriterAppender _writerAppender;
 	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 

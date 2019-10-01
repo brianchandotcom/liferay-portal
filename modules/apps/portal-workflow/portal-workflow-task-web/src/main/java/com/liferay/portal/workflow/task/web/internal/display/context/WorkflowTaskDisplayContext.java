@@ -339,6 +339,21 @@ public class WorkflowTaskDisplayContext {
 		return null;
 	}
 
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_httpServletRequest, "orderByType");
+
+		if (Validator.isNull(_orderByType)) {
+			_orderByType = _portalPreferences.getValue(
+				PortletKeys.MY_WORKFLOW_TASK, "order-by-type", "asc");
+		}
+
+		return _orderByType;
+	}
+
 	public String getPreviewOfTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -371,7 +386,7 @@ public class WorkflowTaskDisplayContext {
 		return portletURL.toString();
 	}
 
-	public String getSortingURL() throws PortletException {
+	public String getSortingURL() {
 		LiferayPortletResponse response =
 			_workflowTaskRequestHelper.getLiferayPortletResponse();
 
@@ -380,11 +395,9 @@ public class WorkflowTaskDisplayContext {
 		portletURL.setParameter("tabs1", _getTabs1());
 		portletURL.setParameter("orderByCol", _getOrderByCol());
 
-		String orderByType = ParamUtil.getString(
-			_httpServletRequest, "orderByType", "asc");
-
 		portletURL.setParameter(
-			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return portletURL.toString();
 	}
@@ -1095,6 +1108,7 @@ public class WorkflowTaskDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;
+	private String _orderByType;
 	private final PortalPreferences _portalPreferences;
 	private final Map<Long, Role> _roles = new HashMap<>();
 	private final Map<Long, User> _users = new HashMap<>();

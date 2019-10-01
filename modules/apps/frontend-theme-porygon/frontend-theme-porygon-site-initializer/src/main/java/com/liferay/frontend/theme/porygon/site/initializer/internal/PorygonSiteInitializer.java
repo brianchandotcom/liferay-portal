@@ -43,6 +43,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -558,7 +559,7 @@ public class PorygonSiteInitializer implements SiteInitializer {
 			String articleName = StringUtil.upperCaseFirstLetter(
 				CamelCaseUtil.toCamelCase(
 					StringUtil.replace(
-						fileName, StringPool.UNDERLINE, StringPool.SPACE)));
+						fileName, CharPool.UNDERLINE, CharPool.SPACE)));
 
 			Map<Locale, String> nameMap = new HashMap<>();
 

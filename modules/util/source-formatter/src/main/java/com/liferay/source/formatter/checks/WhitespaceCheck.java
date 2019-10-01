@@ -207,7 +207,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 		if (!line.contains(StringPool.DOUBLE_SLASH)) {
 			while (linePart.contains(StringPool.TAB)) {
 				linePart = StringUtil.replaceLast(
-					linePart, StringPool.TAB, StringPool.SPACE);
+					linePart, CharPool.TAB, CharPool.SPACE);
 			}
 		}
 

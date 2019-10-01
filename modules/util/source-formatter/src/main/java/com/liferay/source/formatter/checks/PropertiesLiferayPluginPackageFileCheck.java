@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -70,7 +71,7 @@ public class PropertiesLiferayPluginPackageFileCheck extends BaseFileCheck {
 		content = StringUtil.replace(content, "\n\n", "\n");
 
 		content = StringUtil.replace(
-			content, StringPool.TAB, StringPool.FOUR_SPACES);
+			content, CharPool.TAB, StringPool.FOUR_SPACES);
 
 		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 

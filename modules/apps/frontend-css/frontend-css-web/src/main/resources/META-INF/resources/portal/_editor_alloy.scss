@@ -146,11 +146,18 @@
 }
 
 .ae-ui .ae-toolbars .ae-toolbar-add {
-	z-index: 9999;
+	border-width: 1px;
+	margin-left: 4px;
+	z-index: 989;
 
 	.ae-button {
-		height: 32px;
-		width: 32px;
+		height: 28px;
+		width: 28px;
+
+		@include media-breakpoint-up(xl) {
+			height: 32px;
+			width: 32px;
+		}
 	}
 }
 
@@ -163,16 +170,4 @@
 
 .ie11 .alloy-editor-container .cke_widget_inline {
 	display: inline-block;
-}
-
-@media screen and (max-width: 1279px) {
-	.ae-ui .ae-toolbars .ae-toolbar-add {
-		margin-left: 4px;
-
-		.ae-button {
-			font-size: 14px;
-			height: 24px;
-			width: 24px;
-		}
-	}
 }

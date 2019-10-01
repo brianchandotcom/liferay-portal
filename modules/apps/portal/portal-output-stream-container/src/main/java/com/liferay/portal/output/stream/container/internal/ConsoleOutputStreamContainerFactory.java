@@ -35,7 +35,11 @@ public class ConsoleOutputStreamContainerFactory
 
 	@Override
 	public OutputStreamContainer create(String hint) {
-		return new OutputStreamContainer() {
+		return _OUTPUT_STREAM_CONTAINER;
+	}
+
+	private static final OutputStreamContainer _OUTPUT_STREAM_CONTAINER =
+		new OutputStreamContainer() {
 
 			@Override
 			public String getDescription() {
@@ -48,6 +52,5 @@ public class ConsoleOutputStreamContainerFactory
 			}
 
 		};
-	}
 
 }

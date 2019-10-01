@@ -39,7 +39,14 @@ public class DummyOutputStreamContainerFactory
 
 	@Override
 	public OutputStreamContainer create(String hint) {
-		return new OutputStreamContainer() {
+		return _OUTPUT_STREAM_CONTAINER;
+	}
+
+	private static final DummyOutputStream _DUMMY_OUTPUT_STREAM =
+		new DummyOutputStream();
+
+	private static final OutputStreamContainer _OUTPUT_STREAM_CONTAINER =
+		new OutputStreamContainer() {
 
 			@Override
 			public String getDescription() {
@@ -52,9 +59,5 @@ public class DummyOutputStreamContainerFactory
 			}
 
 		};
-	}
-
-	private static final DummyOutputStream _DUMMY_OUTPUT_STREAM =
-		new DummyOutputStream();
 
 }

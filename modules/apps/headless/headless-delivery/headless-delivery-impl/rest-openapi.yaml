@@ -2021,7 +2021,7 @@ paths:
             tags: ["Comment"]
     "/content-sets/{contentSetId}/content-set-elements":
         get:
-            description: Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated.
+            description: "Retrieves the content set's elements (e.g., structured content, blogs, etc.). Results can be paginated. The set of available headers are: Host (string), Accept-Language (string), User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the request."
             operationId: getContentSetContentSetElementsPage
             parameters:
                 - in: path

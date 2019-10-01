@@ -1202,7 +1202,7 @@ paths:
             tags: ["UserAccount"]
     "/sites/{siteId}/user-accounts/{userAccountId}/segments":
         get:
-            description: Gets a user's segments.
+            description: "Gets a user's segments. The set of available headers are: Host (string), Accept-Language (string), User-Agent (string), X-Browser (string), X-Cookies (collection string), X-Device-Brand (string), X-Device-Model (string), X-Device-Screen-Resolution-Height (double), X-Device-Screen-Resolution-Width (double), X-Last-Sign-In-Date-Time (date time) and X-Signed-In (boolean). Local date will be always present in the request."
             operationId: getSiteUserAccountSegmentsPage
             parameters:
                 - in: path

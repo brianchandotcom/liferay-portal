@@ -27,10 +27,16 @@ export const getFilteredSettingsContext = settingsContext => {
 		pages: visitor.mapColumns(column => {
 			return {
 				...column,
-				fields: column.fields.filter(
+				fields: column.fields
+					.filter(
 					({fieldName}) =>
 						UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
 				)
+					.map(field => ({
+						...field,
+						defaultLanguageId: themeDisplay.getLanguageId(),
+						editingLanguageId: themeDisplay.getLanguageId()
+					}))
 			};
 		})
 	};
@@ -42,7 +48,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			const {fieldName} = fieldInstance;
 
 			dispatchEvent('fieldBlurred', {
-				editingLanguageId: 'en_US',
+				editingLanguageId: themeDisplay.getLanguageId(),
 				propertyName: fieldName,
 				propertyValue: value
 			});
@@ -54,7 +60,7 @@ export default ({dispatchEvent, settingsContext}, container) => {
 			const {fieldName} = fieldInstance;
 
 			dispatchEvent('fieldEdited', {
-				editingLanguageId: 'en_US',
+				editingLanguageId: themeDisplay.getLanguageId(),
 				propertyName: fieldName,
 				propertyValue: value
 			});

@@ -448,7 +448,7 @@ Options.STATE = {
 	 * @type {?string}
 	 */
 
-	defaultLanguageId: Config.string(),
+	defaultLanguageId: Config.string().value(themeDisplay.getLanguageId()),
 
 	/**
 	 * @default false
@@ -468,7 +468,7 @@ Options.STATE = {
 	 * @type {?string}
 	 */
 
-	editingLanguageId: Config.string(),
+	editingLanguageId: Config.string().value(themeDisplay.getLanguageId()),
 
 	/**
 	 * @default 'boolean'

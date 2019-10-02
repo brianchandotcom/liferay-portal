@@ -66,7 +66,7 @@ public class LayoutSEOEntryLocalServiceImpl
 	@Override
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabled, Map<Locale, String> canonicalURLMap,
+			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -75,12 +75,12 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		if (layoutSEOEntry == null) {
 			return _addLayoutSEOEntry(
-				userId, groupId, privateLayout, layoutId, enabled,
+				userId, groupId, privateLayout, layoutId, enabledCanonicalURL,
 				canonicalURLMap, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
-		layoutSEOEntry.setEnabled(enabled);
+		layoutSEOEntry.setEnabledCanonicalURL(enabledCanonicalURL);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
@@ -88,7 +88,7 @@ public class LayoutSEOEntryLocalServiceImpl
 
 	private LayoutSEOEntry _addLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabled, Map<Locale, String> canonicalURLMap,
+			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -111,7 +111,7 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		layoutSEOEntry.setPrivateLayout(privateLayout);
 		layoutSEOEntry.setLayoutId(layoutId);
-		layoutSEOEntry.setEnabled(enabled);
+		layoutSEOEntry.setEnabledCanonicalURL(enabledCanonicalURL);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);

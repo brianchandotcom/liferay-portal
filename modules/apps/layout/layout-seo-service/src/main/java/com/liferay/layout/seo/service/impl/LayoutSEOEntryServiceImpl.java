@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -44,7 +45,11 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURLMap, Map<Locale, String> canonicalURLMap,
-			ServiceContext serviceContext)
+			boolean enabledOpenGraphDescription,
+			Map<Locale, String> openGraphDescriptionMap,
+			boolean enabledOpenGraphTitle,
+			Map<Locale, String> openGraphTitleMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayout(
@@ -55,7 +60,23 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId,
-			enabledCanonicalURLMap, canonicalURLMap, serviceContext);
+			enabledCanonicalURLMap, canonicalURLMap,
+			enabledOpenGraphDescription, openGraphDescriptionMap,
+			enabledOpenGraphTitle, openGraphTitleMap, openGraphImageFileEntryId,
+			serviceContext);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
+			boolean enabledCanonicalURLMap, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateLayoutSEOEntry(
+			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
+			canonicalURLMap, false, Collections.emptyMap(), false,
+			Collections.emptyMap(), 0, serviceContext);
 	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -67,7 +68,11 @@ public class LayoutSEOEntryLocalServiceImpl
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
-			ServiceContext serviceContext)
+			boolean enabledOpenGraphDescription,
+			Map<Locale, String> openGraphDescriptionMap,
+			boolean enabledOpenGraphTitle,
+			Map<Locale, String> openGraphTitleMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
@@ -76,20 +81,45 @@ public class LayoutSEOEntryLocalServiceImpl
 		if (layoutSEOEntry == null) {
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, enabledCanonicalURL,
-				canonicalURLMap, serviceContext);
+				canonicalURLMap, enabledOpenGraphDescription,
+				openGraphDescriptionMap, enabledOpenGraphTitle,
+				openGraphTitleMap, openGraphImageFileEntryId, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
 		layoutSEOEntry.setEnabledCanonicalURL(enabledCanonicalURL);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setEnabledOpenGraphDescription(
+			enabledOpenGraphDescription);
+		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
+		layoutSEOEntry.setEnabledOpenGraphTitle(enabledOpenGraphTitle);
+		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
+		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateLayoutSEOEntry(
+			userId, groupId, privateLayout, layoutId, enabledCanonicalURL,
+			canonicalURLMap, false, Collections.emptyMap(), false,
+			Collections.emptyMap(), 0, serviceContext);
 	}
 
 	private LayoutSEOEntry _addLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
-			ServiceContext serviceContext)
+			boolean enabledOpenGraphDescription,
+			Map<Locale, String> openGraphDescriptionMap,
+			boolean enabledOpenGraphTitle,
+			Map<Locale, String> openGraphTitleMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.create(
@@ -113,6 +143,12 @@ public class LayoutSEOEntryLocalServiceImpl
 		layoutSEOEntry.setLayoutId(layoutId);
 		layoutSEOEntry.setEnabledCanonicalURL(enabledCanonicalURL);
 		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setEnabledOpenGraphDescription(
+			enabledOpenGraphDescription);
+		layoutSEOEntry.setOpenGraphDescriptionMap(openGraphDescriptionMap);
+		layoutSEOEntry.setEnabledOpenGraphTitle(enabledOpenGraphTitle);
+		layoutSEOEntry.setOpenGraphTitleMap(openGraphTitleMap);
+		layoutSEOEntry.setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
 
 		return layoutSEOEntryPersistence.update(layoutSEOEntry);
 	}

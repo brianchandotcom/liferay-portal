@@ -617,44 +617,31 @@ public class SiteAdminPortlet extends MVCPortlet {
 		this.userService = userService;
 	}
 
-	/**
-	 * This is an interim function which converts the temporary UI input into a
-	 * compatible type for the service. It is fully expected that a better UI
-	 * would more closely map inputs to a TreeMap.
-	 *
-	 * @param  virtualHost virtual host string encoded as <code>
-	 *         hostname[;languageId][,hostname[;languageId]]*</code>
-	 * @param  availableLocales locales available for the site
-	 * @throws AvailableLocaleException
-	 */
 	protected TreeMap<String, String> toTreeMap(
-			String virtualHost, Set<Locale> availableLocales)
+			ActionRequest actionRequest, String parameterPrefix,
+			Set<Locale> availableLocales)
 		throws AvailableLocaleException {
 
 		TreeMap<String, String> treeMap = new TreeMap<>();
 
-		for (String part : StringUtil.split(virtualHost)) {
-			String[] subparts = StringUtil.split(part, ';');
+		String[] virtualHostNames = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "Name[]");
+		String[] virtualHostLocales = ParamUtil.getStringValues(
+			actionRequest, parameterPrefix + "Locale[]");
 
-			if (subparts.length == 2) {
-				String languageId = subparts[1];
+		for (int i = 0; i < virtualHostNames.length; i++) {
+			String virtualHostName = virtualHostNames[i];
+			String virtualHostLocale = virtualHostLocales[i];
 
-				Locale locale = LocaleUtil.fromLanguageId(languageId);
+			if (Validator.isNotNull(virtualHostLocale)) {
+				Locale locale = LocaleUtil.fromLanguageId(virtualHostLocale);
 
 				if (!availableLocales.contains(locale)) {
-					throw new AvailableLocaleException(languageId);
+					throw new AvailableLocaleException(virtualHostLocale);
 				}
+			}
 
-				treeMap.put(subparts[0], subparts[1]);
-			}
-			else if (subparts.length == 1) {
-				treeMap.put(subparts[0], StringPool.BLANK);
-			}
-			else {
-				_log.error(
-					"Syntax of virtual host entry is incorrect. Was " + part +
-						" should be <hostname>[;<languageId>]");
-			}
+			treeMap.put(virtualHostName, virtualHostLocale);
 		}
 
 		return treeMap;
@@ -966,21 +953,15 @@ public class SiteAdminPortlet extends MVCPortlet {
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			liveGroup.getGroupId());
 
-		String publicVirtualHost = ParamUtil.getString(
-			actionRequest, "publicVirtualHost");
-
 		layoutSetService.updateVirtualHosts(
 			liveGroup.getGroupId(), false,
-			toTreeMap(publicVirtualHost, availableLocales));
+			toTreeMap(actionRequest, "publicVirtualHost", availableLocales));
 
 		LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
 
-		String privateVirtualHost = ParamUtil.getString(
-			actionRequest, "privateVirtualHost");
-
 		layoutSetService.updateVirtualHosts(
 			liveGroup.getGroupId(), true,
-			toTreeMap(privateVirtualHost, availableLocales));
+			toTreeMap(actionRequest, "privateVirtualHost", availableLocales));
 
 		// Staging
 
@@ -994,19 +975,17 @@ public class SiteAdminPortlet extends MVCPortlet {
 			groupService.updateFriendlyURL(
 				stagingGroup.getGroupId(), friendlyURL);
 
-			publicVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPublicVirtualHost");
-
 			layoutSetService.updateVirtualHosts(
 				stagingGroup.getGroupId(), false,
-				toTreeMap(publicVirtualHost, availableLocales));
-
-			privateVirtualHost = ParamUtil.getString(
-				actionRequest, "stagingPrivateVirtualHost");
+				toTreeMap(
+					actionRequest, "stagingPublicVirtualHost",
+					availableLocales));
 
 			layoutSetService.updateVirtualHosts(
 				stagingGroup.getGroupId(), true,
-				toTreeMap(privateVirtualHost, availableLocales));
+				toTreeMap(
+					actionRequest, "stagingPrivateVirtualHost",
+					availableLocales));
 
 			UnicodeProperties stagedGroupTypeSettingsProperties =
 				stagingGroup.getTypeSettingsProperties();

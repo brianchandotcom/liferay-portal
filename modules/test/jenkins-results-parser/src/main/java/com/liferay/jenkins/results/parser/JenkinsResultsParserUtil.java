@@ -2901,6 +2901,26 @@ public class JenkinsResultsParserUtil {
 			_DIST_PORTAL_JOB_URL_DEFAULT, "(", portalBranchName, ")");
 	}
 
+	private static String _getFilteredPropertyValue(String propertyValue) {
+		if (propertyValue == null) {
+			return null;
+		}
+
+		List<String> propertyValues = new ArrayList<>();
+
+		for (String value : propertyValue.split(",")) {
+			String trimmedValue = value.trim();
+
+			if (trimmedValue.startsWith("#")) {
+				continue;
+			}
+
+			propertyValues.add(value);
+		}
+
+		return String.join(",", propertyValues);
+	}
+
 	private static String _getGitHubAPIRateLimitStatusMessage(
 		int limit, int remaining, long reset) {
 
@@ -3000,7 +3020,7 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		String value = properties.getProperty(name);
+		String value = _getFilteredPropertyValue(properties.getProperty(name));
 
 		Matcher matcher = _nestedPropertyPattern.matcher(value);
 

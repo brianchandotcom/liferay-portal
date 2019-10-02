@@ -156,7 +156,7 @@ if (privateVirtualHosts.size() == 0) {
 
 			<div class="container-fluid lfr-form-row">
 				<div class="row">
-					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name="publicVirtualHostName[]" placeholder="public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name="publicVirtualHostName[]" placeholder="virtual-host" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="publicVirtualHostLocale[]" wrapperCssClass="col-sm-6">
 						<aui:option label="default-language" value="" />
@@ -193,7 +193,7 @@ if (privateVirtualHosts.size() == 0) {
 
 			<div class="container-fluid lfr-form-row">
 				<div class="row">
-					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name="privateVirtualHostName[]" placeholder="private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name="privateVirtualHostName[]" placeholder="virtual-host" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="privateVirtualHostLocale[]" wrapperCssClass="col-sm-6">
 						<aui:option label="default-language" value="" />
@@ -242,7 +242,7 @@ if (privateVirtualHosts.size() == 0) {
 
 				<div class="container-fluid lfr-form-row">
 					<div class="row">
-						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHostName[]" placeholder="staging-public-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+						<aui:input inlineField="<%= true %>" label="staging-public-pages" maxlength="200" name="stagingPublicVirtualHostName[]" placeholder="virtual-host" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
 						<aui:select inlineField="<%= true %>" label="language" name="stagingPublicVirtualHostLocale[]" wrapperCssClass="col-sm-6">
 							<aui:option label="default-language" value="" />
@@ -289,7 +289,7 @@ if (privateVirtualHosts.size() == 0) {
 
 				<div class="container-fluid lfr-form-row">
 					<div class="row">
-						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHostName[]" placeholder="staging-private-pages" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
+						<aui:input inlineField="<%= true %>" label="staging-private-pages" maxlength="200" name="stagingPrivateVirtualHostName[]" placeholder="virtual-host" type="text" value="<%= hostName %>" wrapperCssClass="col-sm-6" />
 
 						<aui:select inlineField="<%= true %>" label="language" name="stagingPrivateVirtualHostLocale[]" wrapperCssClass="col-sm-6">
 							<aui:option label="default-language" value="" />

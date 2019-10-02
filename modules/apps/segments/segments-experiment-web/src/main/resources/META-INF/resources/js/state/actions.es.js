@@ -59,3 +59,10 @@ export const archiveExperiment = payload => ({
 	payload,
 	type: 'ARCHIVE_EXPERIMENT'
 });
+
+export const deleteArchivedExperiment = experimentId => ({
+	payload: {
+		experimentId
+	},
+	type: 'DELETE_ARCHIVED_EXPERIMENT'
+});

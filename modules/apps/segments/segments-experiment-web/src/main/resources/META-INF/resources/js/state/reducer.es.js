@@ -88,6 +88,18 @@ export function reducer(state, action) {
 				variants: [],
 				winnerVariant: null
 			};
+		case 'DELETE_ARCHIVED_EXPERIMENT':
+			return {
+				...state,
+				experimentHistory: state.experimentHistory.filter(
+					experiment => {
+						return (
+							experiment.segmentsExperimentId !==
+							action.payload.experimentId
+						);
+					}
+				)
+			};
 
 		default:
 			return state;

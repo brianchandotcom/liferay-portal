@@ -38,6 +38,7 @@ import {
 	openEditionModal,
 	openCreationModal,
 	addSegmentsExperiment,
+	deleteArchivedExperiment,
 	updateSegmentsExperiment,
 	addVariant
 } from '../state/actions.es';
@@ -159,7 +160,14 @@ function SegmentsExperimentsSidebar({
 			.then(() => {
 				openSuccessToast();
 
-				navigateToExperience(experiment.segmentsExperienceId);
+				if (
+					experiment &&
+					experiment.segmentsExperimentId === experimentId
+				) {
+					navigateToExperience(experiment.segmentsExperienceId);
+				} else {
+					dispatch(deleteArchivedExperiment(experimentId));
+				}
 			})
 			.catch(_error => {
 				openErrorToast();

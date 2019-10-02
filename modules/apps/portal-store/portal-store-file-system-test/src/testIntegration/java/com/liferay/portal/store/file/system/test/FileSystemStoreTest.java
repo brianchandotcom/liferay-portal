@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -75,7 +76,9 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 
 	@Override
 	protected Store getStore() {
-		return _store;
+		Store store = ReflectionTestUtil.getFieldValue(_store, "_store");
+
+		return ReflectionTestUtil.getFieldValue(store, "_store");
 	}
 
 	private static Configuration _configuration;
@@ -89,7 +92,7 @@ public class FileSystemStoreTest extends BaseStoreTestCase {
 	private static String _rootDir;
 
 	@Inject(
-		filter = "(&(service.ranking=0)(store.type=com.liferay.portal.store.file.system.FileSystemStore))",
+		filter = "store.type=com.liferay.portal.store.file.system.FileSystemStore",
 		type = Store.class
 	)
 	private Store _store;

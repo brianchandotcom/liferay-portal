@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -52,6 +53,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -472,34 +474,19 @@ public class PortalInstances {
 
 				String languageId = virtualHost.getLanguageId();
 
-				if (Validator.isNotNull(languageId)) {
-					Group group = layoutSet.getGroup();
+				if (Validator.isNotNull(languageId) &&
+					LanguageUtil.isAvailableLocale(
+						layoutSet.getGroupId(), languageId)) {
 
-					String[] availableLanguageIds = StringUtil.split(
-						group.getTypeSettingsProperty("locales"));
-
-					if (!LanguageUtil.isAvailableLocale(languageId) ||
-						!ArrayUtil.contains(availableLanguageIds, languageId)) {
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Virtual Host ", virtualHost.getHostname(),
-									" default languageId is not available ",
-									languageId));
-						}
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Virtual Host ", virtualHost.getHostname(),
+								" has default languageId ", languageId));
 					}
-					else {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								StringBundler.concat(
-									"Virtual Host ", virtualHost.getHostname(),
-									" has default languageId ", languageId));
-						}
 
-						httpServletRequest.setAttribute(
-							WebKeys.I18N_LANGUAGE_ID, languageId);
-					}
+					httpServletRequest.setAttribute(
+						WebKeys.I18N_LANGUAGE_ID, languageId);
 				}
 			}
 

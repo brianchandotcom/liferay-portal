@@ -54,7 +54,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Noemi Zamarripa
  */
 @RunWith(Arquillian.class)
-public class MultiHostLocaleFilterTest {
+public class MultiVirtualHostLocaleFilterTest {
 
 	@ClassRule
 	@Rule
@@ -86,8 +86,8 @@ public class MultiHostLocaleFilterTest {
 
 	@Test
 	public void testMultipleVirtualHostsWithLocale() throws Exception {
-		_treeMap.put(_TESTHOST_FR, _FR_LANGUAGE_ID);
-		_treeMap.put(_TESTHOST_JP, _JP_LANGUAGE_ID);
+		_treeMap.put(_TESTHOST_FR, _LANGUAGE_ID_FR);
+		_treeMap.put(_TESTHOST_ES, _LANGUAGE_ID_ES);
 
 		_layoutSetLocalService.updateVirtualHosts(_groupId, false, _treeMap);
 
@@ -119,7 +119,7 @@ public class MultiHostLocaleFilterTest {
 	@Test
 	public void testMultipleVirtualHostsWithoutLocale() throws Exception {
 		_treeMap.put(_TESTHOST_FR, StringPool.BLANK);
-		_treeMap.put(_TESTHOST_JP, StringPool.BLANK);
+		_treeMap.put(_TESTHOST_ES, StringPool.BLANK);
 
 		_layoutSetLocalService.updateVirtualHosts(_groupId, false, _treeMap);
 
@@ -143,7 +143,7 @@ public class MultiHostLocaleFilterTest {
 
 	@Test
 	public void testSingleVirtualHostWithLocale() throws Exception {
-		_treeMap.put(_TESTHOST_DE, _DE_LANGUAGE_ID);
+		_treeMap.put(_TESTHOST_DE, _LANGUAGE_ID_DE);
 
 		_layoutSetLocalService.updateVirtualHosts(_groupId, false, _treeMap);
 
@@ -219,13 +219,13 @@ public class MultiHostLocaleFilterTest {
 		_mockHttpServletRequest.addHeader(_HOST, hostname);
 	}
 
-	private static final String _DE_LANGUAGE_ID = "de_DE";
-
-	private static final String _FR_LANGUAGE_ID = "fr_FR";
-
 	private static final String _HOST = "Host";
 
-	private static final String _JP_LANGUAGE_ID = "ja_JP";
+	private static final String _LANGUAGE_ID_DE = "de_DE";
+
+	private static final String _LANGUAGE_ID_FR = "fr_FR";
+
+	private static final String _LANGUAGE_ID_ES = "es_ES";
 
 	private static final int _SERVER_PORT = 8080;
 
@@ -233,7 +233,7 @@ public class MultiHostLocaleFilterTest {
 
 	private static final String _TESTHOST_FR = "testhost.fr";
 
-	private static final String _TESTHOST_JP = "testhost.jp";
+	private static final String _TESTHOST_ES = "testhost.es";
 
 	private static final String _WEB_GUEST = "/web/guest";
 

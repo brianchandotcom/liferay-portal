@@ -121,7 +121,6 @@ import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -395,9 +394,7 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
-			StoreFactory storeFactory = StoreFactory.getInstance();
-
-			storeFactory.setStore(null);
+			PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -1417,12 +1414,8 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
-			StoreFactory storeFactory = StoreFactory.getInstance();
-
-			String storeClassName = portalProperties.getProperty(
+			PropsValues.DL_STORE_IMPL = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
-
-			storeFactory.setStore(storeClassName);
 		}
 
 		if (portalProperties.containsKey(

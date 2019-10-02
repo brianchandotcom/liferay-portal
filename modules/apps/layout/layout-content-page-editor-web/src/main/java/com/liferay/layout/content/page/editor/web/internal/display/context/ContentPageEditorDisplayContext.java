@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -270,6 +271,8 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"getPageContentsURL",
 			_getResourceURL("/content_layout/get_page_contents")
+		).put(
+			"hasUpdatePermissions", _hasUpdatePermissions()
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(
@@ -1389,6 +1392,24 @@ public class ContentPageEditorDisplayContext {
 			themeDisplay.getLayoutTypePortlet());
 
 		return _getWidgetCategoriesSoyContexts(portletCategory);
+	}
+
+	private boolean _hasUpdatePermissions() {
+		try {
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+					ActionKeys.UPDATE)) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isUsed(Portlet portlet, long plid) {

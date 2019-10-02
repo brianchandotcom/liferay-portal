@@ -18,6 +18,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
+import {useModal} from '@clayui/modal';
 
 import {
 	OTHER_REASON_VALUE,
@@ -124,6 +125,10 @@ const Flags = ({
 			});
 	};
 
+	const {observer} = useModal({
+		onClose: handleClickClose
+	});
+
 	return (
 		<>
 			<ClayButton
@@ -155,6 +160,7 @@ const Flags = ({
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmitReport}
 					isSending={isSending}
+					observer={observer}
 					pathTermsOfUse={pathTermsOfUse}
 					reasons={reasons}
 					selectedReason={selectedReason}

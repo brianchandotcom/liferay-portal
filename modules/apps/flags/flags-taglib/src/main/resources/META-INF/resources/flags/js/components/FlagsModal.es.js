@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
+import ClayModal from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -197,16 +197,13 @@ const FlagsModal = ({
 	handleInputChange,
 	handleSubmit,
 	isSending,
+	observer,
 	pathTermsOfUse,
 	reasons,
 	selectedReason,
 	signedIn,
 	status
 }) => {
-	const {observer, onClose} = useModal({
-		onClose: handleClose
-	});
-
 	return (
 		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>
@@ -214,7 +211,7 @@ const FlagsModal = ({
 			</ClayModal.Header>
 			{status === STATUS_REPORT ? (
 				<ModalContentForm
-					handleClose={onClose}
+					handleClose={handleClose}
 					handleInputChange={handleInputChange}
 					handleSubmit={handleSubmit}
 					isSending={isSending}
@@ -227,14 +224,14 @@ const FlagsModal = ({
 				<>
 					<ModalBody
 						companyName={companyName}
-						handleClose={onClose}
+						handleClose={handleClose}
 						status={status}
 					/>
 					<ClayModal.Footer
 						last={
 							<ClayButton
 								displayType="secondary"
-								onClick={onClose}
+								onClick={handleClose}
 							>
 								{Liferay.Language.get('close')}
 							</ClayButton>

@@ -34,6 +34,11 @@ function _renderFlagsModalComponent({
 	signedIn = true,
 	status = STATUS_REPORT
 } = {}) {
+	const observer = {
+		dispatch: () => {},
+		mutation: [1, 1]
+	};
+
 	return render(
 		<FlagsModal
 			companyName={companyName}
@@ -41,6 +46,7 @@ function _renderFlagsModalComponent({
 			handleInputChange={handleInputChange}
 			handleSubmit={handleSubmit}
 			isSending={isSending}
+			observer={observer}
 			pathTermsOfUse={pathTermsOfUse}
 			reasons={reasons}
 			selectedReason={selectedReason}

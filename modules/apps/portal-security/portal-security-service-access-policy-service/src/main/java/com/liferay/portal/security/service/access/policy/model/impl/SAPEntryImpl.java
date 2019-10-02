@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
+import com.liferay.portal.security.service.access.policy.internal.tracker.SAPSystemEntryTracker;
 
 import java.util.List;
 import java.util.Objects;
@@ -56,6 +57,10 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 		if (Objects.equals(
 				getName(), sapConfiguration.systemUserPasswordSAPEntryName())) {
 
+			return true;
+		}
+
+		if (SAPSystemEntryTracker.isSystemEntry(getName())) {
 			return true;
 		}
 

@@ -140,6 +140,41 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	</c:choose>
 </c:if>
 
+<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+	<h4><liferay-ui:message key="open-graph" /></h4>
+
+	<%
+	LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
+	%>
+
+	<c:choose>
+		<c:when test="<%= selLayoutSEOEntry != null %>">
+			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
+			<div id="<portlet:namespace />openGraphSettings">
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="useCustomTitle" type="checkbox" />
+
+				<aui:input label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
+
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="useCustomDescription" type="checkbox" />
+
+				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div id="<portlet:namespace />openGraphSettings">
+				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="openGraphTitle" type="checkbox" />
+
+				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" type="text" />
+
+				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescription" type="checkbox" />
+
+				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
+			</div>
+		</c:otherwise>
+	</c:choose>
+</c:if>
+
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />useCustomCanonicalURL', '<portlet:namespace />customCanonicalURLSettings');
 </aui:script>

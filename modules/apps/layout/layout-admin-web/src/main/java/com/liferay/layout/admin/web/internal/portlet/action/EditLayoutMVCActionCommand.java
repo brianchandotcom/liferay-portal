@@ -149,10 +149,21 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "useCustomCanonicalURL");
 		Map<Locale, String> canonicalURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "canonicalURL");
+		boolean useCustomTitle = ParamUtil.getBoolean(
+			actionRequest, "useCustomTitle");
+		Map<Locale, String> openGraphTitleMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "openGraphTitle");
+		boolean useCustomDescription = ParamUtil.getBoolean(
+			actionRequest, "useCustomDescription");
+		Map<Locale, String> openGraphDescriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "openGraphDescription");
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
-			canonicalURLMap, serviceContext);
+			canonicalURLMap, useCustomDescription, openGraphDescriptionMap, 0,
+			useCustomTitle, openGraphTitleMap, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -167,7 +178,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, draftLayout.getLayoutId(),
-				useCustomCanonicalURL, canonicalURLMap, serviceContext);
+				useCustomCanonicalURL, canonicalURLMap, useCustomDescription,
+				openGraphDescriptionMap, 0, useCustomTitle, openGraphTitleMap,
+				serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

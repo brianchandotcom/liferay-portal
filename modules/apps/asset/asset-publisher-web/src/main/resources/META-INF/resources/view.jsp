@@ -134,7 +134,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && !assetPublisher
 SearchContainer searchContainer = assetPublisherDisplayContext.getSearchContainer();
 %>
 
-<c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getResults().size()) %>">
+<c:if test="<%= !assetPublisherDisplayContext.isPaginationTypeNone() && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
 	<liferay-ui:search-paginator
 		searchContainer="<%= searchContainer %>"
 		type="<%= assetPublisherDisplayContext.getPaginationType() %>"

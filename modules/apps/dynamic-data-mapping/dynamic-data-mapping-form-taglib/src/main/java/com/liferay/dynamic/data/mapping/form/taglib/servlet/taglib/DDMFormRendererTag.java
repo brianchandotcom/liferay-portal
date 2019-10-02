@@ -56,12 +56,38 @@ import java.util.Set;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Pedro Queiroz
  * @author Rafael Praxedes
  */
 public class DDMFormRendererTag extends BaseDDMFormRendererTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		int result = super.doStartTag();
+
+		setNamespacedAttribute(request, "ddmFormHTML", getDDMFormHTML());
+		setNamespacedAttribute(
+			request, "ddmFormInstance", getDDMFormInstance());
+		setNamespacedAttribute(
+			request, "hasAddFormInstanceRecordPermission",
+			hasAddFormInstanceRecordPermission());
+		setNamespacedAttribute(
+			request, "hasViewFormInstancePermission",
+			hasViewFormInstancePermission());
+		setNamespacedAttribute(request, "isFormAvailable", isFormAvailable());
+		setNamespacedAttribute(
+			request, "languageId",
+			LocaleUtil.toLanguageId(getLocale(request, getDDMForm())));
+		setNamespacedAttribute(request, "redirectURL", getRedirectURL());
+		setNamespacedAttribute(
+			request, "resourceBundle",
+			getResourceBundle(getLocale(request, getDDMForm())));
+
+		return result;
+	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		DDMForm ddmForm) {
@@ -71,7 +97,8 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 		DDMFormInstance ddmFormInstance = getDDMFormInstance();
 
-		ddmFormRenderingContext.setContainerId(StringUtil.randomString());
+		ddmFormRenderingContext.setContainerId(
+			"form_" + StringUtil.randomString());
 
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
 
@@ -361,33 +388,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 		}
 
 		return false;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		super.setAttributes(httpServletRequest);
-
-		setNamespacedAttribute(
-			httpServletRequest, "ddmFormHTML", getDDMFormHTML());
-		setNamespacedAttribute(
-			httpServletRequest, "ddmFormInstance", getDDMFormInstance());
-		setNamespacedAttribute(
-			httpServletRequest, "hasAddFormInstanceRecordPermission",
-			hasAddFormInstanceRecordPermission());
-		setNamespacedAttribute(
-			httpServletRequest, "hasViewFormInstancePermission",
-			hasViewFormInstancePermission());
-		setNamespacedAttribute(
-			httpServletRequest, "isFormAvailable", isFormAvailable());
-		setNamespacedAttribute(
-			httpServletRequest, "languageId",
-			LocaleUtil.toLanguageId(
-				getLocale(httpServletRequest, getDDMForm())));
-		setNamespacedAttribute(
-			httpServletRequest, "redirectURL", getRedirectURL());
-		setNamespacedAttribute(
-			httpServletRequest, "resourceBundle",
-			getResourceBundle(getLocale(httpServletRequest, getDDMForm())));
 	}
 
 	protected void setDDMFormValues(

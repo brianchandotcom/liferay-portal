@@ -31,15 +31,6 @@ const Arrow = ({ direction, handleClick }) => (
 	</div>
 );
 
-const ImageSlide = ({ url }) => {
-	const styles = {
-		cursor: "pointer",
-		maxHeight: `100%`
-	};
-
-	return <img alt="alt" src={url} style={styles} />;
-};
-
 const InfoPanel = ({ imageData }) => {
 	return <h1>Info Panel</h1>;
 };
@@ -58,9 +49,7 @@ const Carousel = ({currentItem, handleClickNext, handleClickPrevious, showArrows
 				/>
 			)}
 
-			<ImageSlide
-				url={currentItem.url}
-			/>
+			<img alt={currentItem.title} src={currentItem.url} />
 
 			{showArrows && (
 				<Arrow

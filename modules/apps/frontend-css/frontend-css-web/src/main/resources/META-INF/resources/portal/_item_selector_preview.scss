@@ -22,18 +22,35 @@
 		padding: 3.5rem;
 		text-align: center;
 
+		@media (max-width: 768px) {
+			padding: 1rem;
+		}
+
 		.sidenav-content{
 			height: 100%;
+			position: relative;
 
-			> div {
-				height: 100%;
+			.pull-left, .pull-right {
+				position: absolute;
+				top: calc(50% - 2rem);
 			}
+
+			.pull-left {
+				left: 0;
+			}
+
+			.pull-right {
+				right: 0;
+			}
+		}
+
+		img {
+			max-height: 100%;
+			max-width: 100%;
 		}
 
 		.icon-arrow {
 			font-size: 2rem;
-			position: relative;
-			top: calc(50% - 1rem);
 
 			&:active,
 			&:hover,

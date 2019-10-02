@@ -53,6 +53,11 @@ public class BatchEngineTaskItemReaderFactory {
 				content.getBinaryStream(), itemClass);
 		}
 
+		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
+			return new JSONLBatchEngineTaskItemReader(
+				content.getBinaryStream(), itemClass);
+		}
+
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 

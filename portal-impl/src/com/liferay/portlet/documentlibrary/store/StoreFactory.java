@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
@@ -26,12 +25,10 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -133,14 +130,7 @@ public class StoreFactory {
 	}
 
 	public Store getStore(String key) {
-		StoreServiceRegistrationHolder storeServiceRegistrationHolder =
-			_storeServiceTrackerMap.getService(key);
-
-		if (storeServiceRegistrationHolder == null) {
-			return null;
-		}
-
-		return storeServiceRegistrationHolder._store;
+		return _storeServiceTrackerMap.getService(key);
 	}
 
 	public String[] getStoreTypes() {
@@ -171,80 +161,31 @@ public class StoreFactory {
 	private static boolean _warned;
 
 	private volatile Store _store;
-	private final ServiceTrackerMap<String, StoreServiceRegistrationHolder>
-		_storeServiceTrackerMap;
+	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap;
 	private String _storeType;
 
-	private static class StoreServiceRegistrationHolder {
-
-		private StoreServiceRegistrationHolder(
-			Store store, ServiceRegistration<Store> serviceRegistration) {
-
-			_store = store;
-			_serviceRegistration = serviceRegistration;
-		}
-
-		private final ServiceRegistration<Store> _serviceRegistration;
-		private final Store _store;
-
-	}
-
 	private class StoreServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<Store, StoreServiceRegistrationHolder> {
+		implements ServiceTrackerCustomizer<Store, Store> {
 
 		@Override
-		public StoreServiceRegistrationHolder addingService(
-			ServiceReference<Store> serviceReference) {
-
-			if (GetterUtil.getBoolean(
-					serviceReference.getProperty("current.store"))) {
-
-				return null;
-			}
-
-			String storeType = (String)serviceReference.getProperty(
-				"store.type");
-
+		public Store addingService(ServiceReference<Store> serviceReference) {
 			Registry registry = RegistryUtil.getRegistry();
 
 			Store store = registry.getService(serviceReference);
 
-			ServiceRegistration<Store> serviceRegistration = null;
-
-			if (PropsValues.DL_STORE_IMPL.equals(storeType)) {
-				Map<String, Object> properties =
-					serviceReference.getProperties();
-
-				properties.put("current.store", "true");
-
-				serviceRegistration = registry.registerService(
-					Store.class, store, properties);
-			}
-
 			cleanUp(serviceReference);
 
-			return new StoreServiceRegistrationHolder(
-				store, serviceRegistration);
+			return store;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<Store> serviceReference,
-			StoreServiceRegistrationHolder storeServiceRegistrationHolder) {
+			ServiceReference<Store> serviceReference, Store store) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<Store> serviceReference,
-			StoreServiceRegistrationHolder storeServiceRegistrationHolder) {
-
-			ServiceRegistration<Store> serviceRegistration =
-				storeServiceRegistrationHolder._serviceRegistration;
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
+			ServiceReference<Store> serviceReference, Store store) {
 
 			cleanUp(serviceReference);
 

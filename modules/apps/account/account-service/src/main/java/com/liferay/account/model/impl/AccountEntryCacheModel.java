@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -99,6 +99,8 @@ public class AccountEntryCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", domains=");
+		sb.append(domains);
 		sb.append(", logoId=");
 		sb.append(logoId);
 		sb.append(", status=");
@@ -154,6 +156,13 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setDescription(description);
 		}
 
+		if (domains == null) {
+			accountEntryImpl.setDomains("");
+		}
+		else {
+			accountEntryImpl.setDomains(domains);
+		}
+
 		accountEntryImpl.setLogoId(logoId);
 		accountEntryImpl.setStatus(status);
 
@@ -178,6 +187,7 @@ public class AccountEntryCacheModel
 		parentAccountEntryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		domains = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
 
@@ -220,6 +230,13 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		if (domains == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(domains);
+		}
+
 		objectOutput.writeLong(logoId);
 
 		objectOutput.writeInt(status);
@@ -235,6 +252,7 @@ public class AccountEntryCacheModel
 	public long parentAccountEntryId;
 	public String name;
 	public String description;
+	public String domains;
 	public long logoId;
 	public int status;
 

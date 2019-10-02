@@ -76,8 +76,8 @@ public class AccountEntryModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"logoId", Types.BIGINT},
-		{"status", Types.INTEGER}
+		{"description", Types.VARCHAR}, {"domains", Types.VARCHAR},
+		{"logoId", Types.BIGINT}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -94,12 +94,13 @@ public class AccountEntryModelImpl
 		TABLE_COLUMNS_MAP.put("parentAccountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("domains", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,logoId LONG,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -151,6 +152,7 @@ public class AccountEntryModelImpl
 		model.setParentAccountEntryId(soapModel.getParentAccountEntryId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setDomains(soapModel.getDomains());
 		model.setLogoId(soapModel.getLogoId());
 		model.setStatus(soapModel.getStatus());
 
@@ -347,6 +349,10 @@ public class AccountEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"description",
 			(BiConsumer<AccountEntry, String>)AccountEntry::setDescription);
+		attributeGetterFunctions.put("domains", AccountEntry::getDomains);
+		attributeSetterBiConsumers.put(
+			"domains",
+			(BiConsumer<AccountEntry, String>)AccountEntry::setDomains);
 		attributeGetterFunctions.put("logoId", AccountEntry::getLogoId);
 		attributeSetterBiConsumers.put(
 			"logoId", (BiConsumer<AccountEntry, Long>)AccountEntry::setLogoId);
@@ -524,6 +530,22 @@ public class AccountEntryModelImpl
 
 	@JSON
 	@Override
+	public String getDomains() {
+		if (_domains == null) {
+			return "";
+		}
+		else {
+			return _domains;
+		}
+	}
+
+	@Override
+	public void setDomains(String domains) {
+		_domains = domains;
+	}
+
+	@JSON
+	@Override
 	public long getLogoId() {
 		return _logoId;
 	}
@@ -602,6 +624,7 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setParentAccountEntryId(getParentAccountEntryId());
 		accountEntryImpl.setName(getName());
 		accountEntryImpl.setDescription(getDescription());
+		accountEntryImpl.setDomains(getDomains());
 		accountEntryImpl.setLogoId(getLogoId());
 		accountEntryImpl.setStatus(getStatus());
 
@@ -735,6 +758,14 @@ public class AccountEntryModelImpl
 			accountEntryCacheModel.description = null;
 		}
 
+		accountEntryCacheModel.domains = getDomains();
+
+		String domains = accountEntryCacheModel.domains;
+
+		if ((domains != null) && (domains.length() == 0)) {
+			accountEntryCacheModel.domains = null;
+		}
+
 		accountEntryCacheModel.logoId = getLogoId();
 
 		accountEntryCacheModel.status = getStatus();
@@ -828,6 +859,7 @@ public class AccountEntryModelImpl
 	private long _parentAccountEntryId;
 	private String _name;
 	private String _description;
+	private String _domains;
 	private long _logoId;
 	private int _status;
 	private int _originalStatus;

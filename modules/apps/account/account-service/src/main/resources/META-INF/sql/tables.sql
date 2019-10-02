@@ -9,6 +9,7 @@ create table AccountEntry (
 	parentAccountEntryId LONG,
 	name VARCHAR(100) null,
 	description STRING null,
+	domains STRING null,
 	logoId LONG,
 	status INTEGER
 );

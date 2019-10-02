@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.security.service.access.policy.configuration.SAPSystemEntry;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
@@ -89,12 +90,13 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.jaxrs.name=liferay-json-web-services-analytics",
-		"sap.scope.finder=true"
+		"sap.scope.finder=true", "sap.system.entry=OAUTH2_analytics.read",
+		"sap.system.entry=OAUTH2_analytics.write"
 	},
-	service = PortalInstanceLifecycleListener.class
+	service = {PortalInstanceLifecycleListener.class, SAPSystemEntry.class}
 )
 public class AnalyticsCloudPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener implements SAPSystemEntry {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

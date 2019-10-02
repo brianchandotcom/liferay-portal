@@ -96,7 +96,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		<c:when test="<%= selLayoutSEOEntry != null %>">
 			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-			<aui:input checked="<%= selLayoutSEOEntry.isEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
 				<aui:input name="canonicalURL" placeholder="canonical-url">

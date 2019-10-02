@@ -71,7 +71,7 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertFalse(layoutSEOEntry.isEnabled());
+		Assert.assertFalse(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
@@ -115,7 +115,7 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertTrue(layoutSEOEntry.isEnabled());
+		Assert.assertTrue(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));

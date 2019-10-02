@@ -111,7 +111,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		if ((layoutSEOEntry == null) || !layoutSEOEntry.isEnabled()) {
+		if ((layoutSEOEntry == null) ||
+			!layoutSEOEntry.isCanonicalURLEnabled()) {
+
 			return StringPool.BLANK;
 		}
 

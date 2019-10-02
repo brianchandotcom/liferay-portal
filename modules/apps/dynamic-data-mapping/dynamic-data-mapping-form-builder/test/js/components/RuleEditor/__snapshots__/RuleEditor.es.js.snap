@@ -9,7 +9,7 @@ exports[`Rule Editor Acceptance Criteria When a condition is added and there's m
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-secondary dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>
@@ -193,7 +193,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-secondary dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">or</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>
@@ -377,7 +377,7 @@ exports[`Rule Editor Acceptance Criteria should configure the conditions accordi
       <div class="panel panel-default">
         <div class="flex-container panel-body">
           <div class="h4 panel-title">condition</div>
-          <div class="btn-group dropdown" style=""><button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">and</span><span class="caret"></span></button>
+          <div class="btn-group dropdown" style=""><button class="btn btn-secondary dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" ref="logicalOperatorDropDownButton" type="button"><span class="dropdown-toggle-selected-value">and</span><span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li class="logic-operator text-uppercase" ref="globalOrOperator"><a data-value="or">or</a></li>
               <li class="divider"></li>

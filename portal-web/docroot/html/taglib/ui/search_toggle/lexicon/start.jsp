@@ -23,7 +23,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 <div class="basic-search input-group">
 	<div class="input-group-input">
 		<div class="basic-search-slider" id="<%= id %>simple">
-			<button class="basic-search-close btn btn-default" type="button">
+			<button class="basic-search-close btn btn-secondary" type="button">
 				<span class="icon-remove"></span>
 			</button>
 
@@ -32,11 +32,11 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 	</div>
 
 	<div class="input-group-btn">
-		<button class="btn btn-default" type="submit">
+		<button class="btn btn-secondary" type="submit">
 			<span class="icon-search"></span>
 		</button>
 
-		<button class="btn btn-default toggle-advanced" id="<%= id %>toggleAdvanced" type="button">
+		<button class="btn btn-secondary toggle-advanced" id="<%= id %>toggleAdvanced" type="button">
 			<span class="caret"></span>
 		</button>
 	</div>

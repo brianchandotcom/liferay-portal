@@ -415,7 +415,7 @@ class Form extends Component {
 								}
 							/>
 							<button
-								class="btn ddm-button btn-default"
+								class="btn btn-secondary ddm-button"
 								data-onclick="_handleSaveButtonClicked"
 								ref="saveButton"
 							>
@@ -432,14 +432,14 @@ class Form extends Component {
 					{!this.isFormBuilderView() && (
 						<div class="button-holder ddm-form-builder-buttons">
 							<button
-								class="btn btn-primary ddm-button btn-default"
+								class="btn btn-primary ddm-button"
 								data-onclick="_handleSaveButtonClicked"
 								ref="saveFieldSetButton"
 							>
 								{saveButtonLabel}
 							</button>
 							<a
-								class="btn btn-cancel btn-default btn-link"
+								class="btn btn-cancel btn-link"
 								data-onclick="_handleCancelButtonClicked"
 								href={redirectURL}
 								ref="cancelFieldSetButton"

@@ -26,7 +26,7 @@ import {isSubsetOf} from './validators.es';
  * @type {string}
  */
 const TPL_HOME_BUTTON = `
-	<button class='btn btn-default home-button'>
+	<button class='btn btn-secondary home-button'>
 		<i class='glyphicon glyphicon-screenshot'></i>
 	</button>
 `;
@@ -212,7 +212,7 @@ class MapBase extends State {
 
 		if (controls.indexOf(this.constructor.CONTROLS.HOME) !== -1) {
 			const homeControl = buildFragment(TPL_HOME_BUTTON).querySelector(
-				'.btn.btn-default.home-button'
+				'.btn.btn-secondary.home-button'
 			);
 			customControls[this.constructor.CONTROLS.HOME] = homeControl;
 			this.addControl(

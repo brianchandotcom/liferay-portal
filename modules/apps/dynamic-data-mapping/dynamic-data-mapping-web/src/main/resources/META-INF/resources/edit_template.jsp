@@ -231,7 +231,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 										<liferay-ui:icon
 											icon="search"
 											label="<%= true %>"
-											linkCssClass="btn btn-default"
+											linkCssClass="btn btn-secondary"
 											markupView="lexicon"
 											message="select"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'

@@ -119,17 +119,17 @@ $management-bar-default-link-active-color: $body-color !default;
 $management-bar-default-link-disabled-bg: transparent !default;
 $management-bar-default-link-disabled-color: $navbar-light-disabled-color !default;
 
-$management-bar-default-btn-default-bg: transparent !default;
-$management-bar-default-btn-default-border: transparent !default;
-$management-bar-default-btn-default-color: $management-bar-default-link-color !default;
+$management-bar-default-btn-secondary-bg: transparent !default;
+$management-bar-default-btn-secondary-border: transparent !default;
+$management-bar-default-btn-secondary-color: $management-bar-default-link-color !default;
 
-$management-bar-default-btn-default-hover-bg: $management-bar-default-link-hover-bg !default;
-$management-bar-default-btn-default-hover-border: $management-bar-default-btn-default-border !default;
-$management-bar-default-btn-default-hover-color: $body-color !default;
+$management-bar-default-btn-secondary-hover-bg: $management-bar-default-link-hover-bg !default;
+$management-bar-default-btn-secondary-hover-border: $management-bar-default-btn-secondary-border !default;
+$management-bar-default-btn-secondary-hover-color: $body-color !default;
 
-$management-bar-default-btn-default-active-bg: $management-bar-default-btn-default-hover-bg !default;
-$management-bar-default-btn-default-active-border: $management-bar-default-btn-default-hover-border !default;
-$management-bar-default-btn-default-active-color: $management-bar-default-btn-default-hover-color !default;
+$management-bar-default-btn-secondary-active-bg: $management-bar-default-btn-secondary-hover-bg !default;
+$management-bar-default-btn-secondary-active-border: $management-bar-default-btn-secondary-hover-border !default;
+$management-bar-default-btn-secondary-active-color: $management-bar-default-btn-secondary-hover-color !default;
 
 // Icons
 

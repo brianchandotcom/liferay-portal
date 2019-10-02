@@ -38,7 +38,7 @@ class ShareFormPopover extends Component {
 		const {success} = this.state;
 
 		const buttonClasses = getCN('btn ddm-copy-clipboard', {
-			'btn-default': true,
+			'btn-secondary': !success,
 			'btn-success': success
 		});
 

@@ -10,7 +10,7 @@ exports[`ShareFormPopover should copy the sharable URL to user's clipboard 1`] =
           <div class="form-feedback-group">
             <div class="form-feedback-item">Copied to clipboard.</div>
           </div>
-        </div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-default btn-success" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-success-icon pl-2 pr-2"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
+        </div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn btn-success ddm-copy-clipboard" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-success-icon pl-2 pr-2"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
                 <use xlink:href="spritemap#check"></use>
               </svg></span></button></span>
       </div>
@@ -26,7 +26,7 @@ exports[`ShareFormPopover should copy the sharable URL to user's clipboard 1`] =
           <div class="form-feedback-group">
             <div class="form-feedback-item">Copied to clipboard.</div>
           </div>
-        </div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-default btn-success" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-success-icon pl-2 pr-2"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
+        </div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn btn-success ddm-copy-clipboard" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-success-icon pl-2 pr-2"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
                 <use xlink:href="spritemap#check"></use>
               </svg></span></button></span>
       </div>
@@ -41,7 +41,7 @@ exports[`ShareFormPopover should render the default markup 1`] = `
   <div class="popover-body">
     <div class="form-group m-0">
       <div class="input-group">
-        <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text"></div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-default" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-text">copy</span></button></span>
+        <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text"></div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn btn-secondary ddm-copy-clipboard" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-text">copy</span></button></span>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@ exports[`ShareFormPopover should render the default markup 1`] = `
   <div class="popover-body">
     <div class="form-group m-0">
       <div class="input-group">
-        <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text"></div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-default" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-text">copy</span></button></span>
+        <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text"></div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn btn-secondary ddm-copy-clipboard" data-text="publish/url" data-clipboard="" type="button"><span class="publish-button-text">copy</span></button></span>
       </div>
     </div>
   </div>

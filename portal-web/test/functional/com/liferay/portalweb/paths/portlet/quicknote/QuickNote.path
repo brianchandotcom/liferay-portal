@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>OK_BUTTON</td>
-	<td>//button[contains(@class,'btn-default')]/span[@class='icon-ok']</td>
+	<td>//button[contains(@class,'btn-secondary')]/span[@class='icon-ok']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -123,7 +123,7 @@
 			String linkCssClass = StringPool.BLANK;
 
 			if (!groupType.isControlPanel()) {
-				linkCssClass = "btn btn-default btn-sm";
+				linkCssClass = "btn btn-secondary btn-sm";
 			}
 			%>
 

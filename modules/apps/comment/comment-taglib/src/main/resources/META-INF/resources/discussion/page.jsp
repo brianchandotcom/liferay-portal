@@ -214,7 +214,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 
 						<c:if test="<%= moreCommentsPagination %>">
 							<div class="lfr-discussion-more-comments" id="<%= namespace %>moreCommentsContainer">
-								<button class="btn btn-default btn-sm" id="<%= namespace %>moreCommentsTrigger" type="button"><liferay-ui:message key="more-comments" /></button>
+								<button class="btn btn-secondary btn-sm" id="<%= namespace %>moreCommentsTrigger" type="button"><liferay-ui:message key="more-comments" /></button>
 
 								<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
 								<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />

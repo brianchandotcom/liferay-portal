@@ -42,7 +42,7 @@ else {
 	</div>
 </div>
 
-<aui:button cssClass="btn btn-default" id="changeTheme" value="change-current-theme" />
+<aui:button cssClass="btn btn-secondary" id="changeTheme" value="change-current-theme" />
 
 <aui:script use="aui-parse-content">
 	var Util = Liferay.Util;

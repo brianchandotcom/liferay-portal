@@ -266,7 +266,7 @@ AUI.add(
 				TPL_DELTA_SELECTOR:
 					'<div class="lfr-pagination-delta-selector">' +
 					'<div class="btn-group lfr-icon-menu">' +
-					'<a class="btn btn-default direction-down dropdown-toggle max-display-items-15" href="javascript:;" id="{id}" title="{title}">' +
+					'<a class="btn btn-secondary direction-down dropdown-toggle max-display-items-15" href="javascript:;" id="{id}" title="{title}">' +
 					'<span class="lfr-pagination-delta-selector-amount">{amount}</span>' +
 					'<span class="lfr-icon-menu-text">{title}</span>' +
 					'<i class="icon-caret-down"></i>' +

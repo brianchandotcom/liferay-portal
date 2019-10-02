@@ -149,10 +149,21 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "useCustomCanonicalURL");
 		Map<Locale, String> canonicalURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "canonicalURL");
+		boolean useCustomDescription = ParamUtil.getBoolean(
+			actionRequest, "useCustomDescription");
+		Map<Locale, String> openGraphDescriptionMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "openGraphDescription");
+		boolean useCustomTitle = ParamUtil.getBoolean(
+			actionRequest, "useCustomTitle");
+		Map<Locale, String> openGraphTitleMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "openGraphTitle");
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
-			canonicalURLMap, serviceContext);
+			canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
+			useCustomTitle, openGraphTitleMap, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());

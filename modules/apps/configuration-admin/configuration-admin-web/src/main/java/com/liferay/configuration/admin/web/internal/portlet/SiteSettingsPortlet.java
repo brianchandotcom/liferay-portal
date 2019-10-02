@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-site-settings",
 		"com.liferay.portlet.display-category=category.hidden",

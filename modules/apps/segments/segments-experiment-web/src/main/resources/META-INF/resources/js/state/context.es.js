@@ -21,8 +21,7 @@ const DEFAULT_STATE = {
 	experiment: null,
 	experimentHistory: [],
 	selectedExperienceId: null,
-	variants: [],
-	winnerVariant: null
+	variants: []
 };
 
 export function getInitialState(firstState) {
@@ -30,7 +29,9 @@ export function getInitialState(firstState) {
 		initialExperimentHistory,
 		initialSegmentsExperiment,
 		initialSelectedSegmentsExperienceId,
-		initialSegmentsVariants
+		initialSegmentsVariants,
+		viewSegmentsExperimentDetailsURL,
+		winnerSegmentsVariantId
 	} = firstState;
 
 	const state = {
@@ -38,14 +39,11 @@ export function getInitialState(firstState) {
 		experimentHistory: initialExperimentHistory || [],
 		selectedExperienceId: initialSelectedSegmentsExperienceId,
 		variants: initialSegmentsVariants.map(initialVariant => {
-			if (
-				firstState.winnerSegmentsVariantId ===
-				initialVariant.segmentsExperienceId
-			)
+			if (winnerSegmentsVariantId === initialVariant.segmentsExperienceId)
 				return {...initialVariant, winner: true};
 			return initialVariant;
 		}),
-		winnerVariant: firstState.winnerSegmentsVariantId
+		viewExperimentURL: viewSegmentsExperimentDetailsURL
 	};
 
 	return {

@@ -52,8 +52,7 @@ SegmentsExperimentsContext.Provider.propTypes = {
 			classNameId: PropTypes.string.isRequired,
 			classPK: PropTypes.string.isRequired,
 			type: PropTypes.string.isRequired
-		}),
-		viewSegmentsExperimentDetailsURL: PropTypes.string
+		})
 	})
 };
 

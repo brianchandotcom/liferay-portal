@@ -53,6 +53,7 @@ function SegmentsExperimentsSidebar({
 	initialSegmentsVariants,
 	initialSegmentsExperiment,
 	initialSelectedSegmentsExperienceId = '0',
+	viewSegmentsExperimentDetailsURL,
 	winnerSegmentsVariantId
 }) {
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
@@ -63,6 +64,7 @@ function SegmentsExperimentsSidebar({
 			initialSegmentsExperiment,
 			initialSegmentsVariants,
 			initialSelectedSegmentsExperienceId,
+			viewSegmentsExperimentDetailsURL,
 			winnerSegmentsVariantId
 		},
 		getInitialState

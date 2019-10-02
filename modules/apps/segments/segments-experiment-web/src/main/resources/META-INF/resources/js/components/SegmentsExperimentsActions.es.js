@@ -39,13 +39,11 @@ function _experimentReady(experiment, variants) {
 }
 
 function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
-	const {variants, experiment} = useContext(StateContext);
+	const {variants, experiment, viewExperimentURL} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
-	const {APIService, viewSegmentsExperimentDetailsURL} = useContext(
-		SegmentsExperimentsContext
-	);
+	const {APIService} = useContext(SegmentsExperimentsContext);
 
 	const readyToRun = _experimentReady(experiment, variants);
 
@@ -129,11 +127,11 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 					visible={reviewModalVisible}
 				/>
 			)}
-			{viewSegmentsExperimentDetailsURL && (
+			{viewExperimentURL && (
 				<ClayLink
 					className="btn btn-secondary btn-sm w-100 mt-3"
 					displayType="secondary"
-					href={viewSegmentsExperimentDetailsURL}
+					href={viewExperimentURL}
 					target="_blank"
 				>
 					{Liferay.Language.get('view-data-in-analytics-cloud')}

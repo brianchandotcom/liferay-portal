@@ -19,12 +19,7 @@ import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.
 import SegmentsExperimentsContext from './context.es';
 
 function renderComponent({props, context}) {
-	const {
-		assetsPath,
-		endpoints,
-		page,
-		viewSegmentsExperimentDetailsURL
-	} = context;
+	const {assetsPath, endpoints, page} = context;
 	const {
 		calculateSegmentsExperimentEstimatedDurationURL,
 		createSegmentsExperimentURL,
@@ -59,8 +54,7 @@ function renderComponent({props, context}) {
 				}),
 				assetsPath,
 				editVariantLayoutURL: editSegmentsVariantLayoutURL,
-				page,
-				viewSegmentsExperimentDetailsURL
+				page
 			}}
 		>
 			<SegmentsExperimentsSidebar

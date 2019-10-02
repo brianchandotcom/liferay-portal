@@ -22,6 +22,8 @@ import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.time.Month;
@@ -64,7 +66,11 @@ public class AccountEntryUserRelLocalServiceImpl
 		accountEntryUserRel.setAccountEntryId(accountEntryId);
 		accountEntryUserRel.setAccountUserId(accountUserId);
 
-		return addAccountEntryUserRel(accountEntryUserRel);
+		accountEntryUserRel = addAccountEntryUserRel(accountEntryUserRel);
+
+		_reindexAccountUser(accountUserId);
+
+		return accountEntryUserRel;
 	}
 
 	@Override
@@ -105,8 +111,13 @@ public class AccountEntryUserRelLocalServiceImpl
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		return accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntryId, user.getUserId());
+		AccountEntryUserRel accountEntryUserRel =
+			accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntryId, user.getUserId());
+
+		_reindexAccountUser(user.getUserId());
+
+		return accountEntryUserRel;
 	}
 
 	@Override
@@ -118,5 +129,13 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
+
+	private void _reindexAccountUser(long accountUserId)
+		throws PortalException {
+
+		Indexer<User> userIndexer = IndexerRegistryUtil.getIndexer(User.class);
+
+		userIndexer.reindex(userLocalService.getUser(accountUserId));
+	}
 
 }

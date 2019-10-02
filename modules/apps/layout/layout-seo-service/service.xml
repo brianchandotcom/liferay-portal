@@ -25,8 +25,13 @@
 
 		<column name="privateLayout" type="boolean" />
 		<column name="layoutId" type="long" />
-		<column name="enabled" type="boolean" />
+		<column name="canonicalURLEnabled" type="boolean" />
 		<column localized="true" name="canonicalURL" type="String" />
+		<column name="openGraphTitleEnabled" type="boolean" />
+		<column localized="true" name="openGraphTitle" type="String" />
+		<column name="openGraphDescriptionEnabled" type="boolean" />
+		<column localized="true" name="openGraphDescription" type="String" />
+		<column name="openGraphImageFileEntryId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->

@@ -21,10 +21,13 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -33,6 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,11 +53,14 @@ public class AccountUserRetrieverTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testGetAccountUsers() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
+	}
 
+	@Test
+	public void testGetAccountUsers() throws Exception {
 		_users.add(UserTestUtil.addUser());
 		_users.add(UserTestUtil.addUser());
 		_users.add(UserTestUtil.addUser());
@@ -78,6 +85,74 @@ public class AccountUserRetrieverTest {
 		Arrays.sort(actualUserIds);
 
 		Assert.assertArrayEquals(expectedUserIds, actualUserIds);
+	}
+
+	@Test
+	public void testSearchAccountUsers() throws Exception {
+
+		// Add a user that is not part of the account
+
+		_users.add(UserTestUtil.addUser());
+
+		// Assert that null keyword search does not hit non-account users
+
+		_assertSearch(null, 0);
+
+		// Add a user that is part of the account but will not hit a keyword
+		// search
+
+		List<User> accountUsers = new ArrayList<>();
+
+		accountUsers.add(UserTestUtil.addUser());
+
+		// Add a user that is part of the account and will hit a keyword search
+
+		String searchTerm = RandomTestUtil.randomString();
+
+		accountUsers.add(
+			UserTestUtil.addUser(
+				searchTerm + RandomTestUtil.randomString(), null));
+
+		_users.addAll(accountUsers);
+
+		for (User user : accountUsers) {
+			_accountEntryUserRels.add(
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		// Assert that null keyword search hits only account users
+
+		_assertSearch(null, 2);
+
+		// Assert that non-null keyword search hits only account users that
+		// match
+
+		_assertSearch(searchTerm, 1);
+	}
+
+	private void _assertSearch(String keywords, int expectedSize)
+		throws Exception {
+
+		List<User> actualUsers = _search(keywords);
+
+		Assert.assertEquals(
+			actualUsers.toString(), expectedSize, actualUsers.size());
+
+		Assert.assertEquals(expectedSize, _searchCount(keywords));
+	}
+
+	private List<User> _search(String keywords) throws Exception {
+		return _accountUserRetriever.searchAccountUsers(
+			_accountEntry.getAccountEntryId(), keywords,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, "screenName", false);
+	}
+
+	private long _searchCount(String keywords) throws Exception {
+		return _accountUserRetriever.searchCountAccountUsers(
+			_accountEntry.getAccountEntryId(), keywords,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@DeleteAfterTestRun

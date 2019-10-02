@@ -42,6 +42,7 @@ public class DLFileRankWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("fileRankId", getFileRankId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -55,6 +56,12 @@ public class DLFileRankWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long fileRankId = (Long)attributes.get("fileRankId");
 
 		if (fileRankId != null) {
@@ -156,6 +163,16 @@ public class DLFileRankWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the mvcc version of this document library file rank.
+	 *
+	 * @return the mvcc version of this document library file rank
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -266,6 +283,16 @@ public class DLFileRankWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the mvcc version of this document library file rank.
+	 *
+	 * @param mvccVersion the mvcc version of this document library file rank
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

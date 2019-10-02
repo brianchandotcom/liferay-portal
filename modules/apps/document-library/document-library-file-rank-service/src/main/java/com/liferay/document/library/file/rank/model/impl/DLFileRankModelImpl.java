@@ -67,16 +67,17 @@ public class DLFileRankModelImpl
 	public static final String TABLE_NAME = "DLFileRank";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"fileRankId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"fileEntryId", Types.BIGINT},
-		{"active_", Types.BOOLEAN}
+		{"mvccVersion", Types.BIGINT}, {"fileRankId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"fileEntryId", Types.BIGINT}, {"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileRankId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -87,7 +88,7 @@ public class DLFileRankModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileRank (fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
+		"create table DLFileRank (mvccVersion LONG default 0 not null,fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileRank";
 
@@ -247,6 +248,10 @@ public class DLFileRankModelImpl
 		Map<String, BiConsumer<DLFileRank, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<DLFileRank, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", DLFileRank::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DLFileRank, Long>)DLFileRank::setMvccVersion);
 		attributeGetterFunctions.put("fileRankId", DLFileRank::getFileRankId);
 		attributeSetterBiConsumers.put(
 			"fileRankId",
@@ -277,6 +282,16 @@ public class DLFileRankModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -468,6 +483,7 @@ public class DLFileRankModelImpl
 	public Object clone() {
 		DLFileRankImpl dlFileRankImpl = new DLFileRankImpl();
 
+		dlFileRankImpl.setMvccVersion(getMvccVersion());
 		dlFileRankImpl.setFileRankId(getFileRankId());
 		dlFileRankImpl.setGroupId(getGroupId());
 		dlFileRankImpl.setCompanyId(getCompanyId());
@@ -564,6 +580,8 @@ public class DLFileRankModelImpl
 	@Override
 	public CacheModel<DLFileRank> toCacheModel() {
 		DLFileRankCacheModel dlFileRankCacheModel = new DLFileRankCacheModel();
+
+		dlFileRankCacheModel.mvccVersion = getMvccVersion();
 
 		dlFileRankCacheModel.fileRankId = getFileRankId();
 
@@ -662,6 +680,7 @@ public class DLFileRankModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private long _fileRankId;
 	private long _groupId;
 	private long _originalGroupId;

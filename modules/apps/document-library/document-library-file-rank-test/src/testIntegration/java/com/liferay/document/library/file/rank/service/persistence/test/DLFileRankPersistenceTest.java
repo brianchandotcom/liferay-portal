@@ -124,6 +124,8 @@ public class DLFileRankPersistenceTest {
 
 		DLFileRank newDLFileRank = _persistence.create(pk);
 
+		newDLFileRank.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDLFileRank.setGroupId(RandomTestUtil.nextLong());
 
 		newDLFileRank.setCompanyId(RandomTestUtil.nextLong());
@@ -141,6 +143,9 @@ public class DLFileRankPersistenceTest {
 		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(
 			newDLFileRank.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDLFileRank.getMvccVersion(),
+			newDLFileRank.getMvccVersion());
 		Assert.assertEquals(
 			existingDLFileRank.getFileRankId(), newDLFileRank.getFileRankId());
 		Assert.assertEquals(
@@ -224,9 +229,9 @@ public class DLFileRankPersistenceTest {
 
 	protected OrderByComparator<DLFileRank> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DLFileRank", "fileRankId", true, "groupId", true, "companyId",
-			true, "userId", true, "createDate", true, "fileEntryId", true,
-			"active", true);
+			"DLFileRank", "mvccVersion", true, "fileRankId", true, "groupId",
+			true, "companyId", true, "userId", true, "createDate", true,
+			"fileEntryId", true, "active", true);
 	}
 
 	@Test
@@ -465,6 +470,8 @@ public class DLFileRankPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DLFileRank dlFileRank = _persistence.create(pk);
+
+		dlFileRank.setMvccVersion(RandomTestUtil.nextLong());
 
 		dlFileRank.setGroupId(RandomTestUtil.nextLong());
 

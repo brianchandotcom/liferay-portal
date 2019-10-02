@@ -166,7 +166,7 @@ if (privateVirtualHosts.size() == 0) {
 							String languageId = LocaleUtil.toLanguageId(localeEntry);
 						%>
 
-							<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+							<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
 
 						<%
 						}
@@ -203,7 +203,7 @@ if (privateVirtualHosts.size() == 0) {
 							String languageId = LocaleUtil.toLanguageId(localeEntry);
 						%>
 
-							<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+							<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
 
 						<%
 						}
@@ -252,7 +252,7 @@ if (privateVirtualHosts.size() == 0) {
 								String languageId = LocaleUtil.toLanguageId(localeEntry);
 							%>
 
-								<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+								<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
 
 							<%
 							}
@@ -299,7 +299,7 @@ if (privateVirtualHosts.size() == 0) {
 								String languageId = LocaleUtil.toLanguageId(localeEntry);
 							%>
 
-								<aui:option label="<%= languageId %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
+								<aui:option label="<%= localeEntry.getDisplayName(themeDisplay.getLocale()) %>" selected="<%= languageId.equals(hostLocale) %>" value="<%= languageId %>" />
 
 							<%
 							}

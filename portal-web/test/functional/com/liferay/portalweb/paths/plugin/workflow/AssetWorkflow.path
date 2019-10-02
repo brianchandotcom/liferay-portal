@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//span[contains(@class,'text-uppercase')] | //span[contains(@class,'workflow-value')]</td>
+	<td>//span[contains(@class,'text-uppercase')] | //span[contains(@class,'workflow-value') and contains(@class,'status')]</td>
 	<td></td>
 </tr>
 <tr>

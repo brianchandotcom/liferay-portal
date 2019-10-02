@@ -38,19 +38,31 @@
 			</then>
 		</if>
 
-		<java
-			classname="com.liferay.portal.tools.DBBuilder"
-			classpathref="db.builder.classpath"
-			fork="${fork.mode}"
-		>
-			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
-			<jvmarg value="-Xmx${db.build.java.mx}" />
-			<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="db.database.name=${database.name}" />
-			<arg value="db.database.types=${database.types}" />
-			<arg value="db.sql.dir=${db.sql.dir}" />
-		</java>
+		<echo>Starting DBBuilder</echo>
+
+		<trycatch property="exception">
+			<try>
+				<java
+					classname="com.liferay.portal.tools.DBBuilder"
+					classpathref="db.builder.classpath"
+					fork="${fork.mode}"
+				>
+					<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
+					<jvmarg value="-Xmx${db.build.java.mx}" />
+					<jvmarg value="-XX:MaxPermSize=${db.build.java.maxpermsize}" />
+					<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+					<arg value="db.database.name=${database.name}" />
+					<arg value="db.database.types=${database.types}" />
+					<arg value="db.sql.dir=${db.sql.dir}" />
+				</java>
+			</try>
+			<catch>
+				<echo>Exception occurred while running DBBuilder ${exception}</echo>
+			</catch>
+			<finally>
+				<echo>Finished running DBBuilder</echo>
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="clean">

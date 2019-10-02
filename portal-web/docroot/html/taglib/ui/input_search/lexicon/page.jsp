@@ -39,7 +39,7 @@ String value = ParamUtil.getString(request, name);
 		<label class="hide-accessible" for="<%= namespace + id %>"><%= title %></label>
 
 		<div class="basic-search-slider">
-			<button class="basic-search-close btn btn-default" type="button"><aui:icon image="times" markupView="lexicon" /><span class="sr-only"><%= buttonLabel %></span></button>
+			<button class="basic-search-close btn btn-secondary" type="button"><aui:icon image="times" markupView="lexicon" /><span class="sr-only"><%= buttonLabel %></span></button>
 
 			<input class="form-control search-query" data-qa-id="searchInput" id="<%= namespace + id %>" name="<%= namespace + name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 		</div>
@@ -47,7 +47,7 @@ String value = ParamUtil.getString(request, name);
 
 	<c:if test="<%= showButton %>">
 		<div class="input-group-btn">
-			<button class="btn btn-default" data-qa-id="searchButton" type="submit">
+			<button class="btn btn-secondary" data-qa-id="searchButton" type="submit">
 				<aui:icon image="search" markupView="lexicon" />
 			</button>
 		</div>

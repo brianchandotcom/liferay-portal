@@ -27,7 +27,7 @@
 				</div>
 
 				<span class="input-group-append input-group-item input-group-item-shrink">
-					<button class="btn btn-default" data-clipboard data-target="#<portlet:namespace />clipboard" type="button">
+					<button class="btn btn-secondary" data-clipboard data-target="#<portlet:namespace />clipboard" type="button">
 						<span class="publish-button-text">
 							<liferay-ui:message key="copy" />
 						</span>

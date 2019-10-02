@@ -43,12 +43,12 @@ AUI.add(
 			'</div>';
 
 		var TPL_SCHEDULER_ICON_NEXT =
-			'<button aria-label="{ariaLabel}"" role="button" type="button" class="scheduler-base-icon-next btn btn-default">' +
+			'<button aria-label="{ariaLabel}"" role="button" type="button" class="btn btn-secondary scheduler-base-icon-next">' +
 			Liferay.Util.getLexiconIconTpl('angle-right') +
 			'</button>';
 
 		var TPL_SCHEDULER_ICON_PREV =
-			'<button aria-label="{ariaLabel}"" role="button" type="button" class="scheduler-base-icon-prev btn btn-default">' +
+			'<button aria-label="{ariaLabel}"" role="button" type="button" class="btn btn-secondary scheduler-base-icon-prev">' +
 			Liferay.Util.getLexiconIconTpl('angle-left') +
 			'</button>';
 

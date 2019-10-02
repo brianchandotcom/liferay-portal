@@ -1389,7 +1389,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A CSS class for styling the trigger for the icon menu. The default value is <![CDATA[<code>btn btn-default</code>]]>.</description>
+			<description>A CSS class for styling the trigger for the icon menu. The default value is <![CDATA[<code>btn btn-secondary</code>]]>.</description>
 			<name>triggerCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

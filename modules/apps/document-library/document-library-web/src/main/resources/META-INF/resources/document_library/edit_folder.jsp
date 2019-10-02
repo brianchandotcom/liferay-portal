@@ -215,7 +215,7 @@ renderResponse.setTitle(headerTitle);
 								cssClass="modify-link select-file-entry-type"
 								icon="search"
 								label="<%= true %>"
-								linkCssClass="btn btn-default"
+								linkCssClass="btn btn-secondary"
 								markupView="lexicon"
 								message="select-document-type"
 								url='<%= "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeSelector();" %>'

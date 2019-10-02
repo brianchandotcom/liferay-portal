@@ -49,7 +49,7 @@
 								</p>
 
 								<p>
-									<a class="btn btn-default btn-wb-default text-uppercase" href="${cur_ItemHeading.ItemLinkText.ItemLinkURL.getData()}">${cur_ItemHeading.ItemLinkText.getData()}</a>
+									<a class="btn btn-secondary btn-wb-default text-uppercase" href="${cur_ItemHeading.ItemLinkText.ItemLinkURL.getData()}">${cur_ItemHeading.ItemLinkText.getData()}</a>
 								</p>
 							</div>
 						</div>

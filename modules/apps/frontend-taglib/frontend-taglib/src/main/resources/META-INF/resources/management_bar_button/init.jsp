@@ -27,7 +27,7 @@ String iconCssClass = (String)request.getAttribute("liferay-frontend:management-
 String id = (String)request.getAttribute("liferay-frontend:management-bar-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-button:label");
 
-cssClass = "btn btn-default lfr-portal-tooltip " + cssClass;
+cssClass = "btn btn-secondary lfr-portal-tooltip " + cssClass;
 
 if (active) {
 	cssClass = "active " + cssClass;

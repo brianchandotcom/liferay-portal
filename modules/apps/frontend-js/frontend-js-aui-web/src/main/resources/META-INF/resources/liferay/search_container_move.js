@@ -50,7 +50,7 @@ AUI.add(
 
 				tooltipClass: {
 					validator: Lang.isString,
-					value: 'btn btn-default btn-group'
+					value: 'btn btn-group btn-secondary'
 				}
 			},
 

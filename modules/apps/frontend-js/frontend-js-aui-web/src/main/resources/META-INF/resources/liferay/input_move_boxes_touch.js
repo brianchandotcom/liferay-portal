@@ -47,7 +47,7 @@ AUI.add(
 		var STR_TRUE = 'true';
 
 		var TPL_EDIT_SELECTION =
-			'<button class="btn btn-default edit-selection" type="button">' +
+			'<button class="btn btn-secondary edit-selection" type="button">' +
 			'<i class="icon-edit"></i> ' +
 			'<span class="btn-text">{0}</span>' +
 			'</button>';

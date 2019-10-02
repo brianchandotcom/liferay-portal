@@ -69,9 +69,9 @@ else {
 
 				<div class="portrait-icons">
 					<div class="btn-group button-holder">
-						<aui:button cssClass="btn btn-default edit-logo modify-link" value="change" />
+						<aui:button cssClass="btn btn-secondary edit-logo modify-link" value="change" />
 
-						<aui:button cssClass="btn btn-default delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
+						<aui:button cssClass="btn btn-secondary delete-logo modify-link" disabled="<%= defaultLogo && (fileEntryId == 0) %>" value="delete" />
 					</div>
 
 					<aui:input name="deleteLogo" type="hidden" value="<%= deleteLogo %>" />

@@ -135,7 +135,7 @@
 			padding-left: 20px;
 			padding-top: 12px;
 
-			.input-group-btn .btn-default {
+			.input-group-btn .btn-secondary {
 				background-color: #f1f2f5;
 				border-color: #e7e7ed;
 			}
@@ -180,7 +180,7 @@
 			}
 		}
 
-		.btn-default:not([disabled]):not(.disabled).active {
+		.btn-secondary:not([disabled]):not(.disabled).active {
 			border-color: transparent;
 		}
 	}
@@ -498,34 +498,34 @@
 	// Management Bar Default Btn Default
 
 	.management-bar-default {
-		.btn-default,
-		.nav > li > .btn-default {
-			background-color: $management-bar-default-btn-default-bg;
-			border-color: $management-bar-default-btn-default-border;
-			color: $management-bar-default-btn-default-color;
+		.btn-secondary,
+		.nav > li > .btn-secondary {
+			background-color: $management-bar-default-btn-secondary-bg;
+			border-color: $management-bar-default-btn-secondary-border;
+			color: $management-bar-default-btn-secondary-color;
 
 			&:focus,
 			&:hover {
-				background-color: $management-bar-default-btn-default-hover-bg;
-				border-color: $management-bar-default-btn-default-hover-border;
-				color: $management-bar-default-btn-default-hover-color;
+				background-color: $management-bar-default-btn-secondary-hover-bg;
+				border-color: $management-bar-default-btn-secondary-hover-border;
+				color: $management-bar-default-btn-secondary-hover-color;
 			}
 
 			&:active,
 			&.active {
-				background-color: $management-bar-default-btn-default-active-bg;
-				border-color: $management-bar-default-btn-default-active-border;
-				color: $management-bar-default-btn-default-active-color;
+				background-color: $management-bar-default-btn-secondary-active-bg;
+				border-color: $management-bar-default-btn-secondary-active-border;
+				color: $management-bar-default-btn-secondary-active-color;
 			}
 		}
 
 		@if (variable-exists(atlas-theme)) {
-			.dropdown.open .btn-default {
+			.dropdown.open .btn-secondary {
 				&,
 				&:focus {
-					background-color: $management-bar-default-btn-default-active-bg;
-					border-color: $management-bar-default-btn-default-active-border;
-					color: $management-bar-default-btn-default-active-color;
+					background-color: $management-bar-default-btn-secondary-active-bg;
+					border-color: $management-bar-default-btn-secondary-active-border;
+					color: $management-bar-default-btn-secondary-active-color;
 				}
 			}
 		}

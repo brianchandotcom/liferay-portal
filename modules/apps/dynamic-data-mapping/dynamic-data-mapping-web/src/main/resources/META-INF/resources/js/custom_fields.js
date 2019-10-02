@@ -101,7 +101,7 @@ AUI.add(
 			'<div class="form-group">' +
 			'<input class="field form-control" type="text" value="" readonly="readonly">' +
 			'<div class="button-holder">' +
-			'<button class="btn select-button btn-default" type="button">' +
+			'<button class="btn btn-secondary select-button" type="button">' +
 			'<span class="lfr-btn-label">' +
 			A.Escape.html(Liferay.Language.get('select')) +
 			'</span>' +
@@ -137,7 +137,7 @@ AUI.add(
 			'<div class="form-group">' +
 			'<input class="field form-control" type="text" value="" readonly="readonly">' +
 			'<div class="button-holder">' +
-			'<button class="btn select-button btn-default" type="button">' +
+			'<button class="btn btn-secondary select-button" type="button">' +
 			'<span class="lfr-btn-label">' +
 			A.Escape.html(Liferay.Language.get('select')) +
 			'</span>' +

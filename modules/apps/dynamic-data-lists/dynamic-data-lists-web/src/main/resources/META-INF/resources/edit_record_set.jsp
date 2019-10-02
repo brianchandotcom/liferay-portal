@@ -97,7 +97,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 				<liferay-ui:icon
 					label="<%= true %>"
-					linkCssClass="btn btn-default"
+					linkCssClass="btn btn-secondary"
 					message="select"
 					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 				/>

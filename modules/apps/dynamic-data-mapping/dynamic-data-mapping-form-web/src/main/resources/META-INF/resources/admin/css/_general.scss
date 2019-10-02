@@ -21,20 +21,20 @@ td.lfr-name-column {
 }
 
 .ddm-form-builder-buttons {
-	.btn-default {
+	.btn-secondary {
 		margin-left: 12px;
+	}
 
-		&.btn-link {
-			font-weight: 600;
+	.btn-link {
+		font-weight: 600;
 
-			&:focus {
-				box-shadow: none;
-			}
+		&:focus {
+			box-shadow: none;
 		}
+	}
 
-		&.btn-primary {
-			margin-left: 0;
-		}
+	.btn-primary {
+		margin-left: 0;
 	}
 }
 

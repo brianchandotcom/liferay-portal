@@ -127,7 +127,7 @@ AUI.add(
 			'</tpl>',
 
 			'<span class="select-files-container" id="{$ns}selectFilesButton">',
-			'<button class="btn btn-default" type="button">{[ this.selectFilesText ]}</button>',
+			'<button class="btn btn-secondary" type="button">{[ this.selectFilesText ]}</button>',
 			'</span>',
 			'</div>',
 			'</div>',

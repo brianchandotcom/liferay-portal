@@ -338,7 +338,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					}
 
 					if (_extended) {
-						jspWriter.write(" btn btn-default");
+						jspWriter.write(" btn btn-secondary");
 					}
 
 					if (_select) {

@@ -41,7 +41,7 @@ String value = ParamUtil.getString(request, name);
 
 	<c:if test="<%= showButton %>">
 		<span class="input-group-btn">
-			<button class="btn btn-default" type="submit">
+			<button class="btn btn-secondary" type="submit">
 				<%= buttonLabel %>
 			</button>
 		</span>

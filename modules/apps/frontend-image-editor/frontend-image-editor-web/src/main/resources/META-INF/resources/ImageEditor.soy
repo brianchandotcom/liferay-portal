@@ -69,7 +69,7 @@
 			{let $hasChanges: $history and $history.canUndo /}
 
 			{let $saveButtonAttributes kind="attributes"}
-				class="btn btn-default btn-primary {$hasChanges ? '' : 'disabled'}"
+				class="btn btn-primary {$hasChanges ? '' : 'disabled'}"
 				data-onclick="save_"
 
 				{if not $hasChanges}
@@ -81,7 +81,7 @@
 				<span class="lfr-btn-label">{msg desc=""}save{/msg}</span>
 			</button>
 
-			<button class="btn btn-cancel btn-default btn-link" data-onclick="close_">
+			<button class="btn btn-cancel btn-link" data-onclick="close_">
 				<span class="lfr-btn-label">{msg desc=""}cancel{/msg}</span>
 			</button>
 		</div>

@@ -856,9 +856,11 @@ AUI.add(
 
 					A.each(instance.tableRows, function(item, index) {
 						if (index < weeks) {
-							item.removeClass('hide');
+							if (!item.parentElement) {
+								instance.tableRowContainer.appendChild(item);
+							}
 						} else {
-							item.addClass('hide');
+							item.remove();
 						}
 					});
 

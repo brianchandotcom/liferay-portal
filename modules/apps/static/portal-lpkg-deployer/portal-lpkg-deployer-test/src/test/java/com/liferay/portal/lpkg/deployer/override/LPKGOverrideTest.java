@@ -169,8 +169,9 @@ public class LPKGOverrideTest {
 		String staticLPKGBundleSymbolicNames = SystemProperties.get(
 			"static.lpkg.bundle.symbolic.names");
 
-		List<String> staticLPKGBundleSymbolicNameList = StringUtil.split(
-			staticLPKGBundleSymbolicNames);
+		List<String> staticLPKGBundleSymbolicNameList =
+			com.liferay.petra.string.StringUtil.split(
+				staticLPKGBundleSymbolicNames);
 
 		String name = ReleaseInfo.getName();
 

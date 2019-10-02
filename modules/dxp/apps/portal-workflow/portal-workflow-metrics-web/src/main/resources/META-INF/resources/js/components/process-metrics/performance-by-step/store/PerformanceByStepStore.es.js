@@ -13,28 +13,32 @@
 import {AppContext} from '../../../AppContext.es';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 
-const usePerformanceData = (page, pageSize, processId, sort) => {
+const usePerformanceData = (page, pageSize, processId, search, sort) => {
 	const {client} = useContext(AppContext);
 	const [items, setItems] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
 
-	const fetchData = (page, pageSize, processId, sort) => {
-		client
-			.get(`/processes/${processId}/tasks`, {
-				page,
-				pageSize,
-				sort
-			})
-			.then(({data}) => {
-				setTotalCount(() => data.totalCount);
-				setItems(() => data.items);
-			});
+	const fetchData = (page, pageSize, processId, search, sort) => {
+		const params = {
+			page,
+			pageSize,
+			sort: decodeURIComponent(sort)
+		};
+
+		if (typeof search === 'string' && search) {
+			params.key = decodeURIComponent(search);
+		}
+
+		client.get(`/processes/${processId}/tasks`, {params}).then(({data}) => {
+			setTotalCount(() => data.totalCount);
+			setItems(() => data.items);
+		});
 	};
 
 	useEffect(() => {
 		if (page && pageSize && processId && sort)
-			fetchData(page, pageSize, processId, sort);
-	}, [page, pageSize, processId, sort]);
+			fetchData(page, pageSize, processId, search, sort);
+	}, [page, pageSize, processId, search, sort]);
 
 	return {
 		items,
@@ -49,11 +53,12 @@ const PerformanceDataProvider = ({
 	page,
 	pageSize,
 	processId,
+	search,
 	sort
 }) => {
 	return (
 		<PerformanceDataContext.Provider
-			value={usePerformanceData(page, pageSize, processId, sort)}
+			value={usePerformanceData(page, pageSize, processId, search, sort)}
 		>
 			{children}
 		</PerformanceDataContext.Provider>

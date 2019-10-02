@@ -17,35 +17,51 @@ import {
 	PerformanceDataContext,
 	PerformanceDataProvider
 } from './store/PerformanceByStepStore.es';
+import Search from '../../../shared/components/pagination/Search.es';
 
-function PerformanceByStep({page, pageSize, processId, sort}) {
+function PerformanceByStep({page, pageSize, processId, search, sort}) {
 	return (
 		<PerformanceDataProvider
 			page={page}
 			pageSize={pageSize}
 			processId={processId}
-			sort={decodeURIComponent(sort)}
+			search={search}
+			sort={sort}
 		>
-			<PerformanceByStep.Body />
+			<PerformanceByStep.Body
+				page={page}
+				pageSize={pageSize}
+				search={search}
+			/>
 		</PerformanceDataProvider>
 	);
 }
 
 const Body = ({page, pageSize}) => {
-	const {items, totalCount} = useContext(PerformanceDataContext);
+	const {items = [], totalCount} = useContext(PerformanceDataContext);
 
 	return (
-		<div
-			className="container-fluid-1280 mt-4"
-			data-testid="performance-test"
-		>
-			<PerformanceByStep.Table items={items} />
-			<PaginationBar
-				page={page}
-				pageCount={items.length}
-				pageSize={pageSize}
-				totalCount={totalCount}
-			/>
+		<div>
+			<nav className="management-bar management-bar-light navbar navbar-expand-md">
+				<div className="container-fluid container-fluid-max-xl">
+					<div className="navbar-form navbar-form-autofit">
+						<Search disabled={false} />
+					</div>
+				</div>
+			</nav>
+
+			<div
+				className="container-fluid-1280 mt-4"
+				data-testid="performance-test"
+			>
+				<PerformanceByStep.Table items={items} />
+				<PaginationBar
+					page={page}
+					pageCount={items.length}
+					pageSize={pageSize}
+					totalCount={totalCount}
+				/>
+			</div>
 		</div>
 	);
 };
@@ -71,7 +87,7 @@ const Table = ({items}) => {
 
 						<th className="table-head-title text-right">
 							<ListHeadItem
-								name="overdueInstanceCount"
+								name="durationAvg"
 								title={Liferay.Language.get(
 									'avg-completion-time'
 								)}
@@ -81,9 +97,10 @@ const Table = ({items}) => {
 				</thead>
 
 				<tbody>
-					{items.map((step, index) => (
-						<PerformanceByStep.Item {...step} key={index} />
-					))}
+					{items &&
+						items.map((step, index) => (
+							<PerformanceByStep.Item {...step} key={index} />
+						))}
 				</tbody>
 			</table>
 		</div>

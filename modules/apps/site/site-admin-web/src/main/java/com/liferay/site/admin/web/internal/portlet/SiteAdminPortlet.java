@@ -631,6 +631,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		for (int i = 0; i < virtualHostNames.length; i++) {
 			String virtualHostName = virtualHostNames[i];
+
 			String virtualHostLocale = virtualHostLocales[i];
 
 			if (Validator.isNotNull(virtualHostLocale)) {

@@ -19,9 +19,11 @@ import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
+import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.User;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -123,6 +126,14 @@ public class AccountEntryUserRelLocalServiceTest {
 		Assert.assertEquals(_userInfo.screenName, user.getScreenName());
 		Assert.assertEquals(
 			accountEntryUserRel.getAccountUserId(), user.getUserId());
+
+		List<User> actualUsers = _accountUserRetriever.searchAccountUsers(
+			_accountEntry.getAccountEntryId(), user.getScreenName(),
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, "screenName", false);
+
+		Assert.assertEquals(actualUsers.toString(), 1, actualUsers.size());
+		Assert.assertEquals(actualUsers.get(0), user);
 	}
 
 	@Test
@@ -235,6 +246,9 @@ public class AccountEntryUserRelLocalServiceTest {
 	@DeleteAfterTestRun
 	private final List<AccountEntryUserRel> _accountEntryUserRels =
 		new ArrayList<>();
+
+	@Inject
+	private AccountUserRetriever _accountUserRetriever;
 
 	@DeleteAfterTestRun
 	private User _user;

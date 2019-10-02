@@ -16,18 +16,45 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Map<String, Object> context = new HashMap<>();
+<div>
 
-context.put("color", portletConfigurationCSSPortletDisplayContext.getBackgroundColor());
-context.put("id", renderResponse.getNamespace() + "backgroundColor");
-context.put("label", LanguageUtil.get(request, "background-color"));
-context.put("name", renderResponse.getNamespace() + "backgroundColor");
-%>
+	<%
+	String color = portletConfigurationCSSPortletDisplayContext.getBackgroundColor();
+	String label = LanguageUtil.get(request, "background-color");
+	String name = renderResponse.getNamespace() + "backgroundColor";
 
-<soy:component-renderer
-	context="<%= context %>"
-	module="js/ColorPickerInput.es"
-	servletContext="<%= application %>"
-	templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-/>
+	Map<String, Object> data = new HashMap<>();
+
+	data.put("color", color);
+	data.put("label", label);
+	data.put("name", name);
+	%>
+
+	<div class="form-group">
+		<input name="<%= name %>" type="hidden" value="#<%= color %>" />
+
+		<div class="clay-color-picker">
+			<label><%= label %></label>
+
+			<div class="clay-color input-group">
+				<div class="input-group-item input-group-item-shrink input-group-prepend">
+					<div class="input-group-text">
+						<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= color %>" type="button" />
+					</div>
+				</div>
+
+				<div class="input-group-append input-group-item">
+					<input class="form-control input-group-inset input-group-inset-before" type="text" />
+
+					<label class="input-group-inset-item input-group-inset-item-before"><%= color %></label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<react:component
+		data="<%= data %>"
+		module="js/ColorPickerInput.es"
+		servletContext="<%= application %>"
+	/>
+</div>

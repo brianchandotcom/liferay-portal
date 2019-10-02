@@ -12,117 +12,32 @@
  * details.
  */
 
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import core from 'metal';
+import ClayColorPicker from '@clayui/color-picker';
+import React, {useState} from 'react';
 
-import templates from './ColorPickerInput.soy';
-
-/**
- * ColorPickerInput
- *
- * This class creates an input with a ColorPickerPopover binded to it.
- */
-
-class ColorPickerInput extends Component {
-	/**
-	 * @inheritDoc
-	 */
-
-	rendered() {
-		const instance = this;
-
-		AUI().use('aui-color-picker-popover', A => {
-			instance.colorPickerPopover = new A.ColorPickerPopover({
-				color: instance.color,
-				constrain: true,
-				trigger: '#' + instance.id,
-				zIndex: Liferay.zIndex.POPOVER
-			});
-
-			instance.colorPickerPopover.render(instance.element);
-			instance.colorPickerPopover.after(
-				'select',
-				instance.setColor_,
-				instance
-			);
-		});
-	}
-
-	/**
-	 * Sets the selected color
-	 *
-	 * @param  {Event} event
-	 */
-
-	setColor_(event) {
-		this.color = event.color;
-	}
+function normalizeColor(color) {
+	return color.startsWith('#') ? color.substring(1) : color;
 }
 
-/**
- * State definition.
- * @type {!Object}
- * @static
- */
+const ColorPicker = ({color, label, name}) => {
+	const [colorValue, setColorValue] = useState(normalizeColor(color));
 
-ColorPickerInput.STATE = {
-	/**
-	 * Current selected color
-	 * @type {String}
-	 */
+	return (
+		<div className="form-group">
+			<input name={name} type="hidden" value={`#${colorValue}`} />
 
-	color: {
-		validator: core.isString
-	},
-
-	/**
-	 * Input disabled state
-	 * @type {Boolean}
-	 */
-
-	disabled: {
-		validator: core.isBoolean,
-		value: false
-	},
-
-	/**
-	 * Id for the input
-	 * @type {String}
-	 */
-
-	id: {
-		validator: core.isString
-	},
-
-	/**
-	 * Input css classes
-	 * @type {String}
-	 */
-
-	inputClasses: {
-		validator: core.isString
-	},
-
-	/**
-	 * Label for the input
-	 * @type {String}
-	 */
-
-	label: {
-		validator: core.isString
-	},
-
-	/**
-	 * Name for the input
-	 * @type {String}
-	 */
-
-	name: {
-		validator: core.isString
-	}
+			<ClayColorPicker
+				label={label}
+				name={`${name}ColorPicker`}
+				onValueChange={setColorValue}
+				showHex={true}
+				title={label}
+				value={colorValue}
+			/>
+		</div>
+	);
 };
 
-Soy.register(ColorPickerInput, templates);
-
-export default ColorPickerInput;
+export default function(props) {
+	return <ColorPicker {...props} />;
+}

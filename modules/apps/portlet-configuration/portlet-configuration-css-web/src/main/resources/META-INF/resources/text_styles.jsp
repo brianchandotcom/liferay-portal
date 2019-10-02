@@ -50,21 +50,47 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 
 		</aui:select>
 
-		<%
-		Map<String, Object> context = new HashMap<>();
+		<div>
 
-		context.put("color", portletConfigurationCSSPortletDisplayContext.getTextDataProperty("color"));
-		context.put("id", renderResponse.getNamespace() + "fontColor");
-		context.put("label", LanguageUtil.get(request, "color"));
-		context.put("name", renderResponse.getNamespace() + "fontColor");
-		%>
+			<%
+			String color = portletConfigurationCSSPortletDisplayContext.getTextDataProperty("color");
+			String label = LanguageUtil.get(request, "color");
+			String name = renderResponse.getNamespace() + "fontColor";
 
-		<soy:component-renderer
-			context="<%= context %>"
-			module="js/ColorPickerInput.es"
-			servletContext="<%= application %>"
-			templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-		/>
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("color", color);
+			data.put("label", label);
+			data.put("name", name);
+			%>
+
+			<div class="form-group">
+				<input name="<%= name %>" type="hidden" value="#<%= color %>" />
+
+				<div class="clay-color-picker">
+					<label><%= label %></label>
+
+					<div class="clay-color input-group">
+						<div class="input-group-item input-group-item-shrink input-group-prepend">
+							<div class="input-group-text">
+								<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= color %>" type="button" />
+							</div>
+						</div>
+
+						<div class="input-group-append input-group-item">
+							<input class="form-control input-group-inset input-group-inset-before" type="hidden" />
+							<label class="input-group-inset-item input-group-inset-item-before"><%= color %></label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<react:component
+				data="<%= data %>"
+				module="js/ColorPickerInput.es"
+				servletContext="<%= application %>"
+			/>
+		</div>
 
 		<aui:select label="alignment" name="textAlign" showEmptyOption="<%= true %>">
 			<aui:option label="justify" selected='<%= Objects.equals(portletConfigurationCSSPortletDisplayContext.getTextDataProperty("textAlign"), "justify") %>' />

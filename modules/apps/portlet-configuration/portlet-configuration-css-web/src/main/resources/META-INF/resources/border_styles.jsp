@@ -118,79 +118,175 @@
 		<aui:fieldset label="border-color">
 			<aui:input checked='<%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") %>' data-inputselector=".same-border-color" label="same-for-all" name="useForAllColor" type="toggle-switch" />
 
-			<%
-			Map<String, Object> contextBorderTop = new HashMap<>();
+			<div>
 
-			contextBorderTop.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderColor"));
-			contextBorderTop.put("elementClasses", "field-row");
-			contextBorderTop.put("id", renderResponse.getNamespace() + "borderColorTop");
-			contextBorderTop.put("label", LanguageUtil.get(request, "top"));
-			contextBorderTop.put("name", renderResponse.getNamespace() + "borderColorTop");
-			%>
+				<%
+				String colorTop = portletConfigurationCSSPortletDisplayContext.getBorderProperty("top", "borderColor");
+				String labelTop = LanguageUtil.get(request, "top");
+				String nameTop = renderResponse.getNamespace() + "borderColorTop";
 
-			<soy:component-renderer
-				context="<%= contextBorderTop %>"
-				module="js/ColorPickerInput.es"
-				servletContext="<%= application %>"
-				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-			/>
+				Map<String, Object> dataBorderTop = new HashMap<>();
 
-			<%
-			Map<String, Object> contextBorderRight = new HashMap<>();
+				dataBorderTop.put("color", colorTop);
+				dataBorderTop.put("label", labelTop);
+				dataBorderTop.put("name", nameTop);
+				%>
 
-			contextBorderRight.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor"));
-			contextBorderRight.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
-			contextBorderRight.put("elementClasses", "field-row");
-			contextBorderRight.put("id", renderResponse.getNamespace() + "borderColorRight");
-			contextBorderRight.put("inputClasses", "same-border-color");
-			contextBorderRight.put("label", LanguageUtil.get(request, "right"));
-			contextBorderRight.put("name", renderResponse.getNamespace() + "borderColorRight");
-			%>
+				<div class="form-group">
+					<input name="<%= nameTop %>" type="hidden" value="#<%= colorTop %>" />
 
-			<soy:component-renderer
-				context="<%= contextBorderRight %>"
-				module="js/ColorPickerInput.es"
-				servletContext="<%= application %>"
-				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-			/>
+					<div class="clay-color-picker">
+						<label><%= labelTop %></label>
 
-			<%
-			Map<String, Object> contextBorderBottom = new HashMap<>();
+						<div class="clay-color input-group">
+							<div class="input-group-item input-group-item-shrink input-group-prepend">
+								<div class="input-group-text">
+									<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= colorTop %>" type="button" />
+								</div>
+							</div>
 
-			contextBorderBottom.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor"));
-			contextBorderBottom.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
-			contextBorderBottom.put("elementClasses", "field-row");
-			contextBorderBottom.put("id", renderResponse.getNamespace() + "borderColorBottom");
-			contextBorderBottom.put("inputClasses", "same-border-color");
-			contextBorderBottom.put("label", LanguageUtil.get(request, "bottom"));
-			contextBorderBottom.put("name", renderResponse.getNamespace() + "borderColorBottom");
-			%>
+							<div class="input-group-append input-group-item">
+								<input class="form-control input-group-inset input-group-inset-before" type="hidden" />
+								<label class="input-group-inset-item input-group-inset-item-before"><%= colorTop %></label>
+							</div>
+						</div>
+					</div>
+				</div>
 
-			<soy:component-renderer
-				context="<%= contextBorderBottom %>"
-				module="js/ColorPickerInput.es"
-				servletContext="<%= application %>"
-				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-			/>
+				<react:component
+					data="<%= dataBorderTop %>"
+					module="js/ColorPickerInput.es"
+					servletContext="<%= application %>"
+				/>
+			</div>
 
-			<%
-			Map<String, Object> contextBorderLeft = new HashMap<>();
+			<fieldset class="same-border-color" <%= portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor") ? "disabled" : StringPool.BLANK %>>
+				<div>
 
-			contextBorderLeft.put("color", portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor"));
-			contextBorderLeft.put("disabled", portletConfigurationCSSPortletDisplayContext.isBorderSameForAll("borderColor"));
-			contextBorderLeft.put("elementClasses", "field-row");
-			contextBorderLeft.put("id", renderResponse.getNamespace() + "borderColorLeft");
-			contextBorderLeft.put("inputClasses", "same-border-color");
-			contextBorderLeft.put("label", LanguageUtil.get(request, "left"));
-			contextBorderLeft.put("name", renderResponse.getNamespace() + "borderColorLeft");
-			%>
+					<%
+					String colorRight = portletConfigurationCSSPortletDisplayContext.getBorderProperty("right", "borderColor");
+					String labelRight = LanguageUtil.get(request, "right");
+					String nameRight = renderResponse.getNamespace() + "borderColorRight";
 
-			<soy:component-renderer
-				context="<%= contextBorderLeft %>"
-				module="js/ColorPickerInput.es"
-				servletContext="<%= application %>"
-				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
-			/>
+					Map<String, Object> dataBorderRight = new HashMap<>();
+
+					dataBorderRight.put("color", colorRight);
+					dataBorderRight.put("label", labelRight);
+					dataBorderRight.put("name", nameRight);
+					%>
+
+					<div class="form-group">
+						<input name="<%= nameRight %>" type="hidden" value="#<%= colorRight %>" />
+
+						<div class="clay-color-picker">
+							<label><%= labelRight %></label>
+
+							<div class="clay-color input-group">
+								<div class="input-group-item input-group-item-shrink input-group-prepend">
+									<div class="input-group-text">
+										<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= colorRight %>" type="button" />
+									</div>
+								</div>
+
+								<div class="input-group-append input-group-item">
+									<input class="form-control input-group-inset input-group-inset-before" type="hidden" />
+									<label class="input-group-inset-item input-group-inset-item-before"><%= colorRight %></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<react:component
+						data="<%= dataBorderRight %>"
+						module="js/ColorPickerInput.es"
+						servletContext="<%= application %>"
+					/>
+				</div>
+
+				<div>
+
+					<%
+					String colorBottom = portletConfigurationCSSPortletDisplayContext.getBorderProperty("bottom", "borderColor");
+					String labelBottom = LanguageUtil.get(request, "bottom");
+					String nameBottom = renderResponse.getNamespace() + "borderColorBottom";
+
+					Map<String, Object> dataBorderBottom = new HashMap<>();
+
+					dataBorderBottom.put("color", colorBottom);
+					dataBorderBottom.put("label", labelBottom);
+					dataBorderBottom.put("name", nameBottom);
+					%>
+
+					<div class="form-group">
+						<input name="<%= nameBottom %>" type="hidden" value="#<%= colorBottom %>" />
+
+						<div class="clay-color-picker">
+							<label><%= labelBottom %></label>
+
+							<div class="clay-color input-group">
+								<div class="input-group-item input-group-item-shrink input-group-prepend">
+									<div class="input-group-text">
+										<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= colorBottom %>" type="button" />
+									</div>
+								</div>
+
+								<div class="input-group-append input-group-item">
+									<input class="form-control input-group-inset input-group-inset-before" type="hidden" />
+									<label class="input-group-inset-item input-group-inset-item-before"><%= colorBottom %></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<react:component
+						data="<%= dataBorderBottom %>"
+						module="js/ColorPickerInput.es"
+						servletContext="<%= application %>"
+					/>
+				</div>
+
+				<div>
+
+					<%
+					String colorLeft = portletConfigurationCSSPortletDisplayContext.getBorderProperty("left", "borderColor");
+					String labelLeft = LanguageUtil.get(request, "left");
+					String nameLeft = renderResponse.getNamespace() + "borderColorLeft";
+
+					Map<String, Object> dataBorderLeft = new HashMap<>();
+
+					dataBorderLeft.put("color", colorLeft);
+					dataBorderLeft.put("label", labelLeft);
+					dataBorderLeft.put("name", nameLeft);
+					%>
+
+					<div class="form-group">
+						<input name="<%= nameLeft %>" type="hidden" value="#<%= colorLeft %>" />
+
+						<div class="clay-color-picker">
+							<label><%= labelLeft %></label>
+
+							<div class="clay-color input-group">
+								<div class="input-group-item input-group-item-shrink input-group-prepend">
+									<div class="input-group-text">
+										<button class="btn clay-color-btn dropdown-toggle" style="border-width: 0px; height: 28px; width: 28px;" title="<%= colorLeft %>" type="button" />
+									</div>
+								</div>
+
+								<div class="input-group-append input-group-item">
+									<input class="form-control input-group-inset input-group-inset-before" type="hidden" />
+									<label class="input-group-inset-item input-group-inset-item-before"><%= colorLeft %></label>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<react:component
+						data="<%= dataBorderLeft %>"
+						module="js/ColorPickerInput.es"
+						servletContext="<%= application %>"
+					/>
+				</div>
+			</fieldset>
 		</aui:fieldset>
 	</aui:col>
 </aui:row>

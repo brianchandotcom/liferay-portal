@@ -1,4 +1,8 @@
 {
+	"dependencies": {
+		"@clayui/color-picker": "3.0.0",
+		"react": "16.9.0"
+	},
 	"name": "portlet-configuration-css-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -166,7 +166,7 @@ public class SegmentsExperimentDisplayContext {
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentService.getSegmentsExperiments(
-				getSelectedSegmentsExperienceId(),
+				_getSegmentsExperienceId(),
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				SegmentsExperimentConstants.Status.
 					getNonexclusiveStatusValues(),

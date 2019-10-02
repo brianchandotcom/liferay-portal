@@ -140,6 +140,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setDescription(RandomTestUtil.randomString());
 
+		newAccountEntry.setDomains(RandomTestUtil.randomString());
+
 		newAccountEntry.setLogoId(RandomTestUtil.nextLong());
 
 		newAccountEntry.setStatus(RandomTestUtil.nextInt());
@@ -176,6 +178,8 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAccountEntry.getDescription(),
 			newAccountEntry.getDescription());
+		Assert.assertEquals(
+			existingAccountEntry.getDomains(), newAccountEntry.getDomains());
 		Assert.assertEquals(
 			existingAccountEntry.getLogoId(), newAccountEntry.getLogoId());
 		Assert.assertEquals(
@@ -225,7 +229,8 @@ public class AccountEntryPersistenceTest {
 			"AccountEntry", "mvccVersion", true, "accountEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "parentAccountEntryId", true, "name",
-			true, "description", true, "logoId", true, "status", true);
+			true, "description", true, "domains", true, "logoId", true,
+			"status", true);
 	}
 
 	@Test
@@ -463,6 +468,8 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setName(RandomTestUtil.randomString());
 
 		accountEntry.setDescription(RandomTestUtil.randomString());
+
+		accountEntry.setDomains(RandomTestUtil.randomString());
 
 		accountEntry.setLogoId(RandomTestUtil.nextLong());
 

@@ -34,25 +34,10 @@ public class SQLStateAcceptor implements RetryAcceptor {
 		String sqlState = propertyMap.get(SQLSTATE);
 
 		while (true) {
-			Class<?> clazz = t.getClass();
+			if ((t instanceof SQLException) &&
+				_scanForSQLState((SQLException)t, sqlState)) {
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			if (classLoader == null) {
-				classLoader = ClassLoader.getSystemClassLoader();
-			}
-
-			try {
-				Class<?> exceptionClass = classLoader.loadClass(
-					SQLException.class.getName());
-
-				if (exceptionClass.isInstance(t) &&
-					_scanForSQLState((SQLException)t, sqlState)) {
-
-					return true;
-				}
-			}
-			catch (ClassNotFoundException cnfe) {
+				return true;
 			}
 
 			Throwable cause = t.getCause();

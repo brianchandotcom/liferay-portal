@@ -261,7 +261,12 @@ public class ResourcePermissionLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public void addResourcePermission(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -1432,7 +1437,12 @@ public class ResourcePermissionLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public void setOwnerResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -1471,7 +1481,12 @@ public class ResourcePermissionLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public void setResourcePermissions(
 			long companyId, String name, int scope, String primKey, long roleId,
@@ -1509,7 +1524,12 @@ public class ResourcePermissionLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public void setResourcePermissions(
 			long companyId, String name, int scope, String primKey,

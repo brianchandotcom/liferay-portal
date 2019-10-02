@@ -412,7 +412,12 @@ public class PortletPreferencesLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
@@ -425,7 +430,12 @@ public class PortletPreferencesLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
@@ -455,7 +465,12 @@ public class PortletPreferencesLocalServiceImpl
 	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
-		properties = {@Property(name = SQLStateAcceptor.SQLSTATE, value = "23")}
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION
+			)
+		}
 	)
 	public javax.portlet.PortletPreferences getPreferences(
 		PortletPreferencesIds portletPreferencesIds) {

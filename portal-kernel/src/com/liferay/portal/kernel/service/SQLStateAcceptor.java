@@ -27,6 +27,8 @@ public class SQLStateAcceptor implements RetryAcceptor {
 
 	public static final String SQLSTATE = "SQLSTATE";
 
+	public static final String SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION = "23";
+
 	@Override
 	public boolean acceptException(
 		Throwable t, Map<String, String> propertyMap) {

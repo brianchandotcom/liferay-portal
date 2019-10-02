@@ -114,7 +114,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			</div>
 		</c:otherwise>
 	</c:choose>
-	</></c:if>
+</c:if>
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />useCustomCanonicalURL', '<portlet:namespace />customCanonicalURLSettings');

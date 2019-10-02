@@ -444,8 +444,15 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 					_targetLayout.getUserId(), _targetLayout.getGroupId(),
 					_targetLayout.isPrivateLayout(),
-					_targetLayout.getLayoutId(), layoutSEOEntry.isEnabled(),
-					layoutSEOEntry.getCanonicalURLMap(), serviceContext);
+					_targetLayout.getLayoutId(),
+					layoutSEOEntry.isEnabledCanonicalURL(),
+					layoutSEOEntry.getCanonicalURLMap(),
+					layoutSEOEntry.isEnabledOpenGraphDescription(),
+					layoutSEOEntry.getOpenGraphDescriptionMap(),
+					layoutSEOEntry.isEnabledOpenGraphTitle(),
+					layoutSEOEntry.getOpenGraphTitleMap(),
+					layoutSEOEntry.getOpenGraphImageFileEntryId(),
+					serviceContext);
 			}
 
 			return _layoutLocalService.updateIconImage(

@@ -101,6 +101,11 @@ public class LayoutSEOEntryStagedModelDataHandler
 				layout.isPrivateLayout(), layout.getLayoutId(),
 				layoutSEOEntry.isEnabledCanonicalURL(),
 				layoutSEOEntry.getCanonicalURLMap(),
+				layoutSEOEntry.isEnabledOpenGraphDescription(),
+				layoutSEOEntry.getOpenGraphDescriptionMap(),
+				layoutSEOEntry.isEnabledOpenGraphTitle(),
+				layoutSEOEntry.getOpenGraphTitleMap(),
+				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				portletDataContext.createServiceContext(layoutSEOEntry));
 		}
 		else {
@@ -111,6 +116,11 @@ public class LayoutSEOEntryStagedModelDataHandler
 				existingLayoutSEOEntry.getLayoutId(),
 				layoutSEOEntry.isEnabledCanonicalURL(),
 				layoutSEOEntry.getCanonicalURLMap(),
+				layoutSEOEntry.isEnabledOpenGraphDescription(),
+				layoutSEOEntry.getOpenGraphDescriptionMap(),
+				layoutSEOEntry.isEnabledOpenGraphTitle(),
+				layoutSEOEntry.getOpenGraphTitleMap(),
+				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				portletDataContext.createServiceContext(layoutSEOEntry));
 		}
 	}

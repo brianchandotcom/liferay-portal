@@ -146,15 +146,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		return ddmStructureLayoutPersistence.update(structureLayout);
 	}
 
-	@Indexable(type = IndexableType.DELETE)
-	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public DDMStructureLayout deleteDDMStructureLayout(
-		DDMStructureLayout structureLayout) {
-
-		return ddmStructureLayoutPersistence.remove(structureLayout);
-	}
-
 	@Override
 	public void deleteDDMStructureLayouts(
 			long classNameId, DDMStructureVersion ddmStructureVersion)
@@ -170,11 +161,6 @@ public class DDMStructureLayoutLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #deleteDDMStructureLayout(DDMStructureLayout)}
-	 */
-	@Deprecated
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(DDMStructureLayout structureLayout) {
@@ -185,10 +171,7 @@ public class DDMStructureLayoutLocalServiceImpl
 	public void deleteStructureLayout(long structureLayoutId)
 		throws PortalException {
 
-		DDMStructureLayout structureLayout =
-			ddmStructureLayoutPersistence.findByPrimaryKey(structureLayoutId);
-
-		deleteDDMStructureLayout(structureLayout);
+		deleteDDMStructureLayout(structureLayoutId);
 	}
 
 	@Override

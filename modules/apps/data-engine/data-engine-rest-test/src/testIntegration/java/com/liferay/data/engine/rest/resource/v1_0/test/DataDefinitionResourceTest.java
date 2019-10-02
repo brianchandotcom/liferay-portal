@@ -72,8 +72,6 @@ public class DataDefinitionResourceTest
 			"abcdefghijklmnopqrstuvwxyz0123456789",
 			"abcdefghijklmnopqrstuvwxyz0123456789", "definition");
 		_testGetSiteDataDefinitionsPage(
-			"definition description", "descr", "name");
-		_testGetSiteDataDefinitionsPage(
 			"description name", "description name", "definition");
 		_testGetSiteDataDefinitionsPage(
 			"description", "DEFINITION", "DeFiNiTiON NaMe");

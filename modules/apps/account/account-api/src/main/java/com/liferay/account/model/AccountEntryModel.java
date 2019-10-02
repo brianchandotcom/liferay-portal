@@ -231,6 +231,21 @@ public interface AccountEntryModel
 	public void setDescription(String description);
 
 	/**
+	 * Returns the domains of this account entry.
+	 *
+	 * @return the domains of this account entry
+	 */
+	@AutoEscape
+	public String getDomains();
+
+	/**
+	 * Sets the domains of this account entry.
+	 *
+	 * @param domains the domains of this account entry
+	 */
+	public void setDomains(String domains);
+
+	/**
 	 * Returns the logo ID of this account entry.
 	 *
 	 * @return the logo ID of this account entry

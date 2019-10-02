@@ -17,6 +17,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="domains" type="String" />
 		<field name="logoId" type="long" />
 		<field name="status" type="int" />
 	</model>

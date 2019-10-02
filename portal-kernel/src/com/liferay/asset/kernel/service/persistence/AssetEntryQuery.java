@@ -14,15 +14,11 @@
 
 package com.liferay.asset.kernel.service.persistence;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -192,10 +188,6 @@ public class AssetEntryQuery {
 		return _allCategoryIds;
 	}
 
-	public long[] getAllLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_allCategoryIds);
-	}
-
 	public long[] getAllTagIds() {
 		return _allTagIds;
 	}
@@ -206,10 +198,6 @@ public class AssetEntryQuery {
 
 	public long[] getAnyCategoryIds() {
 		return _anyCategoryIds;
-	}
-
-	public long[] getAnyLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_anyCategoryIds);
 	}
 
 	public long[] getAnyTagIds() {
@@ -264,10 +252,6 @@ public class AssetEntryQuery {
 		return _notAllCategoryIds;
 	}
 
-	public long[] getNotAllLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_notAllCategoryIds);
-	}
-
 	public long[] getNotAllTagIds() {
 		return _notAllTagIds;
 	}
@@ -278,10 +262,6 @@ public class AssetEntryQuery {
 
 	public long[] getNotAnyCategoryIds() {
 		return _notAnyCategoryIds;
-	}
-
-	public long[] getNotAnyLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_notAnyCategoryIds);
 	}
 
 	public long[] getNotAnyTagIds() {
@@ -655,33 +635,6 @@ public class AssetEntryQuery {
 
 		return ArrayUtil.toArray(tagIdsList.toArray(new Long[0]));
 	}
-
-	private long[] _getLeftAndRightCategoryIds(long[] categoryIds) {
-		long[] leftRightIds = new long[categoryIds.length * 3];
-
-		for (int i = 0; i < categoryIds.length; i++) {
-			long categoryId = categoryIds[i];
-
-			try {
-				AssetCategory category =
-					AssetCategoryLocalServiceUtil.getCategory(categoryId);
-
-				leftRightIds[3 * i] = category.getGroupId();
-				leftRightIds[3 * i + 1] = category.getLeftCategoryId();
-				leftRightIds[3 * i + 2] = category.getRightCategoryId();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Error retrieving category " + categoryId);
-				}
-			}
-		}
-
-		return leftRightIds;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetEntryQuery.class);
 
 	private long[] _allCategoryIds = new long[0];
 	private long[] _allTagIds = new long[0];

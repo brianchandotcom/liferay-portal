@@ -64,7 +64,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			className, classPK, reporterEmailAddress, reportedUserId,
 			contentTitle, contentURL, reason, serviceContext);
 
-		actionResponse.setRenderParameter("mvcPath", "/edit_entry.jsp");
+		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
 	}
 
 	@Reference(unbind = "-")

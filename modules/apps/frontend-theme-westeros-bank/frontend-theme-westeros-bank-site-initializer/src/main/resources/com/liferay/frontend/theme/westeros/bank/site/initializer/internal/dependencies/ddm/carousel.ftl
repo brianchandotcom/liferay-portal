@@ -17,7 +17,7 @@
 	<div class="carousel slide" data-ride="carousel" id="main-carousel">
 		<#if ItemHeading.getSiblings()?has_content>
 
-			<ol class="carousel-indicators d-none d-md-block">
+			<ol class="carousel-indicators d-md-block d-none">
 				<#list ItemHeading.getSiblings() as cur_ItemCounter>
 					<#if cur_ItemCounter?counter == 1>
 						<li class="active" data-slide-to="0" data-target="#main-carousel"></li>

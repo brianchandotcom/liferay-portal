@@ -53,10 +53,11 @@ public class UploadServletRequestImplTest {
 
 	@Test
 	public void testSort() {
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(new MockHttpServletRequest());
 
-		List<FileItem> sortedFileItems = uploadServletRequest.sort(_fileItems);
+		List<FileItem> sortedFileItems = uploadServletRequestImpl.sort(
+			_fileItems);
 
 		Assert.assertEquals(
 			sortedFileItems.toString(), 10, sortedFileItems.size());
@@ -79,10 +80,11 @@ public class UploadServletRequestImplTest {
 
 	@Test
 	public void testSortKeepsOriginalOrderWithSameParameterName() {
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(new MockHttpServletRequest());
 
-		List<FileItem> sortedFileItems = uploadServletRequest.sort(_fileItems);
+		List<FileItem> sortedFileItems = uploadServletRequestImpl.sort(
+			_fileItems);
 
 		FileItem fileItem1 = sortedFileItems.get(1);
 

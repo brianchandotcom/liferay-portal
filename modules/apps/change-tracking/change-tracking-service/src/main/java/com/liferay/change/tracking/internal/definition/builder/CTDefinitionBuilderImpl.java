@@ -37,12 +37,12 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 
 	@Activate
 	public void activate() {
-		_ctDefinition = new CTDefinitionImpl<>();
+		_ctDefinitionImpl = new CTDefinitionImpl<>();
 	}
 
 	@Override
 	public ContentTypeLanguageKeyStep<T, U> setContentType(String contentType) {
-		_ctDefinition.setContentType(contentType);
+		_ctDefinitionImpl.setContentType(contentType);
 
 		return new ContentTypeLanguageKeyStepImpl();
 	}
@@ -51,7 +51,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 
 		@Override
 		public CTDefinition build() {
-			return _ctDefinition;
+			return _ctDefinitionImpl;
 		}
 
 	}
@@ -63,7 +63,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 		public EntityClassesStep<T, U> setContentTypeLanguageKey(
 			String contentTypeLanguageKey) {
 
-			_ctDefinition.setContentTypeLanguageKey(contentTypeLanguageKey);
+			_ctDefinitionImpl.setContentTypeLanguageKey(contentTypeLanguageKey);
 
 			return new EntityClassesStepImpl();
 		}
@@ -135,8 +135,8 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 		public ResourceEntitiesByCompanyIdStep<T, U> setEntityClasses(
 			Class<T> resourceEntityClass, Class<U> versionEntityClass) {
 
-			_ctDefinition.setResourceEntityClass(resourceEntityClass);
-			_ctDefinition.setVersionEntityClass(versionEntityClass);
+			_ctDefinitionImpl.setResourceEntityClass(resourceEntityClass);
+			_ctDefinitionImpl.setVersionEntityClass(versionEntityClass);
 
 			return new ResourceEntitiesByCompanyIdStepImpl();
 		}
@@ -154,9 +154,9 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 				Function<T, Serializable>
 					versionEntityIdFromResourceEntityFunction) {
 
-			_ctDefinition.setResourceEntityIdFromResourceEntityFunction(
+			_ctDefinitionImpl.setResourceEntityIdFromResourceEntityFunction(
 				resourceEntityIdFromResourceEntityFunction);
-			_ctDefinition.setVersionEntityIdFromResourceEntityFunction(
+			_ctDefinitionImpl.setVersionEntityIdFromResourceEntityFunction(
 				versionEntityIdFromResourceEntityFunction);
 
 			return new VersionEntitiesFromResourceEntityStepImpl();
@@ -175,9 +175,9 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 				Function<U, Serializable>
 					versionEntityIdFromVersionEntityFunction) {
 
-			_ctDefinition.setResourceEntityIdFromVersionEntityFunction(
+			_ctDefinitionImpl.setResourceEntityIdFromVersionEntityFunction(
 				resourceEntityIdFromVersionEntityFunction);
-			_ctDefinition.setVersionEntityIdFromVersionEntityFunction(
+			_ctDefinitionImpl.setVersionEntityIdFromVersionEntityFunction(
 				versionEntityIdFromVersionEntityFunction);
 
 			return new VersionEntityStatusInfoStepImpl();
@@ -193,7 +193,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 			setResourceEntitiesByCompanyIdFunction(
 				Function<Long, List<T>> resourceEntitiesByCompanyIdFunction) {
 
-			_ctDefinition.setResourceEntitiesByCompanyIdFunction(
+			_ctDefinitionImpl.setResourceEntitiesByCompanyIdFunction(
 				resourceEntitiesByCompanyIdFunction);
 
 			return new ResourceEntityByResourceEntityIdStepImpl();
@@ -209,7 +209,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 			setResourceEntityByResourceEntityIdFunction(
 				Function<Long, T> resourceEntityByResourceEntityIdFunction) {
 
-			_ctDefinition.setResourceEntityByResourceEntityIdFunction(
+			_ctDefinitionImpl.setResourceEntityByResourceEntityIdFunction(
 				resourceEntityByResourceEntityIdFunction);
 
 			return new EntityIdsFromResourceEntityStepImpl();
@@ -226,7 +226,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 				Function<T, List<U>>
 					versionEntitiesFromResourceEntityFunction) {
 
-			_ctDefinition.setVersionEntitiesFromResourceEntityFunction(
+			_ctDefinitionImpl.setVersionEntitiesFromResourceEntityFunction(
 				versionEntitiesFromResourceEntityFunction);
 
 			return new VersionEntityByVersionEntityIdStepImpl();
@@ -242,7 +242,7 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 			setVersionEntityByVersionEntityIdFunction(
 				Function<Long, U> versionEntityByVersionEntityIdFunction) {
 
-			_ctDefinition.setVersionEntityByVersionEntityIdFunction(
+			_ctDefinitionImpl.setVersionEntityByVersionEntityIdFunction(
 				versionEntityByVersionEntityIdFunction);
 
 			return new VersionEntityDetailsStepImpl();
@@ -261,13 +261,13 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 			Function<U, String> versionEntityTitleFunction,
 			Function<U, Serializable> versionEntityVersionFunction) {
 
-			_ctDefinition.setVersionEntityRelatedEntitiesFunctions(
+			_ctDefinitionImpl.setVersionEntityRelatedEntitiesFunctions(
 				versionEntityRelatedEntitiesFunctions);
-			_ctDefinition.setVersionEntitySiteNameFunction(
+			_ctDefinitionImpl.setVersionEntitySiteNameFunction(
 				versionEntitySiteNameFunction);
-			_ctDefinition.setVersionEntityTitleFunction(
+			_ctDefinitionImpl.setVersionEntityTitleFunction(
 				versionEntityTitleFunction);
-			_ctDefinition.setVersionEntityVersionFunction(
+			_ctDefinitionImpl.setVersionEntityVersionFunction(
 				versionEntityVersionFunction);
 
 			return new EntityIdsFromVersionEntityStepImpl();
@@ -283,9 +283,9 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 			Integer[] versionEntityAllowedStatuses,
 			Function<U, Integer> versionEntityStatusFunction) {
 
-			_ctDefinition.setVersionEntityAllowedStatuses(
+			_ctDefinitionImpl.setVersionEntityAllowedStatuses(
 				versionEntityAllowedStatuses);
-			_ctDefinition.setVersionEntityStatusFunction(
+			_ctDefinitionImpl.setVersionEntityStatusFunction(
 				versionEntityStatusFunction);
 
 			return new BuildStepImpl();
@@ -293,6 +293,6 @@ public class CTDefinitionBuilderImpl<T extends BaseModel, U extends BaseModel>
 
 	}
 
-	private CTDefinitionImpl<T, U> _ctDefinition;
+	private CTDefinitionImpl<T, U> _ctDefinitionImpl;
 
 }

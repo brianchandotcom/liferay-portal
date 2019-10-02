@@ -66,39 +66,39 @@ public class PortletRequestDispatcherImplTest {
 
 	@Test
 	public void testInclude() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(null, null, "/testPath", "/testPath"),
 				true, _portletContext, "/testPath");
 
-		portletRequestDispatcher.include(_portletRequest, _portletResponse);
+		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
 	public void testIncludeAlternateContextPath() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
 					null, null, "/test/testPath", "/testPath"),
 				true, _portletContext, "/testPath");
 
-		portletRequestDispatcher.include(
+		portletRequestDispatcherImpl.include(
 			new TestPortletRequest("/test", _portlet), _portletResponse);
 	}
 
 	@Test
 	public void testIncludeNoPath() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(null, null, "", ""), true,
 				_portletContext);
 
-		portletRequestDispatcher.include(_portletRequest, _portletResponse);
+		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
 	public void testIncludeWithQueryString() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
 					"/moreTestPath",
@@ -108,29 +108,29 @@ public class PortletRequestDispatcherImplTest {
 				"/testPath/moreTestPath?testName=&testname=testvalue&" +
 					"testname=testvalue2");
 
-		portletRequestDispatcher.include(_portletRequest, _portletResponse);
+		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
 	public void testIncludeWithUnmatchedPath() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
 					null, null, "/unmatchedPath", "/unmatchedPath"),
 				true, _portletContext, "/unmatchedPath");
 
-		portletRequestDispatcher.include(_portletRequest, _portletResponse);
+		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
 	}
 
 	@Test
 	public void testIncludeWithUnrecognizedSeparator() throws Exception {
-		PortletRequestDispatcherImpl portletRequestDispatcher =
+		PortletRequestDispatcherImpl portletRequestDispatcherImpl =
 			new PortletRequestDispatcherImpl(
 				new TestRequestDispatcher(
 					null, null, "/testPath|", "/testPath|"),
 				true, _portletContext, "/testPath|");
 
-		portletRequestDispatcher.include(_portletRequest, _portletResponse);
+		portletRequestDispatcherImpl.include(_portletRequest, _portletResponse);
 	}
 
 	static {

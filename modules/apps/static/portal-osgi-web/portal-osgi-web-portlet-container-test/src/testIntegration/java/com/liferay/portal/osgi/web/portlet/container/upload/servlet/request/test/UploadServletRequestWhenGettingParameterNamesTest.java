@@ -76,13 +76,13 @@ public class UploadServletRequestWhenGettingParameterNamesTest {
 
 		mockHttpServletRequest.addParameter(parameter, parameter);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, regularParameters);
 
 		Enumeration<String> parameterNames =
-			uploadServletRequest.getParameterNames();
+			uploadServletRequestImpl.getParameterNames();
 
 		List<String> parameterNamesList = Collections.list(parameterNames);
 

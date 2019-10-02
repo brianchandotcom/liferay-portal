@@ -131,11 +131,12 @@ public class PortalPreferencesImpl
 			return false;
 		}
 
-		PortalPreferencesImpl portalPreferences = (PortalPreferencesImpl)obj;
+		PortalPreferencesImpl portalPreferencesImpl =
+			(PortalPreferencesImpl)obj;
 
-		if ((getOwnerId() == portalPreferences.getOwnerId()) &&
-			(getOwnerType() == portalPreferences.getOwnerType()) &&
-			getPreferences().equals(portalPreferences.getPreferences())) {
+		if ((getOwnerId() == portalPreferencesImpl.getOwnerId()) &&
+			(getOwnerType() == portalPreferencesImpl.getOwnerType()) &&
+			getPreferences().equals(portalPreferencesImpl.getPreferences())) {
 
 			return true;
 		}

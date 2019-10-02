@@ -215,7 +215,7 @@ public class SearchRequestExecutorFixture {
 				commonSearchRequestBuilderAssembler, statsRequestBuilderFactory,
 				statsTranslator);
 
-		SearchSearchResponseAssemblerImpl searchSearchResponseAssembler =
+		SearchSearchResponseAssemblerImpl searchSearchResponseAssemblerImpl =
 			createSearchSearchResponseAssembler(
 				statsRequestBuilderFactory, statsTranslator);
 
@@ -229,12 +229,12 @@ public class SearchRequestExecutorFixture {
 					createMultisearchSearchRequestExecutor(
 						elasticsearchClientResolver,
 						searchSearchRequestAssembler,
-						searchSearchResponseAssembler));
+						searchSearchResponseAssemblerImpl));
 				setSearchSearchRequestExecutor(
 					createSearchSearchRequestExecutor(
 						elasticsearchClientResolver,
 						searchSearchRequestAssembler,
-						searchSearchResponseAssembler));
+						searchSearchResponseAssemblerImpl));
 				setSuggestSearchRequestExecutor(
 					createSuggestSearchRequestExecutor(
 						elasticsearchClientResolver));

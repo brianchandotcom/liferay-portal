@@ -428,14 +428,15 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 						searchContext.setGroupBy(groupBy);
 					});
 
-				BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
+				BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
-				booleanQuery.addExactTerm(SORT_FIELD, "3");
-				booleanQuery.addExactTerm(SORT_FIELD, "2");
+				booleanQueryImpl.addExactTerm(SORT_FIELD, "3");
+				booleanQueryImpl.addExactTerm(SORT_FIELD, "2");
 
-				booleanQuery.add(getDefaultQuery(), BooleanClauseOccur.MUST);
+				booleanQueryImpl.add(
+					getDefaultQuery(), BooleanClauseOccur.MUST);
 
-				indexingTestHelper.setQuery(booleanQuery);
+				indexingTestHelper.setQuery(booleanQueryImpl);
 
 				indexingTestHelper.search();
 

@@ -73,12 +73,12 @@ public class AMImageURLFactoryImplTest {
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_amImageURLFactory, "_amURIResolver", _amURIResolver);
+			_amImageURLFactoryImpl, "_amURIResolver", _amURIResolver);
 	}
 
 	@Test
 	public void testCreatesURLForFileEntry() throws Exception {
-		URI uri = _amImageURLFactory.createFileEntryURL(
+		URI uri = _amImageURLFactoryImpl.createFileEntryURL(
 			_fileVersion, _amImageConfigurationEntry);
 
 		Assert.assertEquals(
@@ -88,7 +88,7 @@ public class AMImageURLFactoryImplTest {
 
 	@Test
 	public void testCreatesURLForFileVersion() throws Exception {
-		URI uri = _amImageURLFactory.createFileVersionURL(
+		URI uri = _amImageURLFactoryImpl.createFileVersionURL(
 			_fileVersion, _amImageConfigurationEntry);
 
 		Assert.assertEquals(
@@ -99,7 +99,7 @@ public class AMImageURLFactoryImplTest {
 
 	private final AMImageConfigurationEntry _amImageConfigurationEntry =
 		new AMImageConfigurationEntryImpl("small", _UUID, new HashMap<>());
-	private final AMImageURLFactoryImpl _amImageURLFactory =
+	private final AMImageURLFactoryImpl _amImageURLFactoryImpl =
 		new AMImageURLFactoryImpl();
 
 	@Mock

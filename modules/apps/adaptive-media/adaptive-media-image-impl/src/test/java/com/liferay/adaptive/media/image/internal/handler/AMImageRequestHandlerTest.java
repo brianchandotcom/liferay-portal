@@ -357,17 +357,17 @@ public class AMImageRequestHandlerTest {
 		properties.put("max-height", String.valueOf(height));
 		properties.put("max-width", String.valueOf(width));
 
-		AMImageConfigurationEntryImpl amImageConfigurationEntry =
+		AMImageConfigurationEntryImpl amImageConfigurationEntryImpl =
 			new AMImageConfigurationEntryImpl(uuid, uuid, properties);
 
 		Mockito.when(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				companyId, amImageConfigurationEntry.getUUID())
+				companyId, amImageConfigurationEntryImpl.getUUID())
 		).thenReturn(
-			Optional.of(amImageConfigurationEntry)
+			Optional.of(amImageConfigurationEntryImpl)
 		);
 
-		return amImageConfigurationEntry;
+		return amImageConfigurationEntryImpl;
 	}
 
 	private HttpServletRequest _createRequestFor(

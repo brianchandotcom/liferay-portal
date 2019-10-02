@@ -116,9 +116,9 @@ public class ContextProviderUtil {
 	private static MultivaluedMap<String, String> _getPathParameters(
 		Message message) {
 
-		UriInfoImpl uriInfo = new UriInfoImpl(message);
+		UriInfoImpl uriInfoImpl = new UriInfoImpl(message);
 
-		return uriInfo.getPathParameters();
+		return uriInfoImpl.getPathParameters();
 	}
 
 }

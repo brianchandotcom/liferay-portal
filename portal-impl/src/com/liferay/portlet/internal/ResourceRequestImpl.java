@@ -114,18 +114,18 @@ public class ResourceRequestImpl
 	public Map<String, String[]> getPrivateRenderParameterMap() {
 		Map<String, String[]> privateRenderParameters = new HashMap<>();
 
-		RenderParametersImpl liferayRenderParameters =
+		RenderParametersImpl liferayRenderParametersImpl =
 			(RenderParametersImpl)getRenderParameters();
 
 		Map<String, String[]> liferayRenderParametersMap =
-			liferayRenderParameters.getParameterMap();
+			liferayRenderParametersImpl.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry :
 				liferayRenderParametersMap.entrySet()) {
 
 			String renderParameterName = entry.getKey();
 
-			if (!liferayRenderParameters.isPublic(renderParameterName)) {
+			if (!liferayRenderParametersImpl.isPublic(renderParameterName)) {
 				privateRenderParameters.put(
 					renderParameterName, entry.getValue());
 			}

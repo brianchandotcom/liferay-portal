@@ -41,20 +41,20 @@ public class DocumentFixture {
 	public static Document newDocument(
 		long companyId, long groupId, String entryClassName) {
 
-		DocumentImpl document = new DocumentImpl();
+		DocumentImpl documentImpl = new DocumentImpl();
 
-		document.addKeyword(Field.COMPANY_ID, companyId);
-		document.addKeyword(Field.GROUP_ID, groupId);
+		documentImpl.addKeyword(Field.COMPANY_ID, companyId);
+		documentImpl.addKeyword(Field.GROUP_ID, groupId);
 
 		long entryClassPK = RandomTestUtil.randomLong();
 
-		document.addUID(entryClassName, entryClassPK);
+		documentImpl.addUID(entryClassName, entryClassPK);
 
-		DocumentHelper documentHelper = new DocumentHelper(document);
+		DocumentHelper documentHelper = new DocumentHelper(documentImpl);
 
 		documentHelper.setEntryKey(entryClassName, entryClassPK);
 
-		return document;
+		return documentImpl;
 	}
 
 	public void setUp() {

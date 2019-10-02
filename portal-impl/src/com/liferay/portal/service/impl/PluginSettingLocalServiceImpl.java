@@ -44,12 +44,12 @@ public class PluginSettingLocalServiceImpl
 
 	@Override
 	public PluginSetting getDefaultPluginSetting() {
-		PluginSettingImpl pluginSetting = new PluginSettingImpl();
+		PluginSettingImpl pluginSettingImpl = new PluginSettingImpl();
 
-		pluginSetting.setRoles(StringPool.BLANK);
-		pluginSetting.setActive(true);
+		pluginSettingImpl.setRoles(StringPool.BLANK);
+		pluginSettingImpl.setActive(true);
 
-		return pluginSetting;
+		return pluginSettingImpl;
 	}
 
 	@Override

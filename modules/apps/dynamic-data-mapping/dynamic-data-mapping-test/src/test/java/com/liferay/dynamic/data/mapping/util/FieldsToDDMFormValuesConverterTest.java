@@ -100,8 +100,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(metadata1Field, metadata2Field);
 
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
+		DDMFormValues ddmFormValues =
+			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -146,8 +146,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(nameField, phoneField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
+		DDMFormValues ddmFormValues =
+			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -216,8 +216,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Fields fields = createFields(nameField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
+		DDMFormValues ddmFormValues =
+			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -260,8 +260,8 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 		Fields fields = createFields(
 			titleField, contentField, fieldsDisplayField);
 
-		DDMFormValues ddmFormValues = _fieldsToDDMFormValuesConverter.convert(
-			ddmStructure, fields);
+		DDMFormValues ddmFormValues =
+			_fieldsToDDMFormValuesConverterImpl.convert(ddmStructure, fields);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -316,7 +316,7 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 	}
 
 	private final FieldsToDDMFormValuesConverterImpl
-		_fieldsToDDMFormValuesConverter =
+		_fieldsToDDMFormValuesConverterImpl =
 			new FieldsToDDMFormValuesConverterImpl();
 
 }

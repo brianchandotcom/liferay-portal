@@ -48,9 +48,9 @@ public class DSEmailNotificationImpl implements DSEmailNotification {
 	}
 
 	public void setDSEmailNotificationSettings(
-		DSEmailNotificationSettingsImpl dsEmailNotificationSettings) {
+		DSEmailNotificationSettingsImpl dsEmailNotificationSettingsImpl) {
 
-		_dsEmailNotificationSettings = dsEmailNotificationSettings;
+		_dsEmailNotificationSettings = dsEmailNotificationSettingsImpl;
 	}
 
 	public void setSupportedLanguage(String supportedLanguage) {

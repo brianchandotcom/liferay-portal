@@ -1603,13 +1603,13 @@ public class TableMapperTest {
 
 		// Miss cache
 
-		TableMapperImpl<Right, Left> rightTableMapper =
+		TableMapperImpl<Right, Left> rightTableMapperImpl =
 			(TableMapperImpl<Right, Left>)TableMapperFactory.getTableMapper(
 				rightKey, _TABLE_NAME, _COMPANY_COLUMN_NAME, _RIGHT_COLUMN_NAME,
 				_LEFT_COLUMN_NAME, _rightBasePersistence, Left.class);
 
-		Assert.assertNotSame(tableMapperImpl, rightTableMapper);
-		Assert.assertSame(rightTableMapper, tableMappers.get(rightKey));
+		Assert.assertNotSame(tableMapperImpl, rightTableMapperImpl);
+		Assert.assertSame(rightTableMapperImpl, tableMappers.get(rightKey));
 
 		Assert.assertEquals(tableMappers.toString(), 2, tableMappers.size());
 		Assert.assertNotSame(tableMapperImpl, tableMappers.get(rightKey));
@@ -1626,10 +1626,10 @@ public class TableMapperTest {
 
 		Assert.assertSame(
 			tableMapperImpl.leftToRightPortalCache,
-			rightTableMapper.rightToLeftPortalCache);
+			rightTableMapperImpl.rightToLeftPortalCache);
 		Assert.assertSame(
 			tableMapperImpl.rightToLeftPortalCache,
-			rightTableMapper.leftToRightPortalCache);
+			rightTableMapperImpl.leftToRightPortalCache);
 
 		// Remove
 

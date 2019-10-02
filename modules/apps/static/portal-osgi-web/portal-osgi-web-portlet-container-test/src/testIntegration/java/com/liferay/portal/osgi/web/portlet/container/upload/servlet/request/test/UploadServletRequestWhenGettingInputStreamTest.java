@@ -60,20 +60,21 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest());
 
-		ServletInputStream inputStream = uploadServletRequest.getInputStream();
+		ServletInputStream inputStream =
+			uploadServletRequestImpl.getInputStream();
 
 		Assert.assertFalse(inputStream instanceof LiferayInputStream);
 
-		uploadServletRequest = new UploadServletRequestImpl(
+		uploadServletRequestImpl = new UploadServletRequestImpl(
 			(HttpServletRequest)liferayServletRequest.getRequest(),
 			new HashMap<String, FileItem[]>(),
 			new HashMap<String, List<String>>());
 
-		inputStream = uploadServletRequest.getInputStream();
+		inputStream = uploadServletRequestImpl.getInputStream();
 
 		Assert.assertFalse(inputStream instanceof LiferayInputStream);
 	}
@@ -84,11 +85,12 @@ public class UploadServletRequestWhenGettingInputStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest());
 
-		ServletInputStream inputStream = uploadServletRequest.getInputStream();
+		ServletInputStream inputStream =
+			uploadServletRequestImpl.getInputStream();
 
 		Assert.assertTrue(inputStream instanceof ServletInputStreamAdapter);
 	}

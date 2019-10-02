@@ -76,7 +76,7 @@ public class ExpressionConvertImplTest {
 			BinaryExpression.Operation.EQ,
 			new LiteralExpressionImpl("test", LiteralExpression.Type.STRING));
 
-		TermFilter termFilter = (TermFilter)_expressionConvert.convert(
+		TermFilter termFilter = (TermFilter)_expressionConvertImpl.convert(
 			binaryExpression, LocaleUtil.getDefault(), _entityModel);
 
 		Assert.assertEquals("title", termFilter.getField());
@@ -99,7 +99,7 @@ public class ExpressionConvertImplTest {
 						new LiteralExpressionImpl(
 							"'keyword1'", LiteralExpression.Type.STRING)))));
 
-		TermFilter termFilter = (TermFilter)_expressionConvert.convert(
+		TermFilter termFilter = (TermFilter)_expressionConvertImpl.convert(
 			memberExpression, LocaleUtil.getDefault(), _entityModel);
 
 		Assert.assertNotNull(termFilter);
@@ -128,7 +128,7 @@ public class ExpressionConvertImplTest {
 
 	};
 
-	private final ExpressionConvertImpl _expressionConvert =
+	private final ExpressionConvertImpl _expressionConvertImpl =
 		new ExpressionConvertImpl();
 
 }

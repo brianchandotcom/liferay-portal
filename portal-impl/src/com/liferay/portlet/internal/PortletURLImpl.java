@@ -1603,17 +1603,17 @@ public class PortletURLImpl
 		else {
 			mutableRenderParameterMap = new LinkedHashMap<>();
 
-			RenderParametersImpl liferayRenderParameters =
+			RenderParametersImpl liferayRenderParametersImpl =
 				(RenderParametersImpl)_portletRequest.getRenderParameters();
 
 			publicRenderParameterNames =
-				liferayRenderParameters.getPublicRenderParameterNames();
+				liferayRenderParametersImpl.getPublicRenderParameterNames();
 
 			if (MimeResponse.Copy.ALL.equals(_copy) ||
 				MimeResponse.Copy.PUBLIC.equals(_copy)) {
 
 				Map<String, String[]> liferayRenderParametersMap =
-					liferayRenderParameters.getParameterMap();
+					liferayRenderParametersImpl.getParameterMap();
 
 				for (Map.Entry<String, String[]> entry :
 						liferayRenderParametersMap.entrySet()) {
@@ -1621,7 +1621,8 @@ public class PortletURLImpl
 					String renderParameterName = entry.getKey();
 
 					if (MimeResponse.Copy.ALL.equals(_copy) ||
-						liferayRenderParameters.isPublic(renderParameterName)) {
+						liferayRenderParametersImpl.isPublic(
+							renderParameterName)) {
 
 						mutableRenderParameterMap.put(
 							renderParameterName, entry.getValue());

@@ -43,10 +43,10 @@ public class DDMExpressionFactoryImplTest extends PowerMockito {
 
 	@Test
 	public void testCreateDDMExpression() throws Exception {
-		DDMExpressionFactoryImpl ddmExpressionFactory =
+		DDMExpressionFactoryImpl ddmExpressionFactoryImpl =
 			new DDMExpressionFactoryImpl();
 
-		ddmExpressionFactory.ddmExpressionFunctionTracker =
+		ddmExpressionFactoryImpl.ddmExpressionFunctionTracker =
 			_ddmExpressionFunctionTracker;
 
 		Map<String, DDMExpressionFunctionFactory> factories =
@@ -67,7 +67,7 @@ public class DDMExpressionFactoryImplTest extends PowerMockito {
 			CreateExpressionRequest.Builder.newBuilder("pow(2,3)");
 
 		DDMExpression<BigDecimal> ddmExpression =
-			ddmExpressionFactory.createExpression(builder.build());
+			ddmExpressionFactoryImpl.createExpression(builder.build());
 
 		BigDecimal actual = ddmExpression.evaluate();
 

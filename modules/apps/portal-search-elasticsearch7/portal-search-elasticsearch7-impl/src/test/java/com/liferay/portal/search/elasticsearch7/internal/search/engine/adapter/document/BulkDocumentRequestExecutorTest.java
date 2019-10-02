@@ -56,13 +56,14 @@ public class BulkDocumentRequestExecutorTest {
 				}
 			};
 
-		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutorImpl() {
-			{
-				setBulkableDocumentRequestTranslator(
-					bulkableDocumentRequestTranslator);
-				setElasticsearchClientResolver(elasticsearchFixture);
-			}
-		};
+		_bulkDocumentRequestExecutorImpl =
+			new BulkDocumentRequestExecutorImpl() {
+				{
+					setBulkableDocumentRequestTranslator(
+						bulkableDocumentRequestTranslator);
+					setElasticsearchClientResolver(elasticsearchFixture);
+				}
+			};
 
 		_elasticsearchFixture = elasticsearchFixture;
 
@@ -110,7 +111,7 @@ public class BulkDocumentRequestExecutorTest {
 		bulkDocumentRequest.addBulkableDocumentRequest(updateDocumentRequest);
 
 		BulkRequestBuilder bulkRequestBuilder =
-			_bulkDocumentRequestExecutor.createBulkRequestBuilder(
+			_bulkDocumentRequestExecutorImpl.createBulkRequestBuilder(
 				bulkDocumentRequest);
 
 		Assert.assertEquals(3, bulkRequestBuilder.numberOfActions());
@@ -120,7 +121,7 @@ public class BulkDocumentRequestExecutorTest {
 
 	private static final String _MAPPING_NAME = "testMapping";
 
-	private BulkDocumentRequestExecutorImpl _bulkDocumentRequestExecutor;
+	private BulkDocumentRequestExecutorImpl _bulkDocumentRequestExecutorImpl;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchFixture _elasticsearchFixture;
 

@@ -45,7 +45,20 @@ public abstract class PortalAcceptanceTestSuiteJob
 				jobProperties, "test.batch.names");
 		}
 
-		return getSetFromString(testBatchNames);
+		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
+
+		if (!_testSuiteName.equals("relevant")) {
+			return testBatchNamesSet;
+		}
+
+		String stableTestBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names[stable]");
+
+		if (stableTestBatchNames != null) {
+			testBatchNamesSet.addAll(getSetFromString(stableTestBatchNames));
+		}
+
+		return testBatchNamesSet;
 	}
 
 	@Override

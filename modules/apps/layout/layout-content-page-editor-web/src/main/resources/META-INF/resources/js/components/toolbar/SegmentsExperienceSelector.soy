@@ -193,6 +193,17 @@
 												{$experience.segmentsEntryName}
 											</span>
 										</span>
+
+								{if $experience.hasSegmentsExperiment}
+									<div class="d-flex align-self-center dropdown-menu__experience--btn-group px-2">
+										{call ClayIcon.render}
+											{param elementClasses: 'mx-1' /}
+											{param spritemap: $spritemap /}
+											{param symbol: 'test' /}
+										{/call}
+									</div>
+								{/if}
+
 									</button>
 								</span>
 
@@ -290,6 +301,7 @@
 										{/call}
 									</div>
 								{/if}
+
 							</li>
 						{/foreach}
 					</ul>

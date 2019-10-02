@@ -16,6 +16,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import 'clay-label';
 import './TranslationStatus.es';
 import './SegmentsExperienceSelector.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';

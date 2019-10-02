@@ -52,7 +52,7 @@ buildCKEditorPlugins {
 
 	dependsOn buildCKEditor, packageRunBuild
 
-	from new File("classes/META-INF/resources/_diffs")
+	from new File(packageRunBuild.destinationDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
 }

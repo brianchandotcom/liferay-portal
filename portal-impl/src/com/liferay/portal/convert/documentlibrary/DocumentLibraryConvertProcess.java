@@ -108,8 +108,6 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 			storeFactory.getStore(),
 			storeFactory.getStore(targetStoreClassName));
 
-		storeFactory.setStore(targetStoreClassName);
-
 		MaintenanceUtil.appendStatus(
 			StringBundler.concat(
 				"Please set ", PropsKeys.DL_STORE_IMPL,

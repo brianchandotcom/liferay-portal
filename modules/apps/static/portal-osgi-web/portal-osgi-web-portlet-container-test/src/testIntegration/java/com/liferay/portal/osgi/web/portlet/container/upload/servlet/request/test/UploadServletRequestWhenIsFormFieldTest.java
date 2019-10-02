@@ -61,13 +61,13 @@ public class UploadServletRequestWhenIsFormFieldTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
@@ -80,7 +80,7 @@ public class UploadServletRequestWhenIsFormFieldTest {
 
 			Assert.assertEquals(
 				firstFileItem.isFormField(),
-				uploadServletRequest.isFormField(key));
+				uploadServletRequestImpl.isFormField(key));
 		}
 	}
 
@@ -90,13 +90,14 @@ public class UploadServletRequestWhenIsFormFieldTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.isFormField("irrelevantName"));
+		Assert.assertNull(
+			uploadServletRequestImpl.isFormField("irrelevantName"));
 	}
 
 	@Test
@@ -110,12 +111,13 @@ public class UploadServletRequestWhenIsFormFieldTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.isFormField("nonexistentFile"));
+		Assert.assertNull(
+			uploadServletRequestImpl.isFormField("nonexistentFile"));
 	}
 
 	private static final byte[] _BYTES =

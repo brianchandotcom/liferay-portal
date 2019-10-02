@@ -79,18 +79,18 @@ public class UploadServletRequestWhenCreatingFromMainConstructorTest {
 		HttpServletRequest mockHttpServletRequest =
 			(HttpServletRequest)liferayServletRequest.getRequest();
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(mockHttpServletRequest);
 
 		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertTrue(
 			multipartParameterMap.toString(), multipartParameterMap.isEmpty());
 
 		Map<String, List<String>> regularParameterMap =
-			uploadServletRequest.getRegularParameterMap();
+			uploadServletRequestImpl.getRegularParameterMap();
 
 		Assert.assertNotNull(regularParameterMap);
 		Assert.assertTrue(

@@ -45,12 +45,12 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		_ddmDataProviderInstanceSettings =
+		_ddmDataProviderInstanceSettingsImpl =
 			new DDMDataProviderInstanceSettingsImpl();
 
-		_ddmDataProviderInstanceSettings.ddmDataProviderTracker =
+		_ddmDataProviderInstanceSettingsImpl.ddmDataProviderTracker =
 			_ddmDataProviderTracker;
-		_ddmDataProviderInstanceSettings.jsonDDMFormValuesDeserializer =
+		_ddmDataProviderInstanceSettingsImpl.jsonDDMFormValuesDeserializer =
 			_ddmFormValuesDeserializer;
 	}
 
@@ -83,7 +83,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 		);
 
 		TestDataProviderInstanceSettings testDataProviderInstanceSettings =
-			_ddmDataProviderInstanceSettings.getSettings(
+			_ddmDataProviderInstanceSettingsImpl.getSettings(
 				_ddmDataProviderInstance,
 				TestDataProviderInstanceSettings.class);
 
@@ -102,7 +102,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 			IllegalStateException.class
 		);
 
-		_ddmDataProviderInstanceSettings.getSettings(
+		_ddmDataProviderInstanceSettingsImpl.getSettings(
 			_ddmDataProviderInstance, DDMRESTDataProviderSettings.class);
 	}
 
@@ -135,7 +135,7 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 
 	private DDMDataProviderInstanceSettingsImpl
-		_ddmDataProviderInstanceSettings;
+		_ddmDataProviderInstanceSettingsImpl;
 
 	@Mock
 	private DDMDataProviderTracker _ddmDataProviderTracker;

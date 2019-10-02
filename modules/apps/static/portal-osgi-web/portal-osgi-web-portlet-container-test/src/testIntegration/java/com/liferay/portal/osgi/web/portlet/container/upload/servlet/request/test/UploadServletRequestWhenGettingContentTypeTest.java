@@ -61,13 +61,13 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
@@ -80,7 +80,7 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 
 			Assert.assertEquals(
 				firstFileItem.getContentType(),
-				uploadServletRequest.getContentType(key));
+				uploadServletRequestImpl.getContentType(key));
 		}
 	}
 
@@ -90,13 +90,13 @@ public class UploadServletRequestWhenGettingContentTypeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getContentType("name"));
+		Assert.assertNull(uploadServletRequestImpl.getContentType("name"));
 	}
 
 	private static final byte[] _BYTES =

@@ -46,7 +46,7 @@ public class DDMStorageAdapterTrackerImplTest extends PowerMockito {
 
 	@Test
 	public void testActivate() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTracker =
+		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
 			new DDMStorageAdapterTrackerImpl();
 
 		BundleContext bundleContext = mock(BundleContext.class);
@@ -59,21 +59,21 @@ public class DDMStorageAdapterTrackerImplTest extends PowerMockito {
 			_ddmStorageAdapterServiceTrackerMap
 		);
 
-		ddmStorageAdapterTracker.activate(bundleContext);
+		ddmStorageAdapterTrackerImpl.activate(bundleContext);
 
 		Assert.assertNotNull(
-			ddmStorageAdapterTracker.ddmStorageAdapterServiceTrackerMap);
+			ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap);
 	}
 
 	@Test
 	public void testDeactivate() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTracker =
+		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
 			new DDMStorageAdapterTrackerImpl();
 
-		ddmStorageAdapterTracker.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTracker.deactivate();
+		ddmStorageAdapterTrackerImpl.deactivate();
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)
@@ -82,13 +82,13 @@ public class DDMStorageAdapterTrackerImplTest extends PowerMockito {
 
 	@Test
 	public void testGetDDMStorageAdapter() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTracker =
+		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
 			new DDMStorageAdapterTrackerImpl();
 
-		ddmStorageAdapterTracker.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTracker.getDDMStorageAdapter("json");
+		ddmStorageAdapterTrackerImpl.getDDMStorageAdapter("json");
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)
@@ -99,13 +99,13 @@ public class DDMStorageAdapterTrackerImplTest extends PowerMockito {
 
 	@Test
 	public void testGetDDMStorageAdapterTypes() {
-		DDMStorageAdapterTrackerImpl ddmStorageAdapterTracker =
+		DDMStorageAdapterTrackerImpl ddmStorageAdapterTrackerImpl =
 			new DDMStorageAdapterTrackerImpl();
 
-		ddmStorageAdapterTracker.ddmStorageAdapterServiceTrackerMap =
+		ddmStorageAdapterTrackerImpl.ddmStorageAdapterServiceTrackerMap =
 			_ddmStorageAdapterServiceTrackerMap;
 
-		ddmStorageAdapterTracker.getDDMStorageAdapterTypes();
+		ddmStorageAdapterTrackerImpl.getDDMStorageAdapterTypes();
 
 		Mockito.verify(
 			_ddmStorageAdapterServiceTrackerMap, Mockito.times(1)

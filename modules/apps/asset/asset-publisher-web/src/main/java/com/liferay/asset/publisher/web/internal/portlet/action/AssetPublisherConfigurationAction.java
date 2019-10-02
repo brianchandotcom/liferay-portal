@@ -685,10 +685,10 @@ public class AssetPublisherConfigurationAction
 				layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 
 			if (layoutRevision != null) {
-				PortletPreferencesImpl portletPreferences =
+				PortletPreferencesImpl portletPreferencesImpl =
 					(PortletPreferencesImpl)actionRequest.getPreferences();
 
-				portletPreferences.setPlid(
+				portletPreferencesImpl.setPlid(
 					layoutRevision.getLayoutRevisionId());
 			}
 		}

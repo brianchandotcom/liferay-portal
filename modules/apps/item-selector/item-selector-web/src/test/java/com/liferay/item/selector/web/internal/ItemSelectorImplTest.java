@@ -61,15 +61,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
-		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
-		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testStringItemSelectorReturnType);
-		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializerImpl.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
 
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
-			_stubItemSelectorCriterionSerializer);
+			_stubItemSelectorCriterionSerializerImpl);
 
 		ReflectionTestUtil.setFieldValue(
 			_itemSelectorImpl, "_http", new HttpImpl());
@@ -292,7 +292,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
 	private final StubItemSelectorCriterionSerializerImpl
-		_stubItemSelectorCriterionSerializer =
+		_stubItemSelectorCriterionSerializerImpl =
 			new StubItemSelectorCriterionSerializerImpl();
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
 		new TestFileEntryItemSelectorReturnType();

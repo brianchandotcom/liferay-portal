@@ -61,20 +61,20 @@ public class UploadServletRequestWhenGettingSizeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
 		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 
-			Long size = uploadServletRequest.getSize(key);
+			Long size = uploadServletRequestImpl.getSize(key);
 
 			FileItem[] fileItems = entry.getValue();
 
@@ -90,13 +90,13 @@ public class UploadServletRequestWhenGettingSizeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getSize("irrelevantName"));
+		Assert.assertNull(uploadServletRequestImpl.getSize("irrelevantName"));
 	}
 
 	@Test
@@ -110,12 +110,12 @@ public class UploadServletRequestWhenGettingSizeTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getSize("nonexistentFile"));
+		Assert.assertNull(uploadServletRequestImpl.getSize("nonexistentFile"));
 	}
 
 	private static final byte[] _BYTES =

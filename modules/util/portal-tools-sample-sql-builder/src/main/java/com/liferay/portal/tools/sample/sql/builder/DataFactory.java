@@ -3569,17 +3569,17 @@ public class DataFactory {
 			String servletContextName, String schemaVersion)
 		throws IOException {
 
-		ReleaseModelImpl releaseModel = new ReleaseModelImpl();
+		ReleaseModelImpl releaseModelImpl = new ReleaseModelImpl();
 
-		releaseModel.setReleaseId(_counter.get());
-		releaseModel.setCreateDate(new Date());
-		releaseModel.setModifiedDate(new Date());
-		releaseModel.setServletContextName(servletContextName);
-		releaseModel.setSchemaVersion(schemaVersion);
-		releaseModel.setBuildDate(new Date());
-		releaseModel.setVerified(true);
+		releaseModelImpl.setReleaseId(_counter.get());
+		releaseModelImpl.setCreateDate(new Date());
+		releaseModelImpl.setModifiedDate(new Date());
+		releaseModelImpl.setServletContextName(servletContextName);
+		releaseModelImpl.setSchemaVersion(schemaVersion);
+		releaseModelImpl.setBuildDate(new Date());
+		releaseModelImpl.setVerified(true);
 
-		return releaseModel;
+		return releaseModelImpl;
 	}
 
 	protected ResourcePermissionModel newResourcePermissionModel(

@@ -38,7 +38,8 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testAlign() {
 		String expected = "<p style=\"text-align: center\">text</p>";
-		String actual = _htmlBBCodeTranslator.parse("[center]text[/center]");
+		String actual = _htmlBBCodeTranslatorImpl.parse(
+			"[center]text[/center]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -47,7 +48,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	public void testAsterisk() {
 		String expected =
 			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[b]type[/b] some [u]text[/u][*]this is a test");
 
 		Assert.assertEquals(expected, actual);
@@ -57,7 +58,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	public void testAsteriskInBold() {
 		String expected =
 			"<strong>asterisk</strong><li> is inside the bold</li>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[b]asterisk[*][/b] is inside the bold");
 
 		Assert.assertEquals(expected, actual);
@@ -66,7 +67,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testBold() {
 		String expected = "<strong>text</strong>";
-		String actual = _htmlBBCodeTranslator.parse("[b]text[/b]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[b]text[/b]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -81,13 +82,13 @@ public class HtmlBBCodeTranslatorImplTest {
 		sb.append("</td></tr></tbody></table></div>");
 
 		Assert.assertEquals(
-			sb.toString(), _htmlBBCodeTranslator.parse("[code]:)[/code]"));
+			sb.toString(), _htmlBBCodeTranslatorImpl.parse("[code]:)[/code]"));
 	}
 
 	@Test
 	public void testColor() {
 		String expected = "<span style=\"color: #ff0000\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[color=#ff0000]text[/color]");
 
 		Assert.assertEquals(expected, actual);
@@ -98,7 +99,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<img alt=\"emoticon\" " +
 				"src=\"@theme_images_path@/emoticons/happy.gif\" >";
-		String actual = _htmlBBCodeTranslator.parse(":)");
+		String actual = _htmlBBCodeTranslatorImpl.parse(":)");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -108,7 +109,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<span style=\"font-family: " +
 				HtmlUtil.escapeAttribute("georgia, serif") + "\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[font=georgia, serif]text[/font]");
 
 		Assert.assertEquals(expected, actual);
@@ -117,7 +118,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testFontSize() {
 		String expected = "<span style=\"font-size: 18px;\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse("[size=5]text[/size]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[size=5]text[/size]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -125,7 +126,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testImgXSS() {
 		String expected = "<img src=\"\" />";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[img]asd[font= onerror=alert(/XSS/.source)//]FF[/font][/img]");
 
 		Assert.assertEquals(expected, actual);
@@ -134,7 +135,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testIncompleteTag() {
 		String expected = "<strong>text</strong>";
-		String actual = _htmlBBCodeTranslator.parse("[b]text");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[b]text");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -143,7 +144,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	public void testInvalidTag() {
 		String expected = "[x]invalidTag[/x]";
 
-		String actual = _htmlBBCodeTranslator.parse("[x]invalidTag[/x]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[x]invalidTag[/x]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -151,7 +152,8 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testInvalidTagAndValidTag() {
 		String expected = "[x]bbb<u>XXX</u>ddd[/x]";
-		String actual = _htmlBBCodeTranslator.parse("[x]bbb[u]XXX[/u]ddd[/x]");
+		String actual = _htmlBBCodeTranslatorImpl.parse(
+			"[x]bbb[u]XXX[/u]ddd[/x]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -159,7 +161,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testItalic() {
 		String expected = "<em>text</em>";
-		String actual = _htmlBBCodeTranslator.parse("[i]text[/i]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[i]text[/i]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -169,7 +171,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<ol style=\"list-style: lower-roman outside;\" start=\"2\">" +
 				"<li>line1</li><li>line2</li></ol>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[list type=\"i\" start=\"2\"][*]line1[*]line2[/list]");
 
 		Assert.assertEquals(expected, actual);
@@ -180,7 +182,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<div class=\"quote-title\">citer:</div><div class=\"quote\">" +
 				"<div class=\"quote-content\">text</div></div>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[quote=citer]text[/quote]");
 
 		Assert.assertEquals(expected, actual);
@@ -189,7 +191,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testStrike() {
 		String expected = "<strike>text</strike>";
-		String actual = _htmlBBCodeTranslator.parse("[s]text[/s]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[s]text[/s]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -197,7 +199,7 @@ public class HtmlBBCodeTranslatorImplTest {
 	@Test
 	public void testUnderline() {
 		String expected = "<u>text</u>";
-		String actual = _htmlBBCodeTranslator.parse("[u]text[/u]");
+		String actual = _htmlBBCodeTranslatorImpl.parse("[u]text[/u]");
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -207,7 +209,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<ul style=\"list-style: circle outside;\">" +
 				"<li>line1</li><li>line2</li></ul>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[list type=\"circle\"][*]line1[*]line2[/list]");
 
 		Assert.assertEquals(expected, actual);
@@ -219,7 +221,7 @@ public class HtmlBBCodeTranslatorImplTest {
 
 		String expected =
 			"<a href=\"" + HtmlUtil.escapeHREF(url) + "\">link</a>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[url=" + url + "]link[/url]");
 
 		Assert.assertEquals(expected, actual);
@@ -232,13 +234,13 @@ public class HtmlBBCodeTranslatorImplTest {
 
 		String expected =
 			"<a href=\"" + HtmlUtil.escapeHREF(urlWithAccents) + "\">link</a>";
-		String actual = _htmlBBCodeTranslator.parse(
+		String actual = _htmlBBCodeTranslatorImpl.parse(
 			"[url=" + urlWithAccents + "]link[/url]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
-	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslator =
+	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslatorImpl =
 		new HtmlBBCodeTranslatorImpl();
 
 }

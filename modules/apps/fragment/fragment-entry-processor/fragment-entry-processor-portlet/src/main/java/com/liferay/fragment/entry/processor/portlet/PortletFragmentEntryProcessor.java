@@ -544,27 +544,27 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		long plid = 0L;
 
 		if (jxPortletPreferences instanceof PortletPreferencesImpl) {
-			PortletPreferencesImpl portletPreferences =
+			PortletPreferencesImpl portletPreferencesImpl =
 				(PortletPreferencesImpl)jxPortletPreferences;
 
-			plid = portletPreferences.getPlid();
+			plid = portletPreferencesImpl.getPlid();
 		}
 
 		for (com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences : portletPreferencesList) {
+				portletPreferencesImpl : portletPreferencesList) {
 
-			if ((plid != portletPreferences.getPlid()) ||
+			if ((plid != portletPreferencesImpl.getPlid()) ||
 				Objects.equals(
-					portletPreferences.getPreferences(),
+					portletPreferencesImpl.getPreferences(),
 					portletPreferencesXml)) {
 
 				continue;
 			}
 
-			portletPreferences.setPreferences(portletPreferencesXml);
+			portletPreferencesImpl.setPreferences(portletPreferencesXml);
 
 			_portletPreferencesLocalService.updatePortletPreferences(
-				portletPreferences);
+				portletPreferencesImpl);
 		}
 	}
 

@@ -63,25 +63,25 @@ public class UploadServletRequestWhenGettingFileTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
 		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 
-			File file = uploadServletRequest.getFile(key);
+			File file = uploadServletRequestImpl.getFile(key);
 
 			Assert.assertNotNull(file);
 			Assert.assertTrue(file.exists());
 
-			file = uploadServletRequest.getFile(key, true);
+			file = uploadServletRequestImpl.getFile(key, true);
 
 			Assert.assertNotNull(file);
 			Assert.assertTrue(file.exists());
@@ -94,14 +94,15 @@ public class UploadServletRequestWhenGettingFileTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFile("irrelevantName"));
-		Assert.assertNull(uploadServletRequest.getFile("irrelevantName", true));
+		Assert.assertNull(uploadServletRequestImpl.getFile("irrelevantName"));
+		Assert.assertNull(
+			uploadServletRequestImpl.getFile("irrelevantName", true));
 	}
 
 	@Test
@@ -115,14 +116,14 @@ public class UploadServletRequestWhenGettingFileTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFile("nonexistentFile"));
+		Assert.assertNull(uploadServletRequestImpl.getFile("nonexistentFile"));
 		Assert.assertNull(
-			uploadServletRequest.getFile("nonexistentFile", true));
+			uploadServletRequestImpl.getFile("nonexistentFile", true));
 	}
 
 	private static final byte[] _BYTES =

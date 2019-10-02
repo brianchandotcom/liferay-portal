@@ -140,12 +140,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Object clone() {
-		JournalArticleImpl journalArticle = (JournalArticleImpl)super.clone();
+		JournalArticleImpl journalArticleImpl =
+			(JournalArticleImpl)super.clone();
 
-		journalArticle.setDescriptionMap(getDescriptionMap());
-		journalArticle.setTitleMap(getTitleMap());
+		journalArticleImpl.setDescriptionMap(getDescriptionMap());
+		journalArticleImpl.setTitleMap(getTitleMap());
 
-		return journalArticle;
+		return journalArticleImpl;
 	}
 
 	@Override

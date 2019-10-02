@@ -34,21 +34,21 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			CreateExpressionRequest createExpressionRequest)
 		throws DDMExpressionException {
 
-		DDMExpressionImpl<T> ddmExpression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
 			createExpressionRequest.getExpression());
 
-		ddmExpression.setDDMExpressionActionHandler(
+		ddmExpressionImpl.setDDMExpressionActionHandler(
 			createExpressionRequest.getDDMExpressionActionHandler());
-		ddmExpression.setDDMExpressionFieldAccessor(
+		ddmExpressionImpl.setDDMExpressionFieldAccessor(
 			createExpressionRequest.getDDMExpressionFieldAccessor());
-		ddmExpression.setDDMExpressionObserver(
+		ddmExpressionImpl.setDDMExpressionObserver(
 			createExpressionRequest.getDDMExpressionObserver());
-		ddmExpression.setDDMExpressionParameterAccessor(
+		ddmExpressionImpl.setDDMExpressionParameterAccessor(
 			createExpressionRequest.getDDMExpressionParameterAccessor());
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			ddmExpressionFunctionTracker);
 
-		return ddmExpression;
+		return ddmExpressionImpl;
 	}
 
 	@Reference

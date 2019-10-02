@@ -63,20 +63,20 @@ public class UploadServletRequestWhenGettingFileNameTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 1, map.size());
 
 		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 
-			String fileName = uploadServletRequest.getFileName(key);
+			String fileName = uploadServletRequestImpl.getFileName(key);
 
 			FileItem[] fileItems = entry.getValue();
 
@@ -92,13 +92,14 @@ public class UploadServletRequestWhenGettingFileNameTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFileName("irrelevantName"));
+		Assert.assertNull(
+			uploadServletRequestImpl.getFileName("irrelevantName"));
 	}
 
 	@Test
@@ -112,12 +113,13 @@ public class UploadServletRequestWhenGettingFileNameTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFileName("nonexistentFile"));
+		Assert.assertNull(
+			uploadServletRequestImpl.getFileName("nonexistentFile"));
 	}
 
 	private static final byte[] _BYTES =

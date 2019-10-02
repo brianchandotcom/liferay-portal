@@ -68,21 +68,21 @@ public class UploadServletRequestWhenGettingFilesAsStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 10, map.size());
 
 		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 
-			InputStream[] inputStreams = uploadServletRequest.getFilesAsStream(
-				key);
+			InputStream[] inputStreams =
+				uploadServletRequestImpl.getFilesAsStream(key);
 
 			FileItem[] fileItems = entry.getValue();
 
@@ -109,14 +109,14 @@ public class UploadServletRequestWhenGettingFilesAsStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
 		Assert.assertNull(
-			uploadServletRequest.getFilesAsStream("irrelevantName"));
+			uploadServletRequestImpl.getFilesAsStream("irrelevantName"));
 	}
 
 	@Test
@@ -130,13 +130,13 @@ public class UploadServletRequestWhenGettingFilesAsStreamTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Assert.assertNull(
-			uploadServletRequest.getFilesAsStream("nonexistentFile"));
+			uploadServletRequestImpl.getFilesAsStream("nonexistentFile"));
 	}
 
 	private static final byte[] _BYTES =

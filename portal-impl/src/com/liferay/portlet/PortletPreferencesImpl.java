@@ -81,14 +81,15 @@ public class PortletPreferencesImpl
 			return false;
 		}
 
-		PortletPreferencesImpl portletPreferences = (PortletPreferencesImpl)obj;
+		PortletPreferencesImpl portletPreferencesImpl =
+			(PortletPreferencesImpl)obj;
 
-		if ((companyId == portletPreferences.companyId) &&
-			(getOwnerId() == portletPreferences.getOwnerId()) &&
-			(getOwnerType() == portletPreferences.getOwnerType()) &&
-			(getPlid() == portletPreferences.getPlid()) &&
-			getPortletId().equals(portletPreferences.getPortletId()) &&
-			getPreferences().equals(portletPreferences.getPreferences())) {
+		if ((companyId == portletPreferencesImpl.companyId) &&
+			(getOwnerId() == portletPreferencesImpl.getOwnerId()) &&
+			(getOwnerType() == portletPreferencesImpl.getOwnerType()) &&
+			(getPlid() == portletPreferencesImpl.getPlid()) &&
+			getPortletId().equals(portletPreferencesImpl.getPortletId()) &&
+			getPreferences().equals(portletPreferencesImpl.getPreferences())) {
 
 			return true;
 		}

@@ -61,15 +61,15 @@ public class UploadServletRequestWhenCleaningUpTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		uploadServletRequest.cleanUp();
+		uploadServletRequestImpl.cleanUp();
 
 		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertEquals(

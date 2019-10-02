@@ -45,9 +45,9 @@ public class BaseModelHintsImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_testBaseModelHints = new TestBaseModelHintsImpl();
+		_testBaseModelHintsImpl = new TestBaseModelHintsImpl();
 
-		_testBaseModelHints.afterPropertiesSet();
+		_testBaseModelHintsImpl.afterPropertiesSet();
 
 		_document = DocumentHelper.createDocument();
 
@@ -114,25 +114,25 @@ public class BaseModelHintsImplTest {
 		addValidatorElement(combinedFieldElement, "required");
 		addSanitizeElement(combinedFieldElement, "text/plain", "ALL");
 
-		_testBaseModelHints.read(null, null, new TestInputStream());
+		_testBaseModelHintsImpl.read(null, null, new TestInputStream());
 	}
 
 	@Test
 	public void testBuildCustomValidatorName() {
 		String custom = "custom";
 
-		String validatorName1 = _testBaseModelHints.buildCustomValidatorName(
-			custom);
-		String validatorName2 = _testBaseModelHints.buildCustomValidatorName(
-			custom);
+		String validatorName1 =
+			_testBaseModelHintsImpl.buildCustomValidatorName(custom);
+		String validatorName2 =
+			_testBaseModelHintsImpl.buildCustomValidatorName(custom);
 
 		Assert.assertNotEquals(validatorName1, validatorName2);
 	}
 
 	@Test
 	public void testGetDefaultHints() {
-		Map<String, String> defaultHints = _testBaseModelHints.getDefaultHints(
-			_MODEL);
+		Map<String, String> defaultHints =
+			_testBaseModelHintsImpl.getDefaultHints(_MODEL);
 
 		Assert.assertEquals(defaultHints.toString(), 1, defaultHints.size());
 		Assert.assertEquals("210", defaultHints.get("display-width"));
@@ -140,7 +140,7 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetFieldsElement() {
-		Object fieldObject = _testBaseModelHints.getFieldsElement(
+		Object fieldObject = _testBaseModelHintsImpl.getFieldsElement(
 			_MODEL, "simpleField");
 
 		Element fieldElement = (Element)fieldObject;
@@ -151,35 +151,37 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetHints() {
-		Map<String, String> hints = _testBaseModelHints.getHints(
+		Map<String, String> hints = _testBaseModelHintsImpl.getHints(
 			_MODEL, "hintField");
 
 		Assert.assertEquals("Date", hints.get("type"));
 		Assert.assertEquals("150", hints.get("max-length"));
 
-		hints = _testBaseModelHints.getHints(_MODEL, "combinedField");
+		hints = _testBaseModelHintsImpl.getHints(_MODEL, "combinedField");
 
 		Assert.assertEquals("350", hints.get("display-width"));
 	}
 
 	@Test
 	public void testGetMaxLength() {
-		int maxLength = _testBaseModelHints.getMaxLength(_MODEL, "simpleField");
+		int maxLength = _testBaseModelHintsImpl.getMaxLength(
+			_MODEL, "simpleField");
 
 		Assert.assertEquals(75, maxLength);
 
-		maxLength = _testBaseModelHints.getMaxLength(_MODEL, "hintField");
+		maxLength = _testBaseModelHintsImpl.getMaxLength(_MODEL, "hintField");
 
 		Assert.assertEquals(150, maxLength);
 
-		maxLength = _testBaseModelHints.getMaxLength(_MODEL, "combinedField");
+		maxLength = _testBaseModelHintsImpl.getMaxLength(
+			_MODEL, "combinedField");
 
 		Assert.assertEquals(4000, maxLength);
 	}
 
 	@Test
 	public void testGetModels() {
-		List<String> models = _testBaseModelHints.getModels();
+		List<String> models = _testBaseModelHintsImpl.getModels();
 
 		Assert.assertEquals(models.toString(), 1, models.size());
 
@@ -188,12 +190,12 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetSanitizeTuple() {
-		Tuple sanitizeTuple = _testBaseModelHints.getSanitizeTuple(
+		Tuple sanitizeTuple = _testBaseModelHintsImpl.getSanitizeTuple(
 			_MODEL, "simpleField");
 
 		Assert.assertNull(sanitizeTuple);
 
-		sanitizeTuple = _testBaseModelHints.getSanitizeTuple(
+		sanitizeTuple = _testBaseModelHintsImpl.getSanitizeTuple(
 			_MODEL, "sanitizeField");
 
 		Assert.assertEquals(3, sanitizeTuple.getSize());
@@ -204,7 +206,7 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetSanitizeTuples() {
-		List<Tuple> sanitizedTuples = _testBaseModelHints.getSanitizeTuples(
+		List<Tuple> sanitizedTuples = _testBaseModelHintsImpl.getSanitizeTuples(
 			_MODEL);
 
 		Assert.assertEquals(
@@ -226,29 +228,29 @@ public class BaseModelHintsImplTest {
 	@Test
 	public void testGetType() {
 		Assert.assertEquals(
-			"Blob", _testBaseModelHints.getType(_MODEL, "blobField"));
+			"Blob", _testBaseModelHintsImpl.getType(_MODEL, "blobField"));
 		Assert.assertEquals(
-			"boolean", _testBaseModelHints.getType(_MODEL, "booleanField"));
+			"boolean", _testBaseModelHintsImpl.getType(_MODEL, "booleanField"));
 		Assert.assertEquals(
-			"Date", _testBaseModelHints.getType(_MODEL, "dateField"));
+			"Date", _testBaseModelHintsImpl.getType(_MODEL, "dateField"));
 		Assert.assertEquals(
-			"double", _testBaseModelHints.getType(_MODEL, "doubleField"));
+			"double", _testBaseModelHintsImpl.getType(_MODEL, "doubleField"));
 		Assert.assertEquals(
-			"int", _testBaseModelHints.getType(_MODEL, "intField"));
+			"int", _testBaseModelHintsImpl.getType(_MODEL, "intField"));
 		Assert.assertEquals(
-			"long", _testBaseModelHints.getType(_MODEL, "longField"));
+			"long", _testBaseModelHintsImpl.getType(_MODEL, "longField"));
 		Assert.assertEquals(
-			"String", _testBaseModelHints.getType(_MODEL, "stringField"));
+			"String", _testBaseModelHintsImpl.getType(_MODEL, "stringField"));
 	}
 
 	@Test
 	public void testGetValidators() {
-		List<Tuple> validators = _testBaseModelHints.getValidators(
+		List<Tuple> validators = _testBaseModelHintsImpl.getValidators(
 			_MODEL, "simpleField");
 
 		Assert.assertNull(validators);
 
-		validators = _testBaseModelHints.getValidators(
+		validators = _testBaseModelHintsImpl.getValidators(
 			_MODEL, "validatorField");
 
 		Assert.assertEquals(validators.toString(), 2, validators.size());
@@ -263,7 +265,8 @@ public class BaseModelHintsImplTest {
 		Assert.assertEquals("validatorField", requiredValidator.getObject(0));
 		Assert.assertEquals("required", requiredValidator.getObject(1));
 
-		validators = _testBaseModelHints.getValidators(_MODEL, "combinedField");
+		validators = _testBaseModelHintsImpl.getValidators(
+			_MODEL, "combinedField");
 
 		Assert.assertEquals(validators.toString(), 1, validators.size());
 
@@ -275,18 +278,19 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testGetValue() {
-		String type = _testBaseModelHints.getType(_MODEL, "simpleField");
+		String type = _testBaseModelHintsImpl.getType(_MODEL, "simpleField");
 
-		String value = _testBaseModelHints.getValue(
+		String value = _testBaseModelHintsImpl.getValue(
 			_MODEL, "simpleField", "type", type);
 
 		Assert.assertEquals("long", type);
 
 		Assert.assertEquals("long", value);
 
-		type = _testBaseModelHints.getType(_MODEL, "hintField");
+		type = _testBaseModelHintsImpl.getType(_MODEL, "hintField");
 
-		value = _testBaseModelHints.getValue(_MODEL, "hintField", "type", type);
+		value = _testBaseModelHintsImpl.getValue(
+			_MODEL, "hintField", "type", type);
 
 		Assert.assertEquals("long", type);
 
@@ -295,31 +299,32 @@ public class BaseModelHintsImplTest {
 
 	@Test
 	public void testHasField() {
-		Assert.assertFalse(_testBaseModelHints.hasField(_MODEL, "test"));
+		Assert.assertFalse(_testBaseModelHintsImpl.hasField(_MODEL, "test"));
 
-		Assert.assertTrue(_testBaseModelHints.hasField(_MODEL, "simpleField"));
+		Assert.assertTrue(
+			_testBaseModelHintsImpl.hasField(_MODEL, "simpleField"));
 	}
 
 	@Test
 	public void testIsCustomValidator() {
-		Assert.assertFalse(_testBaseModelHints.isCustomValidator("test"));
+		Assert.assertFalse(_testBaseModelHintsImpl.isCustomValidator("test"));
 
-		Assert.assertTrue(_testBaseModelHints.isCustomValidator("custom"));
+		Assert.assertTrue(_testBaseModelHintsImpl.isCustomValidator("custom"));
 	}
 
 	@Test
 	public void testIsLocalized() {
 		Assert.assertFalse(
-			_testBaseModelHints.isLocalized(_MODEL, "simpleField"));
+			_testBaseModelHintsImpl.isLocalized(_MODEL, "simpleField"));
 		Assert.assertTrue(
-			_testBaseModelHints.isLocalized(_MODEL, "localizedField"));
+			_testBaseModelHintsImpl.isLocalized(_MODEL, "localizedField"));
 	}
 
 	@Test
 	public void testTrimString() {
 		String value = RandomTestUtil.randomString(400);
 
-		value = _testBaseModelHints.trimString(_MODEL, "hintField", value);
+		value = _testBaseModelHintsImpl.trimString(_MODEL, "hintField", value);
 
 		Assert.assertEquals(150, value.length());
 	}
@@ -382,7 +387,7 @@ public class BaseModelHintsImplTest {
 		"com.liferay.portal.model.BaseModelHintsImplTest";
 
 	private static Document _document;
-	private static TestBaseModelHintsImpl _testBaseModelHints;
+	private static TestBaseModelHintsImpl _testBaseModelHintsImpl;
 
 	private static class TestBaseModelHintsImpl extends BaseModelHintsImpl {
 

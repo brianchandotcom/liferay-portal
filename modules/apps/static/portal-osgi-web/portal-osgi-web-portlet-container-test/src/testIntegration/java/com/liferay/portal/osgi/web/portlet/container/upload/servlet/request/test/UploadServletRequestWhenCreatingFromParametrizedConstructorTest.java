@@ -61,20 +61,20 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertTrue(
 			multipartParameterMap.toString(), multipartParameterMap.isEmpty());
 
 		Map<String, List<String>> regularParameterMap =
-			uploadServletRequest.getRegularParameterMap();
+			uploadServletRequestImpl.getRegularParameterMap();
 
 		Assert.assertNotNull(regularParameterMap);
 		Assert.assertTrue(
@@ -92,20 +92,20 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertEquals(
 			multipartParameterMap.toString(), 1, multipartParameterMap.size());
 
 		Map<String, List<String>> regularParameterMap =
-			uploadServletRequest.getRegularParameterMap();
+			uploadServletRequestImpl.getRegularParameterMap();
 
 		Assert.assertNotNull(regularParameterMap);
 		Assert.assertTrue(
@@ -121,20 +121,20 @@ public class UploadServletRequestWhenCreatingFromParametrizedConstructorTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(), regularParameters);
 
 		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertTrue(
 			multipartParameterMap.toString(), multipartParameterMap.isEmpty());
 
 		Map<String, List<String>> regularParameterMap =
-			uploadServletRequest.getRegularParameterMap();
+			uploadServletRequestImpl.getRegularParameterMap();
 
 		Assert.assertNotNull(regularParameterMap);
 		Assert.assertEquals(

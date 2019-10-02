@@ -66,20 +66,20 @@ public class UploadServletRequestWhenGettingFilesTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
 		Map<String, FileItem[]> map =
-			uploadServletRequest.getMultipartParameterMap();
+			uploadServletRequestImpl.getMultipartParameterMap();
 
 		Assert.assertEquals(map.toString(), 10, map.size());
 
 		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
 			String key = entry.getKey();
 
-			File[] files = uploadServletRequest.getFiles(key);
+			File[] files = uploadServletRequestImpl.getFiles(key);
 
 			FileItem[] fileItems = entry.getValue();
 
@@ -104,13 +104,13 @@ public class UploadServletRequestWhenGettingFilesTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				new HashMap<String, FileItem[]>(),
 				new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFiles("irrelevantName"));
+		Assert.assertNull(uploadServletRequestImpl.getFiles("irrelevantName"));
 	}
 
 	@Test
@@ -124,12 +124,12 @@ public class UploadServletRequestWhenGettingFilesTest {
 			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _BYTES);
 
-		UploadServletRequestImpl uploadServletRequest =
+		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		Assert.assertNull(uploadServletRequest.getFiles("nonexistentFile"));
+		Assert.assertNull(uploadServletRequestImpl.getFiles("nonexistentFile"));
 	}
 
 	private static final byte[] _BYTES =

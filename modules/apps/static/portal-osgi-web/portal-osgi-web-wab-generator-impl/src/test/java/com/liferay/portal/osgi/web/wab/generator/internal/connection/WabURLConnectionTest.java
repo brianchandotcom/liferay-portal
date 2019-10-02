@@ -57,11 +57,11 @@ public class WabURLConnectionTest {
 
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		SAXReaderImpl secureSAXReader = new SAXReaderImpl();
+		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();
 
-		secureSAXReader.setSecure(true);
+		secureSAXReaderImpl.setSecure(true);
 
-		saxReaderUtil.setSAXReader(secureSAXReader);
+		saxReaderUtil.setSAXReader(secureSAXReaderImpl);
 
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
 			new SecureXMLFactoryProviderUtil();

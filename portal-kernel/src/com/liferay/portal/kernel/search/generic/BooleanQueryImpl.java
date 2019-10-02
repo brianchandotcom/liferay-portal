@@ -113,10 +113,10 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query addExactTerm(String field, String value) {
-		TermQueryImpl termQuery = new TermQueryImpl(
+		TermQueryImpl termQueryImpl = new TermQueryImpl(
 			new QueryTermImpl(field, String.valueOf(value)));
 
-		return add(termQuery, BooleanClauseOccur.SHOULD);
+		return add(termQueryImpl, BooleanClauseOccur.SHOULD);
 	}
 
 	@Override

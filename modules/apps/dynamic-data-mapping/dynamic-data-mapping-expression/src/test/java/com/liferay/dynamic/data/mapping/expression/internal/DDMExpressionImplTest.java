@@ -50,66 +50,68 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 	@Test
 	public void testAddition() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"1 + 3 + 6");
 
-		Assert.assertEquals(new BigDecimal("10"), ddmExpression.evaluate());
+		Assert.assertEquals(new BigDecimal("10"), ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testAndExpression1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"3 > 1 && 1 < 2");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testAndExpression2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"4 > 2 && 1 < 0");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testAndExpression3() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"3 >= 4 and 2 <= 4");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testDivision1() throws Exception {
 		BigDecimal bigDecimal = new BigDecimal(2);
 
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"6 / 3");
 
-		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
+		Assert.assertEquals(
+			bigDecimal.setScale(2), ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testDivision2() throws Exception {
 		BigDecimal bigDecimal = new BigDecimal(7.5);
 
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"15 / 2");
 
-		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
+		Assert.assertEquals(
+			bigDecimal.setScale(2), ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testDivision3() throws Exception {
 		BigDecimal bigDecimal = new BigDecimal(1.11);
 
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"10 / 9");
 
 		Assert.assertEquals(
 			bigDecimal.setScale(2, RoundingMode.FLOOR),
-			ddmExpression.evaluate());
+			ddmExpressionImpl.evaluate());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -119,15 +121,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 	@Test
 	public void testEquals1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"3 == '3'");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testExpressionVariableNames() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"a - b");
 
 		Set<String> variables = new HashSet<String>() {
@@ -138,15 +140,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 		};
 
 		Assert.assertEquals(
-			variables, ddmExpression.getExpressionVariableNames());
+			variables, ddmExpressionImpl.getExpressionVariableNames());
 	}
 
 	@Test
 	public void testFunction0() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = new DDMExpressionImpl<>(
-			"zero()");
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl =
+			new DDMExpressionImpl<>("zero()");
 
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
 
 				@Override
@@ -173,15 +175,15 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 			});
 
-		Assert.assertEquals(BigDecimal.ZERO, ddmExpression.evaluate());
+		Assert.assertEquals(BigDecimal.ZERO, ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testFunction1() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = new DDMExpressionImpl<>(
-			"multiply([1,2,3])");
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl =
+			new DDMExpressionImpl<>("multiply([1,2,3])");
 
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
 
 				@Override
@@ -209,17 +211,17 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 			});
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("6")));
 	}
 
 	@Test
 	public void testFunction2() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = new DDMExpressionImpl<>(
-			"max([1,2,3,4])");
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl =
+			new DDMExpressionImpl<>("max([1,2,3,4])");
 
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
 
 				@Override
@@ -246,17 +248,17 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 			});
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("4")));
 	}
 
 	@Test
 	public void testFunctions() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = new DDMExpressionImpl<>(
-			"square(a) + add(3, abs(b))");
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl =
+			new DDMExpressionImpl<>("square(a) + add(3, abs(b))");
 
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			new DDMExpressionFunctionTracker() {
 
 				@Override
@@ -289,142 +291,144 @@ public class DDMExpressionImplTest extends PowerMockito {
 				}
 
 			});
-		ddmExpression.setVariable("a", 2);
-		ddmExpression.setVariable("b", -3);
+		ddmExpressionImpl.setVariable("a", 2);
+		ddmExpressionImpl.setVariable("b", -3);
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("10")));
 	}
 
 	@Test
 	public void testGreaterThan1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"3 > 2.0");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testGreaterThan2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("4 > 5");
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
+			"4 > 5");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testGreaterThanOrEquals1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"-2 >= -3");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testGreaterThanOrEquals2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"1 >= 2");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test(expected = DDMExpressionException.InvalidSyntax.class)
 	public void testInvalidSyntax1() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"1 ++ 2");
 
-		ddmExpression.evaluate();
+		ddmExpressionImpl.evaluate();
 	}
 
 	@Test(expected = DDMExpressionException.InvalidSyntax.class)
 	public void testInvalidSyntax2() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"(1 * 2");
 
-		ddmExpression.evaluate();
+		ddmExpressionImpl.evaluate();
 	}
 
 	@Test
 	public void testLessThan1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("0 < 4");
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
+			"0 < 4");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testLessThan2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"0 < -1.5");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testLessThanOrEquals1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"1.6 <= 1.7");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testLessThanOrEquals2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"1.9 <= 1.89");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testLogicalConstant() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"TRUE || false");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testMultiplication1() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"2.45 * 2");
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("4.9")));
 	}
 
 	@Test
 	public void testMultiplication2() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"-2 * -3.55");
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("7.10")));
 	}
 
 	@Test
 	public void testNot() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"not(-1 != 1.0)");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testNotEquals() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"1.6 != 1.66");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testNotEquals2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"2 != 2.0");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -434,46 +438,47 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 	@Test
 	public void testOr1() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"2 >= 1 || 1 < 0");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testOr2() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"4 == 3 or -1 >= -2");
 
-		Assert.assertTrue(ddmExpression.evaluate());
+		Assert.assertTrue(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testOr3() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
 			"2 < 2 or 0 > 1");
 
-		Assert.assertFalse(ddmExpression.evaluate());
+		Assert.assertFalse(ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testParenthesis() throws Exception {
 		BigDecimal bigDecimal = new BigDecimal(4);
 
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"(8 + 2) / 2.5");
 
-		Assert.assertEquals(bigDecimal.setScale(2), ddmExpression.evaluate());
+		Assert.assertEquals(
+			bigDecimal.setScale(2), ddmExpressionImpl.evaluate());
 	}
 
 	@Test
 	public void testPrecedence() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"4 - 2 * 6");
 
 		BigDecimal expected = new BigDecimal("-8");
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(expected));
 	}
@@ -490,67 +495,69 @@ public class DDMExpressionImplTest extends PowerMockito {
 
 	@Test
 	public void testSubtraction1() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"-2 -3.55");
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("-5.55")));
 	}
 
 	@Test
 	public void testSubtraction2() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"4 - 2 - 1");
 
-		BigDecimal bigDecimal = ddmExpression.evaluate();
+		BigDecimal bigDecimal = ddmExpressionImpl.evaluate();
 
 		Assert.assertEquals(0, bigDecimal.compareTo(new BigDecimal("1")));
 	}
 
 	@Test(expected = DDMExpressionException.class)
 	public void testUnavailableLogicalVariable() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("a > 5");
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
+			"a > 5");
 
-		ddmExpression.evaluate();
+		ddmExpressionImpl.evaluate();
 	}
 
 	@Test(expected = DDMExpressionException.class)
 	public void testUnavailableNumericVariable() throws Exception {
-		DDMExpressionImpl<Boolean> ddmExpression = createDDMExpression("b + 1");
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = createDDMExpression(
+			"b + 1");
 
-		ddmExpression.evaluate();
+		ddmExpressionImpl.evaluate();
 	}
 
 	@Test(expected = DDMExpressionException.FunctionNotDefined.class)
 	public void testUndefinedFunction() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"sum(1,b)");
 
-		ddmExpression.evaluate();
+		ddmExpressionImpl.evaluate();
 	}
 
 	@Test
 	public void testVariableExpression() throws Exception {
-		DDMExpressionImpl<BigDecimal> ddmExpression = createDDMExpression(
+		DDMExpressionImpl<BigDecimal> ddmExpressionImpl = createDDMExpression(
 			"a + b");
 
-		ddmExpression.setVariable("a", 2);
-		ddmExpression.setVariable("b", 3);
+		ddmExpressionImpl.setVariable("a", 2);
+		ddmExpressionImpl.setVariable("b", 3);
 
-		Assert.assertEquals(new BigDecimal(5), ddmExpression.evaluate());
+		Assert.assertEquals(new BigDecimal(5), ddmExpressionImpl.evaluate());
 	}
 
 	protected <T> DDMExpressionImpl<T> createDDMExpression(String expression)
 		throws DDMExpressionException {
 
-		DDMExpressionImpl<T> ddmExpression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
 			expression);
 
-		ddmExpression.setDDMExpressionFunctionTracker(
+		ddmExpressionImpl.setDDMExpressionFunctionTracker(
 			mock(DDMExpressionFunctionTracker.class));
 
-		return ddmExpression;
+		return ddmExpressionImpl;
 	}
 
 	private Map<String, DDMExpressionFunctionFactory>

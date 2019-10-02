@@ -257,15 +257,15 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	}
 
 	protected void mockDDMFormInstance(long ddmFormInstanceId) {
-		DDMFormInstanceImpl ddmFormInstance = new DDMFormInstanceImpl();
+		DDMFormInstanceImpl ddmFormInstanceImpl = new DDMFormInstanceImpl();
 
-		ddmFormInstance.setFormInstanceId(ddmFormInstanceId);
+		ddmFormInstanceImpl.setFormInstanceId(ddmFormInstanceId);
 
 		Mockito.when(
 			_ddmFormInstanceLocalService.fetchFormInstance(
 				Matchers.eq(ddmFormInstanceId))
 		).thenReturn(
-			ddmFormInstance
+			ddmFormInstanceImpl
 		);
 	}
 

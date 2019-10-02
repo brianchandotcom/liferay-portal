@@ -197,13 +197,13 @@ public class DDMXMLImpl implements DDMXML {
 
 	public XMLSchema getXMLSchema() {
 		if (_xmlSchema == null) {
-			XMLSchemaImpl xmlSchema = new XMLSchemaImpl();
+			XMLSchemaImpl xmlSchemaImpl = new XMLSchemaImpl();
 
-			xmlSchema.setSchemaLanguage("http://www.w3.org/2001/XMLSchema");
-			xmlSchema.setSystemId(
+			xmlSchemaImpl.setSchemaLanguage("http://www.w3.org/2001/XMLSchema");
+			xmlSchemaImpl.setSystemId(
 				"http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd");
 
-			_xmlSchema = xmlSchema;
+			_xmlSchema = xmlSchemaImpl;
 		}
 
 		return _xmlSchema;

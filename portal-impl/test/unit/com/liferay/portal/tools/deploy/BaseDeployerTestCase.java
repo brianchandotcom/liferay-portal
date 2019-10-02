@@ -59,18 +59,18 @@ public abstract class BaseDeployerTestCase {
 
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
-		SAXReaderImpl secureSAXReader = new SAXReaderImpl();
+		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();
 
-		secureSAXReader.setSecure(true);
+		secureSAXReaderImpl.setSecure(true);
 
-		saxReaderUtil.setSAXReader(secureSAXReader);
+		saxReaderUtil.setSAXReader(secureSAXReaderImpl);
 
 		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
 			new UnsecureSAXReaderUtil();
 
-		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
+		SAXReaderImpl unsecureSAXReaderImpl = new SAXReaderImpl();
 
-		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReaderImpl);
 
 		setUpLiferayPluginPackageProperties();
 	}

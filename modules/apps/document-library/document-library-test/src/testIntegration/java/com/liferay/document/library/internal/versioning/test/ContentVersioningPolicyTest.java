@@ -62,19 +62,19 @@ public class ContentVersioningPolicyTest {
 
 	@Test
 	public void testMajorVersionWhenContentChanges() {
-		DLFileVersionImpl previousDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl previousDLFileVersionImpl = new DLFileVersionImpl();
 
-		previousDLFileVersion.setSize(RandomUtil.nextInt(100) + 1);
-		previousDLFileVersion.setChecksum(StringUtil.randomString(5));
+		previousDLFileVersionImpl.setSize(RandomUtil.nextInt(100) + 1);
+		previousDLFileVersionImpl.setChecksum(StringUtil.randomString(5));
 
-		DLFileVersionImpl nextDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl nextDLFileVersionImpl = new DLFileVersionImpl();
 
-		nextDLFileVersion.setSize(previousDLFileVersion.getSize());
-		nextDLFileVersion.setChecksum(StringUtil.randomString(6));
+		nextDLFileVersionImpl.setSize(previousDLFileVersionImpl.getSize());
+		nextDLFileVersionImpl.setChecksum(StringUtil.randomString(6));
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersionImpl, nextDLFileVersionImpl);
 
 		Assert.assertTrue(dlVersionNumberIncreaseOptional.isPresent());
 		Assert.assertEquals(
@@ -84,17 +84,17 @@ public class ContentVersioningPolicyTest {
 
 	@Test
 	public void testMajorVersionWhenSizeChanges() {
-		DLFileVersionImpl previousDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl previousDLFileVersionImpl = new DLFileVersionImpl();
 
-		previousDLFileVersion.setSize(RandomUtil.nextInt(100) + 1);
+		previousDLFileVersionImpl.setSize(RandomUtil.nextInt(100) + 1);
 
-		DLFileVersionImpl nextDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl nextDLFileVersionImpl = new DLFileVersionImpl();
 
-		nextDLFileVersion.setSize(previousDLFileVersion.getSize() + 1);
+		nextDLFileVersionImpl.setSize(previousDLFileVersionImpl.getSize() + 1);
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersionImpl, nextDLFileVersionImpl);
 
 		Assert.assertTrue(dlVersionNumberIncreaseOptional.isPresent());
 		Assert.assertEquals(
@@ -104,36 +104,37 @@ public class ContentVersioningPolicyTest {
 
 	@Test
 	public void testNoVersionIncreaseWhenContentDoesntChange() {
-		DLFileVersionImpl previousDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl previousDLFileVersionImpl = new DLFileVersionImpl();
 
-		previousDLFileVersion.setSize(RandomUtil.nextInt(100) + 1);
-		previousDLFileVersion.setChecksum(StringUtil.randomString(5));
+		previousDLFileVersionImpl.setSize(RandomUtil.nextInt(100) + 1);
+		previousDLFileVersionImpl.setChecksum(StringUtil.randomString(5));
 
-		DLFileVersionImpl nextDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl nextDLFileVersionImpl = new DLFileVersionImpl();
 
-		nextDLFileVersion.setSize(previousDLFileVersion.getSize());
-		nextDLFileVersion.setChecksum(previousDLFileVersion.getChecksum());
+		nextDLFileVersionImpl.setSize(previousDLFileVersionImpl.getSize());
+		nextDLFileVersionImpl.setChecksum(
+			previousDLFileVersionImpl.getChecksum());
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersionImpl, nextDLFileVersionImpl);
 
 		Assert.assertFalse(dlVersionNumberIncreaseOptional.isPresent());
 	}
 
 	@Test
 	public void testNoVersionIncreaseWhenPreviousEmptyAndNextNonempty() {
-		DLFileVersionImpl previousDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl previousDLFileVersionImpl = new DLFileVersionImpl();
 
-		previousDLFileVersion.setSize(0);
+		previousDLFileVersionImpl.setSize(0);
 
-		DLFileVersionImpl nextDLFileVersion = new DLFileVersionImpl();
+		DLFileVersionImpl nextDLFileVersionImpl = new DLFileVersionImpl();
 
-		nextDLFileVersion.setSize(RandomUtil.nextInt(100) + 1);
+		nextDLFileVersionImpl.setSize(RandomUtil.nextInt(100) + 1);
 
 		Optional<DLVersionNumberIncrease> dlVersionNumberIncreaseOptional =
 			_versioningPolicy.computeDLVersionNumberIncrease(
-				previousDLFileVersion, nextDLFileVersion);
+				previousDLFileVersionImpl, nextDLFileVersionImpl);
 
 		Assert.assertFalse(dlVersionNumberIncreaseOptional.isPresent());
 	}

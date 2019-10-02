@@ -54,7 +54,7 @@ public interface AccountEntryService extends BaseService {
 	 */
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, byte[] logoBytes, int status)
+			String description, String[] domains, byte[] logoBytes, int status)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

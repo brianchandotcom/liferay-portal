@@ -77,7 +77,7 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,12 +101,22 @@ public class LayoutSEOEntryCacheModel
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
 		sb.append(layoutId);
-		sb.append(", enabled=");
-		sb.append(enabled);
+		sb.append(", enabledCanonicalURL=");
+		sb.append(enabledCanonicalURL);
 		sb.append(", canonicalURL=");
 		sb.append(canonicalURL);
+		sb.append(", enabledOpenGraphTitle=");
+		sb.append(enabledOpenGraphTitle);
+		sb.append(", openGraphTitle=");
+		sb.append(openGraphTitle);
+		sb.append(", enabledOpenGraphDescription=");
+		sb.append(enabledOpenGraphDescription);
+		sb.append(", openGraphDescription=");
+		sb.append(openGraphDescription);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", openGraphImageFileEntryId=");
+		sb.append(openGraphImageFileEntryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -153,7 +163,7 @@ public class LayoutSEOEntryCacheModel
 
 		layoutSEOEntryImpl.setPrivateLayout(privateLayout);
 		layoutSEOEntryImpl.setLayoutId(layoutId);
-		layoutSEOEntryImpl.setEnabled(enabled);
+		layoutSEOEntryImpl.setEnabledCanonicalURL(enabledCanonicalURL);
 
 		if (canonicalURL == null) {
 			layoutSEOEntryImpl.setCanonicalURL("");
@@ -162,12 +172,34 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setCanonicalURL(canonicalURL);
 		}
 
+		layoutSEOEntryImpl.setEnabledOpenGraphTitle(enabledOpenGraphTitle);
+
+		if (openGraphTitle == null) {
+			layoutSEOEntryImpl.setOpenGraphTitle("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphTitle(openGraphTitle);
+		}
+
+		layoutSEOEntryImpl.setEnabledOpenGraphDescription(
+			enabledOpenGraphDescription);
+
+		if (openGraphDescription == null) {
+			layoutSEOEntryImpl.setOpenGraphDescription("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphDescription(openGraphDescription);
+		}
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutSEOEntryImpl.setLastPublishDate(null);
 		}
 		else {
 			layoutSEOEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
+
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
+			openGraphImageFileEntryId);
 
 		layoutSEOEntryImpl.resetOriginalValues();
 
@@ -194,9 +226,17 @@ public class LayoutSEOEntryCacheModel
 
 		layoutId = objectInput.readLong();
 
-		enabled = objectInput.readBoolean();
+		enabledCanonicalURL = objectInput.readBoolean();
 		canonicalURL = objectInput.readUTF();
+
+		enabledOpenGraphTitle = objectInput.readBoolean();
+		openGraphTitle = objectInput.readUTF();
+
+		enabledOpenGraphDescription = objectInput.readBoolean();
+		openGraphDescription = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		openGraphImageFileEntryId = objectInput.readLong();
 	}
 
 	@Override
@@ -232,7 +272,7 @@ public class LayoutSEOEntryCacheModel
 
 		objectOutput.writeLong(layoutId);
 
-		objectOutput.writeBoolean(enabled);
+		objectOutput.writeBoolean(enabledCanonicalURL);
 
 		if (canonicalURL == null) {
 			objectOutput.writeUTF("");
@@ -241,7 +281,27 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(canonicalURL);
 		}
 
+		objectOutput.writeBoolean(enabledOpenGraphTitle);
+
+		if (openGraphTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphTitle);
+		}
+
+		objectOutput.writeBoolean(enabledOpenGraphDescription);
+
+		if (openGraphDescription == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphDescription);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeLong(openGraphImageFileEntryId);
 	}
 
 	public long mvccVersion;
@@ -255,8 +315,13 @@ public class LayoutSEOEntryCacheModel
 	public long modifiedDate;
 	public boolean privateLayout;
 	public long layoutId;
-	public boolean enabled;
+	public boolean enabledCanonicalURL;
 	public String canonicalURL;
+	public boolean enabledOpenGraphTitle;
+	public String openGraphTitle;
+	public boolean enabledOpenGraphDescription;
+	public String openGraphDescription;
 	public long lastPublishDate;
+	public long openGraphImageFileEntryId;
 
 }

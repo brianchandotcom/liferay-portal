@@ -31,6 +31,7 @@ public class PollsQuestionSoap implements Serializable {
 	public static PollsQuestionSoap toSoapModel(PollsQuestion model) {
 		PollsQuestionSoap soapModel = new PollsQuestionSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setQuestionId(model.getQuestionId());
 		soapModel.setGroupId(model.getGroupId());
@@ -95,6 +96,14 @@ public class PollsQuestionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setQuestionId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -201,6 +210,7 @@ public class PollsQuestionSoap implements Serializable {
 		_lastVoteDate = lastVoteDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _questionId;
 	private long _groupId;

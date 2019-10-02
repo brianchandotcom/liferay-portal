@@ -1,4 +1,5 @@
 create table PollsChoice (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	choiceId LONG not null primary key,
 	groupId LONG,
@@ -14,6 +15,7 @@ create table PollsChoice (
 );
 
 create table PollsQuestion (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	questionId LONG not null primary key,
 	groupId LONG,
@@ -30,6 +32,7 @@ create table PollsQuestion (
 );
 
 create table PollsVote (
+	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	voteId LONG not null primary key,
 	groupId LONG,

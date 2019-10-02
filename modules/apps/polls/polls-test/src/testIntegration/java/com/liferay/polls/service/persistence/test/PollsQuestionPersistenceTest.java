@@ -124,6 +124,8 @@ public class PollsQuestionPersistenceTest {
 
 		PollsQuestion newPollsQuestion = _persistence.create(pk);
 
+		newPollsQuestion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newPollsQuestion.setUuid(RandomTestUtil.randomString());
 
 		newPollsQuestion.setGroupId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class PollsQuestionPersistenceTest {
 		PollsQuestion existingPollsQuestion = _persistence.findByPrimaryKey(
 			newPollsQuestion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingPollsQuestion.getMvccVersion(),
+			newPollsQuestion.getMvccVersion());
 		Assert.assertEquals(
 			existingPollsQuestion.getUuid(), newPollsQuestion.getUuid());
 		Assert.assertEquals(
@@ -255,11 +260,11 @@ public class PollsQuestionPersistenceTest {
 
 	protected OrderByComparator<PollsQuestion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"PollsQuestion", "uuid", true, "questionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "title", true, "description", true,
-			"expirationDate", true, "lastPublishDate", true, "lastVoteDate",
-			true);
+			"PollsQuestion", "mvccVersion", true, "uuid", true, "questionId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "title",
+			true, "description", true, "expirationDate", true,
+			"lastPublishDate", true, "lastVoteDate", true);
 	}
 
 	@Test
@@ -500,6 +505,8 @@ public class PollsQuestionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		PollsQuestion pollsQuestion = _persistence.create(pk);
+
+		pollsQuestion.setMvccVersion(RandomTestUtil.nextLong());
 
 		pollsQuestion.setUuid(RandomTestUtil.randomString());
 

@@ -74,18 +74,20 @@ public class PollsVoteModelImpl
 	public static final String TABLE_NAME = "PollsVote";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"voteId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"questionId", Types.BIGINT}, {"choiceId", Types.BIGINT},
-		{"lastPublishDate", Types.TIMESTAMP}, {"voteDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"voteId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"questionId", Types.BIGINT},
+		{"choiceId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP},
+		{"voteDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("voteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class PollsVoteModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,lastPublishDate DATE null,voteDate DATE null)";
+		"create table PollsVote (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,lastPublishDate DATE null,voteDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table PollsVote";
 
@@ -150,6 +152,7 @@ public class PollsVoteModelImpl
 
 		PollsVote model = new PollsVoteImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setVoteId(soapModel.getVoteId());
 		model.setGroupId(soapModel.getGroupId());
@@ -310,6 +313,10 @@ public class PollsVoteModelImpl
 		Map<String, BiConsumer<PollsVote, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<PollsVote, ?>>();
 
+		attributeGetterFunctions.put("mvccVersion", PollsVote::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<PollsVote, Long>)PollsVote::setMvccVersion);
 		attributeGetterFunctions.put("uuid", PollsVote::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<PollsVote, String>)PollsVote::setUuid);
@@ -357,6 +364,17 @@ public class PollsVoteModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -635,6 +653,7 @@ public class PollsVoteModelImpl
 	public Object clone() {
 		PollsVoteImpl pollsVoteImpl = new PollsVoteImpl();
 
+		pollsVoteImpl.setMvccVersion(getMvccVersion());
 		pollsVoteImpl.setUuid(getUuid());
 		pollsVoteImpl.setVoteId(getVoteId());
 		pollsVoteImpl.setGroupId(getGroupId());
@@ -739,6 +758,8 @@ public class PollsVoteModelImpl
 	@Override
 	public CacheModel<PollsVote> toCacheModel() {
 		PollsVoteCacheModel pollsVoteCacheModel = new PollsVoteCacheModel();
+
+		pollsVoteCacheModel.mvccVersion = getMvccVersion();
 
 		pollsVoteCacheModel.uuid = getUuid();
 
@@ -880,6 +901,7 @@ public class PollsVoteModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _voteId;

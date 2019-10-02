@@ -124,6 +124,8 @@ public class PollsVotePersistenceTest {
 
 		PollsVote newPollsVote = _persistence.create(pk);
 
+		newPollsVote.setMvccVersion(RandomTestUtil.nextLong());
+
 		newPollsVote.setUuid(RandomTestUtil.randomString());
 
 		newPollsVote.setGroupId(RandomTestUtil.nextLong());
@@ -151,6 +153,8 @@ public class PollsVotePersistenceTest {
 		PollsVote existingPollsVote = _persistence.findByPrimaryKey(
 			newPollsVote.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingPollsVote.getMvccVersion(), newPollsVote.getMvccVersion());
 		Assert.assertEquals(
 			existingPollsVote.getUuid(), newPollsVote.getUuid());
 		Assert.assertEquals(
@@ -255,10 +259,10 @@ public class PollsVotePersistenceTest {
 
 	protected OrderByComparator<PollsVote> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"PollsVote", "uuid", true, "voteId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "questionId", true, "choiceId", true,
-			"lastPublishDate", true, "voteDate", true);
+			"PollsVote", "mvccVersion", true, "uuid", true, "voteId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "questionId", true,
+			"choiceId", true, "lastPublishDate", true, "voteDate", true);
 	}
 
 	@Test
@@ -489,6 +493,8 @@ public class PollsVotePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		PollsVote pollsVote = _persistence.create(pk);
+
+		pollsVote.setMvccVersion(RandomTestUtil.nextLong());
 
 		pollsVote.setUuid(RandomTestUtil.randomString());
 

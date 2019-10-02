@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.polls.model.PollsChoice">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="choiceId" type="long" />
 		<field name="groupId" type="long" />
@@ -18,6 +19,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.polls.model.PollsQuestion">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="questionId" type="long" />
 		<field name="groupId" type="long" />
@@ -41,6 +43,7 @@
 		<field name="lastVoteDate" type="Date" />
 	</model>
 	<model name="com.liferay.polls.model.PollsVote">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="voteId" type="long" />
 		<field name="groupId" type="long" />

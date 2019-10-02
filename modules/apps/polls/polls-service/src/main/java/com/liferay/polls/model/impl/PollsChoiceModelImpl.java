@@ -81,18 +81,20 @@ public class PollsChoiceModelImpl
 	public static final String TABLE_NAME = "PollsChoice";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"choiceId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"questionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"choiceId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"questionId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("choiceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -108,7 +110,7 @@ public class PollsChoiceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+		"create table PollsChoice (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table PollsChoice";
 
@@ -155,6 +157,7 @@ public class PollsChoiceModelImpl
 
 		PollsChoice model = new PollsChoiceImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setChoiceId(soapModel.getChoiceId());
 		model.setGroupId(soapModel.getGroupId());
@@ -317,6 +320,11 @@ public class PollsChoiceModelImpl
 		Map<String, BiConsumer<PollsChoice, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<PollsChoice, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", PollsChoice::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<PollsChoice, Long>)PollsChoice::setMvccVersion);
 		attributeGetterFunctions.put("uuid", PollsChoice::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<PollsChoice, String>)PollsChoice::setUuid);
@@ -369,6 +377,17 @@ public class PollsChoiceModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -803,6 +822,7 @@ public class PollsChoiceModelImpl
 	public Object clone() {
 		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
 
+		pollsChoiceImpl.setMvccVersion(getMvccVersion());
 		pollsChoiceImpl.setUuid(getUuid());
 		pollsChoiceImpl.setChoiceId(getChoiceId());
 		pollsChoiceImpl.setGroupId(getGroupId());
@@ -916,6 +936,8 @@ public class PollsChoiceModelImpl
 	public CacheModel<PollsChoice> toCacheModel() {
 		PollsChoiceCacheModel pollsChoiceCacheModel =
 			new PollsChoiceCacheModel();
+
+		pollsChoiceCacheModel.mvccVersion = getMvccVersion();
 
 		pollsChoiceCacheModel.uuid = getUuid();
 
@@ -1062,6 +1084,7 @@ public class PollsChoiceModelImpl
 	private static boolean _entityCacheEnabled;
 	private static boolean _finderCacheEnabled;
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _choiceId;

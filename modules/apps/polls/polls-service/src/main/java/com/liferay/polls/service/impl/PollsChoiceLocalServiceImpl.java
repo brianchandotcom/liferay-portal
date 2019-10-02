@@ -96,9 +96,7 @@ public class PollsChoiceLocalServiceImpl
 		choice.setName(name);
 		choice.setDescription(description);
 
-		pollsChoicePersistence.update(choice);
-
-		return choice;
+		return pollsChoicePersistence.update(choice);
 	}
 
 	protected void validate(String name, String description)

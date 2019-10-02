@@ -1181,7 +1181,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewElement(
 				"summary", null,
 				Dom4JUtil.getNewElement(
-					"strong", null, getTestSuiteName(), " - ",
+					"strong", null, "ci:test:", getTestSuiteName(), " - ",
 					String.valueOf(successCount), " out of ",
 					String.valueOf(getDownstreamBuildCount(null) + 1),
 					" jobs PASSED")));
@@ -1290,8 +1290,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 			sb.append(":x: ");
 		}
 
+		sb.append("ci:test:");
 		sb.append(getTestSuiteName());
-
 		sb.append(" - ");
 		sb.append(String.valueOf(successCount));
 		sb.append(" out of ");
@@ -1484,15 +1484,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	protected String getTestSuiteName() {
-		String testSuiteName = "ci:test";
+		String testSuiteName = getParameterValue("CI_TEST_SUITE");
 
-		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
-
-		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
-			!ciTestSuite.equals("default")) {
-
-			testSuiteName = JenkinsResultsParserUtil.combine(
-				testSuiteName, ":", ciTestSuite);
+		if (testSuiteName == null) {
+			testSuiteName = "default";
 		}
 
 		return testSuiteName;

@@ -52,7 +52,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component bodyContent="true" name="DDMFormRenderer" writeJSP="true">
+	<component bodyContent="false" name="DDMFormRenderer" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>ddmFormInstanceId</name>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
@@ -42,8 +43,13 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 	@Override
 	public LayoutSEOEntry updateLayoutSEOEntry(
-			long groupId, boolean privateLayout, long layoutId, boolean enabled,
-			Map<Locale, String> canonicalURLMap, ServiceContext serviceContext)
+			long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
+			boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			boolean openGraphDescriptionEnabled,
+			Map<Locale, String> openGraphDescriptionMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayout(
@@ -53,8 +59,23 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 			getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			getUserId(), groupId, privateLayout, layoutId, enabled,
-			canonicalURLMap, serviceContext);
+			getUserId(), groupId, privateLayout, layoutId, canonicalURLEnabled,
+			canonicalURLMap, openGraphTitleEnabled, openGraphTitleMap,
+			openGraphDescriptionEnabled, openGraphDescriptionMap,
+			openGraphImageFileEntryId, serviceContext);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
+			boolean enabledCanonicalURLMap, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateLayoutSEOEntry(
+			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
+			canonicalURLMap, false, Collections.emptyMap(), false,
+			Collections.emptyMap(), 0, serviceContext);
 	}
 
 }

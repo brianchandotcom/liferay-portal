@@ -126,3 +126,57 @@ This change was made to avoid serving unnecessary files saving bandwidth and
 increasing performance of your sites by default.
 
 ---------------------------------------
+
+### Auto Tagging Needs To Be Reconfigured Manually
+- **Date: 2019-Oct-2**
+- **JIRA Ticket: LPS-97123**
+
+#### What changed?
+
+Auto Tagging configurations were renamed and reorganized. There's no
+automatic upgrade process, things need to be reconfigured manually again.
+
+#### Who is affected?
+
+This affects any installation of DXP 7.2 upgrading to SP1 that has Auto
+Tagging configured and enabled.
+
+#### How should I update my code?
+
+Changes need to be made in System Settings (please consult the official
+documentation for the details). Any code referencing the old configuration
+interfaces must be updated to use the new ones.
+
+#### Why was this change made?
+
+The old configuration UI was very confusing, split between different
+configuration interfaces. This change unifies the configuration interfaces.
+
+---------------------------------------
+
+### Blogs Image Properties Moved To System Settings
+- **Date: 2019-Oct-2**
+- **JIRA Ticket: LPS-95298**
+
+#### What changed?
+
+Configuration of Blogs images was moved from portal.properties to System
+Settings. There's no automatic upgrade process, so if there was a custom
+property, it needs to be reconfigured manually again.
+
+#### Who is affected?
+
+This affects any installation of DXP 7.2 upgrading to SP1 that has custom
+values for the blogs.image.max.size and blogs.image.extensions properties.
+
+#### How should I update my code?
+
+Changes need to be made in System Settings, in the configuration section
+Blogs > File Uploads. Any code referencing the old properties must be updated
+to use the new configuration interfaces.
+
+#### Why was this change made?
+
+The ability to change these configuration options dynamically (i.e. without a restart) was considered as a valuable feature.
+
+---------------------------------------

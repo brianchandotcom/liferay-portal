@@ -16,4 +16,21 @@
 
 <%@ include file="/init.jsp" %>
 
-<p>React</p>
+<%
+ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
+%>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/layout-content-page-editor-web/css/main.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
+<div id="<portlet:namespace />pageEditor">
+	<div class="inline-item my-5 p-5 w-100">
+		<span aria-hidden="true" class="loading-animation"></span>
+	</div>
+
+	<react:component
+		data="<%= contentPageEditorDisplayContext.getEditorSoyContext() %>"
+		module="page_editor/app/PageEditor.es"
+	/>
+</div>

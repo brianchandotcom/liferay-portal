@@ -168,11 +168,6 @@ public class DDMStructureLayoutLocalServiceWrapper
 			persistedModel);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #deleteDDMStructureLayout(DDMStructureLayout)}
-	 */
-	@Deprecated
 	@Override
 	public void deleteStructureLayout(
 		com.liferay.dynamic.data.mapping.model.DDMStructureLayout

@@ -122,7 +122,6 @@ public interface DDMStructureLayoutLocalService
 	 * @return the ddm structure layout that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public DDMStructureLayout deleteDDMStructureLayout(
 		DDMStructureLayout ddmStructureLayout);
 
@@ -148,11 +147,6 @@ public interface DDMStructureLayoutLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #deleteDDMStructureLayout(DDMStructureLayout)}
-	 */
-	@Deprecated
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(DDMStructureLayout structureLayout);
 

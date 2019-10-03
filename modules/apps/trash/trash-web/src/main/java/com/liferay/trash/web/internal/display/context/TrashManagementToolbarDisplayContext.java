@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -115,6 +116,15 @@ public class TrashManagementToolbarDisplayContext
 
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(

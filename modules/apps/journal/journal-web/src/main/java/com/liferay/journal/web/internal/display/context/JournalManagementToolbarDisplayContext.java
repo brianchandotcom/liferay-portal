@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -286,6 +287,15 @@ public class JournalManagementToolbarDisplayContext
 				if (_journalDisplayContext.isNavigationMine()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							ThemeDisplay themeDisplay =
@@ -303,6 +313,15 @@ public class JournalManagementToolbarDisplayContext
 				if (_journalDisplayContext.isNavigationRecent()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(
@@ -313,6 +332,15 @@ public class JournalManagementToolbarDisplayContext
 				if (_journalDisplayContext.isNavigationStructure()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(
@@ -327,6 +355,14 @@ public class JournalManagementToolbarDisplayContext
 				if (status != _journalDisplayContext.getDefaultStatus()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter("status", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(

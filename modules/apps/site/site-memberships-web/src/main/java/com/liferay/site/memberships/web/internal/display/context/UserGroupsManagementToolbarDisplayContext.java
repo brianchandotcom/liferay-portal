@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -227,6 +228,14 @@ public class UserGroupsManagementToolbarDisplayContext
 				if (role != null) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter("roleId", "0");
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(

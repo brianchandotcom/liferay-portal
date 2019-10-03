@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -133,6 +134,17 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					if (active) {
 						add(
 							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										currentURLObj, liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"navigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
 								labelItem.setCloseable(true);
 
 								labelItem.setLabel(
@@ -142,6 +154,17 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 					else {
 						add(
 							labelItem -> {
+								PortletURL removeLabelURL =
+									PortletURLUtil.clone(
+										currentURLObj, liferayPortletResponse);
+
+								removeLabelURL.setParameter(
+									"navigation", (String)null);
+
+								labelItem.putData(
+									"removeLabelURL",
+									removeLabelURL.toString());
+
 								labelItem.setCloseable(true);
 
 								labelItem.setLabel(

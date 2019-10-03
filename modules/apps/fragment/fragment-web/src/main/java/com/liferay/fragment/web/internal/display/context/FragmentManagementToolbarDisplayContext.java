@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -79,6 +80,15 @@ public abstract class FragmentManagementToolbarDisplayContext
 				if (fragmentDisplayContext.isNavigationSections()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(
@@ -89,6 +99,15 @@ public abstract class FragmentManagementToolbarDisplayContext
 				if (fragmentDisplayContext.isNavigationComponents()) {
 					add(
 						labelItem -> {
+							PortletURL removeLabelURL = PortletURLUtil.clone(
+								currentURLObj, liferayPortletResponse);
+
+							removeLabelURL.setParameter(
+								"navigation", (String)null);
+
+							labelItem.putData(
+								"removeLabelURL", removeLabelURL.toString());
+
 							labelItem.setCloseable(true);
 
 							labelItem.setLabel(

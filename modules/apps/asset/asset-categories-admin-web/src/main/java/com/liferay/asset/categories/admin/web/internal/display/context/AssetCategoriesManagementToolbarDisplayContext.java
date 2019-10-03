@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -173,6 +174,15 @@ public class AssetCategoriesManagementToolbarDisplayContext
 			{
 				add(
 					labelItem -> {
+						PortletURL removeLabelURL = PortletURLUtil.clone(
+							currentURLObj, liferayPortletResponse);
+
+						removeLabelURL.setParameter("navigation", (String)null);
+						removeLabelURL.setParameter("categoryId", "0");
+
+						labelItem.putData(
+							"removeLabelURL", removeLabelURL.toString());
+
 						labelItem.setCloseable(true);
 
 						labelItem.setLabel(

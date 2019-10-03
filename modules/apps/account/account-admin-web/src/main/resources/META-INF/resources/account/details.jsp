@@ -43,6 +43,8 @@ renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "ad
 
 		<liferay-frontend:fieldset-group>
 			<liferay-util:include page="/account/account_display_data.jsp" servletContext="<%= application %>" />
+
+			<liferay-util:include page="/account/domains.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 

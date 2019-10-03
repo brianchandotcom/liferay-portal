@@ -18,9 +18,12 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 /**
  * @author Pei-Jung Lan
@@ -48,6 +51,10 @@ public class AccountDisplay {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public List<String> getDomains() {
+		return _domains;
 	}
 
 	public long getLogoId() {
@@ -90,11 +97,16 @@ public class AccountDisplay {
 		_accountId = accountEntry.getAccountEntryId();
 		_active = _isActive(accountEntry);
 		_description = accountEntry.getDescription();
+		_domains = _getDomains(accountEntry);
 		_logoId = accountEntry.getLogoId();
 		_name = accountEntry.getName();
 		_parentAccountName = _getParentAccountName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
+	}
+
+	private List<String> _getDomains(AccountEntry accountEntry) {
+		return StringUtil.split(accountEntry.getDomains());
 	}
 
 	private String _getParentAccountName(AccountEntry accountEntry) {
@@ -156,6 +168,7 @@ public class AccountDisplay {
 	private final long _accountId;
 	private final boolean _active;
 	private final String _description;
+	private final List<String> _domains;
 	private final long _logoId;
 	private final String _name;
 	private final String _parentAccountName;

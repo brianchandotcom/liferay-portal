@@ -8125,19 +8125,26 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article, String portletId,
 		ServiceContext serviceContext) {
 
+		String defaultArticleURL = StringPool.BLANK;
+
+		try {
+			defaultArticleURL = _portal.getControlPanelFullURL(
+				article.getGroupId(), portletId, null);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
 		LiferayPortletRequest liferayPortletRequest =
 			serviceContext.getLiferayPortletRequest();
 
 		if (liferayPortletRequest == null) {
-			return StringPool.BLANK;
+			return defaultArticleURL;
 		}
 
 		String urlViewInContext = StringPool.BLANK;
 
 		try {
-			String defaultArticleURL = _portal.getControlPanelFullURL(
-				article.getGroupId(), portletId, null);
-
 			AssetRendererFactory<JournalArticle> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
 					JournalArticle.class);

@@ -132,13 +132,21 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 				if (active != null) {
 					if (active) {
 						add(
-							labelItem -> labelItem.setLabel(
-								LanguageUtil.get(request, "active")));
+							labelItem -> {
+								labelItem.setCloseable(true);
+
+								labelItem.setLabel(
+									LanguageUtil.get(request, "active"));
+							});
 					}
 					else {
 						add(
-							labelItem -> labelItem.setLabel(
-								LanguageUtil.get(request, "inactive")));
+							labelItem -> {
+								labelItem.setCloseable(true);
+
+								labelItem.setLabel(
+									LanguageUtil.get(request, "inactive"));
+							});
 					}
 				}
 			}

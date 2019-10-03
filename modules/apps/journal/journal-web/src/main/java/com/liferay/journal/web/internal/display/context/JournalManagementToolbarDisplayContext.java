@@ -286,6 +286,8 @@ public class JournalManagementToolbarDisplayContext
 				if (_journalDisplayContext.isNavigationMine()) {
 					add(
 						labelItem -> {
+							labelItem.setCloseable(true);
+
 							ThemeDisplay themeDisplay =
 								(ThemeDisplay)request.getAttribute(
 									WebKeys.THEME_DISPLAY);
@@ -300,24 +302,37 @@ public class JournalManagementToolbarDisplayContext
 
 				if (_journalDisplayContext.isNavigationRecent()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "recent")));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "recent"));
+						});
 				}
 
 				if (_journalDisplayContext.isNavigationStructure()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "structures") + ": " +
-								_journalDisplayContext.getDDMStructureName()));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "structures") + ": " +
+									_journalDisplayContext.
+										getDDMStructureName());
+						});
 				}
 
 				int status = _journalDisplayContext.getStatus();
 
 				if (status != _journalDisplayContext.getDefaultStatus()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "status") + ": " +
-								_getStatusLabel(status)));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "status") + ": " +
+									_getStatusLabel(status));
+						});
 				}
 			}
 		};

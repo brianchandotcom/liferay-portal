@@ -244,8 +244,12 @@ public class UsersManagementToolbarDisplayContext
 			{
 				if (role != null) {
 					add(
-						labelItem -> labelItem.setLabel(
-							role.getTitle(themeDisplay.getLocale())));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								role.getTitle(themeDisplay.getLocale()));
+						});
 				}
 			}
 		};

@@ -114,9 +114,13 @@ public class TrashManagementToolbarDisplayContext
 					!Objects.equals(getNavigation(), "all")) {
 
 					add(
-						labelItem -> labelItem.setLabel(
-							ResourceActionsUtil.getModelResource(
-								themeDisplay.getLocale(), getNavigation())));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								ResourceActionsUtil.getModelResource(
+									themeDisplay.getLocale(), getNavigation()));
+						});
 				}
 			}
 		};

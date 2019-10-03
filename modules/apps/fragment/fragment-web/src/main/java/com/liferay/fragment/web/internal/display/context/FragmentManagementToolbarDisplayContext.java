@@ -78,14 +78,22 @@ public abstract class FragmentManagementToolbarDisplayContext
 			{
 				if (fragmentDisplayContext.isNavigationSections()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "sections")));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "sections"));
+						});
 				}
 
 				if (fragmentDisplayContext.isNavigationComponents()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "components")));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "components"));
+						});
 				}
 			}
 		};

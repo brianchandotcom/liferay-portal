@@ -143,14 +143,22 @@ public class ContributedFragmentManagementToolbarDisplayContext
 			{
 				if (_fragmentDisplayContext.isNavigationSections()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "sections")));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "sections"));
+						});
 				}
 
 				if (_fragmentDisplayContext.isNavigationComponents()) {
 					add(
-						labelItem -> labelItem.setLabel(
-							LanguageUtil.get(request, "components")));
+						labelItem -> {
+							labelItem.setCloseable(true);
+
+							labelItem.setLabel(
+								LanguageUtil.get(request, "components"));
+						});
 				}
 			}
 		};

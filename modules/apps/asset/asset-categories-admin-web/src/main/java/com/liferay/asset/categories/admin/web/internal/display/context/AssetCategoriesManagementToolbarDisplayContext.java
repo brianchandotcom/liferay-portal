@@ -172,8 +172,12 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		return new LabelItemList() {
 			{
 				add(
-					labelItem -> labelItem.setLabel(
-						category.getTitle(themeDisplay.getLocale())));
+					labelItem -> {
+						labelItem.setCloseable(true);
+
+						labelItem.setLabel(
+							category.getTitle(themeDisplay.getLocale()));
+					});
 			}
 		};
 	}

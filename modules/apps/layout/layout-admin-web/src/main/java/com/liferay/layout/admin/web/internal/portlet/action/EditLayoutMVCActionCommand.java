@@ -160,10 +160,14 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "openGraphTitle");
 
+		long openGraphImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "openGraphImageFileEntryId");
+
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
 			canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
-			useCustomTitle, openGraphTitleMap, serviceContext);
+			useCustomTitle, openGraphTitleMap, openGraphImageFileEntryId,
+			serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -177,8 +181,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				!deleteLogo, iconBytes, serviceContext);
 
 			_layoutSEOEntryService.updateLayoutSEOEntry(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				useCustomCanonicalURL, canonicalURLMap, serviceContext);
+				groupId, privateLayout, layoutId, useCustomCanonicalURL,
+				canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
+				useCustomTitle, openGraphTitleMap, openGraphImageFileEntryId,
+				serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

@@ -1,5 +1,16 @@
 definition {
 
+	macro setCategoryId {
+		Variables.assertDefined(parameterList = "${categoryName},${groupId},${vocabularyId}");
+
+		var categoryId = JSONCategoryAPI._getCategoryIdByName(
+			categoryName = "${categoryName}",
+			groupId = "${groupId}",
+			vocabularyId = "${vocabularyId}");
+
+		return "${categoryId}";
+	}
+
 	macro setDescriptionMap {
 		if (isSet(descriptionMap)) {
 			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");

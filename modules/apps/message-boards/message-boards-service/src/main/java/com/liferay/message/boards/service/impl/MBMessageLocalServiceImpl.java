@@ -728,10 +728,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				else if (childrenMessages.size() == 1) {
 					MBMessage childMessage = childrenMessages.get(0);
 
-					childMessage.setParentMessageId(
-						MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
-					childMessage.setRootMessageId(childMessage.getMessageId());
+					long defaultParentMessageId =
+						MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+
 					childMessage.setTreePath(childMessage.buildTreePath());
+					childMessage.setRootMessageId(childMessage.getMessageId());
+					childMessage.setParentMessageId(defaultParentMessageId);
 
 					mbMessagePersistence.update(childMessage);
 

@@ -104,6 +104,9 @@
 		<field name="threadId" type="long" />
 		<field name="rootMessageId" type="long" />
 		<field name="parentMessageId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="subject" type="String">
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />

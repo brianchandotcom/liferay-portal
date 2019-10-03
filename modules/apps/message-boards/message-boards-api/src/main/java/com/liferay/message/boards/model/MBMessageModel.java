@@ -306,6 +306,21 @@ public interface MBMessageModel
 	public void setParentMessageId(long parentMessageId);
 
 	/**
+	 * Returns the tree path of this message-boards message.
+	 *
+	 * @return the tree path of this message-boards message
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this message-boards message.
+	 *
+	 * @param treePath the tree path of this message-boards message
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the subject of this message-boards message.
 	 *
 	 * @return the subject of this message-boards message

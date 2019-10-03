@@ -25,6 +25,7 @@ import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBMessageTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBStatsUserTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadFlagTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
+import com.liferay.message.boards.internal.upgrade.v2_1_0.util.UpgradeTreePath;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -63,6 +64,8 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 					MBMessageTable.class, MBStatsUserTable.class,
 					MBThreadFlagTable.class, MBThreadTable.class
 				}));
+
+		registry.register("2.0.0", "2.1.0", new UpgradeTreePath());
 	}
 
 	@Reference

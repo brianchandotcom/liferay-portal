@@ -168,22 +168,23 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			"resourcePrimKey");
 
 		KBArticleRootResourcePrimKeyUpgradeColumnImpl
-			rootResourcePrimKeyColumn =
+			kbArticleRootResourcePrimKeyUpgradeColumnImpl =
 				new KBArticleRootResourcePrimKeyUpgradeColumnImpl(
 					resourcePrimKeyColumn);
 
-		KBArticleLatestUpgradeColumnImpl latestColumn =
+		KBArticleLatestUpgradeColumnImpl kbArticleLatestUpgradeColumnImpl =
 			new KBArticleLatestUpgradeColumnImpl(
 				kbArticleIdColumn, resourcePrimKeyColumn);
 
-		KBArticleMainUpgradeColumnImpl mainColumn =
+		KBArticleMainUpgradeColumnImpl kbArticleMainUpgradeColumnImpl =
 			new KBArticleMainUpgradeColumnImpl(
 				kbArticleIdColumn, resourcePrimKeyColumn);
 
 		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 			newTableName, tableColumns, kbArticleIdColumn,
-			resourcePrimKeyColumn, rootResourcePrimKeyColumn, latestColumn,
-			mainColumn);
+			resourcePrimKeyColumn,
+			kbArticleRootResourcePrimKeyUpgradeColumnImpl,
+			kbArticleLatestUpgradeColumnImpl, kbArticleMainUpgradeColumnImpl);
 
 		upgradeTable.setCreateSQL(tableSqlCreate);
 

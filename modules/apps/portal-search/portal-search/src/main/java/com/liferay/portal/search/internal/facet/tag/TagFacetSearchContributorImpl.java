@@ -41,12 +41,12 @@ public class TagFacetSearchContributorImpl
 
 		Facet facet = searchRequestBuilder.withSearchContextGet(
 			searchContext -> {
-				TagFacetBuilderImpl tagBuilderImplImpl =
+				TagFacetBuilderImpl tagFacetBuilderImpl =
 					new TagFacetBuilderImpl(searchContext);
 
-				tagFacetBuilderConsumer.accept(tagBuilderImplImpl);
+				tagFacetBuilderConsumer.accept(tagFacetBuilderImpl);
 
-				return tagBuilderImplImpl.build();
+				return tagFacetBuilderImpl.build();
 			});
 
 		searchRequestBuilder.withFacetContext(

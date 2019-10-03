@@ -42,12 +42,12 @@ public class SiteFacetSearchContributorImpl
 
 		Facet facet = searchRequestBuilder.withSearchContextGet(
 			searchContext -> {
-				SiteFacetBuilderImpl siteBuilderImplImpl =
+				SiteFacetBuilderImpl siteFacetBuilderImpl =
 					new SiteFacetBuilderImpl(searchContext);
 
-				siteFacetBuilderConsumer.accept(siteBuilderImplImpl);
+				siteFacetBuilderConsumer.accept(siteFacetBuilderImpl);
 
-				return siteBuilderImplImpl.build();
+				return siteFacetBuilderImpl.build();
 			});
 
 		searchRequestBuilder.withFacetContext(

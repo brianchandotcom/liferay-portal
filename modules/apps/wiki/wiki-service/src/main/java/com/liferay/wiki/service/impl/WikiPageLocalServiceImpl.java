@@ -1238,14 +1238,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				}
 			}
 			else {
-				WikiPageImpl newPage = new WikiPageImpl();
+				WikiPageImpl wikiPageImpl = new WikiPageImpl();
 
-				newPage.setNew(true);
-				newPage.setNodeId(nodeId);
-				newPage.setTitle(curTitle);
+				wikiPageImpl.setNew(true);
+				wikiPageImpl.setNodeId(nodeId);
+				wikiPageImpl.setTitle(curTitle);
 
 				if (!pages.containsKey(curTitle)) {
-					pages.put(curTitle, newPage);
+					pages.put(curTitle, wikiPageImpl);
 				}
 			}
 		}

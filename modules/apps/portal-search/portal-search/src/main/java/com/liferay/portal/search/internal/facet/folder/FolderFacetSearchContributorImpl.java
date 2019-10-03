@@ -42,12 +42,12 @@ public class FolderFacetSearchContributorImpl
 
 		Facet facet = searchRequestBuilder.withSearchContextGet(
 			searchContext -> {
-				FolderFacetBuilderImpl folderBuilderImplImpl =
+				FolderFacetBuilderImpl folderFacetBuilderImpl =
 					new FolderFacetBuilderImpl(searchContext);
 
-				folderFacetBuilderConsumer.accept(folderBuilderImplImpl);
+				folderFacetBuilderConsumer.accept(folderFacetBuilderImpl);
 
-				return folderBuilderImplImpl.build();
+				return folderFacetBuilderImpl.build();
 			});
 
 		searchRequestBuilder.withFacetContext(

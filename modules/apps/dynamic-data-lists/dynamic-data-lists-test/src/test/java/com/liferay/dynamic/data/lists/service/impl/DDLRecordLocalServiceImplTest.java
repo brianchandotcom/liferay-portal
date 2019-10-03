@@ -201,7 +201,7 @@ public class DDLRecordLocalServiceImplTest {
 
 		fieldsMap.put(fieldName, (Serializable)fieldValues);
 
-		Fields fields = _recordLocalServiceImpl.toFields(
+		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);
 
 		Field field = fields.get(fieldName);
@@ -216,7 +216,7 @@ public class DDLRecordLocalServiceImplTest {
 
 		fieldsMap.put(fieldName, (Serializable)fieldValues);
 
-		Fields fields = _recordLocalServiceImpl.toFields(
+		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);
 
 		Field field = fields.get(fieldName);
@@ -232,7 +232,7 @@ public class DDLRecordLocalServiceImplTest {
 
 		fieldsMap.put(fieldName, fieldValue);
 
-		Fields fields = _recordLocalServiceImpl.toFields(
+		Fields fields = _ddlRecordLocalServiceImpl.toFields(
 			0, fieldsMap, LocaleUtil.US, LocaleUtil.US);
 
 		return fields.get(fieldName);
@@ -268,7 +268,7 @@ public class DDLRecordLocalServiceImplTest {
 		return fieldValuesList;
 	}
 
-	private final DDLRecordLocalServiceImpl _recordLocalServiceImpl =
+	private final DDLRecordLocalServiceImpl _ddlRecordLocalServiceImpl =
 		new DDLRecordLocalServiceImpl();
 
 }

@@ -52,7 +52,7 @@ public class GetSnapshotsRequestExecutorImplTest {
 		getSnapshotsRequest.setSnapshotNames("snapshot1", "snapshot2");
 		getSnapshotsRequest.setVerbose(true);
 
-		GetSnapshotsRequestExecutorImpl getSnapshotRepositoriesRequestImpl =
+		GetSnapshotsRequestExecutorImpl getSnapshotsRequestExecutorImpl =
 			new GetSnapshotsRequestExecutorImpl() {
 				{
 					setElasticsearchClientResolver(_elasticsearchFixture);
@@ -60,7 +60,7 @@ public class GetSnapshotsRequestExecutorImplTest {
 			};
 
 		GetSnapshotsRequestBuilder getSnapshotsRequestBuilder =
-			getSnapshotRepositoriesRequestImpl.createGetSnapshotsRequest(
+			getSnapshotsRequestExecutorImpl.createGetSnapshotsRequest(
 				getSnapshotsRequest);
 
 		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest

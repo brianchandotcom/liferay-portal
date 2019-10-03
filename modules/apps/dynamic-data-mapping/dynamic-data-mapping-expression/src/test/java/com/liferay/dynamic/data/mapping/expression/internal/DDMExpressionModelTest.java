@@ -38,10 +38,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testAndExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"true && (2 != 3)");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(AndExpression.class, expressionModel.getClass());
 
@@ -86,10 +86,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testArithmeticExpression() throws Exception {
-		DDMExpressionImpl<Double> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Double> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"a + b * c - d");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(
 			ArithmeticExpression.class, expressionModel.getClass());
@@ -151,10 +151,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testFunctionCallExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"date()");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(
 			FunctionCallExpression.class, expressionModel.getClass());
@@ -168,10 +168,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testGreaterThanExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"(2 * 5) > 3");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(
 			ComparisonExpression.class, expressionModel.getClass());
@@ -225,10 +225,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testLessThanEqualExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(
 			ComparisonExpression.class, expressionModel.getClass());
@@ -353,10 +353,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testNotExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"not false");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(NotExpression.class, expressionModel.getClass());
 
@@ -373,10 +373,10 @@ public class DDMExpressionModelTest {
 
 	@Test
 	public void testOrExpression() throws Exception {
-		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
+		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
 			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))");
 
-		Expression expressionModel = expression.getModel();
+		Expression expressionModel = ddmExpressionImpl.getModel();
 
 		Assert.assertEquals(OrExpression.class, expressionModel.getClass());
 

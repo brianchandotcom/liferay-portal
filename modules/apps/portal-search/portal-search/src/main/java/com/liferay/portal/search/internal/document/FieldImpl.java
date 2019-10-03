@@ -27,9 +27,9 @@ import java.util.List;
  */
 public class FieldImpl implements Field {
 
-	public FieldImpl(FieldImpl field) {
-		_name = field._name;
-		_values = new ArrayList(field._values);
+	public FieldImpl(FieldImpl fieldImpl) {
+		_name = fieldImpl._name;
+		_values = new ArrayList(fieldImpl._values);
 	}
 
 	public FieldImpl(String name, Collection<Object> values) {

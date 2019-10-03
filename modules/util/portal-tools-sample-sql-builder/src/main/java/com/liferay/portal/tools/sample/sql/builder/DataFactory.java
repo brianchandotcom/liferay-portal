@@ -348,7 +348,7 @@ public class DataFactory {
 		String defaultAssetPublisherPreference = StringUtil.read(
 			getResourceInputStream("default_asset_publisher_preference.xml"));
 
-		_defaultAssetPublisherPortletPreference =
+		_defaultAssetPublisherPortletPreferencesImpl =
 			(PortletPreferencesImpl)_portletPreferencesFactory.fromDefaultXML(
 				defaultAssetPublisherPreference);
 
@@ -2482,7 +2482,8 @@ public class DataFactory {
 			groupId, objectValuePair.getValue());
 
 		PortletPreferences jxPortletPreferences =
-			(PortletPreferences)_defaultAssetPublisherPortletPreference.clone();
+			(PortletPreferences)
+				_defaultAssetPublisherPortletPreferencesImpl.clone();
 
 		jxPortletPreferences.setValue("queryAndOperator0", "false");
 		jxPortletPreferences.setValue("queryContains0", "true");
@@ -3912,7 +3913,7 @@ public class DataFactory {
 	private final SimpleCounter _counter;
 	private final Map<String, Writer> _csvWriters = new HashMap<>();
 	private final PortletPreferencesImpl
-		_defaultAssetPublisherPortletPreference;
+		_defaultAssetPublisherPortletPreferencesImpl;
 	private AssetVocabularyModel _defaultAssetVocabularyModel;
 	private DDMStructureLayoutModel _defaultDLDDMStructureLayoutModel;
 	private DDMStructureModel _defaultDLDDMStructureModel;

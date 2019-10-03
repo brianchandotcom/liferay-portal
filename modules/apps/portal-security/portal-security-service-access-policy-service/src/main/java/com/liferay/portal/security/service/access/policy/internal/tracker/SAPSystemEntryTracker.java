@@ -36,9 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class SAPSystemEntryTracker {
 
 	public static boolean isSystemEntry(String name) {
-		Collection<Set<String>> sapSystemValues = _sapSystemMap.values();
-
-		for (Set<String> values : sapSystemValues) {
+		for (Set<String> values : _sapSystemMap.values()) {
 			if (values.contains(name)) {
 				return true;
 			}

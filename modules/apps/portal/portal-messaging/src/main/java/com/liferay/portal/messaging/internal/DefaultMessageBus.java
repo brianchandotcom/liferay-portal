@@ -480,8 +480,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		Destination destination, Map<String, Object> properties) {
 
 		_removeDestination(destination.getName());
-
-		destination.destroy();
 	}
 
 	protected synchronized void unregisterDestinationEventListener(

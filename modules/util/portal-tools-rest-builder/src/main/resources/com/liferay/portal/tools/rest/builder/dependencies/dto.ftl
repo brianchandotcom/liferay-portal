@@ -32,6 +32,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
@@ -158,6 +159,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				example = "${propertySchema.example}"
 			</#if>
 		)
+
+		<#if !["Boolean", "Boolean[]", "Date", "Date[]", "Double", "Double[]", "Integer", "Integer[]", "Long", "Long[]", "String", "String[]"]?seq_contains(propertyType)>
+			@Valid
+		</#if>
 
 		<#assign capitalizedPropertyName = propertyName?cap_first />
 

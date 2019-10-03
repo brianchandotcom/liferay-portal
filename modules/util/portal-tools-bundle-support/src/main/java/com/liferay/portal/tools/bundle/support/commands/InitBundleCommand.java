@@ -71,13 +71,13 @@ public class InitBundleCommand extends DownloadCommand {
 	}
 
 	public File getConfigsDir() {
-		File file = null;
+		File configsDir = null;
 
 		if (!_configsDirs.isEmpty()) {
-			file = _configsDirs.get(_configsDirs.size() - 1);
+			configsDir = _configsDirs.get(_configsDirs.size() - 1);
 		}
 
-		return file;
+		return configsDir;
 	}
 
 	public List<File> getConfigsDirs() {

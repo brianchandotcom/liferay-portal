@@ -151,18 +151,18 @@ public class BundleSupportCommandsTest {
 
 		_createFile(prodConfigsDir, "prod-configs.properties");
 
-		File devopsDir = temporaryFolder.newFolder("devops");
+		File devOpsDir = temporaryFolder.newFolder("devops");
 
-		File commonDevopsDir = _createDirectory(devopsDir, "common");
+		File commonDevOpsDir = _createDirectory(devOpsDir, "common");
 
-		_createFile(commonDevopsDir, "common-devops.properties");
+		_createFile(commonDevOpsDir, "common-devops.properties");
 
-		File prodDevopsDir = _createDirectory(devopsDir, "prod");
+		File prodDevOpsDir = _createDirectory(devOpsDir, "prod");
 
-		_createFile(prodDevopsDir, "prod-devops.properties");
+		_createFile(prodDevOpsDir, "prod-devops.properties");
 
 		copyConfigs(
-			Arrays.asList(configsDir, devopsDir), "prod", liferayHomeDir);
+			Arrays.asList(configsDir, devOpsDir), "prod", liferayHomeDir);
 
 		File deployedCommonConfigsFile = new File(
 			liferayHomeDir, "common-configs.properties");
@@ -174,15 +174,15 @@ public class BundleSupportCommandsTest {
 
 		Assert.assertTrue(deployedProdConfigsFile.exists());
 
-		File deployedCommonDevopsFile = new File(
+		File deployedCommonDevOpsFile = new File(
 			liferayHomeDir, "common-devops.properties");
 
-		Assert.assertTrue(deployedCommonDevopsFile.exists());
+		Assert.assertTrue(deployedCommonDevOpsFile.exists());
 
-		File deployedProdDevopFile = new File(
+		File deployedProdDevOpsFile = new File(
 			liferayHomeDir, "prod-devops.properties");
 
-		Assert.assertTrue(deployedProdDevopFile.exists());
+		Assert.assertTrue(deployedProdDevOpsFile.exists());
 	}
 
 	@Test

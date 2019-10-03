@@ -19,14 +19,15 @@
 <%
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
 
-SoyContext soyContext = contentPageEditorDisplayContext.getEditorSoyContext();
+SoyContext soyContext = contentPageEditorDisplayContext.getEditorReactContext();
 
 String discardDraftURL = (String)soyContext.get("discardDraftURL");
+String portletNamespace = (String)soyContext.get("portletNamespace");
 String publishURL = (String)soyContext.get("publishURL");
 Boolean singleSegmentsExperienceMode = (Boolean)soyContext.get("singleSegmentsExperienceMode");
 %>
 
-<div class="fragments-editor-toolbar management-bar navbar navbar-expand-md" id="<portlet:namespace />pageEditorToolbar">
+<div class="fragments-editor-toolbar management-bar navbar navbar-expand-md" id="<%= portletNamespace %>pageEditorToolbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="navbar-nav">
 		</ul>

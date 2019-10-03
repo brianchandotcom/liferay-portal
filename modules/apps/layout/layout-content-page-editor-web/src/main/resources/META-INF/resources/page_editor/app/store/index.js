@@ -14,6 +14,23 @@
 
 import React from 'react';
 
-export default function PageEditor(data) {
-	return <pre>{JSON.stringify(data, null, 2)}</pre>;
+const INITIAL_STATE = {
+	/**
+	 * Example state value.
+	 */
+	example: 'value'
+};
+
+export const StoreContext = React.createContext(INITIAL_STATE);
+
+export function getInitialState(data = {}) {
+	// TODO: Transform/normalize.
+	const state = {
+		data
+	};
+
+	return {
+		...INITIAL_STATE,
+		...state
+	};
 }

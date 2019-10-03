@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging;
+package com.liferay.portal.messaging.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -22,6 +22,11 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseDestination;
+import com.liferay.portal.kernel.messaging.DestinationStatistics;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageRunnable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -47,10 +52,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- *   		com.liferay.portal.messaging.internal.BaseAsyncDestination}
  */
-@Deprecated
 public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override

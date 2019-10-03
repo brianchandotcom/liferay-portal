@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging;
+package com.liferay.portal.messaging.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.messaging.MessageRunnable;
 
 import java.util.Set;
 
@@ -30,10 +34,7 @@ import java.util.Set;
  * </p>
  *
  * @author Michael C. Han
- * @deprecated As of Mueller (7.2.x), replaced by {@link
- * 			com.liferay.portal.messaging.internal.ParallelDestination}
  */
-@Deprecated
 public class ParallelDestination extends BaseAsyncDestination {
 
 	@Override

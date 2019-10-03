@@ -17,7 +17,6 @@ package com.liferay.portal.security.service.access.policy.internal.tracker;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.security.service.access.policy.util.SAPSystemEntry;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class SAPSystemEntryTracker {
 
 	public static boolean isSystemEntry(String name) {
-		for (Set<String> values : _sapSystemMap.values()) {
+		for (Set<String> values : _sapSystemEntryMap.values()) {
 			if (values.contains(name)) {
 				return true;
 			}
@@ -52,7 +51,7 @@ public class SAPSystemEntryTracker {
 	public void addSAPSystemEntry(
 		ServiceReference<SAPSystemEntry> serviceReference) {
 
-		_sapSystemMap.put(
+		_sapSystemEntryMap.put(
 			serviceReference,
 			new HashSet<>(
 				StringPlus.asList(
@@ -62,7 +61,7 @@ public class SAPSystemEntryTracker {
 	public void removeSAPSystemEntry(
 		ServiceReference<SAPSystemEntry> serviceReference) {
 
-		_sapSystemMap.remove(serviceReference);
+		_sapSystemEntryMap.remove(serviceReference);
 	}
 
 	public void updateSAPSystemEntry(
@@ -74,6 +73,6 @@ public class SAPSystemEntryTracker {
 	}
 
 	private static final Map<ServiceReference<SAPSystemEntry>, Set<String>>
-		_sapSystemMap = new ConcurrentHashMap<>();
+		_sapSystemEntryMap = new ConcurrentHashMap<>();
 
 }

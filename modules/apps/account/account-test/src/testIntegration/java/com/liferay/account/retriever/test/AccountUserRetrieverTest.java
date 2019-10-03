@@ -90,14 +90,6 @@ public class AccountUserRetrieverTest {
 	@Test
 	public void testSearchAccountUsers() throws Exception {
 
-		// Add a user that is not part of the account
-
-		_users.add(UserTestUtil.addUser());
-
-		// Assert that null keyword search does not hit non-account users
-
-		_assertSearch(null, 0);
-
 		// Add a user that is part of the account but will not hit a keyword
 		// search
 
@@ -132,7 +124,19 @@ public class AccountUserRetrieverTest {
 	}
 
 	@Test
-	public void testSearchAccountUsersPaginated() throws Exception {
+	public void testSearchAccountUsersWithNoAccountUsers() throws Exception {
+
+		// Add a user that is not part of the account
+
+		_users.add(UserTestUtil.addUser());
+
+		// Assert that null keyword search does not hit non-account users
+
+		_assertSearch(null, 0);
+	}
+
+	@Test
+	public void testSearchAccountUsersWithPagination() throws Exception {
 		String searchTerm = RandomTestUtil.randomString();
 
 		_users.add(UserTestUtil.addUser(searchTerm + 1, null));

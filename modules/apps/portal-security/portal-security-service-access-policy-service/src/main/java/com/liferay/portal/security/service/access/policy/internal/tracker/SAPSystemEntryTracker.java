@@ -53,10 +53,10 @@ public class SAPSystemEntryTracker {
 	public void addSAPSystemEntry(
 		ServiceReference<SAPSystemEntry> serviceReference) {
 
-		List<String> values = StringPlus.asList(
-			serviceReference.getProperty("sap.system.entry"));
-
-		_sapSystemMap.put(serviceReference, values);
+		_sapSystemMap.put(
+			serviceReference,
+			StringPlus.asList(
+				serviceReference.getProperty("sap.system.entry")));
 	}
 
 	public void removeSAPSystemEntry(

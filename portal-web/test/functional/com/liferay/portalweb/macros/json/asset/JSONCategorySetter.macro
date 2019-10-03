@@ -32,8 +32,7 @@ definition {
 			var parentCategoryId = JSONCategoryAPI._getCategoryIdByName(
 				categoryName = "${parentCategoryName}",
 				groupId = "${groupId}",
-				vocabularyId = "${vocabularyId}"
-			);
+				vocabularyId = "${vocabularyId}");
 		}
 
 		return "${parentCategoryId}";
@@ -60,8 +59,7 @@ definition {
 
 		var vocabularyId = JSONCategoryAPI._getVocabularyIdByName(
 			groupId = "${groupId}",
-			vocabularyName = "${vocabularyName}"
-		);
+			vocabularyName = "${vocabularyName}");
 
 		return "${vocabularyId}";
 	}

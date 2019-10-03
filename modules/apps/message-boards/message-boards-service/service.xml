@@ -250,6 +250,7 @@
 		<column name="classPK" type="long" />
 		<column name="categoryId" type="long" />
 		<column name="threadId" type="long" />
+		<column name="treePath" type="String" />
 		<column filter-primary="true" name="rootMessageId" type="long" />
 		<column name="parentMessageId" type="long" />
 		<column name="subject" type="String" uad-nonanonymizable="true" />

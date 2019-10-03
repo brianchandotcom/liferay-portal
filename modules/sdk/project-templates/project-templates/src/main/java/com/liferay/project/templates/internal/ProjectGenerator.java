@@ -38,7 +38,6 @@ import java.util.ServiceLoader;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 import org.apache.maven.archetype.ArchetypeManager;
-import org.apache.maven.archetype.common.ArchetypeArtifactManager;
 
 /**
  * @author Gregory Amerson
@@ -147,17 +146,8 @@ public class ProjectGenerator {
 
 		Archetyper archetyper = new Archetyper(archetypesDirs);
 
-		ArchetypeArtifactManager archetypeArtifactManager =
-			archetyper.createArchetypeArtifactManager();
-
 		ProjectTemplateCustomizer projectTemplateCustomizer =
-			_getProjectTemplateCustomizer(
-				template,
-				archetypeArtifactManager.getArchetypeFile(
-					archetypeGenerationRequest.getArchetypeGroupId(),
-					archetypeGenerationRequest.getArchetypeArtifactId(),
-					archetypeGenerationRequest.getArchetypeVersion(), null,
-					null, null));
+			_getProjectTemplateCustomizer(template);
 
 		if (projectTemplateCustomizer != null) {
 			projectTemplateCustomizer.onBeforeGenerateProject(
@@ -190,7 +180,7 @@ public class ProjectGenerator {
 	}
 
 	private ProjectTemplateCustomizer _getProjectTemplateCustomizer(
-			String templateName, File archetypeFile)
+			String templateName)
 		throws MalformedURLException {
 
 		ServiceLoader<ProjectTemplateCustomizer> serviceLoader =

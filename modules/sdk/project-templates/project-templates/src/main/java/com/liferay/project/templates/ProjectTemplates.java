@@ -199,11 +199,10 @@ public class ProjectTemplates {
 		jCommander.parseWithoutValidation(args);
 
 		String template = projectTemplatesArgs.getTemplate();
-		
+
 		if (template.equals("portlet")) {
-			
 			template = "mvc-portlet";
-			
+
 			projectTemplatesArgs.setTemplate(template);
 		}
 
@@ -251,13 +250,12 @@ public class ProjectTemplates {
 			}
 
 			jCommander.parse(args);
-			
+
 			template = projectTemplatesArgs.getTemplate();
-			
+
 			if (template.equals("portlet")) {
-				
 				template = "mvc-portlet";
-				
+
 				projectTemplatesArgs.setTemplate(template);
 			}
 

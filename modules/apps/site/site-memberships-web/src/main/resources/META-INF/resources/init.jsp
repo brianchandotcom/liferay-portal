@@ -101,6 +101,7 @@ page import="com.liferay.site.memberships.web.internal.servlet.taglib.clay.ViewM
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.OrganizationActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
+page import="com.liferay.taglib.util.LexiconUtil" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
 
 <%@ page import="java.util.ArrayList" %><%@

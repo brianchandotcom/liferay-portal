@@ -27,8 +27,12 @@ import com.liferay.project.templates.extensions.util.Validator;
 import com.liferay.project.templates.extensions.util.WorkspaceUtil;
 import com.liferay.project.templates.internal.ProjectGenerator;
 
+import java.beans.Statement;
+
 import java.io.File;
 import java.io.InputStream;
+
+import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -268,57 +272,110 @@ public class ProjectTemplates {
 	public ProjectTemplates(ProjectTemplatesArgs projectTemplatesArgs)
 		throws Exception {
 
-		_checkArgs(projectTemplatesArgs);
+		this(projectTemplatesArgs, null);
+	}
 
-		File destinationDir = projectTemplatesArgs.getDestinationDir();
+	public ProjectTemplates(
+			ProjectTemplatesArgs projectTemplatesArgs,
+			Map<String, String> propertiesMap)
+		throws Exception {
 
-		ProjectGenerator projectGenerator = new ProjectGenerator();
+		ProjectTemplatesArgsExt projectTemplatesArgsExt =
+			projectTemplatesArgs.getProjectTemplatesArgsExt();
 
-		ArchetypeGenerationResult archetypeGenerationResult =
-			projectGenerator.generateProject(
-				projectTemplatesArgs, destinationDir);
+		Thread thread = Thread.currentThread();
 
-		if (archetypeGenerationResult != null) {
-			Exception cause = archetypeGenerationResult.getCause();
+		ClassLoader oldContextClassLoader = thread.getContextClassLoader();
 
-			if (cause != null) {
-				throw cause;
+		boolean changedClassLoader = false;
+
+		try {
+			if (projectTemplatesArgsExt == null) {
+				File templateFile = ProjectTemplatesUtil.getTemplateFile(
+					projectTemplatesArgs);
+
+				URI uri = templateFile.toURI();
+
+				changedClassLoader = true;
+				thread.setContextClassLoader(
+					new URLClassLoader(new URL[] {uri.toURL()}));
+
+				projectTemplatesArgsExt = _getProjectTemplateArgsExt(
+					projectTemplatesArgs.getTemplate(), templateFile);
+
+				projectTemplatesArgs.setProjectTemplatesArgsExt(
+					projectTemplatesArgsExt);
+			}
+
+			if (propertiesMap != null) {
+				for (Map.Entry<String, String> entry :
+						propertiesMap.entrySet()) {
+
+					_setIfPresent(
+						projectTemplatesArgsExt, entry.getKey(),
+						entry.getValue());
+				}
+			}
+
+			_checkArgs(projectTemplatesArgs);
+
+			File destinationDir = projectTemplatesArgs.getDestinationDir();
+
+			ProjectGenerator projectGenerator = new ProjectGenerator();
+
+			ArchetypeGenerationResult archetypeGenerationResult =
+				projectGenerator.generateProject(
+					projectTemplatesArgs, destinationDir);
+
+			if (archetypeGenerationResult != null) {
+				Exception cause = archetypeGenerationResult.getCause();
+
+				if (cause != null) {
+					throw cause;
+				}
+			}
+
+			Path templateDirPath = destinationDir.toPath();
+
+			templateDirPath = templateDirPath.resolve(
+				projectTemplatesArgs.getName());
+
+			if (WorkspaceUtil.isWorkspace(destinationDir)) {
+				Files.deleteIfExists(
+					templateDirPath.resolve("settings.gradle"));
+			}
+			else {
+				if (projectTemplatesArgs.isGradle()) {
+					FileUtil.extractDirectory(
+						"gradle-wrapper", templateDirPath);
+
+					FileUtil.setPosixFilePermissions(
+						templateDirPath.resolve("gradlew"),
+						_wrapperPosixFilePermissions);
+				}
+
+				if (projectTemplatesArgs.isMaven()) {
+					FileUtil.extractDirectory("maven-wrapper", templateDirPath);
+
+					FileUtil.setPosixFilePermissions(
+						templateDirPath.resolve("mvnw"),
+						_wrapperPosixFilePermissions);
+				}
+			}
+
+			if (!projectTemplatesArgs.isGradle()) {
+				FileUtil.deleteFiles(
+					templateDirPath, "build.gradle", "settings.gradle");
+			}
+
+			if (!projectTemplatesArgs.isMaven()) {
+				FileUtil.deleteFiles(templateDirPath, "pom.xml");
 			}
 		}
-
-		Path templateDirPath = destinationDir.toPath();
-
-		templateDirPath = templateDirPath.resolve(
-			projectTemplatesArgs.getName());
-
-		if (WorkspaceUtil.isWorkspace(destinationDir)) {
-			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
-		}
-		else {
-			if (projectTemplatesArgs.isGradle()) {
-				FileUtil.extractDirectory("gradle-wrapper", templateDirPath);
-
-				FileUtil.setPosixFilePermissions(
-					templateDirPath.resolve("gradlew"),
-					_wrapperPosixFilePermissions);
+		finally {
+			if (changedClassLoader) {
+				thread.setContextClassLoader(oldContextClassLoader);
 			}
-
-			if (projectTemplatesArgs.isMaven()) {
-				FileUtil.extractDirectory("maven-wrapper", templateDirPath);
-
-				FileUtil.setPosixFilePermissions(
-					templateDirPath.resolve("mvnw"),
-					_wrapperPosixFilePermissions);
-			}
-		}
-
-		if (!projectTemplatesArgs.isGradle()) {
-			FileUtil.deleteFiles(
-				templateDirPath, "build.gradle", "settings.gradle");
-		}
-
-		if (!projectTemplatesArgs.isMaven()) {
-			FileUtil.deleteFiles(templateDirPath, "pom.xml");
 		}
 	}
 
@@ -494,6 +551,43 @@ public class ProjectTemplates {
 		name = name.replace(' ', '.');
 
 		return name.toLowerCase();
+	}
+
+	private boolean _hasMethod(Object object, String methodName) {
+		if (object != null) {
+			Class<?> clazz = object.getClass();
+			Method method = null;
+
+			try {
+				method = clazz.getMethod(
+					methodName, new Class<?>[] {String.class});
+			}
+			catch (Exception e) {
+				return false;
+			}
+
+			if (method != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
+	}
+
+	private void _setIfPresent(Object object, String methodName, String value) {
+		if (_hasMethod(object, methodName)) {
+			Statement statement = new Statement(
+				object, methodName, new Object[] {value});
+
+			try {
+				statement.execute();
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	private static final Set<PosixFilePermission> _wrapperPosixFilePermissions =

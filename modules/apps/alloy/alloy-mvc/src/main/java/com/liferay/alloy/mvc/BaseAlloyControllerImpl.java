@@ -30,11 +30,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.DestinationFactoryUtil;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.SerialDestination;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -912,13 +913,14 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			}
 		}
 		else {
-			SerialDestination serialDestination = new SerialDestination();
+			DestinationConfiguration destinationConfiguration =
+				new DestinationConfiguration(
+					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+					destinationName);
 
-			serialDestination.setName(destinationName);
-
-			serialDestination.afterPropertiesSet();
-
-			serialDestination.open();
+			Destination serialDestination =
+				DestinationFactoryUtil.createDestination(
+					destinationConfiguration);
 
 			destinationServiceRegistrations.put(
 				serialDestination.getName(),

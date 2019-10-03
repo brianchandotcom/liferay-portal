@@ -47,4 +47,5 @@ public class ContentRepositoryEntryServiceImpl
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.content.repository.service.ContentRepositoryEntryServiceUtil</code> to access the content repository entry remote service.
 	 */
+
 }

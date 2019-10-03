@@ -50,4 +50,28 @@ definition {
 			vocabularyName = "Vocabulary Name");
 	}
 
+	@priority = "4"
+	test EditCategory {
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
+
+		Category.addCP(
+			categoryName = "Category Name",
+			vocabularyName = "Vocabulary Name");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.editCP(
+			categoryName = "Category Name",
+			categoryNameEdit = "Category Name Edit",
+			vocabularyName = "Vocabulary Name");
+
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+		Category.viewCP(
+			categoryName = "Category Name Edit",
+			vocabularyName = "Vocabulary Name");
+	}
+
 }

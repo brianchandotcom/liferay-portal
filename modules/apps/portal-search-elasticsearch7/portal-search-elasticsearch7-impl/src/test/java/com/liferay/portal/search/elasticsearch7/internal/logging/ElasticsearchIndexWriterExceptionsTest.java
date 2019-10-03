@@ -28,9 +28,7 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.elasticsearch.index.IndexNotFoundException;
-import org.elasticsearch.index.engine.DocumentMissingException;
-import org.elasticsearch.index.mapper.MapperParsingException;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,9 +42,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testAddDocument() {
-		expectedException.expect(MapperParsingException.class);
+		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage(
-			"failed to parse field [expirationDate] of type [date]");
+			"type=mapper_parsing_exception, reason=failed to parse field " +
+				"[expirationDate] of type [date]");
 
 		addDocument(
 			DocumentCreationHelpers.singleKeyword(
@@ -77,8 +76,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testCommit() {
-		expectedException.expect(IndexNotFoundException.class);
-		expectedException.expectMessage("no such index");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=index_not_found_exception, reason=no such index");
 
 		SearchContext searchContext = new SearchContext();
 
@@ -95,8 +95,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testDeleteDocument() {
-		expectedException.expect(IndexNotFoundException.class);
-		expectedException.expectMessage("no such index");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=index_not_found_exception, reason=no such index");
 
 		SearchContext searchContext = new SearchContext();
 
@@ -135,8 +136,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testDeleteEntityDocuments() {
-		expectedException.expect(IndexNotFoundException.class);
-		expectedException.expectMessage("no such index");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=index_not_found_exception, reason=no such index");
 
 		SearchContext searchContext = new SearchContext();
 
@@ -153,8 +155,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testPartiallyUpdateDocument() {
-		expectedException.expect(DocumentMissingException.class);
-		expectedException.expectMessage("document missing");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=document_missing_exception, reason=[LiferayDocumentType]");
 
 		Document document = new DocumentImpl();
 

@@ -14,10 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 
@@ -79,39 +76,6 @@ public class RemoteElasticsearchConnectionTest {
 		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 
 		assertNetworkHostAddress("127.0.0.1", 9999);
-	}
-
-	@Test
-	public void testModifyConnectedWithInvalidPropertiesThenValidProperties() {
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put("operationMode", OperationMode.REMOTE.name());
-
-		_remoteElasticsearchConnection.activate(properties);
-
-		_remoteElasticsearchConnection.connect();
-
-		properties.put(
-			"additionalConfigurations",
-			StringBundler.concat(
-				StringPool.OPEN_CURLY_BRACE, RandomTestUtil.randomString(),
-				StringPool.CLOSE_CURLY_BRACE));
-
-		try {
-			_remoteElasticsearchConnection.modified(properties);
-
-			Assert.fail();
-		}
-		catch (IllegalArgumentException iae) {
-		}
-
-		Assert.assertFalse(_remoteElasticsearchConnection.isConnected());
-
-		properties.replace("additionalConfigurations", StringPool.BLANK);
-
-		_remoteElasticsearchConnection.modified(properties);
-
-		Assert.assertTrue(_remoteElasticsearchConnection.isConnected());
 	}
 
 	@Test

@@ -22,9 +22,9 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 
 import java.util.Collections;
 
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.indices.InvalidIndexNameException;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -66,7 +66,7 @@ public class CompanyIdIndexNameBuilderTest {
 		assertIndexNamePrefix(StringPool.BLANK, StringPool.BLANK);
 	}
 
-	@Test(expected = InvalidIndexNameException.class)
+	@Test(expected = ElasticsearchStatusException.class)
 	public void testIndexNamePrefixInvalidIndexName() throws Exception {
 		createIndices(StringPool.STAR, 0);
 	}

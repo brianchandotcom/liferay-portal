@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
@@ -30,6 +33,8 @@ public class StatsClusterRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpJSONFactoryUtil();
+
 		_elasticsearchFixture = new ElasticsearchFixture(
 			StatsClusterRequestExecutorTest.class.getSimpleName());
 
@@ -44,12 +49,14 @@ public class StatsClusterRequestExecutorTest {
 	@Test
 	public void testClusterRequestExecution() {
 		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
-			new String[] {_INDEX_NAME});
+			new String[] {_NODE_ID});
 
 		StatsClusterRequestExecutorImpl statsClusterRequestExecutorImpl =
 			new StatsClusterRequestExecutorImpl() {
 				{
 					setElasticsearchClientResolver(_elasticsearchFixture);
+					setClusterHealthStatusTranslator(
+						new ClusterHealthStatusTranslatorImpl());
 				}
 			};
 
@@ -57,10 +64,19 @@ public class StatsClusterRequestExecutorTest {
 			statsClusterRequestExecutorImpl.execute(statsClusterRequest);
 
 		Assert.assertNotNull(statsClusterResponse);
+
+		Assert.assertNotNull(statsClusterResponse.getClusterHealthStatus());
 	}
 
-	private static final String _INDEX_NAME = "test_request_index";
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(_jsonFactory);
+	}
+
+	private static final String _NODE_ID = "liferay";
 
 	private ElasticsearchFixture _elasticsearchFixture;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

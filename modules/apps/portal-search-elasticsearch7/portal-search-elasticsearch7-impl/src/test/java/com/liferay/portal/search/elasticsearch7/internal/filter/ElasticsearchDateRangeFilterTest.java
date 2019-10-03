@@ -18,7 +18,7 @@ import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchInd
 import com.liferay.portal.search.test.util.filter.BaseDateRangeFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class ElasticsearchDateRangeFilterTest
 
 	@Test
 	public void testMalformed() throws Exception {
-		expectedException.expect(SearchPhaseExecutionException.class);
+		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage("all shards failed");
 
 		addDocument(getDate(2000, 11, 22));
@@ -67,7 +67,7 @@ public class ElasticsearchDateRangeFilterTest
 
 	@Test
 	public void testMalformedMultiple() throws Exception {
-		expectedException.expect(SearchPhaseExecutionException.class);
+		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage("all shards failed");
 
 		addDocument(getDate(2000, 11, 22));

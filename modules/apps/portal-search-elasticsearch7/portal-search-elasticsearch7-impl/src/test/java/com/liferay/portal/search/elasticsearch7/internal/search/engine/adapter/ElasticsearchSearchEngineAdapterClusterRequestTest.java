@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
@@ -51,6 +52,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpJSONFactoryUtil();
+
 		_elasticsearchFixture = new ElasticsearchFixture(getClass());
 
 		_elasticsearchFixture.setUp();
@@ -124,8 +127,35 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	@Test
 	public void testExecuteStatsClusterRequest() throws JSONException {
+		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(null);
+
+		StatsClusterResponse statsClusterResponse =
+			_searchEngineAdapter.execute(statsClusterRequest);
+
+		ClusterHealthStatus clusterHealthStatus =
+			statsClusterResponse.getClusterHealthStatus();
+
+		Assert.assertTrue(
+			clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
+			clusterHealthStatus.equals(ClusterHealthStatus.YELLOW));
+
+		String statusMessage = statsClusterResponse.getStatsMessage();
+
+		JSONFactory jsonFactory = new JSONFactoryImpl();
+
+		JSONObject jsonObject = jsonFactory.createJSONObject(statusMessage);
+
+		JSONObject indicesJSONObject = jsonObject.getJSONObject("indices");
+
+		Assert.assertEquals("1", indicesJSONObject.getString("count"));
+	}
+
+	@Test
+	public void testExecuteStatsClusterRequestWithNodeId()
+		throws JSONException {
+
 		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
-			new String[] {_INDEX_NAME});
+			new String[] {"liferay"});
 
 		StatsClusterResponse statsClusterResponse =
 			_searchEngineAdapter.execute(statsClusterRequest);
@@ -174,6 +204,12 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 		};
 	}
 
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(_jsonFactory);
+	}
+
 	private void _createIndex() {
 		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
 			_INDEX_NAME);
@@ -204,6 +240,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 
 	private ElasticsearchFixture _elasticsearchFixture;
 	private IndicesClient _indicesClient;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

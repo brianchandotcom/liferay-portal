@@ -15,16 +15,18 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.IndexRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.index.AnalysisIndexResponseToken;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
@@ -56,7 +58,10 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.util.EntityUtils;
@@ -81,8 +86,10 @@ import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -91,11 +98,12 @@ import org.junit.Test;
  */
 public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		setUpJSONFactoryUtil();
+
 		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchSearchEngineAdapterIndexRequestTest.class.
-				getSimpleName());
+			ElasticsearchSearchEngineAdapterIndexRequestTest.class);
 
 		_elasticsearchFixture.setUp();
 
@@ -105,15 +113,190 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_elasticsearchFixture.getRestHighLevelClient();
 
 		_indicesClient = restHighLevelClient.indices();
+	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_elasticsearchFixture.tearDown();
+	}
+
+	@Before
+	public void setUp() {
 		_createIndex(_INDEX_NAME);
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		_deleteIndex(_INDEX_NAME);
+	}
 
-		_elasticsearchFixture.tearDown();
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithAnalyzer() {
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setAnalyzer("stop");
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"quick,brown,foxes,jumped,over,lazy,dog,s,bone");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithCharFilters() {
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("{\n");
+		sb.append("    \"settings\": {\n");
+		sb.append("        \"analysis\": {\n");
+		sb.append("            \"char_filter\": {\n");
+		sb.append("                \"custom_cf\": {\n");
+		sb.append("                    \"type\": \"mapping\",\n");
+		sb.append("                    \"mappings\": [\n");
+		sb.append("                        \"- => +\",\n");
+		sb.append("                        \"2 => 3\"\n");
+		sb.append("                    ]\n");
+		sb.append("                }\n");
+		sb.append("            }\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("}");
+
+		_putSettings(sb.toString());
+
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setCharFilters(Collections.singleton("custom_cf"));
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"The 3 QUICK Brown+Foxes jumped over the lazy dog's bone.");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithExplainAndAnalyzer() {
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setAnalyzer("stop");
+		analyzeIndexRequest.setExplain(true);
+		analyzeIndexRequest.setIndexName(_INDEX_NAME);
+		analyzeIndexRequest.setTexts(
+			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
+
+		AnalyzeIndexResponse analyzeIndexResponse =
+			_searchEngineAdapter.execute(analyzeIndexRequest);
+
+		AnalyzeIndexResponse.DetailsAnalyzer detailsAnalyzer =
+			analyzeIndexResponse.getDetailsAnalyzer();
+
+		Assert.assertEquals("stop", detailsAnalyzer.getAnalyzerName());
+
+		assertAnalysisIndexResponseTokens(
+			detailsAnalyzer.getAnalysisIndexResponseTokens(),
+			"quick,brown,foxes,jumped,over,lazy,dog,s,bone");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithExplainAndWithoutAnalyzer() {
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setExplain(true);
+		analyzeIndexRequest.setIndexName(_INDEX_NAME);
+		analyzeIndexRequest.setTexts(
+			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
+		analyzeIndexRequest.setTokenFilters(Collections.singleton("uppercase"));
+
+		AnalyzeIndexResponse analyzeIndexResponse =
+			_searchEngineAdapter.execute(analyzeIndexRequest);
+
+		Assert.assertNull(analyzeIndexResponse.getDetailsAnalyzer());
+
+		List<AnalyzeIndexResponse.DetailsTokenFilter> detailsTokenFilters =
+			analyzeIndexResponse.getDetailsTokenFilters();
+
+		Assert.assertEquals(
+			detailsTokenFilters.toString(), 1, detailsTokenFilters.size());
+
+		AnalyzeIndexResponse.DetailsTokenFilter detailsTokenFilter =
+			detailsTokenFilters.get(0);
+
+		Assert.assertEquals(
+			"uppercase", detailsTokenFilter.getTokenFilterName());
+
+		assertAnalysisIndexResponseTokens(
+			detailsTokenFilter.getAnalysisIndexResponseTokens(),
+			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithFieldName() {
+		String mappingName = "testAnalyze";
+		String mappingSource =
+			"{\"properties\":{\"keywordTestField\":{\"type\":\"keyword\"}}}";
+
+		_putMapping(mappingName, mappingSource);
+
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setFieldName("keywordTestField");
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
+	}
+
+	@Ignore
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithNormalizer() {
+		StringBundler sb = new StringBundler(12);
+
+		sb.append("{\n");
+		sb.append("    \"settings\": {\n");
+		sb.append("        \"analysis\": {\n");
+		sb.append("            \"normalizer\": {\n");
+		sb.append("                \"custom_normalizer\": {\n");
+		sb.append("                    \"type\": \"custom\",\n");
+		sb.append("                    \"filter\": [\"uppercase\"]\n");
+		sb.append("                }\n");
+		sb.append("            }\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("}");
+
+		_putSettings(sb.toString());
+
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setNormalizer("custom_normalizer");
+
+		// Elasticsearch bug? Calls AnalyzeRequest.withNormalizer()
+		// Response contains tokens:
+		// "the,2,quick,brown,foxes,jumped,over,the,lazy,dog's,bone"
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithTokenFilters() {
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setTokenFilters(Collections.singleton("uppercase"));
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"THE 2 QUICK BROWN-FOXES JUMPED OVER THE LAZY DOG'S BONE.");
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequestWithTokenizer() {
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setTokenizer("letter");
+
+		assertExecuteAnalyzeIndexRequest(
+			analyzeIndexRequest,
+			"The,QUICK,Brown,Foxes,jumped,over,the,lazy,dog,s,bone");
 	}
 
 	@Test
@@ -166,6 +349,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		Assert.assertTrue(createIndexResponse.isAcknowledged());
 
+		Assert.assertEquals("test_index_2", createIndexResponse.getIndexName());
+
 		Assert.assertTrue(_indiciesExists("test_index_2"));
 
 		_deleteIndex("test_index_2");
@@ -197,7 +382,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(0, flushIndexResponse.getFailedShards());
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteGetFieldMappingIndexRequest() {
 		String mappingName = "testGetFieldMapping";
@@ -216,14 +400,24 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		GetFieldMappingIndexResponse getFieldMappingIndexResponse =
 			_searchEngineAdapter.execute(getFieldMappingIndexRequest);
 
-		String fieldMappings = String.valueOf(
-			getFieldMappingIndexResponse.getFieldMappings());
+		Map<String, String> fieldMappings =
+			getFieldMappingIndexResponse.getFieldMappings();
 
-		Assert.assertTrue(fieldMappings.contains(mappingSource));
+		String mappings = fieldMappings.get("test_request_index");
+
+		Assert.assertTrue(
+			mappings,
+			mappings.equals("{\"otherTestField\":[{\"type\":\"keyword\"}]}"));
 	}
 
 	@Test
 	public void testExecuteGetIndexIndexRequest() {
+		String mappingName = "testGetIndex";
+		String mappingSource =
+			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+
+		_putMapping(mappingName, mappingSource);
+
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
 			_INDEX_NAME);
 
@@ -234,10 +428,15 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		Assert.assertEquals(Arrays.toString(indexNames), 1, indexNames.length);
 		Assert.assertEquals(_INDEX_NAME, indexNames[0]);
+
+		String indexMappings = String.valueOf(
+			getIndexIndexResponse.getMappings());
+
+		Assert.assertTrue(indexMappings, indexMappings.contains(mappingSource));
 	}
 
 	@Test
-	public void testExecuteGetMappingIndexRequest() throws JSONException {
+	public void testExecuteGetMappingIndexRequest() {
 		String mappingName = "testGetMapping";
 		String mappingSource =
 			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
@@ -275,6 +474,30 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_searchEngineAdapter.execute(indicesExistsIndexRequest2);
 
 		Assert.assertFalse(indicesExistsIndexResponse2.isExists());
+	}
+
+	@Test
+	public void testExecuteOpenIndexRequest() {
+		_closeIndex(_INDEX_NAME);
+
+		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.CLOSE);
+
+		OpenIndexRequest openIndexRequest = new OpenIndexRequest(_INDEX_NAME);
+
+		IndicesOptions indicesOptions = new IndicesOptions();
+
+		indicesOptions.setIgnoreUnavailable(true);
+
+		openIndexRequest.setIndicesOptions(indicesOptions);
+
+		OpenIndexResponse openIndexResponse = _searchEngineAdapter.execute(
+			openIndexRequest);
+
+		Assert.assertTrue(
+			"Open request not acknowledged",
+			openIndexResponse.isAcknowledged());
+
+		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.OPEN);
 	}
 
 	@Test
@@ -319,7 +542,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(0, refreshIndexResponse.getFailedShards());
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteUpdateIndexSettingsIndexRequest() {
 		_createIndex("test_index_2");
@@ -346,35 +568,11 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			"test_index_2");
 
 		String refreshInterval = getSettingsResponse.getSetting(
-			"test_index_2", "refresh_interval");
+			"test_index_2", "index.refresh_interval");
 
 		Assert.assertEquals("2s", refreshInterval);
 
 		_deleteIndex("test_index_2");
-	}
-
-	@Test
-	public void testOpenIndexRequest() {
-		_closeIndex(_INDEX_NAME);
-
-		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.CLOSE);
-
-		OpenIndexRequest openIndexRequest = new OpenIndexRequest(_INDEX_NAME);
-
-		IndicesOptions indicesOptions = new IndicesOptions();
-
-		indicesOptions.setIgnoreUnavailable(true);
-
-		openIndexRequest.setIndicesOptions(indicesOptions);
-
-		OpenIndexResponse openIndexResponse = _searchEngineAdapter.execute(
-			openIndexRequest);
-
-		Assert.assertTrue(
-			"Open request not acknowledged",
-			openIndexResponse.isAcknowledged());
-
-		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.OPEN);
 	}
 
 	protected static IndexRequestExecutor createIndexRequestExecutor(
@@ -401,6 +599,45 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 					createIndexRequestExecutor(elasticsearchClientResolver));
 			}
 		};
+	}
+
+	protected static void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+	}
+
+	protected void assertAnalysisIndexResponseTokens(
+		List<AnalysisIndexResponseToken> analysisIndexResponseTokens,
+		String expectedTokens) {
+
+		List<String> actualTokensList = new ArrayList<>();
+
+		for (AnalysisIndexResponseToken analysisIndexResponseToken :
+				analysisIndexResponseTokens) {
+
+			actualTokensList.add(analysisIndexResponseToken.getTerm());
+		}
+
+		String actualTokens = StringUtil.merge(
+			actualTokensList, StringPool.COMMA);
+
+		Assert.assertEquals(expectedTokens, expectedTokens, actualTokens);
+	}
+
+	protected void assertExecuteAnalyzeIndexRequest(
+		AnalyzeIndexRequest analyzeIndexRequest, String expectedTokens) {
+
+		analyzeIndexRequest.setIndexName(_INDEX_NAME);
+		analyzeIndexRequest.setTexts(
+			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
+
+		AnalyzeIndexResponse analyzeIndexResponse =
+			_searchEngineAdapter.execute(analyzeIndexRequest);
+
+		assertAnalysisIndexResponseTokens(
+			analyzeIndexResponse.getAnalysisIndexResponseTokens(),
+			expectedTokens);
 	}
 
 	protected void assertIndexMetaDataState(
@@ -438,12 +675,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	protected String translateState(IndexMetaData.State state) {
@@ -600,8 +831,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private ElasticsearchFixture _elasticsearchFixture;
-	private IndicesClient _indicesClient;
-	private SearchEngineAdapter _searchEngineAdapter;
+	private static ElasticsearchFixture _elasticsearchFixture;
+	private static IndicesClient _indicesClient;
+	private static SearchEngineAdapter _searchEngineAdapter;
 
 }

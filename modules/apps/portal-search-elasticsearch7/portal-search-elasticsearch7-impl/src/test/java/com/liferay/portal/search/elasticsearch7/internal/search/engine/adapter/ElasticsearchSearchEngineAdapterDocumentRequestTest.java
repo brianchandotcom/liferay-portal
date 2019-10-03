@@ -52,6 +52,7 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -61,7 +62,6 @@ import org.elasticsearch.rest.RestStatus;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -71,9 +71,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchSearchEngineAdapterDocumentRequestTest.class.
-				getSimpleName());
+		_elasticsearchFixture = new ElasticsearchFixture(getClass());
 
 		_elasticsearchFixture.setUp();
 
@@ -316,7 +314,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		Assert.assertEquals(Boolean.TRUE.toString(), map2.get(_FIELD_NAME));
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteDeleteByQueryDocumentRequest() {
 		String documentSource1 = "{\"" + _FIELD_NAME + "\":\"true\"}";
@@ -424,7 +421,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteUpdateByQueryDocumentRequest() {
 		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
@@ -613,11 +609,12 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	private void _indexDocument(String documentSource, String id) {
-		IndexRequest indexRequest = new IndexRequest(
-			_INDEX_NAME, _MAPPING_NAME);
+		IndexRequest indexRequest = new IndexRequest(_INDEX_NAME);
 
 		indexRequest.id(id);
+		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 		indexRequest.source(documentSource, XContentType.JSON);
+		indexRequest.type(_MAPPING_NAME);
 
 		try {
 			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);

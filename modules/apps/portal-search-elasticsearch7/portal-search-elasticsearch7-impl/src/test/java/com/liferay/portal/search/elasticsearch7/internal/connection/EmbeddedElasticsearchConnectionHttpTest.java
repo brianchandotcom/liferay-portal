@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -50,6 +52,8 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpJSONFactoryUtil();
+
 		MockitoAnnotations.initMocks(this);
 
 		_clusterName = RandomTestUtil.randomString();
@@ -121,6 +125,12 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 		return 0;
 	}
 
+	protected void setUpJSONFactoryUtil() {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(_jsonFactory);
+	}
+
 	protected String toString(URL url) throws Exception {
 		try (InputStream inputStream = url.openStream()) {
 			return StringUtil.read(inputStream);
@@ -129,5 +139,6 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 
 	private String _clusterName;
 	private ElasticsearchFixture _elasticsearchFixture;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

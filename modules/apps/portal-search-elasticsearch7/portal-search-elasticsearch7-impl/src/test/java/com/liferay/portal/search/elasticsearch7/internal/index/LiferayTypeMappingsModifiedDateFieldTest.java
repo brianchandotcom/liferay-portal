@@ -20,7 +20,8 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import java.util.Collections;
 import java.util.Date;
 
-import org.elasticsearch.index.mapper.MapperParsingException;
+import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 
 	@Test
 	public void testDate() throws Exception {
-		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
 			"failed to parse date field [1970-01-18T12:08:26.556Z] with " +
 				"format [yyyyMMddHHmmss]");
@@ -68,7 +69,7 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 
 	@Test
 	public void testLongMalformed() throws Exception {
-		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
 			"failed to parse date field [1512506556] with format " +
 				"[yyyyMMddHHmmss]");
@@ -85,7 +86,7 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 
 	@Test
 	public void testStringMalformed() throws Exception {
-		expectedException.expect(IllegalArgumentException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
 			"failed to parse date field [2017-11-15 05:04:02] with format " +
 				"[yyyyMMddHHmmss]");
@@ -104,8 +105,8 @@ public class LiferayTypeMappingsModifiedDateFieldTest {
 			_liferayIndexFixture.index(
 				Collections.singletonMap(Field.MODIFIED_DATE, value));
 		}
-		catch (MapperParsingException mpe) {
-			throw (Exception)mpe.getCause();
+		catch (ElasticsearchStatusException ese) {
+			throw (Exception)ese.getCause();
 		}
 	}
 

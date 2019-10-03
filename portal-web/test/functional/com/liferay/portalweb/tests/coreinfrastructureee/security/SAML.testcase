@@ -741,7 +741,9 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		User.firstLoginPG();
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

@@ -3499,6 +3499,10 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -4227,6 +4231,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
                 - in: query
                   name: filter
                   schema:

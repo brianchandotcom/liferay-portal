@@ -127,6 +127,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jobProperties = portalTestClassJob.getJobProperties();
 
+		String stableTestBatchNamesString = getFirstPropertyValue(
+			"test.batch.names", batchName, NAME_STABLE_TEST_SUITE);
+
+		if (stableTestBatchNamesString != null) {
+			Collections.addAll(
+				stableTestBatchNames, stableTestBatchNamesString.split(","));
+		}
+
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 		_setTestRelevantIntegrationUnitOnly();
@@ -197,11 +205,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected String getFirstPropertyValue(String basePropertyName) {
-		return getFirstPropertyValue(basePropertyName, batchName);
+		return getFirstPropertyValue(
+			basePropertyName, batchName, testSuiteName);
 	}
 
 	protected String getFirstPropertyValue(
 		String basePropertyName, String batchName) {
+
+		return getFirstPropertyValue(
+			basePropertyName, batchName, testSuiteName);
+	}
+
+	protected String getFirstPropertyValue(
+		String basePropertyName, String batchName, String testSuiteName) {
 
 		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
 			throw new RuntimeException(
@@ -352,6 +368,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return true;
 	}
 
+	protected boolean isStableTestSuiteBatch() {
+		return stableTestBatchNames.contains(batchName);
+	}
+
 	protected void setAxisTestClassGroups() {
 		int testClassCount = testClasses.size();
 
@@ -391,6 +411,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean includeStableSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
+	protected List<String> stableTestBatchNames = new ArrayList<>();
 	protected boolean testPrivatePortalBranch;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;

@@ -159,6 +159,8 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="useCustomDescription" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
+
+				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
 		</c:when>
 		<c:otherwise>
@@ -170,9 +172,65 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescription" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
+
+				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>
 		</c:otherwise>
 	</c:choose>
+
+	<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
+
+	<div>
+		<aui:input disabled="<%= true %>" id="openGraphImageTitle" label="image" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" />
+
+		<aui:button name="openGraphImageButton" value="select" />
+
+		<aui:script use="liferay-item-selector-dialog">
+			var openGraphImageButton = document.getElementById('<portlet:namespace />openGraphImageButton');
+
+			if (openGraphImageButton) {
+				openGraphImageButton.addEventListener(
+					'click',
+					function(event) {
+						event.preventDefault();
+
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+							{
+								eventName: '<portlet:namespace />openGraphImageSelectedItem',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+												var itemValue = JSON.parse(selectedItem.value);
+
+												var openGraphImageFileEntryId = document.getElementById('<portlet:namespace />openGraphImageFileEntryId');
+
+												if (openGraphImageFileEntryId) {
+													openGraphImageFileEntryId.value = itemValue.fileEntryId
+												}
+
+												var openGraphImageTitle = document.getElementById('<portlet:namespace />openGraphImageTitle');
+
+												if (openGraphImageTitle) {
+													openGraphImageTitle.value = itemValue.title
+												}
+										}
+
+									}.bind(this)
+								},
+								'strings.add': Liferay.Language.get('ok'),
+								title: '<liferay-ui:message key="open-graph-image" />',
+								url: '<%= layoutsAdminDisplayContext.getItemSelectorURL() %>'
+							}
+						);
+
+						itemSelectorDialog.open();
+					}
+				);
+			}
+		</aui:script>
+	</div>
 </c:if>
 
 <aui:script>

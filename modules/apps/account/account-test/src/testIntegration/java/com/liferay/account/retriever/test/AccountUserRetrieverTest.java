@@ -131,10 +131,39 @@ public class AccountUserRetrieverTest {
 		_assertSearch(searchTerm, 1);
 	}
 
+	@Test
+	public void testSearchAccountUsersPaginated() throws Exception {
+		String searchTerm = RandomTestUtil.randomString();
+
+		_users.add(UserTestUtil.addUser(searchTerm + 1, null));
+		_users.add(UserTestUtil.addUser(searchTerm + 2, null));
+		_users.add(UserTestUtil.addUser(searchTerm + 3, null));
+		_users.add(UserTestUtil.addUser(searchTerm + 4, null));
+
+		for (User user : _users) {
+			_accountEntryUserRels.add(
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					_accountEntry.getAccountEntryId(), user.getUserId()));
+		}
+
+		Assert.assertEquals(4, _searchCount(searchTerm));
+
+		List<User> actualUsers = _search(searchTerm, 1, 2, false);
+
+		Assert.assertEquals(actualUsers.toString(), 2, actualUsers.size());
+		Assert.assertEquals(_users.get(1), actualUsers.get(0));
+
+		actualUsers = _search(searchTerm, 0, 4, true);
+
+		Assert.assertEquals(actualUsers.toString(), 4, actualUsers.size());
+		Assert.assertEquals(_users.get(3), actualUsers.get(0));
+	}
+
 	private void _assertSearch(String keywords, int expectedSize)
 		throws Exception {
 
-		List<User> actualUsers = _search(keywords);
+		List<User> actualUsers = _search(
+			keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
 
 		Assert.assertEquals(
 			actualUsers.toString(), expectedSize, actualUsers.size());
@@ -142,11 +171,14 @@ public class AccountUserRetrieverTest {
 		Assert.assertEquals(expectedSize, _searchCount(keywords));
 	}
 
-	private List<User> _search(String keywords) throws Exception {
+	private List<User> _search(
+			String keywords, int cur, int delta, boolean reverse)
+		throws Exception {
+
 		return _accountUserRetriever.searchAccountUsers(
 			_accountEntry.getAccountEntryId(), keywords,
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, "screenName", false);
+			WorkflowConstants.STATUS_APPROVED, cur, delta, "screenName",
+			reverse);
 	}
 
 	private long _searchCount(String keywords) throws Exception {

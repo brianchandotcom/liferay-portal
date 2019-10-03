@@ -44,7 +44,7 @@ public interface PortalCORSConfiguration {
 	public String name();
 
 	@Meta.AD(
-		deflt = "/documents/*|/image/*|/api/jsonws/*|/o/api/*",
+		deflt = "/documents/*|/image/*|/api/jsonws/*|/o/api/*|/o/graphql",
 		description = "cors-configuration-filter-mapping-url-pattern-description",
 		id = "filter.mapping.url.pattern",
 		name = "cors-configuration-filter-mapping-url-pattern", required = false

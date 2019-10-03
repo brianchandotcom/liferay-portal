@@ -540,11 +540,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			return null;
 		}
 
-		destination.close(true);
-
-		destination.removeDestinationEventListeners();
-
-		destination.unregisterMessageListeners();
+		destination.destroy();
 
 		for (MessageBusEventListener messageBusEventListener :
 				_messageBusEventListeners) {

@@ -165,6 +165,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			new InOutOperationContext<>(
 				inboundMessageContext, new MessageContext<>());
 
+		inboundMessageContext.addSubcontext(
+			new SubjectAssertionContext(assertion));
 		inboundMessageContext.setMessage(response);
 
 		messageContext.addSubcontext(inOutOperationContext);

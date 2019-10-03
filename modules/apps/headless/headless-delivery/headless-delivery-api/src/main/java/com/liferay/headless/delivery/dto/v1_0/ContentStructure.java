@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -79,6 +81,7 @@ public class ContentStructure {
 	protected String[] availableLanguages;
 
 	@Schema(description = "The list of the content structure's fields.")
+	@Valid
 	public ContentStructureField[] getContentStructureFields() {
 		return contentStructureFields;
 	}
@@ -110,6 +113,7 @@ public class ContentStructure {
 	protected ContentStructureField[] contentStructureFields;
 
 	@Schema(description = "The content structure's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}

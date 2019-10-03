@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FormContext {
 
 	@Schema(description = "https://www.schema.org/FormFieldValue")
+	@Valid
 	public FormFieldValue[] getFormFieldValues() {
 		return formFieldValues;
 	}
@@ -74,6 +77,7 @@ public class FormContext {
 	protected FormFieldValue[] formFieldValues;
 
 	@Schema(description = "https://www.schema.org/FormPageContext")
+	@Valid
 	public FormPageContext[] getFormPageContexts() {
 		return formPageContexts;
 	}

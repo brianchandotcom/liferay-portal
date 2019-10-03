@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -75,6 +77,7 @@ public class DataDefinitionRule {
 	protected String[] dataDefinitionFieldNames;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getDataDefinitionRuleParameters() {
 		return dataDefinitionRuleParameters;
 	}

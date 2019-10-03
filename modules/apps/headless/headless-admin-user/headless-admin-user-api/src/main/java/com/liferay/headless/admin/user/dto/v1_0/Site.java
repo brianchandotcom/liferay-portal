@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -73,6 +75,7 @@ public class Site {
 	protected String[] availableLanguages;
 
 	@Schema
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -263,6 +266,7 @@ public class Site {
 	protected String name;
 
 	@Schema
+	@Valid
 	public Site[] getSites() {
 		return sites;
 	}

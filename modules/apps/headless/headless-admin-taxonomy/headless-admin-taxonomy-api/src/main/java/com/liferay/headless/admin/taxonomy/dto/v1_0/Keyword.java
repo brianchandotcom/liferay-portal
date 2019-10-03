@@ -36,6 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,6 +53,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Keyword {
 
 	@Schema(description = "The keyword's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}

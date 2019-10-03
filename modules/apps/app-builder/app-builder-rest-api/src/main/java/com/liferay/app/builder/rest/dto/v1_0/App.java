@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class App {
 
 	@Schema
+	@Valid
 	public AppDeployment[] getAppDeployments() {
 		return appDeployments;
 	}
@@ -244,6 +247,7 @@ public class App {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getName() {
 		return name;
 	}

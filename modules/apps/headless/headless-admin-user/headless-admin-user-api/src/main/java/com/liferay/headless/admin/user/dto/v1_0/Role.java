@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -79,6 +81,7 @@ public class Role {
 	protected String[] availableLanguages;
 
 	@Schema(description = "The role's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}

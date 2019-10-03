@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -103,6 +105,7 @@ public class DataRecordCollection {
 	protected String dataRecordCollectionKey;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -158,6 +161,7 @@ public class DataRecordCollection {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getName() {
 		return name;
 	}

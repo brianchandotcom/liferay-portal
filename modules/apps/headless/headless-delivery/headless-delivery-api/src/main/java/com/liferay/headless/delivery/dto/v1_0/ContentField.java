@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -161,6 +163,7 @@ public class ContentField {
 	@Schema(
 		description = "A list of child content fields that depend on this resource."
 	)
+	@Valid
 	public ContentField[] getNestedContentFields() {
 		return nestedContentFields;
 	}
@@ -220,6 +223,7 @@ public class ContentField {
 	protected Boolean repeatable;
 
 	@Schema
+	@Valid
 	public Value getValue() {
 		return value;
 	}

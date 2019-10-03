@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -105,6 +107,7 @@ public class DataLayout {
 	protected String dataLayoutKey;
 
 	@Schema
+	@Valid
 	public DataLayoutPage[] getDataLayoutPages() {
 		return dataLayoutPages;
 	}
@@ -190,6 +193,7 @@ public class DataLayout {
 	protected Date dateModified;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -245,6 +249,7 @@ public class DataLayout {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getName() {
 		return name;
 	}

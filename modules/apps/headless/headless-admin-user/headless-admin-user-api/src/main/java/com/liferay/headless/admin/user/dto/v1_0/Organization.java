@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -81,6 +83,7 @@ public class Organization {
 	@Schema(
 		description = "The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`."
 	)
+	@Valid
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}
@@ -110,6 +113,7 @@ public class Organization {
 	protected ContactInformation contactInformation;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -280,6 +284,7 @@ public class Organization {
 	@Schema(
 		description = "The organization's postal information (country and region)."
 	)
+	@Valid
 	public Location getLocation() {
 		return location;
 	}
@@ -365,6 +370,7 @@ public class Organization {
 	protected Integer numberOfOrganizations;
 
 	@Schema(description = "The organization's parent organization.")
+	@Valid
 	public Organization getParentOrganization() {
 		return parentOrganization;
 	}
@@ -396,6 +402,7 @@ public class Organization {
 	@Schema(
 		description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification."
 	)
+	@Valid
 	public Service[] getServices() {
 		return services;
 	}

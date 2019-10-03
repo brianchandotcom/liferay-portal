@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FormRecord {
 
 	@Schema
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -189,6 +192,7 @@ public class FormRecord {
 	protected Boolean draft;
 
 	@Schema
+	@Valid
 	public FormFieldValue[] getFormFieldValues() {
 		return formFieldValues;
 	}

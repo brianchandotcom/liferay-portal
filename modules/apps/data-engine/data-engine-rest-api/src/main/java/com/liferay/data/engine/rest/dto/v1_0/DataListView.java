@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DataListView {
 
 	@Schema
+	@Valid
 	public Map<String, Object> getAppliedFilters() {
 		return appliedFilters;
 	}
@@ -216,6 +219,7 @@ public class DataListView {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getName() {
 		return name;
 	}

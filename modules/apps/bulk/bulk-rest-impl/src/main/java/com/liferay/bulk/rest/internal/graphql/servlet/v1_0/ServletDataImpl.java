@@ -14,13 +14,19 @@
 
 package com.liferay.bulk.rest.internal.graphql.servlet.v1_0;
 
+	import com.liferay.bulk.rest.resource.v1_0.DocumentBulkSelectionResource;
+	import com.liferay.bulk.rest.resource.v1_0.GenericErrorResource;
+	import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
+	import com.liferay.bulk.rest.resource.v1_0.KeywordBulkSelectionResource;
+	import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
+	import com.liferay.bulk.rest.resource.v1_0.StatusResource;
+	import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
+	import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryBulkSelectionResource;
+	import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
+
 import com.liferay.bulk.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.bulk.rest.internal.graphql.query.v1_0.Query;
-import com.liferay.bulk.rest.resource.v1_0.KeywordResource;
-import com.liferay.bulk.rest.resource.v1_0.SelectionResource;
-import com.liferay.bulk.rest.resource.v1_0.StatusResource;
-import com.liferay.bulk.rest.resource.v1_0.TaxonomyCategoryResource;
-import com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource;
+
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import javax.annotation.Generated;
@@ -40,19 +46,15 @@ import org.osgi.service.component.annotations.ReferenceScope;
 @Generated("")
 public class ServletDataImpl implements ServletData {
 
+
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		Mutation.setKeywordResourceComponentServiceObjects(
-			_keywordResourceComponentServiceObjects);
-		Mutation.setSelectionResourceComponentServiceObjects(
-			_selectionResourceComponentServiceObjects);
-		Mutation.setTaxonomyCategoryResourceComponentServiceObjects(
-			_taxonomyCategoryResourceComponentServiceObjects);
-		Mutation.setTaxonomyVocabularyResourceComponentServiceObjects(
-			_taxonomyVocabularyResourceComponentServiceObjects);
+			Mutation.setKeywordResourceComponentServiceObjects(_keywordResourceComponentServiceObjects);
+			Mutation.setSelectionResourceComponentServiceObjects(_selectionResourceComponentServiceObjects);
+			Mutation.setTaxonomyCategoryResourceComponentServiceObjects(_taxonomyCategoryResourceComponentServiceObjects);
+			Mutation.setTaxonomyVocabularyResourceComponentServiceObjects(_taxonomyVocabularyResourceComponentServiceObjects);
 
-		Query.setStatusResourceComponentServiceObjects(
-			_statusResourceComponentServiceObjects);
+			Query.setStatusResourceComponentServiceObjects(_statusResourceComponentServiceObjects);
 	}
 
 	@Override
@@ -74,24 +76,17 @@ public class ServletDataImpl implements ServletData {
 		return new Query();
 	}
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<KeywordResource>
-		_keywordResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SelectionResource>
-		_selectionResourceComponentServiceObjects;
 
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<TaxonomyCategoryResource>
-		_taxonomyCategoryResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<TaxonomyVocabularyResource>
-		_taxonomyVocabularyResourceComponentServiceObjects;
-
-	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<StatusResource>
-		_statusResourceComponentServiceObjects;
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<KeywordResource> _keywordResourceComponentServiceObjects;
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<SelectionResource> _selectionResourceComponentServiceObjects;
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<TaxonomyCategoryResource> _taxonomyCategoryResourceComponentServiceObjects;
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<TaxonomyVocabularyResource> _taxonomyVocabularyResourceComponentServiceObjects;
+		@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+		private ComponentServiceObjects<StatusResource> _statusResourceComponentServiceObjects;
 
 }

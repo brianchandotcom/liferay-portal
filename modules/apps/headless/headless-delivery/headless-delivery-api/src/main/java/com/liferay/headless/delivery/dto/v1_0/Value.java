@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -71,6 +73,7 @@ public class Value {
 	protected String data;
 
 	@Schema(description = "A content document element.")
+	@Valid
 	public ContentDocument getDocument() {
 		return document;
 	}
@@ -99,6 +102,7 @@ public class Value {
 	protected ContentDocument document;
 
 	@Schema(description = "A point determined by latitude and longitude.")
+	@Valid
 	public Geo getGeo() {
 		return geo;
 	}
@@ -127,6 +131,7 @@ public class Value {
 	@Schema(
 		description = "A content document element that stores an image file."
 	)
+	@Valid
 	public ContentDocument getImage() {
 		return image;
 	}
@@ -181,6 +186,7 @@ public class Value {
 	protected String link;
 
 	@Schema(description = "A link to structured content on the server.")
+	@Valid
 	public StructuredContentLink getStructuredContentLink() {
 		return structuredContentLink;
 	}

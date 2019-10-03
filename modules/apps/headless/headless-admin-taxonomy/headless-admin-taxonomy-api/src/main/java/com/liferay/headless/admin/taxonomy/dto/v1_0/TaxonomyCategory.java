@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -118,6 +119,7 @@ public class TaxonomyCategory {
 	protected String[] availableLanguages;
 
 	@Schema(description = "The category's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -317,6 +319,7 @@ public class TaxonomyCategory {
 	protected Integer numberOfTaxonomyCategories;
 
 	@Schema(description = "The category's parent category, if it exists.")
+	@Valid
 	public ParentTaxonomyCategory getParentTaxonomyCategory() {
 		return parentTaxonomyCategory;
 	}
@@ -350,6 +353,7 @@ public class TaxonomyCategory {
 	@Schema(
 		description = "The parent category's `TaxonomyVocabulary`, if such a parent category exists."
 	)
+	@Valid
 	public ParentTaxonomyVocabulary getParentTaxonomyVocabulary() {
 		return parentTaxonomyVocabulary;
 	}
@@ -384,6 +388,7 @@ public class TaxonomyCategory {
 	@Schema(
 		description = "A write-only property that specifies the category's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

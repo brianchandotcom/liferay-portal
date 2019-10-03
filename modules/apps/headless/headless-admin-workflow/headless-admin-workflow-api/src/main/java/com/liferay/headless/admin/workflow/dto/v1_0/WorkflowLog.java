@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -51,6 +53,7 @@ public class WorkflowLog {
 	@Schema(
 		description = "The user account of the person auditing the workflow."
 	)
+	@Valid
 	public Creator getAuditPerson() {
 		return auditPerson;
 	}
@@ -161,6 +164,7 @@ public class WorkflowLog {
 	protected Long id;
 
 	@Schema(description = "The person assigned to the workflow.")
+	@Valid
 	public Creator getPerson() {
 		return person;
 	}
@@ -189,6 +193,7 @@ public class WorkflowLog {
 	protected Creator person;
 
 	@Schema(description = "The previous person assigned to the workflow.")
+	@Valid
 	public Creator getPreviousPerson() {
 		return previousPerson;
 	}

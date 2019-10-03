@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -221,6 +223,7 @@ public class ContentStructureField {
 	@Schema(
 		description = "The child content structure fields that depend on this form field."
 	)
+	@Valid
 	public ContentStructureField[] getNestedContentStructureFields() {
 		return nestedContentStructureFields;
 	}
@@ -253,6 +256,7 @@ public class ContentStructureField {
 	protected ContentStructureField[] nestedContentStructureFields;
 
 	@Schema(description = "The list of different possible values.")
+	@Valid
 	public Option[] getOptions() {
 		return options;
 	}

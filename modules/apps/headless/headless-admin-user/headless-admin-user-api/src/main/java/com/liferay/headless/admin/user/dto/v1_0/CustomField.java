@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CustomField {
 
 	@Schema
+	@Valid
 	public CustomValue getCustomValue() {
 		return customValue;
 	}

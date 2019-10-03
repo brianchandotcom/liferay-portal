@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +51,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Comment {
 
 	@Schema(description = "The comment's author.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}

@@ -65,14 +65,14 @@ public class MetadataTypeBuilder {
 
 		JsonNode schemaJsonNode = _getSchemaJsonNode(oasJsonNode, schemaName);
 
+		String schemaType = _getSchemaType(schemaJsonNode);
+
 		JsonNode propertiesJsonNode = schemaJsonNode.get(
 			OASConstants.PROPERTIES);
 
-		if (_jsonNodeReader.hasPath(
-				propertiesJsonNode, OASConstants.PATH_ITEMS_ITEMS_REF)) {
-
+		if (schemaType.equals(OASConstants.ARRAY)) {
 			ArrayTypeBuilder arrayTypeBuilder = _getArrayTypeBuilder(
-				metadataContext);
+				metadataContext, schemaName);
 
 			_resolveArrayMetadataType(
 				arrayTypeBuilder, oasJsonNode,
@@ -83,7 +83,7 @@ public class MetadataTypeBuilder {
 		}
 
 		ObjectTypeBuilder objectTypeBuilder = _getObjectTypeBuilder(
-			metadataContext);
+			metadataContext, schemaName);
 
 		_resolveObjectMetadataType(
 			objectTypeBuilder, oasJsonNode, propertiesJsonNode,
@@ -110,13 +110,16 @@ public class MetadataTypeBuilder {
 	}
 
 	private ArrayTypeBuilder _getArrayTypeBuilder(
-		MetadataContext metadataContext) {
+		MetadataContext metadataContext, String label) {
 
 		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
 
 		return baseTypeBuilder.create(
 			MetadataFormat.JSON
-		).arrayType();
+		).arrayType(
+		).label(
+			label
+		);
 	}
 
 	private MetadataType _getMetadataType(JsonNode propertyJsonNode) {
@@ -203,13 +206,16 @@ public class MetadataTypeBuilder {
 	}
 
 	private ObjectTypeBuilder _getObjectTypeBuilder(
-		MetadataContext metadataContext) {
+		MetadataContext metadataContext, String label) {
 
 		BaseTypeBuilder baseTypeBuilder = metadataContext.getTypeBuilder();
 
 		return baseTypeBuilder.create(
 			MetadataFormat.JSON
-		).objectType();
+		).objectType(
+		).label(
+			label
+		);
 	}
 
 	private JsonNode _getSchemaJsonNode(
@@ -224,6 +230,12 @@ public class MetadataTypeBuilder {
 
 	private String _getSchemaName(String reference) {
 		return reference.replaceAll(OASConstants.PATH_SCHEMA_REFERENCE, "");
+	}
+
+	private String _getSchemaType(JsonNode schemaJsonNode) {
+		JsonNode typeJsonNode = schemaJsonNode.get("type");
+
+		return typeJsonNode.textValue();
 	}
 
 	private MetadataType _resolveAnyMetadataType(

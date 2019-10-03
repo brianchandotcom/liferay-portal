@@ -58,31 +58,25 @@ public class StagingGroupServiceTunnelUtil {
 		throws PortalException {
 
 		try {
-			try {
-				return TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof PortalException) {
-					throw (PortalException)e;
-				}
+			return TunnelUtil.invoke(httpPrincipal, methodHandler);
+		}
+		catch (ConnectException ce) {
+			_log.error("Connection error: " + ce.getMessage());
 
-				throw new SystemException(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(ce, ce);
 			}
 		}
-		catch (SystemException se) {
-			if (se.getCause() instanceof ConnectException) {
-				_log.error("Connection error: " + se.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(se, se);
-				}
-			}
-			else {
-				_log.error(se, se);
-			}
-
-			throw se;
+		catch (PortalException pe) {
+			throw pe;
 		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new SystemException(e);
+		}
+
+		return null;
 	}
 
 	private StagingGroupServiceTunnelUtil() {

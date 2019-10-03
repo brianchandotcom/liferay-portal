@@ -232,27 +232,25 @@ class ItemSelectorPreview extends Component {
 
 		return (
 			<div className="fullscreen item-selector-preview">
-				<ClayIconSpriteContext.Provider value={spritemap}>
-					<Header
-						handleClickClose={this.handleClickClose}
-						handleClickDone={this.handleClickDone}
-						handleClickEdit={this.handleClickEdit}
-						headerTitle={this.props.headerTitle}
-					/>
+				<Header
+					handleClickClose={this.handleClickClose}
+					handleClickDone={this.handleClickDone}
+					handleClickEdit={this.handleClickEdit}
+					headerTitle={this.props.headerTitle}
+				/>
 
-					<Carousel
-						currentItem = {currentItem}
-						handleClickNext = {this.handleClickNext}
-						handleClickPrevious = {this.handleClickPrevious}
-						showArrows = {items.length > 1}
-					/>
+				<Carousel
+					currentItem = {currentItem}
+					handleClickNext = {this.handleClickNext}
+					handleClickPrevious = {this.handleClickPrevious}
+					showArrows = {items.length > 1}
+				/>
 
-					<Footer
-						title={currentItem.title}
-						currentIndex={currentItemIndex}
-						totalItems={items.length}
-					/>
-				</ClayIconSpriteContext.Provider>
+				<Footer
+					title={currentItem.title}
+					currentIndex={currentItemIndex}
+					totalItems={items.length}
+				/>
 			</div>
 		);
 	}

@@ -38,6 +38,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -87,6 +89,7 @@ public class Document {
 	@Schema(
 		description = "An array of images in several resolutions and sizes, created by the Adaptive Media framework."
 	)
+	@Valid
 	public AdaptedImage[] getAdaptedImages() {
 		return adaptedImages;
 	}
@@ -115,6 +118,7 @@ public class Document {
 	protected AdaptedImage[] adaptedImages;
 
 	@Schema(description = "The document's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -172,6 +176,7 @@ public class Document {
 	protected String contentUrl;
 
 	@Schema(description = "The document's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -200,6 +205,7 @@ public class Document {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -482,6 +488,7 @@ public class Document {
 	protected Integer numberOfComments;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -539,6 +546,7 @@ public class Document {
 	protected Long sizeInBytes;
 
 	@Schema(description = "The categories associated with this document.")
+	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -628,6 +636,7 @@ public class Document {
 	@Schema(
 		description = "A write-only property that specifies the document's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

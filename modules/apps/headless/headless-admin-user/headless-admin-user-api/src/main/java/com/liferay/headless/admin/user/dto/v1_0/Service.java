@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,6 +49,7 @@ public class Service {
 	@Schema(
 		description = "A list of hours when the organization is open. This follows the [`OpeningHoursSpecification`](https://www.schema.org/OpeningHoursSpecification) specification."
 	)
+	@Valid
 	public HoursAvailable[] getHoursAvailable() {
 		return hoursAvailable;
 	}

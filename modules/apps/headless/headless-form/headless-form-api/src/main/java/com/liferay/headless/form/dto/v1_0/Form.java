@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -77,6 +79,7 @@ public class Form {
 	protected String[] availableLanguages;
 
 	@Schema
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -245,6 +248,7 @@ public class Form {
 	protected String description;
 
 	@Schema
+	@Valid
 	public FormRecord[] getFormRecords() {
 		return formRecords;
 	}
@@ -381,6 +385,7 @@ public class Form {
 	protected Long siteId;
 
 	@Schema
+	@Valid
 	public FormStructure getStructure() {
 		return structure;
 	}

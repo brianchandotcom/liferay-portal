@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,7 @@ public class KnowledgeBaseArticle {
 	}
 
 	@Schema(description = "The article's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -146,6 +148,7 @@ public class KnowledgeBaseArticle {
 	protected String articleBody;
 
 	@Schema(description = "The article's author.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -174,6 +177,7 @@ public class KnowledgeBaseArticle {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -460,6 +464,7 @@ public class KnowledgeBaseArticle {
 	protected Integer numberOfKnowledgeBaseArticles;
 
 	@Schema(description = "The article's parent folder, if it exists.")
+	@Valid
 	public ParentKnowledgeBaseFolder getParentKnowledgeBaseFolder() {
 		return parentKnowledgeBaseFolder;
 	}
@@ -526,6 +531,7 @@ public class KnowledgeBaseArticle {
 	protected Long parentKnowledgeBaseFolderId;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -583,6 +589,7 @@ public class KnowledgeBaseArticle {
 	protected Long siteId;
 
 	@Schema(description = "The categories associated with this article.")
+	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -673,6 +680,7 @@ public class KnowledgeBaseArticle {
 	@Schema(
 		description = "A write-only property that specifies the article's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

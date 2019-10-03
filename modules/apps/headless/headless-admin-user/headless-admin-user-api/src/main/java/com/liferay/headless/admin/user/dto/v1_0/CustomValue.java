@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CustomValue {
 
 	@Schema(description = "The field's content for simple types.")
+	@Valid
 	public Object getData() {
 		return data;
 	}
@@ -71,6 +74,7 @@ public class CustomValue {
 	protected Object data;
 
 	@Schema(description = "A point determined by latitude and longitude.")
+	@Valid
 	public Geo getGeo() {
 		return geo;
 	}

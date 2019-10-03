@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -271,6 +273,7 @@ public class WorkflowTask {
 	@Schema(
 		description = "The object/asset that the task's workflow is managing."
 	)
+	@Valid
 	public ObjectReviewed getObjectReviewed() {
 		return objectReviewed;
 	}

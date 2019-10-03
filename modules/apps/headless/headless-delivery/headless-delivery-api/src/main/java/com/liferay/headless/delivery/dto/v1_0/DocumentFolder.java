@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,7 @@ public class DocumentFolder {
 	}
 
 	@Schema(description = "The folder's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -116,6 +118,7 @@ public class DocumentFolder {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -369,6 +372,7 @@ public class DocumentFolder {
 	@Schema(
 		description = "A write-only property that specifies the folder's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

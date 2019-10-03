@@ -46,7 +46,8 @@ public class CopyConfigsMojo extends AbstractLiferayMojo {
 		try {
 			CopyConfigsCommand copyConfigsCommand = new CopyConfigsCommand();
 
-			copyConfigsCommand.setConfigsDirs(Arrays.asList(new File(configs)));
+			copyConfigsCommand.setConfigsDirs(
+				Arrays.asList(new File(configsDirName)));
 			copyConfigsCommand.setEnvironment(environment);
 			copyConfigsCommand.setLiferayHomeDir(getLiferayHomeDir());
 
@@ -58,7 +59,7 @@ public class CopyConfigsMojo extends AbstractLiferayMojo {
 	}
 
 	@Parameter(defaultValue = BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME)
-	protected String configs;
+	protected String configsDirName;
 
 	@Parameter(defaultValue = "${liferay.workspace.environment}")
 	protected String environment;

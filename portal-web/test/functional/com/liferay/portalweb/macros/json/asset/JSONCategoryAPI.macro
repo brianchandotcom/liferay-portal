@@ -17,7 +17,11 @@ definition {
 				-d categoryProperties=
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var categoryId = JSONCurlUtil.post("${curl}", "$.categoryId");
+		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
+		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
+
+		return "${categoryId}";
 	}
 
 	@summary = "Directly calls the JSON WS API to add a vocabulary"

@@ -55,6 +55,7 @@ public class MBMessageWrapper
 		attributes.put("classPK", getClassPK());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("threadId", getThreadId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("rootMessageId", getRootMessageId());
 		attributes.put("parentMessageId", getParentMessageId());
 		attributes.put("subject", getSubject());
@@ -145,6 +146,12 @@ public class MBMessageWrapper
 
 		if (threadId != null) {
 			setThreadId(threadId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long rootMessageId = (Long)attributes.get("rootMessageId");
@@ -238,6 +245,13 @@ public class MBMessageWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.addAttachmentsFolder();
+	}
+
+	@Override
+	public String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.buildTreePath();
 	}
 
 	/**
@@ -616,6 +630,16 @@ public class MBMessageWrapper
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return model.getTrashHandler();
+	}
+
+	/**
+	 * Returns the tree path of this message-boards message.
+	 *
+	 * @return the tree path of this message-boards message
+	 */
+	@Override
+	public String getTreePath() {
+		return model.getTreePath();
 	}
 
 	/**
@@ -1094,6 +1118,16 @@ public class MBMessageWrapper
 	}
 
 	/**
+	 * Sets the tree path of this message-boards message.
+	 *
+	 * @param treePath the tree path of this message-boards message
+	 */
+	@Override
+	public void setTreePath(String treePath) {
+		model.setTreePath(treePath);
+	}
+
+	/**
 	 * Sets the user ID of this message-boards message.
 	 *
 	 * @param userId the user ID of this message-boards message
@@ -1131,6 +1165,11 @@ public class MBMessageWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public void updateTreePath(String treePath) {
+		model.updateTreePath(treePath);
 	}
 
 	@Override

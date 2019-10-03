@@ -147,6 +147,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setThreadId(RandomTestUtil.nextLong());
 
+		newMBMessage.setTreePath(RandomTestUtil.randomString());
+
 		newMBMessage.setRootMessageId(RandomTestUtil.nextLong());
 
 		newMBMessage.setParentMessageId(RandomTestUtil.nextLong());
@@ -206,6 +208,8 @@ public class MBMessagePersistenceTest {
 			existingMBMessage.getCategoryId(), newMBMessage.getCategoryId());
 		Assert.assertEquals(
 			existingMBMessage.getThreadId(), newMBMessage.getThreadId());
+		Assert.assertEquals(
+			existingMBMessage.getTreePath(), newMBMessage.getTreePath());
 		Assert.assertEquals(
 			existingMBMessage.getRootMessageId(),
 			newMBMessage.getRootMessageId());
@@ -538,12 +542,12 @@ public class MBMessagePersistenceTest {
 			"MBMessage", "uuid", true, "messageId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"categoryId", true, "threadId", true, "rootMessageId", true,
-			"parentMessageId", true, "subject", true, "format", true,
-			"anonymous", true, "priority", true, "allowPingbacks", true,
-			"answer", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"categoryId", true, "threadId", true, "treePath", true,
+			"rootMessageId", true, "parentMessageId", true, "subject", true,
+			"format", true, "anonymous", true, "priority", true,
+			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -798,6 +802,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setCategoryId(RandomTestUtil.nextLong());
 
 		mbMessage.setThreadId(RandomTestUtil.nextLong());
+
+		mbMessage.setTreePath(RandomTestUtil.randomString());
 
 		mbMessage.setRootMessageId(RandomTestUtil.nextLong());
 

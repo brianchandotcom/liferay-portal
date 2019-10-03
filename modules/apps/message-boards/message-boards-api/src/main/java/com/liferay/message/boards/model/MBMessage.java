@@ -16,6 +16,7 @@ package com.liferay.message.boards.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -29,7 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ImplementationClassName("com.liferay.message.boards.model.impl.MBMessageImpl")
 @ProviderType
-public interface MBMessage extends MBMessageModel, PersistedModel {
+public interface MBMessage extends MBMessageModel, PersistedModel, TreeModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:

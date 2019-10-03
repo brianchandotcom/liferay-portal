@@ -61,7 +61,7 @@ public class MBMessageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,6 +87,8 @@ public class MBMessageCacheModel
 		sb.append(categoryId);
 		sb.append(", threadId=");
 		sb.append(threadId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", rootMessageId=");
 		sb.append(rootMessageId);
 		sb.append(", parentMessageId=");
@@ -161,6 +163,14 @@ public class MBMessageCacheModel
 		mbMessageImpl.setClassPK(classPK);
 		mbMessageImpl.setCategoryId(categoryId);
 		mbMessageImpl.setThreadId(threadId);
+
+		if (treePath == null) {
+			mbMessageImpl.setTreePath("");
+		}
+		else {
+			mbMessageImpl.setTreePath(treePath);
+		}
+
 		mbMessageImpl.setRootMessageId(rootMessageId);
 		mbMessageImpl.setParentMessageId(parentMessageId);
 
@@ -241,6 +251,7 @@ public class MBMessageCacheModel
 		categoryId = objectInput.readLong();
 
 		threadId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 
 		rootMessageId = objectInput.readLong();
 
@@ -299,6 +310,13 @@ public class MBMessageCacheModel
 		objectOutput.writeLong(categoryId);
 
 		objectOutput.writeLong(threadId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		objectOutput.writeLong(rootMessageId);
 
@@ -360,6 +378,7 @@ public class MBMessageCacheModel
 	public long classPK;
 	public long categoryId;
 	public long threadId;
+	public String treePath;
 	public long rootMessageId;
 	public long parentMessageId;
 	public String subject;

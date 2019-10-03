@@ -287,6 +287,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, Object> proxySettings = getProxySettings();
 
 		if (proxySettings.isEmpty() ||
+			(proxySettings.get("proxyAddress") == null) ||
 			http.isNonProxyHost(httpRequest.host())) {
 
 			httpResponse = httpRequest.send();

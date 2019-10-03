@@ -17,6 +17,7 @@ package com.liferay.layout.seo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -74,6 +75,44 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertEquals(
+			StringPool.BLANK,
+			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
+		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertEquals(
+			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
+	}
+
+	@Test
+	public void testAddLayoutSEOEntryWithAllTheFields() throws PortalException {
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"), true,
+			Collections.singletonMap(LocaleUtil.US, "title"), 12345,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				_group.getGroupId(), false, _layout.getLayoutId());
+
+		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
+		Assert.assertFalse(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertEquals(
+			"http://example.com",
+			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertEquals(
+			"description",
+			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
+		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertEquals(
+			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+		Assert.assertEquals(
+			12345, layoutSEOEntry.getOpenGraphImageFileEntryId());
 	}
 
 	@Test
@@ -118,6 +157,53 @@ public class LayoutSEOEntryLocalServiceTest {
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertEquals(
+			StringPool.BLANK,
+			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
+		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertEquals(
+			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
+	}
+
+	@Test
+	public void testUpdateLayoutSEOEntryWithAllTheFields()
+		throws PortalException {
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), false,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
+			Collections.singletonMap(LocaleUtil.US, "description"), true,
+			Collections.singletonMap(LocaleUtil.US, "title"), 12345,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				_group.getGroupId(), false, _layout.getLayoutId());
+
+		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
+		Assert.assertTrue(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertEquals(
+			"http://example.com",
+			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
+		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertEquals(
+			"description",
+			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
+		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertEquals(
+			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
+		Assert.assertEquals(
+			12345, layoutSEOEntry.getOpenGraphImageFileEntryId());
 	}
 
 	@DeleteAfterTestRun

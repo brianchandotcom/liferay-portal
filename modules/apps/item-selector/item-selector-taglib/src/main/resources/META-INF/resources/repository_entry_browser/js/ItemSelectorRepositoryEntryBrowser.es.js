@@ -19,6 +19,8 @@ import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import {render} from 'frontend-js-react-web';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -86,19 +88,18 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 					const container = this.one('.item-selector-preview-container');
 
-					ReactDOM.render(
-						<ItemSelectorPreview
-							container = {container}
-							currentIndex = {index}
-							editItemURL = {this.editItemURL}
-							handleSelectedItem = {this._onItemSelected.bind(this)}
-							headerTitle = {this.closeCaption}
-							items = {items}
-							uploadItemReturnType = {this.uploadItemReturnType}
-							uploadItemURL = {this.uploadItemURL}
-						/>,
-						container
-					);
+					const data = {
+						container: container,
+						currentIndex : index,
+						editItemURL : this.editItemURL,
+						handleSelectedItem: this._onItemSelected.bind(this),
+						headerTitle: this.closeCaption,
+						items: items,
+						uploadItemReturnType: this.uploadItemReturnType,
+						uploadItemURL: this.uploadItemURL
+					};
+
+					render(props => <ItemSelectorPreview {...props} />, data, container);
 				});
 			});
 		}

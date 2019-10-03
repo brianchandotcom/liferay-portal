@@ -24,6 +24,7 @@ const {useContext} = React;
 
 function ToolbarBody() {
 	const dispatch = useContext(DispatchContext);
+
 	const {singleSegmentsExperienceMode} = useContext(ConfigContext);
 
 	return (

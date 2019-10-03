@@ -2,7 +2,9 @@
 
 {template .render}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleValueChanged: any}
+	{@param? _handleFieldFocused: any}
 	{@param? displayErrors: bool}
 	{@param? errorMessage: string}
 	{@param? id: string}
@@ -26,6 +28,8 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
+				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param _handleValueChanged: $_handleValueChanged /}
 				{param disabled: $readOnly /}
 				{param inline: $inline /}
@@ -53,6 +57,8 @@
 
 {template .content}
 	{@param name: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldFocused: any}
 	{@param? _handleValueChanged: any}
 	{@param? disabled: bool}
 	{@param? inline: bool}
@@ -64,7 +70,11 @@
 	{@param? value: string}
 
 	{if $options}
-		<div class="ddm-radio">
+		<div
+			class="ddm-radio"
+			data-onblur="{$_handleFieldBlurred}"
+			data-onfocus="{$_handleFieldFocused}"
+		>
 			{let $radioValue: $value ?: $predefinedValue ?: '' /}
 
 			{foreach $radio in $options}

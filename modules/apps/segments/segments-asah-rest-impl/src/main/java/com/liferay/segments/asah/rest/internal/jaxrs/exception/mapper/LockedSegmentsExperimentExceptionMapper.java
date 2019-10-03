@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * Converts any {@code LockedSegmentsExperimentException} to a {@code 400} error.
  *
  * @author Sarai Díaz
+ * @review
  */
 @Component(
 	property = {

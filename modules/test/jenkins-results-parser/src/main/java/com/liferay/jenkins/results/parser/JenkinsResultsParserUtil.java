@@ -796,9 +796,15 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getCohortName(String masterHostname) {
+		if (masterHostname == null) {
+			return null;
+		}
+
 		Matcher matcher = _jenkinsMasterPattern.matcher(masterHostname);
 
-		matcher.find();
+		if (!matcher.find()) {
+			return null;
+		}
 
 		return matcher.group("cohortName");
 	}
@@ -955,7 +961,8 @@ public class JenkinsResultsParserUtil {
 
 			String cohortName = getCohortName();
 
-			if (buildProperties.containsKey(
+			if ((cohortName != null) &&
+				buildProperties.containsKey(
 					"github.cache.hostnames[" + cohortName + "]")) {
 
 				gitHubCacheHostnames = buildProperties.getProperty(

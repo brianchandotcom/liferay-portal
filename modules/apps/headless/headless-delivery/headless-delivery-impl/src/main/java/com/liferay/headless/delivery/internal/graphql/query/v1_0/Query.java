@@ -1067,12 +1067,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessageMessageBoardMessages(filter: ___, page: ___, pageSize: ___, parentMessageBoardMessageId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardMessageMessageBoardMessages(filter: ___, flatten: ___, page: ___, pageSize: ___, parentMessageBoardMessageId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MessageBoardMessagePage messageBoardMessageMessageBoardMessages(
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -1086,7 +1087,7 @@ public class Query {
 			messageBoardMessageResource -> new MessageBoardMessagePage(
 				messageBoardMessageResource.
 					getMessageBoardMessageMessageBoardMessagesPage(
-						parentMessageBoardMessageId, search,
+						parentMessageBoardMessageId, flatten, search,
 						_filterBiFunction.apply(
 							messageBoardMessageResource, filterString),
 						Pagination.of(page, pageSize),
@@ -1097,11 +1098,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadMessageBoardMessages(filter: ___, messageBoardThreadId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {messageBoardThreadMessageBoardMessages(filter: ___, flatten: ___, messageBoardThreadId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public MessageBoardMessagePage messageBoardThreadMessageBoardMessages(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -1115,7 +1117,7 @@ public class Query {
 			messageBoardMessageResource -> new MessageBoardMessagePage(
 				messageBoardMessageResource.
 					getMessageBoardThreadMessageBoardMessagesPage(
-						messageBoardThreadId, search,
+						messageBoardThreadId, flatten, search,
 						_filterBiFunction.apply(
 							messageBoardMessageResource, filterString),
 						Pagination.of(page, pageSize),
@@ -2488,6 +2490,7 @@ public class Query {
 
 		@GraphQLField
 		public MessageBoardMessagePage messageBoardMessages(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2501,7 +2504,7 @@ public class Query {
 				messageBoardMessageResource -> new MessageBoardMessagePage(
 					messageBoardMessageResource.
 						getMessageBoardMessageMessageBoardMessagesPage(
-							_messageBoardMessage.getId(), search,
+							_messageBoardMessage.getId(), flatten, search,
 							_filterBiFunction.apply(
 								messageBoardMessageResource, filterString),
 							Pagination.of(page, pageSize),
@@ -2673,6 +2676,7 @@ public class Query {
 
 		@GraphQLField
 		public MessageBoardMessagePage messageBoardMessages(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2686,7 +2690,7 @@ public class Query {
 				messageBoardMessageResource -> new MessageBoardMessagePage(
 					messageBoardMessageResource.
 						getMessageBoardThreadMessageBoardMessagesPage(
-							_messageBoardThread.getId(), search,
+							_messageBoardThread.getId(), flatten, search,
 							_filterBiFunction.apply(
 								messageBoardMessageResource, filterString),
 							Pagination.of(page, pageSize),

@@ -34,7 +34,9 @@ import org.gradle.api.tasks.TaskDependency;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class JSTranspilerBasePlugin implements Plugin<Project> {
 
 	public static final String EXPAND_JS_COMPILE_DEPENDENCIES_TASK_NAME =

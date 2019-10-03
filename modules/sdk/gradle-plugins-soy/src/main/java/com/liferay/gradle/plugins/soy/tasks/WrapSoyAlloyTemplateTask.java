@@ -26,7 +26,9 @@ import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class WrapSoyAlloyTemplateTask extends SourceTask {
 
 	@Input

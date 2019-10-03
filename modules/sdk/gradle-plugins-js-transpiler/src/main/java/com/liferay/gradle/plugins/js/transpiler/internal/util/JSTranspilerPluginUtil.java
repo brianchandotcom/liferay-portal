@@ -33,7 +33,9 @@ import org.gradle.api.tasks.TaskDependency;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class JSTranspilerPluginUtil {
 
 	public static Copy addTaskExpandCompileDependency(

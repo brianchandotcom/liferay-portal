@@ -35,7 +35,9 @@ import org.gradle.api.tasks.TaskAction;
 
 /**
  * @author Andrea Di Giorgi
+ * @deprecated As of Judson (7.1.x), with no direct replacement
  */
+@Deprecated
 public class BuildSoyTask extends SourceTask {
 
 	@TaskAction
@@ -57,7 +59,7 @@ public class BuildSoyTask extends SourceTask {
 					ClassLoader contextClassLoader =
 						currentThread.getContextClassLoader();
 
-					Class<?> clazz = (Class<?>)contextClassLoader.loadClass(
+					Class<?> clazz = contextClassLoader.loadClass(
 						BuildSoyCommand.class.getName());
 
 					Method executeMethod = clazz.getMethod(

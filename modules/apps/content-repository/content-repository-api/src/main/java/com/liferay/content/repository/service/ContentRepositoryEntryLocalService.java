@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,6 +75,11 @@ public interface ContentRepositoryEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ContentRepositoryEntry addContentRepositoryEntry(
 		ContentRepositoryEntry contentRepositoryEntry);
+
+	public ContentRepositoryEntry addContentRepositoryEntry(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new content repository entry with the primary key. Does not add the content repository entry to the database.
@@ -300,5 +308,10 @@ public interface ContentRepositoryEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ContentRepositoryEntry updateContentRepositoryEntry(
 		ContentRepositoryEntry contentRepositoryEntry);
+
+	public ContentRepositoryEntry updateContentRepositoryEntry(
+			long contentRepositoryEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
 
 }

@@ -50,6 +50,18 @@ public class ContentRepositoryEntryLocalServiceWrapper
 			contentRepositoryEntry);
 	}
 
+	@Override
+	public com.liferay.content.repository.model.ContentRepositoryEntry
+			addContentRepositoryEntry(
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contentRepositoryEntryLocalService.addContentRepositoryEntry(
+			nameMap, descriptionMap, serviceContext);
+	}
+
 	/**
 	 * Creates a new content repository entry with the primary key. Does not add the content repository entry to the database.
 	 *
@@ -386,6 +398,19 @@ public class ContentRepositoryEntryLocalServiceWrapper
 
 		return _contentRepositoryEntryLocalService.updateContentRepositoryEntry(
 			contentRepositoryEntry);
+	}
+
+	@Override
+	public com.liferay.content.repository.model.ContentRepositoryEntry
+			updateContentRepositoryEntry(
+				long contentRepositoryEntryId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _contentRepositoryEntryLocalService.updateContentRepositoryEntry(
+			contentRepositoryEntryId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override

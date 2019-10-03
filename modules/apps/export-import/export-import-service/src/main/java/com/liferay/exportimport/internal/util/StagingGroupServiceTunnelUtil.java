@@ -35,35 +35,10 @@ public class StagingGroupServiceTunnelUtil {
 			HttpPrincipal httpPrincipal, long remoteGroupId)
 		throws PortalException {
 
-		MethodHandler methodHandler = new MethodHandler(
-			_checkRemoteStagingGroupMethodKey, remoteGroupId);
-
-		try {
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof PortalException) {
-					throw (PortalException)e;
-				}
-
-				throw new SystemException(e);
-			}
-		}
-		catch (SystemException se) {
-			if (se.getCause() instanceof ConnectException) {
-				_log.error("Connection error: " + se.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(se, se);
-				}
-			}
-			else {
-				_log.error(se, se);
-			}
-
-			throw se;
-		}
+		_invoke(
+			httpPrincipal,
+			new MethodHandler(
+				_checkRemoteStagingGroupMethodKey, remoteGroupId));
 	}
 
 	public static String getGroupDisplayURL(
@@ -71,13 +46,20 @@ public class StagingGroupServiceTunnelUtil {
 			boolean privateLayout, boolean secureConnection)
 		throws PortalException {
 
-		MethodHandler methodHandler = new MethodHandler(
-			_getGroupDisplayURLMethodKey, remoteGroupId, privateLayout,
-			secureConnection);
+		return (String)_invoke(
+			httpPrincipal,
+			new MethodHandler(
+				_getGroupDisplayURLMethodKey, remoteGroupId, privateLayout,
+				secureConnection));
+	}
+
+	private static Object _invoke(
+			HttpPrincipal httpPrincipal, MethodHandler methodHandler)
+		throws PortalException {
 
 		try {
 			try {
-				return (String)TunnelUtil.invoke(httpPrincipal, methodHandler);
+				return TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof PortalException) {

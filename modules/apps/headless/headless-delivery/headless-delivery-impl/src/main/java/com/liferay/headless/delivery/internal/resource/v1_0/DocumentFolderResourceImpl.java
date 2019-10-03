@@ -75,15 +75,15 @@ public class DocumentFolderResourceImpl
 
 	@Override
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			Long parentDocumentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long parentDocumentFolderId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		DocumentFolder parentDocumentFolder = _toDocumentFolder(
 			_dlAppService.getFolder(parentDocumentFolderId));
 
 		return _getDocumentFoldersPage(
-			parentDocumentFolder.getSiteId(), search, filter,
+			parentDocumentFolder.getSiteId(), flatten, search, filter,
 			parentDocumentFolder.getId(), pagination, sorts);
 	}
 
@@ -109,7 +109,8 @@ public class DocumentFolderResourceImpl
 		}
 
 		return _getDocumentFoldersPage(
-			siteId, search, filter, documentFolderId, pagination, sorts);
+			siteId, flatten, search, filter, documentFolderId, pagination,
+			sorts);
 	}
 
 	@Override
@@ -182,7 +183,7 @@ public class DocumentFolderResourceImpl
 	}
 
 	private Page<DocumentFolder> _getDocumentFoldersPage(
-			Long siteId, String search, Filter filter,
+			Long siteId, Boolean flatten, String search, Filter filter,
 			Long parentDocumentFolderId, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -192,10 +193,19 @@ public class DocumentFolderResourceImpl
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
+					String field = Field.FOLDER_ID;
+
+					if (GetterUtil.getBoolean(flatten)) {
+						booleanFilter.add(
+							new TermFilter(
+								field, String.valueOf(parentDocumentFolderId)),
+							BooleanClauseOccur.MUST_NOT);
+						field = "treePath";
+					}
+
 					booleanFilter.add(
 						new TermFilter(
-							Field.FOLDER_ID,
-							String.valueOf(parentDocumentFolderId)),
+							field, String.valueOf(parentDocumentFolderId)),
 						BooleanClauseOccur.MUST);
 				}
 			},

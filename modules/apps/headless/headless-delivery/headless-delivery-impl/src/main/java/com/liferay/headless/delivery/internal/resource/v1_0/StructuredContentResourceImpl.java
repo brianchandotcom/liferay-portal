@@ -259,8 +259,8 @@ public class StructuredContentResourceImpl
 	@Override
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				Long structuredContentFolderId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long structuredContentFolderId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getStructuredContentsPage(
@@ -269,10 +269,16 @@ public class StructuredContentResourceImpl
 					BooleanFilter booleanFilter =
 						booleanQuery.getPreBooleanFilter();
 
+					String field =
+						com.liferay.portal.kernel.search.Field.FOLDER_ID;
+
+					if (GetterUtil.getBoolean(flatten)) {
+						field = "treePath";
+					}
+
 					booleanFilter.add(
 						new TermFilter(
-							com.liferay.portal.kernel.search.Field.FOLDER_ID,
-							structuredContentFolderId.toString()),
+							field, structuredContentFolderId.toString()),
 						BooleanClauseOccur.MUST);
 				}
 			},

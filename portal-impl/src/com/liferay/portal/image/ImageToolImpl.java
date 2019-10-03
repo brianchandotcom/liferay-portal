@@ -99,11 +99,11 @@ public class ImageToolImpl implements ImageTool {
 			return null;
 		}
 
-		File inputFile = _fileUtil.createTempFile(type);
-		final File outputFile = _fileUtil.createTempFile(type);
+		File inputFile = _fileImpl.createTempFile(type);
+		final File outputFile = _fileImpl.createTempFile(type);
 
 		try {
-			_fileUtil.write(inputFile, bytes);
+			_fileImpl.write(inputFile, bytes);
 
 			IMOperation imOperation = new IMOperation();
 
@@ -136,7 +136,7 @@ public class ImageToolImpl implements ImageTool {
 
 						try {
 							ImageBag imageBag = read(
-								_fileUtil.getBytes(outputFile));
+								_fileImpl.getBytes(outputFile));
 
 							renderedImage = imageBag.getRenderedImage();
 						}
@@ -156,8 +156,8 @@ public class ImageToolImpl implements ImageTool {
 			_log.error(e, e);
 		}
 		finally {
-			_fileUtil.delete(inputFile);
-			_fileUtil.delete(outputFile);
+			_fileImpl.delete(inputFile);
+			_fileImpl.delete(outputFile);
 		}
 
 		return null;
@@ -559,7 +559,7 @@ public class ImageToolImpl implements ImageTool {
 	public Image getImage(File file)
 		throws ImageResolutionException, IOException {
 
-		byte[] bytes = _fileUtil.getBytes(file);
+		byte[] bytes = _fileImpl.getBytes(file);
 
 		return getImage(bytes);
 	}
@@ -568,7 +568,7 @@ public class ImageToolImpl implements ImageTool {
 	public Image getImage(InputStream is)
 		throws ImageResolutionException, IOException {
 
-		byte[] bytes = _fileUtil.getBytes(is, -1, true);
+		byte[] bytes = _fileImpl.getBytes(is, -1, true);
 
 		return getImage(bytes);
 	}
@@ -577,7 +577,7 @@ public class ImageToolImpl implements ImageTool {
 	public Image getImage(InputStream is, boolean cleanUpStream)
 		throws ImageResolutionException, IOException {
 
-		byte[] bytes = _fileUtil.getBytes(is, -1, cleanUpStream);
+		byte[] bytes = _fileImpl.getBytes(is, -1, cleanUpStream);
 
 		return getImage(bytes);
 	}
@@ -696,14 +696,14 @@ public class ImageToolImpl implements ImageTool {
 	public ImageBag read(File file)
 		throws ImageResolutionException, IOException {
 
-		return read(_fileUtil.getBytes(file));
+		return read(_fileImpl.getBytes(file));
 	}
 
 	@Override
 	public ImageBag read(InputStream inputStream)
 		throws ImageResolutionException, IOException {
 
-		return read(_fileUtil.getBytes(inputStream));
+		return read(_fileImpl.getBytes(inputStream));
 	}
 
 	@Override
@@ -1000,7 +1000,7 @@ public class ImageToolImpl implements ImageTool {
 
 	private static final ImageTool _instance = new ImageToolImpl();
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileImpl = FileImpl.getInstance();
 	private static ImageMagick _imageMagick;
 
 	private Image _defaultCompanyLogo;

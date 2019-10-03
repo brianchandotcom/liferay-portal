@@ -338,7 +338,7 @@ public class PropertiesDocBuilder {
 	protected List<PropertiesSection> getPropertiesSections(File propertiesFile)
 		throws IOException {
 
-		String content = _fileUtil.read(propertiesFile);
+		String content = _fileImpl.read(propertiesFile);
 
 		String[] sections = content.split("\n\n");
 
@@ -403,6 +403,6 @@ public class PropertiesDocBuilder {
 
 	protected static final String INDENT = StringPool.FOUR_SPACES;
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileImpl = FileImpl.getInstance();
 
 }

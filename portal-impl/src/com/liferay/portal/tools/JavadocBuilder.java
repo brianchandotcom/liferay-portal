@@ -627,7 +627,7 @@ public class JavadocBuilder {
 				File file = new File(_BASEDIR + fileName);
 
 				if (file.exists()) {
-					String oldContent = _fileUtil.read(
+					String oldContent = _fileImpl.read(
 						_BASEDIR + fileName + "doc");
 
 					if (_isGenerated(oldContent)) {
@@ -682,7 +682,7 @@ public class JavadocBuilder {
 
 		File file = new File(_BASEDIR + fileName);
 
-		String oldContent = _fileUtil.read(file);
+		String oldContent = _fileImpl.read(file);
 
 		String[] lines = StringUtil.splitLines(oldContent);
 
@@ -735,7 +735,7 @@ public class JavadocBuilder {
 		String newContent = StringUtil.trim(sb.toString());
 
 		if ((oldContent == null) || !oldContent.equals(newContent)) {
-			_fileUtil.write(file, newContent);
+			_fileImpl.write(file, newContent);
 
 			if (log) {
 				System.out.println("Writing " + file);
@@ -751,7 +751,7 @@ public class JavadocBuilder {
 		String oldContent = null;
 
 		if (file.exists()) {
-			oldContent = _fileUtil.read(file);
+			oldContent = _fileImpl.read(file);
 
 			if (_isGenerated(oldContent)) {
 				return;
@@ -763,7 +763,7 @@ public class JavadocBuilder {
 		String newContent = _getJavadocXml(javaClass);
 
 		if ((oldContent == null) || !oldContent.equals(newContent)) {
-			_fileUtil.write(file, newContent.getBytes());
+			_fileImpl.write(file, newContent.getBytes());
 
 			System.out.println("Writing " + file);
 		}
@@ -781,7 +781,7 @@ public class JavadocBuilder {
 		File file = new File(_BASEDIR + fileName);
 
 		if (oldContent == null) {
-			oldContent = _fileUtil.read(file);
+			oldContent = _fileImpl.read(file);
 		}
 
 		String[] lines = StringUtil.splitLines(oldContent);
@@ -860,7 +860,7 @@ public class JavadocBuilder {
 		String newContent = StringUtil.trim(sb.toString());
 
 		if ((oldContent == null) || !oldContent.equals(newContent)) {
-			_fileUtil.write(file, newContent);
+			_fileImpl.write(file, newContent);
 
 			System.out.println("Writing " + file);
 		}
@@ -868,7 +868,7 @@ public class JavadocBuilder {
 
 	private static final String _BASEDIR = "./";
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileImpl = FileImpl.getInstance();
 	private static final SAXReader _saxReader = new SAXReaderImpl();
 
 }

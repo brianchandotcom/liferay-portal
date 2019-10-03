@@ -84,12 +84,12 @@ public class ExtInfoBuilder {
 				StringUtil.replace(file, CharPool.BACK_SLASH, CharPool.SLASH));
 		}
 
-		_fileUtil.write(
+		_fileImpl.write(
 			StringBundler.concat(
 				outputDir, "/ext-", servletContextName, ".xml"),
 			document.formattedString());
 	}
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileImpl = FileImpl.getInstance();
 
 }

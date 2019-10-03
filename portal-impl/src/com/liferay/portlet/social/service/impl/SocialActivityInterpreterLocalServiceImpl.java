@@ -79,11 +79,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 		Map<String, Object> properties = new HashMap<>();
 
-		SocialActivityInterpreterImpl activityInterpreterImpl =
+		SocialActivityInterpreterImpl socialActivityInterpreterImpl =
 			(SocialActivityInterpreterImpl)activityInterpreter;
 
 		properties.put(
-			"javax.portlet.name", activityInterpreterImpl.getPortletId());
+			"javax.portlet.name", socialActivityInterpreterImpl.getPortletId());
 
 		ServiceRegistration<SocialActivityInterpreter> serviceRegistration =
 			registry.registerService(
@@ -208,16 +208,17 @@ public class SocialActivityInterpreterLocalServiceImpl
 		for (SocialActivityInterpreter activityInterpreter :
 				activityInterpreters) {
 
-			SocialActivityInterpreterImpl activityInterpreterImpl =
+			SocialActivityInterpreterImpl socialActivityInterpreterImpl =
 				(SocialActivityInterpreterImpl)activityInterpreter;
 
-			if (activityInterpreterImpl.hasClassName(className)) {
+			if (socialActivityInterpreterImpl.hasClassName(className)) {
 				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreterImpl.interpret(activity, serviceContext);
+					socialActivityInterpreterImpl.interpret(
+						activity, serviceContext);
 
 				if (activityFeedEntry != null) {
 					activityFeedEntry.setPortletId(
-						activityInterpreterImpl.getPortletId());
+						socialActivityInterpreterImpl.getPortletId());
 
 					return activityFeedEntry;
 				}
@@ -264,17 +265,17 @@ public class SocialActivityInterpreterLocalServiceImpl
 		for (SocialActivityInterpreter activityInterpreter :
 				activityInterpreters) {
 
-			SocialActivityInterpreterImpl activityInterpreterImpl =
+			SocialActivityInterpreterImpl socialActivityInterpreterImpl =
 				(SocialActivityInterpreterImpl)activityInterpreter;
 
-			if (activityInterpreterImpl.hasClassName(className)) {
+			if (socialActivityInterpreterImpl.hasClassName(className)) {
 				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreterImpl.interpret(
+					socialActivityInterpreterImpl.interpret(
 						activitySet, serviceContext);
 
 				if (activityFeedEntry != null) {
 					activityFeedEntry.setPortletId(
-						activityInterpreterImpl.getPortletId());
+						socialActivityInterpreterImpl.getPortletId());
 
 					return activityFeedEntry;
 				}
@@ -306,11 +307,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 			for (SocialActivityInterpreter activityInterpreter :
 					activityInterpreters) {
 
-				SocialActivityInterpreterImpl activityInterpreterImpl =
+				SocialActivityInterpreterImpl socialActivityInterpreterImpl =
 					(SocialActivityInterpreterImpl)activityInterpreter;
 
-				if (activityInterpreterImpl.hasClassName(className)) {
-					activityInterpreterImpl.updateActivitySet(activityId);
+				if (socialActivityInterpreterImpl.hasClassName(className)) {
+					socialActivityInterpreterImpl.updateActivitySet(activityId);
 
 					return;
 				}

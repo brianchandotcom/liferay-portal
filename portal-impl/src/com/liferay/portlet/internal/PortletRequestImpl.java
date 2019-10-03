@@ -338,7 +338,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public PortletSession getPortletSession() {
-		return _session;
+		return _portletSessionImpl;
 	}
 
 	@Override
@@ -347,7 +347,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			return null;
 		}
 
-		return _session;
+		return _portletSessionImpl;
 	}
 
 	@Override
@@ -527,8 +527,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public String getRequestedSessionId() {
-		if (_session != null) {
-			return _session.getId();
+		if (_portletSessionImpl != null) {
+			return _portletSessionImpl.getId();
 		}
 
 		HttpSession session = _httpServletRequest.getSession(false);
@@ -840,7 +840,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_windowState = windowState;
 		_portletMode = portletMode;
 		_preferences = preferences;
-		_session = new PortletSessionImpl(
+		_portletSessionImpl = new PortletSessionImpl(
 			_httpServletRequest.getSession(), _portletContext, _portletName,
 			plid);
 
@@ -1032,7 +1032,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public boolean isRequestedSessionIdValid() {
-		if (_session.isInvalidated() || _invalidSession) {
+		if (_portletSessionImpl.isInvalidated() || _invalidSession) {
 			return false;
 		}
 
@@ -1274,13 +1274,13 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private PortletMode _portletMode;
 	private String _portletName;
 	private HttpServletRequest _portletRequestDispatcherHttpServletRequest;
+	private PortletSessionImpl _portletSessionImpl;
 	private int _portletSpecMajorVersion;
 	private PortletPreferences _preferences;
 	private Profile _profile;
 	private String _remoteUser;
 	private long _remoteUserId;
 	private RenderParameters _renderParameters;
-	private PortletSessionImpl _session;
 	private boolean _triggeredByActionURL;
 	private Principal _userPrincipal;
 	private WindowState _windowState;

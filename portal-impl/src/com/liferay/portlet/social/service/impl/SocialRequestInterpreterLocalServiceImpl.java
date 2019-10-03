@@ -78,11 +78,11 @@ public class SocialRequestInterpreterLocalServiceImpl
 
 		Map<String, Object> properties = new HashMap<>();
 
-		SocialRequestInterpreterImpl requestInterpreterImpl =
+		SocialRequestInterpreterImpl socialRequestInterpreterImpl =
 			(SocialRequestInterpreterImpl)requestInterpreter;
 
 		properties.put(
-			"javax.portlet.name", requestInterpreterImpl.getPortletId());
+			"javax.portlet.name", socialRequestInterpreterImpl.getPortletId());
 
 		ServiceRegistration<SocialRequestInterpreter> serviceRegistration =
 			registry.registerService(
@@ -150,16 +150,17 @@ public class SocialRequestInterpreterLocalServiceImpl
 		for (SocialRequestInterpreter requestInterpreter :
 				_requestInterpreters) {
 
-			SocialRequestInterpreterImpl requestInterpreterImpl =
+			SocialRequestInterpreterImpl socialRequestInterpreterImpl =
 				(SocialRequestInterpreterImpl)requestInterpreter;
 
-			if (matches(requestInterpreterImpl, className, request)) {
+			if (matches(socialRequestInterpreterImpl, className, request)) {
 				SocialRequestFeedEntry requestFeedEntry =
-					requestInterpreterImpl.interpret(request, themeDisplay);
+					socialRequestInterpreterImpl.interpret(
+						request, themeDisplay);
 
 				if (requestFeedEntry != null) {
 					requestFeedEntry.setPortletId(
-						requestInterpreterImpl.getPortletId());
+						socialRequestInterpreterImpl.getPortletId());
 
 					return requestFeedEntry;
 				}
@@ -192,12 +193,13 @@ public class SocialRequestInterpreterLocalServiceImpl
 		for (SocialRequestInterpreter requestInterpreter :
 				_requestInterpreters) {
 
-			SocialRequestInterpreterImpl requestInterpreterImpl =
+			SocialRequestInterpreterImpl socialRequestInterpreterImpl =
 				(SocialRequestInterpreterImpl)requestInterpreter;
 
-			if (matches(requestInterpreterImpl, className, request)) {
-				boolean value = requestInterpreterImpl.processConfirmation(
-					request, themeDisplay);
+			if (matches(socialRequestInterpreterImpl, className, request)) {
+				boolean value =
+					socialRequestInterpreterImpl.processConfirmation(
+						request, themeDisplay);
 
 				if (value) {
 					return;
@@ -230,11 +232,11 @@ public class SocialRequestInterpreterLocalServiceImpl
 		for (SocialRequestInterpreter requestInterpreter :
 				_requestInterpreters) {
 
-			SocialRequestInterpreterImpl requestInterpreterImpl =
+			SocialRequestInterpreterImpl socialRequestInterpreterImpl =
 				(SocialRequestInterpreterImpl)requestInterpreter;
 
-			if (matches(requestInterpreterImpl, className, request)) {
-				boolean value = requestInterpreterImpl.processRejection(
+			if (matches(socialRequestInterpreterImpl, className, request)) {
+				boolean value = socialRequestInterpreterImpl.processRejection(
 					request, themeDisplay);
 
 				if (value) {
@@ -261,17 +263,18 @@ public class SocialRequestInterpreterLocalServiceImpl
 	}
 
 	protected boolean matches(
-		SocialRequestInterpreterImpl requestInterpreter, String className,
-		SocialRequest request) {
+		SocialRequestInterpreterImpl socialRequestInterpreterImpl,
+		String className, SocialRequest request) {
 
-		if (!requestInterpreter.hasClassName(className)) {
+		if (!socialRequestInterpreterImpl.hasClassName(className)) {
 			return false;
 		}
 
 		String requestPortletId = getSocialRequestPortletId(request);
 
 		if (Validator.isNull(requestPortletId) ||
-			requestPortletId.equals(requestInterpreter.getPortletId())) {
+			requestPortletId.equals(
+				socialRequestInterpreterImpl.getPortletId())) {
 
 			return true;
 		}

@@ -88,7 +88,7 @@ import org.mozilla.intl.chardet.nsPSMDetector;
 public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	public static FileImpl getInstance() {
-		return _instance;
+		return _fileImpl;
 	}
 
 	@Override
@@ -1163,7 +1163,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	private static final Log _log = LogFactoryUtil.getLog(FileImpl.class);
 
-	private static final FileImpl _instance = new FileImpl();
+	private static final FileImpl _fileImpl = new FileImpl();
 
 	private static class ExtractTextProcessCallable
 		implements ProcessCallable<String> {

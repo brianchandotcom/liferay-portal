@@ -58,12 +58,13 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion and(Criterion lhs, Criterion rhs) {
-		CriterionImpl lhsImpl = (CriterionImpl)lhs;
-		CriterionImpl rhsImpl = (CriterionImpl)rhs;
+		CriterionImpl lhsCriterionImpl = (CriterionImpl)lhs;
+		CriterionImpl rhsCriterionImpl = (CriterionImpl)rhs;
 
 		return new CriterionImpl(
 			Restrictions.and(
-				lhsImpl.getWrappedCriterion(), rhsImpl.getWrappedCriterion()));
+				lhsCriterionImpl.getWrappedCriterion(),
+				rhsCriterionImpl.getWrappedCriterion()));
 	}
 
 	@Override
@@ -210,20 +211,21 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion not(Criterion expression) {
-		CriterionImpl expressionImpl = (CriterionImpl)expression;
+		CriterionImpl expressionCriterionImpl = (CriterionImpl)expression;
 
 		return new CriterionImpl(
-			Restrictions.not(expressionImpl.getWrappedCriterion()));
+			Restrictions.not(expressionCriterionImpl.getWrappedCriterion()));
 	}
 
 	@Override
 	public Criterion or(Criterion lhs, Criterion rhs) {
-		CriterionImpl lhsImpl = (CriterionImpl)lhs;
-		CriterionImpl rhsImpl = (CriterionImpl)rhs;
+		CriterionImpl lhsCriterionImpl = (CriterionImpl)lhs;
+		CriterionImpl rhsCriterionImpl = (CriterionImpl)rhs;
 
 		return new CriterionImpl(
 			Restrictions.or(
-				lhsImpl.getWrappedCriterion(), rhsImpl.getWrappedCriterion()));
+				lhsCriterionImpl.getWrappedCriterion(),
+				rhsCriterionImpl.getWrappedCriterion()));
 	}
 
 	@Override

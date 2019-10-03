@@ -219,7 +219,7 @@ public class PluginsSummaryBuilder {
 
 		System.out.println("## read a " + buildXmlFile);
 
-		String buildXmlContent = _fileUtil.read(buildXmlFile);
+		String buildXmlContent = _fileImpl.read(buildXmlFile);
 
 		int x = buildXmlContent.indexOf("import.shared");
 
@@ -627,7 +627,7 @@ public class PluginsSummaryBuilder {
 		"CLDSVCS", "LPS", "SOS", "SYNC"
 	};
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileImpl = FileImpl.getInstance();
 
 	private final Set<String> _distinctAuthors = new TreeSet<>();
 	private final Set<String> _distinctLicenses = new TreeSet<>();

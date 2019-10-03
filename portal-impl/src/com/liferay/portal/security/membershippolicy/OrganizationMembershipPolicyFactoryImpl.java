@@ -30,7 +30,8 @@ public class OrganizationMembershipPolicyFactoryImpl
 
 	@Override
 	public OrganizationMembershipPolicy getOrganizationMembershipPolicy() {
-		return _instance._serviceTracker.getService();
+		return _organizationMembershipPolicyFactoryImpl._serviceTracker.
+			getService();
 	}
 
 	private OrganizationMembershipPolicyFactoryImpl() {
@@ -42,8 +43,9 @@ public class OrganizationMembershipPolicyFactoryImpl
 		_serviceTracker.open();
 	}
 
-	private static final OrganizationMembershipPolicyFactoryImpl _instance =
-		new OrganizationMembershipPolicyFactoryImpl();
+	private static final OrganizationMembershipPolicyFactoryImpl
+		_organizationMembershipPolicyFactoryImpl =
+			new OrganizationMembershipPolicyFactoryImpl();
 
 	private final ServiceTracker<?, OrganizationMembershipPolicy>
 		_serviceTracker;

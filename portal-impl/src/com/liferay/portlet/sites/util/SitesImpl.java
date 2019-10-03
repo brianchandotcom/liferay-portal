@@ -490,45 +490,45 @@ public class SitesImpl implements Sites {
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					sourceLayout, sourcePortletId, null);
 
-			PortletPreferencesImpl sourcePreferencesImpl =
+			PortletPreferencesImpl sourcePortletPreferencesImpl =
 				(PortletPreferencesImpl)sourcePreferences;
 
 			PortletPreferences targetPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					targetLayout, sourcePortletId, null);
 
-			PortletPreferencesImpl targetPreferencesImpl =
+			PortletPreferencesImpl targetPortletPreferencesImpl =
 				(PortletPreferencesImpl)targetPreferences;
 
 			PortletPreferencesLocalServiceUtil.updatePreferences(
-				targetPreferencesImpl.getOwnerId(),
-				targetPreferencesImpl.getOwnerType(),
-				targetPreferencesImpl.getPlid(), sourcePortletId,
+				targetPortletPreferencesImpl.getOwnerId(),
+				targetPortletPreferencesImpl.getOwnerType(),
+				targetPortletPreferencesImpl.getPlid(), sourcePortletId,
 				sourcePreferences);
 
-			if ((sourcePreferencesImpl.getOwnerId() !=
+			if ((sourcePortletPreferencesImpl.getOwnerId() !=
 					PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
-				(sourcePreferencesImpl.getOwnerType() !=
+				(sourcePortletPreferencesImpl.getOwnerType() !=
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT)) {
 
 				sourcePreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						sourceLayout, sourcePortletId);
 
-				sourcePreferencesImpl =
+				sourcePortletPreferencesImpl =
 					(PortletPreferencesImpl)sourcePreferences;
 
 				targetPreferences =
 					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 						targetLayout, sourcePortletId);
 
-				targetPreferencesImpl =
+				targetPortletPreferencesImpl =
 					(PortletPreferencesImpl)targetPreferences;
 
 				PortletPreferencesLocalServiceUtil.updatePreferences(
-					targetPreferencesImpl.getOwnerId(),
-					targetPreferencesImpl.getOwnerType(),
-					targetPreferencesImpl.getPlid(), sourcePortletId,
+					targetPortletPreferencesImpl.getOwnerId(),
+					targetPortletPreferencesImpl.getOwnerType(),
+					targetPortletPreferencesImpl.getPlid(), sourcePortletId,
 					sourcePreferences);
 			}
 

@@ -791,12 +791,14 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		for (SocialActivityInterpreter activityInterpreter :
 				activityInterpreters) {
 
-			SocialActivityInterpreterImpl activityInterpreterImpl =
+			SocialActivityInterpreterImpl socialActivityInterpreterImpl =
 				(SocialActivityInterpreterImpl)activityInterpreter;
 
-			if (activityInterpreterImpl.hasClassName(activity.getClassName())) {
+			if (socialActivityInterpreterImpl.hasClassName(
+					activity.getClassName())) {
+
 				try {
-					if (activityInterpreterImpl.hasPermission(
+					if (socialActivityInterpreterImpl.hasPermission(
 							permissionChecker, activity, ActionKeys.VIEW,
 							serviceContext)) {
 

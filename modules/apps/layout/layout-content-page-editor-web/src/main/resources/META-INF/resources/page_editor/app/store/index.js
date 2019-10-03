@@ -23,6 +23,22 @@ const INITIAL_STATE = {
 
 export const StoreContext = React.createContext(INITIAL_STATE);
 
+/**
+ * Prepares the initial contents of the store based on server data.
+ *
+ * Data that goes in the store should be of "global" interest across the
+ * app. Actions (user interactions, network activity etc) update that state, and
+ * any interested component can obtain updates via the `StoreContext`.
+ *
+ * This is in contrast to immutable config, managed in the neigboring
+ * config directory. Immutable config may be of interest across the app,
+ * but it does not change in response to actions or events; it remains
+ * static over the lifetime of the app.
+ *
+ * State which is not of "global" interest should go in component-local state
+ * (see the `useState` hook) or a in more localized context objects that apply
+ * to specific subtrees.
+ */
 export function getInitialState(data = {}) {
 	// TODO: Transform/normalize.
 	const state = {

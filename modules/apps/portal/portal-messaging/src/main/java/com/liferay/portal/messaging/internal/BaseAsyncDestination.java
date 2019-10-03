@@ -39,11 +39,6 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.util.Locale;
 import java.util.Set;
@@ -54,19 +49,6 @@ import java.util.concurrent.TimeUnit;
  * @author Shuyang Zhou
  */
 public abstract class BaseAsyncDestination extends BaseDestination {
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		serviceTracker = registry.trackServices(
-			PortalExecutorManager.class,
-			new PortalExecutorManagerServiceTrackerCustomizer());
-
-		serviceTracker.open();
-	}
 
 	@Override
 	public void close(boolean force) {
@@ -80,13 +62,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		else {
 			_threadPoolExecutor.shutdown();
 		}
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		serviceTracker.close();
 	}
 
 	@Override
@@ -146,7 +121,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			new ThreadPoolHandlerAdapter());
 
 		ThreadPoolExecutor oldThreadPoolExecutor =
-			portalExecutorManager.registerPortalExecutor(
+			_portalExecutorManager.registerPortalExecutor(
 				getName(), threadPoolExecutor);
 
 		if (oldThreadPoolExecutor != null) {
@@ -197,6 +172,12 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	public void setMaximumQueueSize(int maximumQueueSize) {
 		_maximumQueueSize = maximumQueueSize;
+	}
+
+	public void setPortalExecutorManager(
+		PortalExecutorManager portalExecutorManager) {
+
+		_portalExecutorManager = portalExecutorManager;
 	}
 
 	/**
@@ -359,10 +340,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		}
 	}
 
-	protected volatile PortalExecutorManager portalExecutorManager;
-	protected ServiceTracker<PortalExecutorManager, PortalExecutorManager>
-		serviceTracker;
-
 	private RejectedExecutionHandler _createRejectionExecutionHandler() {
 		return new RejectedExecutionHandler() {
 
@@ -394,42 +371,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 		BaseAsyncDestination.class);
 
 	private int _maximumQueueSize = Integer.MAX_VALUE;
+	private PortalExecutorManager _portalExecutorManager;
 	private RejectedExecutionHandler _rejectedExecutionHandler;
 	private ThreadPoolExecutor _threadPoolExecutor;
 	private int _workersCoreSize = _WORKERS_CORE_SIZE;
 	private int _workersMaxSize = _WORKERS_MAX_SIZE;
-
-	private class PortalExecutorManagerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<PortalExecutorManager, PortalExecutorManager> {
-
-		@Override
-		public PortalExecutorManager addingService(
-			ServiceReference<PortalExecutorManager> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			portalExecutorManager = registry.getService(serviceReference);
-
-			open();
-
-			return portalExecutorManager;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<PortalExecutorManager> serviceReference,
-			PortalExecutorManager portalExecutorManager) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<PortalExecutorManager> serviceReference,
-			PortalExecutorManager portalExecutorManager) {
-
-			portalExecutorManager = null;
-		}
-
-	}
 
 }

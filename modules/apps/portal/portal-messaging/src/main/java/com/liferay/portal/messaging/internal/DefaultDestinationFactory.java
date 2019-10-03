@@ -67,10 +67,10 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	protected void activate() {
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-			new ParallelDestinationPrototype());
+			new ParallelDestinationPrototype(_portalExecutorManager));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-			new SerialDestinationPrototype());
+			new SerialDestinationPrototype(_portalExecutorManager));
 		_destinationPrototypes.put(
 			DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 			new SynchronousDestinationPrototype());
@@ -104,12 +104,10 @@ public class DefaultDestinationFactory implements DestinationFactory {
 			destinationPrototype);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortalExecutorManager(
-		PortalExecutorManager portalExecutorManager) {
-	}
-
 	private final ConcurrentMap<String, DestinationPrototype>
 		_destinationPrototypes = new ConcurrentHashMap<>();
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 }

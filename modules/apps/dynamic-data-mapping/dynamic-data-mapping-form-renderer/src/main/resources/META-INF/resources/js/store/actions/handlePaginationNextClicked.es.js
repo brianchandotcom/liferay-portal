@@ -16,7 +16,7 @@ import {evaluate} from '../../util/evaluation.es';
 import {PagesVisitor} from '../../util/visitors.es';
 
 export default (evaluatorContext, dispatch) => {
-	const {activePage, pages} = evaluatorContext;
+	const {activePage, formId, pages} = evaluatorContext;
 
 	return evaluate(null, evaluatorContext).then(evaluatedPages => {
 		let validPage = true;
@@ -43,10 +43,18 @@ export default (evaluatorContext, dispatch) => {
 				}
 			);
 
-			dispatch(
-				'activePageUpdated',
-				Math.min(nextActivePageIndex, pages.length - 1)
+			const activePageUpdated = Math.min(
+				nextActivePageIndex,
+				pages.length - 1
 			);
+
+			dispatch('activePageUpdated', activePageUpdated);
+
+			Liferay.fire('ddmFormPageShow', {
+				formId,
+				page: activePageUpdated,
+				title: pages[activePageUpdated].title
+			});
 		} else {
 			dispatch('pageValidationFailed', activePage);
 		}

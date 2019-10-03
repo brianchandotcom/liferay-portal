@@ -15,7 +15,7 @@
 import {evaluate} from '../../util/evaluation.es';
 
 export default (evaluatorContext, dispatch) => {
-	const {activePage} = evaluatorContext;
+	const {activePage, formId, pages} = evaluatorContext;
 
 	return evaluate(null, evaluatorContext).then(evaluatedPages => {
 		let previousActivePageIndex = activePage;
@@ -28,6 +28,14 @@ export default (evaluatorContext, dispatch) => {
 			}
 		}
 
-		dispatch('activePageUpdated', Math.max(previousActivePageIndex, 0));
+		const activePageUpdated = Math.max(previousActivePageIndex, 0);
+
+		dispatch('activePageUpdated', activePageUpdated);
+
+		Liferay.fire('ddmFormPageShow', {
+			formId,
+			page: activePageUpdated,
+			title: pages[activePageUpdated].title
+		});
 	});
 };

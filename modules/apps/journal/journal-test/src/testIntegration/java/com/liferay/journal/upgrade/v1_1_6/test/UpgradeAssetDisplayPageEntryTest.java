@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -156,7 +157,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 
 	protected void addJournalArticle(
 			long resourcePrimKey, long groupId, long companyId,
-			String layoutUuid)
+			String layoutUuid, double version)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(5);
@@ -164,8 +165,8 @@ public class UpgradeAssetDisplayPageEntryTest {
 		sb.append("insert into JournalArticle (uuid_, id_, resourcePrimKey, ");
 		sb.append("groupId, companyId, userId, userName, createDate, ");
 		sb.append("modifiedDate, folderId, classNameId, classPK, treePath, ");
-		sb.append("layoutUuid) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?)");
+		sb.append("articleId, version, layoutUuid) values (?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
@@ -185,7 +186,9 @@ public class UpgradeAssetDisplayPageEntryTest {
 			ps.setLong(11, 0);
 			ps.setLong(12, 0);
 			ps.setString(13, "/");
-			ps.setString(14, layoutUuid);
+			ps.setString(14, RandomTestUtil.randomString());
+			ps.setDouble(15, version);
+			ps.setString(16, layoutUuid);
 
 			ps.executeUpdate();
 		}
@@ -239,19 +242,21 @@ public class UpgradeAssetDisplayPageEntryTest {
 			long resourcePrimKey)
 		throws Exception {
 
+		double version = 1.0;
+
 		if (multipleArticleVersions) {
 			addJournalArticle(
-				resourcePrimKey, group.getGroupId(), group.getCompanyId(),
-				null);
+				resourcePrimKey, group.getGroupId(), group.getCompanyId(), null,
+				version++);
 
 			addJournalArticle(
 				resourcePrimKey, group.getGroupId(), group.getCompanyId(),
-				PortalUUIDUtil.generate());
+				PortalUUIDUtil.generate(), version++);
 		}
 
 		addJournalArticle(
 			resourcePrimKey, group.getGroupId(), group.getCompanyId(),
-			layoutUuid);
+			layoutUuid, version);
 	}
 
 	protected List<Long> createJournalArticles(

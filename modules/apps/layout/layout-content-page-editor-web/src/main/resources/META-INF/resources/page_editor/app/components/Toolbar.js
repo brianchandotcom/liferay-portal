@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -25,36 +26,36 @@ function ToolbarBody() {
 	const dispatch = useContext(DispatchContext);
 	const {singleSegmentsExperienceMode} = useContext(ConfigContext);
 
-	// TODO: Use Clay React components; for now this is just a mirror of the JSP
-	// markup.
 	return (
 		<div className="container-fluid container-fluid-max-xl">
 			<ul className="navbar-nav">Experiences</ul>
 
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					<button
-						className="btn btn-secondary nav-btn"
+					<ClayButton
+						className="nav-btn"
 						disabled
+						displayType="secondary"
 						onClick={() => dispatch({type: 'discard'})}
-						type="submit"
+						small
 					>
 						{singleSegmentsExperienceMode
 							? Liferay.Language.get('discard-variant')
 							: Liferay.Language.get('discard-draft')}
-					</button>
+					</ClayButton>
 				</li>
 				<li className="nav-item">
-					<button
-						className="btn btn-primary nav-btn"
+					<ClayButton
+						className="nav-btn"
 						disabled
+						displayType="primary"
 						onClick={() => dispatch({type: 'publish'})}
-						type="submit"
+						small
 					>
 						{singleSegmentsExperienceMode
 							? Liferay.Language.get('save-variant')
 							: Liferay.Language.get('publish')}
-					</button>
+					</ClayButton>
 				</li>
 			</ul>
 		</div>

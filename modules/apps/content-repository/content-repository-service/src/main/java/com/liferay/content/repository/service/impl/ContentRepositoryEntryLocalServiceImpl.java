@@ -14,10 +14,21 @@
 
 package com.liferay.content.repository.service.impl;
 
+import com.liferay.content.repository.internal.constants.ContentRepositoryEntryConstants;
+import com.liferay.content.repository.model.ContentRepositoryEntry;
 import com.liferay.content.repository.service.base.ContentRepositoryEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the content repository entry local service.
@@ -39,10 +50,58 @@ import org.osgi.service.component.annotations.Component;
 public class ContentRepositoryEntryLocalServiceImpl
 	extends ContentRepositoryEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.content.repository.service.ContentRepositoryEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.content.repository.service.ContentRepositoryEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public ContentRepositoryEntry addContentRepositoryEntry(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		long entryId = counterLocalService.increment();
+
+		ContentRepositoryEntry entry = contentRepositoryEntryPersistence.create(
+			entryId);
+
+		entry.setUuid(serviceContext.getUuid());
+		entry.setCompanyId(serviceContext.getCompanyId());
+		entry.setUserId(serviceContext.getUserId());
+
+		entry = contentRepositoryEntryPersistence.update(entry);
+
+		Group group = _groupLocalService.addGroup(
+			entry.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ContentRepositoryEntry.class.getName(),
+			entry.getContentRepositoryEntryId(),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
+			ContentRepositoryEntryConstants.TYPE_CONTENT_REPOSITORY, false,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, false,
+			true, serviceContext);
+
+		entry.setGroupId(group.getGroupId());
+
+		return contentRepositoryEntryPersistence.update(entry);
+	}
+
+	@Override
+	public ContentRepositoryEntry updateContentRepositoryEntry(
+			long contentRepositoryEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		ContentRepositoryEntry entry = getContentRepositoryEntry(
+			contentRepositoryEntryId);
+
+		Group group = _groupLocalService.getGroup(entry.getGroupId());
+
+		_groupLocalService.updateGroup(
+			entry.getGroupId(), group.getParentGroupId(), nameMap,
+			descriptionMap, group.getType(), group.isManualMembership(),
+			group.getMembershipRestriction(), group.getFriendlyURL(),
+			group.isInheritContent(), group.isActive(), serviceContext);
+
+		return contentRepositoryEntryPersistence.update(entry);
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

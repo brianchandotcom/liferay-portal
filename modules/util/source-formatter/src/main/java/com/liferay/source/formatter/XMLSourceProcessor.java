@@ -63,31 +63,23 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected boolean hasGeneratedTag(String content) {
-		return _hasGeneratedTag(content, "@generated", "<!-- Generated");
-	}
-
-	private boolean _hasGeneratedTag(String content, String... tags) {
-		for (String tag : tags) {
-			if (!content.contains(tag)) {
-				continue;
-			}
-
-			int pos = -1;
-
-			while (true) {
-				pos = content.indexOf(tag, pos + 1);
-
-				if (pos == -1) {
-					break;
-				}
-
-				if (!XMLSourceUtil.isInsideCDATAMarkup(content, pos)) {
-					return true;
-				}
-			}
+		if (!content.contains("@generated")) {
+			return false;
 		}
 
-		return false;
+		int pos = -1;
+
+		while (true) {
+			pos = content.indexOf("@generated", pos + 1);
+
+			if (pos == -1) {
+				return false;
+			}
+
+			if (!XMLSourceUtil.isInsideCDATAMarkup(content, pos)) {
+				return true;
+			}
+		}
 	}
 
 	private static final String[] _INCLUDES = {

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Content Repository API
+Bundle-SymbolicName: com.liferay.content.repository.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.content.repository.exception,\
+	com.liferay.content.repository.model,\
+	com.liferay.content.repository.service,\
+	com.liferay.content.repository.service.persistence

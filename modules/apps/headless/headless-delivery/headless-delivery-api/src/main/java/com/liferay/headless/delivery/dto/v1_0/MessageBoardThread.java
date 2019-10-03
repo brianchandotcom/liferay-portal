@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,7 @@ public class MessageBoardThread {
 	}
 
 	@Schema(description = "The thread's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -147,6 +149,7 @@ public class MessageBoardThread {
 	protected String articleBody;
 
 	@Schema(description = "The thread's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -175,6 +178,7 @@ public class MessageBoardThread {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -436,6 +440,7 @@ public class MessageBoardThread {
 	protected Integer numberOfMessageBoardMessages;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -581,6 +586,7 @@ public class MessageBoardThread {
 	@Schema(
 		description = "A write-only property that specifies the thread's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

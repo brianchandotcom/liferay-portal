@@ -34,6 +34,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -81,6 +83,7 @@ public class DataDefinitionField {
 	}
 
 	@Schema
+	@Valid
 	public Map<String, Object> getCustomProperties() {
 		return customProperties;
 	}
@@ -110,6 +113,7 @@ public class DataDefinitionField {
 	protected Map<String, Object> customProperties;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getDefaultValue() {
 		return defaultValue;
 	}
@@ -193,6 +197,7 @@ public class DataDefinitionField {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public IndexType getIndexType() {
 		return indexType;
 	}
@@ -258,6 +263,7 @@ public class DataDefinitionField {
 	protected Boolean indexable;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getLabel() {
 		return label;
 	}
@@ -340,6 +346,7 @@ public class DataDefinitionField {
 	protected String name;
 
 	@Schema
+	@Valid
 	public DataDefinitionField[] getNestedDataDefinitionFields() {
 		return nestedDataDefinitionFields;
 	}
@@ -484,6 +491,7 @@ public class DataDefinitionField {
 	protected Boolean showLabel;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getTip() {
 		return tip;
 	}

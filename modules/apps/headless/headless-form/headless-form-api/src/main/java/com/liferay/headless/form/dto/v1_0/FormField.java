@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -157,6 +159,7 @@ public class FormField {
 	protected String displayStyle;
 
 	@Schema
+	@Valid
 	public FormFieldOption[] getFormFieldOptions() {
 		return formFieldOptions;
 	}
@@ -186,6 +189,7 @@ public class FormField {
 	protected FormFieldOption[] formFieldOptions;
 
 	@Schema
+	@Valid
 	public Grid getGrid() {
 		return grid;
 	}
@@ -738,6 +742,7 @@ public class FormField {
 	protected String tooltip;
 
 	@Schema(description = "https://www.schema.org/FormFieldValidation")
+	@Valid
 	public Validation getValidation() {
 		return validation;
 	}

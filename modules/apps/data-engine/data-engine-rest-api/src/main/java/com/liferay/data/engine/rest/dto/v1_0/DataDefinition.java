@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -78,6 +80,7 @@ public class DataDefinition {
 	protected String[] availableLanguageIds;
 
 	@Schema
+	@Valid
 	public DataDefinitionField[] getDataDefinitionFields() {
 		return dataDefinitionFields;
 	}
@@ -137,6 +140,7 @@ public class DataDefinition {
 	protected String dataDefinitionKey;
 
 	@Schema
+	@Valid
 	public DataDefinitionRule[] getDataDefinitionRules() {
 		return dataDefinitionRules;
 	}
@@ -252,6 +256,7 @@ public class DataDefinition {
 	protected String defaultLanguageId;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getDescription() {
 		return description;
 	}
@@ -307,6 +312,7 @@ public class DataDefinition {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public Map<String, Object> getName() {
 		return name;
 	}

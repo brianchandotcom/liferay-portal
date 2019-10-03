@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -73,6 +75,7 @@ public class FormFieldContext {
 	protected Boolean evaluable;
 
 	@Schema
+	@Valid
 	public FormFieldOption[] getFormFieldOptions() {
 		return formFieldOptions;
 	}

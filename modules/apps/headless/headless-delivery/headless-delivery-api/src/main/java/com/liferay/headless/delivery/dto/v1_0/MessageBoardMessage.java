@@ -38,6 +38,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -85,6 +87,7 @@ public class MessageBoardMessage {
 	}
 
 	@Schema(description = "The message's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -172,6 +175,7 @@ public class MessageBoardMessage {
 	protected String articleBody;
 
 	@Schema(description = "The message's author.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -200,6 +204,7 @@ public class MessageBoardMessage {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -492,6 +497,7 @@ public class MessageBoardMessage {
 	protected Integer numberOfMessageBoardMessages;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -581,6 +587,7 @@ public class MessageBoardMessage {
 	@Schema(
 		description = "A write-only property that specifies the default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

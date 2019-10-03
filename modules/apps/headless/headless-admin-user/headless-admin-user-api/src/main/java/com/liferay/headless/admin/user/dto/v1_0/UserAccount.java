@@ -36,6 +36,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -133,6 +135,7 @@ public class UserAccount {
 	protected Date birthDate;
 
 	@Schema(description = "The user's contact information.")
+	@Valid
 	public ContactInformation getContactInformation() {
 		return contactInformation;
 	}
@@ -162,6 +165,7 @@ public class UserAccount {
 	protected ContactInformation contactInformation;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -552,6 +556,7 @@ public class UserAccount {
 	protected String name;
 
 	@Schema(description = "A list of the user's organizations.")
+	@Valid
 	public OrganizationBrief[] getOrganizationBriefs() {
 		return organizationBriefs;
 	}
@@ -609,6 +614,7 @@ public class UserAccount {
 	protected String profileURL;
 
 	@Schema(description = "A list of the user's roles.")
+	@Valid
 	public RoleBrief[] getRoleBriefs() {
 		return roleBriefs;
 	}
@@ -637,6 +643,7 @@ public class UserAccount {
 	protected RoleBrief[] roleBriefs;
 
 	@Schema(description = "A list of the user's sites.")
+	@Valid
 	public SiteBrief[] getSiteBriefs() {
 		return siteBriefs;
 	}

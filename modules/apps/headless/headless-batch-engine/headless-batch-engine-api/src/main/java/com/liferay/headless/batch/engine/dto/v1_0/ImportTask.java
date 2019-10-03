@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -210,6 +211,7 @@ public class ImportTask {
 	protected String errorMessage;
 
 	@Schema(description = "The status of import task's execution.")
+	@Valid
 	public ExecuteStatus getExecuteStatus() {
 		return executeStatus;
 	}
@@ -274,6 +276,7 @@ public class ImportTask {
 	protected Long id;
 
 	@Schema(description = "The operation of import task.")
+	@Valid
 	public Operation getOperation() {
 		return operation;
 	}

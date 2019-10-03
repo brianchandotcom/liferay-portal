@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,6 +49,7 @@ public class ContactInformation {
 	@Schema(
 		description = "A list of the user's email addresses, with one optionally marked as primary."
 	)
+	@Valid
 	public EmailAddress[] getEmailAddresses() {
 		return emailAddresses;
 	}
@@ -160,6 +163,7 @@ public class ContactInformation {
 	@Schema(
 		description = "A list of user's postal addresses, with one optionally marked as primary."
 	)
+	@Valid
 	public PostalAddress[] getPostalAddresses() {
 		return postalAddresses;
 	}
@@ -245,6 +249,7 @@ public class ContactInformation {
 	@Schema(
 		description = "A list of the user's phone numbers, with one optionally marked as primary."
 	)
+	@Valid
 	public Phone[] getTelephones() {
 		return telephones;
 	}
@@ -303,6 +308,7 @@ public class ContactInformation {
 	@Schema(
 		description = "A list of the user's web URLs, with one optionally marked as primary."
 	)
+	@Valid
 	public WebUrl[] getWebUrls() {
 		return webUrls;
 	}

@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,7 @@ public class WikiPage {
 	}
 
 	@Schema(description = "The blog post's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -145,6 +147,7 @@ public class WikiPage {
 	protected String content;
 
 	@Schema(description = "The wiki page's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -173,6 +176,7 @@ public class WikiPage {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -457,6 +461,7 @@ public class WikiPage {
 	protected Integer numberOfWikiPages;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -516,6 +521,7 @@ public class WikiPage {
 	protected Long siteId;
 
 	@Schema(description = "The categories associated with this blog post.")
+	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -577,6 +583,7 @@ public class WikiPage {
 	@Schema(
 		description = "A write-only property that specifies the default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

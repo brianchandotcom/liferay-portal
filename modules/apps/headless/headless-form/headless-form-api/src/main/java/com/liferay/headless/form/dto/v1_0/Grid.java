@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -45,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Grid {
 
 	@Schema
+	@Valid
 	public FormFieldOption[] getColumns() {
 		return columns;
 	}
@@ -99,6 +102,7 @@ public class Grid {
 	protected Long id;
 
 	@Schema
+	@Valid
 	public FormFieldOption[] getRows() {
 		return rows;
 	}

@@ -38,6 +38,7 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,7 @@ public class StructuredContent {
 	}
 
 	@Schema(description = "The structured content's average rating.")
+	@Valid
 	public AggregateRating getAggregateRating() {
 		return aggregateRating;
 	}
@@ -149,6 +151,7 @@ public class StructuredContent {
 	@Schema(
 		description = "The list of fields that store the structured content's information."
 	)
+	@Valid
 	public ContentField[] getContentFields() {
 		return contentFields;
 	}
@@ -205,6 +208,7 @@ public class StructuredContent {
 	protected Long contentStructureId;
 
 	@Schema(description = "The structured content's creator.")
+	@Valid
 	public Creator getCreator() {
 		return creator;
 	}
@@ -233,6 +237,7 @@ public class StructuredContent {
 	protected Creator creator;
 
 	@Schema
+	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
 	}
@@ -521,6 +526,7 @@ public class StructuredContent {
 	protected Integer numberOfComments;
 
 	@Schema
+	@Valid
 	public RelatedContent[] getRelatedContents() {
 		return relatedContents;
 	}
@@ -552,6 +558,7 @@ public class StructuredContent {
 	@Schema(
 		description = "A list of rendered structured content, which results from using a template to process the content and return HTML."
 	)
+	@Valid
 	public RenderedContent[] getRenderedContents() {
 		return renderedContents;
 	}
@@ -613,6 +620,7 @@ public class StructuredContent {
 	@Schema(
 		description = "The categories associated with this structured content."
 	)
+	@Valid
 	public TaxonomyCategory[] getTaxonomyCategories() {
 		return taxonomyCategories;
 	}
@@ -731,6 +739,7 @@ public class StructuredContent {
 	@Schema(
 		description = "A write-only property that specifies the structured content's default permissions."
 	)
+	@Valid
 	public ViewableBy getViewableBy() {
 		return viewableBy;
 	}

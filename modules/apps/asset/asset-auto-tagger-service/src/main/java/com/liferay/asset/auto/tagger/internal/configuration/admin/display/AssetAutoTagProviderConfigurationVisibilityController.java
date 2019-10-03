@@ -84,6 +84,12 @@ public class AssetAutoTagProviderConfigurationVisibilityController
 					_companyLocalService.getCompany((long)scopePK));
 		}
 
+		if (ExtendedObjectClassDefinition.Scope.GROUP.equals(scope)) {
+			return _assetAutoTaggerConfigurationFactory.
+				getGroupAssetAutoTaggerConfiguration(
+					_groupLocalService.getGroup((long)scopePK));
+		}
+
 		throw new IllegalArgumentException("Unrecognized scope: " + scope);
 	}
 

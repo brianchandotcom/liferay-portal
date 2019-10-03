@@ -21,6 +21,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.search.ConfigurationModelIndexer;
 import com.liferay.configuration.admin.web.internal.search.FieldNames;
@@ -74,6 +75,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/search"
 	},
@@ -120,7 +122,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 			Document[] documents = hits.getDocs();
 
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-				new ConfigurationScopeDisplayContext(renderRequest);
+				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 			Map<String, ConfigurationModel> configurationModels =
 				_configurationModelRetriever.getConfigurationModels(

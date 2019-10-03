@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationCategor
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
+import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
@@ -55,6 +56,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 		"mvc.command.name=/view_factory_instances",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
@@ -89,7 +91,7 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				configurationModels.get(factoryPid);
 
 			ConfigurationScopeDisplayContext configurationScopeDisplayContext =
-				new ConfigurationScopeDisplayContext(renderRequest);
+				ConfigurationScopeDisplayContextFactory.create(renderRequest);
 
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
 				_configurationEntryRetriever.

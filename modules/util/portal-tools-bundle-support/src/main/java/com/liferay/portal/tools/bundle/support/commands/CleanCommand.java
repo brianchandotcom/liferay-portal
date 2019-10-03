@@ -35,13 +35,11 @@ public class CleanCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		String fileName;
-
 		if (File.separatorChar != '/') {
 			_fileName = _fileName.replace(File.separatorChar, '/');
 		}
 
-		fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
+		String fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
 
 		String dirName = BundleSupportUtil.getDeployDirName(fileName);
 

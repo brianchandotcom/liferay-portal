@@ -12,32 +12,29 @@
  * details.
  */
 
+import {cleanup, render, waitForElement} from '@testing-library/react';
 import VideoPreviewer from '../src/main/resources/META-INF/resources/preview/js/VideoPreviewer.es';
+import React from 'react';
 
-let component;
+describe('VideoPreviewer', () => {
+	afterEach(cleanup);
 
-describe('document-library-preview-video', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-	});
+	it('renders', async () => {
+		const {container} = render(
+			<VideoPreviewer
+				componentId="video-previewer"
+				videoPosterURL="some-url"
+				videoSources={[
+					{type: 'video/mp4', url: 'big_buck_bunny.mp4'},
+					{type: 'video/ogv', url: 'big_buck_bunny.ogv'}
+				]}
+			/>
+		);
 
-	it('renders a video player', () => {
-		component = new VideoPreviewer({
-			videoPosterURL: 'poster.jpg',
-			videoSources: [
-				{
-					type: 'video/mp4',
-					url: '//video.mp4'
-				},
-				{
-					type: 'video/ogv',
-					url: '//video.ogv'
-				}
-			]
-		});
-
-		expect(component).toMatchSnapshot();
+		await waitForElement(() => container.querySelector('#video-previewer'));
+		await waitForElement(() =>
+			container.querySelector('video.preview-file-video')
+		);
+		await waitForElement(() => container.querySelectorAll('source'));
 	});
 });

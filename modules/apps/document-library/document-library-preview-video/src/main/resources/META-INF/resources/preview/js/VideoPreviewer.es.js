@@ -12,49 +12,43 @@
  * details.
  */
 
-import {Config} from 'metal-state';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-import templates from './VideoPreviewer.soy';
-
-/**
- * Component that create an video player
- * @review
- */
-class VideoPreviewer extends Component {}
-
-/**
- * State definition.
- * @review
- * @static
- * @type {!Object}
- */
-VideoPreviewer.STATE = {
-	/**
-	 * The "poster" attribute of the <video> element
-	 * @instance
-	 * @memberof VideoPreviewer
-	 * @review
-	 * @type {String}
-	 */
-	videoPosterURL: Config.string(),
-
-	/**
-	 * List of of video sources
-	 * @instance
-	 * @memberof VideoPreviewer
-	 * @review
-	 * @type {!Array<object>}
-	 */
-	videoSources: Config.arrayOf(
-		Config.shapeOf({
-			type: Config.string().required(),
-			url: Config.string().required()
-		})
-	).required()
+const VideoPreviewer = ({componentId, videoPosterURL, videoSources}) => {
+	return (
+		<div className="preview-file" id={componentId}>
+			<div className="preview-file-container preview-file-max-height">
+				<video
+					className="preview-file-video"
+					controls
+					controlsList="nodownload"
+					poster={videoPosterURL}
+				>
+					{videoSources.map((videoSource, index) => (
+						<source
+							key={index}
+							src={videoSource.url}
+							type={videoSource.type}
+						/>
+					))}
+				</video>
+			</div>
+		</div>
+	);
 };
 
-Soy.register(VideoPreviewer, templates);
-export {VideoPreviewer};
-export default VideoPreviewer;
+VideoPreviewer.propTypes = {
+	componentId: PropTypes.string,
+	videoPosterURL: PropTypes.string.isRequired,
+	videoSources: PropTypes.arrayOf(
+		PropTypes.shape({
+			type: PropTypes.string.isRequired,
+			url: PropTypes.string.isRequired
+		})
+	)
+};
+
+export default function(props) {
+	return <VideoPreviewer {...props} />;
+}

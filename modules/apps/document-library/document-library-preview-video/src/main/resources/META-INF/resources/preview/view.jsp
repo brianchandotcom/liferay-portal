@@ -21,6 +21,8 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document
 
 Map<String, Object> context = new HashMap<>();
 
+context.put("componentId", renderResponse.getNamespace() + randomNamespace + "previewVideo");
+
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
 
 context.put(
@@ -48,9 +50,9 @@ context.put("videoPosterURL", (String)request.getAttribute(DLPreviewVideoWebKeys
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewVideo" %>'
-	context="<%= context %>"
-	module="preview/js/VideoPreviewer.es"
-	templateNamespace="com.liferay.document.library.preview.VideoPreviewer.render"
-/>
+<div>
+	<react:component
+		data="<%= context %>"
+		module="preview/js/VideoPreviewer.es"
+	/>
+</div>

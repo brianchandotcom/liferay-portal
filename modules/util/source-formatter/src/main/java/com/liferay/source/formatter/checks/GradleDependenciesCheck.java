@@ -206,7 +206,7 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",
 			Pattern.DOTALL);
 	private static final Pattern _incorrectWhitespacePattern = Pattern.compile(
-		":[^ \n]");
+		"(:|\",)[^ \n]");
 
 	private class GradleDependencyComparator
 		implements Comparator<String>, Serializable {

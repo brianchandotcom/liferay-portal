@@ -735,6 +735,8 @@ definition {
 
 		PortalSettings.viewEnabledLDAPSetting(enableSettingList = "${enableSettingList}");
 
+		User.logoutPG(specificURL = "http://www.able.com:9080");
+
 		Portlet.shutdownServer();
 
 		Portlet.startServer(deleteLiferayHome = "false");

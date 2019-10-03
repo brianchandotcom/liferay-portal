@@ -278,14 +278,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	public synchronized void replace(
 		Destination destination, boolean closeOnRemove) {
 
-		Destination oldDestination = _destinations.get(destination.getName());
-
-		oldDestination.copyDestinationEventListeners(destination);
-		oldDestination.copyMessageListeners(destination);
-
-		_removeDestination(oldDestination.getName());
-
-		doAddDestination(destination);
+		_addDestination(destination);
 	}
 
 	@Override
@@ -424,12 +417,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			baseDestination.afterPropertiesSet();
 		}
 
-		if (_destinations.containsKey(destination.getName())) {
-			replace(destination);
-		}
-		else {
-			doAddDestination(destination);
-		}
+		_addDestination(destination);
 
 		DestinationWorkerConfiguration destinationWorkerConfiguration =
 			_destinationWorkerConfigurations.get(destinationName);
@@ -529,6 +517,19 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 			baseAsyncDestination.setWorkersMaxSize(
 				destinationWorkerConfiguration.workerMaxSize());
 		}
+	}
+
+	private void _addDestination(Destination destination) {
+		Destination oldDestination = _destinations.get(destination.getName());
+
+		if (oldDestination != null) {
+			oldDestination.copyDestinationEventListeners(destination);
+			oldDestination.copyMessageListeners(destination);
+
+			_removeDestination(oldDestination.getName());
+		}
+
+		doAddDestination(destination);
 	}
 
 	private Destination _removeDestination(String destinationName) {

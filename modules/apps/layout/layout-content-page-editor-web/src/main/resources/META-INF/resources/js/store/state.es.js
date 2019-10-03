@@ -161,10 +161,20 @@ const INITIAL_STATE = {
 	availableSegmentsExperiences: Config.objectOf(
 		Config.shapeOf({
 			active: Config.bool(),
+			hasLockedSegmentsExperiment: Config.bool(),
 			name: Config.string(),
 			priority: Config.number(),
 			segmentsEntryId: Config.string(),
-			segmentsExperienceId: Config.string()
+			segmentsExperienceId: Config.string(),
+			segmentsExperimentStatus: Config.oneOfType([
+				Config.objectOf(
+					Config.shapeOf({
+						label: Config.string(),
+						value: Config.number()
+					})
+				),
+				Config.object()
+			])
 		})
 	).value({}),
 
@@ -626,6 +636,23 @@ const INITIAL_STATE = {
 	 * @type {string}
 	 */
 	segmentsExperienceId: Config.string().value(),
+
+	/**
+	 * The selected Experience test status
+	 * This is meant to be swapped every time an Experience is selected
+	 * @default null
+	 * @review
+	 * @type {object}
+	 */
+	segmentsExperimentStatus: Config.oneOfType([
+		Config.objectOf(
+			Config.shapeOf({
+				label: Config.string(),
+				value: Config.number()
+			})
+		),
+		Config.object()
+	]).value(),
 
 	/**
 	 * Selected items

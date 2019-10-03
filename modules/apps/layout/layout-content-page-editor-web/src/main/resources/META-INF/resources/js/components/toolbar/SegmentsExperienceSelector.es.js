@@ -27,6 +27,7 @@ import getConnectedComponent from '../../store/ConnectedComponent.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SegmentsExperienceSelector.soy';
 import 'clay-icon';
+import './ExperimentsLabel.es';
 import './segmentsExperiences/modal.es';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;

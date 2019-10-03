@@ -256,7 +256,8 @@ function createSegmentsExperienceReducer(state, action) {
 					name,
 					priority,
 					segmentsEntryId,
-					segmentsExperienceId
+					segmentsExperienceId,
+					segmentsExperimentStatus
 				} = segmentsExperience;
 
 				nextState = setIn(
@@ -283,13 +284,11 @@ function createSegmentsExperienceReducer(state, action) {
 				);
 
 				_switchLayoutDataList(nextState, segmentsExperienceId)
-					.then(newState =>
-						setIn(
-							newState,
-							['segmentsExperienceId'],
-							segmentsExperienceId
-						)
-					)
+					.then(newState => ({
+						...newState,
+						segmentsExperienceId,
+						segmentsExperimentStatus
+					}))
 					.then(nextNewState =>
 						_updateFragmentEntryLinks(
 							nextNewState,
@@ -447,6 +446,7 @@ function deleteSegmentsExperienceReducer(state, action) {
  * @param {string} state.segmentsExperienceId
  * @param {object} action
  * @param {string} action.segmentsExperienceId
+ * @param {object} action.segmentsExperimentStatus
  * @param {string} action.type
  * @returns {Promise}
  */
@@ -456,11 +456,17 @@ function selectSegmentsExperienceReducer(state, action) {
 
 		_switchLayoutDataList(nextState, action.segmentsExperienceId)
 			.then(newState => {
-				const nextNewState = setIn(
-					newState,
-					['segmentsExperienceId'],
+				const {
+					segmentsExperimentStatus
+				} = nextState.availableSegmentsExperiences[
 					action.segmentsExperienceId
-				);
+				];
+
+				const nextNewState = {
+					...newState,
+					segmentsExperienceId: action.segmentsExperienceId,
+					segmentsExperimentStatus
+				};
 
 				return nextNewState;
 			})
@@ -510,10 +516,12 @@ function editSegmentsExperienceReducer(state, action) {
 			obj => {
 				const {
 					active,
+					hasLockedSegmentsExperiment,
 					nameCurrentValue,
 					priority,
 					segmentsEntryId,
-					segmentsExperienceId
+					segmentsExperienceId,
+					segmentsExperimentStatus
 				} = obj;
 
 				nextState = setIn(
@@ -521,10 +529,12 @@ function editSegmentsExperienceReducer(state, action) {
 					['availableSegmentsExperiences', segmentsExperienceId],
 					{
 						active,
+						hasLockedSegmentsExperiment,
 						name: nameCurrentValue,
 						priority,
 						segmentsEntryId,
-						segmentsExperienceId
+						segmentsExperienceId,
+						segmentsExperimentStatus
 					}
 				);
 

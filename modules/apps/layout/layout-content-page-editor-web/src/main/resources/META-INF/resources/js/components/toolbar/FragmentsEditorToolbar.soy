@@ -20,7 +20,10 @@
 	{@param? publishURL: string}
 	{@param? redirectURL: string}
 	{@param? savingChanges: bool}
-	{@param? segmentsExperienceHasSegmentsExperiment: bool }
+	{@param? segmentsExperimentStatus: [
+		label: string,
+		value: number
+	] }
 	{@param? selectedSegmentsEntryId: string}
 	{@param? selectedSidebarPanelId: string}
 	{@param? singleSegmentsExperienceMode: bool}
@@ -55,28 +58,18 @@
 					</li>
 				{/if}
 
-				{if $defaultSegmentsExperienceId and not $singleSegmentsExperienceMode and $segmentsExperienceHasSegmentsExperiment}
-					'Test running
-				{/if}
-
 				<li class="nav-item">
 					{call com.liferay.layout.content.page.editor.web.TranslationStatus.render}
 						{param store: $store /}
 					{/call}
 				</li>
 
-				{if $defaultSegmentsExperienceId and not $singleSegmentsExperienceMode and $segmentsExperienceHasSegmentsExperiment}
-					<li class="nav-item">
-									{let $testRunningText kind="text"}
-										{msg desc=""}test-running{/msg}
-									{/let}
-
-									{call ClayLabel.render}
-										{param elementClasses: 'ml-2' /}
-										{param label: $testRunningText /}
-										{param size: 'lg' /}
-										{param style: 'info' /}
-									{/call}
+				{if $defaultSegmentsExperienceId and not $singleSegmentsExperienceMode and $segmentsExperimentStatus}
+					<li class="nav-item pl-2">
+						{call com.liferay.layout.content.page.editor.web.ExperimentsLabel.render }
+							{param label: $segmentsExperimentStatus.label /}
+							{param value: $segmentsExperimentStatus.value /}
+						{/call}
 					</li>
 				{/if}
 

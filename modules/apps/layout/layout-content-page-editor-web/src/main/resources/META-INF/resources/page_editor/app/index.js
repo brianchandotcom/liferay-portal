@@ -16,6 +16,7 @@ import React from 'react';
 
 import App from './components/App';
 import {ConfigContext, getConfig} from './config/index';
+import useThunk from './hooks/useThunk';
 import {StoreContext, getInitialState} from './store/index';
 import {DispatchContext, reducer} from './reducers/index';
 
@@ -32,7 +33,9 @@ const {useReducer} = React;
 function Container({data}) {
 	const config = getConfig(data);
 
-	const [store, dispatch] = useReducer(reducer, data, getInitialState);
+	const [store, dispatch] = useThunk(
+		useReducer(reducer, data, getInitialState)
+	);
 
 	return (
 		<ConfigContext.Provider value={config}>

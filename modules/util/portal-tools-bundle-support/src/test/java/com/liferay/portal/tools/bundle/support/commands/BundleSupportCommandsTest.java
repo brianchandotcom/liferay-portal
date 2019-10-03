@@ -364,12 +364,12 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void copyConfigs(
-			List<File> configDirs, String environment, File liferayHomeDir)
+			List<File> configsDirs, String environment, File liferayHomeDir)
 		throws Exception {
 
 		CopyConfigsCommand copyConfigsCommand = new CopyConfigsCommand();
 
-		copyConfigsCommand.setConfigsDirs(configDirs);
+		copyConfigsCommand.setConfigsDirs(configsDirs);
 		copyConfigsCommand.setEnvironment(environment);
 		copyConfigsCommand.setLiferayHomeDir(liferayHomeDir);
 

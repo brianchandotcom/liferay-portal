@@ -40,8 +40,8 @@ public class CopyConfigsCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		for (File configDir : _configsDirs) {
-			_copyConfigs(configDir);
+		for (File configsDir : _configsDirs) {
+			_copyConfigs(configsDir);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class CopyConfigsCommand extends BaseCommand {
 		description = "The directories that contains the configuration files.",
 		names = "--configs"
 	)
-	private List<File> _configsDirs = BundleSupportConstants.defaultConfigDirs;
+	private List<File> _configsDirs = BundleSupportConstants.defaultConfigsDirs;
 
 	@Parameter(
 		description = "The environment of your Liferay home deployment.",

@@ -61,7 +61,7 @@ public class BundleSupportConstants {
 		"https://web.liferay.com/token-auth-portlet/api/secure/jsonws" +
 			"/tokenauthentry/add-token-auth-entry";
 
-	public static final List<File> defaultConfigDirs = Arrays.asList(
+	public static final List<File> defaultConfigsDirs = Arrays.asList(
 		new File(DEFAULT_CONFIGS_DIR_NAME), new File(DEFAULT_LCP_DIR_NAME),
 		new File(DEFAULT_DEV_OPS_DIR_NAME));
 

@@ -175,7 +175,7 @@ public class InitBundleCommand extends DownloadCommand {
 		description = "The directories that contains the configuration files.",
 		names = "--configs"
 	)
-	private List<File> _configsDirs = BundleSupportConstants.defaultConfigDirs;
+	private List<File> _configsDirs = BundleSupportConstants.defaultConfigsDirs;
 
 	@Parameter(
 		description = "The environment of your Liferay home deployment.",

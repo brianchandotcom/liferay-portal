@@ -28,7 +28,6 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * @author David Truong
- * @author Andrea Di Giorgi
  */
 @Mojo(inheritByDefault = false, name = "copy-configs")
 public class CopyConfigsMojo extends AbstractLiferayMojo {

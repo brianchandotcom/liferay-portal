@@ -157,7 +157,11 @@
 		<#assign fileEntryGroupId = scopeGroupId />
 	</#if>
 
-	<#return dlAppServiceUtil.getFileEntryByUuidAndGroupId(fileEntryUUID, fileEntryGroupId)!"">
+	<#attempt>
+		<#return dlAppServiceUtil.getFileEntryByUuidAndGroupId(fileEntryUUID, fileEntryGroupId)!"">
+	<#recover>
+		<#return "">
+	</#attempt>
 </#function>
 
 <#function getFileEntryURL fileEntry>

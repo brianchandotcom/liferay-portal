@@ -36,12 +36,8 @@ public class StagingGroupServiceTunnelUtil {
 		throws PortalException {
 
 		try {
-			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "checkRemoteStagingGroup",
-				_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES);
-
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteGroupId);
+				_checkRemoteStagingGroupMethodKey, remoteGroupId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -78,12 +74,9 @@ public class StagingGroupServiceTunnelUtil {
 		String groupDisplayURL = null;
 
 		try {
-			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "getGroupDisplayURL",
-				_GET_GROUP_DISPLAY_URL_PARAMETER_TYPES);
-
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, remoteGroupId, privateLayout, secureConnection);
+				_getGroupDisplayURLMethodKey, remoteGroupId, privateLayout,
+				secureConnection);
 
 			Object returnObj = null;
 
@@ -121,15 +114,14 @@ public class StagingGroupServiceTunnelUtil {
 	private StagingGroupServiceTunnelUtil() {
 	}
 
-	private static final Class<?>[]
-		_CHECK_REMOTE_STAGING_GROUP_PARAMETER_TYPES = new Class<?>[] {
-			long.class
-		};
-
-	private static final Class<?>[] _GET_GROUP_DISPLAY_URL_PARAMETER_TYPES =
-		new Class<?>[] {long.class, boolean.class, boolean.class};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingGroupServiceTunnelUtil.class);
+
+	private static final MethodKey _checkRemoteStagingGroupMethodKey =
+		new MethodKey(
+			GroupServiceUtil.class, "checkRemoteStagingGroup", long.class);
+	private static final MethodKey _getGroupDisplayURLMethodKey = new MethodKey(
+		GroupServiceUtil.class, "getGroupDisplayURL", long.class, boolean.class,
+		boolean.class);
 
 }

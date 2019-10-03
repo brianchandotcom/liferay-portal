@@ -14,6 +14,6 @@
 
 import React from 'react';
 
-export default function(data) {
+export default function PageEditor(data) {
 	return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }

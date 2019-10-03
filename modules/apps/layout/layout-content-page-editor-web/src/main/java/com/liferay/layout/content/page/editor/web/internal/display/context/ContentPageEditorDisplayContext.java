@@ -170,6 +170,16 @@ public class ContentPageEditorDisplayContext {
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
 
+	public SoyContext getEditorReactContext() throws Exception {
+		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+
+		soyContext.putAll(getEditorSoyContext());
+
+		soyContext.putAll(getFragmentsEditorToolbarSoyContext());
+
+		return soyContext;
+	}
+
 	public SoyContext getEditorSoyContext() throws Exception {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 

@@ -30,7 +30,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 	</div>
 
 	<react:component
-		data="<%= contentPageEditorDisplayContext.getEditorSoyContext() %>"
+		data="<%= contentPageEditorDisplayContext.getEditorReactContext() %>"
 		module="page_editor/app/PageEditor.es"
 	/>
 </div>

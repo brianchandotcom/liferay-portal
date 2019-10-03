@@ -20,6 +20,13 @@ import templates from './Grid.soy.js';
 import {Config} from 'metal-state';
 
 class Grid extends Component {
+	_handleFieldBlurred(event) {
+		this.emit('fieldBlurred', {
+			fieldInstance: this,
+			originalEvent: event
+		});
+	}
+
 	_handleFieldChanged(event) {
 		const {target} = event;
 		const value = {
@@ -75,6 +82,8 @@ Grid.STATE = {
 	 */
 
 	evaluable: Config.bool().value(false),
+
+	fieldName: Config.string(),
 
 	/**
 	 * @default undefined

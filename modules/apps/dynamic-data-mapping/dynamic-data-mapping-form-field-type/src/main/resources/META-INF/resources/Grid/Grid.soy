@@ -5,6 +5,7 @@
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param value: ?}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
 	{@param? displayErrors: bool}
@@ -24,6 +25,7 @@
 	{call FieldBase.render}
 		{param contentRenderer kind="html"}
 			{call .content}
+				{param _handleFieldBlurred: $_handleFieldBlurred /}
 				{param _handleFieldChanged: $_handleFieldChanged /}
 				{param _handleFieldFocused: $_handleFieldFocused /}
 				{param columns: $columns /}
@@ -55,6 +57,7 @@
 	{@param name: string}
 	{@param rows: list<[label: string, value: ?]>}
 	{@param value: ?}
+	{@param? _handleFieldBlurred: any}
 	{@param? _handleFieldChanged: any}
 	{@param? _handleFieldFocused: any}
 	{@param? disabled: bool}
@@ -97,6 +100,7 @@
 											{/if}
 
 											class="form-builder-grid-field"
+											data-onblur="{$_handleFieldBlurred}"
 											data-onchange="{$_handleFieldChanged}"
 											data-onfocus="{$_handleFieldFocused}"
 											data-row-index="{index($column)}"

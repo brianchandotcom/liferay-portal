@@ -198,6 +198,15 @@ public class ProjectTemplates {
 
 		jCommander.parseWithoutValidation(args);
 
+		String template = projectTemplatesArgs.getTemplate();
+		
+		if (template.equals("portlet")) {
+			
+			template = "mvc-portlet";
+			
+			projectTemplatesArgs.setTemplate(template);
+		}
+
 		File templateFile = ProjectTemplatesUtil.getTemplateFile(
 			projectTemplatesArgs);
 
@@ -242,11 +251,14 @@ public class ProjectTemplates {
 			}
 
 			jCommander.parse(args);
-
-			String template = projectTemplatesArgs.getTemplate();
-
+			
+			template = projectTemplatesArgs.getTemplate();
+			
 			if (template.equals("portlet")) {
-				projectTemplatesArgs.setTemplate("mvc-portlet");
+				
+				template = "mvc-portlet";
+				
+				projectTemplatesArgs.setTemplate(template);
 			}
 
 			if (projectTemplatesArgs.isHelp()) {

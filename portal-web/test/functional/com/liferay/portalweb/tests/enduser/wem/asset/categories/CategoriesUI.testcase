@@ -10,6 +10,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -19,18 +21,13 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Vocabulary.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 
 	@priority = "4"
 	test AddSubcategory {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
@@ -38,24 +35,14 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.addCP(
 			categoryName = "Category Name",
 			subcategoryName = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			panel = "Site Administration",
-			portlet = "Categories");
+		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		Subcategory.viewCP(
 			categoryName = "Category Name",

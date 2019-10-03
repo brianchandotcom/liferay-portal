@@ -130,6 +130,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 		_setTestRelevantIntegrationUnitOnly();
+
+		_setIncludeStableSuite();
 	}
 
 	protected int getAxisMaxSize() {
@@ -379,11 +381,14 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
+	protected static final String NAME_STABLE_TEST_SUITE = "stable";
+
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
 	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
 	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
+	protected boolean includeStableSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected boolean testPrivatePortalBranch;
@@ -494,6 +499,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return Lists.newArrayList(requiredModuleDirs);
+	}
+
+	private void _setIncludeStableSuite() {
+		includeStableSuite = testRelevantChanges;
 	}
 
 	private void _setTestReleaseBundle() {

@@ -74,7 +74,23 @@ public abstract class PortalAcceptanceTestSuiteJob
 				jobProperties, "test.batch.dist.app.servers");
 		}
 
-		return getSetFromString(testBatchDistAppServers);
+		Set<String> testBatchDistAppServersSet = getSetFromString(
+			testBatchDistAppServers);
+
+		if (!_testSuiteName.equals("relevant")) {
+			return testBatchDistAppServersSet;
+		}
+
+		String stableTestBatchDistAppServers =
+			JenkinsResultsParserUtil.getProperty(
+				jobProperties, "test.batch.dist.app.servers[stable]");
+
+		if (stableTestBatchDistAppServers != null) {
+			testBatchDistAppServersSet.addAll(
+				getSetFromString(stableTestBatchDistAppServers));
+		}
+
+		return testBatchDistAppServersSet;
 	}
 
 	@Override

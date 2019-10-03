@@ -38,9 +38,10 @@
 				{if $showRepeatableRemoveButton}
 					{call ClayButton.render}
 						{param disabled: $readOnly /}
-						{param elementClasses: 'btn-xs ddm-form-field-repeatable-delete-button p-0' /}
+						{param elementClasses: 'ddm-form-field-repeatable-delete-button p-0' /}
 						{param events: ['click': $_handleRemoveRepeatedFieldButtonClicked] /}
 						{param icon: 'trash' /}
+						{param size: 'sm' /}
 						{param spritemap: $spritemap /}
 						{param type: 'button' /}
 					{/call}
@@ -48,9 +49,10 @@
 
 				{call ClayButton.render}
 					{param disabled: $readOnly /}
-					{param elementClasses: 'btn-xs ddm-form-field-repeatable-add-button p-0' /}
+					{param elementClasses: 'ddm-form-field-repeatable-add-button p-0' /}
 					{param events: ['click': $_handleAddRepeatedFieldButtonClicked] /}
 					{param icon: 'plus' /}
+					{param size: 'sm' /}
 					{param spritemap: $spritemap /}
 					{param type: 'button' /}
 				{/call}

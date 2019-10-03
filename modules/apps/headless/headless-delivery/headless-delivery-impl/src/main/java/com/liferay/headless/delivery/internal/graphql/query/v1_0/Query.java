@@ -581,11 +581,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolderDocuments(documentFolderId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolderDocuments(documentFolderId: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DocumentPage documentFolderDocuments(
 			@GraphQLName("documentFolderId") Long documentFolderId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -598,7 +599,7 @@ public class Query {
 			this::_populateResourceContext,
 			documentResource -> new DocumentPage(
 				documentResource.getDocumentFolderDocumentsPage(
-					documentFolderId, search,
+					documentFolderId, flatten, search,
 					_filterBiFunction.apply(documentResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(documentResource, sortsString))));
@@ -683,11 +684,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolderDocumentFolders(filter: ___, page: ___, pageSize: ___, parentDocumentFolderId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentFolderDocumentFolders(filter: ___, flatten: ___, page: ___, pageSize: ___, parentDocumentFolderId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public DocumentFolderPage documentFolderDocumentFolders(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -700,7 +702,7 @@ public class Query {
 			this::_populateResourceContext,
 			documentFolderResource -> new DocumentFolderPage(
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, search,
+					parentDocumentFolderId, flatten, search,
 					_filterBiFunction.apply(
 						documentFolderResource, filterString),
 					Pagination.of(page, pageSize),
@@ -1395,12 +1397,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentFolderStructuredContents(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___, structuredContentFolderId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentFolderStructuredContents(filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, sorts: ___, structuredContentFolderId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public StructuredContentPage structuredContentFolderStructuredContents(
 			@GraphQLName("structuredContentFolderId") Long
 				structuredContentFolderId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -1414,7 +1417,7 @@ public class Query {
 			structuredContentResource -> new StructuredContentPage(
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						structuredContentFolderId, search,
+						structuredContentFolderId, flatten, search,
 						_filterBiFunction.apply(
 							structuredContentResource, filterString),
 						Pagination.of(page, pageSize),
@@ -1963,6 +1966,7 @@ public class Query {
 
 		@GraphQLField
 		public DocumentPage documents(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -1975,7 +1979,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				documentResource -> new DocumentPage(
 					documentResource.getDocumentFolderDocumentsPage(
-						_documentFolder.getId(), search,
+						_documentFolder.getId(), flatten, search,
 						_filterBiFunction.apply(documentResource, filterString),
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
@@ -2153,6 +2157,7 @@ public class Query {
 
 		@GraphQLField
 		public DocumentFolderPage documentFolders(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2165,7 +2170,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				documentFolderResource -> new DocumentFolderPage(
 					documentFolderResource.getDocumentFolderDocumentFoldersPage(
-						_documentFolder.getId(), search,
+						_documentFolder.getId(), flatten, search,
 						_filterBiFunction.apply(
 							documentFolderResource, filterString),
 						Pagination.of(page, pageSize),
@@ -2328,6 +2333,7 @@ public class Query {
 
 		@GraphQLField
 		public StructuredContentPage structuredContents(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -2341,7 +2347,7 @@ public class Query {
 				structuredContentResource -> new StructuredContentPage(
 					structuredContentResource.
 						getStructuredContentFolderStructuredContentsPage(
-							_structuredContentFolder.getId(), search,
+							_structuredContentFolder.getId(), flatten, search,
 							_filterBiFunction.apply(
 								structuredContentResource, filterString),
 							Pagination.of(page, pageSize),

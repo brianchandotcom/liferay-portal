@@ -1039,8 +1039,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
 					testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId(),
-					RandomTestUtil.randomString(), null, Pagination.of(1, 2),
-					null);
+					null, RandomTestUtil.randomString(), null,
+					Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -1058,7 +1058,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			page =
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						irrelevantStructuredContentFolderId, null, null,
+						irrelevantStructuredContentFolderId, null, null, null,
 						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -1080,8 +1080,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		page =
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
-					structuredContentFolderId, null, null, Pagination.of(1, 2),
-					null);
+					structuredContentFolderId, null, null, null,
+					Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1121,7 +1121,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> page =
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						structuredContentFolderId, null,
+						structuredContentFolderId, null, null,
 						getFilterString(
 							entityField, "between", structuredContent1),
 						Pagination.of(1, 2), null);
@@ -1159,7 +1159,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> page =
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						structuredContentFolderId, null,
+						structuredContentFolderId, null, null,
 						getFilterString(entityField, "eq", structuredContent1),
 						Pagination.of(1, 2), null);
 
@@ -1191,8 +1191,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Page<StructuredContent> page1 =
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
-					structuredContentFolderId, null, null, Pagination.of(1, 2),
-					null);
+					structuredContentFolderId, null, null, null,
+					Pagination.of(1, 2), null);
 
 		List<StructuredContent> structuredContents1 =
 			(List<StructuredContent>)page1.getItems();
@@ -1203,8 +1203,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Page<StructuredContent> page2 =
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
-					structuredContentFolderId, null, null, Pagination.of(2, 2),
-					null);
+					structuredContentFolderId, null, null, null,
+					Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1217,8 +1217,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Page<StructuredContent> page3 =
 			structuredContentResource.
 				getStructuredContentFolderStructuredContentsPage(
-					structuredContentFolderId, null, null, Pagination.of(1, 3),
-					null);
+					structuredContentFolderId, null, null, null,
+					Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -1321,7 +1321,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> ascPage =
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						structuredContentFolderId, null, null,
+						structuredContentFolderId, null, null, null,
 						Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1331,7 +1331,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> descPage =
 				structuredContentResource.
 					getStructuredContentFolderStructuredContentsPage(
-						structuredContentFolderId, null, null,
+						structuredContentFolderId, null, null, null,
 						Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(

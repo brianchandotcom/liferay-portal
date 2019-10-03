@@ -58,8 +58,8 @@ public interface DocumentFolderResource {
 		throws Exception;
 
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
-			Long parentDocumentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long parentDocumentFolderId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DocumentFolder postDocumentFolderDocumentFolder(

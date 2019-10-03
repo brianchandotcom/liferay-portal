@@ -42,13 +42,13 @@ public interface DocumentResource {
 	}
 
 	public Page<Document> getDocumentFolderDocumentsPage(
-			Long documentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long documentFolderId, Boolean flatten, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getDocumentFolderDocumentsPageHttpResponse(
-			Long documentFolderId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long documentFolderId, Boolean flatten, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Document postDocumentFolderDocument(
@@ -201,13 +201,13 @@ public interface DocumentResource {
 	public static class DocumentResourceImpl implements DocumentResource {
 
 		public Page<Document> getDocumentFolderDocumentsPage(
-				Long documentFolderId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long documentFolderId, Boolean flatten, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDocumentFolderDocumentsPageHttpResponse(
-					documentFolderId, search, filterString, pagination,
+					documentFolderId, flatten, search, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -223,8 +223,9 @@ public interface DocumentResource {
 
 		public HttpInvoker.HttpResponse
 				getDocumentFolderDocumentsPageHttpResponse(
-					Long documentFolderId, String search, String filterString,
-					Pagination pagination, String sortString)
+					Long documentFolderId, Boolean flatten, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -247,6 +248,10 @@ public interface DocumentResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

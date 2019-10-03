@@ -217,6 +217,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentDocumentFolderId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -230,6 +231,7 @@ public abstract class BaseDocumentFolderResourceImpl
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentDocumentFolderId") Long parentDocumentFolderId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)

@@ -79,6 +79,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "documentFolderId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -92,6 +93,7 @@ public abstract class BaseDocumentResourceImpl implements DocumentResource {
 	public Page<Document> getDocumentFolderDocumentsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
 				Long documentFolderId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)

@@ -224,6 +224,7 @@ public abstract class BaseStructuredContentResourceImpl
 			@Parameter(
 				in = ParameterIn.PATH, name = "structuredContentFolderId"
 			),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -241,6 +242,8 @@ public abstract class BaseStructuredContentResourceImpl
 				@NotNull @Parameter(hidden = true)
 				@PathParam("structuredContentFolderId") Long
 					structuredContentFolderId,
+				@Parameter(hidden = true) @QueryParam("flatten") Boolean
+					flatten,
 				@Parameter(hidden = true) @QueryParam("search") String search,
 				@Context Filter filter, @Context Pagination pagination,
 				@Context Sort[] sorts)

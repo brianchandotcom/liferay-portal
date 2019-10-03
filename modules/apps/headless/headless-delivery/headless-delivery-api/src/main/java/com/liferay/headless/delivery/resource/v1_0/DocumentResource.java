@@ -47,8 +47,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DocumentResource {
 
 	public Page<Document> getDocumentFolderDocumentsPage(
-			Long documentFolderId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long documentFolderId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Document postDocumentFolderDocument(

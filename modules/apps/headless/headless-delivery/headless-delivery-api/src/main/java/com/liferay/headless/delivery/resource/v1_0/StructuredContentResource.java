@@ -69,8 +69,8 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				Long structuredContentFolderId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long structuredContentFolderId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public StructuredContent postStructuredContentFolderStructuredContent(

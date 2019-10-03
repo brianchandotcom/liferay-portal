@@ -86,13 +86,13 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
-				Long structuredContentFolderId, String search,
+				Long structuredContentFolderId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getStructuredContentFolderStructuredContentsPageHttpResponse(
-				Long structuredContentFolderId, String search,
+				Long structuredContentFolderId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -601,15 +601,15 @@ public interface StructuredContentResource {
 
 		public Page<StructuredContent>
 				getStructuredContentFolderStructuredContentsPage(
-					Long structuredContentFolderId, String search,
-					String filterString, Pagination pagination,
+					Long structuredContentFolderId, Boolean flatten,
+					String search, String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getStructuredContentFolderStructuredContentsPageHttpResponse(
-					structuredContentFolderId, search, filterString, pagination,
-					sortString);
+					structuredContentFolderId, flatten, search, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -624,8 +624,8 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				getStructuredContentFolderStructuredContentsPageHttpResponse(
-					Long structuredContentFolderId, String search,
-					String filterString, Pagination pagination,
+					Long structuredContentFolderId, Boolean flatten,
+					String search, String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
 
@@ -649,6 +649,10 @@ public interface StructuredContentResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

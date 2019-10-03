@@ -388,7 +388,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Page<DocumentFolder> page =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
 				testGetDocumentFolderDocumentFoldersPage_getParentDocumentFolderId(),
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+				null, RandomTestUtil.randomString(), null, Pagination.of(1, 2),
+				null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -404,7 +405,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 					randomIrrelevantDocumentFolder());
 
 			page = documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				irrelevantParentDocumentFolderId, null, null,
+				irrelevantParentDocumentFolderId, null, null, null,
 				Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -424,7 +425,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 				parentDocumentFolderId, randomDocumentFolder());
 
 		page = documentFolderResource.getDocumentFolderDocumentFoldersPage(
-			parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
+			parentDocumentFolderId, null, null, null, Pagination.of(1, 2),
+			null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -461,7 +463,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, null,
+					parentDocumentFolderId, null, null,
 					getFilterString(entityField, "between", documentFolder1),
 					Pagination.of(1, 2), null);
 
@@ -497,7 +499,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> page =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, null,
+					parentDocumentFolderId, null, null,
 					getFilterString(entityField, "eq", documentFolder1),
 					Pagination.of(1, 2), null);
 
@@ -528,7 +530,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page1 =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, Pagination.of(1, 2), null);
+				parentDocumentFolderId, null, null, null, Pagination.of(1, 2),
+				null);
 
 		List<DocumentFolder> documentFolders1 =
 			(List<DocumentFolder>)page1.getItems();
@@ -538,7 +541,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page2 =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, Pagination.of(2, 2), null);
+				parentDocumentFolderId, null, null, null, Pagination.of(2, 2),
+				null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -550,7 +554,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		Page<DocumentFolder> page3 =
 			documentFolderResource.getDocumentFolderDocumentFoldersPage(
-				parentDocumentFolderId, null, null, Pagination.of(1, 3), null);
+				parentDocumentFolderId, null, null, null, Pagination.of(1, 3),
+				null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(documentFolder1, documentFolder2, documentFolder3),
@@ -651,8 +656,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<DocumentFolder> ascPage =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+					parentDocumentFolderId, null, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(documentFolder1, documentFolder2),
@@ -660,8 +665,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 			Page<DocumentFolder> descPage =
 				documentFolderResource.getDocumentFolderDocumentFoldersPage(
-					parentDocumentFolderId, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+					parentDocumentFolderId, null, null, null,
+					Pagination.of(1, 2), entityField.getName() + ":desc");
 
 			assertEquals(
 				Arrays.asList(documentFolder2, documentFolder1),

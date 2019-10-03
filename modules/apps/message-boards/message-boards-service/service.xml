@@ -252,6 +252,7 @@
 		<column name="threadId" type="long" />
 		<column filter-primary="true" name="rootMessageId" type="long" />
 		<column name="parentMessageId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="subject" type="String" uad-nonanonymizable="true" />
 		<column name="body" type="String" uad-nonanonymizable="true" />
 		<column name="format" type="String" />

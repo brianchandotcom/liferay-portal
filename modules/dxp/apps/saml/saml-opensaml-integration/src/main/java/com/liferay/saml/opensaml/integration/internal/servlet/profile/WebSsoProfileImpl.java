@@ -1513,12 +1513,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		outboundMessageContext.setMessage(samlResponse);
 
-		String relayState = samlSsoRequestContext.getRelayState();
-
-		SAMLBindingContext outboundSamlBindingContext =
-				outboundMessageContext.getSubcontext(SAMLBindingContext.class, true);
-
-		outboundSamlBindingContext.setRelayState(relayState);
+		outboundMessageContext.addSubcontext(
+			messageContext.getSubcontext(SAMLBindingContext.class, true));
 
 		SecurityParametersContext securityParametersContext =
 			outboundMessageContext.getSubcontext(

@@ -106,13 +106,14 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
-				Long parentMessageBoardMessageId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long parentMessageBoardMessageId, Boolean flatten,
+				String search, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		return _getMessageBoardMessagesPage(
 			parentMessageBoardMessageId, search, filter, pagination, sorts,
-			false, null);
+			flatten, null);
 	}
 
 	@Override
@@ -127,8 +128,8 @@ public class MessageBoardMessageResourceImpl
 	@Override
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
-				Long messageBoardThreadId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long messageBoardThreadId, Boolean flatten, String search,
+				Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		MBThread mbThread = _mbThreadLocalService.getMBThread(
@@ -298,6 +299,12 @@ public class MessageBoardMessageResourceImpl
 					booleanQuery.getPreBooleanFilter();
 
 				if (siteId == null) {
+					String field = "parentMessageId";
+
+					if (GetterUtil.getBoolean(flatten)) {
+						field = "treePath";
+					}
+
 					booleanFilter.add(
 						new TermFilter(
 							Field.ENTRY_CLASS_PK,
@@ -305,8 +312,7 @@ public class MessageBoardMessageResourceImpl
 						BooleanClauseOccur.MUST_NOT);
 					booleanFilter.add(
 						new TermFilter(
-							"parentMessageId",
-							String.valueOf(messageBoardMessageId)),
+							field, String.valueOf(messageBoardMessageId)),
 						BooleanClauseOccur.MUST);
 				}
 				else {

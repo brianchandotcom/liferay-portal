@@ -160,10 +160,14 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "openGraphDescription");
 
+		long openGraphImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "openGraphImageFileEntryId");
+
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
 			canonicalURLMap, useCustomTitle, openGraphTitleMap,
-			useCustomDescription, openGraphDescriptionMap, 0, serviceContext);
+			useCustomDescription, openGraphDescriptionMap,
+			openGraphImageFileEntryId, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -180,7 +184,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				useCustomCanonicalURL, canonicalURLMap, useCustomTitle,
 				openGraphTitleMap, useCustomDescription,
-				openGraphDescriptionMap, 0, serviceContext);
+				openGraphDescriptionMap, openGraphImageFileEntryId,
+				serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

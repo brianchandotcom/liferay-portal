@@ -35,10 +35,10 @@ public class StagingGroupServiceTunnelUtil {
 			HttpPrincipal httpPrincipal, long remoteGroupId)
 		throws PortalException {
 
-		try {
-			MethodHandler methodHandler = new MethodHandler(
-				_checkRemoteStagingGroupMethodKey, remoteGroupId);
+		MethodHandler methodHandler = new MethodHandler(
+			_checkRemoteStagingGroupMethodKey, remoteGroupId);
 
+		try {
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
@@ -71,17 +71,13 @@ public class StagingGroupServiceTunnelUtil {
 			boolean privateLayout, boolean secureConnection)
 		throws PortalException {
 
-		String groupDisplayURL = null;
+		MethodHandler methodHandler = new MethodHandler(
+			_getGroupDisplayURLMethodKey, remoteGroupId, privateLayout,
+			secureConnection);
 
 		try {
-			MethodHandler methodHandler = new MethodHandler(
-				_getGroupDisplayURLMethodKey, remoteGroupId, privateLayout,
-				secureConnection);
-
-			Object returnObj = null;
-
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				return (String)TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof PortalException) {
@@ -90,8 +86,6 @@ public class StagingGroupServiceTunnelUtil {
 
 				throw new SystemException(e);
 			}
-
-			groupDisplayURL = (String)returnObj;
 		}
 		catch (SystemException se) {
 			if (se.getCause() instanceof ConnectException) {
@@ -107,8 +101,6 @@ public class StagingGroupServiceTunnelUtil {
 
 			throw se;
 		}
-
-		return groupDisplayURL;
 	}
 
 	private StagingGroupServiceTunnelUtil() {

@@ -93,9 +93,9 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			ElasticsearchSearchEngineAdapterIndexRequestTest.class.
-				getSimpleName());
+		setUpJSONFactoryUtil();
+
+		_elasticsearchFixture = new ElasticsearchFixture(getClass());
 
 		_elasticsearchFixture.setUp();
 
@@ -114,6 +114,54 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		_deleteIndex(_INDEX_NAME);
 
 		_elasticsearchFixture.tearDown();
+	}
+
+	@Test
+	public void testExecuteAnalyzeIndexRequest() {
+		StringBundler sb = new StringBundler(23);
+
+		sb.append("{\n");
+		sb.append("    \"analysis\": {\n");
+		sb.append("        \"analyzer\": {\n");
+		sb.append("            \"keyword_lowercase\": {\n");
+		sb.append("                \"filter\": \"lowercase\",\n");
+		sb.append("                \"tokenizer\": \"keyword\"\n");
+		sb.append("            },\n");
+		sb.append("            \"english_analyzer\": {\n");
+		sb.append("                \"filter\": [\n");
+		sb.append("                    \"lowercase\",\n");
+		sb.append("                    \"english_stemmer\"\n");
+		sb.append("                ],\n");
+		sb.append("                \"tokenizer\": \"standard\"\n");
+		sb.append("            }\n");
+		sb.append("        },\n");
+		sb.append("        \"filter\": {\n");
+		sb.append("            \"english_stemmer\": {\n");
+		sb.append("                \"language\": \"english\",\n");
+		sb.append("                \"type\": \"stemmer\"\n");
+		sb.append("            }\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("}");
+
+		_putSettings(sb.toString());
+
+		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
+
+		analyzeIndexRequest.setAnalyzer("english_analyzer");
+		analyzeIndexRequest.setExplain(true);
+		analyzeIndexRequest.setIndexName(_INDEX_NAME);
+		analyzeIndexRequest.setTexts("Thinking about Something");
+
+		AnalyzeIndexResponse analyzeIndexResponse =
+			_searchEngineAdapter.execute(analyzeIndexRequest);
+
+		//add asserts
+		analyzeIndexResponse.getDetailsAnalyzer();
+		analyzeIndexResponse.getDetailsCharFilters();
+		analyzeIndexResponse.getDetailsTokenFilters();
+		analyzeIndexResponse.getDetailsTokenizer();
+		analyzeIndexResponse.getAnalysisIndexResponseTokens();
 	}
 
 	@Test
@@ -165,6 +213,8 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			createIndexRequest);
 
 		Assert.assertTrue(createIndexResponse.isAcknowledged());
+
+		Assert.assertEquals("test_index_2", createIndexResponse.getIndexName());
 
 		Assert.assertTrue(_indiciesExists("test_index_2"));
 
@@ -224,6 +274,11 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Test
 	public void testExecuteGetIndexIndexRequest() {
+		String mappingSource =
+			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+
+		_putMapping(mappingSource);
+
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
 			_INDEX_NAME);
 
@@ -234,6 +289,11 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 		Assert.assertEquals(Arrays.toString(indexNames), 1, indexNames.length);
 		Assert.assertEquals(_INDEX_NAME, indexNames[0]);
+
+		String indexMappings = String.valueOf(
+			getIndexIndexResponse.getIndexMappings());
+
+		Assert.assertTrue(indexMappings, indexMappings.contains(mappingSource));
 	}
 
 	@Test
@@ -275,6 +335,30 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			_searchEngineAdapter.execute(indicesExistsIndexRequest2);
 
 		Assert.assertFalse(indicesExistsIndexResponse2.isExists());
+	}
+
+	@Test
+	public void testExecuteOpenIndexRequest() {
+		_closeIndex(_INDEX_NAME);
+
+		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.CLOSE);
+
+		OpenIndexRequest openIndexRequest = new OpenIndexRequest(_INDEX_NAME);
+
+		IndicesOptions indicesOptions = new IndicesOptions();
+
+		indicesOptions.setIgnoreUnavailable(true);
+
+		openIndexRequest.setIndicesOptions(indicesOptions);
+
+		OpenIndexResponse openIndexResponse = _searchEngineAdapter.execute(
+			openIndexRequest);
+
+		Assert.assertTrue(
+			"Open request not acknowledged",
+			openIndexResponse.isAcknowledged());
+
+		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.OPEN);
 	}
 
 	@Test
@@ -351,30 +435,6 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals("2s", refreshInterval);
 
 		_deleteIndex("test_index_2");
-	}
-
-	@Test
-	public void testOpenIndexRequest() {
-		_closeIndex(_INDEX_NAME);
-
-		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.CLOSE);
-
-		OpenIndexRequest openIndexRequest = new OpenIndexRequest(_INDEX_NAME);
-
-		IndicesOptions indicesOptions = new IndicesOptions();
-
-		indicesOptions.setIgnoreUnavailable(true);
-
-		openIndexRequest.setIndicesOptions(indicesOptions);
-
-		OpenIndexResponse openIndexResponse = _searchEngineAdapter.execute(
-			openIndexRequest);
-
-		Assert.assertTrue(
-			"Open request not acknowledged",
-			openIndexResponse.isAcknowledged());
-
-		assertIndexMetaDataState(_INDEX_NAME, IndexMetaData.State.OPEN);
 	}
 
 	protected static IndexRequestExecutor createIndexRequestExecutor(

@@ -87,12 +87,13 @@ public class MBMessageModelImpl
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"categoryId", Types.BIGINT}, {"threadId", Types.BIGINT},
 		{"rootMessageId", Types.BIGINT}, {"parentMessageId", Types.BIGINT},
-		{"subject", Types.VARCHAR}, {"body", Types.CLOB},
-		{"format", Types.VARCHAR}, {"anonymous", Types.BOOLEAN},
-		{"priority", Types.DOUBLE}, {"allowPingbacks", Types.BOOLEAN},
-		{"answer", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"treePath", Types.VARCHAR}, {"subject", Types.VARCHAR},
+		{"body", Types.CLOB}, {"format", Types.VARCHAR},
+		{"anonymous", Types.BOOLEAN}, {"priority", Types.DOUBLE},
+		{"allowPingbacks", Types.BOOLEAN}, {"answer", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -113,6 +114,7 @@ public class MBMessageModelImpl
 		TABLE_COLUMNS_MAP.put("threadId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rootMessageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentMessageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("format", Types.VARCHAR);
@@ -128,7 +130,7 @@ public class MBMessageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBMessage (uuid_ VARCHAR(75) null,messageId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,categoryId LONG,threadId LONG,rootMessageId LONG,parentMessageId LONG,treePath STRING null,subject VARCHAR(75) null,body TEXT null,format VARCHAR(75) null,anonymous BOOLEAN,priority DOUBLE,allowPingbacks BOOLEAN,answer BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
@@ -205,6 +207,7 @@ public class MBMessageModelImpl
 		model.setThreadId(soapModel.getThreadId());
 		model.setRootMessageId(soapModel.getRootMessageId());
 		model.setParentMessageId(soapModel.getParentMessageId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setSubject(soapModel.getSubject());
 		model.setBody(soapModel.getBody());
 		model.setFormat(soapModel.getFormat());
@@ -416,6 +419,9 @@ public class MBMessageModelImpl
 		attributeSetterBiConsumers.put(
 			"parentMessageId",
 			(BiConsumer<MBMessage, Long>)MBMessage::setParentMessageId);
+		attributeGetterFunctions.put("treePath", MBMessage::getTreePath);
+		attributeSetterBiConsumers.put(
+			"treePath", (BiConsumer<MBMessage, String>)MBMessage::setTreePath);
 		attributeGetterFunctions.put("subject", MBMessage::getSubject);
 		attributeSetterBiConsumers.put(
 			"subject", (BiConsumer<MBMessage, String>)MBMessage::setSubject);
@@ -783,6 +789,22 @@ public class MBMessageModelImpl
 
 	public long getOriginalParentMessageId() {
 		return _originalParentMessageId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return "";
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -1277,6 +1299,7 @@ public class MBMessageModelImpl
 		mbMessageImpl.setThreadId(getThreadId());
 		mbMessageImpl.setRootMessageId(getRootMessageId());
 		mbMessageImpl.setParentMessageId(getParentMessageId());
+		mbMessageImpl.setTreePath(getTreePath());
 		mbMessageImpl.setSubject(getSubject());
 		mbMessageImpl.setBody(getBody());
 		mbMessageImpl.setFormat(getFormat());
@@ -1470,6 +1493,14 @@ public class MBMessageModelImpl
 
 		mbMessageCacheModel.parentMessageId = getParentMessageId();
 
+		mbMessageCacheModel.treePath = getTreePath();
+
+		String treePath = mbMessageCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			mbMessageCacheModel.treePath = null;
+		}
+
 		mbMessageCacheModel.subject = getSubject();
 
 		String subject = mbMessageCacheModel.subject;
@@ -1640,6 +1671,7 @@ public class MBMessageModelImpl
 	private long _parentMessageId;
 	private long _originalParentMessageId;
 	private boolean _setOriginalParentMessageId;
+	private String _treePath;
 	private String _subject;
 	private String _body;
 	private String _format;

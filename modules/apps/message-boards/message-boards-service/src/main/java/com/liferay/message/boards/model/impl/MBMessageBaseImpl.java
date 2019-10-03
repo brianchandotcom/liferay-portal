@@ -16,6 +16,11 @@ package com.liferay.message.boards.model.impl;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The extended model base implementation for the MBMessage service. Represents a row in the &quot;MBMessage&quot; database table, with each column mapped to a property of this class.
@@ -45,6 +50,43 @@ public abstract class MBMessageBaseImpl
 		else {
 			MBMessageLocalServiceUtil.updateMBMessage(this);
 		}
+	}
+
+	@Override
+	@SuppressWarnings("unused")
+	public String buildTreePath() throws PortalException {
+		List<MBMessage> mbMessages = new ArrayList<MBMessage>();
+
+		MBMessage mbMessage = this;
+
+		while (mbMessage != null) {
+			mbMessages.add(mbMessage);
+
+			mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+				mbMessage.getParentMessageId());
+		}
+
+		StringBundler sb = new StringBundler(mbMessages.size() * 2 + 1);
+
+		sb.append("/");
+
+		for (int i = mbMessages.size() - 1; i >= 0; i--) {
+			mbMessage = mbMessages.get(i);
+
+			sb.append(mbMessage.getMessageId());
+			sb.append("/");
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public void updateTreePath(String treePath) {
+		MBMessage mbMessage = this;
+
+		mbMessage.setTreePath(treePath);
+
+		MBMessageLocalServiceUtil.updateMBMessage(mbMessage);
 	}
 
 }

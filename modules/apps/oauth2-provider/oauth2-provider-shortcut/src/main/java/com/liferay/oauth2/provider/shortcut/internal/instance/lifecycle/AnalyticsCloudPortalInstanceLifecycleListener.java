@@ -63,9 +63,9 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.security.service.access.policy.configuration.SAPSystemEntry;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
-import com.liferay.portal.security.service.access.policy.util.SAPSystemEntry;
 
 import java.io.InputStream;
 

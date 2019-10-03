@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.util;
+package com.liferay.portal.security.service.access.policy.configuration;
 
 /**
  * @author Marta Medio

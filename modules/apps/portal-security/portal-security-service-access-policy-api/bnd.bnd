@@ -8,5 +8,4 @@ Export-Package:\
 	com.liferay.portal.security.service.access.policy.model,\
 	com.liferay.portal.security.service.access.policy.service,\
 	com.liferay.portal.security.service.access.policy.service.persistence,\
-	com.liferay.portal.security.service.access.policy.util,\
 	com.liferay.portal.security.service.access.policy.util.comparator

@@ -15,7 +15,7 @@
 package com.liferay.portal.security.service.access.policy.internal.tracker;
 
 import com.liferay.osgi.util.StringPlus;
-import com.liferay.portal.security.service.access.policy.util.SAPSystemEntry;
+import com.liferay.portal.security.service.access.policy.configuration.SAPSystemEntry;
 
 import java.util.HashSet;
 import java.util.Map;

@@ -50,7 +50,7 @@ if (ddmStructure != null) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="ddmStructureId" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.getDDMStructureId() %>" />
 	<aui:input name="definition" type="hidden" />
-	<aui:input name="indexable" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.enableDDMStructureFieldIndexable() %>" />
+	<aui:input name="indexable" type="hidden" value="<%= journalEditDDMStructuresDisplayContext.isStructureFieldIndexableEnable() %>" />
 
 	<aui:model-context bean="<%= ddmStructure %>" model="<%= DDMStructure.class %>" />
 

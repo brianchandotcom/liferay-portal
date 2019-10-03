@@ -67,10 +67,6 @@ public class JournalEditDDMStructuresDisplayContext {
 		return _journalWebConfiguration.changeableDefaultLanguage();
 	}
 
-	public boolean enableDDMStructureFieldIndexable() {
-		return _journalWebConfiguration.enableDDMStructureFieldIndexable();
-	}
-
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
 	}
@@ -259,6 +255,10 @@ public class JournalEditDDMStructuresDisplayContext {
 		}
 
 		return storageType;
+	}
+
+	public boolean isStructureFieldIndexableEnable() {
+		return _journalWebConfiguration.structureFieldIndexableEnable();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

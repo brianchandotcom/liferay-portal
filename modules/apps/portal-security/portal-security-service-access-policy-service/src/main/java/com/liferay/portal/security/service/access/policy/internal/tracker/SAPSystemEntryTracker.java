@@ -18,10 +18,10 @@ import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.security.service.access.policy.util.SAPSystemEntry;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
@@ -76,6 +76,6 @@ public class SAPSystemEntryTracker {
 	}
 
 	private static final Map<ServiceReference<SAPSystemEntry>, Set<String>>
-		_sapSystemMap = new HashMap<>();
+		_sapSystemMap = new ConcurrentHashMap<>();
 
 }

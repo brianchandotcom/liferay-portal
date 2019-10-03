@@ -93,21 +93,17 @@ public class AccountUserRetrieverTest {
 		// Add a user that is part of the account but will not hit a keyword
 		// search
 
-		List<User> accountUsers = new ArrayList<>();
-
-		accountUsers.add(UserTestUtil.addUser());
+		_users.add(UserTestUtil.addUser());
 
 		// Add a user that is part of the account and will hit a keyword search
 
 		String searchTerm = RandomTestUtil.randomString();
 
-		accountUsers.add(
+		_users.add(
 			UserTestUtil.addUser(
 				searchTerm + RandomTestUtil.randomString(), null));
 
-		_users.addAll(accountUsers);
-
-		for (User user : accountUsers) {
+		for (User user : _users) {
 			_accountEntryUserRels.add(
 				_accountEntryUserRelLocalService.addAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));

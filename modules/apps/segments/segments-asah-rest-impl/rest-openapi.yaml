@@ -53,8 +53,8 @@ components:
                     type: string
                 trafficSplit:
                     format: double
-                    maximum: 100
-                    minimum: 0
+                    maximum: 99
+                    minimum: 1
                     type: number
             type: object
         Status:

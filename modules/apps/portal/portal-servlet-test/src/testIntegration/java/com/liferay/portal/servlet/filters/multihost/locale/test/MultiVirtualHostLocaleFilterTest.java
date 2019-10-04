@@ -223,17 +223,17 @@ public class MultiVirtualHostLocaleFilterTest {
 
 	private static final String _LANGUAGE_ID_DE = "de_DE";
 
-	private static final String _LANGUAGE_ID_FR = "fr_FR";
-
 	private static final String _LANGUAGE_ID_ES = "es_ES";
+
+	private static final String _LANGUAGE_ID_FR = "fr_FR";
 
 	private static final int _SERVER_PORT = 8080;
 
 	private static final String _TESTHOST_DE = "testhost.de";
 
-	private static final String _TESTHOST_FR = "testhost.fr";
-
 	private static final String _TESTHOST_ES = "testhost.es";
+
+	private static final String _TESTHOST_FR = "testhost.fr";
 
 	private static final String _WEB_GUEST = "/web/guest";
 

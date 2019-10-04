@@ -14,6 +14,9 @@
 
 package com.liferay.change.tracking.internal;
 
+import com.liferay.change.tracking.listener.CTEventListener;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -36,8 +39,23 @@ public class CTServiceRegistry {
 		return _serviceTrackerMap.getService(classNameId);
 	}
 
+	public void onPublish(long ctCollectionId) throws Exception {
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			ctEventListener.onPublish(ctCollectionId);
+		}
+	}
+
+	public void onRemove(long ctCollectionId) {
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			ctEventListener.onRemove(ctCollectionId);
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, CTEventListener.class);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, CTService.class, null,
 			(serviceReference, emitter) -> {
@@ -52,6 +70,8 @@ public class CTServiceRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTrackerList.close();
+
 		_serviceTrackerMap.close();
 	}
 
@@ -61,6 +81,8 @@ public class CTServiceRegistry {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
+	private ServiceTrackerList<CTEventListener, CTEventListener>
+		_serviceTrackerList;
 	private ServiceTrackerMap<Long, CTService> _serviceTrackerMap;
 
 }

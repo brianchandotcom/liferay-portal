@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.change.tracking.engine.exception,\
 	com.liferay.change.tracking.exception,\
 	com.liferay.change.tracking.function,\
+	com.liferay.change.tracking.listener,\
 	com.liferay.change.tracking.model,\
 	com.liferay.change.tracking.service,\
 	com.liferay.change.tracking.service.persistence

@@ -1,4 +1,5 @@
-<%--/**
+<%--
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -156,8 +157,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
 	<div>
-		<aui:input id="openGraphImageTitle" label="image" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>">
-		</aui:input>
+		<aui:input disabled="<%= true %>" id="openGraphImageTitle" label="image" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" />
 
 		<aui:button name="openGraphImageButton" value="select" />
 

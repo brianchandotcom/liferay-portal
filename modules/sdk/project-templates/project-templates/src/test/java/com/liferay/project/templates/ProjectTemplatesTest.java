@@ -3919,7 +3919,7 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		System.getProperty("nodejs.npm.ci.sass.binary.site");
 
 	private static final Pattern _antBndPluginVersionPattern = Pattern.compile(
-		".*com\\.liferay\\.ant\\.bnd:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+		".*com\\.liferay\\.ant\\.bnd[:-]([0-9]+\\.[0-9]+\\.[0-9]+).*",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private static URI _gradleDistribution;
 	private static final Pattern _gradlePluginVersionPattern = Pattern.compile(

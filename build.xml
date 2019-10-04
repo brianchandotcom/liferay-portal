@@ -168,7 +168,7 @@ message.
 	</target>
 
 	<target name="clean">
-		<gradle-execute dir="modules" task="clean">
+		<gradle-execute dir="modules" setupbinariescache="false" task="clean">
 			<arg value="--parallel" />
 			<arg value="-Dbuild.profile=portal-pre" />
 		</gradle-execute>
@@ -196,9 +196,9 @@ message.
 			<sequential>
 				<delete dir="${sdk.dir}" />
 
-				<setup-sdk />
+				<setup-sdk setupbinariescache="false" />
 
-				<gradle-execute dir="${project.dir}/modules" task="clean">
+				<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="clean">
 					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
 					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
 					<arg value="-Dbuild.profile=${build.profile}" />
@@ -207,7 +207,7 @@ message.
 				<if>
 					<available file="${project.dir}/modules/test/arquillian-extension-junit-bridge-test" type="dir" />
 					<then>
-						<gradle-execute dir="${project.dir}/modules" task=":test:arquillian-extension-junit-bridge-test:clean" />
+						<gradle-execute dir="${project.dir}/modules/test/arquillian-extension-junit-bridge-test" setupbinariescache="false" task="clean" />
 					</then>
 				</if>
 			</sequential>

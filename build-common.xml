@@ -830,9 +830,12 @@ information.
 			<local name="redirector.output.property" />
 
 			<if>
-				<not>
-					<equals arg1="@{outputproperty}" arg2="" />
-				</not>
+				<or>
+					<not>
+						<equals arg1="@{outputproperty}" arg2="" />
+					</not>
+					<equals arg1="${gradle.execute.silent}" arg2="true" />
+				</or>
 				<then>
 					<property name="redirector.error.property" value="error.property" />
 					<property name="redirector.output.property" value="output.property" />
@@ -945,6 +948,8 @@ information.
 
 					<trycatch>
 						<try>
+							<echo message="Executing Gradle task: ${gradle.executable.task}" />
+
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 								<args />
 								<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
@@ -1023,11 +1028,18 @@ information.
 										</then>
 									</if>
 
-									<local name="task.output" />
+									<if>
+										<not>
+											<equals arg1="${gradle.execute.silent}" arg2="true" />
+										</not>
+										<then>
+											<local name="task.output" />
 
-									<propertycopy from="${redirector.output.property}" name="task.output" />
+											<propertycopy from="${redirector.output.property}" name="task.output" />
 
-									<echo message="${task.output}" />
+											<echo message="${task.output}" />
+										</then>
+									</if>
 								</then>
 							</if>
 						</finally>

@@ -1,13 +1,17 @@
 .search-facet {
-	.facet-checkbox-label {
-		display: block;
-	}
-
-	.facet-term-selected {
+	.facet-clear-btn {
 		font-weight: 600;
+		font-size: 0.875rem; // Copied from .custom-control-label
 	}
 
-	.facet-term-unselected {
-		font-weight: 400;
+	.custom-control-label,
+	.term-name {
+		&.facet-term-unselected {
+			font-weight: 400;
+		}
+
+		&.facet-term-selected {
+			font-weight: 600;
+		}
 	}
 }

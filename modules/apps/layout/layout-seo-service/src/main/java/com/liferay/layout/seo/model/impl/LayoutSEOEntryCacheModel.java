@@ -101,22 +101,22 @@ public class LayoutSEOEntryCacheModel
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
 		sb.append(layoutId);
-		sb.append(", enabledCanonicalURL=");
-		sb.append(enabledCanonicalURL);
+		sb.append(", canonicalURLEnabled=");
+		sb.append(canonicalURLEnabled);
 		sb.append(", canonicalURL=");
 		sb.append(canonicalURL);
-		sb.append(", enabledOpenGraphTitle=");
-		sb.append(enabledOpenGraphTitle);
+		sb.append(", OpenGraphTitleEnabled=");
+		sb.append(OpenGraphTitleEnabled);
 		sb.append(", openGraphTitle=");
 		sb.append(openGraphTitle);
-		sb.append(", enabledOpenGraphDescription=");
-		sb.append(enabledOpenGraphDescription);
+		sb.append(", openGraphDescriptionEnabled=");
+		sb.append(openGraphDescriptionEnabled);
 		sb.append(", openGraphDescription=");
 		sb.append(openGraphDescription);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append(", openGraphImageFileEntryId=");
 		sb.append(openGraphImageFileEntryId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -163,7 +163,7 @@ public class LayoutSEOEntryCacheModel
 
 		layoutSEOEntryImpl.setPrivateLayout(privateLayout);
 		layoutSEOEntryImpl.setLayoutId(layoutId);
-		layoutSEOEntryImpl.setEnabledCanonicalURL(enabledCanonicalURL);
+		layoutSEOEntryImpl.setCanonicalURLEnabled(canonicalURLEnabled);
 
 		if (canonicalURL == null) {
 			layoutSEOEntryImpl.setCanonicalURL("");
@@ -172,7 +172,7 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setCanonicalURL(canonicalURL);
 		}
 
-		layoutSEOEntryImpl.setEnabledOpenGraphTitle(enabledOpenGraphTitle);
+		layoutSEOEntryImpl.setOpenGraphTitleEnabled(OpenGraphTitleEnabled);
 
 		if (openGraphTitle == null) {
 			layoutSEOEntryImpl.setOpenGraphTitle("");
@@ -181,8 +181,8 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setOpenGraphTitle(openGraphTitle);
 		}
 
-		layoutSEOEntryImpl.setEnabledOpenGraphDescription(
-			enabledOpenGraphDescription);
+		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
+			openGraphDescriptionEnabled);
 
 		if (openGraphDescription == null) {
 			layoutSEOEntryImpl.setOpenGraphDescription("");
@@ -191,15 +191,15 @@ public class LayoutSEOEntryCacheModel
 			layoutSEOEntryImpl.setOpenGraphDescription(openGraphDescription);
 		}
 
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
+			openGraphImageFileEntryId);
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutSEOEntryImpl.setLastPublishDate(null);
 		}
 		else {
 			layoutSEOEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
-
-		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
-			openGraphImageFileEntryId);
 
 		layoutSEOEntryImpl.resetOriginalValues();
 
@@ -226,17 +226,17 @@ public class LayoutSEOEntryCacheModel
 
 		layoutId = objectInput.readLong();
 
-		enabledCanonicalURL = objectInput.readBoolean();
+		canonicalURLEnabled = objectInput.readBoolean();
 		canonicalURL = objectInput.readUTF();
 
-		enabledOpenGraphTitle = objectInput.readBoolean();
+		OpenGraphTitleEnabled = objectInput.readBoolean();
 		openGraphTitle = objectInput.readUTF();
 
-		enabledOpenGraphDescription = objectInput.readBoolean();
+		openGraphDescriptionEnabled = objectInput.readBoolean();
 		openGraphDescription = objectInput.readUTF();
-		lastPublishDate = objectInput.readLong();
 
 		openGraphImageFileEntryId = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -272,7 +272,7 @@ public class LayoutSEOEntryCacheModel
 
 		objectOutput.writeLong(layoutId);
 
-		objectOutput.writeBoolean(enabledCanonicalURL);
+		objectOutput.writeBoolean(canonicalURLEnabled);
 
 		if (canonicalURL == null) {
 			objectOutput.writeUTF("");
@@ -281,7 +281,7 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(canonicalURL);
 		}
 
-		objectOutput.writeBoolean(enabledOpenGraphTitle);
+		objectOutput.writeBoolean(OpenGraphTitleEnabled);
 
 		if (openGraphTitle == null) {
 			objectOutput.writeUTF("");
@@ -290,7 +290,7 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(openGraphTitle);
 		}
 
-		objectOutput.writeBoolean(enabledOpenGraphDescription);
+		objectOutput.writeBoolean(openGraphDescriptionEnabled);
 
 		if (openGraphDescription == null) {
 			objectOutput.writeUTF("");
@@ -299,9 +299,8 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(openGraphDescription);
 		}
 
-		objectOutput.writeLong(lastPublishDate);
-
 		objectOutput.writeLong(openGraphImageFileEntryId);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -315,13 +314,13 @@ public class LayoutSEOEntryCacheModel
 	public long modifiedDate;
 	public boolean privateLayout;
 	public long layoutId;
-	public boolean enabledCanonicalURL;
+	public boolean canonicalURLEnabled;
 	public String canonicalURL;
-	public boolean enabledOpenGraphTitle;
+	public boolean OpenGraphTitleEnabled;
 	public String openGraphTitle;
-	public boolean enabledOpenGraphDescription;
+	public boolean openGraphDescriptionEnabled;
 	public String openGraphDescription;
-	public long lastPublishDate;
 	public long openGraphImageFileEntryId;
+	public long lastPublishDate;
 
 }

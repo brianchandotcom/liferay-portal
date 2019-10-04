@@ -54,16 +54,16 @@ public class LayoutSEOEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
-		attributes.put("enabledCanonicalURL", isEnabledCanonicalURL());
+		attributes.put("canonicalURLEnabled", isCanonicalURLEnabled());
 		attributes.put("canonicalURL", getCanonicalURL());
-		attributes.put("enabledOpenGraphTitle", isEnabledOpenGraphTitle());
+		attributes.put("OpenGraphTitleEnabled", isOpenGraphTitleEnabled());
 		attributes.put("openGraphTitle", getOpenGraphTitle());
 		attributes.put(
-			"enabledOpenGraphDescription", isEnabledOpenGraphDescription());
+			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
 		attributes.put("openGraphDescription", getOpenGraphDescription());
-		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put(
 			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -136,11 +136,11 @@ public class LayoutSEOEntryWrapper
 			setLayoutId(layoutId);
 		}
 
-		Boolean enabledCanonicalURL = (Boolean)attributes.get(
-			"enabledCanonicalURL");
+		Boolean canonicalURLEnabled = (Boolean)attributes.get(
+			"canonicalURLEnabled");
 
-		if (enabledCanonicalURL != null) {
-			setEnabledCanonicalURL(enabledCanonicalURL);
+		if (canonicalURLEnabled != null) {
+			setCanonicalURLEnabled(canonicalURLEnabled);
 		}
 
 		String canonicalURL = (String)attributes.get("canonicalURL");
@@ -149,11 +149,11 @@ public class LayoutSEOEntryWrapper
 			setCanonicalURL(canonicalURL);
 		}
 
-		Boolean enabledOpenGraphTitle = (Boolean)attributes.get(
-			"enabledOpenGraphTitle");
+		Boolean OpenGraphTitleEnabled = (Boolean)attributes.get(
+			"OpenGraphTitleEnabled");
 
-		if (enabledOpenGraphTitle != null) {
-			setEnabledOpenGraphTitle(enabledOpenGraphTitle);
+		if (OpenGraphTitleEnabled != null) {
+			setOpenGraphTitleEnabled(OpenGraphTitleEnabled);
 		}
 
 		String openGraphTitle = (String)attributes.get("openGraphTitle");
@@ -162,11 +162,11 @@ public class LayoutSEOEntryWrapper
 			setOpenGraphTitle(openGraphTitle);
 		}
 
-		Boolean enabledOpenGraphDescription = (Boolean)attributes.get(
-			"enabledOpenGraphDescription");
+		Boolean openGraphDescriptionEnabled = (Boolean)attributes.get(
+			"openGraphDescriptionEnabled");
 
-		if (enabledOpenGraphDescription != null) {
-			setEnabledOpenGraphDescription(enabledOpenGraphDescription);
+		if (openGraphDescriptionEnabled != null) {
+			setOpenGraphDescriptionEnabled(openGraphDescriptionEnabled);
 		}
 
 		String openGraphDescription = (String)attributes.get(
@@ -176,17 +176,17 @@ public class LayoutSEOEntryWrapper
 			setOpenGraphDescription(openGraphDescription);
 		}
 
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
 		Long openGraphImageFileEntryId = (Long)attributes.get(
 			"openGraphImageFileEntryId");
 
 		if (openGraphImageFileEntryId != null) {
 			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -262,6 +262,16 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
+	 * Returns the canonical url enabled of this layout seo entry.
+	 *
+	 * @return the canonical url enabled of this layout seo entry
+	 */
+	@Override
+	public boolean getCanonicalURLEnabled() {
+		return model.getCanonicalURLEnabled();
+	}
+
+	/**
 	 * Returns a map of the locales and localized canonical urls of this layout seo entry.
 	 *
 	 * @return the locales and localized canonical urls of this layout seo entry
@@ -294,36 +304,6 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
-	}
-
-	/**
-	 * Returns the enabled canonical url of this layout seo entry.
-	 *
-	 * @return the enabled canonical url of this layout seo entry
-	 */
-	@Override
-	public boolean getEnabledCanonicalURL() {
-		return model.getEnabledCanonicalURL();
-	}
-
-	/**
-	 * Returns the enabled open graph description of this layout seo entry.
-	 *
-	 * @return the enabled open graph description of this layout seo entry
-	 */
-	@Override
-	public boolean getEnabledOpenGraphDescription() {
-		return model.getEnabledOpenGraphDescription();
-	}
-
-	/**
-	 * Returns the enabled open graph title of this layout seo entry.
-	 *
-	 * @return the enabled open graph title of this layout seo entry
-	 */
-	@Override
-	public boolean getEnabledOpenGraphTitle() {
-		return model.getEnabledOpenGraphTitle();
 	}
 
 	/**
@@ -457,6 +437,16 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
+	 * Returns the open graph description enabled of this layout seo entry.
+	 *
+	 * @return the open graph description enabled of this layout seo entry
+	 */
+	@Override
+	public boolean getOpenGraphDescriptionEnabled() {
+		return model.getOpenGraphDescriptionEnabled();
+	}
+
+	/**
 	 * Returns a map of the locales and localized open graph descriptions of this layout seo entry.
 	 *
 	 * @return the locales and localized open graph descriptions of this layout seo entry
@@ -545,6 +535,16 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
+	 * Returns the open graph title enabled of this layout seo entry.
+	 *
+	 * @return the open graph title enabled of this layout seo entry
+	 */
+	@Override
+	public boolean getOpenGraphTitleEnabled() {
+		return model.getOpenGraphTitleEnabled();
+	}
+
+	/**
 	 * Returns a map of the locales and localized open graph titles of this layout seo entry.
 	 *
 	 * @return the locales and localized open graph titles of this layout seo entry
@@ -615,33 +615,33 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled canonical url.
+	 * Returns <code>true</code> if this layout seo entry is canonical url enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled canonical url; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is canonical url enabled; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isEnabledCanonicalURL() {
-		return model.isEnabledCanonicalURL();
+	public boolean isCanonicalURLEnabled() {
+		return model.isCanonicalURLEnabled();
 	}
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled open graph description.
+	 * Returns <code>true</code> if this layout seo entry is open graph description enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled open graph description; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is open graph description enabled; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isEnabledOpenGraphDescription() {
-		return model.isEnabledOpenGraphDescription();
+	public boolean isOpenGraphDescriptionEnabled() {
+		return model.isOpenGraphDescriptionEnabled();
 	}
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled open graph title.
+	 * Returns <code>true</code> if this layout seo entry is open graph title enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled open graph title; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is open graph title enabled; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isEnabledOpenGraphTitle() {
-		return model.isEnabledOpenGraphTitle();
+	public boolean isOpenGraphTitleEnabled() {
+		return model.isOpenGraphTitleEnabled();
 	}
 
 	/**
@@ -721,6 +721,16 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
+	 * Sets whether this layout seo entry is canonical url enabled.
+	 *
+	 * @param canonicalURLEnabled the canonical url enabled of this layout seo entry
+	 */
+	@Override
+	public void setCanonicalURLEnabled(boolean canonicalURLEnabled) {
+		model.setCanonicalURLEnabled(canonicalURLEnabled);
+	}
+
+	/**
 	 * Sets the localized canonical urls of this layout seo entry from the map of locales and localized canonical urls.
 	 *
 	 * @param canonicalURLMap the locales and localized canonical urls of this layout seo entry
@@ -764,38 +774,6 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
-	}
-
-	/**
-	 * Sets whether this layout seo entry is enabled canonical url.
-	 *
-	 * @param enabledCanonicalURL the enabled canonical url of this layout seo entry
-	 */
-	@Override
-	public void setEnabledCanonicalURL(boolean enabledCanonicalURL) {
-		model.setEnabledCanonicalURL(enabledCanonicalURL);
-	}
-
-	/**
-	 * Sets whether this layout seo entry is enabled open graph description.
-	 *
-	 * @param enabledOpenGraphDescription the enabled open graph description of this layout seo entry
-	 */
-	@Override
-	public void setEnabledOpenGraphDescription(
-		boolean enabledOpenGraphDescription) {
-
-		model.setEnabledOpenGraphDescription(enabledOpenGraphDescription);
-	}
-
-	/**
-	 * Sets whether this layout seo entry is enabled open graph title.
-	 *
-	 * @param enabledOpenGraphTitle the enabled open graph title of this layout seo entry
-	 */
-	@Override
-	public void setEnabledOpenGraphTitle(boolean enabledOpenGraphTitle) {
-		model.setEnabledOpenGraphTitle(enabledOpenGraphTitle);
 	}
 
 	/**
@@ -903,6 +881,18 @@ public class LayoutSEOEntryWrapper
 	}
 
 	/**
+	 * Sets whether this layout seo entry is open graph description enabled.
+	 *
+	 * @param openGraphDescriptionEnabled the open graph description enabled of this layout seo entry
+	 */
+	@Override
+	public void setOpenGraphDescriptionEnabled(
+		boolean openGraphDescriptionEnabled) {
+
+		model.setOpenGraphDescriptionEnabled(openGraphDescriptionEnabled);
+	}
+
+	/**
 	 * Sets the localized open graph descriptions of this layout seo entry from the map of locales and localized open graph descriptions.
 	 *
 	 * @param openGraphDescriptionMap the locales and localized open graph descriptions of this layout seo entry
@@ -980,6 +970,16 @@ public class LayoutSEOEntryWrapper
 	@Override
 	public void setOpenGraphTitleCurrentLanguageId(String languageId) {
 		model.setOpenGraphTitleCurrentLanguageId(languageId);
+	}
+
+	/**
+	 * Sets whether this layout seo entry is open graph title enabled.
+	 *
+	 * @param OpenGraphTitleEnabled the open graph title enabled of this layout seo entry
+	 */
+	@Override
+	public void setOpenGraphTitleEnabled(boolean OpenGraphTitleEnabled) {
+		model.setOpenGraphTitleEnabled(OpenGraphTitleEnabled);
 	}
 
 	/**

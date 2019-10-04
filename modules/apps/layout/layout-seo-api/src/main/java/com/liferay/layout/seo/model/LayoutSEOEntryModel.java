@@ -260,25 +260,25 @@ public interface LayoutSEOEntryModel
 	public void setLayoutId(long layoutId);
 
 	/**
-	 * Returns the enabled canonical url of this layout seo entry.
+	 * Returns the canonical url enabled of this layout seo entry.
 	 *
-	 * @return the enabled canonical url of this layout seo entry
+	 * @return the canonical url enabled of this layout seo entry
 	 */
-	public boolean getEnabledCanonicalURL();
+	public boolean getCanonicalURLEnabled();
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled canonical url.
+	 * Returns <code>true</code> if this layout seo entry is canonical url enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled canonical url; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is canonical url enabled; <code>false</code> otherwise
 	 */
-	public boolean isEnabledCanonicalURL();
+	public boolean isCanonicalURLEnabled();
 
 	/**
-	 * Sets whether this layout seo entry is enabled canonical url.
+	 * Sets whether this layout seo entry is canonical url enabled.
 	 *
-	 * @param enabledCanonicalURL the enabled canonical url of this layout seo entry
+	 * @param canonicalURLEnabled the canonical url enabled of this layout seo entry
 	 */
-	public void setEnabledCanonicalURL(boolean enabledCanonicalURL);
+	public void setCanonicalURLEnabled(boolean canonicalURLEnabled);
 
 	/**
 	 * Returns the canonical url of this layout seo entry.
@@ -382,25 +382,25 @@ public interface LayoutSEOEntryModel
 		Map<Locale, String> canonicalURLMap, Locale defaultLocale);
 
 	/**
-	 * Returns the enabled open graph title of this layout seo entry.
+	 * Returns the open graph title enabled of this layout seo entry.
 	 *
-	 * @return the enabled open graph title of this layout seo entry
+	 * @return the open graph title enabled of this layout seo entry
 	 */
-	public boolean getEnabledOpenGraphTitle();
+	public boolean getOpenGraphTitleEnabled();
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled open graph title.
+	 * Returns <code>true</code> if this layout seo entry is open graph title enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled open graph title; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is open graph title enabled; <code>false</code> otherwise
 	 */
-	public boolean isEnabledOpenGraphTitle();
+	public boolean isOpenGraphTitleEnabled();
 
 	/**
-	 * Sets whether this layout seo entry is enabled open graph title.
+	 * Sets whether this layout seo entry is open graph title enabled.
 	 *
-	 * @param enabledOpenGraphTitle the enabled open graph title of this layout seo entry
+	 * @param OpenGraphTitleEnabled the open graph title enabled of this layout seo entry
 	 */
-	public void setEnabledOpenGraphTitle(boolean enabledOpenGraphTitle);
+	public void setOpenGraphTitleEnabled(boolean OpenGraphTitleEnabled);
 
 	/**
 	 * Returns the open graph title of this layout seo entry.
@@ -504,26 +504,26 @@ public interface LayoutSEOEntryModel
 		Map<Locale, String> openGraphTitleMap, Locale defaultLocale);
 
 	/**
-	 * Returns the enabled open graph description of this layout seo entry.
+	 * Returns the open graph description enabled of this layout seo entry.
 	 *
-	 * @return the enabled open graph description of this layout seo entry
+	 * @return the open graph description enabled of this layout seo entry
 	 */
-	public boolean getEnabledOpenGraphDescription();
+	public boolean getOpenGraphDescriptionEnabled();
 
 	/**
-	 * Returns <code>true</code> if this layout seo entry is enabled open graph description.
+	 * Returns <code>true</code> if this layout seo entry is open graph description enabled.
 	 *
-	 * @return <code>true</code> if this layout seo entry is enabled open graph description; <code>false</code> otherwise
+	 * @return <code>true</code> if this layout seo entry is open graph description enabled; <code>false</code> otherwise
 	 */
-	public boolean isEnabledOpenGraphDescription();
+	public boolean isOpenGraphDescriptionEnabled();
 
 	/**
-	 * Sets whether this layout seo entry is enabled open graph description.
+	 * Sets whether this layout seo entry is open graph description enabled.
 	 *
-	 * @param enabledOpenGraphDescription the enabled open graph description of this layout seo entry
+	 * @param openGraphDescriptionEnabled the open graph description enabled of this layout seo entry
 	 */
-	public void setEnabledOpenGraphDescription(
-		boolean enabledOpenGraphDescription);
+	public void setOpenGraphDescriptionEnabled(
+		boolean openGraphDescriptionEnabled);
 
 	/**
 	 * Returns the open graph description of this layout seo entry.
@@ -630,6 +630,20 @@ public interface LayoutSEOEntryModel
 		Map<Locale, String> openGraphDescriptionMap, Locale defaultLocale);
 
 	/**
+	 * Returns the open graph image file entry ID of this layout seo entry.
+	 *
+	 * @return the open graph image file entry ID of this layout seo entry
+	 */
+	public long getOpenGraphImageFileEntryId();
+
+	/**
+	 * Sets the open graph image file entry ID of this layout seo entry.
+	 *
+	 * @param openGraphImageFileEntryId the open graph image file entry ID of this layout seo entry
+	 */
+	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId);
+
+	/**
 	 * Returns the last publish date of this layout seo entry.
 	 *
 	 * @return the last publish date of this layout seo entry
@@ -644,20 +658,6 @@ public interface LayoutSEOEntryModel
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the open graph image file entry ID of this layout seo entry.
-	 *
-	 * @return the open graph image file entry ID of this layout seo entry
-	 */
-	public long getOpenGraphImageFileEntryId();
-
-	/**
-	 * Sets the open graph image file entry ID of this layout seo entry.
-	 *
-	 * @param openGraphImageFileEntryId the open graph image file entry ID of this layout seo entry
-	 */
-	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId);
 
 	@Override
 	public String[] getAvailableLanguageIds();

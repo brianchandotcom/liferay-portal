@@ -86,14 +86,14 @@ public class LayoutSEOEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
-		{"layoutId", Types.BIGINT}, {"enabledCanonicalURL", Types.BOOLEAN},
+		{"layoutId", Types.BIGINT}, {"canonicalURLEnabled", Types.BOOLEAN},
 		{"canonicalURL", Types.VARCHAR},
-		{"enabledOpenGraphTitle", Types.BOOLEAN},
+		{"OpenGraphTitleEnabled", Types.BOOLEAN},
 		{"openGraphTitle", Types.VARCHAR},
-		{"enabledOpenGraphDescription", Types.BOOLEAN},
+		{"openGraphDescriptionEnabled", Types.BOOLEAN},
 		{"openGraphDescription", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP},
-		{"openGraphImageFileEntryId", Types.BIGINT}
+		{"openGraphImageFileEntryId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,18 +111,18 @@ public class LayoutSEOEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("enabledCanonicalURL", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("canonicalURLEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("canonicalURL", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("enabledOpenGraphTitle", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("OpenGraphTitleEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("enabledOpenGraphDescription", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,enabledCanonicalURL BOOLEAN,canonicalURL STRING null,enabledOpenGraphTitle BOOLEAN,openGraphTitle STRING null,enabledOpenGraphDescription BOOLEAN,openGraphDescription STRING null,lastPublishDate DATE null,openGraphImageFileEntryId LONG)";
+		"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURLEnabled BOOLEAN,canonicalURL STRING null,OpenGraphTitleEnabled BOOLEAN,openGraphTitle STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphDescription STRING null,openGraphImageFileEntryId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 
@@ -182,16 +182,16 @@ public class LayoutSEOEntryModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setPrivateLayout(soapModel.isPrivateLayout());
 		model.setLayoutId(soapModel.getLayoutId());
-		model.setEnabledCanonicalURL(soapModel.isEnabledCanonicalURL());
+		model.setCanonicalURLEnabled(soapModel.isCanonicalURLEnabled());
 		model.setCanonicalURL(soapModel.getCanonicalURL());
-		model.setEnabledOpenGraphTitle(soapModel.isEnabledOpenGraphTitle());
+		model.setOpenGraphTitleEnabled(soapModel.isOpenGraphTitleEnabled());
 		model.setOpenGraphTitle(soapModel.getOpenGraphTitle());
-		model.setEnabledOpenGraphDescription(
-			soapModel.isEnabledOpenGraphDescription());
+		model.setOpenGraphDescriptionEnabled(
+			soapModel.isOpenGraphDescriptionEnabled());
 		model.setOpenGraphDescription(soapModel.getOpenGraphDescription());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setOpenGraphImageFileEntryId(
 			soapModel.getOpenGraphImageFileEntryId());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -396,11 +396,11 @@ public class LayoutSEOEntryModelImpl
 			"layoutId",
 			(BiConsumer<LayoutSEOEntry, Long>)LayoutSEOEntry::setLayoutId);
 		attributeGetterFunctions.put(
-			"enabledCanonicalURL", LayoutSEOEntry::getEnabledCanonicalURL);
+			"canonicalURLEnabled", LayoutSEOEntry::getCanonicalURLEnabled);
 		attributeSetterBiConsumers.put(
-			"enabledCanonicalURL",
+			"canonicalURLEnabled",
 			(BiConsumer<LayoutSEOEntry, Boolean>)
-				LayoutSEOEntry::setEnabledCanonicalURL);
+				LayoutSEOEntry::setCanonicalURLEnabled);
 		attributeGetterFunctions.put(
 			"canonicalURL", LayoutSEOEntry::getCanonicalURL);
 		attributeSetterBiConsumers.put(
@@ -408,11 +408,11 @@ public class LayoutSEOEntryModelImpl
 			(BiConsumer<LayoutSEOEntry, String>)
 				LayoutSEOEntry::setCanonicalURL);
 		attributeGetterFunctions.put(
-			"enabledOpenGraphTitle", LayoutSEOEntry::getEnabledOpenGraphTitle);
+			"OpenGraphTitleEnabled", LayoutSEOEntry::getOpenGraphTitleEnabled);
 		attributeSetterBiConsumers.put(
-			"enabledOpenGraphTitle",
+			"OpenGraphTitleEnabled",
 			(BiConsumer<LayoutSEOEntry, Boolean>)
-				LayoutSEOEntry::setEnabledOpenGraphTitle);
+				LayoutSEOEntry::setOpenGraphTitleEnabled);
 		attributeGetterFunctions.put(
 			"openGraphTitle", LayoutSEOEntry::getOpenGraphTitle);
 		attributeSetterBiConsumers.put(
@@ -420,12 +420,12 @@ public class LayoutSEOEntryModelImpl
 			(BiConsumer<LayoutSEOEntry, String>)
 				LayoutSEOEntry::setOpenGraphTitle);
 		attributeGetterFunctions.put(
-			"enabledOpenGraphDescription",
-			LayoutSEOEntry::getEnabledOpenGraphDescription);
+			"openGraphDescriptionEnabled",
+			LayoutSEOEntry::getOpenGraphDescriptionEnabled);
 		attributeSetterBiConsumers.put(
-			"enabledOpenGraphDescription",
+			"openGraphDescriptionEnabled",
 			(BiConsumer<LayoutSEOEntry, Boolean>)
-				LayoutSEOEntry::setEnabledOpenGraphDescription);
+				LayoutSEOEntry::setOpenGraphDescriptionEnabled);
 		attributeGetterFunctions.put(
 			"openGraphDescription", LayoutSEOEntry::getOpenGraphDescription);
 		attributeSetterBiConsumers.put(
@@ -433,18 +433,18 @@ public class LayoutSEOEntryModelImpl
 			(BiConsumer<LayoutSEOEntry, String>)
 				LayoutSEOEntry::setOpenGraphDescription);
 		attributeGetterFunctions.put(
-			"lastPublishDate", LayoutSEOEntry::getLastPublishDate);
-		attributeSetterBiConsumers.put(
-			"lastPublishDate",
-			(BiConsumer<LayoutSEOEntry, Date>)
-				LayoutSEOEntry::setLastPublishDate);
-		attributeGetterFunctions.put(
 			"openGraphImageFileEntryId",
 			LayoutSEOEntry::getOpenGraphImageFileEntryId);
 		attributeSetterBiConsumers.put(
 			"openGraphImageFileEntryId",
 			(BiConsumer<LayoutSEOEntry, Long>)
 				LayoutSEOEntry::setOpenGraphImageFileEntryId);
+		attributeGetterFunctions.put(
+			"lastPublishDate", LayoutSEOEntry::getLastPublishDate);
+		attributeSetterBiConsumers.put(
+			"lastPublishDate",
+			(BiConsumer<LayoutSEOEntry, Date>)
+				LayoutSEOEntry::setLastPublishDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -671,19 +671,19 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getEnabledCanonicalURL() {
-		return _enabledCanonicalURL;
+	public boolean getCanonicalURLEnabled() {
+		return _canonicalURLEnabled;
 	}
 
 	@JSON
 	@Override
-	public boolean isEnabledCanonicalURL() {
-		return _enabledCanonicalURL;
+	public boolean isCanonicalURLEnabled() {
+		return _canonicalURLEnabled;
 	}
 
 	@Override
-	public void setEnabledCanonicalURL(boolean enabledCanonicalURL) {
-		_enabledCanonicalURL = enabledCanonicalURL;
+	public void setCanonicalURLEnabled(boolean canonicalURLEnabled) {
+		_canonicalURLEnabled = canonicalURLEnabled;
 	}
 
 	@JSON
@@ -796,19 +796,19 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getEnabledOpenGraphTitle() {
-		return _enabledOpenGraphTitle;
+	public boolean getOpenGraphTitleEnabled() {
+		return _OpenGraphTitleEnabled;
 	}
 
 	@JSON
 	@Override
-	public boolean isEnabledOpenGraphTitle() {
-		return _enabledOpenGraphTitle;
+	public boolean isOpenGraphTitleEnabled() {
+		return _OpenGraphTitleEnabled;
 	}
 
 	@Override
-	public void setEnabledOpenGraphTitle(boolean enabledOpenGraphTitle) {
-		_enabledOpenGraphTitle = enabledOpenGraphTitle;
+	public void setOpenGraphTitleEnabled(boolean OpenGraphTitleEnabled) {
+		_OpenGraphTitleEnabled = OpenGraphTitleEnabled;
 	}
 
 	@JSON
@@ -922,21 +922,21 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public boolean getEnabledOpenGraphDescription() {
-		return _enabledOpenGraphDescription;
+	public boolean getOpenGraphDescriptionEnabled() {
+		return _openGraphDescriptionEnabled;
 	}
 
 	@JSON
 	@Override
-	public boolean isEnabledOpenGraphDescription() {
-		return _enabledOpenGraphDescription;
+	public boolean isOpenGraphDescriptionEnabled() {
+		return _openGraphDescriptionEnabled;
 	}
 
 	@Override
-	public void setEnabledOpenGraphDescription(
-		boolean enabledOpenGraphDescription) {
+	public void setOpenGraphDescriptionEnabled(
+		boolean openGraphDescriptionEnabled) {
 
-		_enabledOpenGraphDescription = enabledOpenGraphDescription;
+		_openGraphDescriptionEnabled = openGraphDescriptionEnabled;
 	}
 
 	@JSON
@@ -1060,17 +1060,6 @@ public class LayoutSEOEntryModelImpl
 
 	@JSON
 	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
-	@JSON
-	@Override
 	public long getOpenGraphImageFileEntryId() {
 		return _openGraphImageFileEntryId;
 	}
@@ -1078,6 +1067,17 @@ public class LayoutSEOEntryModelImpl
 	@Override
 	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
 		_openGraphImageFileEntryId = openGraphImageFileEntryId;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	@Override
@@ -1249,16 +1249,16 @@ public class LayoutSEOEntryModelImpl
 		layoutSEOEntryImpl.setModifiedDate(getModifiedDate());
 		layoutSEOEntryImpl.setPrivateLayout(isPrivateLayout());
 		layoutSEOEntryImpl.setLayoutId(getLayoutId());
-		layoutSEOEntryImpl.setEnabledCanonicalURL(isEnabledCanonicalURL());
+		layoutSEOEntryImpl.setCanonicalURLEnabled(isCanonicalURLEnabled());
 		layoutSEOEntryImpl.setCanonicalURL(getCanonicalURL());
-		layoutSEOEntryImpl.setEnabledOpenGraphTitle(isEnabledOpenGraphTitle());
+		layoutSEOEntryImpl.setOpenGraphTitleEnabled(isOpenGraphTitleEnabled());
 		layoutSEOEntryImpl.setOpenGraphTitle(getOpenGraphTitle());
-		layoutSEOEntryImpl.setEnabledOpenGraphDescription(
-			isEnabledOpenGraphDescription());
+		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
+			isOpenGraphDescriptionEnabled());
 		layoutSEOEntryImpl.setOpenGraphDescription(getOpenGraphDescription());
-		layoutSEOEntryImpl.setLastPublishDate(getLastPublishDate());
 		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
 			getOpenGraphImageFileEntryId());
+		layoutSEOEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		layoutSEOEntryImpl.resetOriginalValues();
 
@@ -1401,7 +1401,7 @@ public class LayoutSEOEntryModelImpl
 
 		layoutSEOEntryCacheModel.layoutId = getLayoutId();
 
-		layoutSEOEntryCacheModel.enabledCanonicalURL = isEnabledCanonicalURL();
+		layoutSEOEntryCacheModel.canonicalURLEnabled = isCanonicalURLEnabled();
 
 		layoutSEOEntryCacheModel.canonicalURL = getCanonicalURL();
 
@@ -1411,8 +1411,8 @@ public class LayoutSEOEntryModelImpl
 			layoutSEOEntryCacheModel.canonicalURL = null;
 		}
 
-		layoutSEOEntryCacheModel.enabledOpenGraphTitle =
-			isEnabledOpenGraphTitle();
+		layoutSEOEntryCacheModel.OpenGraphTitleEnabled =
+			isOpenGraphTitleEnabled();
 
 		layoutSEOEntryCacheModel.openGraphTitle = getOpenGraphTitle();
 
@@ -1422,8 +1422,8 @@ public class LayoutSEOEntryModelImpl
 			layoutSEOEntryCacheModel.openGraphTitle = null;
 		}
 
-		layoutSEOEntryCacheModel.enabledOpenGraphDescription =
-			isEnabledOpenGraphDescription();
+		layoutSEOEntryCacheModel.openGraphDescriptionEnabled =
+			isOpenGraphDescriptionEnabled();
 
 		layoutSEOEntryCacheModel.openGraphDescription =
 			getOpenGraphDescription();
@@ -1437,6 +1437,9 @@ public class LayoutSEOEntryModelImpl
 			layoutSEOEntryCacheModel.openGraphDescription = null;
 		}
 
+		layoutSEOEntryCacheModel.openGraphImageFileEntryId =
+			getOpenGraphImageFileEntryId();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1446,9 +1449,6 @@ public class LayoutSEOEntryModelImpl
 		else {
 			layoutSEOEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
-
-		layoutSEOEntryCacheModel.openGraphImageFileEntryId =
-			getOpenGraphImageFileEntryId();
 
 		return layoutSEOEntryCacheModel;
 	}
@@ -1547,17 +1547,17 @@ public class LayoutSEOEntryModelImpl
 	private long _layoutId;
 	private long _originalLayoutId;
 	private boolean _setOriginalLayoutId;
-	private boolean _enabledCanonicalURL;
+	private boolean _canonicalURLEnabled;
 	private String _canonicalURL;
 	private String _canonicalURLCurrentLanguageId;
-	private boolean _enabledOpenGraphTitle;
+	private boolean _OpenGraphTitleEnabled;
 	private String _openGraphTitle;
 	private String _openGraphTitleCurrentLanguageId;
-	private boolean _enabledOpenGraphDescription;
+	private boolean _openGraphDescriptionEnabled;
 	private String _openGraphDescription;
 	private String _openGraphDescriptionCurrentLanguageId;
-	private Date _lastPublishDate;
 	private long _openGraphImageFileEntryId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private LayoutSEOEntry _escapedModel;
 

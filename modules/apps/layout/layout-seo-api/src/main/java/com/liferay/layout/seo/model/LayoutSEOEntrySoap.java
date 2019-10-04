@@ -42,16 +42,16 @@ public class LayoutSEOEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
-		soapModel.setEnabledCanonicalURL(model.isEnabledCanonicalURL());
+		soapModel.setCanonicalURLEnabled(model.isCanonicalURLEnabled());
 		soapModel.setCanonicalURL(model.getCanonicalURL());
-		soapModel.setEnabledOpenGraphTitle(model.isEnabledOpenGraphTitle());
+		soapModel.setOpenGraphTitleEnabled(model.isOpenGraphTitleEnabled());
 		soapModel.setOpenGraphTitle(model.getOpenGraphTitle());
-		soapModel.setEnabledOpenGraphDescription(
-			model.isEnabledOpenGraphDescription());
+		soapModel.setOpenGraphDescriptionEnabled(
+			model.isOpenGraphDescriptionEnabled());
 		soapModel.setOpenGraphDescription(model.getOpenGraphDescription());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setOpenGraphImageFileEntryId(
 			model.getOpenGraphImageFileEntryId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -202,16 +202,16 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_layoutId = layoutId;
 	}
 
-	public boolean getEnabledCanonicalURL() {
-		return _enabledCanonicalURL;
+	public boolean getCanonicalURLEnabled() {
+		return _canonicalURLEnabled;
 	}
 
-	public boolean isEnabledCanonicalURL() {
-		return _enabledCanonicalURL;
+	public boolean isCanonicalURLEnabled() {
+		return _canonicalURLEnabled;
 	}
 
-	public void setEnabledCanonicalURL(boolean enabledCanonicalURL) {
-		_enabledCanonicalURL = enabledCanonicalURL;
+	public void setCanonicalURLEnabled(boolean canonicalURLEnabled) {
+		_canonicalURLEnabled = canonicalURLEnabled;
 	}
 
 	public String getCanonicalURL() {
@@ -222,16 +222,16 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_canonicalURL = canonicalURL;
 	}
 
-	public boolean getEnabledOpenGraphTitle() {
-		return _enabledOpenGraphTitle;
+	public boolean getOpenGraphTitleEnabled() {
+		return _OpenGraphTitleEnabled;
 	}
 
-	public boolean isEnabledOpenGraphTitle() {
-		return _enabledOpenGraphTitle;
+	public boolean isOpenGraphTitleEnabled() {
+		return _OpenGraphTitleEnabled;
 	}
 
-	public void setEnabledOpenGraphTitle(boolean enabledOpenGraphTitle) {
-		_enabledOpenGraphTitle = enabledOpenGraphTitle;
+	public void setOpenGraphTitleEnabled(boolean OpenGraphTitleEnabled) {
+		_OpenGraphTitleEnabled = OpenGraphTitleEnabled;
 	}
 
 	public String getOpenGraphTitle() {
@@ -242,18 +242,18 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_openGraphTitle = openGraphTitle;
 	}
 
-	public boolean getEnabledOpenGraphDescription() {
-		return _enabledOpenGraphDescription;
+	public boolean getOpenGraphDescriptionEnabled() {
+		return _openGraphDescriptionEnabled;
 	}
 
-	public boolean isEnabledOpenGraphDescription() {
-		return _enabledOpenGraphDescription;
+	public boolean isOpenGraphDescriptionEnabled() {
+		return _openGraphDescriptionEnabled;
 	}
 
-	public void setEnabledOpenGraphDescription(
-		boolean enabledOpenGraphDescription) {
+	public void setOpenGraphDescriptionEnabled(
+		boolean openGraphDescriptionEnabled) {
 
-		_enabledOpenGraphDescription = enabledOpenGraphDescription;
+		_openGraphDescriptionEnabled = openGraphDescriptionEnabled;
 	}
 
 	public String getOpenGraphDescription() {
@@ -264,20 +264,20 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_openGraphDescription = openGraphDescription;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	public long getOpenGraphImageFileEntryId() {
 		return _openGraphImageFileEntryId;
 	}
 
 	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
 		_openGraphImageFileEntryId = openGraphImageFileEntryId;
+	}
+
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	private long _mvccVersion;
@@ -291,13 +291,13 @@ public class LayoutSEOEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private boolean _privateLayout;
 	private long _layoutId;
-	private boolean _enabledCanonicalURL;
+	private boolean _canonicalURLEnabled;
 	private String _canonicalURL;
-	private boolean _enabledOpenGraphTitle;
+	private boolean _OpenGraphTitleEnabled;
 	private String _openGraphTitle;
-	private boolean _enabledOpenGraphDescription;
+	private boolean _openGraphDescriptionEnabled;
 	private String _openGraphDescription;
-	private Date _lastPublishDate;
 	private long _openGraphImageFileEntryId;
+	private Date _lastPublishDate;
 
 }

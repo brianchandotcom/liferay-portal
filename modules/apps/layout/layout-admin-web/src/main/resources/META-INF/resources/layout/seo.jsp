@@ -140,7 +140,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	</c:choose>
 </c:if>
 
-<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
+<c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) && LayoutSEOLinkManagerUtil.isOpenGraphEnabled(selLayout) %>">
 	<h4><liferay-ui:message key="open-graph" /></h4>
 
 	<%

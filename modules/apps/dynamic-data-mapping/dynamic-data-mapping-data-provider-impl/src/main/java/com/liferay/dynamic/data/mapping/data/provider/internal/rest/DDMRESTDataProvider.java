@@ -392,12 +392,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		Map<String, Object> proxySettings = new HashMap<>();
 
 		try {
-			String nonProxyHosts = SystemProperties.get("http.nonProxyHosts");
-
-			if (Validator.isNotNull(nonProxyHosts)) {
-				proxySettings.put("nonProxyHosts", nonProxyHosts);
-			}
-
 			String proxyAddress = SystemProperties.get("http.proxyHost");
 			String proxyPort = SystemProperties.get("http.proxyPort");
 

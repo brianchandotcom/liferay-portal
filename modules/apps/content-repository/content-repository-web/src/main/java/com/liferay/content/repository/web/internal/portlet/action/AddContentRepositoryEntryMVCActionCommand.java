@@ -14,21 +14,25 @@
 
 package com.liferay.content.repository.web.internal.portlet.action;
 
+import com.liferay.content.repository.exception.ContentRepositoryEntryNameException;
 import com.liferay.content.repository.model.ContentRepositoryEntry;
 import com.liferay.content.repository.service.ContentRepositoryEntryLocalService;
 import com.liferay.content.repository.web.internal.constants.ContentRepositoryPortletKeys;
 import com.liferay.content.repository.web.internal.util.ContentRepositoryEntryURLUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -69,27 +73,48 @@ public class AddContentRepositoryEntryMVCActionCommand
 			nameMap.put(LocaleUtil.getDefault(), name);
 		}
 
-		ContentRepositoryEntry contentRepositoryEntry =
-			_contentRepositoryEntryLocalService.addContentRepositoryEntry(
-				nameMap, descriptionMap,
-				ServiceContextFactory.getInstance(
-					ContentRepositoryEntry.class.getName(), actionRequest));
+		try {
+			ContentRepositoryEntry contentRepositoryEntry =
+				_contentRepositoryEntryLocalService.addContentRepositoryEntry(
+					nameMap, descriptionMap,
+					ServiceContextFactory.getInstance(
+						ContentRepositoryEntry.class.getName(), actionRequest));
 
-		PortletURL editContentRepositoryURL =
-			ContentRepositoryEntryURLUtil.
-				getEditContentRepositoryEntryRenderURL(
-					contentRepositoryEntry.getContentRepositoryEntryId(),
-					ParamUtil.getString(actionRequest, "redirect"),
-					_portal.getLiferayPortletResponse(actionResponse));
+			PortletURL editContentRepositoryURL =
+				ContentRepositoryEntryURLUtil.
+					getEditContentRepositoryEntryRenderURL(
+						contentRepositoryEntry.getContentRepositoryEntryId(),
+						ParamUtil.getString(actionRequest, "redirect"),
+						_portal.getLiferayPortletResponse(actionResponse));
 
-		MultiSessionMessages.add(
-			actionRequest,
-			ContentRepositoryPortletKeys.CONTENT_REPOSITORY_ADMIN +
-				"requestProcessed");
+			MultiSessionMessages.add(
+				actionRequest,
+				ContentRepositoryPortletKeys.CONTENT_REPOSITORY_ADMIN +
+					"requestProcessed");
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse,
-			JSONUtil.put("redirectURL", editContentRepositoryURL.toString()));
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"redirectURL", editContentRepositoryURL.toString()));
+		}
+		catch (Exception e) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("error", _getErrorMessage(e, themeDisplay)));
+		}
+	}
+
+	private String _getErrorMessage(Exception e, ThemeDisplay themeDisplay) {
+		if (e instanceof ContentRepositoryEntryNameException.MustNotBeNull) {
+			return LanguageUtil.get(
+				themeDisplay.getRequest(), "please-enter-a-name");
+		}
+
+		return LanguageUtil.get(
+			themeDisplay.getRequest(), "an-unexpected-error-occurred");
 	}
 
 	@Reference

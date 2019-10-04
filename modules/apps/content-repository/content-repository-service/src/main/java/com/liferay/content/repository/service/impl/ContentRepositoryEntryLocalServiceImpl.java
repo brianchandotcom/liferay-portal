@@ -14,6 +14,7 @@
 
 package com.liferay.content.repository.service.impl;
 
+import com.liferay.content.repository.exception.ContentRepositoryEntryNameException;
 import com.liferay.content.repository.internal.constants.ContentRepositoryEntryConstants;
 import com.liferay.content.repository.model.ContentRepositoryEntry;
 import com.liferay.content.repository.service.base.ContentRepositoryEntryLocalServiceBaseImpl;
@@ -23,6 +24,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
@@ -56,6 +60,8 @@ public class ContentRepositoryEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_validateNameMap(nameMap);
+
 		long entryId = counterLocalService.increment();
 
 		ContentRepositoryEntry entry = contentRepositoryEntryPersistence.create(
@@ -87,6 +93,8 @@ public class ContentRepositoryEntryLocalServiceImpl
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
+		_validateNameMap(nameMap);
+
 		ContentRepositoryEntry entry = getContentRepositoryEntry(
 			contentRepositoryEntryId);
 
@@ -99,6 +107,16 @@ public class ContentRepositoryEntryLocalServiceImpl
 			group.isInheritContent(), group.isActive(), serviceContext);
 
 		return contentRepositoryEntryPersistence.update(entry);
+	}
+
+	private void _validateNameMap(Map<Locale, String> nameMap)
+		throws ContentRepositoryEntryNameException.MustNotBeNull {
+
+		if (MapUtil.isEmpty(nameMap) ||
+			Validator.isNull(nameMap.get(LocaleUtil.getDefault()))) {
+
+			throw new ContentRepositoryEntryNameException.MustNotBeNull();
+		}
 	}
 
 	@Reference

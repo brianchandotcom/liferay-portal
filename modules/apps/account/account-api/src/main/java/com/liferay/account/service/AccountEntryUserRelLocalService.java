@@ -114,6 +114,10 @@ public interface AccountEntryUserRelLocalService
 			long accountEntryUserRelId)
 		throws PortalException;
 
+	public void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -221,6 +225,10 @@ public interface AccountEntryUserRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountUserId(
+		long accountUserId);
 
 	/**
 	 * Returns the number of account entry user rels.

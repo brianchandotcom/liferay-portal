@@ -113,6 +113,15 @@ public class AccountEntryUserRelLocalServiceWrapper
 			accountEntryUserRelId);
 	}
 
+	@Override
+	public void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+			accountEntryId, accountUserIds);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -265,6 +274,14 @@ public class AccountEntryUserRelLocalServiceWrapper
 
 		return _accountEntryUserRelLocalService.
 			getAccountEntryUserRelsByAccountEntryId(accountEntryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountEntryUserRel>
+		getAccountEntryUserRelsByAccountUserId(long accountUserId) {
+
+		return _accountEntryUserRelLocalService.
+			getAccountEntryUserRelsByAccountUserId(accountUserId);
 	}
 
 	/**

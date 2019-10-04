@@ -92,7 +92,7 @@ AssetCategoriesSearchFacetDisplayContext assetCategoriesSearchFacetDisplayContex
 					</aui:fieldset>
 
 					<c:if test="<%= !assetCategoriesSearchFacetDisplayContext.isNothingSelected() %>">
-						<aui:a ariaRole="button" cssClass="single-link" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);"><liferay-ui:message key="clear" /></aui:a>
+						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>

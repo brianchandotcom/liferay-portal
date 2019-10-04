@@ -133,9 +133,7 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 				</aui:field-wrapper>
 
 				<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">
-					<aui:a ariaRole="button" cssClass="modified-facet-a-clear single-link" href="javascript:;" onClick="Liferay.Search.ModifiedFacetFilterUtil.clearSelections(event);">
-						<liferay-ui:message key="clear" />
-					</aui:a>
+					<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
 				</c:if>
 			</aui:form>
 		</liferay-ui:panel>

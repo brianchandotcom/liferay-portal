@@ -92,7 +92,7 @@ CustomFacetDisplayContext customFacetDisplayContext = (CustomFacetDisplayContext
 					</aui:fieldset>
 
 					<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
-						<a class="single-link" href="javascript:;" onClick="Liferay.Search.FacetUtil.clearSelections(event);" role="button"><liferay-ui:message key="clear" /></a>
+						<aui:button cssClass="btn-link btn-unstyled facet-clear-btn" onClick="Liferay.Search.FacetUtil.clearSelections(event);" value="clear" />
 					</c:if>
 				</aui:form>
 			</liferay-ui:panel>

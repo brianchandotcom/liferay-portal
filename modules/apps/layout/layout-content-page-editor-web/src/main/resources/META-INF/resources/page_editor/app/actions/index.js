@@ -12,21 +12,18 @@
  * details.
  */
 
-import React from 'react';
+/**
+ * Action creators.
+ */
 
-import {TYPES} from '../actions/index';
+export {default as discard} from './discard';
+export {default as publish} from './publish';
 
-export const DispatchContext = React.createContext(() => {});
+/**
+ * Action types.
+ */
 
-export function reducer(state, action) {
-	switch (action.type) {
-		case TYPES.discard:
-			return state;
-
-		case TYPES.publish:
-			return state;
-
-		default:
-			throw new Error(`Unrecognized action.type ${action.type}`);
-	}
-}
+// TODO: turn on @babel/plugin-proposal-export-namespace-from and make these
+// `export * as TYPES from './types';`
+import * as TYPES from './types';
+export {TYPES};

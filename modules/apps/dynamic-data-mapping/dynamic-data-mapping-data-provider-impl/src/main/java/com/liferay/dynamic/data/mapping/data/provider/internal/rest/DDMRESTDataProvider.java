@@ -286,10 +286,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		Map<String, Object> proxySettings = getProxySettings();
 
-		if (proxySettings.isEmpty() ||
-			(proxySettings.get("proxyAddress") == null) ||
-			http.isNonProxyHost(httpRequest.host())) {
-
+		if (isNonproxiedHttpRequest(httpRequest, proxySettings)) {
 			httpResponse = httpRequest.send();
 		}
 		else {
@@ -447,6 +444,19 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			});
 
 		return parameters;
+	}
+
+	protected boolean isNonproxiedHttpRequest(
+		HttpRequest httpRequest, Map<String, Object> proxySettings) {
+
+		if (proxySettings.isEmpty() ||
+			(proxySettings.get("proxyAddress") == null) ||
+			http.isNonProxyHost(httpRequest.host())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected String normalizePath(String path) {

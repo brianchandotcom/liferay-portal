@@ -54,9 +54,7 @@ public class FileSystemStore extends BaseStore {
 	public FileSystemStore(
 		FileSystemStoreConfiguration fileSystemStoreConfiguration) {
 
-		_fileSystemStoreConfiguration = fileSystemStoreConfiguration;
-
-		String path = _fileSystemStoreConfiguration.rootDir();
+		String path = fileSystemStoreConfiguration.rootDir();
 
 		File rootDir = new File(path);
 
@@ -74,7 +72,7 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		fileSystemHelper = new FileSystemHelper(
-			_fileSystemStoreConfiguration.useHardLinks(), _rootDir.toPath());
+			fileSystemStoreConfiguration.useHardLinks(), _rootDir.toPath());
 	}
 
 	@Override
@@ -614,7 +612,6 @@ public class FileSystemStore extends BaseStore {
 
 	protected final FileSystemHelper fileSystemHelper;
 
-	private final FileSystemStoreConfiguration _fileSystemStoreConfiguration;
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private final File _rootDir;

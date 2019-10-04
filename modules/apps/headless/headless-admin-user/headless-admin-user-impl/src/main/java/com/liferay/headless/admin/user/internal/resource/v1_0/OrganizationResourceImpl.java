@@ -42,7 +42,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrgLaborService;
@@ -92,20 +94,22 @@ public class OrganizationResourceImpl
 
 	@Override
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long parentOrganizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getOrganizationsPage(
-			parentOrganizationId, search, filter, pagination, sorts);
+			parentOrganizationId, flatten, search, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<Organization> getOrganizationsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return _getOrganizationsPage(0L, search, filter, pagination, sorts);
+		return _getOrganizationsPage(
+			0L, flatten, search, filter, pagination, sorts);
 	}
 
 	private HoursAvailable _createHoursAvailable(
@@ -141,7 +145,7 @@ public class OrganizationResourceImpl
 	}
 
 	private Page<Organization> _getOrganizationsPage(
-			Long organizationId, String search, Filter filter,
+			Long organizationId, Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -150,10 +154,26 @@ public class OrganizationResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				booleanFilter.add(
-					new TermFilter(
-						"parentOrganizationId", String.valueOf(organizationId)),
-					BooleanClauseOccur.MUST);
+				if (GetterUtil.getBoolean(flatten)) {
+					if (organizationId != 0) {
+						booleanFilter.add(
+							new QueryFilter(
+								new WildcardQueryImpl(
+									"treePath", "*" + organizationId + "*")));
+						booleanFilter.add(
+							new TermFilter(
+								"organizationId",
+								String.valueOf(organizationId)),
+							BooleanClauseOccur.MUST_NOT);
+					}
+				}
+				else {
+					booleanFilter.add(
+						new TermFilter(
+							"parentOrganizationId",
+							String.valueOf(organizationId)),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			filter, com.liferay.portal.kernel.model.Organization.class, search,
 			pagination,

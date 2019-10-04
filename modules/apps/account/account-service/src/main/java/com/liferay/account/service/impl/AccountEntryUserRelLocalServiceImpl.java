@@ -121,6 +121,19 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountEntryUserRels(
+			long accountEntryId, long[] accountUserIds)
+		throws PortalException {
+
+		for (long accountUserId : accountUserIds) {
+			accountEntryUserRelPersistence.removeByAEI_AUI(
+				accountEntryId, accountUserId);
+
+			_reindexAccountUser(accountUserId);
+		}
+	}
+
+	@Override
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId) {
 

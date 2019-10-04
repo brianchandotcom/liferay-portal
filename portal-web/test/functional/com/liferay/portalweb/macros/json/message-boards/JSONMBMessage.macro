@@ -4,7 +4,7 @@ definition {
 	macro addCategory {
 		var portalURL = JSONCompany.getPortalURL();
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
 		if (!(isSet(parentCategoryId))) {
 			var parentCategoryId = "0";

@@ -3,10 +3,6 @@ definition {
 	macro _addUser {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
-
-		var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
-
 		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -24,9 +20,9 @@ definition {
 				-d facebookId=0 \
 				-d openId= \
 				-d locale= \
-				-d firstName=${userFirstNameEncoded} \
+				-d firstName=${userFirstName} \
 				-d middleName= \
-				-d lastName=${userLastNameEncoded} \
+				-d lastName=${userLastName} \
 				-d prefixId=0 \
 				-d suffixId=0 \
 				-d male=true \
@@ -44,7 +40,22 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addUserToSite {
+		Variables.assertDefined(parameterList = "${groupId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-group-users/group-id/${groupId}/user-ids/${userId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	macro _agreeToTermsAndAnswerReminderQuery {
+		Variables.assertDefined(parameterList = "${userId}");
+
 		var companyId = JSONCompany.getCompanyId();
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -66,8 +77,6 @@ definition {
 
 	macro _deleteUser {
 		Variables.assertDefined(parameterList = "${userId}");
-
-		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -123,6 +132,59 @@ definition {
 				-d lockoutDuration=0 \
 				-d resetFailureCount=600 \
 				-d resetTicketMaxAge=86400
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _getUserIdByEmailAddress {
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
+				-u test@liferay.com:test
+		''';
+
+		var userId = JSONCurlUtil.get("${curl}", "$['userId']");
+
+		return "${userId}";
+	}
+
+	macro _getUserIds {
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-company-users \
+			-u test@liferay.com:test \
+			-d companyId=${companyId}
+			-d <CURL_DATA[start=-1]CURL_DATA> \
+			-d <CURL_DATA[end=-1]CURL_DATA>
+		''';
+
+		var userIds = JSONCurlUtil.get("${curl}", "$..['userId']");
+		var userIds = StringUtil.replace("${userIds}", "[", "");
+		var userIds = StringUtil.replace("${userIds}", "]", "");
+		var userIds = StringUtil.replace("${userIds}", "&quot;", "");
+
+		return "${userIds}"
+	}
+
+	macro _updatePassword {
+		Variables.assertDefined(parameterList = "${userId},${newPassword},${requireReset}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/update-password \
+				-u test@liferay.com:test \
+				-d userId=${userId} \
+				-d password1='${newPassword}' \
+				-d password2='${newPassword}' \
+				-d passwordReset=${requireReset}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

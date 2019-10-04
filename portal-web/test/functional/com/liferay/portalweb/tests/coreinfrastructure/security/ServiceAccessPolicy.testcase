@@ -56,7 +56,7 @@ definition {
 			allowedServiceSignature = "com.liferay.portal.kernel.service.UserService#getUserByEmailAddress",
 			policyName = "SYSTEM_DEFAULT");
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "test@liferay.com ");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com ");
 
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-email-address \

@@ -43,7 +43,7 @@ definition {
 
 		var roleId = JSONRoleAPI._getRoleIdByName(name = "${roleTitle}");
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
 		JSONGroupAPI._assignGroupRoleToUser(
 			groupId = "${groupId}",
@@ -56,7 +56,7 @@ definition {
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
 		JSONGroupAPI._assignUserToGroup(
 			groupId = "${groupId}",

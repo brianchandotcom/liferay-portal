@@ -1,0 +1,11 @@
+definition {
+
+	macro setUserId {
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
+
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		return "${userId}";
+	}
+
+}

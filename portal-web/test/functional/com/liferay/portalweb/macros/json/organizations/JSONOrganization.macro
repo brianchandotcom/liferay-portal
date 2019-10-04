@@ -15,7 +15,7 @@ definition {
 			organizationName = "${organizationName}"
 		);
 
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
 		JSONOrganizationAPI._assignUserToOrganization(
 			organizationId = "${organizationId}",

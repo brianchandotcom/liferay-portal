@@ -121,22 +121,17 @@ public class UserModelPreFilterContributor
 					return;
 				}
 
-				TermsFilter organizationsTermsFilter = new TermsFilter(
-					"organizationIds");
-				TermsFilter ancestorOrgsTermsFilter = new TermsFilter(
-					"ancestorOrganizationIds");
-
 				String[] organizationIdsStrings = ArrayUtil.toStringArray(
 					values);
 
-				ancestorOrgsTermsFilter.addValues(organizationIdsStrings);
-
-				organizationsTermsFilter.addValues(organizationIdsStrings);
-
 				BooleanFilter userOrgsBooleanFilter = new BooleanFilter();
 
-				userOrgsBooleanFilter.add(ancestorOrgsTermsFilter);
-				userOrgsBooleanFilter.add(organizationsTermsFilter);
+				userOrgsBooleanFilter.add(
+					_createTermsFilter(
+						"ancestorOrganizationIds", organizationIdsStrings));
+				userOrgsBooleanFilter.add(
+					_createTermsFilter(
+						"organizationIds", organizationIdsStrings));
 
 				contextFilter.add(
 					userOrgsBooleanFilter, BooleanClauseOccur.MUST);
@@ -168,11 +163,39 @@ public class UserModelPreFilterContributor
 			}
 		}
 		else if (key.equals("usersTeams")) {
-			contextFilter.addRequiredTerm("teamIds", String.valueOf(value));
+			if (value instanceof Long[]) {
+				Long[] values = (Long[])value;
+
+				if (ArrayUtil.isEmpty(values)) {
+					return;
+				}
+
+				contextFilter.add(
+					_createTermsFilter(
+						"teamIds", ArrayUtil.toStringArray(values)),
+					BooleanClauseOccur.MUST);
+			}
+			else {
+				contextFilter.addRequiredTerm("teamIds", String.valueOf(value));
+			}
 		}
 		else if (key.equals("usersUserGroups")) {
-			contextFilter.addRequiredTerm(
-				"userGroupIds", String.valueOf(value));
+			if (value instanceof Long[]) {
+				Long[] values = (Long[])value;
+
+				if (ArrayUtil.isEmpty(values)) {
+					return;
+				}
+
+				contextFilter.add(
+					_createTermsFilter(
+						"userGroupIds", ArrayUtil.toStringArray(values)),
+					BooleanClauseOccur.MUST);
+			}
+			else {
+				contextFilter.addRequiredTerm(
+					"userGroupIds", String.valueOf(value));
+			}
 		}
 	}
 

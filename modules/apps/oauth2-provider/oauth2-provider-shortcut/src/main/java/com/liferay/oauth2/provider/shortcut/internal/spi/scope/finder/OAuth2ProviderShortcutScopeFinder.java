@@ -19,9 +19,17 @@ import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.security.service.access.policy.model.SAPEntry;
+import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +44,12 @@ import java.util.function.Function;
 public class OAuth2ProviderShortcutScopeFinder
 	implements ApplicationDescriptor, PrefixHandlerFactory, ScopeFinder,
 			   ScopeMapper {
+
+	public OAuth2ProviderShortcutScopeFinder(
+		SAPEntryLocalService sapEntryLocalService) {
+
+		_sapEntryLocalService = sapEntryLocalService;
+	}
 
 	@Override
 	public PrefixHandler create(
@@ -56,7 +70,38 @@ public class OAuth2ProviderShortcutScopeFinder
 
 	@Override
 	public Collection<String> findScopes() {
-		return _scopeAliasesList;
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId == null) {
+			return _scopeAliasesList;
+		}
+
+		ArrayList<String> scopes = new ArrayList<>();
+
+		for (String scopeAlias : _scopeAliasesList) {
+			String name = "OAUTH2_" + scopeAlias;
+			SAPEntry sapEntry = null;
+
+			try {
+				sapEntry = _sapEntryLocalService.fetchSAPEntry(companyId, name);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Scope alias ", name, " is not found: ",
+							pe.getMessage()));
+				}
+
+				continue;
+			}
+
+			if ((sapEntry != null) && sapEntry.isEnabled()) {
+				scopes.add(scopeAlias);
+			}
+		}
+
+		return scopes;
 	}
 
 	@Override
@@ -64,7 +109,12 @@ public class OAuth2ProviderShortcutScopeFinder
 		return Collections.singleton(scope);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		OAuth2ProviderShortcutScopeFinder.class);
+
 	private static final List<String> _scopeAliasesList = Arrays.asList(
 		"analytics.read", "analytics.write");
+
+	private final SAPEntryLocalService _sapEntryLocalService;
 
 }

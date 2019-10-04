@@ -128,7 +128,8 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 				PrefixHandlerFactory.class.getName(),
 				ScopeFinder.class.getName(), ScopeMapper.class.getName()
 			},
-			new OAuth2ProviderShortcutScopeFinder(), properties);
+			new OAuth2ProviderShortcutScopeFinder(_sapEntryLocalService),
+			properties);
 	}
 
 	@Deactivate

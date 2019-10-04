@@ -71,4 +71,27 @@ definition {
 		return "${typeSettings}";
 	}
 
+	@summary = "Directly calls the JavaScript API to update typeSettings"
+	macro _updateTypeSettings {
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
+
+		var javaScript =
+		'''Liferay.Service(
+			'/layout/update-layout',
+			{
+				groupId: ${groupId},
+				privateLayout: ${privateLayout},
+				layoutId: ${layoutId},
+				typeSettings: '${typeSettings}'
+			},
+			function(obj) {
+				console.log(obj);
+			}
+		);''';
+
+		var JSON = selenium.getEval("${javaScript}");
+
+		return "${JSON}";
+	}
+
 }

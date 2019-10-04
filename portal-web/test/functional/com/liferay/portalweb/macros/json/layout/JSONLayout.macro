@@ -101,7 +101,7 @@ definition {
 			privateLayout = "true",
 			widgetName = "${widgetName}");
 
-		JSONLayoutUtil._updateTypeSettings(
+		JSONLayoutAPI._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "true",
@@ -126,7 +126,7 @@ definition {
 			privateLayout = "false",
 			widgetName = "${widgetName}");
 
-		JSONLayoutUtil._updateTypeSettings(
+		JSONLayoutAPI._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "false",
@@ -152,7 +152,7 @@ definition {
 			layoutTemplate = "${layoutTemplate}",
 			privateLayout = "false");
 
-		JSONLayoutUtil._updateTypeSettings(
+		JSONLayoutAPI._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "false",

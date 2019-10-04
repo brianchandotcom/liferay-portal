@@ -163,12 +163,12 @@ public class LayoutPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -728,10 +728,10 @@ public class LayoutPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {uuid, groupId, privateLayout};
@@ -1034,12 +1034,12 @@ public class LayoutPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -1640,12 +1640,12 @@ public class LayoutPersistenceImpl
 		long ctCollectionId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -2157,12 +2157,12 @@ public class LayoutPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -3053,12 +3053,12 @@ public class LayoutPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -3581,12 +3581,12 @@ public class LayoutPersistenceImpl
 		long parentPlid, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -4092,10 +4092,10 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public Layout fetchByIconImageId(long iconImageId, boolean useFinderCache) {
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {iconImageId};
@@ -4149,7 +4149,7 @@ public class LayoutPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache || !productionMode) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {iconImageId};
 							}
 
@@ -4350,12 +4350,12 @@ public class LayoutPersistenceImpl
 
 		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -4947,12 +4947,12 @@ public class LayoutPersistenceImpl
 		sourcePrototypeLayoutUuid = Objects.toString(
 			sourcePrototypeLayoutUuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -5549,12 +5549,12 @@ public class LayoutPersistenceImpl
 		long groupId, boolean privateLayout, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -6521,12 +6521,12 @@ public class LayoutPersistenceImpl
 
 		type = Objects.toString(type, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -7570,12 +7570,12 @@ public class LayoutPersistenceImpl
 
 		layoutPrototypeUuid = Objects.toString(layoutPrototypeUuid, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -8171,10 +8171,10 @@ public class LayoutPersistenceImpl
 	public Layout fetchByP_I(
 		boolean privateLayout, long iconImageId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {privateLayout, iconImageId};
@@ -8234,7 +8234,7 @@ public class LayoutPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache || !productionMode) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									privateLayout, iconImageId
 								};
@@ -8432,10 +8432,10 @@ public class LayoutPersistenceImpl
 	public Layout fetchByC_C(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {classNameId, classPK};
@@ -8495,7 +8495,7 @@ public class LayoutPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache || !productionMode) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									classNameId, classPK
 								};
@@ -8703,10 +8703,10 @@ public class LayoutPersistenceImpl
 		long groupId, boolean privateLayout, long layoutId,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, privateLayout, layoutId};
@@ -8992,12 +8992,12 @@ public class LayoutPersistenceImpl
 		int end, OrderByComparator<Layout> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -10040,11 +10040,11 @@ public class LayoutPersistenceImpl
 				orderByComparator);
 		}
 
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -10698,12 +10698,12 @@ public class LayoutPersistenceImpl
 
 		type = Objects.toString(type, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -11806,10 +11806,10 @@ public class LayoutPersistenceImpl
 
 		friendlyURL = Objects.toString(friendlyURL, "");
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {groupId, privateLayout, friendlyURL};
@@ -12110,10 +12110,10 @@ public class LayoutPersistenceImpl
 		sourcePrototypeLayoutUuid = Objects.toString(
 			sourcePrototypeLayoutUuid, "");
 
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		Object[] finderArgs = null;
 
 		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
@@ -12195,7 +12195,7 @@ public class LayoutPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache || !productionMode) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									groupId, privateLayout,
 									sourcePrototypeLayoutUuid
@@ -12465,12 +12465,12 @@ public class LayoutPersistenceImpl
 		boolean hidden, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -13566,11 +13566,11 @@ public class LayoutPersistenceImpl
 				orderByComparator);
 		}
 
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -14284,12 +14284,12 @@ public class LayoutPersistenceImpl
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		finderPath = _finderPathWithPaginationFindByG_P_P_LtP;
 		finderArgs = new Object[] {
@@ -15743,43 +15743,6 @@ public class LayoutPersistenceImpl
 	}
 
 	@Override
-	public List<String[]> getUniqueIndexColumnNames() {
-		return _uniqueIndexColumnNames;
-	}
-
-	@Override
-	public Layout removeCTModel(Layout layout, boolean quiet) {
-		if (quiet) {
-			return removeImpl(layout);
-		}
-
-		return remove(layout);
-	}
-
-	@Override
-	public Layout updateCTModel(Layout layout, boolean quiet) {
-		if (quiet) {
-			return updateImpl(layout);
-		}
-
-		return update(layout);
-	}
-
-	private static final List<String[]> _uniqueIndexColumnNames =
-		new ArrayList<String[]>();
-
-	static {
-		_uniqueIndexColumnNames.add(
-			new String[] {"uuid_", "groupId", "privateLayout"});
-
-		_uniqueIndexColumnNames.add(
-			new String[] {"groupId", "privateLayout", "layoutId"});
-
-		_uniqueIndexColumnNames.add(
-			new String[] {"groupId", "privateLayout", "friendlyURL"});
-	}
-
-	@Override
 	protected Layout removeImpl(Layout layout) {
 		if (!CTPersistenceHelperUtil.isRemove(layout)) {
 			return layout;
@@ -16598,12 +16561,12 @@ public class LayoutPersistenceImpl
 		int start, int end, OrderByComparator<Layout> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
-
-		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
-			Layout.class);
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
@@ -16773,6 +16736,43 @@ public class LayoutPersistenceImpl
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return LayoutModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	@Override
+	public Layout removeCTModel(Layout layout, boolean quiet) {
+		if (quiet) {
+			return removeImpl(layout);
+		}
+
+		return remove(layout);
+	}
+
+	@Override
+	public Layout updateCTModel(Layout layout, boolean quiet) {
+		if (quiet) {
+			return updateImpl(layout);
+		}
+
+		return update(layout);
+	}
+
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		_uniqueIndexColumnNames.add(
+			new String[] {"uuid_", "groupId", "privateLayout"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "privateLayout", "layoutId"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "privateLayout", "friendlyURL"});
 	}
 
 	/**

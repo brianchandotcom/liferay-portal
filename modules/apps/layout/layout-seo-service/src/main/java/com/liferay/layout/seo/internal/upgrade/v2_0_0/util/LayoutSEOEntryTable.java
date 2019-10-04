@@ -33,14 +33,14 @@ public class LayoutSEOEntryTable {
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"privateLayout", Types.BOOLEAN},
-		{"layoutId", Types.BIGINT}, {"enabledCanonicalURL", Types.BOOLEAN},
+		{"layoutId", Types.BIGINT}, {"canonicalURLEnabled", Types.BOOLEAN},
 		{"canonicalURL", Types.VARCHAR},
-		{"enabledOpenGraphTitle", Types.BOOLEAN},
+		{"openGraphTitleEnabled", Types.BOOLEAN},
 		{"openGraphTitle", Types.VARCHAR},
-		{"enabledOpenGraphDescription", Types.BOOLEAN},
+		{"openGraphDescriptionEnabled", Types.BOOLEAN},
 		{"openGraphDescription", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP},
-		{"openGraphImageFileEntryId", Types.BIGINT}
+		{"openGraphImageFileEntryId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,25 +69,25 @@ TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("enabledCanonicalURL", Types.BOOLEAN);
+TABLE_COLUMNS_MAP.put("canonicalURLEnabled", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("canonicalURL", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("enabledOpenGraphTitle", Types.BOOLEAN);
+TABLE_COLUMNS_MAP.put("OpenGraphTitleEnabled", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("openGraphTitle", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("enabledOpenGraphDescription", Types.BOOLEAN);
+TABLE_COLUMNS_MAP.put("openGraphDescriptionEnabled", Types.BOOLEAN);
 
 TABLE_COLUMNS_MAP.put("openGraphDescription", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
-
 TABLE_COLUMNS_MAP.put("openGraphImageFileEntryId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,enabledCanonicalURL BOOLEAN,canonicalURL STRING null,enabledOpenGraphTitle BOOLEAN,openGraphTitle STRING null,enabledOpenGraphDescription BOOLEAN,openGraphDescription STRING null,lastPublishDate DATE null,openGraphImageFileEntryId LONG)";
+"create table LayoutSEOEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,layoutSEOEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,canonicalURLEnabled BOOLEAN,canonicalURL STRING null,OpenGraphTitleEnabled BOOLEAN,openGraphTitle STRING null,openGraphDescriptionEnabled BOOLEAN,openGraphDescription STRING null,openGraphImageFileEntryId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSEOEntry";
 

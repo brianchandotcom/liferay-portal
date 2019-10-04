@@ -112,7 +112,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 				layout.getLayoutId());
 
 		if ((layoutSEOEntry == null) ||
-			!layoutSEOEntry.isEnabledCanonicalURL()) {
+			!layoutSEOEntry.isCanonicalURLEnabled()) {
 
 			return StringPool.BLANK;
 		}

@@ -99,12 +99,12 @@ public class LayoutSEOEntryStagedModelDataHandler
 			_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 				layoutSEOEntry.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getLayoutId(),
-				layoutSEOEntry.isEnabledCanonicalURL(),
+				layoutSEOEntry.isCanonicalURLEnabled(),
 				layoutSEOEntry.getCanonicalURLMap(),
-				layoutSEOEntry.isEnabledOpenGraphDescription(),
-				layoutSEOEntry.getOpenGraphDescriptionMap(),
-				layoutSEOEntry.isEnabledOpenGraphTitle(),
+				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
+				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
+				layoutSEOEntry.getOpenGraphDescriptionMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				portletDataContext.createServiceContext(layoutSEOEntry));
 		}
@@ -114,12 +114,12 @@ public class LayoutSEOEntryStagedModelDataHandler
 				portletDataContext.getScopeGroupId(),
 				layoutSEOEntry.isPrivateLayout(),
 				existingLayoutSEOEntry.getLayoutId(),
-				layoutSEOEntry.isEnabledCanonicalURL(),
+				layoutSEOEntry.isCanonicalURLEnabled(),
 				layoutSEOEntry.getCanonicalURLMap(),
-				layoutSEOEntry.isEnabledOpenGraphDescription(),
-				layoutSEOEntry.getOpenGraphDescriptionMap(),
-				layoutSEOEntry.isEnabledOpenGraphTitle(),
+				layoutSEOEntry.isOpenGraphTitleEnabled(),
 				layoutSEOEntry.getOpenGraphTitleMap(),
+				layoutSEOEntry.isOpenGraphDescriptionEnabled(),
+				layoutSEOEntry.getOpenGraphDescriptionMap(),
 				layoutSEOEntry.getOpenGraphImageFileEntryId(),
 				portletDataContext.createServiceContext(layoutSEOEntry));
 		}

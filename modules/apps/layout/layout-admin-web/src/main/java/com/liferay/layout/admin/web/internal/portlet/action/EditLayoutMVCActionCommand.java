@@ -165,9 +165,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
-			canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
-			useCustomTitle, openGraphTitleMap, openGraphImageFileEntryId,
-			serviceContext);
+			canonicalURLMap, useCustomTitle, openGraphTitleMap,
+			useCustomDescription, openGraphDescriptionMap,
+			openGraphImageFileEntryId, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -182,9 +182,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, layoutId, useCustomCanonicalURL,
-				canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
-				useCustomTitle, openGraphTitleMap, openGraphImageFileEntryId,
-				serviceContext);
+				canonicalURLMap, useCustomTitle, openGraphTitleMap,
+				useCustomDescription, openGraphDescriptionMap,
+				openGraphImageFileEntryId, serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

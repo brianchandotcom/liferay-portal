@@ -26,10 +26,10 @@ public class UpgradeSEOEntry extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			LayoutSEOEntryTable.class,
-			new AlterColumnName("enabled", "enabledCanonicalURL BOOLEAN"),
-			new AlterTableAddColumn("enabledOpenGraphTitle"),
+			new AlterColumnName("enabled", "canonicalURLEnabled BOOLEAN"),
+			new AlterTableAddColumn("openGraphTitleEnabled"),
 			new AlterTableAddColumn("openGraphTitle"),
-			new AlterTableAddColumn("enabledOpenGraphDescription"),
+			new AlterTableAddColumn("openGraphDescriptionEnabled"),
 			new AlterTableAddColumn("openGraphDescription"),
 			new AlterTableAddColumn("openGraphImageFileEntryId"));
 	}

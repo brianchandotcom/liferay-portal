@@ -71,15 +71,15 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertFalse(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertFalse(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
-		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertFalse(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
-		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
@@ -100,15 +100,15 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertFalse(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertFalse(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
-		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertTrue(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
 			"description",
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
-		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertEquals(
@@ -153,15 +153,15 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertTrue(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertTrue(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
-		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertFalse(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK,
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
-		Assert.assertFalse(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertFalse(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(
 			StringPool.BLANK, layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertEquals(0, layoutSEOEntry.getOpenGraphImageFileEntryId());
@@ -191,15 +191,15 @@ public class LayoutSEOEntryLocalServiceTest {
 				_group.getGroupId(), false, _layout.getLayoutId());
 
 		Assert.assertNotNull(layoutSEOEntry.getLayoutSEOEntryId());
-		Assert.assertTrue(layoutSEOEntry.isEnabledCanonicalURL());
+		Assert.assertTrue(layoutSEOEntry.isCanonicalURLEnabled());
 		Assert.assertEquals(
 			"http://example.com",
 			layoutSEOEntry.getCanonicalURL(LocaleUtil.US));
-		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphDescription());
+		Assert.assertTrue(layoutSEOEntry.isOpenGraphDescriptionEnabled());
 		Assert.assertEquals(
 			"description",
 			layoutSEOEntry.getOpenGraphDescription(LocaleUtil.US));
-		Assert.assertTrue(layoutSEOEntry.isEnabledOpenGraphTitle());
+		Assert.assertTrue(layoutSEOEntry.isOpenGraphTitleEnabled());
 		Assert.assertEquals(
 			"title", layoutSEOEntry.getOpenGraphTitle(LocaleUtil.US));
 		Assert.assertEquals(

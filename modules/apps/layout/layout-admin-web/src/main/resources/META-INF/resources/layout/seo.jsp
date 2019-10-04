@@ -1,5 +1,4 @@
-<%--
-/**
+<%--/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -96,7 +95,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		<c:when test="<%= selLayoutSEOEntry != null %>">
 			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-			<aui:input checked="<%= selLayoutSEOEntry.isEnabledCanonicalURL() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
 				<aui:input name="canonicalURL" placeholder="canonical-url">
@@ -128,11 +127,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
 			<div id="<portlet:namespace />openGraphSettings">
-				<aui:input checked="<%= selLayoutSEOEntry.isEnabledOpenGraphTitle() %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="openGraphTitleEnabled" type="checkbox" />
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="openGraphTitleEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
 
-				<aui:input checked="<%= selLayoutSEOEntry.isEnabledOpenGraphDescription() %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescriptionEnabled" type="checkbox" />
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescriptionEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
 
@@ -143,13 +142,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<div id="<portlet:namespace />openGraphSettings">
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="openGraphTitle" type="checkbox" />
 
-				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" type="text">
-				</aui:input>
+				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" type="text" />
 
 				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescription" type="checkbox" />
 
-				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea">
-				</aui:input>
+				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
 
 				<aui:input id="openGraphImageFileEntryId" name="openGraphImageFileEntryId" type="hidden" />
 			</div>

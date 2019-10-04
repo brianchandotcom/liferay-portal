@@ -12,21 +12,6 @@
  * details.
  */
 
-import React from 'react';
+export const discard = 'discard';
 
-import {TYPES} from '../actions/index';
-
-export const DispatchContext = React.createContext(() => {});
-
-export function reducer(state, action) {
-	switch (action.type) {
-		case TYPES.discard:
-			return state;
-
-		case TYPES.publish:
-			return state;
-
-		default:
-			throw new Error(`Unrecognized action.type ${action.type}`);
-	}
-}
+export const publish = 'publish';

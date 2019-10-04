@@ -17,6 +17,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import {discard, publish} from '../actions/index';
 import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 
@@ -37,7 +38,7 @@ function ToolbarBody() {
 						className="nav-btn"
 						disabled
 						displayType="secondary"
-						onClick={() => dispatch({type: 'discard'})}
+						onClick={() => dispatch(discard())}
 						small
 					>
 						{singleSegmentsExperienceMode
@@ -50,7 +51,7 @@ function ToolbarBody() {
 						className="nav-btn"
 						disabled
 						displayType="primary"
-						onClick={() => dispatch({type: 'publish'})}
+						onClick={() => dispatch(publish())}
 						small
 					>
 						{singleSegmentsExperienceMode

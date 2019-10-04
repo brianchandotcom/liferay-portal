@@ -12,21 +12,11 @@
  * details.
  */
 
-import React from 'react';
+import {discard as type} from './types';
 
-import {TYPES} from '../actions/index';
+const ACTION = {type};
 
-export const DispatchContext = React.createContext(() => {});
-
-export function reducer(state, action) {
-	switch (action.type) {
-		case TYPES.discard:
-			return state;
-
-		case TYPES.publish:
-			return state;
-
-		default:
-			throw new Error(`Unrecognized action.type ${action.type}`);
-	}
+export default function discard() {
+	// This is an example of an action creator that produces a plain action.
+	return {...ACTION};
 }

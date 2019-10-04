@@ -72,6 +72,7 @@ public abstract class BaseOrganizationResourceImpl
 	)
 	@Parameters(
 		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -83,6 +84,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Organization")})
 	public Page<Organization> getOrganizationsPage(
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)
@@ -126,6 +128,7 @@ public abstract class BaseOrganizationResourceImpl
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "parentOrganizationId"),
+			@Parameter(in = ParameterIn.QUERY, name = "flatten"),
 			@Parameter(in = ParameterIn.QUERY, name = "search"),
 			@Parameter(in = ParameterIn.QUERY, name = "filter"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
@@ -139,6 +142,7 @@ public abstract class BaseOrganizationResourceImpl
 	public Page<Organization> getOrganizationOrganizationsPage(
 			@NotNull @Parameter(hidden = true)
 			@PathParam("parentOrganizationId") Long parentOrganizationId,
+			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
 			@Context Sort[] sorts)

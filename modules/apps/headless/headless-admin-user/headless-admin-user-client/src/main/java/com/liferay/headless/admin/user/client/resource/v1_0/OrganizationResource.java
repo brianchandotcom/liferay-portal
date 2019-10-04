@@ -40,13 +40,13 @@ public interface OrganizationResource {
 	}
 
 	public Page<Organization> getOrganizationsPage(
-			String search, String filterString, Pagination pagination,
-			String sortString)
+			Boolean flatten, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getOrganizationsPageHttpResponse(
-			String search, String filterString, Pagination pagination,
-			String sortString)
+			Boolean flatten, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public Organization getOrganization(Long organizationId) throws Exception;
@@ -56,14 +56,14 @@ public interface OrganizationResource {
 		throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long parentOrganizationId, Boolean flatten, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getOrganizationOrganizationsPageHttpResponse(
-				Long parentOrganizationId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentOrganizationId, Boolean flatten, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -123,13 +123,13 @@ public interface OrganizationResource {
 		implements OrganizationResource {
 
 		public Page<Organization> getOrganizationsPage(
-				String search, String filterString, Pagination pagination,
-				String sortString)
+				Boolean flatten, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getOrganizationsPageHttpResponse(
-					search, filterString, pagination, sortString);
+					flatten, search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -143,8 +143,8 @@ public interface OrganizationResource {
 		}
 
 		public HttpInvoker.HttpResponse getOrganizationsPageHttpResponse(
-				String search, String filterString, Pagination pagination,
-				String sortString)
+				Boolean flatten, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -167,6 +167,10 @@ public interface OrganizationResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
@@ -262,14 +266,14 @@ public interface OrganizationResource {
 		}
 
 		public Page<Organization> getOrganizationOrganizationsPage(
-				Long parentOrganizationId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long parentOrganizationId, Boolean flatten, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getOrganizationOrganizationsPageHttpResponse(
-					parentOrganizationId, search, filterString, pagination,
-					sortString);
+					parentOrganizationId, flatten, search, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -284,7 +288,7 @@ public interface OrganizationResource {
 
 		public HttpInvoker.HttpResponse
 				getOrganizationOrganizationsPageHttpResponse(
-					Long parentOrganizationId, String search,
+					Long parentOrganizationId, Boolean flatten, String search,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
@@ -309,6 +313,10 @@ public interface OrganizationResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (flatten != null) {
+				httpInvoker.parameter("flatten", String.valueOf(flatten));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

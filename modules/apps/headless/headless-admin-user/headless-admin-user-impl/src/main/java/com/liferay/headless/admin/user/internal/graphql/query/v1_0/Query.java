@@ -201,10 +201,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizations(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizations(filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public OrganizationPage organizations(
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -217,7 +218,7 @@ public class Query {
 			this::_populateResourceContext,
 			organizationResource -> new OrganizationPage(
 				organizationResource.getOrganizationsPage(
-					search,
+					flatten, search,
 					_filterBiFunction.apply(organizationResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
@@ -244,11 +245,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationOrganizations(filter: ___, page: ___, pageSize: ___, parentOrganizationId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationOrganizations(filter: ___, flatten: ___, page: ___, pageSize: ___, parentOrganizationId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public OrganizationPage organizationOrganizations(
 			@GraphQLName("parentOrganizationId") Long parentOrganizationId,
+			@GraphQLName("flatten") Boolean flatten,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -261,7 +263,7 @@ public class Query {
 			this::_populateResourceContext,
 			organizationResource -> new OrganizationPage(
 				organizationResource.getOrganizationOrganizationsPage(
-					parentOrganizationId, search,
+					parentOrganizationId, flatten, search,
 					_filterBiFunction.apply(organizationResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
@@ -911,6 +913,7 @@ public class Query {
 
 		@GraphQLField
 		public OrganizationPage organizations(
+				@GraphQLName("flatten") Boolean flatten,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -923,7 +926,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				organizationResource -> new OrganizationPage(
 					organizationResource.getOrganizationOrganizationsPage(
-						_organization.getId(), search,
+						_organization.getId(), flatten, search,
 						_filterBiFunction.apply(
 							organizationResource, filterString),
 						Pagination.of(page, pageSize),

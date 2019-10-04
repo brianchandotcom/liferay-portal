@@ -45,14 +45,15 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OrganizationResource {
 
 	public Page<Organization> getOrganizationsPage(
-			String search, Filter filter, Pagination pagination, Sort[] sorts)
+			Boolean flatten, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Organization getOrganization(Long organizationId) throws Exception;
 
 	public Page<Organization> getOrganizationOrganizationsPage(
-			Long parentOrganizationId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long parentOrganizationId, Boolean flatten, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

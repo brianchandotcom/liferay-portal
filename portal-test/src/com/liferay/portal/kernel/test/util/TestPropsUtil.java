@@ -31,19 +31,19 @@ import java.util.Properties;
 public class TestPropsUtil {
 
 	public static String get(String key) {
-		return _instance._get(key);
+		return _testPropsUtil._get(key);
 	}
 
 	public static Properties getProperties() {
-		return _instance._props;
+		return _testPropsUtil._props;
 	}
 
 	public static void printProperties() {
-		_instance._printProperties(true);
+		_testPropsUtil._printProperties(true);
 	}
 
 	public static void set(String key, String value) {
-		_instance._set(key, value);
+		_testPropsUtil._set(key, value);
 	}
 
 	private TestPropsUtil() {
@@ -98,7 +98,7 @@ public class TestPropsUtil {
 		_props.setProperty(key, value);
 	}
 
-	private static final TestPropsUtil _instance = new TestPropsUtil();
+	private static final TestPropsUtil _testPropsUtil = new TestPropsUtil();
 
 	private final Properties _props = new Properties();
 

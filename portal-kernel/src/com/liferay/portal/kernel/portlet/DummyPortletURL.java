@@ -34,7 +34,7 @@ import javax.portlet.annotations.PortletSerializable;
 public class DummyPortletURL implements PortletURL {
 
 	public static DummyPortletURL getInstance() {
-		return _instance;
+		return _dummyPortletURL;
 	}
 
 	@Override
@@ -125,6 +125,7 @@ public class DummyPortletURL implements PortletURL {
 	private DummyPortletURL() {
 	}
 
-	private static final DummyPortletURL _instance = new DummyPortletURL();
+	private static final DummyPortletURL _dummyPortletURL =
+		new DummyPortletURL();
 
 }

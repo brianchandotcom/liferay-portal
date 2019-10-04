@@ -42,7 +42,7 @@ public class ModelValidatorRegistryUtil {
 	public static <T extends ClassedModel> ModelValidator<T> getModelValidator(
 		String className) {
 
-		return _instance._getModelValidator(className);
+		return _modelValidatorRegistryUtil._getModelValidator(className);
 	}
 
 	public static <T extends ClassedModel, U extends ModelValidator<T>> U
@@ -74,8 +74,8 @@ public class ModelValidatorRegistryUtil {
 		return (ModelValidator<T>)_modelvalidators.get(className);
 	}
 
-	private static final ModelValidatorRegistryUtil _instance =
-		new ModelValidatorRegistryUtil();
+	private static final ModelValidatorRegistryUtil
+		_modelValidatorRegistryUtil = new ModelValidatorRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final Map<String, ModelValidator<?>> _modelvalidators =

@@ -68,7 +68,7 @@ public class OpenSSOUtil {
 	}
 
 	private static OpenSSO _getOpenSSO() {
-		return _instance._serviceTracker.getService();
+		return _openSSOUtil._serviceTracker.getService();
 	}
 
 	private OpenSSOUtil() {
@@ -79,7 +79,7 @@ public class OpenSSOUtil {
 		_serviceTracker.open();
 	}
 
-	private static final OpenSSOUtil _instance = new OpenSSOUtil();
+	private static final OpenSSOUtil _openSSOUtil = new OpenSSOUtil();
 
 	private final ServiceTracker<OpenSSO, OpenSSO> _serviceTracker;
 

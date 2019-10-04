@@ -71,7 +71,7 @@ public class AuthVerifierPipeline {
 			AccessControlContext accessControlContext)
 		throws PortalException {
 
-		return _instance._verifyRequest(accessControlContext);
+		return _authVerifierPipeline._verifyRequest(accessControlContext);
 	}
 
 	private AuthVerifierPipeline() {
@@ -330,7 +330,7 @@ public class AuthVerifierPipeline {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierPipeline.class);
 
-	private static final AuthVerifierPipeline _instance =
+	private static final AuthVerifierPipeline _authVerifierPipeline =
 		new AuthVerifierPipeline();
 
 	private final List<AuthVerifierConfiguration> _authVerifierConfigurations =

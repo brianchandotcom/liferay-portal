@@ -30,27 +30,28 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TemplateResourceLoaderUtil {
 
 	public static void clearCache() {
-		_instance._clearCache();
+		_templateResourceLoaderUtil._clearCache();
 	}
 
 	public static void clearCache(String templateResourceLoaderName)
 		throws TemplateException {
 
-		_instance._clearCache(templateResourceLoaderName);
+		_templateResourceLoaderUtil._clearCache(templateResourceLoaderName);
 	}
 
 	public static void clearCache(
 			String templateResourceLoaderName, String templateId)
 		throws TemplateException {
 
-		_instance._clearCache(templateResourceLoaderName, templateId);
+		_templateResourceLoaderUtil._clearCache(
+			templateResourceLoaderName, templateId);
 	}
 
 	public static TemplateResource getTemplateResource(
 			String templateResourceLoaderName, String templateId)
 		throws TemplateException {
 
-		return _instance._getTemplateResource(
+		return _templateResourceLoaderUtil._getTemplateResource(
 			templateResourceLoaderName, templateId);
 	}
 
@@ -58,25 +59,27 @@ public class TemplateResourceLoaderUtil {
 			String templateResourceLoaderName)
 		throws TemplateException {
 
-		return _instance._getTemplateResourceLoader(templateResourceLoaderName);
+		return _templateResourceLoaderUtil._getTemplateResourceLoader(
+			templateResourceLoaderName);
 	}
 
 	public static Set<String> getTemplateResourceLoaderNames() {
-		return _instance._getTemplateResourceLoaderNames();
+		return _templateResourceLoaderUtil._getTemplateResourceLoaderNames();
 	}
 
 	public static boolean hasTemplateResource(
 			String templateResourceLoaderName, String templateId)
 		throws TemplateException {
 
-		return _instance._hasTemplateResource(
+		return _templateResourceLoaderUtil._hasTemplateResource(
 			templateResourceLoaderName, templateId);
 	}
 
 	public static boolean hasTemplateResourceLoader(
 		String templateResourceLoaderName) {
 
-		return _instance._hasTemplateResourceLoader(templateResourceLoaderName);
+		return _templateResourceLoaderUtil._hasTemplateResourceLoader(
+			templateResourceLoaderName);
 	}
 
 	private TemplateResourceLoaderUtil() {
@@ -162,8 +165,8 @@ public class TemplateResourceLoaderUtil {
 		return _templateResourceLoaders.containsKey(templateResourceLoaderName);
 	}
 
-	private static final TemplateResourceLoaderUtil _instance =
-		new TemplateResourceLoaderUtil();
+	private static final TemplateResourceLoaderUtil
+		_templateResourceLoaderUtil = new TemplateResourceLoaderUtil();
 
 	private final ServiceTracker<TemplateResourceLoader, TemplateResourceLoader>
 		_serviceTracker;

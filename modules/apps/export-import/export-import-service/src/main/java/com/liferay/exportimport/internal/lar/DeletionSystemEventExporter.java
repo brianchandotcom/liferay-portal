@@ -49,7 +49,7 @@ import java.util.Set;
 public class DeletionSystemEventExporter {
 
 	public static DeletionSystemEventExporter getInstance() {
-		return _instance;
+		return _deletionSystemEventExporter;
 	}
 
 	public void exportDeletionSystemEvents(
@@ -244,7 +244,7 @@ public class DeletionSystemEventExporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventExporter.class);
 
-	private static final DeletionSystemEventExporter _instance =
-		new DeletionSystemEventExporter();
+	private static final DeletionSystemEventExporter
+		_deletionSystemEventExporter = new DeletionSystemEventExporter();
 
 }

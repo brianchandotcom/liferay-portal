@@ -37,7 +37,7 @@ public class PortletResourcesUtil {
 
 	public static ServletContext getPathServletContext(String path) {
 		for (ServletContext servletContext :
-				_instance._servletContexts.values()) {
+				_portletResourcesUtil._servletContexts.values()) {
 
 			if (path.startsWith(servletContext.getContextPath())) {
 				return servletContext;
@@ -86,7 +86,7 @@ public class PortletResourcesUtil {
 		_serviceTracker.open();
 	}
 
-	private static final PortletResourcesUtil _instance =
+	private static final PortletResourcesUtil _portletResourcesUtil =
 		new PortletResourcesUtil();
 
 	private final ServiceTracker<Portlet, Portlet> _serviceTracker;

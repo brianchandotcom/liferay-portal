@@ -35,7 +35,7 @@ public class PwdToolkitUtil {
 	}
 
 	public static Toolkit getToolkit() {
-		return _instance._serviceTracker.getService();
+		return _pwdToolkitUtil._serviceTracker.getService();
 	}
 
 	public static void validate(
@@ -64,7 +64,7 @@ public class PwdToolkitUtil {
 		_serviceTracker.open();
 	}
 
-	private static final PwdToolkitUtil _instance = new PwdToolkitUtil();
+	private static final PwdToolkitUtil _pwdToolkitUtil = new PwdToolkitUtil();
 
 	private final ServiceTracker<Toolkit, Toolkit> _serviceTracker;
 

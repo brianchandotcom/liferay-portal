@@ -40,7 +40,8 @@ public class FormNavigatorCategoryUtil {
 		String formNavigatorId) {
 
 		List<FormNavigatorCategory> formNavigatorCategories =
-			_instance._formNavigatorCategories.getService(formNavigatorId);
+			_formNavigatorCategoryUtil._formNavigatorCategories.getService(
+				formNavigatorId);
 
 		if (formNavigatorCategories != null) {
 			return formNavigatorCategories;
@@ -120,7 +121,7 @@ public class FormNavigatorCategoryUtil {
 				"form.navigator.category.order"));
 	}
 
-	private static final FormNavigatorCategoryUtil _instance =
+	private static final FormNavigatorCategoryUtil _formNavigatorCategoryUtil =
 		new FormNavigatorCategoryUtil();
 
 	private final ServiceTrackerMap<String, List<FormNavigatorCategory>>

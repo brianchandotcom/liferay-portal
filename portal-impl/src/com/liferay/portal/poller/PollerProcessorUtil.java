@@ -45,15 +45,15 @@ public class PollerProcessorUtil {
 	public static void addPollerProcessor(
 		String portletId, PollerProcessor pollerProcessor) {
 
-		_instance._addPollerProcessor(portletId, pollerProcessor);
+		_pollerProcessorUtil._addPollerProcessor(portletId, pollerProcessor);
 	}
 
 	public static void deletePollerProcessor(String portletId) {
-		_instance._deletePollerProcessor(portletId);
+		_pollerProcessorUtil._deletePollerProcessor(portletId);
 	}
 
 	public static PollerProcessor getPollerProcessor(String portletId) {
-		return _instance._getPollerProcessor(portletId);
+		return _pollerProcessorUtil._getPollerProcessor(portletId);
 	}
 
 	private PollerProcessorUtil() {
@@ -98,7 +98,7 @@ public class PollerProcessorUtil {
 		return _pollerPorcessors.get(portletId);
 	}
 
-	private static final PollerProcessorUtil _instance =
+	private static final PollerProcessorUtil _pollerProcessorUtil =
 		new PollerProcessorUtil();
 
 	private final StubMap<PollerProcessor> _pollerPorcessors =

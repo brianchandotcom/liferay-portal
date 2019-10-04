@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 public class PortletProps {
 
 	public static String get(String key) {
-		return _instance._configuration.get(key);
+		return _portletProps._configuration.get(key);
 	}
 
 	private PortletProps() {
@@ -33,7 +33,7 @@ public class PortletProps {
 			clazz.getClassLoader(), "portlet");
 	}
 
-	private static final PortletProps _instance = new PortletProps();
+	private static final PortletProps _portletProps = new PortletProps();
 
 	private final Configuration _configuration;
 

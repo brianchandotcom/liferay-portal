@@ -38,14 +38,15 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	public static ExportImportPortletPreferencesProcessor
 		getExportImportPortletPreferencesProcessor(String portletName) {
 
-		return _instance._getExportImportPortletPreferencesProcessor(
-			portletName);
+		return _exportImportPortletPreferencesProcessorRegistryUtil.
+			_getExportImportPortletPreferencesProcessor(portletName);
 	}
 
 	public static List<ExportImportPortletPreferencesProcessor>
 		getExportImportPortletPreferencesProcessors() {
 
-		return _instance._getExportImportPortletPreferencesProcessors();
+		return _exportImportPortletPreferencesProcessorRegistryUtil.
+			_getExportImportPortletPreferencesProcessors();
 	}
 
 	private ExportImportPortletPreferencesProcessorRegistryUtil() {
@@ -75,7 +76,8 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	}
 
 	private static final ExportImportPortletPreferencesProcessorRegistryUtil
-		_instance = new ExportImportPortletPreferencesProcessorRegistryUtil();
+		_exportImportPortletPreferencesProcessorRegistryUtil =
+			new ExportImportPortletPreferencesProcessorRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final Map<String, ExportImportPortletPreferencesProcessor>

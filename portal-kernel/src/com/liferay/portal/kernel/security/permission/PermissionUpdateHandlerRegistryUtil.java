@@ -38,17 +38,19 @@ public class PermissionUpdateHandlerRegistryUtil {
 	public static PermissionUpdateHandler getPermissionUpdateHandler(
 		String modelClassName) {
 
-		return _instance._getPermissionUpdateHandler(modelClassName);
+		return _permissionUpdateHandlerRegistryUtil._getPermissionUpdateHandler(
+			modelClassName);
 	}
 
 	public static List<PermissionUpdateHandler> getPermissionUpdateHandlers() {
-		return _instance._getPermissionUpdateHandlers();
+		return _permissionUpdateHandlerRegistryUtil.
+			_getPermissionUpdateHandlers();
 	}
 
 	public static void register(
 		PermissionUpdateHandler permissionUpdateHandler) {
 
-		_instance._register(permissionUpdateHandler);
+		_permissionUpdateHandlerRegistryUtil._register(permissionUpdateHandler);
 	}
 
 	public static void unregister(
@@ -64,7 +66,8 @@ public class PermissionUpdateHandlerRegistryUtil {
 	public static void unregister(
 		PermissionUpdateHandler permissionUpdateHandler) {
 
-		_instance._unregister(permissionUpdateHandler);
+		_permissionUpdateHandlerRegistryUtil._unregister(
+			permissionUpdateHandler);
 	}
 
 	private PermissionUpdateHandlerRegistryUtil() {
@@ -112,8 +115,9 @@ public class PermissionUpdateHandlerRegistryUtil {
 		}
 	}
 
-	private static final PermissionUpdateHandlerRegistryUtil _instance =
-		new PermissionUpdateHandlerRegistryUtil();
+	private static final PermissionUpdateHandlerRegistryUtil
+		_permissionUpdateHandlerRegistryUtil =
+			new PermissionUpdateHandlerRegistryUtil();
 
 	private final Map<String, PermissionUpdateHandler>
 		_permissionUpdateHandlers = new ConcurrentHashMap<>();

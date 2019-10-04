@@ -40,19 +40,20 @@ import java.util.concurrent.ConcurrentMap;
 public class ModelListenerRegistrationUtil {
 
 	public static <T> ModelListener<T>[] getModelListeners(Class<T> clazz) {
-		return _instance._getModelListeners(clazz);
+		return _modelListenerRegistrationUtil._getModelListeners(clazz);
 	}
 
 	public static void register(ModelListener<?> modelListener) {
 		Class<?> clazz = modelListener.getClass();
 
-		_instance._register(clazz.getName(), modelListener);
+		_modelListenerRegistrationUtil._register(
+			clazz.getName(), modelListener);
 	}
 
 	public static void unregister(ModelListener<?> modelListener) {
 		Class<?> clazz = modelListener.getClass();
 
-		_instance._unregister(clazz.getName());
+		_modelListenerRegistrationUtil._unregister(clazz.getName());
 	}
 
 	private ModelListenerRegistrationUtil() {
@@ -97,8 +98,8 @@ public class ModelListenerRegistrationUtil {
 		}
 	}
 
-	private static final ModelListenerRegistrationUtil _instance =
-		new ModelListenerRegistrationUtil();
+	private static final ModelListenerRegistrationUtil
+		_modelListenerRegistrationUtil = new ModelListenerRegistrationUtil();
 
 	private final ConcurrentMap<Class<?>, List<ModelListener<?>>>
 		_modelListeners = new ConcurrentHashMap<>();

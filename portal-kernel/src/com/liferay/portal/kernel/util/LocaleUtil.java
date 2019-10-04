@@ -120,7 +120,7 @@ public class LocaleUtil {
 	}
 
 	public static LocaleUtil getInstance() {
-		return _instance;
+		return _localeUtil;
 	}
 
 	public static Map<String, String> getISOLanguages(Locale locale) {
@@ -556,7 +556,7 @@ public class LocaleUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(LocaleUtil.class);
 
-	private static final LocaleUtil _instance = new LocaleUtil();
+	private static final LocaleUtil _localeUtil = new LocaleUtil();
 
 	private Locale _locale;
 	private final Map<String, Locale> _locales = new HashMap<>();

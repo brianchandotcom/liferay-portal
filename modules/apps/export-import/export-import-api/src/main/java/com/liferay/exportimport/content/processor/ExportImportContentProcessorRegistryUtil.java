@@ -39,13 +39,15 @@ public class ExportImportContentProcessorRegistryUtil {
 	public static ExportImportContentProcessor getExportImportContentProcessor(
 		String className) {
 
-		return _instance._getExportImportContentProcessor(className);
+		return _exportImportContentProcessorRegistryUtil.
+			_getExportImportContentProcessor(className);
 	}
 
 	public static List<ExportImportContentProcessor>
 		getExportImportContentProcessors() {
 
-		return _instance._getExportImportContentProcessors();
+		return _exportImportContentProcessorRegistryUtil.
+			_getExportImportContentProcessors();
 	}
 
 	private ExportImportContentProcessorRegistryUtil() {
@@ -74,8 +76,9 @@ public class ExportImportContentProcessorRegistryUtil {
 		return ListUtil.fromCollection(values);
 	}
 
-	private static final ExportImportContentProcessorRegistryUtil _instance =
-		new ExportImportContentProcessorRegistryUtil();
+	private static final ExportImportContentProcessorRegistryUtil
+		_exportImportContentProcessorRegistryUtil =
+			new ExportImportContentProcessorRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final Map<String, ExportImportContentProcessor>

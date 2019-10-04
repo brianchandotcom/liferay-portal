@@ -79,159 +79,165 @@ import org.apache.commons.lang.time.StopWatch;
 public class PluginPackageUtil {
 
 	public static void endPluginPackageInstallation(String preliminaryContext) {
-		_instance._endPluginPackageInstallation(preliminaryContext);
+		_pluginPackageUtil._endPluginPackageInstallation(preliminaryContext);
 	}
 
 	public static List<PluginPackage> getAllAvailablePluginPackages()
 		throws PortalException {
 
-		return _instance._getAllAvailablePluginPackages();
+		return _pluginPackageUtil._getAllAvailablePluginPackages();
 	}
 
 	public static Collection<String> getAvailableTags() {
-		return _instance._getAvailableTags();
+		return _pluginPackageUtil._getAvailableTags();
 	}
 
 	public static PluginPackage getInstalledPluginPackage(String context) {
-		return _instance._getInstalledPluginPackage(context);
+		return _pluginPackageUtil._getInstalledPluginPackage(context);
 	}
 
 	public static List<PluginPackage> getInstalledPluginPackages() {
-		return _instance._getInstalledPluginPackages();
+		return _pluginPackageUtil._getInstalledPluginPackages();
 	}
 
 	public static Date getLastUpdateDate() {
-		return _instance._getLastUpdateDate();
+		return _pluginPackageUtil._getLastUpdateDate();
 	}
 
 	public static PluginPackage getLatestAvailablePluginPackage(
 			String groupId, String artifactId)
 		throws PortalException {
 
-		return _instance._getLatestAvailablePluginPackage(groupId, artifactId);
+		return _pluginPackageUtil._getLatestAvailablePluginPackage(
+			groupId, artifactId);
 	}
 
 	public static PluginPackage getLatestInstalledPluginPackage(
 		String groupId, String artifactId) {
 
-		return _instance._getLatestInstalledPluginPackage(groupId, artifactId);
+		return _pluginPackageUtil._getLatestInstalledPluginPackage(
+			groupId, artifactId);
 	}
 
 	public static PluginPackage getPluginPackageByModuleId(
 			String moduleId, String repositoryURL)
 		throws PortalException {
 
-		return _instance._getPluginPackageByModuleId(moduleId, repositoryURL);
+		return _pluginPackageUtil._getPluginPackageByModuleId(
+			moduleId, repositoryURL);
 	}
 
 	public static PluginPackage getPluginPackageByURL(String url)
 		throws PortalException {
 
-		return _instance._getPluginPackageByURL(url);
+		return _pluginPackageUtil._getPluginPackageByURL(url);
 	}
 
 	public static RemotePluginPackageRepository getRepository(
 			String repositoryURL)
 		throws PortalException {
 
-		return _instance._getRepository(repositoryURL);
+		return _pluginPackageUtil._getRepository(repositoryURL);
 	}
 
 	public static String[] getRepositoryURLs() {
-		return _instance._getRepositoryURLs();
+		return _pluginPackageUtil._getRepositoryURLs();
 	}
 
 	public static String[] getStatusAndInstalledVersion(
 		PluginPackage pluginPackage) {
 
-		return _instance._getStatusAndInstalledVersion(pluginPackage);
+		return _pluginPackageUtil._getStatusAndInstalledVersion(pluginPackage);
 	}
 
 	public static String[] getSupportedTypes() {
-		return _instance._getSupportedTypes();
+		return _pluginPackageUtil._getSupportedTypes();
 	}
 
 	public static boolean isCurrentVersionSupported(List<String> versions) {
-		return _instance._isCurrentVersionSupported(versions);
+		return _pluginPackageUtil._isCurrentVersionSupported(versions);
 	}
 
 	public static boolean isIgnored(PluginPackage pluginPackage) {
-		return _instance._isIgnored(pluginPackage);
+		return _pluginPackageUtil._isIgnored(pluginPackage);
 	}
 
 	public static boolean isInstallationInProcess(String context) {
-		return _instance._isInstallationInProcess(context);
+		return _pluginPackageUtil._isInstallationInProcess(context);
 	}
 
 	public static boolean isInstalled(String context) {
-		return _instance._isInstalled(context);
+		return _pluginPackageUtil._isInstalled(context);
 	}
 
 	public static boolean isTrusted(String repositoryURL) {
-		return _instance._isTrusted(repositoryURL);
+		return _pluginPackageUtil._isTrusted(repositoryURL);
 	}
 
 	public static boolean isUpdateAvailable() {
-		return _instance._isUpdateAvailable();
+		return _pluginPackageUtil._isUpdateAvailable();
 	}
 
 	public static PluginPackage readPluginPackageProperties(
 		String displayName, Properties properties) {
 
-		return _instance._readPluginPackageProperties(displayName, properties);
+		return _pluginPackageUtil._readPluginPackageProperties(
+			displayName, properties);
 	}
 
 	public static PluginPackage readPluginPackageServletContext(
 			ServletContext servletContext)
 		throws DocumentException, IOException {
 
-		return _instance._readPluginPackageServletContext(servletContext);
+		return _pluginPackageUtil._readPluginPackageServletContext(
+			servletContext);
 	}
 
 	public static PluginPackage readPluginPackageXml(
 		Element pluginPackageElement) {
 
-		return _instance._readPluginPackageXml(pluginPackageElement);
+		return _pluginPackageUtil._readPluginPackageXml(pluginPackageElement);
 	}
 
 	public static PluginPackage readPluginPackageXml(String xml)
 		throws DocumentException {
 
-		return _instance._readPluginPackageXml(xml);
+		return _pluginPackageUtil._readPluginPackageXml(xml);
 	}
 
 	public static void refreshUpdatesAvailableCache() {
-		_instance._refreshUpdatesAvailableCache();
+		_pluginPackageUtil._refreshUpdatesAvailableCache();
 	}
 
 	public static void registerInstalledPluginPackage(
 			PluginPackage pluginPackage)
 		throws PortalException {
 
-		_instance._registerInstalledPluginPackage(pluginPackage);
+		_pluginPackageUtil._registerInstalledPluginPackage(pluginPackage);
 	}
 
 	public static void registerPluginPackageInstallation(
 		String preliminaryContext) {
 
-		_instance._registerPluginPackageInstallation(preliminaryContext);
+		_pluginPackageUtil._registerPluginPackageInstallation(
+			preliminaryContext);
 	}
 
 	public static RepositoryReport reloadRepositories() throws PortalException {
-		return _instance._reloadRepositories();
+		return _pluginPackageUtil._reloadRepositories();
 	}
 
 	public static void unregisterInstalledPluginPackage(
 			PluginPackage pluginPackage)
 		throws PortalException {
 
-		_instance._unregisterInstalledPluginPackage(pluginPackage);
+		_pluginPackageUtil._unregisterInstalledPluginPackage(pluginPackage);
 	}
 
 	public static void updateInstallingPluginPackage(
 		String preliminaryContext, PluginPackage pluginPackage) {
 
-		_instance._updateInstallingPluginPackage(
+		_pluginPackageUtil._updateInstallingPluginPackage(
 			preliminaryContext, pluginPackage);
 	}
 
@@ -1257,7 +1263,8 @@ public class PluginPackageUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PluginPackageUtil.class);
 
-	private static final PluginPackageUtil _instance = new PluginPackageUtil();
+	private static final PluginPackageUtil _pluginPackageUtil =
+		new PluginPackageUtil();
 
 	private final Set<String> _availableTagsCache;
 	private final LocalPluginPackageRepository _installedPluginPackages;

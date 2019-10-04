@@ -29,7 +29,7 @@ import java.util.List;
 public class TokenizerUtil {
 
 	public static Tokenizer getTokenizer() {
-		Tokenizer tokenizer = _instance._serviceTracker.getService();
+		Tokenizer tokenizer = _tokenizerUtil._serviceTracker.getService();
 
 		if (tokenizer == null) {
 			tokenizer = _defaultTokenizer;
@@ -51,9 +51,8 @@ public class TokenizerUtil {
 		_serviceTracker = registry.trackServices(Tokenizer.class);
 	}
 
-	private static final TokenizerUtil _instance = new TokenizerUtil();
-
 	private static final Tokenizer _defaultTokenizer = new SimpleTokenizer();
+	private static final TokenizerUtil _tokenizerUtil = new TokenizerUtil();
 
 	private final ServiceTracker<Tokenizer, Tokenizer> _serviceTracker;
 

@@ -20,7 +20,7 @@ package com.liferay.asset.info.display.contributor.util;
 public class ContentAccessorUtil {
 
 	public static ContentAccessorUtil getInstance() {
-		return _instance;
+		return _contentAccessorUtil;
 	}
 
 	public static boolean isContentAccessor(Object object) {
@@ -30,6 +30,7 @@ public class ContentAccessorUtil {
 	private ContentAccessorUtil() {
 	}
 
-	private static ContentAccessorUtil _instance = new ContentAccessorUtil();
+	private static ContentAccessorUtil _contentAccessorUtil =
+		new ContentAccessorUtil();
 
 }

@@ -48,7 +48,7 @@ public class RatingsDataTransformerUtil {
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		_instance._transformCompanyRatingsData(
+		_ratingsDataTransformerUtil._transformCompanyRatingsData(
 			companyId, oldPortletPreferences, unicodeProperties);
 	}
 
@@ -57,7 +57,7 @@ public class RatingsDataTransformerUtil {
 			UnicodeProperties unicodeProperties)
 		throws PortalException {
 
-		_instance._transformGroupRatingsData(
+		_ratingsDataTransformerUtil._transformGroupRatingsData(
 			groupId, oldUnicodeProperties, unicodeProperties);
 	}
 
@@ -198,8 +198,8 @@ public class RatingsDataTransformerUtil {
 		ratingsEntryActionableDynamicQuery.performActions();
 	}
 
-	private static final RatingsDataTransformerUtil _instance =
-		new RatingsDataTransformerUtil();
+	private static final RatingsDataTransformerUtil
+		_ratingsDataTransformerUtil = new RatingsDataTransformerUtil();
 
 	private final ServiceTracker<RatingsDataTransformer, RatingsDataTransformer>
 		_serviceTracker;

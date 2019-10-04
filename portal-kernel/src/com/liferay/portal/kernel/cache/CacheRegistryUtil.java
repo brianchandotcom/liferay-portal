@@ -31,19 +31,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CacheRegistryUtil {
 
 	public static void clear() {
-		_instance._clear();
+		_cacheRegistryUtil._clear();
 	}
 
 	public static void clear(String name) {
-		_instance._clear(name);
+		_cacheRegistryUtil._clear(name);
 	}
 
 	public static boolean isActive() {
-		return _instance._isActive();
+		return _cacheRegistryUtil._isActive();
 	}
 
 	public static void setActive(boolean active) {
-		_instance._setActive(active);
+		_cacheRegistryUtil._setActive(active);
 	}
 
 	private CacheRegistryUtil() {
@@ -101,7 +101,8 @@ public class CacheRegistryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CacheRegistryUtil.class);
 
-	private static final CacheRegistryUtil _instance = new CacheRegistryUtil();
+	private static final CacheRegistryUtil _cacheRegistryUtil =
+		new CacheRegistryUtil();
 
 	private volatile boolean _active = true;
 	private final Map<String, CacheRegistryItem> _cacheRegistryItems =

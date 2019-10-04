@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentManagementToolbarDisplayContextFactory {
 
 	public static FragmentManagementToolbarDisplayContextFactory getInstance() {
-		return _instance;
+		return _fragmentManagementToolbarDisplayContextFactory;
 	}
 
 	public FragmentManagementToolbarDisplayContext
@@ -61,6 +61,7 @@ public class FragmentManagementToolbarDisplayContextFactory {
 	}
 
 	private static final FragmentManagementToolbarDisplayContextFactory
-		_instance = new FragmentManagementToolbarDisplayContextFactory();
+		_fragmentManagementToolbarDisplayContextFactory =
+			new FragmentManagementToolbarDisplayContextFactory();
 
 }

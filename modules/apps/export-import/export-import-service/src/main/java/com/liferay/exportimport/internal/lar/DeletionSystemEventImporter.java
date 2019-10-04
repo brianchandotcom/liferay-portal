@@ -44,7 +44,7 @@ import org.xml.sax.XMLReader;
 public class DeletionSystemEventImporter {
 
 	public static DeletionSystemEventImporter getInstance() {
-		return _instance;
+		return _deletionSystemEventImporter;
 	}
 
 	public void importDeletionSystemEvents(
@@ -158,7 +158,7 @@ public class DeletionSystemEventImporter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporter.class);
 
-	private static final DeletionSystemEventImporter _instance =
-		new DeletionSystemEventImporter();
+	private static final DeletionSystemEventImporter
+		_deletionSystemEventImporter = new DeletionSystemEventImporter();
 
 }

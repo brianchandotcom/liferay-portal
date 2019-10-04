@@ -40,7 +40,7 @@ public class RuleGroupProcessorUtil {
 	}
 
 	public static RuleGroupProcessor getRuleGroupProcessor() {
-		return _instance._getRuleGroupProcessor();
+		return _ruleGroupProcessorUtil._getRuleGroupProcessor();
 	}
 
 	public static RuleHandler getRuleHandler(String ruleType) {
@@ -77,7 +77,7 @@ public class RuleGroupProcessorUtil {
 		return _ruleGroupProcessor;
 	}
 
-	private static final RuleGroupProcessorUtil _instance =
+	private static final RuleGroupProcessorUtil _ruleGroupProcessorUtil =
 		new RuleGroupProcessorUtil();
 
 	private final BundleContext _bundleContext;

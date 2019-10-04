@@ -143,7 +143,7 @@ public class DeployUtil {
 	public static String getResourcePath(Set<Path> tempPaths, String resource)
 		throws Exception {
 
-		return _instance._getResourcePath(tempPaths, resource);
+		return _deployUtil._getResourcePath(tempPaths, resource);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class DeployUtil {
 	 */
 	@Deprecated
 	public static String getResourcePath(String resource) throws Exception {
-		return _instance._getResourcePath(new HashSet<>(), resource);
+		return _deployUtil._getResourcePath(new HashSet<>(), resource);
 	}
 
 	public static void redeployTomcat(String context) throws Exception {
@@ -297,6 +297,6 @@ public class DeployUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(DeployUtil.class);
 
-	private static final DeployUtil _instance = new DeployUtil();
+	private static final DeployUtil _deployUtil = new DeployUtil();
 
 }

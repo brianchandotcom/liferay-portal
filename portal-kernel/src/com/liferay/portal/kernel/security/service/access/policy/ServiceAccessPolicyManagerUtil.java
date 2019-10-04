@@ -57,7 +57,7 @@ public class ServiceAccessPolicyManagerUtil {
 	}
 
 	public static ServiceAccessPolicyManager getServiceAccessPolicyManager() {
-		return _instance._serviceTracker.getService();
+		return _serviceAccessPolicyManagerUtil._serviceTracker.getService();
 	}
 
 	private ServiceAccessPolicyManagerUtil() {
@@ -69,8 +69,8 @@ public class ServiceAccessPolicyManagerUtil {
 		_serviceTracker.open();
 	}
 
-	private static final ServiceAccessPolicyManagerUtil _instance =
-		new ServiceAccessPolicyManagerUtil();
+	private static final ServiceAccessPolicyManagerUtil
+		_serviceAccessPolicyManagerUtil = new ServiceAccessPolicyManagerUtil();
 
 	private final ServiceTracker<?, ServiceAccessPolicyManager> _serviceTracker;
 

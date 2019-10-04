@@ -41,7 +41,8 @@ public class FacetFactoryUtil {
 
 		String className = facetConfiguration.getClassName();
 
-		FacetFactory facetFactory = _instance._facetFactories.get(className);
+		FacetFactory facetFactory = _facetFactoryUtil._facetFactories.get(
+			className);
 
 		if (facetFactory == null) {
 			if (_log.isDebugEnabled()) {
@@ -71,7 +72,8 @@ public class FacetFactoryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacetFactoryUtil.class);
 
-	private static final FacetFactoryUtil _instance = new FacetFactoryUtil();
+	private static final FacetFactoryUtil _facetFactoryUtil =
+		new FacetFactoryUtil();
 
 	private final Map<String, FacetFactory> _facetFactories =
 		new ConcurrentHashMap<>();

@@ -26,43 +26,43 @@ import java.util.Objects;
 public class JavaDetector {
 
 	public static String getJavaClassPath() {
-		return _instance._javaClassPath;
+		return _javaDetector._javaClassPath;
 	}
 
 	public static double getJavaClassVersion() {
-		return _instance._javaClassVersion;
+		return _javaDetector._javaClassVersion;
 	}
 
 	public static String getJavaRuntimeName() {
-		return _instance._javaRuntimeName;
+		return _javaDetector._javaRuntimeName;
 	}
 
 	public static String getJavaRuntimeVersion() {
-		return _instance._javaRuntimeVersion;
+		return _javaDetector._javaRuntimeVersion;
 	}
 
 	public static double getJavaSpecificationVersion() {
-		return _instance._javaSpecificationVersion;
+		return _javaDetector._javaSpecificationVersion;
 	}
 
 	public static String getJavaVendor() {
-		return _instance._javaVendor;
+		return _javaDetector._javaVendor;
 	}
 
 	public static String getJavaVersion() {
-		return _instance._javaVersion;
+		return _javaDetector._javaVersion;
 	}
 
 	public static String getJavaVmVersion() {
-		return _instance._javaVmVersion;
+		return _javaDetector._javaVmVersion;
 	}
 
 	public static boolean is64bit() {
-		return _instance._64bit;
+		return _javaDetector._64bit;
 	}
 
 	public static boolean isIBM() {
-		return _instance._ibm;
+		return _javaDetector._ibm;
 	}
 
 	public static boolean isJDK7() {
@@ -96,11 +96,11 @@ public class JavaDetector {
 	}
 
 	public static boolean isOpenJDK() {
-		return _instance._openJDK;
+		return _javaDetector._openJDK;
 	}
 
 	public static boolean isOracle() {
-		return _instance._oracle;
+		return _javaDetector._oracle;
 	}
 
 	protected JavaDetector() {
@@ -155,7 +155,7 @@ public class JavaDetector {
 
 	private static final Log _log = LogFactoryUtil.getLog(JavaDetector.class);
 
-	private static final JavaDetector _instance = new JavaDetector();
+	private static final JavaDetector _javaDetector = new JavaDetector();
 
 	private final boolean _64bit;
 	private final boolean _ibm;

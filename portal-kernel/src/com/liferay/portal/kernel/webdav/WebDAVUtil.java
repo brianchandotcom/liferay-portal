@@ -223,7 +223,7 @@ public class WebDAVUtil {
 	}
 
 	public static WebDAVUtil getInstance() {
-		return _instance;
+		return _webDAVUtil;
 	}
 
 	public static String getLockUuid(HttpServletRequest httpServletRequest)
@@ -442,7 +442,7 @@ public class WebDAVUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
 
-	private static final WebDAVUtil _instance = new WebDAVUtil();
+	private static final WebDAVUtil _webDAVUtil = new WebDAVUtil();
 
 	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
 		new ServiceRegistrationMapImpl<>();

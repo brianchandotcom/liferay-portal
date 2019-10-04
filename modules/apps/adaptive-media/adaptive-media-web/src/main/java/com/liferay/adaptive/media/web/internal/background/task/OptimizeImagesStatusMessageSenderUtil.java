@@ -33,12 +33,13 @@ public class OptimizeImagesStatusMessageSenderUtil {
 	public static void sendStatusMessage(
 		String phase, long companyId, String configurationEntryUuid) {
 
-		_instance._sendStatusMessage(phase, companyId, configurationEntryUuid);
+		_optimizeImagesStatusMessageSenderUtil._sendStatusMessage(
+			phase, companyId, configurationEntryUuid);
 	}
 
 	@Activate
 	protected void activate() {
-		_instance = this;
+		_optimizeImagesStatusMessageSenderUtil = this;
 	}
 
 	private void _sendStatusMessage(
@@ -61,7 +62,8 @@ public class OptimizeImagesStatusMessageSenderUtil {
 			message);
 	}
 
-	private static OptimizeImagesStatusMessageSenderUtil _instance;
+	private static OptimizeImagesStatusMessageSenderUtil
+		_optimizeImagesStatusMessageSenderUtil;
 
 	@Reference
 	private BackgroundTaskStatusMessageSender

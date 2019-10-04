@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		return _instance._serviceTracker.getService();
+		return _emailAddressGeneratorFactory._serviceTracker.getService();
 	}
 
 	private EmailAddressGeneratorFactory() {
@@ -38,8 +38,8 @@ public class EmailAddressGeneratorFactory {
 		_serviceTracker.open();
 	}
 
-	private static final EmailAddressGeneratorFactory _instance =
-		new EmailAddressGeneratorFactory();
+	private static final EmailAddressGeneratorFactory
+		_emailAddressGeneratorFactory = new EmailAddressGeneratorFactory();
 
 	private final ServiceTracker<?, EmailAddressGenerator> _serviceTracker;
 

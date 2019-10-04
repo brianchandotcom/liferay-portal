@@ -30,7 +30,7 @@ import javax.portlet.RenderResponse;
 public class FragmentEntryVerticalCardFactory {
 
 	public static FragmentEntryVerticalCardFactory getInstance() {
-		return _instance;
+		return _fragmentEntryVerticalCardFactory;
 	}
 
 	public VerticalCard getVerticalCard(
@@ -55,7 +55,8 @@ public class FragmentEntryVerticalCardFactory {
 	private FragmentEntryVerticalCardFactory() {
 	}
 
-	private static final FragmentEntryVerticalCardFactory _instance =
-		new FragmentEntryVerticalCardFactory();
+	private static final FragmentEntryVerticalCardFactory
+		_fragmentEntryVerticalCardFactory =
+			new FragmentEntryVerticalCardFactory();
 
 }

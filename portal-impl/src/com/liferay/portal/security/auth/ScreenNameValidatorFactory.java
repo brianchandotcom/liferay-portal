@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class ScreenNameValidatorFactory {
 
 	public static ScreenNameValidator getInstance() {
-		return _instance._serviceTracker.getService();
+		return _screenNameValidatorFactory._serviceTracker.getService();
 	}
 
 	private ScreenNameValidatorFactory() {
@@ -38,8 +38,8 @@ public class ScreenNameValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static final ScreenNameValidatorFactory _instance =
-		new ScreenNameValidatorFactory();
+	private static final ScreenNameValidatorFactory
+		_screenNameValidatorFactory = new ScreenNameValidatorFactory();
 
 	private final ServiceTracker<?, ScreenNameValidator> _serviceTracker;
 

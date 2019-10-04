@@ -36,11 +36,11 @@ public class PortletURLListenerFactory {
 			PortletURLListener portletURLListener)
 		throws PortletException {
 
-		return _instance._create(portletURLListener);
+		return _portletURLListenerFactory._create(portletURLListener);
 	}
 
 	public static void destroy(PortletURLListener portletURLListener) {
-		_instance._destroy(portletURLListener);
+		_portletURLListenerFactory._destroy(portletURLListener);
 	}
 
 	private PortletURLListenerFactory() {
@@ -149,7 +149,7 @@ public class PortletURLListenerFactory {
 		return _init(null, portletURLListener, null);
 	}
 
-	private static final PortletURLListenerFactory _instance =
+	private static final PortletURLListenerFactory _portletURLListenerFactory =
 		new PortletURLListenerFactory();
 
 	private final Map<String, Map<String, PortletURLGenerationListener>> _pool;

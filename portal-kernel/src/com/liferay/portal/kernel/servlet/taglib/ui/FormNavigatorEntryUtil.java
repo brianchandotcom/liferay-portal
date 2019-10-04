@@ -137,7 +137,7 @@ public class FormNavigatorEntryUtil {
 
 		FormNavigatorEntryConfigurationHelper
 			formNavigatorEntryConfigurationHelper =
-				_instance._serviceTracker.getService();
+				_formNavigatorEntryUtil._serviceTracker.getService();
 
 		if (formNavigatorEntryConfigurationHelper == null) {
 			return Optional.empty();
@@ -158,7 +158,7 @@ public class FormNavigatorEntryUtil {
 			return formNavigationEntriesOptional.get();
 		}
 
-		return (List)_instance._formNavigatorEntries.getService(
+		return (List)_formNavigatorEntryUtil._formNavigatorEntries.getService(
 			_getKey(formNavigatorId, categoryKey));
 	}
 
@@ -200,7 +200,7 @@ public class FormNavigatorEntryUtil {
 		_serviceTracker.open();
 	}
 
-	private static final FormNavigatorEntryUtil _instance =
+	private static final FormNavigatorEntryUtil _formNavigatorEntryUtil =
 		new FormNavigatorEntryUtil();
 
 	@SuppressWarnings("rawtypes")

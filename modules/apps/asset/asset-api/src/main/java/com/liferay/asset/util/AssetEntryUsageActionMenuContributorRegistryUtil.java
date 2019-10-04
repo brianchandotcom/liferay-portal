@@ -28,7 +28,8 @@ public class AssetEntryUsageActionMenuContributorRegistryUtil {
 	public static AssetEntryUsageActionMenuContributor
 		getAssetEntryUsageActionMenuContributor(String className) {
 
-		return _instance._getAssetEntryUsageActionMenuContributor(className);
+		return _assetEntryUsageActionMenuContributorRegistryUtil.
+			_getAssetEntryUsageActionMenuContributor(className);
 	}
 
 	private AssetEntryUsageActionMenuContributorRegistryUtil() {
@@ -47,7 +48,8 @@ public class AssetEntryUsageActionMenuContributorRegistryUtil {
 	}
 
 	private static final AssetEntryUsageActionMenuContributorRegistryUtil
-		_instance = new AssetEntryUsageActionMenuContributorRegistryUtil();
+		_assetEntryUsageActionMenuContributorRegistryUtil =
+			new AssetEntryUsageActionMenuContributorRegistryUtil();
 
 	private final ServiceTrackerMap
 		<String, AssetEntryUsageActionMenuContributor> _serviceTrackerMap;

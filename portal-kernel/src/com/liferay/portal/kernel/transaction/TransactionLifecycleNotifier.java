@@ -65,7 +65,7 @@ public class TransactionLifecycleNotifier {
 		TransactionStatus transactionStatus) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleNotifier._transactionLifecycleListeners) {
 
 			transactionLifecycleListener.committed(
 				transactionAttribute, transactionStatus);
@@ -77,7 +77,7 @@ public class TransactionLifecycleNotifier {
 		TransactionStatus transactionStatus) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleNotifier._transactionLifecycleListeners) {
 
 			transactionLifecycleListener.created(
 				transactionAttribute, transactionStatus);
@@ -89,7 +89,7 @@ public class TransactionLifecycleNotifier {
 		TransactionStatus transactionStatus, Throwable throwable) {
 
 		for (TransactionLifecycleListener transactionLifecycleListener :
-				_instance._transactionLifecycleListeners) {
+				_transactionLifecycleNotifier._transactionLifecycleListeners) {
 
 			transactionLifecycleListener.rollbacked(
 				transactionAttribute, transactionStatus, throwable);
@@ -106,8 +106,8 @@ public class TransactionLifecycleNotifier {
 		_serviceTracker.open();
 	}
 
-	private static final TransactionLifecycleNotifier _instance =
-		new TransactionLifecycleNotifier();
+	private static final TransactionLifecycleNotifier
+		_transactionLifecycleNotifier = new TransactionLifecycleNotifier();
 
 	private final ServiceTracker
 		<TransactionLifecycleListener, TransactionLifecycleListener>

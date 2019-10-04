@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessControlUtil {
 
 	public static AccessControl getAccessControl() {
-		return _instance._serviceTracker.getService();
+		return _accessControlUtil._serviceTracker.getService();
 	}
 
 	public static AccessControlContext getAccessControlContext() {
@@ -110,11 +110,11 @@ public class AccessControlUtil {
 
 	private static final String _SERVER_IP = "SERVER_IP";
 
-	private static final AccessControlUtil _instance = new AccessControlUtil();
-
 	private static final ThreadLocal<AccessControlContext>
 		_accessControlContext = new CentralizedThreadLocal<>(
 			AccessControlUtil.class + "._accessControlContext");
+	private static final AccessControlUtil _accessControlUtil =
+		new AccessControlUtil();
 
 	private final ServiceTracker<?, AccessControl> _serviceTracker;
 

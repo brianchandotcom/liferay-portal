@@ -33,14 +33,14 @@ public class SocialBookmarksRegistryUtil {
 
 	public static SocialBookmark getSocialBookmark(String type) {
 		SocialBookmarksRegistry socialBookmarksRegistry =
-			_instance._socialBookmarksRegistry;
+			_socialBookmarksRegistryUtil._socialBookmarksRegistry;
 
 		return socialBookmarksRegistry.getSocialBookmark(type);
 	}
 
 	public static List<String> getSocialBookmarksTypes() {
 		SocialBookmarksRegistry socialBookmarksRegistry =
-			_instance._socialBookmarksRegistry;
+			_socialBookmarksRegistryUtil._socialBookmarksRegistry;
 
 		return socialBookmarksRegistry.getSocialBookmarksTypes();
 	}
@@ -60,15 +60,15 @@ public class SocialBookmarksRegistryUtil {
 
 	@Activate
 	protected void activate() {
-		_instance = this;
+		_socialBookmarksRegistryUtil = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
+		_socialBookmarksRegistryUtil = null;
 	}
 
-	private static SocialBookmarksRegistryUtil _instance;
+	private static SocialBookmarksRegistryUtil _socialBookmarksRegistryUtil;
 
 	@Reference
 	private SocialBookmarksRegistry _socialBookmarksRegistry;

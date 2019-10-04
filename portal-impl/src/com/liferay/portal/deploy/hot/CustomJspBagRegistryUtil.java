@@ -57,7 +57,8 @@ public class CustomJspBagRegistryUtil {
 	public static Map<ServiceReference<CustomJspBag>, CustomJspBag>
 		getCustomJspBags() {
 
-		return Collections.unmodifiableMap(_instance._customJspBagsMap);
+		return Collections.unmodifiableMap(
+			_customJspBagRegistryUtil._customJspBagsMap);
 	}
 
 	protected InputStream getCustomJspInputStream(
@@ -261,7 +262,7 @@ public class CustomJspBagRegistryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomJspBagRegistryUtil.class);
 
-	private static final CustomJspBagRegistryUtil _instance =
+	private static final CustomJspBagRegistryUtil _customJspBagRegistryUtil =
 		new CustomJspBagRegistryUtil();
 
 	private final Map<ServiceReference<CustomJspBag>, CustomJspBag>

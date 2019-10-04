@@ -51,49 +51,55 @@ public class UserNotificationManagerUtil {
 		String portletId,
 		UserNotificationDefinition userNotificationDefinition) {
 
-		_instance._addUserNotificationDefinition(
+		_userNotificationManagerUtil._addUserNotificationDefinition(
 			portletId, userNotificationDefinition);
 	}
 
 	public static void addUserNotificationHandler(
 		UserNotificationHandler userNotificationHandler) {
 
-		_instance._addUserNotificationHandler(userNotificationHandler);
+		_userNotificationManagerUtil._addUserNotificationHandler(
+			userNotificationHandler);
 	}
 
 	public static void deleteUserNotificationDefinitions(String portletId) {
-		_instance._deleteUserNotificationDefinitions(portletId);
+		_userNotificationManagerUtil._deleteUserNotificationDefinitions(
+			portletId);
 	}
 
 	public static void deleteUserNotificationHandler(
 		UserNotificationHandler userNotificationHandler) {
 
-		_instance._deleteUserNotificationHandler(userNotificationHandler);
+		_userNotificationManagerUtil._deleteUserNotificationHandler(
+			userNotificationHandler);
 	}
 
 	public static UserNotificationDefinition fetchUserNotificationDefinition(
 		String portletId, long classNameId, int notificationType) {
 
-		return _instance._fetchUserNotificationDefinition(
+		return _userNotificationManagerUtil._fetchUserNotificationDefinition(
 			portletId, classNameId, notificationType);
 	}
 
 	public static Map<String, List<UserNotificationDefinition>>
 		getActiveUserNotificationDefinitions() {
 
-		return _instance._getUserNotificationDefinitions(true);
+		return _userNotificationManagerUtil._getUserNotificationDefinitions(
+			true);
 	}
 
 	public static Map<String, List<UserNotificationDefinition>>
 		getUserNotificationDefinitions() {
 
-		return _instance._getUserNotificationDefinitions(false);
+		return _userNotificationManagerUtil._getUserNotificationDefinitions(
+			false);
 	}
 
 	public static Map<String, Map<String, UserNotificationHandler>>
 		getUserNotificationHandlers() {
 
-		return Collections.unmodifiableMap(_instance._userNotificationHandlers);
+		return Collections.unmodifiableMap(
+			_userNotificationManagerUtil._userNotificationHandlers);
 	}
 
 	public static UserNotificationFeedEntry interpret(
@@ -101,7 +107,7 @@ public class UserNotificationManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _instance._interpret(
+		return _userNotificationManagerUtil._interpret(
 			selector, userNotificationEvent, serviceContext);
 	}
 
@@ -110,7 +116,7 @@ public class UserNotificationManagerUtil {
 			int notificationType, int deliveryType)
 		throws PortalException {
 
-		return _instance._isDeliver(
+		return _userNotificationManagerUtil._isDeliver(
 			userId, StringPool.BLANK, portletId, classNameId, notificationType,
 			deliveryType, null);
 	}
@@ -121,7 +127,7 @@ public class UserNotificationManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _instance._isDeliver(
+		return _userNotificationManagerUtil._isDeliver(
 			userId, selector, portletId, classNameId, notificationType,
 			deliveryType, serviceContext);
 	}
@@ -239,7 +245,7 @@ public class UserNotificationManagerUtil {
 
 		ServiceTrackerMap<String, List<UserNotificationDefinition>>
 			userNotificationDefinitionsServiceTrackerMap =
-				_instance._userNotificationDefinitions;
+				_userNotificationManagerUtil._userNotificationDefinitions;
 
 		for (String portletId :
 				userNotificationDefinitionsServiceTrackerMap.keySet()) {
@@ -321,8 +327,8 @@ public class UserNotificationManagerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerUtil.class);
 
-	private static final UserNotificationManagerUtil _instance =
-		new UserNotificationManagerUtil();
+	private static final UserNotificationManagerUtil
+		_userNotificationManagerUtil = new UserNotificationManagerUtil();
 
 	private final ServiceTrackerMap<String, List<UserNotificationDefinition>>
 		_userNotificationDefinitions =

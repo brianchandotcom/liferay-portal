@@ -43,7 +43,7 @@ public class CurrencyConverterUtil {
 
 		symbols = new TreeMap<>();
 
-		for (String symbol : _instance._currencyIds) {
+		for (String symbol : _currencyConverterUtil._currencyIds) {
 			symbols.put(LanguageUtil.get(locale, symbol), symbol);
 		}
 
@@ -69,7 +69,7 @@ public class CurrencyConverterUtil {
 	}
 
 	public static boolean isCurrency(String symbol) {
-		return _instance._currencyIds.contains(symbol);
+		return _currencyConverterUtil._currencyIds.contains(symbol);
 	}
 
 	private CurrencyConverterUtil() {
@@ -110,9 +110,8 @@ public class CurrencyConverterUtil {
 		_currencyIds.add("ZAR");
 	}
 
-	private static final CurrencyConverterUtil _instance =
+	private static final CurrencyConverterUtil _currencyConverterUtil =
 		new CurrencyConverterUtil();
-
 	private static final Map<String, Map<String, String>> _symbolsPool =
 		new ConcurrentHashMap<>();
 

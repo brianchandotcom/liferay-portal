@@ -64,7 +64,7 @@ public class HttpAuthManagerUtil {
 	}
 
 	private static HttpAuthManager _getHttpAuthManager() {
-		return _instance._serviceTracker.getService();
+		return _httpAuthManagerUtil._serviceTracker.getService();
 	}
 
 	private HttpAuthManagerUtil() {
@@ -75,7 +75,7 @@ public class HttpAuthManagerUtil {
 		_serviceTracker.open();
 	}
 
-	private static final HttpAuthManagerUtil _instance =
+	private static final HttpAuthManagerUtil _httpAuthManagerUtil =
 		new HttpAuthManagerUtil();
 
 	private final ServiceTracker<?, HttpAuthManager> _serviceTracker;

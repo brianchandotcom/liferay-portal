@@ -32,16 +32,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OpenSearchRegistryUtil {
 
 	public static OpenSearch getOpenSearch(Class<?> clazz) {
-		return _instance._openSearchInstances.get(clazz.getName());
+		return _openSearchRegistryUtil._openSearchInstances.get(
+			clazz.getName());
 	}
 
 	public static OpenSearch getOpenSearch(String className) {
-		return _instance._openSearchInstances.get(className);
+		return _openSearchRegistryUtil._openSearchInstances.get(className);
 	}
 
 	public static List<OpenSearch> getOpenSearchInstances() {
 		List<OpenSearch> openSearchInstances = new ArrayList<>(
-			_instance._openSearchInstances.values());
+			_openSearchRegistryUtil._openSearchInstances.values());
 
 		return Collections.unmodifiableList(openSearchInstances);
 	}
@@ -55,7 +56,7 @@ public class OpenSearchRegistryUtil {
 		_serviceTracker.open();
 	}
 
-	private static final OpenSearchRegistryUtil _instance =
+	private static final OpenSearchRegistryUtil _openSearchRegistryUtil =
 		new OpenSearchRegistryUtil();
 
 	private final Map<String, OpenSearch> _openSearchInstances =

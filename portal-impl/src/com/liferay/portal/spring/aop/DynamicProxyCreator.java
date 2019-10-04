@@ -33,7 +33,7 @@ import org.springframework.core.Ordered;
 public class DynamicProxyCreator implements BeanPostProcessor, Ordered {
 
 	public static DynamicProxyCreator getDynamicProxyCreator() {
-		return _instance;
+		return _dynamicProxyCreator;
 	}
 
 	public void clear() {
@@ -93,13 +93,13 @@ public class DynamicProxyCreator implements BeanPostProcessor, Ordered {
 				objectValuePair = new ObjectValuePair<>(
 					beanMatcher, invocationHandlerFactory);
 
-			_instance._beanMatcherInvocationHandlerFactories.add(
+			_dynamicProxyCreator._beanMatcherInvocationHandlerFactories.add(
 				objectValuePair);
 		}
 
 	}
 
-	private static final DynamicProxyCreator _instance =
+	private static final DynamicProxyCreator _dynamicProxyCreator =
 		new DynamicProxyCreator();
 
 	private final List<ObjectValuePair<BeanMatcher, InvocationHandlerFactory>>

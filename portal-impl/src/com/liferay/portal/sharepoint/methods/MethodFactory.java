@@ -32,7 +32,7 @@ public class MethodFactory {
 	public static Method create(SharepointRequest sharepointRequest)
 		throws SharepointException {
 
-		return _instance._create(sharepointRequest);
+		return _methodFactory._create(sharepointRequest);
 	}
 
 	private MethodFactory() {
@@ -166,7 +166,7 @@ public class MethodFactory {
 			PropsUtil.get(MethodFactory.class.getName() + ".URL_TO_WEB_URL"),
 			UrlToWebUrlMethodImpl.class.getName());
 
-	private static final MethodFactory _instance = new MethodFactory();
+	private static final MethodFactory _methodFactory = new MethodFactory();
 
 	private final Map<String, Object> _methods;
 

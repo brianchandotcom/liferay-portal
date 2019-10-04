@@ -36,25 +36,28 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExportImportControllerRegistryUtil {
 
 	public static ExportController getExportController(String className) {
-		return _instance._getExportController(className);
+		return _exportImportControllerRegistryUtil._getExportController(
+			className);
 	}
 
 	public static List<ExportImportController> getExportImportControllers() {
-		return _instance._getExportImportControllers();
+		return _exportImportControllerRegistryUtil.
+			_getExportImportControllers();
 	}
 
 	public static ImportController getImportController(String className) {
-		return _instance._getImportController(className);
+		return _exportImportControllerRegistryUtil._getImportController(
+			className);
 	}
 
 	public static void register(ExportImportController exportImportController) {
-		_instance._register(exportImportController);
+		_exportImportControllerRegistryUtil._register(exportImportController);
 	}
 
 	public static void unregister(
 		ExportImportController exportImportController) {
 
-		_instance._unregister(exportImportController);
+		_exportImportControllerRegistryUtil._unregister(exportImportController);
 	}
 
 	private ExportImportControllerRegistryUtil() {
@@ -101,8 +104,9 @@ public class ExportImportControllerRegistryUtil {
 		}
 	}
 
-	private static final ExportImportControllerRegistryUtil _instance =
-		new ExportImportControllerRegistryUtil();
+	private static final ExportImportControllerRegistryUtil
+		_exportImportControllerRegistryUtil =
+			new ExportImportControllerRegistryUtil();
 
 	private final Map<String, ExportController> _exportControllers =
 		new ConcurrentHashMap<>();

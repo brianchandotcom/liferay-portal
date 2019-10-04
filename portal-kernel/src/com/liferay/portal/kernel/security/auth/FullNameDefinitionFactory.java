@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FullNameDefinitionFactory {
 
 	public static FullNameDefinition getInstance(Locale locale) {
-		return _instance._getInstance(locale);
+		return _fullNameDefinitionFactory._getInstance(locale);
 	}
 
 	private FullNameDefinitionFactory() {
@@ -129,7 +129,7 @@ public class FullNameDefinitionFactory {
 		return fieldNames;
 	}
 
-	private static final FullNameDefinitionFactory _instance =
+	private static final FullNameDefinitionFactory _fullNameDefinitionFactory =
 		new FullNameDefinitionFactory();
 
 	private final Map<Locale, FullNameDefinition> _fullNameDefinitions =

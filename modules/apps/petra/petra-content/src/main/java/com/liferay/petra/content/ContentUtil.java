@@ -32,13 +32,13 @@ import java.util.Map;
 public class ContentUtil {
 
 	public static String get(ClassLoader classLoader, String location) {
-		return _instance._get(classLoader, location, false);
+		return _contentUtil._get(classLoader, location, false);
 	}
 
 	public static String get(
 		ClassLoader classLoader, String location, boolean all) {
 
-		return _instance._get(classLoader, location, all);
+		return _contentUtil._get(classLoader, location, all);
 	}
 
 	private ContentUtil() {
@@ -68,7 +68,7 @@ public class ContentUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
-	private static final ContentUtil _instance = new ContentUtil();
+	private static final ContentUtil _contentUtil = new ContentUtil();
 
 	private final Map<String, String> _contentPool;
 

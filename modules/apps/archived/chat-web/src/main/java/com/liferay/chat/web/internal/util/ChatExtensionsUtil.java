@@ -23,15 +23,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatExtensionsUtil {
 
 	public static Map<String, String> getExtensions() {
-		return _instance._getExtensions();
+		return _chatExtensionsUtil._getExtensions();
 	}
 
 	public static void register(String servletContextName, String path) {
-		_instance._register(servletContextName, path);
+		_chatExtensionsUtil._register(servletContextName, path);
 	}
 
 	public static void unregister(String servletContextName) {
-		_instance._unregister(servletContextName);
+		_chatExtensionsUtil._unregister(servletContextName);
 	}
 
 	private ChatExtensionsUtil() {
@@ -50,7 +50,7 @@ public class ChatExtensionsUtil {
 		_extensions.remove(servletContextName);
 	}
 
-	private static final ChatExtensionsUtil _instance =
+	private static final ChatExtensionsUtil _chatExtensionsUtil =
 		new ChatExtensionsUtil();
 
 	private final Map<String, String> _extensions;

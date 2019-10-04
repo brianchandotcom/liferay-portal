@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		return _instance._serviceTracker.getService();
+		return _screenNameGeneratorFactory._serviceTracker.getService();
 	}
 
 	private ScreenNameGeneratorFactory() {
@@ -38,8 +38,8 @@ public class ScreenNameGeneratorFactory {
 		_serviceTracker.open();
 	}
 
-	private static final ScreenNameGeneratorFactory _instance =
-		new ScreenNameGeneratorFactory();
+	private static final ScreenNameGeneratorFactory
+		_screenNameGeneratorFactory = new ScreenNameGeneratorFactory();
 
 	private final ServiceTracker<?, ScreenNameGenerator> _serviceTracker;
 

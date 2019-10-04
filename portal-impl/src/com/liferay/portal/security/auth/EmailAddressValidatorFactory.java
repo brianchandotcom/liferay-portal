@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class EmailAddressValidatorFactory {
 
 	public static EmailAddressValidator getInstance() {
-		return _instance._serviceTracker.getService();
+		return _emailAddressValidatorFactory._serviceTracker.getService();
 	}
 
 	private EmailAddressValidatorFactory() {
@@ -38,8 +38,8 @@ public class EmailAddressValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static final EmailAddressValidatorFactory _instance =
-		new EmailAddressValidatorFactory();
+	private static final EmailAddressValidatorFactory
+		_emailAddressValidatorFactory = new EmailAddressValidatorFactory();
 
 	private final ServiceTracker<?, EmailAddressValidator> _serviceTracker;
 

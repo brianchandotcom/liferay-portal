@@ -28,24 +28,24 @@ import org.osgi.service.component.annotations.Reference;
 public class ItemSelectorUtil {
 
 	public static final ItemSelector getItemSelector() {
-		return _instance._getItemSelector();
+		return _itemSelectorUtil._getItemSelector();
 	}
 
 	@Activate
 	protected void activate() {
-		_instance = this;
+		_itemSelectorUtil = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
+		_itemSelectorUtil = null;
 	}
 
 	private ItemSelector _getItemSelector() {
 		return _itemSelector;
 	}
 
-	private static ItemSelectorUtil _instance;
+	private static ItemSelectorUtil _itemSelectorUtil;
 
 	@Reference
 	private ItemSelector _itemSelector;

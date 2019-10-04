@@ -30,7 +30,7 @@ public class PermissionCheckerFactoryUtil {
 	}
 
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {
-		return _instance._serviceTracker.getService();
+		return _permissionCheckerFactoryUtil._serviceTracker.getService();
 	}
 
 	private PermissionCheckerFactoryUtil() {
@@ -42,8 +42,8 @@ public class PermissionCheckerFactoryUtil {
 		_serviceTracker.open();
 	}
 
-	private static final PermissionCheckerFactoryUtil _instance =
-		new PermissionCheckerFactoryUtil();
+	private static final PermissionCheckerFactoryUtil
+		_permissionCheckerFactoryUtil = new PermissionCheckerFactoryUtil();
 
 	private final ServiceTracker<?, PermissionCheckerFactory> _serviceTracker;
 

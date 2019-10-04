@@ -28,7 +28,7 @@ import java.util.Set;
 public class Randomizer extends Random {
 
 	public static Randomizer getInstance() {
-		return _instance;
+		return _randomizer;
 	}
 
 	public Randomizer() {
@@ -139,6 +139,6 @@ public class Randomizer extends Random {
 		return new String(array);
 	}
 
-	private static final Randomizer _instance = new Randomizer();
+	private static final Randomizer _randomizer = new Randomizer();
 
 }

@@ -35,7 +35,7 @@ public class ReadingTimeUtil {
 		String displayStyle) {
 
 		ReadingTimeMessageProvider readingTimeMessageProvider =
-			_instance._serviceTrackerMap.getService(displayStyle);
+			_readingTimeUtil._serviceTrackerMap.getService(displayStyle);
 
 		if (readingTimeMessageProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -51,7 +51,7 @@ public class ReadingTimeUtil {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_instance = this;
+		_readingTimeUtil = this;
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ReadingTimeMessageProvider.class, "display.style");
@@ -59,7 +59,7 @@ public class ReadingTimeUtil {
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
+		_readingTimeUtil = null;
 
 		_serviceTrackerMap.close();
 	}
@@ -67,7 +67,7 @@ public class ReadingTimeUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReadingTimeUtil.class);
 
-	private static ReadingTimeUtil _instance;
+	private static ReadingTimeUtil _readingTimeUtil;
 
 	private ServiceTrackerMap<String, ReadingTimeMessageProvider>
 		_serviceTrackerMap;

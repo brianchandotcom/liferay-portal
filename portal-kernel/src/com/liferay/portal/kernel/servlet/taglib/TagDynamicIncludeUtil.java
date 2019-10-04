@@ -43,7 +43,7 @@ public class TagDynamicIncludeUtil {
 
 		String key = _getKey(tagClassName, tagDynamicId, tagPoint);
 
-		return _instance._tagDynamicIncludes.getService(key);
+		return _tagDynamicIncludeUtil._tagDynamicIncludes.getService(key);
 	}
 
 	public static boolean hasTagDynamicInclude(
@@ -151,7 +151,7 @@ public class TagDynamicIncludeUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TagDynamicIncludeUtil.class);
 
-	private static final TagDynamicIncludeUtil _instance =
+	private static final TagDynamicIncludeUtil _tagDynamicIncludeUtil =
 		new TagDynamicIncludeUtil();
 
 	private final ServiceTrackerMap<String, List<TagDynamicInclude>>

@@ -40,15 +40,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TemplateManagerUtil {
 
 	public static void destroy() {
-		_instance._destroy();
+		_templateManagerUtil._destroy();
 	}
 
 	public static void destroy(ClassLoader classLoader) {
-		_instance._destroy(classLoader);
+		_templateManagerUtil._destroy(classLoader);
 	}
 
 	public static Set<String> getSupportedLanguageTypes(String propertyKey) {
-		return _instance._getSupportedLanguageTypes(propertyKey);
+		return _templateManagerUtil._getSupportedLanguageTypes(propertyKey);
 	}
 
 	public static Template getTemplate(
@@ -56,26 +56,26 @@ public class TemplateManagerUtil {
 			boolean restricted)
 		throws TemplateException {
 
-		return _instance._getTemplate(
+		return _templateManagerUtil._getTemplate(
 			templateManagerName, templateResource, restricted);
 	}
 
 	public static TemplateManager getTemplateManager(
 		String templateManagerName) {
 
-		return _instance._getTemplateManager(templateManagerName);
+		return _templateManagerUtil._getTemplateManager(templateManagerName);
 	}
 
 	public static Set<String> getTemplateManagerNames() {
-		return _instance._getTemplateManagerNames();
+		return _templateManagerUtil._getTemplateManagerNames();
 	}
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
-		return _instance._getTemplateManagers();
+		return _templateManagerUtil._getTemplateManagers();
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {
-		return _instance._hasTemplateManager(templateManagerName);
+		return _templateManagerUtil._hasTemplateManager(templateManagerName);
 	}
 
 	private TemplateManagerUtil() {
@@ -214,7 +214,7 @@ public class TemplateManagerUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TemplateManagerUtil.class);
 
-	private static final TemplateManagerUtil _instance =
+	private static final TemplateManagerUtil _templateManagerUtil =
 		new TemplateManagerUtil();
 
 	private final ServiceTracker<TemplateManager, TemplateManager>

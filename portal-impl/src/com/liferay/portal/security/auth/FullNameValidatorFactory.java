@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class FullNameValidatorFactory {
 
 	public static FullNameValidator getInstance() {
-		return _instance._serviceTracker.getService();
+		return _fullNameValidatorFactory._serviceTracker.getService();
 	}
 
 	private FullNameValidatorFactory() {
@@ -38,7 +38,7 @@ public class FullNameValidatorFactory {
 		_serviceTracker.open();
 	}
 
-	private static final FullNameValidatorFactory _instance =
+	private static final FullNameValidatorFactory _fullNameValidatorFactory =
 		new FullNameValidatorFactory();
 
 	private final ServiceTracker<FullNameValidator, FullNameValidator>

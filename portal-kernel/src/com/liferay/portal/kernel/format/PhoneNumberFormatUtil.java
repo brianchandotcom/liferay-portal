@@ -30,7 +30,7 @@ public class PhoneNumberFormatUtil {
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
-		return _instance._serviceTracker.getService();
+		return _phoneNumberFormatUtil._serviceTracker.getService();
 	}
 
 	public static String strip(String phoneNumber) {
@@ -49,7 +49,7 @@ public class PhoneNumberFormatUtil {
 		_serviceTracker.open();
 	}
 
-	private static final PhoneNumberFormatUtil _instance =
+	private static final PhoneNumberFormatUtil _phoneNumberFormatUtil =
 		new PhoneNumberFormatUtil();
 
 	private final ServiceTracker<PhoneNumberFormat, PhoneNumberFormat>

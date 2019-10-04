@@ -34,11 +34,11 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class TrashHandlerRegistryUtil {
 
 	public static TrashHandler getTrashHandler(String className) {
-		return _instance._getTrashHandler(className);
+		return _trashHandlerRegistryUtil._getTrashHandler(className);
 	}
 
 	public static List<TrashHandler> getTrashHandlers() {
-		return _instance._getTrashHandlers();
+		return _trashHandlerRegistryUtil._getTrashHandlers();
 	}
 
 	public static void register(List<TrashHandler> trashHandlers) {
@@ -48,7 +48,7 @@ public class TrashHandlerRegistryUtil {
 	}
 
 	public static void register(TrashHandler trashHandler) {
-		_instance._register(trashHandler);
+		_trashHandlerRegistryUtil._register(trashHandler);
 	}
 
 	public static void unregister(List<TrashHandler> trashHandlers) {
@@ -58,7 +58,7 @@ public class TrashHandlerRegistryUtil {
 	}
 
 	public static void unregister(TrashHandler trashHandler) {
-		_instance._unregister(trashHandler);
+		_trashHandlerRegistryUtil._unregister(trashHandler);
 	}
 
 	private TrashHandlerRegistryUtil() {
@@ -96,7 +96,7 @@ public class TrashHandlerRegistryUtil {
 		}
 	}
 
-	private static final TrashHandlerRegistryUtil _instance =
+	private static final TrashHandlerRegistryUtil _trashHandlerRegistryUtil =
 		new TrashHandlerRegistryUtil();
 
 	private final ServiceRegistrationMap<TrashHandler> _serviceRegistrations =

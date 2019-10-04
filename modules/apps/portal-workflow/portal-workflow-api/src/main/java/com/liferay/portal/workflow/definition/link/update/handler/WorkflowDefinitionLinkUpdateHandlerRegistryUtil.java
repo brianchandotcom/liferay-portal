@@ -35,8 +35,8 @@ public class WorkflowDefinitionLinkUpdateHandlerRegistryUtil {
 	public static WorkflowDefinitionLinkUpdateHandler
 		getWorkflowDefinitionLinkUpdateHandler(String modelClassName) {
 
-		return _instance._getWorkflowDefinitionLinkUpdateHandler(
-			modelClassName);
+		return _workflowDefinitionLinkUpdateHandlerRegistryUtil.
+			_getWorkflowDefinitionLinkUpdateHandler(modelClassName);
 	}
 
 	private WorkflowDefinitionLinkUpdateHandlerRegistryUtil() {
@@ -57,7 +57,8 @@ public class WorkflowDefinitionLinkUpdateHandlerRegistryUtil {
 	}
 
 	private static final WorkflowDefinitionLinkUpdateHandlerRegistryUtil
-		_instance = new WorkflowDefinitionLinkUpdateHandlerRegistryUtil();
+		_workflowDefinitionLinkUpdateHandlerRegistryUtil =
+			new WorkflowDefinitionLinkUpdateHandlerRegistryUtil();
 
 	private final BundleContext _bundleContext;
 	private final ServiceTracker

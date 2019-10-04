@@ -29,7 +29,7 @@ public class OpenIdUtil {
 	}
 
 	protected static OpenId getOpenId() {
-		return _instance._serviceTracker.getService();
+		return _openIdUtil._serviceTracker.getService();
 	}
 
 	private OpenIdUtil() {
@@ -40,7 +40,7 @@ public class OpenIdUtil {
 		_serviceTracker.open();
 	}
 
-	private static final OpenIdUtil _instance = new OpenIdUtil();
+	private static final OpenIdUtil _openIdUtil = new OpenIdUtil();
 
 	private final ServiceTracker<OpenId, OpenId> _serviceTracker;
 

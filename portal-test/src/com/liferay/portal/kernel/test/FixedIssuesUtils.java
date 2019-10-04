@@ -36,7 +36,7 @@ public class FixedIssuesUtils {
 	}
 
 	public static boolean isIssueFixed(String issue) {
-		return ArrayUtil.contains(_instance._fixedIssues, issue);
+		return ArrayUtil.contains(_fixedIssuesUtils._fixedIssues, issue);
 	}
 
 	private FixedIssuesUtils() {
@@ -44,7 +44,8 @@ public class FixedIssuesUtils {
 			GetterUtil.getString(System.getProperty("fixed.issues")));
 	}
 
-	private static final FixedIssuesUtils _instance = new FixedIssuesUtils();
+	private static final FixedIssuesUtils _fixedIssuesUtils =
+		new FixedIssuesUtils();
 
 	private final String[] _fixedIssues;
 

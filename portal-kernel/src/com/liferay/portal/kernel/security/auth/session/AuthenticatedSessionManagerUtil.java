@@ -29,7 +29,7 @@ import javax.servlet.http.HttpSession;
 public class AuthenticatedSessionManagerUtil {
 
 	public static AuthenticatedSessionManager getAuthenticatedSessionManager() {
-		return _instance._serviceTracker.getService();
+		return _authenticatedSessionManagerUtil._serviceTracker.getService();
 	}
 
 	public static long getAuthenticatedUserId(
@@ -82,8 +82,9 @@ public class AuthenticatedSessionManagerUtil {
 		_serviceTracker.open();
 	}
 
-	private static final AuthenticatedSessionManagerUtil _instance =
-		new AuthenticatedSessionManagerUtil();
+	private static final AuthenticatedSessionManagerUtil
+		_authenticatedSessionManagerUtil =
+			new AuthenticatedSessionManagerUtil();
 
 	private final ServiceTracker<?, AuthenticatedSessionManager>
 		_serviceTracker;

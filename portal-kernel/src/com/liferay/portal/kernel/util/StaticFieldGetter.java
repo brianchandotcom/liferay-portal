@@ -25,7 +25,7 @@ import java.lang.reflect.Field;
 public class StaticFieldGetter {
 
 	public static StaticFieldGetter getInstance() {
-		return _instance;
+		return _staticFieldGetter;
 	}
 
 	public Object getFieldValue(String className, String fieldName) {
@@ -51,6 +51,7 @@ public class StaticFieldGetter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		StaticFieldGetter.class);
 
-	private static final StaticFieldGetter _instance = new StaticFieldGetter();
+	private static final StaticFieldGetter _staticFieldGetter =
+		new StaticFieldGetter();
 
 }

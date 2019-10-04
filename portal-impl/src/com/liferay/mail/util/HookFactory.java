@@ -27,7 +27,7 @@ import com.liferay.registry.ServiceTracker;
 public class HookFactory {
 
 	public static Hook getInstance() {
-		return _instance._serviceTracker.getService();
+		return _hookFactory._serviceTracker.getService();
 	}
 
 	private HookFactory() {
@@ -38,7 +38,7 @@ public class HookFactory {
 		_serviceTracker.open();
 	}
 
-	private static final HookFactory _instance = new HookFactory();
+	private static final HookFactory _hookFactory = new HookFactory();
 
 	private final ServiceTracker<Hook, Hook> _serviceTracker;
 

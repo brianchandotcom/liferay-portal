@@ -30,7 +30,7 @@ public class ContentTransformerUtil {
 
 	public static ContentTransformerHandler getContentTransformerHandler() {
 		Iterator<ContentTransformerHandler> iterator =
-			_instance._contentTransformerHandlers.iterator();
+			_contentTransformerUtil._contentTransformerHandlers.iterator();
 
 		if (iterator.hasNext()) {
 			return iterator.next();
@@ -46,7 +46,7 @@ public class ContentTransformerUtil {
 			bundle.getBundleContext(), ContentTransformerHandler.class);
 	}
 
-	private static final ContentTransformerUtil _instance =
+	private static final ContentTransformerUtil _contentTransformerUtil =
 		new ContentTransformerUtil();
 
 	private final ServiceTrackerList

@@ -54,7 +54,7 @@ import org.apache.commons.collections.CollectionUtils;
 public class FreeMarkerTool {
 
 	public static FreeMarkerTool getInstance() {
-		return _instance;
+		return _freeMarkerTool;
 	}
 
 	public Map<String, Schema> getDTOEnumSchemas(
@@ -881,6 +881,6 @@ public class FreeMarkerTool {
 		return false;
 	}
 
-	private static FreeMarkerTool _instance = new FreeMarkerTool();
+	private static FreeMarkerTool _freeMarkerTool = new FreeMarkerTool();
 
 }

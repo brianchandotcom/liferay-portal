@@ -31,7 +31,7 @@ public class PortalSessionActivationListener
 	implements HttpSessionActivationListener, Serializable {
 
 	public static PortalSessionActivationListener getInstance() {
-		return _instance;
+		return _portalSessionActivationListener;
 	}
 
 	public static PortalSessionActivationListener getInstance(
@@ -68,7 +68,8 @@ public class PortalSessionActivationListener
 	public void sessionWillPassivate(HttpSessionEvent httpSessionEvent) {
 	}
 
-	private static final PortalSessionActivationListener _instance =
-		new PortalSessionActivationListener();
+	private static final PortalSessionActivationListener
+		_portalSessionActivationListener =
+			new PortalSessionActivationListener();
 
 }

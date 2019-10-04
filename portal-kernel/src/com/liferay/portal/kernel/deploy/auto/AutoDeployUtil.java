@@ -29,7 +29,7 @@ public class AutoDeployUtil {
 	}
 
 	public static AutoDeployUtil getInstance() {
-		return _instance;
+		return _autoDeployUtil;
 	}
 
 	public static void registerDir(AutoDeployDir autoDeployDir) {
@@ -62,7 +62,7 @@ public class AutoDeployUtil {
 		}
 	}
 
-	private static final AutoDeployUtil _instance = new AutoDeployUtil();
+	private static final AutoDeployUtil _autoDeployUtil = new AutoDeployUtil();
 
 	private final Map<String, AutoDeployDir> _autoDeployDirs;
 

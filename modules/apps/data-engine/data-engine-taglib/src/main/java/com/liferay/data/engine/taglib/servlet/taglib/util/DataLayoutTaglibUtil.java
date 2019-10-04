@@ -107,7 +107,8 @@ public class DataLayoutTaglibUtil {
 	public static Set<Locale> getAvailableLocales(
 		long dataLayoutId, HttpServletRequest httpServletRequest) {
 
-		return _instance._getAvailableLocales(dataLayoutId, httpServletRequest);
+		return _dataLayoutTaglibUtil._getAvailableLocales(
+			dataLayoutId, httpServletRequest);
 	}
 
 	public static JSONObject getDataLayoutJSONObject(
@@ -115,7 +116,7 @@ public class DataLayoutTaglibUtil {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		return _instance._getDataLayoutJSONObject(
+		return _dataLayoutTaglibUtil._getDataLayoutJSONObject(
 			availableLocales, dataLayoutId, httpServletRequest,
 			httpServletResponse);
 	}
@@ -124,13 +125,15 @@ public class DataLayoutTaglibUtil {
 			long dataRecordId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return _instance._getDataRecordValues(dataRecordId, httpServletRequest);
+		return _dataLayoutTaglibUtil._getDataRecordValues(
+			dataRecordId, httpServletRequest);
 	}
 
 	public static JSONArray getFieldTypesJSONArray(
 		HttpServletRequest httpServletRequest) {
 
-		return _instance._getFieldTypesJSONArray(httpServletRequest);
+		return _dataLayoutTaglibUtil._getFieldTypesJSONArray(
+			httpServletRequest);
 	}
 
 	public static String renderDataLayout(
@@ -138,26 +141,26 @@ public class DataLayoutTaglibUtil {
 			DataLayoutRendererContext dataLayoutRendererContext)
 		throws Exception {
 
-		return _instance._dataLayoutRenderer.render(
+		return _dataLayoutTaglibUtil._dataLayoutRenderer.render(
 			dataLayoutId, dataLayoutRendererContext);
 	}
 
 	public static String resolveFieldTypesModules() {
-		return _instance._resolveFieldTypesModules();
+		return _dataLayoutTaglibUtil._resolveFieldTypesModules();
 	}
 
 	public static String resolveModule(String moduleName) {
-		return _instance._npmResolver.resolveModuleName(moduleName);
+		return _dataLayoutTaglibUtil._npmResolver.resolveModuleName(moduleName);
 	}
 
 	@Activate
 	protected void activate() {
-		_instance = this;
+		_dataLayoutTaglibUtil = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
+		_dataLayoutTaglibUtil = null;
 	}
 
 	private JSONObject _createFieldContext(
@@ -400,7 +403,7 @@ public class DataLayoutTaglibUtil {
 		Stream<FieldType> stream = fieldTypes.stream();
 
 		stream.map(
-			fieldType -> _instance._getFieldTypeMetadataJSONObject(
+			fieldType -> _dataLayoutTaglibUtil._getFieldTypeMetadataJSONObject(
 				fieldType, httpServletRequest)
 		).forEach(
 			jsonArray::put
@@ -454,9 +457,9 @@ public class DataLayoutTaglibUtil {
 		Stream<FieldType> stream = fieldTypes.stream();
 
 		return stream.filter(
-			_instance::_hasJavascriptModule
+			_dataLayoutTaglibUtil::_hasJavascriptModule
 		).map(
-			_instance::_resolveFieldTypeModule
+			_dataLayoutTaglibUtil::_resolveFieldTypeModule
 		).collect(
 			Collectors.joining(StringPool.COMMA)
 		);
@@ -479,7 +482,7 @@ public class DataLayoutTaglibUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLayoutTaglibUtil.class);
 
-	private static DataLayoutTaglibUtil _instance;
+	private static DataLayoutTaglibUtil _dataLayoutTaglibUtil;
 
 	@Reference
 	private DataLayoutRenderer _dataLayoutRenderer;

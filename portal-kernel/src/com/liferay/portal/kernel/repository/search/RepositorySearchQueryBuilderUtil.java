@@ -35,7 +35,7 @@ public class RepositorySearchQueryBuilderUtil {
 	public static RepositorySearchQueryBuilder
 		getRepositorySearchQueryBuilder() {
 
-		return _instance._serviceTracker.getService();
+		return _repositorySearchQueryBuilderUtil._serviceTracker.getService();
 	}
 
 	public RepositorySearchQueryBuilderUtil() {
@@ -47,8 +47,9 @@ public class RepositorySearchQueryBuilderUtil {
 		_serviceTracker.open();
 	}
 
-	private static final RepositorySearchQueryBuilderUtil _instance =
-		new RepositorySearchQueryBuilderUtil();
+	private static final RepositorySearchQueryBuilderUtil
+		_repositorySearchQueryBuilderUtil =
+			new RepositorySearchQueryBuilderUtil();
 
 	private final ServiceTracker
 		<RepositorySearchQueryBuilder, RepositorySearchQueryBuilder>

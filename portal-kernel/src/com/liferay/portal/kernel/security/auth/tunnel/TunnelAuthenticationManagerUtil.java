@@ -42,7 +42,7 @@ public class TunnelAuthenticationManagerUtil {
 	}
 
 	private static TunnelAuthenticationManager _getTunnelManagerUtil() {
-		return _instance._serviceTracker.getService();
+		return _tunnelAuthenticationManagerUtil._serviceTracker.getService();
 	}
 
 	private TunnelAuthenticationManagerUtil() {
@@ -54,8 +54,9 @@ public class TunnelAuthenticationManagerUtil {
 		_serviceTracker.open();
 	}
 
-	private static final TunnelAuthenticationManagerUtil _instance =
-		new TunnelAuthenticationManagerUtil();
+	private static final TunnelAuthenticationManagerUtil
+		_tunnelAuthenticationManagerUtil =
+			new TunnelAuthenticationManagerUtil();
 
 	private final ServiceTracker<?, TunnelAuthenticationManager>
 		_serviceTracker;

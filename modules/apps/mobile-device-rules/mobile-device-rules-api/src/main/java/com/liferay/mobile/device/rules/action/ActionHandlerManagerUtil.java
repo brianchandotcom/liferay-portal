@@ -48,7 +48,7 @@ public class ActionHandlerManagerUtil {
 	}
 
 	public static ActionHandlerManager getActionHandlerManager() {
-		return _instance._getActionHandlerManager();
+		return _actionHandlerManagerUtil._getActionHandlerManager();
 	}
 
 	public static Collection<ActionHandler> getActionHandlers() {
@@ -78,7 +78,7 @@ public class ActionHandlerManagerUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static final ActionHandlerManagerUtil _instance =
+	private static final ActionHandlerManagerUtil _actionHandlerManagerUtil =
 		new ActionHandlerManagerUtil();
 
 	private final ServiceTracker<ActionHandlerManager, ActionHandlerManager>

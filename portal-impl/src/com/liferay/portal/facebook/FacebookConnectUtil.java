@@ -52,7 +52,7 @@ public class FacebookConnectUtil {
 	}
 
 	public static FacebookConnect getFacebookConnect() {
-		return _instance._serviceTracker.getService();
+		return _facebookConnectUtil._serviceTracker.getService();
 	}
 
 	public static JSONObject getGraphResources(
@@ -90,7 +90,7 @@ public class FacebookConnectUtil {
 		_serviceTracker.open();
 	}
 
-	private static final FacebookConnectUtil _instance =
+	private static final FacebookConnectUtil _facebookConnectUtil =
 		new FacebookConnectUtil();
 
 	private final ServiceTracker<FacebookConnect, FacebookConnect>

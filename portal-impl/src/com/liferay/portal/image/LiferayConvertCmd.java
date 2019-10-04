@@ -40,7 +40,7 @@ public class LiferayConvertCmd extends ConvertCmd {
 
 		LinkedList<String> arguments = new LinkedList<>();
 
-		arguments.addAll(_instance.getCommand());
+		arguments.addAll(_liferayConvertCmd.getCommand());
 		arguments.addAll(resourceLimits);
 		arguments.addAll(commandArguments);
 
@@ -61,6 +61,7 @@ public class LiferayConvertCmd extends ConvertCmd {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayConvertCmd.class);
 
-	private static final LiferayConvertCmd _instance = new LiferayConvertCmd();
+	private static final LiferayConvertCmd _liferayConvertCmd =
+		new LiferayConvertCmd();
 
 }

@@ -45,10 +45,10 @@ public class DuplicateFriendlyURLEntryExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			"Duplicate friendly URL"
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

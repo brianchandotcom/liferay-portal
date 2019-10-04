@@ -41,10 +41,10 @@ public class WebApplicationExceptionMapper
 
 		return Response.status(
 			response.getStatus()
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			webApplicationException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

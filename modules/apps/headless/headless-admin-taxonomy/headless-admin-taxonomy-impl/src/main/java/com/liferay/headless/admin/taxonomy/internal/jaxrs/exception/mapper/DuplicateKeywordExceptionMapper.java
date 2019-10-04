@@ -43,11 +43,11 @@ public class DuplicateKeywordExceptionMapper
 	public Response toResponse(DuplicateTagException duplicateTagException) {
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				duplicateTagException.getMessage(), "tag", "keyword")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

@@ -43,11 +43,11 @@ public class MessageBoardSectionNameExceptionMapper
 	public Response toResponse(CategoryNameException categoryNameException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				categoryNameException.getMessage(), "Name", "Title")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

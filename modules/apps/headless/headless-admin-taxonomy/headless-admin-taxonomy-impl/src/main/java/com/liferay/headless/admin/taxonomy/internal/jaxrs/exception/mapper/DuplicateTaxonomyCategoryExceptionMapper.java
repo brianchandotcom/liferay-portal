@@ -45,12 +45,12 @@ public class DuplicateTaxonomyCategoryExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				duplicateCategoryException.getMessage(), "category",
 				"taxonomy category")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

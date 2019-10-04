@@ -43,12 +43,12 @@ public class BlogPostingFriendlyURLExceptionMapper
 	public Response toResponse(EntryUrlTitleException entryUrlTitleException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				entryUrlTitleException.getMessage(), "URL title",
 				"Friendly URL")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

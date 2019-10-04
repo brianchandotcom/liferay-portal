@@ -44,11 +44,11 @@ public class DuplicateStructuredContentFolderNameExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			"A structured content folder already exists with the name " +
 				duplicateFolderNameException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

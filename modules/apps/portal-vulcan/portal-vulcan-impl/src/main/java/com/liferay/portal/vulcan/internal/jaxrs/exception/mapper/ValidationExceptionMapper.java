@@ -33,10 +33,10 @@ public class ValidationExceptionMapper
 	public Response toResponse(ValidationException validationException) {
 		return Response.status(
 			Response.Status.BAD_REQUEST
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			validationException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

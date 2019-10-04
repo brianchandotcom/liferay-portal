@@ -44,10 +44,10 @@ public class InvalidKnowledgeBaseFolderNameExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			invalidKBFolderNameException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

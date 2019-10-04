@@ -42,10 +42,10 @@ public class DocumentFileNameExceptionMapper
 	public Response toResponse(FileNameException fileNameException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			fileNameException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

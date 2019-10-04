@@ -32,10 +32,10 @@ public class ExceptionMapper
 
 		return Response.status(
 			500
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			exception.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

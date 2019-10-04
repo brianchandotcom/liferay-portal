@@ -32,10 +32,10 @@ public class PortalExceptionMapper implements ExceptionMapper<PortalException> {
 	public Response toResponse(PortalException portalException) {
 		return Response.status(
 			Response.Status.INTERNAL_SERVER_ERROR
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			portalException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

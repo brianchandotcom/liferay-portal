@@ -42,10 +42,10 @@ public class StructuredContentTitleExceptionMapper
 	public Response toResponse(ArticleTitleException articleTitleException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			articleTitleException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

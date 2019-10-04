@@ -42,10 +42,10 @@ public class LockedMessageBoardThreadExceptionMapper
 	public Response toResponse(LockedThreadException lockedThreadException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			lockedThreadException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

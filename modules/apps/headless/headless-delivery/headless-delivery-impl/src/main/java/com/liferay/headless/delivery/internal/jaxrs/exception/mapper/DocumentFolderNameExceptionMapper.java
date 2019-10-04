@@ -43,11 +43,11 @@ public class DocumentFolderNameExceptionMapper
 	public Response toResponse(FolderNameException folderNameException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				folderNameException.getMessage(), "Folder", "Document folder")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

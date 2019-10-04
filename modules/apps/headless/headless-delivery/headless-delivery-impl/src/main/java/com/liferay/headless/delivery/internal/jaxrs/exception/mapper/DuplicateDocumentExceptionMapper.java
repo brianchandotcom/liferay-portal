@@ -45,12 +45,12 @@ public class DuplicateDocumentExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				duplicateFileEntryException.getMessage(), "file entry",
 				"document")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

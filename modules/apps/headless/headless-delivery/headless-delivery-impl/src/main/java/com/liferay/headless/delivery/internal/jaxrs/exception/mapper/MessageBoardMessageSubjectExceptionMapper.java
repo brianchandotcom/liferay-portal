@@ -45,13 +45,13 @@ public class MessageBoardMessageSubjectExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				messageSubjectException.getMessage(),
 				new String[] {"Subject", "body"},
 				new String[] {"Headline", "article body"})
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

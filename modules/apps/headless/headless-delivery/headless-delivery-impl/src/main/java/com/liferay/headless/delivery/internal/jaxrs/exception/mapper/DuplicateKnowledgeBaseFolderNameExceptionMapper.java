@@ -44,10 +44,10 @@ public class DuplicateKnowledgeBaseFolderNameExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			duplicateKBFolderNameException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

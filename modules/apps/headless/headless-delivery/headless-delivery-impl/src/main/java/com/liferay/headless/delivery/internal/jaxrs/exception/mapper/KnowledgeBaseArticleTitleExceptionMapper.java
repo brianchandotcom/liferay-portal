@@ -44,10 +44,10 @@ public class KnowledgeBaseArticleTitleExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			kbArticleTitleException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

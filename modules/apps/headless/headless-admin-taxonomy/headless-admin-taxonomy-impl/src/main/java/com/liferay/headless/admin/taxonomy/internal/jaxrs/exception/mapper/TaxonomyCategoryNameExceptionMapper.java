@@ -45,12 +45,12 @@ public class TaxonomyCategoryNameExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				assetCategoryNameException.getMessage(), "category",
 				"taxonomy category")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

@@ -43,11 +43,11 @@ public class BlogPostingHeadlineExceptionMapper
 	public Response toResponse(EntryTitleException entryTitleException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				entryTitleException.getMessage(), "Title", "Headline")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

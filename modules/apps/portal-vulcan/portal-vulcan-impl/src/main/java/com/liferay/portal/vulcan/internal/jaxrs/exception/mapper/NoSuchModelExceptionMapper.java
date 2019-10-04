@@ -48,10 +48,10 @@ public class NoSuchModelExceptionMapper
 
 		return Response.status(
 			Response.Status.NOT_FOUND
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			noSuchModelException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

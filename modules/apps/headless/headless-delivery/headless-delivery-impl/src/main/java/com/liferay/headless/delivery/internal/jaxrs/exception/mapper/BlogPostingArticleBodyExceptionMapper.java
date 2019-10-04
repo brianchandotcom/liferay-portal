@@ -43,11 +43,11 @@ public class BlogPostingArticleBodyExceptionMapper
 	public Response toResponse(EntryContentException entryContentException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				entryContentException.getMessage(), "Content", "Article body")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

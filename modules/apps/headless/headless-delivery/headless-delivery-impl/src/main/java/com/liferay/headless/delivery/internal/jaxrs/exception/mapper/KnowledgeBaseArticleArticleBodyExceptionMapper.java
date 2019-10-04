@@ -45,12 +45,12 @@ public class KnowledgeBaseArticleArticleBodyExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				kbArticleContentException.getMessage(), "Content",
 				"Article body")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

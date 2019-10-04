@@ -42,10 +42,10 @@ public class DocumentFileExtensionExceptionMapper
 	public Response toResponse(FileExtensionException fileExtensionException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			fileExtensionException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

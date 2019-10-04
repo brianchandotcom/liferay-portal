@@ -42,10 +42,10 @@ public class DocumentFileSizeExceptionMapper
 	public Response toResponse(FileSizeException fileSizeException) {
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			fileSizeException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

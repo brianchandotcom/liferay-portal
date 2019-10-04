@@ -45,12 +45,12 @@ public class TaxonomyVocabularyNameExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				vocabularyNameException.getMessage(), "Category vocabulary",
 				"Taxonomy vocabulary")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

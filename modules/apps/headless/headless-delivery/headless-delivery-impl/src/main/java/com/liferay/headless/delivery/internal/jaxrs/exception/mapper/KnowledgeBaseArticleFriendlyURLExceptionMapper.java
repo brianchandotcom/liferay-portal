@@ -53,12 +53,12 @@ public class KnowledgeBaseArticleFriendlyURLExceptionMapper
 
 		return Response.status(
 			statusCode
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				kbArticleUrlTitleException.getMessage(), "URL title",
 				"Friendly URL")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

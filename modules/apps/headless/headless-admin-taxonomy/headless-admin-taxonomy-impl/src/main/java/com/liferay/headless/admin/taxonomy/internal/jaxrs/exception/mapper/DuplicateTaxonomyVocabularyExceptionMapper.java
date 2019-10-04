@@ -45,12 +45,12 @@ public class DuplicateTaxonomyVocabularyExceptionMapper
 
 		return Response.status(
 			409
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			StringUtil.replace(
 				duplicateVocabularyException.getMessage(),
 				"category vocabulary", "taxonomy vocabulary")
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

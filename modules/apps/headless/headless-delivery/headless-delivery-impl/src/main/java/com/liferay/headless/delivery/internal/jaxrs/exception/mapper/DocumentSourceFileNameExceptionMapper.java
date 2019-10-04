@@ -44,10 +44,10 @@ public class DocumentSourceFileNameExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			sourceFileNameException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

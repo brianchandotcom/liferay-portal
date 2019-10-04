@@ -43,8 +43,8 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/import-task.properties",
-	property = "batch.size=100", scope = ServiceScope.PROTOTYPE,
-	service = ImportTaskResource.class
+	property = {"batch.engine=true", "batch.size=100"},
+	scope = ServiceScope.PROTOTYPE, service = ImportTaskResource.class
 )
 public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 

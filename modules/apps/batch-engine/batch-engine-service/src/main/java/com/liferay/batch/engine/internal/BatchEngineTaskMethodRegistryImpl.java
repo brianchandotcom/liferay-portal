@@ -63,7 +63,8 @@ public class BatchEngineTaskMethodRegistryImpl
 		_serviceTracker = new ServiceTracker<>(
 			bundleContext,
 			bundleContext.createFilter(
-				"(&(api.version=*)(osgi.jaxrs.resource=true))"),
+				"(&(api.version=*)(osgi.jaxrs.resource=true)" +
+					"(!(batch.engine=true)))"),
 			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
 
 		_serviceTracker.open();

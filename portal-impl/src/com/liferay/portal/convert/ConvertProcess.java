@@ -14,6 +14,9 @@
 
 package com.liferay.portal.convert;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Iván Zaera
  */
@@ -30,6 +33,18 @@ public interface ConvertProcess {
 	public String[] getParameterNames();
 
 	public String getPath();
+
+	public default boolean hasCustomView() {
+		return false;
+	}
+
+	public default boolean includeCustomView(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		return false;
+	}
 
 	public boolean isEnabled();
 

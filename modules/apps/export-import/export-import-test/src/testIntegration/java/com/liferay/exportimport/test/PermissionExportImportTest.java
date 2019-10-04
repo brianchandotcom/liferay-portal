@@ -179,7 +179,7 @@ public class PermissionExportImportTest {
 		clazz = classLoader.loadClass(
 			"com.liferay.exportimport.internal.lar.PermissionExporter");
 
-		Field field = clazz.getDeclaredField("_instance");
+		Field field = clazz.getDeclaredField("_permissionExporter");
 
 		field.setAccessible(true);
 

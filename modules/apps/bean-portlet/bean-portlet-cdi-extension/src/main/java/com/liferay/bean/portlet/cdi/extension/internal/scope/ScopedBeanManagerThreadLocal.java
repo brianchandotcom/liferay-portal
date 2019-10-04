@@ -31,19 +31,19 @@ import java.util.function.Supplier;
 public class ScopedBeanManagerThreadLocal {
 
 	public static Runnable captureScopedBeanManagers() {
-		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
 
-		return () -> _instance.set(scopedBeanManagers);
+		return () -> _threadLocal.set(scopedBeanManagers);
 	}
 
 	public static ScopedBeanManager getCurrentScopedBeanManager() {
-		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
 
 		return scopedBeanManagers.peek();
 	}
 
 	public static Closeable install(ScopedBeanManager scopedBeanManager) {
-		Deque<ScopedBeanManager> scopedBeanManagerStack = _instance.get();
+		Deque<ScopedBeanManager> scopedBeanManagerStack = _threadLocal.get();
 
 		scopedBeanManagerStack.push(scopedBeanManager);
 
@@ -59,7 +59,7 @@ public class ScopedBeanManagerThreadLocal {
 				if (scopedBeanManagerStack.isEmpty()) {
 					closingScopedBeanManager.destroyScopedBeans();
 
-					_instance.remove();
+					_threadLocal.remove();
 				}
 			}
 		};
@@ -70,7 +70,7 @@ public class ScopedBeanManagerThreadLocal {
 			Supplier<ScopedBeanManager> supplier)
 		throws T {
 
-		Deque<ScopedBeanManager> scopedBeanManagers = _instance.get();
+		Deque<ScopedBeanManager> scopedBeanManagers = _threadLocal.get();
 
 		scopedBeanManagers.push(supplier.get());
 
@@ -87,15 +87,15 @@ public class ScopedBeanManagerThreadLocal {
 	}
 
 	public static void remove() {
-		_instance.remove();
+		_threadLocal.remove();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScopedBeanManagerThreadLocal.class);
 
-	private static final ThreadLocal<Deque<ScopedBeanManager>> _instance =
+	private static final ThreadLocal<Deque<ScopedBeanManager>> _threadLocal =
 		new CentralizedThreadLocal<>(
-			ScopedBeanManagerThreadLocal.class + "._instance",
+			ScopedBeanManagerThreadLocal.class + "._threadLocal",
 			ConcurrentLinkedDeque::new);
 
 }

@@ -23,44 +23,44 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortletContextBagPool {
 
 	public static void clear() {
-		_instance._portletContextBagPool.clear();
+		_portletContextBagPool._portletContextBagMap.clear();
 	}
 
 	public static PortletContextBag get(String servletContextName) {
-		return _instance._get(servletContextName);
+		return _portletContextBagPool._get(servletContextName);
 	}
 
 	public static void put(
 		String servletContextName, PortletContextBag portletContextBag) {
 
-		_instance._put(servletContextName, portletContextBag);
+		_portletContextBagPool._put(servletContextName, portletContextBag);
 	}
 
 	public static PortletContextBag remove(String servletContextName) {
-		return _instance._remove(servletContextName);
+		return _portletContextBagPool._remove(servletContextName);
 	}
 
 	private PortletContextBagPool() {
-		_portletContextBagPool = new ConcurrentHashMap<>();
+		_portletContextBagMap = new ConcurrentHashMap<>();
 	}
 
 	private PortletContextBag _get(String servletContextName) {
-		return _portletContextBagPool.get(servletContextName);
+		return _portletContextBagMap.get(servletContextName);
 	}
 
 	private void _put(
 		String servletContextName, PortletContextBag portletContextBag) {
 
-		_portletContextBagPool.put(servletContextName, portletContextBag);
+		_portletContextBagMap.put(servletContextName, portletContextBag);
 	}
 
 	private PortletContextBag _remove(String servletContextName) {
-		return _portletContextBagPool.remove(servletContextName);
+		return _portletContextBagMap.remove(servletContextName);
 	}
 
-	private static final PortletContextBagPool _instance =
+	private static final PortletContextBagPool _portletContextBagPool =
 		new PortletContextBagPool();
 
-	private final Map<String, PortletContextBag> _portletContextBagPool;
+	private final Map<String, PortletContextBag> _portletContextBagMap;
 
 }

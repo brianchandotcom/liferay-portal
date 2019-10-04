@@ -29,17 +29,17 @@ import com.liferay.portal.util.PropsValues;
 public class JAASHelper {
 
 	public static JAASHelper getInstance() {
-		return _instance;
+		return _jaasHelper;
 	}
 
 	public static long getJaasUserId(long companyId, String name)
 		throws PortalException {
 
-		return _instance.doGetJaasUserId(companyId, name);
+		return _jaasHelper.doGetJaasUserId(companyId, name);
 	}
 
 	public static void setInstance(JAASHelper instance) {
-		_instance = instance;
+		_jaasHelper = instance;
 	}
 
 	protected long doGetJaasUserId(long companyId, String name)
@@ -88,6 +88,6 @@ public class JAASHelper {
 		return userId;
 	}
 
-	private static JAASHelper _instance = new JAASHelper();
+	private static JAASHelper _jaasHelper = new JAASHelper();
 
 }

@@ -36,7 +36,7 @@ public class JQTFastStart {
 	public static void convert(File inputFile, File outputFile)
 		throws IOException {
 
-		_instance.doConvert(inputFile, outputFile);
+		_jqtFastStart.doConvert(inputFile, outputFile);
 	}
 
 	protected void doConvert(File inputFile, File outputFile)
@@ -179,6 +179,6 @@ public class JQTFastStart {
 
 	private static final Log _log = LogFactoryUtil.getLog(JQTFastStart.class);
 
-	private static final JQTFastStart _instance = new JQTFastStart();
+	private static final JQTFastStart _jqtFastStart = new JQTFastStart();
 
 }

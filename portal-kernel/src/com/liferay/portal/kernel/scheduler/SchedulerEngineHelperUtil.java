@@ -324,12 +324,12 @@ public class SchedulerEngineHelperUtil {
 	}
 
 	private static SchedulerEngineHelper _getSchedulerEngineHelper() {
-		return _instance;
+		return _schedulerEngineHelper;
 	}
 
-	private static volatile SchedulerEngineHelper _instance =
+	private static volatile SchedulerEngineHelper _schedulerEngineHelper =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			SchedulerEngineHelper.class, SchedulerEngineHelperUtil.class,
-			"_instance", false);
+			"_schedulerEngineHelper", false);
 
 }

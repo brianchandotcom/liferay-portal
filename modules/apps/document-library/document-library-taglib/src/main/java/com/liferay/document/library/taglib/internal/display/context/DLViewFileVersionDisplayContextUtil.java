@@ -38,22 +38,23 @@ public class DLViewFileVersionDisplayContextUtil {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, FileVersion fileVersion) {
 
-		return _instance._dlDisplayContextProvider.
+		return _dlViewFileVersionDisplayContextUtil._dlDisplayContextProvider.
 			getDLViewFileVersionDisplayContext(
 				httpServletRequest, httpServletResponse, fileVersion);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_instance = this;
+		_dlViewFileVersionDisplayContextUtil = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_instance = null;
+		_dlViewFileVersionDisplayContextUtil = null;
 	}
 
-	private static DLViewFileVersionDisplayContextUtil _instance;
+	private static DLViewFileVersionDisplayContextUtil
+		_dlViewFileVersionDisplayContextUtil;
 
 	@Reference
 	private DLDisplayContextProvider _dlDisplayContextProvider;

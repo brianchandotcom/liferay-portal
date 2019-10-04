@@ -25,7 +25,7 @@ import com.liferay.registry.ServiceTracker;
 public class BBCodeTranslatorUtil {
 
 	public static BBCodeTranslator getBBCodeTranslator() {
-		return _instance._getBBCodeTranslator();
+		return _bbCodeTranslatorUtil._getBBCodeTranslator();
 	}
 
 	public static String[] getEmoticonDescriptions() {
@@ -64,7 +64,7 @@ public class BBCodeTranslatorUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static final BBCodeTranslatorUtil _instance =
+	private static final BBCodeTranslatorUtil _bbCodeTranslatorUtil =
 		new BBCodeTranslatorUtil();
 
 	private final ServiceTracker<BBCodeTranslator, BBCodeTranslator>

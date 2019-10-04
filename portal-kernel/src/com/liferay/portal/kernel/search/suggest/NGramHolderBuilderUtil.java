@@ -47,11 +47,11 @@ public class NGramHolderBuilderUtil {
 	}
 
 	public static NGramHolderBuilder getNGramHolderBuilder() {
-		if (_instance._serviceTracker.getService() == null) {
+		if (_nGramHolderBuilderUtil._serviceTracker.getService() == null) {
 			return _defaultNGramHolderBuilder;
 		}
 
-		return _instance._serviceTracker.getService();
+		return _nGramHolderBuilderUtil._serviceTracker.getService();
 	}
 
 	private NGramHolderBuilderUtil() {
@@ -62,11 +62,10 @@ public class NGramHolderBuilderUtil {
 		_serviceTracker.open();
 	}
 
-	private static final NGramHolderBuilderUtil _instance =
-		new NGramHolderBuilderUtil();
-
 	private static final NGramHolderBuilder _defaultNGramHolderBuilder =
 		new NullNGramHolderBuilder();
+	private static final NGramHolderBuilderUtil _nGramHolderBuilderUtil =
+		new NGramHolderBuilderUtil();
 
 	private final ServiceTracker<NGramHolderBuilder, NGramHolderBuilder>
 		_serviceTracker;

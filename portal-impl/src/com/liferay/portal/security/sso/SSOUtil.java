@@ -38,9 +38,9 @@ public class SSOUtil {
 		long companyId, String sessionExpirationRedirectURL) {
 
 		String ssoSessionExpirationRedirectURL =
-			_instance._getSessionExpirationRedirectURL(companyId);
+			_ssoUtil._getSessionExpirationRedirectURL(companyId);
 
-		if (_instance._ssoMap.isEmpty() ||
+		if (_ssoUtil._ssoMap.isEmpty() ||
 			Validator.isNull(ssoSessionExpirationRedirectURL)) {
 
 			return sessionExpirationRedirectURL;
@@ -50,11 +50,11 @@ public class SSOUtil {
 	}
 
 	public static String getSignInURL(long companyId, String signInURL) {
-		if (_instance._ssoMap.isEmpty()) {
+		if (_ssoUtil._ssoMap.isEmpty()) {
 			return null;
 		}
 
-		return _instance._getSignInURL(companyId, signInURL);
+		return _ssoUtil._getSignInURL(companyId, signInURL);
 	}
 
 	public static boolean isLoginRedirectRequired(long companyId) {
@@ -65,30 +65,30 @@ public class SSOUtil {
 			return true;
 		}
 
-		if (_instance._ssoMap.isEmpty()) {
+		if (_ssoUtil._ssoMap.isEmpty()) {
 			return false;
 		}
 
-		return _instance._isLoginRedirectRequired(companyId);
+		return _ssoUtil._isLoginRedirectRequired(companyId);
 	}
 
 	public static boolean isRedirectRequired(long companyId) {
-		if (_instance._ssoMap.isEmpty()) {
+		if (_ssoUtil._ssoMap.isEmpty()) {
 			return false;
 		}
 
-		return _instance._isRedirectRequired(companyId);
+		return _ssoUtil._isRedirectRequired(companyId);
 	}
 
 	public static boolean isSessionRedirectOnExpire(long companyId) {
 		boolean sessionRedirectOnExpire =
 			PropsValues.SESSION_TIMEOUT_REDIRECT_ON_EXPIRE;
 
-		if (_instance._ssoMap.isEmpty() || sessionRedirectOnExpire) {
+		if (_ssoUtil._ssoMap.isEmpty() || sessionRedirectOnExpire) {
 			return sessionRedirectOnExpire;
 		}
 
-		return _instance._isSessionRedirectOnExpire(companyId);
+		return _ssoUtil._isSessionRedirectOnExpire(companyId);
 	}
 
 	private SSOUtil() {
@@ -155,7 +155,7 @@ public class SSOUtil {
 		return false;
 	}
 
-	private static final SSOUtil _instance = new SSOUtil();
+	private static final SSOUtil _ssoUtil = new SSOUtil();
 
 	private final ServiceTracker<SSO, SSO> _serviceTracker;
 	private final Map<ServiceReference<SSO>, SSO> _ssoMap =

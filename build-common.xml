@@ -826,6 +826,26 @@ information.
 
 			<local name="task.available" />
 
+			<local name="redirector.error.property" />
+			<local name="redirector.output.property" />
+
+			<if>
+				<not>
+					<equals arg1="@{outputproperty}" arg2="" />
+				</not>
+				<then>
+					<property name="redirector.error.property" value="error.property" />
+					<property name="redirector.output.property" value="output.property" />
+				</then>
+				<else>
+					<property name="redirector.error.property" value="" />
+					<property name="redirector.output.property" value="" />
+				</else>
+			</if>
+
+			<local name="${redirector.error.property}" />
+			<local name="${redirector.output.property}" />
+
 			<if>
 				<equals arg1="@{checktask}" arg2="true" />
 				<then>
@@ -850,21 +870,31 @@ information.
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-						<redirector errorproperty="@{outputproperty}.error" outputproperty="tasks.output" unless:blank="tasks.output" />
+						<redirector errorproperty="${redirector.error.property}" outputproperty="tasks.output" unless:blank="tasks.output" />
 					</exec>
 
 					<condition else="false" property="task.available" value="true">
 						<contains string="${tasks.output}" substring="@{task} -" />
 					</condition>
 
-					<local name="task.error" />
-
-					<propertycopy from="@{outputproperty}.error" name="task.error" />
-
 					<if>
-						<equals arg1="${task.error}" arg2="" />
+						<not>
+							<equals arg1="${redirector.error.property}" arg2="" />
+						</not>
 						<then>
-							<var name="@{outputproperty}.error" unset="true" />
+							<local name="task.error" />
+
+							<propertycopy from="${redirector.error.property}" name="task.error" />
+
+							<if>
+								<equals arg1="${task.error}" arg2="" />
+								<then>
+									<var name="${redirector.error.property}" unset="true" />
+								</then>
+								<else>
+									<propertycopy from="${redirector.error.property}" name="@{outputproperty}.error" />
+								</else>
+							</if>
 						</then>
 					</if>
 				</then>
@@ -934,10 +964,23 @@ information.
 								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+								<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 							</exec>
 						</try>
 						<catch>
+							<if>
+								<isset property="${redirector.error.property}" />
+								<then>
+									<local name="task.error" />
+
+									<propertycopy from="${redirector.error.property}" name="task.error" />
+
+									<echo message="${task.error}" />
+								</then>
+							</if>
+
+							<echo />
+
 							<echoxml>
 								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 									<args />
@@ -958,7 +1001,7 @@ information.
 									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 									<arg line="@{task}" />
 									<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
-									<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+									<redirector errorproperty="${redirector.error.property}" outputproperty="${redirector.output.property}" unless:blank="${redirector.output.property}" />
 								</exec>
 							</echoxml>
 
@@ -966,13 +1009,25 @@ information.
 						</catch>
 						<finally>
 							<if>
-								<isset property="@{outputproperty}" />
+								<not>
+									<equals arg1="${redirector.output.property}" arg2="" />
+								</not>
 								<then>
-									<local name="outputproperty" />
+									<if>
+										<not>
+											<equals arg1="@{outputproperty}" arg2="" />
+										</not>
+										<then>
+											<propertycopy from="${redirector.error.property}" name="@{outputproperty}.error" />
+											<propertycopy from="${redirector.output.property}" name="@{outputproperty}" />
+										</then>
+									</if>
 
-									<propertycopy from="@{outputproperty}" name="outputproperty" />
+									<local name="task.output" />
 
-									<echo message="${outputproperty}" />
+									<propertycopy from="${redirector.output.property}" name="task.output" />
+
+									<echo message="${task.output}" />
 								</then>
 							</if>
 						</finally>

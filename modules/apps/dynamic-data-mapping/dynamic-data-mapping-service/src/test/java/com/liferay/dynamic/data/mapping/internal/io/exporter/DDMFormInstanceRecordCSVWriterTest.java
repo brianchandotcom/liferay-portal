@@ -96,6 +96,66 @@ public class DDMFormInstanceRecordCSVWriterTest {
 	}
 
 	@Test
+	public void testWriteAfterChangeFieldName() throws Exception {
+		Map<String, String> ddmFormFieldsLabel =
+			new LinkedHashMap<String, String>() {
+				{
+					put("field1", "Field 1");
+					put("field1AfterChangeName", "Field 1");
+					put("field2", "Field 2");
+				}
+			};
+
+		List<Map<String, String>> ddmFormFieldValues =
+			new ArrayList<Map<String, String>>() {
+				{
+					Map<String, String> map1 = new HashMap<String, String>() {
+						{
+							put("field1", "1");
+							put("field2", "esta é uma 'string'");
+							put("field1AfterChangeName", "");
+						}
+					};
+
+					add(map1);
+
+					Map<String, String> map2 = new HashMap<String, String>() {
+						{
+							put("field1AfterChangeName", "2");
+							put("field2", "esta é uma 'string'");
+							put("field1", "");
+						}
+					};
+
+					add(map2);
+				}
+			};
+
+		DDMFormInstanceRecordWriterRequest.Builder builder =
+			DDMFormInstanceRecordWriterRequest.Builder.newBuilder(
+				ddmFormFieldsLabel, ddmFormFieldValues);
+
+		DDMFormInstanceRecordCSVWriter ddmFormInstanceRecordCSVWriter =
+			new DDMFormInstanceRecordCSVWriter();
+
+		DDMFormInstanceRecordWriterResponse
+			ddmFormInstanceRecordWriterResponse =
+				ddmFormInstanceRecordCSVWriter.write(builder.build());
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("Field 1 (field1),Field 1 (field1AfterChangeName),Field 2\n");
+		sb.append("1,,esta é uma 'string'\n");
+		sb.append(",2,esta é uma 'string'");
+
+		String expected = sb.toString();
+
+		Assert.assertArrayEquals(
+			expected.getBytes(),
+			ddmFormInstanceRecordWriterResponse.getContent());
+	}
+
+	@Test
 	public void testWriteRecords() {
 		DDMFormInstanceRecordCSVWriter ddmFormInstanceRecordCSVWriter =
 			new DDMFormInstanceRecordCSVWriter();

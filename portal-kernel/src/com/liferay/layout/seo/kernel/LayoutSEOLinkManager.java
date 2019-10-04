@@ -31,4 +31,10 @@ public interface LayoutSEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws PortalException;
 
+	public default boolean isOpenGraphEnabled(Layout layout)
+		throws PortalException {
+
+		return false;
+	}
+
 }

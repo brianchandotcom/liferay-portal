@@ -80,6 +80,15 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return layoutSEOLinks;
 	}
 
+	@Override
+	public boolean isOpenGraphEnabled(Layout layout) throws PortalException {
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				LayoutSEOCompanyConfiguration.class, layout.getCompanyId());
+
+		return layoutSEOCompanyConfiguration.enableOpenGraph();
+	}
+
 	private String _getCanonicalURL(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)

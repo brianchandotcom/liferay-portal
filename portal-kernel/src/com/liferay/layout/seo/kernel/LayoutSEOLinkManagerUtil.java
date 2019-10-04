@@ -39,6 +39,12 @@ public class LayoutSEOLinkManagerUtil {
 			layout, locale, canonicalURL, alternateURLs);
 	}
 
+	public static boolean isOpenGraphEnabled(Layout layout)
+		throws PortalException {
+
+		return _layoutSEOLinkManager.isOpenGraphEnabled(layout);
+	}
+
 	private static volatile LayoutSEOLinkManager _layoutSEOLinkManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			LayoutSEOLinkManager.class, LayoutSEOLinkManagerUtil.class,

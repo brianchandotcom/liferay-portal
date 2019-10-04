@@ -47,4 +47,14 @@ public interface LayoutSEOCompanyConfiguration {
 	)
 	public String canonicalURL();
 
+	/**
+	 * Sets if open graph is enabled.
+	 */
+	@Meta.AD(
+		deflt = "false",
+		description = "layout-seo-configuration-enable-open-graph-description",
+		name = "layout-seo-configuration-enable-open-graph", required = false
+	)
+	public boolean enableOpenGraph();
+
 }

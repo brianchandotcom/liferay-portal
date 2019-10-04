@@ -875,6 +875,44 @@ information.
 			<if>
 				<equals arg1="${task.available}" arg2="true" />
 				<then>
+					<local name="gradle.executable.task" />
+
+					<if>
+						<isset property="@{dir}" />
+						<then>
+							<local name="gradle.task.dir.unix" />
+
+							<pathconvert property="gradle.task.dir.unix" targetos="unix">
+								<path location="@{dir}" />
+							</pathconvert>
+
+							<local name="gradle.project.path" />
+
+							<propertyregex
+								global="false"
+								input="${gradle.task.dir.unix}"
+								override="yes"
+								property="gradle.project.path"
+								regexp="^.*/modules(/.*)"
+								select="\1"
+							/>
+
+							<propertyregex
+								global="true"
+								input="${gradle.project.path}"
+								override="yes"
+								property="gradle.project.path"
+								regexp="/"
+								replace=":"
+							/>
+
+							<property name="gradle.executable.task" value="${gradle.project.path}:@{task}" />
+						</then>
+						<else>
+							<property name="gradle.executable.task" value="@{task}" />
+						</else>
+					</if>
+
 					<trycatch>
 						<try>
 							<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
@@ -899,6 +937,33 @@ information.
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
 							</exec>
 						</try>
+						<catch>
+							<echoxml>
+								<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+									<args />
+									<arg if:set="env.JENKINS_HOME" value="--max-workers=${gradle.ci.max.workers}" />
+									<arg value="--no-daemon" />
+									<arg if:true="${gradle.profile.enabled}" value="--profile" />
+									<arg if:set="env.JENKINS_HOME" value="--profile" />
+									<arg value="--project-cache-dir=${project.dir}/.gradle" />
+									<arg if:true="@{refreshdependencies}" value="--refresh-dependencies" />
+									<arg value="--stacktrace" />
+									<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+									<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+									<arg value="-Dliferay.home=${liferay.home}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
+									<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
+									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
+									<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
+									<arg line="@{task}" />
+									<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
+									<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
+								</exec>
+							</echoxml>
+
+							<fail message="Unable to execute Gradle task: ${gradle.executable.task}." />
+						</catch>
 						<finally>
 							<if>
 								<isset property="@{outputproperty}" />

@@ -119,10 +119,9 @@ public class AssigneeUserResourceImpl
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		booleanQuery.addMustNotQueryClauses(_queries.term("instanceId", 0));
 		booleanQuery.addMustNotQueryClauses(
-			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED));
-		booleanQuery.addMustNotQueryClauses(
+			_queries.term("instanceId", 0),
+			_queries.term("status", WorkfowMetricsSLAStatus.COMPLETED),
 			_queries.term("status", WorkfowMetricsSLAStatus.EXPIRED));
 
 		if (taskKeys.length > 0) {

@@ -31,11 +31,11 @@ public class AssigneeUserEntityModel implements EntityModel {
 
 	public AssigneeUserEntityModel() {
 		_entityFieldsMap = Stream.of(
-			new IntegerEntityField("taskCount", locale -> "taskCount"),
 			new IntegerEntityField(
 				"onTimeTaskCount", locale -> "onTimeTaskCount"),
 			new IntegerEntityField(
-				"overdueTaskCount", locale -> "overdueTaskCount")
+				"overdueTaskCount", locale -> "overdueTaskCount"),
+			new IntegerEntityField("taskCount", locale -> "taskCount")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

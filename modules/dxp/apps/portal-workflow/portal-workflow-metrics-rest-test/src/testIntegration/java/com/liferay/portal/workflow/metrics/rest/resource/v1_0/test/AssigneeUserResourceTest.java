@@ -81,6 +81,7 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 				testGroup.getCompanyId(), _process);
 		}
 
+		_deleteSLATaskResults();
 		_deleteTasks();
 		_deleteTokens();
 	}
@@ -90,6 +91,7 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 	public void testGetProcessAssigneeUsersPage() throws Exception {
 		super.testGetProcessAssigneeUsersPage();
 
+		_deleteSLATaskResults();
 		_deleteTasks();
 		_deleteTokens();
 
@@ -305,6 +307,11 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 		return _process.getId();
 	}
 
+	private void _deleteSLATaskResults() throws Exception {
+		_workflowMetricsRESTTestHelper.deleteSLATaskResults(
+			testGroup.getCompanyId(), _process.getId());
+	}
+
 	private void _deleteTasks() throws Exception {
 		for (Task task : _tasks) {
 			_workflowMetricsRESTTestHelper.deleteTask(
@@ -316,9 +323,6 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 
 	private void _deleteTokens() throws Exception {
 		_workflowMetricsRESTTestHelper.deleteTokens(
-			testGroup.getCompanyId(), _process.getId());
-
-		_workflowMetricsRESTTestHelper.deleteSLATaskResults(
 			testGroup.getCompanyId(), _process.getId());
 	}
 

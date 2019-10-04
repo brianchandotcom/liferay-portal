@@ -21,12 +21,9 @@ for (state in states) {
 }
 
 def taskCount = 0;
-def taskMap;
 
 for (entry in map.entrySet()) {
-	taskMap = entry.value;
-
-	for (taskMapEntry in taskMap.entrySet()) {
+	for (taskMapEntry in entry.value.entrySet()) {
 		if (taskMapEntry.value == true) {
 			taskCount += 1;
 		}

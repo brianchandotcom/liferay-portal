@@ -185,18 +185,41 @@ public class ModulesStructureTestUtil {
 			String dependency = matcher.group();
 
 			String projectPath = matcher.group(2);
-
+			
+			int pathEndQuote = projectPath.indexOf('"');
+			
+			if (pathEndQuote == -1) {
+				pathEndQuote = projectPath.indexOf("'");
+			}
+			
+			if (pathEndQuote > -1) {
+				projectPath = projectPath.substring(0, pathEndQuote);
+			}
+			
 			String projectDirName = StringUtil.replace(
 				projectPath.substring(1), CharPool.COLON, File.separatorChar);
 
 			Path projectDirPath = rootDirPath.resolve(projectDirName);
+			
+			try {
+				
+				Assert.assertTrue(
+					StringBundler.concat(
+						"Dependency in ", gradlePath,
+						" points to nonexistent project directory ", projectDirPath,
+						": ", matcher.group()),
+					Files.exists(projectDirPath));
+			} catch (Throwable th) {
 
-			Assert.assertTrue(
-				StringBundler.concat(
-					"Dependency in ", gradlePath,
-					" points to nonexistent project directory ", projectDirPath,
-					": ", matcher.group()),
-				Files.exists(projectDirPath));
+				System.out.println("dependency: " + dependency);
+
+				System.out.println("projectPath: " + projectPath);
+				System.out.println("rootDirPath: " + rootDirPath);
+				System.out.println("projectDirPath: " + projectDirPath);
+				System.out.println(th);
+				
+				throw new RuntimeException(th);
+			}
 
 			Path bndBndPath = projectDirPath.resolve("bnd.bnd");
 

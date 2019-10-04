@@ -14,8 +14,8 @@
 
 package com.liferay.content.repository.service.impl;
 
+import com.liferay.content.repository.constants.ContentRepositoryEntryConstants;
 import com.liferay.content.repository.exception.ContentRepositoryEntryNameException;
-import com.liferay.content.repository.internal.constants.ContentRepositoryEntryConstants;
 import com.liferay.content.repository.model.ContentRepositoryEntry;
 import com.liferay.content.repository.service.base.ContentRepositoryEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;

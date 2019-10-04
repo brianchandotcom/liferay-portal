@@ -109,8 +109,7 @@ export default class AppComponent extends React.Component {
 							/>
 
 							<Route
-								exact
-								path="/performance/:processId/:pageSize/:page/:sort"
+								path="/performance/:processId/:pageSize/:page/:sort/:search?"
 								render={withParams(PerformanceByStep)}
 							/>
 						</Switch>

@@ -8229,6 +8229,81 @@ public class JournalArticleLocalServiceImpl
 			return;
 		}
 
+		SubscriptionSender subscriptionSender =
+			new GroupSubscriptionCheckSubscriptionSender(
+				JournalConstants.RESOURCE_NAME);
+
+		subscriptionSender.setClassName(article.getModelClassName());
+		subscriptionSender.setClassPK(article.getId());
+		subscriptionSender.setCompanyId(article.getCompanyId());
+
+		JournalFolder folder = journalFolderPersistence.fetchByPrimaryKey(
+			article.getFolderId());
+
+		subscriptionSender.addPersistedSubscribers(
+			JournalFolder.class.getName(), article.getGroupId());
+
+		Group group = groupLocalService.getGroup(article.getGroupId());
+
+		long liveGroupId = group.getLiveGroupId();
+
+		if (liveGroupId > 0) {
+			subscriptionSender.addPersistedSubscribers(
+				JournalFolder.class.getName(), liveGroupId, false);
+		}
+
+		if (folder != null) {
+			subscriptionSender.addPersistedSubscribers(
+				JournalFolder.class.getName(), folder.getFolderId());
+
+			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
+				subscriptionSender.addPersistedSubscribers(
+					JournalFolder.class.getName(), ancestorFolderId);
+			}
+
+			if (liveGroupId > 0) {
+				folder = journalFolderPersistence.fetchByUUID_G(
+					folder.getUuid(), liveGroupId);
+
+				if (folder != null) {
+					subscriptionSender.addPersistedSubscribers(
+						JournalFolder.class.getName(), folder.getFolderId(),
+						false);
+
+					for (Long ancestorFolderId :
+							folder.getAncestorFolderIds()) {
+
+						subscriptionSender.addPersistedSubscribers(
+							JournalFolder.class.getName(), ancestorFolderId,
+							false);
+					}
+				}
+			}
+		}
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(article.getGroupId()),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			article.getDDMStructureKey(), true);
+
+		subscriptionSender.addPersistedSubscribers(
+			DDMStructure.class.getName(), ddmStructure.getStructureId());
+
+		subscriptionSender.addPersistedSubscribers(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (liveGroupId > 0) {
+			JournalArticle liveGroupArticle =
+				journalArticlePersistence.fetchByUUID_G(
+					article.getUuid(), liveGroupId);
+
+			if (liveGroupArticle != null) {
+				subscriptionSender.addPersistedSubscribers(
+					JournalArticle.class.getName(),
+					liveGroupArticle.getResourcePrimKey(), false);
+			}
+		}
+
 		String articleTitle = article.getTitle(serviceContext.getLanguageId());
 
 		String fromName = journalGroupServiceConfiguration.emailFromName();
@@ -8333,13 +8408,6 @@ public class JournalArticleLocalServiceImpl
 		catch (Exception e) {
 		}
 
-		SubscriptionSender subscriptionSender =
-			new GroupSubscriptionCheckSubscriptionSender(
-				JournalConstants.RESOURCE_NAME);
-
-		subscriptionSender.setClassName(article.getModelClassName());
-		subscriptionSender.setClassPK(article.getId());
-		subscriptionSender.setCompanyId(article.getCompanyId());
 		subscriptionSender.setContextAttribute(
 			"[$ARTICLE_CONTENT$]", articleContent, false);
 		subscriptionSender.setContextAttribute(
@@ -8347,9 +8415,6 @@ public class JournalArticleLocalServiceImpl
 			false);
 
 		String folderName = StringPool.BLANK;
-
-		JournalFolder folder = journalFolderPersistence.fetchByPrimaryKey(
-			article.getFolderId());
 
 		if (folder != null) {
 			folderName = folder.getName();
@@ -8394,69 +8459,6 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
-
-		subscriptionSender.addPersistedSubscribers(
-			JournalFolder.class.getName(), article.getGroupId());
-
-		Group group = groupLocalService.getGroup(article.getGroupId());
-
-		long liveGroupId = group.getLiveGroupId();
-
-		if (liveGroupId > 0) {
-			subscriptionSender.addPersistedSubscribers(
-				JournalFolder.class.getName(), liveGroupId, false);
-		}
-
-		if (folder != null) {
-			subscriptionSender.addPersistedSubscribers(
-				JournalFolder.class.getName(), folder.getFolderId());
-
-			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
-				subscriptionSender.addPersistedSubscribers(
-					JournalFolder.class.getName(), ancestorFolderId);
-			}
-
-			if (liveGroupId > 0) {
-				folder = journalFolderPersistence.fetchByUUID_G(
-					folder.getUuid(), liveGroupId);
-
-				if (folder != null) {
-					subscriptionSender.addPersistedSubscribers(
-						JournalFolder.class.getName(), folder.getFolderId(),
-						false);
-
-					for (Long ancestorFolderId :
-							folder.getAncestorFolderIds()) {
-
-						subscriptionSender.addPersistedSubscribers(
-							JournalFolder.class.getName(), ancestorFolderId,
-							false);
-					}
-				}
-			}
-		}
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(article.getGroupId()),
-			classNameLocalService.getClassNameId(JournalArticle.class),
-			article.getDDMStructureKey(), true);
-
-		subscriptionSender.addPersistedSubscribers(
-			DDMStructure.class.getName(), ddmStructure.getStructureId());
-
-		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (liveGroupId > 0) {
-			article = journalArticlePersistence.fetchByUUID_G(
-				article.getUuid(), liveGroupId);
-
-			if (article != null) {
-				subscriptionSender.addPersistedSubscribers(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey(), false);
-			}
-		}
 
 		subscriptionSender.flushNotificationsAsync();
 	}

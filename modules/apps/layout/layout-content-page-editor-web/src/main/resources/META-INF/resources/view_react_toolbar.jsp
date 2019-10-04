@@ -27,7 +27,7 @@ String publishURL = (String)soyContext.get("publishURL");
 Boolean singleSegmentsExperienceMode = (Boolean)soyContext.get("singleSegmentsExperienceMode");
 %>
 
-<div class="fragments-editor-toolbar management-bar navbar navbar-expand-md" id="<%= portletNamespace %>pageEditorToolbar">
+<div class="page-editor-toolbar management-bar navbar navbar-expand-md" id="<%= portletNamespace %>pageEditorToolbar">
 	<div class="container-fluid container-fluid-max-xl">
 		<ul class="navbar-nav">
 		</ul>

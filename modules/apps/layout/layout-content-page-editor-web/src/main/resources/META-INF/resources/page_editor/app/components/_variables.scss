@@ -1,0 +1,24 @@
+//
+// Colors
+//
+
+$sidebarBackgroundColor: #393a4a;
+$sidebarButtonColor: #a7a9bc;
+$sidebarButtonHoverColor: #fff;
+$sidebarButtonSeparatorColor: #6b6c7e;
+$toolbarBorderColor: fade_out(#dcdcdc, 0.5);
+
+//
+// Layout
+//
+
+$controlMenuHeight: 56px;
+$toolbarBorderWidth: 1px;
+$toolbarHeight: 64px;
+
+//
+// z-indexes, ordered numerically.
+//
+
+$zIndexToolbar: 971;
+$zIndexSidebar: 972;

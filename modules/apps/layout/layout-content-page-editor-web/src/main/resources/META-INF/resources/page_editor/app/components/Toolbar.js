@@ -29,7 +29,7 @@ function ToolbarBody() {
 	const {singleSegmentsExperienceMode} = useContext(ConfigContext);
 
 	return (
-		<div className="container-fluid container-fluid-max-xl">
+		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
 			<ul className="navbar-nav">Experiences</ul>
 
 			<ul className="navbar-nav">

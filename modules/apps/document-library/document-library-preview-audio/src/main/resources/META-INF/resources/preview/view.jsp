@@ -17,8 +17,6 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
 
 List<Map<String, String>> audioSources = new ArrayList<>(previewFileURLs.size());
@@ -33,11 +31,6 @@ for (String previewFileURL : previewFileURLs) {
 		}
 	}
 }
-
-Map<String, Object> context = new HashMap<>();
-
-context.put("audioMaxWidth", PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
-context.put("audioSources", audioSources);
 %>
 
 <liferay-util:html-top
@@ -46,9 +39,27 @@ context.put("audioSources", audioSources);
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<soy:component-renderer
-	componentId='<%= renderResponse.getNamespace() + randomNamespace + "previewAudio" %>'
-	context="<%= context %>"
-	module="preview/js/AudioPreviewer.es"
-	templateNamespace="com.liferay.document.library.preview.AudioPreviewer.render"
-/>
+<div>
+	<div class="preview-file">
+		<div class="preview-file-container">
+			<audio
+				class="preview-file-audio"
+				controls
+				controlsList="nodownload"
+				style="max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px; "
+			>
+
+				<%
+				for (Map<String, String> audioSource : audioSources) {
+				%>
+
+					<source src="<%= audioSource.get("url") %>" type="<%= audioSource.get("type") %>" />
+
+				<%
+				}
+				%>
+
+			</audio>
+		</div>
+	</div>
+</div>

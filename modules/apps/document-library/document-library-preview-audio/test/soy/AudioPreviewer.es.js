@@ -12,7 +12,7 @@
  * details.
  */
 
-import AudioPreviewer from '../src/main/resources/META-INF/resources/preview/js/AudioPreviewer.es';
+import AudioPreviewer from '../../src/main/resources/META-INF/resources/preview/js/soy/AudioPreviewer.es';
 
 let component;
 

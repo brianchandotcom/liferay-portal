@@ -54,6 +54,13 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 						title="<%= convertProcess.getDescription() %>"
 					>
 						<c:choose>
+							<c:when test="<%= convertProcess.hasCustomView() %>">
+
+								<%
+								convertProcess.includeCustomView(request, PipingServletResponse.createPipingServletResponse(pageContext));
+								%>
+
+							</c:when>
 							<c:when test="<%= parameterNames == null %>">
 								<div class="alert alert-info">
 									<liferay-ui:message key="<%= convertProcess.getConfigurationErrorMessage() %>" />

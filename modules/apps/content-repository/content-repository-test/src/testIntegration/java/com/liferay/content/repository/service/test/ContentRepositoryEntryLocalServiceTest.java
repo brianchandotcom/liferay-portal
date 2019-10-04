@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -85,9 +88,7 @@ public class ContentRepositoryEntryLocalServiceTest {
 	public void testAddContentRepositoryEntryFailsWithAnEmptyName()
 		throws Exception {
 
-		_contentRepositoryEntryLocalService.addContentRepositoryEntry(
-			new HashMap<>(), new HashMap<>(),
-			ServiceContextTestUtil.getServiceContext());
+		_addContentRepositoryEntry(null, null);
 	}
 
 	@Test(expected = ContentRepositoryEntryNameException.MustNotBeNull.class)
@@ -142,10 +143,19 @@ public class ContentRepositoryEntryLocalServiceTest {
 
 		nameMap.put(LocaleUtil.getDefault(), name);
 
-		return _contentRepositoryEntryLocalService.addContentRepositoryEntry(
-			nameMap, descriptionMap,
-			ServiceContextTestUtil.getServiceContext());
+		ContentRepositoryEntry contentRepositoryEntry =
+			_contentRepositoryEntryLocalService.addContentRepositoryEntry(
+				nameMap, descriptionMap,
+				ServiceContextTestUtil.getServiceContext());
+
+		_contentRepositoryEntries.add(contentRepositoryEntry);
+
+		return contentRepositoryEntry;
 	}
+
+	@DeleteAfterTestRun
+	private final List<ContentRepositoryEntry> _contentRepositoryEntries =
+		new ArrayList<>();
 
 	@Inject
 	private ContentRepositoryEntryLocalService

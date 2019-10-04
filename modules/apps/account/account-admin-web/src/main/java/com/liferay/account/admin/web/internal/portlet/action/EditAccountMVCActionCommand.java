@@ -15,6 +15,7 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
+import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -102,6 +103,9 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass());
 
 				mvcPath = "/error.jsp";
+			}
+			else if (e instanceof AccountEntryDomainsException) {
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

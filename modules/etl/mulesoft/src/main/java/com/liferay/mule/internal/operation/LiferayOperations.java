@@ -29,6 +29,7 @@ import com.liferay.mule.internal.metadata.output.POSTEndpointOutputTypeResolver;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import org.mule.runtime.api.meta.ExpressionSupport;
@@ -137,7 +138,7 @@ public class LiferayOperations {
 	@NullSafe
 	@Optional
 	@Parameter
-	private MultiMap<String, String> _pathParams;
+	private Map<String, String> _pathParams;
 
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@NullSafe

@@ -64,7 +64,7 @@ public final class LiferayConnection {
 	}
 
 	public HttpResponse delete(
-			MultiMap<String, String> pathParams,
+			Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)
 		throws IOException, TimeoutException {
 
@@ -77,7 +77,7 @@ public final class LiferayConnection {
 	}
 
 	public HttpResponse get(
-			MultiMap<String, String> pathParams,
+			Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)
 		throws IOException, TimeoutException {
 
@@ -102,7 +102,7 @@ public final class LiferayConnection {
 	}
 
 	public HttpResponse patch(
-			InputStream inputStream, MultiMap<String, String> pathParams,
+			InputStream inputStream, Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)
 		throws IOException, TimeoutException {
 
@@ -115,7 +115,7 @@ public final class LiferayConnection {
 	}
 
 	public HttpResponse post(
-			InputStream inputStream, MultiMap<String, String> pathParams,
+			InputStream inputStream, Map<String, String> pathParams,
 			MultiMap<String, String> queryParams, String endpoint)
 		throws IOException, TimeoutException {
 
@@ -211,7 +211,7 @@ public final class LiferayConnection {
 	}
 
 	private String _resolvePathParams(
-		String endpoint, MultiMap<String, String> pathParams) {
+		String endpoint, Map<String, String> pathParams) {
 
 		for (Map.Entry<String, String> pathParam : pathParams.entrySet()) {
 			endpoint = endpoint.replace(

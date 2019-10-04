@@ -27,7 +27,7 @@ public class DocumentLibraryExtraSettingsConvertProcess
 
 	@Override
 	public String getDescription() {
-		return "convert-extra-settings-from-document-library-files";
+		return "convert-extra-settings-from-documents-and-media-files";
 	}
 
 	@Override

@@ -81,6 +81,22 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 				getFirstPropertyValue("test.batch.class.names.includes"),
 				_tckHomeDirectory));
 
+		if (includeStableSuite && isStableTestSuiteBatch()) {
+			excludesPathMatchers.addAll(
+				getPathMatchers(
+					getFirstPropertyValue(
+						"test.batch.class.names.excludes", batchName,
+						NAME_STABLE_TEST_SUITE),
+					_tckHomeDirectory));
+
+			includesPathMatchers.addAll(
+				getPathMatchers(
+					getFirstPropertyValue(
+						"test.batch.class.names.includes", batchName,
+						NAME_STABLE_TEST_SUITE),
+					_tckHomeDirectory));
+		}
+
 		setTestClasses();
 
 		setAxisTestClassGroups();

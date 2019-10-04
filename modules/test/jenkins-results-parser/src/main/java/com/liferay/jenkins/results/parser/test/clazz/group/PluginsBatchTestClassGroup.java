@@ -94,6 +94,22 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 				getFirstPropertyValue("test.batch.plugin.names.includes"),
 				_pluginsGitWorkingDirectory.getWorkingDirectory()));
 
+		if (includeStableSuite && isStableTestSuiteBatch()) {
+			excludesPathMatchers.addAll(
+				getPathMatchers(
+					getFirstPropertyValue(
+						"test.batch.plugin.names.excludes", batchName,
+						NAME_STABLE_TEST_SUITE),
+					_pluginsGitWorkingDirectory.getWorkingDirectory()));
+
+			includesPathMatchers.addAll(
+				getPathMatchers(
+					getFirstPropertyValue(
+						"test.batch.plugin.names.includes", batchName,
+						NAME_STABLE_TEST_SUITE),
+					_pluginsGitWorkingDirectory.getWorkingDirectory()));
+		}
+
 		setTestClasses();
 
 		setAxisTestClassGroups();

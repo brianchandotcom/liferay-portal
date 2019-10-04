@@ -26,6 +26,8 @@ if (accountDisplay != null) {
 }
 %>
 
+<liferay-ui:error exception="<%= AccountEntryDomainsException.class %>" message="please-enter-a-valid-mail-domain" />
+
 <liferay-util:buffer
 	var="removeDomainIcon"
 >

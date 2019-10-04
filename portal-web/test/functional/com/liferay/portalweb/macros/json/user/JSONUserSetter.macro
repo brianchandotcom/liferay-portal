@@ -1,11 +1,51 @@
 definition {
 
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		return "${groupId}";
+	}
+
+	macro setNewPassword {
+		if (!(isSet(newPassword))) {
+			var newPassword = "test";
+		}
+
+		return "${newPassword}";
+	}
+
+	macro setRequireReset {
+		if (!(isSet(requireReset))) {
+			var requireReset = "true";
+		}
+
+		return "${requireReset}";
+	}
+
+	macro setUserFirstName {
+		Variables.assertDefined(parameterList = "${userFirstName}");
+
+		var userFirstName = URLUtil.encodeUTF8("${userFirstName}");
+
+		return "${userFirstName}";
+	}
+
 	macro setUserId {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
 		return "${userId}";
+	}
+
+	macro setUserLastName {
+		Variables.assertDefined(parameterList = "${userLastName}");
+
+		var userLastName = URLUtil.encodeUTF8("${userLastName}");
+
+		return "${userLastName}";
 	}
 
 }

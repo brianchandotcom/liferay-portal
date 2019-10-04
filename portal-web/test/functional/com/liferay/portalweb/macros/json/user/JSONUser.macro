@@ -3,9 +3,9 @@ definition {
 	macro addUser {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
+		var userFirstName = JSONUserSetter.setUserFirstName(userFirstName = "${userFirstName}");
 
-		var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
+		var userLastName = JSONUserSetter.setUserLastName(userLastName = "${userLastName}");
 
 		JSONUserAPI._addUser(
 			userEmailAddress = "${userEmailAddress}",
@@ -17,9 +17,9 @@ definition {
 	macro addUserToSite {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONUserSetter.setGroupId(groupName = "${groupName}");
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 
 		JSONUserAPI._addUserToSite(
 			groupId = "${groupId}",
@@ -29,7 +29,7 @@ definition {
 	macro deleteUserByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 
 		JSONUserAPI._deleteUser(userId = "${userId}");
 	}
@@ -46,15 +46,11 @@ definition {
 
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		if (!(isSet(newPassword))) {
-			var newPassword = "test";
-		}
+		var newPassword = JSONUserSetter.setNewPassword(newPassword = "${newPassword}");
 
-		if (!(isSet(requireReset))) {
-			var requireReset = "true";
-		}
+		var requireReset = JSONUserSetter.setRequireReset(requireReset = "${requireReset}");
 
-		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${userEmailAddress}");
 
 		JSONUserAPI._updatePassword(
 			newPassword = "${newPassword}",
@@ -72,10 +68,6 @@ definition {
 
 	macro tearDownByFirstName {
 		Variables.assertDefined(parameterList = "${userFirstName}");
-
-		var companyId = JSONCompany.getCompanyId();
-
-		var portalURL = JSONCompany.getPortalURL();
 
 		var userId = JSONUserAPI._getUserIds();
 

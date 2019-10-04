@@ -12,8 +12,17 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
 export default function Sidebar() {
-	return <div></div>;
+	return (
+		<div className="page-editor-sidebar">
+			<div className="page-editor-sidebar-buttons">
+				<ClayButtonWithIcon displayType="unstyled" symbol="cards2" />
+				<hr />
+				<ClayButtonWithIcon displayType="unstyled" symbol="comments" />
+			</div>
+		</div>
+	);
 }

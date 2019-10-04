@@ -1,0 +1,39 @@
+@import './variables';
+
+$sidebarButtonHeight: 40px;
+$sidebarButtonWidth: 40px;
+
+.page-editor-sidebar {
+	background-color: $sidebarBackgroundColor;
+	height: 100vh;
+	position: fixed;
+	right: 0;
+	top: $toolbarHeight;
+	z-index: $zIndexSidebar;
+
+	&-buttons {
+		flex-direction: column;
+		padding-top: 16px;
+		width: $sidebarButtonWidth;
+
+		button {
+			color: $sidebarButtonColor;
+
+			&:active,
+			&:focus,
+			&:hover {
+				color: $sidebarButtonHoverColor;
+			}
+		}
+
+		hr {
+			border-color: $sidebarButtonSeparatorColor;
+			margin: 12px 8px;
+		}
+	}
+
+	body.has-control-menu & {
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		top: $controlMenuHeight + $toolbarHeight;
+	}
+}

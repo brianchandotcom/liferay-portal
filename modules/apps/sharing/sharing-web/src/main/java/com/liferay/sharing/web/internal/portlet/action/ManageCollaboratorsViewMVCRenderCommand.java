@@ -84,10 +84,10 @@ public class ManageCollaboratorsViewMVCRenderCommand
 		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
 		template.put("classPK", classPK);
-
 		template.put(
 			"collaborators",
 			_getCollaboratorsJSONArray(classNameId, classPK, renderRequest));
+
 		template.put(
 			"dialogId",
 			ParamUtil.getString(

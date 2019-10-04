@@ -19,7 +19,7 @@ import useSelector from '../../store/hooks/useSelector.es';
 
 const Editor = props => {
 	const editorConfig = useSelector(
-		state => state.defaultEditorConfigurations.text.editorConfig
+		state => state.defaultEditorConfigurations.commentEditor.editorConfig
 	);
 	const portletNamespace = useSelector(state => state.portletNamespace);
 

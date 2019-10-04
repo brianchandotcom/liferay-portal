@@ -30,6 +30,7 @@ page import="com.liferay.account.admin.web.internal.constants.AccountWebKeys" %>
 page import="com.liferay.account.admin.web.internal.dao.search.AccountDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountUserDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountDisplay" %><%@
+page import="com.liferay.account.admin.web.internal.display.AccountUserDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@

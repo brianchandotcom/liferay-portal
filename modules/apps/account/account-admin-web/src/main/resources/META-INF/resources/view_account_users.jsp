@@ -33,8 +33,6 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
-		<aui:input name="userId" type="hidden" />
-
 		<liferay-ui:search-container
 			searchContainer="<%= accountUserDisplaySearchContainer %>"
 		>
@@ -65,6 +63,10 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="account-roles"
 					property="accountRoles"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/account_user_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

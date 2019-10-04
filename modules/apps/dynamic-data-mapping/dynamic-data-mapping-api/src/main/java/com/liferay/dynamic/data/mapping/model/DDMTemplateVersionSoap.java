@@ -32,6 +32,7 @@ public class DDMTemplateVersionSoap implements Serializable {
 		DDMTemplateVersionSoap soapModel = new DDMTemplateVersionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setTemplateVersionId(model.getTemplateVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -118,6 +119,14 @@ public class DDMTemplateVersionSoap implements Serializable {
 
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	public long getTemplateVersionId() {
@@ -265,6 +274,7 @@ public class DDMTemplateVersionSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _templateVersionId;
 	private long _groupId;
 	private long _companyId;

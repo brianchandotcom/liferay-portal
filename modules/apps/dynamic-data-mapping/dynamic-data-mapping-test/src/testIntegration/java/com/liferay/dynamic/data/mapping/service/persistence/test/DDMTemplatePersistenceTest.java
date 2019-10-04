@@ -127,6 +127,8 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMTemplate.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMTemplate.setUuid(RandomTestUtil.randomString());
 
 		newDDMTemplate.setGroupId(RandomTestUtil.nextLong());
@@ -185,6 +187,9 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertEquals(
 			existingDDMTemplate.getMvccVersion(),
 			newDDMTemplate.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMTemplate.getCtCollectionId(),
+			newDDMTemplate.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMTemplate.getUuid(), newDDMTemplate.getUuid());
 		Assert.assertEquals(
@@ -276,6 +281,13 @@ public class DDMTemplatePersistenceTest {
 		_persistence.countByUuid_C("null", 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
 	}
 
 	@Test
@@ -438,14 +450,15 @@ public class DDMTemplatePersistenceTest {
 
 	protected OrderByComparator<DDMTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplate", "mvccVersion", true, "uuid", true, "templateId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "versionUserId", true, "versionUserName", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "resourceClassNameId", true, "templateKey", true,
-			"version", true, "type", true, "mode", true, "language", true,
-			"cacheable", true, "smallImage", true, "smallImageId", true,
-			"smallImageURL", true, "lastPublishDate", true);
+			"DDMTemplate", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "templateId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "resourceClassNameId", true,
+			"templateKey", true, "version", true, "type", true, "mode", true,
+			"language", true, "cacheable", true, "smallImage", true,
+			"smallImageId", true, "smallImageURL", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -705,6 +718,8 @@ public class DDMTemplatePersistenceTest {
 		DDMTemplate ddmTemplate = _persistence.create(pk);
 
 		ddmTemplate.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmTemplate.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmTemplate.setUuid(RandomTestUtil.randomString());
 

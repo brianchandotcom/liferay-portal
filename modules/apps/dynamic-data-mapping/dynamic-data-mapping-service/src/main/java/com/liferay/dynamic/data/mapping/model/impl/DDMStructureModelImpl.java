@@ -81,17 +81,17 @@ public class DDMStructureModelImpl
 	public static final String TABLE_NAME = "DDMStructure";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"structureId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"versionUserId", Types.BIGINT},
-		{"versionUserName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"parentStructureId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"structureKey", Types.VARCHAR},
-		{"version", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.CLOB}, {"definition", Types.CLOB},
-		{"storageType", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"structureId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"versionUserId", Types.BIGINT}, {"versionUserName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"parentStructureId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"structureKey", Types.VARCHAR}, {"version", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.CLOB},
+		{"definition", Types.CLOB}, {"storageType", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -99,6 +99,7 @@ public class DDMStructureModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -122,7 +123,7 @@ public class DDMStructureModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructure (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
+		"create table DDMStructure (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,structureId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null,primary key (structureId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 
@@ -142,19 +143,21 @@ public class DDMStructureModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long DESCRIPTION_COLUMN_BITMASK = 4L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long DESCRIPTION_COLUMN_BITMASK = 8L;
 
-	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
 
-	public static final long STRUCTUREKEY_COLUMN_BITMASK = 64L;
+	public static final long PARENTSTRUCTUREID_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long STRUCTUREKEY_COLUMN_BITMASK = 128L;
 
-	public static final long STRUCTUREID_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+
+	public static final long STRUCTUREID_COLUMN_BITMASK = 512L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -178,6 +181,7 @@ public class DDMStructureModelImpl
 		DDMStructure model = new DDMStructureImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setStructureId(soapModel.getStructureId());
 		model.setGroupId(soapModel.getGroupId());
@@ -353,6 +357,11 @@ public class DDMStructureModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DDMStructure, Long>)DDMStructure::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMStructure::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMStructure, Long>)DDMStructure::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMStructure::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<DDMStructure, String>)DDMStructure::setUuid);
@@ -455,6 +464,29 @@ public class DDMStructureModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1174,6 +1206,7 @@ public class DDMStructureModelImpl
 		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
 
 		ddmStructureImpl.setMvccVersion(getMvccVersion());
+		ddmStructureImpl.setCtCollectionId(getCtCollectionId());
 		ddmStructureImpl.setUuid(getUuid());
 		ddmStructureImpl.setStructureId(getStructureId());
 		ddmStructureImpl.setGroupId(getGroupId());
@@ -1256,6 +1289,11 @@ public class DDMStructureModelImpl
 	public void resetOriginalValues() {
 		DDMStructureModelImpl ddmStructureModelImpl = this;
 
+		ddmStructureModelImpl._originalCtCollectionId =
+			ddmStructureModelImpl._ctCollectionId;
+
+		ddmStructureModelImpl._setOriginalCtCollectionId = false;
+
 		ddmStructureModelImpl._originalUuid = ddmStructureModelImpl._uuid;
 
 		ddmStructureModelImpl._originalGroupId = ddmStructureModelImpl._groupId;
@@ -1300,6 +1338,8 @@ public class DDMStructureModelImpl
 			new DDMStructureCacheModel();
 
 		ddmStructureCacheModel.mvccVersion = getMvccVersion();
+
+		ddmStructureCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmStructureCacheModel.uuid = getUuid();
 
@@ -1497,6 +1537,9 @@ public class DDMStructureModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _structureId;

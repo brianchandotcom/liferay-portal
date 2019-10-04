@@ -129,6 +129,8 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newDDMStructureVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newDDMStructureVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMStructureVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -173,6 +175,9 @@ public class DDMStructureVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDDMStructureVersion.getMvccVersion(),
 			newDDMStructureVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingDDMStructureVersion.getCtCollectionId(),
+			newDDMStructureVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingDDMStructureVersion.getStructureVersionId(),
 			newDDMStructureVersion.getStructureVersionId());
@@ -230,6 +235,13 @@ public class DDMStructureVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCTCollectionId() throws Exception {
+		_persistence.countByCTCollectionId(RandomTestUtil.nextLong());
+
+		_persistence.countByCTCollectionId(0L);
+	}
+
+	@Test
 	public void testCountByStructureId() throws Exception {
 		_persistence.countByStructureId(RandomTestUtil.nextLong());
 
@@ -280,10 +292,10 @@ public class DDMStructureVersionPersistenceTest {
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMStructureVersion", "mvccVersion", true, "structureVersionId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "structureId", true,
-			"version", true, "parentStructureId", true, "name", true,
+			"DDMStructureVersion", "mvccVersion", true, "ctCollectionId", true,
+			"structureVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true, "structureId",
+			true, "version", true, "parentStructureId", true, "name", true,
 			"storageType", true, "type", true, "status", true, "statusByUserId",
 			true, "statusByUserName", true, "statusDate", true);
 	}
@@ -540,6 +552,8 @@ public class DDMStructureVersionPersistenceTest {
 		DDMStructureVersion ddmStructureVersion = _persistence.create(pk);
 
 		ddmStructureVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		ddmStructureVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setGroupId(RandomTestUtil.nextLong());
 

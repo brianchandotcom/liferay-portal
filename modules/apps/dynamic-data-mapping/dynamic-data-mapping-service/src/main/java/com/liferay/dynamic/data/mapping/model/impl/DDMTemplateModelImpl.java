@@ -81,20 +81,20 @@ public class DDMTemplateModelImpl
 	public static final String TABLE_NAME = "DDMTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"templateId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"versionUserId", Types.BIGINT},
-		{"versionUserName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"resourceClassNameId", Types.BIGINT},
-		{"templateKey", Types.VARCHAR}, {"version", Types.VARCHAR},
-		{"name", Types.CLOB}, {"description", Types.CLOB},
-		{"type_", Types.VARCHAR}, {"mode_", Types.VARCHAR},
-		{"language", Types.VARCHAR}, {"script", Types.CLOB},
-		{"cacheable", Types.BOOLEAN}, {"smallImage", Types.BOOLEAN},
-		{"smallImageId", Types.BIGINT}, {"smallImageURL", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"templateId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"versionUserId", Types.BIGINT}, {"versionUserName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"resourceClassNameId", Types.BIGINT}, {"templateKey", Types.VARCHAR},
+		{"version", Types.VARCHAR}, {"name", Types.CLOB},
+		{"description", Types.CLOB}, {"type_", Types.VARCHAR},
+		{"mode_", Types.VARCHAR}, {"language", Types.VARCHAR},
+		{"script", Types.CLOB}, {"cacheable", Types.BOOLEAN},
+		{"smallImage", Types.BOOLEAN}, {"smallImageId", Types.BIGINT},
+		{"smallImageURL", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,6 +102,7 @@ public class DDMTemplateModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -131,7 +132,7 @@ public class DDMTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null)";
+		"create table DDMTemplate (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,templateId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,primary key (templateId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 
@@ -153,21 +154,23 @@ public class DDMTemplateModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long CTCOLLECTIONID_COLUMN_BITMASK = 8L;
 
-	public static final long LANGUAGE_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	public static final long MODE_COLUMN_BITMASK = 32L;
+	public static final long LANGUAGE_COLUMN_BITMASK = 32L;
 
-	public static final long SMALLIMAGEID_COLUMN_BITMASK = 64L;
+	public static final long MODE_COLUMN_BITMASK = 64L;
 
-	public static final long TEMPLATEKEY_COLUMN_BITMASK = 128L;
+	public static final long SMALLIMAGEID_COLUMN_BITMASK = 128L;
 
-	public static final long TYPE_COLUMN_BITMASK = 256L;
+	public static final long TEMPLATEKEY_COLUMN_BITMASK = 256L;
 
-	public static final long UUID_COLUMN_BITMASK = 512L;
+	public static final long TYPE_COLUMN_BITMASK = 512L;
 
-	public static final long TEMPLATEID_COLUMN_BITMASK = 1024L;
+	public static final long UUID_COLUMN_BITMASK = 1024L;
+
+	public static final long TEMPLATEID_COLUMN_BITMASK = 2048L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -191,6 +194,7 @@ public class DDMTemplateModelImpl
 		DDMTemplate model = new DDMTemplateImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setGroupId(soapModel.getGroupId());
@@ -372,6 +376,11 @@ public class DDMTemplateModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DDMTemplate, Long>)DDMTemplate::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", DDMTemplate::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<DDMTemplate, Long>)DDMTemplate::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", DDMTemplate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<DDMTemplate, String>)DDMTemplate::setUuid);
@@ -494,6 +503,29 @@ public class DDMTemplateModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_columnBitmask |= CTCOLLECTIONID_COLUMN_BITMASK;
+
+		if (!_setOriginalCtCollectionId) {
+			_setOriginalCtCollectionId = true;
+
+			_originalCtCollectionId = _ctCollectionId;
+		}
+
+		_ctCollectionId = ctCollectionId;
+	}
+
+	public long getOriginalCtCollectionId() {
+		return _originalCtCollectionId;
 	}
 
 	@JSON
@@ -1340,6 +1372,7 @@ public class DDMTemplateModelImpl
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
 
 		ddmTemplateImpl.setMvccVersion(getMvccVersion());
+		ddmTemplateImpl.setCtCollectionId(getCtCollectionId());
 		ddmTemplateImpl.setUuid(getUuid());
 		ddmTemplateImpl.setTemplateId(getTemplateId());
 		ddmTemplateImpl.setGroupId(getGroupId());
@@ -1428,6 +1461,11 @@ public class DDMTemplateModelImpl
 	public void resetOriginalValues() {
 		DDMTemplateModelImpl ddmTemplateModelImpl = this;
 
+		ddmTemplateModelImpl._originalCtCollectionId =
+			ddmTemplateModelImpl._ctCollectionId;
+
+		ddmTemplateModelImpl._setOriginalCtCollectionId = false;
+
 		ddmTemplateModelImpl._originalUuid = ddmTemplateModelImpl._uuid;
 
 		ddmTemplateModelImpl._originalGroupId = ddmTemplateModelImpl._groupId;
@@ -1475,6 +1513,8 @@ public class DDMTemplateModelImpl
 			new DDMTemplateCacheModel();
 
 		ddmTemplateCacheModel.mvccVersion = getMvccVersion();
+
+		ddmTemplateCacheModel.ctCollectionId = getCtCollectionId();
 
 		ddmTemplateCacheModel.uuid = getUuid();
 
@@ -1700,6 +1740,9 @@ public class DDMTemplateModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
+	private long _originalCtCollectionId;
+	private boolean _setOriginalCtCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _templateId;

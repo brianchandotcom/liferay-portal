@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -39,8 +40,7 @@ public class DDMTemplateVersionServiceWrapper
 	 * Never modify or reference this interface directly. Always use {@link DDMTemplateVersionServiceUtil} to access the ddm template version remote service. Add custom service methods to <code>com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
-			getLatestTemplateVersion(long templateId)
+	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionService.getLatestTemplateVersion(templateId);
@@ -57,22 +57,18 @@ public class DDMTemplateVersionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion
-			getTemplateVersion(long templateVersionId)
+	public DDMTemplateVersion getTemplateVersion(long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionService.getTemplateVersion(templateVersionId);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>
-				getTemplateVersions(
-					long templateId, int start, int end,
-					com.liferay.portal.kernel.util.OrderByComparator
-						<com.liferay.dynamic.data.mapping.model.
-							DDMTemplateVersion> orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<DDMTemplateVersion> getTemplateVersions(
+			long templateId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmTemplateVersionService.getTemplateVersions(
 			templateId, start, end, orderByComparator);

@@ -147,6 +147,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructure">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="structureId" type="long" />
 		<field name="groupId" type="long" />
@@ -213,6 +214,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="structureVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -240,6 +242,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplate">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="templateId" type="long" />
 		<field name="groupId" type="long" />
@@ -292,6 +295,7 @@
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="templateVersionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

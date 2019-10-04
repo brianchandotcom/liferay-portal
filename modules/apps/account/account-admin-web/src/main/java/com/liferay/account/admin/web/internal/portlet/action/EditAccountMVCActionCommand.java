@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -61,10 +62,12 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentAccountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		String domains = ParamUtil.getString(actionRequest, "domainNames");
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			_getLogoBytes(actionRequest), _getStatus(actionRequest));
+			StringUtil.split(domains), _getLogoBytes(actionRequest),
+			_getStatus(actionRequest));
 	}
 
 	@Override
@@ -119,10 +122,12 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+		String domains = ParamUtil.getString(actionRequest, "domainNames");
 
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			_getLogoBytes(actionRequest), _getStatus(actionRequest));
+			StringUtil.split(domains), _getLogoBytes(actionRequest),
+			_getStatus(actionRequest));
 	}
 
 	private byte[] _getLogoBytes(ActionRequest actionRequest) throws Exception {

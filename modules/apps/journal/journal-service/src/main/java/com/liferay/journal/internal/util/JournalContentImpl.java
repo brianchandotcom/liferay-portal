@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
@@ -69,9 +70,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Michael Young
  */
-@Component(service = {IdentifiableOSGiService.class, JournalContent.class})
+@Component(
+	service = {
+		CTEventListener.class, IdentifiableOSGiService.class,
+		JournalContent.class
+	}
+)
 public class JournalContentImpl
-	implements IdentifiableOSGiService, JournalContent {
+	implements CTEventListener, IdentifiableOSGiService, JournalContent {
 
 	@Activate
 	public void activate() {
@@ -389,6 +395,11 @@ public class JournalContentImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return JournalContent.class.getName();
+	}
+
+	@Override
+	public void onPublish(long ctCollectionId) {
+		_portalCache.removeAll();
 	}
 
 	protected JournalArticleDisplay getArticleDisplay(

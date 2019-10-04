@@ -19,6 +19,7 @@ import com.liferay.content.repository.constants.ContentRepositoryEntryConstants;
 import com.liferay.content.repository.exception.ContentRepositoryEntryNameException;
 import com.liferay.content.repository.model.ContentRepositoryEntry;
 import com.liferay.content.repository.service.ContentRepositoryEntryLocalService;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -89,6 +90,29 @@ public class ContentRepositoryEntryLocalServiceTest {
 		throws Exception {
 
 		_addContentRepositoryEntry(null, null);
+	}
+
+	@Test(expected = NoSuchGroupException.class)
+	public void testDeleteContentRepositoryEntryDeletesTheGroupToo()
+		throws Exception {
+
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), "description");
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), "name");
+
+		ContentRepositoryEntry contentRepositoryEntry =
+			_contentRepositoryEntryLocalService.addContentRepositoryEntry(
+				nameMap, descriptionMap,
+				ServiceContextTestUtil.getServiceContext());
+
+		_contentRepositoryEntryLocalService.deleteContentRepositoryEntry(
+			contentRepositoryEntry);
+
+		_groupLocalService.getGroup(contentRepositoryEntry.getGroupId());
 	}
 
 	@Test(expected = ContentRepositoryEntryNameException.MustNotBeNull.class)

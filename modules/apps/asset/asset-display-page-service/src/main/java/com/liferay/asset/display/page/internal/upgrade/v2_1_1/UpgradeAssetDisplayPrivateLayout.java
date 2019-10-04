@@ -58,6 +58,10 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update Layout set layoutId = ?, privateLayout = ? where " +
+						"plid = ?"));
+			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update LayoutFriendlyURL set privateLayout = ? where " +
 						"plid = ?"))) {
 
 			ps1.setBoolean(1, true);
@@ -76,9 +80,15 @@ public class UpgradeAssetDisplayPrivateLayout extends UpgradeProcess {
 					ps2.setLong(3, plid);
 
 					ps2.addBatch();
+
+					ps3.setBoolean(1, false);
+					ps3.setLong(2, plid);
+
+					ps3.addBatch();
 				}
 
 				ps2.executeBatch();
+				ps3.executeBatch();
 			}
 		}
 	}

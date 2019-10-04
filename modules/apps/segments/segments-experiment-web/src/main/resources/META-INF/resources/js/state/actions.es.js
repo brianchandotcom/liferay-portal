@@ -22,12 +22,24 @@ export const addVariant = payload => ({
 	type: 'ADD_VARIANT'
 });
 
+export const archiveExperiment = payload => ({
+	payload,
+	type: 'ARCHIVE_EXPERIMENT'
+});
+
 export const closeCreationModal = () => ({
 	type: 'CREATE_EXPERIMENT_FINISH'
 });
 
 export const closeEditionModal = () => ({
 	type: 'EDIT_EXPERIMENT_FINISH'
+});
+
+export const deleteArchivedExperiment = experimentId => ({
+	payload: {
+		experimentId
+	},
+	type: 'DELETE_ARCHIVED_EXPERIMENT'
 });
 
 export const openCreationModal = payload => ({
@@ -53,16 +65,4 @@ export const updateVariant = payload => ({
 export const updateVariants = payload => ({
 	payload,
 	type: 'UPDATE_VARIANTS'
-});
-
-export const archiveExperiment = payload => ({
-	payload,
-	type: 'ARCHIVE_EXPERIMENT'
-});
-
-export const deleteArchivedExperiment = experimentId => ({
-	payload: {
-		experimentId
-	},
-	type: 'DELETE_ARCHIVED_EXPERIMENT'
 });

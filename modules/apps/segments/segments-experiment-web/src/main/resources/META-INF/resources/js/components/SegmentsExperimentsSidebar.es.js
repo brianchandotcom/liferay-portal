@@ -32,15 +32,15 @@ import {
 	StateContext
 } from '../state/context.es';
 import {
+	addSegmentsExperiment,
+	addVariant,
 	archiveExperiment,
 	closeCreationModal,
 	closeEditionModal,
-	openEditionModal,
-	openCreationModal,
-	addSegmentsExperiment,
 	deleteArchivedExperiment,
-	updateSegmentsExperiment,
-	addVariant
+	openCreationModal,
+	openEditionModal,
+	updateSegmentsExperiment
 } from '../state/actions.es';
 import {STATUS_COMPLETED, STATUS_TERMINATED} from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';

@@ -26,6 +26,18 @@ export function reducer(state, action) {
 				variants: [...state.variants, action.payload]
 			};
 
+		case 'ARCHIVE_EXPERIMENT':
+			return {
+				...state,
+				experiment: null,
+				experimentHistory: [
+					{...state.experiment, status: action.payload.status},
+					...state.experimentHistory
+				],
+				variants: [],
+				viewExperimentURL: undefined
+			};
+
 		case 'CREATE_EXPERIMENT_FINISH':
 			return {
 				...state,
@@ -36,6 +48,19 @@ export function reducer(state, action) {
 
 		case 'CREATE_EXPERIMENT_START':
 			return _createExperimentStart(state, action.payload);
+
+		case 'DELETE_ARCHIVED_EXPERIMENT':
+			return {
+				...state,
+				experimentHistory: state.experimentHistory.filter(
+					experiment => {
+						return (
+							experiment.segmentsExperimentId !==
+							action.payload.experimentId
+						);
+					}
+				)
+			};
 
 		case 'EDIT_EXPERIMENT_FINISH':
 			return {
@@ -72,30 +97,6 @@ export function reducer(state, action) {
 			return {
 				...state,
 				variants: action.payload
-			};
-
-		case 'ARCHIVE_EXPERIMENT':
-			return {
-				...state,
-				experiment: null,
-				experimentHistory: [
-					{...state.experiment, status: action.payload.status},
-					...state.experimentHistory
-				],
-				variants: [],
-				viewExperimentURL: undefined
-			};
-		case 'DELETE_ARCHIVED_EXPERIMENT':
-			return {
-				...state,
-				experimentHistory: state.experimentHistory.filter(
-					experiment => {
-						return (
-							experiment.segmentsExperimentId !==
-							action.payload.experimentId
-						);
-					}
-				)
 			};
 
 		default:

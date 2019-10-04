@@ -36,6 +36,11 @@ public class DocumentLibraryExtraSettingsConvertProcess
 	}
 
 	@Override
+	public boolean hasCustomView() {
+		return true;
+	}
+
+	@Override
 	public boolean isEnabled() {
 		try {
 			return DLFileEntryLocalServiceUtil.hasExtraSettings();
@@ -49,6 +54,11 @@ public class DocumentLibraryExtraSettingsConvertProcess
 
 	@Override
 	protected void doConvert() throws Exception {
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/edit_document_library_extra_settings.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

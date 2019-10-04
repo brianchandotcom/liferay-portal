@@ -83,7 +83,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			File newFileNameVersionFile = new File(
 				newFileNameDir + StringPool.SLASH + newFileNameVersion);
 
-			fileSystemHelper.move(fileNameVersionFile, newFileNameVersionFile);
+			move(fileNameVersionFile, newFileNameVersionFile);
 		}
 	}
 

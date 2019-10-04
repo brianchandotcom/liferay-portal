@@ -17,7 +17,19 @@ package com.liferay.portal.convert;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.MaintenanceUtil;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -94,6 +106,47 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 	}
 
 	@Override
+	public boolean includeCustomView(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		String jspPath = getJspPath();
+
+		if (Validator.isNull(jspPath)) {
+			return false;
+		}
+
+		ResourceBundleLoader resourceBundleLoader =
+			(ResourceBundleLoader)httpServletRequest.getAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER);
+
+		ServletContext servletContext = getServletContext(httpServletRequest);
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(jspPath);
+
+		try {
+			httpServletRequest.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER,
+				getResourceBundleLoader(httpServletRequest));
+
+			requestDispatcher.include(httpServletRequest, httpServletResponse);
+
+			return true;
+		}
+		catch (ServletException se) {
+			_log.error("Unable to include JSP " + jspPath, se);
+
+			throw new IOException("Unable to include " + jspPath, se);
+		}
+		finally {
+			httpServletRequest.setAttribute(
+				WebKeys.RESOURCE_BUNDLE_LOADER, resourceBundleLoader);
+		}
+	}
+
+	@Override
 	public abstract boolean isEnabled();
 
 	@Override
@@ -109,6 +162,26 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 	}
 
 	protected abstract void doConvert() throws Exception;
+
+	protected String getJspPath() {
+		return null;
+	}
+
+	protected ResourceBundleLoader getResourceBundleLoader(
+		HttpServletRequest httpServletRequest) {
+
+		ServletContext servletContext = getServletContext(httpServletRequest);
+
+		return ResourceBundleLoaderUtil.
+			getResourceBundleLoaderByServletContextName(
+				servletContext.getServletContextName());
+	}
+
+	protected ServletContext getServletContext(
+		HttpServletRequest httpServletRequest) {
+
+		return httpServletRequest.getServletContext();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseConvertProcess.class);

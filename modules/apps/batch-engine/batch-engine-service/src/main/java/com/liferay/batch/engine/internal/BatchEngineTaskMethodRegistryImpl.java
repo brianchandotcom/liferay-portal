@@ -65,17 +65,19 @@ public class BatchEngineTaskMethodRegistryImpl
 			bundleContext.createFilter(
 				"(&(api.version=*)(osgi.jaxrs.resource=true))"),
 			new BatchEngineTaskMethodServiceTrackerCustomizer(bundleContext));
-
-		_serviceTracker.open();
 	}
 
 	@Deactivate
 	public void deactivate() {
 		_serviceTracker.close();
+
+		_open = false;
 	}
 
 	@Override
 	public Class<?> getItemClass(String itemClassName) {
+		_ensureOpen();
+
 		Map.Entry<Class<?>, AtomicInteger> entry = _itemClasses.get(
 			itemClassName);
 
@@ -94,13 +96,34 @@ public class BatchEngineTaskMethodRegistryImpl
 				BatchEngineTaskOperation batchEngineTaskOperation,
 				String itemClassName) {
 
+		_ensureOpen();
+
 		return _unsafeBiFunctions.get(
 			new FactoryKey(
 				apiVersion, batchEngineTaskOperation, itemClassName));
 	}
 
+	private void _ensureOpen() {
+		boolean opened = _open;
+
+		if (opened) {
+			return;
+		}
+
+		synchronized (this) {
+			if (_open) {
+				return;
+			}
+
+			_serviceTracker.open();
+
+			_open = true;
+		}
+	}
+
 	private final Map<String, Map.Entry<Class<?>, AtomicInteger>> _itemClasses =
 		new ConcurrentHashMap<>();
+	private volatile boolean _open;
 	private ServiceTracker<Object, List<FactoryKey>> _serviceTracker;
 	private final Map
 		<FactoryKey,

@@ -42,18 +42,6 @@ import java.io.InputStream;
 public abstract class BaseStore implements Store {
 
 	/**
-	 * Adds a directory.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param dirName the directory's name
-	 */
-	@Override
-	public abstract void addDirectory(
-		long companyId, long repositoryId, String dirName);
-
-	/**
 	 * Adds a file based on a byte array.
 	 *
 	 * @param companyId the primary key of the company
@@ -103,30 +91,6 @@ public abstract class BaseStore implements Store {
 		}
 	}
 
-	/**
-	 * Adds a file based on an {@link InputStream} object.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param is the files's data
-	 */
-	@Override
-	public abstract void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException;
-
-	/**
-	 * Ensures company's root directory exists.
-	 *
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 * @param companyId the primary key of the company
-	 */
-	@Deprecated
-	@Override
-	public abstract void checkRoot(long companyId);
-
 	@Override
 	public void copyFileToStore(
 		long companyId, long repositoryId, String fileName, String versionLabel,
@@ -168,45 +132,6 @@ public abstract class BaseStore implements Store {
 
 		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
-
-	/**
-	 * Deletes a directory.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param dirName the directory's name
-	 */
-	@Override
-	public abstract void deleteDirectory(
-		long companyId, long repositoryId, String dirName);
-
-	/**
-	 * Deletes a file. If a file has multiple versions, all versions will be
-	 * deleted.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file's name
-	 */
-	@Override
-	public abstract void deleteFile(
-		long companyId, long repositoryId, String fileName);
-
-	/**
-	 * Deletes a file at a particular version.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file's name
-	 * @param versionLabel the file's version label
-	 */
-	@Override
-	public abstract void deleteFile(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel);
 
 	/**
 	 * Returns the file as a {@link File} object.
@@ -335,63 +260,6 @@ public abstract class BaseStore implements Store {
 	}
 
 	/**
-	 * Returns the file as an {@link InputStream} object.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @param  versionLabel the file's version label
-	 * @return Returns the {@link InputStream} object with the file's name
-	 */
-	@Override
-	public abstract InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
-
-	/**
-	 * Returns all files of the directory.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
-	 * @return Returns all files of the directory
-	 */
-	@Override
-	public abstract String[] getFileNames(
-		long companyId, long repositoryId, String dirName);
-
-	/**
-	 * Returns the size of the file.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the size of the file
-	 */
-	@Override
-	public abstract long getFileSize(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException;
-
-	/**
-	 * Returns <code>true</code> if the directory exists.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
-	 * @return <code>true</code> if the directory exists; <code>false</code>
-	 *         otherwise
-	 */
-	@Override
-	public abstract boolean hasDirectory(
-		long companyId, long repositoryId, String dirName);
-
-	/**
 	 * Returns <code>true</code> if the file exists.
 	 *
 	 * @param  companyId the primary key of the company
@@ -405,22 +273,6 @@ public abstract class BaseStore implements Store {
 	public boolean hasFile(long companyId, long repositoryId, String fileName) {
 		return hasFile(companyId, repositoryId, fileName, VERSION_DEFAULT);
 	}
-
-	/**
-	 * Returns <code>true</code> if the file exists.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @param  versionLabel the file's version label
-	 * @return <code>true</code> if the file exists; <code>false</code>
-	 *         otherwise
-	 */
-	@Override
-	public abstract boolean hasFile(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel);
 
 	/**
 	 * Moves an existing directory.
@@ -442,20 +294,6 @@ public abstract class BaseStore implements Store {
 		_transfer(
 			companyId, repositoryId, fileName, versionLabel, targetStore, true);
 	}
-
-	/**
-	 * Moves a file to a new data repository.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository
-	 * @param newRepositoryId the primary key of the new data repository
-	 * @param fileName the file's name
-	 */
-	@Override
-	public abstract void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException;
 
 	/**
 	 * Updates a file based on a byte array.
@@ -512,22 +350,6 @@ public abstract class BaseStore implements Store {
 			_log.error("Unable to update file", ioe);
 		}
 	}
-
-	/**
-	 * Updates a file based on an {@link InputStream} object.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param versionLabel the file's new version label
-	 * @param is the new file's data
-	 */
-	@Override
-	public abstract void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws PortalException;
 
 	/**
 	 * Update's a file version label. Similar to {@link #copyFileVersion(long,

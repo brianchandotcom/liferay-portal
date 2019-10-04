@@ -834,7 +834,12 @@ information.
 					<not>
 						<equals arg1="@{outputproperty}" arg2="" />
 					</not>
-					<equals arg1="${gradle.execute.silent}" arg2="true" />
+					<and>
+						<not>
+							<isset property="env.JENKINS_HOME" />
+						</not>
+						<equals arg1="${gradle.execute.silent}" arg2="true" />
+					</and>
 				</or>
 				<then>
 					<property name="redirector.error.property" value="error.property" />

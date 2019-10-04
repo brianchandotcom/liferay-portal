@@ -259,6 +259,27 @@ public class SubscriptionSender implements Serializable {
 		return serviceContext;
 	}
 
+	public boolean hasSubscribers() {
+		if (!_runtimeSubscribersOVPs.isEmpty()) {
+			return true;
+		}
+
+		for (Tuple tuple : _persistedSubscribersTuples) {
+			String className = (String)tuple.getObject(0);
+			long classPK = (long)tuple.getObject(1);
+
+			List<Subscription> subscriptions =
+				SubscriptionLocalServiceUtil.getSubscriptions(
+					companyId, className, classPK);
+
+			if (!subscriptions.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void initialize() throws Exception {
 		if (_initialized) {
 			return;

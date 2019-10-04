@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.repository.internal.constants;
+package com.liferay.content.repository.constants;
 
 import com.liferay.portal.kernel.model.GroupConstants;
 

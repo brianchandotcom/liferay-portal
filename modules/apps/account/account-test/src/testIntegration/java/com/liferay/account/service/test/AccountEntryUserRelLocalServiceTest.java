@@ -16,6 +16,7 @@ package com.liferay.account.service.test;
 
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.exception.NoSuchEntryException;
+import com.liferay.account.exception.NoSuchEntryUserRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
@@ -190,6 +191,40 @@ public class AccountEntryUserRelLocalServiceTest {
 		Assert.assertNull(
 			_userLocalService.fetchUserByScreenName(
 				TestPropsValues.getCompanyId(), _userInfo.screenName));
+	}
+
+	@Test
+	public void testDeleteAccountEntryUserRels() throws Exception {
+		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId());
+
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId());
+
+		Assert.assertEquals(
+			accountEntryUserRels.toString(), 1, accountEntryUserRels.size());
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+			_accountEntry.getAccountEntryId(),
+			new long[] {accountEntryUserRel.getAccountUserId()});
+
+		accountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId());
+
+		Assert.assertEquals(
+			accountEntryUserRels.toString(), 0, accountEntryUserRels.size());
+	}
+
+	@Test(expected = NoSuchEntryUserRelException.class)
+	public void testDeleteAccountEntryUserRelsThrowsNSEURException()
+		throws Exception {
+
+		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
+			_accountEntry.getAccountEntryId(), new long[] {_user.getUserId()});
 	}
 
 	@Test

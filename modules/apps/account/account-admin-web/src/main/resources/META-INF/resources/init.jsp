@@ -34,6 +34,7 @@ page import="com.liferay.account.admin.web.internal.display.AccountUserDisplay" 
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
+page import="com.liferay.account.exception.AccountEntryDomainsException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

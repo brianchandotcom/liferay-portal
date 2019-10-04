@@ -36,31 +36,6 @@ const CustomTimeRangeForm = ({filterKey}) => {
 
 	const dateFormat = 'MM/DD/YYYY';
 
-	const FormGroupItem = ({children, error}) => (
-		<div className={`form-group-item ${error ? 'has-error' : ''}`}>
-			<div className="input-group">
-				<div className="input-group-item">{children}</div>
-			</div>
-
-			{error && (
-				<div className="form-feedback-group">
-					<div className="form-feedback-item">
-						<span className="form-feedback-indicator mr-2">
-							<Icon iconName="exclamation-full" />
-						</span>
-
-						<span
-							className="text-semi-bold"
-							data-testid="errorSpan"
-						>
-							{error}
-						</span>
-					</div>
-				</div>
-			)}
-		</div>
-	);
-
 	const onBlur = ({target: {name, value}}) => {
 		validate(name, value);
 	};
@@ -164,5 +139,27 @@ const CustomTimeRangeForm = ({filterKey}) => {
 		</div>
 	);
 };
+
+const FormGroupItem = ({children, error}) => (
+	<div className={`form-group-item ${error ? 'has-error' : ''}`}>
+		<div className="input-group">
+			<div className="input-group-item">{children}</div>
+		</div>
+
+		{error && (
+			<div className="form-feedback-group">
+				<div className="form-feedback-item">
+					<span className="form-feedback-indicator mr-2">
+						<Icon iconName="exclamation-full" />
+					</span>
+
+					<span className="text-semi-bold" data-testid="errorSpan">
+						{error}
+					</span>
+				</div>
+			</div>
+		)}
+	</div>
+);
 
 export {CustomTimeRangeForm};

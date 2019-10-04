@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.SerialDestination;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.messaging.internal.DefaultMessageBus;
+import com.liferay.portal.messaging.internal.SerialDestination;
+import com.liferay.portal.messaging.internal.SynchronousDestination;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -130,17 +130,9 @@ public class DefaultSynchronousMessageSenderTest {
 
 	@Test
 	public void testSendToAsyncDestination() throws MessageBusException {
-		SerialDestination serialDestination = new SerialDestination() {
+		SerialDestination serialDestination = new SerialDestination();
 
-			@Override
-			public void open() {
-				portalExecutorManager = _portalExecutorManager;
-
-				super.open();
-			}
-
-		};
-
+		serialDestination.setPortalExecutorManager(_portalExecutorManager);
 		serialDestination.setName("testSerialDestination");
 
 		serialDestination.afterPropertiesSet();

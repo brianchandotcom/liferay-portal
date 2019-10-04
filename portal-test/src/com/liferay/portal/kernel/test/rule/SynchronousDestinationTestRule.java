@@ -18,7 +18,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -26,7 +27,7 @@ import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -106,19 +107,19 @@ public class SynchronousDestinationTestRule
 		public BaseDestination createSynchronousDestination(
 			String destinationName) {
 
-			SynchronousDestination synchronousDestination = null;
+			TestSynchronousDestination testSynchronousDestination = null;
 
 			if ((_sync != null) && _sync.cleanTransaction()) {
-				synchronousDestination =
+				testSynchronousDestination =
 					new CleanTransactionSynchronousDestination();
 			}
 			else {
-				synchronousDestination = new SynchronousDestination();
+				testSynchronousDestination = new TestSynchronousDestination();
 			}
 
-			synchronousDestination.setName(destinationName);
+			testSynchronousDestination.setName(destinationName);
 
-			return synchronousDestination;
+			return testSynchronousDestination;
 		}
 
 		public void enableSync() {
@@ -188,9 +189,8 @@ public class SynchronousDestinationTestRule
 						searchEngineId));
 			}
 
-			BaseAsyncDestination schedulerDestination =
-				(BaseAsyncDestination)_destinations.get(
-					DestinationNames.SCHEDULER_DISPATCH);
+			Destination schedulerDestination = _destinations.get(
+				DestinationNames.SCHEDULER_DISPATCH);
 
 			if (schedulerDestination == null) {
 				return;
@@ -210,8 +210,11 @@ public class SynchronousDestinationTestRule
 				_schedulerInvokerMessageListeners.add(invokerMessageListener);
 			}
 
+			int workersMaxSize = ReflectionTestUtil.getFieldValue(
+				schedulerDestination, "_workersMaxSize");
+
 			CountDownLatch startCountDownLatch = new CountDownLatch(
-				schedulerDestination.getWorkersMaxSize());
+				workersMaxSize);
 
 			CountDownLatch endCountDownLatch = new CountDownLatch(1);
 
@@ -232,7 +235,7 @@ public class SynchronousDestinationTestRule
 
 			schedulerDestination.register(messageListener);
 
-			for (int i = 0; i < schedulerDestination.getWorkersMaxSize(); i++) {
+			for (int i = 0; i < workersMaxSize; i++) {
 				schedulerDestination.send(countDownMessage);
 			}
 
@@ -251,7 +254,20 @@ public class SynchronousDestinationTestRule
 		public void replaceDestination(String destinationName) {
 			Destination destination = _destinations.get(destinationName);
 
-			if (destination instanceof BaseAsyncDestination) {
+			boolean asyncDestination = false;
+
+			if (destination != null) {
+				try {
+					ReflectionTestUtil.getField(
+						destination.getClass(), "_threadPoolExecutor");
+
+					asyncDestination = true;
+				}
+				catch (Exception e) {
+				}
+			}
+
+			if (asyncDestination) {
 				_asyncServiceDestinations.add(destination);
 
 				Destination synchronousDestination =
@@ -330,6 +346,25 @@ public class SynchronousDestinationTestRule
 
 	}
 
+	public static class TestSynchronousDestination extends BaseDestination {
+
+		@Override
+		public void send(Message message) {
+			for (MessageListener messageListener : messageListeners) {
+				try {
+					messageListener.receive(message);
+				}
+				catch (MessageListenerException mle) {
+					_log.error("Unable to process message " + message, mle);
+				}
+			}
+		}
+
+		private static final Log _log = LogFactoryUtil.getLog(
+			TestSynchronousDestination.class);
+
+	}
+
 	protected SynchronousDestinationTestRule() {
 	}
 
@@ -357,7 +392,7 @@ public class SynchronousDestinationTestRule
 	}
 
 	private static class CleanTransactionSynchronousDestination
-		extends SynchronousDestination {
+		extends TestSynchronousDestination {
 
 		@Override
 		public void send(final Message message) {

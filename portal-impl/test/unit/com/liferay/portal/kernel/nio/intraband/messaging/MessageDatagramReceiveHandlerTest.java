@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.PortalExecutorManagerInvocationHandler;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.nio.intraband.test.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.test.MockRegistrationReference;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.registry.BasicRegistryImpl;
@@ -133,7 +133,8 @@ public class MessageDatagramReceiveHandlerTest {
 
 		// Normal destination, synchronized, no listener
 
-		BaseDestination baseDestination = new SynchronousDestination();
+		BaseDestination baseDestination =
+			new SynchronousDestinationTestRule.TestSynchronousDestination();
 
 		baseDestination.setName(
 			MessageDatagramReceiveHandlerTest.class.getName());
@@ -228,7 +229,8 @@ public class MessageDatagramReceiveHandlerTest {
 
 		// Intraband bridge destination, not synchronized, no listener
 
-		baseDestination = new SynchronousDestination();
+		baseDestination =
+			new SynchronousDestinationTestRule.TestSynchronousDestination();
 
 		baseDestination.setName(
 			MessageDatagramReceiveHandlerTest.class.getName());

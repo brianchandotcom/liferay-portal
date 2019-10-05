@@ -251,7 +251,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	public synchronized Destination removeDestination(
 		String destinationName, boolean closeOnRemove) {
 
-		return _removeDestination(destinationName, closeOnRemove);
+		return _removeDestination(destinationName);
 	}
 
 	@Override
@@ -283,7 +283,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		oldDestination.copyDestinationEventListeners(destination);
 		oldDestination.copyMessageListeners(destination);
 
-		removeDestination(oldDestination.getName(), closeOnRemove);
+		_removeDestination(oldDestination.getName());
 
 		doAddDestination(destination);
 	}
@@ -479,7 +479,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	protected synchronized void unregisterDestination(
 		Destination destination, Map<String, Object> properties) {
 
-		_removeDestination(destination.getName(), true);
+		_removeDestination(destination.getName());
 
 		destination.destroy();
 	}
@@ -533,18 +533,14 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		}
 	}
 
-	private Destination _removeDestination(
-		String destinationName, boolean closeOnRemove) {
-
+	private Destination _removeDestination(String destinationName) {
 		Destination destination = _destinations.remove(destinationName);
 
 		if (destination == null) {
 			return null;
 		}
 
-		if (closeOnRemove) {
-			destination.close(true);
-		}
+		destination.close(true);
 
 		destination.removeDestinationEventListeners();
 

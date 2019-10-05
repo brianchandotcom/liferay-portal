@@ -63,14 +63,15 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		_setRelevantTestBatchRunPropertyQuery();
 	}
 
-	private String _getDefaultTestBatchRunPropertyQuery() {
-		return getFirstPropertyValue("test.batch.run.property.query");
+	private String _getDefaultTestBatchRunPropertyQuery(String testSuiteName) {
+		return getFirstPropertyValue(
+			"test.batch.run.property.query", batchName, testSuiteName);
 	}
 
 	private void _setRelevantTestBatchRunPropertyQuery() {
 		if (!testRelevantChanges) {
 			_relevantTestBatchRunPropertyQuery =
-				_getDefaultTestBatchRunPropertyQuery();
+				_getDefaultTestBatchRunPropertyQuery(testSuiteName);
 
 			return;
 		}
@@ -153,10 +154,20 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		if (sb.length() == 0) {
-			_relevantTestBatchRunPropertyQuery =
-				_getDefaultTestBatchRunPropertyQuery();
+			sb.append("(");
+			sb.append(_getDefaultTestBatchRunPropertyQuery(testSuiteName));
+			sb.append(")");
+		}
 
-			return;
+		String stableTestBatchRunPropertyQuery =
+			_getDefaultTestBatchRunPropertyQuery(NAME_STABLE_TEST_SUITE);
+
+		if ((stableTestBatchRunPropertyQuery != null) && includeStableSuite &&
+			isStableTestSuiteBatch()) {
+
+			sb.append(" OR (");
+			sb.append(stableTestBatchRunPropertyQuery);
+			sb.append(")");
 		}
 
 		_relevantTestBatchRunPropertyQuery = sb.toString();

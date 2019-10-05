@@ -140,6 +140,13 @@ public class AccountEntryUserRelLocalServiceImpl
 		return accountEntryUserRelPersistence.findByAEI(accountEntryId);
 	}
 
+	@Override
+	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountUserId(
+		long accountUserId) {
+
+		return accountEntryUserRelPersistence.findByAUI(accountUserId);
+	}
+
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
 

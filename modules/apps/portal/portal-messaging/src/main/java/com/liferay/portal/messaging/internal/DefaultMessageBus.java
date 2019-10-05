@@ -556,7 +556,8 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultMessageBus.class);
 
-	private final Map<String, Destination> _destinations = new HashMap<>();
+	private final Map<String, Destination> _destinations =
+		new ConcurrentHashMap<>();
 	private final Map<String, DestinationWorkerConfiguration>
 		_destinationWorkerConfigurations = new ConcurrentHashMap<>();
 	private final Map<String, String> _factoryPidsToDestinationName =

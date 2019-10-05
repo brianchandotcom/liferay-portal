@@ -16,10 +16,12 @@ package com.liferay.batch.engine.internal.messaging;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
@@ -45,22 +46,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ivica Cardic
  */
 @Component(
-	immediate = true, property = {"orphanage.threshold=30", "scan.interval=60"},
-	service = MessageListener.class
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
+	immediate = true, service = MessageListener.class
 )
 public class BatchEngineTaskOrphanScannerMessageListener
 	extends BaseMessageListener {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineTaskConfiguration.class, properties);
+
 		_orphanageThreshold =
-			GetterUtil.getLong(properties.get("orphanage.threshold")) *
-				Time.MINUTE;
+			batchEngineTaskConfiguration.orphanageThreshold() * Time.MINUTE;
 
 		String className =
 			BatchEngineTaskOrphanScannerMessageListener.class.getName();
-		int scanInterval = GetterUtil.getInteger(
-			properties.get("scan.interval"));
+		int scanInterval = batchEngineTaskConfiguration.orphanScanInterval();
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,

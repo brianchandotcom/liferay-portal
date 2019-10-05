@@ -489,41 +489,49 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	}
 
 	private void _addDestination(Destination destination) {
-		Destination oldDestination = _destinations.put(
-			destination.getName(), destination);
+		Destination oldDestination = _destinations.get(destination.getName());
 
 		if (oldDestination != null) {
 			oldDestination.copyDestinationEventListeners(destination);
 			oldDestination.copyMessageListeners(destination);
+		}
+		else {
+			List<MessageListener> messageListeners =
+				_queuedMessageListeners.remove(destination.getName());
 
-			_removeDestination(oldDestination.getName());
+			if (!ListUtil.isEmpty(messageListeners)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Registering ", messageListeners.size(),
+							" queued message listeners for destination ",
+							destination.getName()));
+				}
+
+				for (MessageListener messageListener : messageListeners) {
+					destination.register(messageListener);
+				}
+			}
 		}
 
 		destination.open();
+
+		_destinations.put(destination.getName(), destination);
+
+		if (oldDestination != null) {
+			oldDestination.destroy();
+
+			for (MessageBusEventListener messageBusEventListener :
+					_messageBusEventListeners) {
+
+				messageBusEventListener.destinationRemoved(oldDestination);
+			}
+		}
 
 		for (MessageBusEventListener messageBusEventListener :
 				_messageBusEventListeners) {
 
 			messageBusEventListener.destinationAdded(destination);
-		}
-
-		List<MessageListener> messageListeners = _queuedMessageListeners.remove(
-			destination.getName());
-
-		if (ListUtil.isEmpty(messageListeners)) {
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Registering ", messageListeners.size(),
-					" queued message listeners for destination ",
-					destination.getName()));
-		}
-
-		for (MessageListener messageListener : messageListeners) {
-			destination.register(messageListener);
 		}
 	}
 

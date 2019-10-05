@@ -18,18 +18,21 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -42,18 +45,32 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Ivica Cardic
  */
 @Component(
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
 	properties = "OSGI-INF/liferay/rest/v1_0/import-task.properties",
-	property = {"batch.engine=true", "batch.size=100"},
 	scope = ServiceScope.PROTOTYPE, service = ImportTaskResource.class
 )
 public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Activate
 	public void activate(Map<String, Object> properties) {
-		_batchSize = GetterUtil.getLong(properties.get("batch.size"));
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineTaskConfiguration.class, properties);
 
-		if (_batchSize <= 0) {
-			_batchSize = 1;
+		_defaultBatchSize = batchEngineTaskConfiguration.batchSize();
+
+		if (_defaultBatchSize <= 0) {
+			_defaultBatchSize = 1;
+		}
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
+			if (key.startsWith("batchSize.")) {
+				_itemClassBatchSizeMap.put(
+					key.substring(key.indexOf(".") + 1),
+					GetterUtil.getInteger(entry.getValue()));
+			}
 		}
 	}
 
@@ -116,10 +133,16 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_portalExecutorManager.getPortalExecutor(
 				ImportTaskResourceImpl.class.getName());
 
+		long batchSize = _defaultBatchSize;
+
+		if (_itemClassBatchSizeMap.containsKey(className)) {
+			batchSize = _itemClassBatchSizeMap.get(className);
+		}
+
 		BatchEngineTask batchEngineTask =
 			_batchEngineTaskLocalService.addBatchEngineTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				_batchSize, callbackURL, className,
+				batchSize, callbackURL, className,
 				StreamUtil.toByteArray(binaryFile.getInputStream()),
 				StringUtil.upperCase(
 					_file.getExtension(binaryFile.getFileName())),
@@ -155,10 +178,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;
 
-	private long _batchSize;
+	private int _defaultBatchSize;
 
 	@Reference
 	private File _file;
+
+	private final Map<String, Integer> _itemClassBatchSizeMap = new HashMap<>();
 
 	@Reference
 	private ItemClassRegistry _itemClassRegistry;

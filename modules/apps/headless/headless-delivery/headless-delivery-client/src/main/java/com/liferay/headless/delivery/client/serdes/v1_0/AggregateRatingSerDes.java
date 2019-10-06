@@ -65,6 +65,16 @@ public class AggregateRatingSerDes {
 			sb.append(aggregateRating.getBestRating());
 		}
 
+		if (aggregateRating.getRatingAverage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ratingAverage\": ");
+
+			sb.append(aggregateRating.getRatingAverage());
+		}
+
 		if (aggregateRating.getRatingCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -122,6 +132,15 @@ public class AggregateRatingSerDes {
 				"bestRating", String.valueOf(aggregateRating.getBestRating()));
 		}
 
+		if (aggregateRating.getRatingAverage() == null) {
+			map.put("ratingAverage", null);
+		}
+		else {
+			map.put(
+				"ratingAverage",
+				String.valueOf(aggregateRating.getRatingAverage()));
+		}
+
 		if (aggregateRating.getRatingCount() == null) {
 			map.put("ratingCount", null);
 		}
@@ -173,6 +192,12 @@ public class AggregateRatingSerDes {
 			if (Objects.equals(jsonParserFieldName, "bestRating")) {
 				if (jsonParserFieldValue != null) {
 					aggregateRating.setBestRating(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ratingAverage")) {
+				if (jsonParserFieldValue != null) {
+					aggregateRating.setRatingAverage(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}

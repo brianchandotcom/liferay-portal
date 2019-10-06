@@ -49,6 +49,27 @@ public class AggregateRating {
 
 	protected Double bestRating;
 
+	public Double getRatingAverage() {
+		return ratingAverage;
+	}
+
+	public void setRatingAverage(Double ratingAverage) {
+		this.ratingAverage = ratingAverage;
+	}
+
+	public void setRatingAverage(
+		UnsafeSupplier<Double, Exception> ratingAverageUnsafeSupplier) {
+
+		try {
+			ratingAverage = ratingAverageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double ratingAverage;
+
 	public Integer getRatingCount() {
 		return ratingCount;
 	}

@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -98,7 +99,8 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 						return CreatorUtil.toCreator(
 							_portal,
-							_userService.getUserById(mbMessage.getUserId()));
+							_userLocalService.getUserById(
+								mbMessage.getUserId()));
 					});
 			}
 		};
@@ -124,6 +126,9 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

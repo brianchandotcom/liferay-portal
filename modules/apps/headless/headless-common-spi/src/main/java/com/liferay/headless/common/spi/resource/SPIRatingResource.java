@@ -58,7 +58,7 @@ public class SPIRatingResource<T> {
 
 	public T getRating(Long classPK) throws Exception {
 		return _transformUnsafeFunction.apply(
-			_ratingsEntryLocalService.getEntry(
+			_ratingsEntryLocalService.fetchEntry(
 				_user.getUserId(), _className, classPK));
 	}
 

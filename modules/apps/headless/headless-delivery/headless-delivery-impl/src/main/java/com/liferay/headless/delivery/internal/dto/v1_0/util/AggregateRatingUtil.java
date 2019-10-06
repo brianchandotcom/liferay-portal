@@ -30,8 +30,9 @@ public class AggregateRatingUtil {
 		return new AggregateRating() {
 			{
 				bestRating = 1D;
+				ratingAverage = ratingsStats.getAverageScore();
 				ratingCount = ratingsStats.getTotalEntries();
-				ratingValue = ratingsStats.getAverageScore();
+				ratingValue = ratingsStats.getTotalScore();
 				worstRating = 0D;
 			}
 		};

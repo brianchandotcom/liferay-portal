@@ -8,12 +8,18 @@ components:
                     format: double
                     readOnly: true
                     type: number
+                ratingAverage:
+                    description: The average rating.
+                    format: double
+                    readOnly: true
+                    type: number
                 ratingCount:
                     description: The number of ratings.
                     readOnly: true
                     type: integer
                 ratingValue:
-                    description: The average rating.
+                    #@review
+                    description: The rating value.
                     format: double
                     readOnly: true
                     type: number

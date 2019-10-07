@@ -988,7 +988,7 @@ public class DDMStructureLocalServiceImpl
 		long companyId, long[] groupIds, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return ddmStructureFinder.filterFindByC_G_C_S(
+		return ddmStructureFinder.findByC_G_C_S(
 			companyId, groupIds, classNameId, WorkflowConstants.STATUS_ANY,
 			start, end, orderByComparator);
 	}

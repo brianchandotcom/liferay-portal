@@ -68,9 +68,6 @@ if (!dlFileEntries.isEmpty()) {
 			</div>
 		</c:if>
 
-		<portlet:actionURL name="/server_admin/edit_document_library_extra_settings" var="convertDocumentLibraryExtraSettingsURL" />
-
-		<aui:form action="<%= convertDocumentLibraryExtraSettingsURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "convertDocumentLibraryExtraSettings();" %>'>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="keys" type="hidden" value="<%= StringUtil.merge(keys) %>" />
 
@@ -107,17 +104,20 @@ if (!dlFileEntries.isEmpty()) {
 			%>
 
 			<aui:button-row>
-				<aui:button type="submit" />
+				<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "convertDocumentLibraryExtraSettings(event)" %>' type="submit"/>
 			</aui:button-row>
-		</aui:form>
 	</c:otherwise>
 </c:choose>
 
 <aui:script>
-	function <portlet:namespace />convertDocumentLibraryExtraSettings() {
+	function <portlet:namespace />convertDocumentLibraryExtraSettings(event) {
+		event.preventDefault();
+
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
+			form.action = '<portlet:actionURL name="/server_admin/edit_document_library_extra_settings" />';
+
 			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 			if (cmd) {

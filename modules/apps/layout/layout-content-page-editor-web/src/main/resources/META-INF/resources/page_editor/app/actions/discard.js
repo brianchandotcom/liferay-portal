@@ -12,7 +12,7 @@
  * details.
  */
 
-import {discard as type} from './types';
+import {DISCARD as type} from './types';
 
 const ACTION = {type};
 

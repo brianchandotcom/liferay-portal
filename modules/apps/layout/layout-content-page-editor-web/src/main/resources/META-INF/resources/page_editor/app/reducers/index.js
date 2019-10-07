@@ -20,10 +20,10 @@ export const DispatchContext = React.createContext(() => {});
 
 export function reducer(state, action) {
 	switch (action.type) {
-		case TYPES.discard:
+		case TYPES.DISCARD:
 			return state;
 
-		case TYPES.publish:
+		case TYPES.PUBLISH:
 			return state;
 
 		default:

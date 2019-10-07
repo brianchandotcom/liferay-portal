@@ -12,6 +12,6 @@
  * details.
  */
 
-export const discard = 'discard';
+export const DISCARD = 'DISCARD';
 
-export const publish = 'publish';
+export const PUBLISH = 'PUBLISH';

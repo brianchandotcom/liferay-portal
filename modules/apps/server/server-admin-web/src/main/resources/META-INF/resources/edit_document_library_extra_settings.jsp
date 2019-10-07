@@ -68,44 +68,44 @@ if (!dlFileEntries.isEmpty()) {
 			</div>
 		</c:if>
 
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="keys" type="hidden" value="<%= StringUtil.merge(keys) %>" />
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="keys" type="hidden" value="<%= StringUtil.merge(keys) %>" />
 
-			<%
-			for (String key : keys) {
-				String selectName = "type_" + key;
-			%>
+		<%
+		for (String key : keys) {
+			String selectName = "type_" + key;
+		%>
 
-				<aui:fieldset>
-					<liferay-ui:message arguments="<%= key %>" key="convert-extra-settings-key-from-x-to" translateArguments="<%= false %>" />
+			<aui:fieldset>
+				<liferay-ui:message arguments="<%= key %>" key="convert-extra-settings-key-from-x-to" translateArguments="<%= false %>" />
 
-					<br />
+				<br />
 
-					<aui:select helpMessage="custom-field-type-help" label="type" name="<%= selectName %>">
+				<aui:select helpMessage="custom-field-type-help" label="type" name="<%= selectName %>">
 
-						<%
-						for (int curType : ExpandoColumnConstants.TYPES) {
-							if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
-								continue;
-							}
-						%>
-
-							<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
-
-						<%
+					<%
+					for (int curType : ExpandoColumnConstants.TYPES) {
+						if ((curType == ExpandoColumnConstants.BOOLEAN_ARRAY) || (curType == ExpandoColumnConstants.DATE_ARRAY)) {
+							continue;
 						}
-						%>
+					%>
 
-					</aui:select>
-				</aui:fieldset>
+						<aui:option label="<%= ExpandoColumnConstants.getTypeLabel(curType) %>" value="<%= curType %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-			<aui:button-row>
-				<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "convertDocumentLibraryExtraSettings(event)" %>' type="submit"/>
-			</aui:button-row>
+				</aui:select>
+			</aui:fieldset>
+
+		<%
+		}
+		%>
+
+		<aui:button-row>
+			<aui:button onClick='<%= "javascript:" + renderResponse.getNamespace() + "convertDocumentLibraryExtraSettings(event)" %>' type="submit" />
+		</aui:button-row>
 	</c:otherwise>
 </c:choose>
 

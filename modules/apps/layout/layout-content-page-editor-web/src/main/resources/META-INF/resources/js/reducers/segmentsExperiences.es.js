@@ -520,23 +520,26 @@ function editSegmentsExperienceReducer(state, action) {
 					nameCurrentValue,
 					priority,
 					segmentsEntryId,
-					segmentsExperienceId,
-					segmentsExperimentStatus
+					segmentsExperienceId
 				} = obj;
 
-				nextState = setIn(
-					nextState,
-					['availableSegmentsExperiences', segmentsExperienceId],
-					{
-						active,
-						hasLockedSegmentsExperiment,
-						name: nameCurrentValue,
-						priority,
-						segmentsEntryId,
-						segmentsExperienceId,
-						segmentsExperimentStatus
+				nextState = {
+					...nextState,
+					availableSegmentsExperiences: {
+						...nextState.availableSegmentsExperiences,
+						[segmentsExperienceId]: {
+							...nextState.availableSegmentsExperiences[
+								segmentsExperienceId
+							],
+							active,
+							hasLockedSegmentsExperiment,
+							name: nameCurrentValue,
+							priority,
+							segmentsEntryId,
+							segmentsExperienceId
+						}
 					}
-				);
+				};
 
 				resolve(nextState);
 			},

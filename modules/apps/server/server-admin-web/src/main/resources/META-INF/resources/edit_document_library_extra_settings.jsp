@@ -56,8 +56,8 @@ if (!dlFileEntries.isEmpty()) {
 %>
 
 <c:choose>
-	<c:when test="<%= dlFileEntry == null %>">
-		<div class="alert alert-success">
+	<c:when test="<%= (dlFileEntry == null) || (keys == null) %>">
+		<div class="alert alert-info">
 			<liferay-ui:message key="there-are-no-longer-any-documents-and-media-files-with-extra-settings" />
 		</div>
 	</c:when>

@@ -70,10 +70,10 @@ public class MBMessageModelDocumentContributor
 				mbMessage.getSubject());
 		}
 
-		document.addKeyword("answer", mbMessage.isAnswer());
 		document.addKeyword("parentMessageId", mbMessage.getParentMessageId());
 		document.addKeyword(
 			Field.ROOT_ENTRY_CLASS_PK, mbMessage.getRootMessageId());
+		document.addKeywordSortable("answer", mbMessage.isAnswer());
 
 		if (mbMessage.isAnonymous()) {
 			document.remove(Field.USER_NAME);

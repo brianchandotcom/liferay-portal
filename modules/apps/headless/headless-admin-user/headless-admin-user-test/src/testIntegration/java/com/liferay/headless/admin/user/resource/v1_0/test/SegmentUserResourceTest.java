@@ -22,14 +22,12 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
@@ -127,12 +125,11 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 			Long segmentId, SegmentUser segmentUser)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.addUser(
-			UserConstants.USER_ID_DEFAULT, PortalUtil.getDefaultCompanyId(),
-			true, null, null, true, "", segmentUser.getEmailAddress(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(), segmentUser.getName(),
-			StringPool.BLANK, segmentUser.getName(), 0, 0, true, 1, 1, 1970, "",
-			null, null, null, null, false, new ServiceContext());
+		User user = UserTestUtil.addUser(
+			PortalUtil.getDefaultCompanyId(), UserConstants.USER_ID_DEFAULT,
+			null, segmentUser.getEmailAddress(), StringPool.BLANK,
+			LocaleUtil.getDefault(), segmentUser.getName(),
+			segmentUser.getName(), null, new ServiceContext());
 
 		_users.add(user);
 
@@ -143,29 +140,21 @@ public class SegmentUserResourceTest extends BaseSegmentUserResourceTestCase {
 	protected Long testGetSegmentUserAccountsPage_getSegmentId()
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), "",
-			User.class.getName());
-
-		segmentsEntry.setActive(true);
-		segmentsEntry.setCriteria(
+		String criteria = JSONUtil.put(
+			"criteria",
 			JSONUtil.put(
-				"criteria",
+				"user",
 				JSONUtil.put(
-					"user",
-					JSONUtil.put(
-						"conjunction", "and"
-					).put(
-						"filterString", _filterString
-					))
-			).toString());
-		segmentsEntry.setSource(SegmentsEntryConstants.SOURCE_DEFAULT);
+					"conjunction", "and"
+				).put(
+					"filterString", _filterString
+				))
+		).toString();
 
-		SegmentsEntry segmentsEntry1 =
-			SegmentsEntryLocalServiceUtil.updateSegmentsEntry(segmentsEntry);
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			testGroup.getGroupId(), criteria, User.class.getName());
 
-		return segmentsEntry1.getSegmentsEntryId();
+		return segmentsEntry.getSegmentsEntryId();
 	}
 
 	private SegmentUser _toSegmentUser(User user) {

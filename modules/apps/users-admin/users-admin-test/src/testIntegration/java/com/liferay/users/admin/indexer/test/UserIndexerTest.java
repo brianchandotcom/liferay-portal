@@ -48,11 +48,10 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -711,26 +710,17 @@ public class UserIndexerTest {
 	protected Hits search(List<Role> roles) throws Exception {
 		SearchContext searchContext = getSearchContext();
 
-		Serializable usersRolesValue = null;
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>(1);
 
 		if (roles.size() == 1) {
 			Role role = roles.get(0);
 
-			usersRolesValue = role.getRoleId();
+			params.put("usersRoles", role.getRoleId());
 		}
 		else {
-			Stream<Role> stream = roles.stream();
-
-			usersRolesValue = stream.map(
-				Role::getRoleId
-			).toArray(
-				Long[]::new
-			);
+			params.put(
+				"usersRoles", ListUtil.toArray(roles, Role.ROLE_ID_ACCESSOR));
 		}
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>(1);
-
-		params.put("usersRoles", usersRolesValue);
 
 		searchContext.setAttribute("params", params);
 

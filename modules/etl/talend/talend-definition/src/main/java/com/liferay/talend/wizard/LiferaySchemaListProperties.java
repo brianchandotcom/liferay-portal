@@ -106,8 +106,7 @@ public class LiferaySchemaListProperties extends ComponentPropertiesImpl {
 
 		try {
 			Map<String, String> endpointMap = _getEndpointMap(
-				OASConstants.OPERATION_GET,
-				oasSource.getOASJsonObject(connection.getApiSpecURL()));
+				OASConstants.OPERATION_GET, oasSource.getOASJsonObject());
 
 			for (Map.Entry<String, String> entry : endpointMap.entrySet()) {
 				String endpoint = entry.getKey();

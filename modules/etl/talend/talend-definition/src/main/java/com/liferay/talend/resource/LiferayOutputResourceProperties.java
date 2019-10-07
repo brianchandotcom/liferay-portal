@@ -97,7 +97,7 @@ public class LiferayOutputResourceProperties
 		populateParametersTable(
 			oasExplorer.getParameters(
 				endpoint.getValue(), action.getMethodName(),
-				oasSource.getOASJsonObject(connection.apiSpecURL.getValue())));
+				oasSource.getOASJsonObject()));
 
 		return _createEndpointSchema(oasSource);
 	}
@@ -115,8 +115,7 @@ public class LiferayOutputResourceProperties
 
 		OASExplorer oasExplorer = new OASExplorer();
 
-		JsonObject oasJsonObject = oasSource.getOASJsonObject(
-			connection.getApiSpecURL());
+		JsonObject oasJsonObject = oasSource.getOASJsonObject();
 
 		try {
 			Set<String> endpoints = oasExplorer.getEndpointList(
@@ -208,8 +207,7 @@ public class LiferayOutputResourceProperties
 			OASExplorer oasExplorer = new OASExplorer();
 
 			supportedOperations = oasExplorer.getSupportedOperations(
-				endpoint.getValue(),
-				oasSource.getOASJsonObject(connection.getApiSpecURL()));
+				endpoint.getValue(), oasSource.getOASJsonObject());
 		}
 		catch (TalendRuntimeException tre) {
 			endpoint.setValue(null);
@@ -246,7 +244,7 @@ public class LiferayOutputResourceProperties
 			main.schema.setValue(
 				schemaBuilder.inferSchema(
 					endpoint.getValue(), action.getMethodName(),
-					oasSource.getOASJsonObject(connection.getApiSpecURL())));
+					oasSource.getOASJsonObject()));
 
 			_updateSchemas();
 		}

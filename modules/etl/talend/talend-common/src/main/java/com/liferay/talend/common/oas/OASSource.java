@@ -24,7 +24,7 @@ import org.talend.daikon.properties.ValidationResult;
  */
 public interface OASSource {
 
-	public JsonObject getOASJsonObject(String oasURL);
+	public JsonObject getOASJsonObject();
 
 	public ValidationResult initialize(ComponentProperties componentProperties);
 

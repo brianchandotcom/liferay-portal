@@ -83,8 +83,7 @@ public class LiferayInputResourceProperties
 			OASExplorer oasExplorer = new OASExplorer();
 
 			Set<String> endpoints = oasExplorer.getEndpointList(
-				OASConstants.OPERATION_GET,
-				jsonClient.getOASJsonObject(connection.getApiSpecURL()));
+				OASConstants.OPERATION_GET, jsonClient.getOASJsonObject());
 
 			if (endpoints.isEmpty()) {
 				return new ValidationResult(
@@ -134,8 +133,7 @@ public class LiferayInputResourceProperties
 			_logger.debug("Endpoint: " + endpoint.getValue());
 		}
 
-		JsonObject oasJsonObject = oasSource.getOASJsonObject(
-			connection.getApiSpecURL());
+		JsonObject oasJsonObject = oasSource.getOASJsonObject();
 
 		try {
 			SchemaBuilder schemaBuilder = new SchemaBuilder();

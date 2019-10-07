@@ -202,8 +202,8 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
-	public JsonObject getOASJsonObject(String oasURL) {
-		return doGetRequest(null, oasURL);
+	public JsonObject getOASJsonObject() {
+		return doGetRequest((String)null);
 	}
 
 	public RESTClient getRestClient(RuntimeContainer runtimeContainer) {

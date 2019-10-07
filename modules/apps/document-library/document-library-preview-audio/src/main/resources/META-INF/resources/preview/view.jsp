@@ -18,19 +18,6 @@
 
 <%
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudioWebKeys.PREVIEW_FILE_URLS);
-
-List<Map<String, String>> audioSources = new ArrayList<>(previewFileURLs.size());
-
-for (String previewFileURL : previewFileURLs) {
-	if (Validator.isNotNull(previewFileURL)) {
-		if (previewFileURL.endsWith("mp3")) {
-			audioSources.add(MapUtil.fromArray("type", "audio/mp3", "url", previewFileURL));
-		}
-		else if (previewFileURL.endsWith("ogg")) {
-			audioSources.add(MapUtil.fromArray("type", "audio/ogg", "url", previewFileURL));
-		}
-	}
-}
 %>
 
 <liferay-util:html-top
@@ -46,16 +33,29 @@ for (String previewFileURL : previewFileURLs) {
 				class="preview-file-audio"
 				controls
 				controlsList="nodownload"
-				style="max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px; "
+				style="max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;"
 			>
 
 				<%
-				for (Map<String, String> audioSource : audioSources) {
+				for (String previewFileURL : previewFileURLs) {
+					String type = null;
+
+					if (Validator.isNotNull(previewFileURL)) {
+						if (previewFileURL.endsWith("mp3")) {
+							type = "audio/mp3";
+						}
+						else if (previewFileURL.endsWith("ogg")) {
+							type = "audio/ogg";
+						}
+					}
+
+					if (type != null) {
 				%>
 
-					<source src="<%= audioSource.get("url") %>" type="<%= audioSource.get("type") %>" />
+					<source src="<%= previewFileURL %>" type="<%= type %>" />
 
 				<%
+					}
 				}
 				%>
 

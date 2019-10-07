@@ -109,16 +109,26 @@ export default function Sidebar() {
 				}
 
 				if (rendersSidebarContent) {
-					setOpen(!open);
+					if (activePlugin !== pluginInstance) {
+						setOpen(true);
 
-					if (!open) {
 						if (typeof pluginInstance.activate === 'function') {
 							pluginInstance.activate();
 						}
 
 						setActivePlugin(pluginInstance);
 					} else {
-						setActivePlugin(null);
+						setOpen(!open);
+
+						if (!open) {
+							if (typeof pluginInstance.activate === 'function') {
+								pluginInstance.activate();
+							}
+
+							setActivePlugin(pluginInstance);
+						} else {
+							setActivePlugin(null);
+						}
 					}
 				} else {
 					if (open) {

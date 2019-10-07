@@ -790,6 +790,11 @@ public class JournalConverterImpl implements JournalConverter {
 
 				Serializable fieldValue = ddmField.getValue(locale, count);
 
+				if (fieldValue == null) {
+					fieldValue = ddmField.getValue(
+						ddmField.getDefaultLocale(), count);
+				}
+
 				String valueString = String.valueOf(fieldValue);
 
 				updateDynamicContentValue(

@@ -15,8 +15,13 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,11 +30,14 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserGroupIdComparator;
 import com.liferay.portal.service.base.UserGroupServiceBaseImpl;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -226,6 +234,180 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 			userId);
 
 		return filterUserGroups(userGroups);
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups that match the keywords.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user group's name or description (optionally <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param  start the lower bound of the range of user groups to return
+	 * @param  end the upper bound of the range of user groups to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the user groups (optionally
+	 *         <code>null</code>)
+	 * @return the matching user groups ordered by comparator <code>obc</code>
+	 * @see    com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Override
+	public List<UserGroup> search(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<UserGroup> obc) {
+
+		if (isUseCustomSQL(params)) {
+			return userGroupFinder.filterFindByKeywords(
+				companyId, keywords, params, start, end, obc);
+		}
+
+		String orderByCol = obc.getOrderByFields()[0];
+
+		String orderByType = "asc";
+
+		if (!obc.isAscending()) {
+			orderByType = "desc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, orderByCol, orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				userGroupLocalService.search(
+					companyId, keywords, params, start, end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	/**
+	 * Returns an ordered range of all the user groups that match the name and
+	 * description.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name (optionally <code>null</code>)
+	 * @param  description the user group's description (optionally
+	 *         <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param  andOperator whether every field must match its keywords or just
+	 *         one field
+	 * @param  start the lower bound of the range of user groups to return
+	 * @param  end the upper bound of the range of user groups to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the user groups (optionally
+	 *         <code>null</code>)
+	 * @return the matching user groups ordered by comparator <code>obc</code>
+	 * @see    com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Override
+	public List<UserGroup> search(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<UserGroup> obc) {
+
+		if (isUseCustomSQL(params)) {
+			return userGroupFinder.filterFindByC_N_D(
+				companyId, name, description, params, andOperator, start, end,
+				obc);
+		}
+
+		String orderByCol = obc.getOrderByFields()[0];
+
+		String orderByType = "asc";
+
+		if (!obc.isAscending()) {
+			orderByType = "desc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, orderByCol, orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				userGroupLocalService.search(
+					companyId, name, description, params, andOperator, start,
+					end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
+	/**
+	 * Returns the number of user groups that match the keywords
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user group's name or description (optionally <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @return the number of matching user groups
+	 * @see    com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Override
+	public int searchCount(
+		long companyId, String keywords, LinkedHashMap<String, Object> params) {
+
+		if (isUseCustomSQL(params)) {
+			return userGroupFinder.filterCountByKeywords(
+				companyId, keywords, params);
+		}
+
+		return userGroupLocalService.searchCount(companyId, keywords, params);
+	}
+
+	/**
+	 * Returns the number of user groups that match the name and description.
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name (optionally <code>null</code>)
+	 * @param  description the user group's description (optionally
+	 *         <code>null</code>)
+	 * @param  params the finder params (optionally <code>null</code>). For more
+	 *         information see {@link
+	 *         com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param  andOperator whether every field must match its keywords or just
+	 *         one field
+	 * @return the number of matching user groups
+	 * @see    com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Override
+	public int searchCount(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
+
+		if (isUseCustomSQL(params)) {
+			return userGroupFinder.filterCountByC_N_D(
+				companyId, name, description, params, andOperator);
+		}
+
+		return userGroupLocalService.searchCount(
+			companyId, name, description, params, andOperator);
 	}
 
 	/**

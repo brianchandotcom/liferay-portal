@@ -46,11 +46,11 @@ if (Validator.isNotNull(keywords)) {
 	userGroupParams.put("expandoAttributes", keywords);
 }
 
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
+int userGroupsCount = UserGroupServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
 
 userGroupSearch.setTotal(userGroupsCount);
 
-List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
+List<UserGroup> userGroups = UserGroupServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
 
 userGroupSearch.setResults(userGroups);
 

@@ -1190,10 +1190,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
-		if (indexer.isIndexerEnabled() &&
-			PropsValues.USER_GROUPS_SEARCH_WITH_INDEX &&
-			MapUtil.isEmpty(params)) {
+		if (!indexer.isIndexerEnabled() ||
+			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX) {
 
+			return true;
+		}
+
+		if (MapUtil.isEmpty(params)) {
 			return false;
 		}
 

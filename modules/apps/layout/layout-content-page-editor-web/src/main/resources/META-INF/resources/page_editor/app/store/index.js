@@ -39,10 +39,15 @@ export const StoreContext = React.createContext(INITIAL_STATE);
  * (see the `useState` hook) or a in more localized context objects that apply
  * to specific subtrees.
  */
-export function getInitialState(data = {}) {
+export function getInitialState([data, config]) {
 	const state = {
 		...transformServerData(data)
 	};
+
+	// Exclude keys that were partitioned off into config.
+	Object.keys(config).forEach(key => {
+		delete state[key];
+	});
 
 	return {
 		...INITIAL_STATE,

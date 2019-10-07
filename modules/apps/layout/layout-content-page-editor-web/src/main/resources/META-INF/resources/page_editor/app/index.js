@@ -34,7 +34,7 @@ function Container({data}) {
 	const config = getConfig(data);
 
 	const [store, dispatch] = useThunk(
-		useReducer(reducer, data, getInitialState)
+		useReducer(reducer, [data, config], getInitialState)
 	);
 
 	return (

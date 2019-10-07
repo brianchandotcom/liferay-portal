@@ -68,7 +68,8 @@ public class LayoutSEOEntryServiceSoap {
 	public static com.liferay.layout.seo.model.LayoutSEOEntrySoap
 			updateLayoutSEOEntry(
 				long groupId, boolean privateLayout, long layoutId,
-				boolean enabled, String[] canonicalURLMapLanguageIds,
+				boolean enabledCanonicalURLMap,
+				String[] canonicalURLMapLanguageIds,
 				String[] canonicalURLMapValues,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -80,8 +81,8 @@ public class LayoutSEOEntryServiceSoap {
 
 			com.liferay.layout.seo.model.LayoutSEOEntry returnValue =
 				LayoutSEOEntryServiceUtil.updateLayoutSEOEntry(
-					groupId, privateLayout, layoutId, enabled, canonicalURLMap,
-					serviceContext);
+					groupId, privateLayout, layoutId, enabledCanonicalURLMap,
+					canonicalURLMap, serviceContext);
 
 			return com.liferay.layout.seo.model.LayoutSEOEntrySoap.toSoapModel(
 				returnValue);

@@ -54,7 +54,8 @@ public class LayoutSEOEntryServiceHttp {
 	public static com.liferay.layout.seo.model.LayoutSEOEntry
 			updateLayoutSEOEntry(
 				HttpPrincipal httpPrincipal, long groupId,
-				boolean privateLayout, long layoutId, boolean enabled,
+				boolean privateLayout, long layoutId,
+				boolean enabledCanonicalURLMap,
 				java.util.Map<java.util.Locale, String> canonicalURLMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -65,8 +66,8 @@ public class LayoutSEOEntryServiceHttp {
 				_updateLayoutSEOEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, layoutId, enabled,
-				canonicalURLMap, serviceContext);
+				methodKey, groupId, privateLayout, layoutId,
+				enabledCanonicalURLMap, canonicalURLMap, serviceContext);
 
 			Object returnObj = null;
 

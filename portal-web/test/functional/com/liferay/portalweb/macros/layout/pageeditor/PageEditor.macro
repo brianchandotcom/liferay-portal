@@ -271,6 +271,22 @@ definition {
 		Click(locator1 = "Button#UPDATE");
 	}
 
+	macro editFragmentHTML {
+		PageEditor.gotoEditableFieldEdit(
+			fragmentName = "${fragmentName}",
+			id = "${id}");
+
+		var content = TestCase.getFileContent(fileName = "${fileName}");
+
+		Type.typeAceEditorNoError(
+			locator1 = "Fragment#EDITABLE_HTML_FRAGMENT_FIELD",
+			value1 = "${content}");
+
+		Click(locator1 = "Button#SAVE");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro editFragmentImage {
 		PageEditor.gotoEditableFieldImageProperties(
 			fragmentName = "${fragmentName}",

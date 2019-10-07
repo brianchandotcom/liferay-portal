@@ -266,9 +266,9 @@ public class JournalContentImpl
 
 		JournalArticleDisplay articleDisplay = null;
 
-		if (CTCollectionThreadLocal.getCTCollectionId() ==
-				CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			articleDisplay = _portalCache.get(journalContentKey);
 		}
 
@@ -281,7 +281,11 @@ public class JournalContentImpl
 				lifecycleRender) {
 
 				try {
-					_portalCache.put(journalContentKey, articleDisplay);
+					if (ctCollectionId ==
+							CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+
+						_portalCache.put(journalContentKey, articleDisplay);
+					}
 				}
 				catch (ClassCastException cce) {
 					if (_log.isWarnEnabled()) {

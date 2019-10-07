@@ -17,8 +17,20 @@ package com.liferay.segments.odata.retriever.test;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -56,6 +68,42 @@ public class OrganizationODataRetrieverTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	public void testGetOrganizationsFilterByAssetTagIds() throws Exception {
+		Organization organization1 = OrganizationTestUtil.addOrganization();
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+		_organizations.add(organization2);
+
+		Company company = _companyLocalService.getCompany(
+			organization1.getCompanyId());
+
+		AssetTag tag = AssetTestUtil.addTag(company.getGroupId(), "tag1");
+
+		_assetTags.add(tag);
+
+		_organizationLocalService.updateAsset(
+			TestPropsValues.getUserId(), organization1, new long[0],
+			new String[] {tag.getName()});
+
+		String filterString = String.format(
+			"(name eq '%s') and (assetTagIds eq '%s')", organization1.getName(),
+			tag.getTagId());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organization1, organizations.get(0));
+	}
+
+	@Test
 	public void testGetOrganizationsFilterByCompanyId() throws Exception {
 		Organization parentOrganization =
 			OrganizationTestUtil.addOrganization();
@@ -84,6 +132,48 @@ public class OrganizationODataRetrieverTest {
 			LocaleUtil.getDefault(), 0, 2);
 
 		Assert.assertEquals(organization, organizations.get(0));
+	}
+
+	@Test
+	public void testGetOrganizationsFilterByCountryAndRegion()
+		throws Exception {
+
+		Country country = _countryService.getCountryByName("spain");
+
+		List<Region> regions = _regionService.getRegions(
+			country.getCountryId());
+
+		Region region = regions.get(0);
+
+		Organization organization1 = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(),
+			OrganizationConstants.TYPE_ORGANIZATION, region.getRegionId(),
+			country.getCountryId(),
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			true, new ServiceContext());
+
+		Organization organization2 = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization1);
+		_organizations.add(organization2);
+
+		String filterString = String.format(
+			"(country eq '%s') and (region eq '%s')",
+			country.getNameCurrentValue(), region.getName());
+
+		int count = _oDataRetriever.getResultsCount(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<Organization> organizations = _oDataRetriever.getResults(
+			TestPropsValues.getCompanyId(), filterString,
+			LocaleUtil.getDefault(), 0, 2);
+
+		Assert.assertEquals(organization1, organizations.get(0));
 	}
 
 	@Test
@@ -524,6 +614,15 @@ public class OrganizationODataRetrieverTest {
 		Assert.assertEquals(organization, organizations.get(0));
 	}
 
+	@DeleteAfterTestRun
+	private final List<AssetTag> _assetTags = new ArrayList<>();
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CountryService _countryService;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.model.Organization"
 	)
@@ -534,5 +633,8 @@ public class OrganizationODataRetrieverTest {
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
+
+	@Inject
+	private RegionService _regionService;
 
 }

@@ -17,8 +17,11 @@ package com.liferay.segments.odata.retriever.test;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
@@ -26,6 +29,8 @@ import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -105,6 +110,44 @@ public class UserODataRetrieverTest {
 		String filterString = String.format(
 			"(firstName eq '%s') and (ancestorOrganizationIds eq '%s')",
 			firstName, parentOrganization.getOrganizationId());
+
+		int count = _oDataRetriever.getResultsCount(
+			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
+
+		Assert.assertEquals(1, count);
+
+		List<User> users = _oDataRetriever.getResults(
+			_group1.getCompanyId(), filterString, LocaleUtil.getDefault(), 0,
+			2);
+
+		Assert.assertEquals(_user1, users.get(0));
+	}
+
+	@Test
+	public void testGetUsersFilterByAssetTagIds() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+
+		_user1 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+		_user2 = UserTestUtil.addUser(
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(), firstName,
+			RandomTestUtil.randomString(), new long[] {_group1.getGroupId()});
+
+		Company company = _companyLocalService.getCompany(
+			_user1.getCompanyId());
+
+		AssetTag tag = AssetTestUtil.addTag(company.getGroupId(), "tag1");
+
+		_assetTags.add(tag);
+
+		_userLocalService.updateAsset(
+			TestPropsValues.getUserId(), _user1, new long[0],
+			new String[] {tag.getName()});
+
+		String filterString = String.format(
+			"(firstName eq '%s') and (assetTagIds eq '%s')", firstName,
+			tag.getTagId());
 
 		int count = _oDataRetriever.getResultsCount(
 			_group1.getCompanyId(), filterString, LocaleUtil.getDefault());
@@ -906,6 +949,12 @@ public class UserODataRetrieverTest {
 	}
 
 	@DeleteAfterTestRun
+	private final List<AssetTag> _assetTags = new ArrayList<>();
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
 	private Group _group1;
 
 	@DeleteAfterTestRun
@@ -913,6 +962,9 @@ public class UserODataRetrieverTest {
 
 	@Inject(filter = "model.class.name=com.liferay.portal.kernel.model.User")
 	private ODataRetriever<User> _oDataRetriever;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

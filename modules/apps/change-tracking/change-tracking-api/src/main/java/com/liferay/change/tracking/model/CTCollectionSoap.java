@@ -35,14 +35,12 @@ public class CTCollectionSoap implements Serializable {
 		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
-		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
@@ -129,14 +127,6 @@ public class CTCollectionSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public String getUserName() {
-		return _userName;
-	}
-
-	public void setUserName(String userName) {
-		_userName = userName;
-	}
-
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -185,14 +175,6 @@ public class CTCollectionSoap implements Serializable {
 		_statusByUserId = statusByUserId;
 	}
 
-	public String getStatusByUserName() {
-		return _statusByUserName;
-	}
-
-	public void setStatusByUserName(String statusByUserName) {
-		_statusByUserName = statusByUserName;
-	}
-
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -205,14 +187,12 @@ public class CTCollectionSoap implements Serializable {
 	private long _ctCollectionId;
 	private long _companyId;
 	private long _userId;
-	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
 	private int _status;
 	private long _statusByUserId;
-	private String _statusByUserName;
 	private Date _statusDate;
 
 }

@@ -60,17 +60,6 @@ public class CTEntryLocalServiceUtil {
 			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
 	}
 
-	public static com.liferay.change.tracking.model.CTEntry addCTEntry(
-			long userId, long modelClassNameId, long modelClassPK,
-			long modelResourcePrimKey, int changeType, long ctCollectionId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().addCTEntry(
-			userId, modelClassNameId, modelClassPK, modelResourcePrimKey,
-			changeType, ctCollectionId, serviceContext);
-	}
-
 	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
@@ -205,35 +194,6 @@ public class CTEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntries(
-			long ctCollectionId, long modelResourcePrimKey,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return getService().fetchCTEntries(
-			ctCollectionId, modelResourcePrimKey, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntries(
-			long ctCollectionId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return getService().fetchCTEntries(ctCollectionId, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntriesByModelClassNameId(
-			long ctCollectionId, long modelClassNameId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return getService().fetchCTEntriesByModelClassNameId(
-			ctCollectionId, modelClassNameId, queryDefinition);
-	}
-
 	public static com.liferay.change.tracking.model.CTEntry fetchCTEntry(
 		long ctEntryId) {
 
@@ -260,20 +220,13 @@ public class CTEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getCTCollectionCTEntries(long ctCollectionId, int start, int end) {
-
-		return getService().getCTCollectionCTEntries(
-			ctCollectionId, start, end);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getCTCollectionCTEntries(
-			long ctCollectionId, int status, int start, int end,
+			long ctCollectionId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTEntry> orderByComparator) {
 
 		return getService().getCTCollectionCTEntries(
-			ctCollectionId, status, start, end, orderByComparator);
+			ctCollectionId, start, end, orderByComparator);
 	}
 
 	public static int getCTCollectionCTEntriesCount(long ctCollectionId) {
@@ -310,14 +263,6 @@ public class CTEntryLocalServiceUtil {
 	 */
 	public static int getCTEntriesCount() {
 		return getService().getCTEntriesCount();
-	}
-
-	public static int getCTEntriesCount(
-		long ctCollectionId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return getService().getCTEntriesCount(ctCollectionId, queryDefinition);
 	}
 
 	/**
@@ -363,12 +308,6 @@ public class CTEntryLocalServiceUtil {
 		return getService().hasCTEntries(ctCollectionId, modelClassNameId);
 	}
 
-	public static com.liferay.change.tracking.model.CTEntry updateCollision(
-		long ctEntryId, boolean collision) {
-
-		return getService().updateCollision(ctEntryId, collision);
-	}
-
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -379,12 +318,6 @@ public class CTEntryLocalServiceUtil {
 		com.liferay.change.tracking.model.CTEntry ctEntry) {
 
 		return getService().updateCTEntry(ctEntry);
-	}
-
-	public static com.liferay.change.tracking.model.CTEntry updateStatus(
-		long ctEntryId, int status) {
-
-		return getService().updateStatus(ctEntryId, status);
 	}
 
 	public static CTEntryLocalService getService() {

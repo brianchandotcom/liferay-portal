@@ -52,10 +52,7 @@ public class CTEntryWrapper
 		attributes.put("modelClassNameId", getModelClassNameId());
 		attributes.put("modelClassPK", getModelClassPK());
 		attributes.put("modelMvccVersion", getModelMvccVersion());
-		attributes.put("modelResourcePrimKey", getModelResourcePrimKey());
 		attributes.put("changeType", getChangeType());
-		attributes.put("collision", isCollision());
-		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -122,29 +119,10 @@ public class CTEntryWrapper
 			setModelMvccVersion(modelMvccVersion);
 		}
 
-		Long modelResourcePrimKey = (Long)attributes.get(
-			"modelResourcePrimKey");
-
-		if (modelResourcePrimKey != null) {
-			setModelResourcePrimKey(modelResourcePrimKey);
-		}
-
 		Integer changeType = (Integer)attributes.get("changeType");
 
 		if (changeType != null) {
 			setChangeType(changeType);
-		}
-
-		Boolean collision = (Boolean)attributes.get("collision");
-
-		if (collision != null) {
-			setCollision(collision);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
 		}
 	}
 
@@ -156,16 +134,6 @@ public class CTEntryWrapper
 	@Override
 	public int getChangeType() {
 		return model.getChangeType();
-	}
-
-	/**
-	 * Returns the collision of this ct entry.
-	 *
-	 * @return the collision of this ct entry
-	 */
-	@Override
-	public boolean getCollision() {
-		return model.getCollision();
 	}
 
 	/**
@@ -239,16 +207,6 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Returns the model resource prim key of this ct entry.
-	 *
-	 * @return the model resource prim key of this ct entry
-	 */
-	@Override
-	public long getModelResourcePrimKey() {
-		return model.getModelResourcePrimKey();
-	}
-
-	/**
 	 * Returns the modified date of this ct entry.
 	 *
 	 * @return the modified date of this ct entry
@@ -279,16 +237,6 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Returns the status of this ct entry.
-	 *
-	 * @return the status of this ct entry
-	 */
-	@Override
-	public int getStatus() {
-		return model.getStatus();
-	}
-
-	/**
 	 * Returns the user ID of this ct entry.
 	 *
 	 * @return the user ID of this ct entry
@@ -314,16 +262,6 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this ct entry is collision.
-	 *
-	 * @return <code>true</code> if this ct entry is collision; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isCollision() {
-		return model.isCollision();
-	}
-
-	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a ct entry model instance should use the <code>CTEntry</code> interface instead.
@@ -341,16 +279,6 @@ public class CTEntryWrapper
 	@Override
 	public void setChangeType(int changeType) {
 		model.setChangeType(changeType);
-	}
-
-	/**
-	 * Sets whether this ct entry is collision.
-	 *
-	 * @param collision the collision of this ct entry
-	 */
-	@Override
-	public void setCollision(boolean collision) {
-		model.setCollision(collision);
 	}
 
 	/**
@@ -424,16 +352,6 @@ public class CTEntryWrapper
 	}
 
 	/**
-	 * Sets the model resource prim key of this ct entry.
-	 *
-	 * @param modelResourcePrimKey the model resource prim key of this ct entry
-	 */
-	@Override
-	public void setModelResourcePrimKey(long modelResourcePrimKey) {
-		model.setModelResourcePrimKey(modelResourcePrimKey);
-	}
-
-	/**
 	 * Sets the modified date of this ct entry.
 	 *
 	 * @param modifiedDate the modified date of this ct entry
@@ -461,16 +379,6 @@ public class CTEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the status of this ct entry.
-	 *
-	 * @param status the status of this ct entry
-	 */
-	@Override
-	public void setStatus(int status) {
-		model.setStatus(status);
 	}
 
 	/**

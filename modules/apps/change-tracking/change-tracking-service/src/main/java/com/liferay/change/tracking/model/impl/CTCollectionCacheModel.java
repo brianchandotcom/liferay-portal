@@ -77,7 +77,7 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,8 +87,6 @@ public class CTCollectionCacheModel
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", userName=");
-		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -101,8 +99,6 @@ public class CTCollectionCacheModel
 		sb.append(status);
 		sb.append(", statusByUserId=");
 		sb.append(statusByUserId);
-		sb.append(", statusByUserName=");
-		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
 		sb.append("}");
@@ -118,13 +114,6 @@ public class CTCollectionCacheModel
 		ctCollectionImpl.setCtCollectionId(ctCollectionId);
 		ctCollectionImpl.setCompanyId(companyId);
 		ctCollectionImpl.setUserId(userId);
-
-		if (userName == null) {
-			ctCollectionImpl.setUserName("");
-		}
-		else {
-			ctCollectionImpl.setUserName(userName);
-		}
 
 		if (createDate == Long.MIN_VALUE) {
 			ctCollectionImpl.setCreateDate(null);
@@ -157,13 +146,6 @@ public class CTCollectionCacheModel
 		ctCollectionImpl.setStatus(status);
 		ctCollectionImpl.setStatusByUserId(statusByUserId);
 
-		if (statusByUserName == null) {
-			ctCollectionImpl.setStatusByUserName("");
-		}
-		else {
-			ctCollectionImpl.setStatusByUserName(statusByUserName);
-		}
-
 		if (statusDate == Long.MIN_VALUE) {
 			ctCollectionImpl.setStatusDate(null);
 		}
@@ -185,7 +167,6 @@ public class CTCollectionCacheModel
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
-		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -194,7 +175,6 @@ public class CTCollectionCacheModel
 		status = objectInput.readInt();
 
 		statusByUserId = objectInput.readLong();
-		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
 	}
 
@@ -207,14 +187,6 @@ public class CTCollectionCacheModel
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
-
-		if (userName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(userName);
-		}
-
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -235,14 +207,6 @@ public class CTCollectionCacheModel
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
-
-		if (statusByUserName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(statusByUserName);
-		}
-
 		objectOutput.writeLong(statusDate);
 	}
 
@@ -250,14 +214,12 @@ public class CTCollectionCacheModel
 	public long ctCollectionId;
 	public long companyId;
 	public long userId;
-	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public String name;
 	public String description;
 	public int status;
 	public long statusByUserId;
-	public String statusByUserName;
 	public long statusDate;
 
 }

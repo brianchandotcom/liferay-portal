@@ -76,7 +76,7 @@ public class CTEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,14 +98,8 @@ public class CTEntryCacheModel
 		sb.append(modelClassPK);
 		sb.append(", modelMvccVersion=");
 		sb.append(modelMvccVersion);
-		sb.append(", modelResourcePrimKey=");
-		sb.append(modelResourcePrimKey);
 		sb.append(", changeType=");
 		sb.append(changeType);
-		sb.append(", collision=");
-		sb.append(collision);
-		sb.append(", status=");
-		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,10 +132,7 @@ public class CTEntryCacheModel
 		ctEntryImpl.setModelClassNameId(modelClassNameId);
 		ctEntryImpl.setModelClassPK(modelClassPK);
 		ctEntryImpl.setModelMvccVersion(modelMvccVersion);
-		ctEntryImpl.setModelResourcePrimKey(modelResourcePrimKey);
 		ctEntryImpl.setChangeType(changeType);
-		ctEntryImpl.setCollision(collision);
-		ctEntryImpl.setStatus(status);
 
 		ctEntryImpl.resetOriginalValues();
 
@@ -168,13 +159,7 @@ public class CTEntryCacheModel
 
 		modelMvccVersion = objectInput.readLong();
 
-		modelResourcePrimKey = objectInput.readLong();
-
 		changeType = objectInput.readInt();
-
-		collision = objectInput.readBoolean();
-
-		status = objectInput.readInt();
 	}
 
 	@Override
@@ -197,13 +182,7 @@ public class CTEntryCacheModel
 
 		objectOutput.writeLong(modelMvccVersion);
 
-		objectOutput.writeLong(modelResourcePrimKey);
-
 		objectOutput.writeInt(changeType);
-
-		objectOutput.writeBoolean(collision);
-
-		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -216,9 +195,6 @@ public class CTEntryCacheModel
 	public long modelClassNameId;
 	public long modelClassPK;
 	public long modelMvccVersion;
-	public long modelResourcePrimKey;
 	public int changeType;
-	public boolean collision;
-	public int status;
 
 }

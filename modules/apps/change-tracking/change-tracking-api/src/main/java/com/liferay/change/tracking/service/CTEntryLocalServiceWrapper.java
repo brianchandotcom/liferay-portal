@@ -54,18 +54,6 @@ public class CTEntryLocalServiceWrapper
 			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
 	}
 
-	@Override
-	public com.liferay.change.tracking.model.CTEntry addCTEntry(
-			long userId, long modelClassNameId, long modelClassPK,
-			long modelResourcePrimKey, int changeType, long ctCollectionId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ctEntryLocalService.addCTEntry(
-			userId, modelClassNameId, modelClassPK, modelResourcePrimKey,
-			changeType, ctCollectionId, serviceContext);
-	}
-
 	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
@@ -208,39 +196,6 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntries(
-			long ctCollectionId, long modelResourcePrimKey,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.fetchCTEntries(
-			ctCollectionId, modelResourcePrimKey, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntries(
-			long ctCollectionId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.fetchCTEntries(
-			ctCollectionId, queryDefinition);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		fetchCTEntriesByModelClassNameId(
-			long ctCollectionId, long modelClassNameId,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition
-				<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.fetchCTEntriesByModelClassNameId(
-			ctCollectionId, modelClassNameId, queryDefinition);
-	}
-
-	@Override
 	public com.liferay.change.tracking.model.CTEntry fetchCTEntry(
 		long ctEntryId) {
 
@@ -271,21 +226,13 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTEntry>
-		getCTCollectionCTEntries(long ctCollectionId, int start, int end) {
-
-		return _ctEntryLocalService.getCTCollectionCTEntries(
-			ctCollectionId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.change.tracking.model.CTEntry>
 		getCTCollectionCTEntries(
-			long ctCollectionId, int status, int start, int end,
+			long ctCollectionId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.change.tracking.model.CTEntry> orderByComparator) {
 
 		return _ctEntryLocalService.getCTCollectionCTEntries(
-			ctCollectionId, status, start, end, orderByComparator);
+			ctCollectionId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -328,16 +275,6 @@ public class CTEntryLocalServiceWrapper
 	@Override
 	public int getCTEntriesCount() {
 		return _ctEntryLocalService.getCTEntriesCount();
-	}
-
-	@Override
-	public int getCTEntriesCount(
-		long ctCollectionId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition
-			<com.liferay.change.tracking.model.CTEntry> queryDefinition) {
-
-		return _ctEntryLocalService.getCTEntriesCount(
-			ctCollectionId, queryDefinition);
 	}
 
 	/**
@@ -385,13 +322,6 @@ public class CTEntryLocalServiceWrapper
 			ctCollectionId, modelClassNameId);
 	}
 
-	@Override
-	public com.liferay.change.tracking.model.CTEntry updateCollision(
-		long ctEntryId, boolean collision) {
-
-		return _ctEntryLocalService.updateCollision(ctEntryId, collision);
-	}
-
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -403,13 +333,6 @@ public class CTEntryLocalServiceWrapper
 		com.liferay.change.tracking.model.CTEntry ctEntry) {
 
 		return _ctEntryLocalService.updateCTEntry(ctEntry);
-	}
-
-	@Override
-	public com.liferay.change.tracking.model.CTEntry updateStatus(
-		long ctEntryId, int status) {
-
-		return _ctEntryLocalService.updateStatus(ctEntryId, status);
 	}
 
 	@Override

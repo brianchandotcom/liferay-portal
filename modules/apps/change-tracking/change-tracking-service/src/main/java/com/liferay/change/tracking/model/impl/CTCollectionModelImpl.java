@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -71,10 +70,9 @@ public class CTCollectionModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusDate", Types.TIMESTAMP}
 	};
 
@@ -86,19 +84,17 @@ public class CTCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CTCollection (mvccVersion LONG default 0 not null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(200) null,status INTEGER,statusByUserId LONG,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTCollection";
 
@@ -272,10 +268,6 @@ public class CTCollectionModelImpl
 		attributeGetterFunctions.put("userId", CTCollection::getUserId);
 		attributeSetterBiConsumers.put(
 			"userId", (BiConsumer<CTCollection, Long>)CTCollection::setUserId);
-		attributeGetterFunctions.put("userName", CTCollection::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<CTCollection, String>)CTCollection::setUserName);
 		attributeGetterFunctions.put("createDate", CTCollection::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -302,12 +294,6 @@ public class CTCollectionModelImpl
 		attributeSetterBiConsumers.put(
 			"statusByUserId",
 			(BiConsumer<CTCollection, Long>)CTCollection::setStatusByUserId);
-		attributeGetterFunctions.put(
-			"statusByUserName", CTCollection::getStatusByUserName);
-		attributeSetterBiConsumers.put(
-			"statusByUserName",
-			(BiConsumer<CTCollection, String>)
-				CTCollection::setStatusByUserName);
 		attributeGetterFunctions.put("statusDate", CTCollection::getStatusDate);
 		attributeSetterBiConsumers.put(
 			"statusDate",
@@ -385,21 +371,6 @@ public class CTCollectionModelImpl
 
 	@Override
 	public void setUserUuid(String userUuid) {
-	}
-
-	@Override
-	public String getUserName() {
-		if (_userName == null) {
-			return "";
-		}
-		else {
-			return _userName;
-		}
-	}
-
-	@Override
-	public void setUserName(String userName) {
-		_userName = userName;
 	}
 
 	@Override
@@ -519,21 +490,6 @@ public class CTCollectionModelImpl
 	}
 
 	@Override
-	public String getStatusByUserName() {
-		if (_statusByUserName == null) {
-			return "";
-		}
-		else {
-			return _statusByUserName;
-		}
-	}
-
-	@Override
-	public void setStatusByUserName(String statusByUserName) {
-		_statusByUserName = statusByUserName;
-	}
-
-	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -541,86 +497,6 @@ public class CTCollectionModelImpl
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
-	}
-
-	@Override
-	public boolean isApproved() {
-		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isDenied() {
-		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isDraft() {
-		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isExpired() {
-		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInactive() {
-		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isIncomplete() {
-		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isPending() {
-		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isScheduled() {
-		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	public long getColumnBitmask() {
@@ -663,14 +539,12 @@ public class CTCollectionModelImpl
 		ctCollectionImpl.setCtCollectionId(getCtCollectionId());
 		ctCollectionImpl.setCompanyId(getCompanyId());
 		ctCollectionImpl.setUserId(getUserId());
-		ctCollectionImpl.setUserName(getUserName());
 		ctCollectionImpl.setCreateDate(getCreateDate());
 		ctCollectionImpl.setModifiedDate(getModifiedDate());
 		ctCollectionImpl.setName(getName());
 		ctCollectionImpl.setDescription(getDescription());
 		ctCollectionImpl.setStatus(getStatus());
 		ctCollectionImpl.setStatusByUserId(getStatusByUserId());
-		ctCollectionImpl.setStatusByUserName(getStatusByUserName());
 		ctCollectionImpl.setStatusDate(getStatusDate());
 
 		ctCollectionImpl.resetOriginalValues();
@@ -762,14 +636,6 @@ public class CTCollectionModelImpl
 
 		ctCollectionCacheModel.userId = getUserId();
 
-		ctCollectionCacheModel.userName = getUserName();
-
-		String userName = ctCollectionCacheModel.userName;
-
-		if ((userName != null) && (userName.length() == 0)) {
-			ctCollectionCacheModel.userName = null;
-		}
-
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -807,14 +673,6 @@ public class CTCollectionModelImpl
 		ctCollectionCacheModel.status = getStatus();
 
 		ctCollectionCacheModel.statusByUserId = getStatusByUserId();
-
-		ctCollectionCacheModel.statusByUserName = getStatusByUserName();
-
-		String statusByUserName = ctCollectionCacheModel.statusByUserName;
-
-		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
-			ctCollectionCacheModel.statusByUserName = null;
-		}
 
 		Date statusDate = getStatusDate();
 
@@ -907,7 +765,6 @@ public class CTCollectionModelImpl
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
@@ -918,7 +775,6 @@ public class CTCollectionModelImpl
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
 	private long _statusByUserId;
-	private String _statusByUserName;
 	private Date _statusDate;
 	private long _columnBitmask;
 	private CTCollection _escapedModel;

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -72,9 +70,7 @@ public interface CTProcessLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CTProcess addCTProcess(CTProcess ctProcess);
 
-	public CTProcess addCTProcess(
-			long userId, long ctCollectionId, boolean ignoreCollision,
-			ServiceContext serviceContext)
+	public CTProcess addCTProcess(long userId, long ctCollectionId)
 		throws PortalException;
 
 	/**
@@ -218,11 +214,6 @@ public interface CTProcessLocalService
 	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords, int status, int start,
 		int end, OrderByComparator<CTProcess> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String keywords,
-		QueryDefinition<?> queryDefinition);
 
 	/**
 	 * Returns the number of ct processes.

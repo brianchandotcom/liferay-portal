@@ -46,14 +46,12 @@ public class CTCollectionWrapper
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
@@ -83,12 +81,6 @@ public class CTCollectionWrapper
 
 		if (userId != null) {
 			setUserId(userId);
-		}
-
-		String userName = (String)attributes.get("userName");
-
-		if (userName != null) {
-			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -125,12 +117,6 @@ public class CTCollectionWrapper
 
 		if (statusByUserId != null) {
 			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
 		}
 
 		Date statusDate = (Date)attributes.get("statusDate");
@@ -241,16 +227,6 @@ public class CTCollectionWrapper
 	}
 
 	/**
-	 * Returns the status by user name of this ct collection.
-	 *
-	 * @return the status by user name of this ct collection
-	 */
-	@Override
-	public String getStatusByUserName() {
-		return model.getStatusByUserName();
-	}
-
-	/**
 	 * Returns the status by user uuid of this ct collection.
 	 *
 	 * @return the status by user uuid of this ct collection
@@ -280,11 +256,6 @@ public class CTCollectionWrapper
 		return model.getUserId();
 	}
 
-	/**
-	 * Returns the user name of this ct collection.
-	 *
-	 * @return the user name of this ct collection
-	 */
 	@Override
 	public String getUserName() {
 		return model.getUserName();
@@ -300,89 +271,9 @@ public class CTCollectionWrapper
 		return model.getUserUuid();
 	}
 
-	/**
-	 * Returns <code>true</code> if this ct collection is approved.
-	 *
-	 * @return <code>true</code> if this ct collection is approved; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isApproved() {
-		return model.isApproved();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is denied.
-	 *
-	 * @return <code>true</code> if this ct collection is denied; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDenied() {
-		return model.isDenied();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is a draft.
-	 *
-	 * @return <code>true</code> if this ct collection is a draft; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDraft() {
-		return model.isDraft();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is expired.
-	 *
-	 * @return <code>true</code> if this ct collection is expired; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isExpired() {
-		return model.isExpired();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is inactive.
-	 *
-	 * @return <code>true</code> if this ct collection is inactive; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInactive() {
-		return model.isInactive();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is incomplete.
-	 *
-	 * @return <code>true</code> if this ct collection is incomplete; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isIncomplete() {
-		return model.isIncomplete();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is pending.
-	 *
-	 * @return <code>true</code> if this ct collection is pending; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isPending() {
-		return model.isPending();
-	}
-
 	@Override
 	public boolean isProduction() {
 		return model.isProduction();
-	}
-
-	/**
-	 * Returns <code>true</code> if this ct collection is scheduled.
-	 *
-	 * @return <code>true</code> if this ct collection is scheduled; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isScheduled() {
-		return model.isScheduled();
 	}
 
 	/**
@@ -496,16 +387,6 @@ public class CTCollectionWrapper
 	}
 
 	/**
-	 * Sets the status by user name of this ct collection.
-	 *
-	 * @param statusByUserName the status by user name of this ct collection
-	 */
-	@Override
-	public void setStatusByUserName(String statusByUserName) {
-		model.setStatusByUserName(statusByUserName);
-	}
-
-	/**
 	 * Sets the status by user uuid of this ct collection.
 	 *
 	 * @param statusByUserUuid the status by user uuid of this ct collection
@@ -533,16 +414,6 @@ public class CTCollectionWrapper
 	@Override
 	public void setUserId(long userId) {
 		model.setUserId(userId);
-	}
-
-	/**
-	 * Sets the user name of this ct collection.
-	 *
-	 * @param userName the user name of this ct collection
-	 */
-	@Override
-	public void setUserName(String userName) {
-		model.setUserName(userName);
 	}
 
 	/**

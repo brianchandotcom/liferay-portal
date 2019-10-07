@@ -168,11 +168,6 @@ public class CTProcessWrapper
 		return model.getPrimaryKey();
 	}
 
-	@Override
-	public int getStatus() {
-		return model.getStatus();
-	}
-
 	/**
 	 * Returns the user ID of this ct process.
 	 *

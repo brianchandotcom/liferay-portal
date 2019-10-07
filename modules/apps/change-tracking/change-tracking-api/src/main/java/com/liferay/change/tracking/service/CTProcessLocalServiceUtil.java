@@ -51,12 +51,10 @@ public class CTProcessLocalServiceUtil {
 	}
 
 	public static com.liferay.change.tracking.model.CTProcess addCTProcess(
-			long userId, long ctCollectionId, boolean ignoreCollision,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long userId, long ctCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addCTProcess(
-			userId, ctCollectionId, ignoreCollision, serviceContext);
+		return getService().addCTProcess(userId, ctCollectionId);
 	}
 
 	/**
@@ -258,16 +256,6 @@ public class CTProcessLocalServiceUtil {
 
 		return getService().getCTProcesses(
 			companyId, userId, keywords, status, start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.change.tracking.model.CTProcess>
-		getCTProcesses(
-			long companyId, long userId, String keywords,
-			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
-				queryDefinition) {
-
-		return getService().getCTProcesses(
-			companyId, userId, keywords, queryDefinition);
 	}
 
 	/**

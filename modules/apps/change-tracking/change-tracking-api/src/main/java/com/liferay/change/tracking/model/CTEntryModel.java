@@ -216,20 +216,6 @@ public interface CTEntryModel
 	public void setModelMvccVersion(long modelMvccVersion);
 
 	/**
-	 * Returns the model resource prim key of this ct entry.
-	 *
-	 * @return the model resource prim key of this ct entry
-	 */
-	public long getModelResourcePrimKey();
-
-	/**
-	 * Sets the model resource prim key of this ct entry.
-	 *
-	 * @param modelResourcePrimKey the model resource prim key of this ct entry
-	 */
-	public void setModelResourcePrimKey(long modelResourcePrimKey);
-
-	/**
 	 * Returns the change type of this ct entry.
 	 *
 	 * @return the change type of this ct entry
@@ -242,40 +228,5 @@ public interface CTEntryModel
 	 * @param changeType the change type of this ct entry
 	 */
 	public void setChangeType(int changeType);
-
-	/**
-	 * Returns the collision of this ct entry.
-	 *
-	 * @return the collision of this ct entry
-	 */
-	public boolean getCollision();
-
-	/**
-	 * Returns <code>true</code> if this ct entry is collision.
-	 *
-	 * @return <code>true</code> if this ct entry is collision; <code>false</code> otherwise
-	 */
-	public boolean isCollision();
-
-	/**
-	 * Sets whether this ct entry is collision.
-	 *
-	 * @param collision the collision of this ct entry
-	 */
-	public void setCollision(boolean collision);
-
-	/**
-	 * Returns the status of this ct entry.
-	 *
-	 * @return the status of this ct entry
-	 */
-	public int getStatus();
-
-	/**
-	 * Sets the status of this ct entry.
-	 *
-	 * @param status the status of this ct entry
-	 */
-	public void setStatus(int status);
 
 }

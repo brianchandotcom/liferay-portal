@@ -130,8 +130,6 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setUserId(RandomTestUtil.nextLong());
 
-		newCTCollection.setUserName(RandomTestUtil.randomString());
-
 		newCTCollection.setCreateDate(RandomTestUtil.nextDate());
 
 		newCTCollection.setModifiedDate(RandomTestUtil.nextDate());
@@ -143,8 +141,6 @@ public class CTCollectionPersistenceTest {
 		newCTCollection.setStatus(RandomTestUtil.nextInt());
 
 		newCTCollection.setStatusByUserId(RandomTestUtil.nextLong());
-
-		newCTCollection.setStatusByUserName(RandomTestUtil.randomString());
 
 		newCTCollection.setStatusDate(RandomTestUtil.nextDate());
 
@@ -165,8 +161,6 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingCTCollection.getUserId(), newCTCollection.getUserId());
 		Assert.assertEquals(
-			existingCTCollection.getUserName(), newCTCollection.getUserName());
-		Assert.assertEquals(
 			Time.getShortTimestamp(existingCTCollection.getCreateDate()),
 			Time.getShortTimestamp(newCTCollection.getCreateDate()));
 		Assert.assertEquals(
@@ -182,9 +176,6 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingCTCollection.getStatusByUserId(),
 			newCTCollection.getStatusByUserId());
-		Assert.assertEquals(
-			existingCTCollection.getStatusByUserName(),
-			newCTCollection.getStatusByUserName());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCTCollection.getStatusDate()),
 			Time.getShortTimestamp(newCTCollection.getStatusDate()));
@@ -240,10 +231,9 @@ public class CTCollectionPersistenceTest {
 	protected OrderByComparator<CTCollection> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CTCollection", "mvccVersion", true, "ctCollectionId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"companyId", true, "userId", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true, "status",
+			true, "statusByUserId", true, "statusDate", true);
 	}
 
 	@Test
@@ -490,8 +480,6 @@ public class CTCollectionPersistenceTest {
 
 		ctCollection.setUserId(RandomTestUtil.nextLong());
 
-		ctCollection.setUserName(RandomTestUtil.randomString());
-
 		ctCollection.setCreateDate(RandomTestUtil.nextDate());
 
 		ctCollection.setModifiedDate(RandomTestUtil.nextDate());
@@ -503,8 +491,6 @@ public class CTCollectionPersistenceTest {
 		ctCollection.setStatus(RandomTestUtil.nextInt());
 
 		ctCollection.setStatusByUserId(RandomTestUtil.nextLong());
-
-		ctCollection.setStatusByUserName(RandomTestUtil.randomString());
 
 		ctCollection.setStatusDate(RandomTestUtil.nextDate());
 

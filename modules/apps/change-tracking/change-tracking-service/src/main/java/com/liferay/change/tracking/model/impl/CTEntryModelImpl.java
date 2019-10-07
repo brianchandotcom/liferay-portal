@@ -71,8 +71,7 @@ public class CTEntryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"ctCollectionId", Types.BIGINT}, {"modelClassNameId", Types.BIGINT},
 		{"modelClassPK", Types.BIGINT}, {"modelMvccVersion", Types.BIGINT},
-		{"modelResourcePrimKey", Types.BIGINT}, {"changeType", Types.INTEGER},
-		{"collision", Types.BOOLEAN}, {"status", Types.INTEGER}
+		{"changeType", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,14 +88,11 @@ public class CTEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modelClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modelClassPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modelMvccVersion", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("modelResourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("changeType", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("collision", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTEntry (mvccVersion LONG default 0 not null,ctEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,modelClassNameId LONG,modelClassPK LONG,modelMvccVersion LONG,modelResourcePrimKey LONG,changeType INTEGER,collision BOOLEAN,status INTEGER)";
+		"create table CTEntry (mvccVersion LONG default 0 not null,ctEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctCollectionId LONG,modelClassNameId LONG,modelClassPK LONG,modelMvccVersion LONG,changeType INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTEntry";
 
@@ -117,11 +113,7 @@ public class CTEntryModelImpl
 
 	public static final long MODELCLASSPK_COLUMN_BITMASK = 4L;
 
-	public static final long MODELRESOURCEPRIMKEY_COLUMN_BITMASK = 8L;
-
-	public static final long STATUS_COLUMN_BITMASK = 16L;
-
-	public static final long CTENTRYID_COLUMN_BITMASK = 32L;
+	public static final long CTENTRYID_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -292,20 +284,9 @@ public class CTEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"modelMvccVersion",
 			(BiConsumer<CTEntry, Long>)CTEntry::setModelMvccVersion);
-		attributeGetterFunctions.put(
-			"modelResourcePrimKey", CTEntry::getModelResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"modelResourcePrimKey",
-			(BiConsumer<CTEntry, Long>)CTEntry::setModelResourcePrimKey);
 		attributeGetterFunctions.put("changeType", CTEntry::getChangeType);
 		attributeSetterBiConsumers.put(
 			"changeType", (BiConsumer<CTEntry, Integer>)CTEntry::setChangeType);
-		attributeGetterFunctions.put("collision", CTEntry::getCollision);
-		attributeSetterBiConsumers.put(
-			"collision", (BiConsumer<CTEntry, Boolean>)CTEntry::setCollision);
-		attributeGetterFunctions.put("status", CTEntry::getStatus);
-		attributeSetterBiConsumers.put(
-			"status", (BiConsumer<CTEntry, Integer>)CTEntry::setStatus);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -472,28 +453,6 @@ public class CTEntryModelImpl
 	}
 
 	@Override
-	public long getModelResourcePrimKey() {
-		return _modelResourcePrimKey;
-	}
-
-	@Override
-	public void setModelResourcePrimKey(long modelResourcePrimKey) {
-		_columnBitmask |= MODELRESOURCEPRIMKEY_COLUMN_BITMASK;
-
-		if (!_setOriginalModelResourcePrimKey) {
-			_setOriginalModelResourcePrimKey = true;
-
-			_originalModelResourcePrimKey = _modelResourcePrimKey;
-		}
-
-		_modelResourcePrimKey = modelResourcePrimKey;
-	}
-
-	public long getOriginalModelResourcePrimKey() {
-		return _originalModelResourcePrimKey;
-	}
-
-	@Override
 	public int getChangeType() {
 		return _changeType;
 	}
@@ -501,43 +460,6 @@ public class CTEntryModelImpl
 	@Override
 	public void setChangeType(int changeType) {
 		_changeType = changeType;
-	}
-
-	@Override
-	public boolean getCollision() {
-		return _collision;
-	}
-
-	@Override
-	public boolean isCollision() {
-		return _collision;
-	}
-
-	@Override
-	public void setCollision(boolean collision) {
-		_collision = collision;
-	}
-
-	@Override
-	public int getStatus() {
-		return _status;
-	}
-
-	@Override
-	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
-		}
-
-		_status = status;
-	}
-
-	public int getOriginalStatus() {
-		return _originalStatus;
 	}
 
 	public long getColumnBitmask() {
@@ -586,10 +508,7 @@ public class CTEntryModelImpl
 		ctEntryImpl.setModelClassNameId(getModelClassNameId());
 		ctEntryImpl.setModelClassPK(getModelClassPK());
 		ctEntryImpl.setModelMvccVersion(getModelMvccVersion());
-		ctEntryImpl.setModelResourcePrimKey(getModelResourcePrimKey());
 		ctEntryImpl.setChangeType(getChangeType());
-		ctEntryImpl.setCollision(isCollision());
-		ctEntryImpl.setStatus(getStatus());
 
 		ctEntryImpl.resetOriginalValues();
 
@@ -668,15 +587,6 @@ public class CTEntryModelImpl
 
 		ctEntryModelImpl._setOriginalModelClassPK = false;
 
-		ctEntryModelImpl._originalModelResourcePrimKey =
-			ctEntryModelImpl._modelResourcePrimKey;
-
-		ctEntryModelImpl._setOriginalModelResourcePrimKey = false;
-
-		ctEntryModelImpl._originalStatus = ctEntryModelImpl._status;
-
-		ctEntryModelImpl._setOriginalStatus = false;
-
 		ctEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -718,13 +628,7 @@ public class CTEntryModelImpl
 
 		ctEntryCacheModel.modelMvccVersion = getModelMvccVersion();
 
-		ctEntryCacheModel.modelResourcePrimKey = getModelResourcePrimKey();
-
 		ctEntryCacheModel.changeType = getChangeType();
-
-		ctEntryCacheModel.collision = isCollision();
-
-		ctEntryCacheModel.status = getStatus();
 
 		return ctEntryCacheModel;
 	}
@@ -819,14 +723,7 @@ public class CTEntryModelImpl
 	private long _originalModelClassPK;
 	private boolean _setOriginalModelClassPK;
 	private long _modelMvccVersion;
-	private long _modelResourcePrimKey;
-	private long _originalModelResourcePrimKey;
-	private boolean _setOriginalModelResourcePrimKey;
 	private int _changeType;
-	private boolean _collision;
-	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private CTEntry _escapedModel;
 

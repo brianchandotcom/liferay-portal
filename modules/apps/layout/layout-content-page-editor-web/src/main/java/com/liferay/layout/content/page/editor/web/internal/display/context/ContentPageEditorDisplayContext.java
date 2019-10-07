@@ -36,9 +36,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.info.item.selector.InfoItemSelector;
-import com.liferay.info.item.selector.InfoItemSelectorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
@@ -82,7 +79,6 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -173,12 +169,6 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererTracker =
 			(FragmentRendererTracker)httpServletRequest.getAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER);
-		_infoItemRendererTracker =
-			(InfoItemRendererTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_RENDERER_TRACKER);
-		_infoItemSelectorTracker =
-			(InfoItemSelectorTracker)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_SELECTOR_TRACKER);
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.ITEM_SELECTOR);
 	}
@@ -201,8 +191,6 @@ public class ContentPageEditorDisplayContext {
 			getFragmentEntryActionURL("/content_layout/add_structured_content")
 		).put(
 			"assetBrowserLinks", _getAssetBrowserLinksSoyContexts()
-		).put(
-			"availableAssets", _getAvailableAssetsSoyContexts()
 		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
 		).put(
@@ -503,60 +491,6 @@ public class ContentPageEditorDisplayContext {
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return assetBrowserURL.toString();
-	}
-
-	private List<SoyContext> _getAvailableAssetsSoyContexts() throws Exception {
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		Set<String> classNames =
-			_infoItemSelectorTracker.getInfoItemSelectorsClassNames();
-
-		for (String className : classNames) {
-			List<InfoItemRenderer> infoItemRenderers =
-				_infoItemRendererTracker.getInfoItemRenderers(className);
-
-			if (ListUtil.isEmpty(infoItemRenderers)) {
-				continue;
-			}
-
-			List<InfoItemSelector> infoItemSelectors =
-				_infoItemSelectorTracker.getInfoItemSelectors(className);
-
-			InfoItemSelector infoItemSelector = infoItemSelectors.get(0);
-
-			PortletURL infoItemSelectorPortletURL =
-				infoItemSelector.getInfoItemSelectorPortletURL(request);
-
-			if (infoItemSelectorPortletURL == null) {
-				continue;
-			}
-
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-			soyContext.put(
-				"availableTemplates",
-				_getInfoItemRenderersTemplatesSoyContexts(infoItemRenderers)
-			).put(
-				"className", className
-			).put(
-				"classNameId", PortalUtil.getClassNameId(className)
-			);
-
-			infoItemSelectorPortletURL.setParameter(
-				"eventName", _renderResponse.getNamespace() + "selectAsset");
-
-			soyContext.put(
-				"href", infoItemSelectorPortletURL.toString()
-			).put(
-				"typeName",
-				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(), className)
-			);
-
-			soyContexts.add(soyContext);
-		}
-
-		return soyContexts;
 	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
@@ -1425,8 +1359,6 @@ public class ContentPageEditorDisplayContext {
 	private final FragmentRendererTracker _fragmentRendererTracker;
 	private Long _groupId;
 	private ItemSelectorCriterion _imageItemSelectorCriterion;
-	private final InfoItemRendererTracker _infoItemRendererTracker;
-	private final InfoItemSelectorTracker _infoItemSelectorTracker;
 	private final ItemSelector _itemSelector;
 	private String _layoutData;
 	private String _redirect;

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -243,30 +244,15 @@ public class StandaloneAppDeployer implements AppDeployer {
 
 		return _bundleContext.registerService(
 			Portlet.class, new AppPortlet(appId),
-			new HashMapDictionary<String, Object>() {
-				{
-					put(
-						"com.liferay.portlet.application-type",
-						"full-page-application");
-					put("com.liferay.portlet.add-default-resource", "true");
-					put(
-						"com.liferay.portlet.display-category",
-						"category.hidden");
-					put("com.liferay.portlet.use-default-template", "true");
-					put("javax.portlet.display-name", appName);
-					put("javax.portlet.name", portletName);
-					put(
-						"javax.portlet.init-param.template-path",
-						"/META-INF/resources/");
-					put(
-						"javax.portlet.init-param.view-template",
-						"/view_entries.jsp");
-					put(
-						"javax.portlet.security-role-ref",
-						"guest,power-user,user");
-					put("javax.portlet.supports.mime-type", "text/html");
-				}
-			});
+			AppPortlet.getProperties(
+				appName, portletName,
+				new HashMap<String, Object>() {
+					{
+						put(
+							"com.liferay.portlet.application-type",
+							"full-page-application");
+					}
+				}));
 	}
 
 	private String _getGroupFriendlyURL(long appId) {

@@ -16,8 +16,12 @@ package com.liferay.app.builder.web.internal.portlet;
 
 import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.io.IOException;
+
+import java.util.Dictionary;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -27,6 +31,38 @@ import javax.portlet.RenderResponse;
  * @author Gabriel Albuquerque
  */
 public class AppPortlet extends MVCPortlet {
+
+	public static Dictionary<String, Object> getProperties(
+		String appName, String portletName,
+		Map<String, Object> customProperties) {
+
+		HashMapDictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>() {
+				{
+					put("com.liferay.portlet.add-default-resource", true);
+					put(
+						"com.liferay.portlet.display-category",
+						"category.hidden");
+					put("com.liferay.portlet.use-default-template", true);
+					put("javax.portlet.display-name", appName);
+					put("javax.portlet.name", portletName);
+					put(
+						"javax.portlet.init-param.template-path",
+						"/META-INF/resources/");
+					put(
+						"javax.portlet.init-param.view-template",
+						"/view_entries.jsp");
+					put(
+						"javax.portlet.security-role-ref",
+						"administrator,guest,power-user,user");
+					put("javax.portlet.supports.mime-type", "text/html");
+				}
+			};
+
+		properties.putAll(customProperties);
+
+		return properties;
+	}
 
 	public AppPortlet(long appId) {
 		_appId = appId;

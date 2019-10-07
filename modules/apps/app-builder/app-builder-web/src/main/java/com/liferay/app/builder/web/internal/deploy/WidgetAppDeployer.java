@@ -20,9 +20,9 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
@@ -90,27 +90,15 @@ public class WidgetAppDeployer implements AppDeployer {
 
 		return _bundleContext.registerService(
 			Portlet.class, new AppPortlet(appId),
-			new HashMapDictionary<String, Object>() {
-				{
-					put("com.liferay.portlet.add-default-resource", true);
-					put(
-						"com.liferay.portlet.display-category",
-						"category.collaboration");
-					put("com.liferay.portlet.use-default-template", "true");
-					put("javax.portlet.display-name", appName);
-					put("javax.portlet.name", portletName);
-					put(
-						"javax.portlet.init-param.template-path",
-						"/META-INF/resources/");
-					put(
-						"javax.portlet.init-param.view-template",
-						"/view_entries.jsp");
-					put(
-						"javax.portlet.security-role-ref",
-						"administrator,guest,power-user,user");
-					put("javax.portlet.supports.mime-type", "text/html");
-				}
-			});
+			AppPortlet.getProperties(
+				appName, portletName,
+				new HashMap<String, Object>() {
+					{
+						put(
+							"com.liferay.portlet.display-category",
+							"category.collaboration");
+					}
+				}));
 	}
 
 	@Reference

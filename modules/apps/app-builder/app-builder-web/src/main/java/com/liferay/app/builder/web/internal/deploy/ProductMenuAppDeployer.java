@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
@@ -185,27 +186,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 		return _bundleContext.registerService(
 			Portlet.class, new AppPortlet(appId),
-			new HashMapDictionary<String, Object>() {
-				{
-					put("com.liferay.portlet.add-default-resource", true);
-					put(
-						"com.liferay.portlet.display-category",
-						"category.hidden");
-					put("com.liferay.portlet.use-default-template", "true");
-					put("javax.portlet.display-name", appName);
-					put("javax.portlet.name", portletName);
-					put(
-						"javax.portlet.init-param.template-path",
-						"/META-INF/resources/");
-					put(
-						"javax.portlet.init-param.view-template",
-						"/view_entries.jsp");
-					put(
-						"javax.portlet.security-role-ref",
-						"administrator,guest,power-user,user");
-					put("javax.portlet.supports.mime-type", "text/html");
-				}
-			});
+			AppPortlet.getProperties(appName, portletName, new HashMap<>()));
 	}
 
 	private String _getPanelCategoryKey(long appId) {

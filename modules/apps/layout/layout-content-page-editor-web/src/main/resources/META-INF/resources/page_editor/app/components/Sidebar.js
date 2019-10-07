@@ -112,6 +112,7 @@ export default function Sidebar() {
 							return <hr key={`separator-${index}`} />;
 						} else {
 							return (
+								// TODO: also handle keydown
 								<ClayButtonWithIcon
 									data-tooltip-align="left"
 									displayType="unstyled"

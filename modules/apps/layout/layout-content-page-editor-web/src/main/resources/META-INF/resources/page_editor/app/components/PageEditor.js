@@ -14,12 +14,21 @@
 
 import React from 'react';
 
+import {ConfigContext} from '../config/index';
 import {StoreContext} from '../store/index';
 
 const {useContext} = React;
 
 export default function PageEditor() {
+	const config = useContext(ConfigContext);
 	const state = useContext(StoreContext);
 
-	return <pre>{JSON.stringify(state, null, 2)}</pre>;
+	return (
+		<>
+			<h3>Config</h3>
+			<pre>{JSON.stringify(config, null, 2)}</pre>
+			<h3>Store state</h3>
+			<pre>{JSON.stringify(state, null, 2)}</pre>
+		</>
+	);
 }

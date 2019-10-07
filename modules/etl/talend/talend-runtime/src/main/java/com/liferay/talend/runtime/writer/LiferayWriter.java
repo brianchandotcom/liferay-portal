@@ -129,8 +129,13 @@ public class LiferayWriter
 			return;
 		}
 
-		_handleSuccessRecord(
-			_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
+		if (jsonObject != null) {
+			_handleSuccessRecord(
+				_jsonObjectIndexedRecordConverter.toIndexedRecord(jsonObject));
+		}
+		else {
+			_handleSuccessRecord(indexedRecord);
+		}
 	}
 
 	@Override

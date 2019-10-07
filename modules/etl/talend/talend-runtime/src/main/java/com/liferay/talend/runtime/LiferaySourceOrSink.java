@@ -104,6 +104,10 @@ public class LiferaySourceOrSink
 		}
 
 		if (!_responseHandler.isApplicationJsonContentType(response)) {
+			if (response.getStatus() == 204) {
+				return null;
+			}
+
 			throw new ResponseContentClientException(
 				"Unable to decode response content type " +
 					_responseHandler.getContentType(response),

@@ -15,3 +15,236 @@
 --%>
 
 <%@ include file="/item/selector/init.jsp" %>
+
+<%
+JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDisplayContext = (JournalArticleItemSelectorViewDisplayContext)request.getAttribute(JournalWebConstants.JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+%>
+
+<clay:management-toolbar
+	displayContext="<%= new JournalArticleItemSelectorViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, journalArticleItemSelectorViewDisplayContext) %>"
+/>
+
+<div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer" id="<portlet:namespace />articlesContainer">
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
+	/>
+
+	<liferay-ui:search-container
+		emptyResultsMessage="no-web-content-was-found"
+		id="articles"
+		searchContainer="<%= journalArticleItemSelectorViewDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="Object"
+			cssClass="entry-display-style"
+			modelVar="object"
+		>
+
+			<%
+			JournalArticle curArticle = null;
+			JournalFolder curFolder = null;
+
+			Object result = row.getObject();
+
+			if (result instanceof JournalFolder) {
+				curFolder = (JournalFolder)result;
+			}
+			else {
+				curArticle = journalArticleItemSelectorViewDisplayContext.getLatestArticle((JournalArticle)result);
+			}
+			%>
+
+			<c:choose>
+				<c:when test="<%= curArticle != null %>">
+
+					<%
+					String title = curArticle.getTitle(locale);
+
+					if (Validator.isNull(title)) {
+						title = curArticle.getTitle(LocaleUtil.fromLanguageId(curArticle.getDefaultLanguageId()));
+					}
+					%>
+
+					<c:choose>
+						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
+							<liferay-ui:search-container-column-text>
+								<liferay-ui:user-portrait
+									userId="<%= curArticle.getUserId() %>"
+								/>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+
+								<%
+								Date createDate = curArticle.getModifiedDate();
+
+								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
+
+								<span class="text-default">
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+								</span>
+
+								<p class="font-weight-bold h5">
+									<%= HtmlUtil.escape(title) %>
+								</p>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
+
+							<%
+							row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+							%>
+
+							<liferay-ui:search-container-column-text>
+								<clay:vertical-card
+									verticalCard="<%= new JournalArticleItemSelectorVerticalCard(curArticle, renderRequest) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200 table-title"
+								name="title"
+								value="<%= title %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200"
+								name="description"
+								value="<%= StringUtil.shorten(HtmlUtil.stripHtml(curArticle.getDescription(locale)), 200) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-100"
+								name="author"
+								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curArticle)) %>"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+								name="modified-date"
+								value="<%= curArticle.getModifiedDate() %>"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+								name="display-date"
+								value="<%= curArticle.getDisplayDate() %>"
+							/>
+
+							<%
+							DDMStructure ddmStructure = curArticle.getDDMStructure();
+							%>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-100"
+								name="type"
+								value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:when test="<%= curFolder != null %>">
+
+					<%
+					PortletURL rowURL = journalArticleItemSelectorViewDisplayContext.getPortletURL();
+
+					rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+					%>
+
+					<c:choose>
+						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
+							<liferay-ui:search-container-column-icon
+								icon="folder"
+								toggleRowChecker="<%= true %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+
+								<%
+								Date createDate = curFolder.getCreateDate();
+
+								String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+								%>
+
+								<span class="text-default">
+									<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curFolder.getUserName()), createDateDescription} %>" key="x-modified-x-ago" />
+								</span>
+
+								<p class="font-weight-bold h5">
+									<a href="<%= rowURL %>">
+										<%= HtmlUtil.escape(curFolder.getName()) %>
+									</a>
+								</p>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
+
+							<%
+							row.setCssClass("entry-card lfr-asset-folder " + row.getCssClass());
+							%>
+
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+								<clay:horizontal-card
+									horizontalCard="<%= new JournalFolderItemSelectorHorizontalCard(curFolder, journalArticleItemSelectorViewDisplayContext) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200 table-list-title"
+								href="<%= rowURL %>"
+								name="title"
+								value="<%= HtmlUtil.escape(curFolder.getName()) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200"
+								name="description"
+								value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-150"
+								name="author"
+								value="<%= HtmlUtil.escape(PortalUtil.getUserName(curFolder)) %>"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+								name="modified-date"
+								value="<%= curFolder.getModifiedDate() %>"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+								name="display-date"
+								value="--"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-150"
+								name="type"
+								value='<%= LanguageUtil.get(request, "folder") %>'
+							/>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+			</c:choose>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			displayStyle="<%= journalArticleItemSelectorViewDisplayContext.getDisplayStyle() %>"
+			markupView="lexicon"
+			resultRowSplitter="<%= new JournalResultRowSplitter() %>"
+			searchContainer="<%= searchContainer %>"
+		/>
+	</liferay-ui:search-container>
+</div>

@@ -29,6 +29,7 @@ export const ConfigContext = React.createContext(DEFAULT_CONFIG);
 export function getConfig(data) {
 	const {
 		discardDraftURL,
+		lookAndFeelURL,
 		portletNamespace,
 		publishURL,
 		singleSegmentsExperienceMode
@@ -38,6 +39,7 @@ export function getConfig(data) {
 		...DEFAULT_CONFIG,
 
 		discardDraftURL,
+		lookAndFeelURL,
 		portletNamespace,
 		publishURL,
 		singleSegmentsExperienceMode,

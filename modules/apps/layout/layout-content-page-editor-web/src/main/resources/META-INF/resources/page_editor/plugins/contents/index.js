@@ -15,6 +15,8 @@
 /**
  * Entry-point for "Contents" (sidebar pane) functionality.
  */
-export default function() {
-	return null;
+export default class Contents {
+	constructor(_state, _config) {
+		// TODO: implement
+	}
 }

@@ -40,13 +40,66 @@ export const StoreContext = React.createContext(INITIAL_STATE);
  * to specific subtrees.
  */
 export function getInitialState(data = {}) {
-	// TODO: Transform/normalize.
 	const state = {
-		data
+		...transformServerData(data)
 	};
 
 	return {
 		...INITIAL_STATE,
 		...state
+	};
+}
+
+/**
+ * In general, we expect the sidebarPanelId to correspond with the name
+ * of a plugin. Here we deal with the exceptions by mapping IDs to
+ * plugin names.
+ */
+const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
+	elements: 'section-builder',
+
+	lookAndFeel: 'look-and-feel',
+
+	/**
+	 * Not a real plugin, just a visual separator.
+	 */
+	separator: null
+};
+
+/**
+ * Until we decompose the layout-content-page-editor module into a
+ * set of smaller OSGi plugins, we "fake" it here to show how we would
+ * lazily-load components from elsewhere by injecting an additional
+ * "pluginEntryPoint" property.
+ *
+ * Note that in the final version we'll be using NPMResolver to obtain these
+ * paths dynamically.
+ *
+ * @see transformServerData() below.
+ */
+const PLUGIN_ROOT = 'layout-content-page-editor-web@2.0.0/page_editor/plugins';
+
+function transformServerData(data) {
+	return {
+		...data,
+
+		sidebarPanels: data.sidebarPanels.map(panel => {
+			const mapping = SIDEBAR_PANEL_IDS_TO_PLUGINS[panel.sidebarPanelId];
+
+			if (mapping === null) {
+				return panel;
+			}
+
+			const sidebarPanelId = mapping || panel.sidebarPanelId;
+
+			return {
+				...panel,
+
+				// https://github.com/liferay/liferay-js-toolkit/issues/324
+				pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
+
+				sidebarPanelId
+			};
+		})
 	};
 }

@@ -25,7 +25,7 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 	searchContainerId="blogEntries"
 />
 
-<div class="container-fluid container-fluid-max-xl main-content-body" id="<portlet:namespace />blogEntriesContainer">
+<div class="container-fluid container-fluid-max-xl item-selector lfr-item-viewer main-content-body" id="<portlet:namespace />blogEntriesContainer">
 	<liferay-ui:search-container
 		id="blogEntries"
 		searchContainer="<%= blogEntriesItemSelectorDisplayContext.getSearchContainer() %>"
@@ -36,8 +36,31 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 			keyProperty="entryId"
 			modelVar="entry"
 		>
+
+			<%
+			row.setCssClass("entries");
+
+			Map<String, Object> data = new HashMap<>();
+
+			JSONObject entryJSONObject = JSONFactoryUtil.createJSONObject();
+
+			entryJSONObject.put("className", BlogsEntry.class.getName());
+			entryJSONObject.put("classNameId", PortalUtil.getClassNameId(BlogsEntry.class.getName()));
+			entryJSONObject.put("classPK", entry.getEntryId());
+			entryJSONObject.put("title", BlogsEntryUtil.getDisplayTitle(resourceBundle, entry));
+
+			data.put("value", entryJSONObject.toString());
+
+			row.setData(data);
+			%>
+
 			<c:choose>
 				<c:when test='<%= Objects.equals(blogEntriesItemSelectorDisplayContext.getDisplayStyle(), "descriptive") %>'>
+
+					<%
+					row.setCssClass("item-preview " + row.getCssClass());
+					%>
+
 					<liferay-ui:search-container-column-user
 						showDetails="<%= false %>"
 						userId="<%= entry.getUserId() %>"
@@ -79,6 +102,11 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
+
+					<%
+					row.setCssClass("item-preview " + row.getCssClass());
+					%>
+
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="title"
@@ -126,3 +154,41 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 		/>
 	</liferay-ui:search-container>
 </div>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var selectArticleHandler = dom.delegate(
+		document.querySelector('#<portlet:namespace/>blogEntriesContainer'),
+		'click',
+		'.entries',
+		function(event) {
+			<c:choose>
+				<c:when test='<%= Objects.equals(blogEntriesItemSelectorDisplayContext.getDisplayStyle(), "icon") %>'>
+					dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
+				</c:when>
+				<c:otherwise>
+					dom.removeClasses(document.querySelectorAll('.entries.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.entries'), 'active');
+				</c:otherwise>
+			</c:choose>
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= blogEntriesItemSelectorDisplayContext.getItemSelectedEventName() %>',
+				{
+					data: {
+						returnType: '<%= InfoItemItemSelectorReturnType.class.getName() %>',
+						value: event.delegateTarget.dataset.value
+					}
+				}
+			);
+		}
+	);
+
+	function removeListener() {
+		selectArticleHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	}
+
+	Liferay.on('destroyPortlet', removeListener);
+</aui:script>

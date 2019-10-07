@@ -133,16 +133,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_portalExecutorManager.getPortalExecutor(
 				ImportTaskResourceImpl.class.getName());
 
-		long batchSize = _defaultBatchSize;
-
-		if (_itemClassBatchSizeMap.containsKey(className)) {
-			batchSize = _itemClassBatchSizeMap.get(className);
-		}
-
 		BatchEngineTask batchEngineTask =
 			_batchEngineTaskLocalService.addBatchEngineTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
-				batchSize, callbackURL, className,
+				_itemClassBatchSizeMap.getOrDefault(
+					className, _defaultBatchSize),
+				callbackURL, className,
 				StreamUtil.toByteArray(binaryFile.getInputStream()),
 				StringUtil.upperCase(
 					_file.getExtension(binaryFile.getFileName())),

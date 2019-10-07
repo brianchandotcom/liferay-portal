@@ -18,7 +18,6 @@ import com.liferay.asset.info.display.field.AssetEntryInfoDisplayFieldProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.dynamic.data.mapping.info.display.field.DDMFormValuesInfoDisplayFieldProvider;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayField;
@@ -51,7 +50,7 @@ public class DLFileEntryInfoDisplayContributor
 
 	@Override
 	public String getClassName() {
-		return DLFileEntryConstants.getClassName();
+		return FileEntry.class.getName();
 	}
 
 	@Override

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = InfoDisplayContributorField.class
 )
 public class DLFileEntryPublishDateInfoDisplayContributorField

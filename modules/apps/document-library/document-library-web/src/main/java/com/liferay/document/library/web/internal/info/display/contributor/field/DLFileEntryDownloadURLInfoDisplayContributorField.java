@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
 	service = InfoDisplayContributorField.class
 )
 public class DLFileEntryDownloadURLInfoDisplayContributorField

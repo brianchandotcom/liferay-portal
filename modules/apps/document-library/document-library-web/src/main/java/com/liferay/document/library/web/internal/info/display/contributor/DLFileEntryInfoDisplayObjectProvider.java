@@ -42,7 +42,7 @@ public class DLFileEntryInfoDisplayObjectProvider
 
 	@Override
 	public long getClassNameId() {
-		return PortalUtil.getClassNameId(DLFileEntryConstants.getClassName());
+		return PortalUtil.getClassNameId(FileEntry.class.getName());
 	}
 
 	@Override

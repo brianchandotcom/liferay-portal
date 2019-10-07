@@ -59,6 +59,7 @@ page import="com.liferay.portal.kernel.service.OrganizationServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PhoneServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.RegionServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.service.UserGroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WebsiteServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@

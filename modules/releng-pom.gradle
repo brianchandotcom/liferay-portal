@@ -285,20 +285,20 @@ generatePomThirdParty {
 
 testPomCompileOnly {
 	doLast {
-		_testPom(pomCompileOnlyArtifactId, version, true)
+		_testPom(pomCompileOnlyArtifactId, version)
 	}
 
 }
 
 testPomRelease {
 	doLast {
-		_testPom(pomReleaseArtifactId, version, false)
+		_testPom(pomReleaseArtifactId, version)
 	}
 }
 
 testPomThirdParty {
 	doLast {
-		_testPom(pomThirdPartyArtifactId, version, true)
+		_testPom(pomThirdPartyArtifactId, version)
 	}
 }
 

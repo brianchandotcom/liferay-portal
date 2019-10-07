@@ -378,7 +378,7 @@ private String _isDigitalExperiencePlatform() {
 	return false
 }
 
-private void _testPom(String artifactId, String version, Boolean excludeLiferayDependencies) {
+private void _testPom(String artifactId, String version) {
 	File pom = new File(buildDir, "${artifactId}-${version}.pom")
 
 	Node pomNode = new XmlParser().parseText(pom.text)
@@ -402,8 +402,8 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 	assert pomNode.scm.url.text() == "https://github.com/liferay/liferay-portal"
 	assert pomNode.version.text() == version
 
-	String dependencyArtifactIdPattern = excludeLiferayDependencies ? /^(?!com\.liferay)[a-z][a-z\d.-]*[a-z\d]/ : /[a-z][a-z\d.-]*[a-z\d]/
-	String dependencyGroupIdPattern = excludeLiferayDependencies ? /^(?!com\.liferay)[a-z][a-z\d.-]*[a-z\d]/ : /[a-z][a-z\d.-]*[a-z\d]/
+	String dependencyArtifactIdPattern = /[a-z][a-z\d.-]*[a-z\d]/
+	String dependencyGroupIdPattern = /[a-z][a-z\d.-]*[a-z\d]/
 
 	String[] failedDependencies = []
 

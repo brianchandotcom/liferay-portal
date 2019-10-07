@@ -16,20 +16,38 @@ package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -50,6 +68,59 @@ public class UserGroupServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Test
+	public void testDatabaseSearchPermissionCheck() throws Exception {
+		UserGroup publicUserGroup = _addUserGroup();
+		UserGroup privateUserGroup = _addUserGroup();
+
+		User groupUser = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(
+			groupUser.getUserId(), publicUserGroup);
+
+		_userGroupLocalService.addUserUserGroup(
+			groupUser.getUserId(), privateUserGroup);
+
+		User publicAdminUser = UserTestUtil.addUser();
+
+		Role publicAdminRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleLocalServiceUtil.addUserRole(
+			publicAdminUser.getUserId(), publicAdminRole);
+
+		ResourceAction viewAction =
+			_resourceActionLocalService.fetchResourceAction(
+				UserGroup.class.getName(), ActionKeys.VIEW);
+
+		ResourcePermissionTestUtil.addResourcePermission(
+			viewAction.getBitwiseValue(), UserGroup.class.getName(),
+			String.valueOf(publicUserGroup.getUserGroupId()),
+			publicAdminRole.getRoleId(), ResourceConstants.SCOPE_INDIVIDUAL);
+
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(publicAdminUser));
+
+		String keywords = null;
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
+
+		userGroupParams.put(
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
+			Long.valueOf(groupUser.getUserId()));
+
+		List<UserGroup> userGroups = _userGroupService.search(
+			publicAdminRole.getCompanyId(), keywords, userGroupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));
+
+		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
+
+		_userLocalService.deleteUser(groupUser);
+		_userLocalService.deleteUser(publicAdminUser);
+
+		_roleLocalService.deleteRole(publicAdminRole);
+	}
 
 	@Test
 	public void testGetGtUserGroups() throws Exception {
@@ -151,6 +222,15 @@ public class UserGroupServiceTest {
 	}
 
 	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private UserGroupLocalService _userGroupLocalService;
 
 	@DeleteAfterTestRun
@@ -158,5 +238,8 @@ public class UserGroupServiceTest {
 
 	@Inject
 	private UserGroupService _userGroupService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

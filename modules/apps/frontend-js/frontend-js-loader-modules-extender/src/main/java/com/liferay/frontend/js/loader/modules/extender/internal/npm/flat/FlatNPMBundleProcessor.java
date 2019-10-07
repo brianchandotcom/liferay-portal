@@ -401,7 +401,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 				String alias = folderPath.substring(1);
 
-				if (main.startsWith(StringPool.PERIOD)) {
+				if (!main.startsWith(StringPool.SLASH)) {
 					main = _canonicalizePath(alias + StringPool.SLASH + main);
 				}
 

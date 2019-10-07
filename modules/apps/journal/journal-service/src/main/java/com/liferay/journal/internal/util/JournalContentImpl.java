@@ -92,6 +92,11 @@ public class JournalContentImpl
 	}
 
 	@Override
+	public void afterPublish(long ctCollectionId) {
+		_portalCache.removeAll();
+	}
+
+	@Override
 	public void clearCache() {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -395,11 +400,6 @@ public class JournalContentImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return JournalContent.class.getName();
-	}
-
-	@Override
-	public void onPublish(long ctCollectionId) {
-		_portalCache.removeAll();
 	}
 
 	protected JournalArticleDisplay getArticleDisplay(

@@ -35,20 +35,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTServiceRegistry.class)
 public class CTServiceRegistry {
 
+	public void afterPublish(long ctCollectionId) throws Exception {
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			ctEventListener.afterPublish(ctCollectionId);
+		}
+	}
+
+	public void beforeRemove(long ctCollectionId) {
+		for (CTEventListener ctEventListener : _serviceTrackerList) {
+			ctEventListener.beforeRemove(ctCollectionId);
+		}
+	}
+
 	public CTService<?> getCTService(long classNameId) {
 		return _serviceTrackerMap.getService(classNameId);
-	}
-
-	public void onPublish(long ctCollectionId) throws Exception {
-		for (CTEventListener ctEventListener : _serviceTrackerList) {
-			ctEventListener.onPublish(ctCollectionId);
-		}
-	}
-
-	public void onRemove(long ctCollectionId) {
-		for (CTEventListener ctEventListener : _serviceTrackerList) {
-			ctEventListener.onRemove(ctCollectionId);
-		}
 	}
 
 	@Activate

@@ -19,10 +19,10 @@ package com.liferay.change.tracking.listener;
  */
 public interface CTEventListener {
 
-	public default void onPublish(long ctCollectionId) throws Exception {
+	public default void afterPublish(long ctCollectionId) throws Exception {
 	}
 
-	public default void onRemove(long ctCollectionId) {
+	public default void beforeRemove(long ctCollectionId) {
 	}
 
 }

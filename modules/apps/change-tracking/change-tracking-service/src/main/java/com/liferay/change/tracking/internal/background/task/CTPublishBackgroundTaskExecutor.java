@@ -135,7 +135,7 @@ public class CTPublishBackgroundTaskExecutor
 			}
 		}
 
-		_ctServiceRegistry.onPublish(ctCollectionId);
+		_ctServiceRegistry.afterPublish(ctCollectionId);
 
 		_ctCollectionLocalService.updateStatus(
 			backgroundTask.getUserId(), ctCollection,

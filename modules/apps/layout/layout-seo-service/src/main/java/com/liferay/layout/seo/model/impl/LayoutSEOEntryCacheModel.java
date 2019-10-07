@@ -77,7 +77,7 @@ public class LayoutSEOEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,10 +101,20 @@ public class LayoutSEOEntryCacheModel
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
 		sb.append(layoutId);
-		sb.append(", enabled=");
-		sb.append(enabled);
+		sb.append(", canonicalURLEnabled=");
+		sb.append(canonicalURLEnabled);
 		sb.append(", canonicalURL=");
 		sb.append(canonicalURL);
+		sb.append(", openGraphTitleEnabled=");
+		sb.append(openGraphTitleEnabled);
+		sb.append(", openGraphTitle=");
+		sb.append(openGraphTitle);
+		sb.append(", openGraphDescriptionEnabled=");
+		sb.append(openGraphDescriptionEnabled);
+		sb.append(", openGraphDescription=");
+		sb.append(openGraphDescription);
+		sb.append(", openGraphImageFileEntryId=");
+		sb.append(openGraphImageFileEntryId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -153,7 +163,7 @@ public class LayoutSEOEntryCacheModel
 
 		layoutSEOEntryImpl.setPrivateLayout(privateLayout);
 		layoutSEOEntryImpl.setLayoutId(layoutId);
-		layoutSEOEntryImpl.setEnabled(enabled);
+		layoutSEOEntryImpl.setCanonicalURLEnabled(canonicalURLEnabled);
 
 		if (canonicalURL == null) {
 			layoutSEOEntryImpl.setCanonicalURL("");
@@ -161,6 +171,28 @@ public class LayoutSEOEntryCacheModel
 		else {
 			layoutSEOEntryImpl.setCanonicalURL(canonicalURL);
 		}
+
+		layoutSEOEntryImpl.setOpenGraphTitleEnabled(openGraphTitleEnabled);
+
+		if (openGraphTitle == null) {
+			layoutSEOEntryImpl.setOpenGraphTitle("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphTitle(openGraphTitle);
+		}
+
+		layoutSEOEntryImpl.setOpenGraphDescriptionEnabled(
+			openGraphDescriptionEnabled);
+
+		if (openGraphDescription == null) {
+			layoutSEOEntryImpl.setOpenGraphDescription("");
+		}
+		else {
+			layoutSEOEntryImpl.setOpenGraphDescription(openGraphDescription);
+		}
+
+		layoutSEOEntryImpl.setOpenGraphImageFileEntryId(
+			openGraphImageFileEntryId);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutSEOEntryImpl.setLastPublishDate(null);
@@ -194,8 +226,16 @@ public class LayoutSEOEntryCacheModel
 
 		layoutId = objectInput.readLong();
 
-		enabled = objectInput.readBoolean();
+		canonicalURLEnabled = objectInput.readBoolean();
 		canonicalURL = objectInput.readUTF();
+
+		openGraphTitleEnabled = objectInput.readBoolean();
+		openGraphTitle = objectInput.readUTF();
+
+		openGraphDescriptionEnabled = objectInput.readBoolean();
+		openGraphDescription = objectInput.readUTF();
+
+		openGraphImageFileEntryId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -232,7 +272,7 @@ public class LayoutSEOEntryCacheModel
 
 		objectOutput.writeLong(layoutId);
 
-		objectOutput.writeBoolean(enabled);
+		objectOutput.writeBoolean(canonicalURLEnabled);
 
 		if (canonicalURL == null) {
 			objectOutput.writeUTF("");
@@ -241,6 +281,25 @@ public class LayoutSEOEntryCacheModel
 			objectOutput.writeUTF(canonicalURL);
 		}
 
+		objectOutput.writeBoolean(openGraphTitleEnabled);
+
+		if (openGraphTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphTitle);
+		}
+
+		objectOutput.writeBoolean(openGraphDescriptionEnabled);
+
+		if (openGraphDescription == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openGraphDescription);
+		}
+
+		objectOutput.writeLong(openGraphImageFileEntryId);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -255,8 +314,13 @@ public class LayoutSEOEntryCacheModel
 	public long modifiedDate;
 	public boolean privateLayout;
 	public long layoutId;
-	public boolean enabled;
+	public boolean canonicalURLEnabled;
 	public String canonicalURL;
+	public boolean openGraphTitleEnabled;
+	public String openGraphTitle;
+	public boolean openGraphDescriptionEnabled;
+	public String openGraphDescription;
+	public long openGraphImageFileEntryId;
 	public long lastPublishDate;
 
 }

@@ -50,14 +50,14 @@ public class LayoutSEOEntryServiceUtil {
 	public static com.liferay.layout.seo.model.LayoutSEOEntry
 			updateLayoutSEOEntry(
 				long groupId, boolean privateLayout, long layoutId,
-				boolean enabled,
+				boolean enabledCanonicalURLMap,
 				java.util.Map<java.util.Locale, String> canonicalURLMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, enabled, canonicalURLMap,
-			serviceContext);
+			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
+			canonicalURLMap, serviceContext);
 	}
 
 	public static LayoutSEOEntryService getService() {

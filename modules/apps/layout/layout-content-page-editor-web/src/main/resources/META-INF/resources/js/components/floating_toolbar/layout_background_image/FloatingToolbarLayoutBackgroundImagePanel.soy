@@ -73,7 +73,7 @@
 
 				{if not $mappingFieldsURL or $_selectedMappingSourceTypeId == $_mappingSourceTypeIds.content}
 					<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
-						{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+						{call com.liferay.layout.content.page.editor.web.InfoItemSelector.render}
 							{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
 							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}

@@ -30,9 +30,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsActionKeys;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
@@ -218,6 +221,51 @@ public class SegmentsDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public String getSegmentsEntryURL(SegmentsEntry segmentsEntry) {
+		if (segmentsEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		if (Objects.equals(
+				segmentsEntry.getSource(),
+				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND)) {
+
+			String asahFaroURL = PrefsPropsUtil.getString(
+				segmentsEntry.getCompanyId(), "liferayAnalyticsURL");
+
+			if (Validator.isNull(asahFaroURL)) {
+				return StringPool.BLANK;
+			}
+
+			return asahFaroURL + "/contacts/segments/" +
+				segmentsEntry.getSegmentsEntryKey();
+		}
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editSegmentsEntry");
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(_renderRequest));
+		portletURL.setParameter(
+			"segmentsEntryId",
+			String.valueOf(segmentsEntry.getSegmentsEntryId()));
+		portletURL.setParameter("showInEditMode", Boolean.FALSE.toString());
+
+		return portletURL.toString();
+	}
+
+	public String getSegmentsEntryURLTarget(SegmentsEntry segmentsEntry) {
+		if ((segmentsEntry == null) ||
+			Objects.equals(
+				segmentsEntry.getSource(),
+				SegmentsEntryConstants.SOURCE_DEFAULT)) {
+
+			return "_self";
+		}
+
+		return "_blank";
 	}
 
 	public String getSortingURL() {

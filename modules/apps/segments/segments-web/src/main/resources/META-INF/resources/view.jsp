@@ -64,17 +64,11 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 			row.setData(rowData);
 			%>
 
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="editSegmentsEntry" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="segmentsEntryId" value="<%= String.valueOf(segmentsEntry.getSegmentsEntryId()) %>" />
-				<portlet:param name="showInEditMode" value="<%= Boolean.FALSE.toString() %>" />
-			</portlet:renderURL>
-
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand table-title"
-				href="<%= rowURL %>"
+				href="<%= segmentsDisplayContext.getSegmentsEntryURL(segmentsEntry) %>"
 				name="name"
+				target="<%= segmentsDisplayContext.getSegmentsEntryURLTarget(segmentsEntry) %>"
 				value="<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>"
 			/>
 

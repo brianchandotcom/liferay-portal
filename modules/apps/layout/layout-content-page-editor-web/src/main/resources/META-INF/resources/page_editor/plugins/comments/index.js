@@ -16,7 +16,7 @@
  * Entry-point for "Comments" (sidebar pane) functionality.
  */
 export default class Comments {
-	constructor(_state, _config) {
+	constructor(_store, _config) {
 		// TODO: implement
 	}
 }

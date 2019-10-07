@@ -3,18 +3,27 @@
 $sidebarButtonHeight: 40px;
 $sidebarButtonWidth: 40px;
 
+//
+// z-indexes for childern of page-editor-sidebar (which is a stacking context).
+//
+
+$zIndexButtons: 1;
+$zIndexContent: 0;
+
 .page-editor-sidebar {
-	background-color: $sidebarBackgroundColor;
-	height: 100vh;
+	display: flex;
+	height: calc(100vh - #{$toolbarHeight});
 	position: fixed;
 	right: 0;
 	top: $toolbarHeight;
 	z-index: $zIndexSidebar;
 
 	&-buttons {
+		background-color: $sidebarButtonBackgroundColor;
 		flex-direction: column;
 		padding-top: 16px;
 		width: $sidebarButtonWidth;
+		z-index: $zIndexButtons;
 
 		button {
 			color: $sidebarButtonColor;
@@ -30,6 +39,24 @@ $sidebarButtonWidth: 40px;
 			border-color: $sidebarButtonSeparatorColor;
 			margin: 12px 8px;
 		}
+	}
+
+	&-content {
+		border-left: 1px solid $sidebarBorderColor;
+		background-color: $sidebarContentBackgroundColor;
+		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		overflow-x: hidden;
+		padding: 8px;
+		position: fixed;
+		right: $sidebarButtonWidth;
+		transform: translateX(100%);
+		transition: transform ease $defaultTransitionDuration;
+		width: $sidebarContentWidth;
+		z-index: $zIndexContent;
+	}
+
+	&-content-open {
+		transform: translateX(0);
 	}
 
 	body.has-control-menu & {

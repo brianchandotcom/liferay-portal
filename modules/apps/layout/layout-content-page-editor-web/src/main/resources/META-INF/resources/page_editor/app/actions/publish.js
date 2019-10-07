@@ -12,7 +12,7 @@
  * details.
  */
 
-import {publish as type} from './types';
+import {PUBLISH as type} from './types';
 
 const ACTION = {type};
 

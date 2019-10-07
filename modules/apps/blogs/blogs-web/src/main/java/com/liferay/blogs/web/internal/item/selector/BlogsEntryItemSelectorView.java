@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.web.internal.item.selector;
 
+import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
+import com.liferay.blogs.web.internal.display.context.BlogEntriesItemSelectorDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -35,6 +37,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,6 +84,16 @@ public class BlogsEntryItemSelectorView
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
+
+		BlogEntriesItemSelectorDisplayContext
+			blogEntriesItemSelectorDisplayContext =
+				new BlogEntriesItemSelectorDisplayContext(
+					(HttpServletRequest)request, this, itemSelectedEventName,
+					search, portletURL);
+
+		request.setAttribute(
+			BlogsWebKeys.BLOGS_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			blogEntriesItemSelectorDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 

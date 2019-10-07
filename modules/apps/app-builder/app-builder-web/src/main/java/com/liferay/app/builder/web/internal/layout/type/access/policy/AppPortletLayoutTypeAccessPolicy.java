@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 /**
  * @author Gabriel Albuquerque
  */
-public class DeployedAppPortletLayoutTypeAccessPolicy
+public class AppPortletLayoutTypeAccessPolicy
 	extends DefaultLayoutTypeAccessPolicyImpl {
 
 	@Override

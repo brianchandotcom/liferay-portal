@@ -19,9 +19,9 @@ import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
-import com.liferay.app.builder.web.internal.layout.type.access.policy.DeployedAppPortletLayoutTypeAccessPolicy;
-import com.liferay.app.builder.web.internal.layout.type.controller.DeployedAppPortletLayoutTypeController;
-import com.liferay.app.builder.web.internal.portlet.DeployedAppPortlet;
+import com.liferay.app.builder.web.internal.layout.type.access.policy.AppPortletLayoutTypeAccessPolicy;
+import com.liferay.app.builder.web.internal.layout.type.controller.AppPortletLayoutTypeController;
+import com.liferay.app.builder.web.internal.portlet.AppPortlet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -77,15 +77,14 @@ public class StandaloneAppDeployer implements AppDeployer {
 			appId,
 			key -> {
 				try {
+					String portletName = _getPortletName(appId);
+
 					return new ServiceRegistration<?>[] {
-						_deployAppLayout(
-							appBuilderApp.getCompanyId(), appId,
-							_getPortletName(appId)),
-						_deployDeployedAppPortlet(
-							appId, appBuilderApp.getName(),
-							_getPortletName(appId)),
-						_deployDeployedAppPortletLayoutTypeAccessPolicy(
-							_getPortletName(appId))
+						_deployLayoutTypeController(
+							appBuilderApp.getCompanyId(), appId, portletName),
+						_deployPortlet(
+							appId, appBuilderApp.getName(), portletName),
+						_deployLayoutTypeAccessPolicy(portletName)
 					};
 				}
 				catch (PortalException pe) {
@@ -128,31 +127,6 @@ public class StandaloneAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	protected Layout addPublicLayout(
-			long companyId, long groupId, String portletName)
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAttribute(
-			"layout.instanceable.allowed", Boolean.TRUE);
-		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
-
-		serviceContext.setScopeGroupId(groupId);
-
-		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
-
-		serviceContext.setUserId(defaultUserId);
-
-		return _layoutLocalService.addLayout(
-			defaultUserId, groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
-			StringPool.BLANK, StringPool.BLANK, portletName, true, null,
-			serviceContext);
-	}
-
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
@@ -180,9 +154,7 @@ public class StandaloneAppDeployer implements AppDeployer {
 
 	protected ServletContext servletContext;
 
-	private Group _addAppGroup(long companyId, long appId)
-		throws PortalException {
-
+	private Group _addGroup(long companyId, long appId) throws PortalException {
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			LocaleUtil.getDefault(), _getGroupName(appId));
 
@@ -195,7 +167,45 @@ public class StandaloneAppDeployer implements AppDeployer {
 			_getGroupFriendlyURL(appId), false, false, true, null);
 	}
 
-	private ServiceRegistration<?> _deployAppLayout(
+	private Layout _addPublicLayout(
+			long companyId, long groupId, String portletName)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
+
+		serviceContext.setScopeGroupId(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		return _layoutLocalService.addLayout(
+			defaultUserId, groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
+			StringPool.BLANK, StringPool.BLANK, portletName, true, null,
+			serviceContext);
+	}
+
+	private ServiceRegistration<?> _deployLayoutTypeAccessPolicy(
+		String portletName) {
+
+		return _bundleContext.registerService(
+			LayoutTypeAccessPolicy.class,
+			new AppPortletLayoutTypeAccessPolicy(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put("layout.type", portletName);
+				}
+			});
+	}
+
+	private ServiceRegistration<?> _deployLayoutTypeController(
 			long companyId, long appId, String portletName)
 		throws PortalException {
 
@@ -203,7 +213,7 @@ public class StandaloneAppDeployer implements AppDeployer {
 			companyId, _getGroupFriendlyURL(appId));
 
 		if (group == null) {
-			group = _addAppGroup(companyId, appId);
+			group = _addGroup(companyId, appId);
 		}
 		else {
 			group.setActive(true);
@@ -215,12 +225,12 @@ public class StandaloneAppDeployer implements AppDeployer {
 				_layoutLocalService.fetchDefaultLayout(
 					group.getGroupId(), false))) {
 
-			addPublicLayout(companyId, group.getGroupId(), portletName);
+			_addPublicLayout(companyId, group.getGroupId(), portletName);
 		}
 
 		return _bundleContext.registerService(
 			LayoutTypeController.class,
-			new DeployedAppPortletLayoutTypeController(servletContext, appId),
+			new AppPortletLayoutTypeController(servletContext, portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("layout.type", portletName);
@@ -228,11 +238,11 @@ public class StandaloneAppDeployer implements AppDeployer {
 			});
 	}
 
-	private ServiceRegistration<?> _deployDeployedAppPortlet(
+	private ServiceRegistration<?> _deployPortlet(
 		long appId, String appName, String portletName) {
 
 		return _bundleContext.registerService(
-			Portlet.class, new DeployedAppPortlet(appId),
+			Portlet.class, new AppPortlet(appId),
 			new HashMapDictionary<String, Object>() {
 				{
 					put(
@@ -255,19 +265,6 @@ public class StandaloneAppDeployer implements AppDeployer {
 						"javax.portlet.security-role-ref",
 						"guest,power-user,user");
 					put("javax.portlet.supports.mime-type", "text/html");
-				}
-			});
-	}
-
-	private ServiceRegistration<?>
-		_deployDeployedAppPortletLayoutTypeAccessPolicy(String portletName) {
-
-		return _bundleContext.registerService(
-			LayoutTypeAccessPolicy.class,
-			new DeployedAppPortletLayoutTypeAccessPolicy(),
-			new HashMapDictionary<String, Object>() {
-				{
-					put("layout.type", portletName);
 				}
 			});
 	}

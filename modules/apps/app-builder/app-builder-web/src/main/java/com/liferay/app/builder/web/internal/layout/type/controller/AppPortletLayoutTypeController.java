@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.web.internal.layout.type.controller;
 
-import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -28,21 +27,21 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Gabriel Albuquerque
  */
-public class DeployedAppPortletLayoutTypeController
+public class AppPortletLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
 
-	public DeployedAppPortletLayoutTypeController() {
+	public AppPortletLayoutTypeController() {
 	}
 
-	public DeployedAppPortletLayoutTypeController(
-		ServletContext servletContext, long appId) {
+	public AppPortletLayoutTypeController(
+		ServletContext servletContext, String portletName) {
 
 		this.servletContext = servletContext;
 
 		_url = StringBundler.concat(
 			"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}&",
 			"p_v_l_s_g_id=${liferay:pvlsgid}&p_p_state=pop_up&p_p_id=",
-			AppBuilderPortletKeys.STANDALONE_APP, "_", appId);
+			portletName);
 	}
 
 	@Override
@@ -101,15 +100,13 @@ public class DeployedAppPortletLayoutTypeController
 
 	@Override
 	protected String getEditPage() {
-		return _EDIT_PAGE;
+		return _VIEW_PAGE;
 	}
 
 	@Override
 	protected String getViewPage() {
 		return _VIEW_PAGE;
 	}
-
-	private static final String _EDIT_PAGE = "/layout/view.jsp";
 
 	private static final String _VIEW_PAGE = "/layout/view.jsp";
 

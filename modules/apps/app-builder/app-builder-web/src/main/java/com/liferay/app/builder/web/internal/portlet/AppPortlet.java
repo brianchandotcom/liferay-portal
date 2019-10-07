@@ -26,9 +26,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Gabriel Albuquerque
  */
-public class DeployedAppPortlet extends MVCPortlet {
+public class AppPortlet extends MVCPortlet {
 
-	public DeployedAppPortlet(long appId) {
+	public AppPortlet(long appId) {
 		_appId = appId;
 	}
 

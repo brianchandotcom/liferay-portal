@@ -19,7 +19,7 @@ import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.constants.AppBuilderPortletKeys;
-import com.liferay.app.builder.web.internal.portlet.DeployedAppPortlet;
+import com.liferay.app.builder.web.internal.portlet.AppPortlet;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -54,7 +54,7 @@ public class WidgetAppDeployer implements AppDeployer {
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
-			key -> _deployAppPortlet(
+			key -> _deployPortlet(
 				appId,
 				appBuilderApp.getName(LocaleThreadLocal.getDefaultLocale()),
 				AppBuilderPortletKeys.WIDGET_APP + "_" + appId));
@@ -85,11 +85,11 @@ public class WidgetAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	private ServiceRegistration<?> _deployAppPortlet(
+	private ServiceRegistration<?> _deployPortlet(
 		long appId, String appName, String portletName) {
 
 		return _bundleContext.registerService(
-			Portlet.class, new DeployedAppPortlet(appId),
+			Portlet.class, new AppPortlet(appId),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("com.liferay.portlet.add-default-resource", true);

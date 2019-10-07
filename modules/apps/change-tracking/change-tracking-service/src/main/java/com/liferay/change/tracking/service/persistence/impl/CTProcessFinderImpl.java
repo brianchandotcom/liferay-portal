@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,8 +59,8 @@ public class CTProcessFinderImpl
 			String sql = _customSQL.get(getClass(), FIND_BY_C_U_N_D_S);
 
 			if (userId <= 0) {
-				sql = StringUtil.replace(
-					sql, "(CTProcess.userId = ?) AND", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "AND (CTProcess.userId = ?)");
 			}
 
 			String[] names = _customSQL.keywords(
@@ -70,10 +68,14 @@ public class CTProcessFinderImpl
 			String[] descriptions = _customSQL.keywords(
 				keywords, true, WildcardMode.SURROUND);
 
-			boolean keywordsEmpty = _isKeywordsEmpty(names);
+			boolean keywordsEmpty = Validator.isBlank(keywords);
 
 			if (keywordsEmpty) {
-				sql = _replaceKeywordConditionsWithBlank(sql);
+				int x = sql.indexOf("AND (BackgroundTask.status = ?)") + 32;
+
+				int y = sql.indexOf("ORDER BY", x);
+
+				sql = sql.substring(0, x) + sql.substring(y);
 			}
 			else {
 				sql = _customSQL.replaceKeywords(
@@ -86,8 +88,8 @@ public class CTProcessFinderImpl
 			}
 
 			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "AND (BackgroundTask.status = ?)", StringPool.BLANK);
+				sql = StringUtil.removeSubstring(
+					sql, "AND (BackgroundTask.status = ?)");
 			}
 
 			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
@@ -123,31 +125,6 @@ public class CTProcessFinderImpl
 			closeSession(session);
 		}
 	}
-
-	private boolean _isKeywordsEmpty(String[] keywords) {
-		boolean emptyKeywords = false;
-		boolean nonEmptyKeywords = false;
-
-		for (String keyword : keywords) {
-			emptyKeywords = Validator.isNull(keyword);
-			nonEmptyKeywords = Validator.isNotNull(keyword);
-		}
-
-		if (emptyKeywords && !nonEmptyKeywords) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private String _replaceKeywordConditionsWithBlank(String sql) {
-		Matcher matcher = _pattern.matcher(sql);
-
-		return matcher.replaceAll(StringPool.BLANK);
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"AND\\s*\\(\\s*\\([A-Za-z\\(\\)\\.\\s\\?\\[\\]$_]*\\)\\s*\\)");
 
 	@Reference
 	private CustomSQL _customSQL;

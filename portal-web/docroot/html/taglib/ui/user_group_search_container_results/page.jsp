@@ -35,11 +35,11 @@ SearchContainer userGroupSearchContainer = (SearchContainer)request.getAttribute
 			userGroupParams.put("expandoAttributes", keywords);
 		}
 
-		total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
+		total = UserGroupServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
 
 		searchContainer.setTotal(total);
 
-		results = UserGroupLocalServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = UserGroupServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 		%>

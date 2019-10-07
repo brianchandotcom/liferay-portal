@@ -198,6 +198,11 @@
 											</span>
 											{if $experience.segmentsExperimentStatus}
 												<div>
+													<span class="font-weight-normal text-secondary">
+														{msg desc=""}test{/msg}
+														:{sp}
+													</span>
+
 													{call com.liferay.layout.content.page.editor.web.ExperimentsLabel.render}
 														{param label: $experience.segmentsExperimentStatus.label /}
 														{param value: $experience.segmentsExperimentStatus.value /}

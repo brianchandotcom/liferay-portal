@@ -689,6 +689,8 @@ public interface WebKeys {
 
 	public static final String SHOPPING_ORDER = "SHOPPING_ORDER";
 
+	public static final String SHOW_PORTLET_TOPPER = "SHOW_PORTLET_TOPPER";
+
 	public static final String SINGLE_PAGE_APPLICATION_CLEAR_CACHE =
 		"LIFERAY_SHARED_SINGLE_PAGE_APPLICATION_CLEAR_CACHE";
 

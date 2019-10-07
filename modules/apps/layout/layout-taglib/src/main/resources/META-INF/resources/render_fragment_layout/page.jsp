@@ -32,7 +32,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 
 		<%
 		try {
-			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
+			request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
 
 			for (int i = 0; i < structureJSONArray.length(); i++) {
 				JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
@@ -172,7 +172,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 			}
 		}
 		finally {
-			request.removeAttribute(WebKeys.PORTLET_DECORATE);
+			request.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
 		}
 		%>
 

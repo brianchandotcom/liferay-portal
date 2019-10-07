@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -152,6 +154,109 @@ public interface UserGroupService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<UserGroup> getUserUserGroups(long userId)
 		throws PortalException;
+
+	/**
+	 * Returns an ordered range of all the user groups that match the keywords.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param companyId the primary key of the user group's company
+	 * @param keywords the keywords (space separated), which may occur in the
+	 user group's name or description (optionally <code>null</code>)
+	 * @param params the finder params (optionally <code>null</code>). For more
+	 information see {@link
+	 com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param start the lower bound of the range of user groups to return
+	 * @param end the upper bound of the range of user groups to return (not
+	 inclusive)
+	 * @param obc the comparator to order the user groups (optionally
+	 <code>null</code>)
+	 * @return the matching user groups ordered by comparator <code>obc</code>
+	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> search(
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<UserGroup> obc);
+
+	/**
+	 * Returns an ordered range of all the user groups that match the name and
+	 * description.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param companyId the primary key of the user group's company
+	 * @param name the user group's name (optionally <code>null</code>)
+	 * @param description the user group's description (optionally
+	 <code>null</code>)
+	 * @param params the finder params (optionally <code>null</code>). For more
+	 information see {@link
+	 com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param andOperator whether every field must match its keywords or just
+	 one field
+	 * @param start the lower bound of the range of user groups to return
+	 * @param end the upper bound of the range of user groups to return (not
+	 inclusive)
+	 * @param obc the comparator to order the user groups (optionally
+	 <code>null</code>)
+	 * @return the matching user groups ordered by comparator <code>obc</code>
+	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserGroup> search(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<UserGroup> obc);
+
+	/**
+	 * Returns the number of user groups that match the keywords
+	 *
+	 * @param companyId the primary key of the user group's company
+	 * @param keywords the keywords (space separated), which may occur in the
+	 user group's name or description (optionally <code>null</code>)
+	 * @param params the finder params (optionally <code>null</code>). For more
+	 information see {@link
+	 com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @return the number of matching user groups
+	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
+		long companyId, String keywords, LinkedHashMap<String, Object> params);
+
+	/**
+	 * Returns the number of user groups that match the name and description.
+	 *
+	 * @param companyId the primary key of the user group's company
+	 * @param name the user group's name (optionally <code>null</code>)
+	 * @param description the user group's description (optionally
+	 <code>null</code>)
+	 * @param params the finder params (optionally <code>null</code>). For more
+	 information see {@link
+	 com.liferay.portal.kernel.service.persistence.UserGroupFinder}
+	 * @param andOperator whether every field must match its keywords or just
+	 one field
+	 * @return the number of matching user groups
+	 * @see com.liferay.portal.kernel.service.persistence.UserGroupFinder
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(
+		long companyId, String name, String description,
+		LinkedHashMap<String, Object> params, boolean andOperator);
 
 	/**
 	 * Removes the user groups from the group.

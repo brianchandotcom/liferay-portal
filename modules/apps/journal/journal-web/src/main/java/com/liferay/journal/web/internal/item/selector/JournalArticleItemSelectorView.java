@@ -18,6 +18,8 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.journal.web.internal.display.context.JournalArticleItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -35,6 +37,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,6 +84,17 @@ public class JournalArticleItemSelectorView
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
+
+		JournalArticleItemSelectorViewDisplayContext
+			journalItemSelectorViewDisplayContext =
+				new JournalArticleItemSelectorViewDisplayContext(
+					(HttpServletRequest)request, this, itemSelectedEventName,
+					search, portletURL);
+
+		request.setAttribute(
+			JournalWebConstants.
+				JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			journalItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 

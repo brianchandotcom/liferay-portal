@@ -26,6 +26,10 @@ public class JournalWebConstants {
 		"journal.ddm.template.form";
 
 	public static final String
+		JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+			"JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+
+	public static final String
 		JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER =
 			"JOURNAL_DDM_TEMPLATE_ELEMENTS_DEFAULT_EVENT_HANDLER";
 

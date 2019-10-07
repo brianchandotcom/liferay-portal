@@ -182,13 +182,6 @@ export default Component => {
 			return dom.closest(this.element, 'form');
 		}
 
-		getFormTitle() {
-			const form = this.getFormNode();
-			const formName = form && form.querySelector('.ddm-form-name');
-
-			return formName && formName.textContent;
-		}
-
 		toJSON() {
 			const {
 				description,

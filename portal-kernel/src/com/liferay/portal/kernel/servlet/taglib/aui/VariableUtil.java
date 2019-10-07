@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Iván Zaera Avellón
  */
-class VariableUtil {
+public class VariableUtil {
 
 	public static String generateVariable(String module) {
 		return generateVariable(module, null);

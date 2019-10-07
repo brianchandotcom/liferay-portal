@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Iván Zaera Avellón
  */
-class TagInvocationData implements Serializable {
+public class TagInvocationData implements Serializable {
 
 	public TagInvocationData(String content, String require) {
 		_contentSB.append(content);

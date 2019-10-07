@@ -308,7 +308,17 @@ public interface LayoutSEOEntryLocalService
 
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabledCanonicalURL, Map<Locale, String> canonicalURLMap,
+			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
+			boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			boolean openGraphDescriptionEnabled,
+			Map<Locale, String> openGraphDescriptionMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException;
 

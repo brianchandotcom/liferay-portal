@@ -62,6 +62,16 @@ public interface LayoutSEOEntryService extends BaseService {
 
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
+			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
+			boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			boolean openGraphDescriptionEnabled,
+			Map<Locale, String> openGraphDescriptionMap,
+			long openGraphImageFileEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId,
 			boolean enabledCanonicalURLMap, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException;

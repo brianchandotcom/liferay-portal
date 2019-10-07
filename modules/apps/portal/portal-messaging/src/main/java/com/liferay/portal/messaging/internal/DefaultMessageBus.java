@@ -76,12 +76,16 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 				public ObjectValuePair<String, MessageListener> addingService(
 					ServiceReference<MessageListener> serviceReference) {
 
-					MessageListener messageListener = bundleContext.getService(
-						serviceReference);
-
 					String destinationName =
 						(String)serviceReference.getProperty(
 							"destination.name");
+
+					if (destinationName == null) {
+						return null;
+					}
+
+					MessageListener messageListener = bundleContext.getService(
+						serviceReference);
 
 					Thread currentThread = Thread.currentThread();
 

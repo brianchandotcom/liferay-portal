@@ -554,18 +554,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Bookmarks");
-
-		Bookmark.addCP(
-			bookmarkDescription = "This is a test bookmark!",
-			bookmarkName = "Test Bookmark",
-			bookmarkURL = "https://www.liferay.com");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -609,7 +597,7 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.downloadExportedPersonalData(applications = "Wiki,Message Boards,Contacts Center,Bookmarks,Blogs,Announcements,Documents and Media");
+		GDPR.downloadExportedPersonalData(applications = "Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}

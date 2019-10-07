@@ -101,43 +101,26 @@ export default function Sidebar() {
 			const pluginInstance = pluginInstances.current.get(sidebarPanelId);
 
 			if (isMounted()) {
-				if (
-					activePlugin &&
-					typeof activePlugin.deactivate === 'function'
-				) {
+				const shouldActivate =
+					!rendersSidebarContent || pluginInstance !== activePlugin;
+
+				const wantOpen = rendersSidebarContent && shouldActivate;
+
+				if (typeof activePlugin.deactivate === 'function') {
 					activePlugin.deactivate();
 				}
 
-				if (rendersSidebarContent) {
-					if (activePlugin !== pluginInstance) {
-						setOpen(true);
+				if (
+					shouldActivate &&
+					typeof pluginInstance.activate === 'function'
+				) {
+					pluginInstance.activate();
+				}
 
-						if (typeof pluginInstance.activate === 'function') {
-							pluginInstance.activate();
-						}
+				setActivePlugin(shouldActivate ? pluginInstance : null);
 
-						setActivePlugin(pluginInstance);
-					} else {
-						setOpen(!open);
-
-						if (!open) {
-							if (typeof pluginInstance.activate === 'function') {
-								pluginInstance.activate();
-							}
-
-							setActivePlugin(pluginInstance);
-						} else {
-							setActivePlugin(null);
-						}
-					}
-				} else {
-					if (open) {
-						setOpen(false);
-					}
-
-					if (typeof pluginInstance.activate === 'function') {
-						pluginInstance.activate();
-					}
+				if (open !== wantOpen) {
+					setOpen(wantOpen);
 				}
 			}
 		}

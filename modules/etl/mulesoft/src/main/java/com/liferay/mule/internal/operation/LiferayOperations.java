@@ -52,6 +52,9 @@ import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Matija Petanjek
  */
@@ -65,6 +68,11 @@ public class LiferayOperations {
 			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
 				String endpoint)
 		throws IOException, TimeoutException {
+
+		_logger.debug(
+			"Send DELETE request to endpoint {}, with path parameters {} and " +
+				"query paramters {}",
+			endpoint, _pathParams, _queryParams);
 
 		HttpResponse httpResponse = connection.delete(
 			_pathParams, _queryParams, endpoint);
@@ -87,6 +95,11 @@ public class LiferayOperations {
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
 		throws Exception {
+
+		_logger.debug(
+			"Send GET request to endpoint {}, with path parameters {} and " +
+				"query paramters {}",
+			endpoint, _pathParams, _queryParams);
 
 		HttpResponse httpResponse = connection.get(
 			_pathParams, _queryParams, endpoint);
@@ -113,6 +126,11 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
+		_logger.debug(
+			"Send PATCH request to endpoint {}, with path parameters {} and " +
+				"query paramters {}",
+			endpoint, _pathParams, _queryParams);
+
 		HttpResponse httpResponse = connection.patch(
 			inputStream, _pathParams, _queryParams, endpoint);
 
@@ -136,6 +154,11 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
+		_logger.debug(
+			"Send POST request to endpoint {}, with path parameters {} and " +
+				"query paramters {}",
+			endpoint, _pathParams, _queryParams);
+
 		HttpResponse httpResponse = connection.post(
 			inputStream, _pathParams, _queryParams, endpoint);
 
@@ -148,6 +171,9 @@ public class LiferayOperations {
 			httpEntity.getContent()
 		).build();
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		LiferayOperations.class);
 
 	private final LiferayResponseValidator _liferayResponseValidator =
 		new LiferayResponseValidator();

@@ -72,7 +72,7 @@ public class BlogsEntryModelIndexerWriterContributor
 	@Override
 	public IndexerWriterMode getIndexerWriterMode(BlogsEntry blogsEntry) {
 		if (blogsEntry.isApproved() || blogsEntry.isInTrash() ||
-			blogsEntry.isDraft()) {
+			blogsEntry.isDraft() || blogsEntry.isPending()) {
 
 			return IndexerWriterMode.UPDATE;
 		}

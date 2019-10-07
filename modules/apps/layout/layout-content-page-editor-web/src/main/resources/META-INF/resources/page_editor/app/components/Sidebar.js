@@ -14,13 +14,14 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
 import {ConfigContext} from '../config/index';
 import {StoreContext} from '../store/index';
 
-const {useContext, useRef} = React;
+const {useContext, useRef, useState} = React;
 
 const SEPARATOR = 'separator';
 
@@ -30,12 +31,32 @@ const SEPARATOR = 'separator';
  */
 const swallow = [value => value, _error => undefined];
 
+// TODO: possibly extract this into frontend-js-react-web, or at least into
+// hooks directory
+function useStateSafe(initialValue) {
+	const isMounted = useIsMounted();
+
+	const [state, setState] = useState(initialValue);
+
+	return [
+		state,
+		function setStateSafe(newValue) {
+			if (isMounted()) {
+				setState(newValue);
+			}
+		}
+	];
+}
+
 // TODO: add react error boundary
 export default function Sidebar() {
 	const config = useContext(ConfigContext);
-	const state = useContext(StoreContext);
+	const store = useContext(StoreContext);
 
-	const {sidebarPanels} = state;
+	// TODO: default to open and eagerly load first plugin
+	const [open, setOpen] = useStateSafe(false);
+
+	const {sidebarPanels} = store;
 
 	const isMounted = useIsMounted();
 
@@ -71,26 +92,42 @@ export default function Sidebar() {
 	};
 
 	const togglePanel = sidebarPanel => {
-		const {sidebarPanelId} = sidebarPanel;
+		const {rendersSidebarContent, sidebarPanelId} = sidebarPanel;
 
-		let pluginInstance = pluginInstances.current.get(sidebarPanelId);
+		function toggle() {
+			const pluginInstance = pluginInstances.current.get(sidebarPanelId);
 
-		if (pluginInstance) {
-			if (typeof pluginInstance.activate === 'function') {
-				pluginInstance.activate();
+
+			if (isMounted()) {
+				if (!rendersSidebarContent && open) {
+					setOpen(false);
+				} else if (rendersSidebarContent) {
+					setOpen(!open);
+				}
+
+				if (open) {
+					if (typeof pluginInstance.deactivate === 'function') {
+						pluginInstance.deactivate();
+					}
+				} else {
+					if (typeof pluginInstance.activate === 'function') {
+						pluginInstance.activate();
+					}
+				}
 			}
+		}
+
+		if (pluginInstances.current.has(sidebarPanelId)) {
+			toggle();
 		} else {
 			const promise =
 				preloaded.current.get(sidebarPanelId) || preload(sidebarPanel);
 
 			promise
 				.then(Plugin => {
-					pluginInstance = new Plugin(state, config);
+					const pluginInstance = new Plugin(store, config);
 					pluginInstances.current.set(sidebarPanelId, pluginInstance);
-
-					if (typeof pluginInstance.activate === 'function') {
-						pluginInstance.activate();
-					}
+					toggle();
 				})
 				.catch(error => {
 					if (process.env.NODE_ENV === 'development') {
@@ -130,6 +167,14 @@ export default function Sidebar() {
 							);
 						}
 					})}
+				</div>
+				<div
+					className={classNames({
+						'page-editor-sidebar-content': true,
+						'page-editor-sidebar-content-open': open
+					})}
+				>
+					sidebar contents
 				</div>
 			</div>
 		</ClayTooltipProvider>

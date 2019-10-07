@@ -16,7 +16,7 @@
  * Entry-point for "Sections" (sidebar pane) functionality.
  */
 export default class Sections {
-	constructor(_state, _config) {
+	constructor(_store, _config) {
 		// TODO: implement
 	}
 }

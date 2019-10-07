@@ -71,6 +71,10 @@ const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 	separator: null
 };
 
+const rendersSidebarContent = sidebarPanelId => {
+	return sidebarPanelId !== 'look-and-feel';
+};
+
 /**
  * Until we decompose the layout-content-page-editor module into a
  * set of smaller OSGi plugins, we "fake" it here to show how we would
@@ -102,6 +106,8 @@ function transformServerData(data) {
 
 				// https://github.com/liferay/liferay-js-toolkit/issues/324
 				pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
+
+				rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
 
 				sidebarPanelId
 			};

@@ -1,11 +1,19 @@
 //
+// Animations
+//
+
+$defaultTransitionDuration: 0.5s;
+
+//
 // Colors
 //
 
-$sidebarBackgroundColor: #393a4a;
+$sidebarBorderColor: #e7e7ed;
+$sidebarButtonBackgroundColor: #393a4a;
 $sidebarButtonColor: #a7a9bc;
 $sidebarButtonHoverColor: #fff;
 $sidebarButtonSeparatorColor: #6b6c7e;
+$sidebarContentBackgroundColor: #fff;
 $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
 
 //
@@ -13,6 +21,7 @@ $toolbarBorderColor: fade_out(#dcdcdc, 0.5);
 //
 
 $controlMenuHeight: 56px;
+$sidebarContentWidth: 280px;
 $toolbarBorderWidth: 1px;
 $toolbarHeight: 64px;
 

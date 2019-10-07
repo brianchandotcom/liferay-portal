@@ -16,7 +16,7 @@
  * Entry-point for "Widgets" (sidebar pane) functionality.
  */
 export default class Widgets {
-	constructor(_state, _config) {
+	constructor(_store, _config) {
 		// TODO: implement
 	}
 }

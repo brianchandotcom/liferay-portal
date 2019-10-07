@@ -16,7 +16,7 @@
  * Entry-point for "Contents" (sidebar pane) functionality.
  */
 export default class Contents {
-	constructor(_state, _config) {
+	constructor(_store, _config) {
 		// TODO: implement
 	}
 }

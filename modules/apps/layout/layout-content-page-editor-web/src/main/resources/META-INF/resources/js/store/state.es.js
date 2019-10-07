@@ -111,21 +111,6 @@ const INITIAL_STATE = {
 		})
 	).value([]),
 
-	availableAssets: Config.arrayOf(
-		Config.shapeOf({
-			availableTemplates: Config.arrayOf(
-				Config.shapeOf({
-					key: Config.string(),
-					label: Config.string()
-				})
-			),
-			className: Config.string(),
-			classNameId: Config.string(),
-			href: Config.string(),
-			name: Config.string()
-		})
-	).value([]),
-
 	/**
 	 * Object of available languages.
 	 * @default {}

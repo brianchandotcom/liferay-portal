@@ -12,11 +12,6 @@
 		typeOptions: ?
 	]}
 
-	{@param? availableAssets: list<[
-		href: string,
-		typeName: string
-	]>}
-
 	{@param? availableTemplates: list<[
 		key: string,
 		label: string
@@ -41,7 +36,6 @@
 		{else}
 			<div class="form-group">
 				{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-					{param assetBrowserLinks: $availableAssets /}
 					{param fieldId: $field.name /}
 					{param fieldName: $field.label /}
 					{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}

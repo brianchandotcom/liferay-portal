@@ -65,11 +65,7 @@ class ItemSelectorField extends Component {
 		) {
 			const {className} = this.configurationValues[this.field.name];
 
-			const itemType = this.availableAssets.find(
-				availableAsset => availableAsset.className === className
-			);
-
-			this.availableTemplates = itemType.availableTemplates;
+			this.availableTemplates = [];
 		} else {
 			this.availableTemplates = [];
 		}
@@ -82,9 +78,7 @@ class ItemSelectorField extends Component {
 	_handleItemSelectClick() {
 		const className = this.field.typeOptions.className;
 
-		const itemType = this.availableAssets.find(
-			availableAsset => availableAsset.className === className
-		);
+		const itemType = '';
 
 		if (itemType) {
 			this._openAssetBrowser(itemType.href, itemType.typeName);
@@ -191,7 +185,6 @@ ItemSelectorField.STATE = {
 };
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
-	'availableAssets',
 	'portletNamespace',
 	'spritemap'
 ]);

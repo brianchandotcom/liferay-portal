@@ -118,12 +118,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			httpServletRequest.setAttribute(
 				FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
 				_fragmentRendererTracker);
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_RENDERER_TRACKER,
-				_infoItemRendererTracker);
-			httpServletRequest.setAttribute(
-				InfoDisplayWebKeys.INFO_ITEM_SELECTOR_TRACKER,
-				_infoItemSelectorTracker);
 		}
 
 		httpServletRequest.setAttribute(

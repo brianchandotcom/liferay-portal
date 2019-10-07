@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDITABLE_HTML_FRAGMENT_FIELD</td>
+	<td>//div[contains(@class,'source-panel')]//div[contains(@class,'lfr-source-editor-code')]//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

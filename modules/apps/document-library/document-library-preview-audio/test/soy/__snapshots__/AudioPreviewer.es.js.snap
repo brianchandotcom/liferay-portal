@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`document-library-preview-audio renders an audio player 1`] = `
-<div class="preview-file">
-  <div class="preview-file-container"><audio class="preview-file-audio" controls="" controlslist="nodownload" style="max-width: 520px;">
-      <source src="//audio.ogg" type="audio/ogg">
-      <source src="//audio.mp3" type="audio/mp3"></audio></div>
-</div>
-`;

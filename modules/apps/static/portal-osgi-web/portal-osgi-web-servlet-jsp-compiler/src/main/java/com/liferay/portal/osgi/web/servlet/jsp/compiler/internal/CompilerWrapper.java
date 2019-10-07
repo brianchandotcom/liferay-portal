@@ -36,6 +36,7 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.jasper.EmbeddedServletOptions;
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspCompilationContext;
 import org.apache.jasper.Options;
@@ -131,9 +132,9 @@ public class CompilerWrapper extends Compiler {
 
 		URL url = null;
 
-		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED) {
-			Options options = ctxt.getOptions();
+		Options options = ctxt.getOptions();
 
+		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED) {
 			File scratchDir = options.getScratchDir();
 
 			File classFile = new File(scratchDir, classNamePath);
@@ -153,6 +154,15 @@ public class CompilerWrapper extends Compiler {
 		}
 
 		if (url == null) {
+			EmbeddedServletOptions embeddedServletOptions =
+				(EmbeddedServletOptions)options;
+
+			if (Boolean.valueOf(
+					embeddedServletOptions.getProperty("hasFragment"))) {
+
+				return null;
+			}
+
 			JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
 
 			if ((jspClassInfo != null) && jspClassInfo.isOverride()) {

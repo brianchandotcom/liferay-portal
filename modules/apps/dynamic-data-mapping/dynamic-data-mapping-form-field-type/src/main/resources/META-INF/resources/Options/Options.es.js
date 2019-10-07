@@ -210,6 +210,7 @@ class Options extends Component {
 		return (
 			defaultLanguageId === editingLanguageId &&
 			(option.value === '' ||
+				option.value === Liferay.Language.get('option') ||
 				new RegExp(`^${normalizeFieldName(option.label)}\\d*$`).test(
 					option.value
 				))
@@ -361,7 +362,7 @@ class Options extends Component {
 		}
 
 		if (property === 'label') {
-			options = this.normalizeOptions(options);
+			options = this.normalizeOptions(options, true);
 		}
 
 		let newValue = {

@@ -14,11 +14,15 @@
 
 package com.liferay.change.tracking.internal;
 
+import com.liferay.change.tracking.exception.CTEventException;
 import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
@@ -35,15 +39,35 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTServiceRegistry.class)
 public class CTServiceRegistry {
 
-	public void afterPublish(long ctCollectionId) throws Exception {
+	public void afterPublish(long ctCollectionId) {
 		for (CTEventListener ctEventListener : _serviceTrackerList) {
-			ctEventListener.afterPublish(ctCollectionId);
+			try {
+				ctEventListener.afterPublish(ctCollectionId);
+			}
+			catch (CTEventException ctee) {
+				_log.error(
+					StringBundler.concat(
+						"After publish callback failure for ct collection: ",
+						ctCollectionId, " by CTEventListener: ",
+						ctEventListener),
+					ctee);
+			}
 		}
 	}
 
 	public void beforeRemove(long ctCollectionId) {
 		for (CTEventListener ctEventListener : _serviceTrackerList) {
-			ctEventListener.beforeRemove(ctCollectionId);
+			try {
+				ctEventListener.beforeRemove(ctCollectionId);
+			}
+			catch (CTEventException ctee) {
+				_log.error(
+					StringBundler.concat(
+						"Before remove callback failure for ct collection: ",
+						ctCollectionId, " by CTEventListener: ",
+						ctEventListener),
+					ctee);
+			}
 		}
 	}
 
@@ -74,6 +98,9 @@ public class CTServiceRegistry {
 
 		_serviceTrackerMap.close();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTServiceRegistry.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

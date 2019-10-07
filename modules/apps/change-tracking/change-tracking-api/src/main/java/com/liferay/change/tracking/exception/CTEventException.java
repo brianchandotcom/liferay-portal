@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.change.tracking.listener;
+package com.liferay.change.tracking.exception;
 
-import com.liferay.change.tracking.exception.CTEventException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Preston Crary
+ * @author Shuyang Zhou
  */
-public interface CTEventListener {
+public class CTEventException extends PortalException {
 
-	public default void afterPublish(long ctCollectionId)
-		throws CTEventException {
+	public CTEventException() {
 	}
 
-	public default void beforeRemove(long ctCollectionId)
-		throws CTEventException {
+	public CTEventException(String msg) {
+		super(msg);
+	}
+
+	public CTEventException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public CTEventException(Throwable cause) {
+		super(cause);
 	}
 
 }

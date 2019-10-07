@@ -526,10 +526,12 @@ public class UIItemsBuilder {
 		PortletURL portletURL = null;
 
 		if (_fileShortcut == null) {
-			portletURL = _getRenderURL("/document_library/edit_file_entry");
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_entry");
 		}
 		else {
-			portletURL = _getRenderURL("/document_library/edit_file_shortcut");
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_shortcut");
 		}
 
 		portletURL.setParameter("backURL", _getCurrentURL());
@@ -1125,6 +1127,38 @@ public class UIItemsBuilder {
 		}
 
 		portletURL.setParameter("redirect", redirect);
+
+		return portletURL;
+	}
+
+	private PortletURL _getControlPanelRenderURL(String mvcRenderCommandName) {
+		return _getControlPanelRenderURL(
+			mvcRenderCommandName, _getCurrentURL());
+	}
+
+	private PortletURL _getControlPanelRenderURL(
+		String mvcRenderCommandName, String redirect) {
+
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			_getLiferayPortletRequest(), _themeDisplay.getScopeGroup(),
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+
+		if (_fileShortcut != null) {
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+		else {
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
 
 		return portletURL;
 	}

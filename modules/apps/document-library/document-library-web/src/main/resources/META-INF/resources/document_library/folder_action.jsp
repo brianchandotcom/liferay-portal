@@ -133,29 +133,35 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 				<c:if test="<%= hasUpdatePermission %>">
 					<c:choose>
 						<c:when test="<%= !folder.isMountPoint() %>">
-							<portlet:renderURL var="editURL">
-								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
-								<portlet:param name="redirect" value="<%= redirect %>" />
-								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							</portlet:renderURL>
+
+							<%
+							PortletURL editURL = PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0, PortletRequest.RENDER_PHASE);
+
+							editURL.setParameter("mvcRenderCommandName", "/document_library/edit_folder");
+							editURL.setParameter("redirect", redirect);
+							editURL.setParameter("folderId", String.valueOf(folderId));
+							editURL.setParameter("repositoryId", String.valueOf(repositoryId));
+							%>
 
 							<liferay-ui:icon
 								message="edit"
-								url="<%= editURL %>"
+								url="<%= editURL.toString() %>"
 							/>
 						</c:when>
 						<c:otherwise>
-							<portlet:renderURL var="editURL">
-								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
-								<portlet:param name="redirect" value="<%= redirect %>" />
-								<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-								<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-							</portlet:renderURL>
+
+							<%
+							PortletURL editURL = PortalUtil.getControlPanelPortletURL(request, themeDisplay.getScopeGroup(), DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0, PortletRequest.RENDER_PHASE);
+
+							editURL.setParameter("mvcRenderCommandName", "/document_library/edit_repository");
+							editURL.setParameter("redirect", redirect);
+							editURL.setParameter("folderId", String.valueOf(folderId));
+							editURL.setParameter("repositoryId", String.valueOf(repositoryId));
+							%>
 
 							<liferay-ui:icon
 								message="edit"
-								url="<%= editURL %>"
+								url="<%= editURL.toString() %>"
 							/>
 						</c:otherwise>
 					</c:choose>

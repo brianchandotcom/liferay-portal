@@ -42,22 +42,22 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
 LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
 
-boolean disabledLocaleInput = false;
+boolean readOnlyLocaleInput = false;
 
 if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) && !siteAdminConfiguration.enableCustomLanguagesWithTemplatePropagation()) {
-	disabledLocaleInput = true;
+	readOnlyLocaleInput = true;
 }
 %>
 
-<c:if test="<%= disabledLocaleInput %>">
+<c:if test="<%= readOnlyLocaleInput %>">
 	<p class="text-muted">
 		<liferay-ui:message key="the-language-settings-cannot-be-edited-while-propagation-of-changes-from-the-site-template-is-enabled" />
 	</p>
 </c:if>
 
-<aui:input checked="<%= inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
+<aui:input checked="<%= inheritLocales %>" id="<%= GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES %>" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" readonly="<%= readOnlyLocaleInput %>" type="radio" value="<%= true %>" />
 
-<aui:input checked="<%= !inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
+<aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" readonly="<%= readOnlyLocaleInput %>" type="radio" value="<%= false %>" />
 
 <aui:fieldset id='<%= renderResponse.getNamespace() + "inheritLocalesFieldset" %>'>
 	<aui:fieldset cssClass="default-language">
@@ -107,7 +107,7 @@ if ((publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLay
 	<aui:fieldset cssClass="default-language">
 		<h4 class="text-default"><liferay-ui:message key="default-language" /></h4>
 
-		<aui:select disabled="<%= disabledLocaleInput %>" label="" name="TypeSettingsProperties--languageId--" title="language">
+		<aui:select label="" name="TypeSettingsProperties--languageId--" readonly="<%= readOnlyLocaleInput %>" title="language">
 
 			<%
 			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(liveGroup.getGroupId());

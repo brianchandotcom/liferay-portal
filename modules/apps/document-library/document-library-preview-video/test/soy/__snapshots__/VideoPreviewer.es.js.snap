@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`document-library-preview-video renders a video player 1`] = `
-<div class="preview-file">
-  <div class="preview-file-container preview-file-max-height"><video class="preview-file-video" controls="" controlslist="nodownload" poster="poster.jpg">
-      <source src="//video.mp4" type="video/mp4">
-      <source src="//video.ogv" type="video/ogv"></video></div>
-</div>
-`;

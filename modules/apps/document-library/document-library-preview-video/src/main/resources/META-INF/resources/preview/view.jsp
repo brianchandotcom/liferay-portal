@@ -17,31 +17,8 @@
 <%@ include file="/preview/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_view_file_entry_preview") + StringPool.UNDERLINE;
-
-Map<String, Object> context = new HashMap<>();
-
-context.put("componentId", renderResponse.getNamespace() + randomNamespace + "previewVideo");
-
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
-
-context.put(
-	"videoSources",
-	new ArrayList<Map<String, String>>() {
-		{
-			for (String previewFileURL : previewFileURLs) {
-				if (Validator.isNotNull(previewFileURL)) {
-					if (previewFileURL.endsWith("mp4")) {
-						add(MapUtil.fromArray("type", "video/mp4", "url", previewFileURL));
-					}
-					else if (previewFileURL.endsWith("ogv")) {
-						add(MapUtil.fromArray("type", "video/ogv", "url", previewFileURL));
-					}
-				}
-			}
-		}
-	});
-context.put("videoPosterURL", (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_POSTER_URL));
+String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_POSTER_URL);
 %>
 
 <liferay-util:html-top
@@ -50,9 +27,39 @@ context.put("videoPosterURL", (String)request.getAttribute(DLPreviewVideoWebKeys
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div>
-	<react:component
-		data="<%= context %>"
-		module="preview/js/VideoPreviewer.es"
-	/>
+<div class="preview-file" id="{$id}">
+	<div class="preview-file-container preview-file-max-height">
+		<video
+			class="preview-file-video"
+			controls
+			controlsList="nodownload"
+
+			<c:if test="<%= Validator.isNotNull(videoPosterURL) %>">
+				poster="<%= videoPosterURL %>"
+			</c:if>
+		>
+			<% for (String previewFileURL : previewFileURLs) {
+				String type = null;
+
+				if (Validator.isNotNull(previewFileURL)) {
+					if (previewFileURL.endsWith("mp4")) {
+						type = "video/mp4";
+					}
+					else if (previewFileURL.endsWith("ogv")) {
+						type = "video/ogv";
+					}
+				}
+
+				if (type != null) {
+			%>
+
+				<source src="<%= previewFileURL.toString() %>" type="<%= type %>" />
+
+			<%
+				}
+			}
+			%>
+
+		</video>
+	</div>
 </div>

@@ -55,6 +55,7 @@ export default function Sidebar() {
 
 	// TODO: default to open and eagerly load first plugin
 	const [open, setOpen] = useStateSafe(false);
+	const [activePlugin, setActivePlugin] = useStateSafe(null);
 
 	const {sidebarPanels} = store;
 
@@ -91,25 +92,39 @@ export default function Sidebar() {
 		return preloaded.current.get(sidebarPanelId);
 	};
 
+	// TODO: useEffect to call deactivate before unmounting
+
 	const togglePanel = sidebarPanel => {
 		const {rendersSidebarContent, sidebarPanelId} = sidebarPanel;
 
 		function toggle() {
 			const pluginInstance = pluginInstances.current.get(sidebarPanelId);
 
-
 			if (isMounted()) {
-				if (!rendersSidebarContent && open) {
-					setOpen(false);
-				} else if (rendersSidebarContent) {
-					setOpen(!open);
+				if (
+					activePlugin &&
+					typeof activePlugin.deactivate === 'function'
+				) {
+					activePlugin.deactivate();
 				}
 
-				if (open) {
-					if (typeof pluginInstance.deactivate === 'function') {
-						pluginInstance.deactivate();
+				if (rendersSidebarContent) {
+					setOpen(!open);
+
+					if (!open) {
+						if (typeof pluginInstance.activate === 'function') {
+							pluginInstance.activate();
+						}
+
+						setActivePlugin(pluginInstance);
+					} else {
+						setActivePlugin(null);
 					}
 				} else {
+					if (open) {
+						setOpen(false);
+					}
+
 					if (typeof pluginInstance.activate === 'function') {
 						pluginInstance.activate();
 					}

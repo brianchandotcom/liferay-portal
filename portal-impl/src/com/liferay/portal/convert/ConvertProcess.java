@@ -32,7 +32,13 @@ public interface ConvertProcess {
 
 	public String[] getParameterNames();
 
-	public String getPath();
+	/**
+	 * @deprecated As of Mueller (7.2.x), with no direct replacement
+	 */
+	@Deprecated
+	public default String getPath() {
+		return null;
+	}
 
 	public default boolean hasCustomView() {
 		return false;

@@ -31,11 +31,6 @@ public class DocumentLibraryExtraSettingsConvertProcess
 	}
 
 	@Override
-	public String getPath() {
-		return "/admin_server/edit_document_library_extra_settings";
-	}
-
-	@Override
 	public boolean hasCustomView() {
 		return true;
 	}

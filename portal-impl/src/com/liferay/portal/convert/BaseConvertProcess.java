@@ -101,11 +101,6 @@ public abstract class BaseConvertProcess implements ConvertProcess {
 	}
 
 	@Override
-	public String getPath() {
-		return null;
-	}
-
-	@Override
 	public boolean includeCustomView(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

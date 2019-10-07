@@ -372,6 +372,19 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		this._selectedAssetEntry = assetEntry;
 
 		this.store.dispatch(
+			updateEditableValueFieldIdAction(
+				this.item.fragmentEntryLinkId,
+				this._getFragmentEntryProcessor(),
+				this.item.editableId,
+				{
+					classNameId: '',
+					classPK: '',
+					fieldId: ''
+				}
+			)
+		);
+
+		this.store.dispatch(
 			Object.assign({}, this._selectedAssetEntry, {
 				type: ADD_MAPPED_ASSET_ENTRY
 			})

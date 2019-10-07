@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,28 +61,21 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	private void _addCustomField(long companyId, String name, String preset)
-		throws Exception {
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			companyId, DLFileEntryConstants.getClassName(), 0);
-
-		int type = GetterUtil.getInteger(preset);
-
-		expandoBridge.addAttribute(name, type);
-	}
-
 	private void _convert(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			themeDisplay.getCompanyId(), DLFileEntryConstants.getClassName(),
+			0);
 
 		String[] keys = StringUtil.split(
 			ParamUtil.getString(actionRequest, "keys"));
 
 		for (String key : keys) {
-			String preset = ParamUtil.getString(actionRequest, "type_" + key);
+			int type = ParamUtil.getInteger(actionRequest, "type_" + key);
 
-			_addCustomField(themeDisplay.getCompanyId(), key, preset);
+			expandoBridge.addAttribute(key, type);
 		}
 
 		_dlFileEntryLocalService.convertExtraSettings(keys);

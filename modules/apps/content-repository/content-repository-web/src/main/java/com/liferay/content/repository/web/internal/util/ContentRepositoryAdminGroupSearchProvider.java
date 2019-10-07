@@ -15,6 +15,7 @@
 package com.liferay.content.repository.web.internal.util;
 
 import com.liferay.content.repository.model.ContentRepositoryEntry;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
@@ -90,6 +92,12 @@ public class ContentRepositoryAdminGroupSearchProvider {
 				searchTerms.getKeywords(), groupParams, groupSearch.getStart(),
 				groupSearch.getEnd(), groupSearch.getOrderByComparator());
 		}
+
+		groupSearch.setEmptyResultsMessage(
+			LanguageUtil.get(
+				ResourceBundleUtil.getBundle(
+					portletRequest.getLocale(), getClass()),
+				"no-repositories-were-found"));
 
 		groupSearch.setResults(results);
 

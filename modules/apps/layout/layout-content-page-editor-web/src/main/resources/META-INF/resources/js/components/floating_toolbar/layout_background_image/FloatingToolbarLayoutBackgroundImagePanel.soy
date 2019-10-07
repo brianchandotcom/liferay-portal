@@ -37,10 +37,6 @@
 	]>}
 	{@param? _selectedImageSourceTypeId: string}
 	{@param? _selectedMappingSourceTypeId: string}
-	{@param? assetBrowserLinks: list<[
-		href: string,
-		typeName: string
-	]>}
 	{@param? mappedAssetEntries: list<[
 		encodedId: string,
 		classNameId: string,
@@ -78,7 +74,6 @@
 				{if not $mappingFieldsURL or $_selectedMappingSourceTypeId == $_mappingSourceTypeIds.content}
 					<div class="floating-toolbar-layout-background-image-panel__asset-select form-group">
 						{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-							{param assetBrowserLinks: $assetBrowserLinks /}
 							{param fieldId kind="text"}floatingToolbarLayoutBackgroundImagePanelAssetSelect{/param}
 							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}

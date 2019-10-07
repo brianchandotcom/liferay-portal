@@ -4,10 +4,6 @@
  * AssetSelector
  */
 {template .render}
-	{@param? assetBrowserLinks: list<[
-		href: string,
-		typeName: string
-	]>}
 	{@param? fieldId: string}
 	{@param? fieldName: string}
 	{@param? handleAssetBrowserLinkClick: any}
@@ -57,20 +53,6 @@
 				</button>
 
 				<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
-					{if $assetBrowserLinks}
-						{foreach $assetBrowserLink in $assetBrowserLinks}
-							<button
-								class="dropdown-item"
-								data-onclick="{$handleAssetBrowserLinkClick}"
-								data-asset-browser-url="{$assetBrowserLink.href}"
-								data-asset-browser-window-title="{$assetBrowserLink.typeName}"
-								key="{$assetBrowserLink.href}"
-								type="button"
-							>
-								{$assetBrowserLink.typeName}
-							</button>
-						{/foreach}
-					{/if}
 					{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
 						<div
 							aria-hidden="true"

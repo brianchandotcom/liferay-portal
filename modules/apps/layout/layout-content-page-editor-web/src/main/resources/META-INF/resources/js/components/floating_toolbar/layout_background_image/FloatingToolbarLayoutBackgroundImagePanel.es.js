@@ -547,7 +547,6 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(
 	FloatingToolbarLayoutBackgroundImagePanel,
 	[
-		'assetBrowserLinks',
 		'imageSelectorURL',
 		'mappedAssetEntries',
 		'mappingFieldsURL',

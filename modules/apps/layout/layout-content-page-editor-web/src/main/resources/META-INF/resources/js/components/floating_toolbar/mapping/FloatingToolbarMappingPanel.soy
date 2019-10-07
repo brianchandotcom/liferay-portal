@@ -30,10 +30,6 @@
 		id: string,
 		label: string
 	]>}
-	{@param? assetBrowserLinks: list<[
-		href: string,
-		typeName: string
-	]>}
 	{@param? contentCreationEnabled: bool}
 	{@param? mappedAssetEntries: list<[
 		encodedId: string,
@@ -68,7 +64,6 @@
 				{if not $mappingFieldsURL or $_selectedSourceTypeId == $_sourceTypeIds.content}
 					<div class="floating-toolbar-mapping-panel__asset-select form-group">
 						{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-							{param assetBrowserLinks: $assetBrowserLinks /}
 							{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
 							{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 							{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}

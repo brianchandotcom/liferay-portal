@@ -52,7 +52,7 @@ List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudio
 					if (type != null) {
 				%>
 
-					<source src="<%= previewFileURL %>" type="<%= type %>" />
+						<source src="<%= previewFileURL %>" type="<%= type %>" />
 
 				<%
 					}

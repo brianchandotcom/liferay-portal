@@ -33,7 +33,6 @@ import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -72,11 +71,8 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -121,7 +117,6 @@ import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
@@ -189,8 +184,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"addStructuredContentURL",
 			getFragmentEntryActionURL("/content_layout/add_structured_content")
-		).put(
-			"assetBrowserLinks", _getAssetBrowserLinksSoyContexts()
 		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
 		).put(
@@ -423,75 +416,6 @@ public class ContentPageEditorDisplayContext {
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
-
-	private List<SoyContext> _getAssetBrowserLinksSoyContexts()
-		throws Exception {
-
-		if (_assetBrowserLinksSoyContexts != null) {
-			return _assetBrowserLinksSoyContexts;
-		}
-
-		List<SoyContext> soyContexts = new ArrayList<>();
-
-		List<InfoDisplayContributor> infoDisplayContributors =
-			infoDisplayContributorTracker.getInfoDisplayContributors();
-
-		for (InfoDisplayContributor infoDisplayContributor :
-				infoDisplayContributors) {
-
-			if (infoDisplayContributor == null) {
-				continue;
-			}
-
-			String assetBrowserURL = _getAssetBrowserURL(
-				infoDisplayContributor.getClassName());
-
-			if (assetBrowserURL == null) {
-				continue;
-			}
-
-			SoyContext assetBrowserSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
-
-			assetBrowserSoyContext.put(
-				"href", assetBrowserURL
-			).put(
-				"typeName",
-				infoDisplayContributor.getLabel(themeDisplay.getLocale())
-			);
-
-			soyContexts.add(assetBrowserSoyContext);
-		}
-
-		_assetBrowserLinksSoyContexts = soyContexts;
-
-		return _assetBrowserLinksSoyContexts;
-	}
-
-	private String _getAssetBrowserURL(String className) throws Exception {
-		PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(
-			request, className, PortletProvider.Action.BROWSE);
-
-		if (assetBrowserURL == null) {
-			return null;
-		}
-
-		assetBrowserURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		assetBrowserURL.setParameter(
-			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
-		assetBrowserURL.setParameter("typeSelection", className);
-		assetBrowserURL.setParameter(
-			"showNonindexable", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter(
-			"showScheduled", String.valueOf(Boolean.TRUE));
-		assetBrowserURL.setParameter(
-			"eventName", _renderResponse.getNamespace() + "selectAsset");
-		assetBrowserURL.setPortletMode(PortletMode.VIEW);
-		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return assetBrowserURL.toString();
-	}
 
 	private SoyContext _getAvailableLanguagesSoyContext() {
 		SoyContext availableLanguagesSoyContext =
@@ -1346,7 +1270,6 @@ public class ContentPageEditorDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContentPageEditorDisplayContext.class);
 
-	private List<SoyContext> _assetBrowserLinksSoyContexts;
 	private final CommentManager _commentManager;
 	private final List<ContentPageEditorSidebarPanel>
 		_contentPageEditorSidebarPanels;

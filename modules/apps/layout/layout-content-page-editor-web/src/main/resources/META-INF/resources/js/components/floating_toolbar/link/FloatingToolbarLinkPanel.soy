@@ -40,10 +40,6 @@
 		label: string
 	]>}
 	{@param? _targetTypes: ?}
-	{@param? assetBrowserLinks: list<[
-		href: string,
-		typeName: string
-	]>}
 	{@param? mappedAssetEntries: list<[
 		encodedId: string,
 		classNameId: string,
@@ -101,7 +97,6 @@
 					</div>
 				{else}
 					{call .linkMapping}
-						{param assetBrowserLinks: $assetBrowserLinks /}
 						{param fieldId: $item.editableValues.config.mappedField or $item.editableValues.config.fieldId /}
 						{param fields: $_fields /}
 						{param handleAssetBrowserLinkClick: $_handleAssetBrowserLinkClick /}
@@ -145,10 +140,6 @@
 {/template}
 
 {template .linkMapping}
-	{@param? assetBrowserLinks: list<[
-		href: string,
-		typeName: string
-	]>}
 	{@param? fieldId: string}
 	{@param? fields: ?}
 	{@param? mappedAssetEntries: list<[
@@ -188,7 +179,6 @@
 	{if not $mappingFieldsURL or $selectedSourceTypeId == $sourceTypeIds.content}
 		<div class="floating-toolbar-mapping-panel__asset-select form-group">
 			{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
-				{param assetBrowserLinks: $assetBrowserLinks /}
 				{param fieldId kind="text"}floatingToolbarMappingPanelAssetSelect{/param}
 				{param fieldName kind="text"}{msg desc=""}content{/msg}{/param}
 				{param handleAssetBrowserLinkClick: $handleAssetBrowserLinkClick /}

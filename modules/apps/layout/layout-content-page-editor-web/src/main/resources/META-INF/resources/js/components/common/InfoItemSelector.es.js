@@ -16,12 +16,12 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import templates from './AssetSelector.soy';
+import templates from './InfoItemSelector.soy';
 
 /**
- * AssetSelector
+ * InfoItemSelector
  */
-class AssetSelector extends Component {}
+class InfoItemSelector extends Component {}
 
 /**
  * State definition.
@@ -29,13 +29,13 @@ class AssetSelector extends Component {}
  * @static
  * @type {!Object}
  */
-AssetSelector.STATE = {};
+InfoItemSelector.STATE = {};
 
-const ConnectedAssetSelector = getConnectedComponent(AssetSelector, [
+const ConnectedInfoItemSelector = getConnectedComponent(InfoItemSelector, [
 	'spritemap'
 ]);
 
-Soy.register(ConnectedAssetSelector, templates);
+Soy.register(ConnectedInfoItemSelector, templates);
 
-export {ConnectedAssetSelector, AssetSelector};
-export default ConnectedAssetSelector;
+export {ConnectedInfoItemSelector, InfoItemSelector};
+export default ConnectedInfoItemSelector;

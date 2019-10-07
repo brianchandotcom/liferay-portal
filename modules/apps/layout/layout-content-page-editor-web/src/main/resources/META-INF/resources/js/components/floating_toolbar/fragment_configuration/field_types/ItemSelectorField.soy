@@ -26,7 +26,7 @@
 
 	<div>
 		{if $selectedClassName}
-			{call .classNameAssetSelector}
+			{call .classNameInfoItemSelector}
 				{param configurationValues: $configurationValues /}
 				{param field: $field /}
 				{param handleItemSelectClick: $_handleItemSelectClick /}
@@ -35,7 +35,7 @@
 			{/call}
 		{else}
 			<div class="form-group">
-				{call com.liferay.layout.content.page.editor.web.AssetSelector.render}
+				{call com.liferay.layout.content.page.editor.web.InfoItemSelector.render}
 					{param fieldId: $field.name /}
 					{param fieldName: $field.label /}
 					{param handleAssetBrowserLinkClick: $_handleItemTypeClick /}
@@ -56,7 +56,7 @@
 	</div>
 {/template}
 
-{template .classNameAssetSelector}
+{template .classNameInfoItemSelector}
 	{@param configurationValues: ?}
 	{@param field: [
 		name: string,

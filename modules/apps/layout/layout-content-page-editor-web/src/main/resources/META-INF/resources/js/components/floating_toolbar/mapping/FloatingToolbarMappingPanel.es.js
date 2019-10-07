@@ -15,7 +15,7 @@
 import {PortletBase} from 'frontend-js-web';
 import Soy, {Config} from 'metal-soy';
 
-import '../../common/AssetSelector.es';
+import '../../common/InfoItemSelector.es';
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
 import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
 import {

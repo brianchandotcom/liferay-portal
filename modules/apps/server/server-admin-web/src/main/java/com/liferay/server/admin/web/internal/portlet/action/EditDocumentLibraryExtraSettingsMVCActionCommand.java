@@ -56,13 +56,13 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals("convert")) {
-			convert(actionRequest);
+			_convert(actionRequest);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected void addCustomField(long companyId, String name, String preset)
+	private void _addCustomField(long companyId, String name, String preset)
 		throws Exception {
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
@@ -73,7 +73,7 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 		expandoBridge.addAttribute(name, type);
 	}
 
-	protected void convert(ActionRequest actionRequest) throws Exception {
+	private void _convert(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -83,7 +83,7 @@ public class EditDocumentLibraryExtraSettingsMVCActionCommand
 		for (String key : keys) {
 			String preset = ParamUtil.getString(actionRequest, "type_" + key);
 
-			addCustomField(themeDisplay.getCompanyId(), key, preset);
+			_addCustomField(themeDisplay.getCompanyId(), key, preset);
 		}
 
 		_dlFileEntryLocalService.convertExtraSettings(keys);

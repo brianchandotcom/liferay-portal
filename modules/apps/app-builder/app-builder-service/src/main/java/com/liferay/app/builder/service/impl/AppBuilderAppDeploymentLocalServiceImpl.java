@@ -14,13 +14,17 @@
 
 package com.liferay.app.builder.service.impl;
 
+import com.liferay.app.builder.deploy.AppDeployer;
+import com.liferay.app.builder.deploy.AppDeployerTracker;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.base.AppBuilderAppDeploymentLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,6 +53,30 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 	}
 
 	@Override
+	public AppBuilderAppDeployment deleteAppBuilderAppDeployment(
+			long appBuilderAppDeploymentId)
+		throws PortalException {
+
+		AppBuilderAppDeployment appBuilderAppDeployment =
+			getAppBuilderAppDeployment(appBuilderAppDeploymentId);
+
+		AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
+			appBuilderAppDeployment.getType());
+
+		try {
+			if (appDeployer != null) {
+				appDeployer.undeploy(
+					appBuilderAppDeployment.getAppBuilderAppId());
+			}
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+
+		return super.deleteAppBuilderAppDeployment(appBuilderAppDeploymentId);
+	}
+
+	@Override
 	public AppBuilderAppDeployment getAppBuilderAppDeployment(
 			long appBuilderAppId, String type)
 		throws Exception {
@@ -64,5 +92,8 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 		return appBuilderAppDeploymentPersistence.findByAppBuilderAppId(
 			appBuilderAppId);
 	}
+
+	@Reference
+	private AppDeployerTracker _appDeployerTracker;
 
 }

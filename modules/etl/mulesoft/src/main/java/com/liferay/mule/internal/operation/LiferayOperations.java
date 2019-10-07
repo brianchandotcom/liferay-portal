@@ -15,6 +15,8 @@
 package com.liferay.mule.internal.operation;
 
 import com.liferay.mule.internal.connection.LiferayConnection;
+import com.liferay.mule.internal.error.LiferayResponseErrorProvider;
+import com.liferay.mule.internal.error.LiferayResponseValidator;
 import com.liferay.mule.internal.metadata.input.PATCHEndpointInputTypeResolver;
 import com.liferay.mule.internal.metadata.input.POSTEndpointInputTypeResolver;
 import com.liferay.mule.internal.metadata.key.DELETEEndpointTypeKeysResolver;
@@ -35,6 +37,7 @@ import java.util.concurrent.TimeoutException;
 import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.api.util.MultiMap;
 import org.mule.runtime.extension.api.annotation.Expression;
+import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
 import org.mule.runtime.extension.api.annotation.metadata.TypeResolver;
@@ -44,6 +47,7 @@ import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
 import org.mule.runtime.extension.api.annotation.param.Parameter;
+import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
 import org.mule.runtime.http.api.domain.message.response.HttpResponse;
@@ -51,9 +55,10 @@ import org.mule.runtime.http.api.domain.message.response.HttpResponse;
 /**
  * @author Matija Petanjek
  */
+@Throws(LiferayResponseErrorProvider.class)
 public class LiferayOperations {
 
-	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = DELETEEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> delete(
 			@Connection LiferayConnection connection,
@@ -64,6 +69,8 @@ public class LiferayOperations {
 		HttpResponse httpResponse = connection.delete(
 			_pathParams, _queryParams, endpoint);
 
+		_liferayResponseValidator.validate(httpResponse);
+
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		InputStream inputStream = httpEntity.getContent();
@@ -74,7 +81,7 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> get(
 			@Connection LiferayConnection connection,
@@ -84,6 +91,8 @@ public class LiferayOperations {
 		HttpResponse httpResponse = connection.get(
 			_pathParams, _queryParams, endpoint);
 
+		_liferayResponseValidator.validate(httpResponse);
+
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		InputStream inputStream = httpEntity.getContent();
@@ -94,18 +103,21 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = PATCHEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> patch(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
-			@Content @TypeResolver(value = PATCHEndpointInputTypeResolver.class)
+			@Content @DisplayName("Records")
+			@TypeResolver(value = PATCHEndpointInputTypeResolver.class)
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
 		HttpResponse httpResponse = connection.patch(
 			inputStream, _pathParams, _queryParams, endpoint);
 
+		_liferayResponseValidator.validate(httpResponse);
+
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		return Result.<InputStream, Void>builder(
@@ -114,18 +126,21 @@ public class LiferayOperations {
 		).build();
 	}
 
-	@MediaType(strict = false, value = MediaType.APPLICATION_JSON)
+	@MediaType(MediaType.APPLICATION_JSON)
 	@OutputResolver(output = POSTEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> post(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
-			@Content @TypeResolver(value = POSTEndpointInputTypeResolver.class)
+			@Content @DisplayName("Records")
+			@TypeResolver(value = POSTEndpointInputTypeResolver.class)
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
 		HttpResponse httpResponse = connection.post(
 			inputStream, _pathParams, _queryParams, endpoint);
 
+		_liferayResponseValidator.validate(httpResponse);
+
 		HttpEntity httpEntity = httpResponse.getEntity();
 
 		return Result.<InputStream, Void>builder(
@@ -134,12 +149,17 @@ public class LiferayOperations {
 		).build();
 	}
 
+	private final LiferayResponseValidator _liferayResponseValidator =
+		new LiferayResponseValidator();
+
+	@DisplayName("Path Parameters")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@NullSafe
 	@Optional
 	@Parameter
 	private Map<String, String> _pathParams;
 
+	@DisplayName("Query Parameters")
 	@Expression(ExpressionSupport.NOT_SUPPORTED)
 	@NullSafe
 	@Optional

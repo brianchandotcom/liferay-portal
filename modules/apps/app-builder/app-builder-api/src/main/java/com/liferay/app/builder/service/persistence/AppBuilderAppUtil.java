@@ -703,6 +703,182 @@ public class AppBuilderAppUtil {
 	}
 
 	/**
+	 * Returns all the app builder apps where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @return the matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByDDMStructureId(
+		long ddmStructureId) {
+
+		return getPersistence().findByDDMStructureId(ddmStructureId);
+	}
+
+	/**
+	 * Returns a range of all the app builder apps where ddmStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @return the range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByDDMStructureId(
+		long ddmStructureId, int start, int end) {
+
+		return getPersistence().findByDDMStructureId(
+			ddmStructureId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByDDMStructureId(
+		long ddmStructureId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().findByDDMStructureId(
+			ddmStructureId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the app builder apps where ddmStructureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param start the lower bound of the range of app builder apps
+	 * @param end the upper bound of the range of app builder apps (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching app builder apps
+	 */
+	public static List<AppBuilderApp> findByDDMStructureId(
+		long ddmStructureId, int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByDDMStructureId(
+			ddmStructureId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByDDMStructureId_First(
+			long ddmStructureId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByDDMStructureId_First(
+			ddmStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first app builder app in the ordered set where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByDDMStructureId_First(
+		long ddmStructureId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByDDMStructureId_First(
+			ddmStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app
+	 * @throws NoSuchAppException if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp findByDDMStructureId_Last(
+			long ddmStructureId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByDDMStructureId_Last(
+			ddmStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last app builder app in the ordered set where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
+	 */
+	public static AppBuilderApp fetchByDDMStructureId_Last(
+		long ddmStructureId,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return getPersistence().fetchByDDMStructureId_Last(
+			ddmStructureId, orderByComparator);
+	}
+
+	/**
+	 * Returns the app builder apps before and after the current app builder app in the ordered set where ddmStructureId = &#63;.
+	 *
+	 * @param appBuilderAppId the primary key of the current app builder app
+	 * @param ddmStructureId the ddm structure ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next app builder app
+	 * @throws NoSuchAppException if a app builder app with the primary key could not be found
+	 */
+	public static AppBuilderApp[] findByDDMStructureId_PrevAndNext(
+			long appBuilderAppId, long ddmStructureId,
+			OrderByComparator<AppBuilderApp> orderByComparator)
+		throws com.liferay.app.builder.exception.NoSuchAppException {
+
+		return getPersistence().findByDDMStructureId_PrevAndNext(
+			appBuilderAppId, ddmStructureId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the app builder apps where ddmStructureId = &#63; from the database.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 */
+	public static void removeByDDMStructureId(long ddmStructureId) {
+		getPersistence().removeByDDMStructureId(ddmStructureId);
+	}
+
+	/**
+	 * Returns the number of app builder apps where ddmStructureId = &#63;.
+	 *
+	 * @param ddmStructureId the ddm structure ID
+	 * @return the number of matching app builder apps
+	 */
+	public static int countByDDMStructureId(long ddmStructureId) {
+		return getPersistence().countByDDMStructureId(ddmStructureId);
+	}
+
+	/**
 	 * Returns all the app builder apps where companyId = &#63; and status = &#63;.
 	 *
 	 * @param companyId the company ID

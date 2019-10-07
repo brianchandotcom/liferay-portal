@@ -48,7 +48,7 @@ public class DocumentLibraryExtraSettingsConvertProcess
 	}
 
 	@Override
-	protected void doConvert() throws Exception {
+	protected void doConvert() {
 	}
 
 	@Override

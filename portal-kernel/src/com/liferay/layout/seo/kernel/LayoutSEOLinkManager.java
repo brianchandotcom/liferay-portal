@@ -26,6 +26,14 @@ import java.util.Map;
  */
 public interface LayoutSEOLinkManager {
 
+	public default LayoutSEOLink getCanonicalLayoutSEOLink(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)

@@ -44,6 +44,18 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Override
+	public LayoutSEOLink getCanonicalLayoutSEOLink(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException {
+
+		return new LayoutSEOLinkImpl(
+			_html.escapeAttribute(
+				_getCanonicalURL(layout, locale, canonicalURL, alternateURLs)),
+			null, LayoutSEOLink.Relationship.CANONICAL);
+	}
+
+	@Override
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -53,11 +65,8 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			alternateURLs.size() + 2);
 
 		layoutSEOLinks.add(
-			new LayoutSEOLinkImpl(
-				_html.escapeAttribute(
-					_getCanonicalURL(
-						layout, locale, canonicalURL, alternateURLs)),
-				null, LayoutSEOLink.Relationship.CANONICAL));
+			getCanonicalLayoutSEOLink(
+				layout, locale, canonicalURL, alternateURLs));
 
 		alternateURLs.forEach(
 			(urlLocale, url) -> layoutSEOLinks.add(

@@ -75,6 +75,7 @@ const _handleFieldBlurred = function(properties) {
 };
 
 const _handleFieldFocused = function(properties) {
+	const {fieldInstance} = properties;
 	const {pages} = this;
 
 	this.fieldFocusDate = new Date();
@@ -86,7 +87,7 @@ const _handleFieldFocused = function(properties) {
 	});
 
 	Liferay.fire('ddmFieldFocus', {
-		fieldName: properties.fieldInstance.fieldName,
+		fieldName: fieldInstance.fieldName,
 		formId: this.getFormId(),
 		page: this.activePage
 	});

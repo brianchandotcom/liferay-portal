@@ -15,6 +15,8 @@
 /**
  * Entry-point for "Sections" (sidebar pane) functionality.
  */
-export default function() {
-	return null;
+export default class Sections {
+	constructor(_state, _config) {
+		// TODO: implement
+	}
 }

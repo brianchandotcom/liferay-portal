@@ -15,6 +15,8 @@
 /**
  * Entry-point for "Experience" (toolbar drop-down) functionality.
  */
-export default function() {
-	return null;
+export default class Experience {
+	constructor(_state, _config) {
+		// TODO: implement
+	}
 }

@@ -19,7 +19,7 @@ import {StoreContext} from '../store/index';
 const {useContext} = React;
 
 export default function PageEditor() {
-	const {data} = useContext(StoreContext);
+	const state = useContext(StoreContext);
 
-	return <pre>{JSON.stringify(data, null, 2)}</pre>;
+	return <pre>{JSON.stringify(state, null, 2)}</pre>;
 }

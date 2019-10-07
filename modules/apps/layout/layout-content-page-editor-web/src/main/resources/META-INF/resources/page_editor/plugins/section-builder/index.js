@@ -15,6 +15,8 @@
 /**
  * Entry-point for "Section Builder" (sidebar pane) functionality.
  */
-export default function() {
-	return null;
+export default class SectionBuilder {
+	constructor(_state, _config) {
+		// TODO: implement
+	}
 }

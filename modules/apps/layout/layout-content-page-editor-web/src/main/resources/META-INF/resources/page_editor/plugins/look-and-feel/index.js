@@ -13,10 +13,14 @@
  */
 
 /**
- * Entry-point for "Widgets" (sidebar pane) functionality.
+ * Entry-point for "Look and Feel" (sidebar pane) functionality.
  */
-export default class Widgets {
-	constructor(_state, _config) {
-		// TODO: implement
+export default class LookAndFeel {
+	constructor(_state, config) {
+		this.lookAndFeelURL = config.lookAndFeelURL;
+	}
+
+	activate() {
+		Liferay.Util.navigate(this.lookAndFeelURL);
 	}
 }

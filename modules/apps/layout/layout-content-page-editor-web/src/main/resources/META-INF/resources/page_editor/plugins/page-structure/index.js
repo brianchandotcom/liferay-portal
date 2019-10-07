@@ -15,6 +15,8 @@
 /**
  * Entry-point for "Page Structure" (sidebar pane) functionality.
  */
-export default function() {
-	return null;
+export default class PageStructure {
+	constructor(_state, _config) {
+		// TODO: implement
+	}
 }

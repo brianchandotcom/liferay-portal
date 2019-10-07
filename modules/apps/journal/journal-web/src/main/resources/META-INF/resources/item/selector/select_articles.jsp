@@ -58,15 +58,36 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 				<c:when test="<%= curArticle != null %>">
 
 					<%
+					row.setCssClass("articles " + row.getCssClass());
+
+					Map<String, Object> data = new HashMap<>();
+
+					JSONObject articleJSONObject = JSONFactoryUtil.createJSONObject();
+
+					articleJSONObject.put("className", JournalArticle.class.getName());
+					articleJSONObject.put("classNameId", PortalUtil.getClassNameId(JournalArticle.class.getName()));
+					articleJSONObject.put("classPK", curArticle.getResourcePrimKey());
+
 					String title = curArticle.getTitle(locale);
 
 					if (Validator.isNull(title)) {
 						title = curArticle.getTitle(LocaleUtil.fromLanguageId(curArticle.getDefaultLanguageId()));
 					}
+
+					articleJSONObject.put("title", title);
+
+					data.put("value", articleJSONObject.toString());
+
+					row.setData(data);
 					%>
 
 					<c:choose>
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
+
+							<%
+							row.setCssClass("item-preview " + row.getCssClass());
+							%>
+
 							<liferay-ui:search-container-column-text>
 								<liferay-ui:user-portrait
 									userId="<%= curArticle.getUserId() %>"
@@ -105,6 +126,11 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
+
+							<%
+							row.setCssClass("item-preview " + row.getCssClass());
+							%>
+
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="title"
@@ -248,3 +274,41 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		/>
 	</liferay-ui:search-container>
 </div>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var selectArticleHandler = dom.delegate(
+		document.querySelector('#<portlet:namespace/>articlesContainer'),
+		'click',
+		'.articles',
+		function(event) {
+			<c:choose>
+				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
+					dom.removeClasses(document.querySelectorAll('.form-check-card.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.form-check-card'), 'active');
+				</c:when>
+				<c:otherwise>
+					dom.removeClasses(document.querySelectorAll('.articles.active'), 'active');
+					dom.addClasses(dom.closest(event.delegateTarget, '.articles'), 'active');
+				</c:otherwise>
+			</c:choose>
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= journalArticleItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
+				{
+					data: {
+						returnType: '<%= InfoItemItemSelectorReturnType.class.getName() %>',
+						value: event.delegateTarget.dataset.value
+					}
+				}
+			);
+		}
+	);
+
+	function removeListener() {
+		selectArticleHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	}
+
+	Liferay.on('destroyPortlet', removeListener);
+</aui:script>

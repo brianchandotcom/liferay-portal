@@ -17,20 +17,33 @@ package com.liferay.user.groups.admin.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -73,6 +86,53 @@ public class UserGroupLocalServiceTest {
 
 		GroupLocalServiceUtil.addRoleGroup(
 			_role.getRoleId(), _userGroup1.getGroupId());
+	}
+
+	@Test
+	public void testDatabaseSearchNoPermissionCheck() throws Exception {
+		User groupUser = UserTestUtil.addUser();
+
+		_userGroupLocalService.addUserUserGroup(
+			groupUser.getUserId(), _userGroup1);
+
+		_userGroupLocalService.addUserUserGroup(
+			groupUser.getUserId(), _userGroup2);
+
+		User publicAdminUser = UserTestUtil.addUser();
+
+		Role publicAdminRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_roleLocalService.addUserRole(
+			publicAdminUser.getUserId(), publicAdminRole);
+
+		ResourceAction viewAction =
+			_resourceActionLocalService.fetchResourceAction(
+				UserGroup.class.getName(), ActionKeys.VIEW);
+
+		ResourcePermissionTestUtil.addResourcePermission(
+			viewAction.getBitwiseValue(), UserGroup.class.getName(),
+			String.valueOf(_userGroup1.getUserGroupId()),
+			publicAdminRole.getRoleId(), ResourceConstants.SCOPE_INDIVIDUAL);
+
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(publicAdminUser));
+
+		String keywords = null;
+
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
+
+		userGroupParams.put(
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
+			Long.valueOf(groupUser.getUserId()));
+
+		List<UserGroup> userGroups = _search(keywords, userGroupParams);
+
+		Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
+
+		_userLocalService.deleteUser(groupUser);
+		_userLocalService.deleteUser(publicAdminUser);
+
+		_roleLocalService.deleteRole(publicAdminRole);
 	}
 
 	@Test
@@ -206,5 +266,20 @@ public class UserGroupLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private static UserGroup _userGroup2;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

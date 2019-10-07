@@ -19,7 +19,6 @@ import 'clay-label';
 
 /**
  * This code lives also in `segments/segments-experiment-web` module
- * TODO import it from there
  */
 
 const STATUS_COMPLETED = 2;
@@ -35,11 +34,11 @@ export const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
 
 const STATUS_TO_TYPE = {
 	[STATUS_COMPLETED]: 'success',
-	[STATUS_DRAFT]: 'secondary',
-	[STATUS_FINISHED_NO_WINNER]: 'secondary',
+	[STATUS_DRAFT]: undefined,
+	[STATUS_FINISHED_NO_WINNER]: undefined,
 	[STATUS_FINISHED_WINNER]: 'success',
 	[STATUS_PAUSED]: 'warning',
-	[STATUS_RUNNING]: 'primary',
+	[STATUS_RUNNING]: 'info',
 	[STATUS_SCHEDULED]: 'warning',
 	[STATUS_TERMINATED]: 'danger'
 };
@@ -50,12 +49,16 @@ const STATUS_TO_TYPE = {
  */
 class ExperimentsLabel extends Component {
 	prepareStateForRender(state) {
-		const {label, value} = state;
+		const {value} = state;
 
 		const style = statusToLabelDisplayType(value);
 
+		const elementClasses =
+			state.size === 'lg' ? 'label-lg text-capitalize' : '';
+
 		return {
-			label,
+			...state,
+			elementClasses,
 			style
 		};
 	}
@@ -68,6 +71,13 @@ ExperimentsLabel.STATE = {
 	 * @type {string}
 	 */
 	label: Config.string().required(),
+
+	/**
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	size: Config.string(),
 
 	/**
 	 * This prop is generated in the `prepareStateForRender` from the `value` prop

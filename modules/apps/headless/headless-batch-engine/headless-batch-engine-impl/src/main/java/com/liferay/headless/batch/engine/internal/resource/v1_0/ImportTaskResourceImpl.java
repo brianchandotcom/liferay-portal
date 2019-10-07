@@ -28,12 +28,14 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 import org.osgi.service.component.annotations.Activate;
@@ -63,14 +65,13 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			_defaultBatchSize = 1;
 		}
 
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			String key = entry.getKey();
+		Properties batchSizeProperties = PropsUtil.getProperties(
+			"batch.size.", true);
 
-			if (key.startsWith("batchSize.")) {
-				_itemClassBatchSizeMap.put(
-					key.substring(key.indexOf(".") + 1),
-					GetterUtil.getInteger(entry.getValue()));
-			}
+		for (Map.Entry<Object, Object> entry : batchSizeProperties.entrySet()) {
+			_itemClassBatchSizeMap.put(
+				String.valueOf(entry.getKey()),
+				GetterUtil.getInteger(entry.getValue()));
 		}
 	}
 

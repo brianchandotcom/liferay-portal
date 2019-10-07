@@ -1300,13 +1300,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			boolean productionMode = ${ctPersistenceHelper}.isProductionMode(${entity.name}.class);
 		</#if>
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-			pagination = false;
-
 			if (${useCache}) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
@@ -1339,9 +1336,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			else {
 				sql = _SQL_SELECT_${entity.alias?upper_case};
 
-				if (pagination) {
-					sql = sql.concat(${entity.name}ModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(${entity.name}ModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1351,16 +1346,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
-				}
+				list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 

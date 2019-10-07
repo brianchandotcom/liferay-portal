@@ -35,7 +35,6 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 
 	public MessageBoardMessageEntityModel(List<EntityField> entityFields) {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
-			new BooleanEntityField("showAsAnswer", locale -> "answer"),
 			new BooleanEntityField("showAsQuestion", locale -> "question"),
 			new CollectionEntityField(
 				new StringEntityField(
@@ -49,6 +48,10 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				"dateModified",
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
+			new EntityField(
+				"showAsAnswer", EntityField.Type.BOOLEAN,
+				locale -> Field.getSortableFieldName("answer_String"),
+				locale -> "answer", String::valueOf),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new IntegerEntityField(
 				"messageBoardSectionId", locale -> Field.CATEGORY_ID),

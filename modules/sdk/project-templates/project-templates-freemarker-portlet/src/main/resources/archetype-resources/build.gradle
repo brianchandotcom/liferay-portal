@@ -30,11 +30,11 @@ dependencies {
 #elseif (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.bridges", version: "3.0.2"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "3.1.2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "3.4.2"
 #elseif (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.bridges", version: "6.0.2"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "4.0.8"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "4.1.0"
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"

@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.util.taglib</artifactId>
-			<version>3.1.2</version>
+			<version>3.4.2</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

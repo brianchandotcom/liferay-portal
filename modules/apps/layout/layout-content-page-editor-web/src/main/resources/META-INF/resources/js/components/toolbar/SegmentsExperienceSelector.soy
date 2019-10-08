@@ -199,8 +199,7 @@
 											{if $experience.segmentsExperimentStatus}
 												<div>
 													<span class="font-weight-normal text-secondary">
-														{msg desc=""}test{/msg}
-														:{sp}
+														{msg desc=""}test{/msg}{sp}
 													</span>
 
 													{call com.liferay.layout.content.page.editor.web.ExperimentsLabel.render}
@@ -211,16 +210,15 @@
 											{/if}
 										</span>
 
-								{if $experience.hasLockedSegmentsExperiment}
-									<div class="d-flex align-self-center dropdown-menu__experience--btn-group px-2">
-										{call ClayIcon.render}
-											{param elementClasses: 'mx-1' /}
-											{param spritemap: $spritemap /}
-											{param symbol: 'test' /}
-										{/call}
-									</div>
-								{/if}
-
+										{if $experience.hasLockedSegmentsExperiment}
+											<div class="d-flex align-self-center dropdown-menu__experience--btn-group px-2">
+												{call ClayIcon.render}
+													{param elementClasses: 'mx-1' /}
+													{param spritemap: $spritemap /}
+													{param symbol: 'test' /}
+												{/call}
+											</div>
+										{/if}
 									</button>
 								</span>
 

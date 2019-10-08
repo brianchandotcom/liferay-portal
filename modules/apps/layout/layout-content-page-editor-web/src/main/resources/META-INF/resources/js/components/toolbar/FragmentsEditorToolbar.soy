@@ -65,10 +65,13 @@
 				</li>
 
 				{if $defaultSegmentsExperienceId and not $singleSegmentsExperienceMode and $segmentsExperimentStatus}
-					<li class="nav-item pl-2">
+					<li class="nav-item pl-3">
+						<span class=" mr-1 text-secondary">
+							{msg desc=""}test{/msg}
+						</span>
+
 						{call com.liferay.layout.content.page.editor.web.ExperimentsLabel.render }
 							{param label: $segmentsExperimentStatus.label /}
-							{param size: 'lg' /}
 							{param value: $segmentsExperimentStatus.value /}
 						{/call}
 					</li>

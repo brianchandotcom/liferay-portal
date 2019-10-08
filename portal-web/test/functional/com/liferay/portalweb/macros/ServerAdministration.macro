@@ -243,4 +243,19 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
+	macro viewProperties {
+		Navigator.gotoNavItem(navItem = "Properties");
+
+		var key_propertyName = "${propertyName}";
+		var key_propertyTitle = "${propertyTitle}";
+
+		AssertClick(
+			locator1 = "ServerAdministrationProperties#PORTAL_SYSTEM_PROPERTY_TITLE",
+			value1 = "${propertyTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ServerAdministrationProperties#PORTAL_SYSTEM_PROPERTY_NAME",
+			value1 = "${propertyName}");
+	}
+
 }

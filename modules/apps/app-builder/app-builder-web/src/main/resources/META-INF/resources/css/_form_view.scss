@@ -21,6 +21,10 @@
 
 .app-builder-form-view-app .app-builder-sidebar {
 	margin-top: $upperToolbarHeight;
+
+	.lfr-ddm-form-container .ddm-field-options-container .ddm-options-target {
+		margin: 2px 0;
+	}
 }
 
 .app-builder-form-view-body {

@@ -23,6 +23,8 @@ public class LayoutPageTemplateEntryTypeConstants {
 
 	public static final int TYPE_DISPLAY_PAGE = 1;
 
+	public static final int TYPE_MASTER_PAGE = 3;
+
 	public static final int TYPE_WIDGET_PAGE = 2;
 
 }

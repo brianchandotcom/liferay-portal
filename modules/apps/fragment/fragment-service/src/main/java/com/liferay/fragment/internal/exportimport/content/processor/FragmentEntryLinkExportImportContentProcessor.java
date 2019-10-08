@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -339,7 +340,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (!stagingGroupHelper.isStagedPortlet(
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!stagingGroupHelper.isStagedPortlet(
 				portletDataContext.getScopeGroupId(),
 				assetRendererFactory.getPortletId())) {
 

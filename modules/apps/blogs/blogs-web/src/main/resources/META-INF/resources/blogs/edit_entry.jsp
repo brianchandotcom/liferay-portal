@@ -47,11 +47,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
-
-if (portletTitleBasedNavigation) {
-	renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) : LanguageUtil.get(request, "new-blog-entry"));
-}
+renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) : LanguageUtil.get(request, "new-blog-entry"));
 
 BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
 
@@ -89,14 +85,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 	</c:if>
 </liferay-util:buffer>
 
-<c:if test="<%= portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar
-		fixed="<%= true %>"
-	>
-		<%= saveStatus %>
-		<%= readingTime %>
-	</liferay-frontend:info-bar>
-</c:if>
+<liferay-frontend:info-bar
+	fixed="<%= true %>"
+>
+	<%= saveStatus %>
+	<%= readingTime %>
+</liferay-frontend:info-bar>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
@@ -108,14 +102,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<div class="entry-options">
-				<div class="status">
-					<%= saveStatus %>
-					<%= readingTime %>
-				</div>
+		<div class="entry-options">
+			<div class="status">
+				<%= saveStatus %>
+				<%= readingTime %>
 			</div>
-		</c:if>
+		</div>
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />

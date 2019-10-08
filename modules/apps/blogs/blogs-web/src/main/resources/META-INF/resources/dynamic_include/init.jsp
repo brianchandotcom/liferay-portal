@@ -25,6 +25,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.blogs.constants.BlogsConstants" %><%@
+page import="com.liferay.blogs.constants.BlogsPortletKeys" %><%@
 page import="com.liferay.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
@@ -36,10 +37,12 @@ page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %>
 
-<%@ page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

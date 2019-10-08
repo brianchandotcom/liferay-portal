@@ -855,7 +855,7 @@ AUI.add(
 					var weeks = DateMath.getWeeksInMonth(date, firstDayOfWeek);
 
 					A.each(instance.tableRows, function(item, index) {
-						if (index > weeks) {
+						if (index >= weeks) {
 							item.remove();
 						} else if (index < weeks && !item.parentElement) {
 							instance.tableRowContainer.appendChild(item);

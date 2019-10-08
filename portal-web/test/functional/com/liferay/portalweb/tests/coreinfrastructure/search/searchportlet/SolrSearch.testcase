@@ -1536,7 +1536,6 @@ definition {
 
 	@priority = "5"
 	test ViewMultipleFacetURLs {
-		property osgi.app.includes = "portal-search-solr7";
 		var searchPage = "Search Page";
 
 		JSONCategory.addVocabulary(

@@ -17,10 +17,13 @@ package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -421,6 +424,15 @@ public class WorkflowDefinitionManagerImpl
 					name, version, serviceContext);
 			}
 			else {
+				List<WorkflowDefinitionLink> workflowDefinitionLinks =
+					_workflowDefinitionLinkLocalService.
+						getWorkflowDefinitionLinks(companyId, name, version);
+
+				if (!workflowDefinitionLinks.isEmpty()) {
+					throw new RequiredWorkflowDefinitionException(
+						workflowDefinitionLinks);
+				}
+
 				_kaleoDefinitionLocalService.deactivateKaleoDefinition(
 					name, version, serviceContext);
 			}
@@ -544,6 +556,10 @@ public class WorkflowDefinitionManagerImpl
 
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

@@ -49,6 +49,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				<aui:a href="<%= rowURL.toString() %>">
 					<%= curCategory.getName() %>
 				</aui:a>
+
+				<c:if test='<%= curCategory.getDisplayStyle().equals("question") %>'>
+					<aui:icon cssClass="icon-monospaced" image="question-circle" markupView="lexicon" message="question" />
+				</c:if>
 			</h4>
 
 			<h5 class="text-default">

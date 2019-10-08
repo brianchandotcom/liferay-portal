@@ -65,6 +65,40 @@ public class MessageBoardMessageResourceTest
 	}
 
 	@Override
+	public void testPutMessageBoardMessageSubscribe() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessage_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageSubscribeHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageSubscribeHttpResponse(0L));
+	}
+
+	@Override
+	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testDeleteMessageBoardMessage_addMessageBoardMessage();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnsubscribeHttpResponse(
+					messageBoardMessage.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.
+				putMessageBoardMessageUnsubscribeHttpResponse(0L));
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "headline"};
 	}

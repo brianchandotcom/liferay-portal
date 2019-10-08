@@ -18,6 +18,7 @@
 
 <%
 List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewVideoWebKeys.PREVIEW_FILE_URLS);
+String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO_POSTER_URL);
 %>
 
 <liferay-util:html-top

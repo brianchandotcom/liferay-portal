@@ -111,8 +111,11 @@ public class MBSubscriptionSender
 		super.populateNotificationEventJSONObject(notificationEventJSONObject);
 	}
 
+
 	@Override
-	protected void sendNotification(User user) throws Exception {
+	protected void sendNotification(User user, boolean notifyImmediately)
+		throws Exception {
+
 		sendEmailNotification(user);
 
 		if (currentUserId == user.getUserId()) {
@@ -123,7 +126,7 @@ public class MBSubscriptionSender
 			return;
 		}
 
-		sendUserNotification(user);
+		sendUserNotification(user, notifyImmediately);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

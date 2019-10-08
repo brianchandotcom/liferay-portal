@@ -74,6 +74,11 @@ public class DEDataListViewLocalServiceImpl
 	}
 
 	@Override
+	public void deleteDEDataListViewsByDDMStructureId(long ddmStructureId) {
+		deDataListViewPersistence.removeByDDMStructureId(ddmStructureId);
+	}
+
+	@Override
 	public List<DEDataListView> getDEDataListViews(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
 		OrderByComparator<DEDataListView> orderByComparator) {

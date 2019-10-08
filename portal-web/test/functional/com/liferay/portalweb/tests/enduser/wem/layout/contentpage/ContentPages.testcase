@@ -222,7 +222,9 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		task ("Assert the freemarker code was not executed") {
 			AssertTextNotEquals(

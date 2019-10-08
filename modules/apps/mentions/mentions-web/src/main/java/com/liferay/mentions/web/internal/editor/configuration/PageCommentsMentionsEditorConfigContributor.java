@@ -1,12 +1,28 @@
 package com.liferay.mentions.web.internal.editor.configuration;
 
-
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.util.Map;
+
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Ambrín Chaudhary
  */
 @Component(
 	property = {
@@ -16,5 +32,83 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 	},
 	service = EditorConfigContributor.class
 )
-public class PageCommentsMentionsEditorConfigContributor extends BaseMentionsEditorConfigContributor {
+public class PageCommentsMentionsEditorConfigContributor
+	extends BaseMentionsEditorConfigContributor {
+
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		super.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
+
+		String namespace = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:namespace"));
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, namespace + name + "selectItem",
+			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
+
+		String extraPlugins =
+			jsonObject.getString("extraPlugins") + "," + getExtraPluginsLists();
+
+		jsonObject.put(
+			"allowedContent", ""
+		).put(
+			"disallowedContent", "br"
+		).put(
+			"enterMode", 2
+		).put(
+			"extraPlugins", extraPlugins
+		).put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString()
+		).put(
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString()
+		).put(
+			"removePlugins", getRemovePluginsLists()
+		).put(
+			"toolbars", JSONFactoryUtil.createJSONObject()
+		);
+	}
+
+	protected String getExtraPluginsLists() {
+		return "ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
+			"ae_selectionregion,ae_tableresize,ae_tabletools," +
+				"ae_uicore,itemselector,media,adaptivemedia";
+	}
+
+	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
+		ItemSelectorCriterion itemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new DownloadURLItemSelectorReturnType());
+
+		return itemSelectorCriterion;
+	}
+
+	protected String getRemovePluginsLists() {
+		return "elementspath,floatingspace,image,link,liststyle," +
+			"magicline,resize,tabletools,toolbar,ae_embed";
+	}
+
+	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
+		ItemSelectorCriterion itemSelectorCriterion =
+			new URLItemSelectorCriterion();
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new URLItemSelectorReturnType());
+
+		return itemSelectorCriterion;
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
+
 }

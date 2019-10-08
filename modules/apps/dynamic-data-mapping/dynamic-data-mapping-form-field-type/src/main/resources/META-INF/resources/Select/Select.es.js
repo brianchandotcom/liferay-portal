@@ -233,16 +233,26 @@ class Select extends Component {
 			type: multiple ? 'checkbox' : 'item'
 		};
 	}
+
+	_setDataSourceType(value) {
+		if (Array.isArray(value)) {
+			return value[value.length - 1];
+		}
+
+		return value;
+	}
 }
 
 Select.STATE = {
 	/**
-	 * @default 'string'
+	 * @default 'manual'
 	 * @memberof Select
 	 * @type {?(string|undefined)}
 	 */
 
-	dataSourceType: Config.string(),
+	dataSourceType: Config.oneOfType([Config.string(), Config.array()])
+		.setter('_setDataSourceType')
+		.value('manual'),
 
 	/**
 	 * @default 'string'

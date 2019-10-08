@@ -53,7 +53,7 @@ class FormBuilderBase extends Component {
 		const visitor = new PagesVisitor(pages);
 
 		return visitor.mapFields(field => {
-			if (field.type === 'select' && field.dataSourceType !== 'manual') {
+			if (field.type === 'select' && !field.dataSourceType.includes('manual')) {
 				field = {
 					...field,
 					options: [

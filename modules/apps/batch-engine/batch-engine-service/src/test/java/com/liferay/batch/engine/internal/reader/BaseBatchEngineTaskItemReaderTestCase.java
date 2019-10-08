@@ -17,11 +17,9 @@ package com.liferay.batch.engine.internal.reader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import java.time.ZoneId;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,8 +34,6 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 		createDate = new Date();
 
 		_dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-		_dateFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
 
 		createDateString = _dateFormat.format(createDate);
 	}

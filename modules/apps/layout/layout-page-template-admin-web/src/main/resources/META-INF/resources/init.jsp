@@ -29,7 +29,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.LayoutPageTemplatesAdminDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.LayoutPrototypeDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.display.context.LayoutPrototypeManagementToolbarDisplayContext" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.display.context.MasterPageDisplayContext" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.display.context.MasterPageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.LayoutPrototypeVerticalCard" %><%@
+page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay.MasterPageVerticalCard" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@

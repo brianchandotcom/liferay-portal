@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -46,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -66,19 +63,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BlogsEntryAssetRenderer
 	extends BaseJSPAssetRenderer<BlogsEntry> implements TrashRenderer {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #BlogsEntryAssetRenderer(BlogsEntry, ResourceBundleLoader)}
-	 */
-	@Deprecated
-	public BlogsEntryAssetRenderer(BlogsEntry entry) {
-		this(
-			entry,
-			new AggregateResourceBundleLoader(
-				new ClassResourceBundleLoader(
-					"content.Language", BlogsEntryAssetRenderer.class)));
-	}
 
 	public BlogsEntryAssetRenderer(
 		BlogsEntry entry, ResourceBundleLoader resourceBundleLoader) {
@@ -109,15 +93,6 @@ public class BlogsEntryAssetRenderer
 		}
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _entry.getDisplayDate();
 	}
 
 	@Override
@@ -211,9 +186,8 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		return getURLEdit(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
@@ -248,7 +222,7 @@ public class BlogsEntryAssetRenderer
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			String noSuchEntryRedirect)
-		throws Exception {
+		throws PortalException {
 
 		if (_assetDisplayPageFriendlyURLProvider != null) {
 			ThemeDisplay themeDisplay =
@@ -290,13 +264,6 @@ public class BlogsEntryAssetRenderer
 	@Override
 	public String getUuid() {
 		return _entry.getUuid();
-	}
-
-	public boolean hasDeletePermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
-		return BlogsEntryPermission.contains(
-			permissionChecker, _entry, ActionKeys.DELETE);
 	}
 
 	@Override

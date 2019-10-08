@@ -152,8 +152,7 @@ public class BlogsEntryAssetRendererFactory
 
 	@Override
 	public boolean hasAddPermission(
-			PermissionChecker permissionChecker, long groupId, long classTypeId)
-		throws Exception {
+		PermissionChecker permissionChecker, long groupId, long classTypeId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, ActionKeys.ADD_ENTRY);

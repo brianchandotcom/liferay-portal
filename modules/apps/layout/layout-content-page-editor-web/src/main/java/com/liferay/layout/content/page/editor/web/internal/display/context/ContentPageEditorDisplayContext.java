@@ -633,8 +633,7 @@ public class ContentPageEditorDisplayContext {
 				Collections.emptyMap(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(request));
 
-		configurations.put(
-			"commentEditor", commentEditorConfiguration.getData());
+		configurations.put("comment", commentEditorConfiguration.getData());
 
 		_defaultConfigurations = configurations;
 

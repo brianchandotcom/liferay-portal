@@ -299,6 +299,16 @@ public class MessageBoardMessageSerDes {
 			sb.append(messageBoardMessage.getSiteId());
 		}
 
+		if (messageBoardMessage.getSubscribed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(messageBoardMessage.getSubscribed());
+		}
+
 		if (messageBoardMessage.getViewableBy() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -477,6 +487,15 @@ public class MessageBoardMessageSerDes {
 			map.put("siteId", String.valueOf(messageBoardMessage.getSiteId()));
 		}
 
+		if (messageBoardMessage.getSubscribed() == null) {
+			map.put("subscribed", null);
+		}
+		else {
+			map.put(
+				"subscribed",
+				String.valueOf(messageBoardMessage.getSubscribed()));
+		}
+
 		if (messageBoardMessage.getViewableBy() == null) {
 			map.put("viewableBy", null);
 		}
@@ -627,6 +646,12 @@ public class MessageBoardMessageSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardMessage.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardMessage.setSubscribed(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {

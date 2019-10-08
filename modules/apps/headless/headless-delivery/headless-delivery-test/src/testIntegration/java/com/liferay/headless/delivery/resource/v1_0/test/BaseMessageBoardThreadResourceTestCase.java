@@ -762,6 +762,16 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testPutMessageBoardThreadSubscribe() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testDeleteMessageBoardThreadMyRating() throws Exception {
 		MessageBoardThread messageBoardThread =
 			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
@@ -1415,6 +1425,24 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = messageBoardThread.getSubscribed();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("threadType", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1687,6 +1715,14 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 			if (Objects.equals("showAsQuestion", additionalAssertFieldName)) {
 				if (messageBoardThread.getShowAsQuestion() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (messageBoardThread.getSubscribed() == null) {
 					valid = false;
 				}
 
@@ -2006,6 +2042,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread1.getSubscribed(),
+						messageBoardThread2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("threadType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardThread1.getThreadType(),
@@ -2204,6 +2251,17 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardThread.getShowAsQuestion(),
 						jsonObject.getBoolean("showAsQuestion"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardThread.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -2433,6 +2491,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("threadType")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardThread.getThreadType()));
@@ -2485,6 +2548,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				showAsQuestion = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 				threadType = RandomTestUtil.randomString();
 				viewCount = RandomTestUtil.randomInt();
 			}

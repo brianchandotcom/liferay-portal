@@ -80,6 +80,8 @@ public class OpenAPIResourceImpl {
 
 			add(SiteResourceImpl.class);
 
+			add(SubscriptionResourceImpl.class);
+
 			add(UserAccountResourceImpl.class);
 
 			add(WebUrlResourceImpl.class);

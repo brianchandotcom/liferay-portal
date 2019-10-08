@@ -3,10 +3,6 @@ Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.portal.service.test,\
-	com.liferay.portal.test.log,\
-	com.liferay.portal.test.mail,\
-	com.liferay.portal.test.randomizerbumpers,\
-	com.liferay.portal.test.rule,\
 	com.liferay.portal.webserver.test,\
 	com.liferay.portlet.documentlibrary.service.test,\
 	com.liferay.portlet.documentlibrary.store.test,\

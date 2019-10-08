@@ -594,9 +594,9 @@ definition {
 		AssertVisible(locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
-	@description = "This is a test for LPS-91751. It ensures that user can not preview too large file."
+	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
 	@priority = "5"
-	test PreviewTooLargeFile {
+	test PreviewFileThatExceedsLimit {
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(

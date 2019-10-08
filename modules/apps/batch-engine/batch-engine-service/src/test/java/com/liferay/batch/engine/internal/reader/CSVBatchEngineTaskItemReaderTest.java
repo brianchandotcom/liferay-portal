@@ -153,25 +153,21 @@ public class CSVBatchEngineTaskItemReaderTest
 	private byte[] _getContent(Object[][] rowValues, String delimiter) {
 		StringBundler sb = new StringBundler();
 
-		for (int i = 0; i < CELL_NAMES.length; i++) {
-			sb.append(CELL_NAMES[i]);
-
-			if (i < (CELL_NAMES.length - 1)) {
-				sb.append(delimiter);
-			}
+		for (String cellName : CELL_NAMES) {
+			sb.append(cellName);
+			sb.append(delimiter);
 		}
 
+		sb.setIndex(sb.index() - 1);
 		sb.append("\n");
 
 		for (Object[] cellValues : rowValues) {
-			for (int i = 0; i < cellValues.length; i++) {
-				sb.append(cellValues[i]);
-
-				if (i < (cellValues.length - 1)) {
-					sb.append(delimiter);
-				}
+			for (Object cellValue : cellValues) {
+				sb.append(cellValue);
+				sb.append(delimiter);
 			}
 
+			sb.setIndex(sb.index() - 1);
 			sb.append("\n");
 		}
 

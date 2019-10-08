@@ -159,30 +159,25 @@ public class JSONBatchEngineTaskItemReaderTest
 
 		sb.append("[");
 
-		for (int i = 0; i < rowValues.length; i++) {
+		for (Object[] singleRowValues : rowValues) {
 			sb.append("{");
 
-			for (int j = 0; j < rowValues[i].length; j++) {
-				if (rowValues[i][j] != null) {
+			for (int j = 0; j < singleRowValues.length; j++) {
+				if (singleRowValues[j] != null) {
 					sb.append("\"");
 					sb.append(_CELL_NAMES[j]);
 					sb.append("\":");
-					sb.append(rowValues[i][j]);
-
-					if (j < (rowValues[i].length - 1)) {
-						sb.append(",");
-					}
+					sb.append(singleRowValues[j]);
+					sb.append(",");
 				}
 			}
 
-			sb.append("}");
-
-			if (i < (rowValues.length - 1)) {
-				sb.append(",");
-			}
+			sb.setIndex(sb.index() - 1);
+			sb.append("},");
 		}
 
-		sb.append("]");
+		sb.setIndex(sb.index() - 1);
+		sb.append("}]");
 
 		String content = sb.toString();
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -153,7 +154,8 @@ public class SynchronousDestinationTestRule
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
 
-			ProxyModeThreadLocal.setForceSync(true);
+			_forceSyncSafeClosable = ProxyModeThreadLocal.setWithSafeClosable(
+				true);
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
@@ -290,7 +292,9 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void restorePreviousSync() {
-			ProxyModeThreadLocal.setForceSync(_forceSync);
+			if (_forceSyncSafeClosable != null) {
+				_forceSyncSafeClosable.close();
+			}
 
 			for (Destination destination : _asyncServiceDestinations) {
 				_destinations.put(destination.getName(), destination);
@@ -318,8 +322,11 @@ public class SynchronousDestinationTestRule
 			}
 		}
 
+		/**
+		 * @deprecated As of Mueller (7.2.x), with no direct replacement
+		 */
+		@Deprecated
 		public void setForceSync(boolean forceSync) {
-			_forceSync = forceSync;
 		}
 
 		public void setSync(Sync sync) {
@@ -339,7 +346,7 @@ public class SynchronousDestinationTestRule
 		private final List<Destination> _asyncServiceDestinations =
 			new ArrayList<>();
 		private Map<String, Destination> _destinations;
-		private boolean _forceSync;
+		private SafeClosable _forceSyncSafeClosable;
 		private final List<InvokerMessageListener>
 			_schedulerInvokerMessageListeners = new ArrayList<>();
 		private Sync _sync;
@@ -371,7 +378,6 @@ public class SynchronousDestinationTestRule
 	private SyncHandler _createSyncHandler(Sync sync) {
 		SyncHandler syncHandler = new SyncHandler();
 
-		syncHandler.setForceSync(ProxyModeThreadLocal.isForceSync());
 		syncHandler.setSync(sync);
 
 		syncHandler.enableSync();

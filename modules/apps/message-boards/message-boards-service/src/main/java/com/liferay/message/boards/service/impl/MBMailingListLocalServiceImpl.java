@@ -23,6 +23,7 @@ import com.liferay.message.boards.exception.MailingListOutUserNameException;
 import com.liferay.message.boards.internal.messaging.MailingListRequest;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.message.boards.service.base.MBMailingListLocalServiceBaseImpl;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
@@ -213,17 +214,12 @@ public class MBMailingListLocalServiceImpl
 		// Scheduler
 
 		if (active) {
-			boolean forceSync = ProxyModeThreadLocal.isForceSync();
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
-			ProxyModeThreadLocal.setForceSync(true);
-
-			try {
 				unscheduleMailingList(mailingList);
 
 				scheduleMailingList(mailingList);
-			}
-			finally {
-				ProxyModeThreadLocal.setForceSync(forceSync);
 			}
 		}
 		else {

@@ -23,6 +23,7 @@ import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelpe
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -276,10 +276,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addUserIds) ||
 			!ArrayUtil.isEmpty(removeUserIds)) {
 
-			try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-					new ProxyModeThreadLocalCloseable()) {
-
-				ProxyModeThreadLocal.setForceSync(true);
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
 				_userService.addRoleUsers(roleId, addUserIds);
 				_userService.unsetRoleUsers(roleId, removeUserIds);

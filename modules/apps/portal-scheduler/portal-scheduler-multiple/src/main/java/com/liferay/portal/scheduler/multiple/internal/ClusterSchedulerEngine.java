@@ -14,6 +14,7 @@
 
 package com.liferay.portal.scheduler.multiple.internal;
 
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
@@ -873,13 +874,11 @@ public class ClusterSchedulerEngine
 
 		@Override
 		protected void doMasterTokenAcquired() throws Exception {
-			boolean forceSync = ProxyModeThreadLocal.isForceSync();
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
-			ProxyModeThreadLocal.setForceSync(true);
+				_writeLock.lock();
 
-			_writeLock.lock();
-
-			try {
 				for (ObjectValuePair<SchedulerResponse, TriggerState>
 						memoryClusteredJob : _memoryClusteredJobs.values()) {
 
@@ -936,8 +935,6 @@ public class ClusterSchedulerEngine
 					getOSGiServiceIdentifier());
 			}
 			finally {
-				ProxyModeThreadLocal.setForceSync(forceSync);
-
 				_writeLock.unlock();
 			}
 		}

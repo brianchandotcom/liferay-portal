@@ -33,6 +33,7 @@ dependencies {
 	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":apps:users-admin:users-admin-test-util")
 	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-lang")
 	testIntegrationCompile project(":core:petra:petra-reflect")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":core:registry-api")

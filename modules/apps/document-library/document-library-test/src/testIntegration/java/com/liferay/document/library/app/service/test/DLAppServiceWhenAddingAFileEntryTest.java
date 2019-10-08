@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -417,9 +418,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 
 		@Override
 		protected void doRun() throws Exception {
-			ProxyModeThreadLocal.setForceSync(true);
+			try (SafeClosable safeClosable =
+					ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
-			try {
 				FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 					group.getGroupId(), parentFolder.getFolderId(),
 					"Test-" + _index + ".txt");

@@ -14,9 +14,9 @@
 
 package com.liferay.users.admin.web.internal.portlet.action;
 
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
-import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -100,10 +100,8 @@ public class EditOrganizationAssignmentsMVCActionCommand
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-				new ProxyModeThreadLocalCloseable()) {
-
-			ProxyModeThreadLocal.setForceSync(true);
+		try (SafeClosable safeClosable =
+				ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
 			_userService.addOrganizationUsers(organizationId, addUserIds);
 			_userService.unsetOrganizationUsers(organizationId, removeUserIds);

@@ -287,6 +287,13 @@ public class AppBuilderAppLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(long ddmStructureId) {
+
+		return _appBuilderAppLocalService.getAppBuilderApps(ddmStructureId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getAppBuilderApps(long companyId, int status) {
 
 		return _appBuilderAppLocalService.getAppBuilderApps(companyId, status);

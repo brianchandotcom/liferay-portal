@@ -54,19 +54,6 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 		_serviceContext = serviceContext;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #AdminSubscriptionSender(KBArticle, ModelResourcePermission,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public AdminSubscriptionSender(
-		KBArticle kbArticle, ServiceContext serviceContext) {
-
-		_kbArticle = kbArticle;
-		_serviceContext = serviceContext;
-	}
-
 	@Override
 	public void initialize() throws Exception {
 		super.initialize();
@@ -108,19 +95,6 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String getEmailKBArticleAttachments(Locale locale)
-		throws Exception {
-
-		Function<Locale, String> emailKBArticleAttachmentsFunction =
-			_getEmailKBArticleAttachmentsFunction();
-
-		return emailKBArticleAttachmentsFunction.apply(locale);
-	}
-
 	@Override
 	protected boolean hasPermission(
 			Subscription subscription, String inferredClassName,
@@ -149,13 +123,6 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 			PermissionThreadLocal.setPermissionChecker(
 				contextPermissionChecker);
 		}
-	}
-
-	@Override
-	protected String replaceContent(String content, Locale locale)
-		throws Exception {
-
-		return super.replaceContent(content, locale);
 	}
 
 	private Function<Locale, String> _getEmailKBArticleAttachmentsFunction()
@@ -187,7 +154,7 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	}
 
 	private final KBArticle _kbArticle;
-	private ModelResourcePermission<KBArticle>
+	private final ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
 	private final ServiceContext _serviceContext;
 

@@ -87,17 +87,6 @@ public class MBSubscriptionSender
 		_fullName = fullName;
 	}
 
-	private String _getMailingListSubject(String subject, String mailId) {
-		subject = GetterUtil.getString(subject);
-		mailId = GetterUtil.getString(mailId);
-
-		return subject.concat(
-			StringPool.SPACE
-		).concat(
-			mailId
-		);
-	}
-
 	@Override
 	protected void populateNotificationEventJSONObject(
 		JSONObject notificationEventJSONObject) {
@@ -110,7 +99,6 @@ public class MBSubscriptionSender
 
 		super.populateNotificationEventJSONObject(notificationEventJSONObject);
 	}
-
 
 	@Override
 	protected void sendNotification(User user, boolean notifyImmediately)
@@ -127,6 +115,17 @@ public class MBSubscriptionSender
 		}
 
 		sendUserNotification(user, notifyImmediately);
+	}
+
+	private String _getMailingListSubject(String subject, String mailId) {
+		subject = GetterUtil.getString(subject);
+		mailId = GetterUtil.getString(mailId);
+
+		return subject.concat(
+			StringPool.SPACE
+		).concat(
+			mailId
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

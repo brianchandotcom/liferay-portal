@@ -38,8 +38,8 @@ class ItemSelectorPreview extends Component {
 		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
 		items: PropTypes.array.isRequired,
-		uploadItemURL: PropTypes.string.isRequired,
-		uploadItemReturnType: PropTypes.string.isRequired
+		uploadItemReturnType: PropTypes.string.isRequired,
+		uploadItemURL: PropTypes.string.isRequired
 	};
 
 	constructor(props) {
@@ -49,24 +49,27 @@ class ItemSelectorPreview extends Component {
 		const currentItem = items[currentIndex];
 
 		this.state = {
-			currentItem: currentItem,
+			currentItem,
 			currentItemIndex: currentIndex,
-			items: items
-		}
+			items
+		};
 	}
 
 	componentDidMount() {
-		document.documentElement.addEventListener("keydown", this.handleOnKeyDown.bind(this));
+		document.documentElement.addEventListener(
+			'keydown',
+			this.handleOnKeyDown.bind(this)
+		);
 	}
 
 	componentWillUnmount() {
-		document.documentElement.removeEventListener("keydown", this.handleOnKeyDown.bind(this));
+		document.documentElement.removeEventListener(
+			'keydown',
+			this.handleOnKeyDown.bind(this)
+		);
 	}
 
 	componentDidUpdate() {
-		console.log('componentDidUpdate');
-		console.log(this.refs);
-
 		const sidenavToggle = this.refs.test;
 
 		if (sidenavToggle) {
@@ -97,11 +100,11 @@ class ItemSelectorPreview extends Component {
 	};
 
 	handleClickEdit = () => {
-		const { currentItem } = this.state;
+		const {currentItem} = this.state;
 
 		const itemTitle = currentItem.title;
 
-		let editDialogTitle = Liferay.Util.sub(TPL_EDIT_DIALOG_TITLE, {
+		const editDialogTitle = Liferay.Util.sub(TPL_EDIT_DIALOG_TITLE, {
 			copy: Liferay.Language.get('copy'),
 			edit: Liferay.Language.get('edit'),
 			title: itemTitle
@@ -138,10 +141,10 @@ class ItemSelectorPreview extends Component {
 			},
 			this.handleSaveEdit.bind(this)
 		);
-	}
+	};
 
 	handleClickNext = () => {
-		const {currentItemIndex, items } = this.state;
+		const {currentItemIndex, items} = this.state;
 
 		const lastIndex = items.length - 1;
 		const shouldResetIndex = currentItemIndex === lastIndex;
@@ -150,13 +153,13 @@ class ItemSelectorPreview extends Component {
 		const currentItem = items[index];
 
 		this.setState({
-			currentItemIndex: index,
-			currentItem: currentItem
+			currentItem,
+			currentItemIndex: index
 		});
 	};
 
 	handleClickPrevious = () => {
-		const {currentItemIndex, items } = this.state;
+		const {currentItemIndex, items} = this.state;
 
 		const lastIndex = items.length - 1;
 		const shouldResetIndex = currentItemIndex === 0;
@@ -165,8 +168,8 @@ class ItemSelectorPreview extends Component {
 		const currentItem = items[index];
 
 		this.setState({
-			currentItemIndex: index,
-			currentItem: currentItem
+			currentItem,
+			currentItemIndex: index
 		});
 	};
 
@@ -187,10 +190,10 @@ class ItemSelectorPreview extends Component {
 	};
 
 	handleSaveEdit = e => {
-		let { items }  = this.state;
-		let itemData = e.data.file;
+		const {items} = this.state;
+		const itemData = e.data.file;
 
-		let editedItemMetadata = {
+		const editedItemMetadata = {
 			groups: [
 				{
 					data: [
@@ -208,27 +211,24 @@ class ItemSelectorPreview extends Component {
 			]
 		};
 
-		let editedItem = {
+		const editedItem = {
 			metadata: editedItemMetadata,
 			returnType: this.props.uploadItemReturnType,
-			value: itemData.resolvedValue,
-			url: itemData.url
-		}
+			url: itemData.url,
+			value: itemData.resolvedValue
+		};
 
 		items.push(editedItem);
 
 		this.setState({
 			currentItem: editedItem,
 			currentItemIndex: items.length - 1,
-			items: items
+			items
 		});
-	}
+	};
 
 	render() {
 		const {currentItemIndex, currentItem, items} = this.state;
-
-		const spritemap =
-			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
 		return (
 			<div className="fullscreen item-selector-preview">
@@ -240,10 +240,10 @@ class ItemSelectorPreview extends Component {
 				/>
 
 				<Carousel
-					currentItem = {currentItem}
-					handleClickNext = {this.handleClickNext}
-					handleClickPrevious = {this.handleClickPrevious}
-					showArrows = {items.length > 1}
+					currentItem={currentItem}
+					handleClickNext={this.handleClickNext}
+					handleClickPrevious={this.handleClickPrevious}
+					showArrows={items.length > 1}
 				/>
 
 				<Footer

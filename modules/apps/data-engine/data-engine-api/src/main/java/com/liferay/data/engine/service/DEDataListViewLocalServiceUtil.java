@@ -102,6 +102,12 @@ public class DEDataListViewLocalServiceUtil {
 		return getService().deleteDEDataListView(deDataListViewId);
 	}
 
+	public static void deleteDEDataListViewsByDDMStructureId(
+		long ddmStructureId) {
+
+		getService().deleteDEDataListViewsByDDMStructureId(ddmStructureId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

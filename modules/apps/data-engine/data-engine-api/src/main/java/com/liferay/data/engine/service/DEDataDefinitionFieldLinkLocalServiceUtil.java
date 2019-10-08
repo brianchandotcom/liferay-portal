@@ -105,6 +105,13 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 			deDataDefinitionFieldLinkId);
 	}
 
+	public static void deleteDEDataDefinitionFieldLinksByDDMStructureId(
+		long ddmStructureId) {
+
+		getService().deleteDEDataDefinitionFieldLinksByDDMStructureId(
+			ddmStructureId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

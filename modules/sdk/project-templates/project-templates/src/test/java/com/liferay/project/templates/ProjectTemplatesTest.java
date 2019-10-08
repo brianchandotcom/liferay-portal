@@ -1946,8 +1946,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 	}
 
 	@Ignore
-	@Ignore
-	@Ignore
 	@Test
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(

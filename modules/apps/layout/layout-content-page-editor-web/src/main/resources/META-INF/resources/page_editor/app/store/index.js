@@ -63,17 +63,23 @@ export function getInitialState([data, config]) {
 const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
 	elements: 'section-builder',
 
-	lookAndFeel: 'look-and-feel',
-
-	/**
-	 * Not a real plugin, just a visual separator.
-	 */
-	separator: null
+	lookAndFeel: 'look-and-feel'
 };
 
 const rendersSidebarContent = sidebarPanelId => {
 	return sidebarPanelId !== 'look-and-feel';
 };
+
+function transformServerData(data) {
+	let sidebarPanels = augmentPanelData(data.sidebarPanels);
+
+	sidebarPanels = partitionPanels(sidebarPanels);
+
+	return {
+		...data,
+		sidebarPanels
+	};
+}
 
 /**
  * Until we decompose the layout-content-page-editor module into a
@@ -88,29 +94,48 @@ const rendersSidebarContent = sidebarPanelId => {
  */
 const PLUGIN_ROOT = 'layout-content-page-editor-web@2.0.0/page_editor/plugins';
 
-function transformServerData(data) {
-	return {
-		...data,
+function augmentPanelData(sidebarPanels) {
+	return sidebarPanels.map(panel => {
+		if (isSeparator(panel)) {
+			return panel;
+		}
 
-		sidebarPanels: data.sidebarPanels.map(panel => {
-			const mapping = SIDEBAR_PANEL_IDS_TO_PLUGINS[panel.sidebarPanelId];
+		const mapping = SIDEBAR_PANEL_IDS_TO_PLUGINS[panel.sidebarPanelId];
 
-			if (mapping === null) {
-				return panel;
+		const sidebarPanelId = mapping || panel.sidebarPanelId;
+
+		return {
+			...panel,
+
+			// https://github.com/liferay/liferay-js-toolkit/issues/324
+			pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
+
+			rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
+
+			sidebarPanelId
+		};
+	});
+}
+
+function isSeparator(panel) {
+	return panel.sidebarPanelId === 'separator';
+}
+
+/**
+ * Instead of using fake panels with an ID of `separator`, partition the panels
+ * array into an array of arrays; we'll draw a separator between each group.
+ */
+function partitionPanels(panels) {
+	return panels.reduce(
+		(groups, panel) => {
+			if (isSeparator(panel)) {
+				groups.push([]);
+			} else {
+				groups[groups.length - 1].push(panel);
 			}
 
-			const sidebarPanelId = mapping || panel.sidebarPanelId;
-
-			return {
-				...panel,
-
-				// https://github.com/liferay/liferay-js-toolkit/issues/324
-				pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
-
-				rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
-
-				sidebarPanelId
-			};
-		})
-	};
+			return groups;
+		},
+		[[]]
+	);
 }

@@ -23,8 +23,6 @@ import {StoreContext} from '../store/index';
 
 const {useContext, useRef, useState} = React;
 
-const SEPARATOR = 'separator';
-
 /**
  * Failure to preload is a non-critical failure, so we use this swallow
  * rejected promises silently.
@@ -150,14 +148,12 @@ export default function Sidebar() {
 		<ClayTooltipProvider>
 			<div className="page-editor-sidebar">
 				<div className="page-editor-sidebar-buttons">
-					{sidebarPanels.map((sidebarPanel, index) => {
-						const {icon, label, sidebarPanelId} = sidebarPanel;
+					{sidebarPanels.reduce((elements, group, groupIndex) => {
+						const buttons = group.map(sidebarPanel => {
+							const {icon, label, sidebarPanelId} = sidebarPanel;
 
-						if (sidebarPanelId === SEPARATOR) {
-							return <hr key={`separator-${index}`} />;
-						} else {
+							// TODO: also handle keydown
 							return (
-								// TODO: also handle keydown
 								<ClayButtonWithIcon
 									data-tooltip-align="left"
 									displayType="unstyled"
@@ -173,8 +169,18 @@ export default function Sidebar() {
 									title={label}
 								/>
 							);
+						});
+
+						// Add separator between groups.
+						if (groupIndex === sidebarPanels.length - 1) {
+							return elements.concat(buttons);
+						} else {
+							return elements.concat([
+								...buttons,
+								<hr key={`separator-${groupIndex}`} />
+							]);
 						}
-					})}
+					}, [])}
 				</div>
 				<div
 					className={classNames({

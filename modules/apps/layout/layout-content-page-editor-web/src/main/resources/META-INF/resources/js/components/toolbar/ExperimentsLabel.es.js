@@ -14,8 +14,9 @@
 
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
-import templates from './ExperimentsLabel.soy';
 import 'clay-label';
+
+import templates from './ExperimentsLabel.soy';
 
 /**
  * This code lives also in `segments/segments-experiment-web` module
@@ -32,6 +33,9 @@ const STATUS_TERMINATED = 6;
 
 const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
 
+/**
+ * Maps the Experiment status code to its label style
+ */
 const STATUS_TO_TYPE = {
 	[STATUS_COMPLETED]: 'success',
 	[STATUS_DRAFT]: undefined,

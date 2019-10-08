@@ -12,6 +12,10 @@ Export-Package:\
 	com.liferay.portal.kernel.test.rule.callback,\
 	com.liferay.portal.kernel.test.search,\
 	com.liferay.portal.kernel.test.util,\
+	com.liferay.portal.test.log,\
+	com.liferay.portal.test.mail,\
+	com.liferay.portal.test.randomizerbumpers,\
+	com.liferay.portal.test.rule,\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\

@@ -27,6 +27,7 @@ import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTestTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
+import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
 
@@ -707,9 +708,16 @@ public class NodePlugin implements Plugin<Project> {
 
 				});
 
-			TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
+			String incrementalCacheEnabled = GradleUtil.getTaskPrefixedProperty(
+				packageRunBuildTask, "incremental.cache.enabled");
 
-			taskOutputs.dir(packageRunBuildTask.getDestinationDir());
+			if (Validator.isNull(incrementalCacheEnabled) ||
+				Boolean.parseBoolean(incrementalCacheEnabled)) {
+
+				TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
+
+				taskOutputs.dir(packageRunBuildTask.getDestinationDir());
+			}
 
 			processResourcesCopy.dependsOn(packageRunBuildTask);
 

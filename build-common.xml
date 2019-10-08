@@ -1976,6 +1976,7 @@ rerun your task.
 					<propertyref prefix="org.gradle." />
 					<propertyref prefix="sonatype." />
 					<propertyref prefix="source.formatter." />
+					<propertyref prefix="systemProp." />
 					<propertyref regex=".+\.ignore\.local$" />
 					<propertyref regex="^\s*app\.server\.(?:jboss|tcserver|tomcat|weblogic|websphere|wildfly).*" />
 				</propertyset>

@@ -14,13 +14,17 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
+import com.liferay.portal.workflow.kaleo.runtime.integration.internal.util.WorkflowLockUtil;
 
 import java.io.Serializable;
 
@@ -266,6 +270,18 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			String transitionName, Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
+		String className = WorkflowDefinition.class.getName();
+		String key = WorkflowLockUtil.encodeKey(
+			workflowDefinitionName, workflowDefinitionVersion);
+
+		if (_lockLocalService.isLocked(className, key)) {
+			throw new WorkflowException(
+				StringBundler.concat(
+					"Workflow definition name ", workflowDefinitionName,
+					" and version ", workflowDefinitionVersion,
+					" is being undeployed"));
+		}
+
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
@@ -291,6 +307,9 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 		return _workflowEngine.updateContext(
 			workflowInstanceId, workflowContext, serviceContext);
 	}
+
+	@Reference
+	private LockLocalService _lockLocalService;
 
 	@Reference
 	private WorkflowEngine _workflowEngine;

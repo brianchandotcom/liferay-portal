@@ -25,16 +25,12 @@
 
 	<!-- Proxy -->
 
-	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
-		<constructor-arg name="workflowDefinitionManager">
-			<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy">
-				<constructor-arg>
-					<bean class="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
-						<property name="destinationName" value="liferay/workflow_definition" />
-						<property name="synchronousDestinationName" value="liferay/workflow_definition" />
-						<property name="synchronousMessageSenderMode" value="DIRECT" />
-					</bean>
-				</constructor-arg>
+	<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy" id="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
+		<constructor-arg>
+			<bean class="com.liferay.portal.workflow.WorkflowDefinitionManagerProxyBean">
+				<property name="destinationName" value="liferay/workflow_definition" />
+				<property name="synchronousDestinationName" value="liferay/workflow_definition" />
+				<property name="synchronousMessageSenderMode" value="DIRECT" />
 			</bean>
 		</constructor-arg>
 	</bean>
@@ -43,16 +39,12 @@
 		<property name="synchronousDestinationName" value="liferay/workflow_engine" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean class="com.liferay.portal.workflow.WorkflowLockingAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
-		<constructor-arg name="workflowInstanceManager">
-			<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy">
-				<constructor-arg>
-					<bean class="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
-						<property name="destinationName" value="liferay/workflow_instance" />
-						<property name="synchronousDestinationName" value="liferay/workflow_instance" />
-						<property name="synchronousMessageSenderMode" value="DIRECT" />
-					</bean>
-				</constructor-arg>
+	<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy" id="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
+		<constructor-arg>
+			<bean class="com.liferay.portal.workflow.WorkflowInstanceManagerProxyBean">
+				<property name="destinationName" value="liferay/workflow_instance" />
+				<property name="synchronousDestinationName" value="liferay/workflow_instance" />
+				<property name="synchronousMessageSenderMode" value="DIRECT" />
 			</bean>
 		</constructor-arg>
 	</bean>

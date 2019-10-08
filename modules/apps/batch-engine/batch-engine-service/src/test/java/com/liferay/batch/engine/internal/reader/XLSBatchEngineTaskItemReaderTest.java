@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -37,7 +38,7 @@ import org.junit.Test;
 public class XLSBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
@@ -48,7 +49,13 @@ public class XLSBatchEngineTaskItemReaderTest
 						}
 					})) {
 
-			xlsBatchEngineTaskItemReader.read();
+			try {
+				xlsBatchEngineTaskItemReader.read();
+
+				Assert.fail();
+			}
+			catch (ArrayIndexOutOfBoundsException aioobe) {
+			}
 		}
 	}
 

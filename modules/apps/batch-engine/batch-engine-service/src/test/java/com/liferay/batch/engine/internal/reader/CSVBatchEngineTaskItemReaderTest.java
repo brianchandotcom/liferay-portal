@@ -22,6 +22,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -30,7 +31,7 @@ import org.junit.Test;
 public class CSVBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
@@ -42,7 +43,13 @@ public class CSVBatchEngineTaskItemReaderTest
 					},
 					StringPool.COMMA)) {
 
-			csvBatchEngineTaskItemReader.read();
+			try {
+				csvBatchEngineTaskItemReader.read();
+
+				Assert.fail();
+			}
+			catch (ArrayIndexOutOfBoundsException aioobe) {
+			}
 		}
 	}
 

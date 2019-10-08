@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -31,7 +32,7 @@ import org.junit.Test;
 public class JSONBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
-	@Test(expected = UnrecognizedPropertyException.class)
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (JSONBatchEngineTaskItemReader jsonBatchEngineTaskItemReader =
 				_getJSONBatchEngineTaskItemReader(
@@ -43,7 +44,13 @@ public class JSONBatchEngineTaskItemReaderTest
 						}
 					})) {
 
-			jsonBatchEngineTaskItemReader.read();
+			try {
+				jsonBatchEngineTaskItemReader.read();
+
+				Assert.fail();
+			}
+			catch (UnrecognizedPropertyException upe) {
+			}
 		}
 	}
 

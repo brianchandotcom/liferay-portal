@@ -161,28 +161,23 @@ public class XLSBatchEngineTaskItemReaderTest
 	}
 
 	private byte[] _getContent(Object[][] rowValues) throws IOException {
-		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+		try (XSSFWorkbook xssfWorkbook = new XSSFWorkbook()) {
+			Sheet sheet = xssfWorkbook.createSheet();
 
-		Sheet sheet = xssfWorkbook.createSheet();
+			_populateRow(
+				sheet.createRow(0), xssfWorkbook, (Object[])CELL_NAMES);
 
-		_populateRow(sheet.createRow(0), xssfWorkbook, (Object[])CELL_NAMES);
+			for (int i = 0; i < rowValues.length; i++) {
+				_populateRow(
+					sheet.createRow(i + 1), xssfWorkbook, rowValues[i]);
+			}
 
-		for (int i = 0; i < rowValues.length; i++) {
-			_populateRow(sheet.createRow(i + 1), xssfWorkbook, rowValues[i]);
-		}
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
 
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+			xssfWorkbook.write(byteArrayOutputStream);
 
-		xssfWorkbook.write(byteArrayOutputStream);
-
-		xssfWorkbook.close();
-
-		try {
 			return byteArrayOutputStream.toByteArray();
-		}
-		finally {
-			byteArrayOutputStream.close();
 		}
 	}
 

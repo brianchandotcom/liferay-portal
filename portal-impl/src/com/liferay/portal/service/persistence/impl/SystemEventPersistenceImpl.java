@@ -40,7 +40,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,14 +149,11 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -205,7 +201,7 @@ public class SystemEventPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SystemEventModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -222,18 +218,8 @@ public class SystemEventPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SystemEvent>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -670,14 +656,11 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -732,7 +715,7 @@ public class SystemEventPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SystemEventModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -751,18 +734,8 @@ public class SystemEventPersistenceImpl
 
 				qPos.add(systemEventSetKey);
 
-				if (!pagination) {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SystemEvent>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1237,14 +1210,11 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_C;
@@ -1301,7 +1271,7 @@ public class SystemEventPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SystemEventModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1322,18 +1292,8 @@ public class SystemEventPersistenceImpl
 
 				qPos.add(classPK);
 
-				if (!pagination) {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SystemEvent>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1839,14 +1799,11 @@ public class SystemEventPersistenceImpl
 		int end, OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_C_T;
@@ -1907,7 +1864,7 @@ public class SystemEventPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SystemEventModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1930,18 +1887,8 @@ public class SystemEventPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SystemEvent>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2890,14 +2837,11 @@ public class SystemEventPersistenceImpl
 		int start, int end, OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2934,9 +2878,7 @@ public class SystemEventPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SYSTEMEVENT;
 
-				if (pagination) {
-					sql = sql.concat(SystemEventModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SystemEventModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2946,18 +2888,8 @@ public class SystemEventPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SystemEvent>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SystemEvent>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

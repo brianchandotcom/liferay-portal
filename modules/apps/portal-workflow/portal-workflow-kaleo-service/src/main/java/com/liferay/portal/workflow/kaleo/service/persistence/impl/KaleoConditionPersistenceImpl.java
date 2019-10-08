@@ -165,14 +165,11 @@ public class KaleoConditionPersistenceImpl
 		OrderByComparator<KaleoCondition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -222,7 +219,7 @@ public class KaleoConditionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(KaleoConditionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -239,18 +236,8 @@ public class KaleoConditionPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<KaleoCondition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -687,14 +674,11 @@ public class KaleoConditionPersistenceImpl
 		OrderByComparator<KaleoCondition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -749,7 +733,7 @@ public class KaleoConditionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(KaleoConditionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -766,18 +750,8 @@ public class KaleoConditionPersistenceImpl
 
 				qPos.add(kaleoDefinitionVersionId);
 
-				if (!pagination) {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<KaleoCondition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1870,14 +1844,11 @@ public class KaleoConditionPersistenceImpl
 		int start, int end, OrderByComparator<KaleoCondition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1914,9 +1885,7 @@ public class KaleoConditionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_KALEOCONDITION;
 
-				if (pagination) {
-					sql = sql.concat(KaleoConditionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(KaleoConditionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1926,18 +1895,8 @@ public class KaleoConditionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<KaleoCondition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<KaleoCondition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

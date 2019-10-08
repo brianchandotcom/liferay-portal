@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -166,14 +165,11 @@ public class DDMStructureVersionPersistenceImpl
 		OrderByComparator<DDMStructureVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByStructureId;
@@ -223,7 +219,7 @@ public class DDMStructureVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMStructureVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -240,18 +236,8 @@ public class DDMStructureVersionPersistenceImpl
 
 				qPos.add(structureId);
 
-				if (!pagination) {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMStructureVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -953,14 +939,11 @@ public class DDMStructureVersionPersistenceImpl
 		OrderByComparator<DDMStructureVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByS_S;
@@ -1014,7 +997,7 @@ public class DDMStructureVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMStructureVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1033,18 +1016,8 @@ public class DDMStructureVersionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMStructureVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1935,14 +1908,11 @@ public class DDMStructureVersionPersistenceImpl
 		OrderByComparator<DDMStructureVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1979,10 +1949,7 @@ public class DDMStructureVersionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DDMSTRUCTUREVERSION;
 
-				if (pagination) {
-					sql = sql.concat(
-						DDMStructureVersionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(DDMStructureVersionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1992,18 +1959,8 @@ public class DDMStructureVersionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMStructureVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMStructureVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

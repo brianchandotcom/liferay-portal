@@ -172,14 +172,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -238,7 +235,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
@@ -258,18 +255,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CalendarNotificationTemplate>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1009,14 +996,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1082,7 +1066,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
@@ -1104,18 +1088,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CalendarNotificationTemplate>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1614,14 +1588,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCalendarId;
@@ -1675,7 +1646,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
@@ -1693,18 +1664,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				qPos.add(calendarId);
 
-				if (!pagination) {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CalendarNotificationTemplate>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3079,14 +3040,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3123,10 +3081,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 			else {
 				sql = _SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE;
 
-				if (pagination) {
-					sql = sql.concat(
-						CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -3136,18 +3092,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CalendarNotificationTemplate>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CalendarNotificationTemplate>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

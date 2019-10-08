@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -766,14 +765,11 @@ public class ReleasePersistenceImpl
 		int start, int end, OrderByComparator<Release> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -810,9 +806,7 @@ public class ReleasePersistenceImpl
 			else {
 				sql = _SQL_SELECT_RELEASE_;
 
-				if (pagination) {
-					sql = sql.concat(ReleaseModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(ReleaseModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -822,18 +816,8 @@ public class ReleasePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Release>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Release>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Release>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

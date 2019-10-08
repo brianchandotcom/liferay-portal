@@ -174,14 +174,11 @@ public class JournalArticleResourcePersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticleResource.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -238,7 +235,7 @@ public class JournalArticleResourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(JournalArticleResourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -257,18 +254,8 @@ public class JournalArticleResourcePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<JournalArticleResource>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1036,14 +1023,11 @@ public class JournalArticleResourcePersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticleResource.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1106,7 +1090,7 @@ public class JournalArticleResourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(JournalArticleResourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1127,18 +1111,8 @@ public class JournalArticleResourcePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<JournalArticleResource>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1652,14 +1626,11 @@ public class JournalArticleResourcePersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticleResource.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
@@ -1711,7 +1682,7 @@ public class JournalArticleResourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(JournalArticleResourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1728,18 +1699,8 @@ public class JournalArticleResourcePersistenceImpl
 
 				qPos.add(ctCollectionId);
 
-				if (!pagination) {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<JournalArticleResource>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2183,14 +2144,11 @@ public class JournalArticleResourcePersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticleResource.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -2238,7 +2196,7 @@ public class JournalArticleResourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(JournalArticleResourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2255,18 +2213,8 @@ public class JournalArticleResourcePersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<JournalArticleResource>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3731,14 +3679,11 @@ public class JournalArticleResourcePersistenceImpl
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticleResource.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3775,10 +3720,7 @@ public class JournalArticleResourcePersistenceImpl
 			else {
 				sql = _SQL_SELECT_JOURNALARTICLERESOURCE;
 
-				if (pagination) {
-					sql = sql.concat(
-						JournalArticleResourceModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(JournalArticleResourceModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -3788,18 +3730,8 @@ public class JournalArticleResourcePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<JournalArticleResource>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<JournalArticleResource>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

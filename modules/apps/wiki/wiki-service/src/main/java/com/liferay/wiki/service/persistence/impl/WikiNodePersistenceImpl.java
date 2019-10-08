@@ -49,7 +49,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -169,14 +168,11 @@ public class WikiNodePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -233,7 +229,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -252,18 +248,8 @@ public class WikiNodePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -979,14 +965,11 @@ public class WikiNodePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1049,7 +1032,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1070,18 +1053,8 @@ public class WikiNodePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1566,14 +1539,11 @@ public class WikiNodePersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1621,7 +1591,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1638,18 +1608,8 @@ public class WikiNodePersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2448,14 +2408,11 @@ public class WikiNodePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2505,7 +2462,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2522,18 +2479,8 @@ public class WikiNodePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3218,14 +3165,11 @@ public class WikiNodePersistenceImpl
 		long groupId, int status, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -3279,7 +3223,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3298,18 +3242,8 @@ public class WikiNodePersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4163,14 +4097,11 @@ public class WikiNodePersistenceImpl
 		long companyId, int status, int start, int end,
 		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_S;
@@ -4224,7 +4155,7 @@ public class WikiNodePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4243,18 +4174,8 @@ public class WikiNodePersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -5286,14 +5207,11 @@ public class WikiNodePersistenceImpl
 		int start, int end, OrderByComparator<WikiNode> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -5330,9 +5248,7 @@ public class WikiNodePersistenceImpl
 			else {
 				sql = _SQL_SELECT_WIKINODE;
 
-				if (pagination) {
-					sql = sql.concat(WikiNodeModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(WikiNodeModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -5342,18 +5258,8 @@ public class WikiNodePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WikiNode>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WikiNode>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

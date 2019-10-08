@@ -49,7 +49,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -169,14 +168,11 @@ public class CalendarPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -233,7 +229,7 @@ public class CalendarPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(CalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -252,18 +248,8 @@ public class CalendarPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Calendar>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -979,14 +965,11 @@ public class CalendarPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1049,7 +1032,7 @@ public class CalendarPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(CalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1070,18 +1053,8 @@ public class CalendarPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Calendar>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1574,14 +1547,11 @@ public class CalendarPersistenceImpl
 		long groupId, long calendarResourceId, int start, int end,
 		OrderByComparator<Calendar> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C;
@@ -1636,7 +1606,7 @@ public class CalendarPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(CalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1655,18 +1625,8 @@ public class CalendarPersistenceImpl
 
 				qPos.add(calendarResourceId);
 
-				if (!pagination) {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Calendar>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2542,14 +2502,11 @@ public class CalendarPersistenceImpl
 		int start, int end, OrderByComparator<Calendar> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_D;
@@ -2610,7 +2567,7 @@ public class CalendarPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(CalendarModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2631,18 +2588,8 @@ public class CalendarPersistenceImpl
 
 				qPos.add(defaultCalendar);
 
-				if (!pagination) {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Calendar>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4058,14 +4005,11 @@ public class CalendarPersistenceImpl
 		int start, int end, OrderByComparator<Calendar> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -4102,9 +4046,7 @@ public class CalendarPersistenceImpl
 			else {
 				sql = _SQL_SELECT_CALENDAR;
 
-				if (pagination) {
-					sql = sql.concat(CalendarModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(CalendarModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -4114,18 +4056,8 @@ public class CalendarPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Calendar>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Calendar>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

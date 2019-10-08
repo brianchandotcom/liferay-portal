@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -163,14 +162,11 @@ public class DDMTemplateVersionPersistenceImpl
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByTemplateId;
@@ -220,7 +216,7 @@ public class DDMTemplateVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -237,18 +233,8 @@ public class DDMTemplateVersionPersistenceImpl
 
 				qPos.add(templateId);
 
-				if (!pagination) {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMTemplateVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -946,14 +932,11 @@ public class DDMTemplateVersionPersistenceImpl
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByT_S;
@@ -1007,7 +990,7 @@ public class DDMTemplateVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1026,18 +1009,8 @@ public class DDMTemplateVersionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMTemplateVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1921,14 +1894,11 @@ public class DDMTemplateVersionPersistenceImpl
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1965,9 +1935,7 @@ public class DDMTemplateVersionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DDMTEMPLATEVERSION;
 
-				if (pagination) {
-					sql = sql.concat(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1977,18 +1945,8 @@ public class DDMTemplateVersionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMTemplateVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMTemplateVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

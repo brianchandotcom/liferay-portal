@@ -168,14 +168,11 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		OrderByComparator<AppBuilderAppDeployment> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByAppBuilderAppId;
@@ -227,7 +224,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(AppBuilderAppDeploymentModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -244,18 +241,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 				qPos.add(appBuilderAppId);
 
-				if (!pagination) {
-					list = (List<AppBuilderAppDeployment>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<AppBuilderAppDeployment>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<AppBuilderAppDeployment>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1392,14 +1379,11 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		OrderByComparator<AppBuilderAppDeployment> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1436,10 +1420,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			else {
 				sql = _SQL_SELECT_APPBUILDERAPPDEPLOYMENT;
 
-				if (pagination) {
-					sql = sql.concat(
-						AppBuilderAppDeploymentModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					AppBuilderAppDeploymentModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1449,18 +1431,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<AppBuilderAppDeployment>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<AppBuilderAppDeployment>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<AppBuilderAppDeployment>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

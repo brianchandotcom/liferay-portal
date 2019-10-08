@@ -40,7 +40,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,14 +152,11 @@ public class SocialActivitySetPersistenceImpl
 		OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -208,7 +204,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -225,18 +221,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -670,14 +656,11 @@ public class SocialActivitySetPersistenceImpl
 		OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -725,7 +708,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -742,18 +725,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(userId);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1197,14 +1170,11 @@ public class SocialActivitySetPersistenceImpl
 		OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_T;
@@ -1261,7 +1231,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1282,18 +1252,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1794,14 +1754,11 @@ public class SocialActivitySetPersistenceImpl
 		OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_C_T;
@@ -1858,7 +1815,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1879,18 +1836,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2398,14 +2345,11 @@ public class SocialActivitySetPersistenceImpl
 		int end, OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_U_C_T;
@@ -2466,7 +2410,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2489,18 +2433,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3037,14 +2971,11 @@ public class SocialActivitySetPersistenceImpl
 		int end, OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByU_C_C_T;
@@ -3105,7 +3036,7 @@ public class SocialActivitySetPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3128,18 +3059,8 @@ public class SocialActivitySetPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4166,14 +4087,11 @@ public class SocialActivitySetPersistenceImpl
 		OrderByComparator<SocialActivitySet> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -4210,9 +4128,7 @@ public class SocialActivitySetPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SOCIALACTIVITYSET;
 
-				if (pagination) {
-					sql = sql.concat(SocialActivitySetModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SocialActivitySetModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -4222,18 +4138,8 @@ public class SocialActivitySetPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SocialActivitySet>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SocialActivitySet>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

@@ -166,14 +166,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -230,7 +227,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -249,18 +246,8 @@ public class LayoutPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1037,14 +1024,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1107,7 +1091,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1128,18 +1112,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1643,14 +1617,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
@@ -1700,7 +1671,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1717,18 +1688,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(ctCollectionId);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2160,14 +2121,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -2215,7 +2173,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2232,18 +2190,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3056,14 +3004,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -3113,7 +3058,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3130,18 +3075,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3584,14 +3519,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByParentPlid;
@@ -3641,7 +3573,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3658,18 +3590,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(parentPlid);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4353,14 +4275,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath =
@@ -4424,7 +4343,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4443,18 +4362,8 @@ public class LayoutPersistenceImpl
 					qPos.add(layoutPrototypeUuid);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4950,14 +4859,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath =
@@ -5022,7 +4928,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5041,18 +4947,8 @@ public class LayoutPersistenceImpl
 					qPos.add(sourcePrototypeLayoutUuid);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -5552,14 +5448,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P;
@@ -5613,7 +5506,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5632,18 +5525,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(privateLayout);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -6524,14 +6407,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_T;
@@ -6594,7 +6474,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6615,18 +6495,8 @@ public class LayoutPersistenceImpl
 					qPos.add(type);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -7573,14 +7443,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByC_L;
@@ -7644,7 +7511,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7665,18 +7532,8 @@ public class LayoutPersistenceImpl
 					qPos.add(layoutPrototypeUuid);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -8995,14 +8852,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P_P;
@@ -9062,7 +8916,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -9083,18 +8937,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(parentLayoutId);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -10043,13 +9887,10 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
@@ -10101,7 +9942,7 @@ public class LayoutPersistenceImpl
 						list.addAll(
 							_findByG_P_P(
 								groupId, privateLayout, parentLayoutIdsPage,
-								start, end, orderByComparator, pagination));
+								start, end, orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
@@ -10111,7 +9952,7 @@ public class LayoutPersistenceImpl
 				else {
 					list = _findByG_P_P(
 						groupId, privateLayout, parentLayoutIds, start, end,
-						orderByComparator, pagination);
+						orderByComparator);
 				}
 
 				cacheResult(list);
@@ -10136,8 +9977,7 @@ public class LayoutPersistenceImpl
 
 	private List<Layout> _findByG_P_P(
 		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
-		int end, OrderByComparator<Layout> orderByComparator,
-		boolean pagination) {
+		int end, OrderByComparator<Layout> orderByComparator) {
 
 		List<Layout> list = null;
 
@@ -10171,7 +10011,7 @@ public class LayoutPersistenceImpl
 			appendOrderByComparator(
 				query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 		}
-		else if (pagination) {
+		else {
 			query.append(LayoutModelImpl.ORDER_BY_JPQL);
 		}
 
@@ -10190,18 +10030,7 @@ public class LayoutPersistenceImpl
 
 			qPos.add(privateLayout);
 
-			if (!pagination) {
-				list = (List<Layout>)QueryUtil.list(
-					q, getDialect(), start, end, false);
-
-				Collections.sort(list);
-
-				list = Collections.unmodifiableList(list);
-			}
-			else {
-				list = (List<Layout>)QueryUtil.list(
-					q, getDialect(), start, end);
-			}
+			list = (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -10701,14 +10530,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P_T;
@@ -10774,7 +10600,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -10797,18 +10623,8 @@ public class LayoutPersistenceImpl
 					qPos.add(type);
 				}
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -12468,14 +12284,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_P_P_H;
@@ -12538,7 +12351,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -12561,18 +12374,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(hidden);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -13569,13 +13372,10 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderArgs = new Object[] {
@@ -13629,8 +13429,7 @@ public class LayoutPersistenceImpl
 						list.addAll(
 							_findByG_P_P_H(
 								groupId, privateLayout, parentLayoutIdsPage,
-								hidden, start, end, orderByComparator,
-								pagination));
+								hidden, start, end, orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
@@ -13640,7 +13439,7 @@ public class LayoutPersistenceImpl
 				else {
 					list = _findByG_P_P_H(
 						groupId, privateLayout, parentLayoutIds, hidden, start,
-						end, orderByComparator, pagination);
+						end, orderByComparator);
 				}
 
 				cacheResult(list);
@@ -13667,7 +13466,7 @@ public class LayoutPersistenceImpl
 	private List<Layout> _findByG_P_P_H(
 		long groupId, boolean privateLayout, long[] parentLayoutIds,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean pagination) {
+		OrderByComparator<Layout> orderByComparator) {
 
 		List<Layout> list = null;
 
@@ -13705,7 +13504,7 @@ public class LayoutPersistenceImpl
 			appendOrderByComparator(
 				query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 		}
-		else if (pagination) {
+		else {
 			query.append(LayoutModelImpl.ORDER_BY_JPQL);
 		}
 
@@ -13726,18 +13525,7 @@ public class LayoutPersistenceImpl
 
 			qPos.add(hidden);
 
-			if (!pagination) {
-				list = (List<Layout>)QueryUtil.list(
-					q, getDialect(), start, end, false);
-
-				Collections.sort(list);
-
-				list = Collections.unmodifiableList(list);
-			}
-			else {
-				list = (List<Layout>)QueryUtil.list(
-					q, getDialect(), start, end);
-			}
+			list = (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -14287,7 +14075,6 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -14343,7 +14130,7 @@ public class LayoutPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -14366,18 +14153,8 @@ public class LayoutPersistenceImpl
 
 				qPos.add(priority);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -16564,14 +16341,11 @@ public class LayoutPersistenceImpl
 		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
 			Layout.class);
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -16608,9 +16382,7 @@ public class LayoutPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LAYOUT;
 
-				if (pagination) {
-					sql = sql.concat(LayoutModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(LayoutModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -16620,18 +16392,8 @@ public class LayoutPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Layout>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Layout>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

@@ -48,7 +48,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -169,14 +168,11 @@ public class OAuth2AuthorizationPersistenceImpl
 		OrderByComparator<OAuth2Authorization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -224,7 +220,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -241,18 +237,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				qPos.add(userId);
 
-				if (!pagination) {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -690,14 +676,11 @@ public class OAuth2AuthorizationPersistenceImpl
 		OrderByComparator<OAuth2Authorization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -751,7 +734,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -768,18 +751,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				qPos.add(oAuth2ApplicationId);
 
-				if (!pagination) {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1228,14 +1201,11 @@ public class OAuth2AuthorizationPersistenceImpl
 		OrderByComparator<OAuth2Authorization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -1289,7 +1259,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1306,18 +1276,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				qPos.add(accessTokenContentHash);
 
-				if (!pagination) {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1769,14 +1729,11 @@ public class OAuth2AuthorizationPersistenceImpl
 		OrderByComparator<OAuth2Authorization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -1830,7 +1787,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1847,18 +1804,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				qPos.add(refreshTokenContentHash);
 
-				if (!pagination) {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2749,14 +2696,11 @@ public class OAuth2AuthorizationPersistenceImpl
 		OrderByComparator<OAuth2Authorization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2793,10 +2737,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			else {
 				sql = _SQL_SELECT_OAUTH2AUTHORIZATION;
 
-				if (pagination) {
-					sql = sql.concat(
-						OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2806,18 +2747,8 @@ public class OAuth2AuthorizationPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2Authorization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2Authorization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

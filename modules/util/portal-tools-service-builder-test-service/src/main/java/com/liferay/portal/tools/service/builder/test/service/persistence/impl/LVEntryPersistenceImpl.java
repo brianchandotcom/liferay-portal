@@ -165,14 +165,11 @@ public class LVEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -229,7 +226,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -248,18 +245,8 @@ public class LVEntryPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -718,14 +705,11 @@ public class LVEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_Head;
@@ -788,7 +772,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -809,18 +793,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(head);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1310,14 +1284,11 @@ public class LVEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUUID_G;
@@ -1380,7 +1351,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1401,18 +1372,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2179,14 +2140,11 @@ public class LVEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -2249,7 +2207,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2270,18 +2228,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2781,14 +2729,11 @@ public class LVEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C_Head;
@@ -2854,7 +2799,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2877,18 +2822,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(head);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3401,14 +3336,11 @@ public class LVEntryPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -3456,7 +3388,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3473,18 +3405,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3852,13 +3774,10 @@ public class LVEntryPersistenceImpl
 			return findByGroupId(groupIds[0], start, end, orderByComparator);
 		}
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds)};
@@ -3902,8 +3821,7 @@ public class LVEntryPersistenceImpl
 					for (long[] groupIdsPage : groupIdsPages) {
 						list.addAll(
 							_findByGroupId(
-								groupIdsPage, start, end, orderByComparator,
-								pagination));
+								groupIdsPage, start, end, orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
@@ -3912,7 +3830,7 @@ public class LVEntryPersistenceImpl
 				}
 				else {
 					list = _findByGroupId(
-						groupIds, start, end, orderByComparator, pagination);
+						groupIds, start, end, orderByComparator);
 				}
 
 				cacheResult(list);
@@ -3938,7 +3856,7 @@ public class LVEntryPersistenceImpl
 
 	private List<LVEntry> _findByGroupId(
 		long[] groupIds, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator, boolean pagination) {
+		OrderByComparator<LVEntry> orderByComparator) {
 
 		List<LVEntry> list = null;
 
@@ -3968,7 +3886,7 @@ public class LVEntryPersistenceImpl
 			appendOrderByComparator(
 				query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 		}
-		else if (pagination) {
+		else {
 			query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 		}
 
@@ -3981,18 +3899,7 @@ public class LVEntryPersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			if (!pagination) {
-				list = (List<LVEntry>)QueryUtil.list(
-					q, getDialect(), start, end, false);
-
-				Collections.sort(list);
-
-				list = Collections.unmodifiableList(list);
-			}
-			else {
-				list = (List<LVEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
-			}
+			list = (List<LVEntry>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -4257,14 +4164,11 @@ public class LVEntryPersistenceImpl
 		long groupId, boolean head, int start, int end,
 		OrderByComparator<LVEntry> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId_Head;
@@ -4318,7 +4222,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4337,18 +4241,8 @@ public class LVEntryPersistenceImpl
 
 				qPos.add(head);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4746,13 +4640,10 @@ public class LVEntryPersistenceImpl
 				groupIds[0], head, start, end, orderByComparator);
 		}
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {StringUtil.merge(groupIds), head};
@@ -4799,7 +4690,7 @@ public class LVEntryPersistenceImpl
 						list.addAll(
 							_findByGroupId_Head(
 								groupIdsPage, head, start, end,
-								orderByComparator, pagination));
+								orderByComparator));
 					}
 
 					Collections.sort(list, orderByComparator);
@@ -4808,8 +4699,7 @@ public class LVEntryPersistenceImpl
 				}
 				else {
 					list = _findByGroupId_Head(
-						groupIds, head, start, end, orderByComparator,
-						pagination);
+						groupIds, head, start, end, orderByComparator);
 				}
 
 				cacheResult(list);
@@ -4836,7 +4726,7 @@ public class LVEntryPersistenceImpl
 
 	private List<LVEntry> _findByGroupId_Head(
 		long[] groupIds, boolean head, int start, int end,
-		OrderByComparator<LVEntry> orderByComparator, boolean pagination) {
+		OrderByComparator<LVEntry> orderByComparator) {
 
 		List<LVEntry> list = null;
 
@@ -4870,7 +4760,7 @@ public class LVEntryPersistenceImpl
 			appendOrderByComparator(
 				query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 		}
-		else if (pagination) {
+		else {
 			query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 		}
 
@@ -4887,18 +4777,7 @@ public class LVEntryPersistenceImpl
 
 			qPos.add(head);
 
-			if (!pagination) {
-				list = (List<LVEntry>)QueryUtil.list(
-					q, getDialect(), start, end, false);
-
-				Collections.sort(list);
-
-				list = Collections.unmodifiableList(list);
-			}
-			else {
-				list = (List<LVEntry>)QueryUtil.list(
-					q, getDialect(), start, end);
-			}
+			list = (List<LVEntry>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw processException(e);
@@ -5186,14 +5065,11 @@ public class LVEntryPersistenceImpl
 
 		uniqueGroupKey = Objects.toString(uniqueGroupKey, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_UGK;
@@ -5256,7 +5132,7 @@ public class LVEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -5277,18 +5153,8 @@ public class LVEntryPersistenceImpl
 					qPos.add(uniqueGroupKey);
 				}
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -7078,14 +6944,11 @@ public class LVEntryPersistenceImpl
 		int start, int end, OrderByComparator<LVEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -7122,9 +6985,7 @@ public class LVEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_LVENTRY;
 
-				if (pagination) {
-					sql = sql.concat(LVEntryModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(LVEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -7134,18 +6995,8 @@ public class LVEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<LVEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<LVEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

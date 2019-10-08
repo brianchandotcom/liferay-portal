@@ -44,7 +44,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -409,14 +408,11 @@ public class PushNotificationsDevicePersistenceImpl
 
 		platform = Objects.toString(platform, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByU_P;
@@ -480,7 +476,7 @@ public class PushNotificationsDevicePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -501,18 +497,8 @@ public class PushNotificationsDevicePersistenceImpl
 					qPos.add(platform);
 				}
 
-				if (!pagination) {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PushNotificationsDevice>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -933,13 +919,10 @@ public class PushNotificationsDevicePersistenceImpl
 				userIds[0], platform, start, end, orderByComparator);
 		}
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {StringUtil.merge(userIds), platform};
@@ -1011,7 +994,7 @@ public class PushNotificationsDevicePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1030,18 +1013,8 @@ public class PushNotificationsDevicePersistenceImpl
 					qPos.add(platform);
 				}
 
-				if (!pagination) {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PushNotificationsDevice>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1737,14 +1710,11 @@ public class PushNotificationsDevicePersistenceImpl
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1781,10 +1751,8 @@ public class PushNotificationsDevicePersistenceImpl
 			else {
 				sql = _SQL_SELECT_PUSHNOTIFICATIONSDEVICE;
 
-				if (pagination) {
-					sql = sql.concat(
-						PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1794,18 +1762,8 @@ public class PushNotificationsDevicePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PushNotificationsDevice>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

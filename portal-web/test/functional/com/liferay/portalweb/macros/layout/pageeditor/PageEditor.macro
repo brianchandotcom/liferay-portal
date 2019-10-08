@@ -274,7 +274,7 @@ definition {
 	macro editFragmentHTML {
 		PageEditor.gotoEditableFieldEdit(
 			fragmentName = "${fragmentName}",
-			id = "${id}");
+			id = "${editableId}");
 
 		var content = TestCase.getFileContent(fileName = "${fileName}");
 

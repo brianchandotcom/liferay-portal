@@ -53,7 +53,7 @@ String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO
 				if (type != null) {
 			%>
 
-				<source src="<%= previewFileURL.toString() %>" type="<%= type %>" />
+				<source src="<%= previewFileURL %>" type="<%= type %>" />
 
 			<%
 				}

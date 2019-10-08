@@ -30,7 +30,7 @@ const STATUS_RUNNING = 1;
 const STATUS_SCHEDULED = 7;
 const STATUS_TERMINATED = 6;
 
-export const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
+const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
 
 const STATUS_TO_TYPE = {
 	[STATUS_COMPLETED]: 'success',
@@ -46,25 +46,33 @@ const STATUS_TO_TYPE = {
 /**
  * This component is wrapper of ClayLabel
  * It takes a value that gets translated to a label style and rendered
+ * ExperimentsLabel
+ * @review
  */
 class ExperimentsLabel extends Component {
 	prepareStateForRender(state) {
-		const {value} = state;
-
-		const style = statusToLabelDisplayType(value);
-
-		const elementClasses =
-			state.size === 'lg' ? 'label-lg text-capitalize' : '';
-
 		return {
 			...state,
-			elementClasses,
-			style
+			_style: statusToLabelDisplayType(state.value)
 		};
 	}
 }
 
+/**
+ * State definition.
+ * @review
+ * @static
+ * @type {!Object}
+ */
 ExperimentsLabel.STATE = {
+	/**
+	 * This prop is generated in the `prepareStateForRender` from the `value` prop
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	_style: Config.string().internal(),
+
 	/**
 	 * @default undefined
 	 * @review
@@ -73,22 +81,7 @@ ExperimentsLabel.STATE = {
 	label: Config.string().required(),
 
 	/**
-	 * @default undefined
-	 * @review
-	 * @type {string}
-	 */
-	size: Config.string(),
-
-	/**
-	 * This prop is generated in the `prepareStateForRender` from the `value` prop
-	 * @default undefined
-	 * @review
-	 * @type {string}
-	 */
-	style: Config.string().internal(),
-
-	/**
-	 * An Experiment status value that is only used to be translated to `style`
+	 * An Experiment status value that is only used to be translated to `_style`
 	 * @default undefined
 	 * @review
 	 * @type {number}
@@ -98,5 +91,4 @@ ExperimentsLabel.STATE = {
 
 Soy.register(ExperimentsLabel, templates);
 
-export {ExperimentsLabel};
 export default ExperimentsLabel;

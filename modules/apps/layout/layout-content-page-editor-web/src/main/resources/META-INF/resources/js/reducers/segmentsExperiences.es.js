@@ -516,7 +516,6 @@ function editSegmentsExperienceReducer(state, action) {
 			obj => {
 				const {
 					active,
-					hasLockedSegmentsExperiment,
 					nameCurrentValue,
 					priority,
 					segmentsEntryId,
@@ -532,7 +531,6 @@ function editSegmentsExperienceReducer(state, action) {
 								segmentsExperienceId
 							],
 							active,
-							hasLockedSegmentsExperiment,
 							name: nameCurrentValue,
 							priority,
 							segmentsEntryId,

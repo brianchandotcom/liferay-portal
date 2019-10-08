@@ -2,12 +2,10 @@
 
 {template .render}
 	{@param label: string }
-	{@param? elementClasses: string }
-	{@param? style: string }
+	{@param? _style: string }
 
 	{call ClayLabel.render}
-		{param elementClasses: $elementClasses /}
 		{param label: $label /}
-		{param style: $style /}
+		{param style: $_style /}
 	{/call}
 {/template}

@@ -74,6 +74,12 @@ public interface MessageBoardMessageResource {
 			Long messageBoardMessageId, Rating rating)
 		throws Exception;
 
+	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
+		throws Exception;
+
+	public void putMessageBoardMessageUnsubscribe(Long messageBoardMessageId)
+		throws Exception;
+
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				Long parentMessageBoardMessageId, String search, Filter filter,

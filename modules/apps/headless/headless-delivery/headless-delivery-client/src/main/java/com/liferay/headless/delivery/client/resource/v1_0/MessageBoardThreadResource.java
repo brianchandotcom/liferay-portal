@@ -91,6 +91,21 @@ public interface MessageBoardThreadResource {
 			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
+	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putMessageBoardThreadSubscribeHttpResponse(
+			Long messageBoardThreadId)
+		throws Exception;
+
+	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putMessageBoardThreadUnsubscribeHttpResponse(
+				Long messageBoardThreadId)
+		throws Exception;
+
 	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
 		throws Exception;
 
@@ -601,6 +616,120 @@ public interface MessageBoardThreadResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}",
+				messageBoardThreadId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putMessageBoardThreadSubscribeHttpResponse(
+					messageBoardThreadId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				putMessageBoardThreadSubscribeHttpResponse(
+					Long messageBoardThreadId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				messageBoardThreadId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/subscribe",
+				messageBoardThreadId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				putMessageBoardThreadUnsubscribeHttpResponse(
+					messageBoardThreadId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				putMessageBoardThreadUnsubscribeHttpResponse(
+					Long messageBoardThreadId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				messageBoardThreadId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/unsubscribe",
 				messageBoardThreadId);
 
 			httpInvoker.userNameAndPassword(

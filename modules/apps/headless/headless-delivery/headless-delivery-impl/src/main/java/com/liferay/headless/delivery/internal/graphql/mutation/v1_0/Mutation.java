@@ -987,6 +987,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateMessageBoardMessageSubscribe(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessageSubscribe(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardMessageUnsubscribe(
+			@GraphQLName("messageBoardMessageId") Long messageBoardMessageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardMessageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardMessageResource ->
+				messageBoardMessageResource.putMessageBoardMessageUnsubscribe(
+					messageBoardMessageId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public MessageBoardMessage createMessageBoardMessageMessageBoardMessage(
 			@GraphQLName("parentMessageBoardMessageId") Long
 				parentMessageBoardMessageId,
@@ -1156,6 +1186,36 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThread(
 					messageBoardThreadId, messageBoardThread));
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardThreadSubscribe(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadSubscribe(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardThreadUnsubscribe(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadUnsubscribe(
+					messageBoardThreadId));
+
+		return true;
 	}
 
 	@GraphQLField

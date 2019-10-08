@@ -259,6 +259,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getSiteId());
 		}
 
+		if (messageBoardThread.getSubscribed() != null) {
+			existingMessageBoardThread.setSubscribed(
+				messageBoardThread.getSubscribed());
+		}
+
 		if (messageBoardThread.getThreadType() != null) {
 			existingMessageBoardThread.setThreadType(
 				messageBoardThread.getThreadType());
@@ -306,6 +311,48 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 
 		return new MessageBoardThread();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
+	@Path("/message-board-threads/{messageBoardThreadId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public void putMessageBoardThreadSubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-threads/{messageBoardThreadId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardThreadId")
+		}
+	)
+	@Path("/message-board-threads/{messageBoardThreadId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardThread")})
+	public void putMessageBoardThreadUnsubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
 	}
 
 	/**

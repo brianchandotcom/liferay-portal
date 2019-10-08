@@ -278,6 +278,16 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getSiteId());
 		}
 
+		if (messageBoardThread.getSubscribed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(messageBoardThread.getSubscribed());
+		}
+
 		if (messageBoardThread.getThreadType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -461,6 +471,15 @@ public class MessageBoardThreadSerDes {
 			map.put("siteId", String.valueOf(messageBoardThread.getSiteId()));
 		}
 
+		if (messageBoardThread.getSubscribed() == null) {
+			map.put("subscribed", null);
+		}
+		else {
+			map.put(
+				"subscribed",
+				String.valueOf(messageBoardThread.getSubscribed()));
+		}
+
 		if (messageBoardThread.getThreadType() == null) {
 			map.put("threadType", null);
 		}
@@ -614,6 +633,12 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setSubscribed(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "threadType")) {

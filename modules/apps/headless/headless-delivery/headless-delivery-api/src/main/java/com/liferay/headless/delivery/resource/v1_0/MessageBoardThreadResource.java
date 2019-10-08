@@ -69,6 +69,12 @@ public interface MessageBoardThreadResource {
 			Long messageBoardThreadId, MessageBoardThread messageBoardThread)
 		throws Exception;
 
+	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
+		throws Exception;
+
+	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
+		throws Exception;
+
 	public void deleteMessageBoardThreadMyRating(Long messageBoardThreadId)
 		throws Exception;
 

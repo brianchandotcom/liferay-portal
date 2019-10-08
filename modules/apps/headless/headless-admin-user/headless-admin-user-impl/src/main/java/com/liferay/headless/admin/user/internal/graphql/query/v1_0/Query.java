@@ -22,6 +22,7 @@ import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
 import com.liferay.headless.admin.user.dto.v1_0.Site;
+import com.liferay.headless.admin.user.dto.v1_0.Subscription;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
@@ -32,6 +33,7 @@ import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
+import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -127,6 +129,14 @@ public class Query {
 
 		_siteResourceComponentServiceObjects =
 			siteResourceComponentServiceObjects;
+	}
+
+	public static void setSubscriptionResourceComponentServiceObjects(
+		ComponentServiceObjects<SubscriptionResource>
+			subscriptionResourceComponentServiceObjects) {
+
+		_subscriptionResourceComponentServiceObjects =
+			subscriptionResourceComponentServiceObjects;
 	}
 
 	public static void setUserAccountResourceComponentServiceObjects(
@@ -513,6 +523,44 @@ public class Query {
 			_siteResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			siteResource -> siteResource.getSite(siteId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccountSubscriptions(contentType: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SubscriptionPage myUserAccountSubscriptions(
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_subscriptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			subscriptionResource -> new SubscriptionPage(
+				subscriptionResource.getMyUserAccountSubscriptionsPage(
+					contentType, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccountSubscription(subscriptionId: ___){contentId, contentType, dateCreated, dateModified, frequency, id, siteId}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Subscription myUserAccountSubscription(
+			@GraphQLName("subscriptionId") Long subscriptionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_subscriptionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			subscriptionResource ->
+				subscriptionResource.getMyUserAccountSubscription(
+					subscriptionId));
 	}
 
 	/**
@@ -938,11 +986,11 @@ public class Query {
 
 	}
 
-	@GraphQLTypeExtension(Segment.class)
+	@GraphQLTypeExtension(Subscription.class)
 	public class GetSiteTypeExtension {
 
-		public GetSiteTypeExtension(Segment segment) {
-			_segment = segment;
+		public GetSiteTypeExtension(Subscription subscription) {
+			_subscription = subscription;
 		}
 
 		@GraphQLField
@@ -950,10 +998,11 @@ public class Query {
 			return _applyComponentServiceObjects(
 				_siteResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
-				siteResource -> siteResource.getSite(_segment.getSiteId()));
+				siteResource -> siteResource.getSite(
+					_subscription.getSiteId()));
 		}
 
-		private Segment _segment;
+		private Subscription _subscription;
 
 	}
 
@@ -1216,6 +1265,30 @@ public class Query {
 
 	}
 
+	@GraphQLName("SubscriptionPage")
+	public class SubscriptionPage {
+
+		public SubscriptionPage(Page subscriptionPage) {
+			items = subscriptionPage.getItems();
+			page = subscriptionPage.getPage();
+			pageSize = subscriptionPage.getPageSize();
+			totalCount = subscriptionPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Subscription> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("UserAccountPage")
 	public class UserAccountPage {
 
@@ -1379,6 +1452,19 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			SubscriptionResource subscriptionResource)
+		throws Exception {
+
+		subscriptionResource.setContextAcceptLanguage(_acceptLanguage);
+		subscriptionResource.setContextCompany(_company);
+		subscriptionResource.setContextHttpServletRequest(_httpServletRequest);
+		subscriptionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		subscriptionResource.setContextUriInfo(_uriInfo);
+		subscriptionResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
 			UserAccountResource userAccountResource)
 		throws Exception {
 
@@ -1417,6 +1503,8 @@ public class Query {
 		_segmentUserResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SiteResource>
 		_siteResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SubscriptionResource>
+		_subscriptionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WebUrlResource>

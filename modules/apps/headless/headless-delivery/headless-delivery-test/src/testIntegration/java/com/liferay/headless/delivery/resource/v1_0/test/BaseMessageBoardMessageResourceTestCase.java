@@ -434,6 +434,16 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testPutMessageBoardMessageSubscribe() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetMessageBoardMessageMessageBoardMessagesPage()
 		throws Exception {
 
@@ -1448,6 +1458,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (messageBoardMessage.getSubscribed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (messageBoardMessage.getViewableBy() == null) {
 					valid = false;
@@ -1769,6 +1787,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getSubscribed(),
+						messageBoardMessage2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getViewableBy(),
@@ -1969,6 +1998,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardMessage.getShowAsAnswer(),
 						jsonObject.getBoolean("showAsAnswer"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -2186,6 +2226,11 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2227,6 +2272,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				numberOfMessageBoardMessages = RandomTestUtil.randomInt();
 				showAsAnswer = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

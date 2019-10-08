@@ -17,15 +17,19 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -112,18 +116,28 @@ public class MasterPageDisplayContext {
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE);
 		}
 		else {
-			layoutPageTemplateEntries =
+			if (masterPagesSearchContainer.getStart() == 0) {
+				layoutPageTemplateEntries = new ArrayList<>();
+
+				layoutPageTemplateEntries.add(_addBlankMasterPage());
+			}
+
+			layoutPageTemplateEntries.addAll(
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE,
 					masterPagesSearchContainer.getStart(),
-					masterPagesSearchContainer.getEnd(), orderByComparator);
+					masterPagesSearchContainer.getEnd(), orderByComparator));
 
 			layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.
 					getLayoutPageTemplateEntriesCount(
 						_themeDisplay.getScopeGroupId(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE);
+
+			if (masterPagesSearchContainer.getStart() == 0) {
+				layoutPageTemplateEntriesCount++;
+			}
 		}
 
 		masterPagesSearchContainer.setResults(layoutPageTemplateEntries);
@@ -190,6 +204,18 @@ public class MasterPageDisplayContext {
 		}
 
 		return false;
+	}
+
+	private LayoutPageTemplateEntry _addBlankMasterPage() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				createLayoutPageTemplateEntry(0);
+
+		layoutPageTemplateEntry.setName(
+			LanguageUtil.get(_httpServletRequest, "blank"));
+		layoutPageTemplateEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		return layoutPageTemplateEntry;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

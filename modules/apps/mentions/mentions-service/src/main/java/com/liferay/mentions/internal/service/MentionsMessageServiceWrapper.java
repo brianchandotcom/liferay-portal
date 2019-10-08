@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -118,6 +119,14 @@ public class MentionsMessageServiceWrapper
 			serviceContext.setAttribute(
 				"contentURL", workflowContext.get("url"));
 		}
+		else {
+			serviceContext.setAttribute(
+				"contentURL",
+				_http.addParameter(
+					contentURL,
+					serviceContext.getAttribute("namespace") + "messageId",
+					message.getMessageId()));
+		}
 
 		_mentionsNotifier.notify(
 			userId, message.getGroupId(), title, content,
@@ -147,6 +156,10 @@ public class MentionsMessageServiceWrapper
 	}
 
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Http _http;
+
 	private MBMessageLocalService _mbMessageLocalService;
 	private MentionsNotifier _mentionsNotifier;
 

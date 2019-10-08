@@ -26,13 +26,16 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,6 +60,8 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 		MBMessage mbMessage = _mbMessageService.getMessage(
 			dtoConverterContext.getResourcePrimKey());
+
+		User user = dtoConverterContext.getUser();
 
 		return new MessageBoardMessage() {
 			{
@@ -89,6 +94,9 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 						WorkflowConstants.STATUS_APPROVED);
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					mbMessage.getCompanyId(), user.getUserId(),
+					MBThread.class.getName(), mbMessage.getThreadId());
 
 				setCreator(
 					() -> {
@@ -125,6 +133,9 @@ public class MessageBoardMessageDTOConverter implements DTOConverter {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

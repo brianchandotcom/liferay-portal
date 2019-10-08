@@ -692,6 +692,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			_extRepository.getExtRepositoryParentFolder(
 				extRepositoryObjectAdapter.getExtRepositoryModel());
 
+		if (parentFolder == null) {
+			return null;
+		}
+
 		return _toExtRepositoryObjectAdapter(
 			ExtRepositoryObjectAdapterType.FOLDER, parentFolder);
 	}

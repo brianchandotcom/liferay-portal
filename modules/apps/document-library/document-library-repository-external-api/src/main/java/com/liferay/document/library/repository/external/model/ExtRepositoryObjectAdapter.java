@@ -112,7 +112,7 @@ public abstract class ExtRepositoryObjectAdapter<T>
 
 		Folder parentFolder = extRepositoryAdapter.getParentFolder(this);
 
-		if (parentFolder.isRoot()) {
+		if ((parentFolder == null) || parentFolder.isRoot()) {
 			return DLAppLocalServiceUtil.getMountFolder(getRepositoryId());
 		}
 

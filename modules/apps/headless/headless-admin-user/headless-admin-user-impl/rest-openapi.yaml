@@ -452,6 +452,29 @@ components:
                     readOnly: true
                     type: string
             type: object
+        Subscription:
+            properties:
+                contentId:
+                    type: object
+                contentType:
+                    type: string
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                frequency:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                siteId:
+                    format: int64
+                    type: integer
         UserAccount:
             description: Represents a user.
             properties:
@@ -1240,6 +1263,73 @@ paths:
                                 type: array
                     description: ""
             tags: ["Segment"]
+    "/subscriptions":
+        get:
+            operationId: getSubscriptionsPage
+            parameters:
+                - in: query
+                  name: contentType
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Subscription"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Subscription"
+                                type: array
+                    description: ""
+            tags: ["Subscription"]
+    "/subscriptions/{subscriptionId}":
+        delete:
+            operationId: deleteSubscription
+            parameters:
+                - in: path
+                  name: subscriptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Subscription"]
+        get:
+            operationId: getSubscription
+            parameters:
+                - in: path
+                  name: subscriptionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Subscription"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Subscription"
+                    description: ""
+            tags: ["Subscription"]
     "/user-accounts":
         get:
             description: Retrieves the user accounts. Results can be paginated, filtered, searched, and sorted.

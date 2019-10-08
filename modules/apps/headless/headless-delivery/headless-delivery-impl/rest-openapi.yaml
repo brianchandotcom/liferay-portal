@@ -1008,6 +1008,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 viewableBy:
                     description: A write-only property that specifies the default permissions.
                     enum: [Anyone, Members, Owner]
@@ -1137,6 +1140,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 threadType:
                     description: The thread's type.
                     type: string
@@ -3544,6 +3550,38 @@ paths:
                                 $ref: "#/components/schemas/Rating"
                     description: ""
             tags: ["MessageBoardMessage"]
+    "/message-board-messages/{messageBoardMessageId}/subscribe":
+        put:
+            operationId: putMessageBoardMessageSubscribe
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardMessage"]
+    "/message-board-messages/{messageBoardMessageId}/unsubscribe":
+        put:
+            operationId: putMessageBoardMessageUnsubscribe
+            parameters:
+                - in: path
+                  name: messageBoardMessageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardMessage"]
     "/message-board-messages/{parentMessageBoardMessageId}/message-board-messages":
         get:
             description: Retrieves the parent message board message's child messages. Results can be paginated, filtered, searched, and sorted.
@@ -4188,6 +4226,38 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["MessageBoardThread"]
+    "/message-board-threads/{messageBoardThreadId}/subscribe":
+        put:
+            operationId: putMessageBoardThreadSubscribe
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardThread"]
+    "/message-board-threads/{messageBoardThreadId}/unsubscribe":
+        put:
+            operationId: putMessageBoardThreadUnsubscribe
+            parameters:
+                - in: path
+                  name: messageBoardThreadId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
                     description: ""
             tags: ["MessageBoardThread"]
     "/sites/{siteId}/blog-posting-images":

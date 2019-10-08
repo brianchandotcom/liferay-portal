@@ -277,14 +277,20 @@ public class MessageBoardThreadResourceImpl
 	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
 		throws Exception {
 
-		_mbMessageService.subscribeMessage(messageBoardThreadId);
+		MBThread mbThread = _mbThreadLocalService.getThread(
+			messageBoardThreadId);
+
+		_mbMessageService.subscribeMessage(mbThread.getRootMessageId());
 	}
 
 	@Override
 	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
 		throws Exception {
 
-		_mbMessageService.unsubscribeMessage(messageBoardThreadId);
+		MBThread mbThread = _mbThreadLocalService.getThread(
+			messageBoardThreadId);
+
+		_mbMessageService.unsubscribeMessage(mbThread.getRootMessageId());
 	}
 
 	private MessageBoardThread _addMessageBoardThread(

@@ -15,10 +15,15 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Header = ({handleClickClose, handleClickDone, handleClickEdit, headerTitle}) => (
+const Header = ({
+	handleClickClose,
+	handleClickDone,
+	handleClickEdit,
+	headerTitle
+}) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
 			<ClayNavigationBar>
@@ -29,7 +34,7 @@ const Header = ({handleClickClose, handleClickDone, handleClickEdit, headerTitle
 						monospaced
 						onClick={handleClickClose}
 					>
-						<ClayIcon symbol="angle-left"  />
+						<ClayIcon symbol="angle-left" />
 					</ClayButton>
 				</ClayNavigationBar.Item>
 
@@ -37,7 +42,6 @@ const Header = ({handleClickClose, handleClickDone, handleClickEdit, headerTitle
 					<strong>{headerTitle} </strong>
 				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
-
 
 			<ClayNavigationBar>
 				<ClayNavigationBar.Item>
@@ -47,27 +51,19 @@ const Header = ({handleClickClose, handleClickDone, handleClickEdit, headerTitle
 						monospaced
 						onClick={handleClickEdit}
 					>
-						<ClayIcon symbol="pencil"  />
+						<ClayIcon symbol="pencil" />
 					</ClayButton>
 				</ClayNavigationBar.Item>
 
 				<ClayNavigationBar.Item>
-					<ClayButton
-						borderless
-						displayType="secondary"
-						monospaced
-					>
-						<ClayIcon symbol="info-panel-open"  />
+					<ClayButton borderless displayType="secondary" monospaced>
+						<ClayIcon symbol="info-panel-open" />
 					</ClayButton>
 				</ClayNavigationBar.Item>
 
-				<ClayButton
-					displayType="primary"
-					onClick={handleClickDone}
-				>
+				<ClayButton displayType="primary" onClick={handleClickDone}>
 					{Liferay.Language.get('done')}
 				</ClayButton>
-
 			</ClayNavigationBar>
 		</div>
 	</div>

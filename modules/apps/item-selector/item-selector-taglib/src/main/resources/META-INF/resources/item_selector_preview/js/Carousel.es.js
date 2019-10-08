@@ -14,10 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {Component} from 'react';
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Arrow = ({ direction, handleClick }) => (
+const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>
 		<ClayButton
 			borderless
@@ -31,11 +31,16 @@ const Arrow = ({ direction, handleClick }) => (
 	</div>
 );
 
-const InfoPanel = ({ imageData }) => {
+const InfoPanel = () => {
 	return <h1>Info Panel</h1>;
 };
 
-const Carousel = ({currentItem, handleClickNext, handleClickPrevious, showArrows}) => (
+const Carousel = ({
+	currentItem,
+	handleClickNext,
+	handleClickPrevious,
+	showArrows
+}) => (
 	<div className="carousel sidenav-container">
 		<div className="info-panel sidenav-menu-slider">
 			<InfoPanel imageData={currentItem.metadata} />
@@ -43,19 +48,13 @@ const Carousel = ({currentItem, handleClickNext, handleClickPrevious, showArrows
 
 		<div className="sidenav-content">
 			{showArrows && (
-				<Arrow
-					direction="left"
-					handleClick={handleClickPrevious}
-				/>
+				<Arrow direction="left" handleClick={handleClickPrevious} />
 			)}
 
 			<img alt={currentItem.title} src={currentItem.url} />
 
 			{showArrows && (
-				<Arrow
-					direction="right"
-					handleClick={handleClickNext}
-				/>
+				<Arrow direction="right" handleClick={handleClickNext} />
 			)}
 		</div>
 	</div>

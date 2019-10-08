@@ -22,7 +22,6 @@ import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPrev
 import {render} from 'frontend-js-react-web';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
@@ -69,7 +68,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			}
 		);
 
-
 		this.attachItemSelectorPreviewComponent();
 	}
 
@@ -86,20 +84,26 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 					e.preventDefault();
 					e.stopPropagation();
 
-					const container = this.one('.item-selector-preview-container');
+					const container = this.one(
+						'.item-selector-preview-container'
+					);
 
 					const data = {
-						container: container,
-						currentIndex : index,
-						editItemURL : this.editItemURL,
+						container,
+						currentIndex: index,
+						editItemURL: this.editItemURL,
 						handleSelectedItem: this._onItemSelected.bind(this),
 						headerTitle: this.closeCaption,
-						items: items,
+						items,
 						uploadItemReturnType: this.uploadItemReturnType,
 						uploadItemURL: this.uploadItemURL
 					};
 
-					render(props => <ItemSelectorPreview {...props} />, data, container);
+					render(
+						props => <ItemSelectorPreview {...props} />,
+						data,
+						container
+					);
 				});
 			});
 		}

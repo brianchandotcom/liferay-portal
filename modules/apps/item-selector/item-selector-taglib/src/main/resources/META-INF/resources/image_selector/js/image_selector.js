@@ -232,11 +232,15 @@ AUI.add(
 
 					Liferay.Loader.require(
 						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						function(ItemSelectorDialog){
-							var itemSelectorDialog = new ItemSelectorDialog.default({
-								eventName: instance.get('itemSelectorEventName'),
-								url: instance.get('itemSelectorURL')
-							});
+						function(ItemSelectorDialog) {
+							var itemSelectorDialog = new ItemSelectorDialog.default(
+								{
+									eventName: instance.get(
+										'itemSelectorEventName'
+									),
+									url: instance.get('itemSelectorURL')
+								}
+							);
 
 							itemSelectorDialog.open();
 

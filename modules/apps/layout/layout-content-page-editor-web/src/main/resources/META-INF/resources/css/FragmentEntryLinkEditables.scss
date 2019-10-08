@@ -30,6 +30,8 @@
 		outline: none;
 	}
 
+	.fragments-editor:not(.fragments-editor--with-update-permissions)
+		&--translated:hover:before,
 	&--translated:before {
 		background-color: fade_out(
 			$fragmentEditableFieldGridTranslatedColor,
@@ -37,6 +39,8 @@
 		);
 	}
 
+	.fragments-editor:not(.fragments-editor--with-update-permissions)
+		&--mapped:hover:before,
 	&--mapped:before {
 		box-shadow: inset 0 0 0 1px
 			fade_out($fragmentEditableFieldGridMappedColor, 0.6);

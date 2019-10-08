@@ -81,16 +81,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public void copyFileToStore(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, Store targetStore)
-		throws PortalException {
-
-		_store.copyFileToStore(
-			companyId, repositoryId, fileName, versionLabel, targetStore);
-	}
-
-	@Override
 	public void copyFileVersion(
 			final long companyId, final long repositoryId,
 			final String fileName, final String fromVersionLabel,
@@ -223,16 +213,6 @@ public class IgnoreDuplicatesStore implements Store {
 	@Override
 	public void move(String srcDir, String destDir) {
 		_store.move(srcDir, destDir);
-	}
-
-	@Override
-	public void moveFileToStore(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, Store targetStore)
-		throws PortalException {
-
-		_store.moveFileToStore(
-			companyId, repositoryId, fileName, versionLabel, targetStore);
 	}
 
 	@Override

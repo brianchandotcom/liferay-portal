@@ -1,9 +1,6 @@
 #if (${projectType} != "workspace")buildscript {
 	dependencies {
-		classpath group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.2.0"
-		classpath (group: "com.liferay", name: "com.liferay.gradle.plugins", version: "@com.liferay.gradle.plugins.version@") {
-			exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd.gradle"
-		}
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "@com.liferay.gradle.plugins.version@"
 	}
 
 	repositories {

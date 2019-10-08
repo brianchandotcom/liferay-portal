@@ -66,6 +66,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
@@ -272,6 +273,20 @@ public class MessageBoardThreadResourceImpl
 			rating.getRatingValue(), mbThread.getRootMessageId());
 	}
 
+	@Override
+	public void putMessageBoardThreadSubscribe(Long messageBoardThreadId)
+		throws Exception {
+
+		_mbMessageService.subscribeMessage(messageBoardThreadId);
+	}
+
+	@Override
+	public void putMessageBoardThreadUnsubscribe(Long messageBoardThreadId)
+		throws Exception {
+
+		_mbMessageService.unsubscribeMessage(messageBoardThreadId);
+	}
+
 	private MessageBoardThread _addMessageBoardThread(
 			Long siteId, Long messageBoardSectionId,
 			MessageBoardThread messageBoardThread)
@@ -376,6 +391,9 @@ public class MessageBoardThreadResourceImpl
 					contextAcceptLanguage.getPreferredLocale());
 				showAsQuestion = mbThread.isQuestion();
 				siteId = mbThread.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					mbMessage.getCompanyId(), contextUser.getUserId(),
+					MBThread.class.getName(), mbMessage.getThreadId());
 				threadType = _toThreadType(
 					mbThread.getGroupId(), mbThread.getPriority());
 				viewCount = mbThread.getViewCount();
@@ -493,6 +511,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

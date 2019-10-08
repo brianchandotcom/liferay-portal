@@ -42,31 +42,6 @@ import java.io.InputStream;
 public abstract class BaseStore implements Store {
 
 	/**
-	 * Adds a file based on a byte array.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param bytes the files's data
-	 */
-	@Override
-	public void addFile(
-			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException {
-
-		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(bytes)) {
-
-			addFile(
-				companyId, repositoryId, fileName, unsyncByteArrayInputStream);
-		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to read bytes", ioe);
-		}
-	}
-
-	/**
 	 * Adds a file based on a {@link File} object.
 	 *
 	 * @param companyId the primary key of the company

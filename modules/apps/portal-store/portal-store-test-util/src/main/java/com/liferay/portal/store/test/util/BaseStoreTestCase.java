@@ -74,17 +74,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testAddFileWithByteArray() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
-
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-	}
-
-	@Test
 	public void testAddFileWithByteArrayInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

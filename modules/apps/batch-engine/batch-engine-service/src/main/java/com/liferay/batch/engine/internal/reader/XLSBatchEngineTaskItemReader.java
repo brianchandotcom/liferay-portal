@@ -16,8 +16,6 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.liferay.petra.string.StringPool;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -106,7 +103,7 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
 				value = value.trim();
 
-				if (Objects.equals(value, StringPool.BLANK)) {
+				if (value.isEmpty()) {
 					value = null;
 				}
 

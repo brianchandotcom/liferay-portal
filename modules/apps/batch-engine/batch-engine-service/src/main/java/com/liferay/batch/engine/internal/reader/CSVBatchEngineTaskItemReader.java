@@ -17,7 +17,6 @@ package com.liferay.batch.engine.internal.reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -26,7 +25,6 @@ import java.io.InputStreamReader;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Ivica Cardic
@@ -74,7 +72,7 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 
 			String value = values[i].trim();
 
-			if (Objects.equals(value, StringPool.BLANK)) {
+			if (value.isEmpty()) {
 				value = null;
 			}
 

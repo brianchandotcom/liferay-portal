@@ -379,6 +379,14 @@ const INITIAL_STATE = {
 	getAssetMappingFieldsURL: Config.string().value(''),
 
 	/**
+	 * Get available templates url
+	 * @default undefined
+	 * @review
+	 * @type {string}
+	 */
+	getAvailableTemplatesURL: Config.string().value(''),
+
+	/**
 	 * URL for obtaining the content structure mapping fields
 	 * created.
 	 * @default '''

@@ -19,6 +19,7 @@ import {Config} from 'metal-state';
 import '../../../common/InfoItemSelector.es';
 import './ItemSelectorFieldDelegateTemplate.soy';
 import templates from './ItemSelectorField.soy';
+import {getAvailableTemplates} from '../../../../utils/FragmentsEditorFetchUtils.es';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';
 import {openItemSelector} from '../../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
@@ -63,9 +64,11 @@ class ItemSelectorField extends Component {
 			this.configurationValues[this.field.name] &&
 			this.configurationValues[this.field.name].className
 		) {
-			const {className} = this.configurationValues[this.field.name];
-
-			this.availableTemplates = [];
+			getAvailableTemplates(
+				this.configurationValues[this.field.name].className
+			).then(availableTemplates => {
+				this.availableTemplates = availableTemplates;
+			});
 		} else {
 			this.availableTemplates = [];
 		}
@@ -170,6 +173,7 @@ ItemSelectorField.STATE = {
 };
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
+	'getAvailableTemplatesURL',
 	'infoItemSelectorURL',
 	'portletNamespace',
 	'spritemap'

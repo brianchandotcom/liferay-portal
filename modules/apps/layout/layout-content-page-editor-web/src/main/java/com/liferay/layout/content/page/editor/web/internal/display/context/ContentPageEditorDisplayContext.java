@@ -244,6 +244,9 @@ public class ContentPageEditorDisplayContext {
 			_getResourceURL(
 				"/content_layout/get_content_structure_mapping_fields")
 		).put(
+			"getAvailableTemplatesURL",
+			_getResourceURL("/content_layout/get_available_templates")
+		).put(
 			"getContentStructuresURL",
 			_getResourceURL("/content_layout/get_content_structures")
 		).put(

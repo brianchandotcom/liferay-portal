@@ -37,19 +37,6 @@ public class LayoutPageTemplatesControlPanelEntry
 	extends BaseControlPanelEntry {
 
 	@Override
-	public boolean hasAccessPermissionDenied(
-			PermissionChecker permissionChecker, Group group, Portlet portlet)
-		throws Exception {
-
-		if (!group.isCompany()) {
-			return false;
-		}
-
-		return super.hasAccessPermissionDenied(
-			permissionChecker, group, portlet);
-	}
-
-	@Override
 	protected boolean hasPermissionImplicitlyGranted(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {

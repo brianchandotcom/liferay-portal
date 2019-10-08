@@ -5830,7 +5830,18 @@ information. Make sure to commit in all build services results.
 					<then>
 						<get-module-base-dir-from-subrepository-name subrepository.name="${subrepository.name}" />
 
+						<move
+							file="${module.base.dir}/settings.gradle"
+							tofile="${module.base.dir}/settings.gradle.temp"
+							verbose="true"
+						/>
+
 						<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test" />
+
+						<move
+							file="${module.base.dir}/settings.gradle.temp"
+							tofile="${module.base.dir}/settings.gradle"
+						/>
 					</then>
 					<else>
 						<antcall inheritAll="false" target="record-test-class-file-names">

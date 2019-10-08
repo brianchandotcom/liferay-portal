@@ -12,13 +12,12 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
 import React from 'react';
 import APIService from './util/APIService.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
 
-function renderComponent({props, context}) {
+export default function({props, context}) {
 	const {assetsPath, endpoints, page} = context;
 	const {
 		calculateSegmentsExperimentEstimatedDurationURL,
@@ -73,8 +72,4 @@ function renderComponent({props, context}) {
 			/>
 		</SegmentsExperimentsContext.Provider>
 	);
-}
-
-export default function(containerId, data) {
-	render(renderComponent, data, document.getElementById(containerId));
 }

@@ -25,47 +25,16 @@
 		String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-experiment-root";
 		%>
 
-		<div id="<%= segmentsExperimentRootId %>"></div>
+		<div id="<%= segmentsExperimentRootId %>">
+			<div class="inline-item my-5 p-5 w-100">
+				<span aria-hidden="true" class="loading-animation"></span>
+			</div>
 
-		<aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
-			segmentsExperimentsApp.default(
-				'<%= segmentsExperimentRootId %>',
-				{
-					context: {
-						assetsPath: '<%= segmentsExperimentDisplayContext.getAssetsPath() %>',
-						contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
-						endpoints: {
-							calculateSegmentsExperimentEstimatedDurationURL: '<%= segmentsExperimentDisplayContext.getCalculateSegmentsExperimentEstimatedDurationURL() %>',
-							createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
-							createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
-							deleteSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsExperimentURL() %>',
-							deleteSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>',
-							editSegmentsExperimentStatusURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
-							editSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
-							editSegmentsVariantLayoutURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
-							editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
-							runSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
-						},
-						namespace: '<portlet:namespace />',
-						page: {
-							classPK: '<%= themeDisplay.getPlid() %>',
-							classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
-							type: '<%= layout.getType() %>'
-						}
-					},
-					props: {
-						historySegmentsExperiments: <%= segmentsExperimentDisplayContext.getHistorySegmentsExperimentsJSONArray(locale) %>,
-						initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
-						segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
-						segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject(locale) %>,
-						segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoalsJSONArray(locale) %>,
-						selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>',
-						viewSegmentsExperimentDetailsURL: '<%= segmentsExperimentDisplayContext.getViewSegmentsExperimentDetailsURL() %>',
-						winnerSegmentsVariantId: '<%= segmentsExperimentDisplayContext.getWinnerSegmentsExperienceId() %>'
-					}
-				}
-			);
-		</aui:script>
+			<react:component
+				data="<%= segmentsExperimentDisplayContext.getData() %>"
+				module="js/index.es"
+			/>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="p-3 pt-5 text-center">

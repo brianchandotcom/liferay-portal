@@ -201,7 +201,7 @@ public class BookmarksEntryAssetRenderer
 				permissionChecker, _entry, ActionKeys.VIEW);
 		}
 		catch (PortalException pe) {
-			return true;
+			return false;
 		}
 	}
 

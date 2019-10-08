@@ -1945,10 +1945,10 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"--dependency-management-enabled", "--liferay-version", "7.2");
 	}
 
+	@Ignore
+	@Ignore
+	@Ignore
 	@Test
-	@Ignore
-	@Ignore
-	@Ignore
 	public void testBuildTemplateSimulationPanelEntry70() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"simulation-panel-entry", "simulator", "--package-name",

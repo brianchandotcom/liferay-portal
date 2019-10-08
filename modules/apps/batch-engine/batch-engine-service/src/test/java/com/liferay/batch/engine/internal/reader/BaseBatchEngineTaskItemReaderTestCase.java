@@ -17,7 +17,6 @@ package com.liferay.batch.engine.internal.reader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-
 import java.util.Date;
 import java.util.Map;
 
@@ -32,8 +31,6 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 	@Before
 	public void setUp() {
 		createDate = new Date();
-
-		_dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 		createDateString = _dateFormat.format(createDate);
 	}
@@ -101,6 +98,7 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 	protected Date createDate;
 	protected String createDateString;
 
-	private static DateFormat _dateFormat;
+	private static final DateFormat _dateFormat = new SimpleDateFormat(
+		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 }

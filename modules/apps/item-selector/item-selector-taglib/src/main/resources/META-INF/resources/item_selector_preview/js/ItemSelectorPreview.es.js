@@ -247,8 +247,8 @@ class ItemSelectorPreview extends Component {
 				/>
 
 				<Footer
-					title={currentItem.title}
 					currentIndex={currentItemIndex}
+					title={currentItem.title}
 					totalItems={items.length}
 				/>
 			</div>

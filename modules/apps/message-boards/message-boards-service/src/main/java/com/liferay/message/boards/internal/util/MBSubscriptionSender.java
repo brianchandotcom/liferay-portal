@@ -73,7 +73,7 @@ public class MBSubscriptionSender
 			setSMTPAccount(smtpAccount);
 		}
 
-		setSubject(getMailingListSubject(subject, mailId));
+		setSubject(_getMailingListSubject(subject, mailId));
 
 		addRuntimeSubscribers(
 			mailingList.getEmailAddress(), mailingList.getEmailAddress());
@@ -87,7 +87,7 @@ public class MBSubscriptionSender
 		_fullName = fullName;
 	}
 
-	protected String getMailingListSubject(String subject, String mailId) {
+	private String _getMailingListSubject(String subject, String mailId) {
 		subject = GetterUtil.getString(subject);
 		mailId = GetterUtil.getString(mailId);
 

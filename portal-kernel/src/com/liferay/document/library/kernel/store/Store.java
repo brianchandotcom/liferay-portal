@@ -106,9 +106,6 @@ public interface Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
 
-	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
-
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

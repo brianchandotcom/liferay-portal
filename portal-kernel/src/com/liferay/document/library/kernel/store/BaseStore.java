@@ -84,30 +84,6 @@ public abstract class BaseStore implements Store {
 	 * UnsupportedOperationException}.
 	 * </p>
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the {@link File} object with the file's name
-	 */
-	@Override
-	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return getFile(companyId, repositoryId, fileName, StringPool.BLANK);
-	}
-
-	/**
-	 * Returns the file as a {@link File} object.
-	 *
-	 * <p>
-	 * This method is useful when optimizing low-level file operations like
-	 * copy. The client must not delete or change the returned {@link File}
-	 * object in any way. This method is only supported in certain stores. If
-	 * not supported, this method will throw an {@link
-	 * UnsupportedOperationException}.
-	 * </p>
-	 *
 	 * <p>
 	 * This method should be overrided if a more optimized approach can be used
 	 * (e.g., {@link FileSystemStore#getFile(long, long, String, String)}).

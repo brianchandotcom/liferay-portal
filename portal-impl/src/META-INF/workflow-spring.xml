@@ -70,16 +70,12 @@
 		<property name="synchronousDestinationName" value="liferay/workflow_status" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean class="com.liferay.portal.workflow.WorkflowPermissionAdvice" factory-method="create" id="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
-		<constructor-arg name="workflowTaskManager">
-			<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy">
-				<constructor-arg>
-					<bean class="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
-						<property name="destinationName" value="liferay/workflow_task" />
-						<property name="synchronousDestinationName" value="liferay/workflow_task" />
-						<property name="synchronousMessageSenderMode" value="DIRECT" />
-					</bean>
-				</constructor-arg>
+	<bean class="com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler" factory-method="createProxy" id="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
+		<constructor-arg>
+			<bean class="com.liferay.portal.workflow.WorkflowTaskManagerProxyBean">
+				<property name="destinationName" value="liferay/workflow_task" />
+				<property name="synchronousDestinationName" value="liferay/workflow_task" />
+				<property name="synchronousMessageSenderMode" value="DIRECT" />
 			</bean>
 		</constructor-arg>
 	</bean>

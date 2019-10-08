@@ -420,6 +420,7 @@ definition {
 		// SearchResultPortlet.viewSearchResultNotPresent(
 		//	searchAssetTitle = "Article 2",
 		//	searchAssetType = "Web Content Article");
+
 	}
 
 	test AssertSynonymBulkActions {

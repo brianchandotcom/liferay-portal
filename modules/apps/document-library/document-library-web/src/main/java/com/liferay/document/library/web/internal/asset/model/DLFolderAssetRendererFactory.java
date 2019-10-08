@@ -109,11 +109,7 @@ public class DLFolderAssetRendererFactory
 			permissionChecker, classPK, actionId);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(

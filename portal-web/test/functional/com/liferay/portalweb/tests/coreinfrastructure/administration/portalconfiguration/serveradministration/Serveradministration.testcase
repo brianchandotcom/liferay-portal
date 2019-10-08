@@ -1,0 +1,33 @@
+@component-name = "portal-server-administration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Server Administration";
+
+	setUp {
+		User.firstLoginPG();
+	}
+
+	@description = "This is a use case for LPS-102790"
+	@priority = "4"
+	test ViewSystemAndPortalProperties {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.viewProperties(
+			propertyName = "catalina.home",
+			propertyTitle = "System Properties");
+
+		Pagination.changePagination(itemsPerPage = "20");
+
+		ServerAdministration.viewProperties(
+			propertyName = "admin.email.from.name",
+			propertyTitle = "Portal Properties");
+
+		Pagination.changePagination(itemsPerPage = "20");
+	}
+
+}

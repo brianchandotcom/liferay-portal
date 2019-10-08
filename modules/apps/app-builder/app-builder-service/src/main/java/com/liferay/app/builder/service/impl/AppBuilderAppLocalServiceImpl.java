@@ -15,6 +15,8 @@
 package com.liferay.app.builder.service.impl;
 
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDeployment;
+import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.base.AppBuilderAppLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -69,8 +72,31 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public AppBuilderApp deleteAppBuilderApp(long appBuilderAppId)
+		throws PortalException {
+
+		List<AppBuilderAppDeployment> appBuilderAppDeployments =
+			_appBuilderAppDeploymentLocalService.getAppBuilderAppDeployments(
+				appBuilderAppId);
+
+		for (AppBuilderAppDeployment appBuilderAppDeployment :
+				appBuilderAppDeployments) {
+
+			_appBuilderAppDeploymentLocalService.deleteAppBuilderAppDeployment(
+				appBuilderAppDeployment.getAppBuilderAppDeploymentId());
+		}
+
+		return super.deleteAppBuilderApp(appBuilderAppId);
+	}
+
+	@Override
 	public List<Long> getAppBuilderAppIds(int status, String type) {
 		return appBuilderAppFinder.findByS_T(status, type);
+	}
+
+	@Override
+	public List<AppBuilderApp> getAppBuilderApps(long ddmStructureId) {
+		return appBuilderAppPersistence.findByDDMStructureId(ddmStructureId);
 	}
 
 	@Override
@@ -133,5 +159,9 @@ public class AppBuilderAppLocalServiceImpl
 
 		return appBuilderAppPersistence.update(appBuilderApp);
 	}
+
+	@Reference
+	private AppBuilderAppDeploymentLocalService
+		_appBuilderAppDeploymentLocalService;
 
 }

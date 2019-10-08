@@ -274,6 +274,12 @@ public class AppBuilderAppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(long ddmStructureId) {
+
+		return getService().getAppBuilderApps(ddmStructureId);
+	}
+
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getAppBuilderApps(long companyId, int status) {
 
 		return getService().getAppBuilderApps(companyId, status);

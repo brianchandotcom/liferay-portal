@@ -367,7 +367,7 @@
 </tr>
 <tr>
 	<td>WIDGETS_ADD_PORTLET_DRAG_LINK</td>
-	<td>//div[contains(@data-drag-source-label,'${key_portletName}') and contains(@class,'drag-source')]</td>
+	<td>//button[contains(@data-drag-source-label,'${key_portletName}') and contains(@class,'drag-source')]</td>
 	<td></td>
 </tr>
 <tr>

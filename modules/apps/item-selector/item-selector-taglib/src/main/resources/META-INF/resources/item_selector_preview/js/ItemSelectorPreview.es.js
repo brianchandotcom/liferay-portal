@@ -12,8 +12,6 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
-import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';

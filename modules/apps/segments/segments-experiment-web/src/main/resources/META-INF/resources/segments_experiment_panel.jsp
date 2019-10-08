@@ -32,7 +32,7 @@
 
 			<react:component
 				data="<%= segmentsExperimentDisplayContext.getData() %>"
-				module="js/index.es"
+				module="js/SegmentsExperimentApp.es"
 			/>
 		</div>
 	</c:when>

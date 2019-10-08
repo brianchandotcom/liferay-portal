@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -158,14 +157,11 @@ public class MBStatsUserPersistenceImpl
 		OrderByComparator<MBStatsUser> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -213,7 +209,7 @@ public class MBStatsUserPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(MBStatsUserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -230,18 +226,8 @@ public class MBStatsUserPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<MBStatsUser>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -668,14 +654,11 @@ public class MBStatsUserPersistenceImpl
 		OrderByComparator<MBStatsUser> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -723,7 +706,7 @@ public class MBStatsUserPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(MBStatsUserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -740,18 +723,8 @@ public class MBStatsUserPersistenceImpl
 
 				qPos.add(userId);
 
-				if (!pagination) {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<MBStatsUser>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1416,7 +1389,6 @@ public class MBStatsUserPersistenceImpl
 		OrderByComparator<MBStatsUser> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -1468,7 +1440,7 @@ public class MBStatsUserPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(MBStatsUserModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1489,18 +1461,8 @@ public class MBStatsUserPersistenceImpl
 
 				qPos.add(messageCount);
 
-				if (!pagination) {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<MBStatsUser>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2380,14 +2342,11 @@ public class MBStatsUserPersistenceImpl
 		int start, int end, OrderByComparator<MBStatsUser> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2424,9 +2383,7 @@ public class MBStatsUserPersistenceImpl
 			else {
 				sql = _SQL_SELECT_MBSTATSUSER;
 
-				if (pagination) {
-					sql = sql.concat(MBStatsUserModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(MBStatsUserModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2436,18 +2393,8 @@ public class MBStatsUserPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<MBStatsUser>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<MBStatsUser>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

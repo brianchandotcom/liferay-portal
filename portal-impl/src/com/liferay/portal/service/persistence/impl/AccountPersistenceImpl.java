@@ -41,7 +41,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -471,14 +470,11 @@ public class AccountPersistenceImpl
 		int start, int end, OrderByComparator<Account> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -515,9 +511,7 @@ public class AccountPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ACCOUNT;
 
-				if (pagination) {
-					sql = sql.concat(AccountModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(AccountModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -527,18 +521,8 @@ public class AccountPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Account>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Account>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Account>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

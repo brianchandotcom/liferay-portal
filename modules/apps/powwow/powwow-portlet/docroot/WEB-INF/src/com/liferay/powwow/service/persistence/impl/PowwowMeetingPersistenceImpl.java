@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -153,14 +152,11 @@ public class PowwowMeetingPersistenceImpl
 		OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -208,7 +204,7 @@ public class PowwowMeetingPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -225,18 +221,8 @@ public class PowwowMeetingPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1046,14 +1032,11 @@ public class PowwowMeetingPersistenceImpl
 		OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByPowwowServerId;
@@ -1103,7 +1086,7 @@ public class PowwowMeetingPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1120,18 +1103,8 @@ public class PowwowMeetingPersistenceImpl
 
 				qPos.add(powwowServerId);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1567,14 +1540,11 @@ public class PowwowMeetingPersistenceImpl
 		OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByStatus;
@@ -1622,7 +1592,7 @@ public class PowwowMeetingPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1639,18 +1609,8 @@ public class PowwowMeetingPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2086,14 +2046,11 @@ public class PowwowMeetingPersistenceImpl
 		OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByU_S;
@@ -2147,7 +2104,7 @@ public class PowwowMeetingPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2166,18 +2123,8 @@ public class PowwowMeetingPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2645,14 +2592,11 @@ public class PowwowMeetingPersistenceImpl
 		OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByPSI_S;
@@ -2706,7 +2650,7 @@ public class PowwowMeetingPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2725,18 +2669,8 @@ public class PowwowMeetingPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3667,14 +3601,11 @@ public class PowwowMeetingPersistenceImpl
 		int start, int end, OrderByComparator<PowwowMeeting> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3711,9 +3642,7 @@ public class PowwowMeetingPersistenceImpl
 			else {
 				sql = _SQL_SELECT_POWWOWMEETING;
 
-				if (pagination) {
-					sql = sql.concat(PowwowMeetingModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(PowwowMeetingModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -3723,18 +3652,8 @@ public class PowwowMeetingPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<PowwowMeeting>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<PowwowMeeting>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -162,14 +161,11 @@ public class CTPreferencesPersistenceImpl
 		OrderByComparator<CTPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCollectionId;
@@ -219,7 +215,7 @@ public class CTPreferencesPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(CTPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -236,18 +232,8 @@ public class CTPreferencesPersistenceImpl
 
 				qPos.add(ctCollectionId);
 
-				if (!pagination) {
-					list = (List<CTPreferences>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CTPreferences>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CTPreferences>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1287,14 +1273,11 @@ public class CTPreferencesPersistenceImpl
 		int start, int end, OrderByComparator<CTPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1331,9 +1314,7 @@ public class CTPreferencesPersistenceImpl
 			else {
 				sql = _SQL_SELECT_CTPREFERENCES;
 
-				if (pagination) {
-					sql = sql.concat(CTPreferencesModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(CTPreferencesModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1343,18 +1324,8 @@ public class CTPreferencesPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<CTPreferences>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<CTPreferences>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<CTPreferences>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

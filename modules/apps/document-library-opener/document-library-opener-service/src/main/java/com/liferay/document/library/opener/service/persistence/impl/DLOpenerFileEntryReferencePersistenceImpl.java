@@ -45,7 +45,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1096,14 +1095,11 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		OrderByComparator<DLOpenerFileEntryReference> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1140,10 +1136,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			else {
 				sql = _SQL_SELECT_DLOPENERFILEENTRYREFERENCE;
 
-				if (pagination) {
-					sql = sql.concat(
-						DLOpenerFileEntryReferenceModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					DLOpenerFileEntryReferenceModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1153,18 +1147,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<DLOpenerFileEntryReference>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DLOpenerFileEntryReference>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DLOpenerFileEntryReference>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

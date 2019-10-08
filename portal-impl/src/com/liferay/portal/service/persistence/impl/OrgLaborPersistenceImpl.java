@@ -39,7 +39,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -149,14 +148,11 @@ public class OrgLaborPersistenceImpl
 		long organizationId, int start, int end,
 		OrderByComparator<OrgLabor> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByOrganizationId;
@@ -206,7 +202,7 @@ public class OrgLaborPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OrgLaborModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -223,18 +219,8 @@ public class OrgLaborPersistenceImpl
 
 				qPos.add(organizationId);
 
-				if (!pagination) {
-					list = (List<OrgLabor>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OrgLabor>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OrgLabor>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -987,14 +973,11 @@ public class OrgLaborPersistenceImpl
 		int start, int end, OrderByComparator<OrgLabor> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1031,9 +1014,7 @@ public class OrgLaborPersistenceImpl
 			else {
 				sql = _SQL_SELECT_ORGLABOR;
 
-				if (pagination) {
-					sql = sql.concat(OrgLaborModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(OrgLaborModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1043,18 +1024,8 @@ public class OrgLaborPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<OrgLabor>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OrgLabor>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OrgLabor>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

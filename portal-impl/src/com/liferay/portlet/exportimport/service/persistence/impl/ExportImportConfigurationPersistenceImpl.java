@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -156,14 +155,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -213,7 +209,7 @@ public class ExportImportConfigurationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -230,18 +226,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -683,14 +669,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -742,7 +725,7 @@ public class ExportImportConfigurationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -759,18 +742,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1216,14 +1189,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_T;
@@ -1279,7 +1249,7 @@ public class ExportImportConfigurationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1298,18 +1268,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1780,14 +1740,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_S;
@@ -1843,7 +1800,7 @@ public class ExportImportConfigurationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1862,18 +1819,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2351,14 +2298,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByG_T_S;
@@ -2417,7 +2361,7 @@ public class ExportImportConfigurationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2438,18 +2382,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3464,14 +3398,11 @@ public class ExportImportConfigurationPersistenceImpl
 		OrderByComparator<ExportImportConfiguration> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3508,10 +3439,8 @@ public class ExportImportConfigurationPersistenceImpl
 			else {
 				sql = _SQL_SELECT_EXPORTIMPORTCONFIGURATION;
 
-				if (pagination) {
-					sql = sql.concat(
-						ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					ExportImportConfigurationModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -3521,18 +3450,8 @@ public class ExportImportConfigurationPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ExportImportConfiguration>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ExportImportConfiguration>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

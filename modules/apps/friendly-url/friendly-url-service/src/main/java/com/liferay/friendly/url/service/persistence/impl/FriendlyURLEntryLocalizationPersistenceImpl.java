@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -165,14 +164,11 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -229,7 +225,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL);
 			}
@@ -247,18 +243,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				qPos.add(friendlyURLEntryId);
 
-				if (!pagination) {
-					list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1758,14 +1744,11 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1802,10 +1785,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			else {
 				sql = _SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION;
 
-				if (pagination) {
-					sql = sql.concat(
-						FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1815,18 +1796,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<FriendlyURLEntryLocalization>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

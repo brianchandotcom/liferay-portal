@@ -43,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,14 +167,11 @@ public class DDMFormInstanceVersionPersistenceImpl
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByFormInstanceId;
@@ -227,7 +223,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -244,18 +240,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 				qPos.add(formInstanceId);
 
-				if (!pagination) {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMFormInstanceVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -964,14 +950,11 @@ public class DDMFormInstanceVersionPersistenceImpl
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByF_S;
@@ -1026,7 +1009,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1045,18 +1028,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMFormInstanceVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1965,14 +1938,11 @@ public class DDMFormInstanceVersionPersistenceImpl
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2009,10 +1979,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_DDMFORMINSTANCEVERSION;
 
-				if (pagination) {
-					sql = sql.concat(
-						DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2022,18 +1989,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<DDMFormInstanceVersion>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<DDMFormInstanceVersion>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

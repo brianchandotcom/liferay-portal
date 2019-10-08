@@ -40,7 +40,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,14 +153,11 @@ public class UserTrackerPathPersistenceImpl
 		OrderByComparator<UserTrackerPath> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserTrackerId;
@@ -211,7 +207,7 @@ public class UserTrackerPathPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(UserTrackerPathModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -228,18 +224,8 @@ public class UserTrackerPathPersistenceImpl
 
 				qPos.add(userTrackerId);
 
-				if (!pagination) {
-					list = (List<UserTrackerPath>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<UserTrackerPath>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<UserTrackerPath>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1018,14 +1004,11 @@ public class UserTrackerPathPersistenceImpl
 		OrderByComparator<UserTrackerPath> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1062,9 +1045,7 @@ public class UserTrackerPathPersistenceImpl
 			else {
 				sql = _SQL_SELECT_USERTRACKERPATH;
 
-				if (pagination) {
-					sql = sql.concat(UserTrackerPathModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(UserTrackerPathModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1074,18 +1055,8 @@ public class UserTrackerPathPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<UserTrackerPath>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<UserTrackerPath>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<UserTrackerPath>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

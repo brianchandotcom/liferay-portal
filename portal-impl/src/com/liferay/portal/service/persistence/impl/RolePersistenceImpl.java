@@ -168,14 +168,11 @@ public class RolePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -232,7 +229,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -251,18 +248,7 @@ public class RolePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1133,14 +1119,11 @@ public class RolePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1203,7 +1186,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1224,18 +1207,7 @@ public class RolePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2152,14 +2124,11 @@ public class RolePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2209,7 +2178,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2226,18 +2195,7 @@ public class RolePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3034,14 +2992,11 @@ public class RolePersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByName;
@@ -3098,7 +3053,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3117,18 +3072,7 @@ public class RolePersistenceImpl
 					qPos.add(name);
 				}
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3983,14 +3927,11 @@ public class RolePersistenceImpl
 		int type, int start, int end, OrderByComparator<Role> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByType;
@@ -4038,7 +3979,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4055,18 +3996,7 @@ public class RolePersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4859,14 +4789,11 @@ public class RolePersistenceImpl
 
 		subtype = Objects.toString(subtype, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindBySubtype;
@@ -4923,7 +4850,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4942,18 +4869,7 @@ public class RolePersistenceImpl
 					qPos.add(subtype);
 				}
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -6076,14 +5992,11 @@ public class RolePersistenceImpl
 		long companyId, int type, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_T;
@@ -6137,7 +6050,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -6156,18 +6069,7 @@ public class RolePersistenceImpl
 
 				qPos.add(type);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -7035,13 +6937,10 @@ public class RolePersistenceImpl
 				companyId, types[0], start, end, orderByComparator);
 		}
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {companyId, StringUtil.merge(types)};
@@ -7100,7 +6999,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7117,18 +7016,7 @@ public class RolePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -7520,14 +7408,11 @@ public class RolePersistenceImpl
 
 		subtype = Objects.toString(subtype, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByT_S;
@@ -7590,7 +7475,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -7611,18 +7496,7 @@ public class RolePersistenceImpl
 					qPos.add(subtype);
 				}
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -8574,13 +8448,10 @@ public class RolePersistenceImpl
 			}
 		}
 
-		boolean pagination = true;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderArgs = new Object[] {
@@ -8644,7 +8515,7 @@ public class RolePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -8663,18 +8534,7 @@ public class RolePersistenceImpl
 
 				qPos.add(classNameId);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -9907,14 +9767,11 @@ public class RolePersistenceImpl
 		int start, int end, OrderByComparator<Role> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -9951,9 +9808,7 @@ public class RolePersistenceImpl
 			else {
 				sql = _SQL_SELECT_ROLE_;
 
-				if (pagination) {
-					sql = sql.concat(RoleModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(RoleModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -9963,18 +9818,7 @@ public class RolePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Role>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Role>)QueryUtil.list(q, getDialect(), start, end);
 
 				cacheResult(list);
 

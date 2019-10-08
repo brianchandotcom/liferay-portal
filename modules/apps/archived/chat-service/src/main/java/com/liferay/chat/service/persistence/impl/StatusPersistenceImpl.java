@@ -42,7 +42,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -361,14 +360,11 @@ public class StatusPersistenceImpl
 		long modifiedDate, int start, int end,
 		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByModifiedDate;
@@ -418,7 +414,7 @@ public class StatusPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(StatusModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -435,18 +431,8 @@ public class StatusPersistenceImpl
 
 				qPos.add(modifiedDate);
 
-				if (!pagination) {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Status>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -872,14 +858,11 @@ public class StatusPersistenceImpl
 		boolean online, int start, int end,
 		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByOnline;
@@ -927,7 +910,7 @@ public class StatusPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(StatusModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -944,18 +927,8 @@ public class StatusPersistenceImpl
 
 				qPos.add(online);
 
-				if (!pagination) {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Status>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1386,14 +1359,11 @@ public class StatusPersistenceImpl
 		long modifiedDate, boolean online, int start, int end,
 		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByM_O;
@@ -1447,7 +1417,7 @@ public class StatusPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(StatusModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1466,18 +1436,8 @@ public class StatusPersistenceImpl
 
 				qPos.add(online);
 
-				if (!pagination) {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Status>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2343,14 +2303,11 @@ public class StatusPersistenceImpl
 		int start, int end, OrderByComparator<Status> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -2387,9 +2344,7 @@ public class StatusPersistenceImpl
 			else {
 				sql = _SQL_SELECT_STATUS;
 
-				if (pagination) {
-					sql = sql.concat(StatusModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(StatusModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2399,18 +2354,8 @@ public class StatusPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Status>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Status>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

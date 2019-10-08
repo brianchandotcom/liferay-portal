@@ -157,14 +157,11 @@ public class EagerBlobEntityPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -221,7 +218,7 @@ public class EagerBlobEntityPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(EagerBlobEntityModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -240,18 +237,8 @@ public class EagerBlobEntityPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<EagerBlobEntity>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<EagerBlobEntity>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<EagerBlobEntity>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1515,14 +1502,11 @@ public class EagerBlobEntityPersistenceImpl
 		OrderByComparator<EagerBlobEntity> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1559,9 +1543,7 @@ public class EagerBlobEntityPersistenceImpl
 			else {
 				sql = _SQL_SELECT_EAGERBLOBENTITY;
 
-				if (pagination) {
-					sql = sql.concat(EagerBlobEntityModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(EagerBlobEntityModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1571,18 +1553,8 @@ public class EagerBlobEntityPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<EagerBlobEntity>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<EagerBlobEntity>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<EagerBlobEntity>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

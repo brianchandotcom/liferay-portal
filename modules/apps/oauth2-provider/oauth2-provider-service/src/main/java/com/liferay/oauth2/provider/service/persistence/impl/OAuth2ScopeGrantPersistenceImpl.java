@@ -180,14 +180,11 @@ public class OAuth2ScopeGrantPersistenceImpl
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -243,7 +240,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -260,18 +257,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 				qPos.add(oAuth2ApplicationScopeAliasesId);
 
-				if (!pagination) {
-					list = (List<OAuth2ScopeGrant>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2ScopeGrant>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2ScopeGrant>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1557,14 +1544,11 @@ public class OAuth2ScopeGrantPersistenceImpl
 		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1601,9 +1585,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 			else {
 				sql = _SQL_SELECT_OAUTH2SCOPEGRANT;
 
-				if (pagination) {
-					sql = sql.concat(OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1613,18 +1595,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<OAuth2ScopeGrant>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<OAuth2ScopeGrant>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<OAuth2ScopeGrant>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

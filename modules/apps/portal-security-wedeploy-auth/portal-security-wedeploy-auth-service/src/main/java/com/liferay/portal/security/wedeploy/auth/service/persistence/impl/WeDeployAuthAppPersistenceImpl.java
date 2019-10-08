@@ -1182,14 +1182,11 @@ public class WeDeployAuthAppPersistenceImpl
 		OrderByComparator<WeDeployAuthApp> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1226,9 +1223,7 @@ public class WeDeployAuthAppPersistenceImpl
 			else {
 				sql = _SQL_SELECT_WEDEPLOYAUTHAPP;
 
-				if (pagination) {
-					sql = sql.concat(WeDeployAuthAppModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(WeDeployAuthAppModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1238,18 +1233,8 @@ public class WeDeployAuthAppPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<WeDeployAuthApp>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WeDeployAuthApp>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WeDeployAuthApp>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

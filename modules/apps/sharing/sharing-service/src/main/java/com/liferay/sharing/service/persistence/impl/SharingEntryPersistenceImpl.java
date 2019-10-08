@@ -49,7 +49,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -171,14 +170,11 @@ public class SharingEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -235,7 +231,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -254,18 +250,8 @@ public class SharingEntryPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -982,14 +968,11 @@ public class SharingEntryPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1052,7 +1035,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1073,18 +1056,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1572,14 +1545,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1627,7 +1597,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1644,18 +1614,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2082,14 +2042,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUserId;
@@ -2137,7 +2094,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2154,18 +2111,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(userId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2594,14 +2541,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByToUserId;
@@ -2649,7 +2593,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2666,18 +2610,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(toUserId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3107,7 +3041,6 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -3163,7 +3096,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3182,18 +3115,8 @@ public class SharingEntryPersistenceImpl
 					qPos.add(new Timestamp(expirationDate.getTime()));
 				}
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3659,14 +3582,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByU_C;
@@ -3720,7 +3640,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -3739,18 +3659,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(classNameId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4217,14 +4127,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByTU_C;
@@ -4278,7 +4185,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4297,18 +4204,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(classNameId);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4775,14 +4672,11 @@ public class SharingEntryPersistenceImpl
 		OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_C;
@@ -4836,7 +4730,7 @@ public class SharingEntryPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -4855,18 +4749,8 @@ public class SharingEntryPersistenceImpl
 
 				qPos.add(classPK);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -6234,14 +6118,11 @@ public class SharingEntryPersistenceImpl
 		int start, int end, OrderByComparator<SharingEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -6278,9 +6159,7 @@ public class SharingEntryPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SHARINGENTRY;
 
-				if (pagination) {
-					sql = sql.concat(SharingEntryModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SharingEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -6290,18 +6169,8 @@ public class SharingEntryPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SharingEntry>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SharingEntry>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

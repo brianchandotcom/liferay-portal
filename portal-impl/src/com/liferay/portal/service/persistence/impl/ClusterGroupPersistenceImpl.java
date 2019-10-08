@@ -34,7 +34,6 @@ import com.liferay.portal.model.impl.ClusterGroupModelImpl;
 
 import java.io.Serializable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -417,14 +416,11 @@ public class ClusterGroupPersistenceImpl
 		int start, int end, OrderByComparator<ClusterGroup> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -461,9 +457,7 @@ public class ClusterGroupPersistenceImpl
 			else {
 				sql = _SQL_SELECT_CLUSTERGROUP;
 
-				if (pagination) {
-					sql = sql.concat(ClusterGroupModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(ClusterGroupModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -473,18 +467,8 @@ public class ClusterGroupPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<ClusterGroup>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<ClusterGroup>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<ClusterGroup>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

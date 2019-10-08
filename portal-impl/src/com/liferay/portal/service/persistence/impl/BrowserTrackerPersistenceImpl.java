@@ -39,7 +39,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -698,14 +697,11 @@ public class BrowserTrackerPersistenceImpl
 		int start, int end, OrderByComparator<BrowserTracker> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -742,9 +738,7 @@ public class BrowserTrackerPersistenceImpl
 			else {
 				sql = _SQL_SELECT_BROWSERTRACKER;
 
-				if (pagination) {
-					sql = sql.concat(BrowserTrackerModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(BrowserTrackerModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -754,18 +748,8 @@ public class BrowserTrackerPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<BrowserTracker>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<BrowserTracker>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<BrowserTracker>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

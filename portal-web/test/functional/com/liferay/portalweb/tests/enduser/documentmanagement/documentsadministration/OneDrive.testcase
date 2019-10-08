@@ -225,6 +225,33 @@ definition {
 			tagNameList = "adventures");
 	}
 
+	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout under site admin on an Excel document during creation."
+	@priority = "4"
+	test CancelCheckoutOnExcelSheet {
+		property test.name.skip.portal.instance = "OneDrive#CancelCheckoutOnExcelSheet";
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Cancel Checkout Excel Sheet Title",
+			key_documentTitle = "Cancel Checkout Excel Sheet Title.xlsx");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.cancelCheckoutCP(dmDocumentTitle = "Cancel Checkout Excel Sheet Title");
+
+		AssertElementNotPresent(
+			key_rowEntry = "Cancel Checkout Excel Sheet Title",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+			value1 = "Cancel Checkout Excel Sheet Title");
+	}
+
 	@description = "This test ensures that no residual data is left in the Portal UI after canceling checkout on a Word document during creation."
 	@priority = "4"
 	test CancelCheckoutOnWordDocument {

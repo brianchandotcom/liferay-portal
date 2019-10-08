@@ -8,7 +8,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/$1"
 		},
-		"file-globs": "**/lib/**/*.js",
+		"file-globs": "**/lib/**/*.js,!**/bridge",
 		"input": "build/node/packageRunBuild/resources/node_modules",
 		"output": "build/node/packageRunBuild/resources/bridge",
 		"src-mod-name-mapper": {

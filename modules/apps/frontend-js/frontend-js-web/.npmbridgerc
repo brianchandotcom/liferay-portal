@@ -8,7 +8,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/frontend-js-web/$1"
 		},
-		"file-globs": "liferay/**/*.js",
+		"file-globs": "liferay/**/*.js,!**/bridge",
 		"input": "build/node/packageRunBuild/resources",
 		"output": "build/node/packageRunBuild/resources/bridge/frontend-js-web",
 		"src-mod-name-mapper": {

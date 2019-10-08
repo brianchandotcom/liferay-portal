@@ -4,7 +4,7 @@
 			"from": "(.*)\\.js$",
 			"to": "bridge/map-common/$1"
 		},
-		"file-globs": "**/*.es.js,**/*.soy.js",
+		"file-globs": "**/*.es.js,**/*.soy.js,!**/bridge",
 		"input": "build/node/packageRunBuild/resources",
 		"output": "build/node/packageRunBuild/resources/bridge/map-common",
 		"src-mod-name-mapper": {

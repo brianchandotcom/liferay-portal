@@ -218,7 +218,7 @@ definition {
 		PageEditor.editFragmentHTML(
 			fileName = "fragment_freemarker_basic.html",
 			fragmentName = "HTML",
-			id = "html");
+			id = "element-html");
 
 		PageEditor.clickPublish();
 

@@ -1273,26 +1273,34 @@ public class GitWorkingDirectory {
 			sb.append(currentLocalGitBranch.getSHA());
 		}
 
-		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-			GitUtil.MILLIS_TIMEOUT, sb.toString());
+		String gitDiffCommandString = sb.toString();
 
-		if (executionResult.getExitValue() == 1) {
-			return Collections.emptyList();
-		}
+		List<File> modifiedFiles = _modifiedFilesMap.get(gitDiffCommandString);
 
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				"Unable to get current branch modified files\n" +
-					executionResult.getStandardError());
-		}
+		if (modifiedFiles == null) {
+			GitUtil.ExecutionResult executionResult = executeBashCommands(
+				GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
+				GitUtil.MILLIS_TIMEOUT, gitDiffCommandString);
 
-		List<File> modifiedFiles = new ArrayList<>();
+			if (executionResult.getExitValue() == 1) {
+				return Collections.emptyList();
+			}
 
-		String gitDiffOutput = executionResult.getStandardOut();
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					"Unable to get current branch modified files\n" +
+						executionResult.getStandardError());
+			}
 
-		for (String line : gitDiffOutput.split("\n")) {
-			modifiedFiles.add(new File(_workingDirectory, line));
+			modifiedFiles = new ArrayList<>();
+
+			String gitDiffOutput = executionResult.getStandardOut();
+
+			for (String line : gitDiffOutput.split("\n")) {
+				modifiedFiles.add(new File(_workingDirectory, line));
+			}
+
+			_modifiedFilesMap.put(gitDiffCommandString, modifiedFiles);
 		}
 
 		return JenkinsResultsParserUtil.getIncludedFiles(
@@ -2436,6 +2444,8 @@ public class GitWorkingDirectory {
 		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<commitTime>\\d+) (?<message>.*)");
+	private static final Map<String, List<File>> _modifiedFilesMap =
+		new HashMap<>();
 	private static final List<String> _privateOnlyGitRepositoryNames =
 		_getBuildPropertyAsList(
 			"git.working.directory.private.only.repository.names");

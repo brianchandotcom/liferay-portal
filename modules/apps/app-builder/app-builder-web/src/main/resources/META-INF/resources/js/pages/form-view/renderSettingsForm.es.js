@@ -39,11 +39,21 @@ export const getFilteredSettingsContext = settingsContext => {
 						({fieldName}) =>
 							UNIMPLIMENTED_PROPERTIES.indexOf(fieldName) === -1
 					)
-					.map(field => ({
-						...field,
-						defaultLanguageId: themeDisplay.getLanguageId(),
-						editingLanguageId: themeDisplay.getLanguageId()
-					}))
+					.map(field => {
+						if (field.fieldName === 'dataSourceType') {
+							field = {
+								...field,
+								predefinedValue: '["manual"]',
+								readOnly: true
+							};
+						}
+
+						return {
+							...field,
+							defaultLanguageId: themeDisplay.getLanguageId(),
+							editingLanguageId: themeDisplay.getLanguageId()
+						};
+					})
 			};
 		})
 	};

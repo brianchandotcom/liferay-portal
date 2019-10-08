@@ -30,6 +30,69 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-89073. It ensures that users can add and remove tags for existing images via Gogo Shell."
+	@priority = "4"
+	test AddAndRemoveAutoTagViaGogoShell {
+		property test.name.skip.portal.instance = "DMAutoTagging#AddAndRemoveAutoTagViaGogoShell";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var documentNumber : list "_1,_2,_3") {
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentFile = "Document_4.jpg",
+				dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			AutoTagging.assertAutoTagPresent(tagName = "carton");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		GogoShell.openGogoShellAdmin();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		GogoShell.executeCommand(commandName = "assetAutoTagger:untagAll ${companyId}");
+
+		GogoShell.viewOutput(outputContent = "Deleted 1 tags to asset entry DM Document JPG_1 Deleted 1 tags to asset entry DM Document JPG_2 Deleted 1 tags to asset entry DM Document JPG_3");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var documentNumber : list "_1,_2,_3") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			AutoTagging.assertNoAutoTag(tagName = "carton");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "assetAutoTagger:tagAllUntagged ${companyId}");
+
+		GogoShell.viewOutput(outputContent = "Added 1 tags to asset entry DM Document JPG_1 Added 1 tags to asset entry DM Document JPG_2 Added 1 tags to asset entry DM Document JPG_3");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var documentNumber : list "_1,_2,_3") {
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document JPG${documentNumber}");
+
+			AutoTagging.assertAutoTagPresent(tagName = "carton");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+		}
+	}
+
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = "4"
 	test AssertAutoTagAfterPublishToLive {

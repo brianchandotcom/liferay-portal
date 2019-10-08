@@ -80,8 +80,6 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 		String createDateString, String description, Long id,
 		Map<String, String> name, Item item) {
 
-		Assert.assertEquals(description, item.getDescription());
-
 		if (createDateString == null) {
 			Assert.assertNull(item.getCreateDate());
 		}
@@ -90,6 +88,7 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 				createDateString, _dateFormat.format(item.getCreateDate()));
 		}
 
+		Assert.assertEquals(description, item.getDescription());
 		Assert.assertEquals(id, item.getId());
 		Assert.assertEquals(name, item.getName());
 	}

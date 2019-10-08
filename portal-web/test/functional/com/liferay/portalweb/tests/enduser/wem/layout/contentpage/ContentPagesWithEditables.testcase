@@ -41,9 +41,9 @@ definition {
 		PageEditor.addBasicComponent(fragmentName = "HTML");
 
 		PageEditor.editFragmentHTML(
+			editableId = "element-html",
 			fileName = "fragment_freemarker_basic.html",
-			fragmentName = "HTML",
-			editableId = "element-html");
+			fragmentName = "HTML");
 
 		PageEditor.clickPublish();
 

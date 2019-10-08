@@ -72,15 +72,6 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
-		throws DuplicateFileException {
-
-		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, file);
-	}
-
-	@Override
-	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			InputStream inputStream)
 		throws DuplicateFileException {

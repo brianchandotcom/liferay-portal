@@ -44,10 +44,6 @@ public interface Store {
 	 */
 	public void addDirectory(long companyId, long repositoryId, String dirName);
 
-	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException;
-
 	/**
 	 * Adds a file based on an {@link InputStream} object.
 	 *

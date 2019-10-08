@@ -42,31 +42,6 @@ import java.io.InputStream;
 public abstract class BaseStore implements Store {
 
 	/**
-	 * Adds a file based on a {@link File} object.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param file Name the file name
-	 */
-	@Override
-	public void addFile(
-			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException {
-
-		try (InputStream is = new FileInputStream(file)) {
-			addFile(companyId, repositoryId, fileName, is);
-		}
-		catch (FileNotFoundException fnfe) {
-			throw new SystemException(fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error("Unable to add file", ioe);
-		}
-	}
-
-	/**
 	 * Creates a new copy of the file version.
 	 *
 	 * <p>

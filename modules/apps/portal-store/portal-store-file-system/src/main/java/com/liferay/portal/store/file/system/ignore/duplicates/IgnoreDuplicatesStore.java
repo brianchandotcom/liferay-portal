@@ -42,18 +42,6 @@ public class IgnoreDuplicatesStore implements Store {
 	@Override
 	public void addFile(
 			final long companyId, final long repositoryId,
-			final String fileName, final File file)
-		throws PortalException {
-
-		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT),
-			() -> _store.addFile(companyId, repositoryId, fileName, file));
-	}
-
-	@Override
-	public void addFile(
-			final long companyId, final long repositoryId,
 			final String fileName, final InputStream is)
 		throws PortalException {
 

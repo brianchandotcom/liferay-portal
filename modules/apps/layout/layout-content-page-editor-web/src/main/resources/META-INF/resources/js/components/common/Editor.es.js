@@ -19,7 +19,9 @@ import useSelector from '../../store/hooks/useSelector.es';
 
 const Editor = props => {
 	const editorConfig = useSelector(
-		state => state.defaultEditorConfigurations.comment.editorConfig
+		state =>
+			state.defaultEditorConfigurations[props.configurationName]
+				.editorConfig
 	);
 	const portletNamespace = useSelector(state => state.portletNamespace);
 
@@ -122,6 +124,8 @@ Editor.defaultProps = {
 
 Editor.propTypes = {
 	autoFocus: PropTypes.bool,
+	configurationName: PropTypes.oneOf(['rich-text', 'text', 'comment'])
+		.isRequired,
 	editorConfig: PropTypes.object,
 	id: PropTypes.string.isRequired,
 	initialValue: PropTypes.string.isRequired,

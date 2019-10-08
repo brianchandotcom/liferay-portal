@@ -29,6 +29,7 @@ const CommentForm = props => (
 
 				<Editor
 					autoFocus={props.autoFocus}
+					configurationName="comment"
 					id={props.id}
 					initialValue={props.textareaContent}
 					onChange={props.onTextareaChange}

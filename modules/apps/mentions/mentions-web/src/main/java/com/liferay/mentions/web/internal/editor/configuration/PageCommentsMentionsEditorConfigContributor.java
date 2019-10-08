@@ -10,8 +10,8 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
  */
 @Component(
 	property = {
-		"editor.config.key=pageEditorCommentEditor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+		"editor.config.key=pageEditorCommentEditor",
+		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
 		"service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class

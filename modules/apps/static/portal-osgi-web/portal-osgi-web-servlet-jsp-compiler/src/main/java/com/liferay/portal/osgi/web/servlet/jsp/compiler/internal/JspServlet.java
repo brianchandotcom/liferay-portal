@@ -210,7 +210,6 @@ public class JspServlet extends HttpServlet {
 		defaults.put("keepgenerated", "false");
 		defaults.put("logVerbosityLevel", "NONE");
 		defaults.put("saveBytecode", "true");
-		defaults.put("usePrecompiledJar", "true");
 
 		StringBundler sb = new StringBundler(4);
 

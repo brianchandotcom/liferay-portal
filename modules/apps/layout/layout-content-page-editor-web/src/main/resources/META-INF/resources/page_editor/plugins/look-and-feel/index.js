@@ -16,7 +16,7 @@
  * Entry-point for "Look and Feel" (sidebar pane) functionality.
  */
 export default class LookAndFeel {
-	constructor(_store, config) {
+	constructor({config}) {
 		this.lookAndFeelURL = config.lookAndFeelURL;
 	}
 

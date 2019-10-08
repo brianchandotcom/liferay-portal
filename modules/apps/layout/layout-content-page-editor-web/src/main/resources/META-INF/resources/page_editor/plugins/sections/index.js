@@ -12,11 +12,17 @@
  * details.
  */
 
+import React from 'react';
+
 /**
  * Entry-point for "Sections" (sidebar pane) functionality.
  */
 export default class Sections {
-	constructor(_store, _config) {
-		// TODO: implement
+	constructor({panel}) {
+		this.title = panel.label;
+	}
+
+	renderSidebar() {
+		return <h1>{this.title}</h1>;
 	}
 }

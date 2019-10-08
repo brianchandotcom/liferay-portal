@@ -12,17 +12,26 @@
  * details.
  */
 
+import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
-/**
- * Entry-point for "Comments" (sidebar pane) functionality.
- */
-export default class Comments {
-	constructor({panel}) {
-		this.title = panel.label;
-	}
+const {useState} = React;
 
-	renderSidebar() {
-		return <h1>{this.title}</h1>;
-	}
+/**
+ * Wrapper for `useState` that does an `isMounted()` check behind the scenes
+ * before triggering side-effects.
+ */
+export default function useStateSafe(initialValue) {
+	const isMounted = useIsMounted();
+
+	const [state, setState] = useState(initialValue);
+
+	return [
+		state,
+		function setStateSafe(newValue) {
+			if (isMounted()) {
+				setState(newValue);
+			}
+		}
+	];
 }

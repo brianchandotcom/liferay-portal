@@ -19,32 +19,18 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
 import {ConfigContext} from '../config/index';
+import usePlugins from '../hooks/usePlugins';
+import usePreload from '../hooks/usePreload';
+import useStateSafe from '../hooks/useStateSafe';
 import {StoreContext} from '../store/index';
 
-const {useContext, useRef, useState} = React;
+const {Suspense, lazy, useContext} = React;
 
 /**
- * Failure to preload is a non-critical failure, so we use this swallow
+ * Failure to preload is a non-critical failure, so we'll use this to swallow
  * rejected promises silently.
  */
 const swallow = [value => value, _error => undefined];
-
-// TODO: possibly extract this into frontend-js-react-web, or at least into
-// hooks directory
-function useStateSafe(initialValue) {
-	const isMounted = useIsMounted();
-
-	const [state, setState] = useState(initialValue);
-
-	return [
-		state,
-		function setStateSafe(newValue) {
-			if (isMounted()) {
-				setState(newValue);
-			}
-		}
-	];
-}
 
 // TODO: add react error boundary
 export default function Sidebar() {
@@ -53,94 +39,54 @@ export default function Sidebar() {
 
 	// TODO: default to open and eagerly load first plugin
 	const [open, setOpen] = useStateSafe(false);
-	const [activePlugin, setActivePlugin] = useStateSafe(null);
+	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
 	const {sidebarPanels} = store;
 
 	const isMounted = useIsMounted();
 
-	// We use refs here to avoid state-related races.
-	const preloaded = useRef(new Map());
-	const pluginInstances = useRef(new Map());
+	const preload = usePreload();
 
-	const preload = ({pluginEntryPoint, sidebarPanelId}) => {
-		if (!preloaded.current.get(sidebarPanelId)) {
-			preloaded.current.set(
-				sidebarPanelId,
-				new Promise((resolve, reject) => {
-					Liferay.Loader.require(
-						[pluginEntryPoint],
-						Plugin => {
-							if (isMounted()) {
-								resolve(Plugin.default);
-							}
-						},
-						error => {
-							if (isMounted()) {
-								// Reset so that we retry next time.
-								preloaded.current.set(sidebarPanelId, null);
-								reject(error);
-							}
-						}
-					);
-				})
-			);
-		}
-
-		return preloaded.current.get(sidebarPanelId);
-	};
+	const {getInstance, register} = usePlugins();
 
 	// TODO: useEffect to call deactivate before unmounting
 
-	const togglePanel = sidebarPanel => {
-		const {rendersSidebarContent, sidebarPanelId} = sidebarPanel;
+	const togglePanel = panel => {
+		const {rendersSidebarContent, sidebarPanelId} = panel;
 
-		function toggle() {
-			const pluginInstance = pluginInstances.current.get(sidebarPanelId);
+		const shouldActivate =
+			!rendersSidebarContent || sidebarPanelId !== activePluginId;
 
-			if (isMounted()) {
-				const shouldActivate =
-					!rendersSidebarContent || pluginInstance !== activePlugin;
+		const wantOpen = rendersSidebarContent && shouldActivate;
 
-				const wantOpen = rendersSidebarContent && shouldActivate;
-
-				if (typeof activePlugin.deactivate === 'function') {
-					activePlugin.deactivate();
-				}
-
-				if (
-					shouldActivate &&
-					typeof pluginInstance.activate === 'function'
-				) {
-					pluginInstance.activate();
-				}
-
-				setActivePlugin(shouldActivate ? pluginInstance : null);
-
-				if (open !== wantOpen) {
-					setOpen(wantOpen);
-				}
-			}
+		if (open !== wantOpen) {
+			setOpen(wantOpen);
 		}
 
-		if (pluginInstances.current.has(sidebarPanelId)) {
-			toggle();
-		} else {
-			const promise =
-				preloaded.current.get(sidebarPanelId) || preload(sidebarPanel);
+		getInstance(activePluginId).then(activePlugin => {
+			if (activePlugin && typeof activePlugin.deactivate === 'function') {
+				activePlugin.deactivate();
+			}
+		});
 
-			promise
-				.then(Plugin => {
-					const pluginInstance = new Plugin(store, config);
-					pluginInstances.current.set(sidebarPanelId, pluginInstance);
-					toggle();
-				})
-				.catch(error => {
-					if (process.env.NODE_ENV === 'development') {
-						console.error(error);
+		if (shouldActivate) {
+			const promise = preload(sidebarPanelId, panel.pluginEntryPoint);
+
+			register(sidebarPanelId, promise, {config, panel, store}).then(
+				plugin => {
+					if (
+						plugin &&
+						typeof plugin.activate === 'function' &&
+						isMounted()
+					) {
+						plugin.activate();
 					}
-					// TODO: show a toast or something
-				});
+
+					setActivePluginId(sidebarPanelId);
+				}
+			);
+		} else {
+			setActivePluginId(null);
 		}
 	};
 
@@ -149,8 +95,18 @@ export default function Sidebar() {
 			<div className="page-editor-sidebar">
 				<div className="page-editor-sidebar-buttons">
 					{sidebarPanels.reduce((elements, group, groupIndex) => {
-						const buttons = group.map(sidebarPanel => {
-							const {icon, label, sidebarPanelId} = sidebarPanel;
+						const buttons = group.map(panel => {
+							const {
+								icon,
+								label,
+								pluginEntryPoint,
+								sidebarPanelId
+							} = panel;
+
+							const prefetch = () =>
+								preload(sidebarPanelId, pluginEntryPoint).then(
+									...swallow
+								);
 
 							// TODO: also handle keydown
 							return (
@@ -158,13 +114,9 @@ export default function Sidebar() {
 									data-tooltip-align="left"
 									displayType="unstyled"
 									key={sidebarPanelId}
-									onClick={() => togglePanel(sidebarPanel)}
-									onFocus={() =>
-										preload(sidebarPanel).then(...swallow)
-									}
-									onMouseEnter={() =>
-										preload(sidebarPanel).then(...swallow)
-									}
+									onClick={() => togglePanel(panel)}
+									onFocus={prefetch}
+									onMouseEnter={prefetch}
 									symbol={icon}
 									title={label}
 								/>
@@ -188,9 +140,77 @@ export default function Sidebar() {
 						'page-editor-sidebar-content-open': open
 					})}
 				>
-					sidebar contents
+					<ErrorBoundary>
+						<Suspense fallback={<Spinner />}>
+							<SidebarPanel
+								plugin={getInstance(activePluginId)}
+							/>
+						</Suspense>
+					</ErrorBoundary>
 				</div>
 			</div>
 		</ClayTooltipProvider>
 	);
+}
+
+const SidebarPanel = ({plugin}) => {
+	const Component = lazy(() =>
+		plugin.then(instance => {
+			return {
+				default: () => {
+					if (
+						instance &&
+						typeof instance.renderSidebar === 'function'
+					) {
+						return instance.renderSidebar();
+					} else {
+						return null;
+					}
+				}
+			};
+		})
+	);
+
+	return <Component />;
+};
+
+// TODO: make sure this shows up during preloading
+const Spinner = () => {
+	return (
+		<div className="inline-item my-5 p-5 w-100">
+			<span aria-hidden="true" className="loading-animation"></span>
+		</div>
+	);
+};
+
+class ErrorBoundary extends React.Component {
+	static getDerivedStateFromError(_error) {
+		// TODO: specifically look for loading errors here
+		return {hasError: true};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {hasError: false};
+	}
+
+	componentDidCatch() {
+		// TODO: log here in dev
+	}
+
+	render() {
+		if (this.state.hasError) {
+			return (
+				<span>
+					got an error, could
+					<a onClick={() => this.setState({hasError: false})}>
+						retry
+					</a>
+				</span>
+			);
+		} else {
+			return this.props.children;
+		}
+	}
 }

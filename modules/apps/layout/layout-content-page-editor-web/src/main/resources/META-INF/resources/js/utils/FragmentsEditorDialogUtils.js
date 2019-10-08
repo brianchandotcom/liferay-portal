@@ -29,47 +29,6 @@ const DOWNLOAD_FILE_ENTRY_IMAGE_SELECTOR_RETURN_TYPE =
 	'com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType';
 
 /**
- * @param {object} options
- * @param {function} options.callback
- * @param {string} options.assetBrowserURL
- * @param {string} options.eventName
- * @param {string} options.modalTitle
- * @param {function} [options.destroyedCallback=null]
- */
-function openAssetBrowser({
-	assetBrowserURL,
-	callback,
-	eventName,
-	modalTitle,
-	destroyedCallback = null
-}) {
-	Liferay.Util.selectEntity(
-		{
-			dialog: {
-				constrain: true,
-				destroyOnHide: true,
-				modal: true
-			},
-			eventName,
-			title: modalTitle,
-			uri: assetBrowserURL
-		},
-		event => {
-			if (event.assetclassnameid) {
-				callback({
-					className: event.assetclassname,
-					classNameId: event.assetclassnameid,
-					classPK: event.assetclasspk,
-					title: event.assettitle
-				});
-			} else if (destroyedCallback) {
-				destroyedCallback();
-			}
-		}
-	);
-}
-
-/**
  * @param {object} store Store
  * @return {CreateContentDialog}
  */
@@ -137,6 +96,53 @@ function openImageSelector({
 }
 
 /**
+ * @param {object} options
+ * @param {function} options.callback
+ * @param {string} options.eventName
+ * @param {string} options.itemSelectorURL
+ * @param {function} [options.destroyedCallback=null]
+ */
+function openItemSelector({
+	callback,
+	eventName,
+	itemSelectorURL,
+	destroyedCallback = null
+}) {
+	AUI().use('liferay-item-selector-dialog', A => {
+		const itemSelector = new A.LiferayItemSelectorDialog({
+			eventName,
+			on: {
+				selectedItemChange: event => {
+					const selectedItem = event.newVal;
+
+					if (selectedItem && selectedItem.value) {
+						const infoItem = JSON.parse(selectedItem.value);
+
+						callback({
+							className: infoItem.className,
+							classNameId: infoItem.classNameId,
+							classPK: infoItem.classPK,
+							title: infoItem.title
+						});
+					}
+				},
+
+				visibleChange: event => {
+					if (event.newVal === false && destroyedCallback) {
+						destroyedCallback();
+					}
+				}
+			},
+			'strings.add': Liferay.Language.get('done'),
+			title: Liferay.Language.get('select'),
+			url: itemSelectorURL
+		});
+
+		itemSelector.open();
+	});
+}
+
+/**
  * @param {{dispatch: Function}} store
  * @review
  */
@@ -179,9 +185,9 @@ function stopListeningWidgetConfigurationChange() {
 }
 
 export {
-	openAssetBrowser,
 	openCreateContentDialog,
 	openImageSelector,
+	openItemSelector,
 	startListeningWidgetConfigurationChange,
 	stopListeningWidgetConfigurationChange
 };

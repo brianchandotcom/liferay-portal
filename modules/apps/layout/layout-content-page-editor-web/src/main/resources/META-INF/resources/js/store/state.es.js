@@ -455,6 +455,14 @@ const INITIAL_STATE = {
 	imageSelectorURL: Config.string().value(''),
 
 	/**
+	 * URL for selecting info items
+	 * @default []
+	 * @review
+	 * @type {object[]}
+	 */
+	infoItemSelectorURL: Config.string().value(''),
+
+	/**
 	 * Currently selected language id.
 	 * @default ''
 	 * @review

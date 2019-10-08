@@ -34,12 +34,13 @@ import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.DownloadFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -253,6 +254,8 @@ public class ContentPageEditorDisplayContext {
 			_getResourceURL("/content_layout/get_page_contents")
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
+		).put(
+			"infoItemSelectorURL", _getInfoItemSelectorURL()
 		).put(
 			"languageId", themeDisplay.getLanguageId()
 		).put(
@@ -925,24 +928,23 @@ public class ContentPageEditorDisplayContext {
 		return _imageItemSelectorCriterion;
 	}
 
-	private List<SoyContext> _getInfoItemRenderersTemplatesSoyContexts(
-		List<InfoItemRenderer> infoItemRenderers) {
+	private String _getInfoItemSelectorURL() {
+		ItemSelectorCriterion itemSelectorCriterion =
+			new InfoItemItemSelectorCriterion();
 
-		List<SoyContext> soyContexts = new ArrayList<>();
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new InfoItemItemSelectorReturnType());
 
-		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+		PortletURL infoItemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(request),
+			_renderResponse.getNamespace() + "selectInfoItem",
+			itemSelectorCriterion);
 
-			soyContext.put(
-				"key", infoItemRenderer.getKey()
-			).put(
-				"label", infoItemRenderer.getLabel(themeDisplay.getLocale())
-			);
-
-			soyContexts.add(soyContext);
+		if (infoItemSelectorURL == null) {
+			return StringPool.BLANK;
 		}
 
-		return soyContexts;
+		return infoItemSelectorURL.toString();
 	}
 
 	private String _getItemSelectorURL() {

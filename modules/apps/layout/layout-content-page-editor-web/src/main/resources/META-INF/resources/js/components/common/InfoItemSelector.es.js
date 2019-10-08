@@ -32,6 +32,7 @@ class InfoItemSelector extends Component {}
 InfoItemSelector.STATE = {};
 
 const ConnectedInfoItemSelector = getConnectedComponent(InfoItemSelector, [
+	'infoItemSelectorURL',
 	'spritemap'
 ]);
 

@@ -8,6 +8,7 @@
 	{@param? fieldName: string}
 	{@param? handleAssetBrowserLinkClick: any}
 	{@param? handleAssetEntryLinkClick: any}
+	{@param? infoItemSelectorURL: string}
 	{@param? recentlyUsedAssetEntries: list<[
 		encodedId: string,
 		classNameId: string,
@@ -53,6 +54,15 @@
 				</button>
 
 				<div class="dropdown-menu item-selector-dropdown-menu" id="{$dropdownId}">
+					{if $infoItemSelectorURL}
+						<button
+							class="dropdown-item"
+							data-onclick="{$handleAssetBrowserLinkClick}"
+							type="button"
+						>
+							{msg desc=""}select{/msg}...
+						</button>
+					{/if}
 					{if $recentlyUsedAssetEntries and length($recentlyUsedAssetEntries) > 0}
 						<div
 							aria-hidden="true"

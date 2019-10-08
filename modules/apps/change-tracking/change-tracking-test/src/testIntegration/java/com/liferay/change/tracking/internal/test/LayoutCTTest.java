@@ -208,6 +208,11 @@ public class LayoutCTTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
+				expectedLog = "ERROR: current transaction is aborted, commands ignored until end of transaction block",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedDBType = ExpectedDBType.POSTGRESQL,
 				expectedLog = "ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			),

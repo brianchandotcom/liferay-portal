@@ -221,6 +221,20 @@ public class MessageBoardMessageResourceImpl
 			rating.getRatingValue(), messageBoardMessageId);
 	}
 
+	@Override
+	public void putMessageBoardMessageSubscribe(Long messageBoardMessageId)
+		throws Exception {
+
+		_mbMessageService.subscribeMessage(messageBoardMessageId);
+	}
+
+	@Override
+	public void putMessageBoardMessageUnsubscribe(Long messageBoardMessageId)
+		throws Exception {
+
+		_mbMessageService.unsubscribeMessage(messageBoardMessageId);
+	}
+
 	private MessageBoardMessage _addMessageBoardThread(
 			Long messageBoardMessageId, MessageBoardMessage messageBoardMessage)
 		throws Exception {

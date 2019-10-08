@@ -431,14 +431,24 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
 				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Cancel Checkout");
 		}
 		else {
+			var key_dmDocumentTitle = "${dmDocumentTitle}";
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${dmDocumentTitle}");
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
 				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
-		}
 
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Cancel Checkout");
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Cancel Checkout");
+		}
 
 		Alert.viewSuccessMessage();
 	}

@@ -20,7 +20,7 @@ import '../../../common/InfoItemSelector.es';
 import './ItemSelectorFieldDelegateTemplate.soy';
 import templates from './ItemSelectorField.soy';
 import getConnectedComponent from '../../../../store/ConnectedComponent.es';
-import {openAssetBrowser} from '../../../../utils/FragmentsEditorDialogUtils';
+import {openItemSelector} from '../../../../utils/FragmentsEditorDialogUtils';
 import {setIn} from '../../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
@@ -76,13 +76,7 @@ class ItemSelectorField extends Component {
 	 * @review
 	 */
 	_handleItemSelectClick() {
-		const className = this.field.typeOptions.className;
-
-		const itemType = '';
-
-		if (itemType) {
-			this._openAssetBrowser(itemType.href, itemType.typeName);
-		}
+		this._openItemSelector();
 	}
 
 	/**
@@ -105,40 +99,31 @@ class ItemSelectorField extends Component {
 
 	/**
 	 * Handle the click in the item type dropdown
-	 * @param {Event} event
 	 * @review
 	 */
-	_handleItemTypeClick(event) {
-		const {
-			assetBrowserUrl,
-			assetBrowserWindowTitle
-		} = event.delegateTarget.dataset;
-
-		this._openAssetBrowser(assetBrowserUrl, assetBrowserWindowTitle);
+	_handleItemTypeClick() {
+		this._openItemSelector();
 	}
 
 	/**
-	 * Opens asset browser
-	 * @param {string} assetBrowserURL
-	 * @param {string} assetBrowserWindowTitle
+	 * Opens item selector
 	 * @review
 	 */
-	_openAssetBrowser(assetBrowserURL, assetBrowserWindowTitle) {
-		openAssetBrowser({
-			assetBrowserURL,
-			callback: selectedAssetEntry => {
+	_openItemSelector() {
+		openItemSelector({
+			callback: selectedInfoItem => {
 				this.emit('fieldValueChanged', {
 					name: this.field.name,
 					value: {
-						className: selectedAssetEntry.className,
-						classNameId: selectedAssetEntry.classNameId,
-						classPK: selectedAssetEntry.classPK,
-						title: selectedAssetEntry.title
+						className: selectedInfoItem.className,
+						classNameId: selectedInfoItem.classNameId,
+						classPK: selectedInfoItem.classPK,
+						title: selectedInfoItem.title
 					}
 				});
 			},
-			eventName: `${this.portletNamespace}selectAsset`,
-			modalTitle: assetBrowserWindowTitle
+			eventName: `${this.portletNamespace}selectInfoItem`,
+			itemSelectorURL: this.infoItemSelectorURL
 		});
 	}
 }
@@ -185,6 +170,7 @@ ItemSelectorField.STATE = {
 };
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
+	'infoItemSelectorURL',
 	'portletNamespace',
 	'spritemap'
 ]);

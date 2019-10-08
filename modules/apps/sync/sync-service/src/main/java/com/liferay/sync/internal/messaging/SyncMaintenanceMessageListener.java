@@ -126,7 +126,8 @@ public class SyncMaintenanceMessageListener extends BaseMessageListener {
 								values.put("event", dlSyncEvent.getEvent());
 								values.put(
 									"modifiedTime",
-									dlSyncEvent.getModifiedTime());
+									_syncDLObjectLocalService.
+										getLatestModifiedTime() + 1);
 								values.put("type", dlSyncEvent.getType());
 								values.put("typePK", dlSyncEvent.getTypePK());
 

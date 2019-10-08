@@ -1049,6 +1049,63 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				}
 			</#if>
+		<#elseif properties?keys?seq_contains("id") && stringUtil.equals(javaMethodSignature.returnType, "void")>
+
+			@Test
+			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+
+				@SuppressWarnings("PMD.UnusedLocalVariable")
+				${schemaName} ${schemaVarName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+				assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+					<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+						${schemaVarName}.getId()
+					<#else>
+						null
+					</#if>
+					<#sep>, </#sep>
+				</#list>
+				));
+
+				assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+					<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+						<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
+							0D
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+							0
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+							0L
+						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+							""
+						<#else>
+							null
+						</#if>
+					<#else>
+						null
+					</#if>
+					<#sep>, </#sep>
+				</#list>
+				));
+			}
+
+			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+			<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
+				<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+
+				return ${schemaVarName}Resource.postSite${schemaName}(testGroup.getGroupId(), random${schemaName}()
+
+				<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
+					, getMultipartFiles()
+				</#if>
+
+				);
+			<#else>
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			</#if>
+			}
+
 		<#elseif !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {

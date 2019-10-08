@@ -82,7 +82,10 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 
 		Assert.assertEquals(description, item.getDescription());
 
-		if (item.getCreateDate() != null) {
+		if (createDateString == null) {
+			Assert.assertNull(item.getCreateDate());
+		}
+		else {
 			Assert.assertEquals(
 				createDateString, _dateFormat.format(item.getCreateDate()));
 		}

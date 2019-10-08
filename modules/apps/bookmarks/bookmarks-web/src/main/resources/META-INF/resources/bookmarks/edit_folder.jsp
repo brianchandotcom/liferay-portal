@@ -49,17 +49,13 @@ else {
 
 String headerTitle = (folder == null) ? ((parentFolderId > 0) ? LanguageUtil.get(request, "add-subfolder") : LanguageUtil.get(request, "add-folder")) : LanguageUtil.format(request, "edit-x", folder.getName(), false);
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
-	renderResponse.setTitle(headerTitle);
-}
+renderResponse.setTitle(headerTitle);
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div class="container-fluid-1280">
 	<portlet:actionURL name="/bookmarks/edit_folder" var="editFolderURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 	</portlet:actionURL>
@@ -69,14 +65,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
-
-		<c:if test="<%= !portletTitleBasedNavigation %>">
-			<liferay-ui:header
-				backURL="<%= redirect %>"
-				localizeTitle="<%= folder == null %>"
-				title="<%= headerTitle %>"
-			/>
-		</c:if>
 
 		<liferay-ui:error exception="<%= FolderNameException.class %>">
 			<p>

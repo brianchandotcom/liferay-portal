@@ -44,21 +44,16 @@ else {
 }
 
 boolean showFolderSelector = ParamUtil.getBoolean(request, "showFolderSelector");
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 String headerTitle = (entry == null) ? LanguageUtil.get(request, "add-bookmark") : LanguageUtil.format(request, "edit-x", entry.getName(), false);
 
-boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-if (portletTitleBasedNavigation) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
-
-	renderResponse.setTitle(headerTitle);
-}
+renderResponse.setTitle(headerTitle);
 %>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
+<div class="container-fluid-1280">
 	<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_entry" />
 	</portlet:actionURL>
@@ -71,14 +66,6 @@ if (portletTitleBasedNavigation) {
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 		<aui:input name="showFolderSelector" type="hidden" value="<%= showFolderSelector %>" />
-
-		<c:if test="<%= !portletTitleBasedNavigation && showHeader %>">
-			<liferay-ui:header
-				backURL="<%= backURL %>"
-				localizeTitle="<%= entry == null %>"
-				title="<%= headerTitle %>"
-			/>
-		</c:if>
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />

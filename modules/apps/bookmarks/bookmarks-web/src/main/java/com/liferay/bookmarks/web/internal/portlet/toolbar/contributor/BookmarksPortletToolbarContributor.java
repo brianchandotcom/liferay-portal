@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -94,10 +92,9 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(),
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			portletRequest, themeDisplay.getScopeGroup(),
+			BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -132,10 +129,9 @@ public class BookmarksPortletToolbarContributor
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletDisplay.getId(),
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			portletRequest, themeDisplay.getScopeGroup(),
+			BookmarksPortletKeys.BOOKMARKS_ADMIN, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

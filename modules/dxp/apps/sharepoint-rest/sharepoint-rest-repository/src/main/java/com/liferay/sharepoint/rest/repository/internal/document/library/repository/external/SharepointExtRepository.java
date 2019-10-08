@@ -337,6 +337,14 @@ public class SharepointExtRepository implements ExtRepository {
 		throws PortalException {
 
 		try {
+			if ((extRepositoryObjectType == ExtRepositoryObjectType.FOLDER) &&
+				(extRepositoryObjectKey.equals(_libraryPath) ||
+				 extRepositoryObjectKey.equals(
+					 StringPool.SLASH + _libraryPath))) {
+
+				return (T)_rootFolder;
+			}
+
 			String url = _sharepointURLHelper.getObjectURL(
 				extRepositoryObjectType, extRepositoryObjectKey);
 

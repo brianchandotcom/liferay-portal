@@ -995,6 +995,16 @@ public class DirectoryWatcher extends Thread implements BundleListener
         String bundleLocation, BufferedInputStream is, long checksum, AtomicBoolean modified)
         throws IOException, BundleException
     {
+		Bundle bundle = context.getBundle(bundleLocation);
+
+		if (bundle != null) {
+			bundle.update(is);
+
+			Util.storeChecksum(bundle, checksum, context);
+
+			return bundle;
+		}
+
         JarInputStream jar = null;
         try {
             is.mark(256 * 1024);

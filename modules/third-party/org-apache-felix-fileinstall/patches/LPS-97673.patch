@@ -1,0 +1,21 @@
+diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+index fa41674..2e91eaa 100644
+--- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
++++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+@@ -995,6 +995,16 @@ public class DirectoryWatcher extends Thread implements BundleListener
+         String bundleLocation, BufferedInputStream is, long checksum, AtomicBoolean modified)
+         throws IOException, BundleException
+     {
++		Bundle bundle = context.getBundle(bundleLocation);
++
++		if (bundle != null) {
++			bundle.update(is);
++
++			Util.storeChecksum(bundle, checksum, context);
++
++			return bundle;
++		}
++
+         JarInputStream jar = null;
+         try {
+             is.mark(256 * 1024);

@@ -135,8 +135,7 @@ public class BookmarksEntryAssetRendererFactory
 
 	@Override
 	public boolean hasAddPermission(
-			PermissionChecker permissionChecker, long groupId, long classTypeId)
-		throws Exception {
+		PermissionChecker permissionChecker, long groupId, long classTypeId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, ActionKeys.ADD_ENTRY);
@@ -145,7 +144,7 @@ public class BookmarksEntryAssetRendererFactory
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws Exception {
+		throws PortalException {
 
 		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);

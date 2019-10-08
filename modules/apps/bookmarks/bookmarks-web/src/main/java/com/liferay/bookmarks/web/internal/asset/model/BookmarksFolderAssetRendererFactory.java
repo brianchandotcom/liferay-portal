@@ -117,7 +117,7 @@ public class BookmarksFolderAssetRendererFactory
 	@Override
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws Exception {
+		throws PortalException {
 
 		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);

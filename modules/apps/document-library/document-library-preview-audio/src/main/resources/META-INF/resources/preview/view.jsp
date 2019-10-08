@@ -26,40 +26,38 @@ List<String> previewFileURLs = (List<String>)request.getAttribute(DLPreviewAudio
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div>
-	<div class="preview-file">
-		<div class="preview-file-container">
-			<audio
-				class="preview-file-audio"
-				controls
-				controlsList="nodownload"
-				style="max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;"
-			>
+<div class="preview-file">
+	<div class="preview-file-container">
+		<audio
+			class="preview-file-audio"
+			controls
+			controlsList="nodownload"
+			style="max-width: <%= PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH %>px;"
+		>
 
-				<%
-				for (String previewFileURL : previewFileURLs) {
-					String type = null;
+			<%
+			for (String previewFileURL : previewFileURLs) {
+				String type = null;
 
-					if (Validator.isNotNull(previewFileURL)) {
-						if (previewFileURL.endsWith("mp3")) {
-							type = "audio/mp3";
-						}
-						else if (previewFileURL.endsWith("ogg")) {
-							type = "audio/ogg";
-						}
+				if (Validator.isNotNull(previewFileURL)) {
+					if (previewFileURL.endsWith("mp3")) {
+						type = "audio/mp3";
 					}
-
-					if (type != null) {
-				%>
-
-						<source src="<%= previewFileURL %>" type="<%= type %>" />
-
-				<%
+					else if (previewFileURL.endsWith("ogg")) {
+						type = "audio/ogg";
 					}
 				}
-				%>
 
-			</audio>
-		</div>
+				if (type != null) {
+			%>
+
+					<source src="<%= previewFileURL %>" type="<%= type %>" />
+
+			<%
+				}
+			}
+			%>
+
+		</audio>
 	</div>
 </div>

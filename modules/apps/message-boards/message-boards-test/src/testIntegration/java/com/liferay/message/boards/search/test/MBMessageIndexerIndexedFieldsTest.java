@@ -164,6 +164,7 @@ public class MBMessageIndexerIndexedFieldsTest {
 		map.put(Field.USER_ID, String.valueOf(mbMessage.getUserId()));
 		map.put(Field.USER_NAME, StringUtil.lowerCase(mbMessage.getUserName()));
 		map.put("answer", "false");
+		map.put("answer_String_sortable", "false");
 		map.put("discussion", "false");
 		map.put(
 			"parentMessageId", String.valueOf(mbMessage.getParentMessageId()));

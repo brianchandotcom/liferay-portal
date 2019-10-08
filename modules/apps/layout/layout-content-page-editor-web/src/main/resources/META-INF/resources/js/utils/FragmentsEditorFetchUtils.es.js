@@ -190,6 +190,12 @@ function getAssetMappingFields(classNameId, classPK) {
 	});
 }
 
+function getAvailableTemplates(className) {
+	return _fetch(_store.getState().getAvailableTemplatesURL, {
+		className
+	});
+}
+
 /**
  * @param {string} ddmStructureId
  */
@@ -342,6 +348,7 @@ export {
 	editFragmentEntryLinkComment,
 	getAssetFieldValue,
 	getAssetMappingFields,
+	getAvailableTemplates,
 	getContentStructureMappingFields,
 	getExperienceUsedPortletIds,
 	getPageContents,

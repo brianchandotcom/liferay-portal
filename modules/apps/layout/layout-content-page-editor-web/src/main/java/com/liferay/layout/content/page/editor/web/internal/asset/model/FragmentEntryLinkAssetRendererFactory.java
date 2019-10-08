@@ -85,6 +85,11 @@ public class FragmentEntryLinkAssetRendererFactory
 		return TYPE;
 	}
 
+	@Override
+	public String getTypeName(Locale locale) {
+		return LanguageUtil.get(locale, "fragment");
+	}
+
 	public class FragmentEntryLinkAssetRenderer
 		extends BaseAssetRenderer<FragmentEntryLink> {
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -90,7 +91,12 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		store.addFile(companyId, repositoryId, fileName, file);
+		try (InputStream is = new FileInputStream(file)) {
+			store.addFile(companyId, repositoryId, fileName, is);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -150,7 +156,9 @@ public class DLStoreImpl implements DLStore {
 
 					AntivirusScannerUtil.scan(tempFile);
 
-					store.addFile(companyId, repositoryId, fileName, tempFile);
+					try (InputStream fis = new FileInputStream(tempFile)) {
+						store.addFile(companyId, repositoryId, fileName, fis);
+					}
 				}
 			}
 			catch (IOException ioe) {

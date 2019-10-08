@@ -112,6 +112,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -2695,7 +2697,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				// File
 
-				_store.addFile(_companyId, dlFolderId, name, file);
+				try (InputStream is = new FileInputStream(file)) {
+					_store.addFile(_companyId, dlFolderId, name, is);
+				}
 
 				return fileEntryUuid;
 			}

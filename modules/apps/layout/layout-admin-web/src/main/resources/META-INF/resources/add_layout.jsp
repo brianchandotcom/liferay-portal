@@ -34,6 +34,8 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 			<c:choose>
 				<c:when test="<%= autoSiteNavigationMenus.size() > 1 %>">
+					<div class="h3 sheet-subtitle"><liferay-ui:message key="navigation-menus" /></div>
+
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
 					<div class="auto-site-navigation-menus container my-3">
@@ -69,7 +71,9 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 			</c:choose>
 
 			<c:if test="<%= layoutsAdminDisplayContext.isShowCategorization() %>">
-				<aui:fieldset cssClass="mb-4" label="categorization">
+				<aui:fieldset cssClass="mb-4">
+					<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>
+
 					<liferay-asset:asset-categories-selector
 						className="<%= Layout.class.getName() %>"
 						classPK="<%= 0 %>"

@@ -214,9 +214,14 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		store.copyFileVersion(
-			companyId, repositoryId, fileName, fromVersionLabel,
-			toVersionLabel);
+		InputStream is = store.getFileAsStream(
+			companyId, repositoryId, fileName, fromVersionLabel);
+
+		if (is == null) {
+			is = new UnsyncByteArrayInputStream(new byte[0]);
+		}
+
+		store.updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
 	}
 
 	@Override

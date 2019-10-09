@@ -458,7 +458,13 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		store.updateFile(companyId, repositoryId, fileName, versionLabel, file);
+		try (InputStream is = new FileInputStream(file)) {
+			store.updateFile(
+				companyId, repositoryId, fileName, versionLabel, is);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -486,7 +492,7 @@ public class DLStoreImpl implements DLStore {
 			Store store = _storeFactory.getStore();
 
 			store.updateFile(
-				companyId, repositoryId, fileName, versionLabel, file);
+				companyId, repositoryId, fileName, versionLabel, is);
 
 			return;
 		}
@@ -507,8 +513,10 @@ public class DLStoreImpl implements DLStore {
 
 				AntivirusScannerUtil.scan(tempFile);
 
-				store.updateFile(
-					companyId, repositoryId, fileName, versionLabel, tempFile);
+				try (InputStream fis = new FileInputStream(tempFile)) {
+					store.updateFile(
+						companyId, repositoryId, fileName, versionLabel, fis);
+				}
 			}
 			catch (IOException ioe) {
 				throw new SystemException(

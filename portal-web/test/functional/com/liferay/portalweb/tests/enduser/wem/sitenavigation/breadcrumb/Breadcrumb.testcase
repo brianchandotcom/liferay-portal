@@ -307,7 +307,10 @@ definition {
 
 	@priority = "5"
 	test DisableShowPage {
-		property portal.acceptance = "true";
+
+		// Ignoring test from acceptance until LRQA-52643 is resolved
+
+		property portal.acceptance = "false";
 		property testray.component.names = "Breadcrumb";
 
 		ProductMenu.gotoPortlet(

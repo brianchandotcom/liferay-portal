@@ -130,7 +130,10 @@ definition {
 	@description = "This is a test for LPS-99543. User can change text fragment configuration in a content page template."
 	@priority = "5"
 	test AddTextConfigurationFragmentToContentPageTemplate {
-		property portal.acceptance = "true";
+
+		// Ignoring test from acceptance until LRQA-52644 is resolved
+
+		property portal.acceptance = "false";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");

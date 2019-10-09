@@ -55,9 +55,9 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-		}
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		task ("Assert the Content fragment has the updated editable text") {
 			AssertVisible(
@@ -112,6 +112,10 @@ definition {
 			layoutName = "Content Page Name",
 			type = "content");
 
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
 		task ("Add an Image fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -137,9 +141,9 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-		}
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		task ("Assert the Image fragment appears with the image") {
 			AssertVisible(

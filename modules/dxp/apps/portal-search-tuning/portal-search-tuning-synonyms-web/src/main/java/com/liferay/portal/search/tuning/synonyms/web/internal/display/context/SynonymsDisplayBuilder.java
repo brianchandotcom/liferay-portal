@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.synonyms.web.internal.synonym.SynonymIndexer;
 
@@ -79,7 +80,7 @@ public class SynonymsDisplayBuilder {
 	}
 
 	public String getDisplayedSynonymSet(String synonymSet) {
-		return synonymSet.replace(",", ", ");
+		return StringUtil.replace(synonymSet, ',', ", ");
 	}
 
 	protected SearchContainer<SynonymSetDisplayContext> buildSearchContainer(

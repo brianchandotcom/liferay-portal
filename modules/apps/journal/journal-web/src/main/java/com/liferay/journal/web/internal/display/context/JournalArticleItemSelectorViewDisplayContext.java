@@ -59,13 +59,13 @@ public class JournalArticleItemSelectorViewDisplayContext {
 	public JournalArticleItemSelectorViewDisplayContext(
 		HttpServletRequest httpServletRequest,
 		JournalArticleItemSelectorView journalArticleItemSelectorView,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		PortletURL portletURL, String itemSelectedEventName, boolean search) {
 
 		_httpServletRequest = httpServletRequest;
 		_journalArticleItemSelectorView = journalArticleItemSelectorView;
+		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
-		_portletURL = portletURL;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);

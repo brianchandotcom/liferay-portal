@@ -87,8 +87,8 @@ public class JournalArticleItemSelectorView
 		JournalArticleItemSelectorViewDisplayContext
 			journalItemSelectorViewDisplayContext =
 				new JournalArticleItemSelectorViewDisplayContext(
-					(HttpServletRequest)servletRequest, this,
-					itemSelectedEventName, search, portletURL);
+					(HttpServletRequest)servletRequest, this, portletURL,
+					itemSelectedEventName, search);
 
 		servletRequest.setAttribute(
 			JournalWebConstants.

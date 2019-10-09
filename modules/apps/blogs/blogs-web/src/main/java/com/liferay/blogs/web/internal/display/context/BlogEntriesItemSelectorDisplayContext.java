@@ -47,12 +47,12 @@ public class BlogEntriesItemSelectorDisplayContext {
 	public BlogEntriesItemSelectorDisplayContext(
 		HttpServletRequest httpServletRequest,
 		BlogsEntryItemSelectorView blogsEntryItemSelectorView,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		PortletURL portletURL, String itemSelectedEventName) {
 
 		_httpServletRequest = httpServletRequest;
 		_blogsEntryItemSelectorView = blogsEntryItemSelectorView;
-		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
+		_itemSelectedEventName = itemSelectedEventName;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);

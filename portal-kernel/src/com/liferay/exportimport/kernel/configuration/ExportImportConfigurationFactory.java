@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -149,27 +148,6 @@ public class ExportImportConfigurationFactory {
 				exportImportConfiguration.getType(),
 				exportImportConfiguration.getSettingsMap(),
 				exportImportConfiguration.getStatus(), new ServiceContext());
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ExportImportConfigurationParameterMapFactoryUtil#buildParameterMap(
-	 *             )}
-	 */
-	@Deprecated
-	public static Map<String, String[]> getDefaultPublishingParameters(
-		PortletRequest portletRequest) {
-
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
-
-		Map<String, String[]> requestParameterMap = new LinkedHashMap<>(
-			portletRequest.getParameterMap());
-
-		MapUtil.merge(requestParameterMap, parameterMap);
-
-		return parameterMap;
 	}
 
 	protected static ExportImportConfiguration

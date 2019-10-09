@@ -25,7 +25,7 @@ import usePreload from '../hooks/usePreload';
 import useStateSafe from '../hooks/useStateSafe';
 import {StoreContext} from '../store/index';
 
-const {Suspense, lazy, useContext} = React;
+const {Suspense, lazy, useContext, useEffect} = React;
 
 /**
  * Failure to preload is a non-critical failure, so we'll use this to swallow
@@ -37,9 +37,8 @@ export default function Sidebar() {
 	const config = useContext(ConfigContext);
 	const store = useContext(StoreContext);
 
-	// TODO: default to open and eagerly load first plugin
 	const [hasError, setHasError] = useStateSafe(false);
-	const [open, setOpen] = useStateSafe(false);
+	const [open, setOpen] = useStateSafe(true);
 	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
 	const {sidebarPanels} = store;
@@ -50,7 +49,21 @@ export default function Sidebar() {
 
 	const {getInstance, register} = usePlugins();
 
-	// TODO: useEffect to call deactivate before unmounting
+	useEffect(
+		() => {
+			// Open first panel on mount.
+			const panel = sidebarPanels[0] && sidebarPanels[0][0];
+
+			if (panel) {
+				togglePanel(panel);
+			}
+		},
+		// We really only want to do this once, on first mount.
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
+
+	// TODO: maybe use useEffect to call deactivate before unmounting
 
 	const togglePanel = panel => {
 		if (hasError) {

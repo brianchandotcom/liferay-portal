@@ -1,6 +1,6 @@
 definition {
 
-	macro addComment {
+	macro addPG {
 		Click(
 			key_editor = "postReply",
 			locator1 = "AlloyEditor#EDITOR");

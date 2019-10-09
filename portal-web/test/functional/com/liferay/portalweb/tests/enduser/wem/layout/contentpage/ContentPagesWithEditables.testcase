@@ -38,22 +38,16 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		task ("Add a Content fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Content");
-		}
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content");
 
-		task ("Edit the Content fragment editable text") {
-			PageEditor.editFragmentText(
-				fragmentName = "Content",
-				id = "content",
-				text = "New editable fragment text");
-		}
+		PageEditor.editFragmentText(
+			fragmentName = "Content",
+			id = "content",
+			text = "New editable fragment text");
 
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
+		PageEditor.clickPublish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Content Page Name",
@@ -116,18 +110,14 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		task ("Add an Image fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Image");
-		}
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Image");
 
-		task ("Edit the Image fragment's image") {
-			PageEditor.editFragmentImage(
-				fileName = "Document_1.png",
-				fragmentName = "Image",
-				id = "image");
-		}
+		PageEditor.editFragmentImage(
+			fileName = "Document_1.png",
+			fragmentName = "Image",
+			id = "image");
 
 		task ("Assert the Image fragment's image was changed") {
 			AssertVisible(
@@ -137,9 +127,7 @@ definition {
 				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 		}
 
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
+		PageEditor.clickPublish();
 
 		ContentPagesNavigator.openViewContentPage(
 			pageName = "Content Page Name",
@@ -153,9 +141,7 @@ definition {
 				locator1 = "Fragment#FRAGMENT_IMAGE");
 		}
 
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
-		}
+		ContentPages.clickPencil();
 
 		task ("Assert the Image fragment's image has persisted") {
 			AssertVisible(

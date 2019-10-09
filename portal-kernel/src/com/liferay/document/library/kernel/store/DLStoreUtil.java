@@ -61,21 +61,6 @@ import java.io.InputStream;
 public class DLStoreUtil {
 
 	/**
-	 * Adds a directory.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param dirName the directory's name
-	 */
-	public static void addDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		getStore().addDirectory(companyId, repositoryId, dirName);
-	}
-
-	/**
 	 * Adds a file based on a byte array.
 	 *
 	 * @param companyId the primary key of the company

@@ -34,16 +34,6 @@ public interface Store {
 	public static final String VERSION_DEFAULT = "1.0";
 
 	/**
-	 * Adds a directory.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param dirName the directory's name
-	 */
-	public void addDirectory(long companyId, long repositoryId, String dirName);
-
-	/**
 	 * Adds a file based on an {@link InputStream} object.
 	 *
 	 * @param companyId the primary key of the company

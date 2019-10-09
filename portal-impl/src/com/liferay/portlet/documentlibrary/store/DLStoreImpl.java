@@ -48,19 +48,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		if (!DLValidatorUtil.isValidName(dirName) || dirName.equals("/")) {
-			throw new DirectoryNameException(dirName);
-		}
-
-		Store store = _storeFactory.getStore();
-
-		store.addDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, byte[] bytes)

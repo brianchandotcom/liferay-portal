@@ -33,15 +33,6 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public void addDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		String safeDirName = FileUtil.encodeSafeFileName(dirName);
-
-		_store.addDirectory(companyId, repositoryId, safeDirName);
-	}
-
-	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {

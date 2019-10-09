@@ -29,9 +29,6 @@ import java.io.InputStream;
 @Transactional(rollbackFor = {PortalException.class, SystemException.class})
 public interface DLStore {
 
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException;
-
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			boolean validateFileExtension, byte[] bytes)

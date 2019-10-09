@@ -227,16 +227,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			long companyId, String dirName, String filePath, File srcFile)
 		throws PortalException {
 
-		DLStoreUtil.addDirectory(companyId, REPOSITORY_ID, dirName);
-
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, srcFile);
 	}
 
 	protected void addFileToStore(
 			long companyId, String dirName, String filePath, InputStream is)
 		throws PortalException {
-
-		DLStoreUtil.addDirectory(companyId, REPOSITORY_ID, dirName);
 
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
 	}

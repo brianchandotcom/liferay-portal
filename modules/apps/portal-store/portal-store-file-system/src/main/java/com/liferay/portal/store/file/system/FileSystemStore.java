@@ -83,24 +83,6 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public void addDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
-
-		if (dirNameDir.exists()) {
-			return;
-		}
-
-		try {
-			FileUtil.mkdirs(dirNameDir);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws DuplicateFileException {

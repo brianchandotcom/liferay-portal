@@ -57,9 +57,6 @@ public class KBArticleAttachmentsUtil {
 
 			String newDirName = "knowledgebase/kbarticles/" + folderId;
 
-			DLStoreUtil.addDirectory(
-				kbArticle.getCompanyId(), CompanyConstants.SYSTEM, newDirName);
-
 			String[] fileNames = DLStoreUtil.getFileNames(
 				kbArticle.getCompanyId(), CompanyConstants.SYSTEM, oldDirName);
 

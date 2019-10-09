@@ -32,13 +32,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public void addDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		_store.addDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
 	public void addFile(
 			final long companyId, final long repositoryId,
 			final String fileName, final InputStream is)

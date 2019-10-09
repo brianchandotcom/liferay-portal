@@ -99,11 +99,6 @@ import org.osgi.service.component.annotations.Reference;
 public class S3Store extends BaseStore {
 
 	@Override
-	public void addDirectory(
-		long companyId, long repositoryId, String dirName) {
-	}
-
-	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException {

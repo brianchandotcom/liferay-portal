@@ -214,11 +214,15 @@ public class DBStore extends BaseStore {
 				companyId, newRepositoryId, fileName);
 		}
 
-		if (!hasFile(companyId, repositoryId, fileName)) {
+		if (!hasFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		if (hasFile(companyId, newRepositoryId, fileName)) {
+		if (hasFile(
+				companyId, newRepositoryId, fileName, Store.VERSION_DEFAULT)) {
+
 			throw new DuplicateFileException(
 				companyId, newRepositoryId, fileName);
 		}
@@ -238,11 +242,15 @@ public class DBStore extends BaseStore {
 				companyId, repositoryId, newFileName);
 		}
 
-		if (!hasFile(companyId, repositoryId, fileName)) {
+		if (!hasFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
-		if (hasFile(companyId, repositoryId, newFileName)) {
+		if (hasFile(
+				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT)) {
+
 			throw new DuplicateFileException(
 				companyId, repositoryId, newFileName);
 		}

@@ -120,7 +120,8 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 		for (String attachment : getAttachments(companyId, resourcePrimKey)) {
 			try {
 				if (!_store.hasFile(
-						companyId, CompanyConstants.SYSTEM, attachment)) {
+						companyId, CompanyConstants.SYSTEM, attachment,
+						Store.VERSION_DEFAULT)) {
 
 					continue;
 				}

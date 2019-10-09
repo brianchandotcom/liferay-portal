@@ -533,6 +533,25 @@ class SegmentsExperienceSelector extends Component {
 	}
 
 	/**
+	 * Sets the AB Test sidebar open before allowing navigation
+	 * @memberof SegmentsExperienceSelector
+	 * @param {Event} event
+	 * @review
+	 */
+	_handleSegmentsExperimentNavigation(event) {
+		event.preventDefault();
+
+		const url = event.delegateTarget.href;
+
+		Liferay.Util.Session.set(
+			'com.liferay.segments.experiment.web_panelState',
+			'open'
+		).then(() => {
+			Liferay.Util.navigate(url);
+		});
+	}
+
+	/**
 	 * @memberof SegmentsExperienceSelector
 	 * @review
 	 * @param {!string} name

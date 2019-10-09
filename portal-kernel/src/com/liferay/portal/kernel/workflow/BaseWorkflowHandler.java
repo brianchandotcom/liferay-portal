@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalServiceUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.Serializable;
@@ -155,7 +155,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 		throws PortalException {
 
 		try {
-			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			PortletURL portletURL = PortletURLFactoryUtil.create(
 				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
 				PortletRequest.RENDER_PHASE);
 

@@ -21,11 +21,14 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -141,8 +144,10 @@ public class AccountUserRetrieverTest {
 			String name = keywords + i;
 
 			User user = UserTestUtil.addUser(
-				name, LocaleUtil.getDefault(), name,
-				RandomTestUtil.randomString(), null);
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				StringPool.BLANK, name + "@liferay.com", name,
+				LocaleUtil.getDefault(), name, RandomTestUtil.randomString(),
+				null, ServiceContextTestUtil.getServiceContext());
 
 			_users.add(user);
 
@@ -185,10 +190,22 @@ public class AccountUserRetrieverTest {
 		Assert.assertEquals(users.toString(), 4, users.size());
 		Assert.assertEquals(_users.get(3), users.get(0));
 
-		// Test sort by non-keyword-mapped field name
+		// Test sort by non-keyword-mapped non-sortable field name
 
 		baseModelSearchResult = _searchAccountUsers(
 			keywords, 0, 4, "firstName", true);
+
+		Assert.assertEquals(4, baseModelSearchResult.getLength());
+
+		users = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(users.toString(), 4, users.size());
+		Assert.assertEquals(_users.get(3), users.get(0));
+
+		// Test sort by non-keyword-mapped sortable field name
+
+		baseModelSearchResult = _searchAccountUsers(
+			keywords, 0, 4, "emailAddress", true);
 
 		Assert.assertEquals(4, baseModelSearchResult.getLength());
 

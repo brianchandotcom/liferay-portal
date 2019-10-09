@@ -119,10 +119,11 @@ public class BlogEntriesItemSelectorDisplayContext {
 
 		entriesSearchContainer.setTotal(
 			BlogsEntryServiceUtil.getGroupEntriesCount(
-				themeDisplay.getScopeGroupId(), WorkflowConstants.STATUS_ANY));
+				themeDisplay.getScopeGroupId(),
+				WorkflowConstants.STATUS_APPROVED));
 
 		List<BlogsEntry> entriesResults = BlogsEntryServiceUtil.getGroupEntries(
-			themeDisplay.getScopeGroupId(), WorkflowConstants.STATUS_ANY,
+			themeDisplay.getScopeGroupId(), WorkflowConstants.STATUS_APPROVED,
 			entriesSearchContainer.getStart(), entriesSearchContainer.getEnd(),
 			entriesSearchContainer.getOrderByComparator());
 

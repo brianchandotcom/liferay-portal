@@ -12,13 +12,17 @@
  * details.
  */
 
-import SidebarElements from './SidebarElements.es';
-import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
-import templates from './SidebarElementsPanel.soy';
+import React from 'react';
+import SidebarHeader from '../SidebarHeader.es';
 
-const SidebarElementsPanel = getConnectedReactComponentAdapter(
-	SidebarElements,
-	templates
-);
+const SidebarElements = () => {
+	return (
+		<>
+			<SidebarHeader>
+				{Liferay.Language.get('section-builder')}
+			</SidebarHeader>
+		</>
+	);
+};
 
-export default SidebarElementsPanel;
+export default SidebarElements;

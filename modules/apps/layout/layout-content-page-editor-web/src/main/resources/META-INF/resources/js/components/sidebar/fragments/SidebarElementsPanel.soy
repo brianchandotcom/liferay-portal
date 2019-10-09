@@ -4,20 +4,5 @@
  * SidebarElementsPanel
  */
 {template .render}
-	{@param? store: ?}
-
-	<div class="sidebar-fragments-section sidebar-section">
-		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarContent.sidebarHeader}
-			{param content kind="html"}
-				{msg desc=""}section-builder{/msg}
-			{/param}
-		{/call}
-
-		<div class="pb-3 px-3">
-			{call com.liferay.layout.content.page.editor.web.SidebarAvailableElements.render}
-				{param ref: 'sidebarTab' /}
-				{param store: $store /}
-			{/call}
-		</div>
-	</div>
+	<div key="sidebar-elements-panel" ref="app"></div>
 {/template}

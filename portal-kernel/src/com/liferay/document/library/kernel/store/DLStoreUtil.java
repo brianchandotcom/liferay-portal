@@ -45,7 +45,7 @@ import java.io.InputStream;
  * try {
  * DLStoreUtil.addDirectory(companyId, repositoryId, dirName);
  * }
- * catch (DuplicateDirectoryException dde) {
+ * catch (PortalException pe) {
  * }
  *
  * DLStoreUtil.addFile(

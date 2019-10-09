@@ -24,6 +24,47 @@ definition {
 		}
 	}
 
+	@description = "Add a content page and edit its fragment immediately. This is a variation of the steps from LPS-85872."
+	@priority = "5"
+	test AddContentPageWithEditedFragmentText {
+		property testray.component.names = "Training";
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add a Content fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Content");
+		}
+
+		task ("Edit the Content fragment editable text") {
+			PageEditor.editFragmentText(
+				fragmentName = "Content",
+				id = "content",
+				text = "New editable fragment text");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Assert the Content fragment has the updated editable text") {
+			AssertVisible(
+				key_content = "New editable fragment text",
+				key_fragmentClass = "body",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 	@description = "This is a test for LPS-101333. Freemarker code should not be executed in an html fragment."
 	@priority = "5"
 	test AddContentPageWithHTMLFragment {
@@ -55,6 +96,67 @@ definition {
 			AssertTextNotEquals(
 				locator1 = "//div[contains(@class,'fragment-html-test')]",
 				value1 = "Basic Test");
+		}
+	}
+
+	@description = "This is a test for LPS-95045. A user should be able to add an image fragment and change the image in the fragment."
+	@priority = "5"
+	test AddContentPageWithImageFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(pageName = "Test Content Page Name");
+		}
+
+		task ("Add an Image fragment to the content page") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Image");
+		}
+
+		task ("Edit the Image fragment's image") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.png",
+				fragmentName = "Image",
+				id = "image");
+		}
+
+		task ("Assert the Image fragment's image was changed") {
+			AssertVisible(
+				key_fragmentClass = "image",
+				key_image = "Document_1.png",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Assert the Image fragment appears with the image") {
+			AssertVisible(
+				key_fragmentClass = "image",
+				key_image = "Document_1.png",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT_IMAGE");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
+		task ("Assert the Image fragment's image has persisted") {
+			AssertVisible(
+				key_fragmentClass = "image",
+				key_image = "Document_1.png",
+				key_position = "1",
+				locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 		}
 	}
 

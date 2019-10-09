@@ -67,20 +67,6 @@ class ItemSelectorPreview extends Component {
 		);
 	}
 
-	componentDidUpdate() {
-		const sidenavToggle = this.refs.test;
-
-		if (sidenavToggle) {
-			Liferay.SideNavigation.initialize(sidenavToggle, {
-				container: '.sidenav-container',
-				position: 'right',
-				type: 'relative',
-				typeMobile: 'fixed',
-				width: '320px'
-			});
-		}
-	}
-
 	close = () => {
 		ReactDOM.unmountComponentAtNode(this.props.container);
 	};

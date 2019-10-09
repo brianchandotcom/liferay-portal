@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import PageStructureSidebar from './components/PageStructureSidebar';
+
 /**
  * Entry-point for "Page Structure" (sidebar pane) functionality.
  */
@@ -23,6 +25,6 @@ export default class PageStructure {
 	}
 
 	renderSidebar() {
-		return <h1>{this.title}</h1>;
+		return <PageStructureSidebar title={this.title} />;
 	}
 }

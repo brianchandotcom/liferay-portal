@@ -14,16 +14,6 @@
 
 import React from 'react';
 
-import SectionsSidebar from './components/SectionsSidebar';
-/**
- * Entry-point for "Sections" (sidebar pane) functionality.
- */
-export default class Sections {
-	constructor({panel}) {
-		this.title = panel.label;
-	}
-
-	renderSidebar() {
-		return <SectionsSidebar title={this.title} />;
-	}
+export default function SectionsSidebar({title}) {
+	return <h1>{title}</h1>;
 }

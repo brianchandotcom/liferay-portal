@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import WidgetsSidebar from './components/WidgetsSidebar';
+
 /**
  * Entry-point for "Widgets" (sidebar pane) functionality.
  */
@@ -23,6 +25,6 @@ export default class Widgets {
 	}
 
 	renderSidebar() {
-		return <h1>{this.title}</h1>;
+		return <WidgetsSidebar title={this.title} />;
 	}
 }

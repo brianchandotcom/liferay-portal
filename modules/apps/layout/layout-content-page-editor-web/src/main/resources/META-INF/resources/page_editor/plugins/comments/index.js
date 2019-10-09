@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import CommentsSidebar from './components/CommentsSidebar';
+
 /**
  * Entry-point for "Comments" (sidebar pane) functionality.
  */
@@ -23,6 +25,6 @@ export default class Comments {
 	}
 
 	renderSidebar() {
-		return <h1>{this.title}</h1>;
+		return <CommentsSidebar title={this.title} />;
 	}
 }

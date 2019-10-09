@@ -192,7 +192,6 @@
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
 		<check name="SessionKeysCheck" />
-		<check name="StringUtilCheck" />
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 
@@ -334,7 +333,6 @@
 		<check name="MethodCallsOrderCheck" />
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
-		<check name="StringUtilCheck" />
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />
 

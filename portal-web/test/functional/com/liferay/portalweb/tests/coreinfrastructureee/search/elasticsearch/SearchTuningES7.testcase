@@ -358,69 +358,66 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2/Web Content Article,Journal 1/Web Content Article,Journal 2/Web Content Article");
 
-		// Workaround due to LRQA-52239
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
 
-		// ProductMenu.gotoPortlet(
-		//	category = "Search Tuning",
-		//	panel = "Control Panel",
-		//	portlet = "Result Rankings");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Article");
 
-		// LexiconEntry.gotoEntryMenuItem(
-		//	menuItem = "Edit",
-		//	rowEntry = "Article");
+		SearchTuning.addResult(
+			assetTitle = "Journal 2",
+			searchTerm = "Journal");
 
-		// SearchTuning.addResult(
-		//	assetTitle = "Journal 2",
-		//	searchTerm = "Journal");
+		Button.clickSave();
 
-		// Button.clickSave();
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Synonyms");
 
-		// ProductMenu.gotoPortlet(
-		//	category = "Search Tuning",
-		//	panel = "Control Panel",
-		//	portlet = "Synonyms");
+		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
-		// SearchTuning.addSynonymSet(synonyms = "Article,Journal");
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
 
-		// ProductMenu.gotoPortlet(
-		//	category = "Search Tuning",
-		//	panel = "Control Panel",
-		//	portlet = "Result Rankings");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Article");
 
-		// LexiconEntry.gotoEntryMenuItem(
-		//	menuItem = "Edit",
-		//	rowEntry = "Article");
+		AssertElementPresent(
+			key_assetTitle = "Journal 2",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 
-		// AssertElementPresent(
-		//	key_assetTitle = "Journal 2",
-		//	locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
+		AssertElementPresent(
+			key_assetTitle = "Journal 1",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 
-		// AssertElementPresent(
-		//	key_assetTitle = "Journal 1",
-		//	locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
+		SearchTuning.configureAliases(addAlias = "Journal");
 
-		// SearchTuning.configureAliases(addAlias = "Journal");
+		Button.clickSave();
 
-		// Button.clickSave();
+		Navigator.openURL();
 
-		// Navigator.openURL();
+		SearchPortlets.searchEmbedded(searchTerm = "Article");
 
-		// SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1,Journal 1");
 
-		// SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1,Journal 1");
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Article 2",
+			searchAssetType = "Web Content Article");
 
-		// SearchResultPortlet.viewSearchResultNotPresent(
-		//	searchAssetTitle = "Article 2",
-		//	searchAssetType = "Web Content Article");
+		SearchPortlets.searchEmbedded(searchTerm = "Journal");
 
-		// SearchPortlets.searchEmbedded(searchTerm = "Journal");
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1,Journal 1");
 
-		// SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1,Journal 1");
-
-		// SearchResultPortlet.viewSearchResultNotPresent(
-		//	searchAssetTitle = "Article 2",
-		//	searchAssetType = "Web Content Article");
-
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Article 2",
+			searchAssetType = "Web Content Article");
 	}
 
 	test AssertSynonymBulkActions {
@@ -617,9 +614,6 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
 	}
 
-	// Temporarily ignored due to LRQA-52239
-
-	@ignore = "true"
 	test ReorderAddedResultsFromOtherSites {
 		property test.name.skip.portal.instance = "SearchTuningES7#ReorderAddedResultsFromOtherSites";
 

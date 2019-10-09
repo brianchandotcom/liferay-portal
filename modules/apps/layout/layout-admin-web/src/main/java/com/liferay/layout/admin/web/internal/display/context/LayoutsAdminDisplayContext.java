@@ -48,6 +48,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -1637,6 +1639,9 @@ public class LayoutsAdminDisplayContext {
 				_themeDisplay.getScopeGroupId());
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return new long[0];
@@ -1798,6 +1803,9 @@ public class LayoutsAdminDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsAdminDisplayContext.class);
 
 	private Long _activeLayoutSetBranchId;
 	private String _backURL;

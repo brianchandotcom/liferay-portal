@@ -1,4 +1,4 @@
- @component-name = "portal-wcm"
+@component-name = "portal-wcm"
 definition {
 
 	property portal.release = "true";
@@ -45,17 +45,9 @@ definition {
 			pageTemplateActive = "Active",
 			pageTemplateName = "Page Template Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		SitePages.addPublicPage(
 			pageName = "Site Page",
@@ -79,10 +71,7 @@ definition {
 
 		Portlet.viewPG(portletName = "Blogs");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",
@@ -91,8 +80,6 @@ definition {
 		Page.togglePageTemplateInheritChanges(toggleValue = "disable");
 
 		Button.clickSave();
-
-		Navigator.openURL();
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
@@ -109,7 +96,7 @@ definition {
 
 	@priority = "4"
 	test DeactivateAndActivatePageTemplate {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+		JSONGroup.addGroup(groupName = "Site Name");
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
@@ -125,12 +112,7 @@ definition {
 			pageTemplateName = "Page Template Name",
 			pageTemplateStatus = "Not Active");
 
-		Navigator.openSiteURL(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -148,12 +130,7 @@ definition {
 			pageTemplateName = "Page Template Name",
 			pageTemplateStatus = "Active");
 
-		Navigator.openSiteURL(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 

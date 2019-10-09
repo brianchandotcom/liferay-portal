@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.internal.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -126,9 +127,10 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 				long folderId = getFolderId(groupId, userId, resourcePrimKey);
 
-				byte[] bytes = _store.getFileAsBytes(
-					companyId, CompanyConstants.SYSTEM, attachment,
-					StringPool.BLANK);
+				byte[] bytes = StreamUtil.toByteArray(
+					_store.getFileAsStream(
+						companyId, CompanyConstants.SYSTEM, attachment,
+						StringPool.BLANK));
 
 				String title = FileUtil.getShortFileName(attachment);
 

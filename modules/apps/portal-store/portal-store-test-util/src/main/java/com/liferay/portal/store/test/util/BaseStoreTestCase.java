@@ -129,7 +129,9 @@ public abstract class BaseStoreTestCase {
 			store.hasFile(companyId, repositoryId, fileName, "1.2"));
 		Assert.assertArrayEquals(
 			_DATA_VERSION_1,
-			store.getFileAsBytes(companyId, repositoryId, fileName, "1.2"));
+			StreamUtil.toByteArray(
+				store.getFileAsStream(
+					companyId, repositoryId, fileName, "1.2")));
 	}
 
 	@Test(expected = DuplicateFileException.class)
@@ -540,7 +542,9 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertArrayEquals(
 			_DATA_VERSION_1,
-			store.getFileAsBytes(companyId, repositoryId, fileName, "1.1"));
+			StreamUtil.toByteArray(
+				store.getFileAsStream(
+					companyId, repositoryId, fileName, "1.1")));
 	}
 
 	@Test(expected = DuplicateFileException.class)
@@ -598,13 +602,13 @@ public abstract class BaseStoreTestCase {
 		store.updateFile(
 			companyId, repositoryId, fileName, "1.1", _DATA_VERSION_2);
 
-		byte[] firstVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.0");
+		byte[] firstVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.0"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
-		byte[] secondVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.1");
+		byte[] secondVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.1"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
@@ -627,13 +631,13 @@ public abstract class BaseStoreTestCase {
 
 		store.updateFile(companyId, repositoryId, fileName, "1.1", file);
 
-		byte[] firstVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.0");
+		byte[] firstVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.0"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
-		byte[] secondVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.1");
+		byte[] secondVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.1"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 
@@ -656,13 +660,13 @@ public abstract class BaseStoreTestCase {
 			companyId, repositoryId, fileName, "1.1",
 			new ByteArrayInputStream(_DATA_VERSION_2));
 
-		byte[] firstVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.0");
+		byte[] firstVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.0"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
 
-		byte[] secondVersionBytes = store.getFileAsBytes(
-			companyId, repositoryId, fileName, "1.1");
+		byte[] secondVersionBytes = StreamUtil.toByteArray(
+			store.getFileAsStream(companyId, repositoryId, fileName, "1.1"));
 
 		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
 

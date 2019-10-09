@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,7 +47,9 @@ public class AccountUserDisplaySearchContainerFactory {
 		throws PortalException {
 
 		SearchContainer accountUserDisplaySearchContainer = new UserSearch(
-			liferayPortletRequest, liferayPortletResponse.createRenderURL());
+			liferayPortletRequest,
+			PortletURLUtil.getCurrent(
+				liferayPortletRequest, liferayPortletResponse));
 
 		accountUserDisplaySearchContainer.setEmptyResultsMessage(
 			"there-are-no-users-associated-with-this-account");

@@ -192,6 +192,36 @@ definition {
 			value1 = "Add Word Doc Title");
 	}
 
+	@description = "This test covers LPS-102478. It ensures that an Office 365 document auto check-in after lock expiration."
+	@priority = "4"
+	test AutoCheckinDocumentAfterLockExpiration {
+		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";
+
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=120000";
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		OneDrive.AddDocument(
+			dmDocumentTitle = "Auto Checkin Word Doc Title",
+			key_documentTitle = "Auto Checkin Word Doc Title.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		Pause(locator1 = "120000");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			key_dmDocumentTitle = "Auto Checkin Word Doc Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
+	}
+
 	@description = "This test ensures that a Word Document is autotagged once checked in."
 	@priority = "4"
 	test AutoTagWordDocument {

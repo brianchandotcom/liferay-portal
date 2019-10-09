@@ -23,13 +23,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Tuple;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -94,62 +90,13 @@ public class TestAssetRendererFactory
 		return 1234567890;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public Tuple getClassTypeFieldName(
-		long classTypeId, String fieldName, Locale locale) {
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public List<Tuple> getClassTypeFieldNames(
-		long classTypeId, Locale locale, int start, int end) {
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale) {
-		return 0;
-	}
-
 	@Override
 	public ClassTypeReader getClassTypeReader() {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale) {
-		return null;
-	}
-
 	@Override
 	public String getIconCssClass() {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getIconPath(PortletRequest portletRequest) {
 		return null;
 	}
 
@@ -173,29 +120,8 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public String getTypeName(Locale locale, boolean hasSubtypes) {
-		return null;
-	}
-
 	@Override
 	public String getTypeName(Locale locale, long subtypeId) {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public PortletURL getURLAdd(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
-
 		return null;
 	}
 
@@ -219,15 +145,6 @@ public class TestAssetRendererFactory
 	public boolean hasAddPermission(
 		PermissionChecker permissionChecker, long groupId, long classTypeId) {
 
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale) {
 		return false;
 	}
 

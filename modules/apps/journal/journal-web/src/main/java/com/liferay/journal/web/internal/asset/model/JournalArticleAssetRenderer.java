@@ -173,15 +173,6 @@ public class JournalArticleAssetRenderer
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return _article.getDisplayDate();
-	}
-
 	@Override
 	public long getGroupId() {
 		return _article.getGroupId();

@@ -42,14 +42,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletMode;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -62,15 +59,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Sergio González
  */
 public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getAddToPagePortletId() throws Exception {
-		return StringPool.BLANK;
-	}
 
 	@Override
 	public AssetRendererFactory<T> getAssetRendererFactory() {
@@ -106,15 +94,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Date getDisplayDate() {
-		return null;
-	}
-
 	@Override
 	public String getIconCssClass() throws PortalException {
 		return getAssetRendererFactory().getIconCssClass();
@@ -123,18 +102,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	@Override
 	public String getNewName(String oldName, String token) {
 		return TrashUtil.getNewName(oldName, token);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getPreviewPath(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		return StringPool.BLANK;
 	}
 
 	@Override
@@ -365,17 +332,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		throws Exception {
 
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setAddToPagePreferences(
-			PortletPreferences portletPreferences, String portletId,
-			ThemeDisplay themeDisplay)
-		throws Exception {
 	}
 
 	public void setAssetRendererType(int assetRendererType) {

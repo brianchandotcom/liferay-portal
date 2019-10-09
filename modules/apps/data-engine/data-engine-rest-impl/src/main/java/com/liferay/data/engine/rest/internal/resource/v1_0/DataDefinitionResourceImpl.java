@@ -31,6 +31,8 @@ import com.liferay.data.engine.rest.internal.odata.entity.v1_0.DataDefinitionEnt
 import com.liferay.data.engine.rest.internal.resource.common.CommonDataRecordCollectionResource;
 import com.liferay.data.engine.rest.internal.resource.v1_0.util.DataEnginePermissionUtil;
 import com.liferay.data.engine.rest.resource.v1_0.DataDefinitionResource;
+import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
+import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
@@ -105,6 +107,12 @@ public class DataDefinitionResourceImpl
 			ActionKeys.DELETE);
 
 		_ddlRecordSetLocalService.deleteDDMStructureRecordSets(
+			dataDefinitionId);
+
+		_deDataDefinitionFieldLinkLocalService.
+			deleteDEDataDefinitionFieldLinksByDDMStructureId(dataDefinitionId);
+
+		_deDataListViewLocalService.deleteDEDataListViewsByDDMStructureId(
 			dataDefinitionId);
 
 		List<DDMStructureVersion> ddmStructureVersions =
@@ -451,6 +459,13 @@ public class DataDefinitionResourceImpl
 
 	@Reference
 	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
+	@Reference
+	private DEDataDefinitionFieldLinkLocalService
+		_deDataDefinitionFieldLinkLocalService;
+
+	@Reference
+	private DEDataListViewLocalService _deDataListViewLocalService;
 
 	@Reference
 	private FieldTypeTracker _fieldTypeTracker;

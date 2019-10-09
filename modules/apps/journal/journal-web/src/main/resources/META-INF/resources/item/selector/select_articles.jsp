@@ -304,11 +304,12 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		}
 	);
 
-	function removeListener() {
-		selectArticleHandler.removeListener();
+	Liferay.on(
+		'destroyPortlet',
+		function() {
+			selectArticleHandler.removeListener();
 
-		Liferay.detach('destroyPortlet', removeListener);
-	}
-
-	Liferay.on('destroyPortlet', removeListener);
+			Liferay.detach('destroyPortlet', removeListener);
+		}
+	);
 </aui:script>

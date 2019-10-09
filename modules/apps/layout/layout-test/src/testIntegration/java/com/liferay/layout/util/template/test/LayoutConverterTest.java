@@ -180,6 +180,11 @@ public class LayoutConverterTest {
 	}
 
 	@Test
+	public void testConvertOneTwoOneColumnsISinglePortlet() throws Exception {
+		_testConvertOneTwoOneColumnsSinglePortlet("1_2_1_columns_i");
+	}
+
+	@Test
 	public void testConvertTwoColumnsIIIMultiplePortlets() throws Exception {
 		_testConvertTwoColumnsMultiplePortlets("2_columns_iii");
 	}

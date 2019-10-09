@@ -106,14 +106,6 @@ public class IgnoreDuplicatesStore implements Store {
 
 	@Override
 	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsStream(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException {

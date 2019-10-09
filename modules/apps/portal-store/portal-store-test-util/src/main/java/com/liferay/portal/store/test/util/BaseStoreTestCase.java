@@ -248,28 +248,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testGetFileAsStream() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		addVersions(fileName, 1);
-
-		try (InputStream inputStream = store.getFileAsStream(
-				companyId, repositoryId, fileName)) {
-
-			for (int i = 0; i < _DATA_SIZE; i++) {
-				Assert.assertEquals(
-					_DATA_VERSION_1[i], (byte)inputStream.read());
-			}
-
-			Assert.assertEquals(-1, inputStream.read());
-		}
-	}
-
-	@Test
 	public void testGetFileAsStreamWithVersion() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

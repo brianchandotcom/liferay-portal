@@ -116,24 +116,6 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws NoSuchFileException {
-
-		try {
-			DLContent dlContent = _dlContentLocalService.getContent(
-				companyId, repositoryId, fileName);
-
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				new GetBlobDataCallable(dlContent.getContentId()));
-		}
-		catch (Throwable t) {
-			throw new NoSuchFileException(companyId, repositoryId, fileName, t);
-		}
-	}
-
-	@Override
-	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws NoSuchFileException {

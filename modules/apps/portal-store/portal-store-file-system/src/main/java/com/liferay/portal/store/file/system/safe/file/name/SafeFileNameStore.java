@@ -161,22 +161,6 @@ public class SafeFileNameStore implements Store {
 
 	@Override
 	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName)) {
-
-			return _store.getFileAsStream(companyId, repositoryId, fileName);
-		}
-
-		return _store.getFileAsStream(companyId, repositoryId, safeFileName);
-	}
-
-	@Override
-	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException {

@@ -16,7 +16,6 @@ package com.liferay.document.library.kernel.store;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -103,24 +102,6 @@ public abstract class BaseStore implements Store {
 		throws PortalException {
 
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Returns the file as an {@link InputStream} object.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the {@link InputStream} object with the file's name
-	 */
-	@Override
-	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return getFileAsStream(
-			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
 	/**

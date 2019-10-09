@@ -30,6 +30,12 @@ import {DEFAULT_INITIAL_STATE} from './state.es';
 const STORE_DEVTOOLS_ID = '__REDUX_DEVTOOLS_EXTENSION__';
 
 /**
+ * Internal store instance
+ * @type {Store}
+ */
+let _store;
+
+/**
  * Connects a given component to a given store, syncing it's properties with it.
  * @param {Component} component
  * @param {Store} store
@@ -65,20 +71,30 @@ const disconnect = function(component) {
  * @review
  */
 const createStore = function(initialState, reducer, componentIds = []) {
-	const store = new Store(initialState, reducer);
+	_store = new Store(initialState, reducer);
 
 	componentIds.forEach(componentId => {
 		Liferay.componentReady(componentId).then(component => {
-			component.store = store;
+			component.store = _store;
 
 			connect(
 				component,
-				store
+				_store
 			);
 		});
 	});
 
-	return store;
+	return _store;
+};
+
+/**
+ * Returns the existing store state.
+ * Warning: this is a workaround to get constants from DisplayContext
+ * until we split them into another module.
+ * @return {object}
+ */
+const getState = function() {
+	return _store ? _store.getState() : {};
 };
 
 /**
@@ -321,5 +337,5 @@ Store.STATE = {
 		.value(null)
 };
 
-export {connect, disconnect, createStore, Store};
+export {connect, disconnect, createStore, getState, Store};
 export default Store;

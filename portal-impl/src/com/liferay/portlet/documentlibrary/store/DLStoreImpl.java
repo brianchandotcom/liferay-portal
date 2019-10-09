@@ -484,14 +484,14 @@ public class DLStoreImpl implements DLStore {
 			String versionLabel, String sourceFileName, InputStream is)
 		throws PortalException {
 
+		validate(
+			fileName, fileExtension, sourceFileName, validateFileExtension);
+
 		if (is instanceof ByteArrayFileInputStream) {
 			ByteArrayFileInputStream byteArrayFileInputStream =
 				(ByteArrayFileInputStream)is;
 
 			File file = byteArrayFileInputStream.getFile();
-
-			validate(
-				fileName, fileExtension, sourceFileName, validateFileExtension);
 
 			DLValidatorUtil.validateVersionLabel(versionLabel);
 
@@ -506,9 +506,6 @@ public class DLStoreImpl implements DLStore {
 
 			return;
 		}
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension);
 
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 

@@ -59,7 +59,9 @@ function AssetTagsSelector({
 				}),
 				p_auth: Liferay.authToken
 			}),
-			method: 'POST'
+			credentials: 'include',
+			method: 'POST',
+			'x-csrf-token': Liferay.authToken
 		},
 		link: `${window.location.origin}${themeDisplay.getPathContext()}
 				/api/jsonws/invoke`

@@ -16,6 +16,7 @@ package com.liferay.flags.web.internal.portlet.action;
 
 import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -60,6 +61,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			"com.liferay.portlet.flags.model.FlagsEntry", actionRequest);
 
+		if (_MB_MESSAGE_CLASSNAME.equals(className)) {
+			contentURL = _getMBMessageContentURL(classPK, contentURL);
+		}
+
 		_flagsEntryService.addEntry(
 			className, classPK, reporterEmailAddress, reportedUserId,
 			contentTitle, contentURL, reason, serviceContext);
@@ -71,6 +76,28 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	protected void setFlagsEntryService(FlagsEntryService flagsEntryService) {
 		_flagsEntryService = flagsEntryService;
 	}
+
+	private String _getMBMessageContentURL(long classPK, String contentURL) {
+		String mbMessageContentURL = StringPool.BLANK;
+
+		mbMessageContentURL = contentURL.replaceAll(
+			_MESSAGE_BOARDS_REGEX, "$1" + classPK);
+
+		mbMessageContentURL = mbMessageContentURL.replaceAll(
+			_MESSAGE_BOARDS_ADMIN_REGEX, "$1" + classPK);
+
+		return mbMessageContentURL;
+	}
+
+	private static final String _MB_MESSAGE_CLASSNAME =
+		"com.liferay.message.boards.model.MBMessage";
+
+	private static final String _MESSAGE_BOARDS_ADMIN_REGEX =
+		"([^\\s]+_com_liferay_message_boards_web_portlet_MBAdminPortlet" +
+			"_messageId=)(\\d+)";
+
+	private static final String _MESSAGE_BOARDS_REGEX =
+		"([^\\s]+\\/message_boards\\/message\\/)(\\d+)";
 
 	private FlagsEntryService _flagsEntryService;
 

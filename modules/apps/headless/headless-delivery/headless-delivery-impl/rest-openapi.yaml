@@ -676,6 +676,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 viewableBy:
                     description: A write-only property that specifies the folder's default permissions.
                     enum: [Anyone, Members, Owner]
@@ -769,6 +772,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 taxonomyCategories:
                     description: The categories associated with this article.
                     items:
@@ -1060,6 +1066,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 title:
                     description: The section's main title.
                     type: string
@@ -1307,6 +1316,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 taxonomyCategories:
                     description: The categories associated with this structured content.
                     items:
@@ -1388,6 +1400,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 viewableBy:
                     description: A write-only property that specifies the folder's default permissions.
                     enum: [Anyone, Members, Owner]
@@ -1435,6 +1450,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 viewableBy:
                     description: A write-only property that specifies the default permissions.
                     enum: [Anyone, Members, Owner]
@@ -1509,6 +1527,9 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
                 taxonomyCategories:
                     description: The categories associated with this blog post.
                     items:
@@ -2309,6 +2330,38 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description: ""
             tags: ["Document"]
+    "/document-folders/{documentFolderId}/subscribe":
+        put:
+            operationId: putDocumentFolderSubscribe
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DocumentFolder"]
+    "/document-folders/{documentFolderId}/unsubscribe":
+        put:
+            operationId: putDocumentFolderUnsubscribe
+            parameters:
+                - in: path
+                  name: documentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["DocumentFolder"]
     "/document-folders/{parentDocumentFolderId}/document-folders":
         get:
             description: Retrieves the folder's subfolders. Results can be paginated, filtered, searched, and sorted.
@@ -2909,6 +2962,38 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/Rating"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe":
+        put:
+            operationId: putKnowledgeBaseArticleSubscribe
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe":
+        put:
+            operationId: putKnowledgeBaseArticleUnsubscribe
+            parameters:
+                - in: path
+                  name: knowledgeBaseArticleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
                     description: ""
             tags: ["KnowledgeBaseArticle"]
     "/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles":
@@ -3828,6 +3913,38 @@ paths:
                                 $ref: "#/components/schemas/MessageBoardThread"
                     description: ""
             tags: ["MessageBoardThread"]
+    "/message-board-sections/{messageBoardSectionId}/subscribe":
+        put:
+            operationId: putMessageBoardSectionSubscribe
+            parameters:
+                - in: path
+                  name: messageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardSection"]
+    "/message-board-sections/{messageBoardSectionId}/unsubscribe":
+        put:
+            operationId: putMessageBoardSectionUnsubscribe
+            parameters:
+                - in: path
+                  name: messageBoardSectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["MessageBoardSection"]
     "/message-board-sections/{parentMessageBoardSectionId}/message-board-sections":
         get:
             description: Retrieves the parent message board section's subsections. Results can be paginated, filtered, searched, and sorted.
@@ -4413,6 +4530,38 @@ paths:
                                 $ref: "#/components/schemas/BlogPosting"
                     description: ""
             tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/subscribe":
+        put:
+            operationId: putSiteBlogPostingSubscribe
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/unsubscribe":
+        put:
+            operationId: putSiteBlogPostingUnsubscribe
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["BlogPosting"]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description: Retrieves the content set elements by key. Results can be paginated.
@@ -4775,6 +4924,38 @@ paths:
                         application/xml:
                             schema:
                                 $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/sites/{siteId}/knowledge-base-articles/subscribe":
+        put:
+            operationId: putSiteKnowledgeBaseArticleSubscribe
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["KnowledgeBaseArticle"]
+    "/sites/{siteId}/knowledge-base-articles/unsubscribe":
+        put:
+            operationId: putSiteKnowledgeBaseArticleUnsubscribe
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
                     description: ""
             tags: ["KnowledgeBaseArticle"]
     "/sites/{siteId}/knowledge-base-folders":
@@ -5558,6 +5739,70 @@ paths:
                                 $ref: "#/components/schemas/StructuredContent"
                     description: ""
             tags: ["StructuredContent"]
+    "/structured-content-folders/{structuredContentFolderId}/subscribe":
+        put:
+            operationId: putStructuredContentFolderSubscribe
+            parameters:
+                - in: path
+                  name: structuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContentFolder"]
+    "/structured-content-folders/{structuredContentFolderId}/unsubscribe":
+        put:
+            operationId: putStructuredContentFolderUnsubscribe
+            parameters:
+                - in: path
+                  name: structuredContentFolderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContentFolder"]
+    "/structured-content/{structuredContentId}/subscribe":
+        put:
+            operationId: putStructuredContentSubscribe
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContent"]
+    "/structured-content/{structuredContentId}/unsubscribe":
+        put:
+            operationId: putStructuredContentUnsubscribe
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["StructuredContent"]
     "/structured-contents/{structuredContentId}":
         delete:
             description: Deletes the structured content and returns a 204 if the operation succeeds.
@@ -5862,6 +6107,38 @@ paths:
                                 type: string
                     description: ""
             tags: ["StructuredContent"]
+    "/wiki-node/{wikiNodeId}/subscribe":
+        put:
+            operationId: putWikiNodeSubscribe
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["WikiNode"]
+    "/wiki-node/{wikiNodeId}/unsubscribe":
+        put:
+            operationId: putWikiNodeUnsubscribe
+            parameters:
+                - in: path
+                  name: wikiNodeId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["WikiNode"]
     "/wiki-nodes/{wikiNodeId}":
         # @review
         delete:
@@ -6043,6 +6320,38 @@ paths:
                                 $ref: "#/components/schemas/WikiPageAttachment"
                     description: ""
             tags: ["WikiPageAttachment"]
+    "/wiki-page/{wikiPageId}/subscribe":
+        put:
+            operationId: putWikiPageSubscribe
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["WikiPage"]
+    "/wiki-page/{wikiPageId}/unsubscribe":
+        put:
+            operationId: putWikiPageUnsubscribe
+            parameters:
+                - in: path
+                  name: wikiPageId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["WikiPage"]
     "/wiki-pages/{parentWikiPageId}/wiki-pages":
         get:
             operationId: getWikiPageWikiPagesPage

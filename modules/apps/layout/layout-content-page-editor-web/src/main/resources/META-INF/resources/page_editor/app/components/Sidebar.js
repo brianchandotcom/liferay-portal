@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
@@ -141,7 +142,7 @@ export default function Sidebar() {
 					})}
 				>
 					<ErrorBoundary>
-						<Suspense fallback={<Spinner />}>
+						<Suspense fallback={<ClayLoadingIndicator />}>
 							<SidebarPanel
 								plugin={getInstance(activePluginId)}
 							/>
@@ -172,15 +173,6 @@ const SidebarPanel = ({plugin}) => {
 	);
 
 	return <Component />;
-};
-
-// TODO: make sure this shows up during preloading
-const Spinner = () => {
-	return (
-		<div className="inline-item my-5 p-5 w-100">
-			<span aria-hidden="true" className="loading-animation"></span>
-		</div>
-	);
 };
 
 class ErrorBoundary extends React.Component {

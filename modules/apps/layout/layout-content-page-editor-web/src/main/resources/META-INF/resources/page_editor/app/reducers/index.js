@@ -14,19 +14,19 @@
 
 import React from 'react';
 
-import {TYPES} from '../actions/index';
+import baseReducer from './baseReducer';
 
 export const DispatchContext = React.createContext(() => {});
 
+/**
+ * Runs the base reducer plus any dynamically loaded reducers that have
+ * been registered from plugins.
+ */
 export function reducer(state, action) {
-	switch (action.type) {
-		case TYPES.DISCARD:
-			return state;
-
-		case TYPES.PUBLISH:
-			return state;
-
-		default:
-			throw new Error(`Unrecognized action.type ${action.type}`);
-	}
+	return [baseReducer, ...Object.values(state.reducers)].reduce(
+		(nextState, nextReducer) => {
+			return nextReducer(nextState, action);
+		},
+		state
+	);
 }

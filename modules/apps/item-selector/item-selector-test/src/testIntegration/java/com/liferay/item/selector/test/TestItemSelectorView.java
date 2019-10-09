@@ -18,7 +18,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
@@ -66,10 +65,7 @@ public class TestItemSelectorView
 	}
 
 	private final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType()
-				}));
+		_supportedItemSelectorReturnTypes = Collections.singletonList(
+			new FileEntryItemSelectorReturnType());
 
 }

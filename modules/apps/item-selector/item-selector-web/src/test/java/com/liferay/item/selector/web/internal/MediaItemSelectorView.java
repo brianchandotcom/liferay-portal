@@ -17,7 +17,6 @@ package com.liferay.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,10 +70,7 @@ public class MediaItemSelectorView
 	}
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new TestURLItemSelectorReturnType()
-				}));
+		_supportedItemSelectorReturnTypes = Collections.singletonList(
+			new TestURLItemSelectorReturnType());
 
 }

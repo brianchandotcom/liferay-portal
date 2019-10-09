@@ -23,7 +23,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -112,11 +111,8 @@ public class AssetDisplayPagesItemSelectorView
 	}
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new UUIDItemSelectorReturnType()
-				}));
+		_supportedItemSelectorReturnTypes = Collections.singletonList(
+			new UUIDItemSelectorReturnType());
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;

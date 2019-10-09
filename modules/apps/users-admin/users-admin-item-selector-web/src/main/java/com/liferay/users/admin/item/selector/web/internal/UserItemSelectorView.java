@@ -20,7 +20,6 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.item.selector.UserItemSelectorCriterion;
 import com.liferay.users.admin.item.selector.web.internal.constants.UserItemSelectorViewConstants;
@@ -105,11 +104,8 @@ public class UserItemSelectorView
 	}
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new UUIDItemSelectorReturnType()
-				}));
+		_supportedItemSelectorReturnTypes = Collections.singletonList(
+			new UUIDItemSelectorReturnType());
 
 	@Reference
 	private Portal _portal;

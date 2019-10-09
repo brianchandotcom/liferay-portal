@@ -22,7 +22,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
@@ -116,11 +115,8 @@ public class ParentSitesItemSelectorView
 	}
 
 	private static final List<ItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
-			ListUtil.fromArray(
-				new ItemSelectorReturnType[] {
-					new SiteItemSelectorReturnType()
-				}));
+		_supportedItemSelectorReturnTypes = Collections.singletonList(
+			new SiteItemSelectorReturnType());
 
 	@Reference
 	private AssetPublisherHelper _assetPublisherHelper;

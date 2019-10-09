@@ -129,6 +129,92 @@ definition {
 			fromNotifications = "true");
 	}
 
+	@description = "This test covers LPS-101493. It ensures that a user who replies to a comment will receive further reply notifications."
+	@priority = "4"
+	test ViewCommentFurtherReply {
+		property test.name.skip.portal.instance = "ContentPageReviewNotifications#ViewCommentFurtherReply";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment By User 1",
+			fragmentName = "Title",
+			position = "1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.replyToComment(commentReply = "Reply from User 2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.replyToComment(commentReply = "Reply from User Test");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			contentBody = "Reply from User Test",
+			fragmentName = "Title",
+			user = "Test Test");
+
+		Notifications.navigateToContent(contentBody = "Reply from User Test");
+
+		PageEditor.viewComment(
+			fragmentComment = "Reply from User Test",
+			fromNotifications = "true");
+	}
+
 	@description = "This case ensures that a user is notified when a reply is added to their comment."
 	@priority = "5"
 	test ViewCommentReply {

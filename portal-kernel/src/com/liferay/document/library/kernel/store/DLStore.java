@@ -59,8 +59,6 @@ public interface DLStore {
 			long companyId, long repositoryId, String fileName, InputStream is)
 		throws PortalException;
 
-	public void checkRoot(long companyId);
-
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)

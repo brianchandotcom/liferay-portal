@@ -184,17 +184,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Ensures company's root directory exists.
-	 *
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 * @param companyId the primary key of the company
-	 */
-	@Deprecated
-	public static void checkRoot(long companyId) {
-		getStore().checkRoot(companyId);
-	}
-
-	/**
 	 * Creates a new copy of the file version.
 	 *
 	 * @param companyId the primary key of the company

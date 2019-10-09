@@ -184,13 +184,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public void checkRoot(long companyId) {
-		Store store = _storeFactory.getStore();
-
-		store.checkRoot(companyId);
-	}
-
-	@Override
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)

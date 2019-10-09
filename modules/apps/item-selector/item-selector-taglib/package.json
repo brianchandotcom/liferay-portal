@@ -1,17 +1,17 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.0.0-milestone.2",
-		"@clayui/icon": "^3.0.0-milestone.2",
-		"@clayui/navigation-bar": "^3.0.0-milestone.3",
+		"@clayui/button": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"@clayui/navigation-bar": "3.0.0",
 		"clay-alert": "2.18.1",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
-		"metal-dom": "^2.16.8",
+		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",
 		"metal-state": "2.16.8",
-		"prop-types": "^15.7.2",
-		"react": "^16.9.0",
-		"react-dom": "^16.9.0"
+		"prop-types": "15.7.2",
+		"react": "16.9.0",
+		"react-dom": "16.9.0"
 	},
 	"name": "item-selector-taglib",
 	"scripts": {

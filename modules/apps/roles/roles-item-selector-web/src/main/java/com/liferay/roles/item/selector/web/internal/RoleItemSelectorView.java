@@ -17,7 +17,7 @@ package com.liferay.roles.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -67,7 +67,7 @@ public class RoleItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(_portal.getResourceBundle(locale), "roles");
+		return _language.get(_portal.getResourceBundle(locale), "roles");
 	}
 
 	@Override
@@ -106,6 +106,9 @@ public class RoleItemSelectorView
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.singletonList(
 			new UUIDItemSelectorReturnType());
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

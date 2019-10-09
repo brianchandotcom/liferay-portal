@@ -18,7 +18,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
@@ -71,7 +71,7 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "page-attachments");
+		return _language.get(locale, "page-attachments");
 	}
 
 	@Override
@@ -115,6 +115,9 @@ public class WikiAttachmentItemSelectorView
 	@Reference
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.wiki.web)")
 	private ServletContext _servletContext;

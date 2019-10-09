@@ -156,7 +156,7 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 </div>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	var selectArticleHandler = dom.delegate(
+	var selectEntryHandler = dom.delegate(
 		document.querySelector('#<portlet:namespace/>blogEntriesContainer'),
 		'click',
 		'.entries',
@@ -187,7 +187,7 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 	Liferay.on(
 		'destroyPortlet',
 		function() {
-			selectArticleHandler.removeListener();
+			selectEntryHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', removeListener);
 		}

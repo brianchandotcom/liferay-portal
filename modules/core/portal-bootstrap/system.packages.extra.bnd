@@ -179,11 +179,11 @@ Export-Package:\
 	jodd.util.*;version='3.6.4',\
 	\
 	org.apache.bcel.*;version='2.7.1',\
-	org.apache.commons.beanutils;version='1.8.2',\
-	org.apache.commons.beanutils.converters;version='1.8.2',\
-	org.apache.commons.beanutils.expression;version='1.8.2',\
-	org.apache.commons.beanutils.locale;version='1.8.2',\
-	org.apache.commons.beanutils.locale.converters;version='1.8.2',\
+	org.apache.commons.beanutils;version='1.9.2',\
+	org.apache.commons.beanutils.converters;version='1.9.2',\
+	org.apache.commons.beanutils.expression;version='1.9.2',\
+	org.apache.commons.beanutils.locale;version='1.9.2',\
+	org.apache.commons.beanutils.locale.converters;version='1.9.2',\
 	org.apache.commons.chain;version='1.2',\
 	org.apache.commons.chain.config;version='1.2',\
 	org.apache.commons.chain.generic;version='1.2',\

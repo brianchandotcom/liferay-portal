@@ -63,7 +63,9 @@ const Table = ({items}) => {
 						<th className="table-head-title text-right">
 							<ListHeadItem
 								name="overdueInstanceCount"
-								title={Liferay.Language.get('sla-breached')}
+								title={Liferay.Language.get(
+									'sla-breached-percent'
+								)}
 							/>
 						</th>
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.settings.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -30,6 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.io.IOException;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,6 +100,32 @@ public class SavePortalSettingsFormMVCActionCommand
 			actionRequest, getParameterNamespace() + name);
 	}
 
+	protected String[] getValues(ActionRequest actionRequest, String name) {
+		String value = getString(actionRequest, name + "Indexes");
+
+		if (Validator.isNull(value)) {
+			return new String[] {getString(actionRequest, name)};
+		}
+
+		List<String> list = Arrays.asList(value.split(","));
+
+		Stream<String> stream = list.stream();
+
+		String[] ret = stream.map(
+			index -> getString(actionRequest, name.concat(index))
+		).filter(
+			Validator::isNotNull
+		).toArray(
+			String[]::new
+		);
+
+		if (ret.length == 0) {
+			return new String[] {StringPool.BLANK};
+		}
+
+		return ret;
+	}
+
 	protected void storeSettings(
 			ActionRequest actionRequest, ThemeDisplay themeDisplay)
 		throws IOException, SettingsException, ValidatorException {
@@ -110,16 +141,36 @@ public class SavePortalSettingsFormMVCActionCommand
 			SettingsFactoryUtil.getSettingsDescriptor(getSettingsId());
 
 		for (String name : settingsDescriptor.getAllKeys()) {
-			String value = getString(actionRequest, name);
+			String[] values = getValues(actionRequest, name);
 
-			if (value.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+			String[] oldValues = settings.getValues(name, null);
+
+			if (oldValues == null) {
+				modifiableSettings.setValues(name, values);
+
 				continue;
 			}
 
-			String oldValue = settings.getValue(name, null);
+			for (int i = 0; i < oldValues.length; i++) {
+				if (i >= values.length) {
+					modifiableSettings.setValues(name, values);
 
-			if (!value.equals(oldValue)) {
-				modifiableSettings.setValue(name, value);
+					break;
+				}
+				else if (values[i].equals(Portal.TEMP_OBFUSCATION_VALUE)) {
+					values[i] = oldValues[i];
+				}
+
+				if (!values[i].equals(oldValues[i])) {
+					modifiableSettings.setValues(name, values);
+
+					break;
+				}
+				else if ((i == (oldValues.length - 1)) &&
+						 (values.length > oldValues.length)) {
+
+					modifiableSettings.setValues(name, values);
+				}
 			}
 		}
 

@@ -653,14 +653,11 @@ public class SamlSpSessionPersistenceImpl
 
 		nameIdValue = Objects.toString(nameIdValue, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByNameIdValue;
@@ -719,7 +716,7 @@ public class SamlSpSessionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SamlSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -738,18 +735,8 @@ public class SamlSpSessionPersistenceImpl
 					qPos.add(nameIdValue);
 				}
 
-				if (!pagination) {
-					list = (List<SamlSpSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlSpSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlSpSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1931,14 +1918,11 @@ public class SamlSpSessionPersistenceImpl
 		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1975,9 +1959,7 @@ public class SamlSpSessionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SAMLSPSESSION;
 
-				if (pagination) {
-					sql = sql.concat(SamlSpSessionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SamlSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1987,18 +1969,8 @@ public class SamlSpSessionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SamlSpSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlSpSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlSpSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

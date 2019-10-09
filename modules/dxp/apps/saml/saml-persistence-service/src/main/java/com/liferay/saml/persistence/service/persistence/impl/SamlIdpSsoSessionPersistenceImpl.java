@@ -157,7 +157,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -213,7 +212,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SamlIdpSsoSessionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -232,18 +231,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
-				if (!pagination) {
-					list = (List<SamlIdpSsoSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlIdpSsoSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlIdpSsoSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1359,14 +1348,11 @@ public class SamlIdpSsoSessionPersistenceImpl
 		OrderByComparator<SamlIdpSsoSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1403,9 +1389,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SAMLIDPSSOSESSION;
 
-				if (pagination) {
-					sql = sql.concat(SamlIdpSsoSessionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SamlIdpSsoSessionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1415,18 +1399,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SamlIdpSsoSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlIdpSsoSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlIdpSsoSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

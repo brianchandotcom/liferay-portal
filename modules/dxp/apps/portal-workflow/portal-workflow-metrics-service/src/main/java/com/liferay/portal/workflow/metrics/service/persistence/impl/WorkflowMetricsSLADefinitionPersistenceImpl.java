@@ -161,14 +161,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -227,7 +224,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -247,18 +244,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -998,14 +985,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1071,7 +1055,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -1093,18 +1077,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1868,14 +1842,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_S;
@@ -1932,7 +1903,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -1952,18 +1923,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2442,14 +2403,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_A_P;
@@ -2510,7 +2468,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -2532,18 +2490,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(processId);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3058,14 +3006,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_A_N_P;
@@ -3139,7 +3084,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -3165,18 +3110,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(processId);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3749,14 +3684,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByC_A_P_S;
@@ -3823,7 +3755,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -3847,18 +3779,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -4411,7 +4333,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		processVersion = Objects.toString(processVersion, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -4484,7 +4405,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(
 					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
@@ -4512,18 +4433,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				qPos.add(status);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -5815,14 +5726,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -5859,10 +5767,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_WORKFLOWMETRICSSLADEFINITION;
 
-				if (pagination) {
-					sql = sql.concat(
-						WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -5872,18 +5778,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

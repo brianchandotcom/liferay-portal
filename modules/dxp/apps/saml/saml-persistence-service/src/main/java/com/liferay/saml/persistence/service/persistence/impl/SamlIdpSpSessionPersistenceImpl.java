@@ -157,7 +157,6 @@ public class SamlIdpSpSessionPersistenceImpl
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -213,7 +212,7 @@ public class SamlIdpSpSessionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SamlIdpSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -232,18 +231,8 @@ public class SamlIdpSpSessionPersistenceImpl
 					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
-				if (!pagination) {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlIdpSpSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -709,14 +698,11 @@ public class SamlIdpSpSessionPersistenceImpl
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath =
@@ -770,7 +756,7 @@ public class SamlIdpSpSessionPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SamlIdpSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -787,18 +773,8 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				qPos.add(samlIdpSsoSessionId);
 
-				if (!pagination) {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlIdpSpSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1945,14 +1921,11 @@ public class SamlIdpSpSessionPersistenceImpl
 		OrderByComparator<SamlIdpSpSession> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1989,9 +1962,7 @@ public class SamlIdpSpSessionPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SAMLIDPSPSESSION;
 
-				if (pagination) {
-					sql = sql.concat(SamlIdpSpSessionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SamlIdpSpSessionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2001,18 +1972,8 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlIdpSpSession>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlIdpSpSession>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

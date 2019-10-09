@@ -155,7 +155,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		OrderByComparator<SamlSpAuthRequest> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
@@ -211,7 +210,7 @@ public class SamlSpAuthRequestPersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SamlSpAuthRequestModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -230,18 +229,8 @@ public class SamlSpAuthRequestPersistenceImpl
 					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
-				if (!pagination) {
-					list = (List<SamlSpAuthRequest>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlSpAuthRequest>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlSpAuthRequest>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1381,14 +1370,11 @@ public class SamlSpAuthRequestPersistenceImpl
 		OrderByComparator<SamlSpAuthRequest> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -1425,9 +1411,7 @@ public class SamlSpAuthRequestPersistenceImpl
 			else {
 				sql = _SQL_SELECT_SAMLSPAUTHREQUEST;
 
-				if (pagination) {
-					sql = sql.concat(SamlSpAuthRequestModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SamlSpAuthRequestModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -1437,18 +1421,8 @@ public class SamlSpAuthRequestPersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<SamlSpAuthRequest>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<SamlSpAuthRequest>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<SamlSpAuthRequest>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

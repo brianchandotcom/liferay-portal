@@ -46,7 +46,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -158,14 +157,11 @@ public class SourcePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid;
@@ -222,7 +218,7 @@ public class SourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -241,18 +237,8 @@ public class SourcePersistenceImpl
 					qPos.add(uuid);
 				}
 
-				if (!pagination) {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Source>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -967,14 +953,11 @@ public class SourcePersistenceImpl
 
 		uuid = Objects.toString(uuid, "");
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByUuid_C;
@@ -1037,7 +1020,7 @@ public class SourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1058,18 +1041,8 @@ public class SourcePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Source>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -1552,14 +1525,11 @@ public class SourcePersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<Source> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
@@ -1607,7 +1577,7 @@ public class SourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1624,18 +1594,8 @@ public class SourcePersistenceImpl
 
 				qPos.add(groupId);
 
-				if (!pagination) {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Source>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -2428,14 +2388,11 @@ public class SourcePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Source> orderByComparator, boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindByCompanyId;
@@ -2485,7 +2442,7 @@ public class SourcePersistenceImpl
 				appendOrderByComparator(
 					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
+			else {
 				query.append(SourceModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2502,18 +2459,8 @@ public class SourcePersistenceImpl
 
 				qPos.add(companyId);
 
-				if (!pagination) {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Source>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 
@@ -3415,14 +3362,11 @@ public class SourcePersistenceImpl
 		int start, int end, OrderByComparator<Source> orderByComparator,
 		boolean useFinderCache) {
 
-		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
-
-			pagination = false;
 
 			if (useFinderCache) {
 				finderPath = _finderPathWithoutPaginationFindAll;
@@ -3459,9 +3403,7 @@ public class SourcePersistenceImpl
 			else {
 				sql = _SQL_SELECT_SOURCE;
 
-				if (pagination) {
-					sql = sql.concat(SourceModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(SourceModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -3471,18 +3413,8 @@ public class SourcePersistenceImpl
 
 				Query q = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Source>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Source>)QueryUtil.list(
+					q, getDialect(), start, end);
 
 				cacheResult(list);
 

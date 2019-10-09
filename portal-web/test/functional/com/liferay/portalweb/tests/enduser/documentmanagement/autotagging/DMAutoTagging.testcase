@@ -213,6 +213,31 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
+	@description = "This test covers LPS-101885. It asserts that auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
+	@priority = "4"
+	test DeleteDocumentAfterAutoTagged {
+		property test.name.skip.portal.instance = "DMAutoTagging#DeleteDocumentAfterAutoTagged";
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Document",
+			confidenceThreshold = "0.05");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
+			dmDocumentTitle = "DM Document DOCX");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.deleteCP(dmDocumentTitle = "DM Document DOCX");
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException");
+
+		DMDocument.viewDefaultCP();
+	}
+
 	@description = "This test asserts that the max number of tags at the instance level cannot be greater than the max number of tags at the portal level."
 	@priority = "4"
 	test MaxNumberOfTagsCheckBetweenInstanceLevelAndPortalLevel {

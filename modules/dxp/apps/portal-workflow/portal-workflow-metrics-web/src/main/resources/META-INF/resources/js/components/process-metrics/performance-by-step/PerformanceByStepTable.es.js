@@ -34,7 +34,7 @@ const Table = ({items = []}) => (
 					</th>
 
 					<th className="text-right" style={{width: '20%'}}>
-						{`${Liferay.Language.get('sla-breached')} (%)`}
+						{Liferay.Language.get('sla-breached-percent')}
 					</th>
 
 					<th className="text-right" style={{width: '20%'}}>

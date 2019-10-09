@@ -74,7 +74,7 @@ const getRequestUrl = (processId, timeRange) => {
 		requestUrl += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;
 	}
 
-	requestUrl += '&page=0&pageSize=10&sort=durationAvg:asc';
+	requestUrl += '&page=1&pageSize=10&sort=durationAvg:desc';
 
 	return requestUrl;
 };

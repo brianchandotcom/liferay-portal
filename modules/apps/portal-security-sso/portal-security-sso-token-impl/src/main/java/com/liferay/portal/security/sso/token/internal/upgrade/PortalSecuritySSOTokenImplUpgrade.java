@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.token.internal.upgrade;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

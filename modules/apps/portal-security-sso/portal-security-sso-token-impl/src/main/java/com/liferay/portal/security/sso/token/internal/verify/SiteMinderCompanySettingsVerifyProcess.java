@@ -17,9 +17,9 @@ package com.liferay.portal.security.sso.token.internal.verify;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.security.sso.token.internal.constants.LegacyTokenPropsKeys;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConfigurationKeys;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
+import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
+import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
+import com.liferay.portal.security.sso.token.constants.TokenConstants;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -62,7 +62,7 @@ public class SiteMinderCompanySettingsVerifyProcess
 			},
 			{
 				LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
-				TokenConfigurationKeys.USER_HEADER
+				TokenConfigurationKeys.USER_TOKEN_NAME
 			}
 		};
 	}

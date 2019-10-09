@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.configuration;
+package com.liferay.portal.security.sso.token.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,11 +23,9 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
  * @author Michael C. Han
  * @author Mika Koivisto
  */
-@ExtendedObjectClassDefinition(
-	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
-)
+@ExtendedObjectClassDefinition(category = "sso")
 @Meta.OCD(
-	id = "com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration",
+	id = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration",
 	localization = "content/Language", name = "token-configuration-name"
 )
 public interface TokenConfiguration {

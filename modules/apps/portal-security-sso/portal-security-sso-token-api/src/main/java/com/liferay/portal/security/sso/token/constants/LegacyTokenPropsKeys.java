@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.constants;
+package com.liferay.portal.security.sso.token.constants;
 
 /**
  * @author Brian Greenwald

@@ -16,8 +16,10 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.internal.util.StringUtil;
+import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 
 import groovy.json.JsonSlurper;
@@ -36,6 +38,7 @@ import org.gradle.api.Task;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Peter Shin
@@ -56,10 +59,19 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
 
+		final NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		Task yarnInstallTask = _addTaskYarnInstall(project);
+
 		_addTaskYarnCheckFormat(project);
 		_addTaskYarnFormat(project);
-		_addTaskYarnInstall(project);
 		_addTaskYarnLock(project);
+
+		for (Project subproject : project.getSubprojects()) {
+			_configureTasksNpmInstall(
+				subproject, yarnInstallTask, nodeExtension);
+		}
 	}
 
 	private ExecutePackageManagerTask _addTaskYarnCheckFormat(
@@ -273,6 +285,50 @@ public class LiferayYarnPlugin implements Plugin<Project> {
 				_addTaskYarnInstall(task, yarnLockFile, false)));
 
 		return task;
+	}
+
+	private void _configureTaskNpmInstall(
+		NpmInstallTask npmInstallTask, Task yarnInstallTask,
+		NodeExtension nodeExtension) {
+
+		File scriptFile = nodeExtension.getScriptFile();
+
+		if (scriptFile == null) {
+			return;
+		}
+
+		String fileName = scriptFile.getName();
+
+		if (!fileName.startsWith("yarn-") || !fileName.endsWith(".js")) {
+			return;
+		}
+
+		Project project = npmInstallTask.getProject();
+
+		File nodeModulesDir = project.file("node_modules");
+
+		if (!nodeModulesDir.exists()) {
+			npmInstallTask.finalizedBy(yarnInstallTask);
+		}
+	}
+
+	private void _configureTasksNpmInstall(
+		Project project, final Task yarnInstallTask,
+		final NodeExtension nodeExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskNpmInstall(
+						npmInstallTask, yarnInstallTask, nodeExtension);
+				}
+
+			});
 	}
 
 	private FileTree _getYarnLockFiles(Project project) {

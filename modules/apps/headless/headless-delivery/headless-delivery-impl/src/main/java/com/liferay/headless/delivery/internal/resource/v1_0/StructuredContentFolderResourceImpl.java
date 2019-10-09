@@ -167,6 +167,30 @@ public class StructuredContentFolderResourceImpl
 					structuredContentFolder.getViewableByAsString())));
 	}
 
+	@Override
+	public void putStructuredContentFolderSubscribe(
+			Long structuredContentFolderId)
+		throws Exception {
+
+		JournalFolder journalFolder = _journalFolderService.getFolder(
+			structuredContentFolderId);
+
+		_journalFolderService.subscribe(
+			journalFolder.getGroupId(), journalFolder.getFolderId());
+	}
+
+	@Override
+	public void putStructuredContentFolderUnsubscribe(
+			Long structuredContentFolderId)
+		throws Exception {
+
+		JournalFolder journalFolder = _journalFolderService.getFolder(
+			structuredContentFolderId);
+
+		_journalFolderService.unsubscribe(
+			journalFolder.getGroupId(), journalFolder.getFolderId());
+	}
+
 	private StructuredContentFolder _addStructuredContentFolder(
 			Long siteId, Long parentFolderId,
 			StructuredContentFolder structuredContentFolder)
@@ -228,7 +252,7 @@ public class StructuredContentFolderResourceImpl
 		return _structuredContentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				journalFolder.getFolderId()));
+				journalFolder.getFolderId(), contextUriInfo, contextUser));
 	}
 
 	@Reference

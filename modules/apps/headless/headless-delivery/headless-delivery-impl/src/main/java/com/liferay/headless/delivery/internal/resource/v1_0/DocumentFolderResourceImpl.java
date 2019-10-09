@@ -165,6 +165,26 @@ public class DocumentFolderResourceImpl
 			documentFolder.getDescription(), documentFolder.getName());
 	}
 
+	@Override
+	public void putDocumentFolderSubscribe(Long documentFolderId)
+		throws Exception {
+
+		Folder folder = _dlAppService.getFolder(documentFolderId);
+
+		_dlAppService.subscribeFolder(
+			folder.getGroupId(), folder.getFolderId());
+	}
+
+	@Override
+	public void putDocumentFolderUnsubscribe(Long documentFolderId)
+		throws Exception {
+
+		Folder folder = _dlAppService.getFolder(documentFolderId);
+
+		_dlAppService.unsubscribeFolder(
+			folder.getGroupId(), folder.getFolderId());
+	}
+
 	private DocumentFolder _addFolder(
 			Long siteId, Long parentDocumentFolderId,
 			DocumentFolder documentFolder)
@@ -226,7 +246,7 @@ public class DocumentFolderResourceImpl
 		return _documentFolderDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				folder.getFolderId()));
+				folder.getFolderId(), contextUriInfo, contextUser));
 	}
 
 	private DocumentFolder _updateDocumentFolder(

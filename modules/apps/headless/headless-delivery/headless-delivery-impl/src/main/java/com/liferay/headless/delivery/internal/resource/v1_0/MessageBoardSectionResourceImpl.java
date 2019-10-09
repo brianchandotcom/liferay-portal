@@ -41,6 +41,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
@@ -175,6 +176,28 @@ public class MessageBoardSectionResourceImpl
 					mbCategory.getGroupId(), null)));
 	}
 
+	@Override
+	public void putMessageBoardSectionSubscribe(Long messageBoardSectionId)
+		throws Exception {
+
+		MBCategory mbCategory = _mbCategoryService.getCategory(
+			messageBoardSectionId);
+
+		_mbCategoryService.subscribeCategory(
+			mbCategory.getGroupId(), mbCategory.getCategoryId());
+	}
+
+	@Override
+	public void putMessageBoardSectionUnsubscribe(Long messageBoardSectionId)
+		throws Exception {
+
+		MBCategory mbCategory = _mbCategoryService.getCategory(
+			messageBoardSectionId);
+
+		_mbCategoryService.unsubscribeCategory(
+			mbCategory.getGroupId(), mbCategory.getCategoryId());
+	}
+
 	private MessageBoardSection _addMessageBoardSection(
 			long siteId, Long parentMessageBoardSectionId,
 			MessageBoardSection messageBoardSection)
@@ -241,6 +264,9 @@ public class MessageBoardSectionResourceImpl
 						mbCategory.getGroupId(), mbCategory.getCategoryId());
 				numberOfMessageBoardThreads = mbCategory.getThreadCount();
 				siteId = mbCategory.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					mbCategory.getCompanyId(), contextUser.getUserId(),
+					MBCategory.class.getName(), mbCategory.getCategoryId());
 				title = mbCategory.getName();
 			}
 		};
@@ -257,6 +283,9 @@ public class MessageBoardSectionResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

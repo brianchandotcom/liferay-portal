@@ -426,7 +426,8 @@ public class DocumentResourceImpl
 
 	private Document _toDocument(FileEntry fileEntry) throws Exception {
 		return _documentDTOConverter.toDTO(
-			new DefaultDTOConverterContext(null, fileEntry.getFileEntryId()));
+			new DefaultDTOConverterContext(
+				null, fileEntry.getFileEntryId(), contextUriInfo, contextUser));
 	}
 
 	@Reference

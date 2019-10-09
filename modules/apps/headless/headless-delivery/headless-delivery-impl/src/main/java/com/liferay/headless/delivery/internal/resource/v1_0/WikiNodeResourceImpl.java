@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
 
@@ -118,6 +119,16 @@ public class WikiNodeResourceImpl
 					wikiNode.getViewableByAsString())));
 	}
 
+	@Override
+	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception {
+		_wikiNodeService.subscribeNode(wikiNodeId);
+	}
+
+	@Override
+	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception {
+		_wikiNodeService.unsubscribeNode(wikiNodeId);
+	}
+
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
@@ -134,6 +145,10 @@ public class WikiNodeResourceImpl
 				numberOfWikiPages = _wikiPageService.getPagesCount(
 					wikiNode.getGroupId(), wikiNode.getNodeId(), true);
 				siteId = wikiNode.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					wikiNode.getCompanyId(), contextUser.getUserId(),
+					com.liferay.wiki.model.WikiNode.class.getName(),
+					wikiNode.getNodeId());
 			}
 		};
 	}
@@ -142,6 +157,9 @@ public class WikiNodeResourceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

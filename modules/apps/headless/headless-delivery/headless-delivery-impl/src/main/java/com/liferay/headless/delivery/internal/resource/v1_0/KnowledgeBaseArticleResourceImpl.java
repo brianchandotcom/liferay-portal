@@ -283,6 +283,40 @@ public class KnowledgeBaseArticleResourceImpl
 			rating.getRatingValue(), knowledgeBaseArticleId);
 	}
 
+	@Override
+	public void putKnowledgeBaseArticleSubscribe(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
+			knowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
+
+		_kbArticleService.subscribeKBArticle(
+			kbArticle.getGroupId(), kbArticle.getResourcePrimKey());
+	}
+
+	@Override
+	public void putKnowledgeBaseArticleUnsubscribe(Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_kbArticleService.unsubscribeKBArticle(knowledgeBaseArticleId);
+	}
+
+	@Override
+	public void putSiteKnowledgeBaseArticleSubscribe(Long siteId)
+		throws Exception {
+
+		_kbArticleService.subscribeGroupKBArticles(
+			siteId, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+	}
+
+	@Override
+	public void putSiteKnowledgeBaseArticleUnsubscribe(Long siteId)
+		throws Exception {
+
+		_kbArticleService.unsubscribeGroupKBArticles(
+			siteId, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		KnowledgeBaseArticle knowledgeBaseArticle) {
 
@@ -363,7 +397,8 @@ public class KnowledgeBaseArticleResourceImpl
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				knowledgeBaseArticleResourcePrimKey));
+				knowledgeBaseArticleResourcePrimKey, contextUriInfo,
+				contextUser));
 	}
 
 	@Reference

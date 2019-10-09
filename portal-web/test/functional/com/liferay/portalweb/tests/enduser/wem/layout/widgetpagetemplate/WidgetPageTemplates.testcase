@@ -1,4 +1,4 @@
-@component-name = "portal-wcm"
+ @component-name = "portal-wcm"
 definition {
 
 	property portal.release = "true";
@@ -27,12 +27,7 @@ definition {
 
 	@priority = "4"
 	test AddPageTemplate {
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -44,12 +39,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -77,12 +67,7 @@ definition {
 			page = "Site Page",
 			pageTemplateName = "Page Template Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 
@@ -109,12 +94,7 @@ definition {
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 
@@ -131,12 +111,7 @@ definition {
 	test DeactivateAndActivatePageTemplate {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -163,12 +138,7 @@ definition {
 
 		Page.viewPageTemplateTypeNotPresent(pageTemplateName = "Page Template Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.deactivateAndActivate(
 			pageTemplateName = "Page Template Name",
@@ -196,12 +166,7 @@ definition {
 	test DeletePageTemplate {
 		property portal.acceptance = "true";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -217,12 +182,7 @@ definition {
 	test EditPageTemplate {
 		property portal.acceptance = "true";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -240,14 +200,7 @@ definition {
 
 		CalendarConfiguration.save();
 
-		Navigator.openSiteURL(siteName = "guest");
-
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.editCP(
 			pageTemplateActive = "Not Active",
@@ -256,12 +209,7 @@ definition {
 
 	@priority = "4"
 	test EditPageTemplateDescription {
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -280,16 +228,11 @@ definition {
 	test ImportLAR {
 		property testray.component.names = "Training";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		LAR.importSiteCP(
 			larFileName = "college-and-department-page-templates.lar",
 			uploadFrom = "dependencies");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
 
 		PageTemplatesAdminGlobalSite.viewCP(pageTemplateName = "College Landing Page");
 
@@ -309,14 +252,7 @@ definition {
 
 		Portlet.viewSpecificPG(portletName = "Asset Publisher");
 
-		Navigator.openURL();
-
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.viewPG(
 			pageTemplateName = "Department Landing Page",
@@ -337,12 +273,7 @@ definition {
 	test LocalizeDefaultPageTemplates {
 		property test.name.skip.portal.instance = "WidgetPageTemplates#LocalizeDefaultPageTemplates";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 
@@ -353,17 +284,7 @@ definition {
 			saveButton = "Save",
 			successMessage = "Su petición ha terminado con éxito.");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoLocalizedSite(
-			displayStyle = "tabla",
-			navItem = "Mis Sitios",
-			site = "Global");
-
-		ProductMenu.gotoPortlet(
-			category = "Constructor del sitio",
-			panel = "Site Administration",
-			portlet = "Páginas del sitio web");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.viewDefaultLocalizedCP(
 			pageTemplateNameList = "Blog,Búsqueda,Wiki",
@@ -384,12 +305,7 @@ definition {
 
 		Navigator.openURL();
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 	}
@@ -398,12 +314,7 @@ definition {
 	test ViewEditedPageTemplatePageName {
 		property testray.component.names = "Page Templates";
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
 			pageTemplateActive = "Active",
@@ -415,12 +326,7 @@ definition {
 			pageTemplateName = "Page Template Name",
 			siteName = "${siteName}");
 
-		SitePages.openPagesAdmin(siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.editCP(
 			pageTemplateActive = "Active",

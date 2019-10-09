@@ -88,13 +88,12 @@ definition {
 		LexiconCard.clickCardTitle(card = "${pageTemplateName}");
 	}
 
-	macro tearDownCP {
-		SitePages.openPagesAdmin(siteURLKey = "global");
+	macro openGlobalPageTemplatesAdmin() {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/global/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet");
+	}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+	macro tearDownCP {
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		var pageTemplateName = "Page Template Name";
 

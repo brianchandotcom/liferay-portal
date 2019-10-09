@@ -25,7 +25,7 @@
 			id='${namespace + formName}'
 			label=""
 			name='${name}'
-			onChange='${namespace + "changeLanguage"}'
+			onChange='${namespace + "changeLanguage();"}'
 			title="language"
 		>
 			<#list entries as entry>

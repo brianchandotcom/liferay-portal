@@ -16,9 +16,12 @@ import React from 'react';
 
 const INITIAL_STATE = {
 	/**
-	 * Example state value.
+	 * A collection of dynamically loaded reducers that may be loaded from
+	 * plugins at runtime.
+	 *
+	 * TODO: potentially allow us to specify a ranking here to determine order
 	 */
-	example: 'value'
+	reducers: {}
 };
 
 export const StoreContext = React.createContext(INITIAL_STATE);

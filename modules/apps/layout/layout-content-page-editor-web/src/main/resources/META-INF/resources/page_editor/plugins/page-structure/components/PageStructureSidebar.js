@@ -12,8 +12,22 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import React from 'react';
 
-export default function PageStructureSidebar({title}) {
-	return <h1>{title}</h1>;
+export default function PageStructureSidebar({dispatch, title}) {
+	return (
+		<>
+			<h1>{title}</h1>
+			<ul>
+				<li>
+					<ClayButton
+						onClick={() => dispatch({type: 'A CUSTOM ACTION'})}
+					>
+						Action
+					</ClayButton>
+				</li>
+			</ul>
+		</>
+	);
 }

@@ -13,5 +13,6 @@
  */
 
 export const DISCARD = 'DISCARD';
-
+export const LOAD_REDUCER = 'LOAD_REDUCER';
 export const PUBLISH = 'PUBLISH';
+export const UNLOAD_REDUCER = 'UNLOAD_REDUCER';

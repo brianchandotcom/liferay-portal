@@ -19,10 +19,13 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
+import {loadReducer, unloadReducer} from '../actions/index';
+import * as ActionTypes from '../actions/types';
 import {ConfigContext} from '../config/index';
 import usePlugins from '../hooks/usePlugins';
 import useLoad from '../hooks/useLoad';
 import useStateSafe from '../hooks/useStateSafe';
+import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 
 const {Suspense, lazy, useContext, useEffect} = React;
@@ -35,6 +38,7 @@ const swallow = [value => value, _error => undefined];
 
 export default function Sidebar() {
 	const config = useContext(ConfigContext);
+	const dispatch = useContext(DispatchContext);
 	const store = useContext(StoreContext);
 
 	const [hasError, setHasError] = useStateSafe(false);
@@ -83,7 +87,7 @@ export default function Sidebar() {
 
 		getInstance(activePluginId).then(activePlugin => {
 			if (activePlugin && typeof activePlugin.deactivate === 'function') {
-				activePlugin.deactivate();
+				activePlugin.deactivate({unloadReducer});
 			}
 		});
 
@@ -92,19 +96,23 @@ export default function Sidebar() {
 
 			const promise = load(sidebarPanelId, panel.pluginEntryPoint);
 
-			register(sidebarPanelId, promise, {config, panel, store}).then(
-				plugin => {
-					if (
-						plugin &&
-						typeof plugin.activate === 'function' &&
-						isMounted()
-					) {
-						plugin.activate();
-					} else if (!plugin) {
-						setHasError(true);
-					}
+			register(sidebarPanelId, promise, {
+				ActionTypes,
+				config,
+				dispatch,
+				panel,
+				store
+			}).then(plugin => {
+				if (
+					plugin &&
+					typeof plugin.activate === 'function' &&
+					isMounted()
+				) {
+					plugin.activate({loadReducer});
+				} else if (!plugin) {
+					setHasError(true);
 				}
-			);
+			});
 		} else {
 			setActivePluginId(null);
 		}

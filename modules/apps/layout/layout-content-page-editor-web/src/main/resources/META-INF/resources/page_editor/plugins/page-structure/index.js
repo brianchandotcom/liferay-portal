@@ -20,11 +20,37 @@ import PageStructureSidebar from './components/PageStructureSidebar';
  * Entry-point for "Page Structure" (sidebar pane) functionality.
  */
 export default class PageStructure {
-	constructor({panel}) {
+	static name = 'PageStructure';
+
+	// TODO: make other app contexts available here as well
+	constructor({ActionTypes, dispatch, panel}) {
+		this.ActionTypes = ActionTypes;
+		this.dispatch = dispatch;
 		this.title = panel.label;
 	}
 
+	activate({loadReducer}) {
+		const reducer = (state, action) => {
+			const nextState = state;
+
+			switch (action.type) {
+				default:
+					break;
+			}
+
+			return nextState;
+		};
+
+		this.dispatch(loadReducer(reducer, PageStructure.name));
+	}
+
+	deactivate({unloadReducer}) {
+		this.dispatch(unloadReducer(PageStructure.name));
+	}
+
 	renderSidebar() {
-		return <PageStructureSidebar title={this.title} />;
+		return (
+			<PageStructureSidebar dispatch={this.dispatch} title={this.title} />
+		);
 	}
 }

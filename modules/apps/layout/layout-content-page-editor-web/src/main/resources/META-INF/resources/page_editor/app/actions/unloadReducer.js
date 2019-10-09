@@ -12,20 +12,13 @@
  * details.
  */
 
-/**
- * Action creators.
- */
+import {UNLOAD_REDUCER as type} from './types';
 
-export {default as discard} from './discard';
-export {default as loadReducer} from './loadReducer';
-export {default as publish} from './publish';
-export {default as unloadReducer} from './unloadReducer';
+const ACTION = {type};
 
-/**
- * Action types.
- */
-
-// TODO: turn on @babel/plugin-proposal-export-namespace-from and make these
-// `export * as TYPES from './types';`
-import * as TYPES from './types';
-export {TYPES};
+export default function unloadReducer(key) {
+	return {
+		...ACTION,
+		key
+	};
+}

@@ -531,6 +531,62 @@ public class LayoutConverterTest {
 	}
 
 	@Test
+	public void testConvertTwoOneTwoColumnsSinglePortlet() throws Exception {
+		Map<String, String[]> portletIdsMap1 = new TreeMap<String, String[]>() {
+			{
+				put(
+					"column-1",
+					new String[] {
+						"com_liferay_chart_sample_web_portlet_" +
+							"ChartSamplePortlet"
+					});
+				put(
+					"column-2",
+					new String[] {
+						"com_liferay_chart_sample_web_portlet_" +
+							"ChartSamplePortlet"
+					});
+			}
+		};
+		Map<String, String[]> portletIdsMap2 = new TreeMap<String, String[]>() {
+			{
+				put(
+					"column-1",
+					new String[] {
+						"com_liferay_hello_velocity_web_portlet_" +
+							"HelloVelocityPortlet"
+					});
+			}
+		};
+		Map<String, String[]> portletIdsMap3 = new TreeMap<String, String[]>() {
+			{
+				put(
+					"column-1",
+					new String[] {
+						"com_liferay_hello_world_web_portlet_HelloWorldPortlet"
+					});
+				put(
+					"column-2",
+					new String[] {
+						"com_liferay_chart_sample_web_portlet_" +
+							"ChartSamplePortlet"
+					});
+			}
+		};
+
+		List<Map<String, String[]>> portletIdsMaps =
+			new ArrayList<Map<String, String[]>>() {
+				{
+					add(portletIdsMap1);
+					add(portletIdsMap2);
+					add(portletIdsMap3);
+				}
+			};
+
+		_testConvert("2_1_2_columns", portletIdsMaps);
+	}
+
+	@Test
 	public void testIsConvertibleFalseWidgetPageCustomizable()
 		throws Exception {
 

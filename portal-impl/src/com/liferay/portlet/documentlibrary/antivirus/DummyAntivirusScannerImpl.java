@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.antivirus;
 import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,10 +34,6 @@ public class DummyAntivirusScannerImpl implements AntivirusScanner {
 
 	@Override
 	public void scan(File file) {
-	}
-
-	@Override
-	public void scan(InputStream inputStream) {
 	}
 
 	private static final boolean _ACTIVE = false;

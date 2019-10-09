@@ -15,7 +15,6 @@
 package com.liferay.document.library.kernel.antivirus;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * @author Michael C. Han
@@ -27,7 +26,5 @@ public interface AntivirusScanner {
 	public void scan(byte[] bytes) throws AntivirusScannerException;
 
 	public void scan(File file) throws AntivirusScannerException;
-
-	public void scan(InputStream inputStream) throws AntivirusScannerException;
 
 }

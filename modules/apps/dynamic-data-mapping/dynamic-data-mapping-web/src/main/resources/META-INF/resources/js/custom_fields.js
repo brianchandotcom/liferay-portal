@@ -44,15 +44,17 @@ AUI.add(
 		var isValue = Lang.isValue;
 
 		var structureFieldIndexEnable = function() {
-			var indexTypeNode = A.one(
-				'#_' + Liferay.Portlet.list[0] + '_indexable'
-			);
+			for (var i = 0; i < Liferay.Portlet.list.length; i++) {
+				var indexTypeNode = A.one(
+					'#_' + Liferay.Portlet.list[i] + '_indexable'
+				);
 
-			if (indexTypeNode) {
-				var indexable = indexTypeNode.getAttribute('value');
+				if (indexTypeNode) {
+					var indexable = indexTypeNode.getAttribute('value');
 
-				if (indexable === 'false') {
-					return false;
+					if (indexable === 'false') {
+						return false;
+					}
 				}
 			}
 

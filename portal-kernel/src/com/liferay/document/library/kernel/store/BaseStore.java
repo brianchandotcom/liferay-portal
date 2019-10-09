@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.kernel.store;
 
-import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -23,9 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -81,34 +77,6 @@ public abstract class BaseStore implements Store {
 	@Deprecated
 	@Override
 	public void move(String srcDir, String destDir) {
-	}
-
-	/**
-	 * Updates a file based on a {@link File} object.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param versionLabel the file's new version label
-	 * @param file Name the file name
-	 */
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
-		throws PortalException {
-
-		try (InputStream is = new FileInputStream(file)) {
-			updateFile(companyId, repositoryId, fileName, versionLabel, is);
-		}
-		catch (FileNotFoundException fnfe) {
-			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, versionLabel, fnfe);
-		}
-		catch (IOException ioe) {
-			_log.error("Unable to update file", ioe);
-		}
 	}
 
 	/**

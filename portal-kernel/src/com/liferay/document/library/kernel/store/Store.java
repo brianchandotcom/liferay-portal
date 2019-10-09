@@ -199,11 +199,6 @@ public interface Store {
 			String newFileName)
 		throws PortalException;
 
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
-		throws PortalException;
-
 	/**
 	 * Updates a file based on an {@link InputStream} object.
 	 *

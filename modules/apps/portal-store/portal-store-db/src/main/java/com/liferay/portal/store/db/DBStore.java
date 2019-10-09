@@ -37,9 +37,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -257,31 +255,6 @@ public class DBStore extends BaseStore {
 
 		_dlContentLocalService.updateDLContent(
 			companyId, repositoryId, repositoryId, fileName, newFileName);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, File file)
-		throws DuplicateFileException {
-
-		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new FileInputStream(file);
-		}
-		catch (FileNotFoundException fnfe) {
-			throw new SystemException(fnfe);
-		}
-
-		_dlContentLocalService.addContent(
-			companyId, repositoryId, fileName, versionLabel, inputStream,
-			file.length());
 	}
 
 	@Override

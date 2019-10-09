@@ -509,35 +509,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testUpdateFileWithFile() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		File file = createFile(_DATA_VERSION_2);
-
-		store.updateFile(companyId, repositoryId, fileName, "1.1", file);
-
-		byte[] firstVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(companyId, repositoryId, fileName, "1.0"));
-
-		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
-
-		byte[] secondVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(companyId, repositoryId, fileName, "1.1"));
-
-		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
-
-		byte[] currentVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(
-				companyId, repositoryId, fileName, StringPool.BLANK));
-
-		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
-	}
-
-	@Test
 	public void testUpdateFileWithInputStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

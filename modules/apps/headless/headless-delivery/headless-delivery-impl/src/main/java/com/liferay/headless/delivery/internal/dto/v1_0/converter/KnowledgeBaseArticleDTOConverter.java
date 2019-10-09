@@ -32,12 +32,14 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryUtil
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
 import java.util.Optional;
@@ -70,6 +72,8 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 		if (kbArticle == null) {
 			return null;
 		}
+
+		User user = dtoConverterContext.getUser();
 
 		return new KnowledgeBaseArticle() {
 			{
@@ -111,6 +115,9 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 					kbArticle.getResourcePrimKey(),
 					dtoConverterContext.getLocale());
 				siteId = kbArticle.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					kbArticle.getCompanyId(), user.getUserId(),
+					KBArticle.class.getName(), kbArticle.getResourcePrimKey());
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						KBArticle.class.getName(), kbArticle.getClassPK()),
@@ -156,6 +163,9 @@ public class KnowledgeBaseArticleDTOConverter implements DTOConverter {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

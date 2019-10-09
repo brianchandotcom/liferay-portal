@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiNodeService;
@@ -223,6 +224,24 @@ public class WikiPageResourceImpl
 					wikiPage.getViewableByAsString())));
 	}
 
+	@Override
+	public void putWikiPageSubscribe(Long wikiPageId) throws Exception {
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.getPageByPageId(wikiPageId);
+
+		_wikiPageService.subscribePage(
+			wikiPage.getNodeId(), wikiPage.getTitle());
+	}
+
+	@Override
+	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception {
+		com.liferay.wiki.model.WikiPage wikiPage =
+			_wikiPageLocalService.getPageByPageId(wikiPageId);
+
+		_wikiPageService.unsubscribePage(
+			wikiPage.getNodeId(), wikiPage.getTitle());
+	}
+
 	private String _getEncodingFormat(
 		com.liferay.wiki.model.WikiPage wikiPage) {
 
@@ -289,6 +308,10 @@ public class WikiPageResourceImpl
 					wikiPage.getModelClassName(), wikiPage.getResourcePrimKey(),
 					contextAcceptLanguage.getPreferredLocale());
 				siteId = wikiPage.getGroupId();
+				subscribed = _subscriptionLocalService.isSubscribed(
+					wikiPage.getCompanyId(), contextUser.getUserId(),
+					com.liferay.wiki.model.WikiPage.class.getName(),
+					wikiPage.getResourcePrimKey());
 				taxonomyCategories = TransformUtil.transformToArray(
 					_assetCategoryLocalService.getCategories(
 						com.liferay.wiki.model.WikiPage.class.getName(),
@@ -327,6 +350,9 @@ public class WikiPageResourceImpl
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

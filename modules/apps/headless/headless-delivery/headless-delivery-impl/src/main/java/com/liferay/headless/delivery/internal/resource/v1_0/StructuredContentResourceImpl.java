@@ -494,6 +494,28 @@ public class StructuredContentResourceImpl
 			rating.getRatingValue(), structuredContentId);
 	}
 
+	@Override
+	public void putStructuredContentSubscribe(Long structuredContentId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		_journalArticleService.subscribe(
+			journalArticle.getGroupId(), journalArticle.getResourcePrimKey());
+	}
+
+	@Override
+	public void putStructuredContentUnsubscribe(Long structuredContentId)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
+			structuredContentId);
+
+		_journalArticleService.unsubscribe(
+			journalArticle.getGroupId(), journalArticle.getResourcePrimKey());
+	}
+
 	private StructuredContent _addStructuredContent(
 			Long siteId, Long parentStructuredContentFolderId,
 			StructuredContent structuredContent)
@@ -850,7 +872,8 @@ public class StructuredContentResourceImpl
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				journalArticle.getResourcePrimKey(), contextUriInfo));
+				journalArticle.getResourcePrimKey(), contextUriInfo,
+				contextUser));
 	}
 
 	private void _validateContentFields(

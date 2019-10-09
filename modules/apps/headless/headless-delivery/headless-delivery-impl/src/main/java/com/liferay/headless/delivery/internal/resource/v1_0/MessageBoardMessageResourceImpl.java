@@ -320,7 +320,7 @@ public class MessageBoardMessageResourceImpl
 
 		return _messageBoardMessageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, mbMessage.getPrimaryKey(), null, contextUser));
+				null, mbMessage.getPrimaryKey(), contextUriInfo, contextUser));
 	}
 
 	private void _updateAnswer(

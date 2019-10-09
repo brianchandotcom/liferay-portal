@@ -39,10 +39,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -121,43 +119,24 @@ public class RawMetadataProcessorImpl
 	public void saveMetadata(FileVersion fileVersion) throws PortalException {
 		Map<String, DDMFormValues> rawMetadataMap = null;
 
-		if (fileVersion instanceof LiferayFileVersion) {
-			try {
-				LiferayFileVersion liferayFileVersion =
-					(LiferayFileVersion)fileVersion;
-
-				File file = liferayFileVersion.getFile(false);
-
-				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
-					fileVersion.getExtension(), fileVersion.getMimeType(),
-					file);
-			}
-			catch (UnsupportedOperationException uoe) {
-			}
-		}
-
-		if (rawMetadataMap == null) {
-			try (InputStream inputStream = fileVersion.getContentStream(
-					false)) {
-
-				if (inputStream == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"No metadata is available for file version " +
-								fileVersion.getFileVersionId());
-					}
-
-					return;
-				}
-
-				rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
-					fileVersion.getExtension(), fileVersion.getMimeType(),
-					inputStream);
-			}
-			catch (IOException ioe) {
+		try (InputStream inputStream = fileVersion.getContentStream(false)) {
+			if (inputStream == null) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
+					_log.warn(
+						"No metadata is available for file version " +
+							fileVersion.getFileVersionId());
 				}
+
+				return;
+			}
+
+			rawMetadataMap = RawMetadataProcessorUtil.getRawMetadataMap(
+				fileVersion.getExtension(), fileVersion.getMimeType(),
+				inputStream);
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
 			}
 		}
 

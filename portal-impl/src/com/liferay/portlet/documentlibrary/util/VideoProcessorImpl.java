@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.ThreadUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -422,36 +421,16 @@ public class VideoProcessorImpl
 				return;
 			}
 
-			File file = null;
-
 			if (!hasPreviews(destinationFileVersion) ||
 				!hasThumbnails(destinationFileVersion)) {
 
-				if (destinationFileVersion instanceof LiferayFileVersion) {
-					try {
-						LiferayFileVersion liferayFileVersion =
-							(LiferayFileVersion)destinationFileVersion;
+				try (InputStream inputStream =
+						destinationFileVersion.getContentStream(false)) {
 
-						file = liferayFileVersion.getFile(false);
-					}
-					catch (UnsupportedOperationException uoe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(uoe, uoe);
-						}
-					}
-				}
+					videoTempFile = FileUtil.createTempFile(
+						destinationFileVersion.getExtension());
 
-				if (file == null) {
-					try (InputStream inputStream =
-							destinationFileVersion.getContentStream(false)) {
-
-						videoTempFile = FileUtil.createTempFile(
-							destinationFileVersion.getExtension());
-
-						FileUtil.write(videoTempFile, inputStream);
-
-						file = videoTempFile;
-					}
+					FileUtil.write(videoTempFile, inputStream);
 				}
 			}
 
@@ -467,7 +446,8 @@ public class VideoProcessorImpl
 
 				try {
 					_generateVideoXuggler(
-						destinationFileVersion, file, previewTempFiles);
+						destinationFileVersion, videoTempFile,
+						previewTempFiles);
 				}
 				catch (Exception e) {
 					_fileVersionPreviewEventListener.onFailure(
@@ -480,7 +460,7 @@ public class VideoProcessorImpl
 			if (!hasThumbnails(destinationFileVersion)) {
 				try {
 					_generateThumbnailXuggler(
-						destinationFileVersion, file,
+						destinationFileVersion, videoTempFile,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 				}

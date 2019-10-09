@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -420,21 +419,6 @@ public class PDFProcessorImpl
 			String extension = destinationFileVersion.getExtension();
 
 			if (extension.equals("pdf")) {
-				if (destinationFileVersion instanceof LiferayFileVersion) {
-					try {
-						LiferayFileVersion liferayFileVersion =
-							(LiferayFileVersion)destinationFileVersion;
-
-						File file = liferayFileVersion.getFile(false);
-
-						_generateImages(destinationFileVersion, file);
-
-						return;
-					}
-					catch (UnsupportedOperationException uoe) {
-					}
-				}
-
 				try (InputStream inputStream =
 						destinationFileVersion.getContentStream(false)) {
 

@@ -106,6 +106,10 @@ definition {
 
 		Page.selectMobileDeviceFamily(deviceFamilyName = "Linux Family Name");
 
+		// Workaround for LPS-92083
+
+		Refresh();
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = "Linux Family Name");

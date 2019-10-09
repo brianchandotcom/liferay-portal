@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -136,12 +137,15 @@ public class AccountUserRetrieverTest {
 	public void testSearchAccountUsersWithPagination() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
-		_users.add(UserTestUtil.addUser(keywords + 1, null));
-		_users.add(UserTestUtil.addUser(keywords + 2, null));
-		_users.add(UserTestUtil.addUser(keywords + 3, null));
-		_users.add(UserTestUtil.addUser(keywords + 4, null));
+		for (int i = 1; i < 5; i++) {
+			String name = keywords + i;
 
-		for (User user : _users) {
+			User user = UserTestUtil.addUser(
+				name, LocaleUtil.getDefault(), name,
+				RandomTestUtil.randomString(), null);
+
+			_users.add(user);
+
 			_accountEntryUserRels.add(
 				_accountEntryUserRelLocalService.addAccountEntryUserRel(
 					_accountEntry.getAccountEntryId(), user.getUserId()));
@@ -180,6 +184,18 @@ public class AccountUserRetrieverTest {
 
 		Assert.assertEquals(users.toString(), 4, users.size());
 		Assert.assertEquals(_users.get(3), users.get(0));
+
+		// Test sort by non-keyword-mapped field name
+
+		baseModelSearchResult = _searchAccountUsers(
+			keywords, 0, 4, "firstName", true);
+
+		Assert.assertEquals(4, baseModelSearchResult.getLength());
+
+		users = baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(users.toString(), 4, users.size());
+		Assert.assertEquals(_users.get(3), users.get(0));
 	}
 
 	private void _assertSearch(String keywords, int expectedSize)
@@ -199,10 +215,17 @@ public class AccountUserRetrieverTest {
 			String keywords, int cur, int delta, boolean reverse)
 		throws Exception {
 
+		return _searchAccountUsers(keywords, cur, delta, "screenName", reverse);
+	}
+
+	private BaseModelSearchResult<User> _searchAccountUsers(
+			String keywords, int cur, int delta, String sortField,
+			boolean reverse)
+		throws Exception {
+
 		return _accountUserRetriever.searchAccountUsers(
 			_accountEntry.getAccountEntryId(), keywords,
-			WorkflowConstants.STATUS_APPROVED, cur, delta, "screenName",
-			reverse);
+			WorkflowConstants.STATUS_APPROVED, cur, delta, sortField, reverse);
 	}
 
 	@DeleteAfterTestRun

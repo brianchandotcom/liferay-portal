@@ -1295,18 +1295,19 @@ public class LayoutsAdminDisplayContext {
 	public boolean isShowCategorization() {
 		long classNameId = PortalUtil.getClassNameId(Layout.class);
 
-		List<AssetVocabulary> vocabularies =
+		List<AssetVocabulary> assetVocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(_getGroupIds());
 
-		for (AssetVocabulary vocabulary : vocabularies) {
-			if (vocabulary.isAssociatedToClassNameId(classNameId) &&
-				vocabulary.isRequired(classNameId, 0)) {
+		for (AssetVocabulary assetVocabulary : assetVocabularies) {
+			if (assetVocabulary.isAssociatedToClassNameId(classNameId) &&
+				assetVocabulary.isRequired(classNameId, 0)) {
 
-				int vocabularyCategoriesCount =
+				int assetVocabularyCategoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), vocabulary.getVocabularyId());
+						assetVocabulary.getGroupId(),
+						assetVocabulary.getVocabularyId());
 
-				if (vocabularyCategoriesCount > 0) {
+				if (assetVocabularyCategoriesCount > 0) {
 					return true;
 				}
 			}

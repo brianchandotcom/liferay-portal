@@ -60,19 +60,20 @@ public class LayoutExceptionRequestHandler {
 		if (pe instanceof AssetCategoryException) {
 			AssetCategoryException ace = (AssetCategoryException)pe;
 
-			AssetVocabulary vocabulary = ace.getVocabulary();
+			AssetVocabulary assetVocabulary = ace.getVocabulary();
 
-			String vocabularyTitle = StringPool.BLANK;
+			String assetVocabularyTitle = StringPool.BLANK;
 
-			if (vocabulary != null) {
-				vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
+			if (assetVocabulary != null) {
+				assetVocabularyTitle = assetVocabulary.getTitle(
+					themeDisplay.getLocale());
 			}
 
 			if (ace.getType() == AssetCategoryException.AT_LEAST_ONE_CATEGORY) {
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"please-select-at-least-one-category-for-x",
-					vocabularyTitle);
+					assetVocabularyTitle);
 			}
 			else if (ace.getType() ==
 						AssetCategoryException.TOO_MANY_CATEGORIES) {
@@ -80,7 +81,7 @@ public class LayoutExceptionRequestHandler {
 				errorMessage = LanguageUtil.format(
 					themeDisplay.getRequest(),
 					"you-cannot-select-more-than-one-category-for-x",
-					vocabularyTitle);
+					assetVocabularyTitle);
 			}
 		}
 		else if (pe instanceof LayoutNameException) {

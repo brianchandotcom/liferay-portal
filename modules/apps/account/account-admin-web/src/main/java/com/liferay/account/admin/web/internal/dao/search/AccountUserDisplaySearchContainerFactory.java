@@ -18,14 +18,18 @@ import com.liferay.account.admin.web.internal.display.AccountUserDisplay;
 import com.liferay.account.retriever.AccountUserRetriever;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,8 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountUserDisplaySearchContainerFactory {
 
 	public static SearchContainer create(
-		long accountEntryId, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+			long accountEntryId, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException {
 
 		SearchContainer accountUserDisplaySearchContainer = new UserSearch(
 			liferayPortletRequest, liferayPortletResponse.createRenderURL());
@@ -49,23 +54,27 @@ public class AccountUserDisplaySearchContainerFactory {
 		accountUserDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 
-		List<User> accountUsers = _accountUserRetriever.getAccountUsers(
-			accountEntryId);
+		String keywords = ParamUtil.getString(
+			liferayPortletRequest, "keywords", null);
+		String navigation = ParamUtil.getString(
+			liferayPortletRequest, "navigation", "active");
 
-		accountUserDisplaySearchContainer.setTotal(accountUsers.size());
-
-		accountUsers = ListUtil.sort(
-			accountUsers,
-			accountUserDisplaySearchContainer.getOrderByComparator());
-
-		accountUsers = ListUtil.subList(
-			accountUsers, accountUserDisplaySearchContainer.getStart(),
-			accountUserDisplaySearchContainer.getEnd());
+		BaseModelSearchResult<User> accountUsersSearchResult =
+			_accountUserRetriever.searchAccountUsers(
+				accountEntryId, keywords, _getStatus(navigation),
+				accountUserDisplaySearchContainer.getStart(),
+				accountUserDisplaySearchContainer.getDelta(),
+				accountUserDisplaySearchContainer.getOrderByCol(),
+				_isReverseOrder(
+					accountUserDisplaySearchContainer.getOrderByType()));
 
 		List<AccountUserDisplay> accountUserDisplays = TransformUtil.transform(
-			accountUsers, AccountUserDisplay::of);
+			accountUsersSearchResult.getBaseModels(), AccountUserDisplay::of);
 
 		accountUserDisplaySearchContainer.setResults(accountUserDisplays);
+
+		accountUserDisplaySearchContainer.setTotal(
+			accountUsersSearchResult.getLength());
 
 		return accountUserDisplaySearchContainer;
 	}
@@ -75,6 +84,22 @@ public class AccountUserDisplaySearchContainerFactory {
 		AccountUserRetriever accountUserRetriever) {
 
 		_accountUserRetriever = accountUserRetriever;
+	}
+
+	private static int _getStatus(String navigation) {
+		if (Objects.equals(navigation, "inactive")) {
+			return WorkflowConstants.STATUS_INACTIVE;
+		}
+
+		return WorkflowConstants.STATUS_APPROVED;
+	}
+
+	private static boolean _isReverseOrder(String orderByType) {
+		if (Objects.equals(orderByType, "desc")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static AccountUserRetriever _accountUserRetriever;

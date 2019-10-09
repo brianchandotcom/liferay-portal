@@ -113,20 +113,16 @@ class ItemSelectorField extends Component {
 	 * @review
 	 */
 	_openItemSelector() {
-		openItemSelector({
-			callback: selectedInfoItem => {
-				this.emit('fieldValueChanged', {
-					name: this.field.name,
-					value: {
-						className: selectedInfoItem.className,
-						classNameId: selectedInfoItem.classNameId,
-						classPK: selectedInfoItem.classPK,
-						title: selectedInfoItem.title
-					}
-				});
-			},
-			eventName: `${this.portletNamespace}selectInfoItem`,
-			itemSelectorURL: this.infoItemSelectorURL
+		openItemSelector(selectedInfoItem => {
+			this.emit('fieldValueChanged', {
+				name: this.field.name,
+				value: {
+					className: selectedInfoItem.className,
+					classNameId: selectedInfoItem.classNameId,
+					classPK: selectedInfoItem.classPK,
+					title: selectedInfoItem.title
+				}
+			});
 		});
 	}
 }
@@ -174,8 +170,6 @@ ItemSelectorField.STATE = {
 
 const ConnectedItemSelectorField = getConnectedComponent(ItemSelectorField, [
 	'getAvailableTemplatesURL',
-	'infoItemSelectorURL',
-	'portletNamespace',
 	'spritemap'
 ]);
 

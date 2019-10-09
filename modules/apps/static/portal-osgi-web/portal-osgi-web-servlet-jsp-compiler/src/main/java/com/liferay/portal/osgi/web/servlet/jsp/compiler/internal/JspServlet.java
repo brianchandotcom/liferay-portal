@@ -232,16 +232,22 @@ public class JspServlet extends HttpServlet {
 
 				String fragmentHost = dictionary.get(Constants.FRAGMENT_HOST);
 
-				if ((fragmentHost != null) &&
-					fragmentHost.equals(symbolicName)) {
+				if (fragmentHost != null) {
+					int index = fragmentHost.indexOf(StringPool.SEMICOLON);
 
-					Enumeration<URL> enumeration = bundle.findEntries(
-						"META-INF/resources", "*.jsp", true);
+					if (index != -1) {
+						fragmentHost = fragmentHost.substring(0, index);
+					}
 
-					if (enumeration != null) {
-						defaults.put("hasFragment", "true");
+					if (fragmentHost.equals(symbolicName)) {
+						Enumeration<URL> enumeration = bundle.findEntries(
+							"META-INF/resources", "*.jsp", true);
 
-						close();
+						if (enumeration != null) {
+							defaults.put("hasFragment", "true");
+
+							close();
+						}
 					}
 				}
 

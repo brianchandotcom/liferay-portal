@@ -20,10 +20,10 @@ copyRepo {
 }
 
 dependencies {
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.2.0"
-	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.2.0"
-	compile group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "4.2.0"
-	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.2.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "4.3.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "4.3.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "4.3.0"
+	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.3.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 	compile group: "io.spring.gradle", name: "dependency-management-plugin", version: "1.0.7.RELEASE"
 

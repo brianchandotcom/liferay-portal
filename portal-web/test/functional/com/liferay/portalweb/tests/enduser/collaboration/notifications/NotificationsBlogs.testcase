@@ -417,7 +417,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
+		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		Notifications.viewBadgeCount(notificationCount = "0");
 
@@ -443,7 +443,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "userfn userln");

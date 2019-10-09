@@ -358,7 +358,7 @@ definition {
 			entryContent = "Blogs Entry1 Content",
 			entryTitle = "Blogs Entry1 Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "[...] Blogs Entry2 Content [...] Read More",
 			userFullName = "Test Test");
@@ -448,7 +448,7 @@ definition {
 			entryContent = "Blogs Entry3 Content",
 			entryTitle = "Blogs Entry3 Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "[...] Blogs Entry4 Content [...] Read More",
 			entryContent = "Blogs Entry3 Content",
@@ -516,7 +516,7 @@ definition {
 			entryContent = "Blogs Entry5 Content",
 			entryTitle = "Blogs Entry5 Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "[...] Blogs Entry6 Content [...] Read More",
 			userFullName = "Test Test");
@@ -556,7 +556,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
+		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
@@ -564,7 +564,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test");
@@ -597,7 +597,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test");

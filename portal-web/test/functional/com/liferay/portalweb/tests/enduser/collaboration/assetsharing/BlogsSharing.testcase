@@ -180,7 +180,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Comments.addComment(entryComment = "test");
+		Comments.addPG(entryComment = "test");
 	}
 
 	@description = "This test ensures a user can update a blog entry once it is shared with him."

@@ -247,11 +247,11 @@ definition {
 
 		if (isSet(eventCommentList)) {
 			for (var eventComment : list "${eventCommentList}") {
-				Comments.addComment(entryComment = "${eventComment}");
+				Comments.addPG(entryComment = "${eventComment}");
 			}
 		}
 		else {
-			Comments.addComment(entryComment = "${eventComment}");
+			Comments.addPG(entryComment = "${eventComment}");
 		}
 
 		if (isSet(eventCommentList)) {

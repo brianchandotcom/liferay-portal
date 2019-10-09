@@ -76,7 +76,7 @@ definition {
 
 		Ratings.rate(ratingResult = "Thumb Up");
 
-		BlogsEntryComment.add(entryComment = "Blogs Entry Comment");
+		Comments.addPG(entryComment = "Blogs Entry Comment");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Blogs Page",
@@ -90,7 +90,7 @@ definition {
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test (You)");
@@ -152,7 +152,7 @@ definition {
 			ratingResult = "Thumb Up",
 			voteCount = "1");
 
-		BlogsEntryComment.viewPG(
+		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blogs Entry Comment",
 			userFullName = "Test Test (You)");

@@ -1319,7 +1319,7 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title");
 
-		BlogsEntryComment.add(entryComment = "Web Content Comment");
+		Comments.addPG(entryComment = "Web Content Comment");
 
 		JSONRole.addRegularRole(
 			roleKey = "Web Content Comment Reviewer",
@@ -1366,7 +1366,7 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Web Content Title");
 
-		BlogsEntryComment.edit(
+		Comments.edit(
 			entryComment = "Web Content Comment",
 			entryCommentEdit = "Web Content Comment Edit");
 
@@ -1374,7 +1374,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		BlogsEntryComment.delete(entryComment = "Web Content Comment Edit");
+		Comments.delete(entryComment = "Web Content Comment Edit");
 	}
 
 }

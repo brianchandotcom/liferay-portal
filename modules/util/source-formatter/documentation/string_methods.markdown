@@ -14,14 +14,21 @@ So instead of the following methods in `java.util.String` use, the counterpart
 in `com.liferay.portal.kernel.util.StringUtil` instead.
 
 - `equalsIgnoreCase`
+- `replace`
 - `toLowerCase`
 - `toUpperCase`
 
-For better performance, enforce Character replacement over String replacement,
-when possible.
+---
+
+For better performance, enforce Character replacement over CharSequence/String
+replacement, when possible.
 
 Instead of `StringUtil.replace(s, "$", "DOLLAR")` we should use
 `StringUtil.replace(s, '$', "DOLLAR")`.
+
+Instead of `s.replace("$", "%")` we should use `s.replace('$', '%')`.
+
+---
 
 For better performance, use `StringUtil.merge()` instead of `String.join()`.
 

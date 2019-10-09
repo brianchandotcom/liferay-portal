@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.store.Store;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,7 +74,7 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 				try (InputStream is = sourceStore.getFileAsStream(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
-						fileVersionPath)) {
+						fileVersionPath, StringPool.BLANK)) {
 
 					targetStore.addFile(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,

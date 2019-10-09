@@ -330,7 +330,8 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		return store.getFileAsStream(companyId, repositoryId, fileName);
+		return store.getFileAsStream(
+			companyId, repositoryId, fileName, StringPool.BLANK);
 	}
 
 	@Override

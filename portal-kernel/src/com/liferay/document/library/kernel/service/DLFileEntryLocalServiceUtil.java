@@ -568,50 +568,6 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean)}
-	 */
-	@Deprecated
-	public static java.io.File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFile(
-			userId, fileEntryId, version, incrementCounter);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean, int)}
-	 */
-	@Deprecated
-	public static java.io.File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter, int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFile(
-			userId, fileEntryId, version, incrementCounter, increment);
-	}
-
-	public static java.io.File getFile(
-			long fileEntryId, String version, boolean incrementCounter)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFile(fileEntryId, version, incrementCounter);
-	}
-
-	public static java.io.File getFile(
-			long fileEntryId, String version, boolean incrementCounter,
-			int increment)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().getFile(
-			fileEntryId, version, incrementCounter, increment);
-	}
-
-	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 #getFileAsStream(long, String)}
 	 */

@@ -414,39 +414,6 @@ public interface DLFileEntryLocalService
 	public int getExtraSettingsFileEntriesCount();
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 String, boolean, int)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter, int increment)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(
-			long fileEntryId, String version, boolean incrementCounter)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(
-			long fileEntryId, String version, boolean incrementCounter,
-			int increment)
-		throws PortalException;
-
-	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 #getFileAsStream(long, String)}
 	 */

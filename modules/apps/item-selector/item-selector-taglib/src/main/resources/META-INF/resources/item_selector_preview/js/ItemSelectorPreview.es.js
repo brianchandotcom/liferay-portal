@@ -170,6 +170,7 @@ class ItemSelectorPreview extends Component {
 				e.stopPropagation();
 				this.close();
 				break;
+			default:
 		}
 	};
 
@@ -231,8 +232,8 @@ class ItemSelectorPreview extends Component {
 				/>
 
 				<Footer
-					title={currentItem.title}
 					currentIndex={currentItemIndex}
+					title={currentItem.title}
 					totalItems={items.length}
 				/>
 			</div>

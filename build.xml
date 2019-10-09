@@ -997,6 +997,21 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
 	</target>
 
+	<target name="set-dxp-credentials">
+		<input addproperty="set.dxp.credentials.username" message="Please enter your Liferay username (firstname.lastname):" />
+
+		<input addproperty="set.dxp.credentials.password" message="Please enter your Liferay password:">
+			<handler type="secure" />
+		</input>
+
+		<get
+			dest="${user.home}/.liferay/"
+			password="${set.dxp.credentials.password}"
+			src="https://files.liferay.com/private/ee/.DXP_CREDENTIALS"
+			username="${set.dxp.credentials.username}"
+		/>
+	</target>
+
 	<target depends="setup-jrebel-properties" name="setup-jrebel">
 		<copy
 			file="tools/jrebel/rebel.xml_GLOBAL"

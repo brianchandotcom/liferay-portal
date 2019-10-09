@@ -12,8 +12,9 @@
  * details.
  */
 
-import CreateContentDialog from '../components/content/CreateContentDialog.es';
 import {UPDATE_LAST_SAVE_DATE} from '../actions/actions.es';
+import CreateContentDialog from '../components/content/CreateContentDialog.es';
+import {getState} from '../store/store.es';
 
 /**
  * @private
@@ -39,21 +40,15 @@ function openCreateContentDialog(store) {
 }
 
 /**
- * @param {object} options
- * @param {function} options.callback
- * @param {string} options.imageSelectorURL
- * @param {string} options.portletNamespace
- * @param {function} [options.destroyedCallback=null]
+ * @param {function} callback
+ * @param {function} [destroyedCallback=null]
  */
-function openImageSelector({
-	callback,
-	imageSelectorURL,
-	portletNamespace,
-	destroyedCallback = null
-}) {
+function openImageSelector(callback, destroyedCallback = null) {
+	const state = getState();
+
 	AUI().use('liferay-item-selector-dialog', A => {
 		const itemSelector = new A.LiferayItemSelectorDialog({
-			eventName: `${portletNamespace}selectImage`,
+			eventName: `${state.portletNamespace}selectImage`,
 			on: {
 				selectedItemChange: event => {
 					const selectedItem = event.newVal || {};
@@ -88,7 +83,7 @@ function openImageSelector({
 				}
 			},
 			title: Liferay.Language.get('select'),
-			url: imageSelectorURL
+			url: state.imageSelectorURL
 		});
 
 		itemSelector.open();

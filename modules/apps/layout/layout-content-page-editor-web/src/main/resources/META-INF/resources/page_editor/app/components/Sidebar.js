@@ -83,9 +83,10 @@ export default function Sidebar() {
 						plugin.activate();
 					}
 
-					setActivePluginId(sidebarPanelId);
 				}
 			);
+
+			setActivePluginId(sidebarPanelId);
 		} else {
 			setActivePluginId(null);
 		}

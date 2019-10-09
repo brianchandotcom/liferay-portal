@@ -310,11 +310,7 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_handleSelectButtonClick() {
-		openImageSelector({
-			callback: image => this._updateRowBackgroundImage(image),
-			imageSelectorURL: this.imageSelectorURL,
-			portletNamespace: this.portletNamespace
-		});
+		openImageSelector(image => this._updateRowBackgroundImage(image));
 	}
 
 	/**
@@ -540,7 +536,6 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(
 	FloatingToolbarLayoutBackgroundImagePanel,
 	[
-		'imageSelectorURL',
 		'infoItemSelectorURL',
 		'mappedAssetEntries',
 		'mappingFieldsURL',

@@ -257,11 +257,9 @@ class FragmentEditableBackgroundImage extends Component {
 		const item = event.target.closest('[data-fragments-editor-item-id]');
 
 		if (item === this.element && this._active) {
-			openImageSelector({
-				callback: image => this._updateFragmentBackgroundImage(image),
-				imageSelectorURL: this.imageSelectorURL,
-				portletNamespace: this.portletNamespace
-			});
+			openImageSelector(image =>
+				this._updateFragmentBackgroundImage(image)
+			);
 		}
 	}
 
@@ -278,11 +276,9 @@ class FragmentEditableBackgroundImage extends Component {
 			!this._getBackgroundImageValue() &&
 			panelId === FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage.panelId
 		) {
-			openImageSelector({
-				callback: image => this._updateFragmentBackgroundImage(image),
-				imageSelectorURL: this.imageSelectorURL,
-				portletNamespace: this.portletNamespace
-			});
+			openImageSelector(image =>
+				this._updateFragmentBackgroundImage(image)
+			);
 		}
 	}
 
@@ -484,11 +480,9 @@ const ConnectedFragmentEditableBackgroundImage = getConnectedComponent(
 		'defaultLanguageId',
 		'defaultSegmentsExperienceId',
 		'getAssetFieldValueURL',
-		'imageSelectorURL',
 		'languageId',
 		'layoutData',
 		'mappingFieldsURL',
-		'portletNamespace',
 		'segmentsExperienceId',
 		'selectedMappingTypes'
 	]

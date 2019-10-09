@@ -33,11 +33,7 @@ class FloatingToolbarFragmentBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_handleSelectButtonClick() {
-		openImageSelector({
-			callback: image => this._updateFragmentBackgroundImage(image),
-			imageSelectorURL: this.imageSelectorURL,
-			portletNamespace: this.portletNamespace
-		});
+		openImageSelector(image => this._updateFragmentBackgroundImage(image));
 	}
 
 	/**
@@ -83,13 +79,7 @@ FloatingToolbarFragmentBackgroundImagePanel.STATE = {
 
 const ConnectedFloatingToolbarFragmentBackgroundImagePanel = getConnectedComponent(
 	FloatingToolbarFragmentBackgroundImagePanel,
-	[
-		'defaultSegmentsExperienceId',
-		'imageSelectorURL',
-		'languageId',
-		'portletNamespace',
-		'segmentsExperienceId'
-	]
+	['defaultSegmentsExperienceId', 'languageId', 'segmentsExperienceId']
 );
 
 Soy.register(ConnectedFloatingToolbarFragmentBackgroundImagePanel, templates);

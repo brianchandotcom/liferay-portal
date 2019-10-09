@@ -101,21 +101,14 @@ function init(
 	changedCallback,
 	destroyedCallback
 ) {
-	const {imageSelectorURL} = options;
-
-	openImageSelector({
-		callback: image => {
-			_handleImageEditorChange(
-				image,
-				editableElement,
-				fragmentEntryLinkId,
-				changedCallback
-			);
-		},
-		destroyedCallback,
-		imageSelectorURL,
-		portletNamespace
-	});
+	openImageSelector(image => {
+		_handleImageEditorChange(
+			image,
+			editableElement,
+			fragmentEntryLinkId,
+			changedCallback
+		);
+	}, destroyedCallback);
 }
 
 /**

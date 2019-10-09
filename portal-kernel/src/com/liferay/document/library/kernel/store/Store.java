@@ -214,9 +214,4 @@ public interface Store {
 			String versionLabel, InputStream is)
 		throws PortalException;
 
-	public void updateFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws PortalException;
-
 }

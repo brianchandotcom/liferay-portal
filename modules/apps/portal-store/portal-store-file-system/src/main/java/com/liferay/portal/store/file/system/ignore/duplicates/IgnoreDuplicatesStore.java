@@ -180,21 +180,6 @@ public class IgnoreDuplicatesStore implements Store {
 				companyId, repositoryId, fileName, versionLabel, is));
 	}
 
-	@Override
-	public void updateFileVersion(
-			final long companyId, final long repositoryId,
-			final String fileName, final String fromVersionLabel,
-			final String toVersionLabel)
-		throws PortalException {
-
-		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(
-				companyId, repositoryId, fileName, toVersionLabel),
-			() -> _store.updateFileVersion(
-				companyId, repositoryId, fileName, fromVersionLabel,
-				toVersionLabel));
-	}
-
 	protected StoreAction createDeleteFileStoreAction(
 		final long companyId, final long repositoryId, final String fileName) {
 

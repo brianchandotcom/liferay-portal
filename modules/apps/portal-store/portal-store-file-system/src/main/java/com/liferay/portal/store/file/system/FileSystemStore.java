@@ -391,31 +391,6 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
-	@Override
-	public void updateFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws DuplicateFileException, NoSuchFileException {
-
-		File fromFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (!fromFileNameVersionFile.exists()) {
-			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, fromVersionLabel);
-		}
-
-		File toFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, toVersionLabel);
-
-		if (toFileNameVersionFile.exists()) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, toVersionLabel);
-		}
-
-		move(fromFileNameVersionFile, toFileNameVersionFile);
-	}
-
 	protected void deleteEmptyAncestors(File file) {
 		deleteEmptyAncestors(-1, -1, file);
 	}

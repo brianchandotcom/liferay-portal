@@ -16,13 +16,11 @@ package com.liferay.document.library.kernel.store;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * The abstract base class for all file store implementations. Most, if not all
@@ -77,36 +75,6 @@ public abstract class BaseStore implements Store {
 	@Deprecated
 	@Override
 	public void move(String srcDir, String destDir) {
-	}
-
-	/**
-	 * Update's a file version label. Similar to {@link #copyFileVersion(long,
-	 * long, String, String, String)} except that the old file version is
-	 * deleted.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file's name
-	 * @param fromVersionLabel the file's version label
-	 * @param toVersionLabel the file's new version label
-	 */
-	@Override
-	public void updateFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
-
-		InputStream is = getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (is == null) {
-			is = new UnsyncByteArrayInputStream(new byte[0]);
-		}
-
-		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
-
-		deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
 	protected void logFailedDeletion(

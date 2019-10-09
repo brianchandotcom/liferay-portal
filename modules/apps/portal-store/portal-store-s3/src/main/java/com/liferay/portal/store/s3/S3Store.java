@@ -361,20 +361,6 @@ public class S3Store extends BaseStore {
 		}
 	}
 
-	@Override
-	public void updateFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
-
-		String oldKey = _s3KeyTransformer.getFileVersionKey(
-			companyId, repositoryId, fileName, fromVersionLabel);
-		String newKey = _s3KeyTransformer.getFileVersionKey(
-			companyId, repositoryId, fileName, toVersionLabel);
-
-		moveObjects(oldKey, newKey);
-	}
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(

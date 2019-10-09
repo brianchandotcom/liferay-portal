@@ -443,43 +443,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testUpdateFileVersion() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.updateFileVersion(
-			companyId, repositoryId, fileName, "1.0", "1.1");
-
-		Assert.assertArrayEquals(
-			_DATA_VERSION_1,
-			StreamUtil.toByteArray(
-				store.getFileAsStream(
-					companyId, repositoryId, fileName, "1.1")));
-	}
-
-	@Test(expected = DuplicateFileException.class)
-	public void testUpdateFileVersionDuplicateFileException() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.updateFileVersion(
-			companyId, repositoryId, fileName, "1.0", "1.0");
-	}
-
-	@Test(expected = NoSuchFileException.class)
-	public void testUpdateFileVersionNoSuchFileException() throws Exception {
-		store.updateFileVersion(
-			companyId, repositoryId, RandomTestUtil.randomString(),
-			Store.VERSION_DEFAULT, Store.VERSION_DEFAULT);
-	}
-
-	@Test
 	public void testUpdateFileVersionWithNewFileName() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

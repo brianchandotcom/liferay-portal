@@ -4,7 +4,7 @@ definition {
 		var key_pageName = "${pageName}";
 		var count = "0";
 
-		while ((!("${count}" == "3")) && (IsElementNotPresent(locator1 = "Home#PAGE_ACTIVE"))) {
+		while (("${count}" != "3") && (IsElementNotPresent(locator1 = "Home#PAGE_ACTIVE"))) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "Home#PAGE",
 				value1 = "${pageName}");

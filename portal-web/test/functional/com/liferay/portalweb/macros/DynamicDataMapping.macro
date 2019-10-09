@@ -738,7 +738,7 @@ definition {
 				value1 = "${fieldOptionsName}");
 		}
 
-		if (!("${fieldEditable}" == "false")) {
+		if ("${fieldEditable}" != "false") {
 			DoubleClick(locator1 = "DDMEditStructure#SETTINGS_OPTIONS");
 
 			var i = "0";

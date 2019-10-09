@@ -584,7 +584,7 @@ definition {
 	macro viewFieldPredefinedValue {
 		var key_fieldName = "${fieldName}";
 
-		if (!("${fieldShowLabel}" == "No")) {
+		if ("${fieldShowLabel}" != "No") {
 			AssertTextEquals(
 				locator1 = "DDLEditRecord#FIELD_LABEL",
 				value1 = "${fieldFieldLabel}");

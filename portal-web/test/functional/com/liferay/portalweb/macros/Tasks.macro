@@ -77,7 +77,7 @@ definition {
 		if (isSet(numberOfTags)) {
 			var tagNumber = "0";
 
-			while (!("${tagNumber}" == "${numberOfTags}")) {
+			while ("${tagNumber}" != "${numberOfTags}") {
 				var tagNumber = MathUtil.sum("${tagNumber}", "1");
 
 				Type(

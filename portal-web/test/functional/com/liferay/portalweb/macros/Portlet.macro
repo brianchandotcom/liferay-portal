@@ -33,7 +33,7 @@ definition {
 
 		var i = "0";
 
-		while (!("${i}" == "${portletCount}")) {
+		while ("${i}" != "${portletCount}") {
 			var i = MathUtil.sum("${i}", "1");
 
 			Refresh();
@@ -105,7 +105,7 @@ definition {
 	macro assertServerShutdown {
 		var shutdownPauseCount = "0";
 
-		while ((IsElementPresent(locator1 = "//body")) && (!("${shutdownPauseCount}" == "12"))) {
+		while ((IsElementPresent(locator1 = "//body")) && ("${shutdownPauseCount}" != "12")) {
 			Refresh();
 
 			Pause(locator1 = "10000");
@@ -119,7 +119,7 @@ definition {
 	macro assertServerStartup {
 		var startupPauseCount = "0";
 
-		while ((!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN"))) && (!("${startupPauseCount}" == "12"))) {
+		while ((!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN"))) && ("${startupPauseCount}" != "12")) {
 			Refresh();
 
 			Pause(locator1 = "10000");
@@ -394,7 +394,7 @@ definition {
 	macro viewDuplicatePG {
 		var i = "0";
 
-		while (!("${i}" == "${totalPortletCount}")) {
+		while ("${i}" != "${totalPortletCount}") {
 			var i = MathUtil.sum("${i}", "1");
 
 			AssertElementPresent(locator1 = "xpath=(//h2[contains(.,'${portletName}')])[${i}]");

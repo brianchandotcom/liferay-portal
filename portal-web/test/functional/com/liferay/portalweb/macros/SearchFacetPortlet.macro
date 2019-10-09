@@ -159,7 +159,7 @@ definition {
 		var facetValue = StringUtil.replace("${facetValue}", " ", "%20");
 		var facetGroupList = "${facetGroup}";
 
-		while (!("${facetValueFound}" == "true")) {
+		while ("${facetValueFound}" != "true") {
 			var facetKeyValuePair = RegexUtil.replace("${facetGroupList}", "(&[^&]+)(.*)", "1");
 
 			if (contains("${facetKeyValuePair}", "${facetValue}")) {
@@ -197,7 +197,7 @@ definition {
 			var facetValueFound = "true";
 		}
 
-		if (!("${facetValueFound}" == "true")) {
+		if ("${facetValueFound}" != "true") {
 			fail("Facet Type value name has not been set correctly.");
 		}
 

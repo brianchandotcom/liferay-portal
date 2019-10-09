@@ -4009,7 +4009,7 @@ definition {
 
 		echo("## Keywords Parameter: ${keywordsParameter}");
 
-		if (!("${keywordsParameter}" == "query")) {
+		if ("${keywordsParameter}" != "query") {
 			fail("Invalid keywords parameter.");
 		}
 	}

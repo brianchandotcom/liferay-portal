@@ -1396,7 +1396,7 @@ definition {
 
 			var url = selenium.getLocation();
 
-			if (!("${url}" == "https://www.google.com/[#]gws_rd=ssl")) {
+			if ("${url}" != "https://www.google.com/[#]gws_rd=ssl") {
 				AssertLocation(value1 = "https://www.google.com/?gws_rd=ssl");
 			}
 			else {

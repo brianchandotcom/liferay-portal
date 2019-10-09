@@ -57,7 +57,7 @@ definition {
 	macro addCP {
 		LexiconEntry.gotoAdd();
 
-		if (!("${singleSiteTypePermission}" == "true")) {
+		if ("${singleSiteTypePermission}" != "true") {
 			if (contains("${siteTemplateName}", "{siteTemplateName}")) {
 				var siteTemplateName = "${siteType} Site";
 			}

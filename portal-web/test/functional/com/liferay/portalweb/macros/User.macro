@@ -1613,7 +1613,7 @@ definition {
 			Alert.closePortalLocalizationWarning();
 		}
 
-		if (!("${samlEnabled}" == "true")) {
+		if ("${samlEnabled}" != "true") {
 			User.loginLocalizationPG(localization = "${localization}");
 		}
 
@@ -1704,7 +1704,7 @@ definition {
 			var maxLoginAttempts = "0";
 		}
 
-		while (!("${count}" == "${loginAttempts}")) {
+		while ("${count}" != "${loginAttempts}") {
 			var count = MathUtil.sum("${count}", "1");
 
 			User._login(
@@ -2041,7 +2041,7 @@ definition {
 
 		Button.clickSave();
 
-		if (!("${newPassword1}" == "${newPassword2}")) {
+		if ("${newPassword1}" != "${newPassword2}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#ALERT",
 				value1 = "Please enter the same value again.");
@@ -2321,7 +2321,7 @@ definition {
 			if (isSet(addressCount)) {
 				var i = "0";
 
-				while (!("${i}" == "${addressCount}")) {
+				while ("${i}" != "${addressCount}") {
 					var i = MathUtil.sum("${i}", "1");
 
 					AssertTextEquals.assertPartialText(

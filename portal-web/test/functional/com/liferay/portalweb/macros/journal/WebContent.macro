@@ -161,7 +161,7 @@ definition {
 		var articleCount = MathUtil.sum("${articleCount}", "1");
 		var count = "1";
 
-		while (!("${count}" == "${articleCount}")) {
+		while ("${count}" != "${articleCount}") {
 			WebContent.addArticleCP(
 				webContentContent = "WC Content ${count}",
 				webContentTitle = "WC Title ${count}");

@@ -94,7 +94,7 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
-		if (!("${sitePageType}" == "Content Page")) {
+		if ("${sitePageType}" != "Content Page") {
 			Button.click(button = "Save");
 		}
 	}

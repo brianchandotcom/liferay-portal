@@ -82,7 +82,7 @@ definition {
 			groupId = "${groupId}"
 		);
 
-		if (!("${collectionNameResult}" == "[]")) {
+		if ("${collectionNameResult}" != "[]") {
 			fail("The collection ${collectionName} was found.");
 		}
 	}
@@ -130,7 +130,7 @@ definition {
 			groupId = "${groupId}"
 		);
 
-		if (!("${fragmentNameResult}" == "[]")) {
+		if ("${fragmentNameResult}" != "[]") {
 			fail("The fragment ${fragmentName} was found.");
 		}
 	}

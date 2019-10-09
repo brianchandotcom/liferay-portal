@@ -89,7 +89,7 @@ definition {
 			Click(locator1 = "Button#ADD_ROW_LAST");
 		}
 		else {
-			while (!("${i}" == "${propertyNumber}")) {
+			while ("${i}" != "${propertyNumber}") {
 				var i = MathUtil.sum("${i}", "1");
 				var key_pathNumber = "${pathNumber}";
 				var pathNumber = MathUtil.sum("${pathNumber}", "1");
@@ -295,7 +295,7 @@ definition {
 				value1 = "${propertiesValueField}");
 		}
 		else {
-			while (!("${i}" == "${propertyNumber}")) {
+			while ("${i}" != "${propertyNumber}") {
 				var key_pathNumber = "${i}";
 				var i = MathUtil.sum("${i}", "1");
 

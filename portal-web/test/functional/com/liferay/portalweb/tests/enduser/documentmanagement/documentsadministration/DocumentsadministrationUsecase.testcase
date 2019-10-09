@@ -746,7 +746,7 @@ definition {
 		var videoGenerationTimeCounter = "0";
 		var videoGenerationTimeMaxWaitTime = "6";
 
-		while ((!("${videoGenerationTimeCounter}" == "${videoGenerationTimeMaxWaitTime}")) && (IsElementPresent(locator1 = "Message#INFO"))) {
+		while (("${videoGenerationTimeCounter}" != "${videoGenerationTimeMaxWaitTime}") && (IsElementPresent(locator1 = "Message#INFO"))) {
 			var videoGenerationTimeCounter = MathUtil.sum("${videoGenerationTimeCounter}", "1");
 
 			Pause(locator1 = "30000");

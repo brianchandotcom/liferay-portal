@@ -787,7 +787,7 @@ definition {
 
 		var count = "1";
 
-		while (!("${count}" == "6")) {
+		while ("${count}" != "6") {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
@@ -855,7 +855,7 @@ definition {
 
 		var count = "1";
 
-		while (!("${count}" == "5")) {
+		while ("${count}" != "5") {
 			ProductMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

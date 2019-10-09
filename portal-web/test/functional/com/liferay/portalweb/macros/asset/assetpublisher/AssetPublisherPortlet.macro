@@ -513,7 +513,7 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			if (!("${siteScopeType}" == "Parent Site")) {
+			if ("${siteScopeType}" != "Parent Site") {
 				Type(
 					locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
 					value1 = "${siteName}");
@@ -922,7 +922,7 @@ definition {
 		else {
 			var ratingPosition = "1";
 
-			while (!("${ratingPosition}" == "${rating}")) {
+			while ("${ratingPosition}" != "${rating}") {
 				AssertElementPresent(
 					key_ratingStarPosition = "${ratingPosition}",
 					locator1 = "Ratings#YOUR_RATING_STAR");
@@ -944,7 +944,7 @@ definition {
 			var emptyRating = MathUtil.difference("5", "${rating}");
 			var emptyStarPosition = "1";
 
-			while (!("${emptyStarPosition}" == "${emptyRating}")) {
+			while ("${emptyStarPosition}" != "${emptyRating}") {
 				AssertElementPresent(
 					key_emptyStarPosition = "${emptyStarPosition}",
 					locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
@@ -1000,7 +1000,7 @@ definition {
 		else {
 			var ratingPosition = "1";
 
-			while (!("${ratingPosition}" == "${averageRating}")) {
+			while ("${ratingPosition}" != "${averageRating}") {
 				AssertElementPresent(
 					key_averageRatingStar = "${ratingPosition}",
 					locator1 = "Ratings#AVERAGE_STAR");
@@ -1022,7 +1022,7 @@ definition {
 			var emptyRating = MathUtil.difference("5", "${averageRating}");
 			var emptyStarPosition = "1";
 
-			while (!("${emptyStarPosition}" == "${emptyRating}")) {
+			while ("${emptyStarPosition}" != "${emptyRating}") {
 				AssertElementPresent(
 					key_averageEmptyStar = "${emptyStarPosition}",
 					locator1 = "Ratings#AVERAGE_STAR_EMPTY");

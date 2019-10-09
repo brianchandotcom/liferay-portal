@@ -285,7 +285,7 @@ definition {
 
 		var pauseCount = "0";
 
-		while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && (!("${pauseCount}" == "20"))) {
+		while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && ("${pauseCount}" != "20")) {
 			Refresh();
 
 			Pause(locator1 = "30000");

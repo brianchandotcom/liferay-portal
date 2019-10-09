@@ -183,7 +183,7 @@ definition {
 
 		var count = Page.getTextCountFromHtmlSource(text = "document.write");
 
-		if (!("${count}" == "2")) {
+		if ("${count}" != "2") {
 			fail("That response should contain two document.write commands");
 		}
 	}

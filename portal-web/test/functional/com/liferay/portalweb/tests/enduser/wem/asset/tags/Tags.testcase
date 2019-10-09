@@ -210,13 +210,13 @@ definition {
 	test ViewTagsPagination {
 		var index = "1";
 
-		while (!("${index}" == "10")) {
+		while ("${index}" != "10") {
 			Tag.addCP(tagName = "tagname0${index}");
 
 			var index = MathUtil.sum("${index}", "1");
 		}
 
-		while (!("${index}" == "26") && (maxIterations = "16")) {
+		while ("${index}" != "26") {
 			Tag.addCP(tagName = "tagname${index}");
 
 			var index = MathUtil.sum("${index}", "1");

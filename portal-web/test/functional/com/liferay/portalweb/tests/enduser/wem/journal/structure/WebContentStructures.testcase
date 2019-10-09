@@ -278,7 +278,7 @@ definition {
 
 		var n = "0";
 
-		while (!("${n}" == "15")) {
+		while ("${n}" != "15") {
 			WebContentStructures.addCP(
 				structureDescription = "WC Structure Description",
 				structureName = "WC Structure Name ${n}");

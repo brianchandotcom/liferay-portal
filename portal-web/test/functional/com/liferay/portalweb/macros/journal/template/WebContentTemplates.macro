@@ -289,7 +289,7 @@ definition {
 				value1 = "FreeMarker");
 		}
 
-		if (!("${userEditPermission}" == "noEditPermission")) {
+		if ("${userEditPermission}" != "noEditPermission") {
 			WebContentNavigator.gotoViewTemplate(templateName = "${templateName}");
 
 			AssertTextEquals(

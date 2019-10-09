@@ -18,6 +18,11 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -63,12 +68,31 @@ public class ContentsContentPageEditorSidebarPanel
 	}
 
 	@Override
-	public boolean isVisible(boolean pageIsDisplayPage) {
+	public boolean isVisible(
+		PermissionChecker permissionChecker, long plid,
+		boolean pageIsDisplayPage) {
+
 		if (!_contentsContentPageEditorSidebarPanelConfiguration.enabled()) {
 			return false;
 		}
 
-		return !pageIsDisplayPage;
+		try {
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, plid, ActionKeys.UPDATE) &&
+				!LayoutPermissionUtil.contains(
+					permissionChecker, plid,
+					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+
+				return false;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return true;
 	}
 
 	@Activate
@@ -79,6 +103,9 @@ public class ContentsContentPageEditorSidebarPanel
 				ContentsContentPageEditorSidebarPanelConfiguration.class,
 				properties);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentsContentPageEditorSidebarPanel.class);
 
 	private volatile ContentsContentPageEditorSidebarPanelConfiguration
 		_contentsContentPageEditorSidebarPanelConfiguration;

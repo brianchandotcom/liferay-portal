@@ -79,9 +79,17 @@ public class LayoutEditorToolbarProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
+		if (!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				ActionKeys.UPDATE) &&
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+				ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

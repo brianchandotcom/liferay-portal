@@ -38,7 +38,7 @@ const Table = ({items = []}) => (
 					</th>
 
 					<th className="text-right" style={{width: '20%'}}>
-						{Liferay.Language.get('avg-completion-time')}
+						{Liferay.Language.get('average-completion-time')}
 					</th>
 				</tr>
 			</thead>

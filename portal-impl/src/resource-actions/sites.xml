@@ -19,6 +19,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
+				<action-key>UPDATE_LAYOUT_CONTENT</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
@@ -39,6 +40,7 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>UPDATE_DISCUSSION</action-key>
+				<action-key>UPDATE_LAYOUT_CONTENT</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

@@ -237,6 +237,8 @@ public class ActionKeys {
 
 	public static final String UPDATE_DISCUSSION = "UPDATE_DISCUSSION";
 
+	public static final String UPDATE_LAYOUT_CONTENT = "UPDATE_LAYOUT_CONTENT";
+
 	public static final String UPDATE_THREAD_PRIORITY =
 		"UPDATE_THREAD_PRIORITY";
 

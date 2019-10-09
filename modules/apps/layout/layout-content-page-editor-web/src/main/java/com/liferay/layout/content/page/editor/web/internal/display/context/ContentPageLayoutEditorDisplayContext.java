@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -194,6 +195,14 @@ public class ContentPageLayoutEditorDisplayContext
 				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
 				themeDisplay.getPlid(), true);
 
+		Layout draftLayout = themeDisplay.getLayout();
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			draftLayout.getClassPK());
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			layout, themeDisplay);
+
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			SoyContext segmentsExperienceSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
@@ -214,6 +223,11 @@ public class ContentPageLayoutEditorDisplayContext
 			).put(
 				"segmentsExperimentStatus",
 				_getSegmentsExperimentStatusSoyContext(
+					segmentsExperience.getSegmentsExperienceId())
+			).put(
+				"segmentsExperimentURL",
+				HttpUtil.addParameter(
+					layoutFullURL, "segmentsExperienceId",
 					segmentsExperience.getSegmentsExperienceId())
 			);
 
@@ -241,6 +255,11 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"segmentsExperimentStatus",
 			_getSegmentsExperimentStatusSoyContext(
+				SegmentsExperienceConstants.ID_DEFAULT)
+		).put(
+			"segmentsExperimentURL",
+			HttpUtil.addParameter(
+				layoutFullURL, "segmentsExperienceId",
 				SegmentsExperienceConstants.ID_DEFAULT)
 		);
 

@@ -115,8 +115,20 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 	}
 
 	@Override
+	protected String getNavigation() {
+		return ParamUtil.getString(
+			liferayPortletRequest, getNavigationParam(), "active");
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"active", "inactive"};
+	}
+
+	@Override
+	protected String getOrderByCol() {
+		return ParamUtil.getString(
+			liferayPortletRequest, getOrderByColParam(), "last-name");
 	}
 
 	@Override

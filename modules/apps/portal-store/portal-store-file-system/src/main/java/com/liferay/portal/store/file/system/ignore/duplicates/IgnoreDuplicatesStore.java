@@ -130,11 +130,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-		_store.move(srcDir, destDir);
-	}
-
-	@Override
 	public void updateFile(
 			final long companyId, final long repositoryId,
 			final long newRepositoryId, final String fileName)

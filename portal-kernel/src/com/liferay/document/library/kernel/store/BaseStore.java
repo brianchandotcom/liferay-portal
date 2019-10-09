@@ -65,18 +65,6 @@ public abstract class BaseStore implements Store {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * Moves an existing directory.
-	 *
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 * @param srcDir the original directory's name
-	 * @param destDir the new directory's name
-	 */
-	@Deprecated
-	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
 	protected void logFailedDeletion(
 		long companyId, long repositoryId, String fileName) {
 

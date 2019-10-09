@@ -124,8 +124,6 @@ public interface DLStore {
 
 	public boolean isValidName(String name);
 
-	public void move(String srcDir, String destDir);
-
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)

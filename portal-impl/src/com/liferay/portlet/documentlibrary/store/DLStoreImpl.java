@@ -412,13 +412,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-		Store store = _storeFactory.getStore();
-
-		store.move(srcDir, destDir);
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)

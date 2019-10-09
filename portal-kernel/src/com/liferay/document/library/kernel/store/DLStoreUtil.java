@@ -507,18 +507,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Moves an existing directory.
-	 *
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 * @param srcDir the original directory's name
-	 * @param destDir the new directory's name
-	 */
-	@Deprecated
-	public static void move(String srcDir, String destDir) {
-		getStore().move(srcDir, destDir);
-	}
-
-	/**
 	 * Moves a file to a new data repository.
 	 *
 	 * @param companyId the primary key of the company

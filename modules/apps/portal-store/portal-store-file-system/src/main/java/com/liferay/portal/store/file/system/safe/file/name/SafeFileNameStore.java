@@ -39,17 +39,6 @@ public class SafeFileNameStore implements Store {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
-		if (!safeDirName.equals(dirName)) {
-			try {
-				_store.move(dirName, safeDirName);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
 		_store.addDirectory(companyId, repositoryId, safeDirName);
 	}
 
@@ -183,17 +172,6 @@ public class SafeFileNameStore implements Store {
 
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
-		if (!safeDirName.equals(dirName)) {
-			try {
-				_store.move(dirName, safeDirName);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
 		String[] fileNames = _store.getFileNames(
 			companyId, repositoryId, safeDirName);
 
@@ -246,11 +224,6 @@ public class SafeFileNameStore implements Store {
 
 		return _store.hasFile(
 			companyId, repositoryId, safeFileName, versionLabel);
-	}
-
-	@Override
-	public void move(String srcDir, String destDir) {
-		_store.move(srcDir, destDir);
 	}
 
 	@Override

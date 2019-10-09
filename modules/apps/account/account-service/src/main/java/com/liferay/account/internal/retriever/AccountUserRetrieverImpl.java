@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +33,7 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -126,7 +126,8 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 			}
 
 			FieldSort sort = _sorts.field(
-				Field.getSortableFieldName(sortField), sortOrder);
+				_sortFieldBuilder.getSortField(User.class.getName(), sortField),
+				sortOrder);
 
 			searchRequestBuilder.sorts(sort);
 		}
@@ -185,6 +186,9 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private SortFieldBuilder _sortFieldBuilder;
 
 	@Reference
 	private Sorts _sorts;

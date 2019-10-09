@@ -170,6 +170,7 @@ class ItemSelectorPreview extends Component {
 				e.stopPropagation();
 				this.close();
 				break;
+			default:
 		}
 	};
 

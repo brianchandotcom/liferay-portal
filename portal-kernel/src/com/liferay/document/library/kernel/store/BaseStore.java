@@ -113,30 +113,6 @@ public abstract class BaseStore implements Store {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @return Returns the byte array with the file's name
-	 */
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		try {
-			InputStream is = getFileAsStream(companyId, repositoryId, fileName);
-
-			return FileUtil.getBytes(is);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	/**
-	 * Returns the file as a byte array.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the byte array with the file's name
 	 */

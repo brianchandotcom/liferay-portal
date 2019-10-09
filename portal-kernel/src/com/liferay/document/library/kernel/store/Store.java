@@ -112,10 +112,6 @@ public interface Store {
 		throws PortalException;
 
 	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException;
-
-	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException;

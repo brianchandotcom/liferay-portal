@@ -251,22 +251,6 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		try {
-			File file = getFile(
-				companyId, repositoryId, fileName, StringPool.BLANK);
-
-			return Files.readAllBytes(file.toPath());
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException {

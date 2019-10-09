@@ -106,14 +106,6 @@ public class IgnoreDuplicatesStore implements Store {
 
 	@Override
 	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsBytes(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
 		throws PortalException {

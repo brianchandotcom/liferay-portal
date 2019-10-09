@@ -245,12 +245,6 @@ public abstract class BaseStoreTestCase {
 			store.hasFile(companyId, repositoryId, fileName, "1.1"));
 	}
 
-	@Test(expected = NoSuchFileException.class)
-	public void testGetFileAsBytesNoSuchFileException() throws Exception {
-		store.getFileAsBytes(
-			companyId, repositoryId, RandomTestUtil.randomString());
-	}
-
 	@Test
 	public void testGetFileAsStream() throws Exception {
 		String fileName = RandomTestUtil.randomString();

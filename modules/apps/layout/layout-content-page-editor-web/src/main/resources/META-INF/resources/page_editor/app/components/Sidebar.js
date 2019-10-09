@@ -21,7 +21,7 @@ import React from 'react';
 
 import {ConfigContext} from '../config/index';
 import usePlugins from '../hooks/usePlugins';
-import usePreload from '../hooks/usePreload';
+import useLoad from '../hooks/useLoad';
 import useStateSafe from '../hooks/useStateSafe';
 import {StoreContext} from '../store/index';
 
@@ -45,7 +45,7 @@ export default function Sidebar() {
 
 	const isMounted = useIsMounted();
 
-	const preload = usePreload();
+	const load = useLoad();
 
 	const {getInstance, register} = usePlugins();
 
@@ -90,7 +90,7 @@ export default function Sidebar() {
 		if (shouldActivate) {
 			setActivePluginId(sidebarPanelId);
 
-			const promise = preload(sidebarPanelId, panel.pluginEntryPoint);
+			const promise = load(sidebarPanelId, panel.pluginEntryPoint);
 
 			register(sidebarPanelId, promise, {config, panel, store}).then(
 				plugin => {
@@ -124,7 +124,7 @@ export default function Sidebar() {
 							} = panel;
 
 							const prefetch = () =>
-								preload(sidebarPanelId, pluginEntryPoint).then(
+								load(sidebarPanelId, pluginEntryPoint).then(
 									...swallow
 								);
 

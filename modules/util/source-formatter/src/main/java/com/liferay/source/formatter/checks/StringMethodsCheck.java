@@ -50,16 +50,16 @@ public class StringMethodsCheck extends BaseFileCheck {
 		}
 
 		_checkInefficientStringMethods(
-			fileName, content, "\\W(\\w+)\\.equalsIgnoreCase\\(",
+			fileName, content, "(\\w+)\\.equalsIgnoreCase\\(",
 			"equalsIgnoreCase");
 		_checkInefficientStringMethods(
-			fileName, content, "\\W(\\w+)\\.join\\(", "merge");
+			fileName, content, "(\\w+)\\.join\\(", "merge");
 		_checkInefficientStringMethods(
-			fileName, content, "\\W(\\w+)\\.replace\\(", "replace");
+			fileName, content, "(\\w+)\\.replace\\(", "replace");
 		_checkInefficientStringMethods(
-			fileName, content, "\\W(\\w+)\\.toLowerCase\\(\\)", "toLowerCase");
+			fileName, content, "(\\w+)\\.toLowerCase\\(\\)", "toLowerCase");
 		_checkInefficientStringMethods(
-			fileName, content, "\\W(\\w+)\\.toUpperCase\\(\\)", "toUpperCase");
+			fileName, content, "(\\w+)\\.toUpperCase\\(\\)", "toUpperCase");
 
 		return content;
 	}

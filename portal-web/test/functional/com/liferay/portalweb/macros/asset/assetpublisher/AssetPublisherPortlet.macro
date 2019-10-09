@@ -941,7 +941,7 @@ definition {
 				locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 		}
 		else {
-			var emptyRating = MathUtil.difference("5", "${rating}");
+			var emptyRating = 5 - ${rating};
 			var emptyStarPosition = "1";
 
 			while ("${emptyStarPosition}" != "${emptyRating}") {
@@ -1019,7 +1019,7 @@ definition {
 				locator1 = "Ratings#AVERAGE_STAR_EMPTY");
 		}
 		else {
-			var emptyRating = MathUtil.difference("5", "${averageRating}");
+			var emptyRating = 5 - ${averageRating};
 			var emptyStarPosition = "1";
 
 			while ("${emptyStarPosition}" != "${emptyRating}") {

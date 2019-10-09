@@ -18,7 +18,7 @@ definition {
 	@description = "Deploy the following jar into Liferay Portal server with port ${nodePort}: ${liferayDependencyJars}"
 	macro deployJarOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -50,7 +50,7 @@ definition {
 	@description = "Get cluster node control address in console"
 	macro getClusterNodeControlAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
@@ -67,7 +67,7 @@ definition {
 	@description = "Get cluster node outgoing ip address in console"
 	macro getClusterNodeOutgoingIPAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -87,7 +87,7 @@ definition {
 	@description = "Get cluster node transport address in console"
 	macro getClusterNodeTransportAddress {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var fileContent = FileUtil.read("${liferayHome}/cluster${bundleIndex}.log");
@@ -104,7 +104,7 @@ definition {
 	@description = "This will get the log content for a specific clustered server bundle"
 	macro getLogFileSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -141,7 +141,7 @@ definition {
 	@description = "This will shutdown the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
 	macro shutdownSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -151,7 +151,7 @@ definition {
 	@description = "This will start the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
 	macro startSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		if ("${deleteLiferayHome}" == "false") {
 			AntCommand(
@@ -172,7 +172,7 @@ definition {
 
 	macro updatePortalPropertiesOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",

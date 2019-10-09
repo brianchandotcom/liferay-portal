@@ -15,7 +15,7 @@ definition {
 	@summary = "Install the following patch onto Liferay Portal server with port ${nodePort}: ${patchFileZipURL}"
 	macro installPatchOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		if (!(contains("${patchFileZipURL}", "dxp-0-"))) {
 			AntCommand(
@@ -37,7 +37,7 @@ definition {
 	@summary = "Uninstall the following patch onto Liferay Portal server with port ${nodePort}"
 	macro uninstallPatchOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",
@@ -47,7 +47,7 @@ definition {
 	@summary = "Update the following osgi configuration onto Liferay Portal server with port ${nodePort}: ${updateConfiguration}"
 	macro updateConfigurationOnSpecificServer {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
-		var bundleIndex = MathUtil.difference("${leadingPortNumber}", "8");
+		var bundleIndex = ${leadingPortNumber} - 8;
 
 		AntCommand(
 			locator1 = "build-test.xml",

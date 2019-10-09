@@ -60,7 +60,9 @@ function AssetTagsSelector({
 				}),
 				p_auth: Liferay.authToken
 			}),
-			method: 'POST'
+			credentials: 'include',
+			method: 'POST',
+			'x-csrf-token': Liferay.authToken
 		},
 		link: `${window.location.origin}${themeDisplay.getPathContext()}
 				/api/jsonws/invoke`
@@ -186,9 +188,7 @@ function AssetTagsSelector({
 	return (
 		<div className="lfr-tags-selector-content" id={id}>
 			<ClayForm.Group>
-				<label>
-					{label || Liferay.Language.get('tags')}
-				</label>
+				<label>{label || Liferay.Language.get('tags')}</label>
 
 				<ClayInput.Group>
 					<ClayInput.GroupItem>

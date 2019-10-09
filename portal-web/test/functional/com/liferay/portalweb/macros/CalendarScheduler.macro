@@ -419,7 +419,7 @@ definition {
 						locator1 = "xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]",
 						value1 = "${eventTitle}");
 
-					var i = MathUtil.sum("${i}", "1");
+					var i = ${i} + 1;
 				}
 
 				AssertClick(

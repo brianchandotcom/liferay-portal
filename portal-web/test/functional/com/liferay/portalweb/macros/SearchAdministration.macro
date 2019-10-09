@@ -33,7 +33,7 @@ definition {
 		while ((IsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${pauseCount}" != "24")) {
 			Pause(locator1 = "5000");
 
-			var pauseCount = MathUtil.sum("${pauseCount}", "1");
+			var pauseCount = ${pauseCount} + 1;
 
 			echo("Pause count: ${pauseCount}");
 		}

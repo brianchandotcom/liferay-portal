@@ -377,7 +377,7 @@ definition {
 		var i = "0";
 
 		for (var fieldOptionsName : list "${fieldOptionsNames}") {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			Type(
 				locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}",
@@ -387,7 +387,7 @@ definition {
 		var j = "0";
 
 		for (var fieldOptionsValue : list "${fieldOptionsValues}") {
-			var j = MathUtil.sum("${j}", "1");
+			var j = ${j} + 1;
 
 			Type(
 				locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",
@@ -744,7 +744,7 @@ definition {
 			var i = "0";
 
 			for (var fieldOptionsName : list "${fieldOptionsNames}") {
-				var i = MathUtil.sum("${i}", "1");
+				var i = ${i} + 1;
 
 				AssertTextEquals(
 					locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_NAME_${i}",
@@ -754,7 +754,7 @@ definition {
 			var j = "0";
 
 			for (var fieldOptionsValue : list "${fieldOptionsValues}") {
-				var j = MathUtil.sum("${j}", "1");
+				var j = ${j} + 1;
 
 				AssertTextEquals(
 					locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",

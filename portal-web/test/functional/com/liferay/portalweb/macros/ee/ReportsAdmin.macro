@@ -81,7 +81,7 @@ definition {
 			}
 		}
 		else {
-			var minutesIncremented2 = MathUtil.sum("${minutes}", "2");
+			var minutesIncremented2 = ${minutes} + 2;
 		}
 
 		Type(

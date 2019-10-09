@@ -799,7 +799,7 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_weekNumber = MathUtil.sum("${weekNumber}", "1");
+		var key_weekNumber = ${weekNumber} + 1;
 
 		AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER");
 	}

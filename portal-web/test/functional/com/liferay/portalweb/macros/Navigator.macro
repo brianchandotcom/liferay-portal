@@ -9,7 +9,7 @@ definition {
 				locator1 = "Home#PAGE",
 				value1 = "${pageName}");
 
-			var count = MathUtil.sum("${count}", "1");
+			var count = ${count} + 1;
 		}
 
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");

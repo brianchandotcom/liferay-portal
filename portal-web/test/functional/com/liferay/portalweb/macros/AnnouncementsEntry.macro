@@ -38,7 +38,7 @@ definition {
 		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "0", "AM");
 		var displayDateAMPM = StringUtil.replace("${displayDateAMPM}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
-		var displayDateMinuteFuture = MathUtil.sum("${displayDateMinute}", "2");
+		var displayDateMinuteFuture = ${displayDateMinute} + 2;
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
 		if ("${displayDateMinuteFutureLength}" == "1") {

@@ -57,7 +57,7 @@ definition {
 			}
 
 			var displayDateMinute = selenium.getElementValue("AddTask#DUE_DATE_MINUTE");
-			var displayDateMinuteFuture = MathUtil.sum("${displayDateMinute}", "2");
+			var displayDateMinuteFuture = ${displayDateMinute} + 2;
 			var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
 			if ("${displayDateMinuteFutureLength}" == "1") {
@@ -78,7 +78,7 @@ definition {
 			var tagNumber = "0";
 
 			while ("${tagNumber}" != "${numberOfTags}") {
-				var tagNumber = MathUtil.sum("${tagNumber}", "1");
+				var tagNumber = ${tagNumber} + 1;
 
 				Type(
 					locator1 = "AddTask#TASK_TAG_FIELD",

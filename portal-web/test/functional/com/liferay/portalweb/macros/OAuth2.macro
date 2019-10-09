@@ -171,7 +171,7 @@ definition {
 						key_matchCount = "${count}",
 						locator1 = "OAuth2#ADMIN_RESOURCE_SCOPE_CHECKED");
 
-					var count = MathUtil.sum("${count}", "1");
+					var count = ${count} + 1;
 				}
 			}
 		}

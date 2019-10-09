@@ -1705,7 +1705,7 @@ definition {
 		}
 
 		while ("${count}" != "${loginAttempts}") {
-			var count = MathUtil.sum("${count}", "1");
+			var count = ${count} + 1;
 
 			User._login(
 				password = "${password}",
@@ -2322,7 +2322,7 @@ definition {
 				var i = "0";
 
 				while ("${i}" != "${addressCount}") {
-					var i = MathUtil.sum("${i}", "1");
+					var i = ${i} + 1;
 
 					AssertTextEquals.assertPartialText(
 						locator1 = "UsersAndOrganizations#USER_CONTACT_INFORMATION_CONTAINER_TABLE",

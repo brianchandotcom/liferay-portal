@@ -664,7 +664,7 @@ definition {
 		MenuItem.click(menuItem = "Update Due Date");
 
 		var currentYear = DateUtil.getCurrentYear();
-		var futureYear = MathUtil.sum("${currentYear}", "1");
+		var futureYear = ${currentYear} + 1;
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",
@@ -712,7 +712,7 @@ definition {
 		MenuItem.click(menuItem = "Update Due Date");
 
 		var currentYear = DateUtil.getCurrentYear();
-		var futureYear = MathUtil.sum("${currentYear}", "1");
+		var futureYear = ${currentYear} + 1;
 
 		Type(
 			locator1 = "MyWorkflowTasks#DIALOG_BOX_DUE_DATE",

@@ -290,7 +290,7 @@ definition {
 
 			Pause(locator1 = "30000");
 
-			var pauseCount = MathUtil.sum("${pauseCount}", "1");
+			var pauseCount = ${pauseCount} + 1;
 
 			echo("Pause count: ${pauseCount}");
 		}

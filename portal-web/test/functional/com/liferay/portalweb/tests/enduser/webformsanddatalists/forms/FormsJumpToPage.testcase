@@ -49,7 +49,7 @@ definition {
 		for (var option : list "1,2,3") {
 			Form.addPage();
 
-			var pageNumber = MathUtil.sum("${option}", "1");
+			var pageNumber = ${option} + 1;
 
 			Form.editPageTitle(formPageName = "Page ${pageNumber}");
 
@@ -155,7 +155,7 @@ definition {
 				fieldName = "ChooseYourDestiny",
 				radioOption = "Destiny ${option}");
 
-			var pageNumber = MathUtil.sum("${option}", "1");
+			var pageNumber = ${option} + 1;
 
 			FormPortlet.nextPage(
 				formPageCurrent = "Page 1",

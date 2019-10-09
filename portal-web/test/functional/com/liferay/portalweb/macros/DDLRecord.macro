@@ -378,7 +378,7 @@ definition {
 		var i = "1";
 
 		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]")) {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			if (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='${key_fieldName}']/a[contains(@class,'ddm-repeatable-add-button')])[${i}]")) {
 				Type(
@@ -449,7 +449,7 @@ definition {
 		var i = "1";
 
 		while (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='Text']//input)[${i}]")) {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			if (IsElementPresent(locator1 = "xpath=(//div[@data-fieldname='Text']//input)[${i}]")) {
 				Type(
@@ -774,7 +774,7 @@ definition {
 
 		AssertElementPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");
 
-		var count = MathUtil.sum("${count}", "1");
+		var count = ${count} + 1;
 		var key_number = "${count}";
 
 		AssertElementNotPresent(locator1 = "DDLEditRecord#LINK_TO_PAGE_BREADCRUMB");

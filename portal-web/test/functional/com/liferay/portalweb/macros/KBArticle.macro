@@ -1184,7 +1184,7 @@ definition {
 		var kbParentChild = "${kbArticleTitle} Child";
 
 		while (IsElementPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_CHILD_GENERIC")) {
-			var childCount = MathUtil.sum("${childCount}", "1");
+			var childCount = ${childCount} + 1;
 			var kbChildArticleTitle = "${kbParentChild} ${childCount}";
 			var key_kbArticleTitle = "${kbArticleTitle}";
 
@@ -1462,7 +1462,7 @@ definition {
 		var count = "0";
 
 		while (IsElementPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_GENERIC")) {
-			var count = MathUtil.sum("${count}", "1");
+			var count = ${count} + 1;
 			var kbParentTitle = "${kbArticleTitle} ${count}";
 
 			if (IsElementPresent(locator1 = "xpath=//div[@class='kbarticle-navigation']/ul[${count}]")) {

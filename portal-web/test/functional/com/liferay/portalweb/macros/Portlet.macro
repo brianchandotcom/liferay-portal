@@ -34,7 +34,7 @@ definition {
 		var i = "0";
 
 		while ("${i}" != "${portletCount}") {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			Refresh();
 
@@ -58,7 +58,7 @@ definition {
 		var key_portletName = "${portletName}";
 
 		while (!((IsElementPresent(locator1 = "Home#PORTLET")) || ("${i}" == "3"))) {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			Pause(locator1 = "30000");
 
@@ -110,7 +110,7 @@ definition {
 
 			Pause(locator1 = "10000");
 
-			var shutdownPauseCount = MathUtil.sum("${shutdownPauseCount}", "1");
+			var shutdownPauseCount = ${shutdownPauseCount} + 1;
 
 			echo("Shutdown pause count: ${shutdownPauseCount}");
 		}
@@ -124,7 +124,7 @@ definition {
 
 			Pause(locator1 = "10000");
 
-			var startupPauseCount = MathUtil.sum("${startupPauseCount}", "1");
+			var startupPauseCount = ${startupPauseCount} + 1;
 
 			echo("Startup pause count: ${startupPauseCount}");
 		}
@@ -395,7 +395,7 @@ definition {
 		var i = "0";
 
 		while ("${i}" != "${totalPortletCount}") {
-			var i = MathUtil.sum("${i}", "1");
+			var i = ${i} + 1;
 
 			AssertElementPresent(locator1 = "xpath=(//h2[contains(.,'${portletName}')])[${i}]");
 		}

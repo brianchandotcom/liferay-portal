@@ -225,7 +225,7 @@ definition {
 		var displayDateDay = selenium.getElementValue("TextInput#DISPLAY_DATE_DAY");
 		var displayDateMonth = selenium.getElementValue("TextInput#DISPLAY_DATE_MONTH");
 		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDateYear = MathUtil.sum("${displayDateYear}", "1");
+		var displayDateYear = ${displayDateYear} + 1;
 		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 		Type(
@@ -501,7 +501,7 @@ definition {
 	macro scheduleBlogEntry {
 		var displayDateDay = selenium.getElementValue("TextInput#DISPLAY_DATE_DAY");
 		var displayDateMonth = selenium.getElementValue("TextInput#DISPLAY_DATE_MONTH");
-		var displayDateMonth = MathUtil.sum("${displayDateMonth}", "1");
+		var displayDateMonth = ${displayDateMonth} + 1;
 		var displayDateYear = selenium.getElementValue("TextInput#DISPLAY_DATE_YEAR");
 		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
@@ -517,7 +517,7 @@ definition {
 		}
 
 		var displayDateMinute = selenium.getElementValue("TextInput#DISPLAY_DATE_MINUTE");
-		var displayDateMinuteFuture = MathUtil.sum("${displayDateMinute}", "3");
+		var displayDateMinuteFuture = ${displayDateMinute} + 3;
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 
 		if ("${displayDateMinuteFutureLength}" == "1") {
@@ -1148,7 +1148,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE_LINK",
 			value1 = "${entryTitle}");
 
-		var entryViewCount = MathUtil.sum("${entryViewCount}", "1");
+		var entryViewCount = ${entryViewCount} + 1;
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "BlogsEntry#ENTRY_VIEW_COUNT",

@@ -294,13 +294,13 @@ definition {
 		var count = "0";
 
 		while ("${count}" != "${depth}") {
-			var index = MathUtil.sum("${count}", "1");
+			var index = ${count} + 1;
 
 			Click(
 				key_depth = "${index}",
 				locator1 = "SitePages#LIST_GROUP_ITEM_DEPTH");
 
-			var count = MathUtil.sum("${count}", "1");
+			var count = ${count} + 1;
 		}
 	}
 

@@ -196,7 +196,7 @@ definition {
 			count = "${count}",
 			navItem = "Live Sessions");
 
-		var countNotPresent = MathUtil.sum("1", "${count}");
+		var countNotPresent = 1 + ${count};
 
 		Clustering._viewNoLiveSession(count = "${countNotPresent}");
 	}

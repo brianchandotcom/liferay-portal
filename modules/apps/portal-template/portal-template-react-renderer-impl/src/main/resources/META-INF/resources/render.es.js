@@ -15,9 +15,9 @@
 import {render} from 'frontend-js-react-web';
 
 export default function(renderFunction, renderData, placeholderId) {
-	render(
-		renderFunction,
-		renderData,
-		document.getElementById(placeholderId).parentElement
-	);
+	const element = document.getElementById(placeholderId);
+
+	if (element) {
+		render(renderFunction, renderData, element.parentElement);
+	}
 }

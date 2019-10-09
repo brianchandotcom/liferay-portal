@@ -318,20 +318,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		if (!DLValidatorUtil.isValidName(dirName)) {
-			throw new DirectoryNameException(dirName);
-		}
-
-		Store store = _storeFactory.getStore();
-
-		return store.hasDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
 	public boolean hasFile(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 

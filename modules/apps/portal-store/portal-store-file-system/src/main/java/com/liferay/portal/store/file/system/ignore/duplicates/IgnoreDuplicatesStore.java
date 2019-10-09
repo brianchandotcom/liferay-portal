@@ -93,13 +93,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public boolean hasDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		return _store.hasDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

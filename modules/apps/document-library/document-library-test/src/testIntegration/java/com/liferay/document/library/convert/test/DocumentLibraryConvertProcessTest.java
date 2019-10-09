@@ -19,13 +19,10 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.content.service.DLContentLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
-import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
@@ -61,7 +58,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 
 import java.io.InputStream;
 
@@ -287,18 +283,6 @@ public class DocumentLibraryConvertProcessTest {
 				rootDLFileEntry.getName(), Store.VERSION_DEFAULT));
 
 		DLFileEntry folderDLFileEntry = (DLFileEntry)folderFileEntry.getModel();
-
-		DLProcessor imageProcessor = _dlProcessorRegistry.getDLProcessor(
-			DLProcessorConstants.IMAGE_PROCESSOR);
-
-		if (imageProcessor instanceof ImageProcessorImpl) {
-			Assert.assertNotEquals(
-				delete,
-				_sourceStore.hasDirectory(
-					folderDLFileEntry.getCompanyId(),
-					DLPreviewableProcessor.REPOSITORY_ID,
-					DLPreviewableProcessor.THUMBNAIL_PATH));
-		}
 
 		Assert.assertNotEquals(
 			delete,

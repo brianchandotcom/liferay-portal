@@ -123,19 +123,6 @@ public interface Store {
 		throws PortalException;
 
 	/**
-	 * Returns <code>true</code> if the directory exists.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
-	 * @return <code>true</code> if the directory exists; <code>false</code>
-	 *         otherwise
-	 */
-	public boolean hasDirectory(
-		long companyId, long repositoryId, String dirName);
-
-	/**
 	 * Returns <code>true</code> if the file exists.
 	 *
 	 * @param  companyId the primary key of the company

@@ -243,15 +243,6 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public boolean hasDirectory(
-		long companyId, long repositoryId, String dirName) {
-
-		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
-
-		return dirNameDir.exists();
-	}
-
-	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

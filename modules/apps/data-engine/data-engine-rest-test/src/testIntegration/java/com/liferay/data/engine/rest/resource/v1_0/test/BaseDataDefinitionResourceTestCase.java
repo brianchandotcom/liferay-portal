@@ -364,12 +364,54 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	public void testPostDataDefinitionDataDefinitionPermission()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataDefinition dataDefinition =
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataDefinitionResource.
+				postDataDefinitionDataDefinitionPermissionHttpResponse(
+					dataDefinition.getId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.
+				postDataDefinitionDataDefinitionPermissionHttpResponse(
+					0L, null, null));
+	}
+
+	protected DataDefinition
+			testPostDataDefinitionDataDefinitionPermission_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinition(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test
 	public void testPostSiteDataDefinitionPermission() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataDefinition dataDefinition =
+			testPostSiteDataDefinitionPermission_addDataDefinition();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
+				null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.postSiteDataDefinitionPermissionHttpResponse(
+				null, null, null));
+	}
+
+	protected DataDefinition
+			testPostSiteDataDefinitionPermission_addDataDefinition()
+		throws Exception {
+
+		return dataDefinitionResource.postSiteDataDefinition(
+			testGroup.getGroupId(), randomDataDefinition());
 	}
 
 	@Test

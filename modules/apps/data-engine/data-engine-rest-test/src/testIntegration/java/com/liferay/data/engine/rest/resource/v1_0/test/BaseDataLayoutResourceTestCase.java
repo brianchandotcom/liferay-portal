@@ -583,12 +583,50 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout =
+			testPostDataLayoutDataLayoutPermission_addDataLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
+				dataLayout.getId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.postDataLayoutDataLayoutPermissionHttpResponse(
+				0L, null, null));
+	}
+
+	protected DataLayout testPostDataLayoutDataLayoutPermission_addDataLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPostSiteDataLayoutPermission() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataLayout dataLayout =
+			testPostSiteDataLayoutPermission_addDataLayout();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
+				null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataLayoutResource.postSiteDataLayoutPermissionHttpResponse(
+				null, null, null));
+	}
+
+	protected DataLayout testPostSiteDataLayoutPermission_addDataLayout()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

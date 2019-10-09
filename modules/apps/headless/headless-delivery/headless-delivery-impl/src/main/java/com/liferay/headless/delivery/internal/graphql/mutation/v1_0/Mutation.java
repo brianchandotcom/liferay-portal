@@ -307,6 +307,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateSiteBlogPostingSubscribe(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.putSiteBlogPostingSubscribe(siteId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateSiteBlogPostingUnsubscribe(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_blogPostingResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			blogPostingResource ->
+				blogPostingResource.putSiteBlogPostingUnsubscribe(siteId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean deleteBlogPostingImage(
 			@GraphQLName("blogPostingImageId") Long blogPostingImageId)
 		throws Exception {
@@ -564,6 +594,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateDocumentFolderSubscribe(
+			@GraphQLName("documentFolderId") Long documentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putDocumentFolderSubscribe(
+					documentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateDocumentFolderUnsubscribe(
+			@GraphQLName("documentFolderId") Long documentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_documentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			documentFolderResource ->
+				documentFolderResource.putDocumentFolderUnsubscribe(
+					documentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public DocumentFolder createDocumentFolderDocumentFolder(
 			@GraphQLName("parentDocumentFolderId") Long parentDocumentFolderId,
 			@GraphQLName("documentFolder") DocumentFolder documentFolder)
@@ -681,6 +741,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateKnowledgeBaseArticleSubscribe(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleSubscribe(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateKnowledgeBaseArticleUnsubscribe(
+			@GraphQLName("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.putKnowledgeBaseArticleUnsubscribe(
+					knowledgeBaseArticleId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public KnowledgeBaseArticle createKnowledgeBaseArticleKnowledgeBaseArticle(
 			@GraphQLName("parentKnowledgeBaseArticleId") Long
 				parentKnowledgeBaseArticleId,
@@ -727,6 +817,38 @@ public class Mutation {
 			knowledgeBaseArticleResource ->
 				knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
 					siteId, knowledgeBaseArticle));
+	}
+
+	@GraphQLField
+	public boolean updateSiteKnowledgeBaseArticleSubscribe(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					putSiteKnowledgeBaseArticleSubscribe(siteId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateSiteKnowledgeBaseArticleUnsubscribe(
+			@GraphQLName("siteId") Long siteId,
+			@GraphQLName("siteKey") String siteKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_knowledgeBaseArticleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			knowledgeBaseArticleResource ->
+				knowledgeBaseArticleResource.
+					putSiteKnowledgeBaseArticleUnsubscribe(siteId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1095,6 +1217,36 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateMessageBoardSectionSubscribe(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSectionSubscribe(
+					messageBoardSectionId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardSectionUnsubscribe(
+			@GraphQLName("messageBoardSectionId") Long messageBoardSectionId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardSectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardSectionResource ->
+				messageBoardSectionResource.putMessageBoardSectionUnsubscribe(
+					messageBoardSectionId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public MessageBoardSection createMessageBoardSectionMessageBoardSection(
 			@GraphQLName("parentMessageBoardSectionId") Long
 				parentMessageBoardSectionId,
@@ -1189,36 +1341,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean updateMessageBoardThreadSubscribe(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.putMessageBoardThreadSubscribe(
-					messageBoardThreadId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public boolean updateMessageBoardThreadUnsubscribe(
-			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_messageBoardThreadResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			messageBoardThreadResource ->
-				messageBoardThreadResource.putMessageBoardThreadUnsubscribe(
-					messageBoardThreadId));
-
-		return true;
-	}
-
-	@GraphQLField
 	public boolean deleteMessageBoardThreadMyRating(
 			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
 		throws Exception {
@@ -1259,6 +1381,36 @@ public class Mutation {
 			messageBoardThreadResource ->
 				messageBoardThreadResource.putMessageBoardThreadMyRating(
 					messageBoardThreadId, rating));
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardThreadSubscribe(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadSubscribe(
+					messageBoardThreadId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateMessageBoardThreadUnsubscribe(
+			@GraphQLName("messageBoardThreadId") Long messageBoardThreadId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_messageBoardThreadResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			messageBoardThreadResource ->
+				messageBoardThreadResource.putMessageBoardThreadUnsubscribe(
+					messageBoardThreadId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1308,6 +1460,36 @@ public class Mutation {
 				structuredContentResource.
 					postStructuredContentFolderStructuredContent(
 						structuredContentFolderId, structuredContent));
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentSubscribe(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentSubscribe(
+					structuredContentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentUnsubscribe(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putStructuredContentUnsubscribe(
+					structuredContentId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1482,6 +1664,40 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean updateStructuredContentFolderSubscribe(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putStructuredContentFolderSubscribe(
+						structuredContentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateStructuredContentFolderUnsubscribe(
+			@GraphQLName("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putStructuredContentFolderUnsubscribe(
+						structuredContentFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
 	public WikiNode createSiteWikiNode(
 			@GraphQLName("siteId") Long siteId,
 			@GraphQLName("siteKey") String siteKey,
@@ -1493,6 +1709,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiNodeResource -> wikiNodeResource.postSiteWikiNode(
 				siteId, wikiNode));
+	}
+
+	@GraphQLField
+	public boolean updateWikiNodeSubscribe(
+			@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNodeSubscribe(
+				wikiNodeId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateWikiNodeUnsubscribe(
+			@GraphQLName("wikiNodeId") Long wikiNodeId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiNodeResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiNodeResource -> wikiNodeResource.putWikiNodeUnsubscribe(
+				wikiNodeId));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -1531,6 +1775,34 @@ public class Mutation {
 			this::_populateResourceContext,
 			wikiPageResource -> wikiPageResource.postWikiNodeWikiPage(
 				wikiNodeId, wikiPage));
+	}
+
+	@GraphQLField
+	public boolean updateWikiPageSubscribe(
+			@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPageSubscribe(
+				wikiPageId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean updateWikiPageUnsubscribe(
+			@GraphQLName("wikiPageId") Long wikiPageId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageResource -> wikiPageResource.putWikiPageUnsubscribe(
+				wikiPageId));
+
+		return true;
 	}
 
 	@GraphQLField

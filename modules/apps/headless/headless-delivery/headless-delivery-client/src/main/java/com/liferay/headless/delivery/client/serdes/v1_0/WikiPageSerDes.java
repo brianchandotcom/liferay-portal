@@ -273,6 +273,16 @@ public class WikiPageSerDes {
 			sb.append(wikiPage.getSiteId());
 		}
 
+		if (wikiPage.getSubscribed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(wikiPage.getSubscribed());
+		}
+
 		if (wikiPage.getTaxonomyCategories() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -456,6 +466,13 @@ public class WikiPageSerDes {
 			map.put("siteId", String.valueOf(wikiPage.getSiteId()));
 		}
 
+		if (wikiPage.getSubscribed() == null) {
+			map.put("subscribed", null);
+		}
+		else {
+			map.put("subscribed", String.valueOf(wikiPage.getSubscribed()));
+		}
+
 		if (wikiPage.getTaxonomyCategories() == null) {
 			map.put("taxonomyCategories", null);
 		}
@@ -599,6 +616,11 @@ public class WikiPageSerDes {
 				if (jsonParserFieldValue != null) {
 					wikiPage.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subscribed")) {
+				if (jsonParserFieldValue != null) {
+					wikiPage.setSubscribed((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

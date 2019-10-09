@@ -534,12 +534,56 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	public void testPostDataRecordCollectionDataRecordCollectionPermission()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecordCollection dataRecordCollection =
+			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataRecordCollectionResource.
+				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
+					dataRecordCollection.getId(), null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.
+				postDataRecordCollectionDataRecordCollectionPermissionHttpResponse(
+					0L, null, null));
+	}
+
+	protected DataRecordCollection
+			testPostDataRecordCollectionDataRecordCollectionPermission_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testPostSiteDataRecordCollectionPermission() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataRecordCollection dataRecordCollection =
+			testPostSiteDataRecordCollectionPermission_addDataRecordCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			dataRecordCollectionResource.
+				postSiteDataRecordCollectionPermissionHttpResponse(
+					null, null, null));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataRecordCollectionResource.
+				postSiteDataRecordCollectionPermissionHttpResponse(
+					null, null, null));
+	}
+
+	protected DataRecordCollection
+			testPostSiteDataRecordCollectionPermission_addDataRecordCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

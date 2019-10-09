@@ -380,6 +380,34 @@ public class StructuredContentFolder {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
+	@Schema
+	public Boolean getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(Boolean subscribed) {
+		this.subscribed = subscribed;
+	}
+
+	@JsonIgnore
+	public void setSubscribed(
+		UnsafeSupplier<Boolean, Exception> subscribedUnsafeSupplier) {
+
+		try {
+			subscribed = subscribedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean subscribed;
+
 	@Schema(
 		description = "A write-only property that specifies the folder's default permissions."
 	)
@@ -575,6 +603,16 @@ public class StructuredContentFolder {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		if (subscribed != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subscribed\": ");
+
+			sb.append(subscribed);
 		}
 
 		if (viewableBy != null) {

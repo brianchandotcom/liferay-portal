@@ -755,6 +755,52 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testPutSiteBlogPostingSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting =
+			testPutSiteBlogPostingSubscribe_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(null));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.putSiteBlogPostingSubscribeHttpResponse(null));
+	}
+
+	protected BlogPosting testPutSiteBlogPostingSubscribe_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
+	public void testPutSiteBlogPostingUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting =
+			testPutSiteBlogPostingUnsubscribe_addBlogPosting();
+
+		assertHttpResponseStatusCode(
+			204,
+			blogPostingResource.putSiteBlogPostingUnsubscribeHttpResponse(
+				null));
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.putSiteBlogPostingUnsubscribeHttpResponse(
+				null));
+	}
+
+	protected BlogPosting testPutSiteBlogPostingUnsubscribe_addBlogPosting()
+		throws Exception {
+
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
 	public void testGetBlogPostingMyRating() throws Exception {
 		BlogPosting postBlogPosting = testGetBlogPosting_addBlogPosting();
 

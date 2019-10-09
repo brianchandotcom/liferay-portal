@@ -59,6 +59,12 @@ public interface MessageBoardSectionResource {
 			Long messageBoardSectionId, MessageBoardSection messageBoardSection)
 		throws Exception;
 
+	public void putMessageBoardSectionSubscribe(Long messageBoardSectionId)
+		throws Exception;
+
+	public void putMessageBoardSectionUnsubscribe(Long messageBoardSectionId)
+		throws Exception;
+
 	public Page<MessageBoardSection>
 			getMessageBoardSectionMessageBoardSectionsPage(
 				Long parentMessageBoardSectionId, String search, Filter filter,

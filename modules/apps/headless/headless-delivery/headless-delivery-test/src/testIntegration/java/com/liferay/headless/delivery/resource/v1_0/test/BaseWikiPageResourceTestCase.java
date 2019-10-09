@@ -488,6 +488,46 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testPutWikiPageSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testPutWikiPageSubscribe_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageResource.putWikiPageSubscribeHttpResponse(
+				wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.putWikiPageSubscribeHttpResponse(0L));
+	}
+
+	protected WikiPage testPutWikiPageSubscribe_addWikiPage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutWikiPageUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage = testPutWikiPageUnsubscribe_addWikiPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageResource.putWikiPageUnsubscribeHttpResponse(
+				wikiPage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiPageResource.putWikiPageUnsubscribeHttpResponse(0L));
+	}
+
+	protected WikiPage testPutWikiPageUnsubscribe_addWikiPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWikiPageWikiPagesPage() throws Exception {
 		Page<WikiPage> page = wikiPageResource.getWikiPageWikiPagesPage(
 			testGetWikiPageWikiPagesPage_getParentWikiPageId());
@@ -892,6 +932,14 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (wikiPage.getSubscribed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategories", additionalAssertFieldName)) {
 
@@ -1128,6 +1176,16 @@ public abstract class BaseWikiPageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getSubscribed(), wikiPage2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategories", additionalAssertFieldName)) {
 
@@ -1245,6 +1303,17 @@ public abstract class BaseWikiPageResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiPage.getNumberOfWikiPages(),
 						jsonObject.getInt("numberOfWikiPages"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -1448,6 +1517,11 @@ public abstract class BaseWikiPageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("taxonomyCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1497,6 +1571,7 @@ public abstract class BaseWikiPageResourceTestCase {
 				numberOfAttachments = RandomTestUtil.randomInt();
 				numberOfWikiPages = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

@@ -197,6 +197,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getSiteId());
 		}
 
+		if (knowledgeBaseArticle.getSubscribed() != null) {
+			existingKnowledgeBaseArticle.setSubscribed(
+				knowledgeBaseArticle.getSubscribed());
+		}
+
 		if (knowledgeBaseArticle.getTaxonomyCategoryIds() != null) {
 			existingKnowledgeBaseArticle.setTaxonomyCategoryIds(
 				knowledgeBaseArticle.getTaxonomyCategoryIds());
@@ -346,6 +351,48 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new Rating();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
+		}
+	)
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void putKnowledgeBaseArticleSubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "knowledgeBaseArticleId")
+		}
+	)
+	@Path("/knowledge-base-articles/{knowledgeBaseArticleId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void putKnowledgeBaseArticleUnsubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("knowledgeBaseArticleId") Long knowledgeBaseArticleId)
+		throws Exception {
 	}
 
 	/**
@@ -545,6 +592,38 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return new KnowledgeBaseArticle();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
+	@Path("/sites/{siteId}/knowledge-base-articles/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void putSiteKnowledgeBaseArticleSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
+	@Path("/sites/{siteId}/knowledge-base-articles/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void putSiteKnowledgeBaseArticleUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

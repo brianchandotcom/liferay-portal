@@ -541,6 +541,46 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
+	public void testPutWikiNodeSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutWikiNodeSubscribe_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putWikiNodeSubscribeHttpResponse(
+				wikiNode.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.putWikiNodeSubscribeHttpResponse(0L));
+	}
+
+	protected WikiNode testPutWikiNodeSubscribe_addWikiNode() throws Exception {
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
+	public void testPutWikiNodeUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode = testPutWikiNodeUnsubscribe_addWikiNode();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(
+				wikiNode.getId()));
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.putWikiNodeUnsubscribeHttpResponse(0L));
+	}
+
+	protected WikiNode testPutWikiNodeUnsubscribe_addWikiNode()
+		throws Exception {
+
+		return wikiNodeResource.postSiteWikiNode(
+			testGroup.getGroupId(), randomWikiNode());
+	}
+
+	@Test
 	public void testDeleteWikiNode() throws Exception {
 		WikiNode wikiNode = testDeleteWikiNode_addWikiNode();
 
@@ -775,6 +815,24 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 				sb.append(", ");
 			}
+
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = wikiNode.getSubscribed();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
 		}
 
 		sb.append("}");
@@ -932,6 +990,14 @@ public abstract class BaseWikiNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (wikiNode.getSubscribed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (wikiNode.getViewableBy() == null) {
 					valid = false;
@@ -1071,6 +1137,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiNode1.getSubscribed(), wikiNode2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("viewableBy", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						wikiNode1.getViewableBy(), wikiNode2.getViewableBy())) {
@@ -1128,6 +1204,17 @@ public abstract class BaseWikiNodeResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiNode.getNumberOfWikiPages(),
 						jsonObject.getInt("numberOfWikiPages"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						wikiNode.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -1290,6 +1377,11 @@ public abstract class BaseWikiNodeResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("viewableBy")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1326,6 +1418,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 				name = RandomTestUtil.randomString();
 				numberOfWikiPages = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

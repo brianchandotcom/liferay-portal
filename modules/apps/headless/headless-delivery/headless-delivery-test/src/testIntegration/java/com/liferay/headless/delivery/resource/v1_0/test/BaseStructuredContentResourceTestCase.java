@@ -1392,6 +1392,57 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPutStructuredContentSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testPutStructuredContentSubscribe_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.putStructuredContentSubscribeHttpResponse(
+				structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.putStructuredContentSubscribeHttpResponse(
+				0L));
+	}
+
+	protected StructuredContent
+			testPutStructuredContentSubscribe_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testPutStructuredContentUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent =
+			testPutStructuredContentUnsubscribe_addStructuredContent();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.
+				putStructuredContentUnsubscribeHttpResponse(
+					structuredContent.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentResource.
+				putStructuredContentUnsubscribeHttpResponse(0L));
+	}
+
+	protected StructuredContent
+			testPutStructuredContentUnsubscribe_addStructuredContent()
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContent(
+			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		StructuredContent structuredContent =
 			testDeleteStructuredContent_addStructuredContent();
@@ -1818,6 +1869,24 @@ public abstract class BaseStructuredContentResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = structuredContent.getSubscribed();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -2102,6 +2171,14 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			if (Objects.equals("renderedContents", additionalAssertFieldName)) {
 				if (structuredContent.getRenderedContents() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (structuredContent.getSubscribed() == null) {
 					valid = false;
 				}
 
@@ -2469,6 +2546,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent1.getSubscribed(),
+						structuredContent2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"taxonomyCategories", additionalAssertFieldName)) {
 
@@ -2682,6 +2770,17 @@ public abstract class BaseStructuredContentResourceTestCase {
 				if (!Objects.deepEquals(
 						structuredContent.getNumberOfComments(),
 						jsonObject.getInt("numberOfComments"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						structuredContent.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -2955,6 +3054,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("taxonomyCategories")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3020,6 +3124,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				key = RandomTestUtil.randomString();
 				numberOfComments = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 				title = RandomTestUtil.randomString();
 				uuid = RandomTestUtil.randomString();
 			}

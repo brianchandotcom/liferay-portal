@@ -124,6 +124,44 @@ public abstract class BaseWikiPageResourceImpl implements WikiPageResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page/{wikiPageId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
+	)
+	@Path("/wiki-page/{wikiPageId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WikiPage")})
+	public void putWikiPageSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
+				wikiPageId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-page/{wikiPageId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "wikiPageId")}
+	)
+	@Path("/wiki-page/{wikiPageId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "WikiPage")})
+	public void putWikiPageUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
+				wikiPageId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/wiki-pages/{parentWikiPageId}/wiki-pages'  -u 'test@liferay.com:test'
 	 */
 	@Override

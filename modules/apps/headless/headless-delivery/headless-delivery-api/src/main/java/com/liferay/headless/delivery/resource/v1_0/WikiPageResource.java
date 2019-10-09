@@ -52,6 +52,10 @@ public interface WikiPageResource {
 	public WikiPage postWikiNodeWikiPage(Long wikiNodeId, WikiPage wikiPage)
 		throws Exception;
 
+	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;
+
+	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception;
+
 	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
 		throws Exception;
 

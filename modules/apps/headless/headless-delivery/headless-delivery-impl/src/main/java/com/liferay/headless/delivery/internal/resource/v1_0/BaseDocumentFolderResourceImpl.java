@@ -168,6 +168,11 @@ public abstract class BaseDocumentFolderResourceImpl
 			existingDocumentFolder.setSiteId(documentFolder.getSiteId());
 		}
 
+		if (documentFolder.getSubscribed() != null) {
+			existingDocumentFolder.setSubscribed(
+				documentFolder.getSubscribed());
+		}
+
 		if (documentFolder.getViewableBy() != null) {
 			existingDocumentFolder.setViewableBy(
 				documentFolder.getViewableBy());
@@ -202,6 +207,44 @@ public abstract class BaseDocumentFolderResourceImpl
 		throws Exception {
 
 		return new DocumentFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
+	)
+	@Path("/document-folders/{documentFolderId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public void putDocumentFolderSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
+				Long documentFolderId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/document-folders/{documentFolderId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "documentFolderId")}
+	)
+	@Path("/document-folders/{documentFolderId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "DocumentFolder")})
+	public void putDocumentFolderUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
+				Long documentFolderId)
+		throws Exception {
 	}
 
 	/**

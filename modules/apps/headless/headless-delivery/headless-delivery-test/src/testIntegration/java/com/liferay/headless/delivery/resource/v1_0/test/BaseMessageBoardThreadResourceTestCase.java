@@ -762,16 +762,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testPutMessageBoardThreadSubscribe() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteMessageBoardThreadMyRating() throws Exception {
 		MessageBoardThread messageBoardThread =
 			testDeleteMessageBoardThreadMyRating_addMessageBoardThread();
@@ -796,6 +786,58 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	protected MessageBoardThread
 			testDeleteMessageBoardThreadMyRating_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testPutMessageBoardThreadSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testPutMessageBoardThreadSubscribe_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				putMessageBoardThreadSubscribeHttpResponse(
+					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				putMessageBoardThreadSubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardThread
+			testPutMessageBoardThreadSubscribe_addMessageBoardThread()
+		throws Exception {
+
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
+	}
+
+	@Test
+	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread =
+			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardThreadResource.
+				putMessageBoardThreadUnsubscribeHttpResponse(
+					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				putMessageBoardThreadUnsubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardThread
+			testPutMessageBoardThreadUnsubscribe_addMessageBoardThread()
 		throws Exception {
 
 		return messageBoardThreadResource.postSiteMessageBoardThread(

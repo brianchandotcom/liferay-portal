@@ -171,6 +171,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 				messageBoardSection.getSiteId());
 		}
 
+		if (messageBoardSection.getSubscribed() != null) {
+			existingMessageBoardSection.setSubscribed(
+				messageBoardSection.getSubscribed());
+		}
+
 		if (messageBoardSection.getTitle() != null) {
 			existingMessageBoardSection.setTitle(
 				messageBoardSection.getTitle());
@@ -213,6 +218,48 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		throws Exception {
 
 		return new MessageBoardSection();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
+	@Path("/message-board-sections/{messageBoardSectionId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public void putMessageBoardSectionSubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/message-board-sections/{messageBoardSectionId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "messageBoardSectionId")
+		}
+	)
+	@Path("/message-board-sections/{messageBoardSectionId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "MessageBoardSection")})
+	public void putMessageBoardSectionUnsubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("messageBoardSectionId") Long messageBoardSectionId)
+		throws Exception {
 	}
 
 	/**

@@ -401,6 +401,58 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testPutMessageBoardSectionSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection =
+			testPutMessageBoardSectionSubscribe_addMessageBoardSection();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardSectionResource.
+				putMessageBoardSectionSubscribeHttpResponse(
+					messageBoardSection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardSectionResource.
+				putMessageBoardSectionSubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardSection
+			testPutMessageBoardSectionSubscribe_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
+	public void testPutMessageBoardSectionUnsubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection =
+			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection();
+
+		assertHttpResponseStatusCode(
+			204,
+			messageBoardSectionResource.
+				putMessageBoardSectionUnsubscribeHttpResponse(
+					messageBoardSection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardSectionResource.
+				putMessageBoardSectionUnsubscribeHttpResponse(0L));
+	}
+
+	protected MessageBoardSection
+			testPutMessageBoardSectionUnsubscribe_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardSectionsPage()
 		throws Exception {
 
@@ -1280,6 +1332,24 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				sb.append(", ");
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = messageBoardSection.getSubscribed();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				sb.append(additionalAssertFieldName);
 				sb.append(": ");
@@ -1486,6 +1556,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (messageBoardSection.getSubscribed() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (messageBoardSection.getTitle() == null) {
 					valid = false;
@@ -1661,6 +1739,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subscribed", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardSection1.getSubscribed(),
+						messageBoardSection2.getSubscribed())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardSection1.getTitle(),
@@ -1732,6 +1821,17 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardSection.getNumberOfMessageBoardThreads(),
 						jsonObject.getInt("numberOfMessageBoardThreads"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subscribed", fieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardSection.getSubscribed(),
+						jsonObject.getBoolean("subscribed"))) {
 
 					return false;
 				}
@@ -1914,6 +2014,11 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("subscribed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("title")) {
 			sb.append("'");
 			sb.append(String.valueOf(messageBoardSection.getTitle()));
@@ -1958,6 +2063,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				numberOfMessageBoardSections = RandomTestUtil.randomInt();
 				numberOfMessageBoardThreads = RandomTestUtil.randomInt();
 				siteId = testGroup.getGroupId();
+				subscribed = RandomTestUtil.randomBoolean();
 				title = RandomTestUtil.randomString();
 			}
 		};

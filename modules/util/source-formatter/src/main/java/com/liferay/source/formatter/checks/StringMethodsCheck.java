@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,14 +37,14 @@ public class StringMethodsCheck extends BaseFileCheck {
 		}
 
 		_checkInefficientStringMethods(
-			fileName, content, "\\.toLowerCase\\(\\)", "toLowerCase");
-		_checkInefficientStringMethods(
-			fileName, content, "\\.toUpperCase\\(\\)", "toUpperCase");
-		_checkInefficientStringMethods(
-			fileName, content, "(?<!StringUtil)\\.equalsIgnoreCase\\(",
+			fileName, content, "\\W(\\w+)\\.equalsIgnoreCase\\(",
 			"equalsIgnoreCase");
 		_checkInefficientStringMethods(
-			fileName, content, "\\WString\\.join\\(", "merge");
+			fileName, content, "\\W(\\w+)\\.join\\(", "merge");
+		_checkInefficientStringMethods(
+			fileName, content, "\\W(\\w+)\\.toLowerCase\\(\\)", "toLowerCase");
+		_checkInefficientStringMethods(
+			fileName, content, "\\W(\\w+)\\.toUpperCase\\(\\)", "toUpperCase");
 
 		return content;
 	}
@@ -60,11 +61,20 @@ public class StringMethodsCheck extends BaseFileCheck {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
-			if (isJavaSource(content, matcher.start())) {
+			if (!isJavaSource(content, matcher.start())) {
+				continue;
+			}
+
+			String s = matcher.group(1);
+
+			if (s.equals("String") ||
+				Objects.equals(
+					getVariableTypeName(content, content, s), "String")) {
+
 				addMessage(
 					fileName, "Use StringUtil." + methodName,
 					"string_methods.markdown",
-					getLineNumber(content, matcher.start()));
+					getLineNumber(content, matcher.start(1)));
 			}
 		}
 	}

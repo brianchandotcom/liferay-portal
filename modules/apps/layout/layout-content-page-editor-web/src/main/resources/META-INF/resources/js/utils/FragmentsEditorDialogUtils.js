@@ -91,21 +91,15 @@ function openImageSelector(callback, destroyedCallback = null) {
 }
 
 /**
- * @param {object} options
- * @param {function} options.callback
- * @param {string} options.eventName
- * @param {string} options.itemSelectorURL
- * @param {function} [options.destroyedCallback=null]
+ * @param {function} callback
+ * @param {function} [destroyedCallback=null]
  */
-function openItemSelector({
-	callback,
-	eventName,
-	itemSelectorURL,
-	destroyedCallback = null
-}) {
+function openItemSelector(callback, destroyedCallback = null) {
+	const state = getState();
+
 	AUI().use('liferay-item-selector-dialog', A => {
 		const itemSelector = new A.LiferayItemSelectorDialog({
-			eventName,
+			eventName: `${state.portletNamespace}selectInfoItem`,
 			on: {
 				selectedItemChange: event => {
 					const selectedItem = event.newVal;
@@ -130,7 +124,7 @@ function openItemSelector({
 			},
 			'strings.add': Liferay.Language.get('done'),
 			title: Liferay.Language.get('select'),
-			url: itemSelectorURL
+			url: state.infoItemSelectorURL
 		});
 
 		itemSelector.open();

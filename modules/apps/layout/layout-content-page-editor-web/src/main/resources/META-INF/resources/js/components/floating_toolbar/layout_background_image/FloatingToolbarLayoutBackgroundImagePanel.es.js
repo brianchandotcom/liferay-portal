@@ -269,12 +269,8 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_handleAssetBrowserLinkClick() {
-		openItemSelector({
-			callback: selectedInfoItem => {
-				this._selectAssetEntry(selectedInfoItem);
-			},
-			eventName: `${this.portletNamespace}selectInfoItem`,
-			itemSelectorURL: this.infoItemSelectorURL
+		openItemSelector(selectedInfoItem => {
+			this._selectAssetEntry(selectedInfoItem);
 		});
 	}
 
@@ -535,13 +531,7 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(
 	FloatingToolbarLayoutBackgroundImagePanel,
-	[
-		'infoItemSelectorURL',
-		'mappedAssetEntries',
-		'mappingFieldsURL',
-		'portletNamespace',
-		'selectedMappingTypes'
-	]
+	['mappedAssetEntries', 'mappingFieldsURL', 'selectedMappingTypes']
 );
 
 Soy.register(ConnectedFloatingToolbarLayoutBackgroundImagePanel, templates);

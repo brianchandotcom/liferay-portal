@@ -237,15 +237,9 @@ class FloatingToolbarLinkPanel extends PortletBase {
 	 * @review
 	 */
 	_handleAssetBrowserLinkClick() {
-		openItemSelector({
-			callback: selectedInfoItem => {
-				this._selectAssetEntry(selectedInfoItem);
-
-				this._focusPanel();
-			},
-			eventName: `${this.portletNamespace}selectInfoItem`,
-			itemSelectorURL: this.infoItemSelectorURL,
-			portletNamespace: this.portletNamespace
+		openItemSelector(selectedInfoItem => {
+			this._selectAssetEntry(selectedInfoItem);
+			this._focusPanel();
 		});
 	}
 
@@ -570,10 +564,8 @@ const ConnectedFloatingToolbarLinkPanel = getConnectedComponent(
 	[
 		'getAssetFieldValueURL',
 		'getAssetMappingFieldsURL',
-		'infoItemSelectorURL',
 		'mappedAssetEntries',
 		'mappingFieldsURL',
-		'portletNamespace',
 		'selectedMappingTypes',
 		'spritemap'
 	]

@@ -207,16 +207,12 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	 * @review
 	 */
 	_handleAssetBrowserLinkClick() {
-		openItemSelector({
-			callback: selectedInfoItem => {
-				this._selectAssetEntry(selectedInfoItem);
+		openItemSelector(selectedInfoItem => {
+			this._selectAssetEntry(selectedInfoItem);
 
-				requestAnimationFrame(() => {
-					this.refs.panel.focus();
-				});
-			},
-			eventName: `${this.portletNamespace}selectInfoItem`,
-			itemSelectorURL: this.infoItemSelectorURL
+			requestAnimationFrame(() => {
+				this.refs.panel.focus();
+			});
 		});
 	}
 
@@ -456,11 +452,9 @@ const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 		'contentCreationEnabled',
 		'defaultSegmentsExperienceId',
 		'getAssetMappingFieldsURL',
-		'infoItemSelectorURL',
 		'languageId',
 		'mappedAssetEntries',
 		'mappingFieldsURL',
-		'portletNamespace',
 		'segmentsExperienceId',
 		'selectedItems',
 		'selectedMappingTypes'

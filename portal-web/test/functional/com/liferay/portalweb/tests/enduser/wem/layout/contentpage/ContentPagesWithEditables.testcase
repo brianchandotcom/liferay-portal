@@ -29,11 +29,14 @@ definition {
 	test AddContentPageWithEditedFragmentText {
 		property testray.component.names = "Training";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		task ("Add a Content fragment to the content page") {
 			PageEditor.addFragment(
@@ -104,11 +107,10 @@ definition {
 	test AddContentPageWithImageFragment {
 		property portal.acceptance = "true";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
 
 		task ("Add an Image fragment to the content page") {
 			PageEditor.addFragment(

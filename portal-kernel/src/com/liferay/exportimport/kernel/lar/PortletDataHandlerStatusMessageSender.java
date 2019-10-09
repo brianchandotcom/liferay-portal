@@ -24,14 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortletDataHandlerStatusMessageSender {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #sendStatusMessage(String, String[], ManifestSummary)}
-	 */
-	@Deprecated
-	public void sendStatusMessage(
-		String messageType, ManifestSummary manifestSummary);
-
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary);
 

@@ -41,18 +41,6 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #sendStatusMessage(String, String[], ManifestSummary)}
-	 */
-	@Deprecated
-	@Override
-	public void sendStatusMessage(
-		String messageType, ManifestSummary manifestSummary) {
-
-		sendStatusMessage(messageType, (String[])null, manifestSummary);
-	}
-
 	@Override
 	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {

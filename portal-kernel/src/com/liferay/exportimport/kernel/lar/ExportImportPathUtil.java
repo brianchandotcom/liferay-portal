@@ -47,12 +47,6 @@ public class ExportImportPathUtil {
 	public static final String PATH_PREFIX_GROUP = "group";
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	public static final String PATH_PREFIX_LAYOUT = "layout";
-
-	/**
 	 * The portlet prefix used in generating paths.
 	 */
 	public static final String PATH_PREFIX_PORTLET = "portlet";
@@ -117,26 +111,6 @@ public class ExportImportPathUtil {
 		).concat(
 			path.substring(pos)
 		);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getModelPath(StagedModel)}
-	 */
-	@Deprecated
-	public static String getLayoutPath(
-		PortletDataContext portletDataContext, long plid) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(getRootPath(portletDataContext));
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(PATH_PREFIX_LAYOUT);
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(plid);
-		sb.append(_FILE_EXTENSION_XML);
-
-		return sb.toString();
 	}
 
 	public static String getModelPath(
@@ -447,43 +421,6 @@ public class ExportImportPathUtil {
 		sb.append(ownerId);
 		sb.append(CharPool.FORWARD_SLASH);
 		sb.append("portlet-preferences.xml");
-
-		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getModelPath(PortletDataContext, String, long)}
-	 */
-	@Deprecated
-	public static String getSourceLayoutPath(
-		PortletDataContext portletDataContext, long layoutId) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(getSourceRootPath(portletDataContext));
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(PATH_PREFIX_LAYOUT);
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(layoutId);
-
-		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getSourcePortletPath(
-		PortletDataContext portletDataContext, String portletId) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(getSourceRootPath(portletDataContext));
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(PATH_PREFIX_PORTLET);
-		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(portletId);
 
 		return sb.toString();
 	}

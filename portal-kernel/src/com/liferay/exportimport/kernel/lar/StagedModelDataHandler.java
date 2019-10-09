@@ -143,25 +143,6 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		PortletDataContext portletDataContext, T stagedModel);
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #importMissingReference(PortletDataContext, Element)}
-	 */
-	@Deprecated
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, Element element)
-		throws PortletDataException;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #importMissingReference(PortletDataContext, String, long,
-	 *             long)}
-	 */
-	@Deprecated
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long classPK)
-		throws PortletDataException;
-
-	/**
 	 * Maps the ID of the existing staged model to the old ID in the reference
 	 * element. When a reference is exported as missing, the Data Handler
 	 * framework calls this method during the import process and updates the new

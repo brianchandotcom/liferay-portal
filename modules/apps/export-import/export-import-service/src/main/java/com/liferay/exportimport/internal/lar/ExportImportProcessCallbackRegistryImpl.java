@@ -29,14 +29,6 @@ import org.osgi.service.component.annotations.Component;
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void registerCallback(Callable<?> callable) {
-	}
-
 	@Override
 	public void registerCallback(String processId, Callable<?> callable) {
 		ExportImportProcessCallbackUtil.registerCallback(processId, callable);

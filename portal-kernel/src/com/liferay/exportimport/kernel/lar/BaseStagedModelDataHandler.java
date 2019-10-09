@@ -270,35 +270,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		return new HashMap<>();
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #importMissingReference(PortletDataContext, Element)}
-	 */
-	@Deprecated
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, Element referenceElement)
-		throws PortletDataException {
-
-		importMissingReference(portletDataContext, referenceElement);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #importMissingReference(PortletDataContext, String, long,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long classPK)
-		throws PortletDataException {
-
-		importMissingReference(
-			portletDataContext, uuid, portletDataContext.getCompanyGroupId(),
-			classPK);
-	}
-
 	@Override
 	public void importMissingReference(
 			PortletDataContext portletDataContext, Element referenceElement)

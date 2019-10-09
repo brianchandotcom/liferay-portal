@@ -59,12 +59,12 @@ public class FlickrItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			FlickrItemSelectorCriterion flickrItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = servletResponse.getWriter();
 
 		printWriter.print(
 			"<html>" + FlickrItemSelectorView.class.getName() + "</html>");

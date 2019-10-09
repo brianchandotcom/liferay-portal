@@ -64,7 +64,7 @@ public abstract class BaseLayoutsItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			LayoutItemSelectorCriterion layoutItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -75,7 +75,7 @@ public abstract class BaseLayoutsItemSelectorView
 					layoutItemSelectorCriterion, itemSelectedEventName,
 					isPrivateLayout());
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			LayoutsItemSelectorWebKeys.
 				LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			layoutItemSelectorViewDisplayContext);
@@ -85,7 +85,7 @@ public abstract class BaseLayoutsItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/layouts.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

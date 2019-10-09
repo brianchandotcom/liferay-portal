@@ -82,7 +82,7 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			WikiAttachmentItemSelectorCriterion
 				wikiAttachmentItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
@@ -95,7 +95,7 @@ public class WikiAttachmentItemSelectorView
 					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			WikiItemSelectorWebKeys.
 				WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiAttachmentItemSelectorViewDisplayContext);
@@ -106,7 +106,7 @@ public class WikiAttachmentItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/item/selector/wiki_page_attachments.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

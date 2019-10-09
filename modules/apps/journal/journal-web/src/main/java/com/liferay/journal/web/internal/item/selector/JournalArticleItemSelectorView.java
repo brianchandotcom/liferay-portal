@@ -79,7 +79,7 @@ public class JournalArticleItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -87,10 +87,10 @@ public class JournalArticleItemSelectorView
 		JournalArticleItemSelectorViewDisplayContext
 			journalItemSelectorViewDisplayContext =
 				new JournalArticleItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, this, itemSelectedEventName,
-					search, portletURL);
+					(HttpServletRequest)servletRequest, this,
+					itemSelectedEventName, search, portletURL);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			JournalWebConstants.
 				JOURNAL_ARTICLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			journalItemSelectorViewDisplayContext);
@@ -101,7 +101,7 @@ public class JournalArticleItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/item/selector/select_articles.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

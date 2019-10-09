@@ -79,7 +79,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response, T t,
+			ServletRequest servletRequest, ServletResponse servletResponse, T t,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
@@ -95,11 +95,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 				_assetVocabularyService, _classNameLocalService,
 				stagingGroupHelper);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			dlItemSelectorViewDisplayContext);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(unbind = "-")

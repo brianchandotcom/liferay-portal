@@ -81,12 +81,13 @@ public class UserGroupItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			UserGroupItemSelectorCriterion userGroupItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		UserGroupItemSelectorViewDisplayContext
 			userGroupItemSelectorViewDisplayContext =
@@ -94,7 +95,7 @@ public class UserGroupItemSelectorView
 					_userGroupLocalService, _usersAdmin, httpServletRequest,
 					portletURL, itemSelectedEventName);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			UserGroupItemSelectorWebKeys.
 				USER_GROUP_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			userGroupItemSelectorViewDisplayContext);
@@ -105,7 +106,7 @@ public class UserGroupItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/user_group_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

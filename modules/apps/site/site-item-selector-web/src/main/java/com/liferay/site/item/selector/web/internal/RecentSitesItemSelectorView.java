@@ -84,20 +84,22 @@ public class RecentSitesItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			SiteItemSelectorCriterion siteItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		request.setAttribute(SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
+		servletRequest.setAttribute(
+			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
 		RecentSitesItemSelectorViewDisplayContext
 			siteItemSelectorViewDisplayContext =
 				new RecentSitesItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL, _recentGroupManager);
+					(HttpServletRequest)servletRequest,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL, _recentGroupManager);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			siteItemSelectorViewDisplayContext);
 
@@ -106,7 +108,7 @@ public class RecentSitesItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/view_sites.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(unbind = "-")

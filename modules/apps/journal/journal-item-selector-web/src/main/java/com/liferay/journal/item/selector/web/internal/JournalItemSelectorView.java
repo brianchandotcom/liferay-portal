@@ -79,7 +79,7 @@ public class JournalItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			JournalItemSelectorCriterion journalItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -91,7 +91,7 @@ public class JournalItemSelectorView
 					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			JournalItemSelectorWebKeys.
 				JOURNAL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			journalItemSelectorViewDisplayContext);
@@ -101,7 +101,7 @@ public class JournalItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/journal_images.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(unbind = "-")

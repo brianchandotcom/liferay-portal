@@ -84,22 +84,24 @@ public class MySitesItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			SiteItemSelectorCriterion siteItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
-		request.setAttribute(SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
+		servletRequest.setAttribute(
+			SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
 		MySitesItemSelectorViewDisplayContext
 			mySitesItemSelectorViewDisplayContext =
 				new MySitesItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, siteItemSelectorCriterion,
-					itemSelectedEventName, portletURL, _groupSearchProvider);
+					(HttpServletRequest)servletRequest,
+					siteItemSelectorCriterion, itemSelectedEventName,
+					portletURL, _groupSearchProvider);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			mySitesItemSelectorViewDisplayContext);
 
@@ -108,7 +110,7 @@ public class MySitesItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/view_sites.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(unbind = "-")

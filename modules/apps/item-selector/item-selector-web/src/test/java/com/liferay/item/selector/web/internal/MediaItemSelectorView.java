@@ -59,12 +59,12 @@ public class MediaItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			MediaItemSelectorCriterion mediaItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
+		PrintWriter printWriter = servletResponse.getWriter();
 
 		printWriter.print(
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");

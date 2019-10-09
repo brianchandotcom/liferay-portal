@@ -78,19 +78,20 @@ public class RoleItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			RoleItemSelectorCriterion roleItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)servletRequest;
 
 		RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext =
 			new RoleItemSelectorViewDisplayContext(
 				_roleService, _usersAdmin, httpServletRequest, portletURL,
 				itemSelectedEventName, roleItemSelectorCriterion.getType());
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			RoleItemSelectorViewConstants.
 				ROLE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			roleItemSelectorViewDisplayContext);
@@ -100,7 +101,7 @@ public class RoleItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/role_item_selector.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

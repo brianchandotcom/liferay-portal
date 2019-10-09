@@ -79,7 +79,7 @@ public class BlogsEntryItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			InfoItemItemSelectorCriterion infoItemItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -87,10 +87,10 @@ public class BlogsEntryItemSelectorView
 		BlogEntriesItemSelectorDisplayContext
 			blogEntriesItemSelectorDisplayContext =
 				new BlogEntriesItemSelectorDisplayContext(
-					(HttpServletRequest)request, this, itemSelectedEventName,
-					search, portletURL);
+					(HttpServletRequest)servletRequest, this,
+					itemSelectedEventName, search, portletURL);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			BlogsWebKeys.BLOGS_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			blogEntriesItemSelectorDisplayContext);
 
@@ -100,7 +100,7 @@ public class BlogsEntryItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/blogs/item/selector/select_entries.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

@@ -83,7 +83,7 @@ public class KBAttachmentItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -95,7 +95,7 @@ public class KBAttachmentItemSelectorView
 					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			KBItemSelectorWebKeys.
 				KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			kbAttachmentItemSelectorViewDisplayContext);
@@ -105,7 +105,7 @@ public class KBAttachmentItemSelectorView
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher("/kb_article_attachments.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(unbind = "-")

@@ -84,7 +84,7 @@ public class SiteNavigationMenuItemSelectorView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			SiteNavigationMenuItemSelectorCriterion
 				siteNavigationMenuItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
@@ -93,10 +93,10 @@ public class SiteNavigationMenuItemSelectorView
 		SiteNavigationMenuItemSelectorViewDisplayContext
 			siteNavigationMenuItemSelectorViewDisplayContext =
 				new SiteNavigationMenuItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, portletURL,
+					(HttpServletRequest)servletRequest, portletURL,
 					itemSelectedEventName);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			SiteNavigationItemSelectorWebKeys.
 				SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			siteNavigationMenuItemSelectorViewDisplayContext);
@@ -107,7 +107,7 @@ public class SiteNavigationMenuItemSelectorView
 			servletContext.getRequestDispatcher(
 				"/view_site_navigation_menus.jsp");
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	private static final List<ItemSelectorReturnType>

@@ -37,6 +37,9 @@ export default function usePlugins() {
 						.catch(error => {
 							if (process.env.NODE_ENV === 'development') {
 								console.error(error);
+
+								// Reset to allow future retries.
+								plugins.current.delete(key);
 							}
 
 							return null;

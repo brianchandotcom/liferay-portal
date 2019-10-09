@@ -43,7 +43,7 @@ export default function usePreload() {
 						},
 						error => {
 							if (isMounted()) {
-								// Reset so that we can retry next time.
+								// Reset to allow future retries.
 								preloading.current.delete(key);
 								reject(error);
 							}

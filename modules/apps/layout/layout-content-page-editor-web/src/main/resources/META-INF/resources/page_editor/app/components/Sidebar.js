@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
@@ -33,12 +33,12 @@ const {Suspense, lazy, useContext} = React;
  */
 const swallow = [value => value, _error => undefined];
 
-// TODO: add react error boundary
 export default function Sidebar() {
 	const config = useContext(ConfigContext);
 	const store = useContext(StoreContext);
 
 	// TODO: default to open and eagerly load first plugin
+	const [hasError, setHasError] = useStateSafe(false);
 	const [open, setOpen] = useStateSafe(false);
 	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
@@ -53,6 +53,10 @@ export default function Sidebar() {
 	// TODO: useEffect to call deactivate before unmounting
 
 	const togglePanel = panel => {
+		if (hasError) {
+			setHasError(false);
+		}
+
 		const {rendersSidebarContent, sidebarPanelId} = panel;
 
 		const shouldActivate =
@@ -71,6 +75,8 @@ export default function Sidebar() {
 		});
 
 		if (shouldActivate) {
+			setActivePluginId(sidebarPanelId);
+
 			const promise = preload(sidebarPanelId, panel.pluginEntryPoint);
 
 			register(sidebarPanelId, promise, {config, panel, store}).then(
@@ -81,12 +87,11 @@ export default function Sidebar() {
 						isMounted()
 					) {
 						plugin.activate();
+					} else if (!plugin) {
+						setHasError(true);
 					}
-
 				}
 			);
-
-			setActivePluginId(sidebarPanelId);
 		} else {
 			setActivePluginId(null);
 		}
@@ -142,13 +147,30 @@ export default function Sidebar() {
 						'page-editor-sidebar-content-open': open
 					})}
 				>
-					<ErrorBoundary>
-						<Suspense fallback={<ClayLoadingIndicator />}>
-							<SidebarPanel
-								plugin={getInstance(activePluginId)}
-							/>
-						</Suspense>
-					</ErrorBoundary>
+					{hasError ? (
+						<div>
+							<ClayButton
+								block
+								displayType="secondary"
+								onClick={() => {
+									setActivePluginId(null);
+									setHasError(false);
+									setOpen(false);
+								}}
+								small
+							>
+								{Liferay.Language.get('refresh')}
+							</ClayButton>
+						</div>
+					) : (
+						<ErrorBoundary handleError={() => setHasError(true)}>
+							<Suspense fallback={<ClayLoadingIndicator />}>
+								<SidebarPanel
+									plugin={getInstance(activePluginId)}
+								/>
+							</Suspense>
+						</ErrorBoundary>
+					)}
 				</div>
 			</div>
 		</ClayTooltipProvider>
@@ -178,7 +200,6 @@ const SidebarPanel = ({plugin}) => {
 
 class ErrorBoundary extends React.Component {
 	static getDerivedStateFromError(_error) {
-		// TODO: specifically look for loading errors here
 		return {hasError: true};
 	}
 
@@ -188,20 +209,15 @@ class ErrorBoundary extends React.Component {
 		this.state = {hasError: false};
 	}
 
-	componentDidCatch() {
-		// TODO: log here in dev
+	componentDidCatch(error) {
+		if (this.props.handleError) {
+			this.props.handleError(error);
+		}
 	}
 
 	render() {
 		if (this.state.hasError) {
-			return (
-				<span>
-					got an error, could
-					<a onClick={() => this.setState({hasError: false})}>
-						retry
-					</a>
-				</span>
-			);
+			return null;
 		} else {
 			return this.props.children;
 		}

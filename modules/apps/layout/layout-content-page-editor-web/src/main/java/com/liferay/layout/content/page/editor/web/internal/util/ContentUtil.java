@@ -303,6 +303,20 @@ public class ContentUtil {
 					}
 				}
 
+				JSONObject itemSelectorJSONObject =
+					editableJSONObject.getJSONObject("itemSelector");
+
+				if ((itemSelectorJSONObject != null) &&
+					(itemSelectorJSONObject.length() > 0)) {
+
+					AssetEntry assetEntry = _getAssetEntry(
+						itemSelectorJSONObject, mappedClassPKs);
+
+					if (assetEntry != null) {
+						assetEntries.add(assetEntry);
+					}
+				}
+
 				AssetEntry assetEntry = _getAssetEntry(
 					editableJSONObject, mappedClassPKs);
 

@@ -1,4 +1,4 @@
-		import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
@@ -27,10 +27,10 @@ ext {
 		"com.liferay.css.builder.version": "3.0.0",
 		"com.liferay.gradle.plugins.css.builder.version": "3.0.0",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.7",
-		"com.liferay.gradle.plugins.version": "4.4.39",
-		"com.liferay.gradle.plugins.workspace.version": "2.1.10",
+		"com.liferay.gradle.plugins.version": "4.4.41",
+		"com.liferay.gradle.plugins.workspace.version": "2.1.11",
 		"com.liferay.portal.tools.bundle.support.version": "3.5.0",
-		"com.liferay.portal.tools.service.builder.version": "1.0.305",
+		"com.liferay.portal.tools.service.builder.version": "1.0.308",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
 		"com.liferay.portal.tools.theme.builder.version": "1.1.7"
 	]

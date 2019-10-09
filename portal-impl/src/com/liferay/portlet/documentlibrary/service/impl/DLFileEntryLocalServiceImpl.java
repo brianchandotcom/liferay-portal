@@ -1014,61 +1014,6 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 *             String, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter)
-		throws PortalException {
-
-		return getFile(fileEntryId, version, incrementCounter, 1);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #getFile(long,
-	 *             String, boolean, int)}
-	 */
-	@Deprecated
-	@Override
-	public File getFile(
-			long userId, long fileEntryId, String version,
-			boolean incrementCounter, int increment)
-		throws PortalException {
-
-		return getFile(fileEntryId, version, incrementCounter, increment);
-	}
-
-	@Override
-	public File getFile(
-			long fileEntryId, String version, boolean incrementCounter)
-		throws PortalException {
-
-		return getFile(fileEntryId, version, incrementCounter, 1);
-	}
-
-	@Override
-	public File getFile(
-			long fileEntryId, String version, boolean incrementCounter,
-			int increment)
-		throws PortalException {
-
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-			fileEntryId);
-
-		if (incrementCounter) {
-			dlFileEntryLocalService.incrementViewCounter(
-				dlFileEntry, increment);
-		}
-
-		return DLStoreUtil.getFile(
-			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), version);
-	}
-
-	/**
 	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
 	 *             #getFileAsStream(long, String)}
 	 */

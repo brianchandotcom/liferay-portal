@@ -960,6 +960,8 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		File sourceFile = null;
+
 		File patchedFile = null;
 
 		try {
@@ -972,8 +974,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			DLFileVersion dlFileVersion =
 				dlFileVersionLocalService.getDLFileVersion(sourceVersionId);
 
-			File sourceFile = dlFileEntryLocalService.getFile(
-				fileEntryId, dlFileVersion.getVersion(), false);
+			sourceFile = FileUtil.createTempFile(
+				dlFileEntryLocalService.getFileAsStream(
+					fileEntryId, dlFileVersion.getVersion(), false));
 
 			patchedFile = FileUtil.createTempFile();
 
@@ -997,11 +1000,12 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			return syncDLObject;
 		}
-		catch (PortalException pe) {
-			throw new PortalException(
-				_syncHelper.buildExceptionMessage(pe), pe);
+		catch (Exception e) {
+			throw new PortalException(_syncHelper.buildExceptionMessage(e), e);
 		}
 		finally {
+			FileUtil.delete(sourceFile);
+
 			FileUtil.delete(patchedFile);
 		}
 	}

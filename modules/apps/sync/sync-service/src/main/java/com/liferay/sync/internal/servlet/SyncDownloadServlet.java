@@ -255,16 +255,25 @@ public class SyncDownloadServlet extends HttpServlet {
 		DLFileVersion sourceDLFileVersion =
 			_dlFileVersionLocalService.getDLFileVersion(sourceVersionId);
 
-		File sourceFile = _dlFileEntryLocalService.getFile(
-			fileEntryId, sourceDLFileVersion.getVersion(), false);
+		File sourceFile = FileUtil.createTempFile(
+			_dlFileEntryLocalService.getFileAsStream(
+				fileEntryId, sourceDLFileVersion.getVersion(), false));
 
 		DLFileVersion targetDLFileVersion =
 			_dlFileVersionLocalService.getDLFileVersion(targetVersionId);
 
-		File targetFile = _dlFileEntryLocalService.getFile(
-			fileEntryId, targetDLFileVersion.getVersion(), false);
+		File targetFile = FileUtil.createTempFile(
+			_dlFileEntryLocalService.getFileAsStream(
+				fileEntryId, targetDLFileVersion.getVersion(), false));
 
-		return _syncHelper.getFileDelta(sourceFile, targetFile);
+		try {
+			return _syncHelper.getFileDelta(sourceFile, targetFile);
+		}
+		finally {
+			sourceFile.delete();
+
+			targetFile.delete();
+		}
 	}
 
 	protected DownloadServletInputStream getFileDownloadServletInputStream(

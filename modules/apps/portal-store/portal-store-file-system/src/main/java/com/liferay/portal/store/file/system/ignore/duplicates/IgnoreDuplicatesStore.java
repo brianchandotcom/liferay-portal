@@ -57,25 +57,6 @@ public class IgnoreDuplicatesStore implements Store {
 	}
 
 	@Override
-	public void copyFileVersion(
-			final long companyId, final long repositoryId,
-			final String fileName, final String fromVersionLabel,
-			final String toVersionLabel)
-		throws PortalException {
-
-		if (fromVersionLabel.equals(toVersionLabel)) {
-			return;
-		}
-
-		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(
-				companyId, repositoryId, fileName, toVersionLabel),
-			() -> _store.copyFileVersion(
-				companyId, repositoryId, fileName, fromVersionLabel,
-				toVersionLabel));
-	}
-
-	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

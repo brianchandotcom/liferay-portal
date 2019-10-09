@@ -126,45 +126,6 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public void copyFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws DuplicateFileException, NoSuchFileException {
-
-		File fromFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (!fromFileNameVersionFile.exists()) {
-			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, fromVersionLabel);
-		}
-
-		File toFileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, toVersionLabel);
-
-		if (toFileNameVersionFile.exists()) {
-			throw new DuplicateFileException(toFileNameVersionFile.getPath());
-		}
-
-		try {
-			if (_useHardLink) {
-				Files.createLink(
-					toFileNameVersionFile.toPath(),
-					fromFileNameVersionFile.toPath());
-			}
-			else {
-				toFileNameVersionFile.createNewFile();
-
-				FileUtil.copyFile(
-					fromFileNameVersionFile, toFileNameVersionFile);
-			}
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

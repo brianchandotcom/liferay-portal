@@ -114,47 +114,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testCopyFileVersion() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		addVersions(fileName, 1);
-
-		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.2");
-
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, fileName, "1.2"));
-		Assert.assertArrayEquals(
-			_DATA_VERSION_1,
-			StreamUtil.toByteArray(
-				store.getFileAsStream(
-					companyId, repositoryId, fileName, "1.2")));
-	}
-
-	@Test(expected = DuplicateFileException.class)
-	public void testCopyFileVersionDuplicateFileException() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		addVersions(fileName, 1);
-
-		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.1");
-	}
-
-	@Test(expected = NoSuchFileException.class)
-	public void testCopyFileVersionNoSuchFileException() throws Exception {
-		store.copyFileVersion(
-			companyId, repositoryId, RandomTestUtil.randomString(), "1.0",
-			"1.1");
-	}
-
-	@Test
 	public void testDeleteDirectory() throws Exception {
 		String dirName = RandomTestUtil.randomString();
 

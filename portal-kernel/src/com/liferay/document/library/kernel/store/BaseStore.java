@@ -40,38 +40,6 @@ import java.io.InputStream;
 public abstract class BaseStore implements Store {
 
 	/**
-	 * Creates a new copy of the file version.
-	 *
-	 * <p>
-	 * This method should be overrided if a more optimized approach can be used
-	 * (e.g., {@link FileSystemStore#copyFileVersion(long, long, String, String,
-	 * String)}).
-	 * </p>
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the original's file name
-	 * @param fromVersionLabel the original file's version label
-	 * @param toVersionLabel the new version label
-	 */
-	@Override
-	public void copyFileVersion(
-			long companyId, long repositoryId, String fileName,
-			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
-
-		InputStream is = getFileAsStream(
-			companyId, repositoryId, fileName, fromVersionLabel);
-
-		if (is == null) {
-			is = new UnsyncByteArrayInputStream(new byte[0]);
-		}
-
-		updateFile(companyId, repositoryId, fileName, toVersionLabel, is);
-	}
-
-	/**
 	 * Returns the file as a {@link File} object.
 	 *
 	 * <p>

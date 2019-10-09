@@ -343,10 +343,12 @@ public class JournalManagementToolbarDisplayContext
 
 							labelItem.setCloseable(true);
 
+							String ddmStructureName =
+								_journalDisplayContext.getDDMStructureName();
+
 							labelItem.setLabel(
 								LanguageUtil.get(request, "structures") + ": " +
-									_journalDisplayContext.
-										getDDMStructureName());
+									ddmStructureName);
 						});
 				}
 

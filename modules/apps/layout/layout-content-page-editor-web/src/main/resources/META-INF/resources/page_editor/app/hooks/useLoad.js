@@ -18,20 +18,20 @@ import React from 'react';
 const {useRef} = React;
 
 /**
- * Provides a way to preload a module on demand.
+ * Provides a way to load a module on demand.
  *
- * The returned `preload()` function expects an identifying `key` for
+ * The returned `load()` function expects an identifying `key` for
  * the module and an entry point (ie. path to the module), and returns a
  * promise that resolves to the loaded module's default export.
  */
-export default function usePreload() {
-	const preloading = useRef(new Map());
+export default function useLoad() {
+	const modules = useRef(new Map());
 
 	const isMounted = useIsMounted();
 
-	return function preload(key, entryPoint) {
-		if (!preloading.current.get(key)) {
-			preloading.current.set(
+	return function load(key, entryPoint) {
+		if (!modules.current.get(key)) {
+			modules.current.set(
 				key,
 				new Promise((resolve, reject) => {
 					Liferay.Loader.require(
@@ -44,7 +44,7 @@ export default function usePreload() {
 						error => {
 							if (isMounted()) {
 								// Reset to allow future retries.
-								preloading.current.delete(key);
+								modules.current.delete(key);
 								reject(error);
 							}
 						}
@@ -53,6 +53,6 @@ export default function usePreload() {
 			);
 		}
 
-		return preloading.current.get(key);
+		return modules.current.get(key);
 	};
 }

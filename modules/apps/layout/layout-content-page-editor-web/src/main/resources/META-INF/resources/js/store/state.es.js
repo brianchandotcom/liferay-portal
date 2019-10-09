@@ -145,7 +145,8 @@ const INITIAL_STATE = {
 					})
 				),
 				Config.object()
-			])
+			]),
+			segmentsExperimentURL: Config.string()
 		})
 	).value({}),
 

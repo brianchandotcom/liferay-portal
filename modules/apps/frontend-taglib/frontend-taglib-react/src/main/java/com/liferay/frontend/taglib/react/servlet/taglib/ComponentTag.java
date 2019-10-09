@@ -28,7 +28,6 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -85,10 +84,8 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			);
 		}
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)pageContext.getRequest();
-
-		String namespace = NPMResolvedPackageNameUtil.get(httpServletRequest);
+		String namespace = NPMResolvedPackageNameUtil.get(
+			pageContext.getServletContext());
 
 		return namespace.concat(
 			"/"

@@ -526,6 +526,11 @@ public class LayoutConverterTest {
 	}
 
 	@Test
+	public void testConvertTwoOneTwoColumnsNoPortlets() throws Exception {
+		_testConvertNoPortlets("2_1_2_columns");
+	}
+
+	@Test
 	public void testIsConvertibleFalseWidgetPageCustomizable()
 		throws Exception {
 

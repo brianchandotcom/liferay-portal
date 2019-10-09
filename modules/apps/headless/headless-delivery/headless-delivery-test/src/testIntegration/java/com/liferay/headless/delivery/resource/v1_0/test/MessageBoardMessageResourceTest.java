@@ -65,40 +65,6 @@ public class MessageBoardMessageResourceTest
 	}
 
 	@Override
-	public void testPutMessageBoardMessageSubscribe() throws Exception {
-		MessageBoardMessage messageBoardMessage =
-			testDeleteMessageBoardMessage_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageSubscribeHttpResponse(0L));
-	}
-
-	@Override
-	public void testPutMessageBoardMessageUnsubscribe() throws Exception {
-		MessageBoardMessage messageBoardMessage =
-			testDeleteMessageBoardMessage_addMessageBoardMessage();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(
-					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				putMessageBoardMessageUnsubscribeHttpResponse(0L));
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "headline"};
 	}
@@ -113,9 +79,7 @@ public class MessageBoardMessageResourceTest
 			testDeleteMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				_mbThread.getThreadId(), randomMessageBoardMessage());
+		return _addMessageBoardMessage(_mbThread.getThreadId());
 	}
 
 	@Override
@@ -123,9 +87,7 @@ public class MessageBoardMessageResourceTest
 			testDeleteMessageBoardMessageMyRating_addMessageBoardMessage()
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				_mbThread.getThreadId(), randomMessageBoardMessage());
+		return _addMessageBoardMessage(_mbThread.getThreadId());
 	}
 
 	@Override
@@ -133,9 +95,7 @@ public class MessageBoardMessageResourceTest
 			testGetMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				_mbThread.getThreadId(), randomMessageBoardMessage());
+		return _addMessageBoardMessage(_mbThread.getThreadId());
 	}
 
 	@Override
@@ -157,10 +117,8 @@ public class MessageBoardMessageResourceTest
 			testPatchMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
-		return messageBoardMessageResource.
-			postMessageBoardThreadMessageBoardMessage(
-				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-				randomMessageBoardMessage());
+		return _addMessageBoardMessage(
+			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId());
 	}
 
 	@Override
@@ -168,10 +126,33 @@ public class MessageBoardMessageResourceTest
 			testPutMessageBoardMessage_addMessageBoardMessage()
 		throws Exception {
 
+		return _addMessageBoardMessage(
+			testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId());
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testPutMessageBoardMessageSubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage(_mbThread.getThreadId());
+	}
+
+	@Override
+	protected MessageBoardMessage
+			testPutMessageBoardMessageUnsubscribe_addMessageBoardMessage()
+		throws Exception {
+
+		return _addMessageBoardMessage(_mbThread.getThreadId());
+	}
+
+	private MessageBoardMessage _addMessageBoardMessage(
+			Long messageBoardThreadId)
+		throws Exception {
+
 		return messageBoardMessageResource.
 			postMessageBoardThreadMessageBoardMessage(
-				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
-				randomMessageBoardMessage());
+				messageBoardThreadId, randomMessageBoardMessage());
 	}
 
 	private MBThread _mbThread;

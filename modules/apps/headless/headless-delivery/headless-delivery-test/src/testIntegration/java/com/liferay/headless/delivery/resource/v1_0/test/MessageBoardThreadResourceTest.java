@@ -48,40 +48,6 @@ public class MessageBoardThreadResourceTest
 	}
 
 	@Override
-	public void testPutMessageBoardThreadSubscribe() throws Exception {
-		MessageBoardThread messageBoardThread =
-			testDeleteMessageBoardThread_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.
-				putMessageBoardThreadSubscribeHttpResponse(
-					messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				putMessageBoardThreadSubscribeHttpResponse(0L));
-	}
-
-	@Override
-	public void testPutMessageBoardThreadUnsubscribe() throws Exception {
-		MessageBoardThread messageBoardThread =
-			testDeleteMessageBoardThread_addMessageBoardThread();
-
-		assertHttpResponseStatusCode(
-			204,
-			messageBoardThreadResource.
-				putMessageBoardThreadUnsubscribeHttpResponse(
-					messageBoardThread.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardThreadResource.
-				putMessageBoardThreadUnsubscribeHttpResponse(0L));
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "headline"};
 	}

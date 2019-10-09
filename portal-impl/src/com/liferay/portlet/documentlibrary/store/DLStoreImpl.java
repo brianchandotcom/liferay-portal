@@ -123,17 +123,9 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
-			!AntivirusScannerUtil.isActive()) {
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
+			AntivirusScannerUtil.isActive()) {
 
-			try {
-				store.addFile(companyId, repositoryId, fileName, is);
-			}
-			catch (AccessDeniedException ade) {
-				throw new PrincipalException(ade);
-			}
-		}
-		else {
 			File tempFile = null;
 
 			try {
@@ -171,6 +163,14 @@ public class DLStoreImpl implements DLStore {
 				if (tempFile != null) {
 					tempFile.delete();
 				}
+			}
+		}
+		else {
+			try {
+				store.addFile(companyId, repositoryId, fileName, is);
+			}
+			catch (AccessDeniedException ade) {
+				throw new PrincipalException(ade);
 			}
 		}
 	}
@@ -511,18 +511,9 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
-			!AntivirusScannerUtil.isActive()) {
+		if (PropsValues.DL_STORE_ANTIVIRUS_ENABLED &&
+			AntivirusScannerUtil.isActive()) {
 
-			try {
-				store.updateFile(
-					companyId, repositoryId, fileName, versionLabel, is);
-			}
-			catch (AccessDeniedException ade) {
-				throw new PrincipalException(ade);
-			}
-		}
-		else {
 			File tempFile = null;
 
 			try {
@@ -562,6 +553,15 @@ public class DLStoreImpl implements DLStore {
 				if (tempFile != null) {
 					tempFile.delete();
 				}
+			}
+		}
+		else {
+			try {
+				store.updateFile(
+					companyId, repositoryId, fileName, versionLabel, is);
+			}
+			catch (AccessDeniedException ade) {
+				throw new PrincipalException(ade);
 			}
 		}
 	}

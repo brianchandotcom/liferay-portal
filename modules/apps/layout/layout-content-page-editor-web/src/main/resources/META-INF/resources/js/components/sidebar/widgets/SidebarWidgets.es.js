@@ -13,7 +13,7 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import Collapse from './Collapse.es';
+import Collapse from './../../common/Collapse.es';
 import SearchForm from './SearchForm.es';
 import SidebarHeader from '../SidebarHeader.es';
 import SidebarWidgetsDragDrop from './SidebarWidgetsDragDrop.es';

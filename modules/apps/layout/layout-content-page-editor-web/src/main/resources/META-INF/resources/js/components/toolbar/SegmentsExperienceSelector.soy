@@ -15,7 +15,8 @@
 		segmentsExperimentStatus: [
 			label: string,
 			value: number
-		]
+		],
+		segmentsExperimentURL: string
 	]>}
 	{@param? hasEditSegmentsEntryPermission: bool }
 	{@param? hasUpdatePermissions: bool }
@@ -30,6 +31,7 @@
 	{@param? _handleMoveExperienceUpButtonClick: any }
 	{@param? _handleEditButtonClick: any }
 	{@param? _handleSegmentsExperienceClick: any}
+	{@param? _handleSegmentsExperimentNavigation: any}
 	{@param? _handleNewSegmentButtonClick: any}
 	{@param? _handleDropdownBlur: any}
 	{@param? _handleDropdownFocus: any}
@@ -212,15 +214,6 @@
 											{/if}
 										</span>
 
-										{if $experience.hasLockedSegmentsExperiment}
-											<div class="d-flex align-self-center dropdown-menu__experience--btn-group px-2">
-												{call ClayIcon.render}
-													{param elementClasses: 'mx-1' /}
-													{param spritemap: $spritemap /}
-													{param symbol: 'test' /}
-												{/call}
-											</div>
-										{/if}
 									</button>
 								</span>
 
@@ -242,7 +235,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-2 mr-0 text-dark' /}
+											{param elementClasses: 'btn-borderless ml-2 mr-0 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceUpButtonClick,
 											] /}
@@ -265,7 +258,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-0 mr-2 text-dark' /}
+											{param elementClasses: 'btn-borderless ml-0 mr-2 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceDownButtonClick
 											] /}
@@ -288,7 +281,7 @@
 												'name': $experience.name,
 												'segmentsEntryId': $experience.segmentsEntryId
 											]/}
-											{param elementClasses: 'btn-borderless mx-2 text-dark' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleEditButtonClick,
 											] /}
@@ -307,7 +300,7 @@
 											{param data: [
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless mx-2 text-dark' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleDeleteButtonClick,
 											] /}
@@ -319,10 +312,22 @@
 									</div>
 								{/if}
 
+								{if $experience.hasLockedSegmentsExperiment and $experience.segmentsExperimentURL}
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
+										<a class="btn btn-borderless btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
+											{call ClayIcon.render}
+												{param elementClasses: '' /}
+												{param spritemap: $spritemap /}
+												{param symbol: 'test' /}
+											{/call}
+										</a>
+									</div>
+								{/if}
 							</li>
 						{/foreach}
 					</ul>
 				{/if}
+
 			</div>
 		</div>
 

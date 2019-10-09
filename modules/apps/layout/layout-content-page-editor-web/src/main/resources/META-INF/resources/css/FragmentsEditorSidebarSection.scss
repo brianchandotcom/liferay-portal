@@ -48,6 +48,14 @@
 		}
 	}
 
+	&__collapse {
+		border-radius: 0px;
+
+		&:focus {
+			border-radius: 1px;
+		}
+	}
+
 	&__elements-panel {
 		.card {
 			width: $sidebarElementCardWidth;

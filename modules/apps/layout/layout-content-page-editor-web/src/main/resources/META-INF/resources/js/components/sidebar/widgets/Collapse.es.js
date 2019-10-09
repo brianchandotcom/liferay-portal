@@ -34,10 +34,8 @@ const Collapse = props => {
 		'btn-unstyled',
 		'collapse-icon',
 		'd-flex',
+		'fragments-editor-sidebar-section__collapse',
 		'justify-content-between',
-		'mb-2',
-		'px-2',
-		'rounded-0',
 		'sheet-subtitle',
 		'w-100'
 	);

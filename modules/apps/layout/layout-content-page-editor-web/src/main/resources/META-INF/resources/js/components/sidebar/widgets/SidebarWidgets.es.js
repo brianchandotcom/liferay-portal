@@ -14,7 +14,7 @@
 
 import React, {useState, useEffect} from 'react';
 import Collapse from './../../common/Collapse.es';
-import SearchForm from './SearchForm.es';
+import SearchForm from '../../common/SearchForm.es';
 import SidebarHeader from '../SidebarHeader.es';
 import SidebarWidgetsDragDrop from './SidebarWidgetsDragDrop.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';

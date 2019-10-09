@@ -262,21 +262,6 @@ public class DBStore extends BaseStore {
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
-			String versionLabel, byte[] bytes)
-		throws DuplicateFileException {
-
-		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		_dlContentLocalService.addContent(
-			companyId, repositoryId, fileName, versionLabel, bytes);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
 		throws DuplicateFileException {
 

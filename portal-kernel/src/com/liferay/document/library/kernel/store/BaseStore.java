@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.store;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,34 +81,6 @@ public abstract class BaseStore implements Store {
 	@Deprecated
 	@Override
 	public void move(String srcDir, String destDir) {
-	}
-
-	/**
-	 * Updates a file based on a byte array.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param versionLabel the file's new version label
-	 * @param bytes the new file's data
-	 */
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, byte[] bytes)
-		throws PortalException {
-
-		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(bytes)) {
-
-			updateFile(
-				companyId, repositoryId, fileName, versionLabel,
-				unsyncByteArrayInputStream);
-		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to read bytes", ioe);
-		}
 	}
 
 	/**

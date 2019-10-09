@@ -132,7 +132,7 @@ public class FileSystemStore extends BaseStore {
 		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
 
 		if (!dirNameDir.exists()) {
-			logFailedDeletion(companyId, repositoryId, dirName);
+			logFailedDeletion(companyId, repositoryId, dirName, null, null);
 
 			return;
 		}
@@ -154,7 +154,7 @@ public class FileSystemStore extends BaseStore {
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
 		if (!fileNameDir.exists()) {
-			logFailedDeletion(companyId, repositoryId, fileName);
+			logFailedDeletion(companyId, repositoryId, fileName, null, null);
 
 			return;
 		}
@@ -175,7 +175,8 @@ public class FileSystemStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		if (!fileNameVersionFile.exists()) {
-			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+			logFailedDeletion(
+				companyId, repositoryId, fileName, versionLabel, null);
 
 			return;
 		}

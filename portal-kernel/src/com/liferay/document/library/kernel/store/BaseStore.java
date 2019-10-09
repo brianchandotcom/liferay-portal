@@ -30,27 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 public abstract class BaseStore implements Store {
 
 	protected void logFailedDeletion(
-		long companyId, long repositoryId, String fileName) {
-
-		logFailedDeletion(companyId, repositoryId, fileName, null, null);
-	}
-
-	protected void logFailedDeletion(
-		long companyId, long repositoryId, String fileName,
-		Exception exception) {
-
-		logFailedDeletion(companyId, repositoryId, fileName, null, exception);
-	}
-
-	protected void logFailedDeletion(
-		long companyId, long repositoryId, String fileName,
-		String versionLabel) {
-
-		logFailedDeletion(
-			companyId, repositoryId, fileName, versionLabel, null);
-	}
-
-	protected void logFailedDeletion(
 		long companyId, long repositoryId, String fileName, String versionLabel,
 		Exception cause) {
 

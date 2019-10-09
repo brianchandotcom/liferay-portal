@@ -127,6 +127,32 @@ increasing performance of your sites by default.
 
 ---------------------------------------
 
+### Removed com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag
+- **Date:** 2019-Oct-15
+- **JIRA Ticket:** [LPS-100144](https://issues.liferay.com/browse/LPS-100144)
+
+#### What changed?
+
+The Java class
+`com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag` has been
+removed.
+
+#### Who is affected?
+
+This affects any code that directly instantiates or extends this class.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed class. If you have code that
+depends on it, you would need to copy over the old implementation to your own
+project and change the dependency to rely on your local version.
+
+#### Why was this change made?
+
+The `asset:asset-tags-selector` and its components have been migrated to React,
+making the old tag and its soy infrastructure unnecessary.
+
+---------------------------------------
 ### Removed liferay.frontend.Slider
 - **Date:** 2019-Oct-10
 - **JIRA Ticket:** [LPS-100124](https://issues.liferay.com/browse/LPS-100124)

@@ -46,8 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author     Antonio Pol
- * @deprecated As of Mueller (7.2.x)
+ * @author Antonio Pol
  */
 @Deprecated
 public class AssetTagsSelectorTag extends IncludeTag {
@@ -262,40 +261,39 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	}
 
 	private Map<String, Object> _getData() {
-		Map<String, Object> data = new HashMap<>();
+		return new HashMap<String, Object>() {
+			{
+				if (Validator.isNotNull(_addCallback)) {
+					put("addCallback", _getNamespace() + _addCallback);
+				}
 
-		if (Validator.isNotNull(_addCallback)) {
-			data.put("addCallback", _getNamespace() + _addCallback);
-		}
+				put("eventName", getEventName());
+				put("groupIds", getGroupIds());
+				put("id", _getNamespace() + getId() + "assetTagsSelector");
+				put("inputName", _getInputName());
+				put("portletURL", getPortletURL().toString());
 
-		data.put("eventName", getEventName());
-		data.put("groupIds", getGroupIds());
-		data.put("id", _getNamespace() + getId() + "assetTagsSelector");
-		data.put("inputName", _getInputName());
-		data.put("portletURL", getPortletURL().toString());
+				if (Validator.isNotNull(_addCallback)) {
+					put("removeCallback", _getNamespace() + _removeCallback);
+				}
 
-		if (Validator.isNotNull(_addCallback)) {
-			data.put("removeCallback", _getNamespace() + _removeCallback);
-		}
+				List<String> tagNames = StringUtil.split(getTagNames());
 
-		List<String> tagNames = StringUtil.split(getTagNames());
+				List<Map<String, String>> selectedItems = new ArrayList<>();
 
-		List<Map<String, String>> selectedItems = new ArrayList<>();
+				for (String tagName : tagNames) {
+					Map<String, String> selectedItem = new HashMap<>();
 
-		for (String tagName : tagNames) {
-			Map<String, String> selectedItem = new HashMap<>();
+					selectedItem.put("label", tagName);
+					selectedItem.put("value", tagName);
 
-			selectedItem.put("label", tagName);
-			selectedItem.put("value", tagName);
+					selectedItems.add(selectedItem);
+				}
 
-			selectedItems.add(selectedItem);
-		}
-
-		data.put("selectedItems", selectedItems);
-
-		data.put("showSelectButton", _showSelectButton);
-
-		return data;
+				put("selectedItems", selectedItems);
+				put("showSelectButton", _showSelectButton);
+			}
+		};
 	}
 
 	private String _getInputName() {

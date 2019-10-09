@@ -42,10 +42,18 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = "Home");
 
-		AssertTextEquals(
-			key_title = "Dynamic and Customizable for a Healthier You",
-			locator1 = "Header#H2_TITLE",
-			value1 = "Dynamic and Customizable for a Healthier You");
+		var key_title = "Dynamic and Customizable for a Healthier You";
+
+		if (IsElementNotPresent(locator1 = "Header#H2_TITLE")) {
+			AssertTextEquals(
+				locator1 = "Header#H1_TITLE",
+				value1 = "Dynamic and Customizable for a Healthier You");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Header#H2_TITLE",
+				value1 = "Dynamic and Customizable for a Healthier You");
+		}
 	}
 
 }

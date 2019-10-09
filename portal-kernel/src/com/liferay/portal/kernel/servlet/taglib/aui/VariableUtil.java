@@ -84,16 +84,16 @@ public class VariableUtil {
 			}
 		}
 
-		if (_reservedWords.contains(module)) {
-			module = StringPool.UNDERLINE + module;
-		}
-
 		String safeName = module;
 
 		if (modified) {
 			safeName = sb.toString();
 
 			module = safeName;
+		}
+
+		if (_reservedWords.contains(module)) {
+			module = StringPool.UNDERLINE + module;
 		}
 
 		int i = 1;

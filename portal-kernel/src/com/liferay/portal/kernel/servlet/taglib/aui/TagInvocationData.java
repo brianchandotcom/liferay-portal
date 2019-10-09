@@ -51,7 +51,7 @@ public class TagInvocationData implements Serializable {
 			String variable = variables.get(i);
 			String variableAlias = _variableAliases.get(i);
 
-			if (!variable.equals(variableAlias)) {
+			if ((variableAlias != null) && !variable.equals(variableAlias)) {
 				sb.append("var ");
 				sb.append(variableAlias);
 				sb.append(" = ");
@@ -80,8 +80,7 @@ public class TagInvocationData implements Serializable {
 			_modules.add(nameAndAlias[0]);
 
 			if (Validator.isBlank(nameAndAlias[1])) {
-				_variableAliases.add(
-					VariableUtil.generateVariable(nameAndAlias[0]));
+				_variableAliases.add(null);
 			}
 			else {
 				_variableAliases.add(nameAndAlias[1]);

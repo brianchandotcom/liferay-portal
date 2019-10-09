@@ -455,19 +455,6 @@ public abstract class BaseStoreTestCase {
 			companyId, repositoryId, RandomTestUtil.randomString());
 	}
 
-	@Test(expected = NoSuchFileException.class)
-	public void testGetFileVersionAsBytesNoSuchFileException()
-		throws Exception {
-
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.getFileAsBytes(companyId, repositoryId, fileName, "1.1");
-	}
-
 	@Test
 	public void testHasFile() throws Exception {
 		String fileName = RandomTestUtil.randomString();

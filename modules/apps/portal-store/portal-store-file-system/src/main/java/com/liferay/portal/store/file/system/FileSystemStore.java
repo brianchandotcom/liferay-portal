@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -247,23 +246,6 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile;
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		try {
-			File file = getFile(
-				companyId, repositoryId, fileName, versionLabel);
-
-			return Files.readAllBytes(file.toPath());
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
 	}
 
 	@Override

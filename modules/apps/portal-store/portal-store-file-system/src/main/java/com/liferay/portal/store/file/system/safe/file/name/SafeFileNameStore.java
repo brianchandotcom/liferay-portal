@@ -160,25 +160,6 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
-
-			return _store.getFileAsBytes(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		return _store.getFileAsBytes(
-			companyId, repositoryId, safeFileName, versionLabel);
-	}
-
-	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {

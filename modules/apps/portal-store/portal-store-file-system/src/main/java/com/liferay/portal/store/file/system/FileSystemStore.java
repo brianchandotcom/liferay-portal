@@ -188,28 +188,6 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	@Override
-	public File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws NoSuchFileException {
-
-		if (Validator.isNull(versionLabel)) {
-			versionLabel = getHeadVersionLabel(
-				companyId, repositoryId, fileName);
-		}
-
-		File fileNameVersionFile = getFileNameVersionFile(
-			companyId, repositoryId, fileName, versionLabel);
-
-		if (!fileNameVersionFile.exists()) {
-			throw new NoSuchFileException(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		return fileNameVersionFile;
-	}
-
-	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

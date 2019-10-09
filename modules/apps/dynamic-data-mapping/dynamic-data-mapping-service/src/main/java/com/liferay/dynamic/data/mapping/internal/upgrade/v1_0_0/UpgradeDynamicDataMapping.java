@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -2567,11 +2568,12 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			return entryVersionFolderId;
 		}
 
-		protected File fetchFile(String filePath) throws PortalException {
+		protected File fetchFile(String filePath) throws Exception {
 			try {
-				return _store.getFile(
-					_companyId, CompanyConstants.SYSTEM, filePath,
-					StringPool.BLANK);
+				return FileUtil.createTempFile(
+					_store.getFileAsStream(
+						_companyId, CompanyConstants.SYSTEM, filePath,
+						StringPool.BLANK));
 			}
 			catch (PortalException pe) {
 				_log.error(
@@ -2701,6 +2703,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				try (InputStream is = new FileInputStream(file)) {
 					_store.addFile(_companyId, dlFolderId, name, is);
 				}
+
+				file.delete();
 
 				return fileEntryUuid;
 			}

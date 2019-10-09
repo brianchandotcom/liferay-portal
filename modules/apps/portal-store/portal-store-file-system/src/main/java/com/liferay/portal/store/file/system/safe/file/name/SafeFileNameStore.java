@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -113,25 +112,6 @@ public class SafeFileNameStore implements Store {
 		}
 
 		_store.deleteFile(companyId, repositoryId, safeFileName, versionLabel);
-	}
-
-	@Override
-	public File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
-
-			return _store.getFile(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		return _store.getFile(
-			companyId, repositoryId, safeFileName, versionLabel);
 	}
 
 	@Override

@@ -64,7 +64,6 @@ import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -184,13 +183,18 @@ public class S3Store extends BaseStore {
 			String versionLabel)
 		throws PortalException {
 
-		File file = getFile(companyId, repositoryId, fileName, versionLabel);
-
 		try {
+			S3Object s3Object = getS3Object(
+				companyId, repositoryId, fileName, versionLabel);
+
+			File file = _s3FileCache.getCacheFile(s3Object, fileName);
+
+			_s3FileCache.cleanUpCacheFiles();
+
 			return new FileInputStream(file);
 		}
-		catch (FileNotFoundException fnfe) {
-			throw new SystemException(fnfe);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 	}
 

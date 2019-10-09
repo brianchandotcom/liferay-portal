@@ -77,14 +77,6 @@ public interface DLStore {
 			String versionLabel)
 		throws PortalException;
 
-	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException;
-
-	public File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException;
-
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException;

@@ -247,31 +247,6 @@ public class DLStoreImpl implements DLStore {
 	}
 
 	@Override
-	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		validate(fileName, false);
-
-		Store store = _storeFactory.getStore();
-
-		return store.getFile(
-			companyId, repositoryId, fileName, StringPool.BLANK);
-	}
-
-	@Override
-	public File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		validate(fileName, false, versionLabel);
-
-		Store store = _storeFactory.getStore();
-
-		return store.getFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
 	public byte[] getFileAsBytes(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {

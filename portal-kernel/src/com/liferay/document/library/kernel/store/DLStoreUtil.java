@@ -262,69 +262,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Returns the file as a {@link File} object.
-	 *
-	 * <p>
-	 * This method is useful when optimizing low-level file operations like
-	 * copy. The client must not delete or change the returned {@link File}
-	 * object in any way. This method is only supported in certain stores. If
-	 * not supported, this method will throw an {@link
-	 * UnsupportedOperationException}.
-	 * </p>
-	 *
-	 * <p>
-	 * If using an S3 store, it is preferable for performance reasons to use
-	 * {@link #getFileAsStream(long, long, String)} instead of this method
-	 * wherever possible.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return Returns the {@link File} object with the file's name
-	 */
-	public static File getFile(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return getStore().getFile(companyId, repositoryId, fileName);
-	}
-
-	/**
-	 * Returns the file as a {@link File} object.
-	 *
-	 * <p>
-	 * This method is useful when optimizing low-level file operations like
-	 * copy. The client must not delete or change the returned {@link File}
-	 * object in any way. This method is only supported in certain stores. If
-	 * not supported, this method will throw an {@link
-	 * UnsupportedOperationException}.
-	 * </p>
-	 *
-	 * <p>
-	 * If using an S3 store, it is preferable for performance reasons to use
-	 * {@link #getFileAsStream(long, long, String, String)} instead of this
-	 * method wherever possible.
-	 * </p>
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @param  versionLabel the file's version label
-	 * @return Returns the {@link File} object with the file's name
-	 */
-	public static File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return getStore().getFile(
-			companyId, repositoryId, fileName, versionLabel);
-	}
-
-	/**
 	 * Returns the file as a byte array.
 	 *
 	 * @param  companyId the primary key of the company

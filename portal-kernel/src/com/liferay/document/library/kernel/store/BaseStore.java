@@ -73,21 +73,6 @@ public abstract class BaseStore implements Store {
 	}
 
 	/**
-	 * Returns <code>true</code> if the file exists.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param  fileName the file's name
-	 * @return <code>true</code> if the file exists; <code>false</code>
-	 *         otherwise
-	 */
-	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName) {
-		return hasFile(companyId, repositoryId, fileName, VERSION_DEFAULT);
-	}
-
-	/**
 	 * Moves an existing directory.
 	 *
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement

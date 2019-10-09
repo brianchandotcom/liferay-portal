@@ -393,17 +393,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testHasFile() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		Assert.assertTrue(store.hasFile(companyId, repositoryId, fileName));
-	}
-
-	@Test
 	public void testHasFileWithVersion() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 

@@ -232,19 +232,6 @@ public class SafeFileNameStore implements Store {
 	}
 
 	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName) {
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName)) {
-
-			return true;
-		}
-
-		return _store.hasFile(companyId, repositoryId, safeFileName);
-	}
-
-	@Override
 	public boolean hasFile(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

@@ -78,14 +78,16 @@ const Empty = ({currentTab}) => {
 		switch (currentTab) {
 			case 'onTime':
 				return Liferay.Language.get(
-					'workload-by-assignee-empty-on-time'
+					'there-are-no-assigned-items-on-time-at-the-moment'
 				);
 			case 'overdue':
 				return Liferay.Language.get(
-					'workload-by-assignee-empty-overdue'
+					'there-are-no-assigned-items-overdue-at-the-moment'
 				);
 			default:
-				return Liferay.Language.get('workload-by-assignee-empty');
+				return Liferay.Language.get(
+					'there-are-no-items-assigned-to-users-at-the-moment'
+				);
 		}
 	};
 

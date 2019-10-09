@@ -15,7 +15,6 @@
 package com.liferay.document.library.kernel.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -125,12 +124,6 @@ public interface DL {
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId);
-
 	public String getFileIcon(String extension);
 
 	public String getFileIconCssClass(String extension);
@@ -203,26 +196,6 @@ public interface DL {
 	public String getTempFileId(long id, String version);
 
 	public String getTempFileId(long id, String version, String languageId);
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getThumbnailSrc(FileEntry, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getThumbnailSrc(
-			FileEntry fileEntry, DLFileShortcut dlFileShortcut,
-			ThemeDisplay themeDisplay)
-		throws Exception;
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getThumbnailSrc(FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getThumbnailSrc(
-			FileEntry fileEntry, FileVersion fileVersion,
-			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
-		throws Exception;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
@@ -299,39 +272,6 @@ public interface DL {
 		String ddmStructureKey);
 
 	public abstract boolean isOfficeExtension(String extension);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
-	 *             long, long)}
-	 */
-	@Deprecated
-	public boolean isSubscribedToFileEntryType(
-		long companyId, long groupId, long userId, long fileEntryTypeId);
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
-	 *             long)}
-	 */
-	@Deprecated
-	public boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
-	 *             long, boolean)}
-	 */
-	@Deprecated
-	public boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId,
-			boolean recursive)
-		throws PortalException;
 
 	public boolean isValidVersion(String version);
 

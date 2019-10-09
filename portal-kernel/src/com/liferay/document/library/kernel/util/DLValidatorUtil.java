@@ -34,14 +34,6 @@ public class DLValidatorUtil {
 		return _dlValidator.fixName(name);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DLValidator getDLValidator() {
-		return _dlValidator;
-	}
-
 	public static long getMaxAllowableSize() {
 		return _dlValidator.getMaxAllowableSize();
 	}
@@ -103,13 +95,6 @@ public class DLValidatorUtil {
 		throws InvalidFileVersionException {
 
 		_dlValidator.validateVersionLabel(versionLabel);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDLValidator(DLValidator dlValidator) {
 	}
 
 	private static volatile DLValidator _dlValidator =

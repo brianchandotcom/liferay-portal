@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
-import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinderRegistryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -58,7 +56,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -484,25 +481,6 @@ public class DLImpl implements DL {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {
-		List<Subscription> subscriptions =
-			SubscriptionLocalServiceUtil.getUserSubscriptions(
-				userId, DLFileEntryType.class.getName());
-
-		Set<Long> classPKs = new HashSet<>();
-
-		for (Subscription subscription : subscriptions) {
-			classPKs.add(subscription.getClassPK());
-		}
-
-		return classPKs;
-	}
-
 	@Override
 	public String getFileIcon(String extension) {
 		if (!_fileIcons.contains(extension)) {
@@ -771,35 +749,6 @@ public class DLImpl implements DL {
 		sb.append(languageId);
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getThumbnailSrc(FileEntry, ThemeDisplay)}
-	 */
-	@Deprecated
-	@Override
-	public String getThumbnailSrc(
-			FileEntry fileEntry, DLFileShortcut dlFileShortcut,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return getThumbnailSrc(
-			fileEntry, fileEntry.getFileVersion(), themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getThumbnailSrc(FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	@Override
-	public String getThumbnailSrc(
-			FileEntry fileEntry, FileVersion fileVersion,
-			DLFileShortcut dlFileShortcut, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 	}
 
 	/**
@@ -1094,79 +1043,6 @@ public class DLImpl implements DL {
 	@Override
 	public boolean isOfficeExtension(String extension) {
 		return ArrayUtil.contains(_MICROSOFT_OFFICE_EXTENSIONS, extension);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(long, long,
-	 *             long, long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isSubscribedToFileEntryType(
-		long companyId, long groupId, long userId, long fileEntryTypeId) {
-
-		if (fileEntryTypeId ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			fileEntryTypeId = groupId;
-		}
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, DLFileEntryType.class.getName(),
-			fileEntryTypeId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
-	 *             long)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId)
-		throws PortalException {
-
-		return isSubscribedToFolder(companyId, groupId, userId, folderId, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.document.library.web.internal.util.
-	 *             DLSubscriptionUtil#isSubscribedToFolder(long, long, long,
-	 *             long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public boolean isSubscribedToFolder(
-			long companyId, long groupId, long userId, long folderId,
-			boolean recursive)
-		throws PortalException {
-
-		List<Long> ancestorFolderIds = new ArrayList<>();
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
-
-			ancestorFolderIds.add(folderId);
-
-			if (recursive) {
-				ancestorFolderIds.addAll(folder.getAncestorFolderIds());
-
-				ancestorFolderIds.add(groupId);
-			}
-		}
-		else {
-			ancestorFolderIds.add(groupId);
-		}
-
-		long[] folderIdsArray = ArrayUtil.toLongArray(ancestorFolderIds);
-
-		return SubscriptionLocalServiceUtil.isSubscribed(
-			companyId, userId, DLFolder.class.getName(), folderIdsArray);
 	}
 
 	@Override

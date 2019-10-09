@@ -46,14 +46,6 @@ public class DLProcessorRegistryUtil {
 		return _dlProcessorRegistry.getDLProcessor(dlProcessorType);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static DLProcessorRegistry getDLProcessorRegistry() {
-		return _dlProcessorRegistry;
-	}
-
 	public static void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -83,14 +75,6 @@ public class DLProcessorRegistryUtil {
 
 	public static void unregister(DLProcessor dlProcessor) {
 		_dlProcessorRegistry.unregister(dlProcessor);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDLProcessorRegistry(
-		DLProcessorRegistry dlProcessorRegistry) {
 	}
 
 	private static volatile DLProcessorRegistry _dlProcessorRegistry =

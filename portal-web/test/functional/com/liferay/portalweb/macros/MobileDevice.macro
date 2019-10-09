@@ -7,7 +7,9 @@ definition {
 			locator1 = "MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK",
 			value1 = "${mobileDeviceFamilyName}");
 
-		LexiconEntry.gotoAdd();
+		// Workaround for LPS-92682
+
+		Click(locator1 = "Button#PLUS");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Portlet#HEADER",

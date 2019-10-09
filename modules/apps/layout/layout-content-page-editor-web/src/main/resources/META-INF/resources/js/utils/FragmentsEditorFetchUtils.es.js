@@ -183,6 +183,10 @@ function getAssetFieldValue(classNameId, classPK, fieldId) {
 	});
 }
 
+/**
+ * @param {string} classNameId
+ * @param {string} classPK
+ */
 function getAssetMappingFields(classNameId, classPK) {
 	return _fetch(_store.getState().getAssetMappingFieldsURL, {
 		classNameId,
@@ -190,6 +194,9 @@ function getAssetMappingFields(classNameId, classPK) {
 	});
 }
 
+/**
+ * @param {string} className
+ */
 function getAvailableTemplates(className) {
 	return _fetch(_store.getState().getAvailableTemplatesURL, {
 		className
@@ -226,6 +233,10 @@ function getPageContents() {
 	return _fetch(getPageContentsURL, {backURL});
 }
 
+/**
+ * @param {string} classNameId
+ * @param {string} classTypeId
+ */
 function getStructureMappingFields(classNameId, classTypeId) {
 	return _fetch(_store.getState().mappingFieldsURL, {
 		classNameId,

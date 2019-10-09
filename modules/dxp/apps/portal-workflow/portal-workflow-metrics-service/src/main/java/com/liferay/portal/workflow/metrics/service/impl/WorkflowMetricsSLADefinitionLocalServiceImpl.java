@@ -381,9 +381,12 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				 ListUtil.filter(
 					 workflowMetricsSLADefinitions,
 					 workflowMetricsSLADefinition -> {
-						if (workflowMetricsSLADefinition.
-								getWorkflowMetricsSLADefinitionId() ==
-									workflowMetricsSLADefinitionId) {
+						long filteredWorkflowMetricsSLADefinitionId =
+							workflowMetricsSLADefinition.
+								getWorkflowMetricsSLADefinitionId();
+
+						if (filteredWorkflowMetricsSLADefinitionId ==
+								workflowMetricsSLADefinitionId) {
 
 							return false;
 						}

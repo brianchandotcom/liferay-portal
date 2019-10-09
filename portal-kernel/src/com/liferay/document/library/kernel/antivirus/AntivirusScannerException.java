@@ -26,14 +26,6 @@ public class AntivirusScannerException extends PortalException {
 
 	public static final int VIRUS_DETECTED = 2;
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #AntivirusScannerException(int)}
-	 */
-	@Deprecated
-	public AntivirusScannerException() {
-	}
-
 	public AntivirusScannerException(int type) {
 		_type = type;
 	}
@@ -42,15 +34,6 @@ public class AntivirusScannerException extends PortalException {
 		super(cause);
 
 		_type = type;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #AntivirusScannerException(String, int)}
-	 */
-	@Deprecated
-	public AntivirusScannerException(String msg) {
-		super(msg);
 	}
 
 	public AntivirusScannerException(String msg, int type) {

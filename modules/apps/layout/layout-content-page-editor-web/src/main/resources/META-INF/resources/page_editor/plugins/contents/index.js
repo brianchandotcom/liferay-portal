@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import ContentsSidebar from './components/ContentsSidebar';
+
 /**
  * Entry-point for "Contents" (sidebar pane) functionality.
  */
@@ -23,6 +25,6 @@ export default class Contents {
 	}
 
 	renderSidebar() {
-		return <h1>{this.title}</h1>;
+		return <ContentsSidebar title={this.title} />;
 	}
 }

@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import SectionBuilderSidebar from './components/SectionBuilderSidebar';
 /**
  * Entry-point for "Section Builder" (sidebar pane) functionality.
  */
@@ -23,6 +24,6 @@ export default class SectionBuilder {
 	}
 
 	renderSidebar() {
-		return <h1>{this.title}</h1>;
+		return <SectionBuilderSidebar title={this.title} />;
 	}
 }

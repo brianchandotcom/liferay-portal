@@ -402,8 +402,8 @@ private void _testPom(String artifactId, String version) {
 	assert pomNode.scm.url.text() == "https://github.com/liferay/liferay-portal"
 	assert pomNode.version.text() == version
 
-	String dependencyArtifactIdPattern = /[a-z][a-z\d.-]*[a-z\d]/
-	String dependencyGroupIdPattern = /[a-z][a-z\d.-]*[a-z\d]/
+	String dependencyArtifactIdPattern = /[A-Za-z][A-Za-z\d.-]*[A-Za-z\d]/
+	String dependencyGroupIdPattern = /[A-Za-z][A-Za-z\d.-]*[A-Za-z\d]/
 
 	String[] failedDependencies = []
 

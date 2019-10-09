@@ -52,6 +52,10 @@ public interface WikiNodeResource {
 	public WikiNode postSiteWikiNode(Long siteId, WikiNode wikiNode)
 		throws Exception;
 
+	public void putWikiNodeSubscribe(Long wikiNodeId) throws Exception;
+
+	public void putWikiNodeUnsubscribe(Long wikiNodeId) throws Exception;
+
 	public void deleteWikiNode(Long wikiNodeId) throws Exception;
 
 	public WikiNode getWikiNode(Long wikiNodeId) throws Exception;

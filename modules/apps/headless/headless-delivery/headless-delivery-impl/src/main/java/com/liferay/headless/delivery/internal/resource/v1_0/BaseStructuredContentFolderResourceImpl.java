@@ -317,6 +317,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				structuredContentFolder.getSiteId());
 		}
 
+		if (structuredContentFolder.getSubscribed() != null) {
+			existingStructuredContentFolder.setSubscribed(
+				structuredContentFolder.getSubscribed());
+		}
+
 		if (structuredContentFolder.getViewableBy() != null) {
 			existingStructuredContentFolder.setViewableBy(
 				structuredContentFolder.getViewableBy());
@@ -357,6 +362,54 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return new StructuredContentFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
+	@Path("/structured-content-folders/{structuredContentFolderId}/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public void putStructuredContentFolderSubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/structured-content-folders/{structuredContentFolderId}/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.PATH, name = "structuredContentFolderId"
+			)
+		}
+	)
+	@Path("/structured-content-folders/{structuredContentFolderId}/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "StructuredContentFolder")})
+	public void putStructuredContentFolderUnsubscribe(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("structuredContentFolderId") Long
+				structuredContentFolderId)
+		throws Exception {
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

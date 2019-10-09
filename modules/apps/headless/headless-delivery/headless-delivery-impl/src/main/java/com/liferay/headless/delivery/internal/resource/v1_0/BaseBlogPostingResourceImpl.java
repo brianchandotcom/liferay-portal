@@ -380,6 +380,38 @@ public abstract class BaseBlogPostingResourceImpl
 		return new BlogPosting();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
+	@Path("/sites/{siteId}/blog-postings/subscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public void putSiteBlogPostingSubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/blog-postings/unsubscribe'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
+	@Path("/sites/{siteId}/blog-postings/unsubscribe")
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "BlogPosting")})
+	public void putSiteBlogPostingUnsubscribe(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId)
+		throws Exception {
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}

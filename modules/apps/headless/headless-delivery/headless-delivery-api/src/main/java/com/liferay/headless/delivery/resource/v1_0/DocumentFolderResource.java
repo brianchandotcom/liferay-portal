@@ -57,6 +57,12 @@ public interface DocumentFolderResource {
 			Long documentFolderId, DocumentFolder documentFolder)
 		throws Exception;
 
+	public void putDocumentFolderSubscribe(Long documentFolderId)
+		throws Exception;
+
+	public void putDocumentFolderUnsubscribe(Long documentFolderId)
+		throws Exception;
+
 	public Page<DocumentFolder> getDocumentFolderDocumentFoldersPage(
 			Long parentDocumentFolderId, Boolean flatten, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)

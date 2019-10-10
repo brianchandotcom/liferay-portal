@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.0.0",
-		"@clayui/css": "3.0.0",
 		"@clayui/icon": "3.0.0",
 		"@clayui/modal": "3.0.0",
 		"clay-button": "2.18.1",

@@ -184,6 +184,7 @@ create index IX_4B906FF6 on Layout (companyId, ctCollectionId);
 create index IX_8F868C29 on Layout (companyId, layoutPrototypeUuid[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_FD5AF6EE on Layout (ctCollectionId);
 create index IX_34D93878 on Layout (groupId, ctCollectionId);
+create index IX_BB1B67F9 on Layout (groupId, mLayoutPageTemplateEntryId, ctCollectionId);
 create index IX_7BFE8B01 on Layout (groupId, privateLayout, ctCollectionId);
 create unique index IX_B556968F on Layout (groupId, privateLayout, friendlyURL[$COLUMN_LENGTH:255$], ctCollectionId);
 create unique index IX_CF5120DA on Layout (groupId, privateLayout, layoutId, ctCollectionId);
@@ -195,6 +196,7 @@ create index IX_A1FC5430 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH
 create index IX_94E0E2D9 on Layout (groupId, type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E7B06BDB on Layout (iconImageId, ctCollectionId);
 create index IX_11389031 on Layout (layoutPrototypeUuid[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_FE87796F on Layout (mLayoutPageTemplateEntryId, ctCollectionId);
 create index IX_7F60B703 on Layout (parentPlid, ctCollectionId);
 create index IX_C95F601E on Layout (privateLayout, iconImageId, ctCollectionId);
 create index IX_ED8D4D2A on Layout (sourcePrototypeLayoutUuid[$COLUMN_LENGTH:75$], ctCollectionId);

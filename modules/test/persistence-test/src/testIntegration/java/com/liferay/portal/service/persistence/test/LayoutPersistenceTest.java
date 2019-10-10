@@ -189,6 +189,8 @@ public class LayoutPersistenceTest {
 
 		newLayout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
+		newLayout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
 		newLayout.setPublishDate(RandomTestUtil.nextDate());
 
 		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
@@ -261,6 +263,9 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getSourcePrototypeLayoutUuid(),
 			newLayout.getSourcePrototypeLayoutUuid());
+		Assert.assertEquals(
+			existingLayout.getMasterLayoutPageTemplateEntryId(),
+			newLayout.getMasterLayoutPageTemplateEntryId());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getPublishDate()),
 			Time.getShortTimestamp(newLayout.getPublishDate()));
@@ -367,6 +372,14 @@ public class LayoutPersistenceTest {
 		_persistence.countByG_T(0L, "null");
 
 		_persistence.countByG_T(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_M() throws Exception {
+		_persistence.countByG_M(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_M(0L, 0L);
 	}
 
 	@Test
@@ -523,7 +536,8 @@ public class LayoutPersistenceTest {
 			"friendlyURL", true, "iconImageId", true, "themeId", true,
 			"colorSchemeId", true, "priority", true, "layoutPrototypeUuid",
 			true, "layoutPrototypeLinkEnabled", true,
-			"sourcePrototypeLayoutUuid", true, "publishDate", true,
+			"sourcePrototypeLayoutUuid", true,
+			"masterLayoutPageTemplateEntryId", true, "publishDate", true,
 			"lastPublishDate", true);
 	}
 
@@ -887,6 +901,8 @@ public class LayoutPersistenceTest {
 		layout.setLayoutPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
 
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
+
+		layout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		layout.setPublishDate(RandomTestUtil.nextDate());
 

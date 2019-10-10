@@ -1058,6 +1058,14 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.getLayouts(groupId, start, end, obc);
 	}
 
+	@Override
+	public java.util.List<Layout> getLayouts(
+		long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return _layoutLocalService.getLayouts(
+			groupId, masterLayoutPageTemplateEntryId);
+	}
+
 	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
@@ -1209,6 +1217,14 @@ public class LayoutLocalServiceWrapper
 	@Override
 	public int getLayoutsCount(long groupId) {
 		return _layoutLocalService.getLayoutsCount(groupId);
+	}
+
+	@Override
+	public int getLayoutsCount(
+		long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return _layoutLocalService.getLayoutsCount(
+			groupId, masterLayoutPageTemplateEntryId);
 	}
 
 	@Override

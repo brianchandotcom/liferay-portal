@@ -1039,6 +1039,13 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayouts(groupId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Layout>
+		getLayouts(long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return getService().getLayouts(
+			groupId, masterLayoutPageTemplateEntryId);
+	}
+
 	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
@@ -1179,6 +1186,13 @@ public class LayoutLocalServiceUtil {
 
 	public static int getLayoutsCount(long groupId) {
 		return getService().getLayoutsCount(groupId);
+	}
+
+	public static int getLayoutsCount(
+		long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return getService().getLayoutsCount(
+			groupId, masterLayoutPageTemplateEntryId);
 	}
 
 	public static int getLayoutsCount(

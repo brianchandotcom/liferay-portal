@@ -55,6 +55,10 @@
 
 		<column name="friendlyURLEntryMappingId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />

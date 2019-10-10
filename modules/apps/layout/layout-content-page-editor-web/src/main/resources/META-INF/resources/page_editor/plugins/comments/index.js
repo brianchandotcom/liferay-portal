@@ -14,14 +14,17 @@
 
 import React from 'react';
 
+import App from './App';
 import CommentsSidebar from './components/CommentsSidebar';
 
 /**
  * Entry-point for "Comments" (sidebar pane) functionality.
  */
 export default class Comments {
-	constructor({panel}) {
+	constructor({app, panel}) {
 		this.title = panel.label;
+
+		App.init(app);
 	}
 
 	renderSidebar() {

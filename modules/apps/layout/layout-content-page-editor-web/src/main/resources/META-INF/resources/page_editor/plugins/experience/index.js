@@ -12,11 +12,14 @@
  * details.
  */
 
+import App from './App';
+
 /**
  * Entry-point for "Experience" (toolbar drop-down) functionality.
  */
 export default class Experience {
-	constructor() {
+	constructor({app}) {
 		// TODO: implement
+		App.init(app);
 	}
 }

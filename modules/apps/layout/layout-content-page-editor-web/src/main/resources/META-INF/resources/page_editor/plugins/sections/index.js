@@ -14,13 +14,16 @@
 
 import React from 'react';
 
+import App from './App';
 import SectionsSidebar from './components/SectionsSidebar';
 /**
  * Entry-point for "Sections" (sidebar pane) functionality.
  */
 export default class Sections {
-	constructor({panel}) {
+	constructor({app, panel}) {
 		this.title = panel.label;
+
+		App.init(app);
 	}
 
 	renderSidebar() {

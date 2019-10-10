@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.license.messaging;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -29,43 +28,6 @@ public enum LicenseManagerMessageType {
 		"liferay/lcs_request";
 
 	public static String MESSAGE_BUS_DESTINATION_STATUS = "liferay/lcs_status";
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), ), with no direct replacement
-	 */
-	@Deprecated
-	public static JSONObject getMessagePayload(Message message) {
-		return getMessagePayload(message.getPayload());
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static JSONObject getMessagePayload(Object object) {
-		if (object instanceof String) {
-			return getMessagePayload((String)object);
-		}
-
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static JSONObject getMessagePayload(String json) {
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
-
-			valueOf(jsonObject);
-
-			return jsonObject;
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
 
 	public static LicenseManagerMessageType valueOf(JSONObject jsonObject) {
 		String type = jsonObject.getString("type");

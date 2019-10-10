@@ -34,6 +34,8 @@ findLayoutsURL.setResourceID("/product_menu/find_layouts");
 data.put("findLayoutsURL", findLayoutsURL.toString());
 
 data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU));
+
+Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <div id="<%= renderResponse.getNamespace() + "-layout-finder" %>">
@@ -43,3 +45,14 @@ data.put("namespace", PortalUtil.getPortletNamespace(ProductNavigationProductMen
 		servletContext="<%= application %>"
 	/>
 </div>
+
+<liferay-layout:layouts-tree
+	draggableTree="<%= false %>"
+	groupId="<%= scopeGroupId %>"
+	incomplete="<%= false %>"
+	portletURL="<%= renderResponse.createRenderURL() %>"
+	privateLayout="<%= layout.isPrivateLayout() %>"
+	rootNodeName="<%= scopeGroup.getLayoutRootNodeName(layout.isPrivateLayout(), locale) %>"
+	selectableTree="<%= false %>"
+	treeId="layoutsTree"
+/>

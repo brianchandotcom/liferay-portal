@@ -173,7 +173,7 @@ public class PagesTreeProductNavigationControlMenuEntry
 			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private void _processBodyBottomContent(PageContext pageContext) {

@@ -7,7 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" id="com.liferay.portal.model.adapter.builder.StagedGroupModelAdapterBuilder" />
 	<bean class="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" id="com.liferay.portal.model.adapter.builder.StagedThemeModelAdapterBuilder" />
 	<bean class="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" id="com.liferay.portal.service.impl.LayoutLocalServiceStagingAdvice" />
 	<bean class="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" id="com.liferay.portal.service.impl.LayoutSetLocalServiceStagingAdvice" />

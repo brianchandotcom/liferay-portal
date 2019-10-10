@@ -42,6 +42,8 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(6, 0, 3), new UpgradeCTModel(LayoutTable.class));
 
 		upgradeProcesses.put(new Version(6, 0, 4), new UpgradeAssetCategory());
+
+		upgradeProcesses.put(new Version(7, 0, 0), new UpgradeSchema());
 	}
 
 }

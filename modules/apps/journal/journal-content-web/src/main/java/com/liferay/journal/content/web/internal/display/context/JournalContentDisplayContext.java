@@ -763,7 +763,7 @@ public class JournalContentDisplayContext {
 		}
 
 		AssetEntryServiceUtil.incrementViewCounter(
-			JournalArticle.class.getName(),
+			articleDisplay.getCompanyId(), JournalArticle.class.getName(),
 			articleDisplay.getResourcePrimKey());
 	}
 

@@ -224,7 +224,8 @@ public class TasksPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		AssetEntryLocalServiceUtil.incrementViewCounter(
-			themeDisplay.getUserId(), TasksEntry.class.getName(), tasksEntryId);
+			tasksEntry.getCompanyId(), themeDisplay.getUserId(),
+			TasksEntry.class.getName(), tasksEntryId);
 	}
 
 }

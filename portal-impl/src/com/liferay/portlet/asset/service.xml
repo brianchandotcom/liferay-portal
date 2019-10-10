@@ -183,7 +183,6 @@
 		<column name="height" type="int" />
 		<column name="width" type="int" />
 		<column name="priority" type="double" />
-		<column name="viewCount" type="int" />
 
 		<!-- Relationships -->
 

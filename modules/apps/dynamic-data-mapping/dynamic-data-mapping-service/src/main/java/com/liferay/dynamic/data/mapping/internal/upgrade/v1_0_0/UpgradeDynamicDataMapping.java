@@ -83,11 +83,13 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -143,7 +145,8 @@ import java.util.regex.Pattern;
 public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	public UpgradeDynamicDataMapping(
-		AssetEntryLocalService assetEntryLocalService, DDM ddm,
+		AssetEntryLocalService assetEntryLocalService,
+		ClassNameLocalService classNameLocalService, DDM ddm,
 		DDMFormDeserializer ddmFormJSONDeserializer,
 		DDMFormDeserializer ddmFormXSDDeserializer,
 		DDMFormLayoutSerializer ddmFormLayoutSerializer,
@@ -162,6 +165,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		Store store) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+		_classNameLocalService = classNameLocalService;
 		_ddm = ddm;
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
@@ -1683,6 +1687,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		Pattern.compile(_INVALID_FIELD_NAME_CHARS_REGEX);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private final ClassNameLocalService _classNameLocalService;
 	private final DDM _ddm;
 	private long _ddmContentClassNameId;
 	private final DDMFormDeserializer _ddmFormJSONDeserializer;
@@ -2356,9 +2361,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			assetEntry.setHeight(height);
 			assetEntry.setWidth(width);
 			assetEntry.setPriority(priority);
-			assetEntry.setViewCount(viewCount);
 
 			_assetEntryLocalService.updateAssetEntry(assetEntry);
+
+			ViewCountServiceUtil.incrementViewCount(
+				companyId,
+				_classNameLocalService.getClassNameId(AssetEntry.class),
+				entryId, viewCount);
 		}
 
 		protected long addDDMDLFolder() throws Exception {

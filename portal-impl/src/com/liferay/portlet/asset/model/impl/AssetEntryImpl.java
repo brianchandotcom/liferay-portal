@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -76,6 +77,11 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 	@Override
 	public List<AssetTag> getTags() {
 		return AssetTagLocalServiceUtil.getEntryTags(getEntryId());
+	}
+
+	public int getViewCount() {
+		return (int)ViewCountServiceUtil.getViewCount(
+			getCompanyId(), getClassNameId(), getPrimaryKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetEntryImpl.class);

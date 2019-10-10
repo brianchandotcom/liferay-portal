@@ -24,7 +24,7 @@ if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 
 	KBArticleLocalServiceUtil.updateViewCount(themeDisplay.getUserId(), kbArticle.getResourcePrimKey(), latestKBArticle.getViewCount() + 1);
 
-	AssetEntryServiceUtil.incrementViewCounter(KBArticle.class.getName(), latestKBArticle.getClassPK());
+	AssetEntryServiceUtil.incrementViewCounter(latestKBArticle.getCompanyId(), KBArticle.class.getName(), latestKBArticle.getClassPK());
 }
 
 boolean enableKBArticleSuggestions = enableKBArticleRatings && kbArticle.isApproved();

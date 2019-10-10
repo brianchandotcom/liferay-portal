@@ -36,7 +36,7 @@ import javax.net.ssl.SSLContext;
 public class LdapSslContextFactory {
 
 	public static SSLContext getSSLContext(boolean server) {
-		return _instance._getSSLContext(server);
+		return _ldapSslContextFactory._getSSLContext(server);
 	}
 
 	private LdapSslContextFactory() {
@@ -128,7 +128,7 @@ public class LdapSslContextFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LdapSslContextFactory.class);
 
-	private static final LdapSslContextFactory _instance =
+	private static final LdapSslContextFactory _ldapSslContextFactory =
 		new LdapSslContextFactory();
 
 	private final SSLContext _clientSSLContext;

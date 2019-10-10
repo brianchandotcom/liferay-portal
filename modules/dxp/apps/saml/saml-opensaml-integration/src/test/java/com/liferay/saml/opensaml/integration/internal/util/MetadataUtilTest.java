@@ -43,13 +43,13 @@ public class MetadataUtilTest {
 
 		OpenSamlBootstrap.bootstrap();
 
-		_metadataUtil = new MetadataUtilImpl();
+		_metadataUtilImpl = new MetadataUtilImpl();
 
 		BasicParserPool parserPool = new BasicParserPool();
 
 		parserPool.initialize();
 
-		_metadataUtil.parserPool = parserPool;
+		_metadataUtilImpl.parserPool = parserPool;
 	}
 
 	@AfterClass
@@ -64,7 +64,7 @@ public class MetadataUtilTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/entities-descriptor.xml");
 
-		String metadata = _metadataUtil.parseMetadataXml(
+		String metadata = _metadataUtilImpl.parseMetadataXml(
 			inputStream, "https://saml.liferay.com/shibboleth");
 
 		Assert.assertNotNull(metadata);
@@ -77,12 +77,12 @@ public class MetadataUtilTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/entity-descriptor.xml");
 
-		String metadata = _metadataUtil.parseMetadataXml(
+		String metadata = _metadataUtilImpl.parseMetadataXml(
 			inputStream, "liferaysamlidpdemo");
 
 		Assert.assertNotNull(metadata);
 	}
 
-	private static MetadataUtilImpl _metadataUtil;
+	private static MetadataUtilImpl _metadataUtilImpl;
 
 }

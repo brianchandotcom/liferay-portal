@@ -490,18 +490,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			mockWorkflowMetricsSLACalendarTracker()
 		throws Exception {
 
-		WorkflowMetricsSLACalendarTrackerImpl metricsSLACalendarTrackerImpl =
-			new WorkflowMetricsSLACalendarTrackerImpl();
+		WorkflowMetricsSLACalendarTrackerImpl
+			workflowMetricsSLACalendarTrackerImpl =
+				new WorkflowMetricsSLACalendarTrackerImpl();
 
 		field(
 			WorkflowMetricsSLACalendarTrackerImpl.class,
 			"_defaultWorkflowMetricsSLACalendar"
 		).set(
-			metricsSLACalendarTrackerImpl,
+			workflowMetricsSLACalendarTrackerImpl,
 			new DefaultWorkflowMetricsSLACalendar()
 		);
 
-		return metricsSLACalendarTrackerImpl;
+		return workflowMetricsSLACalendarTrackerImpl;
 	}
 
 	private void _assertIsBreached(

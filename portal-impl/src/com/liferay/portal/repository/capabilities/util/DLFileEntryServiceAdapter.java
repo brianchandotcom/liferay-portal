@@ -124,24 +124,6 @@ public class DLFileEntryServiceAdapter {
 		return dlFileEntries;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isKeepFileVersionLabel(
-			long fileEntryId, boolean majorVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (_dlFileEntryService != null) {
-			return _dlFileEntryService.isKeepFileVersionLabel(
-				fileEntryId, majorVersion, serviceContext);
-		}
-
-		return _dlFileEntryLocalService.isKeepFileVersionLabel(
-			fileEntryId, majorVersion, serviceContext);
-	}
-
 	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
 			ServiceContext serviceContext,

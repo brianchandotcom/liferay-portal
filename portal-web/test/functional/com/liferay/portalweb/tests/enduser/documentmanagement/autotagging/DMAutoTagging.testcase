@@ -213,10 +213,10 @@ definition {
 		AutoTagging.assertNoAutoTag(tagName = "carton");
 	}
 
-	@description = "This test covers LPS-101885. It asserts that auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
+	@description = "This test covers LPS-101885. It asserts that an auto-tagged document can be deleted when OpenNLP Auto-Tagging is enabled."
 	@priority = "4"
-	test DeleteDocumentAfterAutoTagged {
-		property test.name.skip.portal.instance = "DMAutoTagging#DeleteDocumentAfterAutoTagged";
+	test DeleteAutoTaggedDocument {
+		property test.name.skip.portal.instance = "DMAutoTagging#DeleteAutoTaggedDocument";
 
 		AutoTagging.enableOpenNLP(
 			assetType = "Document",

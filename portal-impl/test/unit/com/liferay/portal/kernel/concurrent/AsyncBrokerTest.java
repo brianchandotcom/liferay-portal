@@ -120,22 +120,6 @@ public class AsyncBrokerTest {
 		Assert.assertTrue(
 			defaultNoticeableFutures.toString(),
 			defaultNoticeableFutures.isEmpty());
-
-		DefaultNoticeableFuture<String> defaultNoticeableFuture =
-			new DefaultNoticeableFuture<>();
-
-		Assert.assertNull(asyncBroker.post(_KEY, defaultNoticeableFuture));
-		Assert.assertSame(
-			defaultNoticeableFuture, defaultNoticeableFutures.get(_KEY));
-		Assert.assertSame(defaultNoticeableFuture, asyncBroker.post(_KEY));
-
-		Assert.assertEquals(
-			defaultNoticeableFutures.toString(), 1,
-			defaultNoticeableFutures.size());
-		Assert.assertTrue(defaultNoticeableFuture.cancel(true));
-		Assert.assertTrue(
-			defaultNoticeableFutures.toString(),
-			defaultNoticeableFutures.isEmpty());
 	}
 
 	@Test

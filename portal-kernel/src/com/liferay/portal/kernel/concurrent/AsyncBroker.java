@@ -71,17 +71,6 @@ public class AsyncBroker<K, V> {
 		return previousNoticeableFuture;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #post(Object,
-	 *             boolean[])}
-	 */
-	@Deprecated
-	public NoticeableFuture<V> post(
-		final K key, final DefaultNoticeableFuture<V> defaultNoticeableFuture) {
-
-		return _post(key, defaultNoticeableFuture);
-	}
-
 	public NoticeableFuture<V> take(K key) {
 		return _defaultNoticeableFutures.remove(key);
 	}

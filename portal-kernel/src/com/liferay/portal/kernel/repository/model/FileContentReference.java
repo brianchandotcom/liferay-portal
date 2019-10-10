@@ -100,19 +100,6 @@ public class FileContentReference {
 		return _sourceFileName;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #FileContentReference(long, String, String, String, File,
-	 *             InputStream, long)}
-	 */
-	@Deprecated
-	protected FileContentReference(
-		String sourceFileName, String extension, String mimeType, File file,
-		InputStream inputStream, long size) {
-
-		this(0, sourceFileName, extension, mimeType, file, inputStream, size);
-	}
-
 	private FileContentReference(
 		long fileEntryId, String sourceFileName, String extension,
 		String mimeType, File file, InputStream inputStream, long size) {

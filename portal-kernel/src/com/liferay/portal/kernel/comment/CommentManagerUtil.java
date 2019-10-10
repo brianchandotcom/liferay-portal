@@ -87,15 +87,6 @@ public class CommentManagerUtil {
 		return _getCommentManager().fetchComment(commentId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getCommentManager()}
-	 */
-	@Deprecated
-	public static CommentManager getCommentManager() {
-		return _getCommentManager();
-	}
-
 	public static int getCommentsCount(String className, long classPK) {
 		return _getCommentManager().getCommentsCount(className, classPK);
 	}

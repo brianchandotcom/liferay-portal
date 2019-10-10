@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.announcements.kernel.exception.EntryContentException;
-import com.liferay.announcements.kernel.exception.EntryDisplayDateException;
 import com.liferay.announcements.kernel.exception.EntryExpirationDateException;
 import com.liferay.announcements.kernel.exception.EntryTitleException;
 import com.liferay.announcements.kernel.exception.EntryURLException;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -121,44 +119,6 @@ public class AnnouncementsEntryLocalServiceImpl
 			false, false);
 
 		return entry;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addEntry(long,
-	 *             long, long, String, String, String, String, Date, Date, int,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AnnouncementsEntry addEntry(
-			long userId, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Date displayDate = new Date();
-
-		if (!displayImmediately) {
-			displayDate = PortalUtil.getDate(
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				EntryDisplayDateException.class);
-		}
-
-		Date expirationDate = PortalUtil.getDate(
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			EntryExpirationDateException.class);
-
-		return addEntry(
-			userId, classNameId, classPK, title, content, url, type,
-			displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
@@ -280,20 +240,6 @@ public class AnnouncementsEntryLocalServiceImpl
 			end);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getEntries(long,
-	 *             long, long, boolean, int, int)}
-	 */
-	@Deprecated
-	@Override
-	public List<AnnouncementsEntry> getEntries(
-		long classNameId, long classPK, boolean alert, int start, int end) {
-
-		return getEntries(
-			CompanyThreadLocal.getCompanyId(), classNameId, classPK, alert,
-			start, end);
-	}
-
 	@Override
 	public List<AnnouncementsEntry> getEntries(
 		long companyId, long classNameId, long classPK, boolean alert,
@@ -356,17 +302,6 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateHour, expirationDateMinute, alert, flagValue);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getEntriesCount(long, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public int getEntriesCount(long classNameId, long classPK, boolean alert) {
-		return getEntriesCount(
-			CompanyThreadLocal.getCompanyId(), classNameId, classPK, alert);
-	}
-
 	@Override
 	public int getEntriesCount(
 		long companyId, long classNameId, long classPK, boolean alert) {
@@ -422,44 +357,6 @@ public class AnnouncementsEntryLocalServiceImpl
 	@Override
 	public int getUserEntriesCount(long userId) {
 		return announcementsEntryPersistence.countByUserId(userId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #updateEntry(long,
-	 *             String, String, String, String, Date, Date, int)}
-	 */
-	@Deprecated
-	@Override
-	public AnnouncementsEntry updateEntry(
-			long userId, long entryId, String title, String content, String url,
-			String type, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean displayImmediately, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute, int priority)
-		throws PortalException {
-
-		// Entry
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Date displayDate = new Date();
-
-		if (!displayImmediately) {
-			displayDate = PortalUtil.getDate(
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				EntryDisplayDateException.class);
-		}
-
-		Date expirationDate = PortalUtil.getDate(
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			EntryExpirationDateException.class);
-
-		return updateEntry(
-			entryId, title, content, url, type, displayDate, expirationDate,
-			priority);
 	}
 
 	@Override

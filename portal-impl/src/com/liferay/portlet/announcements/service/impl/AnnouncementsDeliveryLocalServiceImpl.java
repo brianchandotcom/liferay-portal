@@ -158,20 +158,6 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		return delivery;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #updateDelivery(long, String, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public AnnouncementsDelivery updateDelivery(
-			long userId, String type, boolean email, boolean sms,
-			boolean website)
-		throws PortalException {
-
-		return updateDelivery(userId, type, email, sms);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnnouncementsDeliveryLocalServiceImpl.class);
 

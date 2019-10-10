@@ -192,7 +192,7 @@ definition {
 			value1 = "Add Word Doc Title");
 	}
 
-	@description = "This test covers LPS-102478. It ensures that an Office 365 document auto check-in after lock expiration."
+	@description = "This test covers LPS-102478. It ensures that an Office 365 document automatically checks in after the lock is expired."
 	@priority = "4"
 	test AutoCheckinDocumentAfterLockExpiration {
 		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";

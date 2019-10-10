@@ -57,11 +57,10 @@ public class LayoutSEOEntryServiceHttp {
 				boolean privateLayout, long layoutId,
 				boolean canonicalURLEnabled,
 				java.util.Map<java.util.Locale, String> canonicalURLMap,
-				boolean openGraphTitleEnabled,
-				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				boolean openGraphDescriptionEnabled,
 				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
-				long openGraphImageFileEntryId,
+				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -72,10 +71,10 @@ public class LayoutSEOEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId,
-				canonicalURLEnabled, canonicalURLMap, openGraphTitleEnabled,
-				openGraphTitleMap, openGraphDescriptionEnabled,
-				openGraphDescriptionMap, openGraphImageFileEntryId,
-				serviceContext);
+				canonicalURLEnabled, canonicalURLMap,
+				openGraphDescriptionEnabled, openGraphDescriptionMap,
+				openGraphImageFileEntryId, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -153,8 +152,8 @@ public class LayoutSEOEntryServiceHttp {
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes0 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
-			java.util.Map.class, boolean.class, java.util.Map.class,
-			boolean.class, java.util.Map.class, long.class,
+			java.util.Map.class, boolean.class, java.util.Map.class, long.class,
+			boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateLayoutSEOEntryParameterTypes1 =

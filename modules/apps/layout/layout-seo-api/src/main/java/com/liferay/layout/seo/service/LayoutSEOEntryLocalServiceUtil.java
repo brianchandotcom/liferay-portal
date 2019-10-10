@@ -370,19 +370,18 @@ public class LayoutSEOEntryLocalServiceUtil {
 				long userId, long groupId, boolean privateLayout, long layoutId,
 				boolean canonicalURLEnabled,
 				java.util.Map<java.util.Locale, String> canonicalURLMap,
-				boolean openGraphTitleEnabled,
-				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				boolean openGraphDescriptionEnabled,
 				java.util.Map<java.util.Locale, String> openGraphDescriptionMap,
-				long openGraphImageFileEntryId,
+				long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+				java.util.Map<java.util.Locale, String> openGraphTitleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateLayoutSEOEntry(
 			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, openGraphTitleEnabled, openGraphTitleMap,
-			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openGraphImageFileEntryId, serviceContext);
+			canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageFileEntryId,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	public static com.liferay.layout.seo.model.LayoutSEOEntry

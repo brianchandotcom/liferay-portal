@@ -27,7 +27,10 @@ export default function PageEditor() {
 
 	return (
 		<>
-			<Body fragmentEntryLinks={fragmentEntryLinks} layoutData={layoutData} />
+			<Body
+				fragmentEntryLinks={fragmentEntryLinks}
+				layoutData={layoutData}
+			/>
 			<DebugInfo config={config} state={state} />
 		</>
 	);

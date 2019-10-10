@@ -47,17 +47,27 @@ public class ViewCountEntryFinderImpl
 			ViewCountEntry viewCountEntry = (ViewCountEntry)session.get(
 				ViewCountEntryImpl.class, viewCountEntryPK, LockMode.UPGRADE);
 
-			viewCountEntry.setViewCount(
-				viewCountEntry.getViewCount() + increment);
+			if (viewCountEntry == null) {
+				viewCountEntry = new ViewCountEntryImpl();
 
-			session.saveOrUpdate(viewCountEntry);
+				viewCountEntry.setPrimaryKey(viewCountEntryPK);
+
+				viewCountEntry.setViewCount(increment);
+
+				session.save(viewCountEntry);
+
+				session.flush();
+			}
+			else {
+				viewCountEntry.setViewCount(
+					viewCountEntry.getViewCount() + increment);
+
+				session.saveOrUpdate(viewCountEntry);
+			}
 
 			_entityCache.putResult(
 				entityCacheEnabled, ViewCountEntryImpl.class, viewCountEntryPK,
 				viewCountEntry);
-		}
-		catch (Exception e) {
-			throw processException(e);
 		}
 		finally {
 			closeSession(session);

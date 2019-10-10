@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.service.view.count.ViewCountService;
+import com.liferay.portal.kernel.spring.aop.Property;
+import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.view.count.model.ViewCountEntry;
@@ -39,18 +42,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ViewCountEntryLocalServiceImpl
 	extends ViewCountEntryLocalServiceBaseImpl implements ViewCountService {
-
-	@Override
-	public void addViewCountEntry(
-		long companyId, long classNameId, long classPK) {
-
-		ViewCountEntry viewCountEntry = viewCountEntryPersistence.create(
-			new ViewCountEntryPK(companyId, classNameId, classPK));
-
-		viewCountEntry.setCompanyId(companyId);
-
-		viewCountEntryPersistence.update(viewCountEntry);
-	}
 
 	@Override
 	public Class<?>[] getAopInterfaces() {
@@ -84,6 +75,15 @@ public class ViewCountEntryLocalServiceImpl
 
 	@BufferedIncrement(incrementClass = NumberIncrement.class)
 	@Override
+	@Retry(
+		acceptor = SQLStateAcceptor.class,
+		properties = {
+			@Property(
+				name = SQLStateAcceptor.SQLSTATE,
+				value = SQLStateAcceptor.SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION + "," + SQLStateAcceptor.SQLSTATE_TRANSACTION_ROLLBACK
+			)
+		}
+	)
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void incrementViewCount(
 		long companyId, long classNameId, long classPK, int increment) {
@@ -96,8 +96,15 @@ public class ViewCountEntryLocalServiceImpl
 	public void removeViewCount(long companyId, long classNameId, long classPK)
 		throws PortalException {
 
-		viewCountEntryPersistence.remove(
-			new ViewCountEntryPK(companyId, classNameId, classPK));
+		ViewCountEntryPK viewCountEntryPK = new ViewCountEntryPK(
+			companyId, classNameId, classPK);
+
+		ViewCountEntry viewCountEntry =
+			viewCountEntryPersistence.fetchByPrimaryKey(viewCountEntryPK);
+
+		if (viewCountEntry != null) {
+			viewCountEntryPersistence.remove(viewCountEntry);
+		}
 	}
 
 }

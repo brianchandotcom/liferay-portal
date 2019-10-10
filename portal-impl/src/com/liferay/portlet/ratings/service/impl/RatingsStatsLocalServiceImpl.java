@@ -24,7 +24,6 @@ import com.liferay.ratings.kernel.exception.NoSuchStatsException;
 import com.liferay.ratings.kernel.model.RatingsStats;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -92,16 +91,6 @@ public class RatingsStatsLocalServiceImpl
 	@Override
 	public RatingsStats getStats(long statsId) throws PortalException {
 		return ratingsStatsPersistence.findByPrimaryKey(statsId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<RatingsStats> getStats(String className, List<Long> classPKs) {
-		return ratingsStatsFinder.findByC_C(
-			classNameLocalService.getClassNameId(className), classPKs);
 	}
 
 	@Override

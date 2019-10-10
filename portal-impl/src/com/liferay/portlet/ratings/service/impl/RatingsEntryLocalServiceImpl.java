@@ -116,18 +116,6 @@ public class RatingsEntryLocalServiceImpl
 			userId, classNameLocalService.getClassNameId(className), classPK);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<RatingsEntry> getEntries(
-		long userId, String className, List<Long> classPKs) {
-
-		return ratingsEntryFinder.findByU_C_C(
-			userId, classNameLocalService.getClassNameId(className), classPKs);
-	}
-
 	@Override
 	public Map<Long, RatingsEntry> getEntries(
 		long userId, String className, long[] classPKs) {

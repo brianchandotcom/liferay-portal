@@ -23,34 +23,71 @@ export default function PageEditor() {
 	const config = useContext(ConfigContext);
 	const state = useContext(StoreContext);
 
-	const {fragmentEntryLinks} = state;
+	const {fragmentEntryLinks, layoutData} = state;
 
 	return (
 		<>
-			<Body fragmentEntryLinks={fragmentEntryLinks} />
+			<Body fragmentEntryLinks={fragmentEntryLinks} layoutData={layoutData} />
 			<DebugInfo config={config} state={state} />
 		</>
 	);
 }
 
-function Body({fragmentEntryLinks}) {
-	return Object.values(fragmentEntryLinks).map(
-		({content, fragmentEntryLinkId}) => {
-			if (content.value.contentKind === 'HTML') {
+function Body({layoutData, fragmentEntryLinks}) {
+	return layoutData.structure.map((row, index) => {
+		return (
+			<Row
+				columns={row.columns}
+				fragmentEntryLinks={fragmentEntryLinks}
+				key={index}
+			/>
+		);
+	});
+}
+
+function Row({columns, fragmentEntryLinks}) {
+	return (
+		<div className="row">
+			{columns.map((column, index) => {
+				const {fragmentEntryLinkIds, size} = column;
+
+				const links = fragmentEntryLinkIds.map(id => {
+					return fragmentEntryLinks[id];
+				});
+
 				return (
-					<HTML
-						key={fragmentEntryLinkId}
-						markup={content.value.content}
+					<Column
+						fragmentEntryLinks={links}
+						key={index}
+						size={size}
 					/>
 				);
-			} else {
-				return (
-					<pre key={fragmentEntryLinkId}>
-						{JSON.stringify(content, null, 2)}
-					</pre>
-				);
-			}
-		}
+			})}
+		</div>
+	);
+}
+
+function Column({fragmentEntryLinks, size}) {
+	return (
+		<div className={`col-md-${size}`}>
+			{fragmentEntryLinks.map(({content, fragmentEntryLinkId}) => {
+				if (content.value.contentKind === 'HTML') {
+					return (
+						<HTML
+							key={fragmentEntryLinkId}
+							markup={content.value.content}
+						/>
+					);
+				} else {
+					return (
+						// TODO: actually handle other `contentKind`s
+						<pre key={fragmentEntryLinkId}>
+							{JSON.stringify(content, null, 2)}
+						</pre>
+					);
+				}
+			})}
+		</div>
 	);
 }
 

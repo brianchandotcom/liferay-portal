@@ -517,6 +517,110 @@ definition {
 			dmDocumentTitle = "DM Document Title Edited");
 	}
 
+	@description = "This test covers LPS-101927. It ensures that a user can reply to a comment on an image via shared content"
+	@priority = "4"
+	test ReplyToCommentViaSharedContent {
+		JSONUser.addUser(
+			userEmailAddress = "userea2@liferay.com",
+			userFirstName = "userfn2",
+			userLastName = "userln2",
+			userScreenName = "usersn2");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea2@liferay.com",
+			userScreenName = "usersn2");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocumentSharing.addDocumentWithOnlyOwnerPermissions(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.sharePG(
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea2@liferay.com",
+			userName = "userfn2 userln2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		AssertClick(
+			key_contentTitle = "DM Document Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "DM Document Title");
+
+		Click(locator1 = "Comments#COMMENT_FIELD");
+
+		Type(
+			locator1 = "Comments#COMMENT_FIELD",
+			value1 = "Userea Comment");
+
+		Pause(locator1 = "3000");
+
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
+
+		Pause(locator1 = "3000");
+
+		Alert.viewSuccessMessage();
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
+
+		AssertClick(
+			key_contentTitle = "DM Document Title",
+			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE",
+			value1 = "DM Document Title");
+
+		Click(locator1 = "Sharing#SHARED_CONTENT_REPLY_TO_COMMENT");
+
+		Type(
+			locator1 = "Comments#COMMENT_FIELD_LAST",
+			value1 = "Userea2 Reply To Comment");
+
+		Pause(locator1 = "3000");
+
+		AssertClick(
+			locator1 = "Button#REPLY_LAST",
+			value1 = "Reply");
+
+		Pause(locator1 = "3000");
+
+		Alert.viewSuccessMessage();
+	}
+
 	@description = "This test covers LPS-94284. It ensures that the invalid email still does not add if it has a space."
 	@priority = "4"
 	test ShareViaInvalidAddress {

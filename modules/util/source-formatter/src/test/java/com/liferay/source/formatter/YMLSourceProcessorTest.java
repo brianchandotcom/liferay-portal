@@ -22,6 +22,11 @@ import org.junit.Test;
 public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testExceedMaxLineLength() throws Exception {
+		test("ExceedMaxLineLength.testyaml", "> 120", 18);
+	}
+
+	@Test
 	public void testIncorrectEmptyLines() throws Exception {
 		test("IncorrectEmptyLines.testyaml");
 	}

@@ -18,7 +18,6 @@ import Soy from 'metal-soy';
 import './comments/SidebarCommentsPanel.es';
 import './fragments/SidebarElementsPanel.es';
 import './fragments/SidebarSectionsPanel.es';
-import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
 import './page_content/SidebarPageContentsPanel.es';
 import './page_structure/SidebarPageStructurePanel.es';

@@ -69,8 +69,67 @@ public class DBStore extends BaseStore {
 			String versionLabel, InputStream inputStream)
 		throws DuplicateFileException {
 
-		updateFile(
-			companyId, repositoryId, fileName, versionLabel, inputStream);
+		if (_dlContentLocalService.hasContent(
+				companyId, repositoryId, fileName, versionLabel)) {
+
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+
+		long length = -1;
+
+		if (inputStream instanceof ByteArrayInputStream) {
+			ByteArrayInputStream byteArrayInputStream =
+				(ByteArrayInputStream)inputStream;
+
+			length = byteArrayInputStream.available();
+		}
+		else if (inputStream instanceof FileInputStream) {
+			FileInputStream fileInputStream = (FileInputStream)inputStream;
+
+			FileChannel fileChannel = fileInputStream.getChannel();
+
+			try {
+				length = fileChannel.size();
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to detect file size from file channel", ioe);
+				}
+			}
+		}
+		else if (inputStream instanceof UnsyncByteArrayInputStream) {
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				(UnsyncByteArrayInputStream)inputStream;
+
+			length = unsyncByteArrayInputStream.available();
+		}
+
+		if (length >= 0) {
+			_dlContentLocalService.addContent(
+				companyId, repositoryId, fileName, versionLabel, inputStream,
+				length);
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to detect length from input stream. Reading " +
+						"entire input stream into memory as a last resort.");
+			}
+
+			byte[] bytes = null;
+
+			try {
+				bytes = FileUtil.getBytes(inputStream);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
+
+			_dlContentLocalService.addContent(
+				companyId, repositoryId, fileName, versionLabel, bytes);
+		}
 	}
 
 	@Override
@@ -210,75 +269,6 @@ public class DBStore extends BaseStore {
 
 		_dlContentLocalService.updateDLContent(
 			companyId, repositoryId, repositoryId, fileName, newFileName);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream inputStream)
-		throws DuplicateFileException {
-
-		if (_dlContentLocalService.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		long length = -1;
-
-		if (inputStream instanceof ByteArrayInputStream) {
-			ByteArrayInputStream byteArrayInputStream =
-				(ByteArrayInputStream)inputStream;
-
-			length = byteArrayInputStream.available();
-		}
-		else if (inputStream instanceof FileInputStream) {
-			FileInputStream fileInputStream = (FileInputStream)inputStream;
-
-			FileChannel fileChannel = fileInputStream.getChannel();
-
-			try {
-				length = fileChannel.size();
-			}
-			catch (IOException ioe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to detect file size from file channel", ioe);
-				}
-			}
-		}
-		else if (inputStream instanceof UnsyncByteArrayInputStream) {
-			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				(UnsyncByteArrayInputStream)inputStream;
-
-			length = unsyncByteArrayInputStream.available();
-		}
-
-		if (length >= 0) {
-			_dlContentLocalService.addContent(
-				companyId, repositoryId, fileName, versionLabel, inputStream,
-				length);
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to detect length from input stream. Reading " +
-						"entire input stream into memory as a last resort.");
-			}
-
-			byte[] bytes = null;
-
-			try {
-				bytes = FileUtil.getBytes(inputStream);
-			}
-			catch (IOException ioe) {
-				throw new SystemException(ioe);
-			}
-
-			_dlContentLocalService.addContent(
-				companyId, repositoryId, fileName, versionLabel, bytes);
-		}
 	}
 
 	@Activate

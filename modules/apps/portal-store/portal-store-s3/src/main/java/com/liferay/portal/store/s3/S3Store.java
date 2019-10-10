@@ -104,7 +104,24 @@ public class S3Store extends BaseStore {
 			String versionLabel, InputStream is)
 		throws PortalException {
 
-		updateFile(companyId, repositoryId, fileName, versionLabel, is);
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile(is);
+
+			putObject(companyId, repositoryId, fileName, versionLabel, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	@Override
@@ -282,32 +299,6 @@ public class S3Store extends BaseStore {
 			companyId, repositoryId, newFileName);
 
 		moveObjects(oldKey, newKey);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws PortalException {
-
-		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, fileName, versionLabel);
-		}
-
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile(is);
-
-			putObject(companyId, repositoryId, fileName, versionLabel, file);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
 	}
 
 	@Activate

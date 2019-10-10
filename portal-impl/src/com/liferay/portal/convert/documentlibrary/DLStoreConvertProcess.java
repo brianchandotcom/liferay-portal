@@ -48,15 +48,8 @@ public interface DLStoreConvertProcess {
 		try (InputStream is = sourceStore.getFileAsStream(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			if (versionLabel.equals(Store.VERSION_DEFAULT)) {
-				targetStore.addFile(
-					companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-					is);
-			}
-			else {
-				targetStore.updateFile(
-					companyId, repositoryId, fileName, versionLabel, is);
-			}
+			targetStore.addFile(
+				companyId, repositoryId, fileName, versionLabel, is);
 
 			if (delete) {
 				sourceStore.deleteFile(

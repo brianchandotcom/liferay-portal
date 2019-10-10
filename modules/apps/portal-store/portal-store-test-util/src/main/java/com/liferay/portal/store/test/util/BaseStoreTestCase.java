@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -473,35 +472,6 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
-	public void testUpdateFileWithInputStream() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.updateFile(
-			companyId, repositoryId, fileName, "1.1",
-			new ByteArrayInputStream(_DATA_VERSION_2));
-
-		byte[] firstVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(companyId, repositoryId, fileName, "1.0"));
-
-		Assert.assertArrayEquals(_DATA_VERSION_1, firstVersionBytes);
-
-		byte[] secondVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(companyId, repositoryId, fileName, "1.1"));
-
-		Assert.assertArrayEquals(_DATA_VERSION_2, secondVersionBytes);
-
-		byte[] currentVersionBytes = StreamUtil.toByteArray(
-			store.getFileAsStream(
-				companyId, repositoryId, fileName, StringPool.BLANK));
-
-		Assert.assertArrayEquals(_DATA_VERSION_2, currentVersionBytes);
-	}
-
-	@Test
 	public void testUpdateFileWithNewFileName() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
@@ -549,7 +519,7 @@ public abstract class BaseStoreTestCase {
 		String versionLabel = "1.";
 
 		for (int i = 1; i <= newVersionCount; i++) {
-			store.updateFile(
+			store.addFile(
 				companyId, repositoryId, fileName, versionLabel + i,
 				new UnsyncByteArrayInputStream(_DATA_VERSION_1));
 		}

@@ -286,28 +286,6 @@ public class FileSystemStore extends BaseStore {
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
 
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws DuplicateFileException {
-
-		try {
-			File fileNameVersionFile = getFileNameVersionFile(
-				companyId, repositoryId, fileName, versionLabel);
-
-			if (fileNameVersionFile.exists()) {
-				throw new DuplicateFileException(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-
-			FileUtil.write(fileNameVersionFile, is);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
 	protected void deleteEmptyAncestors(File file) {
 		deleteEmptyAncestors(-1, -1, file);
 	}

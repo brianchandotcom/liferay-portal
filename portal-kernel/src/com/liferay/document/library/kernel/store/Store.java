@@ -144,19 +144,4 @@ public interface Store {
 			String newFileName)
 		throws PortalException;
 
-	/**
-	 * Updates a file based on an {@link InputStream} object.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file name
-	 * @param versionLabel the file's new version label
-	 * @param is the new file's data
-	 */
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel, InputStream is)
-		throws PortalException;
-
 }

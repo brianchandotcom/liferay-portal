@@ -37,6 +37,12 @@ body {
 	}
 }
 
+.pages-tree {
+	.tree-node-selected {
+		font-weight: bold;
+	}
+}
+
 .product-menu {
 	background-color: $product-menu-body-bg;
 

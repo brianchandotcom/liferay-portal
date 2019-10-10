@@ -3,4 +3,5 @@ Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Export-Package: ${package}.api
 #if (${buildType} != "gradle")
--metatype: *#end
+-metatype: *
+-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin#end

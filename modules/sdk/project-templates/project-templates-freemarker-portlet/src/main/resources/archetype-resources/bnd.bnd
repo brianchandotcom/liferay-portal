@@ -9,6 +9,7 @@ Export-Package: ${package}.constants
 	@com.liferay.util.taglib-[0-9\.]*.jar!/META-INF/*.tld
 #if (${buildType} != "gradle")
 -metatype: *
+-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
 #end

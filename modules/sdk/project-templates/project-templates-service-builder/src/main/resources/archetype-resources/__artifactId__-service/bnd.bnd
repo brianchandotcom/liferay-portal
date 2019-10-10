@@ -9,6 +9,7 @@ Liferay-Service: true
 #if (${buildType} != "gradle")
 -includeresource: META-INF/service.xml=service.xml
 -liferay-service-xml: META-INF/service.xml
+-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
 -plugin.service: com.liferay.ant.bnd.service.ServiceAnalyzerPlugin
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || (${dependencyInjector} != "ds"))
 -plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin#end#end

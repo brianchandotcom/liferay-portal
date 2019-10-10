@@ -9,6 +9,7 @@ Web-ContextPath: /dynamic-data-${artifactId}-form-field
 -jsp: *.jsp,*.jspf
 -metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
+-plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
 #if (${liferayVersion.startsWith("7.1")})
 -plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
 #end

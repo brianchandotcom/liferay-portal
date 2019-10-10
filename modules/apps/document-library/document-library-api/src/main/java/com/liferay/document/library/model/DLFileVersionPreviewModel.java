@@ -15,6 +15,7 @@
 package com.liferay.document.library.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -31,7 +32,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFileVersionPreviewModel
-	extends BaseModel<DLFileVersionPreview> {
+	extends BaseModel<DLFileVersionPreview>, ShardedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -80,6 +81,22 @@ public interface DLFileVersionPreviewModel
 	 * @param groupId the group ID of this dl file version preview
 	 */
 	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this dl file version preview.
+	 *
+	 * @return the company ID of this dl file version preview
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this dl file version preview.
+	 *
+	 * @param companyId the company ID of this dl file version preview
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the file entry ID of this dl file version preview.

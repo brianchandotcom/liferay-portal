@@ -331,6 +331,40 @@ public class AssetEntryUsageLocalServiceUtil {
 	}
 
 	/**
+	 * Returns all the asset entry usages matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the asset entry usages
+	 * @param companyId the primary key of the company
+	 * @return the matching asset entry usages, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
+		getAssetEntryUsagesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getAssetEntryUsagesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of asset entry usages matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the asset entry usages
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of asset entry usages
+	 * @param end the upper bound of the range of asset entry usages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching asset entry usages, or an empty list if no matches were found
+	 */
+	public static java.util.List<com.liferay.asset.model.AssetEntryUsage>
+		getAssetEntryUsagesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.asset.model.AssetEntryUsage> orderByComparator) {
+
+		return getService().getAssetEntryUsagesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of asset entry usages.
 	 *
 	 * @return the number of asset entry usages
@@ -345,6 +379,14 @@ public class AssetEntryUsageLocalServiceUtil {
 
 	public static int getAssetEntryUsagesCount(long assetEntryId, int type) {
 		return getService().getAssetEntryUsagesCount(assetEntryId, type);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

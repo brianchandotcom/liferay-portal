@@ -43,29 +43,23 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 
 				lineNumber++;
 
-				_checkMaxLineLength(line, fileName, absolutePath, lineNumber);
+				int maxLineLength;
+
+				try {
+					maxLineLength = Integer.parseInt(
+						getAttributeValue(_MAX_LINE_LENGTH, absolutePath));
+				}
+				catch (Exception e) {
+					continue;
+				}
+
+				if (getLineLength(line) > maxLineLength) {
+					addMessage(fileName, "> " + maxLineLength, lineNumber);
+				}
 			}
 		}
 
 		return content;
-	}
-
-	private void _checkMaxLineLength(
-		String line, String fileName, String absolutePath, int lineNumber) {
-
-		int maxLineLength;
-
-		try {
-			maxLineLength = Integer.parseInt(
-				getAttributeValue(_MAX_LINE_LENGTH, absolutePath));
-		}
-		catch (Exception e) {
-			return;
-		}
-
-		if (getLineLength(line) > maxLineLength) {
-			addMessage(fileName, "> " + maxLineLength, lineNumber);
-		}
 	}
 
 	private static final String _MAX_LINE_LENGTH = "maxLineLength";

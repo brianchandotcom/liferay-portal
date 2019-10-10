@@ -42,15 +42,15 @@ public class LayoutSEOEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPrivateLayout(model.isPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
-		soapModel.setCanonicalURLEnabled(model.isCanonicalURLEnabled());
 		soapModel.setCanonicalURL(model.getCanonicalURL());
-		soapModel.setOpenGraphTitleEnabled(model.isOpenGraphTitleEnabled());
-		soapModel.setOpenGraphTitle(model.getOpenGraphTitle());
+		soapModel.setCanonicalURLEnabled(model.isCanonicalURLEnabled());
+		soapModel.setOpenGraphDescription(model.getOpenGraphDescription());
 		soapModel.setOpenGraphDescriptionEnabled(
 			model.isOpenGraphDescriptionEnabled());
-		soapModel.setOpenGraphDescription(model.getOpenGraphDescription());
 		soapModel.setOpenGraphImageFileEntryId(
 			model.getOpenGraphImageFileEntryId());
+		soapModel.setOpenGraphTitle(model.getOpenGraphTitle());
+		soapModel.setOpenGraphTitleEnabled(model.isOpenGraphTitleEnabled());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -202,6 +202,14 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_layoutId = layoutId;
 	}
 
+	public String getCanonicalURL() {
+		return _canonicalURL;
+	}
+
+	public void setCanonicalURL(String canonicalURL) {
+		_canonicalURL = canonicalURL;
+	}
+
 	public boolean getCanonicalURLEnabled() {
 		return _canonicalURLEnabled;
 	}
@@ -214,32 +222,12 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_canonicalURLEnabled = canonicalURLEnabled;
 	}
 
-	public String getCanonicalURL() {
-		return _canonicalURL;
+	public String getOpenGraphDescription() {
+		return _openGraphDescription;
 	}
 
-	public void setCanonicalURL(String canonicalURL) {
-		_canonicalURL = canonicalURL;
-	}
-
-	public boolean getOpenGraphTitleEnabled() {
-		return _openGraphTitleEnabled;
-	}
-
-	public boolean isOpenGraphTitleEnabled() {
-		return _openGraphTitleEnabled;
-	}
-
-	public void setOpenGraphTitleEnabled(boolean openGraphTitleEnabled) {
-		_openGraphTitleEnabled = openGraphTitleEnabled;
-	}
-
-	public String getOpenGraphTitle() {
-		return _openGraphTitle;
-	}
-
-	public void setOpenGraphTitle(String openGraphTitle) {
-		_openGraphTitle = openGraphTitle;
+	public void setOpenGraphDescription(String openGraphDescription) {
+		_openGraphDescription = openGraphDescription;
 	}
 
 	public boolean getOpenGraphDescriptionEnabled() {
@@ -256,20 +244,32 @@ public class LayoutSEOEntrySoap implements Serializable {
 		_openGraphDescriptionEnabled = openGraphDescriptionEnabled;
 	}
 
-	public String getOpenGraphDescription() {
-		return _openGraphDescription;
-	}
-
-	public void setOpenGraphDescription(String openGraphDescription) {
-		_openGraphDescription = openGraphDescription;
-	}
-
 	public long getOpenGraphImageFileEntryId() {
 		return _openGraphImageFileEntryId;
 	}
 
 	public void setOpenGraphImageFileEntryId(long openGraphImageFileEntryId) {
 		_openGraphImageFileEntryId = openGraphImageFileEntryId;
+	}
+
+	public String getOpenGraphTitle() {
+		return _openGraphTitle;
+	}
+
+	public void setOpenGraphTitle(String openGraphTitle) {
+		_openGraphTitle = openGraphTitle;
+	}
+
+	public boolean getOpenGraphTitleEnabled() {
+		return _openGraphTitleEnabled;
+	}
+
+	public boolean isOpenGraphTitleEnabled() {
+		return _openGraphTitleEnabled;
+	}
+
+	public void setOpenGraphTitleEnabled(boolean openGraphTitleEnabled) {
+		_openGraphTitleEnabled = openGraphTitleEnabled;
 	}
 
 	public Date getLastPublishDate() {
@@ -291,13 +291,13 @@ public class LayoutSEOEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private boolean _privateLayout;
 	private long _layoutId;
-	private boolean _canonicalURLEnabled;
 	private String _canonicalURL;
-	private boolean _openGraphTitleEnabled;
-	private String _openGraphTitle;
-	private boolean _openGraphDescriptionEnabled;
+	private boolean _canonicalURLEnabled;
 	private String _openGraphDescription;
+	private boolean _openGraphDescriptionEnabled;
 	private long _openGraphImageFileEntryId;
+	private String _openGraphTitle;
+	private boolean _openGraphTitleEnabled;
 	private Date _lastPublishDate;
 
 }

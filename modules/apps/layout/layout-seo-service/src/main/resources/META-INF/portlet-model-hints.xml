@@ -13,13 +13,13 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="privateLayout" type="boolean" />
 		<field name="layoutId" type="long" />
-		<field name="canonicalURLEnabled" type="boolean" />
 		<field localized="true" name="canonicalURL" type="String" />
-		<field name="openGraphTitleEnabled" type="boolean" />
-		<field localized="true" name="openGraphTitle" type="String" />
-		<field name="openGraphDescriptionEnabled" type="boolean" />
+		<field name="canonicalURLEnabled" type="boolean" />
 		<field localized="true" name="openGraphDescription" type="String" />
+		<field name="openGraphDescriptionEnabled" type="boolean" />
 		<field name="openGraphImageFileEntryId" type="long" />
+		<field localized="true" name="openGraphTitle" type="String" />
+		<field name="openGraphTitleEnabled" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

@@ -10,12 +10,12 @@ create table LayoutSEOEntry (
 	modifiedDate DATE null,
 	privateLayout BOOLEAN,
 	layoutId LONG,
-	canonicalURLEnabled BOOLEAN,
 	canonicalURL STRING null,
-	openGraphTitleEnabled BOOLEAN,
-	openGraphTitle STRING null,
-	openGraphDescriptionEnabled BOOLEAN,
+	canonicalURLEnabled BOOLEAN,
 	openGraphDescription STRING null,
+	openGraphDescriptionEnabled BOOLEAN,
 	openGraphImageFileEntryId LONG,
+	openGraphTitle STRING null,
+	openGraphTitleEnabled BOOLEAN,
 	lastPublishDate DATE null
 );

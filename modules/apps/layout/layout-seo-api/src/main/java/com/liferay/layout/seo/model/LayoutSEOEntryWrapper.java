@@ -54,15 +54,15 @@ public class LayoutSEOEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("privateLayout", isPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
-		attributes.put("canonicalURLEnabled", isCanonicalURLEnabled());
 		attributes.put("canonicalURL", getCanonicalURL());
-		attributes.put("openGraphTitleEnabled", isOpenGraphTitleEnabled());
-		attributes.put("openGraphTitle", getOpenGraphTitle());
-		attributes.put(
-			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
+		attributes.put("canonicalURLEnabled", isCanonicalURLEnabled());
 		attributes.put("openGraphDescription", getOpenGraphDescription());
 		attributes.put(
+			"openGraphDescriptionEnabled", isOpenGraphDescriptionEnabled());
+		attributes.put(
 			"openGraphImageFileEntryId", getOpenGraphImageFileEntryId());
+		attributes.put("openGraphTitle", getOpenGraphTitle());
+		attributes.put("openGraphTitleEnabled", isOpenGraphTitleEnabled());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -136,37 +136,17 @@ public class LayoutSEOEntryWrapper
 			setLayoutId(layoutId);
 		}
 
-		Boolean canonicalURLEnabled = (Boolean)attributes.get(
-			"canonicalURLEnabled");
-
-		if (canonicalURLEnabled != null) {
-			setCanonicalURLEnabled(canonicalURLEnabled);
-		}
-
 		String canonicalURL = (String)attributes.get("canonicalURL");
 
 		if (canonicalURL != null) {
 			setCanonicalURL(canonicalURL);
 		}
 
-		Boolean openGraphTitleEnabled = (Boolean)attributes.get(
-			"openGraphTitleEnabled");
+		Boolean canonicalURLEnabled = (Boolean)attributes.get(
+			"canonicalURLEnabled");
 
-		if (openGraphTitleEnabled != null) {
-			setOpenGraphTitleEnabled(openGraphTitleEnabled);
-		}
-
-		String openGraphTitle = (String)attributes.get("openGraphTitle");
-
-		if (openGraphTitle != null) {
-			setOpenGraphTitle(openGraphTitle);
-		}
-
-		Boolean openGraphDescriptionEnabled = (Boolean)attributes.get(
-			"openGraphDescriptionEnabled");
-
-		if (openGraphDescriptionEnabled != null) {
-			setOpenGraphDescriptionEnabled(openGraphDescriptionEnabled);
+		if (canonicalURLEnabled != null) {
+			setCanonicalURLEnabled(canonicalURLEnabled);
 		}
 
 		String openGraphDescription = (String)attributes.get(
@@ -176,11 +156,31 @@ public class LayoutSEOEntryWrapper
 			setOpenGraphDescription(openGraphDescription);
 		}
 
+		Boolean openGraphDescriptionEnabled = (Boolean)attributes.get(
+			"openGraphDescriptionEnabled");
+
+		if (openGraphDescriptionEnabled != null) {
+			setOpenGraphDescriptionEnabled(openGraphDescriptionEnabled);
+		}
+
 		Long openGraphImageFileEntryId = (Long)attributes.get(
 			"openGraphImageFileEntryId");
 
 		if (openGraphImageFileEntryId != null) {
 			setOpenGraphImageFileEntryId(openGraphImageFileEntryId);
+		}
+
+		String openGraphTitle = (String)attributes.get("openGraphTitle");
+
+		if (openGraphTitle != null) {
+			setOpenGraphTitle(openGraphTitle);
+		}
+
+		Boolean openGraphTitleEnabled = (Boolean)attributes.get(
+			"openGraphTitleEnabled");
+
+		if (openGraphTitleEnabled != null) {
+			setOpenGraphTitleEnabled(openGraphTitleEnabled);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

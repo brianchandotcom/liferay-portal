@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
+import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.PageJsonSerializer;
@@ -103,15 +104,18 @@ public abstract class BaseMessageBodyWriter
 			new SimpleFilterProvider() {
 				{
 					Set<String> fieldNames = _fieldsQueryParam.getFieldNames();
+					Set<String> restrictFieldNames =
+						_restrictFieldsQueryParam.getRestrictFieldNames();
 
 					PropertyFilter propertyFilter = null;
 
-					if (fieldNames == null) {
+					if ((fieldNames == null) && (restrictFieldNames == null)) {
 						propertyFilter =
 							SimpleBeanPropertyFilter.serializeAll();
 					}
 					else {
-						propertyFilter = VulcanPropertyFilter.of(fieldNames);
+						propertyFilter = VulcanPropertyFilter.of(
+							fieldNames, restrictFieldNames);
 					}
 
 					addFilter("Liferay.Vulcan", propertyFilter);
@@ -143,5 +147,8 @@ public abstract class BaseMessageBodyWriter
 
 	@Context
 	private Providers _providers;
+
+	@Context
+	private RestrictFieldsQueryParam _restrictFieldsQueryParam;
 
 }

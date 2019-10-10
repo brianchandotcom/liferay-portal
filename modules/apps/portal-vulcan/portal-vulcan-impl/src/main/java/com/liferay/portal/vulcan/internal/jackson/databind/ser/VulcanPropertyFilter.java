@@ -22,8 +22,10 @@ import com.fasterxml.jackson.databind.ser.PropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,8 +35,10 @@ import java.util.stream.Stream;
 public class VulcanPropertyFilter
 	extends SimpleBeanPropertyFilter implements PropertyFilter {
 
-	public static VulcanPropertyFilter of(Set<String> fieldNames) {
-		return new VulcanPropertyFilter(fieldNames);
+	public static VulcanPropertyFilter of(
+		Set<String> fieldNames, Set<String> restrictFieldNames) {
+
+		return new VulcanPropertyFilter(fieldNames, restrictFieldNames);
 	}
 
 	@Override
@@ -54,19 +58,50 @@ public class VulcanPropertyFilter
 		}
 	}
 
-	private VulcanPropertyFilter(Set<String> fieldNames) {
-		_fieldNames = fieldNames;
+	private VulcanPropertyFilter(
+		Set<String> fieldNames, Set<String> restrictFieldNames) {
+
+		if (fieldNames == null) {
+			_fieldNames = new HashSet<>();
+		}
+		else {
+			_fieldNames = fieldNames;
+		}
+
+		if (restrictFieldNames == null) {
+			_restrictFieldNames = new HashSet<>();
+		}
+		else {
+			_restrictFieldNames = restrictFieldNames;
+		}
 	}
 
 	private boolean _isFiltered(String path) {
-		return _fieldNames.contains(path);
+		if ((_fieldNames.isEmpty() || _fieldNames.contains(path)) &&
+			!_restrictFieldNames.contains(path)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isFilteredWithoutNested(String path) {
 		if (_isFiltered(path)) {
-			Stream<String> stream = _fieldNames.stream();
+			Stream<String> fieldStream = _fieldNames.stream();
 
-			return stream.noneMatch(field -> field.startsWith(path + "."));
+			Predicate<String> stringPredicate = field -> field.startsWith(
+				path + ".");
+
+			Stream<String> restrictFieldStream = _restrictFieldNames.stream();
+
+			if (fieldStream.noneMatch(stringPredicate) &&
+				restrictFieldStream.noneMatch(stringPredicate)) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		return false;
@@ -133,5 +168,6 @@ public class VulcanPropertyFilter
 	}
 
 	private final Set<String> _fieldNames;
+	private final Set<String> _restrictFieldNames;
 
 }

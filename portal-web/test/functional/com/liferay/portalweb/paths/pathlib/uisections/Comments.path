@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_FIELD_LAST</td>
+	<td>xpath=(//div[contains(@class,'alloy-editor') and contains(@role,'textbox')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_INFO</td>
 	<td>//fieldset[contains(@class,'add-comment')]//div[contains(@class,'alert-info')]</td>
 	<td></td>

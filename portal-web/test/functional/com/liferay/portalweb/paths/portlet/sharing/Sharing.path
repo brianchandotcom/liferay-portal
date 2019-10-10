@@ -145,6 +145,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARED_CONTENT_REPLY_TO_COMMENT</td>
+	<td>//div[contains(@class,'autofit-col')]/button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

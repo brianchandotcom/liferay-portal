@@ -504,6 +504,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPLY_LAST</td>
+	<td>xpath=(//button[contains(.,'Reply')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPORT</td>
 	<td>//button[contains(.,'Report')]</td>
 	<td></td>

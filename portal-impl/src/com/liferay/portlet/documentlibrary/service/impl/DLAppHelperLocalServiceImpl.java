@@ -264,8 +264,8 @@ public class DLAppHelperLocalServiceImpl
 		// File read count
 
 		assetEntryLocalService.incrementViewCounter(
-			userId, DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(), 1);
+			fileEntry.getCompanyId(), userId,
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(), 1);
 
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByToFileEntryId(
@@ -273,7 +273,8 @@ public class DLAppHelperLocalServiceImpl
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			assetEntryLocalService.incrementViewCounter(
-				userId, DLFileShortcutConstants.getClassName(),
+				fileEntry.getCompanyId(), userId,
+				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId(), 1);
 		}
 	}

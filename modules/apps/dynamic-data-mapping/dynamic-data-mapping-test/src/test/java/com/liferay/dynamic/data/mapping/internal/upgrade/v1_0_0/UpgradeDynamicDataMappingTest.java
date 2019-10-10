@@ -117,8 +117,9 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		setUpJSONFactoryUtil();
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			null, null, null, null, null, null, _ddmFormValuesDeserializer,
-			_ddmFormValuesSerializer, null, null, null, null, null, null,
+			null, null, null, null, null, null, null,
+			_ddmFormValuesDeserializer, _ddmFormValuesSerializer, null, null,
+			null, null, null, null,
 			(ResourceActions)ProxyUtil.newProxyInstance(
 				UpgradeDynamicDataMappingTest.class.getClassLoader(),
 				new Class<?>[] {ResourceActions.class},

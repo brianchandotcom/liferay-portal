@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.persistence.ViewCountEntryFinder;
+import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +67,14 @@ public class ViewCountEntryFinderTest {
 		_className = _classNameLocalService.getClassName(
 			ViewCountEntryFinderTest.class.getName());
 
-		_viewCountEntry = _viewCountEntryLocalService.addViewCountEntry(
-			TestPropsValues.getCompanyId(), _className.getClassNameId(), -1);
+		_viewCountEntry = _viewCountEntryLocalService.createViewCountEntry(
+			new ViewCountEntryPK(
+				TestPropsValues.getCompanyId(), _className.getClassNameId(),
+				-1));
+
+		_viewCountEntry.setCompanyId(TestPropsValues.getCompanyId());
+
+		_viewCountEntryLocalService.addViewCountEntry(_viewCountEntry);
 
 		Runtime runtime = Runtime.getRuntime();
 

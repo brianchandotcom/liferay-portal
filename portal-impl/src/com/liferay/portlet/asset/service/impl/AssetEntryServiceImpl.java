@@ -161,14 +161,15 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
-	public AssetEntry incrementViewCounter(String className, long classPK)
+	public AssetEntry incrementViewCounter(
+			long companyId, String className, long classPK)
 		throws PortalException {
 
 		AssetEntryPermission.check(
 			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
 
 		return assetEntryLocalService.incrementViewCounter(
-			getGuestOrUserId(), className, classPK);
+			companyId, getGuestOrUserId(), className, classPK);
 	}
 
 	@Override

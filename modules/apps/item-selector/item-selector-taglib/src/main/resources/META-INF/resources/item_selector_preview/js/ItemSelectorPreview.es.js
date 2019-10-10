@@ -12,8 +12,6 @@
  * details.
  */
 
-import {ClayIconSpriteContext} from '@clayui/icon';
-import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
@@ -67,20 +65,6 @@ class ItemSelectorPreview extends Component {
 			'keydown',
 			this.handleOnKeyDown.bind(this)
 		);
-	}
-
-	componentDidUpdate() {
-		const sidenavToggle = this.refs.test;
-
-		if (sidenavToggle) {
-			Liferay.SideNavigation.initialize(sidenavToggle, {
-				container: '.sidenav-container',
-				position: 'right',
-				type: 'relative',
-				typeMobile: 'fixed',
-				width: '320px'
-			});
-		}
 	}
 
 	close = () => {
@@ -186,6 +170,8 @@ class ItemSelectorPreview extends Component {
 				e.stopPropagation();
 				this.close();
 				break;
+			default:
+				break;
 		}
 	};
 
@@ -247,8 +233,8 @@ class ItemSelectorPreview extends Component {
 				/>
 
 				<Footer
-					title={currentItem.title}
 					currentIndex={currentItemIndex}
+					title={currentItem.title}
 					totalItems={items.length}
 				/>
 			</div>

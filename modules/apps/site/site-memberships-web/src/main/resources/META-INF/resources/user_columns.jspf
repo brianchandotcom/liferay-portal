@@ -37,9 +37,14 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 		row.setCssClass("entry-card lfr-asset-item");
 		%>
 
+		<%
+		String userIconColor = "user-icon " + LexiconUtil.getUserColorCssClass(user2);
+		%>
+
 		<liferay-ui:search-container-column-text>
 			<clay:user-card
 				userCard="<%= new UsersUserCard(user2, !selectUsers, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+				userColorCssClass="<%= userIconColor %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

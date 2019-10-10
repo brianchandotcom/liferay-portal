@@ -12,21 +12,29 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 const SearchForm = props => (
 	<form className="mb-3" role="search">
-		<input
-			className="form-control form-control-sm"
-			id="searchInput"
-			onChange={event => {
-				props.onChange(event.target.value);
-			}}
-			placeholder={`${Liferay.Language.get('search')}...`}
-			type="text"
-			value={props.value}
-		/>
+		<div className="input-group">
+			<div className="input-group-item">
+				<input
+					className="form-control form-control-sm input-group-inset input-group-inset-after"
+					id="searchInput"
+					onChange={event => {
+						props.onChange(event.target.value);
+					}}
+					placeholder={`${Liferay.Language.get('search')}...`}
+					type="text"
+					value={props.value}
+				/>
+				<div className="input-group-inset-item input-group-inset-item-after">
+					<ClayIcon symbol="search" />
+				</div>
+			</div>
+		</div>
 	</form>
 );
 

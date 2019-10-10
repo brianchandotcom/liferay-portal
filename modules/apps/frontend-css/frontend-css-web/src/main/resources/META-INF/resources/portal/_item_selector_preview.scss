@@ -10,7 +10,7 @@
 	}
 
 	.header > nav {
-		padding: .5rem 0;
+		padding: 0.5rem 0;
 
 		strong {
 			font-size: 1rem;
@@ -26,16 +26,17 @@
 			padding: 1rem;
 		}
 
-		.sidenav-content{
+		.sidenav-content {
 			height: 100%;
 			position: relative;
 
-			.pull-left, .pull-right {
+			.pull-left,
+			.pull-right {
 				position: absolute;
 				top: calc(50% - 2rem);
 			}
 
-			.pull-left {
+			.pull-left {
 				left: 0;
 			}
 
@@ -55,19 +56,19 @@
 			&:active,
 			&:hover,
 			&:focus {
-				color: #FFF;
+				color: #fff;
 			}
 		}
 
 		.info-panel {
-			color: #FFF;
+			color: #fff;
 		}
 	}
 
 	.footer {
-		background-color: #30313F;
+		background-color: #30313f;
 		bottom: 0;
-		color: #FFF;
+		color: #fff;
 		padding: 0.75rem 1.5rem;
 		position: fixed;
 		text-align: center;

@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>

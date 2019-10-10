@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = PortalSettingsFormContributor.class)
+@Component(service = PortalSettingsFormContributor.class)
 public class TokenPortalSettingsFormContributor
 	implements PortalSettingsFormContributor {
 

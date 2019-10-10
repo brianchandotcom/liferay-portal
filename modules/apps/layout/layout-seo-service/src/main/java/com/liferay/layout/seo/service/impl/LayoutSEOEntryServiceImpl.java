@@ -45,11 +45,11 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
-			boolean openGraphTitleEnabled,
-			Map<Locale, String> openGraphTitleMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
-			long openGraphImageFileEntryId, ServiceContext serviceContext)
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayout(
@@ -60,9 +60,9 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			getUserId(), groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, openGraphTitleEnabled, openGraphTitleMap,
-			openGraphDescriptionEnabled, openGraphDescriptionMap,
-			openGraphImageFileEntryId, serviceContext);
+			canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageFileEntryId,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
 		return updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, enabledCanonicalURLMap,
-			canonicalURLMap, false, Collections.emptyMap(), false,
-			Collections.emptyMap(), 0, serviceContext);
+			canonicalURLMap, false, Collections.emptyMap(), 0, false,
+			Collections.emptyMap(), serviceContext);
 	}
 
 }

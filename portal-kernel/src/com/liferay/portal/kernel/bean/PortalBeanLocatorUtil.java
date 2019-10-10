@@ -105,21 +105,6 @@ public class PortalBeanLocatorUtil {
 		_beanLocator = beanLocator;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public ClassLoader getBeanLocatorClassLoader(BeanLocator beanLocator);
-
-		public ClassLoader getContextClassLoader(Thread currentThread);
-
-		public void setContextClassLoader(
-			Thread currentThread, ClassLoader classLoader);
-
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalBeanLocatorUtil.class);
 

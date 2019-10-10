@@ -241,12 +241,6 @@ public class AssigneeUserResourceImpl
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"assigneeId", "assigneeId");
 
-		termsAggregation.setSize(10000);
-
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
-
 		termsAggregation.addChildrenAggregations(
 			_aggregations.valueCount("taskCount", "taskId"));
 
@@ -257,6 +251,12 @@ public class AssigneeUserResourceImpl
 				_resourceHelper.createBucketSortPipelineAggregation(
 					fieldSort, pagination));
 		}
+
+		termsAggregation.setSize(10000);
+
+		searchSearchRequest.addAggregation(termsAggregation);
+
+		searchSearchRequest.setIndexNames("workflow-metrics-tokens");
 
 		searchSearchRequest.setQuery(
 			_createTokensBooleanQuery(processId, taskKeys));

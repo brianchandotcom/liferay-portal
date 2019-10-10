@@ -669,6 +669,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_M" return-type="Collection" where="system = [$FALSE$]">
+			<finder-column name="groupId" />
+			<finder-column name="masterLayoutPageTemplateEntryId" />
+		</finder>
 		<finder name="C_L" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="companyId" />
 			<finder-column name="layoutPrototypeUuid" />

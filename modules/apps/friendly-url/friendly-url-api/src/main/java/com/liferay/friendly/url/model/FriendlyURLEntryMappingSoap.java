@@ -36,6 +36,7 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setFriendlyURLEntryMappingId(
 			model.getFriendlyURLEntryMappingId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
@@ -118,6 +119,14 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 		_friendlyURLEntryMappingId = friendlyURLEntryMappingId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -144,6 +153,7 @@ public class FriendlyURLEntryMappingSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _friendlyURLEntryMappingId;
+	private long _companyId;
 	private long _classNameId;
 	private long _classPK;
 	private long _friendlyURLEntryId;

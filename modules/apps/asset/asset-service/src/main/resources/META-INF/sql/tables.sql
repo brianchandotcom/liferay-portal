@@ -3,6 +3,7 @@ create table AssetEntryUsage (
 	uuid_ VARCHAR(75) null,
 	assetEntryUsageId LONG not null primary key,
 	groupId LONG,
+	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	assetEntryId LONG,

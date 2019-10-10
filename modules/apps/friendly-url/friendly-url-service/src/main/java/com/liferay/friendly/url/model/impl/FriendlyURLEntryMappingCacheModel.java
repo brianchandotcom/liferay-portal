@@ -76,12 +76,14 @@ public class FriendlyURLEntryMappingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", friendlyURLEntryMappingId=");
 		sb.append(friendlyURLEntryMappingId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -101,6 +103,7 @@ public class FriendlyURLEntryMappingCacheModel
 		friendlyURLEntryMappingImpl.setMvccVersion(mvccVersion);
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
 			friendlyURLEntryMappingId);
+		friendlyURLEntryMappingImpl.setCompanyId(companyId);
 		friendlyURLEntryMappingImpl.setClassNameId(classNameId);
 		friendlyURLEntryMappingImpl.setClassPK(classPK);
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryId);
@@ -116,6 +119,8 @@ public class FriendlyURLEntryMappingCacheModel
 
 		friendlyURLEntryMappingId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
@@ -129,6 +134,8 @@ public class FriendlyURLEntryMappingCacheModel
 
 		objectOutput.writeLong(friendlyURLEntryMappingId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
@@ -138,6 +145,7 @@ public class FriendlyURLEntryMappingCacheModel
 
 	public long mvccVersion;
 	public long friendlyURLEntryMappingId;
+	public long companyId;
 	public long classNameId;
 	public long classPK;
 	public long friendlyURLEntryId;

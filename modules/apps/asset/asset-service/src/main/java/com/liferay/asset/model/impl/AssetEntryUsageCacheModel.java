@@ -78,7 +78,7 @@ public class AssetEntryUsageCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,8 @@ public class AssetEntryUsageCacheModel
 		sb.append(assetEntryUsageId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -124,6 +126,7 @@ public class AssetEntryUsageCacheModel
 
 		assetEntryUsageImpl.setAssetEntryUsageId(assetEntryUsageId);
 		assetEntryUsageImpl.setGroupId(groupId);
+		assetEntryUsageImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			assetEntryUsageImpl.setCreateDate(null);
@@ -172,6 +175,8 @@ public class AssetEntryUsageCacheModel
 		assetEntryUsageId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
@@ -200,6 +205,8 @@ public class AssetEntryUsageCacheModel
 		objectOutput.writeLong(assetEntryUsageId);
 
 		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
@@ -224,6 +231,7 @@ public class AssetEntryUsageCacheModel
 	public String uuid;
 	public long assetEntryUsageId;
 	public long groupId;
+	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public long assetEntryId;

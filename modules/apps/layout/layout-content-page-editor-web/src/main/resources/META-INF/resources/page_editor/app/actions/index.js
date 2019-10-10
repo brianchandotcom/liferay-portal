@@ -25,7 +25,7 @@ export {default as unloadReducer} from './unloadReducer';
  * Action types.
  */
 
-// TODO: turn on @babel/plugin-proposal-export-namespace-from and make these
+// TODO: once LPS-103009 lands, change this to:
 // `export * as TYPES from './types';`
 import * as TYPES from './types';
 export {TYPES};

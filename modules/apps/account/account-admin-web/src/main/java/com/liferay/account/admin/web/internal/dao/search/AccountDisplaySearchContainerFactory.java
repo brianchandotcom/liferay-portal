@@ -81,7 +81,10 @@ public class AccountDisplaySearchContainerFactory {
 			accountEntries, AccountDisplay::of);
 
 		accountDisplaySearchContainer.setResults(accountDisplays);
-		accountDisplaySearchContainer.setTotal(accountDisplays.size());
+
+		accountDisplaySearchContainer.setTotal(
+			AccountEntryLocalServiceUtil.getAccountEntriesCount(
+				themeDisplay.getCompanyId(), _getStatus(navigation)));
 
 		return accountDisplaySearchContainer;
 	}

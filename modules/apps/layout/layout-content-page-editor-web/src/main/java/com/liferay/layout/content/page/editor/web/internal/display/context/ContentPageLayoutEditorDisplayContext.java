@@ -228,9 +228,8 @@ public class ContentPageLayoutEditorDisplayContext
 					segmentsExperience.getSegmentsExperienceId())
 			).put(
 				"segmentsExperimentURL",
-				HttpUtil.addParameter(
-					layoutFullURL, "segmentsExperienceId",
-					segmentsExperience.getSegmentsExperienceId())
+				_getSegmentsExperimentURL(
+					layoutFullURL, segmentsExperience.getSegmentsExperienceId())
 			);
 
 			availableSegmentsExperiencesSoyContext.put(
@@ -261,9 +260,8 @@ public class ContentPageLayoutEditorDisplayContext
 				SegmentsExperienceConstants.ID_DEFAULT)
 		).put(
 			"segmentsExperimentURL",
-			HttpUtil.addParameter(
-				layoutFullURL, "segmentsExperienceId",
-				SegmentsExperienceConstants.ID_DEFAULT)
+			_getSegmentsExperimentURL(
+				layoutFullURL, SegmentsExperienceConstants.ID_DEFAULT)
 		);
 
 		availableSegmentsExperiencesSoyContext.put(
@@ -392,6 +390,16 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"value", status.getValue()
 		);
+	}
+
+	private String _getSegmentsExperimentURL(
+		String layoutFullURL, long segmentsExperienceId) {
+
+		layoutFullURL = HttpUtil.addParameter(
+			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
+
+		return HttpUtil.addParameter(
+			layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
 	}
 
 	private boolean _hasEditSegmentsEntryPermission() throws PortalException {

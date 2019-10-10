@@ -202,7 +202,7 @@ export default function Sidebar() {
 	);
 }
 
-const SidebarPanel = ({plugin}) => {
+function SidebarPanel({plugin}) {
 	const Component = lazy(() =>
 		plugin.then(instance => {
 			return {
@@ -221,7 +221,7 @@ const SidebarPanel = ({plugin}) => {
 	);
 
 	return <Component />;
-};
+}
 
 class ErrorBoundary extends React.Component {
 	static getDerivedStateFromError(_error) {

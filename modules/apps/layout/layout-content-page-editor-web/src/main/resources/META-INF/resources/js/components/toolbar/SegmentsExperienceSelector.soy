@@ -183,7 +183,7 @@
 							<li class="{$experienceClasses}" key="{$experience.segmentsExperienceId}">
 								<span class="overflow-hidden p-2 w-100">
 									<button
-										class="title p-1 w-100 btn btn-unstyled d-flex justify-content-between align-items-baseline text-dark"
+										class="align-items-baseline btn btn-unstyled d-flex justify-content-between p-2 text-dark title w-100"
 										data-onclick="{$_handleSegmentsExperienceClick}"
 										data-segments-experience-id="{$experience.segmentsExperienceId}"
 										ref="selectExperienceButton{$experience.segmentsExperienceId}"
@@ -218,7 +218,7 @@
 								</span>
 
 								{if $hasUpdatePermissions and ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
-									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
 										{let $disbledMoveUp: (isFirst($experience)) /}
 										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
 										{let $priorityUpButtonRef: 'buttonPriorityUp' + $experience.segmentsExperienceId /}
@@ -235,7 +235,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-2 mr-0 text-secondary' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceUpButtonClick,
 											] /}
@@ -258,7 +258,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-0 mr-2 text-secondary' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceDownButtonClick
 											] /}
@@ -287,6 +287,7 @@
 											] /}
 											{param icon: 'pencil' /}
 											{param monospaced: true /}
+											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
 										{/call}
@@ -306,6 +307,7 @@
 											] /}
 											{param icon: 'times-circle' /}
 											{param monospaced: true /}
+											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
 										{/call}
@@ -313,10 +315,9 @@
 								{/if}
 
 								{if $experience.hasLockedSegmentsExperiment and $experience.segmentsExperimentURL}
-									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
-										<a class="btn btn-borderless btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
+										<a class="btn btn-borderless btn-monospaced btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
 											{call ClayIcon.render}
-												{param elementClasses: '' /}
 												{param spritemap: $spritemap /}
 												{param symbol: 'test' /}
 											{/call}

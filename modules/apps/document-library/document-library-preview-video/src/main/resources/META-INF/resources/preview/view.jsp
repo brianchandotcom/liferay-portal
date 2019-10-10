@@ -38,7 +38,9 @@ String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO
 				poster="<%= videoPosterURL %>"
 			</c:if>
 		>
-			<% for (String previewFileURL : previewFileURLs) {
+
+			<%
+			for (String previewFileURL : previewFileURLs) {
 				String type = null;
 
 				if (Validator.isNotNull(previewFileURL)) {
@@ -53,7 +55,7 @@ String videoPosterURL = (String)request.getAttribute(DLPreviewVideoWebKeys.VIDEO
 				if (type != null) {
 			%>
 
-				<source src="<%= previewFileURL %>" type="<%= type %>" />
+					<source src="<%= previewFileURL %>" type="<%= type %>" />
 
 			<%
 				}

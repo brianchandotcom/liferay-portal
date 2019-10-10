@@ -35,7 +35,7 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 			maxLineLength = Integer.parseInt(
 				getAttributeValue(_MAX_LINE_LENGTH, absolutePath));
 		}
-		catch (Exception e) {
+		catch (NumberFormatException nfe) {
 			return content;
 		}
 

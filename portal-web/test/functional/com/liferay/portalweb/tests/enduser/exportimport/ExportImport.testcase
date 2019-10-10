@@ -1516,6 +1516,8 @@ definition {
 	@description = "This is a use case for LPS-84204."
 	@priority = "4"
 	test ExportImportWCDReferenceWhenNotStagedWebContent {
+		property test.name.skip.portal.instance = "ExportImport#ExportImportWCDReferenceWhenNotStagedWebContent";
+
 		JSONGroup.addGroup(groupName = "Site Name A");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
@@ -1814,6 +1816,8 @@ definition {
 	@description = "This is a use case for LPS-88831, LPS-88889 and LPS-88890."
 	@priority = "4"
 	test ExportWebContentWithDeletedReference {
+		property test.name.skip.portal.instance = "ExportImport#ExportWebContentWithDeletedReference";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -1916,6 +1920,8 @@ definition {
 	@description = "This is a use case for LPS-94738."
 	@priority = "4"
 	test ImportWCDReferenceAfterActivateStaging {
+		property test.name.skip.portal.instance = "ExportImport#ImportWCDReferenceAfterActivateStaging";
+
 		JSONGroup.addGroup(groupName = "Site Name A");
 
 		JSONLayout.addPublicLayout(

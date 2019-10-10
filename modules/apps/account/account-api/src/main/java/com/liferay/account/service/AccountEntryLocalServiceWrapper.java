@@ -302,6 +302,12 @@ public class AccountEntryLocalServiceWrapper
 		return _accountEntryLocalService.getAccountEntriesCount();
 	}
 
+	@Override
+	public int getAccountEntriesCount(long companyId, int status) {
+		return _accountEntryLocalService.getAccountEntriesCount(
+			companyId, status);
+	}
+
 	/**
 	 * Returns the account entry with the primary key.
 	 *

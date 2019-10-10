@@ -227,6 +227,9 @@ public interface AccountEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountEntriesCount(long companyId, int status);
+
 	/**
 	 * Returns the account entry with the primary key.
 	 *

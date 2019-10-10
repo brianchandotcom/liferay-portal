@@ -286,6 +286,10 @@ public class AccountEntryLocalServiceUtil {
 		return getService().getAccountEntriesCount();
 	}
 
+	public static int getAccountEntriesCount(long companyId, int status) {
+		return getService().getAccountEntriesCount(companyId, status);
+	}
+
 	/**
 	 * Returns the account entry with the primary key.
 	 *

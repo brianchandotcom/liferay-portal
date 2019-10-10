@@ -31,6 +31,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -58,25 +59,56 @@ public class WebsiteLocalServiceTest {
 		_listType = listTypes.get(0);
 	}
 
+	@Test
+	public void testAddWebsite() throws Exception {
+		_website = _websiteLocalService.addWebsite(
+			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
+			_VALID_URL, _listType.getListTypeId(), true,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(_website);
+
+		Assert.assertNotNull(
+			_websiteLocalService.fetchWebsite(_website.getWebsiteId()));
+	}
+
 	@Test(expected = WebsiteURLException.class)
 	public void testAddWebsiteInvalidURL() throws Exception {
 		_website = _websiteLocalService.addWebsite(
 			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			"http://www,invalid.com", _listType.getListTypeId(), true,
+			_INVALID_URL, _listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test
+	public void testUpdateWebsite() throws Exception {
+		_website = _websiteLocalService.addWebsite(
+			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
+			_VALID_URL, _listType.getListTypeId(), true,
+			ServiceContextTestUtil.getServiceContext());
+
+		_website = _websiteLocalService.updateWebsite(
+			_website.getWebsiteId(), _website.getUrl(), _website.getTypeId(),
+			false);
+
+		Assert.assertFalse(_website.isPrimary());
 	}
 
 	@Test(expected = WebsiteURLException.class)
 	public void testUpdateWebsiteInvalidURL() throws Exception {
 		_website = _websiteLocalService.addWebsite(
 			_user.getUserId(), Contact.class.getName(), _user.getContactId(),
-			"http://www.valid.com", _listType.getListTypeId(), true,
+			_VALID_URL, _listType.getListTypeId(), true,
 			ServiceContextTestUtil.getServiceContext());
 
 		_websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), "http://www,invalid.com",
-			_website.getTypeId(), _website.isPrimary());
+			_website.getWebsiteId(), _INVALID_URL, _website.getTypeId(),
+			_website.isPrimary());
 	}
+
+	private static final String _INVALID_URL = "http://www,invalid.com";
+
+	private static final String _VALID_URL = "http://www.valid.com";
 
 	private ListType _listType;
 

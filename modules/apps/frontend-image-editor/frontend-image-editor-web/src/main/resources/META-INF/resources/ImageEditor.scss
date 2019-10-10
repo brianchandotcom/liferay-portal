@@ -42,10 +42,8 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 	}
 
 	.lfr-image-editor-image-container {
-		align-items: center;
-		display: flex;
-		justify-content: center;
 		padding: 20px;
+		text-align: center;
 	}
 
 	.lfr-image-editor-history-container {
@@ -63,6 +61,10 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 				color: $imageeditor-text-color;
 			}
 		}
+	}
+
+	.image-preview {
+		display: inline-block;
 	}
 
 	.lfr-image-editor-tools-container {

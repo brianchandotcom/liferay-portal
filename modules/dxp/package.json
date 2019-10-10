@@ -4,7 +4,7 @@
 		"liferay-jest-junit-reporter": "1.0.1",
 		"liferay-karma-alloy-config": "0.0.15",
 		"liferay-karma-config": "0.0.3",
-		"liferay-npm-scripts": "9.5.0"
+		"liferay-npm-scripts": "11.0.0"
 	},
 	"private": true,
 	"scripts": {

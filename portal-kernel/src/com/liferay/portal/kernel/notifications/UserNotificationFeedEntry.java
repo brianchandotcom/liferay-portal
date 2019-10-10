@@ -22,17 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class UserNotificationFeedEntry {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             UserNotificationFeedEntry(boolean, String, String, boolean)}
-	 */
-	@Deprecated
-	public UserNotificationFeedEntry(
-		boolean actionable, String body, String link) {
-
-		this(actionable, body, link, true);
-	}
-
 	public UserNotificationFeedEntry(
 		boolean actionable, String body, String link, boolean applicable) {
 

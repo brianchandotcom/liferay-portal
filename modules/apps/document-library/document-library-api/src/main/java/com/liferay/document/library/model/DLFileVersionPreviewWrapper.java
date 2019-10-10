@@ -45,6 +45,7 @@ public class DLFileVersionPreviewWrapper
 
 		attributes.put("dlFileVersionPreviewId", getDlFileVersionPreviewId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("fileVersionId", getFileVersionId());
 		attributes.put("previewStatus", getPreviewStatus());
@@ -67,6 +68,12 @@ public class DLFileVersionPreviewWrapper
 			setGroupId(groupId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
 
 		if (fileEntryId != null) {
@@ -84,6 +91,16 @@ public class DLFileVersionPreviewWrapper
 		if (previewStatus != null) {
 			setPreviewStatus(previewStatus);
 		}
+	}
+
+	/**
+	 * Returns the company ID of this dl file version preview.
+	 *
+	 * @return the company ID of this dl file version preview
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -154,6 +171,16 @@ public class DLFileVersionPreviewWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the company ID of this dl file version preview.
+	 *
+	 * @param companyId the company ID of this dl file version preview
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

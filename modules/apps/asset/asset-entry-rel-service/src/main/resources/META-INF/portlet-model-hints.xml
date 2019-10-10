@@ -4,6 +4,7 @@
 	<model name="com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel">
 		<field name="mvccVersion" type="long" />
 		<field name="assetEntryAssetCategoryRelId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="assetEntryId" type="long" />
 		<field name="assetCategoryId" type="long" />
 		<field name="priority" type="int" />

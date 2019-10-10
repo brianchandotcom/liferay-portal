@@ -62,12 +62,14 @@ public class DLFileVersionPreviewCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{dlFileVersionPreviewId=");
 		sb.append(dlFileVersionPreviewId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", fileVersionId=");
@@ -87,6 +89,7 @@ public class DLFileVersionPreviewCacheModel
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			dlFileVersionPreviewId);
 		dlFileVersionPreviewImpl.setGroupId(groupId);
+		dlFileVersionPreviewImpl.setCompanyId(companyId);
 		dlFileVersionPreviewImpl.setFileEntryId(fileEntryId);
 		dlFileVersionPreviewImpl.setFileVersionId(fileVersionId);
 		dlFileVersionPreviewImpl.setPreviewStatus(previewStatus);
@@ -102,6 +105,8 @@ public class DLFileVersionPreviewCacheModel
 
 		groupId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		fileEntryId = objectInput.readLong();
 
 		fileVersionId = objectInput.readLong();
@@ -115,6 +120,8 @@ public class DLFileVersionPreviewCacheModel
 
 		objectOutput.writeLong(groupId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(fileEntryId);
 
 		objectOutput.writeLong(fileVersionId);
@@ -124,6 +131,7 @@ public class DLFileVersionPreviewCacheModel
 
 	public long dlFileVersionPreviewId;
 	public long groupId;
+	public long companyId;
 	public long fileEntryId;
 	public long fileVersionId;
 	public int previewStatus;

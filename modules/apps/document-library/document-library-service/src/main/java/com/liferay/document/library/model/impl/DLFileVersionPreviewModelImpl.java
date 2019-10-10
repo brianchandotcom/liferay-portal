@@ -64,8 +64,8 @@ public class DLFileVersionPreviewModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"dlFileVersionPreviewId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"fileEntryId", Types.BIGINT}, {"fileVersionId", Types.BIGINT},
-		{"previewStatus", Types.INTEGER}
+		{"companyId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
+		{"fileVersionId", Types.BIGINT}, {"previewStatus", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -74,13 +74,14 @@ public class DLFileVersionPreviewModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("dlFileVersionPreviewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("previewStatus", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileVersionPreview (dlFileVersionPreviewId LONG not null primary key,groupId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER)";
+		"create table DLFileVersionPreview (dlFileVersionPreviewId LONG not null primary key,groupId LONG,companyId LONG,fileEntryId LONG,fileVersionId LONG,previewStatus INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileVersionPreview";
@@ -256,6 +257,12 @@ public class DLFileVersionPreviewModelImpl
 			(BiConsumer<DLFileVersionPreview, Long>)
 				DLFileVersionPreview::setGroupId);
 		attributeGetterFunctions.put(
+			"companyId", DLFileVersionPreview::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<DLFileVersionPreview, Long>)
+				DLFileVersionPreview::setCompanyId);
+		attributeGetterFunctions.put(
 			"fileEntryId", DLFileVersionPreview::getFileEntryId);
 		attributeSetterBiConsumers.put(
 			"fileEntryId",
@@ -300,6 +307,16 @@ public class DLFileVersionPreviewModelImpl
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -375,7 +392,8 @@ public class DLFileVersionPreviewModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, DLFileVersionPreview.class.getName(), getPrimaryKey());
+			getCompanyId(), DLFileVersionPreview.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -408,6 +426,7 @@ public class DLFileVersionPreviewModelImpl
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			getDlFileVersionPreviewId());
 		dlFileVersionPreviewImpl.setGroupId(getGroupId());
+		dlFileVersionPreviewImpl.setCompanyId(getCompanyId());
 		dlFileVersionPreviewImpl.setFileEntryId(getFileEntryId());
 		dlFileVersionPreviewImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionPreviewImpl.setPreviewStatus(getPreviewStatus());
@@ -513,6 +532,8 @@ public class DLFileVersionPreviewModelImpl
 
 		dlFileVersionPreviewCacheModel.groupId = getGroupId();
 
+		dlFileVersionPreviewCacheModel.companyId = getCompanyId();
+
 		dlFileVersionPreviewCacheModel.fileEntryId = getFileEntryId();
 
 		dlFileVersionPreviewCacheModel.fileVersionId = getFileVersionId();
@@ -599,6 +620,7 @@ public class DLFileVersionPreviewModelImpl
 
 	private long _dlFileVersionPreviewId;
 	private long _groupId;
+	private long _companyId;
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;

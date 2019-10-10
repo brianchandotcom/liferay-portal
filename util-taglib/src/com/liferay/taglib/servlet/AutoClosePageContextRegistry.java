@@ -14,6 +14,10 @@
 
 package com.liferay.taglib.servlet;
 
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+
+import java.lang.reflect.Field;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -65,7 +69,36 @@ public class AutoClosePageContextRegistry {
 		return false;
 	}
 
-	private static final Map<PageContext, List<Runnable>> _runnables =
-		new ConcurrentHashMap<>();
+	private static final Map<PageContext, List<Runnable>> _runnables;
+
+	static {
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
+		Map<PageContext, List<Runnable>> runnables = null;
+
+		if (AutoClosePageContextRegistry.class.getClassLoader() ==
+				portalClassLoader) {
+
+			runnables = new ConcurrentHashMap<>();
+		}
+		else {
+			try {
+				Class<?> portalDeclaringClass = portalClassLoader.loadClass(
+					AutoClosePageContextRegistry.class.getName());
+
+				Field field = portalDeclaringClass.getDeclaredField(
+					"_runnables");
+
+				field.setAccessible(true);
+
+				runnables = (Map<PageContext, List<Runnable>>)field.get(null);
+			}
+			catch (ReflectiveOperationException roe) {
+				throw new ExceptionInInitializerError(roe);
+			}
+		}
+
+		_runnables = runnables;
+	}
 
 }

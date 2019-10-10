@@ -17,15 +17,12 @@ package com.liferay.user.groups.admin.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -37,7 +34,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -90,51 +86,28 @@ public class UserGroupLocalServiceTest {
 
 	@Test
 	public void testDatabaseSearchNoPermissionCheck() throws Exception {
-		User groupUser = UserTestUtil.addUser();
-		User publicAdminUser = UserTestUtil.addUser();
-
-		Role publicAdminRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
 
 		try {
 			_userGroupLocalService.addUserUserGroup(
-				groupUser.getUserId(), _userGroup1);
-
-			_userGroupLocalService.addUserUserGroup(
-				groupUser.getUserId(), _userGroup2);
-
-			_roleLocalService.addUserRole(
-				publicAdminUser.getUserId(), publicAdminRole);
-
-			ResourceAction viewAction =
-				_resourceActionLocalService.fetchResourceAction(
-					UserGroup.class.getName(), ActionKeys.VIEW);
-
-			ResourcePermissionTestUtil.addResourcePermission(
-				viewAction.getBitwiseValue(), UserGroup.class.getName(),
-				String.valueOf(_userGroup1.getUserGroupId()),
-				publicAdminRole.getRoleId(),
-				ResourceConstants.SCOPE_INDIVIDUAL);
+				user.getUserId(), _userGroup1);
 
 			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(publicAdminUser));
-
-			String keywords = null;
+				_permissionCheckerFactory.create(user));
 
 			LinkedHashMap<String, Object> userGroupParams =
 				new LinkedHashMap<>();
 
 			userGroupParams.put(
 				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				Long.valueOf(groupUser.getUserId()));
+				user.getUserId());
 
-			List<UserGroup> userGroups = _search(keywords, userGroupParams);
+			List<UserGroup> userGroups = _search(null, userGroupParams);
 
-			Assert.assertEquals(userGroups.toString(), 2, userGroups.size());
+			Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 		}
 		finally {
-			_userLocalService.deleteUser(groupUser);
-			_userLocalService.deleteUser(publicAdminUser);
-			_roleLocalService.deleteRole(publicAdminRole);
+			_userLocalService.deleteUser(user);
 		}
 	}
 

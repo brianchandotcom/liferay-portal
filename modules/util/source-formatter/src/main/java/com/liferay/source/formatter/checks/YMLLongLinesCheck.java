@@ -39,7 +39,7 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
 
-				_checkMaxLineLength(line, fileName, lineNumber);
+				_checkMaxLineLength(line, fileName, absolutePath, lineNumber);
 			}
 		}
 
@@ -47,15 +47,23 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 	}
 
 	private void _checkMaxLineLength(
-		String line, String fileName, int lineNumber) {
+		String line, String fileName, String absolutePath, int lineNumber) {
 
-		int lineLength = getLineLength(line);
+		int maxLineLength;
 
-		if (lineLength <= getMaxLineLength()) {
+		try {
+			maxLineLength = Integer.parseInt(
+				getAttributeValue(_MAX_LINE_LENGTH, absolutePath));
+		}
+		catch (Exception e) {
 			return;
 		}
 
-		addMessage(fileName, "> " + getMaxLineLength(), lineNumber);
+		if (getLineLength(line) > maxLineLength) {
+			addMessage(fileName, "> " + maxLineLength, lineNumber);
+		}
 	}
+
+	private static final String _MAX_LINE_LENGTH = "maxLineLength";
 
 }

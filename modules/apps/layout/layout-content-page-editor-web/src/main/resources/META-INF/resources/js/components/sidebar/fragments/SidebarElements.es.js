@@ -12,15 +12,70 @@
  * details.
  */
 
-import React from 'react';
+import Collapse from './../../common/Collapse.es';
+import React, {useEffect, useState} from 'react';
+import SearchForm from '../../common/SearchForm.es';
+import SidebarCard from './../SidebarCard.es';
 import SidebarHeader from '../SidebarHeader.es';
+import useSelector from '../../../store/hooks/useSelector.es';
 
 const SidebarElements = () => {
+	const elements = useSelector(state => state.elements);
+	const [searchValue, setSearchValue] = useState('');
+	const [filteredElements, setFilteredElements] = useState(elements);
+
+	useEffect(() => {
+		const searchValueLowerCase = searchValue.toLowerCase();
+
+		setFilteredElements(
+			elements
+				.map(fragmentCollection => {
+					return {
+						...fragmentCollection,
+						fragmentEntries: fragmentCollection.fragmentEntries.filter(
+							fragmentEntry =>
+								fragmentEntry.name
+									.toLowerCase()
+									.indexOf(searchValueLowerCase) !== -1
+						)
+					};
+				})
+				.filter(fragmentCollection => {
+					return fragmentCollection.fragmentEntries.length > 0;
+				})
+		);
+	}, [searchValue, elements]);
+
 	return (
 		<>
 			<SidebarHeader>
 				{Liferay.Language.get('section-builder')}
 			</SidebarHeader>
+
+			<div className="fragments-editor-sidebar-section__elements-panel fragments-editor-sidebar-section__panel p-3">
+				<SearchForm onChange={setSearchValue} value={searchValue} />
+
+				{filteredElements.map(fragmentCollection => (
+					<div key={fragmentCollection.fragmentCollectionId}>
+						<Collapse
+							label={fragmentCollection.name}
+							open={searchValue.length > 0}
+						>
+							<div className="fragments-editor-sidebar-section__elements-panel-grid">
+								{fragmentCollection.fragmentEntries.map(
+									fragmentEntry => (
+										<SidebarCard
+											icon="plus"
+											item={fragmentEntry}
+											key={fragmentEntry.fragmentEntryKey}
+										/>
+									)
+								)}
+							</div>
+						</Collapse>
+					</div>
+				))}
+			</div>
 		</>
 	);
 };

@@ -191,15 +191,6 @@ public class SchedulerEngineHelperUtil {
 			groupName, storageType);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getSchedulerEngineHelper()}
-	 */
-	@Deprecated
-	public static SchedulerEngineHelper getSchedulerEngineHelper() {
-		return _getSchedulerEngineHelper();
-	}
-
 	public static Date getStartTime(SchedulerResponse schedulerResponse) {
 		return _getSchedulerEngineHelper().getStartTime(schedulerResponse);
 	}

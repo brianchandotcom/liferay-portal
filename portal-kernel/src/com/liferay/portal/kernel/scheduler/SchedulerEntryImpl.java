@@ -62,24 +62,8 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	 * @deprecated As of Judson (7.1.x), with no direct replacement
 	 */
 	@Deprecated
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
 	public void setEventListenerClass(String eventListenerClass) {
 		_eventListenerClass = eventListenerClass;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setTrigger(Trigger trigger) {
-		_trigger = trigger;
 	}
 
 	@Override

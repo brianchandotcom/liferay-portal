@@ -111,7 +111,7 @@ AUI.add(
 
 				instance._eventHandles.push(
 					instance.after(
-						'render',
+						'childrenChange',
 						instance._afterRenderTree,
 						instance
 					),

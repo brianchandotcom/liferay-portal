@@ -37,11 +37,11 @@ public class ContentRepositoryEntrySoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setContentRepositoryEntryId(
 			model.getContentRepositoryEntryId());
+		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setGroupId(model.getGroupId());
 
 		return soapModel;
 	}
@@ -128,6 +128,14 @@ public class ContentRepositoryEntrySoap implements Serializable {
 		_contentRepositoryEntryId = contentRepositoryEntryId;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -160,21 +168,13 @@ public class ContentRepositoryEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
 	private long _contentRepositoryEntryId;
+	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _groupId;
 
 }

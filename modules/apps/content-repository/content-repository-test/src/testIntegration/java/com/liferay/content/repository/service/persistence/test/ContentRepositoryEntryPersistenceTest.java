@@ -133,6 +133,8 @@ public class ContentRepositoryEntryPersistenceTest {
 
 		newContentRepositoryEntry.setUuid(RandomTestUtil.randomString());
 
+		newContentRepositoryEntry.setGroupId(RandomTestUtil.nextLong());
+
 		newContentRepositoryEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newContentRepositoryEntry.setUserId(RandomTestUtil.nextLong());
@@ -140,8 +142,6 @@ public class ContentRepositoryEntryPersistenceTest {
 		newContentRepositoryEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		newContentRepositoryEntry.setModifiedDate(RandomTestUtil.nextDate());
-
-		newContentRepositoryEntry.setGroupId(RandomTestUtil.nextLong());
 
 		_contentRepositoryEntries.add(
 			_persistence.update(newContentRepositoryEntry));
@@ -160,6 +160,9 @@ public class ContentRepositoryEntryPersistenceTest {
 			existingContentRepositoryEntry.getContentRepositoryEntryId(),
 			newContentRepositoryEntry.getContentRepositoryEntryId());
 		Assert.assertEquals(
+			existingContentRepositoryEntry.getGroupId(),
+			newContentRepositoryEntry.getGroupId());
+		Assert.assertEquals(
 			existingContentRepositoryEntry.getCompanyId(),
 			newContentRepositoryEntry.getCompanyId());
 		Assert.assertEquals(
@@ -174,9 +177,6 @@ public class ContentRepositoryEntryPersistenceTest {
 				existingContentRepositoryEntry.getModifiedDate()),
 			Time.getShortTimestamp(
 				newContentRepositoryEntry.getModifiedDate()));
-		Assert.assertEquals(
-			existingContentRepositoryEntry.getGroupId(),
-			newContentRepositoryEntry.getGroupId());
 	}
 
 	@Test
@@ -235,8 +235,8 @@ public class ContentRepositoryEntryPersistenceTest {
 	protected OrderByComparator<ContentRepositoryEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"ContentRepositoryEntry", "mvccVersion", true, "uuid", true,
-			"contentRepositoryEntryId", true, "companyId", true, "userId", true,
-			"createDate", true, "modifiedDate", true, "groupId", true);
+			"contentRepositoryEntryId", true, "groupId", true, "companyId",
+			true, "userId", true, "createDate", true, "modifiedDate", true);
 	}
 
 	@Test
@@ -510,6 +510,8 @@ public class ContentRepositoryEntryPersistenceTest {
 
 		contentRepositoryEntry.setUuid(RandomTestUtil.randomString());
 
+		contentRepositoryEntry.setGroupId(RandomTestUtil.nextLong());
+
 		contentRepositoryEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		contentRepositoryEntry.setUserId(RandomTestUtil.nextLong());
@@ -517,8 +519,6 @@ public class ContentRepositoryEntryPersistenceTest {
 		contentRepositoryEntry.setCreateDate(RandomTestUtil.nextDate());
 
 		contentRepositoryEntry.setModifiedDate(RandomTestUtil.nextDate());
-
-		contentRepositoryEntry.setGroupId(RandomTestUtil.nextLong());
 
 		_contentRepositoryEntries.add(
 			_persistence.update(contentRepositoryEntry));

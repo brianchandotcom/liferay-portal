@@ -108,6 +108,20 @@ public interface ContentRepositoryEntryModel
 	public void setContentRepositoryEntryId(long contentRepositoryEntryId);
 
 	/**
+	 * Returns the group ID of this content repository entry.
+	 *
+	 * @return the group ID of this content repository entry
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this content repository entry.
+	 *
+	 * @param groupId the group ID of this content repository entry
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this content repository entry.
 	 *
 	 * @return the company ID of this content repository entry
@@ -182,19 +196,5 @@ public interface ContentRepositoryEntryModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the group ID of this content repository entry.
-	 *
-	 * @return the group ID of this content repository entry
-	 */
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this content repository entry.
-	 *
-	 * @param groupId the group ID of this content repository entry
-	 */
-	public void setGroupId(long groupId);
 
 }

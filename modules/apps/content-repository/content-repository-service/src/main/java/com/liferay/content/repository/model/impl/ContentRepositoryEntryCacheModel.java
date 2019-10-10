@@ -86,6 +86,8 @@ public class ContentRepositoryEntryCacheModel
 		sb.append(uuid);
 		sb.append(", contentRepositoryEntryId=");
 		sb.append(contentRepositoryEntryId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -94,8 +96,6 @@ public class ContentRepositoryEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,6 +117,7 @@ public class ContentRepositoryEntryCacheModel
 
 		contentRepositoryEntryImpl.setContentRepositoryEntryId(
 			contentRepositoryEntryId);
+		contentRepositoryEntryImpl.setGroupId(groupId);
 		contentRepositoryEntryImpl.setCompanyId(companyId);
 		contentRepositoryEntryImpl.setUserId(userId);
 
@@ -134,8 +135,6 @@ public class ContentRepositoryEntryCacheModel
 			contentRepositoryEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		contentRepositoryEntryImpl.setGroupId(groupId);
-
 		contentRepositoryEntryImpl.resetOriginalValues();
 
 		return contentRepositoryEntryImpl;
@@ -148,13 +147,13 @@ public class ContentRepositoryEntryCacheModel
 
 		contentRepositoryEntryId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-
-		groupId = objectInput.readLong();
 	}
 
 	@Override
@@ -170,22 +169,22 @@ public class ContentRepositoryEntryCacheModel
 
 		objectOutput.writeLong(contentRepositoryEntryId);
 
+		objectOutput.writeLong(groupId);
+
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		objectOutput.writeLong(groupId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long contentRepositoryEntryId;
+	public long groupId;
 	public long companyId;
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
-	public long groupId;
 
 }

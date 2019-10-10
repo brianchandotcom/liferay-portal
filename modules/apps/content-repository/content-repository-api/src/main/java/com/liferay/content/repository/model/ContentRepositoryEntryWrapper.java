@@ -49,11 +49,11 @@ public class ContentRepositoryEntryWrapper
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"contentRepositoryEntryId", getContentRepositoryEntryId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -79,6 +79,12 @@ public class ContentRepositoryEntryWrapper
 			setContentRepositoryEntryId(contentRepositoryEntryId);
 		}
 
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
 		Long companyId = (Long)attributes.get("companyId");
 
 		if (companyId != null) {
@@ -101,12 +107,6 @@ public class ContentRepositoryEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 	}
 

@@ -76,9 +76,9 @@ public class ContentRepositoryEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"contentRepositoryEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"groupId", Types.BIGINT}
+		{"contentRepositoryEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,15 +88,15 @@ public class ContentRepositoryEntryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("contentRepositoryEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ContentRepositoryEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,contentRepositoryEntryId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,groupId LONG)";
+		"create table ContentRepositoryEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,contentRepositoryEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ContentRepositoryEntry";
@@ -148,11 +148,11 @@ public class ContentRepositoryEntryModelImpl
 		model.setUuid(soapModel.getUuid());
 		model.setContentRepositoryEntryId(
 			soapModel.getContentRepositoryEntryId());
+		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setGroupId(soapModel.getGroupId());
 
 		return model;
 	}
@@ -329,6 +329,12 @@ public class ContentRepositoryEntryModelImpl
 			(BiConsumer<ContentRepositoryEntry, Long>)
 				ContentRepositoryEntry::setContentRepositoryEntryId);
 		attributeGetterFunctions.put(
+			"groupId", ContentRepositoryEntry::getGroupId);
+		attributeSetterBiConsumers.put(
+			"groupId",
+			(BiConsumer<ContentRepositoryEntry, Long>)
+				ContentRepositoryEntry::setGroupId);
+		attributeGetterFunctions.put(
 			"companyId", ContentRepositoryEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
@@ -352,12 +358,6 @@ public class ContentRepositoryEntryModelImpl
 			"modifiedDate",
 			(BiConsumer<ContentRepositoryEntry, Date>)
 				ContentRepositoryEntry::setModifiedDate);
-		attributeGetterFunctions.put(
-			"groupId", ContentRepositoryEntry::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId",
-			(BiConsumer<ContentRepositoryEntry, Long>)
-				ContentRepositoryEntry::setGroupId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -411,6 +411,29 @@ public class ContentRepositoryEntryModelImpl
 	@Override
 	public void setContentRepositoryEntryId(long contentRepositoryEntryId) {
 		_contentRepositoryEntryId = contentRepositoryEntryId;
+	}
+
+	@JSON
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -491,29 +514,6 @@ public class ContentRepositoryEntryModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -562,11 +562,11 @@ public class ContentRepositoryEntryModelImpl
 		contentRepositoryEntryImpl.setUuid(getUuid());
 		contentRepositoryEntryImpl.setContentRepositoryEntryId(
 			getContentRepositoryEntryId());
+		contentRepositoryEntryImpl.setGroupId(getGroupId());
 		contentRepositoryEntryImpl.setCompanyId(getCompanyId());
 		contentRepositoryEntryImpl.setUserId(getUserId());
 		contentRepositoryEntryImpl.setCreateDate(getCreateDate());
 		contentRepositoryEntryImpl.setModifiedDate(getModifiedDate());
-		contentRepositoryEntryImpl.setGroupId(getGroupId());
 
 		contentRepositoryEntryImpl.resetOriginalValues();
 
@@ -633,17 +633,17 @@ public class ContentRepositoryEntryModelImpl
 		contentRepositoryEntryModelImpl._originalUuid =
 			contentRepositoryEntryModelImpl._uuid;
 
+		contentRepositoryEntryModelImpl._originalGroupId =
+			contentRepositoryEntryModelImpl._groupId;
+
+		contentRepositoryEntryModelImpl._setOriginalGroupId = false;
+
 		contentRepositoryEntryModelImpl._originalCompanyId =
 			contentRepositoryEntryModelImpl._companyId;
 
 		contentRepositoryEntryModelImpl._setOriginalCompanyId = false;
 
 		contentRepositoryEntryModelImpl._setModifiedDate = false;
-
-		contentRepositoryEntryModelImpl._originalGroupId =
-			contentRepositoryEntryModelImpl._groupId;
-
-		contentRepositoryEntryModelImpl._setOriginalGroupId = false;
 
 		contentRepositoryEntryModelImpl._columnBitmask = 0;
 	}
@@ -665,6 +665,8 @@ public class ContentRepositoryEntryModelImpl
 
 		contentRepositoryEntryCacheModel.contentRepositoryEntryId =
 			getContentRepositoryEntryId();
+
+		contentRepositoryEntryCacheModel.groupId = getGroupId();
 
 		contentRepositoryEntryCacheModel.companyId = getCompanyId();
 
@@ -688,8 +690,6 @@ public class ContentRepositoryEntryModelImpl
 		else {
 			contentRepositoryEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
-
-		contentRepositoryEntryCacheModel.groupId = getGroupId();
 
 		return contentRepositoryEntryCacheModel;
 	}
@@ -773,6 +773,9 @@ public class ContentRepositoryEntryModelImpl
 	private String _uuid;
 	private String _originalUuid;
 	private long _contentRepositoryEntryId;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
@@ -780,9 +783,6 @@ public class ContentRepositoryEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _columnBitmask;
 	private ContentRepositoryEntry _escapedModel;
 

@@ -48,6 +48,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(5, 0, 5), new UpgradeThemeId());
 
 		upgradeProcesses.put(new Version(5, 1, 0), new UpgradeMVCCVersion());
+
+		upgradeProcesses.put(new Version(5, 1, 1), new UpgradeVirtualHost());
 	}
 
 }

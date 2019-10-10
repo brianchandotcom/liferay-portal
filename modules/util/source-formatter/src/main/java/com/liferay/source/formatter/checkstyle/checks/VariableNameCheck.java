@@ -75,6 +75,8 @@ public class VariableNameCheck extends BaseCheck {
 		if (isAttributeValue(_CHECK_TYPE_NAME_KEY)) {
 			_checkExceptionVariableName(detailAST, name, typeName);
 
+			_checkInstanceVariableName(detailAST, name, typeName);
+
 			_checkTypeName(
 				detailAST, name, typeName, "DetailAST", "HttpServletRequest",
 				"HttpServletResponse");
@@ -138,6 +140,63 @@ public class VariableNameCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkInstanceVariableName(
+		DetailAST detailAST, String name, String typeName) {
+
+		if (!name.contentEquals("_instance")) {
+			return;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (true) {
+			if (parentDetailAST == null) {
+				return;
+			}
+
+			if (parentDetailAST.getType() != TokenTypes.CLASS_DEF) {
+				parentDetailAST = parentDetailAST.getParent();
+
+				continue;
+			}
+
+			DetailAST identDetailAST = parentDetailAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			if (!typeName.equals(identDetailAST.getText())) {
+				return;
+			}
+
+			DetailAST grandParentDetailAST = parentDetailAST.getParent();
+
+			if (grandParentDetailAST != null) {
+				return;
+			}
+
+			String expectedVariableName = _getExpectedVariableName(
+				typeName, "_", "");
+
+			List<DetailAST> variableDeclarationDetailASTList =
+				DetailASTUtil.getAllChildTokens(
+					parentDetailAST, true, TokenTypes.VARIABLE_DEF);
+
+			for (DetailAST variableDeclarationDetailAST :
+					variableDeclarationDetailASTList) {
+
+				identDetailAST = variableDeclarationDetailAST.findFirstToken(
+					TokenTypes.IDENT);
+
+				if (expectedVariableName.equals(identDetailAST.getText())) {
+					return;
+				}
+			}
+
+			log(detailAST, _MSG_RENAME_VARIABLE, name, expectedVariableName);
+
+			return;
+		}
+	}
+
 	private void _checkIsVariableName(DetailAST detailAST, String name) {
 		if (!_isBooleanType(detailAST.findFirstToken(TokenTypes.TYPE))) {
 			return;
@@ -176,7 +235,8 @@ public class VariableNameCheck extends BaseCheck {
 		DetailAST detailAST, String variableName, String typeName,
 		String... typeNames) {
 
-		if (ArrayUtil.contains(typeNames, typeName) &&
+		if ((typeName.endsWith("Impl") ||
+			 ArrayUtil.contains(typeNames, typeName)) &&
 			!variableName.matches("(?i).*" + typeName + "[0-9]*")) {
 
 			log(

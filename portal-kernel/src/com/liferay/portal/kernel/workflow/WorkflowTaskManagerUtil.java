@@ -212,12 +212,11 @@ public class WorkflowTaskManagerUtil {
 			orderByComparator);
 	}
 
-	public static boolean hasOtherAssignees(
-			long workflowTaskInstanceId, long userId)
+	public static boolean hasOtherAssignees(long workflowTaskId, long userId)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().hasOtherAssignees(
-			workflowTaskInstanceId, userId);
+			workflowTaskId, userId);
 	}
 
 	public static List<WorkflowTask> search(
@@ -233,14 +232,14 @@ public class WorkflowTaskManagerUtil {
 
 	public static List<WorkflowTask> search(
 			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
 			int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().search(
-			companyId, userId, taskName, assetType, assetPrimaryKey, dueDateGT,
+			companyId, userId, taskName, assetType, assetPrimaryKeys, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator, start, end,
 			orderByComparator);
 	}
@@ -267,12 +266,12 @@ public class WorkflowTaskManagerUtil {
 
 	public static int searchCount(
 			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException {
 
 		return getWorkflowTaskManager().searchCount(
-			companyId, userId, taskName, assetType, assetPrimaryKey, dueDateGT,
+			companyId, userId, taskName, assetType, assetPrimaryKeys, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator);
 	}
 

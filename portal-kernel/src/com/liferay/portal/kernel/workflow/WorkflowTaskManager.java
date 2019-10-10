@@ -54,8 +54,7 @@ public interface WorkflowTaskManager {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException;
 
-	public WorkflowTask fetchWorkflowTask(
-			long companyId, long workflowTaskInstanceId)
+	public WorkflowTask fetchWorkflowTask(long companyId, long workflowTaskId)
 		throws WorkflowException;
 
 	public List<String> getNextTransitionNames(
@@ -128,7 +127,7 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
-	public boolean hasOtherAssignees(long workflowTaskInstanceId, long userId)
+	public boolean hasOtherAssignees(long workflowTaskId, long userId)
 		throws WorkflowException;
 
 	public List<WorkflowTask> search(
@@ -139,7 +138,7 @@ public interface WorkflowTaskManager {
 
 	public List<WorkflowTask> search(
 			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator,
 			int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
@@ -158,7 +157,7 @@ public interface WorkflowTaskManager {
 
 	public int searchCount(
 			long companyId, long userId, String taskName, String assetType,
-			Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
+			Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException;
 

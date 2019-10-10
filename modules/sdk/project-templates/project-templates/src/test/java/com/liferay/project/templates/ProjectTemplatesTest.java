@@ -2780,20 +2780,10 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, name, "-DclassName=foo");
 
-		String mavenResult = _executeMaven(
-			mavenProjectDir, "--debug", MAVEN_GOAL_PACKAGE);
-
-		matcher = _antBndPluginVersionPattern.matcher(mavenResult);
-
-		String mavenAntBndVersion = null;
-
-		if (matcher.matches()) {
-			mavenAntBndVersion = matcher.group(1);
-		}
-
-		Assert.assertEquals(
-			"com.liferay.ant.bnd versions do not match", gradleAntBndVersion,
-			mavenAntBndVersion);
+		testContains(
+			mavenProjectDir, "pom.xml",
+			"<artifactId>com.liferay.ant.bnd</artifactId>\n", "<version>",
+			gradleAntBndVersion);
 	}
 
 	@Test

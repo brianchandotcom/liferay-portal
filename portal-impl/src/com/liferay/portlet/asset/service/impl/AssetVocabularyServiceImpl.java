@@ -139,18 +139,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		return vocabulary;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
-		throws PortalException {
-
-		return filterVocabularies(
-			assetVocabularyLocalService.getCompanyVocabularies(companyId));
-	}
-
 	@Override
 	public List<AssetVocabulary> getGroupsVocabularies(long[] groupIds) {
 		return getGroupsVocabularies(groupIds, null);
@@ -307,19 +295,6 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 		return getGroupVocabulariesDisplay(
 			groupId, name, start, end, false, obc);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
-	 */
-	@Deprecated
-	@Override
-	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
-		throws PortalException {
-
-		return filterVocabularies(
-			assetVocabularyLocalService.getVocabularies(vocabularyIds));
 	}
 
 	@Override

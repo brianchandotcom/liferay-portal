@@ -36,7 +36,6 @@ import com.liferay.portlet.asset.service.base.AssetCategoryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -93,48 +92,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		}
 
 		assetCategoryLocalService.deleteCategories(categoryIds);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), Replaced by {@link
-	 *             #deleteCategories(long[])}
-	 */
-	@Deprecated
-	@Override
-	public List<AssetCategory> deleteCategories(
-			long[] categoryIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		List<AssetCategory> failedCategories = new ArrayList<>();
-
-		for (long categoryId : categoryIds) {
-			try {
-				AssetCategoryPermission.check(
-					getPermissionChecker(), categoryId, ActionKeys.DELETE);
-
-				assetCategoryLocalService.deleteCategory(categoryId);
-			}
-			catch (PortalException pe) {
-				if (serviceContext == null) {
-					return null;
-				}
-
-				if (serviceContext.isFailOnPortalException()) {
-					throw pe;
-				}
-
-				AssetCategory category =
-					assetCategoryPersistence.fetchByPrimaryKey(categoryId);
-
-				if (category == null) {
-					category = assetCategoryPersistence.create(categoryId);
-				}
-
-				failedCategories.add(category);
-			}
-		}
-
-		return failedCategories;
 	}
 
 	@Override

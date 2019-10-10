@@ -14,14 +14,17 @@
 
 import React from 'react';
 
+import App from './App';
 import ContentsSidebar from './components/ContentsSidebar';
 
 /**
  * Entry-point for "Contents" (sidebar pane) functionality.
  */
 export default class Contents {
-	constructor({panel}) {
+	constructor({app, panel}) {
 		this.title = panel.label;
+
+		App.init(app);
 	}
 
 	renderSidebar() {

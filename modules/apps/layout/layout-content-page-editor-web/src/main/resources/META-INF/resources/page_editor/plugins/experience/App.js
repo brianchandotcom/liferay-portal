@@ -12,19 +12,18 @@
  * details.
  */
 
-import App from './App';
-
 /**
- * Entry-point for "Look and Feel" (sidebar pane) functionality.
+ * Mutable container that holds arbitrary data from the "App" hosting
+ * the plug-in.
+ *
+ * Typically, used to hold things of "global" interest such as React contexts.
  */
-export default class LookAndFeel {
-	constructor({app}) {
-		this.lookAndFeelURL = app.config.lookAndFeelURL;
-
-		App.init(app);
+const App = {
+	init(app) {
+		Object.entries(app).forEach(([key, value]) => {
+			App[key] = value;
+		});
 	}
+};
 
-	activate() {
-		Liferay.Util.navigate(this.lookAndFeelURL);
-	}
-}
+export default App;

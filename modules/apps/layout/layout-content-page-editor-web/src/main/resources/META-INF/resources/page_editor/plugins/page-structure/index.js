@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import App from './App';
 import PageStructureSidebar from './components/PageStructureSidebar';
 
 /**
@@ -22,14 +23,15 @@ import PageStructureSidebar from './components/PageStructureSidebar';
 export default class PageStructure {
 	static name = 'PageStructure';
 
-	// TODO: make other app contexts available here as well
-	constructor({ActionTypes, dispatch, panel}) {
-		this.ActionTypes = ActionTypes;
-		this.dispatch = dispatch;
+	constructor({app, panel}) {
+		this.Actions = app.Actions;
+		this.dispatch = app.dispatch;
 		this.title = panel.label;
+
+		App.init(app);
 	}
 
-	activate({loadReducer}) {
+	activate() {
 		const reducer = (state, action) => {
 			const nextState = state;
 
@@ -41,16 +43,14 @@ export default class PageStructure {
 			return nextState;
 		};
 
-		this.dispatch(loadReducer(reducer, PageStructure.name));
+		this.dispatch(this.Actions.loadReducer(reducer, PageStructure.name));
 	}
 
-	deactivate({unloadReducer}) {
-		this.dispatch(unloadReducer(PageStructure.name));
+	deactivate() {
+		this.dispatch(this.Actions.unloadReducer(PageStructure.name));
 	}
 
 	renderSidebar() {
-		return (
-			<PageStructureSidebar dispatch={this.dispatch} title={this.title} />
-		);
+		return <PageStructureSidebar title={this.title} />;
 	}
 }

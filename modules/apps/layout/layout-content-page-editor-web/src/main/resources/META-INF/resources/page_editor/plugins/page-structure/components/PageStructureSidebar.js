@@ -15,7 +15,13 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-export default function PageStructureSidebar({dispatch, title}) {
+import App from '../App';
+
+const {useContext} = React;
+
+export default function PageStructureSidebar({title}) {
+	const dispatch = useContext(App.DispatchContext);
+
 	return (
 		<>
 			<h1>{title}</h1>

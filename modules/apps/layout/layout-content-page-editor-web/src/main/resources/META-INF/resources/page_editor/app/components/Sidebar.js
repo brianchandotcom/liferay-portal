@@ -19,8 +19,7 @@ import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
-import {loadReducer, unloadReducer} from '../actions/index';
-import * as ActionTypes from '../actions/types';
+import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import usePlugins from '../hooks/usePlugins';
 import useLoad from '../hooks/useLoad';
@@ -91,7 +90,7 @@ export default function Sidebar() {
 
 		getInstance(activePluginId).then(activePlugin => {
 			if (activePlugin && typeof activePlugin.deactivate === 'function') {
-				activePlugin.deactivate({unloadReducer});
+				activePlugin.deactivate();
 			}
 		});
 
@@ -100,19 +99,23 @@ export default function Sidebar() {
 
 			const promise = load(sidebarPanelId, panel.pluginEntryPoint);
 
-			register(sidebarPanelId, promise, {
-				ActionTypes,
+			const app = {
+				Actions,
+				ConfigContext,
+				DispatchContext,
+				StoreContext,
 				config,
 				dispatch,
-				panel,
 				store
-			}).then(plugin => {
+			};
+
+			register(sidebarPanelId, promise, {app, panel}).then(plugin => {
 				if (
 					plugin &&
 					typeof plugin.activate === 'function' &&
 					isMounted()
 				) {
-					plugin.activate({loadReducer});
+					plugin.activate();
 				} else if (!plugin) {
 					setHasError(true);
 				}

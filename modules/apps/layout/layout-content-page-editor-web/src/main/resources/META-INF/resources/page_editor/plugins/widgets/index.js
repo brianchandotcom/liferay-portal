@@ -14,14 +14,17 @@
 
 import React from 'react';
 
+import App from './App';
 import WidgetsSidebar from './components/WidgetsSidebar';
 
 /**
  * Entry-point for "Widgets" (sidebar pane) functionality.
  */
 export default class Widgets {
-	constructor({panel}) {
+	constructor({app, panel}) {
 		this.title = panel.label;
+
+		App.init(app);
 	}
 
 	renderSidebar() {

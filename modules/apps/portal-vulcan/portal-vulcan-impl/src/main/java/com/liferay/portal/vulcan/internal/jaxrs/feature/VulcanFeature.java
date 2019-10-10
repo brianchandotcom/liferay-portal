@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextP
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FieldsQueryParamContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.RestrictFieldsQueryParamContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
@@ -107,6 +108,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(PaginationContextProvider.class);
 		featureContext.register(PortalExceptionMapper.class);
 		featureContext.register(PrincipalExceptionMapper.class);
+		featureContext.register(RestrictFieldsQueryParamContextProvider.class);
 		featureContext.register(StatusDynamicFeature.class);
 		featureContext.register(TransactionContainerRequestFilter.class);
 		featureContext.register(UnrecognizedPropertyExceptionMapper.class);

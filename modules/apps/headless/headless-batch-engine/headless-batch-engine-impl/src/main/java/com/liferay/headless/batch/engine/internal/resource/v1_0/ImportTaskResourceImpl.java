@@ -30,13 +30,19 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -118,6 +124,19 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			version);
 	}
 
+	private Tuple _getContentAndExtensionFromCompressedFile(
+			InputStream inputStream)
+		throws IOException {
+
+		ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+		ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+		return new Tuple(
+			StreamUtil.toByteArray(zipInputStream),
+			_file.getExtension(zipEntry.getName()));
+	}
+
 	private ImportTask _importFile(
 			BatchEngineTaskOperation batchEngineTaskOperation,
 			BinaryFile binaryFile, String callbackURL, String className,
@@ -131,20 +150,34 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 				"Unknown class name: " + className);
 		}
 
-		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor(
-				ImportTaskResourceImpl.class.getName());
+		byte[] content = null;
+		String extension = null;
+		String fileName = binaryFile.getFileName();
+
+		if (fileName.endsWith("zip")) {
+			Tuple tuple = _getContentAndExtensionFromCompressedFile(
+				binaryFile.getInputStream());
+
+			content = (byte[])tuple.getObject(0);
+			extension = (String)tuple.getObject(1);
+		}
+		else {
+			content = StreamUtil.toByteArray(binaryFile.getInputStream());
+			extension = _file.getExtension(binaryFile.getFileName());
+		}
 
 		BatchEngineTask batchEngineTask =
 			_batchEngineTaskLocalService.addBatchEngineTask(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				_itemClassBatchSizeMap.getOrDefault(className, _batchSize),
-				callbackURL, className,
-				StreamUtil.toByteArray(binaryFile.getInputStream()),
-				StringUtil.upperCase(
-					_file.getExtension(binaryFile.getFileName())),
+				callbackURL, className, content,
+				StringUtil.upperCase(extension),
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				batchEngineTaskOperation.name(), version);
+
+		ExecutorService executorService =
+			_portalExecutorManager.getPortalExecutor(
+				ImportTaskResourceImpl.class.getName());
 
 		executorService.submit(
 			() -> _batchEngineTaskExecutor.execute(batchEngineTask));

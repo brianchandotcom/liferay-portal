@@ -627,10 +627,10 @@
 		<column name="colorSchemeId" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
+		<column db-name="mLayoutPageTemplateEntryId" name="masterLayoutPageTemplateEntryId" type="long" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
-		<column db-name="mLayoutPageTemplateEntryId" name="masterLayoutPageTemplateEntryId" type="long" />
 		<column name="publishDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 

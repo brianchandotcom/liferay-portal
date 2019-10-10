@@ -34,14 +34,15 @@ public class SafeFileNameStore implements Store {
 
 	@Override
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
 		throws PortalException {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
 		renameUnsafeFile(companyId, repositoryId, fileName, safeFileName);
 
-		_store.addFile(companyId, repositoryId, safeFileName, is);
+		_store.addFile(companyId, repositoryId, safeFileName, versionLabel, is);
 	}
 
 	@Override

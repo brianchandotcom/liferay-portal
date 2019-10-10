@@ -49,7 +49,9 @@ public interface DLStoreConvertProcess {
 				companyId, repositoryId, fileName, versionLabel)) {
 
 			if (versionLabel.equals(Store.VERSION_DEFAULT)) {
-				targetStore.addFile(companyId, repositoryId, fileName, is);
+				targetStore.addFile(
+					companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
+					is);
 			}
 			else {
 				targetStore.updateFile(

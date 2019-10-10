@@ -2701,7 +2701,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				// File
 
 				try (InputStream is = new FileInputStream(file)) {
-					_store.addFile(_companyId, dlFolderId, name, is);
+					_store.addFile(
+						_companyId, dlFolderId, name, Store.VERSION_DEFAULT,
+						is);
 				}
 
 				file.delete();

@@ -78,7 +78,7 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 					targetStore.addFile(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
-						fileVersionPath, is);
+						fileVersionPath, Store.VERSION_DEFAULT, is);
 
 					if (delete) {
 						sourceStore.deleteFile(

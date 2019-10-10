@@ -40,10 +40,12 @@ public interface Store {
 	 * @param repositoryId the primary key of the data repository (optionally
 	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
 	 * @param fileName the file name
+	 * @param versionLabel the file's version label
 	 * @param is the files's data
 	 */
 	public void addFile(
-			long companyId, long repositoryId, String fileName, InputStream is)
+			long companyId, long repositoryId, String fileName,
+			String versionLabel, InputStream is)
 		throws PortalException;
 
 	/**

@@ -19,14 +19,14 @@
 <%
 TokenConfiguration tokenConfiguration = ConfigurationProviderUtil.getConfiguration(TokenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), PortalSettingsTokenConstants.FORM_PARAMETER_NAMESPACE, new CompanyServiceSettingsLocator(company.getCompanyId(), TokenConstants.SERVICE_NAME)));
 
+String[] authenticationCookies = tokenConfiguration.authenticationCookies();
+int[] authenticationCookiesIndexes = new int[authenticationCookies.length];
 boolean enabled = tokenConfiguration.enabled();
 boolean importFromLDAP = tokenConfiguration.importFromLDAP();
-String userTokenName = tokenConfiguration.userTokenName();
-String tokenLocation = tokenConfiguration.tokenLocation();
-String[] authenticationCookies = tokenConfiguration.authenticationCookies();
 String logoutRedirectURL = tokenConfiguration.logoutRedirectURL();
+String tokenLocation = tokenConfiguration.tokenLocation();
+String userTokenName = tokenConfiguration.userTokenName();
 
-int[] authenticationCookiesIndexes = new int[authenticationCookies.length];
 %>
 
 <aui:fieldset>

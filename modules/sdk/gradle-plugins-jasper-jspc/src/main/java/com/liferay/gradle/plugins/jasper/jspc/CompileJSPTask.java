@@ -113,7 +113,7 @@ public class CompileJSPTask extends DefaultTask {
 	private String[] _getCompleteArgs() {
 		return new String[] {
 			"-d", FileUtil.getAbsolutePath(getDestinationDir()), "-webapp",
-			FileUtil.getAbsolutePath(getWebAppDir())
+			FileUtil.getAbsolutePath(getWebAppDir()), "-disablePooling"
 		};
 	}
 

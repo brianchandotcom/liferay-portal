@@ -19,6 +19,7 @@
 		segmentsExperimentURL: string
 	]>}
 	{@param? hasEditSegmentsEntryPermission: bool }
+	{@param? hasUpdatePermissions: bool }
 	{@param? defaultSegmentsExperienceId: string }
 	{@param? _closeEditModal: any }
 	{@param? _closeCreateModal: any }
@@ -98,7 +99,7 @@
 				<div class="align-items-end d-flex justify-content-between mb-4">
 					<h3 class="mb-0">{msg desc=""}select-experience{/msg}</h3>
 
-					{if $canCreateExperiences == true}
+					{if $canCreateExperiences == true and $hasUpdatePermissions}
 						{let $newExperience kind="text"}
 							{msg desc=""}new-experience{/msg}
 						{/let}
@@ -135,34 +136,36 @@
 					{/call}
 				{/if}
 
-				{let $experiencesHelpMessage kind="text"}
-					{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
-						{msg desc=""}experience-help-message-empty-state{/msg}
-					{else}
-						{msg desc=""}experience-help-message-started-state{/msg}
-					{/if}
-				{/let}
+				{if $hasUpdatePermissions}
+					{let $experiencesHelpMessage kind="text"}
+						{if $availableSegmentsEntries and length($availableSegmentsEntries) < 1 or length($availableSegmentsExperiences) < 2}
+							{msg desc=""}experience-help-message-empty-state{/msg}
+						{else}
+							{msg desc=""}experience-help-message-started-state{/msg}
+						{/if}
+					{/let}
 
-				<p class="mb-4 text-secondary">
-					{$experiencesHelpMessage}
-				</p>
+					<p class="mb-4 text-secondary">
+						{$experiencesHelpMessage}
+					</p>
 
-				{let $experiencesWarning kind="text"}
-					{msg desc=""}changes-to-experiences-are-applied-immediately{/msg}
-				{/let}
+					{let $experiencesWarning kind="text"}
+						{msg desc=""}changes-to-experiences-are-applied-immediately{/msg}
+					{/let}
 
-				{let $warning kind="text"}
-					{msg desc=""}warning{/msg}:
-				{/let}
+					{let $warning kind="text"}
+						{msg desc=""}warning{/msg}:
+					{/let}
 
-				{call ClayAlert.render}
-					{param elementClasses: 'mx-0  mt-4' /}
-					{param closeable: false /}
-					{param message: $experiencesWarning /}
-					{param spritemap: $spritemap /}
-					{param style: 'warning' /}
-					{param title: $warning /}
-				{/call}
+					{call ClayAlert.render}
+						{param elementClasses: 'mx-0  mt-4' /}
+						{param closeable: false /}
+						{param message: $experiencesWarning /}
+						{param spritemap: $spritemap /}
+						{param style: 'warning' /}
+						{param title: $warning /}
+					{/call}
+				{/if}
 
 				{let $notDefaultExperienceLength: (length($availableSegmentsExperiences) - 2) /}
 				{if length($availableSegmentsExperiences) > 1}
@@ -180,7 +183,7 @@
 							<li class="{$experienceClasses}" key="{$experience.segmentsExperienceId}">
 								<span class="overflow-hidden p-2 w-100">
 									<button
-										class="title p-1 w-100 btn btn-unstyled d-flex justify-content-between align-items-baseline text-dark"
+										class="align-items-baseline btn btn-unstyled d-flex justify-content-between p-2 text-dark title w-100"
 										data-onclick="{$_handleSegmentsExperienceClick}"
 										data-segments-experience-id="{$experience.segmentsExperienceId}"
 										ref="selectExperienceButton{$experience.segmentsExperienceId}"
@@ -214,8 +217,8 @@
 									</button>
 								</span>
 
-								{if ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
-									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
+								{if $hasUpdatePermissions and ($defaultSegmentsExperienceId != $experience.segmentsExperienceId) and not $experience.hasLockedSegmentsExperiment}
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
 										{let $disbledMoveUp: (isFirst($experience)) /}
 										{let $disbledMoveDown: ($notDefaultExperienceLength == index($experience)) /}
 										{let $priorityUpButtonRef: 'buttonPriorityUp' + $experience.segmentsExperienceId /}
@@ -232,7 +235,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-2 mr-0 text-secondary' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceUpButtonClick,
 											] /}
@@ -255,7 +258,7 @@
 												'priority': $experience.priority,
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
-											{param elementClasses: 'btn-borderless ml-0 mr-2 text-secondary' /}
+											{param elementClasses: 'btn-borderless mx-2 text-secondary' /}
 											{param events: [
 												'click': $_handleMoveExperienceDownButtonClick
 											] /}
@@ -284,6 +287,7 @@
 											] /}
 											{param icon: 'pencil' /}
 											{param monospaced: true /}
+											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
 										{/call}
@@ -303,6 +307,7 @@
 											] /}
 											{param icon: 'times-circle' /}
 											{param monospaced: true /}
+											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
 										{/call}
@@ -310,10 +315,9 @@
 								{/if}
 
 								{if $experience.hasLockedSegmentsExperiment and $experience.segmentsExperimentURL}
-									<div class="align-items-center d-flex dropdown-menu__experience--btn-group">
-										<a class="btn btn-borderless btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
+									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
+										<a class="btn btn-borderless btn-monospaced btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
 											{call ClayIcon.render}
-												{param elementClasses: '' /}
 												{param spritemap: $spritemap /}
 												{param symbol: 'test' /}
 											{/call}

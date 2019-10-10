@@ -123,7 +123,8 @@ public class MicroblogsPortlet extends MVCPortlet {
 		}
 
 		assetEntryLocalService.incrementViewCounter(
-			0, MicroblogsEntry.class.getName(), microblogsEntryId, 1);
+			microblogsEntry.getCompanyId(), 0, MicroblogsEntry.class.getName(),
+			microblogsEntryId, 1);
 	}
 
 	protected String[] getAssetTagNames(String content) {

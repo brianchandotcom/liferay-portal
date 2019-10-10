@@ -395,6 +395,14 @@ public class AssetEntryFinderImpl
 			sb.append("(TEMP_TABLE_ASSET_LINK.entryId = AssetEntry.entryId) ");
 		}
 
+		if (entryQuery.isExcludeZeroViewCount()) {
+			sb.append("INNER JOIN ViewCountEntry ON (");
+			sb.append("ViewCountEntry.companyId = AssetEntry.companyId) AND ");
+			sb.append("(ViewCountEntry.classNameId = AssetEntry.classNameId");
+			sb.append(") AND (ViewCountEntry.classPK = AssetEntry.entryId) ");
+			sb.append("AND (ViewCountEntry.viewCount > 0) ");
+		}
+
 		String orderByCol1 = AssetEntryQuery.ORDER_BY_COLUMNS[2];
 		String orderByCol2 = AssetEntryQuery.ORDER_BY_COLUMNS[2];
 
@@ -428,10 +436,6 @@ public class AssetEntryFinderImpl
 
 		if (entryQuery.isVisible() != null) {
 			sb.append(" AND (visible = ?)");
-		}
-
-		if (entryQuery.isExcludeZeroViewCount()) {
-			sb.append(" AND (AssetEntry.viewCount > 0)");
 		}
 
 		// Keywords

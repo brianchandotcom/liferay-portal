@@ -18,9 +18,13 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.view.count.ViewCountService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.view.count.model.ViewCountEntry;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
@@ -34,16 +38,26 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class ViewCountEntryLocalServiceImpl
-	extends ViewCountEntryLocalServiceBaseImpl {
+	extends ViewCountEntryLocalServiceBaseImpl implements ViewCountService {
 
 	@Override
-	public ViewCountEntry addViewCountEntry(
+	public void addViewCountEntry(
 		long companyId, long classNameId, long classPK) {
 
 		ViewCountEntry viewCountEntry = viewCountEntryPersistence.create(
 			new ViewCountEntryPK(companyId, classNameId, classPK));
 
-		return viewCountEntryPersistence.update(viewCountEntry);
+		viewCountEntry.setCompanyId(companyId);
+
+		viewCountEntryPersistence.update(viewCountEntry);
+	}
+
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			ViewCountService.class, ViewCountEntryLocalService.class,
+			IdentifiableOSGiService.class, PersistedModelLocalService.class
+		};
 	}
 
 	@Override

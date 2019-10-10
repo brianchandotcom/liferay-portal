@@ -45,15 +45,14 @@ public interface TaskManager {
 		throws WorkflowException;
 
 	public WorkflowTask completeWorkflowTask(
-			long workflowTaskInstanceId, long workflowTaskFormId,
-			String formValues, Map<String, Serializable> workflowContext,
+			long workflowTaskId, long workflowTaskFormId, String formValues,
+			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
 	public WorkflowTask completeWorkflowTask(
-			long workflowTaskInstanceId, long workflowTaskFormId,
-			String formValues, String transitionName,
-			Map<String, Serializable> workflowContext,
+			long workflowTaskId, long workflowTaskFormId, String formValues,
+			String transitionName, Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
@@ -64,7 +63,7 @@ public interface TaskManager {
 		throws WorkflowException;
 
 	public List<String> getWorkflowTaskFormDefinitions(
-			long workflowTaskInstanceId, ServiceContext serviceContext)
+			long workflowTaskId, ServiceContext serviceContext)
 		throws WorkflowException;
 
 	public WorkflowTask updateDueDate(

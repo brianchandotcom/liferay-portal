@@ -923,7 +923,7 @@ public class PropertiesConfiguration extends AbstractFileConfiguration
 				return _emptyResult;
 			}
 
-			return new String[] {line.substring(0, index).trim(), line.substring(index + 1), "="};
+			return new String[] {line.substring(0, index).trim(), line.substring(index + 1).trim(), "="};
         }
 
 		private static final String[] _emptyResult = {"", "", ""};

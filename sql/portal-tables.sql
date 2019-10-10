@@ -588,6 +588,7 @@ create table Layout (
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
+	mLayoutPageTemplateEntryId LONG,
 	publishDate DATE null,
 	lastPublishDate DATE null,
 	primary key (plid, ctCollectionId)

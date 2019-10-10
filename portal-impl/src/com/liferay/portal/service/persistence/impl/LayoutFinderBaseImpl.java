@@ -40,6 +40,8 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 		dbColumnNames.put("type", "type_");
 		dbColumnNames.put("hidden", "hidden_");
 		dbColumnNames.put("system", "system_");
+		dbColumnNames.put(
+			"masterLayoutPageTemplateEntryId", "mLayoutPageTemplateEntryId");
 
 		setDBColumnNames(dbColumnNames);
 	}

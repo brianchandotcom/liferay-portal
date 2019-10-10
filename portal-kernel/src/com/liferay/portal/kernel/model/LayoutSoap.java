@@ -67,6 +67,8 @@ public class LayoutSoap implements Serializable {
 			model.isLayoutPrototypeLinkEnabled());
 		soapModel.setSourcePrototypeLayoutUuid(
 			model.getSourcePrototypeLayoutUuid());
+		soapModel.setMasterLayoutPageTemplateEntryId(
+			model.getMasterLayoutPageTemplateEntryId());
 		soapModel.setPublishDate(model.getPublishDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
@@ -411,6 +413,16 @@ public class LayoutSoap implements Serializable {
 		_sourcePrototypeLayoutUuid = sourcePrototypeLayoutUuid;
 	}
 
+	public long getMasterLayoutPageTemplateEntryId() {
+		return _masterLayoutPageTemplateEntryId;
+	}
+
+	public void setMasterLayoutPageTemplateEntryId(
+		long masterLayoutPageTemplateEntryId) {
+
+		_masterLayoutPageTemplateEntryId = masterLayoutPageTemplateEntryId;
+	}
+
 	public Date getPublishDate() {
 		return _publishDate;
 	}
@@ -461,6 +473,7 @@ public class LayoutSoap implements Serializable {
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _sourcePrototypeLayoutUuid;
+	private long _masterLayoutPageTemplateEntryId;
 	private Date _publishDate;
 	private Date _lastPublishDate;
 

@@ -607,9 +607,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =
 			"empty.line.missing.after.variable.reference";
 
-	private static final String
-		_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_ASSIGN =
-			"empty.line.missing.before.variable.assign";
+	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_ASSIGN =
+		"empty.line.missing.before.variable.assign";
 
 	private static final String _MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
 		"empty.line.missing.before.variable.use";

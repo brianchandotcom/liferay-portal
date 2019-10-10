@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -139,20 +138,6 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			clazz,
 			new GroupServiceSettingsLocator(
 				groupId, settingsId, configurationPid));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
-	 */
-	@Deprecated
-	@Override
-	public <T> T getPortletInstanceConfiguration(
-			Class<T> clazz, Layout layout, PortletInstance portletInstance)
-		throws ConfigurationException {
-
-		return getPortletInstanceConfiguration(
-			clazz, layout, portletInstance.getPortletInstanceKey());
 	}
 
 	@Override

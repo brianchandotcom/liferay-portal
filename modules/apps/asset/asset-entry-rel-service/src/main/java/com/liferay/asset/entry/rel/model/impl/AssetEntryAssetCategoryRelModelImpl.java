@@ -65,8 +65,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
 		{"assetEntryAssetCategoryRelId", Types.BIGINT},
-		{"assetEntryId", Types.BIGINT}, {"assetCategoryId", Types.BIGINT},
-		{"priority", Types.INTEGER}
+		{"companyId", Types.BIGINT}, {"assetEntryId", Types.BIGINT},
+		{"assetCategoryId", Types.BIGINT}, {"priority", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -75,13 +75,14 @@ public class AssetEntryAssetCategoryRelModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryAssetCategoryRelId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryAssetCategoryRel (mvccVersion LONG default 0 not null,assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
+		"create table AssetEntryAssetCategoryRel (mvccVersion LONG default 0 not null,assetEntryAssetCategoryRelId LONG not null primary key,companyId LONG,assetEntryId LONG,assetCategoryId LONG,priority INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetEntryAssetCategoryRel";
@@ -259,6 +260,12 @@ public class AssetEntryAssetCategoryRelModelImpl
 			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
 				AssetEntryAssetCategoryRel::setAssetEntryAssetCategoryRelId);
 		attributeGetterFunctions.put(
+			"companyId", AssetEntryAssetCategoryRel::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AssetEntryAssetCategoryRel, Long>)
+				AssetEntryAssetCategoryRel::setCompanyId);
+		attributeGetterFunctions.put(
 			"assetEntryId", AssetEntryAssetCategoryRel::getAssetEntryId);
 		attributeSetterBiConsumers.put(
 			"assetEntryId",
@@ -303,6 +310,16 @@ public class AssetEntryAssetCategoryRelModelImpl
 		long assetEntryAssetCategoryRelId) {
 
 		_assetEntryAssetCategoryRelId = assetEntryAssetCategoryRelId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -366,7 +383,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, AssetEntryAssetCategoryRel.class.getName(), getPrimaryKey());
+			getCompanyId(), AssetEntryAssetCategoryRel.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -399,6 +417,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 		assetEntryAssetCategoryRelImpl.setMvccVersion(getMvccVersion());
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
 			getAssetEntryAssetCategoryRelId());
+		assetEntryAssetCategoryRelImpl.setCompanyId(getCompanyId());
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(getAssetEntryId());
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(getAssetCategoryId());
 		assetEntryAssetCategoryRelImpl.setPriority(getPriority());
@@ -492,6 +511,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 		assetEntryAssetCategoryRelCacheModel.assetEntryAssetCategoryRelId =
 			getAssetEntryAssetCategoryRelId();
 
+		assetEntryAssetCategoryRelCacheModel.companyId = getCompanyId();
+
 		assetEntryAssetCategoryRelCacheModel.assetEntryId = getAssetEntryId();
 
 		assetEntryAssetCategoryRelCacheModel.assetCategoryId =
@@ -583,6 +604,7 @@ public class AssetEntryAssetCategoryRelModelImpl
 
 	private long _mvccVersion;
 	private long _assetEntryAssetCategoryRelId;
+	private long _companyId;
 	private long _assetEntryId;
 	private long _originalAssetEntryId;
 	private boolean _setOriginalAssetEntryId;

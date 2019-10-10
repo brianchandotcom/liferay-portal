@@ -197,7 +197,7 @@ definition {
 	test AutoCheckinDocumentAfterLockExpiration {
 		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";
 
-		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=120000";
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=80000";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
 
@@ -213,7 +213,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "100000");
 
 		Refresh();
 

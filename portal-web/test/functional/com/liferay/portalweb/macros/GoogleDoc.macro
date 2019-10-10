@@ -47,6 +47,10 @@ definition {
 			locator1 = "GoogleDoc#TITLE",
 			value1 = "${dmDocumentTitle}");
 
+		KeyPress(
+			locator1 = "GoogleDoc#TITLE",
+			value1 = "\RETURN");
+
 		SelectFrameTop();
 	}
 

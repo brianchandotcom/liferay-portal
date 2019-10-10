@@ -61,13 +61,13 @@ const Item = ({durationAvg, instanceCount, name, overdueInstanceCount}) => {
 
 	return (
 		<tr>
-			<td data-testId="stepName">{name}</td>
+			<td data-testid="stepName">{name}</td>
 
-			<td className="text-right" data-testId="slaBreached">
+			<td className="text-right" data-testid="slaBreached">
 				{`${overdueInstanceCount} (${percentage})`}
 			</td>
 
-			<td className="text-right" data-testId="avgCompletionTime">
+			<td className="text-right" data-testid="avgCompletionTime">
 				{formattedDuration}
 			</td>
 		</tr>

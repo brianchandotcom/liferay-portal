@@ -558,8 +558,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			new BiConsumer<${entity.name}, Object>() {
 
 				@Override
-				public void accept(${entity.name} ${entity.varName}, Object ${entityColumn.name}) {
-					${entity.varName}.set${entityColumn.methodName}((${entityColumnType})${entityColumn.name});
+				public void accept(${entity.name} ${entity.varName}, Object obj) {
+					${entity.varName}.set${entityColumn.methodName}((${entityColumnType})obj);
 				}
 
 			});

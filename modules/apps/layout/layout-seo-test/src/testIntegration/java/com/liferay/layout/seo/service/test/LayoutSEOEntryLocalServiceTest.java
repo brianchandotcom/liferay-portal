@@ -91,8 +91,8 @@ public class LayoutSEOEntryLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), false,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "title"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"), 12345,
+			Collections.singletonMap(LocaleUtil.US, "description"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -182,8 +182,8 @@ public class LayoutSEOEntryLocalServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			_layout.getLayoutId(), true,
 			Collections.singletonMap(LocaleUtil.US, "http://example.com"), true,
-			Collections.singletonMap(LocaleUtil.US, "title"), true,
-			Collections.singletonMap(LocaleUtil.US, "description"), 12345,
+			Collections.singletonMap(LocaleUtil.US, "description"), 12345, true,
+			Collections.singletonMap(LocaleUtil.US, "title"),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutSEOEntry layoutSEOEntry =

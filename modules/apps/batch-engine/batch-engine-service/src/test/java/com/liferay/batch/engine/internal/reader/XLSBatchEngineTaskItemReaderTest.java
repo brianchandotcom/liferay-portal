@@ -79,8 +79,7 @@ public class XLSBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount,
-					(Item)xlsBatchEngineTaskItemReader.read(),
+					rowCount, (Item)xlsBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);

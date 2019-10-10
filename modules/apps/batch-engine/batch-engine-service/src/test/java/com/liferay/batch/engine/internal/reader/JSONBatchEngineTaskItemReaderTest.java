@@ -76,8 +76,7 @@ public class JSONBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount,
-					(Item)jsonBatchEngineTaskItemReader.read(),
+					rowCount, (Item)jsonBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);

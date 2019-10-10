@@ -75,8 +75,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount,
-					(Item)csvBatchEngineTaskItemReader.read(),
+					rowCount, (Item)csvBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);

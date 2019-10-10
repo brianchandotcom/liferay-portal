@@ -77,8 +77,8 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 	}
 
 	protected void validate(
-		String createDateString, String description, Long id,
-		Item item, Map<String, String> name) {
+		String createDateString, String description, Long id, Item item,
+		Map<String, String> name) {
 
 		if (createDateString == null) {
 			Assert.assertNull(item.getCreateDate());

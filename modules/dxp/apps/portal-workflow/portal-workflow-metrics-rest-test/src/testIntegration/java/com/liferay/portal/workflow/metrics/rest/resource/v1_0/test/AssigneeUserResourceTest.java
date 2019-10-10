@@ -272,12 +272,14 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 				testGroup.getCompanyId(), false, _process.getId()),
 			new Task() {
 				{
-					String randomString = RandomTestUtil.randomString();
-
 					durationAvg = 0L;
 					instanceCount = assigneeUser.getTaskCount();
+
+					String randomString = RandomTestUtil.randomString();
+
 					key = randomString;
 					name = randomString;
+
 					onTimeInstanceCount = assigneeUser.getOnTimeTaskCount();
 					overdueInstanceCount = assigneeUser.getOverdueTaskCount();
 				}

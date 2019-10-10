@@ -68,8 +68,6 @@ export default function Sidebar() {
 		[]
 	);
 
-	// TODO: maybe use useEffect to call deactivate before unmounting
-
 	const togglePanel = panel => {
 		if (hasError) {
 			setHasError(false);
@@ -143,7 +141,6 @@ export default function Sidebar() {
 									...swallow
 								);
 
-							// TODO: also handle keydown
 							return (
 								<ClayButtonWithIcon
 									data-tooltip-align="left"

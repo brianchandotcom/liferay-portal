@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -411,19 +410,6 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, true, parentFolderId, false);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getSubfolderIds(List, long, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void getSubfolderIds(
-			List<Long> folderIds, long groupId, long folderId)
-		throws PortalException {
-
-		getSubfolderIds(folderIds, groupId, folderId, true);
-	}
-
 	@Override
 	public void getSubfolderIds(
 			List<Long> folderIds, long groupId, long folderId, boolean recurse)
@@ -571,32 +557,6 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderLocalService.updateFolder(
 			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, restrictionType, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by more general {@link
-	 *             #updateFolder(long, String, String, long, List, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFolder updateFolder(
-			long folderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
-		throws PortalException {
-
-		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
-
-		if (overrideFileEntryTypes) {
-			restrictionType =
-				DLFolderConstants.
-					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
-		}
-
-		return dlFolderLocalService.updateFolder(
-			folderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, restrictionType, serviceContext);
 	}
 

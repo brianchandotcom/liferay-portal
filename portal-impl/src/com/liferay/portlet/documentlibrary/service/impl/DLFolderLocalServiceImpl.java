@@ -154,16 +154,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return dlFolder;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #deleteAllByGroup(long)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteAll(long groupId) throws PortalException {
-		deleteAllByGroup(groupId);
-	}
-
 	@Override
 	public void deleteAllByGroup(long groupId) throws PortalException {
 		Group group = groupLocalService.getGroup(groupId);
@@ -359,16 +349,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Override
 	public long getFolderId(long companyId, long folderId) {
 		return getFolderId(dlFolderPersistence, companyId, folderId);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getGroupFolderIds(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public List<Long> getFolderIds(long groupId, long parentFolderId) {
-		return getGroupFolderIds(groupId, parentFolderId);
 	}
 
 	@Override
@@ -569,18 +549,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #getGroupSubfolderIds(List, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public void getSubfolderIds(
-		List<Long> folderIds, long groupId, long folderId) {
-
-		getGroupSubfolderIds(folderIds, groupId, folderId);
-	}
-
 	@Override
 	public String getUniqueFolderName(
 		String uuid, long groupId, long parentFolderId, String name,
@@ -771,32 +739,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		LockManagerUtil.unlock(DLFolder.class.getName(), folderId);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #updateFolder(long, long, String, String, long, List, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
-		throws PortalException {
-
-		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
-
-		if (overrideFileEntryTypes) {
-			restrictionType =
-				DLFolderConstants.
-					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
-		}
-
-		return updateFolder(
-			folderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, restrictionType, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder updateFolder(
@@ -915,33 +857,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced {@link
-	 *             #updateFolder(long, long, String, String, long, List, int,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFolder updateFolder(
-			long folderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
-		throws PortalException {
-
-		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
-
-		if (overrideFileEntryTypes) {
-			restrictionType =
-				DLFolderConstants.
-					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
-		}
-
-		return updateFolder(
-			serviceContext.getScopeGroupId(), folderId, name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
-			serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder updateFolder(
@@ -961,34 +876,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		return updateFolder(
 			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, restrictionType, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link #
-	 *             updateFolderAndFileEntryTypes(long, long, long, String,
-	 *             String, long, List, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFolder updateFolderAndFileEntryTypes(
-			long userId, long folderId, long parentFolderId, String name,
-			String description, long defaultFileEntryTypeId,
-			List<Long> fileEntryTypeIds, boolean overrideFileEntryTypes,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
-
-		if (overrideFileEntryTypes) {
-			restrictionType =
-				DLFolderConstants.
-					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
-		}
-
-		return updateFolderAndFileEntryTypes(
-			userId, folderId, parentFolderId, name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
-			serviceContext);
 	}
 
 	@Override

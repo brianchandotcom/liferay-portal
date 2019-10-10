@@ -306,43 +306,6 @@ public class DLAppHelperLocalServiceImpl
 		trashOrRestoreFolder(dlFolder, true);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #moveDependentsToTrash(DLFolder)}
-	 */
-	@Deprecated
-	@Override
-	public void moveDependentsToTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException {
-
-		if (dlFileEntriesAndDLFolders.isEmpty()) {
-			return;
-		}
-
-		Object object = dlFileEntriesAndDLFolders.get(0);
-
-		long folderId = 0;
-
-		if (object instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-			folderId = dlFileEntry.getFolderId();
-		}
-		else if (object instanceof DLFileShortcut) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
-			folderId = dlFileShortcut.getFolderId();
-		}
-		else if (object instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)object;
-
-			folderId = dlFolder.getFolderId();
-		}
-
-		moveDependentsToTrash(dlFolderLocalService.getDLFolder(folderId));
-	}
-
 	@Override
 	public FileEntry moveFileEntryFromTrash(
 			long userId, FileEntry fileEntry, long newFolderId,
@@ -616,56 +579,6 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		trashOrRestoreFolder(dlFolder, false);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #restoreDependentsFromTrash(DLFolder)}
-	 */
-	@Deprecated
-	@Override
-	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders)
-		throws PortalException {
-
-		if (dlFileEntriesAndDLFolders.isEmpty()) {
-			return;
-		}
-
-		Object object = dlFileEntriesAndDLFolders.get(0);
-
-		long folderId = 0;
-
-		if (object instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-			folderId = dlFileEntry.getFolderId();
-		}
-		else if (object instanceof DLFileShortcut) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
-			folderId = dlFileShortcut.getFolderId();
-		}
-		else if (object instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)object;
-
-			folderId = dlFolder.getFolderId();
-		}
-
-		restoreDependentsFromTrash(dlFolderLocalService.getDLFolder(folderId));
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #restoreDependentsFromTrash(List)}
-	 */
-	@Deprecated
-	@Override
-	public void restoreDependentsFromTrash(
-			List<Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException {
-
-		restoreDependentsFromTrash(dlFileEntriesAndDLFolders);
 	}
 
 	@Override

@@ -17,7 +17,6 @@ package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 import com.liferay.portal.kernel.mobile.device.NoKnownDevices;
 import com.liferay.portal.kernel.mobile.device.VersionableName;
@@ -31,7 +30,6 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -65,15 +63,6 @@ public class FiftyOneDegreesKnownDevices implements KnownDevices {
 		}
 
 		return _browswers;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Map<Capability, Set<String>> getDeviceIds() {
-		return null;
 	}
 
 	@Override

@@ -31,11 +31,4 @@ public interface DeviceRecognitionProvider {
 
 	public void reload() throws Exception;
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setDeviceCapabilityFilter(
-		DeviceCapabilityFilter deviceCapabilityFilter);
-
 }

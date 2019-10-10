@@ -17,7 +17,6 @@ package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.BaseDevice;
-import com.liferay.portal.kernel.mobile.device.Capability;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.mobile.device.VersionableName;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -27,8 +26,6 @@ import fiftyone.mobile.detection.Match;
 import fiftyone.mobile.detection.entities.Values;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 /**
  * @author Brian Greenwald
@@ -53,24 +50,6 @@ public class FiftyOneDegreesDevice extends BaseDevice {
 	@Override
 	public String getBrowserVersion() {
 		return getValueString(FiftyOneDegreesPropertyNames.BROWSER_VERSION);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Map<String, Capability> getCapabilities() {
-		return null;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getCapability(String name) {
-		return null;
 	}
 
 	@Override

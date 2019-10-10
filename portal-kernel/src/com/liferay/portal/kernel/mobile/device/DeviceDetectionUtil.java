@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.mobile.device;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,20 +51,6 @@ public class DeviceDetectionUtil {
 		KnownDevices knownDevices = getKnownDevices();
 
 		return knownDevices.getBrowsers();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Set<String> getKnownDeviceIdsByCapability(
-		Capability capability) {
-
-		KnownDevices knownDevices = getKnownDevices();
-
-		Map<Capability, Set<String>> deviceIds = knownDevices.getDeviceIds();
-
-		return deviceIds.get(capability);
 	}
 
 	public static Set<VersionableName> getKnownOperatingSystems() {

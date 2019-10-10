@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -29,12 +28,6 @@ public interface KnownDevices {
 	public Set<VersionableName> getBrands();
 
 	public Set<VersionableName> getBrowsers();
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public Map<Capability, Set<String>> getDeviceIds();
 
 	public Set<VersionableName> getOperatingSystems();
 

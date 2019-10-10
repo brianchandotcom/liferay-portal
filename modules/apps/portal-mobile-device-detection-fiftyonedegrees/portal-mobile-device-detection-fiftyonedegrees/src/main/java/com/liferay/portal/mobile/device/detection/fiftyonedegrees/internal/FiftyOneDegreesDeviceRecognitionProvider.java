@@ -15,7 +15,6 @@
 package com.liferay.portal.mobile.device.detection.fiftyonedegrees.internal;
 
 import com.liferay.portal.kernel.mobile.device.Device;
-import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 
@@ -46,15 +45,6 @@ public class FiftyOneDegreesDeviceRecognitionProvider
 	@Override
 	public void reload() throws Exception {
 		_fiftyOneDegreesKnownDevices.reload();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void setDeviceCapabilityFilter(
-		DeviceCapabilityFilter deviceCapabilityFilter) {
 	}
 
 	@Activate

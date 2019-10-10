@@ -149,16 +149,19 @@ const updateFragmentConfigurationAction = (
 		],
 		dispatch,
 		getState
-	).then(() => {
-		const state = getState();
+	)
+		.then(() => {
+			const state = getState();
 
-		return dispatch(
-			updateFragmentEntryLinkContent(
-				fragmentEntryLinkId,
-				state.segmentsExperienceId || state.defaultSegmentsExperienceId
-			)
-		);
-	});
+			return dispatch(
+				updateFragmentEntryLinkContent(
+					fragmentEntryLinkId,
+					state.segmentsExperienceId ||
+						state.defaultSegmentsExperienceId
+				)
+			);
+		})
+		.then(() => dispatch(updatePageContentsAction()));
 
 /**
  * @param {number} fragmentEntryLinkId

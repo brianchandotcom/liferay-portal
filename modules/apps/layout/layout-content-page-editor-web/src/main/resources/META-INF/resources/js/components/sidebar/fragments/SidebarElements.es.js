@@ -18,6 +18,7 @@ import SearchForm from '../../common/SearchForm.es';
 import SidebarCard from './../SidebarCard.es';
 import SidebarElementsDragDrop from './SidebarElementsDragDrop.es';
 import SidebarHeader from '../SidebarHeader.es';
+import SidebarLayouts from './SidebarLayouts.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
@@ -65,6 +66,8 @@ const SidebarElements = () => {
 
 			<div className="fragments-editor-sidebar-section__elements-panel fragments-editor-sidebar-section__panel p-3">
 				<SearchForm onChange={setSearchValue} value={searchValue} />
+
+				{!searchValue.length && <SidebarLayouts />}
 
 				{filteredElements.map(fragmentCollection => (
 					<div key={fragmentCollection.fragmentCollectionId}>

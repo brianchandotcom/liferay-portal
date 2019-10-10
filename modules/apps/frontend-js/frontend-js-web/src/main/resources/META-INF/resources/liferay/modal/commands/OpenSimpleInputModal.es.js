@@ -62,9 +62,9 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
  * - Checkbox: SimpleInputModal supports an optional checkbox field that
  *   can be added to the form.
  * - Id field: if you need to edit an element, instead of creating new ones,
- *   a hidden ID field can be used. fieldValues can also be used to specify an 
+ *   a hidden ID field can be used. fieldValues can also be used to specify an
  *   initial value instead of an empty field.
- * - Redirect URL: by default, the form redirects to an existing URL when it's 
+ * - Redirect URL: by default, the form redirects to an existing URL when it's
  *   submitted. This URL is obtained from the request response as "redirectURL."
  *   If no URL is obtained, the SimpleInputModal is disposed.
  */

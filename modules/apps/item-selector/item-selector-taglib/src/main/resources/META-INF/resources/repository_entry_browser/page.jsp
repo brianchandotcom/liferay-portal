@@ -206,6 +206,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									style="outline-secondary"
 								/>
 							</liferay-ui:search-container-column-text>
+
 						<%
 						}
 
@@ -409,6 +410,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 											url="<%= viewFolderURL.toString() %>"
 										/>
 									</liferay-ui:search-container-column-text>
+
 								<%
 								}
 
@@ -462,9 +464,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 									</liferay-ui:search-container-column-text>
 
 									<liferay-ui:search-container-column-icon
-							   			icon="view"
-							   			cssClass="icon-view"
-							  		/>
+										cssClass="icon-view"
+										icon="view"
+									/>
+
 								<%
 								}
 								%>

@@ -38,14 +38,6 @@ public class PortletDependencyFactoryUtil {
 			name, scope, version, markup, portletRequest);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static PortletDependencyFactory getPortletDependencyFactory() {
-		return _portletDependencyFactory;
-	}
-
 	private static volatile PortletDependencyFactory _portletDependencyFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortletDependencyFactory.class, PortletDependencyFactoryUtil.class,

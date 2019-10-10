@@ -257,9 +257,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-elasticsearch">
+	<macrodef name="prepare-elasticsearch-analyzers">
 		<sequential>
-			<lstopwatch action="start" name="prepare.elasticsearch" />
+			<lstopwatch action="start" name="prepare.elasticsearch.analyzers" />
 
 			<chmod
 				file="${elasticsearch.dir}/bin/**"
@@ -345,7 +345,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				</elseif>
 			</if>
 
-			<lstopwatch action="total" name="prepare.elasticsearch" />
+			<lstopwatch action="total" name="prepare.elasticsearch.analyzers" />
+		</sequential>
+	</macrodef>
 		</sequential>
 	</macrodef>
 
@@ -693,7 +695,7 @@ xpack.monitoring.collection.enabled: true</echo>
 
 		<unzip-elasticsearch />
 
-		<prepare-elasticsearch />
+		<prepare-elasticsearch-analyzers />
 
 		<configure-elasticsearch-properties />
 

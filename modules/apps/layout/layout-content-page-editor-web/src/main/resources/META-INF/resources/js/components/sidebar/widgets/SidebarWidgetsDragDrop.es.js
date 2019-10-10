@@ -34,7 +34,7 @@ import {initializeDragDrop} from '../../../utils/FragmentsEditorDragDrop.es';
 import {setDraggingItemPosition} from '../../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
- * SidebarWidgetsPanel
+ * SidebarWidgetsDragDrop
  */
 class SidebarWidgetsDragDrop extends State {
 	/**
@@ -179,8 +179,22 @@ class SidebarWidgetsDragDrop extends State {
 }
 
 SidebarWidgetsDragDrop.STATE = {
+	/**
+	 * Internal DragDrop instance.
+	 * @default null
+	 * @instance
+	 * @memberOf SidebarElementsDragDrop
+	 * @review
+	 * @type {object|null}
+	 */
 	_dragDrop: Config.object().internal(),
 
+	/**
+	 * @instance
+	 * @memberOf SidebarElementsDragDrop
+	 * @review
+	 * @type {function}
+	 */
 	dispatch: Config.func().required()
 };
 

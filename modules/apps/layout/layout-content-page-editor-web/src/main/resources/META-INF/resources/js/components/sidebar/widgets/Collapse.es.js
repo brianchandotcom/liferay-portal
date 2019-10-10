@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -27,11 +28,25 @@ const Collapse = props => {
 		setOpen(!open);
 	};
 
+	const collapseClassNames = classNames(
+		'align-items-end',
+		'btn',
+		'btn-unstyled',
+		'collapse-icon',
+		'd-flex',
+		'justify-content-between',
+		'mb-2',
+		'px-2',
+		'rounded-0',
+		'sheet-subtitle',
+		'w-100'
+	);
+
 	return (
 		<div className="mb-2">
 			<button
-				ariaExpanded={open}
-				className="align-items-end btn btn-unstyled collapse-icon d-flex justify-content-between mb-2 px-2 rounded-0 sheet-subtitle w-100"
+				aria-expanded={open}
+				className={collapseClassNames}
 				onClick={handleClick}
 				type="button"
 			>

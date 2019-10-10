@@ -42,7 +42,7 @@ const Widget = props => {
 	);
 };
 
-Widget.PropTypes = {
+Widget.propTypes = {
 	widget: PropTypes.shape({
 		instanceable: PropTypes.bool.isRequired,
 		title: PropTypes.string.isRequired,

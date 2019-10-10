@@ -64,3 +64,11 @@ $zIndexContent: 0;
 		top: $controlMenuHeight + $toolbarHeight;
 	}
 }
+
+#wrapper.page-editor-sidebar-padding {
+	padding-right: $sidebarButtonWidth;
+}
+
+#wrapper.page-editor-sidebar-padding-open {
+	padding-right: $sidebarButtonWidth + $sidebarContentWidth;
+}

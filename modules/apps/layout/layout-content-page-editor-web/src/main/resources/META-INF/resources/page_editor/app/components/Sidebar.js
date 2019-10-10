@@ -60,6 +60,8 @@ export default function Sidebar() {
 
 			if (panel) {
 				togglePanel(panel);
+			} else {
+				adjustWrapperPadding({sidebarOpen: false});
 			}
 		},
 		// We really only want to do this once, on first mount.
@@ -83,6 +85,8 @@ export default function Sidebar() {
 
 		if (open !== wantOpen) {
 			setOpen(wantOpen);
+
+			adjustWrapperPadding({sidebarOpen: wantOpen});
 		}
 
 		getInstance(activePluginId).then(activePlugin => {
@@ -241,6 +245,22 @@ class ErrorBoundary extends React.Component {
 			return null;
 		} else {
 			return this.props.children;
+		}
+	}
+}
+
+function adjustWrapperPadding({sidebarOpen}) {
+	const wrapper = document.getElementById('wrapper');
+
+	if (wrapper) {
+		const classList = wrapper.classList;
+
+		if (sidebarOpen) {
+			classList.add('page-editor-sidebar-padding-open');
+			classList.remove('page-editor-sidebar-padding');
+		} else {
+			classList.add('page-editor-sidebar-padding');
+			classList.remove('page-editor-sidebar-padding-open');
 		}
 	}
 }

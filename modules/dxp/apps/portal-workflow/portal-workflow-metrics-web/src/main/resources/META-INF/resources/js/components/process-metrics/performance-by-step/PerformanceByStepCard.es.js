@@ -10,7 +10,7 @@
  */
 
 import {Item, Table} from './PerformanceByStepTable.es';
-import {Body} from './PerformanceByStepBody.es';
+import {Body, Empty} from './PerformanceByStepBody.es';
 import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil.es';
 import Panel from '../../../shared/components/Panel.es';
 import React from 'react';
@@ -60,6 +60,7 @@ const PerformanceByStepCard = ({processId, query}) => {
 };
 
 PerformanceByStepCard.Body = Body;
+PerformanceByStepCard.Empty = Empty;
 PerformanceByStepCard.Header = Header;
 PerformanceByStepCard.Item = Item;
 PerformanceByStepCard.Table = Table;

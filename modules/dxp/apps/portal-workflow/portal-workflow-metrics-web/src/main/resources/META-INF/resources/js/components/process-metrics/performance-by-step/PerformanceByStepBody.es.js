@@ -11,6 +11,7 @@
 
 import React, {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../AppContext.es';
+import EmptyState from '../../../shared/components/list/EmptyState.es';
 import {ErrorContext} from '../../../shared/components/request/Error.es';
 import Icon from '../../../shared/components/Icon.es';
 import {LoadingContext} from '../../../shared/components/request/Loading.es';
@@ -48,20 +49,37 @@ const Body = ({processId}) => {
 	return (
 		<Request.Success>
 			<Panel.Body>
-				<PerformanceByStepCard.Table items={data.items} />
+				{data.totalCount ? (
+					<>
+						<PerformanceByStepCard.Table items={data.items} />
 
-				<div className="mb-1 text-right">
-					<button className="border-0 btn btn-secondary btn-sm">
-						<span data-testId="viewAllSteps">
-							{Liferay.Language.get('view-all-steps') +
-								` (${data.totalCount})`}
-						</span>
+						<div className="mb-1 text-right">
+							<button className="border-0 btn btn-secondary btn-sm">
+								<span data-testid="viewAllSteps">
+									{Liferay.Language.get('view-all-steps') +
+										` (${data.totalCount})`}
+								</span>
 
-						<Icon iconName="caret-right-l" />
-					</button>
-				</div>
+								<Icon iconName="caret-right-l" />
+							</button>
+						</div>
+					</>
+				) : (
+					<PerformanceByStepCard.Empty />
+				)}
 			</Panel.Body>
 		</Request.Success>
+	);
+};
+
+const Empty = () => {
+	return (
+		<EmptyState
+			className="border-0"
+			hideAnimation={true}
+			message={Liferay.Language.get('there-is-no-data-at-the-moment')}
+			messageClassName="small"
+		/>
 	);
 };
 
@@ -79,4 +97,4 @@ const getRequestUrl = (processId, timeRange) => {
 	return requestUrl;
 };
 
-export {Body};
+export {Body, Empty};

@@ -26,6 +26,7 @@ create table FriendlyURLEntryLocalization (
 create table FriendlyURLEntryMapping (
 	mvccVersion LONG default 0 not null,
 	friendlyURLEntryMappingId LONG not null primary key,
+	companyId LONG,
 	classNameId LONG,
 	classPK LONG,
 	friendlyURLEntryId LONG

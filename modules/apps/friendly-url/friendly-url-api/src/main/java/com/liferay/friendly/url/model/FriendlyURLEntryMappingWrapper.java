@@ -46,6 +46,7 @@ public class FriendlyURLEntryMappingWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"friendlyURLEntryMappingId", getFriendlyURLEntryMappingId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
@@ -66,6 +67,12 @@ public class FriendlyURLEntryMappingWrapper
 
 		if (friendlyURLEntryMappingId != null) {
 			setFriendlyURLEntryMappingId(friendlyURLEntryMappingId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -115,6 +122,16 @@ public class FriendlyURLEntryMappingWrapper
 	@Override
 	public long getClassPK() {
 		return model.getClassPK();
+	}
+
+	/**
+	 * Returns the company ID of this friendly url entry mapping.
+	 *
+	 * @return the company ID of this friendly url entry mapping
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -180,6 +197,16 @@ public class FriendlyURLEntryMappingWrapper
 	@Override
 	public void setClassPK(long classPK) {
 		model.setClassPK(classPK);
+	}
+
+	/**
+	 * Sets the company ID of this friendly url entry mapping.
+	 *
+	 * @param companyId the company ID of this friendly url entry mapping
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

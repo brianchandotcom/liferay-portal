@@ -79,12 +79,14 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", assetEntryAssetCategoryRelId=");
 		sb.append(assetEntryAssetCategoryRelId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", assetEntryId=");
 		sb.append(assetEntryId);
 		sb.append(", assetCategoryId=");
@@ -104,6 +106,7 @@ public class AssetEntryAssetCategoryRelCacheModel
 		assetEntryAssetCategoryRelImpl.setMvccVersion(mvccVersion);
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(
 			assetEntryAssetCategoryRelId);
+		assetEntryAssetCategoryRelImpl.setCompanyId(companyId);
 		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryId);
 		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetCategoryId);
 		assetEntryAssetCategoryRelImpl.setPriority(priority);
@@ -119,6 +122,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 		assetEntryAssetCategoryRelId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		assetEntryId = objectInput.readLong();
 
 		assetCategoryId = objectInput.readLong();
@@ -132,6 +137,8 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 		objectOutput.writeLong(assetEntryAssetCategoryRelId);
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeLong(assetEntryId);
 
 		objectOutput.writeLong(assetCategoryId);
@@ -141,6 +148,7 @@ public class AssetEntryAssetCategoryRelCacheModel
 
 	public long mvccVersion;
 	public long assetEntryAssetCategoryRelId;
+	public long companyId;
 	public long assetEntryId;
 	public long assetCategoryId;
 	public int priority;

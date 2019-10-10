@@ -74,11 +74,6 @@ public class MessageDatagramReceiveHandlerTest {
 	}
 
 	@Test
-	public void testDeprecatedConstructor() {
-		new MessageDatagramReceiveHandler(null);
-	}
-
-	@Test
 	public void testDoReceive1() throws Exception {
 
 		// No such destination, not synchronized

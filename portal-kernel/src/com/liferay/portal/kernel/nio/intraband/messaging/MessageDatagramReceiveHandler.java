@@ -38,14 +38,6 @@ public class MessageDatagramReceiveHandler
 	public MessageDatagramReceiveHandler() {
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #MessageDatagramReceiveHandler()}
-	 */
-	@Deprecated
-	public MessageDatagramReceiveHandler(MessageBus messageBus) {
-	}
-
 	@Override
 	protected void doReceive(
 			RegistrationReference registrationReference, Datagram datagram)

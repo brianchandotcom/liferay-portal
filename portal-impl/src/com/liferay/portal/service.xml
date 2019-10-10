@@ -630,6 +630,7 @@
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="sourcePrototypeLayoutUuid" type="String" />
+		<column name="masterLayoutPageTemplateEntryId" type="long" />
 		<column name="publishDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 

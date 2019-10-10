@@ -17,6 +17,8 @@ package com.liferay.asset.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedModel;
 
 import java.util.Date;
 
@@ -38,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @Deprecated
 @ProviderType
 public interface AssetEntryUsageModel
-	extends BaseModel<AssetEntryUsage>, MVCCModel {
+	extends BaseModel<AssetEntryUsage>, MVCCModel, ShardedModel, StagedModel {
 
 	/**
 	 * NOTE FOR DEVELOPERS:
@@ -82,6 +84,7 @@ public interface AssetEntryUsageModel
 	 * @return the uuid of this asset entry usage
 	 */
 	@AutoEscape
+	@Override
 	public String getUuid();
 
 	/**
@@ -89,6 +92,7 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param uuid the uuid of this asset entry usage
 	 */
+	@Override
 	public void setUuid(String uuid);
 
 	/**
@@ -120,10 +124,27 @@ public interface AssetEntryUsageModel
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the company ID of this asset entry usage.
+	 *
+	 * @return the company ID of this asset entry usage
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset entry usage.
+	 *
+	 * @param companyId the company ID of this asset entry usage
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the create date of this asset entry usage.
 	 *
 	 * @return the create date of this asset entry usage
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -131,6 +152,7 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param createDate the create date of this asset entry usage
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
@@ -138,6 +160,7 @@ public interface AssetEntryUsageModel
 	 *
 	 * @return the modified date of this asset entry usage
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -145,6 +168,7 @@ public interface AssetEntryUsageModel
 	 *
 	 * @param modifiedDate the modified date of this asset entry usage
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**

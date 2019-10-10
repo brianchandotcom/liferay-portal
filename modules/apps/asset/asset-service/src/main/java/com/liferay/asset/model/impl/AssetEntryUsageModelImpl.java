@@ -18,6 +18,7 @@ import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.model.AssetEntryUsageModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -69,10 +71,11 @@ public class AssetEntryUsageModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
 		{"assetEntryUsageId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"assetEntryId", Types.BIGINT}, {"containerType", Types.BIGINT},
-		{"containerKey", Types.VARCHAR}, {"plid", Types.BIGINT},
-		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
+		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"assetEntryId", Types.BIGINT},
+		{"containerType", Types.BIGINT}, {"containerKey", Types.VARCHAR},
+		{"plid", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,6 +86,7 @@ public class AssetEntryUsageModelImpl
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetEntryUsageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
@@ -94,7 +98,7 @@ public class AssetEntryUsageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AssetEntryUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,containerType LONG,containerKey VARCHAR(200) null,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
+		"create table AssetEntryUsage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,assetEntryUsageId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,assetEntryId LONG,containerType LONG,containerKey VARCHAR(200) null,plid LONG,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryUsage";
 
@@ -112,19 +116,21 @@ public class AssetEntryUsageModelImpl
 
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 1L;
 
-	public static final long CONTAINERKEY_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long CONTAINERTYPE_COLUMN_BITMASK = 4L;
+	public static final long CONTAINERKEY_COLUMN_BITMASK = 4L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long CONTAINERTYPE_COLUMN_BITMASK = 8L;
 
-	public static final long PLID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	public static final long TYPE_COLUMN_BITMASK = 32L;
+	public static final long PLID_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
 
-	public static final long ASSETENTRYUSAGEID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long ASSETENTRYUSAGEID_COLUMN_BITMASK = 256L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -280,6 +286,11 @@ public class AssetEntryUsageModelImpl
 			"groupId",
 			(BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setGroupId);
 		attributeGetterFunctions.put(
+			"companyId", AssetEntryUsage::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<AssetEntryUsage, Long>)AssetEntryUsage::setCompanyId);
+		attributeGetterFunctions.put(
 			"createDate", AssetEntryUsage::getCreateDate);
 		attributeSetterBiConsumers.put(
 			"createDate",
@@ -394,6 +405,28 @@ public class AssetEntryUsageModelImpl
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -545,6 +578,12 @@ public class AssetEntryUsageModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(AssetEntryUsage.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -552,7 +591,7 @@ public class AssetEntryUsageModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, AssetEntryUsage.class.getName(), getPrimaryKey());
+			getCompanyId(), AssetEntryUsage.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -585,6 +624,7 @@ public class AssetEntryUsageModelImpl
 		assetEntryUsageImpl.setUuid(getUuid());
 		assetEntryUsageImpl.setAssetEntryUsageId(getAssetEntryUsageId());
 		assetEntryUsageImpl.setGroupId(getGroupId());
+		assetEntryUsageImpl.setCompanyId(getCompanyId());
 		assetEntryUsageImpl.setCreateDate(getCreateDate());
 		assetEntryUsageImpl.setModifiedDate(getModifiedDate());
 		assetEntryUsageImpl.setAssetEntryId(getAssetEntryId());
@@ -662,6 +702,11 @@ public class AssetEntryUsageModelImpl
 
 		assetEntryUsageModelImpl._setOriginalGroupId = false;
 
+		assetEntryUsageModelImpl._originalCompanyId =
+			assetEntryUsageModelImpl._companyId;
+
+		assetEntryUsageModelImpl._setOriginalCompanyId = false;
+
 		assetEntryUsageModelImpl._setModifiedDate = false;
 
 		assetEntryUsageModelImpl._originalAssetEntryId =
@@ -706,6 +751,8 @@ public class AssetEntryUsageModelImpl
 		assetEntryUsageCacheModel.assetEntryUsageId = getAssetEntryUsageId();
 
 		assetEntryUsageCacheModel.groupId = getGroupId();
+
+		assetEntryUsageCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
 
@@ -834,6 +881,9 @@ public class AssetEntryUsageModelImpl
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

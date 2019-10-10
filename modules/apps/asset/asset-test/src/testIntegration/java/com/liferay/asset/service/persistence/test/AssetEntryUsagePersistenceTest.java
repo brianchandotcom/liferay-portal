@@ -133,6 +133,8 @@ public class AssetEntryUsagePersistenceTest {
 
 		newAssetEntryUsage.setGroupId(RandomTestUtil.nextLong());
 
+		newAssetEntryUsage.setCompanyId(RandomTestUtil.nextLong());
+
 		newAssetEntryUsage.setCreateDate(RandomTestUtil.nextDate());
 
 		newAssetEntryUsage.setModifiedDate(RandomTestUtil.nextDate());
@@ -165,6 +167,9 @@ public class AssetEntryUsagePersistenceTest {
 		Assert.assertEquals(
 			existingAssetEntryUsage.getGroupId(),
 			newAssetEntryUsage.getGroupId());
+		Assert.assertEquals(
+			existingAssetEntryUsage.getCompanyId(),
+			newAssetEntryUsage.getCompanyId());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingAssetEntryUsage.getCreateDate()),
 			Time.getShortTimestamp(newAssetEntryUsage.getCreateDate()));
@@ -206,6 +211,15 @@ public class AssetEntryUsagePersistenceTest {
 		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -277,10 +291,10 @@ public class AssetEntryUsagePersistenceTest {
 	protected OrderByComparator<AssetEntryUsage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"AssetEntryUsage", "mvccVersion", true, "uuid", true,
-			"assetEntryUsageId", true, "groupId", true, "createDate", true,
-			"modifiedDate", true, "assetEntryId", true, "containerType", true,
-			"containerKey", true, "plid", true, "type", true, "lastPublishDate",
-			true);
+			"assetEntryUsageId", true, "groupId", true, "companyId", true,
+			"createDate", true, "modifiedDate", true, "assetEntryId", true,
+			"containerType", true, "containerKey", true, "plid", true, "type",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -551,6 +565,8 @@ public class AssetEntryUsagePersistenceTest {
 		assetEntryUsage.setUuid(RandomTestUtil.randomString());
 
 		assetEntryUsage.setGroupId(RandomTestUtil.nextLong());
+
+		assetEntryUsage.setCompanyId(RandomTestUtil.nextLong());
 
 		assetEntryUsage.setCreateDate(RandomTestUtil.nextDate());
 

@@ -67,8 +67,8 @@ public class FriendlyURLEntryMappingModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT},
 		{"friendlyURLEntryMappingId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"friendlyURLEntryId", Types.BIGINT}
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"friendlyURLEntryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,13 +77,14 @@ public class FriendlyURLEntryMappingModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryMappingId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("friendlyURLEntryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,friendlyURLEntryMappingId LONG not null primary key,classNameId LONG,classPK LONG,friendlyURLEntryId LONG)";
+		"create table FriendlyURLEntryMapping (mvccVersion LONG default 0 not null,friendlyURLEntryMappingId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,friendlyURLEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryMapping";
@@ -259,6 +260,12 @@ public class FriendlyURLEntryMappingModelImpl
 			(BiConsumer<FriendlyURLEntryMapping, Long>)
 				FriendlyURLEntryMapping::setFriendlyURLEntryMappingId);
 		attributeGetterFunctions.put(
+			"companyId", FriendlyURLEntryMapping::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<FriendlyURLEntryMapping, Long>)
+				FriendlyURLEntryMapping::setCompanyId);
+		attributeGetterFunctions.put(
 			"classNameId", FriendlyURLEntryMapping::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId",
@@ -302,6 +309,16 @@ public class FriendlyURLEntryMappingModelImpl
 	@Override
 	public void setFriendlyURLEntryMappingId(long friendlyURLEntryMappingId) {
 		_friendlyURLEntryMappingId = friendlyURLEntryMappingId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@Override
@@ -385,7 +402,8 @@ public class FriendlyURLEntryMappingModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, FriendlyURLEntryMapping.class.getName(), getPrimaryKey());
+			getCompanyId(), FriendlyURLEntryMapping.class.getName(),
+			getPrimaryKey());
 	}
 
 	@Override
@@ -418,6 +436,7 @@ public class FriendlyURLEntryMappingModelImpl
 		friendlyURLEntryMappingImpl.setMvccVersion(getMvccVersion());
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(
 			getFriendlyURLEntryMappingId());
+		friendlyURLEntryMappingImpl.setCompanyId(getCompanyId());
 		friendlyURLEntryMappingImpl.setClassNameId(getClassNameId());
 		friendlyURLEntryMappingImpl.setClassPK(getClassPK());
 		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(
@@ -509,6 +528,8 @@ public class FriendlyURLEntryMappingModelImpl
 		friendlyURLEntryMappingCacheModel.friendlyURLEntryMappingId =
 			getFriendlyURLEntryMappingId();
 
+		friendlyURLEntryMappingCacheModel.companyId = getCompanyId();
+
 		friendlyURLEntryMappingCacheModel.classNameId = getClassNameId();
 
 		friendlyURLEntryMappingCacheModel.classPK = getClassPK();
@@ -598,6 +619,7 @@ public class FriendlyURLEntryMappingModelImpl
 
 	private long _mvccVersion;
 	private long _friendlyURLEntryMappingId;
+	private long _companyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

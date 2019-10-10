@@ -16,12 +16,14 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
+import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriterFactory;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -47,14 +50,26 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ivica Cardic
  */
-@Component(service = BatchEngineTaskExecutor.class)
+@Component(
+	configurationPid = "com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration",
+	service = BatchEngineTaskExecutor.class
+)
 public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
+	public void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		BatchEngineTaskConfiguration batchEngineTaskConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BatchEngineTaskConfiguration.class, properties);
+
+		_csvFileColumnDelimiter =
+			batchEngineTaskConfiguration.csvFileColumnDelimiter();
+
 		_batchEngineTaskItemReaderFactory =
 			new BatchEngineTaskItemReaderFactory(
-				_batchEngineTaskMethodServiceRegistry);
+				_batchEngineTaskMethodServiceRegistry, _csvFileColumnDelimiter);
 
 		_batchEngineTaskItemWriterFactory =
 			new BatchEngineTaskItemWriterFactory(
@@ -179,6 +194,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private String _csvFileColumnDelimiter;
 
 	@Reference
 	private UserLocalService _userLocalService;

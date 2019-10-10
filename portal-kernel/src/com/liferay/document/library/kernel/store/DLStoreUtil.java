@@ -401,23 +401,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Moves a file to a new data repository.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository
-	 * @param newRepositoryId the primary key of the new data repository
-	 * @param fileName the file's name
-	 */
-	public static void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException {
-
-		getStore().updateFile(
-			companyId, repositoryId, newRepositoryId, fileName);
-	}
-
-	/**
 	 * Update's the file's name
 	 *
 	 * @param companyId the primary key of the company

@@ -542,50 +542,6 @@ public abstract class BaseStoreTestCase {
 			RandomTestUtil.randomString());
 	}
 
-	@Test
-	public void testUpdateFileWithNewRepositoryId() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		long newRepositoryId = RandomTestUtil.nextLong();
-
-		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
-
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, newRepositoryId, fileName, Store.VERSION_DEFAULT));
-
-		store.deleteDirectory(companyId, newRepositoryId, StringPool.SLASH);
-	}
-
-	@Test(expected = DuplicateFileException.class)
-	public void testUpdateFileWithNewRepositoryIdDuplicateFileException()
-		throws Exception {
-
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.updateFile(companyId, repositoryId, repositoryId, fileName);
-	}
-
-	@Test(expected = NoSuchFileException.class)
-	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
-		throws Exception {
-
-		store.updateFile(
-			companyId, repositoryId, RandomTestUtil.nextLong(),
-			RandomTestUtil.randomString());
-	}
-
 	protected void addVersions(String fileName, int newVersionCount)
 		throws Exception {
 

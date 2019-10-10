@@ -267,25 +267,6 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException {
-
-		if (repositoryId == newRepositoryId) {
-			throw new DuplicateFileException(
-				companyId, newRepositoryId, fileName);
-		}
-
-		String oldKey = _s3KeyTransformer.getFileKey(
-			companyId, repositoryId, fileName);
-		String newKey = _s3KeyTransformer.getFileKey(
-			companyId, newRepositoryId, fileName);
-
-		moveObjects(oldKey, newKey);
-	}
-
-	@Override
-	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException {

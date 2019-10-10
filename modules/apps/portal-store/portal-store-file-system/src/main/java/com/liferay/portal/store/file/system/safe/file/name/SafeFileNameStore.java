@@ -185,20 +185,6 @@ public class SafeFileNameStore implements Store {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException {
-
-		String safeFileName = FileUtil.encodeSafeFileName(fileName);
-
-		renameUnsafeFile(companyId, repositoryId, fileName, safeFileName);
-
-		_store.updateFile(
-			companyId, repositoryId, newRepositoryId, safeFileName);
-	}
-
-	@Override
-	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException {

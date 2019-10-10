@@ -103,22 +103,6 @@ public class IgnoreDuplicatesStore implements Store {
 	@Override
 	public void updateFile(
 			final long companyId, final long repositoryId,
-			final long newRepositoryId, final String fileName)
-		throws PortalException {
-
-		if (repositoryId == newRepositoryId) {
-			return;
-		}
-
-		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(companyId, newRepositoryId, fileName),
-			() -> _store.updateFile(
-				companyId, repositoryId, newRepositoryId, fileName));
-	}
-
-	@Override
-	public void updateFile(
-			final long companyId, final long repositoryId,
 			final String fileName, final String newFileName)
 		throws PortalException {
 

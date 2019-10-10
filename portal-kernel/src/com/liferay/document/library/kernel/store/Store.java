@@ -137,19 +137,6 @@ public interface Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
 
-	/**
-	 * Moves a file to a new data repository.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository
-	 * @param newRepositoryId the primary key of the new data repository
-	 * @param fileName the file's name
-	 */
-	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException;
-
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)

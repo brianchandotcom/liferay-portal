@@ -354,17 +354,6 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void updateFile(
-			long companyId, long repositoryId, long newRepositoryId,
-			String fileName)
-		throws PortalException {
-
-		Store store = _storeFactory.getStore();
-
-		store.updateFile(companyId, repositoryId, newRepositoryId, fileName);
-	}
-
-	@Override
-	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
 		throws PortalException {

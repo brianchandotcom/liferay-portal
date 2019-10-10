@@ -37,6 +37,10 @@ public class YMLLongLinesCheck extends BaseFileCheck {
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.matches(" +-")) {
+					continue;
+				}
+
 				lineNumber++;
 
 				_checkMaxLineLength(line, fileName, absolutePath, lineNumber);

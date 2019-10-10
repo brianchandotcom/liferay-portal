@@ -1,37 +1,168 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`document-library-preview-document renders a document previewer with nineteen pages and the fifth page rendered 1`] = `
-<div class="preview-file">
-  <div class="preview-file-container preview-file-max-height" ref="imageContainer"><img class=" preview-file-document  preview-file-document-fit" src="/document-images/5"></div>
-  <div class="preview-toolbar-container">
-    <div class="btn-group floating-bar" role="group">
-      <div class="btn-group"><button class="btn btn-floating-bar btn-floating-bar-text" title="click-to-jump-to-a-page" value="go" type="button">page 5 / 19</button></div><button class="btn btn-floating-bar btn-monospaced" aria-label="caret-top" title="page-above" value="previous" type="button"><svg class="lexicon-icon lexicon-icon-caret-top" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#caret-top"></use>
-        </svg></button><button class="btn btn-floating-bar btn-monospaced" aria-label="caret-bottom" title="page-below" value="next" type="button"><svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#caret-bottom"></use>
-        </svg></button>
-      <div class="separator-floating-bar"></div><button class="btn btn-floating-bar btn-monospaced" aria-label="full-size" title="expand" value="expandToggle" type="button"><svg class="lexicon-icon lexicon-icon-full-size" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#full-size"></use>
-        </svg></button>
+<DocumentFragment>
+  <div
+    class="preview-file"
+  >
+    <div
+      class="preview-file-container preview-file-max-height"
+    >
+      <img
+        class="preview-file-document preview-file-document-fit"
+        src="/document-images/5"
+      />
+    </div>
+    <div
+      class="preview-toolbar-container"
+    >
+      <div
+        class="floating-bar btn-group"
+        role="group"
+      >
+        <div
+          class="btn-group"
+          role="group"
+        >
+          <button
+            class="btn-floating-bar btn-floating-bar-text btn btn-primary"
+            title="click-to-jump-to-a-page"
+            type="button"
+          >
+            page 5 / 19
+          </button>
+        </div>
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="page-above"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-top"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-top"
+            />
+          </svg>
+        </button>
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="page-below"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+        <div
+          class="separator-floating-bar"
+        />
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="expand"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-full-size"
+            role="presentation"
+          >
+            <use
+              xlink:href="#full-size"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`document-library-preview-document renders a document previewer with ten pages and the first page rendered 1`] = `
-<div class="preview-file">
-  <div class="preview-file-container preview-file-max-height" ref="imageContainer"><img class=" preview-file-document  preview-file-document-fit" src="/document-images/1"></div>
-  <div class="preview-toolbar-container">
-    <div class="btn-group floating-bar" role="group">
-      <div class="btn-group"><button class="btn btn-floating-bar btn-floating-bar-text" title="click-to-jump-to-a-page" value="go" type="button">page 1 / 10</button></div><button class="btn btn-floating-bar btn-monospaced" aria-label="caret-top" title="page-above" value="previous" type="button"><svg class="lexicon-icon lexicon-icon-caret-top" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#caret-top"></use>
-        </svg></button><button class="btn btn-floating-bar btn-monospaced" aria-label="caret-bottom" title="page-below" value="next" type="button"><svg class="lexicon-icon lexicon-icon-caret-bottom" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#caret-bottom"></use>
-        </svg></button>
-      <div class="separator-floating-bar"></div><button class="btn btn-floating-bar btn-monospaced" aria-label="full-size" title="expand" value="expandToggle" type="button"><svg class="lexicon-icon lexicon-icon-full-size" focusable="false" role="presentation">
-          <use xlink:href="icons.svg#full-size"></use>
-        </svg></button>
+<DocumentFragment>
+  <div
+    class="preview-file"
+  >
+    <div
+      class="preview-file-container preview-file-max-height"
+    >
+      <img
+        class="preview-file-document preview-file-document-fit"
+        src="/document-images/1"
+      />
+    </div>
+    <div
+      class="preview-toolbar-container"
+    >
+      <div
+        class="floating-bar btn-group"
+        role="group"
+      >
+        <div
+          class="btn-group"
+          role="group"
+        >
+          <button
+            class="btn-floating-bar btn-floating-bar-text btn btn-primary"
+            title="click-to-jump-to-a-page"
+            type="button"
+          >
+            page 1 / 10
+          </button>
+        </div>
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          disabled=""
+          title="page-above"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-top"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-top"
+            />
+          </svg>
+        </button>
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="page-below"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-bottom"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-bottom"
+            />
+          </svg>
+        </button>
+        <div
+          class="separator-floating-bar"
+        />
+        <button
+          class="btn-floating-bar btn btn-monospaced btn-primary"
+          title="expand"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-full-size"
+            role="presentation"
+          >
+            <use
+              xlink:href="#full-size"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

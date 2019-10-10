@@ -12,39 +12,36 @@
  * details.
  */
 
+import {cleanup, render} from '@testing-library/react';
 import DocumentPreviewer from '../src/main/resources/META-INF/resources/preview/js/DocumentPreviewer.es';
-
-let component;
-
-const defaultDocumentPreviewerConfig = {
-	baseImageURL: '/document-images/',
-	spritemap: 'icons.svg'
-};
+import React from 'react';
 
 describe('document-library-preview-document', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
-	});
+	afterEach(cleanup);
 
 	it('renders a document previewer with ten pages and the first page rendered', () => {
-		component = new DocumentPreviewer({
-			...defaultDocumentPreviewerConfig,
-			currentPage: 1,
-			totalPages: 10
-		});
+		const {asFragment} = render(
+			<DocumentPreviewer
+				baseImageURL="/document-images/"
+				initialPage={1}
+				spritemap="icons.svg"
+				totalPages={10}
+			/>
+		);
 
-		expect(component).toMatchSnapshot();
+		expect(asFragment()).toMatchSnapshot();
 	});
 
 	it('renders a document previewer with nineteen pages and the fifth page rendered', () => {
-		component = new DocumentPreviewer({
-			...defaultDocumentPreviewerConfig,
-			currentPage: 5,
-			totalPages: 19
-		});
+		const {asFragment} = render(
+			<DocumentPreviewer
+				baseImageURL="/document-images/"
+				initialPage={5}
+				spritemap="icons.svg"
+				totalPages={19}
+			/>
+		);
 
-		expect(component).toMatchSnapshot();
+		expect(asFragment()).toMatchSnapshot();
 	});
 });

@@ -24,12 +24,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortalInstanceLifecycleManager {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void preregisterCompany(long companyId);
-
 	public void preunregisterCompany(Company company);
 
 	public void registerCompany(Company company);

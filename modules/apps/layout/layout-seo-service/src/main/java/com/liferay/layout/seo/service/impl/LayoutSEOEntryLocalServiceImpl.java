@@ -68,11 +68,11 @@ public class LayoutSEOEntryLocalServiceImpl
 	public LayoutSEOEntry updateLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
-			boolean openGraphTitleEnabled,
-			Map<Locale, String> openGraphTitleMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
-			long openGraphImageFileEntryId, ServiceContext serviceContext)
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
@@ -81,9 +81,9 @@ public class LayoutSEOEntryLocalServiceImpl
 		if (layoutSEOEntry == null) {
 			return _addLayoutSEOEntry(
 				userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
-				canonicalURLMap, openGraphTitleEnabled, openGraphTitleMap,
-				openGraphDescriptionEnabled, openGraphDescriptionMap,
-				openGraphImageFileEntryId, serviceContext);
+				canonicalURLMap, openGraphDescriptionEnabled,
+				openGraphDescriptionMap, openGraphImageFileEntryId,
+				openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 		}
 
 		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
@@ -108,18 +108,18 @@ public class LayoutSEOEntryLocalServiceImpl
 
 		return updateLayoutSEOEntry(
 			userId, groupId, privateLayout, layoutId, canonicalURLEnabled,
-			canonicalURLMap, false, Collections.emptyMap(), false,
-			Collections.emptyMap(), 0, serviceContext);
+			canonicalURLMap, false, Collections.emptyMap(), 0, false,
+			Collections.emptyMap(), serviceContext);
 	}
 
 	private LayoutSEOEntry _addLayoutSEOEntry(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean canonicalURLEnabled, Map<Locale, String> canonicalURLMap,
-			boolean openGraphTitleEnabled,
-			Map<Locale, String> openGraphTitleMap,
 			boolean openGraphDescriptionEnabled,
 			Map<Locale, String> openGraphDescriptionMap,
-			long openGraphImageFileEntryId, ServiceContext serviceContext)
+			long openGraphImageFileEntryId, boolean openGraphTitleEnabled,
+			Map<Locale, String> openGraphTitleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.create(

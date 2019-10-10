@@ -160,7 +160,6 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
-			portletURL.setParameter("backURL", serviceContext.getCurrentURL());
 			portletURL.setParameter(
 				"workflowTaskId", String.valueOf(workflowTaskId));
 			portletURL.setWindowState(WindowState.MAXIMIZED);

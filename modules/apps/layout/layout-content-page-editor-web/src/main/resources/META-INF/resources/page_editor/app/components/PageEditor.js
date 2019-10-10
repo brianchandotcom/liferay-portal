@@ -23,12 +23,53 @@ export default function PageEditor() {
 	const config = useContext(ConfigContext);
 	const state = useContext(StoreContext);
 
+	const {fragmentEntryLinks} = state;
+
 	return (
 		<>
+			<Body fragmentEntryLinks={fragmentEntryLinks} />
+			<DebugInfo config={config} state={state} />
+		</>
+	);
+}
+
+function Body({fragmentEntryLinks}) {
+	return Object.values(fragmentEntryLinks).map(
+		({content, fragmentEntryLinkId}) => {
+			if (content.value.contentKind === 'HTML') {
+				return (
+					<HTML
+						key={fragmentEntryLinkId}
+						markup={content.value.content}
+					/>
+				);
+			} else {
+				return (
+					<pre key={fragmentEntryLinkId}>
+						{JSON.stringify(content, null, 2)}
+					</pre>
+				);
+			}
+		}
+	);
+}
+
+function HTML({markup}) {
+	return <div dangerouslySetInnerHTML={{__html: markup}} />;
+}
+
+let DebugInfo;
+
+if (process.env.NODE_ENV === 'development') {
+	DebugInfo = ({config, state}) => (
+		<>
+			<h2>Debug Information</h2>
 			<h3>Config</h3>
 			<pre>{JSON.stringify(config, null, 2)}</pre>
 			<h3>Store state</h3>
 			<pre>{JSON.stringify(state, null, 2)}</pre>
 		</>
 	);
+} else {
+	DebugInfo = () => null;
 }

@@ -11,6 +11,10 @@ definition {
 		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 	}
 
 	tearDown {

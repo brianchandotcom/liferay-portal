@@ -46,11 +46,7 @@ const Body = ({currentTab, processId, query}) => {
 
 	return (
 		<Request.Success>
-			{!data.totalCount && (
-				<WorkloadByAssigneeCard.Empty currentTab={currentTab} />
-			)}
-
-			{!!data.totalCount && (
+			{data.totalCount ? (
 				<>
 					<WorkloadByAssigneeCard.Table
 						currentTab={currentTab}
@@ -68,6 +64,8 @@ const Body = ({currentTab, processId, query}) => {
 						</button>
 					</div>
 				</>
+			) : (
+				<WorkloadByAssigneeCard.Empty currentTab={currentTab} />
 			)}
 		</Request.Success>
 	);

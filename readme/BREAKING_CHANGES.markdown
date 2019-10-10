@@ -126,3 +126,27 @@ This change was made to avoid serving unnecessary files saving bandwidth and
 increasing performance of your sites by default.
 
 ---------------------------------------
+
+### Removed liferay.frontend.Slider
+- **Date:** 2019-Oct-10
+- **JIRA Ticket:** [LPS-100124](https://issues.liferay.com/browse/LPS-100124)
+
+#### What changed?
+
+Liferay Frontend compat Slider has been removed.
+
+#### Who is affected?
+
+This affects any code that relies on such component.
+
+#### How should I update my code?
+
+There's no direct replacement for this. Clay Slider component can be used
+instead.
+
+#### Why was this change made?
+
+Liferay Frontend compat Slider component is not used and was already
+deprecated in 7.2.
+
+---------------------------------------

@@ -183,13 +183,13 @@ public class LayoutPersistenceTest {
 
 		newLayout.setPriority(RandomTestUtil.nextInt());
 
+		newLayout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
 		newLayout.setLayoutPrototypeUuid(RandomTestUtil.randomString());
 
 		newLayout.setLayoutPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
 
 		newLayout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
-
-		newLayout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		newLayout.setPublishDate(RandomTestUtil.nextDate());
 
@@ -255,6 +255,9 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getPriority(), newLayout.getPriority());
 		Assert.assertEquals(
+			existingLayout.getMasterLayoutPageTemplateEntryId(),
+			newLayout.getMasterLayoutPageTemplateEntryId());
+		Assert.assertEquals(
 			existingLayout.getLayoutPrototypeUuid(),
 			newLayout.getLayoutPrototypeUuid());
 		Assert.assertEquals(
@@ -263,9 +266,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getSourcePrototypeLayoutUuid(),
 			newLayout.getSourcePrototypeLayoutUuid());
-		Assert.assertEquals(
-			existingLayout.getMasterLayoutPageTemplateEntryId(),
-			newLayout.getMasterLayoutPageTemplateEntryId());
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingLayout.getPublishDate()),
 			Time.getShortTimestamp(newLayout.getPublishDate()));
@@ -534,10 +534,10 @@ public class LayoutPersistenceTest {
 			"name", true, "title", true, "description", true, "keywords", true,
 			"robots", true, "type", true, "hidden", true, "system", true,
 			"friendlyURL", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "priority", true, "layoutPrototypeUuid",
+			"colorSchemeId", true, "priority", true,
+			"masterLayoutPageTemplateEntryId", true, "layoutPrototypeUuid",
 			true, "layoutPrototypeLinkEnabled", true,
-			"sourcePrototypeLayoutUuid", true,
-			"masterLayoutPageTemplateEntryId", true, "publishDate", true,
+			"sourcePrototypeLayoutUuid", true, "publishDate", true,
 			"lastPublishDate", true);
 	}
 
@@ -896,13 +896,13 @@ public class LayoutPersistenceTest {
 
 		layout.setPriority(RandomTestUtil.nextInt());
 
+		layout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
 		layout.setLayoutPrototypeUuid(RandomTestUtil.randomString());
 
 		layout.setLayoutPrototypeLinkEnabled(RandomTestUtil.randomBoolean());
 
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
-
-		layout.setMasterLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		layout.setPublishDate(RandomTestUtil.nextDate());
 

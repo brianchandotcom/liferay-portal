@@ -140,14 +140,14 @@ public class LayoutCacheModel
 		sb.append(css);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", masterLayoutPageTemplateEntryId=");
+		sb.append(masterLayoutPageTemplateEntryId);
 		sb.append(", layoutPrototypeUuid=");
 		sb.append(layoutPrototypeUuid);
 		sb.append(", layoutPrototypeLinkEnabled=");
 		sb.append(layoutPrototypeLinkEnabled);
 		sb.append(", sourcePrototypeLayoutUuid=");
 		sb.append(sourcePrototypeLayoutUuid);
-		sb.append(", masterLayoutPageTemplateEntryId=");
-		sb.append(masterLayoutPageTemplateEntryId);
 		sb.append(", publishDate=");
 		sb.append(publishDate);
 		sb.append(", lastPublishDate=");
@@ -287,6 +287,8 @@ public class LayoutCacheModel
 		}
 
 		layoutImpl.setPriority(priority);
+		layoutImpl.setMasterLayoutPageTemplateEntryId(
+			masterLayoutPageTemplateEntryId);
 
 		if (layoutPrototypeUuid == null) {
 			layoutImpl.setLayoutPrototypeUuid("");
@@ -303,9 +305,6 @@ public class LayoutCacheModel
 		else {
 			layoutImpl.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 		}
-
-		layoutImpl.setMasterLayoutPageTemplateEntryId(
-			masterLayoutPageTemplateEntryId);
 
 		if (publishDate == Long.MIN_VALUE) {
 			layoutImpl.setPublishDate(null);
@@ -374,12 +373,12 @@ public class LayoutCacheModel
 		css = objectInput.readUTF();
 
 		priority = objectInput.readInt();
+
+		masterLayoutPageTemplateEntryId = objectInput.readLong();
 		layoutPrototypeUuid = objectInput.readUTF();
 
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
-
-		masterLayoutPageTemplateEntryId = objectInput.readLong();
 		publishDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
@@ -512,6 +511,8 @@ public class LayoutCacheModel
 
 		objectOutput.writeInt(priority);
 
+		objectOutput.writeLong(masterLayoutPageTemplateEntryId);
+
 		if (layoutPrototypeUuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -528,7 +529,6 @@ public class LayoutCacheModel
 			objectOutput.writeUTF(sourcePrototypeLayoutUuid);
 		}
 
-		objectOutput.writeLong(masterLayoutPageTemplateEntryId);
 		objectOutput.writeLong(publishDate);
 		objectOutput.writeLong(lastPublishDate);
 	}
@@ -564,10 +564,10 @@ public class LayoutCacheModel
 	public String colorSchemeId;
 	public String css;
 	public int priority;
+	public long masterLayoutPageTemplateEntryId;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
-	public long masterLayoutPageTemplateEntryId;
 	public long publishDate;
 	public long lastPublishDate;
 

@@ -74,14 +74,14 @@ public class LayoutWrapper
 		attributes.put("colorSchemeId", getColorSchemeId());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
+		attributes.put(
+			"masterLayoutPageTemplateEntryId",
+			getMasterLayoutPageTemplateEntryId());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
 		attributes.put(
 			"sourcePrototypeLayoutUuid", getSourcePrototypeLayoutUuid());
-		attributes.put(
-			"masterLayoutPageTemplateEntryId",
-			getMasterLayoutPageTemplateEntryId());
 		attributes.put("publishDate", getPublishDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -276,6 +276,13 @@ public class LayoutWrapper
 			setPriority(priority);
 		}
 
+		Long masterLayoutPageTemplateEntryId = (Long)attributes.get(
+			"masterLayoutPageTemplateEntryId");
+
+		if (masterLayoutPageTemplateEntryId != null) {
+			setMasterLayoutPageTemplateEntryId(masterLayoutPageTemplateEntryId);
+		}
+
 		String layoutPrototypeUuid = (String)attributes.get(
 			"layoutPrototypeUuid");
 
@@ -295,13 +302,6 @@ public class LayoutWrapper
 
 		if (sourcePrototypeLayoutUuid != null) {
 			setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
-		}
-
-		Long masterLayoutPageTemplateEntryId = (Long)attributes.get(
-			"masterLayoutPageTemplateEntryId");
-
-		if (masterLayoutPageTemplateEntryId != null) {
-			setMasterLayoutPageTemplateEntryId(masterLayoutPageTemplateEntryId);
 		}
 
 		Date publishDate = (Date)attributes.get("publishDate");

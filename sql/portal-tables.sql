@@ -585,10 +585,10 @@ create table Layout (
 	colorSchemeId VARCHAR(75) null,
 	css TEXT null,
 	priority INTEGER,
+	mLayoutPageTemplateEntryId LONG,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
 	sourcePrototypeLayoutUuid VARCHAR(75) null,
-	mLayoutPageTemplateEntryId LONG,
 	publishDate DATE null,
 	lastPublishDate DATE null,
 	primary key (plid, ctCollectionId)

@@ -1567,6 +1567,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
+	@Override
+	public List<Layout> getLayouts(
+		long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return layoutPersistence.findByG_M(
+			groupId, masterLayoutPageTemplateEntryId);
+	}
+
 	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
@@ -1775,6 +1783,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public int getLayoutsCount(long groupId) {
 		return layoutPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getLayoutsCount(
+		long groupId, long masterLayoutPageTemplateEntryId) {
+
+		return layoutPersistence.countByG_M(
+			groupId, masterLayoutPageTemplateEntryId);
 	}
 
 	@Override

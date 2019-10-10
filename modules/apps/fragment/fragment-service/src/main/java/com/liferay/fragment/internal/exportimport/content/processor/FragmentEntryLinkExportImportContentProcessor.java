@@ -436,7 +436,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (!stagingGroupHelper.isStagedPortlet(
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			!stagingGroupHelper.isStagedPortlet(
 				portletDataContext.getScopeGroupId(),
 				assetRendererFactory.getPortletId())) {
 

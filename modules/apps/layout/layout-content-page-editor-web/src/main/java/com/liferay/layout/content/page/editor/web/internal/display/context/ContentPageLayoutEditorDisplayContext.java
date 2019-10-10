@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -209,7 +210,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 			segmentsExperienceSoyContext.put(
 				"hasLockedSegmentsExperiment",
-				segmentsExperience.hasSegmentsExperiment()
+				_hasLockedSegmentsExperiment(
+					segmentsExperience.getSegmentsExperienceId())
 			).put(
 				"name", segmentsExperience.getName(themeDisplay.getLocale())
 			).put(
@@ -240,7 +242,8 @@ public class ContentPageLayoutEditorDisplayContext
 			SoyContextFactoryUtil.createSoyContext();
 
 		defaultSegmentsExperienceSoyContext.put(
-			"hasLockedSegmentsExperiment", false
+			"hasLockedSegmentsExperiment",
+			_hasLockedSegmentsExperiment(SegmentsExperienceConstants.ID_DEFAULT)
 		).put(
 			"name",
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
@@ -399,6 +402,37 @@ public class ContentPageLayoutEditorDisplayContext
 		}
 
 		return true;
+	}
+
+	private boolean _hasLockedSegmentsExperiment(long segmentsExperienceId)
+		throws PortalException {
+
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			SegmentsExperience segmentsExperience =
+				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+					segmentsExperienceId);
+
+			return segmentsExperience.hasSegmentsExperiment();
+		}
+
+		Optional<SegmentsExperiment> segmentsExperimentOptional =
+			_getSegmentsExperimentOptional(segmentsExperienceId);
+
+		if (!segmentsExperimentOptional.isPresent()) {
+			return false;
+		}
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentOptional.get();
+
+		List<Integer> lockedStatusValuesList = ListUtil.toList(
+			SegmentsExperimentConstants.Status.getLockedStatusValues());
+
+		if (lockedStatusValuesList.contains(segmentsExperiment.getStatus())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isShowSegmentsExperiences() throws PortalException {

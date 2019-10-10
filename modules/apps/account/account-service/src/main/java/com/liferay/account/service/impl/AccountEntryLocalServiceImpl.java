@@ -172,6 +172,11 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getAccountEntriesCount(long companyId, int status) {
+		return accountEntryPersistence.countByC_S(companyId, status);
+	}
+
+	@Override
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, byte[] logoBytes,

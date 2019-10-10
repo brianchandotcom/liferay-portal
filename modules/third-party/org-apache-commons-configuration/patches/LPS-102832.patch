@@ -1,0 +1,13 @@
+diff --git a/org/apache/commons/configuration/PropertiesConfiguration.java b/org/apache/commons/configuration/PropertiesConfiguration.java
+index e06974494554..144c1d16201e 100644
+--- a/org/apache/commons/configuration/PropertiesConfiguration.java
++++ b/org/apache/commons/configuration/PropertiesConfiguration.java
+@@ -923,7 +923,7 @@ public class PropertiesConfiguration extends AbstractFileConfiguration
+ 				return _emptyResult;
+ 			}
+ 
+-			return new String[] {line.substring(0, index).trim(), line.substring(index + 1), "="};
++			return new String[] {line.substring(0, index).trim(), line.substring(index + 1).trim(), "="};
+         }
+ 
+ 		private static final String[] _emptyResult = {"", "", ""};

@@ -402,14 +402,11 @@ private void _testPom(String artifactId, String version) {
 	assert pomNode.scm.url.text() == "https://github.com/liferay/liferay-portal"
 	assert pomNode.version.text() == version
 
-	String dependencyArtifactIdPattern = /[A-Za-z][\w.-]*[A-Za-z\d]/
-	String dependencyGroupIdPattern = /[A-Za-z][\w.-]*[A-Za-z\d]/
-
 	String[] failedDependencies = []
 
 	pomNode.dependencyManagement.dependencies.dependency.each {
-		assert it.artifactId.text().matches(dependencyArtifactIdPattern)
-		assert it.groupId.text().matches(dependencyGroupIdPattern)
+		assert it.artifactId.text().matches(/[A-Za-z][\w.-]*[A-Za-z\d]/)
+		assert it.groupId.text().matches(/[A-Za-z][\w.-]*[A-Za-z\d]/)
 		assert it.version.text().matches(/v?\d(?:[A-Za-z\d.-]*[A-Za-z\d])?/)
 
 		String groupPath = it.groupId.text().replaceAll(/\./, "/")

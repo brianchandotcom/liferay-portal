@@ -57,9 +57,9 @@ public class ProcessEntityModel implements EntityModel {
 
 	@Override
 	public String getName() {
-		String name = ProcessEntityModel.class.getName();
-
-		return StringUtil.replace(name, CharPool.PERIOD, CharPool.UNDERLINE);
+		return StringUtil.replace(
+			ProcessEntityModel.class.getName(), CharPool.PERIOD,
+			CharPool.UNDERLINE);
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

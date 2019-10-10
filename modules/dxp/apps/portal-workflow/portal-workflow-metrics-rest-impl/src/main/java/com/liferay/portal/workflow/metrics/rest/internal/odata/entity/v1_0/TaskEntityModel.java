@@ -50,9 +50,9 @@ public class TaskEntityModel implements EntityModel {
 
 	@Override
 	public String getName() {
-		String name = TaskEntityModel.class.getName();
-
-		return StringUtil.replace(name, CharPool.PERIOD, CharPool.UNDERLINE);
+		return StringUtil.replace(
+			TaskEntityModel.class.getName(), CharPool.PERIOD,
+			CharPool.UNDERLINE);
 	}
 
 	private final Map<String, EntityField> _entityFieldsMap;

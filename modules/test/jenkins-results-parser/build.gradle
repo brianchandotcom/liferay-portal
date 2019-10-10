@@ -9,7 +9,6 @@ dependencies {
 	compile group: "commons-codec", name: "commons-codec", version: "1.9"
 	compile group: "commons-io", name: "commons-io", version: "2.6"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
-	compile group: "io.kubernetes", name: "client-java", version: "3.0.0"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.14"
 	compile group: "org.apache.commons", name: "commons-compress", version: "1.18"

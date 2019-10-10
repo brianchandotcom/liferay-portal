@@ -493,6 +493,7 @@
 	<source-processor name="YMLSourceProcessor">
 		<check name="YMLDefinitionOrderCheck" />
 		<check name="YMLEmptyLinesCheck" />
+		<check name="YMLLongLinesCheck" />
 		<check name="YMLWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

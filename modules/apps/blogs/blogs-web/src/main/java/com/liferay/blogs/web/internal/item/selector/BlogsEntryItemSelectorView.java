@@ -87,7 +87,7 @@ public class BlogsEntryItemSelectorView
 		BlogEntriesItemSelectorDisplayContext
 			blogEntriesItemSelectorDisplayContext =
 				new BlogEntriesItemSelectorDisplayContext(
-					(HttpServletRequest)servletRequest, this, portletURL,
+					this, (HttpServletRequest)servletRequest, portletURL,
 					itemSelectedEventName);
 
 		servletRequest.setAttribute(

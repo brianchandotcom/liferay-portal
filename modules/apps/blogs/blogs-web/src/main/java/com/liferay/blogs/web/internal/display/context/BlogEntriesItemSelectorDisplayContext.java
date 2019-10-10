@@ -45,12 +45,12 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogEntriesItemSelectorDisplayContext {
 
 	public BlogEntriesItemSelectorDisplayContext(
-		HttpServletRequest httpServletRequest,
 		BlogsEntryItemSelectorView blogsEntryItemSelectorView,
-		PortletURL portletURL, String itemSelectedEventName) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL,
+		String itemSelectedEventName) {
 
-		_httpServletRequest = httpServletRequest;
 		_blogsEntryItemSelectorView = blogsEntryItemSelectorView;
+		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 

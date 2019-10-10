@@ -23,15 +23,6 @@ public interface VersionedModel<V extends VersionModel> {
 
 	public long getPrimaryKey();
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by the inverse of {@link
-	 *             #isHead()}
-	 */
-	@Deprecated
-	public default boolean isDraft() {
-		return !isHead();
-	}
-
 	public default boolean isHead() {
 		if (getHeadId() >= 0) {
 			return false;

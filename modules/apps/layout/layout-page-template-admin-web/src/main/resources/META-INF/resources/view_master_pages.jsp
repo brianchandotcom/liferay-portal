@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-MasterPageDisplayContext masterPageDisplayContext = new MasterPageDisplayContext(renderRequest, renderResponse, request);
+MasterPageDisplayContext masterPageDisplayContext = new MasterPageDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
@@ -26,7 +26,7 @@ MasterPageDisplayContext masterPageDisplayContext = new MasterPageDisplayContext
 />
 
 <%
-MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayContext = new MasterPageManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, masterPageDisplayContext);
+MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayContext = new MasterPageManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, masterPageDisplayContext);
 %>
 
 <clay:management-toolbar

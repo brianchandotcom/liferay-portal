@@ -356,6 +356,65 @@ definition {
 		}*/
 	}
 
+	@description = "This is a use case for LPS-95670."
+	@priority = "4"
+	test AssertSuggestionsCannotOfferInvalidWordsAsSuggestion {
+		property custom.properties = "locales.enabled=de_DE,en_US${line.separator}locales=de_DE,en_US${line.separator}index.search.spell.checker.dictionary[de_DE]=spellchecker/dictionary_de_DE.txt${line.separator}index.search.spell.checker.supported.locales=en_US,es_ES,de_DE";
+		property index.search.spell.checker.enabled = "true";
+		property test.name.skip.portal.instance = "Search#AssertSuggestionsCannotOfferInvalidWordsAsSuggestion";
+
+		JSONWebcontent.addBasicWebContentLocalized(
+			contentMap = "en_US:WC Content,de_DE:ächten angreifen anmarschieren",
+			groupName = "Guest",
+			titleMap = "en_US:WC Title,de_DE:WC Titel");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search");
+
+		Portlet.addPG(portletName = "Suggestions");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Suggestions",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.enableCheckbox(fieldName = "spellCheckSuggestionEnabled");
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all spell check indexes.");
+
+		AssertConsoleTextPresent(value1 = "Finished indexing dictionary for spellchecker/dictionary_de_DE.txt");
+
+		Navigator.openURL();
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "de-DE",
+			textIcon = "deutsch-Deutschland");
+
+		for (var searchTerm : list "ächten,angreifen,anmarschieren") {
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "WC Titel",
+				searchAssetType = "Webcontent, Artikel",
+				searchTerm = "${searchTerm}");
+
+			AssertElementNotPresent(locator1 = "Search#SEARCH_SUGGESTED_SPELLING");
+		}
+	}
+
 	@description = "This is a use case for LPS-90078."
 	@priority = "4"
 	test ModifyPaginationPortalProperties {

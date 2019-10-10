@@ -447,11 +447,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_targetLayout.getLayoutId(),
 					layoutSEOEntry.isCanonicalURLEnabled(),
 					layoutSEOEntry.getCanonicalURLMap(),
-					layoutSEOEntry.isOpenGraphTitleEnabled(),
-					layoutSEOEntry.getOpenGraphTitleMap(),
 					layoutSEOEntry.isOpenGraphDescriptionEnabled(),
 					layoutSEOEntry.getOpenGraphDescriptionMap(),
 					layoutSEOEntry.getOpenGraphImageFileEntryId(),
+					layoutSEOEntry.isOpenGraphTitleEnabled(),
+					layoutSEOEntry.getOpenGraphTitleMap(),
 					serviceContext);
 			}
 

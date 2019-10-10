@@ -36,15 +36,6 @@ public class ClusterExecutorUtil {
 		return _getClusterExecutor().execute(clusterRequest);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getClusterExecutor()}
-	 */
-	@Deprecated
-	public static ClusterExecutor getClusterExecutor() {
-		return _getClusterExecutor();
-	}
-
 	public static List<ClusterNode> getClusterNodes() {
 		return _getClusterExecutor().getClusterNodes();
 	}

@@ -36,14 +36,6 @@ public class ClusterMasterExecutorUtil {
 		return _clusterMasterExecutor.executeOnMaster(methodHandler);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ClusterMasterExecutor getClusterMasterExecutor() {
-		return _clusterMasterExecutor;
-	}
-
 	public static boolean isEnabled() {
 		return _clusterMasterExecutor.isEnabled();
 	}

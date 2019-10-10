@@ -27,14 +27,6 @@ public class ClusterLinkUtil {
 		return (Address)message.get(_ADDRESS);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #_getClusterLink()}
-	 */
-	@Deprecated
-	public static ClusterLink getClusterLink() {
-		return _getClusterLink();
-	}
-
 	public static void sendMulticastMessage(
 		Message message, Priority priority) {
 

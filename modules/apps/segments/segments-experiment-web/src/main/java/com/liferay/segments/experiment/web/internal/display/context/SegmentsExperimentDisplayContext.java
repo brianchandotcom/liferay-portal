@@ -51,10 +51,6 @@ import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +60,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eduardo García
@@ -381,6 +383,20 @@ public class SegmentsExperimentDisplayContext {
 		return segmentsExperiencesJSONArray;
 	}
 
+	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {
+		if (_segmentsExperiment != null) {
+			return _segmentsExperiment;
+		}
+
+		_segmentsExperiment = _getActiveSegmentsExperimentOptional(
+			_getSelectedSegmentsExperienceId()
+		).orElse(
+			null
+		);
+
+		return _segmentsExperiment;
+	}
+
 	private String _getSegmentsExperimentActionURL(String action) {
 		PortletURL actionURL = _renderResponse.createActionURL();
 
@@ -506,20 +522,6 @@ public class SegmentsExperimentDisplayContext {
 		}
 
 		return String.valueOf(winnerSegmentsExperienceId);
-	}
-
-	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {
-		if (_segmentsExperiment != null) {
-			return _segmentsExperiment;
-		}
-
-		_segmentsExperiment = _getActiveSegmentsExperimentOptional(
-			_getSelectedSegmentsExperienceId()
-		).orElse(
-			null
-		);
-
-		return _segmentsExperiment;
 	}
 
 	private Map<String, Object> _data;

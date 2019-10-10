@@ -44,10 +44,7 @@ definition {
 			siteName = "${siteName}",
 			siteURL = "${siteURL}");
 
-		Comments.addPG(
-			entryComment = "Blogs Entry 1 Comment",
-			siteName = "${siteName}",
-			siteURL = "${siteURL}");
+		Comments.addPG(entryComment = "Blogs Entry 1 Comment");
 
 		Navigator.gotoPage(pageName = "Blogs Test Page");
 

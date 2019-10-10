@@ -204,6 +204,20 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function typeNoMouseOver {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent();
+
+		selenium.waitForEditable();
+
+		selenium.type();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function typeNotVisibleNoMouseOver {
 		WaitForSPARefresh();
 

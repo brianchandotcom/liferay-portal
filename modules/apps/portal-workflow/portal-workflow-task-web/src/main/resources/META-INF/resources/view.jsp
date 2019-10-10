@@ -20,6 +20,8 @@
 DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
 String displayStyle = workflowTaskDisplayContext.getDisplayStyle();
+
+portletDisplay.setShowBackIcon(false);
 %>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />

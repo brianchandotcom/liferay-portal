@@ -1048,7 +1048,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<setup-yarn />
 	</target>
 
-	<target name="snapshot-bundle">
+	<target depends="setup-libs" name="snapshot-bundle">
 		<antelope:stringutil property="snapshot.bundle.file.beginindex" string="${snapshot.bundle.url}">
 			<antelope:lastindexof string="/" />
 		</antelope:stringutil>
@@ -1095,14 +1095,8 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<clean-liferay-home />
 
-		<artifact:dependencies pathId="ant.compress.classpath">
-			<dependency artifactId="ant-compress" groupId="org.apache.ant" version="1.5" />
-
-			<remoteRepository url="https://repository.liferay.com/nexus/content/groups/liferay-public" />
-		</artifact:dependencies>
-
 		<taskdef
-			classpathref="ant.compress.classpath"
+			classpathref="lib.classpath"
 			resource="org/apache/ant/compress/antlib.xml"
 		/>
 

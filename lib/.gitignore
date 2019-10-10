@@ -80,6 +80,7 @@
 /portal/abdera.jar
 /portal/activation.jar
 /portal/ant.jar
+/portal/ant-compress.jar
 /portal/antlr2.jar
 /portal/antlr3-runtime.jar
 /portal/antlr3.jar

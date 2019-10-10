@@ -25,27 +25,8 @@ public class MicrosoftTranslatorFactoryUtil {
 		return getMicrosoftTranslatorFactory().getMicrosoftTranslator();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static MicrosoftTranslator getMicrosoftTranslator(
-		String clientId, String clientSecret) {
-
-		return getMicrosoftTranslatorFactory().getMicrosoftTranslator(
-			clientId, clientSecret);
-	}
-
 	public static MicrosoftTranslatorFactory getMicrosoftTranslatorFactory() {
 		return _microsoftTranslatorFactory;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMicrosoftTranslatorFactory(
-		MicrosoftTranslatorFactory microsoftTranslatorFactory) {
 	}
 
 	private static volatile MicrosoftTranslatorFactory

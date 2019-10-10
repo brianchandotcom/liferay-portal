@@ -165,9 +165,9 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 					{
 						id = assigneeUser1.getId();
 						name = assigneeUser1.getName();
-						taskCount = 1L;
 						onTimeTaskCount = 0L;
 						overdueTaskCount = 1L;
+						taskCount = 1L;
 					}
 				}),
 			(List<AssigneeUser>)page.getItems());
@@ -184,18 +184,18 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 					{
 						id = assigneeUser1.getId();
 						name = assigneeUser1.getName();
-						taskCount = 1L;
 						onTimeTaskCount = 0L;
 						overdueTaskCount = 1L;
+						taskCount = 1L;
 					}
 				},
 				new AssigneeUser() {
 					{
 						id = assigneeUser2.getId();
 						name = assigneeUser2.getName();
-						taskCount = 1L;
 						onTimeTaskCount = 1L;
 						overdueTaskCount = 0L;
+						taskCount = 1L;
 					}
 				}),
 			(List<AssigneeUser>)page.getItems());
@@ -254,9 +254,9 @@ public class AssigneeUserResourceTest extends BaseAssigneeUserResourceTestCase {
 						}
 					});
 				name = user.getFullName();
-				taskCount = 1L;
 				onTimeTaskCount = 1L;
 				overdueTaskCount = 0L;
+				taskCount = 1L;
 			}
 		};
 	}

@@ -66,7 +66,7 @@ function LayoutFinder(props) {
 				`[data-treeid="${props.treeId}"]`
 			);
 
-			if (newKeywords.length == 0	) {
+			if (newKeywords.length == 0) {
 				setLoading(false);
 				setLayouts([]);
 				setTotalCount(0);
@@ -130,10 +130,12 @@ function LayoutFinder(props) {
 					{totalCount > MAX_ITEMS_TO_SHOW && (
 						<div>
 							<div className="mt-2 text-center">
-								{`${totalCount -
-									MAX_ITEMS_TO_SHOW} ${Liferay.Language.get(
-									'results-more-refine-keywords'
-								)}`}
+								{Liferay.Util.sub(
+									Liferay.Language.get(
+										'x-results-more-refine-keywords'
+									),
+									totalCount - MAX_ITEMS_TO_SHOW
+								)}
 							</div>
 
 							<div className="text-center">

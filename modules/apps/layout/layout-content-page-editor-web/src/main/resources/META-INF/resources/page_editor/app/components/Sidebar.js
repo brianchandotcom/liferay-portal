@@ -41,7 +41,7 @@ export default function Sidebar() {
 	const store = useContext(StoreContext);
 
 	const [hasError, setHasError] = useStateSafe(false);
-	const [open, setOpen] = useStateSafe(true);
+	const [open, setOpen] = useStateSafe(false);
 	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
 	const {sidebarPanels} = store;

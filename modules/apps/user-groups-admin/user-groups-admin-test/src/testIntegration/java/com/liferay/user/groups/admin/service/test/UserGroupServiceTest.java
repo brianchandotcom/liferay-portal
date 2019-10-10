@@ -16,13 +16,10 @@ package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -34,8 +31,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -71,58 +66,28 @@ public class UserGroupServiceTest {
 
 	@Test
 	public void testDatabaseSearchPermissionCheck() throws Exception {
-		User groupUser = UserTestUtil.addUser();
-		User publicAdminUser = UserTestUtil.addUser();
-
-		Role publicAdminRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
 
 		try {
-			UserGroup publicUserGroup = _addUserGroup();
-			UserGroup privateUserGroup = _addUserGroup();
-
-			_userGroupLocalService.addUserUserGroup(
-				groupUser.getUserId(), publicUserGroup);
-
-			_userGroupLocalService.addUserUserGroup(
-				groupUser.getUserId(), privateUserGroup);
-
-			RoleLocalServiceUtil.addUserRole(
-				publicAdminUser.getUserId(), publicAdminRole);
-
-			ResourceAction viewAction =
-				_resourceActionLocalService.fetchResourceAction(
-					UserGroup.class.getName(), ActionKeys.VIEW);
-
-			ResourcePermissionTestUtil.addResourcePermission(
-				viewAction.getBitwiseValue(), UserGroup.class.getName(),
-				String.valueOf(publicUserGroup.getUserGroupId()),
-				publicAdminRole.getRoleId(),
-				ResourceConstants.SCOPE_INDIVIDUAL);
-
 			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(publicAdminUser));
+				_permissionCheckerFactory.create(user));
 
-			String keywords = null;
+			UserGroup userGroup = _addUserGroup();
 
-			LinkedHashMap<String, Object> userGroupParams =
-				new LinkedHashMap<>();
+			_userGroupLocalService.addUserUserGroup(
+				user.getUserId(), userGroup);
 
-			userGroupParams.put(
-				UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
-				Long.valueOf(groupUser.getUserId()));
+			_assertSearch(user, 0);
 
-			List<UserGroup> userGroups = _userGroupService.search(
-				publicAdminRole.getCompanyId(), keywords, userGroupParams,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));
+			Role adminRole = _roleLocalService.getRole(
+				user.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-			Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
+			RoleLocalServiceUtil.addUserRole(user.getUserId(), adminRole);
+
+			_assertSearch(user, 1);
 		}
 		finally {
-			_userLocalService.deleteUser(groupUser);
-			_userLocalService.deleteUser(publicAdminUser);
-
-			_roleLocalService.deleteRole(publicAdminRole);
+			_userLocalService.deleteUser(user);
 		}
 	}
 
@@ -223,6 +188,21 @@ public class UserGroupServiceTest {
 			expectedUserGroups.size(),
 			_userGroupService.getUserGroupsCount(
 				TestPropsValues.getCompanyId(), nameSearch));
+	}
+
+	private void _assertSearch(User user, int expected) throws Exception {
+		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
+
+		userGroupParams.put(
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS,
+			user.getUserId());
+
+		List<UserGroup> userGroups = _userGroupService.search(
+			user.getCompanyId(), null, userGroupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
+			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));
+
+		Assert.assertEquals(userGroups.toString(), expected, userGroups.size());
 	}
 
 	@Inject

@@ -2430,7 +2430,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>userColor</name>
+			<name>userColorCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

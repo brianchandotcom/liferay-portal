@@ -41,7 +41,7 @@ public interface UserCard extends BaseClayCard {
 		return null;
 	}
 
-	public default String getUserColor() {
+	public default String getUserColorCssClass() {
 		return null;
 	}
 

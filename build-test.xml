@@ -10890,6 +10890,29 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<param name="todir" value="${app.server.lib.global.dir}" />
 		</antcall>
 
+		<get-testcase-property property.name="index.search.spell.checker.enabled" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<equals arg1="${index.search.spell.checker.enabled}" arg2="true" />
+			</and>
+			<then>
+				<local name="spell.checker.dir" />
+
+				<property name="spell.checker.dir" value="${app.server.dir}/webapps/ROOT/WEB-INF/classes/spellchecker" />
+
+				<mkdir dir="${spell.checker.dir}" />
+
+				<echo>Copying ${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/dictionary_de_DE.txt to ${spell.checker.dir}</echo>
+
+				<copy
+					file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/dictionary_de_DE.txt"
+					todir="${spell.checker.dir}"
+				/>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="portal.version" />
 		<get-testcase-property property.name="skip.upgrade-legacy-database" />
 

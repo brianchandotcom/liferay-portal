@@ -212,6 +212,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					ListMergeable<String> titleListMergeable =
 						(ListMergeable<String>)httpServletRequest.getAttribute(
 							WebKeys.PAGE_TITLE);
+
 					title = titleListMergeable.mergeToString(StringPool.SPACE);
 				}
 
@@ -222,6 +223,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					ListMergeable<String> titleListMergeable =
 						(ListMergeable<String>)httpServletRequest.getAttribute(
 							WebKeys.PAGE_SUBTITLE);
+
 					title =
 						titleListMergeable.mergeToString(StringPool.SPACE) +
 							" - " + title;

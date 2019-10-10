@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -37,22 +35,6 @@ public class PortletClassLoaderUtil {
 		}
 
 		return classLoader;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static ClassLoader getClassLoader(String portletId) {
-		PortletBag portletBag = PortletBagPool.get(portletId);
-
-		if (portletBag == null) {
-			return null;
-		}
-
-		ServletContext servletContext = portletBag.getServletContext();
-
-		return servletContext.getClassLoader();
 	}
 
 	public static String getServletContextName() {

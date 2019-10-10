@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -44,14 +43,6 @@ public abstract class BasePortletProvider implements PortletProvider {
 		return PortalUtil.getControlPanelPortletURL(
 			httpServletRequest, group, getPortletName(), 0, 0,
 			PortletRequest.RENDER_PHASE);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
-		return PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
 	}
 
 }

@@ -41,15 +41,6 @@ public class FriendlyURLResolverRegistryUtil {
 		return _serviceTrackerMap.getService(urlSeparator);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getFriendlyURLResolversAsCollection()}
-	 */
-	@Deprecated
-	public static List<FriendlyURLResolver> getFriendlyURLResolvers() {
-		return new ArrayList<>(getFriendlyURLResolversAsCollection());
-	}
-
 	public static Collection<FriendlyURLResolver>
 		getFriendlyURLResolversAsCollection() {
 

@@ -84,15 +84,6 @@ public class DDLDisplayAddPortletProvider
 			"recordSetId", String.valueOf(record.getRecordSetId()));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	protected long getPlid(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPlid();
-	}
-
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {

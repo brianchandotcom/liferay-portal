@@ -104,15 +104,6 @@ public class JournalContentAddPortletProvider
 			portletId, article.getArticleId(), true);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	protected long getPlid(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPlid();
-	}
-
 	private void _addAssetEntryUsage(
 			Layout layout, String portletId, JournalArticle article)
 		throws PortalException {

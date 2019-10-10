@@ -167,5 +167,12 @@
 		<!-- Temporary suppressions for frontend React setup (LPS-99901, wincent) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-react-web/package\.json" />
+
+		<!-- Temporary suppressions for YMLLongLinesCheck (Alan Huang) -->
+
+		<suppress checks="YMLLongLinesCheck" files="modules/apps/headless/headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi\.yaml" />
+		<suppress checks="YMLLongLinesCheck" files="modules/apps/headless/headless-admin-user/headless-admin-user-impl/rest-openapi\.yaml" />
+		<suppress checks="YMLLongLinesCheck" files="modules/apps/headless/headless-admin-workflow/headless-admin-workflow-impl/rest-openapi\.yaml" />
+		<suppress checks="YMLLongLinesCheck" files="modules/apps/headless/headless-delivery/headless-delivery-impl/rest-openapi\.yaml" />
 	</source-check>
 </suppressions>

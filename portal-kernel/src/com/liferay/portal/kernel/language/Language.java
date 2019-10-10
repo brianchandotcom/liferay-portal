@@ -184,14 +184,6 @@ public interface Language {
 
 	public boolean isSameLanguage(Locale locale1, Locale locale2);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(Supplier,
-	 *             Locale, String)}
-	 */
-	@Deprecated
-	public String process(
-		ResourceBundle resourceBundle, Locale locale, String content);
-
 	public String process(
 		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
 		String content);

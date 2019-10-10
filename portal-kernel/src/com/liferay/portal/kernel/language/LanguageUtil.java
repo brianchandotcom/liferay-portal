@@ -350,17 +350,6 @@ public class LanguageUtil {
 		return Validator.isNotNull(value);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #process(Supplier,
-	 *             Locale, String)}
-	 */
-	@Deprecated
-	public static String process(
-		ResourceBundle resourceBundle, Locale locale, String content) {
-
-		return getLanguage().process(resourceBundle, locale, content);
-	}
-
 	public static String process(
 		Supplier<ResourceBundle> resourceBundleSupplier, Locale locale,
 		String content) {

@@ -81,8 +81,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lock.DuplicateLockException;
-import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -126,7 +124,6 @@ import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -182,7 +179,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -281,75 +277,6 @@ public class StagingImpl implements Staging {
 			classPK);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             StagingURLHelper#buildRemoteURL(ExportImportConfiguration)}
-	 */
-	@Deprecated
-	@Override
-	public String buildRemoteURL(
-		ExportImportConfiguration exportImportConfiguration) {
-
-		return _stagingURLHelper.buildRemoteURL(exportImportConfiguration);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             StagingURLHelper#buildRemoteURL(String, int, String,
-	 *             boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String buildRemoteURL(
-		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection) {
-
-		return _stagingURLHelper.buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getRemoteSiteURL(Group, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public String buildRemoteURL(
-		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
-
-		return buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             StagingURLHelper#buildRemoteURL(UnicodeProperties)}
-	 */
-	@Deprecated
-	@Override
-	public String buildRemoteURL(UnicodeProperties typeSettingsProperties) {
-		return _stagingURLHelper.buildRemoteURL(typeSettingsProperties);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             _stagingLocalService#checkDefaultLayoutSetBranches(long,
-	 *             Group, boolean, boolean, boolean, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public void checkDefaultLayoutSetBranches(
-			long userId, Group liveGroup, boolean branchingPublic,
-			boolean branchingPrivate, boolean remote,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_stagingLocalService.checkDefaultLayoutSetBranches(
-			userId, liveGroup, branchingPublic, branchingPrivate, remote,
-			serviceContext);
-	}
-
 	@Override
 	public long copyFromLive(PortletRequest portletRequest)
 		throws PortalException {
@@ -431,30 +358,6 @@ public class StagingImpl implements Staging {
 			portlet.getPortletId(), parameterMap, true);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #publishPortlet(long, long, long, long, long, String, Map)}
-	 */
-	@Deprecated
-	@Override
-	public long copyPortlet(
-			PortletRequest portletRequest, long sourceGroupId,
-			long targetGroupId, long sourcePlid, long targetPlid,
-			String portletId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Map<String, String[]> parameterMap =
-			_exportImportConfigurationParameterMapFactory.buildParameterMap(
-				portletRequest);
-
-		return publishPortlet(
-			themeDisplay.getUserId(), sourceGroupId, targetGroupId, sourcePlid,
-			targetPlid, portletId, parameterMap);
-	}
-
 	@Override
 	public long copyRemoteLayouts(
 			ExportImportConfiguration exportImportConfiguration)
@@ -497,27 +400,6 @@ public class StagingImpl implements Staging {
 
 		return copyRemoteLayouts(
 			sourceGroupId, privateLayout, layoutIdMap, null, parameterMap,
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			remoteGroupId, remotePrivateLayout);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #copyRemoteLayouts(long, boolean, Map, Map, String, int,
-	 *             String, boolean, long, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public long copyRemoteLayouts(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, String remotePathContext,
-			boolean secureConnection, long remoteGroupId,
-			boolean remotePrivateLayout, Date startDate, Date endDate)
-		throws PortalException {
-
-		return copyRemoteLayouts(
-			sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 			remoteAddress, remotePort, remotePathContext, secureConnection,
 			remoteGroupId, remotePrivateLayout);
 	}
@@ -626,18 +508,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deleteRecentLayoutRevisionId(long, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public void deleteRecentLayoutRevisionId(
-		User user, long layoutSetBranchId, long plid) {
-
-		deleteRecentLayoutRevisionId(user.getUserId(), layoutSetBranchId, plid);
-	}
-
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
@@ -723,20 +593,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return errorMessagesJSONArray;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getErrorMessagesJSONArray(Locale, Map<String,
-	 *             MissingReference>)}
-	 */
-	@Deprecated
-	@Override
-	public JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
-
-		return getErrorMessagesJSONArray(locale, missingReferences);
 	}
 
 	@Override
@@ -1712,19 +1568,6 @@ public class StagingImpl implements Staging {
 		return exceptionMessagesJSONObject;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getExceptionMessagesJSONObject(Locale, Exception,
-	 *             ExportImportConfiguration)}
-	 */
-	@Deprecated
-	@Override
-	public JSONObject getExceptionMessagesJSONObject(
-		Locale locale, Exception e, Map<String, Serializable> contextMap) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public Group getLiveGroup(Group group) {
 		if (group == null) {
@@ -1766,18 +1609,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return group.getGroupId();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), moved to {@link
-	 *             ExportImportHelperUtil#getMissingParentLayouts(Layout, long)}
-	 */
-	@Deprecated
-	@Override
-	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
-		throws PortalException {
-
-		return _exportImportHelper.getMissingParentLayouts(layout, liveGroupId);
 	}
 
 	@Override
@@ -1996,32 +1827,6 @@ public class StagingImpl implements Staging {
 		return stagingGroup;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
-	 *             )}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, String[]> getStagingParameters() {
-		return _exportImportConfigurationParameterMapFactory.
-			buildParameterMap();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ExportImportConfigurationParameterMapFactory#buildParameterMap(
-	 *             PortletRequest)}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, String[]> getStagingParameters(
-		PortletRequest portletRequest) {
-
-		return _exportImportConfigurationParameterMapFactory.buildParameterMap(
-			portletRequest);
-	}
-
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
@@ -2061,20 +1866,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return warningMessagesJSONArray;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getWarningMessagesJSONArray(Locale, Map<String,
-	 *             MissingReference>)}
-	 */
-	@Deprecated
-	@Override
-	public JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences,
-		Map<String, Serializable> contextMap) {
-
-		return getWarningMessagesJSONArray(locale, missingReferences);
 	}
 
 	@Override
@@ -2232,26 +2023,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), see {@link
-	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
-	 *             )}
-	 */
-	@Deprecated
-	@Override
-	public void lockGroup(long userId, long groupId) throws PortalException {
-		if (_lockManager.isLocked(Staging.class.getName(), groupId)) {
-			Lock lock = _lockManager.getLock(Staging.class.getName(), groupId);
-
-			throw new DuplicateLockException(lock);
-		}
-
-		_lockManager.lock(
-			userId, Staging.class.getName(), String.valueOf(groupId),
-			StagingImpl.class.getName(), false,
-			StagingConstants.LOCK_EXPIRATION_TIME);
 	}
 
 	@Override
@@ -2438,23 +2209,6 @@ public class StagingImpl implements Staging {
 			null, parameterMap);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #publishLayouts(long, long, long, boolean, long[], Map)}
-	 */
-	@Deprecated
-	@Override
-	public long publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, long[] layoutIds,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws PortalException {
-
-		return publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-			parameterMap);
-	}
-
 	@Override
 	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
@@ -2496,24 +2250,6 @@ public class StagingImpl implements Staging {
 		return publishLayouts(userId, exportImportConfiguration);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #publishLayouts(long, long, long, boolean, long[], Map)}
-	 */
-	@Deprecated
-	@Override
-	public long publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<Long, Boolean> layoutIdMap,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
-		throws PortalException {
-
-		return publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout,
-			_exportImportHelper.getLayoutIds(layoutIdMap, targetGroupId),
-			parameterMap, startDate, endDate);
-	}
-
 	@Override
 	public long publishLayouts(
 			long userId, long sourceGroupId, long targetGroupId,
@@ -2526,22 +2262,6 @@ public class StagingImpl implements Staging {
 		return publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout,
 			_exportImportHelper.getLayoutIds(sourceGroupLayouts), parameterMap);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #publishLayouts(long, long, long, boolean, Map)}
-	 */
-	@Deprecated
-	@Override
-	public long publishLayouts(
-			long userId, long sourceGroupId, long targetGroupId,
-			boolean privateLayout, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
-		throws PortalException {
-
-		return publishLayouts(
-			userId, sourceGroupId, targetGroupId, privateLayout, parameterMap);
 	}
 
 	@Override
@@ -3275,17 +2995,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), see {@link
-	 *             com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor#getIsolationLevel(
-	 *             )}
-	 */
-	@Deprecated
-	@Override
-	public void unlockGroup(long groupId) {
-		_lockManager.unlock(Staging.class.getName(), groupId);
-	}
-
 	@Override
 	public void unscheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
@@ -3399,136 +3108,6 @@ public class StagingImpl implements Staging {
 			"last-import-layout-branch-name", layoutBranchName);
 
 		layout.setTypeSettingsProperties(typeSettingsProperties);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ExportImportDateUtil#updateLastPublishDate(long, boolean,
-	 *             DateRange, Date)}
-	 */
-	@Deprecated
-	@Override
-	public void updateLastPublishDate(
-			long groupId, boolean privateLayout, Date lastPublishDate)
-		throws PortalException {
-
-		ExportImportDateUtil.updateLastPublishDate(
-			groupId, privateLayout, null, lastPublishDate);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             ExportImportDateUtil#updateLastPublishDate(String,
-	 *             PortletPreferences, DateRange, Date)}
-	 */
-	@Deprecated
-	@Override
-	public void updateLastPublishDate(
-		String portletId, PortletPreferences portletPreferences,
-		Date lastPublishDate) {
-
-		ExportImportDateUtil.updateLastPublishDate(
-			portletId, portletPreferences, null, lastPublishDate);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.staging.configuration.web.internal.portlet.StagingConfigurationPortlet#editStagingConfiguration(
-	 *             javax.portlet.ActionRequest, javax.portlet.ActionResponse)}
-	 */
-	@Deprecated
-	@Override
-	public void updateStaging(PortletRequest portletRequest, Group liveGroup)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long userId = permissionChecker.getUserId();
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING)) {
-
-			return;
-		}
-
-		int stagingType = getStagingType(portletRequest, liveGroup);
-
-		boolean branchingPublic = getBoolean(
-			portletRequest, liveGroup, "branchingPublic");
-		boolean branchingPrivate = getBoolean(
-			portletRequest, liveGroup, "branchingPrivate");
-		boolean forceDisable = ParamUtil.getBoolean(
-			portletRequest, "forceDisable");
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		serviceContext.setAttribute("forceDisable", forceDisable);
-
-		if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
-			if (liveGroup.hasStagingGroup() || liveGroup.isStagedRemotely()) {
-				_stagingLocalService.disableStaging(
-					portletRequest, liveGroup, serviceContext);
-			}
-		}
-		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {
-			_stagingLocalService.enableLocalStaging(
-				userId, liveGroup, branchingPublic, branchingPrivate,
-				serviceContext);
-		}
-		else if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
-			String remoteAddress = getString(
-				portletRequest, liveGroup, "remoteAddress");
-
-			remoteAddress = stripProtocolFromRemoteAddress(remoteAddress);
-
-			int remotePort = getInteger(
-				portletRequest, liveGroup, "remotePort");
-			String remotePathContext = getString(
-				portletRequest, liveGroup, "remotePathContext");
-			boolean secureConnection = getBoolean(
-				portletRequest, liveGroup, "secureConnection");
-			long remoteGroupId = getLong(
-				portletRequest, liveGroup, "remoteGroupId");
-
-			_stagingLocalService.enableRemoteStaging(
-				userId, liveGroup, branchingPublic, branchingPrivate,
-				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, serviceContext);
-		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             GroupLocalService#validateRemote(long, String, int, String,
-	 *             boolean, long)}
-	 */
-	@Deprecated
-	@Override
-	public void validateRemote(
-			long groupId, String remoteAddress, int remotePort,
-			String remotePathContext, boolean secureConnection,
-			long remoteGroupId)
-		throws PortalException {
-
-		_groupLocalService.validateRemote(
-			groupId, remoteAddress, remotePort, remotePathContext,
-			secureConnection, remoteGroupId);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #validateRemote(long, String, int, String, boolean, long)}
-	 */
-	@Deprecated
-	@Override
-	public void validateRemote(
-		String remoteAddress, int remotePort, String remotePathContext,
-		boolean secureConnection, long remoteGroupId) {
 	}
 
 	@Override

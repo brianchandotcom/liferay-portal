@@ -334,8 +334,17 @@ public class FriendlyURLEntryLocalServiceImpl
 		int maxLength = ModelHintsUtil.getMaxLength(
 			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
 
-		String curUrlTitle = normalizedUrlTitle.substring(
-			0, Math.min(maxLength, normalizedUrlTitle.length()));
+		String prefix = normalizedUrlTitle;
+		int endPos = urlTitle.length();
+
+		while (prefix.length() > maxLength) {
+			endPos = _getNewEndPos(urlTitle, endPos);
+
+			prefix = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				urlTitle.substring(0, endPos));
+		}
+
+		String curUrlTitle = prefix;
 
 		for (int i = 1;; i++) {
 			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
@@ -350,13 +359,14 @@ public class FriendlyURLEntryLocalServiceImpl
 
 			String suffix = StringPool.DASH + i;
 
-			String prefix = normalizedUrlTitle.substring(
-				0,
-				Math.min(
-					maxLength - suffix.length(), normalizedUrlTitle.length()));
+			while ((prefix.length() + suffix.length()) > maxLength) {
+				endPos = _getNewEndPos(urlTitle, endPos);
 
-			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
-				prefix + suffix);
+				prefix = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					urlTitle.substring(0, endPos));
+			}
+
+			curUrlTitle = prefix + suffix;
 		}
 
 		return curUrlTitle;
@@ -513,6 +523,20 @@ public class FriendlyURLEntryLocalServiceImpl
 		}
 
 		return true;
+	}
+
+	private int _getNewEndPos(String urlTitle, int endPos) {
+		char c = urlTitle.charAt(endPos - 1);
+
+		if (Character.isLowSurrogate(c) && ((endPos - 2) >= 0)) {
+			char c2 = urlTitle.charAt(endPos - 2);
+
+			if (Character.isHighSurrogate(c2)) {
+				return endPos - 2;
+			}
+		}
+
+		return endPos - 1;
 	}
 
 	private void _updateFriendlyURLEntryLocalizations(

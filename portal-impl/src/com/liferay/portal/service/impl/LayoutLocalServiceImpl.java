@@ -2550,8 +2550,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		typeSettingsProperties.put(
-			Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
+		Group group = layout.getGroup();
+
+		if (!group.isLayoutPrototype()) {
+			typeSettingsProperties.put(
+				Sites.LAYOUT_UPDATEABLE, String.valueOf(layoutUpdateable));
+		}
 
 		if (privateLayout) {
 			typeSettingsProperties.put(

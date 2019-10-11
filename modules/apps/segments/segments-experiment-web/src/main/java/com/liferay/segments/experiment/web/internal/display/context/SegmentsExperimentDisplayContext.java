@@ -109,46 +109,51 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	protected Map<String, Object> getContext() throws PortalException {
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("assetsPath", _getAssetsPath());
-		context.put(
-			"contentPageEditorNamespace",
-			_getContentPageEditorPortletNamespace());
-		context.put("endpoints", _getEndpoints());
-		context.put("namespace", _getSegmentsExperimentPortletNamespace());
-		context.put("page", _getPage());
-
-		return context;
+		return new HashMap<String, Object>() {
+			{
+				put("assetsPath", _getAssetsPath());
+				put(
+					"contentPageEditorNamespace",
+					_getContentPageEditorPortletNamespace());
+				put("endpoints", _getEndpoints());
+				put("namespace", _getSegmentsExperimentPortletNamespace());
+				put("page", _getPage());
+			}
+		};
 	}
 
 	protected Map<String, Object> getProps() throws PortalException {
-		Map<String, Object> props = new HashMap<>();
-
 		Locale locale = _themeDisplay.getLocale();
 
-		props.put(
-			"historySegmentsExperiments",
-			_getHistorySegmentsExperimentsJSONArray(locale));
-		props.put(
-			"initialSegmentsVariants",
-			_getSegmentsExperimentRelsJSONArray(locale));
-		props.put(
-			"segmentsExperiences", _getSegmentsExperiencesJSONArray(locale));
-		props.put(
-			"segmentsExperiment", _getSegmentsExperimentJSONObject(locale));
-		props.put(
-			"segmentsExperimentGoals",
-			_getSegmentsExperimentGoalsJSONArray(locale));
+		return new HashMap<String, Object>() {
+			{
+				put(
+					"historySegmentsExperiments",
+					_getHistorySegmentsExperimentsJSONArray(locale));
+				put(
+					"initialSegmentsVariants",
+					_getSegmentsExperimentRelsJSONArray(locale));
+				put(
+					"segmentsExperiences",
+					_getSegmentsExperiencesJSONArray(locale));
+				put(
+					"segmentsExperiment",
+					_getSegmentsExperimentJSONObject(locale));
+				put(
+					"segmentsExperimentGoals",
+					_getSegmentsExperimentGoalsJSONArray(locale));
 
-		props.put(
-			"selectedSegmentsExperienceId", _getSelectedSegmentsExperienceId());
-		props.put(
-			"viewSegmentsExperimentDetailsURL",
-			_getViewSegmentsExperimentDetailsURL());
-		props.put("winnerSegmentsVariantId", _getWinnerSegmentsExperienceId());
-
-		return props;
+				put(
+					"selectedSegmentsExperienceId",
+					_getSelectedSegmentsExperienceId());
+				put(
+					"viewSegmentsExperimentDetailsURL",
+					_getViewSegmentsExperimentDetailsURL());
+				put(
+					"winnerSegmentsVariantId",
+					_getWinnerSegmentsExperienceId());
+			}
+		};
 	}
 
 	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(

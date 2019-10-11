@@ -38,7 +38,6 @@
 		<column name="description" type="String" />
 		<column name="priority" type="double" />
 		<column name="sections" type="String" />
-		<column name="viewCount" type="int" />
 		<column name="latest" type="boolean" />
 		<column name="main" type="boolean" />
 		<column name="sourceURL" type="String" />

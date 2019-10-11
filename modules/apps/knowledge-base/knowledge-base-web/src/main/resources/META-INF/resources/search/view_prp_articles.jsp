@@ -110,7 +110,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 				<%
 				KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(assetEntry.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
-				int viewCount = (kbArticle != null) ? kbArticle.getViewCount() : 0;
+				long viewCount = (kbArticle != null) ? kbArticle.getViewCount() : 0;
 
 				buffer.append(viewCount);
 				buffer.append(StringPool.SPACE);

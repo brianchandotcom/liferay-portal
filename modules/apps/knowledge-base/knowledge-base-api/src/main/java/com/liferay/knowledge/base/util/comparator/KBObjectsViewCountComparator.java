@@ -108,7 +108,7 @@ public class KBObjectsViewCountComparator<T> extends OrderByComparator<T> {
 		return kbFolder.getName();
 	}
 
-	protected int getViewCount(Object obj) {
+	protected long getViewCount(Object obj) {
 		if (obj instanceof KBArticle) {
 			KBArticle kbArticle = (KBArticle)obj;
 

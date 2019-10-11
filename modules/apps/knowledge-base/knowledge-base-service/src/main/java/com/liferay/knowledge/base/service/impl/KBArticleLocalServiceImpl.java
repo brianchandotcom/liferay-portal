@@ -83,6 +83,8 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -93,6 +95,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -195,7 +198,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setPriority(priority);
 		kbArticle.setSections(
 			StringUtil.merge(KBSectionEscapeUtil.escapeSections(sections)));
-		kbArticle.setViewCount(0);
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
 		kbArticle.setSourceURL(sourceURL);
@@ -390,6 +392,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		// Subscriptions
 
 		deleteSubscriptions(kbArticle);
+
+		// View count
+
+		_viewCountManager.deleteViewCount(
+			kbArticle.getCompanyId(),
+			classNameLocalService.getClassNameId(KBArticle.class),
+			kbArticle.getPrimaryKey());
 
 		// Workflow
 
@@ -888,6 +897,33 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void incrementViewCount(
+			long userId, long resourcePrimKey, int increment)
+		throws PortalException {
+
+		KBArticle kbArticle = getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		_viewCountManager.incrementViewCount(
+			kbArticle.getCompanyId(),
+			classNameLocalService.getClassNameId(KBArticle.class),
+			kbArticle.getPrimaryKey(), increment);
+
+		if (kbArticle.isApproved() || kbArticle.isFirstVersion()) {
+			return;
+		}
+
+		kbArticle = getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+
+		_viewCountManager.incrementViewCount(
+			kbArticle.getCompanyId(),
+			classNameLocalService.getClassNameId(KBArticle.class),
+			kbArticle.getPrimaryKey(), increment);
+	}
+
+	@Override
 	public void moveKBArticle(
 			long userId, long resourcePrimKey, long parentResourceClassNameId,
 			long parentResourcePrimKey, double priority)
@@ -1084,7 +1120,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.setVersion(oldVersion + 1);
 			kbArticle.setUrlTitle(oldKBArticle.getUrlTitle());
 			kbArticle.setPriority(oldKBArticle.getPriority());
-			kbArticle.setViewCount(oldKBArticle.getViewCount());
+
+			_viewCountManager.incrementViewCount(
+				kbArticle.getCompanyId(),
+				classNameLocalService.getClassNameId(KBArticle.class),
+				kbArticle.getPrimaryKey(), (int)oldKBArticle.getViewCount());
 		}
 		else {
 			kbArticle = oldKBArticle;
@@ -1316,32 +1356,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		notifySubscribers(userId, kbArticle, serviceContext);
 
 		return kbArticle;
-	}
-
-	@Override
-	public void updateViewCount(
-			long userId, long resourcePrimKey, int viewCount)
-		throws PortalException {
-
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		kbArticle.setModifiedDate(kbArticle.getModifiedDate());
-		kbArticle.setViewCount(viewCount);
-
-		kbArticlePersistence.update(kbArticle);
-
-		if (kbArticle.isApproved() || kbArticle.isFirstVersion()) {
-			return;
-		}
-
-		kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
-
-		kbArticle.setModifiedDate(kbArticle.getModifiedDate());
-		kbArticle.setViewCount(viewCount);
-
-		kbArticlePersistence.update(kbArticle);
 	}
 
 	protected void addKBArticleAttachment(
@@ -2014,5 +2028,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private ViewCountManager _viewCountManager;
 
 }

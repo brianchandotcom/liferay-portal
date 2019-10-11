@@ -363,9 +363,8 @@ public class KBFolderLocalServiceTest {
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "C");
 
-		KBArticleLocalServiceUtil.updateViewCount(
-			kbArticle2.getUserId(), kbArticle2.getResourcePrimKey(),
-			kbArticle2.getViewCount() + 1000);
+		KBArticleLocalServiceUtil.incrementViewCount(
+			kbArticle2.getUserId(), kbArticle2.getResourcePrimKey(), 1000);
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -507,9 +506,8 @@ public class KBFolderLocalServiceTest {
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "C");
 
-		KBArticleLocalServiceUtil.updateViewCount(
-			kbArticle2.getUserId(), kbArticle2.getResourcePrimKey(),
-			kbArticle2.getViewCount() + 1000);
+		KBArticleLocalServiceUtil.incrementViewCount(
+			kbArticle2.getUserId(), kbArticle2.getResourcePrimKey(), 1000);
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(

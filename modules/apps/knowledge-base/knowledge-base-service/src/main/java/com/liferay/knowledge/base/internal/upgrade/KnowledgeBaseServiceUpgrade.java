@@ -20,11 +20,14 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
+import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -150,6 +153,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register(
+			"3.1.0", "4.0.0",
+			new UpgradeViewCount(
+				"KBArticle", KBArticle.class, "kbArticleId", "viewCount"));
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -166,5 +174,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
+
+	/**
+	 * See LPS-101085. The ViewCount table needs to exist.
+	 */
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

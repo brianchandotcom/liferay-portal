@@ -840,6 +840,14 @@ public abstract class BaseWikiPageResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (wikiPage.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (wikiPage.getAggregateRating() == null) {
 					valid = false;
@@ -1024,6 +1032,16 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPage1.getActions(), wikiPage2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("aggregateRating", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -1377,6 +1395,11 @@ public abstract class BaseWikiPageResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("aggregateRating")) {
 			throw new IllegalArgumentException(

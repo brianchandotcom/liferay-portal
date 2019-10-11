@@ -16,12 +16,15 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.PermissionsUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +36,7 @@ import io.swagger.v3.oas.annotations.tags.Tags;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -137,6 +141,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
+
+		if (knowledgeBaseFolder.getActions() != null) {
+			existingKnowledgeBaseFolder.setActions(
+				knowledgeBaseFolder.getActions());
+		}
 
 		if (knowledgeBaseFolder.getDateCreated() != null) {
 			existingKnowledgeBaseFolder.setDateCreated(
@@ -361,6 +370,31 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		this.contextUser = contextUser;
 	}
 
+	protected Map<String, String> addAction(
+		String actionName, GroupedModel groupedModel, String methodName) {
+
+		return PermissionsUtil.addAction(
+			actionName, getClass(), groupedModel, methodName,
+			contextScopeChecker, contextUriInfo);
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, Long id, String methodName, String permissionName,
+		Long siteId) {
+
+		return PermissionsUtil.addAction(
+			actionName, getClass(), id, methodName, permissionName,
+			contextScopeChecker, siteId, contextUriInfo);
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, String methodName, String permissionName,
+		Long siteId) {
+
+		return addAction(
+			actionName, siteId, methodName, permissionName, siteId);
+	}
+
 	protected void preparePatch(
 		KnowledgeBaseFolder knowledgeBaseFolder,
 		KnowledgeBaseFolder existingKnowledgeBaseFolder) {
@@ -398,6 +432,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	protected Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
+	protected ScopeChecker contextScopeChecker;
 	protected UriInfo contextUriInfo;
 	protected User contextUser;
 

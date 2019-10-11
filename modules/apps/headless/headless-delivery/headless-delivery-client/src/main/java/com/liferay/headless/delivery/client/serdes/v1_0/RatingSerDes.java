@@ -59,6 +59,16 @@ public class RatingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (rating.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(rating.getActions()));
+		}
+
 		if (rating.getBestRating() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -158,6 +168,13 @@ public class RatingSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (rating.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(rating.getActions()));
+		}
+
 		if (rating.getBestRating() == null) {
 			map.put("bestRating", null);
 		}
@@ -221,7 +238,13 @@ public class RatingSerDes {
 			Rating rating, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "bestRating")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					rating.setActions(
+						(Map)RatingSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "bestRating")) {
 				if (jsonParserFieldValue != null) {
 					rating.setBestRating(
 						Double.valueOf((String)jsonParserFieldValue));

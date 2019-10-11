@@ -59,6 +59,16 @@ public class CommentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (comment.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(comment.getActions()));
+		}
+
 		if (comment.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -153,6 +163,13 @@ public class CommentSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (comment.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(comment.getActions()));
+		}
+
 		if (comment.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -211,7 +228,13 @@ public class CommentSerDes {
 			Comment comment, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					comment.setActions(
+						(Map)CommentSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					comment.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

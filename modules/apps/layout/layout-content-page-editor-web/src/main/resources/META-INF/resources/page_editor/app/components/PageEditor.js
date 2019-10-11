@@ -16,6 +16,7 @@ import React from 'react';
 
 import {ConfigContext} from '../config/index';
 import {StoreContext} from '../store/index';
+import UnsafeHTML from './UnsafeHTML';
 
 const {useContext} = React;
 
@@ -76,7 +77,7 @@ function Column({fragmentEntryLinks, size}) {
 			{fragmentEntryLinks.map(({content, fragmentEntryLinkId}) => {
 				if (content.value.contentKind === 'HTML') {
 					return (
-						<HTML
+						<UnsafeHTML
 							key={fragmentEntryLinkId}
 							markup={content.value.content}
 						/>
@@ -92,10 +93,6 @@ function Column({fragmentEntryLinks, size}) {
 			})}
 		</div>
 	);
-}
-
-function HTML({markup}) {
-	return <div dangerouslySetInnerHTML={{__html: markup}} />;
 }
 
 let DebugInfo;

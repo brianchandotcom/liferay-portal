@@ -17,27 +17,124 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {discard, publish} from '../actions/index';
+import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
+import usePlugins from '../../core/hooks/usePlugins';
+import useLoad from '../../core/hooks/useLoad';
 import {DispatchContext} from '../reducers/index';
+import {StoreContext} from '../store/index';
+import UnsafeHTML from './UnsafeHTML';
 
-const {useContext} = React;
+const {discard, publish} = Actions;
+
+const {Suspense, lazy, useContext, useRef} = React;
+
+// TODO refactor this to share code with SidebarPanel component
+function ToolbarSection({plugin}) {
+	const Component = lazy(() => {
+		return plugin.then(instance => {
+			return {
+				default: () => {
+					if (
+						instance &&
+						typeof instance.renderToolbarSection === 'function'
+					) {
+						return instance.renderToolbarSection();
+					} else {
+						return null;
+					}
+				}
+			};
+		});
+	});
+
+	return <Component />;
+}
 
 function ToolbarBody() {
-	const dispatch = useContext(DispatchContext);
+	const config = useContext(ConfigContext);
 
 	const {
 		availableLanguages,
 		defaultLanguageId,
 		singleSegmentsExperienceMode
-	} = useContext(ConfigContext);
+	} = config;
+
+	const dispatch = useContext(DispatchContext);
+
+	const store = useContext(StoreContext);
+
+	const {toolbarPlugins} = store;
+
+	const isMounted = useIsMounted();
+
+	const load = useLoad();
+
+	const {getInstance, register} = usePlugins();
+
+	const loading = useRef(() => {
+		return Promise.all(
+			toolbarPlugins.map(({pluginEntryPoint}) => {
+				const promise = load(pluginEntryPoint, pluginEntryPoint);
+
+				const app = {
+					Actions,
+					StoreContext,
+					config,
+					dispatch,
+					store
+				};
+
+				register(pluginEntryPoint, promise, {app}).then(plugin => {
+					if (!plugin) {
+						throw new Error(
+							`Failed to get instance from ${pluginEntryPoint}`
+						);
+					} else if (isMounted()) {
+						if (typeof plugin.activate === 'function') {
+							plugin.activate();
+						}
+					}
+				});
+			})
+		).catch(error => {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+		});
+	});
+
+	if (loading.current) {
+		// Do this once only.
+		loading.current();
+		loading.current = null;
+	}
 
 	const {languageIcon} = availableLanguages[defaultLanguageId];
 
+	// TODO: add error boundary
 	return (
 		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
 			<ul className="navbar-nav">
-				<li className="nav-item">Experiences here</li>
+				{toolbarPlugins.map(
+					({loadingPlaceholder, pluginEntryPoint}) => {
+						return (
+							<li className="nav-item" key={pluginEntryPoint}>
+								<Suspense
+									fallback={
+										<UnsafeHTML
+											markup={loadingPlaceholder}
+										/>
+									}
+								>
+									<ToolbarSection
+										plugin={getInstance(pluginEntryPoint)}
+									/>
+								</Suspense>
+							</li>
+						);
+					}
+				)}
 				<li className="nav-item">
 					<ClayButtonWithIcon
 						displayType="secondary"

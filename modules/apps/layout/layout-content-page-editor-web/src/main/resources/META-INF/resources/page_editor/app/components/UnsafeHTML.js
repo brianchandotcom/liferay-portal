@@ -14,23 +14,6 @@
 
 import React from 'react';
 
-import {Component} from '../../core/AppContext';
-
-/**
- * Entry-point for "Experience" (toolbar drop-down) functionality.
- */
-export default class Experience {
-	constructor({app}) {
-		this.Component = Component(app);
-	}
-
-	renderToolbarSection() {
-		const {Component} = this;
-
-		return (
-			<Component>
-				<div>Experience</div>
-			</Component>
-		);
-	}
+export default function UnsafeHTML({markup}) {
+	return <div dangerouslySetInnerHTML={{__html: markup}} />;
 }

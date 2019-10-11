@@ -74,13 +74,18 @@ const rendersSidebarContent = sidebarPanelId => {
 };
 
 function transformServerData(data) {
+	// TODO: move sidebarPanels and toolbarPlugins into config because
+	// it should be immutable?
 	let sidebarPanels = augmentPanelData(data.sidebarPanels);
 
 	sidebarPanels = partitionPanels(sidebarPanels);
 
+	const toolbarPlugins = getToolbarPlugins();
+
 	return {
 		...data,
-		sidebarPanels
+		sidebarPanels,
+		toolbarPlugins
 	};
 }
 
@@ -141,4 +146,16 @@ function partitionPanels(panels) {
 		},
 		[[]]
 	);
+}
+
+function getToolbarPlugins() {
+	// Currently we have segments experience data sprinkled throughout the
+	// server data. In the future we may choose to encapsulate it better and
+	// deal with it inside the plugin.
+	return [
+		{
+			loadingPlaceholder: `<div>loading</div>`,
+			pluginEntryPoint: `${PLUGIN_ROOT}/experience/index`
+		}
+	];
 }

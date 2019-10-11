@@ -55,51 +55,6 @@ import java.util.Set;
  */
 public class DocumentImpl implements Document {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             Field#getLocalizedName(Locale, String)}
-	 */
-	@Deprecated
-	public static String getLocalizedName(Locale locale, String name) {
-		return Field.getLocalizedName(locale, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             Field#getLocalizedName(String, String)}
-	 */
-	@Deprecated
-	public static String getLocalizedName(String languageId, String name) {
-		return Field.getLocalizedName(languageId, name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             Field#getSortableFieldName(String)}
-	 */
-	@Deprecated
-	public static String getSortableFieldName(String name) {
-		return Field.getSortableFieldName(name);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             Field#getSortFieldName(Sort, String)}
-	 */
-	@Deprecated
-	public static String getSortFieldName(Sort sort, String scoreFieldName) {
-		return Field.getSortFieldName(sort, scoreFieldName);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             Field#isSortableFieldName(String)}
-	 */
-	@Deprecated
-	public static boolean isSortableFieldName(String name) {
-		return Field.isSortableFieldName(name);
-	}
-
 	public static boolean isSortableTextField(String name) {
 		return _defaultSortableTextFields.contains(name);
 	}

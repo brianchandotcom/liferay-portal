@@ -140,11 +140,6 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	}
 
 	@Override
-	public String getSortField(String orderByCol, int sortType) {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public Summary getSummary(
 			Document document, String snippet, PortletRequest portletRequest,
 			PortletResponse portletResponse)

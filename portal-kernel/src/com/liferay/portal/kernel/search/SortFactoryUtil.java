@@ -56,14 +56,6 @@ public class SortFactoryUtil {
 		return _getSortFactory().getSort(clazz, orderByCol, orderByType);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #_getSortFactory()}
-	 */
-	@Deprecated
-	public static SortFactory getSortFactory() {
-		return _getSortFactory();
-	}
-
 	public static Sort[] toArray(List<Sort> sorts) {
 		return _getSortFactory().toArray(sorts);
 	}

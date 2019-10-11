@@ -112,11 +112,6 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 	}
 
 	@Override
-	public String getSortField(String orderByCol, int sortType) {
-		return _indexer.getSortField(orderByCol, sortType);
-	}
-
-	@Override
 	public Summary getSummary(
 			Document document, String snippet, PortletRequest portletRequest,
 			PortletResponse portletResponse)

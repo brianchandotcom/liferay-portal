@@ -60,13 +60,6 @@ public interface Indexer<T> {
 	@Deprecated
 	public String getSortField(String orderByCol);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             com.liferay.portal.sort.SortFieldBuilder}
-	 */
-	@Deprecated
-	public String getSortField(String orderByCol, int sortType);
-
 	public Summary getSummary(
 			Document document, String snippet, PortletRequest portletRequest,
 			PortletResponse portletResponse)

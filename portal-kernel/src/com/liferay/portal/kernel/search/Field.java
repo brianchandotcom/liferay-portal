@@ -127,12 +127,6 @@ public class Field implements Serializable {
 
 	public static final String PUBLISH_DATE = "publishDate";
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String RATINGS = "ratings";
-
 	public static final String RELATED_ENTRY = "relatedEntry";
 
 	public static final String REMOVED_BY_USER_NAME = "removedByUserName";
@@ -184,12 +178,6 @@ public class Field implements Serializable {
 	public static final String VERSION = "version";
 
 	public static final String VIEW_ACTION_ID = "viewActionId";
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VIEW_COUNT = "viewCount";
 
 	public static String getLocalizedName(Locale locale, String name) {
 		if (locale == null) {

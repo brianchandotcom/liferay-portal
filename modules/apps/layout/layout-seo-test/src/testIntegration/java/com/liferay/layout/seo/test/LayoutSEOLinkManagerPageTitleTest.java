@@ -17,6 +17,7 @@ package com.liferay.layout.seo.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -52,105 +53,68 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_layout = _layoutLocalService.getLayout(TestPropsValues.getPlid());
-		_group = GroupTestUtil.addGroup();
+		_layout = _addLayout();
+
+		_group = _addGroup();
 
 		_layout.setGroupId(_group.getGroupId());
 	}
 
 	@Test
-	public void testGetPageTitleLayoutTitle() throws Exception {
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
-
-		String layoutTitle = RandomTestUtil.randomString();
-
-		_layout.setTitle(layoutTitle);
-
+	public void testGetPageTitleUsesLayoutTitle() throws Exception {
 		String companyName = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				layoutTitle, " - ", siteName, " - ", companyName),
+				_layout.getTitle(), " - ", _group.getName(), " - ",
+				companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleLayoutTitleTitleList() throws Exception {
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
-
-		String layoutTitle = RandomTestUtil.randomString();
-
-		_layout.setTitle(layoutTitle);
-
-		String companyName = RandomTestUtil.randomString();
-
+	public void testGetPageTitleUsesLayoutTitleAndTitleList() throws Exception {
 		ListMergeable<String> titleListMergeable = new ListMergeable<>();
 
 		titleListMergeable.add(RandomTestUtil.randomString());
 		titleListMergeable.add(RandomTestUtil.randomString());
 
+		String companyName = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
-				siteName, " - ", companyName),
+				_group.getName(), " - ", companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, titleListMergeable, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleLayoutWithSubtitleList() throws Exception {
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
-
-		String layoutTitle = RandomTestUtil.randomString();
-
-		_layout.setTitle(layoutTitle);
-
-		String companyName = RandomTestUtil.randomString();
+	public void testGetPageTitleUsesLayoutTitleAndSubtitleList()
+		throws Exception {
 
 		ListMergeable<String> subtitleListMergeable = new ListMergeable<>();
 
 		subtitleListMergeable.add(RandomTestUtil.randomString());
 		subtitleListMergeable.add(RandomTestUtil.randomString());
 
+		String companyName = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
-				layoutTitle, " - ", siteName, " - ", companyName),
+				_layout.getTitle(), " - ", _group.getName(), " - ",
+				companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, null, subtitleListMergeable, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleLayoutWithTitleListSubtitleList()
+	public void testGetPageTitleUsesLayoutTitleAndTitleListAndSubtitleList()
 		throws Exception {
-
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
-
-		String layoutTitle = RandomTestUtil.randomString();
-
-		_layout.setTitle(layoutTitle);
-
-		String companyName = RandomTestUtil.randomString();
 
 		ListMergeable<String> titleListMergeable = new ListMergeable<>();
 
@@ -162,72 +126,75 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		subtitleListMergeable.add(RandomTestUtil.randomString());
 		subtitleListMergeable.add(RandomTestUtil.randomString());
 
+		String companyName = RandomTestUtil.randomString();
+
 		Assert.assertEquals(
 			StringBundler.concat(
 				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
 				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
-				siteName, " - ", companyName),
+				_group.getName(), " - ", companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, titleListMergeable, subtitleListMergeable,
 				companyName, LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleSiteCompanySiteNameEquals() throws Exception {
-		String companyName = RandomTestUtil.randomString();
+	public void testGetPageUsesLayoutTitleAndCompanyName()
+		throws Exception {
 
-		_group.setName(companyName, LocaleUtil.getDefault());
-
-		_groupLocalService.updateGroup(_group);
-
-		String title = RandomTestUtil.randomString();
-
-		_layout.setTitle(title);
+		String companyName = _group.getName();
 
 		Assert.assertEquals(
-			title + " - " + companyName,
+			_layout.getTitle() + " - " + companyName,
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleTilesTitle() throws Exception {
+	public void testGetPageTitleUsesTilesTitle() throws Exception {
 		String tilesTitle = RandomTestUtil.randomString();
-
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
 
 		String companyName = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				tilesTitle, " - ", siteName, " - ", companyName),
+				tilesTitle, " - ", _group.getName(), " - ", companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, tilesTitle, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleTilesTitleCompanySiteNameEquals()
+	public void testGetPageTitleUsesTilesTitleAndCompanyName()
 		throws Exception {
 
 		String tilesTitle = RandomTestUtil.randomString();
 
-		String siteName = RandomTestUtil.randomString();
-
-		_group.setName(siteName);
-
-		_groupLocalService.updateGroup(_group);
+		String companyName = _group.getName();
 
 		Assert.assertEquals(
-			tilesTitle + " - " + siteName,
+			tilesTitle + " - " + companyName,
 			_layoutSEOLinkManager.getPageTitle(
-				_layout, null, tilesTitle, null, null, siteName,
+				_layout, null, tilesTitle, null, null, companyName,
 				LocaleUtil.getDefault()));
+	}
+
+	private Group _addGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		group.setName(RandomTestUtil.randomString());
+
+		return _groupLocalService.updateGroup(group);
+	}
+
+	private Layout _addLayout() throws PortalException {
+		Layout layout = _layoutLocalService.getLayout(
+			TestPropsValues.getPlid());
+
+		layout.setTitle(RandomTestUtil.randomString());
+
+		return layout;
 	}
 
 	@DeleteAfterTestRun

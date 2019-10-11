@@ -40,7 +40,7 @@ public class ActionUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		ScopeChecker scopeChecker, String methodName, UriInfo uriInfo) {
+		String methodName, ScopeChecker scopeChecker, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedModelClass =
 			groupedModel.getClass();
@@ -51,18 +51,18 @@ public class ActionUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			scopeChecker, methodName, interfaceClasses[0].getName(),
+			methodName, interfaceClasses[0].getName(), scopeChecker,
 			groupedModel.getGroupId(), uriInfo);
 	}
 
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, Long id, ScopeChecker scopeChecker,
-		String methodName, String permissionName, Long siteId,
+		String actionName, Class clazz, Long id, String methodName,
+		String permissionName, ScopeChecker scopeChecker, Long siteId,
 		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, scopeChecker, methodName, permissionName,
+				actionName, clazz, id, methodName, permissionName, scopeChecker,
 				siteId, uriInfo);
 		}
 		catch (Exception exception) {
@@ -71,8 +71,8 @@ public class ActionUtil {
 	}
 
 	private static Map<String, String> _addAction(
-			String actionName, Class clazz, Long id, ScopeChecker scopeChecker,
-			String methodName, String permissionName, Long siteId,
+			String actionName, Class clazz, Long id, String methodName,
+			String permissionName, ScopeChecker scopeChecker, Long siteId,
 			UriInfo uriInfo)
 		throws Exception {
 

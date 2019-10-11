@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -44,9 +45,12 @@ import org.apache.cxf.phase.PhaseInterceptorChain;
 @Provider
 public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
-	public ContextContainerRequestFilter(Language language, Portal portal) {
+	public ContextContainerRequestFilter(
+		Language language, Portal portal, ScopeChecker scopeChecker) {
+
 		_language = language;
 		_portal = portal;
+		_scopeChecker = scopeChecker;
 	}
 
 	@Override
@@ -110,6 +114,11 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 				field.set(
 					instance, message.getContextualProperty("HTTP.RESPONSE"));
 			}
+			else if (fieldClass.isAssignableFrom(ScopeChecker.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
+			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
 
@@ -125,5 +134,6 @@ public class ContextContainerRequestFilter implements ContainerRequestFilter {
 
 	private final Language _language;
 	private final Portal _portal;
+	private final ScopeChecker _scopeChecker;
 
 }

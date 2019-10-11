@@ -147,8 +147,6 @@ definition {
 
 	@priority = "4"
 	test DeleteSiteFriendlyURL {
-		var portalURL = PropsUtil.get("portal.url");
-
 		Site.openSitesAdmin();
 
 		JSONGroup.addGroup(groupName = "Site Name");

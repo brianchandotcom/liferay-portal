@@ -76,6 +76,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-97179. User can change colorPalette fragment configuration."
+	@priority = "5"
+	test AddColorPlatteConfigurationFragmentToContentPage {
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "ColorPalette Fragment Example");
+		}
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "ColorPalette Fragment Example");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert text is white") {
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Example Color Red')]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Example Color White')]");
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		}
+
+		task ("Navigate to the content page's 'Edit Mode'") {
+			ContentPages.clickPencil();
+		}
+
+		PageEditorConfiguration.changeConfigColor(
+			colorPalette = "danger",
+			fragmentName = "ColorPalette Fragment Example");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert text is red") {
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Example Color White')]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Example Color Red')]");
+		}
+	}
+
 	@description = "This is a test for LPS-101326. Add placeholder in fragment configuration and assert there the placeholder text is present."
 	@priority = "5"
 	test AddPlaceholderConfigurationFragmentToContentPage {

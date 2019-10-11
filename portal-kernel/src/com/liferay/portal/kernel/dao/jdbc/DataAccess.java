@@ -134,28 +134,6 @@ public class DataAccess {
 		return dataSource.getConnection();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getConnection()}
-	 */
-	@Deprecated
-	public static Connection getUpgradeOptimizedConnection()
-		throws SQLException {
-
-		return getConnection();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public DataSource getDataSource();
-
-		public DataSource getDataSource(String location) throws NamingException;
-
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(DataAccess.class);
 
 }

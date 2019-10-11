@@ -14,6 +14,7 @@
 
 package com.liferay.asset.internal.upgrade;
 
+import com.liferay.asset.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -37,6 +38,8 @@ public class AssetServiceUpgrade implements UpgradeStepRegistrator {
 				}
 
 			});
+
+		registry.register("1.1.0", "2.0.0", new UpgradeCompanyId());
 	}
 
 }

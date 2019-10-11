@@ -110,12 +110,10 @@ public class JSassCompiler implements SassCompiler {
 				options.setOmitSourceMapUrl(false);
 			}
 
-			FileContext fileContext = new FileContext(
-				inputFile.toURI(), null, options);
-
 			Compiler compiler = new Compiler();
 
-			Output output = compiler.compile(fileContext);
+			Output output = compiler.compile(
+				new FileContext(inputFile.toURI(), null, options));
 
 			if (output == null) {
 				throw new JSassCompilerException("Null output");
@@ -123,11 +121,7 @@ public class JSassCompiler implements SassCompiler {
 
 			if (generateSourceMap) {
 				try {
-					File sourceMapFile = new File(sourceMapFileName);
-
-					String sourceMapOutput = output.getSourceMap();
-
-					write(sourceMapFile, sourceMapOutput);
+					write(new File(sourceMapFileName), output.getSourceMap());
 				}
 				catch (Exception e) {
 					System.out.println("Unable to create source map");

@@ -229,7 +229,6 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param ariaLabel: $prioritizeLabel /}
 											{param disabled: $disbledMoveUp /}
 											{param data: [
 												'priority': $experience.priority,
@@ -245,6 +244,7 @@
 											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
+											{param title: $prioritizeLabel /}
 										{/call}
 
 										{let $deprioritizeLabel kind="text"}
@@ -252,7 +252,6 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param ariaLabel: $deprioritizeLabel /}
 											{param disabled: $disbledMoveDown /}
 											{param data: [
 												'priority': $experience.priority,
@@ -268,6 +267,7 @@
 											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
+											{param title: $deprioritizeLabel /}
 										{/call}
 
 										{let $editLabel kind="text"}
@@ -275,7 +275,6 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param ariaLabel: $editLabel /}
 											{param data: [
 												'segmentsExperienceId': $experience.segmentsExperienceId,
 												'name': $experience.name,
@@ -290,6 +289,7 @@
 											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
+											{param title: $editLabel /}
 										{/call}
 
 										{let $deleteLabel kind="text"}
@@ -297,7 +297,6 @@
 										{/let}
 
 										{call ClayButton.render}
-											{param ariaLabel: $deleteLabel /}
 											{param data: [
 												'segmentsExperienceId': $experience.segmentsExperienceId
 											]/}
@@ -310,13 +309,18 @@
 											{param size: 'sm' /}
 											{param spritemap: $spritemap /}
 											{param style: 'unstyled' /}
+											{param title: $deleteLabel /}
 										{/call}
 									</div>
 								{/if}
 
 								{if $experience.hasLockedSegmentsExperiment and $experience.segmentsExperimentURL}
+									{let $goToTestLabel kind="text"}
+										{msg desc=""}go-to-test-details{/msg}
+									{/let}
+
 									<div class="align-items-center d-flex dropdown-menu__experience--btn-group px-2">
-										<a class="btn btn-borderless btn-monospaced btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}">
+										<a class="btn btn-borderless btn-monospaced btn-sm btn-unstyled mx-2 mr-0 text-secondary"  href="{$experience.segmentsExperimentURL}" data-onclick="{$_handleSegmentsExperimentNavigation}" title="{$goToTestLabel}">
 											{call ClayIcon.render}
 												{param spritemap: $spritemap /}
 												{param symbol: 'test' /}

@@ -830,11 +830,12 @@ public abstract class TopLevelBuild extends BaseBuild {
 		Element jobSummaryListElement = getJobSummaryListElement(
 			false, stableBatchNames);
 
-		int successCount = getJobVariantsDownstreamBuildCountByResult(
-			stableBatchNames, "SUCCESS");
+		int successCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, "SUCCESS", null);
 
 		int failCount =
-			getJobVariantsDownstreamBuildCount(stableBatchNames) - successCount;
+			getJobVariantsDownstreamBuildCount(stableBatchNames, null, null) -
+				successCount;
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -1227,7 +1228,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		List<Build> builds = new ArrayList<>();
 
 		if (jobVariants != null) {
-			builds.addAll(getJobVariantsDownstreamBuilds(jobVariants));
+			builds.addAll(
+				getJobVariantsDownstreamBuilds(jobVariants, null, null));
 		}
 		else {
 			builds.add(this);
@@ -1305,7 +1307,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	protected List<Build> getStableDownstreamBuilds() {
 		if (_stableJob != null) {
 			return getJobVariantsDownstreamBuilds(
-				new ArrayList(_stableJob.getBatchNames()));
+				new ArrayList(_stableJob.getBatchNames()), null, null);
 		}
 
 		return new ArrayList();
@@ -1315,8 +1317,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		List<String> stableBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
-		int successCount = getJobVariantsDownstreamBuildCountByResult(
-			stableBatchNames, "SUCCESS");
+		int successCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, "SUCCESS", null);
 
 		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
 
@@ -1331,7 +1333,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 					" jobs PASSED")));
 
 		int stableBuildCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames);
+			stableBatchNames, null, null);
 
 		if (successCount < stableBuildCount) {
 			Dom4JUtil.addToElement(
@@ -1356,8 +1358,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		List<String> stableBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
-		int successCount = getJobVariantsDownstreamBuildCountByResult(
-			stableBatchNames, "SUCCESS");
+		int successCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, "SUCCESS", null);
 
 		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
 
@@ -1435,8 +1437,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 		Element jobSummaryListElement = getJobSummaryListElement(
 			true, stableBatchNames);
 
-		int successCount = getJobVariantsDownstreamBuildCountByResult(
-			stableBatchNames, "SUCCESS");
+		int successCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, "SUCCESS", null);
 
 		return Dom4JUtil.getNewElement(
 			"details", null,

@@ -742,18 +742,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public int getJobVariantsDownstreamBuildCount(List<String> jobVariants) {
+	public int getJobVariantsDownstreamBuildCount(
+		List<String> jobVariants, String result, String status) {
+
 		List<Build> jobVariantsDownstreamBuilds =
-			getJobVariantsDownstreamBuilds(jobVariants);
+			getJobVariantsDownstreamBuilds(jobVariants, result, status);
 
 		return jobVariantsDownstreamBuilds.size();
 	}
 
 	@Override
 	public List<Build> getJobVariantsDownstreamBuilds(
-		List<String> jobVariants) {
+		List<String> jobVariants, String result, String status) {
 
 		List<Build> jobVariantsDownstreamBuilds = new ArrayList<>();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			String downstreamBuildJobVariant = downstreamBuild.getJobVariant();
@@ -2556,30 +2560,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return parameterNames;
-	}
-
-	protected int getJobVariantsDownstreamBuildCountByResult(
-		List<String> jobVariants, String result) {
-
-		List<Build> jobVariantsDownstreamBuilds =
-			getJobVariantsDownstreamBuilds(jobVariants);
-
-		if (result == null) {
-			return jobVariantsDownstreamBuilds.size();
-		}
-
-		int count = 0;
-
-		for (Build jobVariantsDownstreamBuild : jobVariantsDownstreamBuilds) {
-			String jobVariantsDownstreamBuildResult =
-				jobVariantsDownstreamBuild.getResult();
-
-			if (jobVariantsDownstreamBuildResult.equals(result)) {
-				count++;
-			}
-		}
-
-		return count;
 	}
 
 	protected Map<String, String> getParameters(JSONArray jsonArray) {

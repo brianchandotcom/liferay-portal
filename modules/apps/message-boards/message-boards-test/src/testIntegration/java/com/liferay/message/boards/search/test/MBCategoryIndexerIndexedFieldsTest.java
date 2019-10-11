@@ -134,9 +134,9 @@ public class MBCategoryIndexerIndexedFieldsTest {
 			Field.ASSET_PARENT_CATEGORY_ID,
 			String.valueOf(mbCategory.getParentCategoryId()));
 		map.put(Field.COMPANY_ID, String.valueOf(mbCategory.getCompanyId()));
+		map.put(Field.ENTRY_CLASS_NAME, MBCategory.class.getName());
 		map.put(
 			Field.ENTRY_CLASS_PK, String.valueOf(mbCategory.getCategoryId()));
-		map.put(Field.ENTRY_CLASS_NAME, MBCategory.class.getName());
 		map.put(Field.GROUP_ID, String.valueOf(mbCategory.getGroupId()));
 		map.put(Field.SCOPE_GROUP_ID, String.valueOf(mbCategory.getGroupId()));
 		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));

@@ -58,9 +58,9 @@ public class FinderCacheImplTest {
 		_properties.put(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true");
 		_properties.put(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true");
 		_properties.put(
-			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
-		_properties.put(
 			PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD, "-1");
+		_properties.put(
+			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
 
 		_serializedMultiVMPool = (MultiVMPool)ProxyUtil.newProxyInstance(
 			_classLoader, new Class<?>[] {MultiVMPool.class},

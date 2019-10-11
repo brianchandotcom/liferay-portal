@@ -155,10 +155,10 @@ public class PollsQuestionIndexerIndexedFieldsTest {
 
 		map.put(Field.COMPANY_ID, String.valueOf(pollsQuestion.getCompanyId()));
 		map.put(Field.DESCRIPTION, _getDescriptionField(pollsQuestion));
+		map.put(Field.ENTRY_CLASS_NAME, PollsQuestion.class.getName());
 		map.put(
 			Field.ENTRY_CLASS_PK,
 			String.valueOf(pollsQuestion.getQuestionId()));
-		map.put(Field.ENTRY_CLASS_NAME, PollsQuestion.class.getName());
 		map.put(Field.GROUP_ID, String.valueOf(pollsQuestion.getGroupId()));
 		map.put(
 			Field.SCOPE_GROUP_ID, String.valueOf(pollsQuestion.getGroupId()));

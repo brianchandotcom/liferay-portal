@@ -66,11 +66,11 @@ public class PropfindMethodImpl extends BasePropMethodImpl implements Method {
 
 	protected Set<QName> generateProps(Set<QName> props) {
 		props.add(DISPLAYNAME);
-		props.add(RESOURCETYPE);
-		props.add(GETCONTENTTYPE);
 		props.add(GETCONTENTLENGTH);
+		props.add(GETCONTENTTYPE);
 		props.add(GETLASTMODIFIED);
 		props.add(LOCKDISCOVERY);
+		props.add(RESOURCETYPE);
 
 		// RFC 3253 Currently Unsupported
 

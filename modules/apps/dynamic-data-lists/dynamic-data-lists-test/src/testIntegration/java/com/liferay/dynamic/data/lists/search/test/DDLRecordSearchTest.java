@@ -232,8 +232,8 @@ public class DDLRecordSearchTest {
 
 		Map<Locale, String> nameMap = new HashMap<>();
 
-		nameMap.put(LocaleUtil.US, "simple text");
 		nameMap.put(LocaleUtil.JAPAN, "単純なテキスト");
+		nameMap.put(LocaleUtil.US, "simple text");
 
 		DDMFormFieldValue nameDDMFormFieldValue =
 			createLocalizedDDMFormFieldValue("name", nameMap);

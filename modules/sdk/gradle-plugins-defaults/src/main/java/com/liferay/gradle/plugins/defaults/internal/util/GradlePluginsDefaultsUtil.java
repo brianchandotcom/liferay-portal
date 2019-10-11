@@ -156,13 +156,13 @@ public class GradlePluginsDefaultsUtil {
 
 		Set<String> fileNames = new HashSet<>();
 
+		fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile);
 		fileNames.add(
 			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix);
-		fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile);
 
 		if (buildProfile.equals("portal-deprecated")) {
-			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-" + suffix);
 			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal");
+			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-" + suffix);
 		}
 
 		return fileNames;

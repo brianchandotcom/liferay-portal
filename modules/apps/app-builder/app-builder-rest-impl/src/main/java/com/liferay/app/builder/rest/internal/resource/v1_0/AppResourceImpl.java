@@ -145,11 +145,11 @@ public class AppResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
-				searchContext.setAttribute("ddmStructureId", dataDefinitionId);
 				searchContext.setAttribute(
 					Field.CLASS_NAME_ID,
 					_portal.getClassNameId(AppBuilderApp.class));
 				searchContext.setAttribute(Field.NAME, keywords);
+				searchContext.setAttribute("ddmStructureId", dataDefinitionId);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(
 					new long[] {ddmStructure.getGroupId()});

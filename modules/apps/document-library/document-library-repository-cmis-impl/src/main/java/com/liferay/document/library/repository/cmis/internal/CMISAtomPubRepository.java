@@ -53,9 +53,9 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		parameters.put(
-			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
-		parameters.put(
 			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
+		parameters.put(
+			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
 
 		String login = getLogin();
 		String password = null;

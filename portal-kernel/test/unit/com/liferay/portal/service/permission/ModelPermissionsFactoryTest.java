@@ -355,12 +355,12 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		parameterMap.put(
 			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
-				RoleConstants.POWER_USER,
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
-		parameterMap.put(
-			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
 				RoleConstants.ORGANIZATION_USER,
 			new String[] {ActionKeys.DELETE, ActionKeys.VIEW});
+		parameterMap.put(
+			ModelPermissionsFactory.MODEL_PERMISSIONS_PREFIX + className +
+				RoleConstants.POWER_USER,
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

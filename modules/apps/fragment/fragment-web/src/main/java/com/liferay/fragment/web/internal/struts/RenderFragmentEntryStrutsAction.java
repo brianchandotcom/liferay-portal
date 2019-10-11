@@ -69,11 +69,11 @@ public class RenderFragmentEntryStrutsAction implements StrutsAction {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		httpServletRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
-			_fragmentCollectionContributorTracker);
-		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
+		httpServletRequest.setAttribute(
+			FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+			_fragmentCollectionContributorTracker);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, false);

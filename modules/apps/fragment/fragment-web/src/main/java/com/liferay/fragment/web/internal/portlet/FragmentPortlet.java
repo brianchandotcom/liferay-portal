@@ -107,11 +107,11 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
 		renderRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY,
-			_fragmentEntryProcessorRegistry);
-		renderRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
+		renderRequest.setAttribute(
+			FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY,
+			_fragmentEntryProcessorRegistry);
 
 		try {
 			renderRequest.setAttribute(

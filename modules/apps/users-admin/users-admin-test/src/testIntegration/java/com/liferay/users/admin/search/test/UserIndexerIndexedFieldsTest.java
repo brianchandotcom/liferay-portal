@@ -200,8 +200,8 @@ public class UserIndexerIndexedFieldsTest {
 		Map<String, String> map = new HashMap<>();
 
 		map.put(Field.COMPANY_ID, String.valueOf(user.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId()));
 		map.put(Field.ENTRY_CLASS_NAME, User.class.getName());
+		map.put(Field.ENTRY_CLASS_PK, String.valueOf(user.getUserId()));
 		map.put(Field.GROUP_ID, groupId);
 		map.put(Field.SCOPE_GROUP_ID, groupId);
 		map.put(Field.STATUS, String.valueOf(user.getStatus()));

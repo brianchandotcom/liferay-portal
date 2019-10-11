@@ -53,9 +53,9 @@ public class EntityCacheImplTest {
 		properties.put(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true");
 		properties.put(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true");
 		properties.put(
-			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
-		properties.put(
 			PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD, "-1");
+		properties.put(
+			PropsKeys.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED, "true");
 
 		_props = PropsTestUtil.setProps(properties);
 	}

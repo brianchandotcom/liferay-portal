@@ -99,10 +99,10 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		renderRequest.setAttribute(
-			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
-		renderRequest.setAttribute(
 			WorkflowWebKeys.SELECTED_WORKFLOW_PORTLET_TAB,
 			getSelectedWorkflowPortletTab(renderRequest));
+		renderRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_PORTLET_TABS, getWorkflowPortletTabs());
 	}
 
 	@Deactivate

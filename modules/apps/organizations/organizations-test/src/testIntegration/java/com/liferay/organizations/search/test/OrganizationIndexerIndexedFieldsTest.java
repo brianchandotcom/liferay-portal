@@ -211,32 +211,32 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 		String regionName = StringUtil.toLowerCase(region.getName());
 
-		map.put("country", countryName);
-		map.put("region", regionName);
+		map.put(Field.COMPANY_ID, String.valueOf(organization.getCompanyId()));
+		map.put(Field.ENTRY_CLASS_NAME, Organization.class.getName());
+		map.put(
+			Field.ENTRY_CLASS_PK,
+			String.valueOf(organization.getOrganizationId()));
+		map.put(Field.NAME, organization.getName());
 		map.put(
 			Field.NAME + "_sortable",
 			StringUtil.toLowerCase(organization.getName()));
 		map.put(
-			Field.ENTRY_CLASS_PK,
+			Field.ORGANIZATION_ID,
 			String.valueOf(organization.getOrganizationId()));
-		map.put(
-			"nameTreePath_String_sortable",
-			StringUtil.toLowerCase(organization.getName()));
-		map.put(Field.ENTRY_CLASS_NAME, Organization.class.getName());
+		map.put(Field.TREE_PATH, organization.getTreePath());
+		map.put(Field.USER_ID, String.valueOf(organization.getUserId()));
 		map.put(
 			Field.USER_NAME,
 			StringUtil.toLowerCase(organization.getUserName()));
+		map.put("country", countryName);
+		map.put("nameTreePath", organization.getName());
+		map.put(
+			"nameTreePath_String_sortable",
+			StringUtil.toLowerCase(organization.getName()));
 		map.put(
 			"parentOrganizationId",
 			String.valueOf(organization.getParentOrganizationId()));
-		map.put(
-			Field.ORGANIZATION_ID,
-			String.valueOf(organization.getOrganizationId()));
-		map.put(Field.USER_ID, String.valueOf(organization.getUserId()));
-		map.put(Field.COMPANY_ID, String.valueOf(organization.getCompanyId()));
-		map.put("nameTreePath", organization.getName());
-		map.put(Field.NAME, organization.getName());
-		map.put(Field.TREE_PATH, organization.getTreePath());
+		map.put("region", regionName);
 
 		indexedFieldsFixture.populateUID(
 			Organization.class.getName(), organization.getOrganizationId(),

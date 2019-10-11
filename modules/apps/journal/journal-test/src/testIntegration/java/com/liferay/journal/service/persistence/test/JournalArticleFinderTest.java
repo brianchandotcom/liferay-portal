@@ -303,8 +303,8 @@ public class JournalArticleFinderTest {
 
 		Map<Locale, String> titleMap = new HashMap<>();
 
-		titleMap.put(LocaleUtil.US, "Localized Article");
 		titleMap.put(LocaleUtil.FRANCE, "Localized Article");
+		titleMap.put(LocaleUtil.US, "Localized Article");
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(), _folder.getFolderId(),

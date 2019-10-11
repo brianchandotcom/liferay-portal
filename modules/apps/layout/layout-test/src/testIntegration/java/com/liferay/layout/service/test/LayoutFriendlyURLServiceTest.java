@@ -71,8 +71,8 @@ public class LayoutFriendlyURLServiceTest {
 		String name = RandomTestUtil.randomString();
 
 		nameMap.put(LocaleUtil.GERMANY, name);
-		nameMap.put(LocaleUtil.US, name);
 		nameMap.put(LocaleUtil.SPAIN, name);
+		nameMap.put(LocaleUtil.US, name);
 
 		Map<Locale, String> friendlyURLMap = new HashMap<>();
 

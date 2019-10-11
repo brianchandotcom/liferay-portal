@@ -152,8 +152,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 			Field.CLASS_NAME_ID, String.valueOf(mbMessage.getClassNameId()));
 		map.put(Field.CLASS_PK, String.valueOf(mbMessage.getClassPK()));
 		map.put(Field.COMPANY_ID, String.valueOf(mbMessage.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(mbMessage.getMessageId()));
 		map.put(Field.ENTRY_CLASS_NAME, MBMessage.class.getName());
+		map.put(Field.ENTRY_CLASS_PK, String.valueOf(mbMessage.getMessageId()));
 		map.put(Field.GROUP_ID, String.valueOf(mbMessage.getGroupId()));
 		map.put(
 			Field.ROOT_ENTRY_CLASS_PK,
@@ -222,8 +222,8 @@ public class MBMessageIndexerIndexedFieldsTest {
 				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
 				mbMessage.getSubject());
 
-			map.put("localized_title", title);
 			map.put(key, title);
+			map.put("localized_title", title);
 			map.put(key.concat("_sortable"), title);
 		}
 	}

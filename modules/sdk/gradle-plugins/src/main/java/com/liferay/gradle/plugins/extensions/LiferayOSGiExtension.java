@@ -67,10 +67,10 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(
 			Constants.DONOTCOPY, "(" + DONOTCOPY_DEFAULT + ")");
 		_bundleDefaultInstructions.put(
+			Constants.FIXUPMESSAGES + ".classpath.empty", "Classpath is empty");
+		_bundleDefaultInstructions.put(
 			Constants.FIXUPMESSAGES + ".deprecated",
 			"annotations are deprecated");
-		_bundleDefaultInstructions.put(
-			Constants.FIXUPMESSAGES + ".classpath.empty", "Classpath is empty");
 		_bundleDefaultInstructions.put(
 			Constants.FIXUPMESSAGES + ".unicode.string",
 			"Invalid unicode string");

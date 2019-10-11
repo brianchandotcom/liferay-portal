@@ -112,10 +112,10 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		Map<String, String> map = new HashMap<>();
 
 		map.put(Field.COMPANY_ID, String.valueOf(blogsEntry.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(blogsEntry.getEntryId()));
-		map.put(Field.ENTRY_CLASS_NAME, BlogsEntry.class.getName());
 		map.put(Field.CONTENT, blogsEntry.getContent());
 		map.put(Field.DESCRIPTION, blogsEntry.getDescription());
+		map.put(Field.ENTRY_CLASS_NAME, BlogsEntry.class.getName());
+		map.put(Field.ENTRY_CLASS_PK, String.valueOf(blogsEntry.getEntryId()));
 		map.put(Field.GROUP_ID, String.valueOf(blogsEntry.getGroupId()));
 		map.put(Field.SCOPE_GROUP_ID, String.valueOf(blogsEntry.getGroupId()));
 		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));

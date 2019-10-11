@@ -145,8 +145,8 @@ public class MBThreadIndexerIndexedFieldsTest {
 		Map<String, String> map = new HashMap<>();
 
 		map.put(Field.COMPANY_ID, String.valueOf(mbThread.getCompanyId()));
-		map.put(Field.ENTRY_CLASS_PK, String.valueOf(mbThread.getThreadId()));
 		map.put(Field.ENTRY_CLASS_NAME, MBThread.class.getName());
+		map.put(Field.ENTRY_CLASS_PK, String.valueOf(mbThread.getThreadId()));
 		map.put(Field.GROUP_ID, String.valueOf(mbThread.getGroupId()));
 		map.put(Field.SCOPE_GROUP_ID, String.valueOf(mbThread.getGroupId()));
 		map.put(Field.STAGING_GROUP, String.valueOf(_group.isStagingGroup()));

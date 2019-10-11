@@ -248,12 +248,12 @@ public class DLOpenerGoogleDriveManager
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 		taskContextMap.put(GoogleDriveBackgroundTaskConstants.CMD, cmd);
 		taskContextMap.put(
 			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
 			fileEntry.getCompanyId());
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 		taskContextMap.put(
 			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
 			fileEntry.getFileEntryId());

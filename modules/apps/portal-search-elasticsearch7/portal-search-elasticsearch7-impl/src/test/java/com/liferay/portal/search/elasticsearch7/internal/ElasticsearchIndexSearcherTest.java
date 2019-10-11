@@ -58,14 +58,14 @@ public class ElasticsearchIndexSearcherTest {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(
+			ElasticsearchSearchContextAttributes.
+				ATTRIBUTE_KEY_SEARCH_REQUEST_PREFERENCE,
+			"testValue");
+		searchContext.setAttribute(
 			SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION,
 			Boolean.TRUE);
 		searchContext.setAttribute(
 			SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX, Boolean.TRUE);
-		searchContext.setAttribute(
-			ElasticsearchSearchContextAttributes.
-				ATTRIBUTE_KEY_SEARCH_REQUEST_PREFERENCE,
-			"testValue");
 
 		SearchSearchRequest searchSearchRequest =
 			_elasticsearchIndexSearcher.createSearchSearchRequest(

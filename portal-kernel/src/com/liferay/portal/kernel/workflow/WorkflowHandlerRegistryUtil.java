@@ -157,10 +157,6 @@ public class WorkflowHandlerRegistryUtil {
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_COMPANY_ID, String.valueOf(companyId));
 		workflowContext.put(
-			WorkflowConstants.CONTEXT_GROUP_ID, String.valueOf(groupId));
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId));
-		workflowContext.put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME, className);
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_ENTRY_CLASS_PK, String.valueOf(classPK));
@@ -168,10 +164,14 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowConstants.CONTEXT_ENTRY_TYPE,
 			workflowHandler.getType(LocaleUtil.getDefault()));
 		workflowContext.put(
+			WorkflowConstants.CONTEXT_GROUP_ID, String.valueOf(groupId));
+		workflowContext.put(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_TASK_COMMENTS,
 			GetterUtil.getString(serviceContext.getAttribute("comments")));
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(userId));
 
 		T updatedModel = workflowHandler.updateStatus(status, workflowContext);
 

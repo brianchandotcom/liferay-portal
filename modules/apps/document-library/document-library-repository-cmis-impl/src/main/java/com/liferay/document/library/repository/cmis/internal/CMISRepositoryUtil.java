@@ -140,8 +140,8 @@ public class CMISRepositoryUtil {
 		defaultFilterSet.add(PropertyIds.BASE_TYPE_ID);
 		defaultFilterSet.add(PropertyIds.CREATED_BY);
 		defaultFilterSet.add(PropertyIds.CREATION_DATE);
-		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
 		defaultFilterSet.add(PropertyIds.LAST_MODIFICATION_DATE);
+		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
 		defaultFilterSet.add(PropertyIds.NAME);
 		defaultFilterSet.add(PropertyIds.OBJECT_ID);
 		defaultFilterSet.add(PropertyIds.OBJECT_TYPE_ID);

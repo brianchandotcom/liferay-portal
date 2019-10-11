@@ -326,8 +326,8 @@ public class AssetVocabularyServiceTest {
 
 		Map<Locale, String> titleMap = new HashMap<>();
 
-		titleMap.put(LocaleUtil.US, title + "_US");
 		titleMap.put(LocaleUtil.SPAIN, title + "_ES");
+		titleMap.put(LocaleUtil.US, title + "_US");
 
 		String description = RandomTestUtil.randomString();
 

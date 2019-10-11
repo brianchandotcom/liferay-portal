@@ -97,8 +97,6 @@ public class CORSAnnotationDynamicFeature implements DynamicFeature {
 		Map<String, String> corsHeaders = new HashMap<>();
 
 		corsHeaders.put(
-			CORSSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin());
-		corsHeaders.put(
 			CORSSupport.ACCESS_CONTROL_ALLOW_CREDENTIALS,
 			String.valueOf(cors.allowCredentials()));
 		corsHeaders.put(
@@ -107,6 +105,8 @@ public class CORSAnnotationDynamicFeature implements DynamicFeature {
 		corsHeaders.put(
 			CORSSupport.ACCESS_CONTROL_ALLOW_METHODS,
 			StringUtil.merge(cors.allowMethods(), StringPool.COMMA));
+		corsHeaders.put(
+			CORSSupport.ACCESS_CONTROL_ALLOW_ORIGIN, cors.allowOrigin());
 		corsHeaders.put(
 			CORSSupport.ACCESS_CONTROL_EXPOSE_HEADERS,
 			StringUtil.merge(cors.exposeHeaders(), StringPool.COMMA));

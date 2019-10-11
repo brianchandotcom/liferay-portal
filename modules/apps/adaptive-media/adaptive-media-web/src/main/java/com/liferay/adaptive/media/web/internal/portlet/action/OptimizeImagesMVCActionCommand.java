@@ -113,10 +113,10 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
 		taskContextMap.put(
+			AMOptimizeImagesBackgroundTaskConstants.COMPANY_ID, companyId);
+		taskContextMap.put(
 			AMOptimizeImagesBackgroundTaskConstants.CONFIGURATION_ENTRY_UUID,
 			configurationEntryUuid);
-		taskContextMap.put(
-			AMOptimizeImagesBackgroundTaskConstants.COMPANY_ID, companyId);
 		taskContextMap.put(
 			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
 

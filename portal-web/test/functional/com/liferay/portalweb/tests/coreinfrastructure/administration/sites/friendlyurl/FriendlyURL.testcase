@@ -24,6 +24,25 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test ViewCanonicalURLWithLocalizedFriendlyURL {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		User.logoutPG();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name");
+
+		Page.assertCanonicalURL(portalURL = "${portalURL}/web/test-site-name");
+
+		Navigator.openSpecificURL(url = "${portalURL}/es/web/test-site-name");
+
+		Page.assertCanonicalURL(portalURL = "${portalURL}/web/test-site-name");
+	}
+
 	@description = "This is a use case for LRQA-52002. FriendlyURLS should support Unicode characters."
 	@priority = "4"
 	test ViewFriendlyURLWithUnicodeChars {

@@ -74,24 +74,6 @@ public class LayoutSEOLinkManagerPageTitleTest {
 	}
 
 	@Test
-	public void testGetPageTitleUsesLayoutTitleAndTitleList() throws Exception {
-		ListMergeable<String> titleListMergeable = new ListMergeable<>();
-
-		titleListMergeable.add(RandomTestUtil.randomString());
-		titleListMergeable.add(RandomTestUtil.randomString());
-
-		String companyName = RandomTestUtil.randomString();
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
-				_group.getName(), " - ", companyName),
-			_layoutSEOLinkManager.getPageTitle(
-				_layout, null, null, titleListMergeable, null, companyName,
-				LocaleUtil.getDefault()));
-	}
-
-	@Test
 	public void testGetPageTitleUsesLayoutTitleAndSubtitleList()
 		throws Exception {
 
@@ -109,6 +91,24 @@ public class LayoutSEOLinkManagerPageTitleTest {
 				companyName),
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, null, null, subtitleListMergeable, companyName,
+				LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testGetPageTitleUsesLayoutTitleAndTitleList() throws Exception {
+		ListMergeable<String> titleListMergeable = new ListMergeable<>();
+
+		titleListMergeable.add(RandomTestUtil.randomString());
+		titleListMergeable.add(RandomTestUtil.randomString());
+
+		String companyName = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				_group.getName(), " - ", companyName),
+			_layoutSEOLinkManager.getPageTitle(
+				_layout, null, null, titleListMergeable, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
@@ -139,19 +139,6 @@ public class LayoutSEOLinkManagerPageTitleTest {
 	}
 
 	@Test
-	public void testGetPageUsesLayoutTitleAndCompanyName()
-		throws Exception {
-
-		String companyName = _group.getName();
-
-		Assert.assertEquals(
-			_layout.getTitle() + " - " + companyName,
-			_layoutSEOLinkManager.getPageTitle(
-				_layout, null, null, null, null, companyName,
-				LocaleUtil.getDefault()));
-	}
-
-	@Test
 	public void testGetPageTitleUsesTilesTitle() throws Exception {
 		String tilesTitle = RandomTestUtil.randomString();
 
@@ -177,6 +164,17 @@ public class LayoutSEOLinkManagerPageTitleTest {
 			tilesTitle + " - " + companyName,
 			_layoutSEOLinkManager.getPageTitle(
 				_layout, null, tilesTitle, null, null, companyName,
+				LocaleUtil.getDefault()));
+	}
+
+	@Test
+	public void testGetPageUsesLayoutTitleAndCompanyName() throws Exception {
+		String companyName = _group.getName();
+
+		Assert.assertEquals(
+			_layout.getTitle() + " - " + companyName,
+			_layoutSEOLinkManager.getPageTitle(
+				_layout, null, null, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 

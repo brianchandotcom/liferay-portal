@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -36,6 +37,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,6 +74,11 @@ public interface DepotEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DepotEntry addDepotEntry(DepotEntry depotEntry);
+
+	public DepotEntry addDepotEntry(
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Creates a new depot entry with the primary key. Does not add the depot entry to the database.
@@ -288,5 +296,10 @@ public interface DepotEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DepotEntry updateDepotEntry(DepotEntry depotEntry);
+
+	public DepotEntry updateDepotEntry(
+			long depotEntryId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
 
 }

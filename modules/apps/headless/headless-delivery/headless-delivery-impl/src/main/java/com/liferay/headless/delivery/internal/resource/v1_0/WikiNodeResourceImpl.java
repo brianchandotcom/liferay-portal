@@ -37,6 +37,9 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
@@ -86,7 +89,7 @@ public class WikiNodeResourceImpl
 			document -> _toWikiNode(
 				_wikiNodeService.getNode(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, _getActions(siteId));
 	}
 
 	@Override
@@ -129,11 +132,41 @@ public class WikiNodeResourceImpl
 		_wikiNodeService.unsubscribeNode(wikiNodeId);
 	}
 
+	private Map<String, Map> _getActions(
+		com.liferay.wiki.model.WikiNode wikiNode) {
+
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put("delete", addAction("DELETE", wikiNode, "deleteWikiNode"));
+		actions.put("get", addAction("VIEW", wikiNode, "getWikiNode"));
+		actions.put("replace", addAction("UPDATE", wikiNode, "putWikiNode"));
+		actions.put(
+			"subscribe",
+			addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe"));
+		actions.put(
+			"unsubscribe",
+			addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe"));
+
+		return actions;
+	}
+
+	private Map<String, Map> _getActions(Long siteId) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"create",
+			addAction(
+				"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId));
+
+		return actions;
+	}
+
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
 		return new WikiNode() {
 			{
+				actions = _getActions(wikiNode);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));

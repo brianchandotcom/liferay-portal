@@ -66,6 +66,7 @@ public class BlogPostingDTOConverter implements DTOConverter {
 
 		return new BlogPosting() {
 			{
+				actions = dtoConverterContext.getActions();
 				alternativeHeadline = blogsEntry.getSubtitle();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(

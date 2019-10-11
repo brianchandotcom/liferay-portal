@@ -249,6 +249,46 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return metricLabels;
 	}
 
+	public String getStableResult() {
+		if (_stableJob == null) {
+			return null;
+		}
+
+		if (_stableResult != null) {
+			return _stableResult;
+		}
+
+		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
+
+		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
+
+		if (stableDownstreamBuildsSize == 0) {
+			return null;
+		}
+
+		List<String> stableBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
+
+		int completedCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, null, "completed");
+
+		if (completedCount != stableDownstreamBuildsSize) {
+			return null;
+		}
+
+		int successCount = getJobVariantsDownstreamBuildCount(
+			stableBatchNames, "SUCCESS", null);
+
+		if (successCount == stableDownstreamBuildsSize) {
+			_stableResult = "SUCCESS";
+		}
+		else {
+			_stableResult = "FAILURE";
+		}
+
+		return _stableResult;
+	}
+
 	@Override
 	public String getStatusReport(int indentSize) {
 		String statusReport = super.getStatusReport(indentSize);
@@ -1700,6 +1740,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
 	private Job _stableJob;
+	private String _stableResult;
 	private long _updateDuration;
 
 }

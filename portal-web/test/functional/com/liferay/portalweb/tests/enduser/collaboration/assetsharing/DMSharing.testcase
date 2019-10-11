@@ -579,13 +579,9 @@ definition {
 			locator1 = "Comments#COMMENT_FIELD",
 			value1 = "Userea Comment");
 
-		Pause(locator1 = "3000");
-
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");
-
-		Pause(locator1 = "3000");
 
 		Alert.viewSuccessMessage();
 
@@ -610,13 +606,9 @@ definition {
 			locator1 = "Comments#COMMENT_FIELD_LAST",
 			value1 = "Userea2 Reply To Comment");
 
-		Pause(locator1 = "3000");
-
 		AssertClick(
 			locator1 = "Button#REPLY_LAST",
 			value1 = "Reply");
-
-		Pause(locator1 = "3000");
 
 		Alert.viewSuccessMessage();
 	}

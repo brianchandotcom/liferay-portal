@@ -69,10 +69,7 @@ public class LiferayOperations {
 				String endpoint)
 		throws IOException, TimeoutException {
 
-		_logger.debug(
-			"Send DELETE request to endpoint {}, with path parameters {} and " +
-				"query paramters {}",
-			endpoint, _pathParams, _queryParams);
+		_logEndpointParams(endpoint);
 
 		HttpResponse httpResponse = connection.delete(
 			_pathParams, _queryParams, endpoint);
@@ -96,10 +93,7 @@ public class LiferayOperations {
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
 		throws Exception {
 
-		_logger.debug(
-			"Send GET request to endpoint {}, with path parameters {} and " +
-				"query paramters {}",
-			endpoint, _pathParams, _queryParams);
+		_logEndpointParams(endpoint);
 
 		HttpResponse httpResponse = connection.get(
 			_pathParams, _queryParams, endpoint);
@@ -126,10 +120,7 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
-		_logger.debug(
-			"Send PATCH request to endpoint {}, with path parameters {} and " +
-				"query paramters {}",
-			endpoint, _pathParams, _queryParams);
+		_logEndpointParams(endpoint);
 
 		HttpResponse httpResponse = connection.patch(
 			inputStream, _pathParams, _queryParams, endpoint);
@@ -154,10 +145,7 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
-		_logger.debug(
-			"Send POST request to endpoint {}, with path parameters {} and " +
-				"query paramters {}",
-			endpoint, _pathParams, _queryParams);
+		_logEndpointParams(endpoint);
 
 		HttpResponse httpResponse = connection.post(
 			inputStream, _pathParams, _queryParams, endpoint);
@@ -170,6 +158,15 @@ public class LiferayOperations {
 		).output(
 			httpEntity.getContent()
 		).build();
+	}
+
+	private void _logEndpointParams(String endpoint) {
+		if (_logger.isDebugEnabled()) {
+			_logger.debug(
+				"Send DELETE request to endpoint {}, with path parameters {} " +
+					"and query parameters {}",
+				endpoint, _pathParams, _queryParams);
+		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

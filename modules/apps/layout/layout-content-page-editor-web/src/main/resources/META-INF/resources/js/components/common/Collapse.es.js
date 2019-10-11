@@ -19,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 
 const Collapse = props => {
 	const [open, setOpen] = useState(props.open);
+	const icon = open ? 'angle-down' : 'angle-right';
 
 	useEffect(() => {
 		setOpen(props.open);
@@ -50,7 +51,7 @@ const Collapse = props => {
 			>
 				{props.label}
 
-				<ClayIcon symbol={open ? 'angle-down' : 'angle-right'} />
+				<ClayIcon key={icon} symbol={icon} />
 			</button>
 
 			{open && props.children}
@@ -58,7 +59,7 @@ const Collapse = props => {
 	);
 };
 
-Collapse.PropTypes = {
+Collapse.propTypes = {
 	children: PropTypes.node.isRequired,
 	open: PropTypes.bool
 };

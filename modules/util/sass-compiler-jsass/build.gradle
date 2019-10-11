@@ -1,0 +1,14 @@
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"
+
+	compileInclude group: "io.bit3", name: "jsass", version: "5.10.1"
+	compileInclude group: "org.sharegov", name: "mjson", version: "1.4.0"
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}
+
+processTestResources {
+	dependsOn ":util:sass-compiler-jni:downloadSassSpec"
+}

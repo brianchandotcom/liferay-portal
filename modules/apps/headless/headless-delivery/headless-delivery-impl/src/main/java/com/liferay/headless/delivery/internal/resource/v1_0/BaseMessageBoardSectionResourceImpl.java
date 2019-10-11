@@ -142,6 +142,11 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		MessageBoardSection existingMessageBoardSection =
 			getMessageBoardSection(messageBoardSectionId);
 
+		if (messageBoardSection.getActions() != null) {
+			existingMessageBoardSection.setActions(
+				messageBoardSection.getActions());
+		}
+
 		if (messageBoardSection.getDateCreated() != null) {
 			existingMessageBoardSection.setDateCreated(
 				messageBoardSection.getDateCreated());

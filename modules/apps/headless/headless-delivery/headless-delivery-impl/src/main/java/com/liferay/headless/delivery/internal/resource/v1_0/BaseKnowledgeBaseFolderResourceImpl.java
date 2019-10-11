@@ -139,6 +139,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		KnowledgeBaseFolder existingKnowledgeBaseFolder =
 			getKnowledgeBaseFolder(knowledgeBaseFolderId);
 
+		if (knowledgeBaseFolder.getActions() != null) {
+			existingKnowledgeBaseFolder.setActions(
+				knowledgeBaseFolder.getActions());
+		}
+
 		if (knowledgeBaseFolder.getDateCreated() != null) {
 			existingKnowledgeBaseFolder.setDateCreated(
 				knowledgeBaseFolder.getDateCreated());

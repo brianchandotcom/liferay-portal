@@ -143,6 +143,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		MessageBoardMessage existingMessageBoardMessage =
 			getMessageBoardMessage(messageBoardMessageId);
 
+		if (messageBoardMessage.getActions() != null) {
+			existingMessageBoardMessage.setActions(
+				messageBoardMessage.getActions());
+		}
+
 		if (messageBoardMessage.getAnonymous() != null) {
 			existingMessageBoardMessage.setAnonymous(
 				messageBoardMessage.getAnonymous());

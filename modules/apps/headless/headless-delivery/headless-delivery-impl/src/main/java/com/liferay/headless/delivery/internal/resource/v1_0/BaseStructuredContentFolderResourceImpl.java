@@ -281,6 +281,11 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		StructuredContentFolder existingStructuredContentFolder =
 			getStructuredContentFolder(structuredContentFolderId);
 
+		if (structuredContentFolder.getActions() != null) {
+			existingStructuredContentFolder.setActions(
+				structuredContentFolder.getActions());
+		}
+
 		if (structuredContentFolder.getDateCreated() != null) {
 			existingStructuredContentFolder.setDateCreated(
 				structuredContentFolder.getDateCreated());

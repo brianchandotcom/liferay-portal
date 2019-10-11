@@ -402,6 +402,11 @@ public abstract class BaseStructuredContentResourceImpl
 		StructuredContent existingStructuredContent = getStructuredContent(
 			structuredContentId);
 
+		if (structuredContent.getActions() != null) {
+			existingStructuredContent.setActions(
+				structuredContent.getActions());
+		}
+
 		if (structuredContent.getAvailableLanguages() != null) {
 			existingStructuredContent.setAvailableLanguages(
 				structuredContent.getAvailableLanguages());

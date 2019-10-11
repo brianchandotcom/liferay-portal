@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-const {useRef} = React;
+const {useCallback, useRef} = React;
 
 /**
  * Maintains a registry of plugins and provides methods for adding to and
@@ -23,31 +23,31 @@ const {useRef} = React;
 export default function usePlugins() {
 	const plugins = useRef(new Map());
 
-	return {
-		getInstance(key) {
-			return plugins.current.get(key) || Promise.resolve(null);
-		},
+	const getInstance = useCallback(key => {
+		return plugins.current.get(key) || Promise.resolve(null);
+	}, []);
 
-		register(key, promise, init) {
-			if (!plugins.current.has(key)) {
-				plugins.current.set(
-					key,
-					promise
-						.then(Plugin => new Plugin(init))
-						.catch(error => {
-							if (process.env.NODE_ENV === 'development') {
-								console.error(error);
+	const register = useCallback((key, promise, init) => {
+		if (!plugins.current.has(key)) {
+			plugins.current.set(
+				key,
+				promise
+					.then(Plugin => new Plugin(init))
+					.catch(error => {
+						if (process.env.NODE_ENV === 'development') {
+							console.error(error);
 
-								// Reset to allow future retries.
-								plugins.current.delete(key);
-							}
+							// Reset to allow future retries.
+							plugins.current.delete(key);
+						}
 
-							return null;
-						})
-				);
-			}
-
-			return plugins.current.get(key);
+						return null;
+					})
+			);
 		}
-	};
+
+		return plugins.current.get(key);
+	}, []);
+
+	return {getInstance, register};
 }

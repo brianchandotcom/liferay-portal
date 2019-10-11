@@ -32,6 +32,8 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -51,6 +53,7 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
@@ -266,6 +269,37 @@ public class MessageBoardMessageResourceImpl
 		return _toMessageBoardMessage(mbMessage);
 	}
 
+	private Map<String, Map> _getActions(GroupedModel groupedModel) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"create",
+			addAction(
+				"REPLY_TO_MESSAGE", "postMessageBoardThreadMessageBoardMessage",
+				"com.liferay.message.boards", groupedModel.getGroupId()));
+		actions.put(
+			"delete",
+			addAction("DELETE", groupedModel, "deleteMessageBoardMessage"));
+		actions.put(
+			"get", addAction("VIEW", groupedModel, "getMessageBoardMessage"));
+		actions.put(
+			"replace",
+			addAction("UPDATE", groupedModel, "putMessageBoardMessage"));
+		actions.put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", groupedModel, "putMessageBoardMessageSubscribe"));
+		actions.put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", groupedModel, "putMessageBoardMessageSubscribe"));
+		actions.put(
+			"update",
+			addAction("UPDATE", groupedModel, "patchMessageBoardMessage"));
+
+		return actions;
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		MessageBoardMessage messageBoardMessage) {
 
@@ -275,10 +309,35 @@ public class MessageBoardMessageResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private Map<String, Map> _getListActions(GroupedModel groupedModel) {
+		Map<String, Map> map = new HashMap<>();
+
+		map.put(
+			"create",
+			addAction(
+				"ADD_MESSAGE", "postMessageBoardThreadMessageBoardMessage",
+				"com.liferay.message.boards", groupedModel.getGroupId()));
+		map.put(
+			"get",
+			addAction(
+				"VIEW", "getMessageBoardThreadMessageBoardMessagesPage",
+				"com.liferay.message.boards", groupedModel.getGroupId()));
+		map.put(
+			"get-child-messages",
+			addAction(
+				"VIEW", "getMessageBoardMessageMessageBoardMessagesPage",
+				"com.liferay.message.boards", groupedModel.getGroupId()));
+
+		return map;
+	}
+
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(
 			Long messageBoardMessageId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
+
+		MBMessage mbMessage = _mbMessageService.getMessage(
+			messageBoardMessageId);
 
 		return SearchUtil.search(
 			booleanQuery -> {
@@ -304,7 +363,7 @@ public class MessageBoardMessageResourceImpl
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, _getListActions(mbMessage));
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
@@ -320,7 +379,8 @@ public class MessageBoardMessageResourceImpl
 
 		return _messageBoardMessageDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				null, mbMessage.getPrimaryKey(), contextUriInfo, contextUser));
+				null, mbMessage.getPrimaryKey(), contextUriInfo, contextUser,
+				_getActions(mbMessage)));
 	}
 
 	private void _updateAnswer(
@@ -357,6 +417,9 @@ public class MessageBoardMessageResourceImpl
 
 	@Reference
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Reference
+	private ScopeChecker _scopeChecker;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -54,6 +54,7 @@ import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -130,7 +131,7 @@ public class BlogPostingResourceImpl
 			document -> _toBlogPosting(
 				_blogsEntryService.getEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, _getListActions(siteId));
 	}
 
 	@Override
@@ -266,6 +267,20 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private Map<String, Map> _getActions(BlogsEntry blogsEntry) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"delete", addAction("DELETE", blogsEntry, "deleteBlogPosting"));
+		actions.put("get", addAction("VIEW", blogsEntry, "getBlogPosting"));
+		actions.put(
+			"replace", addAction("UPDATE", blogsEntry, "putBlogPosting"));
+		actions.put(
+			"update", addAction("UPDATE", blogsEntry, "patchBlogPosting"));
+
+		return actions;
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		BlogPosting blogPosting) {
 
@@ -294,6 +309,28 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private Map<String, Map> _getListActions(Long siteId) {
+		Map<String, Map> actions = new HashMap<>();
+
+		actions.put(
+			"create",
+			addAction(
+				"ADD_ENTRY", "postSiteBlogPosting", "com.liferay.blogs",
+				siteId));
+		actions.put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteBlogPostingSubscribe", "com.liferay.blogs",
+				siteId));
+		actions.put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
+				"com.liferay.blogs", siteId));
+
+		return actions;
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
@@ -306,7 +343,8 @@ public class BlogPostingResourceImpl
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.getPreferredLocale(),
-				blogsEntry.getEntryId(), contextUriInfo, contextUser));
+				blogsEntry.getEntryId(), contextUriInfo, contextUser,
+				_getActions(blogsEntry)));
 	}
 
 	@Reference

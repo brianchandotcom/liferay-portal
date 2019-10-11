@@ -46,4 +46,5 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.depot.service.DepotEntryServiceUtil</code> to access the depot entry remote service.
 	 */
+
 }

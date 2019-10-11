@@ -63,6 +63,16 @@ public class KnowledgeBaseFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (knowledgeBaseFolder.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(knowledgeBaseFolder.getActions()));
+		}
+
 		if (knowledgeBaseFolder.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -256,6 +266,14 @@ public class KnowledgeBaseFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (knowledgeBaseFolder.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put(
+				"actions", String.valueOf(knowledgeBaseFolder.getActions()));
+		}
+
 		if (knowledgeBaseFolder.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -383,7 +401,14 @@ public class KnowledgeBaseFolderSerDes {
 			KnowledgeBaseFolder knowledgeBaseFolder, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setActions(
+						(Map)KnowledgeBaseFolderSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

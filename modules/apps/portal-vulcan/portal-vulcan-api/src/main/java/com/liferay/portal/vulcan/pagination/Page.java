@@ -130,7 +130,7 @@ public class Page<T> {
 		_totalCount = totalCount;
 	}
 
-	private Map<String, Map> _actions;
+	private final Map<String, Map> _actions;
 	private final Collection<T> _items;
 	private final long _page;
 	private final long _pageSize;

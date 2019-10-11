@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Depot Web
+Bundle-SymbolicName: com.liferay.depot.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /depot-web
+-dsannotations-options: inherit

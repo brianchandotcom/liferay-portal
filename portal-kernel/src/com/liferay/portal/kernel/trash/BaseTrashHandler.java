@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.Collections;
@@ -209,18 +208,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		return Collections.emptyList();
-	}
-
 	@Override
 	public String getTrashContainerModelName() {
 		return StringPool.BLANK;
@@ -233,18 +220,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return 0;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		return Collections.emptyList();
-	}
-
 	@Override
 	public TrashedModel getTrashedModel(long classPK) {
 		return null;
@@ -253,20 +228,6 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@Override
 	public int getTrashModelsCount(long classPK) throws PortalException {
 		return 0;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getTrashModelTrashedModels(long, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashModelTrashRenderers(
-			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException {
-
-		return Collections.emptyList();
 	}
 
 	@Override

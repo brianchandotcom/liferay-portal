@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -227,33 +226,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		return _mbCategoryLocalService.getCategoriesCount(
 			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
-	}
-
-	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException {
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
-			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-			start, end);
-
-		for (MBCategory curCategory : categories) {
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					MBCategory.class.getName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				curCategory.getPrimaryKey());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
 	}
 
 	@Override

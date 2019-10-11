@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
 import java.util.List;
@@ -173,17 +172,6 @@ public class TestTrashHandler implements TrashHandler {
 		return 0;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-		long classPK, int start, int end) {
-
-		return null;
-	}
-
 	@Override
 	public String getTrashContainerModelName() {
 		return null;
@@ -192,17 +180,6 @@ public class TestTrashHandler implements TrashHandler {
 	@Override
 	public int getTrashContainerModelsCount(long classPK) {
 		return 0;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-		long classPK, int start, int end) {
-
-		return null;
 	}
 
 	@Override
@@ -218,17 +195,6 @@ public class TestTrashHandler implements TrashHandler {
 	@Override
 	public int getTrashModelsCount(long classPK) {
 		return 0;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public List<TrashRenderer> getTrashModelTrashRenderers(
-		long classPK, int start, int end, OrderByComparator<?> obc) {
-
-		return null;
 	}
 
 	@Override

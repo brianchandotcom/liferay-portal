@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.trash.kernel.model.TrashEntry;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -334,40 +332,6 @@ public interface TrashHandler {
 		throws PortalException;
 
 	/**
-	 * Returns a range of all the trash renderers of model entities (excluding
-	 * container models) that are children of the parent container model
-	 * identified by the primary key.
-	 *
-	 * <p>
-	 * For example, for a folder with subfolders and documents, a range of all
-	 * the trash renderers of documents (excluding those explicitly moved to the
-	 * recycle bin) is returned.
-	 * </p>
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. The <code>start</code> and <code>end</code>
-	 * values are not primary keys but, rather, indexes in the result set. Thus,
-	 * <code>0</code> refers to the first result in the set. Setting both
-	 * <code>start</code> and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param      classPK the primary key of a container model
-	 * @param      start the lower bound of the range of results
-	 * @param      end the upper bound of the range of results (not inclusive)
-	 * @return     the range of trash renderers of model entities (excluding
-	 *             container models) that are children of the parent container
-	 *             model identified by the primary key
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<TrashRenderer> getTrashContainedModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException;
-
-	/**
 	 * Returns the name of the container model.
 	 *
 	 * <p>
@@ -395,37 +359,6 @@ public interface TrashHandler {
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException;
 
-	/**
-	 * Returns a range of all the trash renderers of model entities that are
-	 * children of the parent container model identified by the primary key.
-	 *
-	 * <p>
-	 * For example, for a folder with subfolders and documents, the range of
-	 * renderers representing folders (excluding those explicitly moved to the
-	 * recycle bin) is returned.
-	 * </p>
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end -
-	 * start</code> instances. The <code>start</code> and <code>end</code>
-	 * values are not primary keys but, rather, indexes in the result set. Thus,
-	 * <code>0</code> refers to the first result in the set. Setting both
-	 * <code>start</code> and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
-	 * result set.
-	 * </p>
-	 *
-	 * @param      classPK the primary key of a container model
-	 * @param      start the lower bound of the range of results
-	 * @param      end the upper bound of the range of results (not inclusive)
-	 * @return     the range of matching trash renderers of model entities
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public List<TrashRenderer> getTrashContainerModelTrashRenderers(
-			long classPK, int start, int end)
-		throws PortalException;
-
 	public TrashedModel getTrashedModel(long classPK);
 
 	public default TrashEntry getTrashEntry(long classPK)
@@ -447,37 +380,6 @@ public interface TrashHandler {
 		throws PortalException {
 
 		return Collections.emptyList();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getTrashModelTrashedModels(long, int, int,
-	 *             OrderByComparator)}
-	 */
-	@Deprecated
-	public default List<TrashRenderer> getTrashModelTrashRenderers(
-			long classPK, int start, int end, OrderByComparator<?> obc)
-		throws PortalException {
-
-		List<TrashedModel> trashedModels = getTrashModelTrashedModels(
-			classPK, start, end, obc);
-
-		List<TrashRenderer> trashRenderers = new ArrayList<>();
-
-		for (TrashedModel trashedModel : trashedModels) {
-			ClassedModel classedModel = (ClassedModel)trashedModel;
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					classedModel.getModelClassName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				trashedModel.getTrashEntryClassPK());
-
-			trashRenderers.add(trashRenderer);
-		}
-
-		return trashRenderers;
 	}
 
 	/**

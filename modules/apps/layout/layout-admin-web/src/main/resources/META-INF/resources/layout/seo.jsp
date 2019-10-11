@@ -47,12 +47,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			Map<String, Object> data = new HashMap<>();
 			Map<String, String> targetsIds = new HashMap<>();
 
+			targetsIds.put("canonicalURL", "canonicalURL");
 			targetsIds.put("description", "descriptionSEO");
 			targetsIds.put("title", "title");
 
 			data.put("suffixTitle", StringPool.BLANK);
 			data.put("targetsIds", targetsIds);
-			data.put("url", StringPool.BLANK);
 			%>
 
 			<react:component

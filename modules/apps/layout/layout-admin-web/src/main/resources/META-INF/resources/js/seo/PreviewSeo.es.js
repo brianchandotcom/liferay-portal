@@ -43,17 +43,15 @@ PreviewSeo.propTypes = {
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({
-	portletNamespace,
-	suffixTitle,
-	targetsIds,
-	url
-}) => {
+const PreviewSeoContainer = ({portletNamespace, suffixTitle, targetsIds}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
+	const [url, setUrl] = useState('');
 
 	const handlerInputChange = ({event, type}) => {
-		const value = event.target && event.target.value;
+		const value =
+			(event.target && event.target.value) || event.target.placeholder;
+
 		if (typeof value === undefined) {
 			return;
 		}
@@ -62,6 +60,8 @@ const PreviewSeoContainer = ({
 			setDescription(value);
 		} else if (type === 'title') {
 			setTitle(value);
+		} else if (type === 'canonicalURL') {
+			setUrl(value);
 		}
 	};
 
@@ -107,8 +107,7 @@ PreviewSeoContainer.propTypes = {
 	targetsIds: PropTypes.shape({
 		description: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired
-	}).isRequired,
-	url: PropTypes.string.isRequired
+	}).isRequired
 };
 
 export default PreviewSeoContainer;

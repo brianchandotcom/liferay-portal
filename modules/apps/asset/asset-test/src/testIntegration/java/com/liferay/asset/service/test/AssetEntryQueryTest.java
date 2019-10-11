@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -1020,8 +1019,7 @@ public class AssetEntryQueryTest {
 			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
 
 			ViewCountServiceUtil.incrementViewCount(
-				assetEntry.getCompanyId(),
-				ClassNameLocalServiceUtil.getClassNameId(AssetEntry.class),
+				assetEntry.getCompanyId(), AssetEntry.class,
 				assetEntry.getEntryId(), viewCount);
 		}
 

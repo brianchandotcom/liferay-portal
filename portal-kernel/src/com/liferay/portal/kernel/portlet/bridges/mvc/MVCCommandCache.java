@@ -28,7 +28,6 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -74,20 +73,6 @@ public class MVCCommandCache<T extends MVCCommand> {
 				"(&(mvc.command.name=*)(|(javax.portlet.name=", portletName,
 				")(javax.portlet.name=", portletId, ")))");
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #MVCCommandCache(MVCCommand, String, String, Class, String)}
-	 */
-	@Deprecated
-	public MVCCommandCache(
-		T emptyMVCCommand, String packagePrefix, String portletName,
-		String mvcCommandClassName, String mvcCommandPostFix) {
-
-		this(
-			emptyMVCCommand, packagePrefix, portletName,
-			_getMVCCommandClass(mvcCommandClassName), mvcCommandPostFix);
 	}
 
 	public void close() {
@@ -203,28 +188,6 @@ public class MVCCommandCache<T extends MVCCommand> {
 		return _mvcCommandCache.isEmpty();
 	}
 
-	private static <T extends MVCCommand> Class<T> _getMVCCommandClass(
-		String mvcCommandClassName) {
-
-		Class<T> mvcCommandClass = null;
-
-		for (Class<? extends MVCCommand> curMVCCommandClass :
-				_mvcCommandClasses) {
-
-			if (mvcCommandClassName.equals(curMVCCommandClass.getName())) {
-				mvcCommandClass = (Class<T>)curMVCCommandClass;
-
-				break;
-			}
-		}
-
-		if (mvcCommandClass == null) {
-			throw new IllegalArgumentException();
-		}
-
-		return mvcCommandClass;
-	}
-
 	private ServiceTrackerMap<String, T> _getServiceTrackerMap() {
 		ServiceTrackerMap<String, T> serviceTrackerMap = _serviceTrackerMap;
 
@@ -256,11 +219,6 @@ public class MVCCommandCache<T extends MVCCommand> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MVCCommandCache.class);
-
-	private static final List<Class<? extends MVCCommand>> _mvcCommandClasses =
-		Arrays.asList(
-			MVCActionCommand.class, MVCRenderCommand.class,
-			MVCResourceCommand.class);
 
 	private final T _emptyMVCCommand;
 	private final String _filterString;

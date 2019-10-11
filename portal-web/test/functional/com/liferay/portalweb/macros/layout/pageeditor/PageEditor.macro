@@ -124,6 +124,16 @@ definition {
 			locator1 = "PageEditor#SECTION");
 	}
 
+	macro addVideoFragmentURL {
+		FormFields.editText(
+			fieldName = "url",
+			fieldValue = "${videoLink}");
+
+		Click(locator1 = "//input[@type='text' and contains(@id,'width')]");
+
+		PageEditor.waitforAutoSave():
+	}
+
 	macro addWidget {
 		PageEditor.gotoTab(tabName = "Widgets");
 

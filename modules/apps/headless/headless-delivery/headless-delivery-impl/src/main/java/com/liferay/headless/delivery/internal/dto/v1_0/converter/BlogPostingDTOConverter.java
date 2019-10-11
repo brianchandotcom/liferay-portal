@@ -67,6 +67,7 @@ public class BlogPostingDTOConverter
 
 		return new BlogPosting() {
 			{
+				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()));

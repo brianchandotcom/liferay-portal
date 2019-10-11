@@ -107,6 +107,7 @@ public class StructuredContentDTOConverter
 
 		return new StructuredContent() {
 			{
+				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						JournalArticle.class.getName(),

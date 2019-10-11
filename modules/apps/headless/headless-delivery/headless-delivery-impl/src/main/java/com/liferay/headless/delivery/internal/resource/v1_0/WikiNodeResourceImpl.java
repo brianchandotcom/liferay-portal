@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -36,6 +37,8 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
+
+import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -86,7 +89,7 @@ public class WikiNodeResourceImpl
 			document -> _toWikiNode(
 				_wikiNodeService.getNode(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, (Map)_getActions(siteId));
 	}
 
 	@Override
@@ -129,11 +132,38 @@ public class WikiNodeResourceImpl
 		_wikiNodeService.unsubscribeNode(wikiNodeId);
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		com.liferay.wiki.model.WikiNode wikiNode) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
+		).put(
+			"get", addAction("VIEW", wikiNode, "getWikiNode")
+		).put(
+			"replace", addAction("UPDATE", wikiNode, "putWikiNode")
+		).put(
+			"subscribe",
+			addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
+		).put(
+			"unsubscribe",
+			addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
+		).build();
+	}
+
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)
 		throws Exception {
 
 		return new WikiNode() {
 			{
+				actions = (Map)_getActions(wikiNode);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.getUserById(wikiNode.getUserId()));

@@ -331,4 +331,36 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}
 
+	@description = "This is a use case for LPS-101893."
+	@priority = "4"
+	test ViewAccountPagination {
+		for (var accountNum : list "1,2,3,4,5,6") {
+			ProductMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			Accounts.addCP(accountName = "Accounts Name ${accountNum}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Pagination.changePagination(itemsPerPage = "5");
+
+		for (var accountNum : list "1,2,3,4,5") {
+			LexiconEntry.viewEntryName(rowEntry = "Accounts Name ${accountNum}");
+		}
+
+		Pagination.viewResults(results = "Showing 1 to 5 of 6 entries.");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		LexiconEntry.viewEntryName(rowEntry = "Accounts Name 6");
+
+		Pagination.viewResults(results = "Showing 6 to 6 of 6 entries.");
+	}
+
 }

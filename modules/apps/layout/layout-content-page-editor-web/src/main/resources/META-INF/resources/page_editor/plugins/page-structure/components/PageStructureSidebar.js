@@ -15,12 +15,12 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import App from '../App';
+import AppContext from '../../../core/AppContext';
 
 const {useContext} = React;
 
 export default function PageStructureSidebar({title}) {
-	const dispatch = useContext(App.DispatchContext);
+	const {dispatch} = useContext(AppContext);
 
 	return (
 		<>

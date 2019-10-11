@@ -12,16 +12,15 @@
  * details.
  */
 
-import App from './App';
+import {Component} from '../../core/AppContext';
 
 /**
  * Entry-point for "Look and Feel" (sidebar pane) functionality.
  */
 export default class LookAndFeel {
 	constructor({app}) {
+		this.Component = Component(app);
 		this.lookAndFeelURL = app.config.lookAndFeelURL;
-
-		App.init(app);
 	}
 
 	activate() {

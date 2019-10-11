@@ -99,8 +99,6 @@ export default function Sidebar() {
 
 			const app = {
 				Actions,
-				ConfigContext,
-				DispatchContext,
 				StoreContext,
 				config,
 				dispatch,

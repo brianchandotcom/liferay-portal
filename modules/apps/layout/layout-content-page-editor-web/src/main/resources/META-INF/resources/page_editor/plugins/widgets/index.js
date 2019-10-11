@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import App from './App';
+import {Component} from '../../core/AppContext';
 import WidgetsSidebar from './components/WidgetsSidebar';
 
 /**
@@ -22,12 +22,17 @@ import WidgetsSidebar from './components/WidgetsSidebar';
  */
 export default class Widgets {
 	constructor({app, panel}) {
+		this.Component = Component(app);
 		this.title = panel.label;
-
-		App.init(app);
 	}
 
 	renderSidebar() {
-		return <WidgetsSidebar title={this.title} />;
+		const {Component} = this;
+
+		return (
+			<Component>
+				<WidgetsSidebar title={this.title} />
+			</Component>
+		);
 	}
 }

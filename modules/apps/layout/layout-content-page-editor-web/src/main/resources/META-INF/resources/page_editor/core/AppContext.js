@@ -12,18 +12,20 @@
  * details.
  */
 
-/**
- * Mutable container that holds arbitrary data from the "App" hosting
- * the plug-in.
- *
- * Typically, used to hold things of "global" interest such as React contexts.
- */
-const App = {
-	init(app) {
-		Object.entries(app).forEach(([key, value]) => {
-			App[key] = value;
-		});
-	}
-};
+import React from 'react';
 
-export default App;
+/**
+ * Context for shared data, intended as a mechanism for sharing between
+ * a host application that uses `usePlugins()` and its hosted plugin modules.
+ */
+const AppContext = React.createContext({});
+
+/**
+ * Convenience function that returns a component that provides the passed
+ * `value` as context.
+ */
+export const Component = value => ({children}) => (
+	<AppContext.Provider value={value}>{children}</AppContext.Provider>
+);
+
+export default AppContext;

@@ -21,14 +21,16 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 
-import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.ws.rs.HttpMethod;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Javier Gamarra
@@ -37,8 +39,7 @@ public class PermissionsUtil {
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, GroupedModel groupedModel,
-		String methodName, ScopeChecker scopeChecker,
-		UriInfo uriInfo) {
+		String methodName, ScopeChecker scopeChecker, UriInfo uriInfo) {
 
 		Class<? extends GroupedModel> groupedClass = groupedModel.getClass();
 

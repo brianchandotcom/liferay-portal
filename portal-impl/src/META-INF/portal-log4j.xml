@@ -336,10 +336,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.search.suggest.BaseSpellCheckIndexWriter">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.kernel.servlet.PipingServletResponse">
 		<priority value="ERROR" />
 	</category>

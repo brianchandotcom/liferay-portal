@@ -62,6 +62,19 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
+	public String getLayoutTitle(
+			Layout layout, String portletId, String tilesTitle,
+			ListMergeable<String> titleListMergeable,
+			ListMergeable<String> subtitleListMergeable, Locale locale)
+		throws PortalException {
+
+		return _html.escape(
+			_getLayoutTitle(
+				layout, portletId, tilesTitle, titleListMergeable,
+				subtitleListMergeable, locale));
+	}
+
+	@Override
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -103,15 +116,25 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			Locale locale)
 		throws PortalException {
 
-		String title = _getPageTitle(
+		String layoutTitle = _getLayoutTitle(
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
 
-		if (Validator.isNotNull(title)) {
-			return _html.escape(title + _getSiteName(layout, companyName));
+		String pageTitle = "";
+
+		if (Validator.isNotNull(layoutTitle)) {
+			pageTitle = layoutTitle + " - ";
 		}
 
-		return _html.escape(companyName);
+		return _html.escape(
+			pageTitle + _getSiteAndCompanyName(layout, companyName));
+	}
+
+	@Override
+	public String getSiteAndCompanyName(Layout layout, String companyName)
+		throws PortalException {
+
+		return _html.escape(_getSiteAndCompanyName(layout, companyName));
 	}
 
 	@Override
@@ -163,7 +186,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return layoutSEOEntry.getCanonicalURL(locale);
 	}
 
-	private String _getPageTitle(
+	private String _getLayoutTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, Locale locale)
@@ -190,7 +213,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			_getTitle(group, layout, titleListMergeable, locale);
 	}
 
-	private String _getSiteName(Layout layout, String companyName)
+	private String _getSiteAndCompanyName(Layout layout, String companyName)
 		throws PortalException {
 
 		Group group = layout.getGroup();
@@ -198,12 +221,11 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		if (group.isLayoutPrototype() ||
 			StringUtil.equals(companyName, group.getDescriptiveName())) {
 
-			return " - " + _html.escape(companyName);
+			return companyName;
 		}
 
 		return StringBundler.concat(
-			" - ", _html.escape(group.getDescriptiveName()), " - ",
-			_html.escape(companyName));
+			group.getDescriptiveName(), " - ", companyName);
 	}
 
 	private String _getTitle(

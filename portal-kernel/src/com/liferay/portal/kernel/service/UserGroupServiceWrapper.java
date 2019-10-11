@@ -216,8 +216,9 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.UserGroup> obc) {
 
@@ -257,9 +258,9 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup> search(
-		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
-		int start, int end,
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.UserGroup> obc) {
 
@@ -281,8 +282,8 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String keywords,
-		java.util.LinkedHashMap<String, Object> params) {
+		long companyId, java.lang.String keywords,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 
 		return _userGroupService.searchCount(companyId, keywords, params);
 	}
@@ -304,8 +305,9 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, boolean andOperator) {
+		long companyId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		boolean andOperator) {
 
 		return _userGroupService.searchCount(
 			companyId, name, description, params, andOperator);

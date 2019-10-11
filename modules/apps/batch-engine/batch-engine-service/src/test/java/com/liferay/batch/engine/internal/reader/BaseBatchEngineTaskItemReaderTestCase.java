@@ -101,6 +101,6 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 	protected String createDateString;
 
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 }

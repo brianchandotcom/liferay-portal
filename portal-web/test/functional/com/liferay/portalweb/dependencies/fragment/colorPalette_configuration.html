@@ -1,0 +1,10 @@
+<div class="fragment-configuration">
+	[#if configuration.textColor.cssClass == "white"]
+		<h3 class="text-${configuration.textColor.cssClass}">Example Color White</h3>	
+	[#elseif configuration.textColor.cssClass == "danger"]
+		<h3 class="text-${configuration.textColor.cssClass}">Example Color Red</h3>
+	[#else]
+		<h3 class="text-${configuration.textColor.cssClass}">Example Color</h3>
+	[/#if]
+</div>
+

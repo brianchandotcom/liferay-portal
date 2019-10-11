@@ -52,12 +52,14 @@ public class PermissionsUtil {
 
 		return addAction(
 			actionName, clazz, (Long)groupedModel.getPrimaryKeyObj(),
-			methodName, permissionName, scopeChecker, groupedModel.getGroupId(), uriInfo);
+			methodName, permissionName, scopeChecker, groupedModel.getGroupId(),
+			uriInfo);
 	}
 
 	public static Map<String, String> addAction(
 		String actionName, Class clazz, Long id, String methodName,
-		String permissionName, ScopeChecker scopeChecker, Long siteId, UriInfo uriInfo) {
+		String permissionName, ScopeChecker scopeChecker, Long siteId,
+		UriInfo uriInfo) {
 
 		MultivaluedMap<String, String> queryParameters =
 			uriInfo.getQueryParameters();

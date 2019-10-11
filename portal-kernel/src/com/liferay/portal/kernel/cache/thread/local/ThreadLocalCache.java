@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.cache.thread.local;
 
 import com.liferay.petra.string.StringBundler;
 
-import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,15 +27,6 @@ public class ThreadLocalCache<T> {
 	public ThreadLocalCache(Object id, Lifecycle lifecycle) {
 		_id = id;
 		_lifecycle = lifecycle;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #ThreadLocalCache(Object, Lifecycle)}
-	 */
-	@Deprecated
-	public ThreadLocalCache(Serializable name, Lifecycle lifecycle) {
-		this((Object)name, lifecycle);
 	}
 
 	public T get(String key) {
@@ -54,14 +43,6 @@ public class ThreadLocalCache<T> {
 
 	public Lifecycle getLifecycle() {
 		return _lifecycle;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getId()}
-	 */
-	@Deprecated
-	public Serializable getName() {
-		return _id.toString();
 	}
 
 	public void put(String key, T obj) {

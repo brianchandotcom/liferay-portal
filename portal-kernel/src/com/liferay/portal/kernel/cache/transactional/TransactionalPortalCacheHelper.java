@@ -139,14 +139,6 @@ public class TransactionalPortalCacheHelper {
 		portalCacheMaps.add(new PortalCacheMap());
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #commit(boolean)}
-	 */
-	@Deprecated
-	public static void commit() {
-		commit(false);
-	}
-
 	public static void commit(boolean readOnly) {
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
@@ -192,17 +184,6 @@ public class TransactionalPortalCacheHelper {
 		return !portalCacheMaps.isEmpty();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #put(PortalCache,
-	 *             Serializable, Object, int, boolean)}
-	 */
-	@Deprecated
-	public static <K extends Serializable, V> void put(
-		PortalCache<K, V> portalCache, K key, V value, int ttl) {
-
-		put(portalCache, key, value, ttl, false);
-	}
-
 	public static <K extends Serializable, V> void put(
 		PortalCache<K, V> portalCache, K key, V value, int ttl, boolean mvcc) {
 
@@ -226,17 +207,6 @@ public class TransactionalPortalCacheHelper {
 		uncommittedBuffer.put(
 			key,
 			new ValueEntry(value, ttl, SkipReplicationThreadLocal.isEnabled()));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #removeAll(PortalCache, boolean)}
-	 */
-	@Deprecated
-	public static <K extends Serializable, V> void removeAll(
-		PortalCache<K, V> portalCache) {
-
-		removeAll(portalCache, false);
 	}
 
 	public static <K extends Serializable, V> void removeAll(

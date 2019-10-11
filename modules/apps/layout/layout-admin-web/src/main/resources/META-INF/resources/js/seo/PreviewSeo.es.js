@@ -30,9 +30,9 @@ const PreviewSeo = ({
 		</div>
 		<div className="preview-seo-url text-truncate">{url}</div>
 		<div className="preview-seo-description">
-			{description > MAX_LENGTH_DESCIPTION
+			{description.length < MAX_LENGTH_DESCIPTION
 				? description
-				: `${description.slice(0, MAX_LENGTH_DESCIPTION)} \u2026`}
+				: `${description.slice(0, MAX_LENGTH_DESCIPTION)}\u2026`}
 		</div>
 	</div>
 );

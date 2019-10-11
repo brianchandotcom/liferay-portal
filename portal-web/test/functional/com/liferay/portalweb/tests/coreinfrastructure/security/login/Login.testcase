@@ -342,17 +342,52 @@ definition {
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "SSO",
 			configurationName = "Token Based SSO",
-			configurationScope = "Virtual Instance Scope");
+			configurationScope = "System Scope");
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
 		PortletEntry.save();
 
-		User.logoutPG();
+		AntCommand(
+			locator1 = "build-test-authentication.xml",
+			value1 = "verify-token-based-login -Dportal.url=localhost:8080/web/guest -Duser.token=test@liferay.com");
+
+		FormFields.disableCheckbox(fieldName = "Enabled");
+
+		PortletEntry.update();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "Token Based SSO",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		PortletEntry.save();
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",
-			value1 = "verify-token-based-login");
+			value1 = "verify-token-based-login -Dportal.url=www.able.com:8080/web/guest -Duser.token=test@www.able.com");
 	}
 
 	@priority = "3"

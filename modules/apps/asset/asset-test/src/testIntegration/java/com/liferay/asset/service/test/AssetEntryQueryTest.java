@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCache;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.view.count.ViewCountServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -52,7 +50,6 @@ import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -543,42 +540,6 @@ public class AssetEntryQueryTest {
 		testOrderByRatings(scores, orderedScores, "DESC");
 	}
 
-	@Test
-	public void testOrderByViewCountsAsc() throws Exception {
-		int[] viewCounts = new int[10];
-		int[] orderedViewCounts = new int[10];
-
-		for (int i = 0; i < viewCounts.length; i++) {
-			int randomInt = RandomTestUtil.randomInt();
-
-			viewCounts[i] = randomInt;
-			orderedViewCounts[i] = randomInt;
-		}
-
-		Arrays.sort(orderedViewCounts);
-
-		testOrderByViewCount(viewCounts, orderedViewCounts, "ASC");
-	}
-
-	@Test
-	public void testOrderByViewCountsDesc() throws Exception {
-		int[] viewCounts = new int[10];
-		int[] orderedViewCounts = new int[10];
-
-		for (int i = 0; i < viewCounts.length; i++) {
-			int randomInt = RandomTestUtil.randomInt();
-
-			viewCounts[i] = randomInt;
-			orderedViewCounts[i] = randomInt;
-		}
-
-		Arrays.sort(orderedViewCounts);
-
-		ArrayUtil.reverse(orderedViewCounts);
-
-		testOrderByViewCount(viewCounts, orderedViewCounts, "DESC");
-	}
-
 	protected AssetEntryQuery buildAssetEntryQuery(
 		long groupId, long[] assetCategoryIds, String[] assetTagNames,
 		boolean any, boolean not) {
@@ -987,58 +948,6 @@ public class AssetEntryQueryTest {
 
 			Assert.assertEquals(
 				ratingsStats.getAverageScore(), orderedScores[i], 0);
-		}
-	}
-
-	protected void testOrderByViewCount(
-			int[] viewCounts, int[] orderedViewCounts, String orderByType)
-		throws Exception {
-
-		ThreadLocalCache<Object[]> threadLocalCache =
-			ThreadLocalCacheManager.getThreadLocalCache(
-				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
-
-		threadLocalCache.removeAll();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
-			2012, 1, 1);
-
-		for (int viewCount : viewCounts) {
-			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), displayDateCalendar.getTime(),
-				serviceContext);
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				BlogsEntry.class.getName(), entry.getEntryId());
-
-			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
-
-			ViewCountServiceUtil.incrementViewCount(
-				assetEntry.getCompanyId(), AssetEntry.class,
-				assetEntry.getEntryId(), viewCount);
-		}
-
-		threadLocalCache.removeAll();
-
-		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
-			_group.getGroupId(), null, null, false, false);
-
-		assetEntryQuery.setOrderByCol1("viewCount");
-		assetEntryQuery.setOrderByType1(orderByType);
-
-		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
-			assetEntryQuery);
-
-		for (int i = 0; i < assetEntries.size(); i++) {
-			AssetEntry assetEntry = assetEntries.get(i);
-
-			Assert.assertEquals(
-				assetEntry.getViewCount(), orderedViewCounts[i]);
 		}
 	}
 

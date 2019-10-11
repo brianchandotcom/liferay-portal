@@ -205,7 +205,8 @@ public class XLSBatchEngineTaskItemReaderTest
 
 				DataFormat dataFormat = creationHelper.createDataFormat();
 
-				cellStyle.setDataFormat(dataFormat.getFormat("d/m/yy h:mm"));
+				cellStyle.setDataFormat(
+					dataFormat.getFormat("yyyy-mm-dd hh:mm:ss"));
 
 				cell.setCellStyle(cellStyle);
 

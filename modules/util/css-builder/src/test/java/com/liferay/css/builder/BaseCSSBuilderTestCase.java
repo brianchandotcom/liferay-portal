@@ -149,6 +149,16 @@ public abstract class BaseCSSBuilderTestCase {
 	}
 
 	@Test
+	public void testCSSBuilderWithJni32() throws Exception {
+		_testCSSBuilder(_importDirPath, "jni32");
+	}
+
+	@Test
+	public void testCSSBuilderWithJni32AndPortalCommonJar() throws Exception {
+		_testCSSBuilder(_importJarPath, "jni32");
+	}
+
+	@Test
 	public void testCSSBuilderWithJniAndPortalCommonJar() throws Exception {
 		_testCSSBuilder(_importJarPath, "jni");
 	}

@@ -5,6 +5,20 @@ definition {
 		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
 	}
 
+	macro changeConfigColor {
+		Click(
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+
+		Click(
+			colorPalette = "${colorPalette}",
+			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+	}
+
 	macro changeConfigSelection {
 		Click(
 			fragment_name = "${fragmentName}",

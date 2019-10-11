@@ -68,6 +68,11 @@
 	<td>//select[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_PALETTE_SELECT</td>
+	<td>//button[contains(@class,'${colorPalette}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

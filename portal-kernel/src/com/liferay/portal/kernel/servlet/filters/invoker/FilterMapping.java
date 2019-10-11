@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -35,21 +34,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class FilterMapping {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #FilterMapping(String, Filter, FilterConfig, List<String>,
-	 *             Set<Dispatcher>)}
-	 */
-	@Deprecated
-	public FilterMapping(
-		String filterName, Filter filter, FilterConfig filterConfig,
-		List<String> urlPatterns, List<String> dispatchers) {
-
-		this(
-			filterName, filter, filterConfig, urlPatterns,
-			_toDispatchers(dispatchers));
-	}
 
 	public FilterMapping(
 		String filterName, Filter filter, FilterConfig filterConfig,
@@ -205,16 +189,6 @@ public class FilterMapping {
 		}
 
 		return false;
-	}
-
-	private static Set<Dispatcher> _toDispatchers(List<String> dispatchers) {
-		Set<Dispatcher> dispatcherSet = new HashSet<>();
-
-		for (String dispatcher : dispatchers) {
-			dispatcherSet.add(Dispatcher.valueOf(dispatcher));
-		}
-
-		return dispatcherSet;
 	}
 
 	private FilterMapping(

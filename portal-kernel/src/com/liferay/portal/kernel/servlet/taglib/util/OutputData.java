@@ -30,18 +30,6 @@ import java.util.Set;
  */
 public class OutputData implements Mergeable<OutputData>, Serializable {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #addDataSB(String,
-	 *             String, StringBundler)}
-	 */
-	@Deprecated
-	public void addData(
-		String outputKey, String webKey,
-		com.liferay.portal.kernel.util.StringBundler sb) {
-
-		addDataSB(outputKey, webKey, _toPetraSB(sb));
-	}
-
 	public void addDataSB(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
@@ -59,32 +47,10 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		return _outputKeys.add(outputKey);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #getDataSB(String,
-	 *             String)}
-	 */
-	@Deprecated
-	public com.liferay.portal.kernel.util.StringBundler getData(
-		String outputKey, String webKey) {
-
-		return _toKernelSB(getDataSB(outputKey, webKey));
-	}
-
 	public StringBundler getDataSB(String outputKey, String webKey) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
 		return _dataMap.get(dataKey);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getMergedDataSB(String)}
-	 */
-	@Deprecated
-	public com.liferay.portal.kernel.util.StringBundler getMergedData(
-		String webKey) {
-
-		return _toKernelSB(getMergedDataSB(webKey));
 	}
 
 	public StringBundler getMergedDataSB(String webKey) {
@@ -144,18 +110,6 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		return this;
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link #setDataSB(String,
-	 *             String, StringBundler)}
-	 */
-	@Deprecated
-	public void setData(
-		String outputKey, String webKey,
-		com.liferay.portal.kernel.util.StringBundler sb) {
-
-		setDataSB(outputKey, webKey, _toPetraSB(sb));
-	}
-
 	public void setDataSB(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
@@ -165,36 +119,6 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	@Override
 	public OutputData split() {
 		return new OutputData();
-	}
-
-	private static com.liferay.portal.kernel.util.StringBundler _toKernelSB(
-		StringBundler petraSB) {
-
-		if (petraSB == null) {
-			return null;
-		}
-
-		com.liferay.portal.kernel.util.StringBundler kernelSB =
-			new com.liferay.portal.kernel.util.StringBundler(
-				petraSB.getStrings());
-
-		kernelSB.setIndex(petraSB.index());
-
-		return kernelSB;
-	}
-
-	private static StringBundler _toPetraSB(
-		com.liferay.portal.kernel.util.StringBundler kernelSB) {
-
-		if (kernelSB == null) {
-			return null;
-		}
-
-		StringBundler petraSB = new StringBundler(kernelSB.getStrings());
-
-		petraSB.setIndex(kernelSB.index());
-
-		return petraSB;
 	}
 
 	private static final long serialVersionUID = 1L;

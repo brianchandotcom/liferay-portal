@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ProxyFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
@@ -226,20 +225,6 @@ public class FilterMappingTest {
 				expectedFilterName, expectedFilter,
 				new TestFilterConfig(expectedUrlRegexIgnore, expectedUrlRegex),
 				Arrays.asList(expectedUrlPattern), dispatchers));
-
-		List<String> dispatcherList = new ArrayList<>();
-
-		for (Dispatcher dispatcher : dispatchers) {
-			dispatcherList.add(String.valueOf(dispatcher));
-		}
-
-		_assertFilterMapping(
-			expectedFilterName, expectedFilter, expectedUrlRegexIgnore,
-			expectedUrlRegex, expectedUrlPattern, expectedDispatchers,
-			new FilterMapping(
-				expectedFilterName, expectedFilter,
-				new TestFilterConfig(expectedUrlRegexIgnore, expectedUrlRegex),
-				Arrays.asList(expectedUrlPattern), dispatcherList));
 	}
 
 	private void _assertFilterMapping(

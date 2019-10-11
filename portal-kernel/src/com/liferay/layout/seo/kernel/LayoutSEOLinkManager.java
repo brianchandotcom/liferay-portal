@@ -35,6 +35,15 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public default String getLayoutTitle(
+			Layout layout, String portletId, String tilesTitle,
+			ListMergeable<String> titleListMergeable,
+			ListMergeable<String> subtitleListMergeable, Locale locale)
+		throws PortalException {
+
+		return "";
+	}
+
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -45,6 +54,13 @@ public interface LayoutSEOLinkManager {
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, String companyName,
 			Locale locale)
+		throws PortalException {
+
+		return companyName;
+	}
+
+	public default String getSiteAndCompanyName(
+			Layout layout, String companyName)
 		throws PortalException {
 
 		return companyName;

@@ -43,25 +43,38 @@ class SegmentsExperienceSelectorModal extends Component {
 	 */
 	_handleFormSubmit(event) {
 		event.preventDefault();
+
 		const nameInput = this.refs.experienceModal.refs.experienceName;
 		const segmentIdInput = this.refs.experienceModal.refs
 			.experienceSegmentId;
 		const validName = nameInput.value && nameInput.value.replace(/ /g, '');
+		const validSegmentId =
+			segmentIdInput.value && segmentIdInput.value.replace(/ /g, '');
+
 		if (
 			this.experienceForm &&
 			this.experienceForm.onExperienceSubmit &&
-			validName
+			validName &&
+			validSegmentId
 		) {
 			this.experienceForm.onExperienceSubmit(
 				nameInput.value,
 				segmentIdInput.value
 			);
-		} else if (!validName) {
-			this.setState({
-				_requiredNameError: true
-			});
+		} else {
+			if (!validName) {
+				this.setState({
+					_requiredNameError: true
+				});
 
-			nameInput.focus();
+				nameInput.focus();
+			}
+
+			if (!validSegmentId) {
+				this.setState({
+					_requiredSegmentError: true
+				});
+			}
 		}
 	}
 
@@ -96,6 +109,17 @@ SegmentsExperienceSelectorModal.STATE = {
 	 * @type {boolean}
 	 */
 	_requiredNameError: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
+	 * Controls the visibility of the required segment error
+	 * @default false
+	 * @memberof SegmentsExperienceSelectorModal
+	 * @review
+	 * @type {boolean}
+	 */
+	_requiredSegmentError: Config.bool()
 		.internal()
 		.value(false),
 

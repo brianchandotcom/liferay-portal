@@ -3,6 +3,7 @@
 {template .render}
 	{@param? _handleFormSubmit: any}
 	{@param? _requiredNameError: bool | null}
+	{@param? _requiredSegmentError: bool | null}
 	{@param? hasSegmentsEntryPermission: bool}
 	{@param? portletPrefix: string }
 	{@param? _handleNewSegmentClick: any }
@@ -79,6 +80,7 @@
 							required
 							type="text"
 						/>
+
 						{if $_requiredNameError }
 							<div class="form-feedback-group">
 								<div class="form-feedback-item">
@@ -86,7 +88,10 @@
 										<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
 											<use href="{$spritemap ?: ''}#exclamation-full" />
 										</svg>
+
+										{sp}
 									</span>
+
 									{msg desc=""}
 										an-experience-name-is-required
 									{/msg}
@@ -95,7 +100,7 @@
 						{/if}
 					</div>
 
-					<div class="form-group my-2">
+					<div class="form-group {$_requiredSegmentError ? 'has-error ' : ''}my-2">
 						<label for="{$portletPrefix}{$experienceForm.segmentSelector.inputId}">
 							{$experienceForm.segmentSelector.label}
 							<svg class="lexicon-icon lexicon-icon-asterisk ml-1 reference-mark" focusable="false" role="presentation">
@@ -132,13 +137,14 @@
 										</option>
 									{/foreach}
 								{else}
-									<option>
+									<option value="">
 										{msg desc=""}
 											no-segments
 										{/msg}
 									</option>
 								{/if}
 							</select>
+
 							{if $hasSegmentsEntryPermission == true}
 								<button type="button" class="btn btn-secondary flex-shrink-0 ml-2" data-onclick="{$_handleNewSegmentClick}">
 									{msg desc=""}
@@ -147,6 +153,24 @@
 								</button>
 							{/if}
 						</div>
+
+						{if $_requiredSegmentError }
+							<div class="form-feedback-group">
+								<div class="form-feedback-item">
+									<span class="form-feedback-indicator">
+										<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+											<use href="{$spritemap ?: ''}#exclamation-full" />
+										</svg>
+
+										{sp}
+									</span>
+
+									{msg desc=""}
+										an-audience-is-required
+									{/msg}
+								</div>
+							</div>
+						{/if}
 					</div>
 				</form>
 			{/param}

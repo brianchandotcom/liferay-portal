@@ -14,7 +14,9 @@
 
 package com.liferay.portal.security.pwd;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,19 +45,6 @@ public class CompositePasswordEncryptor
 	}
 
 	@Override
-	public String encrypt(String plainTextPassword, String encryptedPassword)
-		throws PwdEncryptorException {
-
-		if (Validator.isNull(plainTextPassword)) {
-			throw new PwdEncryptorException("Unable to encrypt blank password");
-		}
-
-		return _defaultAlgorithmPasswordEncryptor.encrypt(
-			getDefaultPasswordAlgorithmType(), plainTextPassword,
-			encryptedPassword);
-	}
-
-	@Override
 	public String encrypt(
 			String algorithm, String plainTextPassword,
 			String encryptedPassword)
@@ -64,10 +54,81 @@ public class CompositePasswordEncryptor
 			throw new PwdEncryptorException("Unable to encrypt blank password");
 		}
 
+		String legacyAlgorithm =
+			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY;
+
+		if (_log.isDebugEnabled() && Validator.isNotNull(legacyAlgorithm)) {
+			String message =
+				"Using legacy detection scheme for algorithm " +
+					legacyAlgorithm + " with current password ";
+
+			if (Validator.isNull(encryptedPassword)) {
+				message += "empty";
+			}
+			else {
+				message += "provided";
+			}
+
+			_log.debug(message);
+		}
+
+		boolean prependAlgorithm = true;
+
+		if (Validator.isNotNull(encryptedPassword) &&
+			(encryptedPassword.charAt(0) != CharPool.OPEN_CURLY_BRACE)) {
+
+			algorithm = legacyAlgorithm;
+
+			prependAlgorithm = false;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Using legacy algorithm " + algorithm);
+			}
+		}
+		else if (Validator.isNotNull(encryptedPassword) &&
+				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {
+
+			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
+			if (index > 0) {
+				algorithm = encryptedPassword.substring(1, index);
+
+				encryptedPassword = encryptedPassword.substring(index + 1);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgraded password to use algorithm " + algorithm);
+			}
+		}
+
 		PasswordEncryptor passwordEncryptor = _select(algorithm);
 
-		return passwordEncryptor.encrypt(
+		String newEncryptedPassword = passwordEncryptor.encrypt(
 			algorithm, plainTextPassword, encryptedPassword);
+
+		if (!prependAlgorithm) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Generated password without algorithm prefix using " +
+						algorithm);
+			}
+
+			return newEncryptedPassword;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Generated password with algorithm prefix using " + algorithm);
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append(getAlgorithmName(algorithm));
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+		sb.append(newEncryptedPassword);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -107,6 +168,16 @@ public class CompositePasswordEncryptor
 					supportedAlgorithmType, passwordEncryptor);
 			}
 		}
+	}
+
+	protected String getAlgorithmName(String algorithm) {
+		int index = algorithm.indexOf(CharPool.SLASH);
+
+		if (index > 0) {
+			return algorithm.substring(0, index);
+		}
+
+		return algorithm;
 	}
 
 	private PasswordEncryptor _select(String algorithm) {

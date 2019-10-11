@@ -17,7 +17,6 @@ package com.liferay.portal.service;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.PermissionedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -66,28 +65,6 @@ public class PersistedModelLocalServiceRegistryImpl
 	@Override
 	public List<PersistedModelLocalService> getPersistedModelLocalServices() {
 		return ListUtil.fromMapValues(_persistedModelLocalServices);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public boolean isPermissionedModelLocalService(String className) {
-		PersistedModelLocalService persistedModelLocalService =
-			getPersistedModelLocalService(className);
-
-		if (persistedModelLocalService == null) {
-			return false;
-		}
-
-		if (persistedModelLocalService instanceof
-				PermissionedModelLocalService) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override

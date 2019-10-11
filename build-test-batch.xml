@@ -3319,7 +3319,7 @@ log.sanitizer.enabled=false</echo>
 					<try>
 						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings,check-upgrade-client-upgrade-core-only,check-upgrade-client-zip-content" param="upgrade.test.target">
 							<sequential>
-								<ant antfile="build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
+								<ant antfile="modules/util/portal-tools-db-upgrade-client/src/testFunctional/antbuild-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
 							</sequential>
 						</for>
 					</try>

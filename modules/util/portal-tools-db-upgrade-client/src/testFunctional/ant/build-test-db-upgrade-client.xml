@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <project basedir="." name="portal-test-db-upgrade-client" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="build-test.xml" />
+	<import file="${liferay.home}/build-test.xml" />
 
 	<macrodef name="clean-database-upgrade-client">
 		<sequential>

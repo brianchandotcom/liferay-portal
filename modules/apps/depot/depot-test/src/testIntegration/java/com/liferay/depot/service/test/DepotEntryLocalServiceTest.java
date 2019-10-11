@@ -19,6 +19,7 @@ import com.liferay.depot.constants.DepotEntryConstants;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -78,6 +79,25 @@ public class DepotEntryLocalServiceTest {
 	@Test(expected = DepotEntryNameException.MustNotBeNull.class)
 	public void testAddDepotEntryFailsWithAnEmptyName() throws Exception {
 		_addDepotEntry(null, null);
+	}
+
+	@Test(expected = NoSuchGroupException.class)
+	public void testDeleteDepotEntryDeletesTheGroupToo() throws Exception {
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		descriptionMap.put(LocaleUtil.getDefault(), "description");
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(LocaleUtil.getDefault(), "name");
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			nameMap, descriptionMap,
+			ServiceContextTestUtil.getServiceContext());
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+
+		_groupLocalService.getGroup(depotEntry.getGroupId());
 	}
 
 	@Test(expected = DepotEntryNameException.MustNotBeNull.class)

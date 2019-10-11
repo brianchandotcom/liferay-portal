@@ -324,6 +324,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 
+		<local name="gradle.execute.silent" />
+
+		<property name="gradle.execute.silent" value="false" />
+
 		<property name="com.liferay.portal.tools.service.builder.ignore.local" value="true" />
 
 		<gradle-execute dir="../modules" task="buildService">

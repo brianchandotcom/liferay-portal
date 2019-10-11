@@ -630,6 +630,54 @@ public class StructuredContentResourceImpl
 		}
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		JournalArticle journalArticle) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			addAction(
+				"DELETE", journalArticle.getResourcePrimKey(),
+				"deleteStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"get",
+			addAction(
+				"VIEW", journalArticle.getResourcePrimKey(),
+				"getStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"get-template",
+			addAction(
+				"VIEW", journalArticle.getResourcePrimKey(),
+				"getStructuredContentRenderedContentTemplate",
+				JournalArticle.class.getName(), journalArticle.getGroupId())
+		).put(
+			"replace",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"putStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+				"putStructuredContentSubscribe", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+				"putStructuredContentUnsubscribe",
+				JournalArticle.class.getName(), journalArticle.getGroupId())
+		).put(
+			"update",
+			addAction(
+				"UPDATE", journalArticle.getResourcePrimKey(),
+				"patchStructuredContent", JournalArticle.class.getName(),
+				journalArticle.getGroupId())
+		).build();
+	}
+
 	private DDMFormField _getDDMFormField(
 		DDMStructure ddmStructure, String name) {
 
@@ -664,6 +712,20 @@ public class StructuredContentResourceImpl
 			JournalArticle.class.getName(), contextCompany.getCompanyId(),
 			structuredContent.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Map<String, String>> _getListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ARTICLE", "postSiteStructuredContent",
+				"com.liferay.journal", siteId)
+		).put(
+			"get",
+			addAction(
+				"VIEW", "getSiteStructuredContentsPage", "com.liferay.journal",
+				siteId)
+		).build();
 	}
 
 	private List<DDMFormField> _getRootDDMFormFields(
@@ -726,7 +788,7 @@ public class StructuredContentResourceImpl
 					document.get(
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)),
-			sorts);
+			sorts, (Map)_getListActions(siteId));
 	}
 
 	private ThemeDisplay _getThemeDisplay(JournalArticle journalArticle)
@@ -869,7 +931,8 @@ public class StructuredContentResourceImpl
 				GetterUtil.getBoolean(
 					contextHttpServletRequest.getHeader(
 						"X-Accept-All-Languages")),
-				_dtoConverterRegistry, journalArticle.getResourcePrimKey(),
+				(Map)_getActions(journalArticle), _dtoConverterRegistry,
+				journalArticle.getResourcePrimKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

@@ -63,6 +63,7 @@ public class MessageBoardMessageDTOConverter
 
 		return new MessageBoardMessage() {
 			{
+				actions = dtoConverterContext.getActions();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(
 						MBMessage.class.getName(), mbMessage.getMessageId()));

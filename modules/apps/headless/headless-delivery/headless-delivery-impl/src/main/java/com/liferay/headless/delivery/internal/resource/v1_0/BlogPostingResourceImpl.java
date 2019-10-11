@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -131,7 +132,7 @@ public class BlogPostingResourceImpl
 			document -> _toBlogPosting(
 				_blogsEntryService.getEntry(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))),
-			sorts);
+			sorts, (Map)_getListActions(siteId));
 	}
 
 	@Override
@@ -267,6 +268,20 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private Map<String, Map<String, String>> _getActions(
+		BlogsEntry blogsEntry) {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete", addAction("DELETE", blogsEntry, "deleteBlogPosting")
+		).put(
+			"get", addAction("VIEW", blogsEntry, "getBlogPosting")
+		).put(
+			"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
+		).put(
+			"update", addAction("UPDATE", blogsEntry, "patchBlogPosting")
+		).build();
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		BlogPosting blogPosting) {
 
@@ -295,6 +310,24 @@ public class BlogPostingResourceImpl
 		}
 	}
 
+	private Map<String, Map<String, String>> _getListActions(Long siteId) {
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"create",
+			addAction(
+				"ADD_ENTRY", "postSiteBlogPosting", "com.liferay.blogs", siteId)
+		).put(
+			"subscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteBlogPostingSubscribe", "com.liferay.blogs",
+				siteId)
+		).put(
+			"unsubscribe",
+			addAction(
+				"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
+				"com.liferay.blogs", siteId)
+		).build();
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			BlogsEntry.class.getName(), _ratingsEntryLocalService,
@@ -306,7 +339,8 @@ public class BlogPostingResourceImpl
 	private BlogPosting _toBlogPosting(BlogsEntry blogsEntry) throws Exception {
 		return _blogPostingDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				_dtoConverterRegistry, blogsEntry.getEntryId(),
+				false, (Map)_getActions(blogsEntry), _dtoConverterRegistry,
+				blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-expect" xmlns:antelope="antlib:ise.antelope.tasks">
+	<macrodef name="run-expect">
+		<attribute name="db.upgrade.client.home" />
+		<attribute name="file.suffix.bat" />
+		<attribute name="expect.file" />
+
+		<sequential>
+			<copy
+				file="../dependencies/@{expect.file}"
+				overwrite="true"
+				tofile="temp.expect"
+			/>
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[db.upgrade.client.home\]"
+				replace="@{db.upgrade.client.home}"
+			/>
+
+			<replaceregexp
+				file="temp.expect"
+				flags="gi"
+				match="\[file.suffix.bat\]"
+				replace="@{file.suffix.bat}"
+			/>
+
+			<chmod
+				file="temp.expect"
+				perm="+x"
+			/>
+
+			<exec executable="./temp.expect" failonerror="true" logError="true" />
+		</sequential>
+	</macrodef>
+</project>

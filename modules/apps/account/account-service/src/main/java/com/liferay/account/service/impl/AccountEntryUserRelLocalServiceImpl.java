@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -57,7 +58,10 @@ public class AccountEntryUserRelLocalServiceImpl
 			throw new DuplicateAccountEntryUserRelException();
 		}
 
-		accountEntryLocalService.getAccountEntry(accountEntryId);
+		if (accountEntryId != AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID) {
+			accountEntryLocalService.getAccountEntry(accountEntryId);
+		}
+
 		userLocalService.getUser(accountUserId);
 
 		accountEntryUserRel = createAccountEntryUserRel(

@@ -19,6 +19,7 @@ import static graphql.schema.GraphQLFieldDefinition.newFieldDefinition;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
@@ -191,6 +192,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -767,6 +769,11 @@ public class GraphQLServletExtender {
 				field.setAccessible(true);
 
 				field.set(instance, httpServletResponseOptional.orElse(null));
+			}
+			else if (fieldClass.isAssignableFrom(ScopeChecker.class)) {
+				field.setAccessible(true);
+
+				field.set(instance, _scopeChecker);
 			}
 			else if (fieldClass.isAssignableFrom(UriInfo.class)) {
 				field.setAccessible(true);
@@ -1403,6 +1410,9 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private ScopeChecker _scopeChecker;
 
 	private volatile Servlet _servlet;
 	private ServiceRegistration<ServletContextHelper>

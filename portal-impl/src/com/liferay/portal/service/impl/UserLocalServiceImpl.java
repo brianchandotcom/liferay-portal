@@ -2309,18 +2309,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all the users who do not have any contacts.
-	 *
-	 * @return     the users who do not have any contacts
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<User> getNoContacts() {
-		return userFinder.findByNoContacts();
-	}
-
-	/**
 	 * Returns all the users who do not belong to any groups, excluding the
 	 * default user.
 	 *
@@ -2960,52 +2948,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long elapsedTime = currentTime - passwordModifiedTime;
 
 			if (elapsedTime > (passwordPolicy.getMaxAge() * 1000)) {
-				return true;
-			}
-
-			return false;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns <code>true</code> if the password policy is configured to warn
-	 * the user that his password is expiring and the remaining time until
-	 * expiration is equal or less than the configured warning time.
-	 *
-	 * @param      user the user
-	 * @return     <code>true</code> if the user's password is expiring soon;
-	 *             <code>false</code> otherwise
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public boolean isPasswordExpiringSoon(User user) throws PortalException {
-		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-		if ((passwordPolicy != null) && passwordPolicy.isExpireable() &&
-			(passwordPolicy.getWarningTime() > 0)) {
-
-			Date now = new Date();
-
-			if (user.getPasswordModifiedDate() == null) {
-				user.setPasswordModifiedDate(now);
-
-				userLocalService.updateUser(user);
-			}
-
-			Date passwordModifiedDate = user.getPasswordModifiedDate();
-
-			long timeModified = passwordModifiedDate.getTime();
-
-			long passwordExpiresOn =
-				(passwordPolicy.getMaxAge() * 1000) + timeModified;
-
-			long timeStartWarning =
-				passwordExpiresOn - (passwordPolicy.getWarningTime() * 1000);
-
-			if (now.getTime() > timeStartWarning) {
 				return true;
 			}
 

@@ -1968,20 +1968,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns all non-system groups having <code>null</code> or empty friendly
-	 * URLs.
-	 *
-	 * @return     the non-system groups having <code>null</code> or empty
-	 *             friendly URLs
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<Group> getNullFriendlyURLGroups() {
-		return groupFinder.findByNullFriendlyURL();
-	}
-
-	/**
 	 * Returns the specified organization group.
 	 *
 	 * @param  companyId the primary key of the company

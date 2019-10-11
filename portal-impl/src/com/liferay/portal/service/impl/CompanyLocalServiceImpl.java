@@ -62,8 +62,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -1214,18 +1212,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	}
 
 	protected void addAssetEntriesFacet(SearchContext searchContext) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void addScopeFacet(SearchContext searchContext) {
-		Facet scopeFacet = new ScopeFacet(searchContext);
-
-		scopeFacet.setStatic(true);
-
-		searchContext.addFacet(scopeFacet);
 	}
 
 	protected Company checkLogo(long companyId) throws PortalException {

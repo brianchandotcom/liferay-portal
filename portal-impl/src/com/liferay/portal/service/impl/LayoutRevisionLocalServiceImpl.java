@@ -268,18 +268,6 @@ public class LayoutRevisionLocalServiceImpl
 			new LayoutRevisionCreateDateComparator(false));
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public LayoutRevision fetchLayoutRevision(
-		long layoutSetBranchId, boolean head, long plid) {
-
-		return layoutRevisionPersistence.fetchByL_H_P_Collection_First(
-			layoutSetBranchId, head, plid, null);
-	}
-
 	@Override
 	public LayoutRevision fetchLayoutRevision(
 		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
@@ -312,19 +300,6 @@ public class LayoutRevisionLocalServiceImpl
 
 		return layoutRevisionPersistence.countByL_P_P(
 			layoutSetBranchId, parentLayoutRevision, plid);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public LayoutRevision getLayoutRevision(
-			long layoutSetBranchId, long plid, boolean head)
-		throws PortalException {
-
-		return layoutRevisionPersistence.findByL_H_P_Collection_First(
-			layoutSetBranchId, head, plid, null);
 	}
 
 	@Override

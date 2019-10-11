@@ -58,8 +58,6 @@ import java.io.OutputStream;
 
 import java.lang.reflect.Field;
 
-import java.security.PrivilegedExceptionAction;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -237,44 +235,6 @@ public class ServiceComponentLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #initServiceComponent(ServiceComponentConfiguration,
-	 *             ClassLoader, String, long, long)}
-	 */
-	@Deprecated
-	@Override
-	public ServiceComponent initServiceComponent(
-			ServiceComponentConfiguration serviceComponentConfiguration,
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			long buildDate, boolean buildAutoUpgrade)
-		throws PortalException {
-
-		return initServiceComponent(
-			serviceComponentConfiguration, classLoader, buildNamespace,
-			buildNumber, buildDate);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #upgradeDB(ClassLoader, String, long, ServiceComponent,
-	 *             String, String, String)}
-	 */
-	@Deprecated
-	@Override
-	public void upgradeDB(
-			final ClassLoader classLoader, final String buildNamespace,
-			final long buildNumber, final boolean buildAutoUpgrade,
-			final ServiceComponent previousServiceComponent,
-			final String tablesSQL, final String sequencesSQL,
-			final String indexesSQL)
-		throws Exception {
-
-		upgradeDB(
-			classLoader, buildNamespace, buildNumber, previousServiceComponent,
-			tablesSQL, sequencesSQL, indexesSQL);
-	}
-
 	@Override
 	public void upgradeDB(
 			final ClassLoader classLoader, final String buildNamespace,
@@ -338,79 +298,6 @@ public class ServiceComponentLocalServiceImpl
 				_log.error(e, e);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public class DoUpgradeDBPrivilegedExceptionAction
-		implements PrivilegedExceptionAction<Void> {
-
-		public DoUpgradeDBPrivilegedExceptionAction(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			ServiceComponent previousServiceComponent, String tablesSQL,
-			String sequencesSQL, String indexesSQL) {
-
-			_classLoader = classLoader;
-			_buildNamespace = buildNamespace;
-			_buildNumber = buildNumber;
-			_previousServiceComponent = previousServiceComponent;
-			_tablesSQL = tablesSQL;
-			_sequencesSQL = sequencesSQL;
-			_indexesSQL = indexesSQL;
-		}
-
-		public ClassLoader getClassLoader() {
-			return _classLoader;
-		}
-
-		@Override
-		public Void run() throws Exception {
-			_doUpgradeDB(
-				_classLoader, _buildNamespace, _buildNumber,
-				_previousServiceComponent, _tablesSQL, _sequencesSQL,
-				_indexesSQL);
-
-			return null;
-		}
-
-		private final String _buildNamespace;
-		private final long _buildNumber;
-		private final ClassLoader _classLoader;
-		private final String _indexesSQL;
-		private final ServiceComponent _previousServiceComponent;
-		private final String _sequencesSQL;
-		private final String _tablesSQL;
-
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public void doUpgradeDB(
-				DoUpgradeDBPrivilegedExceptionAction
-					doUpgradeDBPrivilegedExceptionAction)
-			throws Exception;
-
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void doUpgradeDB(
-			ClassLoader classLoader, String buildNamespace, long buildNumber,
-			boolean buildAutoUpgrade, ServiceComponent previousServiceComponent,
-			String tablesSQL, String sequencesSQL, String indexesSQL)
-		throws Exception {
-
-		_doUpgradeDB(
-			classLoader, buildNamespace, buildNumber, previousServiceComponent,
-			tablesSQL, sequencesSQL, indexesSQL);
 	}
 
 	protected List<String> getModelNames(ClassLoader classLoader)
@@ -717,7 +604,7 @@ public class ServiceComponentLocalServiceImpl
 			_upgradeStep = upgradeStep;
 		}
 
-		private int _buildNumber;
+		private final int _buildNumber;
 		private final String _servletContextName;
 		private final UpgradeStep _upgradeStep;
 

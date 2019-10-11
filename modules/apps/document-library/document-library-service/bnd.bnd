@@ -2,6 +2,6 @@ Bundle-Activator: com.liferay.document.library.internal.activator.DocumentLibrar
 Bundle-Name: Liferay Document Library Service
 Bundle-SymbolicName: com.liferay.document.library.service
 Bundle-Version: 5.0.0
-Liferay-Require-SchemaVersion: 1.1.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.net.URL;
 
@@ -51,7 +52,11 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 
 		StreamUtil.transfer(
 			entryURL.openStream(), httpServletResponse.getOutputStream(),
-			false);
+				false);
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.println();
 
 		String toolbarSet = (String)httpServletRequest.getAttribute(
 			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
@@ -63,6 +68,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			StreamUtil.transfer(
 				entryURL.openStream(), httpServletResponse.getOutputStream(),
 				false);
+
+			printWriter.println();
 		}
 	}
 

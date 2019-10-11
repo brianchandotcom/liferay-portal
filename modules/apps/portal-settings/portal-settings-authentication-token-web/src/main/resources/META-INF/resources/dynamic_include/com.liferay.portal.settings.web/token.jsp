@@ -26,7 +26,6 @@ boolean importFromLDAP = tokenConfiguration.importFromLDAP();
 String logoutRedirectURL = tokenConfiguration.logoutRedirectURL();
 String tokenLocation = tokenConfiguration.tokenLocation();
 String userTokenName = tokenConfiguration.userTokenName();
-
 %>
 
 <aui:fieldset>

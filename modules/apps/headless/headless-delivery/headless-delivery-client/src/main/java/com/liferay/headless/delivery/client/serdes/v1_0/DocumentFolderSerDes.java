@@ -63,6 +63,16 @@ public class DocumentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (documentFolder.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(documentFolder.getActions()));
+		}
+
 		if (documentFolder.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -239,6 +249,13 @@ public class DocumentFolderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (documentFolder.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(documentFolder.getActions()));
+		}
+
 		if (documentFolder.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -347,7 +364,14 @@ public class DocumentFolderSerDes {
 			DocumentFolder documentFolder, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "creator")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					documentFolder.setActions(
+						(Map)DocumentFolderSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					documentFolder.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));

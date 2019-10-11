@@ -16,7 +16,9 @@ package com.liferay.headless.delivery.dto.v1_0.converter;
 
 import com.liferay.portal.kernel.model.User;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.UriInfo;
@@ -26,6 +28,10 @@ import javax.ws.rs.core.UriInfo;
  * @author Víctor Galán
  */
 public interface DTOConverterContext {
+
+	public default Map<String, Map> getActions() {
+		return new HashMap<>();
+	}
 
 	public Locale getLocale();
 

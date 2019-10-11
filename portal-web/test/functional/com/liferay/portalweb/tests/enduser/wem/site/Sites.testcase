@@ -145,6 +145,49 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test DeleteSiteFriendlyURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Site.openSitesAdmin();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Public Page");
+
+		JSONLayout.addPrivateLayout(
+			groupName = "Site Name",
+			layoutName = "Private Page");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
+
+		var siteID = JSONGroupAPI._getGroupIdByName(groupName = "Site Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#FRIENDLY_URL_SITE_SETTINGS",
+			value1 = "/group-${siteID}");
+
+		Navigator.openSiteURL(siteName = "site-name");
+
+		Page.viewNoPG(pageName = "Public Page");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+
+		Navigator.openPrivateSiteURL(siteName = "site-name");
+
+		Page.viewNoPG(pageName = "Private Page");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+	}
+
 	@priority = "5"
 	test EditSite {
 		JSONGroup.addGroup(groupName = "Site Name");

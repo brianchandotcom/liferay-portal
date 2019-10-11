@@ -292,23 +292,6 @@ public class CSSBuilder implements AutoCloseable {
 
 		if ((sassCompilerClassName == null) ||
 			sassCompilerClassName.isEmpty() ||
-			sassCompilerClassName.equals("jni")) {
-
-			try {
-				_sassCompiler = new JSassCompiler(precision);
-
-				System.out.println("Using native Sass compiler");
-			}
-			catch (Throwable t) {
-				System.out.println(
-					"Unable to load native compiler, falling back to Ruby");
-
-				_sassCompiler = new RubySassCompiler(precision);
-			}
-		}
-
-		if ((sassCompilerClassName == null) ||
-			sassCompilerClassName.isEmpty() ||
 			sassCompilerClassName.equals("jni32")) {
 
 			try {

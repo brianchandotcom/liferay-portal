@@ -101,7 +101,13 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			String moduleName = ddmFormFieldType.getModuleName();
 
 			if (Validator.isNotNull(moduleName)) {
-				dependencies.add(_npmResolver.resolveModuleName(moduleName));
+				if (ddmFormFieldType.isCustomDDMFormFieldType()) {
+					dependencies.add(moduleName);
+				}
+				else {
+					dependencies.add(
+						_npmResolver.resolveModuleName(moduleName));
+				}
 			}
 		}
 

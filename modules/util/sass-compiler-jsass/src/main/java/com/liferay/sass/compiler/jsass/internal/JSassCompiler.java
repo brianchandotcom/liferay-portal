@@ -90,9 +90,9 @@ public class JSassCompiler implements SassCompiler {
 			includeDirNames.add(inputFile.getParentFile());
 
 			options.setIncludePaths(includeDirNames);
+			options.setOutputStyle(OutputStyle.NESTED);
 			options.setPrecision(_precision);
 			options.setSourceComments(false);
-			options.setOutputStyle(OutputStyle.NESTED);
 
 			if (generateSourceMap) {
 				if ((sourceMapFileName == null) ||

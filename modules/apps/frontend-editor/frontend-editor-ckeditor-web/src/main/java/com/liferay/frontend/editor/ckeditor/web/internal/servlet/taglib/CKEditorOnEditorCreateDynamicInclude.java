@@ -50,12 +50,17 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 			entryURL.openStream(), httpServletResponse.getOutputStream(),
 			false);
 
+		httpServletResponse.getWriter().println();
+
 		entryURL = bundle.getEntry(
 			"/META-INF/resources/ckeditor/extension/dialog_definition.js");
+
 
 		StreamUtil.transfer(
 			entryURL.openStream(), httpServletResponse.getOutputStream(),
 			false);
+
+		httpServletResponse.getWriter().println();
 	}
 
 	@Override

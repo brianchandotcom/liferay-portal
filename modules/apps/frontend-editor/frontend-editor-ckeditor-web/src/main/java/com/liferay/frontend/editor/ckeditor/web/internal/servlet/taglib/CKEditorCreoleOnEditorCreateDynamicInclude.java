@@ -53,6 +53,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			entryURL.openStream(), httpServletResponse.getOutputStream(),
 			false);
 
+		httpServletResponse.getWriter().println();
+
 		String toolbarSet = (String)httpServletRequest.getAttribute(
 			CKEditorConstants.ATTRIBUTE_NAMESPACE + ":toolbarSet");
 
@@ -63,6 +65,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			StreamUtil.transfer(
 				entryURL.openStream(), httpServletResponse.getOutputStream(),
 				false);
+
+			httpServletResponse.getWriter().println();
 		}
 	}
 

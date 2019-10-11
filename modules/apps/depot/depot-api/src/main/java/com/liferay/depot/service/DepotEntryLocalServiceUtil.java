@@ -50,6 +50,16 @@ public class DepotEntryLocalServiceUtil {
 		return getService().addDepotEntry(depotEntry);
 	}
 
+	public static com.liferay.depot.model.DepotEntry addDepotEntry(
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDepotEntry(
+			nameMap, descriptionMap, serviceContext);
+	}
+
 	/**
 	 * Creates a new depot entry with the primary key. Does not add the depot entry to the database.
 	 *
@@ -338,6 +348,16 @@ public class DepotEntryLocalServiceUtil {
 		com.liferay.depot.model.DepotEntry depotEntry) {
 
 		return getService().updateDepotEntry(depotEntry);
+	}
+
+	public static com.liferay.depot.model.DepotEntry updateDepotEntry(
+			long depotEntryId, java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDepotEntry(
+			depotEntryId, nameMap, descriptionMap, serviceContext);
 	}
 
 	public static DepotEntryLocalService getService() {

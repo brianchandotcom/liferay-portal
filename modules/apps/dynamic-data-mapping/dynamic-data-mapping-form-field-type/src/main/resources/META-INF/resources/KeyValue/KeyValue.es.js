@@ -43,7 +43,7 @@ class KeyValue extends Component {
 	}
 
 	_handleKeywordInputBlurred(event) {
-		this.emit('fieldBlurred', {
+		this.emit('fieldKeywordBlurred', {
 			fieldInstance: this,
 			originalEvent: event,
 			value: event.target.value
@@ -96,11 +96,14 @@ class KeyValue extends Component {
 				value
 			},
 			() => {
-				this.emit('fieldKeywordEdited', {
-					fieldInstance: this,
-					originalEvent,
-					value: keyword
-				});
+				if (generateKeyword) {
+					this.emit('fieldKeywordEdited', {
+						fieldInstance: this,
+						originalEvent,
+						value: keyword
+					});
+				}
+
 				this.emit('fieldEdited', {
 					fieldInstance: this,
 					originalEvent,

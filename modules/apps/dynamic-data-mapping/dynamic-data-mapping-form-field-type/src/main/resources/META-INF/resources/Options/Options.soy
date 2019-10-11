@@ -6,7 +6,7 @@
 	{@param? _handleOptionDeleted: any}
 	{@param? _handleOptionFocused: any}
 	{@param? _handleOptionLabelEdited: any}
-	{@param? _handleOptionValueEdited: any}
+	{@param? _handleOptionValueBlurred: any}
 	{@param? defaultLanguageId: string}
 	{@param? displayErrors: bool}
 	{@param? editingLanguageId: string}
@@ -48,7 +48,7 @@
 									{param events: [
 										'fieldEdited': $_handleOptionLabelEdited,
 										'fieldFocused' : $_handleOptionFocused,
-										'fieldKeywordEdited': $_handleOptionValueEdited
+										'fieldKeywordBlurred': $_handleOptionValueBlurred
 									] /}
 									{param generateKeyword: $option.generateKeyword /}
 									{param key: 'option' + index($option) /}

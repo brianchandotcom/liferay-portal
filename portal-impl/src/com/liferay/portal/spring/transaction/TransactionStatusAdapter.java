@@ -16,7 +16,6 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionStatus;
@@ -42,15 +41,6 @@ public class TransactionStatusAdapter
 	@Override
 	public void flush() {
 		_transactionStatus.flush();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public PlatformTransactionManager getPlatformTransactionManager() {
-		return null;
 	}
 
 	public TransactionStatus getTransactionStatus() {

@@ -43,7 +43,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 /**
@@ -85,6 +87,23 @@ public class SearchUtil {
 			Sort[] sorts)
 		throws Exception {
 
+		return search(
+			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
+			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
+			transformUnsafeFunction, sorts, new HashMap<>());
+	}
+
+	public static <T> Page<T> search(
+			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
+			Filter filter, Class<?> indexerClass, String keywords,
+			Pagination pagination,
+			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
+			UnsafeConsumer<SearchContext, Exception>
+				searchContextUnsafeConsumer,
+			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
+			Sort[] sorts, Map<String, Map> actions)
+		throws Exception {
+
 		if (sorts == null) {
 			sorts = new Sort[] {
 				new Sort(Field.ENTRY_CLASS_PK, Sort.LONG_TYPE, false)
@@ -111,7 +130,8 @@ public class SearchUtil {
 			}
 		}
 
-		return Page.of(items, pagination, indexer.searchCount(searchContext));
+		return Page.of(
+			actions, items, pagination, indexer.searchCount(searchContext));
 	}
 
 	private static SearchContext _createSearchContext(

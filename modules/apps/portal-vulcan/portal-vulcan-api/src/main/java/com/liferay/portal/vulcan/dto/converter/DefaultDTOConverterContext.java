@@ -16,7 +16,9 @@ package com.liferay.portal.vulcan.dto.converter;
 
 import com.liferay.portal.kernel.model.User;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.UriInfo;
@@ -31,7 +33,18 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 		boolean acceptAllLanguages, DTOConverterRegistry dtoConverterRegistry,
 		Object id, Locale locale, UriInfo uriInfo, User user) {
 
+		this(
+			acceptAllLanguages, new HashMap<>(), dtoConverterRegistry, id,
+			locale, uriInfo, user);
+	}
+
+	public DefaultDTOConverterContext(
+		boolean acceptAllLanguages, Map<String, Map> actions,
+		DTOConverterRegistry dtoConverterRegistry, Object id, Locale locale,
+		UriInfo uriInfo, User user) {
+
 		_acceptAllLanguages = acceptAllLanguages;
+		_actions = actions;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_id = id;
 		_locale = locale;
@@ -59,7 +72,12 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	public DefaultDTOConverterContext(
 		Object id, Locale locale, UriInfo uriInfo, User user) {
 
-		this(false, null, id, locale, uriInfo, user);
+		this(false, new HashMap<>(), null, id, locale, uriInfo, user);
+	}
+
+	@Override
+	public Map<String, Map> getActions() {
+		return _actions;
 	}
 
 	@Override
@@ -102,6 +120,7 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	private final boolean _acceptAllLanguages;
+	private final Map<String, Map> _actions;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final Object _id;
 	private final Locale _locale;

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.core.UriInfo;
@@ -28,6 +30,10 @@ import javax.ws.rs.core.UriInfo;
  * @author Víctor Galán
  */
 public interface DTOConverterContext {
+
+	public default Map<String, Map> getActions() {
+		return new HashMap<>();
+	}
 
 	public default DTOConverterRegistry getDTOConverterRegistry() {
 		return null;

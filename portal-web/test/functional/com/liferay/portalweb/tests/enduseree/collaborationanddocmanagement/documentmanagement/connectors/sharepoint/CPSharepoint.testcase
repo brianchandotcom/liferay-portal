@@ -290,6 +290,40 @@ definition {
 	}
 
 	@priority = "4"
+	test EditRepository {
+		property test.name.skip.portal.instance = "CPSharepoint#EditRepository";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
+
+		DMRepository.viewBreadcrumb(dmRepositoryName = "Sharepoint Repository Name");
+
+		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DMRepository.edit(dmRepositoryName = "Sharepoint Repository Name Edit");
+
+		PortletEntry.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		AssertTextEquals(
+			key_dmRepositoryName = "Sharepoint Repository Name Edit",
+			locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW",
+			value1 = "Sharepoint Repository Name Edit");
+	}
+
+	@priority = "4"
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "CPSharepoint#MoveCheckedoutDocumentToFolder";
 
@@ -552,22 +586,6 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.docx");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
-	}
-
-	@priority = "4"
-	test ViewRepository {
-		property test.name.skip.portal.instance = "CPSharepoint#ViewRepository";
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
-
-		DMRepository.viewBreadcrumb(dmRepositoryName = "Sharepoint Repository Name");
 	}
 
 }

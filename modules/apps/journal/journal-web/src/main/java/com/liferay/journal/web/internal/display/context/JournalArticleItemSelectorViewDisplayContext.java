@@ -57,14 +57,14 @@ import javax.servlet.http.HttpServletRequest;
 public class JournalArticleItemSelectorViewDisplayContext {
 
 	public JournalArticleItemSelectorViewDisplayContext(
+		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		JournalArticleItemSelectorView journalArticleItemSelectorView,
-		HttpServletRequest httpServletRequest, PortletURL portletURL,
-		String itemSelectedEventName, boolean search) {
+		PortletURL portletURL, boolean search) {
 
-		_journalArticleItemSelectorView = journalArticleItemSelectorView;
 		_httpServletRequest = httpServletRequest;
-		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
+		_journalArticleItemSelectorView = journalArticleItemSelectorView;
+		_portletURL = portletURL;
 		_search = search;
 
 		_portletRequest = (PortletRequest)httpServletRequest.getAttribute(

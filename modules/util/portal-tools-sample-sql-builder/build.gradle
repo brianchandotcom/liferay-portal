@@ -47,6 +47,8 @@ dependencies {
 	compile project(":apps:message-boards:message-boards-service")
 	compile project(":apps:subscription:subscription-api")
 	compile project(":apps:subscription:subscription-service")
+	compile project(":apps:view-count:view-count-api")
+	compile project(":apps:view-count:view-count-service")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
 

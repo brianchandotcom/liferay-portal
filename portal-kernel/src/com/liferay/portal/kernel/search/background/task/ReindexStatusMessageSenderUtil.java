@@ -21,15 +21,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class ReindexStatusMessageSenderUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #_getReindexStatusMessageSender()}
-	 */
-	@Deprecated
-	public static ReindexStatusMessageSender getReindexStatusMessageSender() {
-		return _getReindexStatusMessageSender();
-	}
-
 	public static void sendStatusMessage(
 		String className, long count, long total) {
 

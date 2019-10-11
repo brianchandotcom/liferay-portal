@@ -17,6 +17,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetCategoryModel;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetEntryModel;
 import com.liferay.asset.kernel.model.AssetTagModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -240,6 +241,9 @@ import com.liferay.subscription.model.SubscriptionConstants;
 import com.liferay.subscription.model.SubscriptionModel;
 import com.liferay.subscription.model.impl.SubscriptionModelImpl;
 import com.liferay.util.SimpleCounter;
+import com.liferay.view.count.model.ViewCountEntryModel;
+import com.liferay.view.count.model.impl.ViewCountEntryModelImpl;
+import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeModel;
@@ -3139,6 +3143,14 @@ public class DataFactory {
 		return userNotificationDeliveryModel;
 	}
 
+	public ViewCountEntryModel newViewCountEntryModel(
+		AssetEntryModel assetEntryModel) {
+
+		return newViewCountEntryModel(
+			assetEntryModel.getCompanyId(), getClassNameId(AssetEntry.class),
+			assetEntryModel.getPrimaryKey(), 0);
+	}
+
 	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
 		List<WikiNodeModel> wikiNodeModels = new ArrayList<>(_maxWikiNodeCount);
 
@@ -4111,6 +4123,24 @@ public class DataFactory {
 		userModel.setEmailAddressVerified(true);
 
 		return userModel;
+	}
+
+	protected ViewCountEntryModel newViewCountEntryModel(
+		long companyId, long classNameId, long classPK, long viewCount) {
+
+		ViewCountEntryModel viewCountEntryModel = new ViewCountEntryModelImpl();
+
+		ViewCountEntryPK viewCountEntryPK = new ViewCountEntryPK();
+
+		viewCountEntryModel.setCompanyId(companyId);
+		viewCountEntryModel.setClassNameId(classNameId);
+		viewCountEntryModel.setClassPK(classPK);
+
+		viewCountEntryModel.setPrimaryKey(viewCountEntryPK);
+
+		viewCountEntryModel.setViewCount(viewCount);
+
+		return viewCountEntryModel;
 	}
 
 	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {

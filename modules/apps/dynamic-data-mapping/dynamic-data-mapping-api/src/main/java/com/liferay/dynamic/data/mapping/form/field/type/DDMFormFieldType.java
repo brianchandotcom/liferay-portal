@@ -30,4 +30,8 @@ public interface DDMFormFieldType {
 
 	public String getName();
 
+	public default boolean isCustomDDMFormFieldType() {
+		return false;
+	}
+
 }

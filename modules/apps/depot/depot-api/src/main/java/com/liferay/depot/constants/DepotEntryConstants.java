@@ -21,6 +21,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
  */
 public class DepotEntryConstants {
 
-	public static final int TYPE_DEPOT = GroupConstants.TYPE_SITE_SYSTEM + 1;
+	public static final int TYPE_DEPOT = 372722318;
 
 }

@@ -54,6 +54,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
+	compileOnly project(":apps:oauth2-provider:oauth2-provider-scope-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:static:osgi:osgi-util")

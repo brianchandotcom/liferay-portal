@@ -28,6 +28,8 @@ export const ConfigContext = React.createContext(DEFAULT_CONFIG);
  */
 export function getConfig(data) {
 	const {
+		availableLanguages,
+		defaultLanguageId,
 		discardDraftURL,
 		lookAndFeelURL,
 		portletNamespace,
@@ -38,6 +40,8 @@ export function getConfig(data) {
 	return {
 		...DEFAULT_CONFIG,
 
+		availableLanguages,
+		defaultLanguageId,
 		discardDraftURL,
 		lookAndFeelURL,
 		portletNamespace,

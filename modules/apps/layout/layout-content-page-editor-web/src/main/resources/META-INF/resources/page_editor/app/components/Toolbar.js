@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -26,11 +26,26 @@ const {useContext} = React;
 function ToolbarBody() {
 	const dispatch = useContext(DispatchContext);
 
-	const {singleSegmentsExperienceMode} = useContext(ConfigContext);
+	const {
+		availableLanguages,
+		defaultLanguageId,
+		singleSegmentsExperienceMode
+	} = useContext(ConfigContext);
+
+	const {languageIcon} = availableLanguages[defaultLanguageId];
 
 	return (
 		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
-			<ul className="navbar-nav">Experiences</ul>
+			<ul className="navbar-nav">
+				<li className="nav-item">Experiences here</li>
+				<li className="nav-item">
+					<ClayButtonWithIcon
+						displayType="secondary"
+						small
+						symbol={languageIcon}
+					/>
+				</li>
+			</ul>
 
 			<ul className="navbar-nav">
 				<li className="nav-item">

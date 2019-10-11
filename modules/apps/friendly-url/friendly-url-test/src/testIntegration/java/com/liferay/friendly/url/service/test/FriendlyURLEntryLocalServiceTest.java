@@ -153,6 +153,27 @@ public class FriendlyURLEntryLocalServiceTest {
 		Assert.assertEquals(maxLength, uniqueUrlTitle.length());
 	}
 
+	@Test
+	public void testGetUniqueUrlTitleWithNonAsciiCharsShortensToMaxLength()
+		throws Exception {
+
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			FriendlyURLEntryLocalization.class.getName(), "urlTitle");
+
+		String urlTitle = StringUtil.randomString(maxLength - 1);
+
+		urlTitle += "あ";
+
+		String uniqueUrlTitle =
+			FriendlyURLEntryLocalServiceUtil.getUniqueUrlTitle(
+				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				urlTitle);
+
+		Assert.assertEquals(maxLength - 1, uniqueUrlTitle.length());
+	}
+
 	@Test(expected = DuplicateFriendlyURLEntryException.class)
 	public void testValidateDuplicateUrlTitle() throws Exception {
 		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);

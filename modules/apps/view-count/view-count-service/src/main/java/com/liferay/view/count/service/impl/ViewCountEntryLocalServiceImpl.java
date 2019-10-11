@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.SQLStateAcceptor;
 import com.liferay.portal.kernel.service.view.count.ViewCountService;
@@ -32,6 +33,7 @@ import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
 import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Preston Crary
@@ -67,6 +69,26 @@ public class ViewCountEntryLocalServiceImpl
 	@Override
 	@Transactional(enabled = false)
 	public void incrementViewCount(
+		long companyId, Class<?> clazz, long classPK) {
+
+		viewCountEntryLocalService.incrementViewCount(
+			companyId, _classNameLocalService.getClassNameId(clazz), classPK,
+			1);
+	}
+
+	@Override
+	@Transactional(enabled = false)
+	public void incrementViewCount(
+		long companyId, Class<?> clazz, long classPK, int increment) {
+
+		viewCountEntryLocalService.incrementViewCount(
+			companyId, _classNameLocalService.getClassNameId(clazz), classPK,
+			increment);
+	}
+
+	@Override
+	@Transactional(enabled = false)
+	public void incrementViewCount(
 		long companyId, long classNameId, long classPK) {
 
 		viewCountEntryLocalService.incrementViewCount(
@@ -93,6 +115,14 @@ public class ViewCountEntryLocalServiceImpl
 	}
 
 	@Override
+	public void removeViewCount(long companyId, Class<?> clazz, long classPK)
+		throws PortalException {
+
+		viewCountEntryLocalService.removeViewCount(
+			companyId, _classNameLocalService.getClassNameId(clazz), classPK);
+	}
+
+	@Override
 	public void removeViewCount(long companyId, long classNameId, long classPK)
 		throws PortalException {
 
@@ -106,5 +136,8 @@ public class ViewCountEntryLocalServiceImpl
 			viewCountEntryPersistence.remove(viewCountEntry);
 		}
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 }

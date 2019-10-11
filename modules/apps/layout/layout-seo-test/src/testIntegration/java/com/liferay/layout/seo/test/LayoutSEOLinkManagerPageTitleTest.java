@@ -16,12 +16,16 @@ package com.liferay.layout.seo.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -29,6 +33,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -58,6 +64,35 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		_group = _addGroup();
 
 		_layout.setGroupId(_group.getGroupId());
+	}
+
+	@Test
+	public void testGetFullPageTitleUsesLayoutPrototypeTitle()
+		throws Exception {
+
+		String layoutPrototypeTitle = RandomTestUtil.randomString();
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			layoutPrototypeTitle);
+
+		_prototypeGroup = layoutPrototype.getGroup();
+
+		_layout.setGroupId(_prototypeGroup.getGroupId());
+
+		ListMergeable<String> subtitleListMergeable = new ListMergeable<>();
+
+		subtitleListMergeable.add(RandomTestUtil.randomString());
+		subtitleListMergeable.add(RandomTestUtil.randomString());
+
+		String companyName = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
+				layoutPrototypeTitle, " - ", companyName),
+			_layoutSEOLinkManager.getFullPageTitle(
+				_layout, null, null, null, subtitleListMergeable, companyName,
+				LocaleUtil.getDefault()));
 	}
 
 	@Test
@@ -141,6 +176,35 @@ public class LayoutSEOLinkManagerPageTitleTest {
 	}
 
 	@Test
+	public void testGetFullPageTitleUsesPortletTitle() throws Exception {
+		_modifyLayoutToSystemManage();
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			TestPropsValues.getCompanyId(), PortletKeys.BLOGS_ADMIN);
+
+		String companyName = RandomTestUtil.randomString();
+
+		ListMergeable<String> titleListMergeable = new ListMergeable<>();
+
+		titleListMergeable.add(RandomTestUtil.randomString());
+		titleListMergeable.add(RandomTestUtil.randomString());
+
+		ListMergeable<String> subtitleListMergeable = new ListMergeable<>();
+
+		subtitleListMergeable.add(RandomTestUtil.randomString());
+		subtitleListMergeable.add(RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				_portal.getPortletTitle(
+					portlet.getRootPortletId(), LocaleUtil.getDefault()),
+				" - ", _group.getName(), " - ", companyName),
+			_layoutSEOLinkManager.getFullPageTitle(
+				_layout, portlet.getRootPortletId(), null, titleListMergeable,
+				subtitleListMergeable, companyName, LocaleUtil.getDefault()));
+	}
+
+	@Test
 	public void testGetFullPageTitleUsesTilesTitle() throws Exception {
 		String tilesTitle = RandomTestUtil.randomString();
 		String companyName = RandomTestUtil.randomString();
@@ -180,6 +244,56 @@ public class LayoutSEOLinkManagerPageTitleTest {
 				LocaleUtil.getDefault()));
 	}
 
+	@Test
+	public void testGetPageTitleSuffixCompanyName() throws Exception {
+		String companyName = _group.getName();
+
+		Assert.assertEquals(
+			companyName,
+			_layoutSEOLinkManager.getPageTitleSuffix(_layout, companyName));
+	}
+
+	@Test
+	public void testGetPageTitleSuffixGroupNameCompanyName() throws Exception {
+		String companyName = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_group.getName() + " - " + companyName,
+			_layoutSEOLinkManager.getPageTitleSuffix(_layout, companyName));
+	}
+
+	@Test
+	public void testGetPageTitleUsesLayoutPrototypeTitle() throws Exception {
+		String layoutPrototypeTitle = RandomTestUtil.randomString();
+
+		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
+			layoutPrototypeTitle);
+
+		_prototypeGroup = layoutPrototype.getGroup();
+
+		_layout.setGroupId(_prototypeGroup.getGroupId());
+
+		String actual = _layoutSEOLinkManager.getPageTitle(
+			_layout, null, null, null, null, LocaleUtil.getDefault());
+
+		Assert.assertEquals(layoutPrototypeTitle, actual);
+	}
+
+	@Test
+	public void testGetPageTitleUsesPortletTitle() throws Exception {
+		_modifyLayoutToSystemManage();
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			TestPropsValues.getCompanyId(), PortletKeys.BLOGS_ADMIN);
+
+		Assert.assertEquals(
+			_portal.getPortletTitle(
+				portlet.getRootPortletId(), LocaleUtil.getDefault()),
+			_layoutSEOLinkManager.getPageTitle(
+				_layout, portlet.getRootPortletId(), null, null, null,
+				LocaleUtil.getDefault()));
+	}
+
 	private Group _addGroup() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -197,6 +311,11 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		return layout;
 	}
 
+	private void _modifyLayoutToSystemManage() {
+		_layout.setSystem(true);
+		_layout.setFriendlyURL("/manage");
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -210,5 +329,14 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 	@Inject
 	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
+
+	@DeleteAfterTestRun
+	private Group _prototypeGroup;
 
 }

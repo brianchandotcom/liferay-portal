@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import App from './App';
+import {Component} from '../../core/AppContext';
 import PageStructureSidebar from './components/PageStructureSidebar';
 
 /**
@@ -25,10 +25,9 @@ export default class PageStructure {
 
 	constructor({app, panel}) {
 		this.Actions = app.Actions;
+		this.Component = Component(app);
 		this.dispatch = app.dispatch;
 		this.title = panel.label;
-
-		App.init(app);
 	}
 
 	activate() {
@@ -51,6 +50,12 @@ export default class PageStructure {
 	}
 
 	renderSidebar() {
-		return <PageStructureSidebar title={this.title} />;
+		const {Component} = this;
+
+		return (
+			<Component>
+				<PageStructureSidebar title={this.title} />
+			</Component>
+		);
 	}
 }

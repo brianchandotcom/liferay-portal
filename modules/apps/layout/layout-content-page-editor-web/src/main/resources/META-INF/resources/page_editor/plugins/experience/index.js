@@ -12,7 +12,7 @@
  * details.
  */
 
-import App from './App';
+import {Component} from '../../core/AppContext';
 
 /**
  * Entry-point for "Experience" (toolbar drop-down) functionality.
@@ -20,6 +20,6 @@ import App from './App';
 export default class Experience {
 	constructor({app}) {
 		// TODO: implement
-		App.init(app);
+		this.Component = Component(app);
 	}
 }

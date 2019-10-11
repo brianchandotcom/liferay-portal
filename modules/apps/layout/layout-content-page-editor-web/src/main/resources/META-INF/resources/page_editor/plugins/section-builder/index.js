@@ -14,19 +14,24 @@
 
 import React from 'react';
 
-import App from './App';
+import {Component} from '../../core/AppContext';
 import SectionBuilderSidebar from './components/SectionBuilderSidebar';
 /**
  * Entry-point for "Section Builder" (sidebar pane) functionality.
  */
 export default class SectionBuilder {
 	constructor({app, panel}) {
+		this.Component = Component(app);
 		this.title = panel.label;
-
-		App.init(app);
 	}
 
 	renderSidebar() {
-		return <SectionBuilderSidebar title={this.title} />;
+		const {Component} = this;
+
+		return (
+			<Component>
+				<SectionBuilderSidebar title={this.title} />
+			</Component>
+		);
 	}
 }

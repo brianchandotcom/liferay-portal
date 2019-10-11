@@ -22,14 +22,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class InlineSQLHelperUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static InlineSQLHelper getInlineSQLHelper() {
-		return _inlineSQLPermission;
-	}
-
 	public static boolean isEnabled() {
 		return _inlineSQLPermission.isEnabled();
 	}
@@ -137,13 +129,6 @@ public class InlineSQLHelperUtil {
 		return _inlineSQLPermission.replacePermissionCheck(
 			sql, className, classPKField, userIdField, groupIdField, groupIds,
 			bridgeJoin);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setInlineSQLHelper(InlineSQLHelper inlineSQLPermission) {
 	}
 
 	private static volatile InlineSQLHelper _inlineSQLPermission =

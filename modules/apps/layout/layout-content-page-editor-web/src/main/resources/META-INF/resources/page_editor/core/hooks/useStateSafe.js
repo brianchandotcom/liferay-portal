@@ -15,7 +15,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
-const {useState} = React;
+const {useCallback, useState} = React;
 
 /**
  * Wrapper for `useState` that does an `isMounted()` check behind the scenes
@@ -26,12 +26,14 @@ export default function useStateSafe(initialValue) {
 
 	const [state, setState] = useState(initialValue);
 
-	return [
-		state,
-		function setStateSafe(newValue) {
+	const setStateSafe = useCallback(
+		newValue => {
 			if (isMounted()) {
 				setState(newValue);
 			}
-		}
-	];
+		},
+		[isMounted]
+	);
+
+	return [state, setStateSafe];
 }

@@ -469,19 +469,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		updateStagedPortlets(remoteURL, remoteGroupId, typeSettingsProperties);
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public MissingReferences publishStagingRequest(
-			long userId, long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public MissingReferences publishStagingRequest(
 			long userId, long stagingRequestId,
@@ -605,19 +592,6 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		finally {
 			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
 		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #publishStagingRequest(long, long, boolean, Map)}
-	 */
-	@Deprecated
-	@Override
-	public MissingReferences validateStagingRequest(
-		long userId, long stagingRequestId, boolean privateLayout,
-		Map<String, String[]> parameterMap) {
-
-		return new MissingReferences();
 	}
 
 	protected void addDefaultLayoutSetBranch(

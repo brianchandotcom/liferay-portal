@@ -35,7 +35,6 @@ import com.liferay.portlet.exportimport.service.base.StagingServiceBaseImpl;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -187,22 +186,6 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 		}
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public MissingReferences publishStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		checkPermission(stagingRequestId);
-
-		return stagingLocalService.publishStagingRequest(
-			getUserId(), stagingRequestId, privateLayout, parameterMap);
-	}
-
 	@Override
 	public MissingReferences publishStagingRequest(
 			long stagingRequestId,
@@ -264,34 +247,6 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 			}
 
 			throw pe;
-		}
-		finally {
-			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(
-				stagingInProcessOnLive);
-		}
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #publishStagingRequest(long, boolean, Map)}
-	 */
-	@Deprecated
-	@Override
-	public MissingReferences validateStagingRequest(
-			long stagingRequestId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		boolean stagingInProcessOnLive =
-			ExportImportThreadLocal.isStagingInProcessOnRemoteLive();
-
-		ExportImportThreadLocal.setStagingInProcessOnRemoteLive(true);
-
-		try {
-			checkPermission(stagingRequestId);
-
-			return stagingLocalService.validateStagingRequest(
-				getUserId(), stagingRequestId, privateLayout, parameterMap);
 		}
 		finally {
 			ExportImportThreadLocal.setStagingInProcessOnRemoteLive(

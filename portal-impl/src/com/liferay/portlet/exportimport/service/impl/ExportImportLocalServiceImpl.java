@@ -16,7 +16,6 @@ package com.liferay.portlet.exportimport.service.impl;
 
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
 import com.liferay.exportimport.kernel.controller.ExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportControllerRegistryUtil;
 import com.liferay.exportimport.kernel.controller.ImportController;
@@ -75,25 +74,6 @@ public class ExportImportLocalServiceImpl
 
 			throw eire;
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public File exportLayoutsAsFile(
-			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationFactory.
-				buildDefaultLocalPublishingExportImportConfiguration(
-					userLocalService.getUser(userId), groupId, 0, privateLayout,
-					parameterMap);
-
-		return exportLayoutsAsFile(exportImportConfiguration);
 	}
 
 	@Override
@@ -264,25 +244,6 @@ public class ExportImportLocalServiceImpl
 		finally {
 			FileUtil.delete(file);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	@Override
-	public void importLayouts(
-			long userId, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
-		throws PortalException {
-
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationFactory.
-				buildDefaultLocalPublishingExportImportConfiguration(
-					userLocalService.getUser(userId), 0, groupId, privateLayout,
-					parameterMap);
-
-		importLayouts(exportImportConfiguration, file);
 	}
 
 	@Override

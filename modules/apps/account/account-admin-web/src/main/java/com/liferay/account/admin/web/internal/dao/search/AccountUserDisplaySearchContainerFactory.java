@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.portlet.usersadmin.search.UserSearch;
 
 import java.util.Objects;
 
@@ -50,14 +49,24 @@ public class AccountUserDisplaySearchContainerFactory {
 		String navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "active");
 
-		SearchContainer accountUserDisplaySearchContainer = new UserSearch(
+		SearchContainer accountUserDisplaySearchContainer = new SearchContainer(
 			liferayPortletRequest,
 			PortletURLUtil.getCurrent(
-				liferayPortletRequest, liferayPortletResponse));
+				liferayPortletRequest, liferayPortletResponse),
+			null, "there-are-no-users-associated-with-this-account");
 
-		accountUserDisplaySearchContainer.setEmptyResultsMessage(
-			"there-are-no-users-associated-with-this-account");
 		accountUserDisplaySearchContainer.setId("accountUsers");
+
+		String orderByCol = ParamUtil.getString(
+			liferayPortletRequest, "orderByCol", "last-name");
+
+		accountUserDisplaySearchContainer.setOrderByCol(orderByCol);
+
+		String orderByType = ParamUtil.getString(
+			liferayPortletRequest, "orderByType", "asc");
+
+		accountUserDisplaySearchContainer.setOrderByType(orderByType);
+
 		accountUserDisplaySearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
 

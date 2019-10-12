@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
@@ -36,7 +35,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -176,20 +174,6 @@ public class HotDeployImpl implements HotDeploy {
 	@Override
 	public synchronized void unregisterListeners() {
 		_hotDeployListeners.clear();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public void initPolicy(
-			String contextName, URLContainer urlContainer,
-			ClassLoader classLoader, Properties properties);
-
-		public void unregister(ClassLoader classLoader);
-
 	}
 
 	protected void doFireDeployEvent(HotDeployEvent hotDeployEvent) {

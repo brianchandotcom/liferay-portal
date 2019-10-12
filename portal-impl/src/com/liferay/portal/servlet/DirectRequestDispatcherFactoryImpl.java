@@ -65,17 +65,6 @@ public class DirectRequestDispatcherFactoryImpl
 		return getRequestDispatcher(servletContext, path);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public RequestDispatcher getRequestDispatcher(
-			ServletContext servletContext, RequestDispatcher requestDispatcher);
-
-	}
-
 	protected RequestDispatcher doGetRequestDispatcher(
 		ServletContext servletContext, String path) {
 

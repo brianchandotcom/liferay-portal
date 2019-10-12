@@ -8,7 +8,6 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="email" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="sms" type="tns:boolean"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="website" type="tns:boolean"></parameter>
 		</operation>
 		<parameter name="allowedMethods" value="updateDelivery" />
 		<parameter name="className" value="com.liferay.portlet.announcements.service.http.AnnouncementsDeliveryServiceSoap" />

@@ -168,6 +168,11 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getLayouts" qname="operNS:getLayouts" returnQName="getLayoutsReturn" returnType="rtns:ArrayOf_tns2_LayoutSoap" returnItemType="tns2:LayoutSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="privateLayout" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getLayouts" qname="operNS:getLayouts" returnQName="getLayoutsReturn" returnType="rtns:ArrayOf_tns2_LayoutSoap" returnItemType="tns2:LayoutSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="urn:http.service.portal.liferay.com" xmlns:tns2="http://model.kernel.portal.liferay.com" name="getLayouts" qname="operNS:getLayouts" returnQName="getLayoutsReturn" returnType="rtns:ArrayOf_tns2_LayoutSoap" returnItemType="tns2:LayoutSoap" soapAction="">
@@ -229,7 +234,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="hidden" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="friendlyURLMapLanguageIds" type="tns:ArrayOf_xsd_string"></parameter>
 			<parameter xmlns:tns="urn:http.service.portal.liferay.com" qname="friendlyURLMapValues" type="tns:ArrayOf_xsd_string"></parameter>
-			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="iconImage" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="hasIconImage" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="iconBytes" type="tns:base64Binary"></parameter>
 			<parameter xmlns:tns="http://service.kernel.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
@@ -291,7 +296,11 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="plid" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="priority" type="tns:int"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addLayout deleteLayout deleteTempFileEntry getAncestorLayouts getControlPanelLayoutPlid getDefaultPlid getLayoutByUuidAndGroupId getLayoutName getLayoutPlid getLayoutReferences getLayouts getLayoutsCount getTempFileNames hasLayout hasPortletId setLayouts unschedulePublishToLive unschedulePublishToRemote updateIconImage updateLayout updateLookAndFeel updateName updateParentLayoutId updateParentLayoutIdAndPriority updatePriority" />
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.kernel.portal.liferay.com" name="updateType" qname="operNS:updateType" returnQName="updateTypeReturn" returnType="rtns:LayoutSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="plid" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addLayout deleteLayout deleteTempFileEntry getAncestorLayouts getControlPanelLayoutPlid getDefaultPlid getLayoutByUuidAndGroupId getLayoutName getLayoutPlid getLayoutReferences getLayouts getLayoutsCount getTempFileNames hasLayout hasPortletId setLayouts unschedulePublishToLive unschedulePublishToRemote updateIconImage updateLayout updateLookAndFeel updateName updateParentLayoutId updateParentLayoutIdAndPriority updatePriority updateType" />
 		<parameter name="className" value="com.liferay.portal.service.http.LayoutServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://icon.configuration.portlet.kernel.portal.liferay.com,http://model.kernel.portal.liferay.com,http://permission.service.kernel.portal.liferay.com,http://service.kernel.portal.liferay.com,http://theme.kernel.portal.liferay.com,http://toolbar.portlet.kernel.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

@@ -2,6 +2,7 @@
 
 <project basedir="." name="portal-test-db-upgrade-client" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="${liferay.home}/build-test.xml" />
+	<import file="util/build-test-expect.xml" />
 
 	<macrodef name="clean-database-upgrade-client">
 		<sequential>
@@ -206,6 +207,66 @@
 				<echo message="${java.error.available}: Unsupported major.minor version" />
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
+	</target>
+
+	<target name="check-upgrade-properties-app-db-set">
+		<get-database-upgrade-client-paths />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			file.suffix.bat="${file.suffix.bat}"
+			expect.file="check-upgrade-properties-none-set.expect"
+		/>
+
+		<clean-database-upgrade-client />
+	</target>
+
+	<target name="check-upgrade-properties-app-ext-set">
+		<get-database-upgrade-client-paths />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			file.suffix.bat="${file.suffix.bat}"
+			expect.file="check-upgrade-properties-none-set.expect"
+		/>
+
+		<clean-database-upgrade-client />
+	</target>
+
+	<target name="check-upgrade-properties-db-ext-set">
+		<get-database-upgrade-client-paths />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/app-server.properties" />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			file.suffix.bat="${file.suffix.bat}"
+			expect.file="check-upgrade-properties-db-ext-set.expect"
+		/>
+
+		<clean-database-upgrade-client />
+	</target>
+
+	<target name="check-upgrade-properties-none-set">
+		<get-database-upgrade-client-paths />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/app-server.properties" />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+
+		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			file.suffix.bat="${file.suffix.bat}"
+			expect.file="check-upgrade-properties-none-set.expect"
+		/>
 
 		<clean-database-upgrade-client />
 	</target>

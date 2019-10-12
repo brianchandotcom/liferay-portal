@@ -107,23 +107,6 @@ public class BeanLocatorImpl implements BeanLocator {
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setPACLServletContextName(String paclServletContextName) {
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public interface PACL {
-
-		public Object getBean(Object bean, ClassLoader classLoader);
-
-	}
-
-	/**
 	 * This method ensures the calls stack is the proper length.
 	 */
 	protected <T> Map<String, T> doLocate(Class<T> clazz) throws Exception {

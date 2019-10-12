@@ -157,7 +157,7 @@ public abstract class BaseStringQueryTestCase extends BaseIndexingTestCase {
 				indexingTestHelper.search();
 
 				indexingTestHelper.verify(
-					hits -> DocumentsAssert.assertValues(
+					hits -> DocumentsAssert.assertValuesIgnoreRelevance(
 						indexingTestHelper.getRequestString(), hits.getDocs(),
 						_FIELD_NAME, expectedValues));
 			});

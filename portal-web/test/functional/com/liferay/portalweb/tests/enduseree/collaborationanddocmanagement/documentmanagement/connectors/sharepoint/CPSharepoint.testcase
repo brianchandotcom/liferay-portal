@@ -141,6 +141,8 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
 
+		Pause(locator1 = "5000");
+
 		var key_dmDocumentTitle = "Document_3.txt";
 
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED");

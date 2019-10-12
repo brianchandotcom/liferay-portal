@@ -404,14 +404,6 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected DynamicQueryImpl getDynamicQueryImpl(DynamicQuery subselect) {
-		return (DynamicQueryImpl)subselect;
-	}
-
 	private final org.hibernate.criterion.Property _property;
 
 }

@@ -50,28 +50,6 @@ import org.apache.commons.configuration.MapConfiguration;
 public class ConfigurationImpl
 	implements com.liferay.portal.kernel.configuration.Configuration {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
-	 */
-	@Deprecated
-	public ConfigurationImpl(ClassLoader classLoader, String name) {
-		this(
-			classLoader, name, CompanyConstants.SYSTEM,
-			_getWebId(CompanyConstants.SYSTEM));
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
-	 */
-	@Deprecated
-	public ConfigurationImpl(
-		ClassLoader classLoader, String name, long companyId) {
-
-		this(classLoader, name, companyId, _getWebId(companyId));
-	}
-
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId, String webId) {
 

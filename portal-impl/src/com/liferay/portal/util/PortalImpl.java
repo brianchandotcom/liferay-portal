@@ -263,7 +263,6 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -7359,51 +7358,6 @@ public class PortalImpl implements Portal {
 		return windowState;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	protected void addDefaultResource(
-			long companyId, Layout layout, Portlet portlet,
-			boolean portletActions)
-		throws PortalException {
-
-		long groupId = getScopeGroupId(layout, portlet.getPortletId());
-
-		addRootModelResource(companyId, groupId, portlet);
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	protected void addDefaultResource(
-			long companyId, long groupId, Layout layout, Portlet portlet,
-			boolean portletActions)
-		throws PortalException {
-
-		addRootModelResource(companyId, groupId, portlet);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #addRootModelResource(long, long, String)}
-	 */
-	@Deprecated
-	protected void addRootModelResource(
-			long companyId, long groupId, Portlet portlet)
-		throws PortalException {
-
-		String name = ResourceActionsUtil.getPortletBaseResource(
-			portlet.getRootPortletId());
-
-		if (Validator.isNull(name)) {
-			return;
-		}
-
-		addRootModelResource(companyId, groupId, name);
-	}
-
 	protected void addRootModelResource(
 			long companyId, long groupId, String name)
 		throws PortalException {
@@ -7427,16 +7381,6 @@ public class PortalImpl implements Portal {
 
 		ResourceLocalServiceUtil.addResources(
 			companyId, groupId, 0, name, primaryKey, false, true, true);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected String buildI18NPath(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-
-		return _buildI18NPath(languageId, locale);
 	}
 
 	protected long doGetPlidFromPortletId(
@@ -8902,27 +8846,11 @@ public class PortalImpl implements Portal {
 		_portalInetSocketAddressEventListeners = new CopyOnWriteArraySet<>();
 	private final AtomicReference<InetSocketAddress>
 		_portalLocalInetSocketAddress = new AtomicReference<>();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #_portalServerInetSocketAddress}
-	 */
-	@Deprecated
-	private final AtomicInteger _portalPort = new AtomicInteger(-1);
-
 	private final AtomicReference<InetSocketAddress>
 		_portalServerInetSocketAddress = new AtomicReference<>();
 	private final Set<String> _reservedParams;
 	private final AtomicReference<InetSocketAddress>
 		_securePortalLocalInetSocketAddress = new AtomicReference<>();
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), replaced by {@link
-	 *             #_securePortalServerInetSocketAddress}
-	 */
-	@Deprecated
-	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
-
 	private final AtomicReference<InetSocketAddress>
 		_securePortalServerInetSocketAddress = new AtomicReference<>();
 	private final String _servletContextName;

@@ -15,10 +15,6 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import javax.sql.DataSource;
 
 /**
  * @author     Shuyang Zhou
@@ -32,10 +28,5 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	protected Session wrapSession(org.hibernate.Session session) {
 		return super.wrapSession(session);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletSessionFactoryImpl.class);
-
-	private DataSource _dataSource;
 
 }

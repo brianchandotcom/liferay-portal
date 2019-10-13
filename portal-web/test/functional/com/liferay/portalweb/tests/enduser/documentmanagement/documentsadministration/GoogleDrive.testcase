@@ -504,6 +504,49 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-91174. It ensures that google drive can not be saved and returned to portal after logout current user."
+	@priority = "5"
+	test SaveGoogleDocAfterLogoutCurrentUser {
+		property test.name.skip.portal.instance = "GoogleDrive#SaveGoogleDocAfterLogoutCurrentUser";
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.addContent(
+			googleDocContent = "Liferay",
+			insertLink = "true",
+			linkAddress = "http://localhost:8080/web/guest",
+			linkText = "Liferay");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
+
+		Click(
+			key_linkAddress = "http://localhost:8080/web/guest",
+			locator1 = "GoogleDoc#INSERT_LINK_FLOATING_LINK");
+
+		SelectWindow(locator1 = "title=Home - ${siteName}");
+
+		UserBar.signOut();
+
+		Close.closeWindow(locator1 = "title=Home - ${siteName}");
+
+		GoogleDoc.saveAndExit();
+
+		Pause(locator1 = "3000");
+
+		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
+
+		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
+	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

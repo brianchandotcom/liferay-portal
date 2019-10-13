@@ -238,10 +238,9 @@ renderResponse.setTitle(headerTitle);
 		}
 
 		var scopeGroupId = <%= themeDisplay.getScopeGroupId() %>;
-		var toGroupId = toGroupIdElement.value;
 
-		if (scopeGroupId != toGroupId) {
-			url += '&<portlet:namespace />folderId=' + '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>';
+		if (scopeGroupId != toGroupIdElement.value) {
+			url += '&<portlet:namespace />folderId=<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>';
 		}
 
 		return url;

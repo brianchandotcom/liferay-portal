@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INSERT_LINK_FLOATING_LINK</td>
+	<td>//div[contains(@class,'link-bubble-header')]//a[contains(.,'${key_linkAddress}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INSERT_LINK_LINK</td>
 	<td>//div[contains(@class,'urlinput-url-container')]/input[@type='text']</td>
 	<td></td>

@@ -296,7 +296,9 @@ definition {
 
 		Notifications.navigateToContent(contentBody = "WC WebContent Title Edit");
 
-		WebContent.viewTitle(webContentTitle = "WC WebContent Title Edit");
+		WebContent.viewTitle(
+			onLive = "true",
+			webContentTitle = "WC WebContent Title Edit");
 
 		AssertConsoleTextNotPresent(value1 = "java.lang.IllegalArgumentException");
 	}

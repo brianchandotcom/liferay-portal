@@ -1133,13 +1133,15 @@ public class RESTBuilder {
 
 				String line = s.substring(z + 1, s.indexOf("\n", z + 1));
 
-				while (line.matches(leadingWhiteSpace + "\\w.*")) {
-					String text = line.trim();
+				while (line.startsWith(leadingWhiteSpace)) {
+					if (line.matches(leadingWhiteSpace + "\\w.*")) {
+						String text = line.trim();
 
-					if ((text.compareTo("operationId:") > 0) ||
-						(s.indexOf('\n', z + 1) == -1)) {
+						if ((text.compareTo("operationId:") > 0) ||
+							(s.indexOf('\n', z + 1) == -1)) {
 
-						break;
+							break;
+						}
 					}
 
 					z = s.indexOf('\n', z + 1);

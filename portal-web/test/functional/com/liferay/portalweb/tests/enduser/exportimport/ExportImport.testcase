@@ -1063,9 +1063,18 @@ definition {
 			groupName = "Guest",
 			layoutName = "Blogs Page");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
 
-		Portlet.addPG(portletName = "Blogs");
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Blogs Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",

@@ -9916,7 +9916,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<equals arg1="${database.type}" arg2="oracle" />
 				<then>
 					<if>
-						<isset property="env.KUBERNETES_SERVICE_HOST" />
+						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						<then>
 							<antcall target="rebuild-database">
 								<param name="database.type" value="${database.type}" />
@@ -9944,23 +9944,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 							<get-database-property property.name="database.version" />
 
-							<property name="oracle.pod.hostname" value="root@${env.HOSTNAME}" />
-
-							<beanshell>
+							<execute>
 								<![CDATA[
-									import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
-									import com.liferay.jenkins.results.parser.k8s.Pod;
-									import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
+									docker cp ${setup.sql.file} ${env.HOSTNAME}_oracle:/home/oracle/setup.sql
 
-									LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
-
-									Pod pod = liferayK8sConnection.getPod(ResourceConfigurationFactory.getConfigurationPod(project.getProperty("database.type"), project.getProperty("database.version")));
-
-									pod.copyFileToPod(project.getProperty("setup.sql.file"), project.getProperty("oracle.pod.hostname"), "/home/oracle/setup.sql");
-
-									pod.exec(new String[] {"/bin/bash", "-c", "source /home/oracle/.bashrc ; sqlplus / as sysdba @/home/oracle/setup.sql"});
+									docker exec ${env.HOSTNAME}_oracle /bin/bash -c "source /home/oracle/.bashrc ; sqlplus / as sysdba @/home/oracle/setup.sql"
 								]]>
-							</beanshell>
+							</execute>
+
+							<delete file="${setup.sql.file}" />
 
 							<echo file="data-pump.sql">
 								<![CDATA[
@@ -9991,19 +9983,13 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 
 							<property location="${liferay.home}/${oracle.dump.file.name}" name="oracle.dump.file.path" />
 
-							<beanshell>
+							<execute>
 								<![CDATA[
-									import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
-									import com.liferay.jenkins.results.parser.k8s.Pod;
-									import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
+									docker exec ${env.HOSTNAME}_oracle mkdir -p ${data.pump.dir}
 
-									LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
-
-									Pod pod = liferayK8sConnection.getPod(ResourceConfigurationFactory.getConfigurationPod(project.getProperty("database.type"), project.getProperty("database.version")));
-
-									pod.copyFileToPod(project.getProperty("oracle.dump.file.path"), project.getProperty("oracle.pod.hostname"), project.getProperty("data.pump.dir") + "/" + project.getProperty("oracle.dump.file.name"));
+									docker cp ${oracle.dump.file.path} ${env.HOSTNAME}_oracle:${data.pump.dir}/${oracle.dump.file.name}
 								]]>
-							</beanshell>
+							</execute>
 
 							<exec executable="impdp">
 								<arg value="${oracle.admin.user}/${oracle.admin.password}" />

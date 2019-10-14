@@ -35,18 +35,6 @@ import javax.portlet.ReadOnlyException;
  */
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void deletePortletPreferences(long portletPreferencesId)
-		throws Exception {
-
-		runSQL(
-			"delete from PortletPreferences where portletPreferencesId = " +
-				portletPreferencesId);
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 		updatePortletPreferences();
@@ -315,30 +303,6 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 				ps3.executeBatch();
 			}
-		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected void updatePortletPreferences(
-			long portletPreferencesId, String preferences)
-		throws Exception {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = connection.prepareStatement(
-				"update PortletPreferences set preferences = ? where " +
-					"portletPreferencesId = " + portletPreferencesId);
-
-			ps.setString(1, preferences);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
 		}
 	}
 

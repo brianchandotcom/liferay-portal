@@ -99,15 +99,6 @@ public class UpgradeCTModel extends UpgradeProcess {
 
 	private abstract static class BasePrimaryKeyAlterable implements Alterable {
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public String getIndexedColumnName() {
-			return null;
-		}
-
 		@Override
 		public boolean shouldAddIndex(Collection<String> columnNames) {
 			return false;

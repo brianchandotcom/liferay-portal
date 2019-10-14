@@ -112,24 +112,6 @@ public abstract class UpgradeProcess
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #upgrade(UpgradeProcess)}
-	 */
-	@Deprecated
-	public void upgrade(Class<?> upgradeProcessClass) throws UpgradeException {
-		UpgradeProcess upgradeProcess = null;
-
-		try {
-			upgradeProcess = (UpgradeProcess)upgradeProcessClass.newInstance();
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
-		}
-
-		upgradeProcess.upgrade();
-	}
-
 	@Override
 	public void upgrade(DBProcessContext dbProcessContext)
 		throws UpgradeException {
@@ -155,12 +137,6 @@ public abstract class UpgradeProcess
 			return false;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		public String getIndexedColumnName();
-
 		public String getSQL(String tableName);
 
 		public boolean shouldAddIndex(Collection<String> columnNames);
@@ -184,15 +160,6 @@ public abstract class UpgradeProcess
 			else {
 				_newColumnName = _newColumn;
 			}
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public String getIndexedColumnName() {
-			return null;
 		}
 
 		@Override
@@ -232,15 +199,6 @@ public abstract class UpgradeProcess
 			_newType = newType;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public String getIndexedColumnName() {
-			return null;
-		}
-
 		@Override
 		public String getSQL(String tableName) {
 			StringBundler sb = new StringBundler(6);
@@ -276,15 +234,6 @@ public abstract class UpgradeProcess
 			_columnName = columnName;
 		}
 
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public String getIndexedColumnName() {
-			return null;
-		}
-
 		@Override
 		public String getSQL(String tableName) {
 			StringBundler sb = new StringBundler(4);
@@ -315,15 +264,6 @@ public abstract class UpgradeProcess
 
 		public AlterTableDropColumn(String columnName) {
 			_columnName = columnName;
-		}
-
-		/**
-		 * @deprecated As of Judson (7.1.x), with no direct replacement
-		 */
-		@Deprecated
-		@Override
-		public String getIndexedColumnName() {
-			return null;
 		}
 
 		@Override
@@ -616,20 +556,6 @@ public abstract class UpgradeProcess
 		DB db = DBManagerUtil.getDB();
 
 		return db.isSupportsUpdateWithInnerJoin();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DBInspector#normalizeName(String, DatabaseMetaData)}
-	 */
-	@Deprecated
-	protected String normalizeName(
-			String name, DatabaseMetaData databaseMetaData)
-		throws SQLException {
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		return dbInspector.normalizeName(name, databaseMetaData);
 	}
 
 	protected void upgradeTable(String tableName, Object[][] tableColumns)

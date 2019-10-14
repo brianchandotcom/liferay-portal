@@ -112,22 +112,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		return typeSettingsProperties.toString();
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected String getNewTypeSettings(
-		String typeSettings, String oldRootPortletId, String newRootPortletId,
-		List<String> columnIds, boolean exactMatch) {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(typeSettings);
-
-		return getNewTypeSettings(
-			typeSettings, oldRootPortletId, newRootPortletId, exactMatch);
-	}
-
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[0][0];
 	}

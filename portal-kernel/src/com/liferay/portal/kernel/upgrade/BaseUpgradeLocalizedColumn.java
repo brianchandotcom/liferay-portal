@@ -76,34 +76,6 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 		}
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), use {@link
-	 *             BaseUpgradeLocalizedColumn#upgradeLocalizedColumn(
-	 *             ResourceBundleLoader, Class, String, String, String, String,
-	 *             long[])}
-	 */
-	@Deprecated
-	protected void upgradeLocalizedColumn(
-			ResourceBundleLoader resourceBundleLoader, String tableName,
-			String columnName, String originalContent,
-			String localizationMapKey, String localizationXMLKey,
-			long[] companyIds)
-		throws SQLException {
-
-		Class<?> clazz = getClass();
-
-		resourceBundleLoader = new AggregateResourceBundleLoader(
-			ResourceBundleUtil.getResourceBundleLoader(
-				"content.Language", clazz.getClassLoader()),
-			resourceBundleLoader);
-
-		for (long companyId : companyIds) {
-			_upgrade(
-				resourceBundleLoader, tableName, columnName, originalContent,
-				localizationMapKey, localizationXMLKey, companyId);
-		}
-	}
-
 	private String _getLocalizationXML(
 			String localizationMapKey, String localizationXMLKey,
 			long companyId, ResourceBundleLoader resourceBundleLoader)

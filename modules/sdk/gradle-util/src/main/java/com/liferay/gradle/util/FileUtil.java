@@ -124,11 +124,7 @@ public class FileUtil {
 			tryLocalNetwork);
 	}
 
-	public static synchronized File get(
-			Project project, String url, String username, String password,
-			File destinationFile, boolean ignoreErrors, boolean tryLocalNetwork)
-		throws IOException {
-
+	public static File getDestinationFile(String url) throws IOException {
 		String mirrorsCacheArtifactSubdir = url.replaceFirst(
 			"https?:\\/\\/(.+\\/).+", "$1");
 
@@ -146,11 +142,20 @@ public class FileUtil {
 
 		String fileName = url.replaceFirst(".+\\/(.+)", "$1");
 
-		File mirrorsCacheArtifactFile = new File(
-			mirrorsCacheArtifactDir, fileName);
+		return new File(mirrorsCacheArtifactDir, fileName);
+	}
+
+	public static synchronized File get(
+			Project project, String url, String username, String password,
+			File destinationFile, boolean ignoreErrors, boolean tryLocalNetwork)
+		throws IOException {
+
+		File mirrorsCacheArtifactFile = getDestinationFile(url);
 
 		if (!mirrorsCacheArtifactFile.exists()) {
-			mirrorsCacheArtifactDir.mkdirs();
+			File dir = mirrorsCacheArtifactFile.getParentFile();
+
+			dir.mkdirs();
 
 			String mirrorsUrl = url.replaceFirst(
 				"https?:\\/\\/", "http://mirrors.lax.liferay.com/");
@@ -181,7 +186,8 @@ public class FileUtil {
 		Path destinationPath = destinationFile.toPath();
 
 		if (destinationFile.isDirectory()) {
-			destinationPath = destinationPath.resolve(fileName);
+			destinationPath = destinationPath.resolve(
+				mirrorsCacheArtifactFile.getName());
 		}
 
 		Path destinationParentPath = destinationPath.getParent();

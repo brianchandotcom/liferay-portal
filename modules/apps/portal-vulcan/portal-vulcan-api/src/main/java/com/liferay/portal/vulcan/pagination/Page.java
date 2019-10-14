@@ -49,6 +49,11 @@ public class Page<T> {
 		return new Page<>(items, pagination, totalCount, actions);
 	}
 
+	@JsonProperty("actions")
+	public Map<String, Map> getActions() {
+		return _actions;
+	}
+
 	@JacksonXmlElementWrapper(localName = "items")
 	@JacksonXmlProperty(localName = "item")
 	public Collection<T> getItems() {
@@ -127,9 +132,7 @@ public class Page<T> {
 		_actions = actions;
 	}
 
-	@JsonProperty("actions")
 	private Map<String, Map> _actions;
-
 	private final Collection<T> _items;
 	private final long _page;
 	private final long _pageSize;

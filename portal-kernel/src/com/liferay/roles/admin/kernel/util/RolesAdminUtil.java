@@ -21,14 +21,6 @@ import com.liferay.portal.kernel.model.Role;
  */
 public class RolesAdminUtil {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getCssClassName(Role role) {
-		return getRolesAdmin().getCssClassName(role);
-	}
-
 	public static String getIconCssClass(Role role) {
 		return getRolesAdmin().getIconCssClass(role);
 	}

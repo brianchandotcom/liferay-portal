@@ -24,36 +24,6 @@ import com.liferay.roles.admin.kernel.util.RolesAdmin;
  */
 public class RolesAdminImpl implements RolesAdmin {
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getCssClassName(Role role) {
-		String cssClassName = StringPool.BLANK;
-
-		String roleName = role.getName();
-		int roleType = role.getType();
-
-		if (roleName.equals(RoleConstants.GUEST)) {
-			cssClassName = "lfr-role-guest";
-		}
-		else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			cssClassName = "lfr-role-organization";
-		}
-		else if (roleType == RoleConstants.TYPE_REGULAR) {
-			cssClassName = "lfr-role-regular";
-		}
-		else if (roleType == RoleConstants.TYPE_SITE) {
-			cssClassName = "lfr-role-site";
-		}
-		else if (role.isTeam()) {
-			cssClassName = "lfr-role-team";
-		}
-
-		return "lfr-role " + cssClassName;
-	}
-
 	@Override
 	public String getIconCssClass(Role role) {
 		String iconCssClass = StringPool.BLANK;

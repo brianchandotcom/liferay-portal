@@ -15,8 +15,10 @@
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -41,10 +43,28 @@ public class MasterPageVerticalCard implements VerticalCard {
 		RenderRequest renderRequest) {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
+		_renderRequest = renderRequest;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		try {
+			MasterPageActionDropdownItemsProvider
+				masterPageActionDropdownItemsProvider =
+					new MasterPageActionDropdownItemsProvider(
+						_layoutPageTemplateEntry, _renderRequest);
+
+			return masterPageActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	@Override
@@ -90,6 +110,7 @@ public class MasterPageVerticalCard implements VerticalCard {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private final RenderRequest _renderRequest;
 	private final ThemeDisplay _themeDisplay;
 
 }

@@ -139,7 +139,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		_selectedTab = ParamUtil.getString(
-			_httpServletRequest, "selectedTab", "basic-pages");
+			_httpServletRequest, "selectedTab", "basic-templates");
 
 		return _selectedTab;
 	}
@@ -168,12 +168,12 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		return types.size();
 	}
 
-	public boolean isBasicPages() {
+	public boolean isBasicTemplates() {
 		if (getLayoutPageTemplateCollectionId() != 0) {
 			return false;
 		}
 
-		if (!Objects.equals(getSelectedTab(), "basic-pages")) {
+		if (!Objects.equals(getSelectedTab(), "basic-templates")) {
 			return false;
 		}
 

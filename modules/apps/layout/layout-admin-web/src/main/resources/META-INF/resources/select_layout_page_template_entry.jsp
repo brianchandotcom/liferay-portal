@@ -67,11 +67,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 							<li class="nav-item">
 
 								<%
-								String basicPagesURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-pages", layoutsAdminDisplayContext.isPrivateLayout());
+								String basicTemplatesURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-templates", layoutsAdminDisplayContext.isPrivateLayout());
 								%>
 
-								<a class="nav-link text-truncate <%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() ? "active" : StringPool.BLANK %>" href="<%= basicPagesURL %>">
-									<liferay-ui:message key="basic-pages" />
+								<a class="nav-link text-truncate <%= selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates() ? "active" : StringPool.BLANK %>" href="<%= basicTemplatesURL %>">
+									<liferay-ui:message key="basic-templates" />
 								</a>
 							</li>
 							<li class="nav-item">
@@ -107,8 +107,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 											<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 										</c:if>
 									</c:when>
-									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
-										<liferay-ui:message key="basic-pages" />
+									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates() %>">
+										<liferay-ui:message key="basic-templates" />
 									</c:when>
 									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
 										<liferay-ui:message key="global-templates" />
@@ -152,8 +152,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 							/>
 						</liferay-ui:search-container>
 					</c:when>
-					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
-						<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
+					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicTemplates() %>">
+						<liferay-util:include page="/select_basic_templates.jsp" servletContext="<%= application %>" />
 					</c:when>
 					<c:otherwise>
 						<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />

@@ -14,20 +14,17 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -38,17 +35,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectBasicPagesHorizontalCard implements HorizontalCard {
+public class SelectBasicTemplatesVerticalCard implements VerticalCard {
 
-	public SelectBasicPagesHorizontalCard(
-		String type, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+	public SelectBasicTemplatesVerticalCard(
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_type = type;
+		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
-		_layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(type);
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -77,7 +72,11 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 
-			addLayoutURL.setParameter("type", _type);
+			addLayoutURL.setParameter("type", LayoutConstants.TYPE_CONTENT);
+			addLayoutURL.setParameter(
+				"masterLayoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
 			data.put("add-layout-url", addLayoutURL.toString());
@@ -91,8 +90,7 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 	@Override
 	public String getElementClasses() {
 		return "add-layout-action-option card-interactive " +
-			"card-interactive-primary card-type-template " +
-				"template-card-horizontal";
+			"card-interactive-primary";
 	}
 
 	@Override
@@ -101,14 +99,13 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 	}
 
 	@Override
-	public String getTitle() {
-		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(),
-			_layoutTypeController.getClass());
+	public String getImageSrc() {
+		return _layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
+	}
 
-		return LanguageUtil.get(
-			_httpServletRequest, layoutTypeResourceBundle,
-			"layout.types." + _type);
+	@Override
+	public String getTitle() {
+		return _layoutPageTemplateEntry.getName();
 	}
 
 	@Override
@@ -117,9 +114,8 @@ public class SelectBasicPagesHorizontalCard implements HorizontalCard {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final LayoutTypeController _layoutTypeController;
+	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
-	private final String _type;
 
 }

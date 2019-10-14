@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -94,6 +96,7 @@ public class DepotEntryVerticalCard
 				_group.getDescriptiveName(_themeDisplay.getLocale()));
 		}
 		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return _group.getName(_themeDisplay.getLocale());
@@ -114,6 +117,9 @@ public class DepotEntryVerticalCard
 			throw new SystemException(pe);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DepotEntryVerticalCard.class);
 
 	private final Group _group;
 	private final LiferayPortletRequest _liferayPortletRequest;

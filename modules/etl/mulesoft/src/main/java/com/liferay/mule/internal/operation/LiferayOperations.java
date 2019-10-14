@@ -36,9 +36,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-import org.mule.runtime.api.meta.ExpressionSupport;
 import org.mule.runtime.api.util.MultiMap;
-import org.mule.runtime.extension.api.annotation.Expression;
 import org.mule.runtime.extension.api.annotation.error.Throws;
 import org.mule.runtime.extension.api.annotation.metadata.MetadataKeyId;
 import org.mule.runtime.extension.api.annotation.metadata.OutputResolver;
@@ -48,7 +46,6 @@ import org.mule.runtime.extension.api.annotation.param.Content;
 import org.mule.runtime.extension.api.annotation.param.MediaType;
 import org.mule.runtime.extension.api.annotation.param.NullSafe;
 import org.mule.runtime.extension.api.annotation.param.Optional;
-import org.mule.runtime.extension.api.annotation.param.Parameter;
 import org.mule.runtime.extension.api.annotation.param.display.DisplayName;
 import org.mule.runtime.extension.api.runtime.operation.Result;
 import org.mule.runtime.http.api.domain.entity.HttpEntity;
@@ -68,13 +65,17 @@ public class LiferayOperations {
 	public Result<InputStream, Void> delete(
 			@Connection LiferayConnection connection,
 			@MetadataKeyId(DELETEEndpointTypeKeysResolver.class)
-				String endpoint)
+				String endpoint,
+			@DisplayName("Path Parameters") @NullSafe @Optional
+				Map<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional
+				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.DELETE, endpoint);
+		_logEndpointParams(Method.DELETE, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.delete(
-			_pathParams, _queryParams, endpoint);
+			pathParams, queryParams, endpoint);
 
 		_liferayResponseValidator.validate(httpResponse);
 
@@ -92,13 +93,17 @@ public class LiferayOperations {
 	@OutputResolver(output = GETEndpointOutputTypeResolver.class)
 	public Result<InputStream, Void> get(
 			@Connection LiferayConnection connection,
-			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
+			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint,
+			@DisplayName("Path Parameters") @NullSafe @Optional
+				Map<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional
+				MultiMap<String, String> queryParams)
 		throws Exception {
 
-		_logEndpointParams(Method.GET, endpoint);
+		_logEndpointParams(Method.GET, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.get(
-			_pathParams, _queryParams, endpoint);
+			pathParams, queryParams, endpoint);
 
 		_liferayResponseValidator.validate(httpResponse);
 
@@ -119,13 +124,17 @@ public class LiferayOperations {
 			@MetadataKeyId(PATCHEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Records")
 			@TypeResolver(value = PATCHEndpointInputTypeResolver.class)
-				InputStream inputStream)
+				InputStream inputStream,
+			@DisplayName("Path Parameters") @NullSafe @Optional
+				Map<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional
+				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.PATCH, endpoint);
+		_logEndpointParams(Method.PATCH, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.patch(
-			inputStream, _pathParams, _queryParams, endpoint);
+			inputStream, pathParams, queryParams, endpoint);
 
 		_liferayResponseValidator.validate(httpResponse);
 
@@ -144,13 +153,17 @@ public class LiferayOperations {
 			@MetadataKeyId(POSTEndpointTypeKeysResolver.class) String endpoint,
 			@Content @DisplayName("Records")
 			@TypeResolver(value = POSTEndpointInputTypeResolver.class)
-				InputStream inputStream)
+				InputStream inputStream,
+			@DisplayName("Path Parameters") @NullSafe @Optional
+				Map<String, String> pathParams,
+			@DisplayName("Query Parameters") @NullSafe @Optional
+				MultiMap<String, String> queryParams)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(Method.POST, endpoint);
+		_logEndpointParams(Method.POST, endpoint, pathParams, queryParams);
 
 		HttpResponse httpResponse = connection.post(
-			inputStream, _pathParams, _queryParams, endpoint);
+			inputStream, pathParams, queryParams, endpoint);
 
 		_liferayResponseValidator.validate(httpResponse);
 
@@ -162,11 +175,14 @@ public class LiferayOperations {
 		).build();
 	}
 
-	private void _logEndpointParams(Method method, String endpoint) {
+	private void _logEndpointParams(
+		Method method, String endpoint, Map<String, String> pathParams,
+		Map<String, String> queryParams) {
+
 		_logger.debug(
 			"Send {} request to endpoint {}, with path parameters {} and " +
 				"query parameters {}",
-			method, endpoint, _pathParams, _queryParams);
+			method, endpoint, pathParams, queryParams);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
@@ -174,19 +190,5 @@ public class LiferayOperations {
 
 	private final LiferayResponseValidator _liferayResponseValidator =
 		new LiferayResponseValidator();
-
-	@DisplayName("Path Parameters")
-	@Expression(ExpressionSupport.NOT_SUPPORTED)
-	@NullSafe
-	@Optional
-	@Parameter
-	private Map<String, String> _pathParams;
-
-	@DisplayName("Query Parameters")
-	@Expression(ExpressionSupport.NOT_SUPPORTED)
-	@NullSafe
-	@Optional
-	@Parameter
-	private MultiMap<String, String> _queryParams;
 
 }

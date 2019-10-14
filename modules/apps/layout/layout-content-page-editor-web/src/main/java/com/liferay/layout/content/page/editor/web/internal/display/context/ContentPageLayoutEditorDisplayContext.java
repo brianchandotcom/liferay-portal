@@ -401,16 +401,6 @@ public class ContentPageLayoutEditorDisplayContext
 			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
 	}
 
-	private boolean _hasEditSegmentsEntryPermission() throws PortalException {
-		String editSegmentsEntryURL = _getEditSegmentsEntryURL();
-
-		if (Validator.isNull(editSegmentsEntryURL)) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _hasDefaultSegmentsExperienceLockedSegmentsExperiment()
 		throws PortalException {
 
@@ -429,6 +419,16 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsExperimentConstants.Status.getLockedStatusValues());
 
 		return lockedStatusValuesList.contains(segmentsExperiment.getStatus());
+	}
+
+	private boolean _hasEditSegmentsEntryPermission() throws PortalException {
+		String editSegmentsEntryURL = _getEditSegmentsEntryURL();
+
+		if (Validator.isNull(editSegmentsEntryURL)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isShowSegmentsExperiences() throws PortalException {

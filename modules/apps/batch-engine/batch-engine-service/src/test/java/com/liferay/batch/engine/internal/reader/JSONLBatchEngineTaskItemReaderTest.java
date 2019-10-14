@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
@@ -49,7 +47,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 
 				Assert.fail();
 			}
-			catch (UnrecognizedPropertyException upe) {
+			catch (NoSuchFieldException nsfe) {
 			}
 		}
 	}

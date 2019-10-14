@@ -25,13 +25,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.artifacts.repositories.AuthenticationContainer;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
-import org.gradle.api.artifacts.repositories.PasswordCredentials;
-import org.gradle.internal.authentication.DefaultBasicAuthentication;
 
 /**
  * @author Andrea Di Giorgi
@@ -81,63 +76,25 @@ public class GradlePluginsDefaultsUtil {
 			}
 		}
 
-		String url = System.getProperty(
+		String repositoryURL = System.getProperty(
 			"repository.url", DEFAULT_REPOSITORY_URL);
 
-		GradleUtil.addMavenArtifactRepository(repositoryHandler, url);
+		GradleUtil.addMavenArtifactRepository(repositoryHandler, repositoryURL);
 
-		final String repositoryPrivatePassword = System.getProperty(
+		String repositoryPrivatePassword = System.getProperty(
 			"repository.private.password");
-		final String repositoryPrivateUrl = System.getProperty(
+		String repositoryPrivateUrl = System.getProperty(
 			"repository.private.url");
-		final String repositoryPrivateUsername = System.getProperty(
+		String repositoryPrivateUsername = System.getProperty(
 			"repository.private.username");
 
 		if (Validator.isNotNull(repositoryPrivatePassword) &&
 			Validator.isNotNull(repositoryPrivateUrl) &&
 			Validator.isNotNull(repositoryPrivateUsername)) {
 
-			MavenArtifactRepository mavenArtifactRepository =
-				repositoryHandler.maven(
-					new Action<MavenArtifactRepository>() {
-
-						@Override
-						public void execute(
-							MavenArtifactRepository mavenArtifactRepository) {
-
-							mavenArtifactRepository.setUrl(
-								repositoryPrivateUrl);
-						}
-
-					});
-
-			mavenArtifactRepository.authentication(
-				new Action<AuthenticationContainer>() {
-
-					@Override
-					public void execute(
-						AuthenticationContainer authenticationContainer) {
-
-						authenticationContainer.add(
-							new DefaultBasicAuthentication("basic"));
-					}
-
-				});
-
-			mavenArtifactRepository.credentials(
-				new Action<PasswordCredentials>() {
-
-					@Override
-					public void execute(
-						PasswordCredentials passwordCredentials) {
-
-						passwordCredentials.setPassword(
-							repositoryPrivatePassword);
-						passwordCredentials.setUsername(
-							repositoryPrivateUsername);
-					}
-
-				});
+			GradleUtil.addMavenArtifactRepository(
+				repositoryHandler, repositoryPrivateUrl,
+				repositoryPrivateUsername, repositoryPrivatePassword);
 		}
 	}
 

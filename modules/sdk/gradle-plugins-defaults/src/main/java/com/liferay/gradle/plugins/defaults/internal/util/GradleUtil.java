@@ -44,13 +44,16 @@ import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
+import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskOutputs;
+import org.gradle.internal.authentication.DefaultBasicAuthentication;
 
 /**
  * @author Andrea Di Giorgi
@@ -71,6 +74,50 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 				}
 
 			});
+	}
+
+	public static MavenArtifactRepository addMavenArtifactRepository(
+		RepositoryHandler repositoryHandler, final String url,
+		final String username, final String password) {
+
+		MavenArtifactRepository mavenArtifactRepository =
+			repositoryHandler.maven(
+				new Action<MavenArtifactRepository>() {
+
+					@Override
+					public void execute(
+						MavenArtifactRepository mavenArtifactRepository) {
+
+						mavenArtifactRepository.setUrl(url);
+					}
+
+				});
+
+		mavenArtifactRepository.authentication(
+			new Action<AuthenticationContainer>() {
+
+				@Override
+				public void execute(
+					AuthenticationContainer authenticationContainer) {
+
+					authenticationContainer.add(
+						new DefaultBasicAuthentication("basic"));
+				}
+
+			});
+
+		mavenArtifactRepository.credentials(
+			new Action<PasswordCredentials>() {
+
+				@Override
+				public void execute(PasswordCredentials passwordCredentials) {
+					passwordCredentials.setPassword(password);
+					passwordCredentials.setUsername(username);
+				}
+
+			});
+
+		return mavenArtifactRepository;
 	}
 
 	@SuppressWarnings("unchecked")

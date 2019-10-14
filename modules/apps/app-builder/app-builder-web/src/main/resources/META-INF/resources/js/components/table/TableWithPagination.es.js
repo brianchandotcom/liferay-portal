@@ -13,7 +13,7 @@
  */
 
 import React, {useContext} from 'react';
-import {ClayPaginationWithBar} from '@clayui/pagination';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {withEmpty} from './EmptyState.es';
 import Table from './Table.es';
 import {withLoading} from '../loading/Loading.es';
@@ -35,7 +35,7 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 
 			{totalCount > 5 && (
 				<div className="taglib-search-iterator-page-iterator-bottom">
-					<ClayPaginationWithBar
+					<ClayPaginationBarWithBasicItems
 						activeDelta={pageSize}
 						activePage={page}
 						deltas={deltas}

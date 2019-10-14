@@ -824,9 +824,21 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			return;
 		}
 
+		String indent = "\t";
+
+		while (true) {
+			pos--;
+
+			if (content.charAt(pos) != '\t') {
+				break;
+			}
+
+			indent += "\t";
+		}
+
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(content, 0, pos - 1);
+		sb.append(content, 0, pos);
 
 		for (String dependencyNotation : forcedExclusions) {
 			String[] tokens = _parseDependencyNotation(dependencyNotation);
@@ -835,22 +847,29 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			String artifactId = tokens[1];
 			String version = tokens[2];
 
-			sb.append("<dependency>");
+			sb.append("\n");
+			sb.append(indent);
+			sb.append("<dependency>\n");
 
-			sb.append("<groupId>");
+			sb.append(indent);
+			sb.append("\t<groupId>");
 			sb.append(groupId);
-			sb.append("</groupId>");
+			sb.append("</groupId>\n");
 
-			sb.append("<artifactId>");
+			sb.append(indent);
+			sb.append("\t<artifactId>");
 			sb.append(artifactId);
-			sb.append("</artifactId>");
+			sb.append("</artifactId>\n");
 
-			sb.append("<type>jar</type>");
+			sb.append(indent);
+			sb.append("\t<type>jar</type>\n");
 
-			sb.append("<version>");
+			sb.append(indent);
+			sb.append("\t<version>");
 			sb.append(version);
-			sb.append("</version>");
+			sb.append("</version>\n");
 
+			sb.append(indent);
 			sb.append("</dependency>");
 		}
 

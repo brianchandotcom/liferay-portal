@@ -1363,7 +1363,6 @@
 					config.doAsGroupId || themeDisplay.getScopeGroupId(),
 				eventName: config.eventName,
 				groupId: config.groupId,
-				mode: config.mode,
 				mvcPath: config.mvcPath || '/view.jsp',
 				p_p_state: 'pop_up',
 				portletResourceNamespace: config.portletResourceNamespace,
@@ -1372,6 +1371,10 @@
 				structureAvailableFields: config.structureAvailableFields,
 				templateId: config.templateId
 			};
+
+			if ('mode' in config) {
+				params.mode = config.mode;
+			}
 
 			if ('navigationStartsOn' in config) {
 				params.navigationStartsOn = config.navigationStartsOn;

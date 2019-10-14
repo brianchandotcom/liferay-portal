@@ -82,7 +82,7 @@ PanelCategory panelCategory = siteAdministrationPanelCategoryDisplayContext.getP
 				</c:when>
 				<c:otherwise>
 					<div class="sticker sticker-default">
-						<aui:icon image="sites" markupView="lexicon" />
+						<aui:icon image="<%= group.getIconCssClass() %>" markupView="lexicon" />
 					</div>
 				</c:otherwise>
 			</c:choose>

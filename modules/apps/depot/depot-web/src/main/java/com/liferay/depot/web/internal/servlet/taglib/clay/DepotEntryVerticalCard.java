@@ -100,7 +100,7 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public String getIcon() {
-		return "repository";
+		return _group.getIconCssClass();
 	}
 
 	@Override

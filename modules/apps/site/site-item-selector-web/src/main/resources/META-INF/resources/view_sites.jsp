@@ -81,7 +81,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-icon
-						icon="sites"
+						icon="<%= group.getIconCssClass() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
@@ -160,7 +160,7 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 									<div class="aspect-ratio card-item-first selector-button" <%= AUIUtil.buildData(data) %>>
 										<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
 											<svg class="lexicon-icon" focusable="false" role="presentation">
-												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#sites" />
+												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= group.getIconCssClass() %>" />
 											</svg>
 										</div>
 									</div>

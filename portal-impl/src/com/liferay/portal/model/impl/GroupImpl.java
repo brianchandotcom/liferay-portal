@@ -320,6 +320,9 @@ public class GroupImpl extends GroupBaseImpl {
 		else if (isUser()) {
 			iconCss = "user";
 		}
+		else if (getType() == GroupConstants.TYPE_DEPOT) {
+			iconCss = "repository";
+		}
 
 		return iconCss;
 	}

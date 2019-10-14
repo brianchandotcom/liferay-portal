@@ -28,6 +28,8 @@ public class OASConstants {
 
 	public static final String ITEMS = "items";
 
+	public static final String OBJECT = "object";
+
 	public static final String OPERATION_DELETE = "delete";
 
 	public static final String OPERATION_GET = "get";

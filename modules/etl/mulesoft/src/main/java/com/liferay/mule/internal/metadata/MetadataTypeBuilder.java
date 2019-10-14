@@ -238,6 +238,16 @@ public class MetadataTypeBuilder {
 		return typeJsonNode.textValue();
 	}
 
+	private void _resolveAdditionalPropertiesMetadataType(
+		ObjectFieldTypeBuilder objectFieldTypeBuilder) {
+
+		objectFieldTypeBuilder.value(
+		).objectType(
+		).description(
+			"Dictionary"
+		);
+	}
+
 	private MetadataType _resolveAnyMetadataType(
 		MetadataContext metadataContext) {
 
@@ -368,6 +378,14 @@ public class MetadataTypeBuilder {
 		if (typeJsonNode == null) {
 			_resolveNestedObjectMetadataType(
 				objectFieldTypeBuilder, oasJsonNode, propertyJsonNode);
+
+			return;
+		}
+		else if (Objects.equals(
+					typeJsonNode.textValue(), OASConstants.OBJECT) &&
+				 propertyJsonNode.has(OASConstants.ADDITIONAL_PROPERTIES)) {
+
+			_resolveAdditionalPropertiesMetadataType(objectFieldTypeBuilder);
 
 			return;
 		}

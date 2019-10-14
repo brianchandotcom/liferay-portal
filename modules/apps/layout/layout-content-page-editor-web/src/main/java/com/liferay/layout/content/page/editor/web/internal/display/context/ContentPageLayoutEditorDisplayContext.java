@@ -210,8 +210,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 			segmentsExperienceSoyContext.put(
 				"hasLockedSegmentsExperiment",
-				_hasLockedSegmentsExperiment(
-					segmentsExperience.getSegmentsExperienceId())
+				segmentsExperience.hasSegmentsExperiment()
 			).put(
 				"name", segmentsExperience.getName(themeDisplay.getLocale())
 			).put(

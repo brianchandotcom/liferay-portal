@@ -19,11 +19,11 @@ package com.liferay.account.admin.web.internal.constants;
  */
 public class AccountScreenNavigationEntryConstants {
 
-	public static final String CATEGORY_KEY_DETAIL = "detail";
+	public static final String CATEGORY_KEY_DETAILS = "details";
 
 	public static final String CATEGORY_KEY_USERS = "users";
 
-	public static final String ENTRY_KEY_DETAIL = "detail";
+	public static final String ENTRY_KEY_DETAILS = "details";
 
 	public static final String ENTRY_KEY_USERS = "users";
 

@@ -33,28 +33,28 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountDetailScreenNavigationCategory
+public class AccountDetailsScreenNavigationCategory
 	extends BaseAccountScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_DETAIL;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_DETAILS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_DETAIL;
+		return AccountScreenNavigationEntryConstants.ENTRY_KEY_DETAILS;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/account/detail.jsp";
+		return "/account/details.jsp";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "detail");
+		return LanguageUtil.get(locale, "details");
 	}
 
 }

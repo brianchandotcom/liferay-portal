@@ -44,7 +44,7 @@ const Header = ({
 			</ClayNavigationBar>
 
 			<ClayNavigationBar>
-				<ClayNavigationBar.Item>
+				<ClayNavigationBar.Item className="btn-group-item">
 					<ClayButton
 						borderless
 						displayType="secondary"
@@ -55,15 +55,21 @@ const Header = ({
 					</ClayButton>
 				</ClayNavigationBar.Item>
 
-				<ClayNavigationBar.Item>
-					<ClayButton borderless displayType="secondary" monospaced>
+				<ClayNavigationBar.Item className="btn-group-item">
+					<ClayButton
+						borderless
+						displayType="secondary"
+						monospaced
+					>
 						<ClayIcon symbol="info-panel-open" />
 					</ClayButton>
 				</ClayNavigationBar.Item>
 
-				<ClayButton displayType="primary" onClick={handleClickDone}>
-					{Liferay.Language.get('done')}
-				</ClayButton>
+				<ClayNavigationBar.Item>
+					<ClayButton displayType="primary" onClick={handleClickDone}>
+						{Liferay.Language.get('done')}
+					</ClayButton>
+				</ClayNavigationBar.Item>
 			</ClayNavigationBar>
 		</div>
 	</div>

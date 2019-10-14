@@ -920,6 +920,10 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portlet.usersadmin.util.UsersAdminImpl">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portlet.webproxy">
 		<priority value="INFO" />
 	</category>

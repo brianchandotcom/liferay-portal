@@ -35,14 +35,6 @@ public class UserInitialsGeneratorUtil {
 		return _userInitialsGenerator.getInitials(user);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public static UserInitialsGenerator getUserInitialsGenerator() {
-		return _userInitialsGenerator;
-	}
-
 	private static volatile UserInitialsGenerator _userInitialsGenerator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserInitialsGenerator.class, UserInitialsGeneratorUtil.class,

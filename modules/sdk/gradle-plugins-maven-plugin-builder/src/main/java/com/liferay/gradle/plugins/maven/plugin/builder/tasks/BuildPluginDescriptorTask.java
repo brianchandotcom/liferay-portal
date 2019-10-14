@@ -27,13 +27,19 @@ import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -42,6 +48,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
@@ -480,6 +490,30 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		File dir = new File(getClassesDir(), "META-INF/maven");
 
+		Files.walkFileTree(
+			dir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String fileName = String.valueOf(filePath.getFileName());
+
+					if (fileName.endsWith(".xml")) {
+						try {
+							_formatXML(filePath);
+						}
+						catch (Exception e) {
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
 		File outputDir = getOutputDir();
 
 		project.delete(outputDir);
@@ -591,6 +625,44 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 
 		XMLUtil.write(document, pomFile);
+	}
+
+	private void _formatXML(Path filePath) throws Exception {
+		String content = new String(
+			Files.readAllBytes(filePath), StandardCharsets.UTF_8);
+
+		SAXReader saxReader = new SAXReader();
+
+		org.dom4j.Document document = saxReader.read(new StringReader(content));
+
+		OutputFormat outputFormat = OutputFormat.createPrettyPrint();
+
+		outputFormat.setExpandEmptyElements(false);
+		outputFormat.setIndent("\t");
+		outputFormat.setLineSeparator("\n");
+		outputFormat.setTrimText(true);
+
+		StringWriter stringWriter = new StringWriter();
+
+		XMLWriter xmlWriter = new XMLWriter(stringWriter, outputFormat);
+
+		xmlWriter.write(document);
+
+		content = stringWriter.toString();
+
+		content = content.trim();
+
+		while (content.contains(" \n")) {
+			content = content.replace(" \n", "\n");
+		}
+
+		content = content.replace("-->\n<", "-->\n\n<");
+
+		content = content.replace(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+			"<?xml version=\"1.0\"?>");
+
+		Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private String _getComments(JavaMethod javaMethod) {

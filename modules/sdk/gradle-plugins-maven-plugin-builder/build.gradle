@@ -17,6 +17,7 @@ copyGradleTestDependencies {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
+	compile group: "org.dom4j", name: "dom4j", version: "2.0.0"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }

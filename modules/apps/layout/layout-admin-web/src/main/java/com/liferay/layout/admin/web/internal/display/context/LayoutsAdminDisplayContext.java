@@ -427,8 +427,9 @@ public class LayoutsAdminDisplayContext {
 				layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getType(),
-				layout.getTypeSettings(), true, true, Collections.emptyMap(),
-				serviceContext);
+				layout.getTypeSettings(), true, true,
+				layout.getMasterLayoutPageTemplateEntryId(),
+				Collections.emptyMap(), serviceContext);
 
 			_layoutCopyHelper.copyLayout(layout, draftLayout);
 		}

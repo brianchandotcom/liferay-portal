@@ -377,6 +377,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, true, true,
+				layout.getMasterLayoutPageTemplateEntryId(),
 				Collections.emptyMap(), serviceContext);
 		}
 

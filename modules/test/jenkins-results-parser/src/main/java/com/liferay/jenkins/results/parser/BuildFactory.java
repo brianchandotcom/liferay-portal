@@ -75,6 +75,9 @@ public class BuildFactory {
 				return new StandaloneTopLevelBuild(
 					url, (TopLevelBuild)parentBuild);
 			}
+
+			return new PortalPullRequestTesterTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
 		}
 
 		if ((parentBuild != null) &&

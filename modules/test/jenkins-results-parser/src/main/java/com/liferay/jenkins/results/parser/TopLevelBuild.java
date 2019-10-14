@@ -249,46 +249,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return metricLabels;
 	}
 
-	public String getStableResult() {
-		if (_stableJob == null) {
-			return null;
-		}
-
-		if (_stableResult != null) {
-			return _stableResult;
-		}
-
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
-
-		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
-
-		if (stableDownstreamBuildsSize == 0) {
-			return null;
-		}
-
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		int completedCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, null, "completed");
-
-		if (completedCount != stableDownstreamBuildsSize) {
-			return null;
-		}
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
-
-		if (successCount == stableDownstreamBuildsSize) {
-			_stableResult = "SUCCESS";
-		}
-		else {
-			_stableResult = "FAILURE";
-		}
-
-		return _stableResult;
-	}
-
 	@Override
 	public String getStatusReport(int indentSize) {
 		String statusReport = super.getStatusReport(indentSize);
@@ -430,21 +390,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 					StatsDMetricsUtil.generateGaugeDeltaMetric(
 						"build_slave_usage_gauge", 1, getMetricLabels()));
 			}
-		}
-
-		try {
-			String testSuiteName = getTestSuiteName();
-
-			if (jobName.contains("test-portal-acceptance-pullrequest(") &&
-				testSuiteName.equals("relevant")) {
-
-				_stableJob = JobFactory.newJob(jobName, "stable", branchName);
-			}
-		}
-		catch (Exception e) {
-			System.out.println("Unable to create stable job for " + jobName);
-
-			e.printStackTrace();
 		}
 	}
 
@@ -855,27 +800,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		int failCount =
 			getDownstreamBuildCount(null) -
 				getDownstreamBuildCountByResult("SUCCESS") + 1;
-
-		return Dom4JUtil.getNewElement(
-			"div", null,
-			Dom4JUtil.getNewElement(
-				"h4", null, String.valueOf(failCount), " Failed Jobs:"),
-			jobSummaryListElement);
-	}
-
-	protected Element getFailedStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		Element jobSummaryListElement = getJobSummaryListElement(
-			false, stableBatchNames);
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
-
-		int failCount =
-			getJobVariantsDownstreamBuildCount(stableBatchNames, null, null) -
-				successCount;
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
@@ -1344,83 +1268,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement("h3", null, sb.toString());
 	}
 
-	protected List<Build> getStableDownstreamBuilds() {
-		if (_stableJob != null) {
-			return getJobVariantsDownstreamBuilds(
-				new ArrayList(_stableJob.getBatchNames()), null, null);
-		}
-
-		return new ArrayList();
-	}
-
-	protected Element getStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
-
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
-
-		Element detailsElement = Dom4JUtil.getNewElement(
-			"details", null,
-			Dom4JUtil.getNewElement(
-				"summary", null,
-				Dom4JUtil.getNewElement(
-					"strong", null, "ci:test:stable - ",
-					String.valueOf(successCount), " out of ",
-					String.valueOf(stableDownstreamBuilds.size()),
-					" jobs PASSED")));
-
-		int stableBuildCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, null, null);
-
-		if (successCount < stableBuildCount) {
-			Dom4JUtil.addToElement(
-				detailsElement, getFailedStableJobSummaryElement());
-		}
-
-		if (successCount > 0) {
-			Dom4JUtil.addToElement(
-				detailsElement, getSuccessfulStableJobSummaryElement());
-		}
-
-		return detailsElement;
-	}
-
-	protected Element getStableResultElement() {
-		if (_stableJob == null) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
-
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
-
-		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
-
-		if (successCount == stableDownstreamBuildsSize) {
-			sb.append(":heavy_check_mark: ");
-		}
-		else {
-			sb.append(":x: ");
-		}
-
-		sb.append("ci:test:stable - ");
-		sb.append(String.valueOf(successCount));
-		sb.append(" out of ");
-		sb.append(String.valueOf(stableDownstreamBuildsSize));
-		sb.append(" jobs passed");
-
-		return Dom4JUtil.getNewElement("h3", null, sb.toString());
-	}
-
 	@Override
 	protected String getStartPropertiesTempMapURL() {
 		if (fromArchive) {
@@ -1459,26 +1306,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 		if ((result != null) && result.equals("SUCCESS")) {
 			successCount++;
 		}
-
-		return Dom4JUtil.getNewElement(
-			"details", null,
-			Dom4JUtil.getNewElement(
-				"summary", null,
-				Dom4JUtil.getNewElement(
-					"strong", null, String.valueOf(successCount),
-					" Successful Jobs:")),
-			jobSummaryListElement);
-	}
-
-	protected Element getSuccessfulStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		Element jobSummaryListElement = getJobSummaryListElement(
-			true, stableBatchNames);
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
 
 		return Dom4JUtil.getNewElement(
 			"details", null,
@@ -1540,16 +1367,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		Element rootElement = Dom4JUtil.getNewElement("html");
 
-		List<Build> stableDownstreamBuilds = new ArrayList<>();
-
-		if (_stableJob != null) {
-			stableDownstreamBuilds.addAll(getStableDownstreamBuilds());
-		}
-
-		if (!stableDownstreamBuilds.isEmpty()) {
-			rootElement.add(getStableResultElement());
-		}
-
 		rootElement.add(getResultElement());
 
 		Element detailsElement = Dom4JUtil.getNewElement(
@@ -1578,11 +1395,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-
-		if (!stableDownstreamBuilds.isEmpty()) {
-			Dom4JUtil.addToElement(
-				detailsElement, getStableJobSummaryElement());
 		}
 
 		Dom4JUtil.addToElement(
@@ -1739,8 +1551,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 	private String _metricsHostName;
 	private int _metricsHostPort;
 	private final boolean _sendBuildMetrics;
-	private Job _stableJob;
-	private String _stableResult;
 	private long _updateDuration;
 
 }

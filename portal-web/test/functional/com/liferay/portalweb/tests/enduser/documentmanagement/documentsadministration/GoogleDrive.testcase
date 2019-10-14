@@ -504,10 +504,10 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-91174. It ensures that google drive can not be saved and returned to portal after logout current user."
+	@description = "This test covers LPS-91174. It ensures that a user cannot save a Google Doc in Portal after logging out."
 	@priority = "5"
-	test SaveGoogleDocAfterLogoutCurrentUser {
-		property test.name.skip.portal.instance = "GoogleDrive#SaveGoogleDocAfterLogoutCurrentUser";
+	test SaveGoogleDocAfterLoggingOut {
+		property test.name.skip.portal.instance = "GoogleDrive#SaveGoogleDocAfterLoggingOut";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

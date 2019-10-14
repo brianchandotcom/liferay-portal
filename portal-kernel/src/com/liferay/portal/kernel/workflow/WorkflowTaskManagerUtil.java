@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -78,6 +79,14 @@ public class WorkflowTaskManagerUtil {
 
 		return getWorkflowTaskManager().getNextTransitionNames(
 			companyId, userId, workflowTaskId);
+	}
+
+	public static List<User> getPooledActors(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().getPooledActors(
+			companyId, workflowTaskId);
 	}
 
 	public static long[] getPooledActorsIds(long companyId, long workflowTaskId)
@@ -245,6 +254,20 @@ public class WorkflowTaskManagerUtil {
 	}
 
 	public static List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().search(
+			companyId, userId, assetTitle, taskName, assetTypes,
+			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, andOperator, start, end, orderByComparator);
+	}
+
+	public static List<WorkflowTask> search(
 			long companyId, long userId, String keywords, String[] assetTypes,
 			Boolean completed, Boolean searchByUserRoles, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
@@ -273,6 +296,19 @@ public class WorkflowTaskManagerUtil {
 		return getWorkflowTaskManager().searchCount(
 			companyId, userId, taskName, assetType, assetPrimaryKeys, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator);
+	}
+
+	public static int searchCount(
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().searchCount(
+			companyId, userId, assetTitle, taskName, assetTypes,
+			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, andOperator);
 	}
 
 	public static int searchCount(

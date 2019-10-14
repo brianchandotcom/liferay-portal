@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PasswordExpiredException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.SendPasswordException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -4023,10 +4024,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String roleName = role.getName();
 
 		if ((roleName.equals(RoleConstants.ADMINISTRATOR) &&
-			 (getRoleUsersCount(role.getRoleId()) <= 1)) ||
-			roleName.equals(RoleConstants.USER)) {
+			 (getRoleUsersCount(role.getRoleId()) <= 1))) {
 
-			return;
+			throw new RequiredRoleException.RequiredAdminRoleException();
+		}
+
+		if (roleName.equals(RoleConstants.USER)) {
+			throw new RequiredRoleException.RequiredUserRoleException();
 		}
 
 		rolePersistence.removeUsers(roleId, users);
@@ -4051,11 +4055,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String roleName = role.getName();
 
-		if (roleName.equals(RoleConstants.USER) ||
-			(roleName.equals(RoleConstants.ADMINISTRATOR) &&
+		if ((roleName.equals(RoleConstants.ADMINISTRATOR) &&
 			 (getRoleUsersCount(role.getRoleId()) <= 1))) {
 
-			return;
+			throw new RequiredRoleException.RequiredAdminRoleException();
+		}
+
+		if (roleName.equals(RoleConstants.USER)) {
+			throw new RequiredRoleException.RequiredUserRoleException();
 		}
 
 		rolePersistence.removeUsers(roleId, userIds);

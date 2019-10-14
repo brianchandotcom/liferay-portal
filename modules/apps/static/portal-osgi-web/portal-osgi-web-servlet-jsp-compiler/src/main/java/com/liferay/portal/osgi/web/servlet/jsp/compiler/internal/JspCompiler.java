@@ -240,6 +240,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		_options.add("-proc:none");
 	}
 
+	@Override
+	public void setClassPath(List<File> path) {
+	}
+
 	public void setDebug(boolean debug) {
 		if (debug) {
 			_options.add("-g");

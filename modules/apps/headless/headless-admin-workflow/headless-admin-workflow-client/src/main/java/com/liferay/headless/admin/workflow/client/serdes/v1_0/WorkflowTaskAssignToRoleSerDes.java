@@ -14,8 +14,11 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -30,24 +33,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChangeTransitionSerDes {
+public class WorkflowTaskAssignToRoleSerDes {
 
-	public static ChangeTransition toDTO(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+	public static WorkflowTaskAssignToRole toDTO(String json) {
+		WorkflowTaskAssignToRoleJSONParser workflowTaskAssignToRoleJSONParser =
+			new WorkflowTaskAssignToRoleJSONParser();
 
-		return changeTransitionJSONParser.parseToDTO(json);
+		return workflowTaskAssignToRoleJSONParser.parseToDTO(json);
 	}
 
-	public static ChangeTransition[] toDTOs(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+	public static WorkflowTaskAssignToRole[] toDTOs(String json) {
+		WorkflowTaskAssignToRoleJSONParser workflowTaskAssignToRoleJSONParser =
+			new WorkflowTaskAssignToRoleJSONParser();
 
-		return changeTransitionJSONParser.parseToDTOs(json);
+		return workflowTaskAssignToRoleJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ChangeTransition changeTransition) {
-		if (changeTransition == null) {
+	public static String toJSON(
+		WorkflowTaskAssignToRole workflowTaskAssignToRole) {
+
+		if (workflowTaskAssignToRole == null) {
 			return "null";
 		}
 
@@ -55,7 +60,10 @@ public class ChangeTransitionSerDes {
 
 		sb.append("{");
 
-		if (changeTransition.getComment() != null) {
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (workflowTaskAssignToRole.getComment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -64,23 +72,35 @@ public class ChangeTransitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(changeTransition.getComment()));
+			sb.append(_escape(workflowTaskAssignToRole.getComment()));
 
 			sb.append("\"");
 		}
 
-		if (changeTransition.getTransition() != null) {
+		if (workflowTaskAssignToRole.getDueDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transition\": ");
+			sb.append("\"dueDate\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(changeTransition.getTransition()));
+			sb.append(
+				liferayToJSONDateFormat.format(
+					workflowTaskAssignToRole.getDueDate()));
 
 			sb.append("\"");
+		}
+
+		if (workflowTaskAssignToRole.getRoleId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleId\": ");
+
+			sb.append(workflowTaskAssignToRole.getRoleId());
 		}
 
 		sb.append("}");
@@ -89,64 +109,83 @@ public class ChangeTransitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+		WorkflowTaskAssignToRoleJSONParser workflowTaskAssignToRoleJSONParser =
+			new WorkflowTaskAssignToRoleJSONParser();
 
-		return changeTransitionJSONParser.parseToMap(json);
+		return workflowTaskAssignToRoleJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ChangeTransition changeTransition) {
-		if (changeTransition == null) {
+	public static Map<String, String> toMap(
+		WorkflowTaskAssignToRole workflowTaskAssignToRole) {
+
+		if (workflowTaskAssignToRole == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (changeTransition.getComment() == null) {
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (workflowTaskAssignToRole.getComment() == null) {
 			map.put("comment", null);
 		}
 		else {
-			map.put("comment", String.valueOf(changeTransition.getComment()));
+			map.put(
+				"comment",
+				String.valueOf(workflowTaskAssignToRole.getComment()));
 		}
 
-		if (changeTransition.getTransition() == null) {
-			map.put("transition", null);
+		map.put(
+			"dueDate",
+			liferayToJSONDateFormat.format(
+				workflowTaskAssignToRole.getDueDate()));
+
+		if (workflowTaskAssignToRole.getRoleId() == null) {
+			map.put("roleId", null);
 		}
 		else {
 			map.put(
-				"transition", String.valueOf(changeTransition.getTransition()));
+				"roleId", String.valueOf(workflowTaskAssignToRole.getRoleId()));
 		}
 
 		return map;
 	}
 
-	public static class ChangeTransitionJSONParser
-		extends BaseJSONParser<ChangeTransition> {
+	public static class WorkflowTaskAssignToRoleJSONParser
+		extends BaseJSONParser<WorkflowTaskAssignToRole> {
 
 		@Override
-		protected ChangeTransition createDTO() {
-			return new ChangeTransition();
+		protected WorkflowTaskAssignToRole createDTO() {
+			return new WorkflowTaskAssignToRole();
 		}
 
 		@Override
-		protected ChangeTransition[] createDTOArray(int size) {
-			return new ChangeTransition[size];
+		protected WorkflowTaskAssignToRole[] createDTOArray(int size) {
+			return new WorkflowTaskAssignToRole[size];
 		}
 
 		@Override
 		protected void setField(
-			ChangeTransition changeTransition, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			WorkflowTaskAssignToRole workflowTaskAssignToRole,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "comment")) {
 				if (jsonParserFieldValue != null) {
-					changeTransition.setComment((String)jsonParserFieldValue);
+					workflowTaskAssignToRole.setComment(
+						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "transition")) {
+			else if (Objects.equals(jsonParserFieldName, "dueDate")) {
 				if (jsonParserFieldValue != null) {
-					changeTransition.setTransition(
-						(String)jsonParserFieldValue);
+					workflowTaskAssignToRole.setDueDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleId")) {
+				if (jsonParserFieldValue != null) {
+					workflowTaskAssignToRole.setRoleId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else {

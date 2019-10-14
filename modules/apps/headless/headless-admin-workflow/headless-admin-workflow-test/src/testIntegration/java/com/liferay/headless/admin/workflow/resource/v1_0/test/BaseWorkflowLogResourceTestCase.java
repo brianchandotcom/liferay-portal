@@ -476,8 +476,24 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("previousRole", additionalAssertFieldName)) {
+				if (workflowLog.getPreviousRole() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("previousState", additionalAssertFieldName)) {
 				if (workflowLog.getPreviousState() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("role", additionalAssertFieldName)) {
+				if (workflowLog.getRole() == null) {
 					valid = false;
 				}
 
@@ -627,10 +643,31 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("previousRole", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowLog1.getPreviousRole(),
+						workflowLog2.getPreviousRole())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("previousState", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						workflowLog1.getPreviousState(),
 						workflowLog2.getPreviousState())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("role", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workflowLog1.getRole(), workflowLog2.getRole())) {
 
 					return false;
 				}
@@ -861,12 +898,22 @@ public abstract class BaseWorkflowLogResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("previousRole")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("previousState")) {
 			sb.append("'");
 			sb.append(String.valueOf(workflowLog.getPreviousState()));
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("role")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("state")) {

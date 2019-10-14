@@ -153,6 +153,27 @@ public class WorkflowLog {
 
 	protected Creator previousPerson;
 
+	public Role getPreviousRole() {
+		return previousRole;
+	}
+
+	public void setPreviousRole(Role previousRole) {
+		this.previousRole = previousRole;
+	}
+
+	public void setPreviousRole(
+		UnsafeSupplier<Role, Exception> previousRoleUnsafeSupplier) {
+
+		try {
+			previousRole = previousRoleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Role previousRole;
+
 	public String getPreviousState() {
 		return previousState;
 	}
@@ -173,6 +194,25 @@ public class WorkflowLog {
 	}
 
 	protected String previousState;
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public void setRole(UnsafeSupplier<Role, Exception> roleUnsafeSupplier) {
+		try {
+			role = roleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Role role;
 
 	public String getState() {
 		return state;

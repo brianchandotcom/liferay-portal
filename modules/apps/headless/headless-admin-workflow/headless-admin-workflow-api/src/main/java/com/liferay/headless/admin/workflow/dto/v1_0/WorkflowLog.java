@@ -221,6 +221,35 @@ public class WorkflowLog {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Creator previousPerson;
 
+	@Schema
+	@Valid
+	public Role getPreviousRole() {
+		return previousRole;
+	}
+
+	public void setPreviousRole(Role previousRole) {
+		this.previousRole = previousRole;
+	}
+
+	@JsonIgnore
+	public void setPreviousRole(
+		UnsafeSupplier<Role, Exception> previousRoleUnsafeSupplier) {
+
+		try {
+			previousRole = previousRoleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Role previousRole;
+
 	@Schema(description = "The workflow's previous state.")
 	public String getPreviousState() {
 		return previousState;
@@ -248,6 +277,33 @@ public class WorkflowLog {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String previousState;
+
+	@Schema
+	@Valid
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@JsonIgnore
+	public void setRole(UnsafeSupplier<Role, Exception> roleUnsafeSupplier) {
+		try {
+			role = roleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Role role;
 
 	@Schema(description = "The workflow's current state.")
 	public String getState() {
@@ -429,6 +485,16 @@ public class WorkflowLog {
 			sb.append(String.valueOf(previousPerson));
 		}
 
+		if (previousRole != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"previousRole\": ");
+
+			sb.append(String.valueOf(previousRole));
+		}
+
 		if (previousState != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -441,6 +507,16 @@ public class WorkflowLog {
 			sb.append(_escape(previousState));
 
 			sb.append("\"");
+		}
+
+		if (role != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"role\": ");
+
+			sb.append(String.valueOf(role));
 		}
 
 		if (state != null) {

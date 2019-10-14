@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -61,6 +63,36 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (workflowTask.getAssigneePerson() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assigneePerson\": ");
+
+			sb.append(String.valueOf(workflowTask.getAssigneePerson()));
+		}
+
+		if (workflowTask.getAssigneeRoles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assigneeRoles\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < workflowTask.getAssigneeRoles().length; i++) {
+				sb.append(String.valueOf(workflowTask.getAssigneeRoles()[i]));
+
+				if ((i + 1) < workflowTask.getAssigneeRoles().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (workflowTask.getCompleted() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -71,18 +103,18 @@ public class WorkflowTaskSerDes {
 			sb.append(workflowTask.getCompleted());
 		}
 
-		if (workflowTask.getDateCompleted() != null) {
+		if (workflowTask.getDateCompletion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dateCompleted\": ");
+			sb.append("\"dateCompletion\": ");
 
 			sb.append("\"");
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					workflowTask.getDateCompleted()));
+					workflowTask.getDateCompletion()));
 
 			sb.append("\"");
 		}
@@ -102,6 +134,31 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
+		if (workflowTask.getDateDue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateDue\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(workflowTask.getDateDue()));
+
+			sb.append("\"");
+		}
+
+		if (workflowTask.getDefinitionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"definitionId\": ");
+
+			sb.append(workflowTask.getDefinitionId());
+		}
+
 		if (workflowTask.getDefinitionName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -112,6 +169,20 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(workflowTask.getDefinitionName()));
+
+			sb.append("\"");
+		}
+
+		if (workflowTask.getDefinitionVersion() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"definitionVersion\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowTask.getDefinitionVersion()));
 
 			sb.append("\"");
 		}
@@ -130,21 +201,6 @@ public class WorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
-		if (workflowTask.getDueDate() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dueDate\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				liferayToJSONDateFormat.format(workflowTask.getDueDate()));
-
-			sb.append("\"");
-		}
-
 		if (workflowTask.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -153,6 +209,16 @@ public class WorkflowTaskSerDes {
 			sb.append("\"id\": ");
 
 			sb.append(workflowTask.getId());
+		}
+
+		if (workflowTask.getInstanceId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"instanceId\": ");
+
+			sb.append(workflowTask.getInstanceId());
 		}
 
 		if (workflowTask.getName() != null) {
@@ -179,30 +245,6 @@ public class WorkflowTaskSerDes {
 			sb.append(String.valueOf(workflowTask.getObjectReviewed()));
 		}
 
-		if (workflowTask.getTransitions() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"transitions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < workflowTask.getTransitions().length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(workflowTask.getTransitions()[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < workflowTask.getTransitions().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -225,6 +267,24 @@ public class WorkflowTaskSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (workflowTask.getAssigneePerson() == null) {
+			map.put("assigneePerson", null);
+		}
+		else {
+			map.put(
+				"assigneePerson",
+				String.valueOf(workflowTask.getAssigneePerson()));
+		}
+
+		if (workflowTask.getAssigneeRoles() == null) {
+			map.put("assigneeRoles", null);
+		}
+		else {
+			map.put(
+				"assigneeRoles",
+				String.valueOf(workflowTask.getAssigneeRoles()));
+		}
+
 		if (workflowTask.getCompleted() == null) {
 			map.put("completed", null);
 		}
@@ -233,12 +293,24 @@ public class WorkflowTaskSerDes {
 		}
 
 		map.put(
-			"dateCompleted",
-			liferayToJSONDateFormat.format(workflowTask.getDateCompleted()));
+			"dateCompletion",
+			liferayToJSONDateFormat.format(workflowTask.getDateCompletion()));
 
 		map.put(
 			"dateCreated",
 			liferayToJSONDateFormat.format(workflowTask.getDateCreated()));
+
+		map.put(
+			"dateDue",
+			liferayToJSONDateFormat.format(workflowTask.getDateDue()));
+
+		if (workflowTask.getDefinitionId() == null) {
+			map.put("definitionId", null);
+		}
+		else {
+			map.put(
+				"definitionId", String.valueOf(workflowTask.getDefinitionId()));
+		}
 
 		if (workflowTask.getDefinitionName() == null) {
 			map.put("definitionName", null);
@@ -249,6 +321,15 @@ public class WorkflowTaskSerDes {
 				String.valueOf(workflowTask.getDefinitionName()));
 		}
 
+		if (workflowTask.getDefinitionVersion() == null) {
+			map.put("definitionVersion", null);
+		}
+		else {
+			map.put(
+				"definitionVersion",
+				String.valueOf(workflowTask.getDefinitionVersion()));
+		}
+
 		if (workflowTask.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -257,15 +338,18 @@ public class WorkflowTaskSerDes {
 				"description", String.valueOf(workflowTask.getDescription()));
 		}
 
-		map.put(
-			"dueDate",
-			liferayToJSONDateFormat.format(workflowTask.getDueDate()));
-
 		if (workflowTask.getId() == null) {
 			map.put("id", null);
 		}
 		else {
 			map.put("id", String.valueOf(workflowTask.getId()));
+		}
+
+		if (workflowTask.getInstanceId() == null) {
+			map.put("instanceId", null);
+		}
+		else {
+			map.put("instanceId", String.valueOf(workflowTask.getInstanceId()));
 		}
 
 		if (workflowTask.getName() == null) {
@@ -282,14 +366,6 @@ public class WorkflowTaskSerDes {
 			map.put(
 				"objectReviewed",
 				String.valueOf(workflowTask.getObjectReviewed()));
-		}
-
-		if (workflowTask.getTransitions() == null) {
-			map.put("transitions", null);
-		}
-		else {
-			map.put(
-				"transitions", String.valueOf(workflowTask.getTransitions()));
 		}
 
 		return map;
@@ -313,14 +389,32 @@ public class WorkflowTaskSerDes {
 			WorkflowTask workflowTask, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "completed")) {
+			if (Objects.equals(jsonParserFieldName, "assigneePerson")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setAssigneePerson(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assigneeRoles")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setAssigneeRoles(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> RoleSerDes.toDTO((String)object)
+						).toArray(
+							size -> new Role[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "completed")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setCompleted((Boolean)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "dateCompleted")) {
+			else if (Objects.equals(jsonParserFieldName, "dateCompletion")) {
 				if (jsonParserFieldValue != null) {
-					workflowTask.setDateCompleted(
+					workflowTask.setDateCompletion(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
@@ -330,9 +424,27 @@ public class WorkflowTaskSerDes {
 						toDate((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "dateDue")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setDateDue(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "definitionId")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setDefinitionId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "definitionName")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setDefinitionName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "definitionVersion")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setDefinitionVersion(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -341,15 +453,15 @@ public class WorkflowTaskSerDes {
 					workflowTask.setDescription((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "dueDate")) {
-				if (jsonParserFieldValue != null) {
-					workflowTask.setDueDate(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					workflowTask.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "instanceId")) {
+				if (jsonParserFieldValue != null) {
+					workflowTask.setInstanceId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -363,12 +475,6 @@ public class WorkflowTaskSerDes {
 					workflowTask.setObjectReviewed(
 						ObjectReviewedSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "transitions")) {
-				if (jsonParserFieldValue != null) {
-					workflowTask.setTransitions(
-						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else {

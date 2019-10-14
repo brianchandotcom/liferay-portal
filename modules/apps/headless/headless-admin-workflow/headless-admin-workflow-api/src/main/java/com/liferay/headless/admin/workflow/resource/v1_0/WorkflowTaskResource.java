@@ -17,12 +17,16 @@ package com.liferay.headless.admin.workflow.resource.v1_0;
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.util.Date;
 
 import javax.annotation.Generated;
 
@@ -45,8 +49,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WorkflowTaskResource {
 
-	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-			Long roleId, Pagination pagination)
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+			Long workflowInstanceId, Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTasksPage(
+			Boolean andOperator, Long[] assetPrimaryKeys, String assetTitle,
+			String[] assetTypes, Boolean completed, Date dateDueEnd,
+			Date dateDueStart, Boolean searchByUserRoles, String taskName,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Page<WorkflowTask> getWorkflowTasksAssignedToMePage(
@@ -57,10 +68,31 @@ public interface WorkflowTaskResource {
 			Pagination pagination)
 		throws Exception;
 
+	public Page<WorkflowTask> getWorkflowTasksAssignedToRolePage(
+			Long roleId, Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTasksAssignedToUserPage(
+			Long assigneeId, Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTasksAssignedToUserRolesPage(
+			Long assigneeId, Pagination pagination)
+		throws Exception;
+
+	public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
+			Long creatorId, Pagination pagination)
+		throws Exception;
+
 	public WorkflowTask getWorkflowTask(Long workflowTaskId) throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToMe(
 			Long workflowTaskId, WorkflowTaskAssignToMe workflowTaskAssignToMe)
+		throws Exception;
+
+	public WorkflowTask postWorkflowTaskAssignToRole(
+			Long workflowTaskId,
+			WorkflowTaskAssignToRole workflowTaskAssignToRole)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskAssignToUser(
@@ -70,6 +102,9 @@ public interface WorkflowTaskResource {
 
 	public WorkflowTask postWorkflowTaskChangeTransition(
 			Long workflowTaskId, ChangeTransition changeTransition)
+		throws Exception;
+
+	public String getWorkflowTaskHasOtherAssignableUser(Long workflowTaskId)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(

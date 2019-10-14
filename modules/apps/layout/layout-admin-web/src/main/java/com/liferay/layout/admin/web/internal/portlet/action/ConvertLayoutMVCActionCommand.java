@@ -101,15 +101,6 @@ public class ConvertLayoutMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		Layout draftLayout = _layoutLocalService.addLayout(
-			layout.getUserId(), layout.getGroupId(), layout.isPrivateLayout(),
-			layout.getParentLayoutId(),
-			_classNameLocalService.getClassNameId(Layout.class),
-			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getType(), layout.getTypeSettings(),
-			true, true, Collections.emptyMap(), serviceContext);
-
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
@@ -142,6 +133,15 @@ public class ConvertLayoutMVCActionCommand
 					layout.getGroupId(), _portal.getClassNameId(Layout.class),
 					layout.getPlid(), layoutDataJSONObject.toString());
 		}
+
+		Layout draftLayout = _layoutLocalService.addLayout(
+			layout.getUserId(), layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getParentLayoutId(),
+			_classNameLocalService.getClassNameId(Layout.class),
+			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getType(), layout.getTypeSettings(),
+			true, true, Collections.emptyMap(), serviceContext);
 
 		_layoutCopyHelper.copyLayout(layout, draftLayout);
 

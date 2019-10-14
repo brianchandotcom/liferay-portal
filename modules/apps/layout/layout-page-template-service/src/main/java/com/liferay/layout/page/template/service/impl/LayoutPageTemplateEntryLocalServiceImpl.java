@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.StagingGroupHelper;
@@ -896,12 +897,28 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(), name);
 
+		String typeSettings = StringPool.BLANK;
+
+		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE) {
+			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+			typeSettingsProperties.setProperty(
+				"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
+			typeSettingsProperties.setProperty(
+				"lfr-theme:regular:show-header", Boolean.FALSE.toString());
+			typeSettingsProperties.setProperty(
+				"lfr-theme:regular:show-header-search",
+				Boolean.FALSE.toString());
+
+			typeSettings = typeSettingsProperties.toString();
+		}
+
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
 		Layout layout = layoutLocalService.addLayout(
 			userId, groupId, privateLayout, 0, titleMap, titleMap, null, null,
-			null, layoutType, StringPool.BLANK, true, true, new HashMap<>(),
+			null, layoutType, typeSettings, true, true, new HashMap<>(),
 			serviceContext);
 
 		serviceContext.setModifiedDate(layout.getModifiedDate());
@@ -911,8 +928,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			classNameLocalService.getClassNameId(Layout.class),
 			layout.getPlid(), layout.getNameMap(), titleMap,
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layoutType, StringPool.BLANK, true, true,
-			Collections.emptyMap(), serviceContext);
+			layout.getRobotsMap(), layoutType, layout.getTypeSettings(), true,
+			true, Collections.emptyMap(), serviceContext);
 
 		return layout;
 	}

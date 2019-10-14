@@ -1,6 +1,8 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.0.0",
+		"@clayui/icon": "^3.0.0",
+		"@clayui/modal": "^3.0.0",
 		"clay": "2.18.1",
 		"clay-alert": "2.18.3",
 		"liferay-amd-loader": "4.2.0",
@@ -18,7 +20,6 @@
 		"metal-position": "2.1.2",
 		"metal-soy": "2.16.8",
 		"react": "16.9.0",
-		"react-dom": "16.9.0",
 		"svg4everybody": "^2.1.8",
 		"uuid": "^3.3.2"
 	},

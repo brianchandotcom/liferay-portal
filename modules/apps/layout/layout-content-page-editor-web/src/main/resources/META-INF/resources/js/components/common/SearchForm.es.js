@@ -20,6 +20,9 @@ const SearchForm = props => (
 	<form className="mb-3" role="search">
 		<div className="input-group">
 			<div className="input-group-item">
+				<label className="sr-only" htmlFor="searchInput">
+					{Liferay.Language.get('search-form')}
+				</label>
 				<input
 					className="form-control form-control-sm input-group-inset input-group-inset-after"
 					id="searchInput"

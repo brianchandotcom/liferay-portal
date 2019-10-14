@@ -60,3 +60,4 @@
 	# changed, so we exclude them from linting.
 	#
 	sdk/**
+	testIntegration/**

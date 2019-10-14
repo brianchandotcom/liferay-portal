@@ -15,6 +15,8 @@
 package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -116,6 +119,19 @@ public class ConvertLayoutMVCActionCommandTest {
 			originalLayout.getPlid());
 
 		Assert.assertNotNull(persistedDraftLayout);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					originalLayout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					originalLayout.getPlid());
+
+		Assert.assertNotNull(layoutPageTemplateStructure);
+
+		Assert.assertNotNull(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
 
 		Layout persistedPublishedLayout = _layoutLocalService.getLayout(
 			originalLayout.getPlid());
@@ -217,6 +233,10 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout/convert_layout")
 	private MVCActionCommand _mvcActionCommand;

@@ -34,19 +34,115 @@ export function getConfig(data) {
 		lookAndFeelURL,
 		portletNamespace,
 		publishURL,
+		sidebarPanels,
 		singleSegmentsExperienceMode
 	} = data;
 
-	return {
-		...DEFAULT_CONFIG,
-
+	// Items copied over directly without modification.
+	const copiedItems = {
 		availableLanguages,
 		defaultLanguageId,
 		discardDraftURL,
 		lookAndFeelURL,
 		portletNamespace,
 		publishURL,
-		singleSegmentsExperienceMode,
-		toolbarId: portletNamespace + DEFAULT_CONFIG.toolbarId
+		singleSegmentsExperienceMode
 	};
+
+	// Special items requiring augmentation, creation, or transformation.
+	const syntheticItems = {
+		sidebarPanels: partitionPanels(augmentPanelData(sidebarPanels)),
+		toolbarId: portletNamespace + DEFAULT_CONFIG.toolbarId,
+		toolbarPlugins: getToolbarPlugins()
+	};
+
+	return {
+		...DEFAULT_CONFIG,
+		...copiedItems,
+		...syntheticItems
+	};
+}
+
+/**
+ * In general, we expect the sidebarPanelId to correspond with the name
+ * of a plugin. Here we deal with the exceptions by mapping IDs to
+ * plugin names.
+ */
+const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
+	elements: 'section-builder',
+
+	lookAndFeel: 'look-and-feel'
+};
+
+/**
+ * Until we decompose the layout-content-page-editor module into a
+ * set of smaller OSGi plugins, we "fake" it here to show how we would
+ * lazily-load components from elsewhere by injecting an additional
+ * "pluginEntryPoint" property.
+ *
+ * Note that in the final version we'll be using NPMResolver to obtain these
+ * paths dynamically.
+ */
+const PLUGIN_ROOT = 'layout-content-page-editor-web@2.0.0/page_editor/plugins';
+
+function augmentPanelData(sidebarPanels) {
+	return sidebarPanels.map(panel => {
+		if (isSeparator(panel)) {
+			return panel;
+		}
+
+		const mapping = SIDEBAR_PANEL_IDS_TO_PLUGINS[panel.sidebarPanelId];
+
+		const sidebarPanelId = mapping || panel.sidebarPanelId;
+
+		return {
+			...panel,
+
+			// https://github.com/liferay/liferay-js-toolkit/issues/324
+			pluginEntryPoint: `${PLUGIN_ROOT}/${sidebarPanelId}/index`,
+
+			rendersSidebarContent: rendersSidebarContent(sidebarPanelId),
+
+			sidebarPanelId
+		};
+	});
+}
+
+function getToolbarPlugins() {
+	// Currently we have segments experience data sprinkled throughout the
+	// server data. In the future we may choose to encapsulate it better and
+	// deal with it inside the plugin.
+	return [
+		{
+			loadingPlaceholder: `<div>loading</div>`,
+			pluginEntryPoint: `${PLUGIN_ROOT}/experience/index`
+		}
+	];
+}
+
+function isSeparator(panel) {
+	return panel.sidebarPanelId === 'separator';
+}
+
+/**
+ * Instead of using fake panels with an ID of `separator`, partition the panels
+ * array into an array of arrays; we'll draw a separator between each group.
+ */
+function partitionPanels(panels) {
+	return panels.reduce(
+		(groups, panel) => {
+			if (isSeparator(panel)) {
+				groups.push([]);
+			} else {
+				groups[groups.length - 1].push(panel);
+			}
+
+			return groups;
+		},
+		[[]]
+	);
+}
+
+function rendersSidebarContent(sidebarPanelId) {
+	return sidebarPanelId !== 'look-and-feel';
 }

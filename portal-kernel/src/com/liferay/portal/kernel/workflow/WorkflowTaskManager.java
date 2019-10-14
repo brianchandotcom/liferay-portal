@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
@@ -60,6 +61,13 @@ public interface WorkflowTaskManager {
 	public List<String> getNextTransitionNames(
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException;
+
+	public default List<User> getPooledActors(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public long[] getPooledActorsIds(long companyId, long workflowTaskId)
 		throws WorkflowException;
@@ -144,6 +152,17 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
+	public default List<WorkflowTask> search(
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<WorkflowTask> search(
 			long companyId, long userId, String keywords, String[] assetTypes,
 			Boolean completed, Boolean searchByUserRoles, int start, int end,
@@ -160,6 +179,16 @@ public interface WorkflowTaskManager {
 			Long[] assetPrimaryKeys, Date dueDateGT, Date dueDateLT,
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException;
+
+	public default int searchCount(
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public int searchCount(
 			long companyId, long userId, String keywords, String[] assetTypes,

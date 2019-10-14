@@ -51,7 +51,7 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new MasterPageVerticalCard(layoutPageTemplateEntry, renderRequest) %>"
+					verticalCard="<%= new MasterPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -62,6 +62,11 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<liferay-frontend:component
+	componentId="<%= LayoutPageTemplateAdminWebKeys.MASTER_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/MasterPageDropdownDefaultEventHandler.es"
+/>
 
 <liferay-frontend:component
 	componentId="<%= masterPageManagementToolbarDisplayContext.getDefaultEventHandler() %>"

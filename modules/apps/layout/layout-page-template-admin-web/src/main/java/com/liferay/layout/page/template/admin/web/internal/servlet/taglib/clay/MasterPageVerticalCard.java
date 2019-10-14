@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemList;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,10 +42,11 @@ public class MasterPageVerticalCard implements VerticalCard {
 
 	public MasterPageVerticalCard(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		RenderRequest renderRequest) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -56,7 +59,8 @@ public class MasterPageVerticalCard implements VerticalCard {
 			MasterPageActionDropdownItemsProvider
 				masterPageActionDropdownItemsProvider =
 					new MasterPageActionDropdownItemsProvider(
-						_layoutPageTemplateEntry, _renderRequest);
+						_layoutPageTemplateEntry, _renderRequest,
+						_renderResponse);
 
 			return masterPageActionDropdownItemsProvider.
 				getActionDropdownItems();
@@ -65,6 +69,12 @@ public class MasterPageVerticalCard implements VerticalCard {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return LayoutPageTemplateAdminWebKeys.
+			MASTER_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override
@@ -111,6 +121,7 @@ public class MasterPageVerticalCard implements VerticalCard {
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

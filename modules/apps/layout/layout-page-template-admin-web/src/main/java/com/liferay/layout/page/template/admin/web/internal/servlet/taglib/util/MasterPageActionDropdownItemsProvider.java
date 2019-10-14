@@ -31,7 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,9 +45,10 @@ public class MasterPageActionDropdownItemsProvider {
 
 	public MasterPageActionDropdownItemsProvider(
 		LayoutPageTemplateEntry layoutPageTemplateEntry,
-		RenderRequest renderRequest) {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
+		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
@@ -60,6 +64,7 @@ public class MasterPageActionDropdownItemsProvider {
 						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
 
 					add(_getEditMasterPageActionUnsafeConsumer());
+					add(_getRenameMasterPageActionUnsafeConsumer());
 				}
 			}
 		};
@@ -90,8 +95,45 @@ public class MasterPageActionDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getRenameMasterPageActionUnsafeConsumer() {
+
+		PortletURL updateMasterPageURL = _renderResponse.createActionURL();
+
+		updateMasterPageURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/update_layout_page_template_entry");
+
+		updateMasterPageURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		updateMasterPageURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+		updateMasterPageURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "renameMasterPage");
+			dropdownItem.putData(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.putData(
+				"layoutPageTemplateEntryName",
+				_layoutPageTemplateEntry.getName());
+			dropdownItem.putData(
+				"updateMasterPageURL", updateMasterPageURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "rename"));
+		};
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
+	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
 }

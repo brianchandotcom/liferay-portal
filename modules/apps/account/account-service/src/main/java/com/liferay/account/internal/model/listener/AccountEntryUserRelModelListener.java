@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,41 +40,40 @@ public class AccountEntryUserRelModelListener
 	public void onAfterCreate(AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
 
-		if (accountEntryUserRel.getAccountEntryId() ==
-				AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID) {
-
-			return;
-		}
-
-		AccountEntryUserRel defaultAccountEntryUserRel =
-			_accountEntryUserRelPersistence.fetchByAEI_AUI(
-				AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID,
-				accountEntryUserRel.getAccountUserId());
-
-		if (defaultAccountEntryUserRel != null) {
-			_accountEntryUserRelLocalService.deleteAccountEntryUserRel(
-				defaultAccountEntryUserRel);
-		}
+		_updateDefaultAccountAssignment(accountEntryUserRel.getAccountUserId());
 	}
 
 	@Override
 	public void onAfterRemove(AccountEntryUserRel accountEntryUserRel)
 		throws ModelListenerException {
 
-		int userAccountsCount = _accountEntryUserRelPersistence.countByAUI(
-			accountEntryUserRel.getAccountUserId());
+		_updateDefaultAccountAssignment(accountEntryUserRel.getAccountUserId());
+	}
 
-		if (userAccountsCount > 0) {
-			return;
-		}
+	private void _updateDefaultAccountAssignment(long accountUserId)
+		throws ModelListenerException {
 
-		try {
-			_accountEntryUserRelLocalService.addAccountEntryUserRel(
-				AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID,
-				accountEntryUserRel.getAccountUserId());
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_accountEntryUserRelPersistence.findByAUI(accountUserId);
+
+		if (ListUtil.isEmpty(accountEntryUserRels)) {
+			try {
+				_accountEntryUserRelLocalService.addAccountEntryUserRel(
+					AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID, accountUserId);
+			}
+			catch (PortalException pe) {
+				throw new ModelListenerException(pe);
+			}
 		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
+		else if (accountEntryUserRels.size() > 1) {
+			accountEntryUserRels.stream(
+			).filter(
+				accountEntryUserRel ->
+					accountEntryUserRel.getAccountEntryId() ==
+						AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID
+			).forEach(
+				_accountEntryUserRelLocalService::deleteAccountEntryUserRel
+			);
 		}
 	}
 

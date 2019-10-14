@@ -2966,6 +2966,54 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-docker-database">
+		<sequential>
+			<get-database-property property.name="database.host" />
+			<get-database-property property.name="database.docker.image" />
+			<get-database-property property.name="database.docker.run.options" />
+
+			<local name="database.docker.network.run.option" />
+
+			<condition else="" property="database.docker.network.run.option" value="--network=${env.DOCKER_NETWORK_NAME}">
+				<isset property="env.DOCKER_NETWORK_NAME" />
+			</condition>
+
+			<local name="docker.start.script" />
+
+			<property name="docker.start.script" value="docker_start.sh" />
+
+			<echo file="${docker.start.script}">
+				<![CDATA[
+					docker run \
+						--detach \
+						--hostname=${database.host} \
+						--interactive \
+						--name=${database.host} \
+						--tty \
+						\
+						${database.docker.network.run.option} \
+						${database.docker.run.options} \
+						\
+						${database.docker.image}
+				]]>
+			</echo>
+
+			<chmod perm="a+x">
+				<fileset dir="." includes="${docker.start.script}" />
+			</chmod>
+
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+				<arg value="${docker.start.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}">
+				<arg value="${docker.start.script}" />
+			</exec>
+
+			<delete file="${docker.start.script}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-k8s-database">
 		<attribute name="database.port" />
 		<attribute name="database.type" />
@@ -2995,6 +3043,48 @@ log.sanitizer.enabled=false</echo>
 					JenkinsResultsParserUtil.executeBashCommands(commands);
 				]]>
 			</beanshell>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-docker-database">
+		<sequential>
+			<get-database-property property.name="database.host" />
+
+			<local name="docker.stop.script" />
+
+			<property name="docker.stop.script" value="docker_stop.sh" />
+
+			<echo file="${docker.stop.script}">
+				<![CDATA[
+					docker_kill_list=$(docker ps -a -q --filter="name=${database.host}")
+
+					if [[ "${docker_kill_list}" != "" ]]
+					then
+						docker kill ${docker_kill_list}
+					fi
+
+					docker_rm_list=$(docker ps -q -f "status=exited")
+
+					if [[ "${docker_rm_list}" != "" ]]
+					then
+						docker rm ${docker_rm_list}
+					fi
+				]]>
+			</echo>
+
+			<chmod perm="a+x">
+				<fileset dir="." includes="${docker.stop.script}" />
+			</chmod>
+
+			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<exec executable="cmd.exe" failonerror="false" os="${os.windows}">
+				<arg value="${docker.stop.script}" />
+			</exec>
+
+			<delete file="${docker.stop.script}" />
 		</sequential>
 	</macrodef>
 

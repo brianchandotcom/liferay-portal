@@ -33,8 +33,13 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 	displayContext="<%= masterPageManagementToolbarDisplayContext %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<portlet:actionURL name="/layout_page_template/delete_master_page" var="deleteMasterPageURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= deleteMasterPageURL %>" cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
+		id="<%= masterPageManagementToolbarDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= masterPageDisplayContext.getMasterPagesSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -47,11 +52,17 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item");
+
+			Map<String, Object> rowData = new HashMap<>();
+
+			rowData.put("actions", masterPageManagementToolbarDisplayContext.getAvailableActions(layoutPageTemplateEntry));
+
+			row.setData(rowData);
 			%>
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new MasterPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse) %>"
+					verticalCard="<%= new MasterPageVerticalCard(layoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

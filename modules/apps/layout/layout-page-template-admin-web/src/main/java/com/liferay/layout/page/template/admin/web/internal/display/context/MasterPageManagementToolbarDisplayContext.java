@@ -16,17 +16,24 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -52,6 +59,37 @@ public class MasterPageManagementToolbarDisplayContext
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "deleteSelectedMasterPages");
+						dropdownItem.setIcon("times-circle");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getAvailableActions(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		if (LayoutPageTemplateEntryPermission.contains(
+				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
+				ActionKeys.DELETE)) {
+
+			return "deleteSelectedMasterPages";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -113,11 +151,6 @@ public class MasterPageManagementToolbarDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return "masterPages";
-	}
-
-	@Override
-	public Boolean isSelectable() {
-		return false;
 	}
 
 	@Override

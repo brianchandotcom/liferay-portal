@@ -27,6 +27,16 @@ class MasterPageManagementToolbarDefaultEventHandler extends DefaultEventHandler
 			spritemap: this.spritemap
 		});
 	}
+
+	deleteSelectedMasterPages() {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			submitForm(this.one('#fm'));
+		}
+	}
 }
 
 MasterPageManagementToolbarDefaultEventHandler.STATE = {

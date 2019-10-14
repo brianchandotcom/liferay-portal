@@ -48,6 +48,7 @@ import java.nio.file.attribute.FileTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -298,8 +299,8 @@ public class JspPrecompileTest {
 				ZipEntry zipEntry = new ZipEntry(
 					"META-INF/resources/".concat(_PRECOMPILE_JSP_FILE_NAME));
 
-				_precompileServletJSPLastModifiedTime = FileTime.fromMillis(
-					System.currentTimeMillis());
+				_precompileServletJSPLastModifiedTime = FileTime.from(
+					System.currentTimeMillis() / 1000, TimeUnit.SECONDS);
 
 				zipEntry.setLastModifiedTime(
 					_precompileServletJSPLastModifiedTime);

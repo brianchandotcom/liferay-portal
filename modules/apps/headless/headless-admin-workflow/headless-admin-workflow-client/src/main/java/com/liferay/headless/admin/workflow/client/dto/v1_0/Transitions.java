@@ -15,7 +15,7 @@
 package com.liferay.headless.admin.workflow.client.dto.v1_0;
 
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.ChangeTransitionSerDes;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.TransitionsSerDes;
 
 import java.util.Objects;
 
@@ -26,49 +26,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChangeTransition {
+public class Transitions {
 
-	public String getComment() {
-		return comment;
+	public String getName() {
+		return name;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setComment(
-		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			comment = commentUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String comment;
-
-	public String getTransition() {
-		return transition;
-	}
-
-	public void setTransition(String transition) {
-		this.transition = transition;
-	}
-
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
-
-		try {
-			transition = transitionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String transition;
+	protected String name;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,13 +53,13 @@ public class ChangeTransition {
 			return true;
 		}
 
-		if (!(object instanceof ChangeTransition)) {
+		if (!(object instanceof Transitions)) {
 			return false;
 		}
 
-		ChangeTransition changeTransition = (ChangeTransition)object;
+		Transitions transitions = (Transitions)object;
 
-		return Objects.equals(toString(), changeTransition.toString());
+		return Objects.equals(toString(), transitions.toString());
 	}
 
 	@Override
@@ -93,7 +70,7 @@ public class ChangeTransition {
 	}
 
 	public String toString() {
-		return ChangeTransitionSerDes.toJSON(this);
+		return TransitionsSerDes.toJSON(this);
 	}
 
 }

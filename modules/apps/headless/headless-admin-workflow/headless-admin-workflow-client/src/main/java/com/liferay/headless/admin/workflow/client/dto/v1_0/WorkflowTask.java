@@ -29,6 +29,48 @@ import javax.annotation.Generated;
 @Generated("")
 public class WorkflowTask {
 
+	public Creator getAssigneePerson() {
+		return assigneePerson;
+	}
+
+	public void setAssigneePerson(Creator assigneePerson) {
+		this.assigneePerson = assigneePerson;
+	}
+
+	public void setAssigneePerson(
+		UnsafeSupplier<Creator, Exception> assigneePersonUnsafeSupplier) {
+
+		try {
+			assigneePerson = assigneePersonUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator assigneePerson;
+
+	public Role[] getAssigneeRoles() {
+		return assigneeRoles;
+	}
+
+	public void setAssigneeRoles(Role[] assigneeRoles) {
+		this.assigneeRoles = assigneeRoles;
+	}
+
+	public void setAssigneeRoles(
+		UnsafeSupplier<Role[], Exception> assigneeRolesUnsafeSupplier) {
+
+		try {
+			assigneeRoles = assigneeRolesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Role[] assigneeRoles;
+
 	public Boolean getCompleted() {
 		return completed;
 	}
@@ -50,26 +92,26 @@ public class WorkflowTask {
 
 	protected Boolean completed;
 
-	public Date getDateCompleted() {
-		return dateCompleted;
+	public Date getDateCompletion() {
+		return dateCompletion;
 	}
 
-	public void setDateCompleted(Date dateCompleted) {
-		this.dateCompleted = dateCompleted;
+	public void setDateCompletion(Date dateCompletion) {
+		this.dateCompletion = dateCompletion;
 	}
 
-	public void setDateCompleted(
-		UnsafeSupplier<Date, Exception> dateCompletedUnsafeSupplier) {
+	public void setDateCompletion(
+		UnsafeSupplier<Date, Exception> dateCompletionUnsafeSupplier) {
 
 		try {
-			dateCompleted = dateCompletedUnsafeSupplier.get();
+			dateCompletion = dateCompletionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Date dateCompleted;
+	protected Date dateCompletion;
 
 	public Date getDateCreated() {
 		return dateCreated;
@@ -92,6 +134,48 @@ public class WorkflowTask {
 
 	protected Date dateCreated;
 
+	public Date getDateDue() {
+		return dateDue;
+	}
+
+	public void setDateDue(Date dateDue) {
+		this.dateDue = dateDue;
+	}
+
+	public void setDateDue(
+		UnsafeSupplier<Date, Exception> dateDueUnsafeSupplier) {
+
+		try {
+			dateDue = dateDueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date dateDue;
+
+	public Long getDefinitionId() {
+		return definitionId;
+	}
+
+	public void setDefinitionId(Long definitionId) {
+		this.definitionId = definitionId;
+	}
+
+	public void setDefinitionId(
+		UnsafeSupplier<Long, Exception> definitionIdUnsafeSupplier) {
+
+		try {
+			definitionId = definitionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long definitionId;
+
 	public String getDefinitionName() {
 		return definitionName;
 	}
@@ -112,6 +196,27 @@ public class WorkflowTask {
 	}
 
 	protected String definitionName;
+
+	public String getDefinitionVersion() {
+		return definitionVersion;
+	}
+
+	public void setDefinitionVersion(String definitionVersion) {
+		this.definitionVersion = definitionVersion;
+	}
+
+	public void setDefinitionVersion(
+		UnsafeSupplier<String, Exception> definitionVersionUnsafeSupplier) {
+
+		try {
+			definitionVersion = definitionVersionUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String definitionVersion;
 
 	public String getDescription() {
 		return description;
@@ -134,27 +239,6 @@ public class WorkflowTask {
 
 	protected String description;
 
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public void setDueDate(
-		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
-
-		try {
-			dueDate = dueDateUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Date dueDate;
-
 	public Long getId() {
 		return id;
 	}
@@ -173,6 +257,27 @@ public class WorkflowTask {
 	}
 
 	protected Long id;
+
+	public Long getInstanceId() {
+		return instanceId;
+	}
+
+	public void setInstanceId(Long instanceId) {
+		this.instanceId = instanceId;
+	}
+
+	public void setInstanceId(
+		UnsafeSupplier<Long, Exception> instanceIdUnsafeSupplier) {
+
+		try {
+			instanceId = instanceIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long instanceId;
 
 	public String getName() {
 		return name;
@@ -214,27 +319,6 @@ public class WorkflowTask {
 	}
 
 	protected ObjectReviewed objectReviewed;
-
-	public String[] getTransitions() {
-		return transitions;
-	}
-
-	public void setTransitions(String[] transitions) {
-		this.transitions = transitions;
-	}
-
-	public void setTransitions(
-		UnsafeSupplier<String[], Exception> transitionsUnsafeSupplier) {
-
-		try {
-			transitions = transitionsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String[] transitions;
 
 	@Override
 	public boolean equals(Object object) {

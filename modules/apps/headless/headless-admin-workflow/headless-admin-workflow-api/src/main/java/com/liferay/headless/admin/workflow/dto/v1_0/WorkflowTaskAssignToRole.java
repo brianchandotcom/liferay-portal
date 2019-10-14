@@ -25,6 +25,10 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -39,12 +43,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChangeTransition")
+@GraphQLName("WorkflowTaskAssignToRole")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ChangeTransition")
-public class ChangeTransition {
+@XmlRootElement(name = "WorkflowTaskAssignToRole")
+public class WorkflowTaskAssignToRole {
 
-	@Schema
+	@Schema(
+		description = "An optional comment to add when assigning the workflow task."
+	)
 	public String getComment() {
 		return comment;
 	}
@@ -72,21 +78,23 @@ public class ChangeTransition {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	protected String comment;
 
-	@Schema
-	public String getTransition() {
-		return transition;
+	@Schema(
+		description = "The date on which the workflow task should be executed."
+	)
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setTransition(String transition) {
-		this.transition = transition;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	@JsonIgnore
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
+	public void setDueDate(
+		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
 
 		try {
-			transition = transitionUnsafeSupplier.get();
+			dueDate = dueDateUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -98,7 +106,35 @@ public class ChangeTransition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String transition;
+	protected Date dueDate;
+
+	@Schema(description = "The ID of the role to assign the workflow task.")
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	@JsonIgnore
+	public void setRoleId(
+		UnsafeSupplier<Long, Exception> roleIdUnsafeSupplier) {
+
+		try {
+			roleId = roleIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected Long roleId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,13 +142,14 @@ public class ChangeTransition {
 			return true;
 		}
 
-		if (!(object instanceof ChangeTransition)) {
+		if (!(object instanceof WorkflowTaskAssignToRole)) {
 			return false;
 		}
 
-		ChangeTransition changeTransition = (ChangeTransition)object;
+		WorkflowTaskAssignToRole workflowTaskAssignToRole =
+			(WorkflowTaskAssignToRole)object;
 
-		return Objects.equals(toString(), changeTransition.toString());
+		return Objects.equals(toString(), workflowTaskAssignToRole.toString());
 	}
 
 	@Override
@@ -126,6 +163,9 @@ public class ChangeTransition {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 		if (comment != null) {
 			if (sb.length() > 1) {
@@ -141,18 +181,28 @@ public class ChangeTransition {
 			sb.append("\"");
 		}
 
-		if (transition != null) {
+		if (dueDate != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transition\": ");
+			sb.append("\"dueDate\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(transition));
+			sb.append(liferayToJSONDateFormat.format(dueDate));
 
 			sb.append("\"");
+		}
+
+		if (roleId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleId\": ");
+
+			sb.append(roleId);
 		}
 
 		sb.append("}");

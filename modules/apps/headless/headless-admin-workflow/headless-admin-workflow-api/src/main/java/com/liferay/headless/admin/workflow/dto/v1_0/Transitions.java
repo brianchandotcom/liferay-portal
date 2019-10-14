@@ -39,26 +39,24 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ChangeTransition")
+@GraphQLName("Transitions")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ChangeTransition")
-public class ChangeTransition {
+@XmlRootElement(name = "Transitions")
+public class Transitions {
 
 	@Schema
-	public String getComment() {
-		return comment;
+	public String getName() {
+		return name;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@JsonIgnore
-	public void setComment(
-		UnsafeSupplier<String, Exception> commentUnsafeSupplier) {
-
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
 		try {
-			comment = commentUnsafeSupplier.get();
+			name = nameUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -69,36 +67,8 @@ public class ChangeTransition {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String comment;
-
-	@Schema
-	public String getTransition() {
-		return transition;
-	}
-
-	public void setTransition(String transition) {
-		this.transition = transition;
-	}
-
-	@JsonIgnore
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
-
-		try {
-			transition = transitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected String transition;
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String name;
 
 	@Override
 	public boolean equals(Object object) {
@@ -106,13 +76,13 @@ public class ChangeTransition {
 			return true;
 		}
 
-		if (!(object instanceof ChangeTransition)) {
+		if (!(object instanceof Transitions)) {
 			return false;
 		}
 
-		ChangeTransition changeTransition = (ChangeTransition)object;
+		Transitions transitions = (Transitions)object;
 
-		return Objects.equals(toString(), changeTransition.toString());
+		return Objects.equals(toString(), transitions.toString());
 	}
 
 	@Override
@@ -127,30 +97,16 @@ public class ChangeTransition {
 
 		sb.append("{");
 
-		if (comment != null) {
+		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"comment\": ");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(comment));
-
-			sb.append("\"");
-		}
-
-		if (transition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"transition\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(transition));
+			sb.append(_escape(name));
 
 			sb.append("\"");
 		}

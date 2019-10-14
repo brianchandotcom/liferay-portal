@@ -394,11 +394,11 @@ public class ContentPageLayoutEditorDisplayContext
 	private String _getSegmentsExperimentURL(
 		String layoutFullURL, long segmentsExperienceId) {
 
-		layoutFullURL = HttpUtil.addParameter(
-			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
-
-		return HttpUtil.addParameter(
+		HttpUtil.addParameter(
 			layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
+
+		return layoutFullURL = HttpUtil.addParameter(
+			layoutFullURL, "segmentsExperienceId", segmentsExperienceId);
 	}
 
 	private boolean _hasEditSegmentsEntryPermission() throws PortalException {

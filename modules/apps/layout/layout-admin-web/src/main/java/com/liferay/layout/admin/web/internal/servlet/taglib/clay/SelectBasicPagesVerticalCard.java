@@ -15,20 +15,16 @@
 package com.liferay.layout.admin.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -42,21 +38,20 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectBasicPagesVerticalCard implements VerticalCard {
 
 	public SelectBasicPagesVerticalCard(
-		String type, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_type = type;
+		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
-		_layoutTypeController =
-			LayoutTypeControllerTracker.getLayoutTypeController(type);
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getDataLink() {
-		Map<String, Object> data = new HashMap<>();
+	@Override
+	public Map<String, String> getData() {
+		Map<String, String> data = new HashMap<>();
 
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
@@ -77,7 +72,11 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 
-			addLayoutURL.setParameter("type", _type);
+			addLayoutURL.setParameter("type", LayoutConstants.TYPE_CONTENT);
+			addLayoutURL.setParameter(
+				"masterLayoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 			addLayoutURL.setWindowState(LiferayWindowState.POP_UP);
 
 			data.put("add-layout-url", addLayoutURL.toString());
@@ -95,37 +94,18 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 	}
 
 	@Override
-	public String getImageSrc() {
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(PortalUtil.getPathContext(_httpServletRequest));
-		sb.append("/images/");
-		sb.append(_type);
-		sb.append(".svg");
-
-		return sb.toString();
+	public String getIcon() {
+		return "page";
 	}
 
 	@Override
-	public String getSubtitle() {
-		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(),
-			_layoutTypeController.getClass());
-
-		return LanguageUtil.get(
-			_httpServletRequest, layoutTypeResourceBundle,
-			"layout.types." + _type + ".description");
+	public String getImageSrc() {
+		return _layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
 	}
 
 	@Override
 	public String getTitle() {
-		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", _themeDisplay.getLocale(),
-			_layoutTypeController.getClass());
-
-		return LanguageUtil.get(
-			_httpServletRequest, layoutTypeResourceBundle,
-			"layout.types." + _type);
+		return _layoutPageTemplateEntry.getName();
 	}
 
 	@Override
@@ -134,9 +114,8 @@ public class SelectBasicPagesVerticalCard implements VerticalCard {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final LayoutTypeController _layoutTypeController;
+	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
-	private final String _type;
 
 }

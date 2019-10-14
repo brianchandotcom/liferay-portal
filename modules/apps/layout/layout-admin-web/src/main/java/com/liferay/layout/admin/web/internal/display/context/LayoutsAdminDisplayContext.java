@@ -202,6 +202,13 @@ public class LayoutsAdminDisplayContext {
 			"layoutPageTemplateEntryId",
 			String.valueOf(layoutPageTemplateEntryId));
 
+		long masterLayoutPageTemplateEntryId = ParamUtil.getLong(
+			_httpServletRequest, "masterLayoutPageTemplateEntryId");
+
+		portletURL.setParameter(
+			"masterLayoutPageTemplateEntryId",
+			String.valueOf(masterLayoutPageTemplateEntryId));
+
 		if (layoutPageTemplateEntryId > 0) {
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/layout/add_content_layout");

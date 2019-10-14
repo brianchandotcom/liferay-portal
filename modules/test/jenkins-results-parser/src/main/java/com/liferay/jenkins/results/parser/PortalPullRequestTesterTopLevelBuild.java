@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.dom4j.Element;
@@ -107,10 +108,10 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 	protected List<Build> getStableDownstreamBuilds() {
 		if (_stableJob != null) {
 			return getJobVariantsDownstreamBuilds(
-				new ArrayList<String>(_stableJob.getBatchNames()), null, null);
+				_stableJob.getBatchNames(), null, null);
 		}
 
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	protected Element getStableJobSummaryElement() {

@@ -102,7 +102,7 @@ public interface Build {
 		List<String> jobVariants, String result, String status);
 
 	public List<Build> getJobVariantsDownstreamBuilds(
-		List<String> jobVariants, String result, String status);
+		Iterable<String> jobVariants, String result, String status);
 
 	public Long getLatestStartTimestamp();
 

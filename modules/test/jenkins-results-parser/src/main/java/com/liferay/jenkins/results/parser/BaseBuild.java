@@ -753,7 +753,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<Build> getJobVariantsDownstreamBuilds(
-		List<String> jobVariants, String result, String status) {
+		Iterable<String> jobVariants, String result, String status) {
 
 		List<Build> jobVariantsDownstreamBuilds = new ArrayList<>();
 

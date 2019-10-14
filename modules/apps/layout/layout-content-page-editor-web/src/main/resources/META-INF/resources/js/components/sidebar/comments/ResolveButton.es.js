@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
+import classNames from 'classnames';
 
 import Loader from '../../common/Loader.es';
 
@@ -42,7 +43,9 @@ const ResolveButton = props => {
 	return (
 		<ClayButton
 			borderless
-			className="flex-shrink-0 lfr-portal-tooltip"
+			className={classNames('flex-shrink-0', {
+				'lfr-portal-tooltip': !!title
+			})}
 			data-title={title}
 			disabled={props.disabled || props.loading}
 			displayType="secondary"

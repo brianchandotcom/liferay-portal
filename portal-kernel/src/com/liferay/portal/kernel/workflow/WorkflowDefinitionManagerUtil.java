@@ -28,20 +28,6 @@ import java.util.List;
  */
 public class WorkflowDefinitionManagerUtil {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deployWorkflowDefinition(long, long, String, String,
-	 *             byte[])}
-	 */
-	@Deprecated
-	public static WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, byte[] bytes)
-		throws WorkflowException {
-
-		return getWorkflowDefinitionManager().deployWorkflowDefinition(
-			companyId, userId, title, bytes);
-	}
-
 	public static WorkflowDefinition deployWorkflowDefinition(
 			long companyId, long userId, String title, String name,
 			byte[] bytes)
@@ -82,19 +68,6 @@ public class WorkflowDefinitionManagerUtil {
 
 		return getWorkflowDefinitionManager().getActiveWorkflowDefinitions(
 			companyId, name, start, end, orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLatestWorkflowDefinition(long, String)}
-	 */
-	@Deprecated
-	public static WorkflowDefinition getLatestKaleoDefinition(
-			long companyId, String name)
-		throws WorkflowException {
-
-		return getWorkflowDefinitionManager().getLatestKaleoDefinition(
-			companyId, name);
 	}
 
 	public static WorkflowDefinition getLatestWorkflowDefinition(

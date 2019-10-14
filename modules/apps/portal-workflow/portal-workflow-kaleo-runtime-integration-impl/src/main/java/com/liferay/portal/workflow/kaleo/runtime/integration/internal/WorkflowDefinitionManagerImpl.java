@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
-import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -63,24 +62,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class WorkflowDefinitionManagerImpl
 	implements WorkflowDefinitionManager {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deployWorkflowDefinition(long, long, String, String,
-	 *             byte[])}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition deployWorkflowDefinition(
-			long companyId, long userId, String title, byte[] bytes)
-		throws WorkflowException {
-
-		Definition definition = _workflowModelParser.parse(
-			new UnsyncByteArrayInputStream(bytes));
-
-		return deployWorkflowDefinition(
-			companyId, userId, title, definition.getName(), bytes);
-	}
 
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
@@ -199,19 +180,6 @@ public class WorkflowDefinitionManagerImpl
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLatestWorkflowDefinition(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition getLatestKaleoDefinition(
-			long companyId, String name)
-		throws WorkflowException {
-
-		return getLatestWorkflowDefinition(companyId, name);
 	}
 
 	@Override

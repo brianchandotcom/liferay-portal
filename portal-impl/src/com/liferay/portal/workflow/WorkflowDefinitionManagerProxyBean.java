@@ -36,19 +36,6 @@ import java.util.List;
 public class WorkflowDefinitionManagerProxyBean
 	extends BaseProxyBean implements WorkflowDefinitionManager {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #deployWorkflowDefinition(long, long, String, String,
-	 *             byte[])}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition deployWorkflowDefinition(
-		long companyId, long userId, String title, byte[] bytes) {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
 		long companyId, long userId, String title, String name, byte[] bytes) {
@@ -78,18 +65,6 @@ public class WorkflowDefinitionManagerProxyBean
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 		long companyId, String name, int start, int end,
 		OrderByComparator<WorkflowDefinition> orderByComparator) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #getLatestWorkflowDefinition(long, String)}
-	 */
-	@Deprecated
-	@Override
-	public WorkflowDefinition getLatestKaleoDefinition(
-		long companyId, String name) {
 
 		throw new UnsupportedOperationException();
 	}

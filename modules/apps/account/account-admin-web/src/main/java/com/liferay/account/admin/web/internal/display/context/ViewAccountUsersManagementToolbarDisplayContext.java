@@ -16,6 +16,8 @@ package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -30,6 +32,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +54,33 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 		super(
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			searchContainer);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemList.of(
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "removeUsers");
+
+				PortletURL removeUsersURL =
+					liferayPortletResponse.createActionURL();
+
+				removeUsersURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_admin/remove_account_users");
+				removeUsersURL.setParameter(
+					"redirect", currentURLObj.toString());
+
+				dropdownItem.putData(
+					"removeUsersURL", removeUsersURL.toString());
+
+				dropdownItem.setIcon("minus-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "remove"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			});
 	}
 
 	@Override
@@ -77,6 +109,11 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					});
 			}
 		};
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "ACCOUNT_USERS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

@@ -21,6 +21,8 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 
 SearchContainer accountUserDisplaySearchContainer = AccountUserDisplaySearchContainerFactory.create(accountDisplay.getAccountId(), liferayPortletRequest, liferayPortletResponse);
 
+ViewAccountUsersManagementToolbarDisplayContext viewAccountUsersManagementToolbarDisplayContext = new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUserDisplaySearchContainer);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
@@ -28,11 +30,14 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new ViewAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountUserDisplaySearchContainer) %>"
+	displayContext="<%= viewAccountUsersManagementToolbarDisplayContext %>"
 />
 
 <aui:container cssClass="container-fluid container-fluid-max-xl">
 	<aui:form method="post" name="fm">
+		<aui:input name="accountEntryId" type="hidden" value="<%= accountDisplay.getAccountId() %>" />
+		<aui:input name="accountUserIds" type="hidden" />
+
 		<liferay-ui:search-container
 			searchContainer="<%= accountUserDisplaySearchContainer %>"
 		>
@@ -76,3 +81,8 @@ renderResponse.setTitle((accountDisplay == null) ? "" : accountDisplay.getName()
 		</liferay-ui:search-container>
 	</aui:form>
 </aui:container>
+
+<liferay-frontend:component
+	componentId="<%= viewAccountUsersManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AccountUsersManagementToolbarDefaultEventHandler.es"
+/>

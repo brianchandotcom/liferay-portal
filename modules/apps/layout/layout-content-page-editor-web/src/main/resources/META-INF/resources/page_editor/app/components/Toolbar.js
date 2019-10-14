@@ -20,6 +20,7 @@ import ReactDOM from 'react-dom';
 import * as Actions from '../actions/index';
 import {ConfigContext} from '../config/index';
 import usePlugins from '../../core/hooks/usePlugins';
+import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
@@ -27,29 +28,7 @@ import UnsafeHTML from './UnsafeHTML';
 
 const {discard, publish} = Actions;
 
-const {Suspense, lazy, useContext, useRef} = React;
-
-// TODO refactor this to share code with SidebarPanel component
-function ToolbarSection({plugin}) {
-	const Component = lazy(() => {
-		return plugin.then(instance => {
-			return {
-				default: () => {
-					if (
-						instance &&
-						typeof instance.renderToolbarSection === 'function'
-					) {
-						return instance.renderToolbarSection();
-					} else {
-						return null;
-					}
-				}
-			};
-		});
-	});
-
-	return <Component />;
-}
+const {Suspense, useCallback, useContext, useRef} = React;
 
 function ToolbarBody() {
 	const config = useContext(ConfigContext);
@@ -110,6 +89,16 @@ function ToolbarBody() {
 		loading.current();
 		loading.current = null;
 	}
+
+	const ToolbarSection = useLazy(
+		useCallback(({instance}) => {
+			if (typeof instance.renderToolbarSection === 'function') {
+				return instance.renderToolbarSection();
+			} else {
+				return null;
+			}
+		}, [])
+	);
 
 	const {languageIcon} = availableLanguages[defaultLanguageId];
 

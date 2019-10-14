@@ -20,6 +20,7 @@ import {useIsMounted} from 'frontend-js-react-web';
 import React from 'react';
 
 import usePlugins from '../../core/hooks/usePlugins';
+import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import useStateSafe from '../../core/hooks/useStateSafe';
 import * as Actions from '../actions/index';
@@ -27,7 +28,7 @@ import {ConfigContext} from '../config/index';
 import {DispatchContext} from '../reducers/index';
 import {StoreContext} from '../store/index';
 
-const {Suspense, lazy, useContext, useEffect} = React;
+const {Suspense, useCallback, useContext, useEffect} = React;
 
 /**
  * Failure to preload is a non-critical failure, so we'll use this to swallow
@@ -66,6 +67,16 @@ export default function Sidebar() {
 		// We really only want to do this once, on first mount.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
+	);
+
+	const SidebarPanel = useLazy(
+		useCallback(({instance}) => {
+			if (typeof instance.renderSidebar === 'function') {
+				return instance.renderSidebar();
+			} else {
+				return null;
+			}
+		}, [])
 	);
 
 	const togglePanel = panel => {
@@ -198,27 +209,6 @@ export default function Sidebar() {
 			</div>
 		</ClayTooltipProvider>
 	);
-}
-
-function SidebarPanel({plugin}) {
-	const Component = lazy(() =>
-		plugin.then(instance => {
-			return {
-				default: () => {
-					if (
-						instance &&
-						typeof instance.renderSidebar === 'function'
-					) {
-						return instance.renderSidebar();
-					} else {
-						return null;
-					}
-				}
-			};
-		})
-	);
-
-	return <Component />;
 }
 
 class ErrorBoundary extends React.Component {

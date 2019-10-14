@@ -40,6 +40,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
@@ -417,9 +418,24 @@ public class BaselinePlugin implements Plugin<Project> {
 			version = "(," + newJarTask.getVersion() + ")";
 
 			if (newJarTask.getVersion() != null) {
-				Version newVersion = new Version(newJarTask.getVersion());
+				Version newVersion = null;
 
-				if (newVersion.getQualifier() == null) {
+				try {
+					newVersion = new Version(newJarTask.getVersion());
+				}
+				catch (IllegalArgumentException iae) {
+					Logger logger = project.getLogger();
+
+					if (logger.isWarnEnabled()) {
+						logger.warn(
+							"Unable to parse version {}",
+							newJarTask.getVersion());
+					}
+				}
+
+				if ((newVersion != null) &&
+					(newVersion.getQualifier() == null)) {
+
 					if (newVersion.getMicro() > 0) {
 						StringBuilder sb = new StringBuilder();
 

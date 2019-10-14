@@ -99,13 +99,13 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<_pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor" />
+				<_pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor"/>
 				<_project implementation="org.apache.maven.project.MavenProject">${project}</_project>
 				<_repositorySystemSession implementation="org.eclipse.aether.RepositorySystemSession">${repositorySystemSession}</_repositorySystemSession>
-				<diffsDir default-value="${maven.war.src}" implementation="java.io.File" />
-				<name default-value="${project.artifactId}" implementation="java.lang.String" />
-				<outputDir default-value="${project.build.directory}/${project.build.finalName}" implementation="java.io.File" />
-				<templateExtension default-value="ftl" implementation="java.lang.String" />
+				<diffsDir default-value="${maven.war.src}" implementation="java.io.File"/>
+				<name default-value="${project.artifactId}" implementation="java.lang.String"/>
+				<outputDir default-value="${project.build.directory}/${project.build.finalName}" implementation="java.io.File"/>
+				<templateExtension default-value="ftl" implementation="java.lang.String"/>
 			</configuration>
 			<requirements>
 				<requirement>

@@ -71,8 +71,8 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<serviceXmlFile default-value="${project.basedir}/service.xml" implementation="java.io.File" />
-				<servletContextName default-value="${project.artifactId}" implementation="java.lang.String" />
+				<serviceXmlFile default-value="${project.basedir}/service.xml" implementation="java.io.File"/>
+				<servletContextName default-value="${project.artifactId}" implementation="java.lang.String"/>
 			</configuration>
 		</mojo>
 	</mojos>

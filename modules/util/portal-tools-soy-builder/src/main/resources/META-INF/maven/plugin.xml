@@ -43,7 +43,7 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<_baseDir default-value="${project.basedir}" implementation="java.io.File" />
+				<_baseDir default-value="${project.basedir}" implementation="java.io.File"/>
 			</configuration>
 			<requirements>
 				<requirement>
@@ -83,7 +83,7 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<_baseDir default-value="${project.basedir}" implementation="java.io.File" />
+				<_baseDir default-value="${project.basedir}" implementation="java.io.File"/>
 			</configuration>
 			<requirements>
 				<requirement>
@@ -137,7 +137,7 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<_baseDir default-value="${project.basedir}" implementation="java.io.File" />
+				<_baseDir default-value="${project.basedir}" implementation="java.io.File"/>
 			</configuration>
 			<requirements>
 				<requirement>

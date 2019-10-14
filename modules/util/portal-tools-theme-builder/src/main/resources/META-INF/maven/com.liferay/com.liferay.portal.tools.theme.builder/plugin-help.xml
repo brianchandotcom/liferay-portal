@@ -76,10 +76,10 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<diffsDir default-value="${maven.war.src}" implementation="java.io.File" />
-				<name default-value="${project.artifactId}" implementation="java.lang.String" />
-				<outputDir default-value="${project.build.directory}/${project.build.finalName}" implementation="java.io.File" />
-				<templateExtension default-value="ftl" implementation="java.lang.String" />
+				<diffsDir default-value="${maven.war.src}" implementation="java.io.File"/>
+				<name default-value="${project.artifactId}" implementation="java.lang.String"/>
+				<outputDir default-value="${project.build.directory}/${project.build.finalName}" implementation="java.io.File"/>
+				<templateExtension default-value="ftl" implementation="java.lang.String"/>
 			</configuration>
 		</mojo>
 	</mojos>

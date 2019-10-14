@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -124,7 +124,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			version);
 	}
 
-	private Tuple _getContentAndExtensionFromCompressedFile(
+	private Map.Entry<byte[], String> _getContentAndExtensionFromCompressedFile(
 			InputStream inputStream)
 		throws IOException {
 
@@ -132,7 +132,7 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
 
-		return new Tuple(
+		return new AbstractMap.SimpleImmutableEntry<>(
 			StreamUtil.toByteArray(zipInputStream),
 			_file.getExtension(zipEntry.getName()));
 	}
@@ -155,11 +155,12 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		String fileName = binaryFile.getFileName();
 
 		if (fileName.endsWith("zip")) {
-			Tuple tuple = _getContentAndExtensionFromCompressedFile(
-				binaryFile.getInputStream());
+			Map.Entry<byte[], String> entry =
+				_getContentAndExtensionFromCompressedFile(
+					binaryFile.getInputStream());
 
-			content = (byte[])tuple.getObject(0);
-			extension = (String)tuple.getObject(1);
+			content = entry.getKey();
+			extension = entry.getValue();
 		}
 		else {
 			content = StreamUtil.toByteArray(binaryFile.getInputStream());

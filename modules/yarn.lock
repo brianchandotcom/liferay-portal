@@ -1226,7 +1226,19 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/pagination@3.0.0":
+"@clayui/pagination-bar@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@clayui/pagination-bar/-/pagination-bar-3.0.0.tgz#571abee49231732f5ee334a4ec7422091869e8d9"
+  integrity sha512-18xMjrLzc+469MI7VUik1ynCftaarg5F4Vm5ktFtCf8na+c8OlNUahgY1gy5o/E5RVTLQi4N886gf+Ap9FJgMg==
+  dependencies:
+    "@clayui/button" "^3.0.0"
+    "@clayui/drop-down" "^3.0.0"
+    "@clayui/icon" "^3.0.0"
+    "@clayui/pagination" "^3.0.0"
+    "@clayui/shared" "^3.0.1"
+    classnames "^2.2.6"
+
+"@clayui/pagination@3.0.0", "@clayui/pagination@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@clayui/pagination/-/pagination-3.0.0.tgz#6a341ee4662da364e2d9aa599dbfbeceff697a3b"
   integrity sha512-Um+oL9uV9ch7jm/gAV4TpBtV8HR9sVNzzhB1l84wD9xi91TqomoiSE9bIlrgJlciMWH7USO8HlNcZ+Icp/7hEQ==

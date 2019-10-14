@@ -170,11 +170,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_COPY_HELPER, _layoutCopyHelper);
 
-			LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(
-				_portal.getLiferayPortletRequest(renderRequest),
-				_portal.getLiferayPortletResponse(renderResponse));
+			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
+				new LayoutsAdminDisplayContext(
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse));
 
-			layoutsAdminDisplayContext.setLayoutSEOLinkManager(_layoutSEOLinkManager);
+			layoutsAdminDisplayContext.setLayoutSEOLinkManager(
+				_layoutSEOLinkManager);
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,
@@ -242,9 +244,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
-	private Portal _portal;
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
 
 	@Reference
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
+	private Portal _portal;
 
 }

@@ -28,7 +28,7 @@ public class LiferayResponseValidator {
 	public void validate(HttpResponse httpResponse) throws IOException {
 		if (httpResponse == null) {
 			throw new ModuleException(
-				"Server error", LiferayError.SERVER_ERROR);
+				"Server returned no response", LiferayError.SERVER_ERROR);
 		}
 		else if (httpResponse.getStatusCode() >= 400) {
 			throw new ModuleException(
@@ -40,7 +40,9 @@ public class LiferayResponseValidator {
 	private String _getMessage(HttpResponse httpResponse) throws IOException {
 		HttpEntity httpEntity = httpResponse.getEntity();
 
-		return new String(httpEntity.getBytes());
+		return String.format(
+			"Request failed with status: %d, and message: %s",
+			httpResponse.getStatusCode(), new String(httpEntity.getBytes()));
 	}
 
 }

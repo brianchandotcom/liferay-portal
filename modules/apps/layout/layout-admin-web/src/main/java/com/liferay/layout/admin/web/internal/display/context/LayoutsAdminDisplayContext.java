@@ -34,6 +34,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -1817,5 +1818,10 @@ public class LayoutsAdminDisplayContext {
 	private Long _selPlid;
 	private String _tabs1;
 	private final ThemeDisplay _themeDisplay;
+	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	public void setLayoutSEOLinkManager(LayoutSEOLinkManager layoutSEOLinkManager) {
+		_layoutSEOLinkManager = layoutSEOLinkManager;
+	}
 
 }

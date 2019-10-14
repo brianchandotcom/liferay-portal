@@ -62,7 +62,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdd.builder", version: "1.0.13"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.wsdl.builder", version: "2.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.xsd.builder", version: "1.0.7"
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.34"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.35"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"), excludes: ["lib/plugins/biz.aQute.bndlib-3.4.0.jar"])
 }

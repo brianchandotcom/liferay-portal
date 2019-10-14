@@ -8,6 +8,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":core:petra:petra-string")
 }

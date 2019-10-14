@@ -73,5 +73,9 @@
 		position: fixed;
 		text-align: center;
 		width: 100%;
+
+		> div {
+			float: right;
+		}
 	}
 }

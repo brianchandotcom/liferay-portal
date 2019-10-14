@@ -19,7 +19,7 @@ const Footer = ({currentIndex, title, totalItems}) => (
 	<div className="footer">
 		<span>{title}</span>
 
-		<div className="pull-right">
+		<div>
 			{Liferay.Util.sub(
 				Liferay.Language.get('x-of-x'),
 				currentIndex + 1,

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -110,50 +111,61 @@ public class ConvertLayoutMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			actionRequest, new MockActionResponse());
 
-		Layout persistedLayout = _layoutService.getLayoutByUuidAndGroupId(
-			originalLayout.getUuid(), originalLayout.getGroupId(),
-			originalLayout.isPrivateLayout());
+		Layout persistedDraftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class.getName()),
+			originalLayout.getPlid());
 
-		Assert.assertNotNull(persistedLayout);
+		Assert.assertNotNull(persistedDraftLayout);
+
+		Layout persistedPublishedLayout = _layoutLocalService.getLayout(
+			originalLayout.getPlid());
+
+		Assert.assertNotNull(persistedPublishedLayout);
 
 		Assert.assertEquals(
-			originalLayout.getGroupId(), persistedLayout.getGroupId());
+			originalLayout.getGroupId(), persistedPublishedLayout.getGroupId());
 		Assert.assertEquals(
 			originalLayout.isPrivateLayout(),
-			persistedLayout.isPrivateLayout());
+			persistedPublishedLayout.isPrivateLayout());
 		Assert.assertEquals(
-			originalLayout.getLayoutId(), persistedLayout.getLayoutId());
+			originalLayout.getLayoutId(),
+			persistedPublishedLayout.getLayoutId());
 		Assert.assertEquals(
-			originalLayout.getClassName(), persistedLayout.getClassName());
+			originalLayout.getClassName(),
+			persistedPublishedLayout.getClassName());
 		Assert.assertEquals(
-			originalLayout.getClassNameId(), persistedLayout.getClassNameId());
+			originalLayout.getClassNameId(),
+			persistedPublishedLayout.getClassNameId());
 		Assert.assertEquals(
 			originalLayout.getDescriptionMap(),
-			persistedLayout.getDescriptionMap());
+			persistedPublishedLayout.getDescriptionMap());
 		Assert.assertEquals(
 			originalLayout.getFriendlyURLMap(),
-			persistedLayout.getFriendlyURLMap());
+			persistedPublishedLayout.getFriendlyURLMap());
 		Assert.assertEquals(
-			originalLayout.getKeywordsMap(), persistedLayout.getKeywordsMap());
+			originalLayout.getKeywordsMap(),
+			persistedPublishedLayout.getKeywordsMap());
 		Assert.assertEquals(
-			originalLayout.getNameMap(), persistedLayout.getNameMap());
+			originalLayout.getNameMap(), persistedPublishedLayout.getNameMap());
 		Assert.assertEquals(
 			originalLayout.getParentLayoutId(),
-			persistedLayout.getParentLayoutId());
+			persistedPublishedLayout.getParentLayoutId());
 		Assert.assertEquals(
-			originalLayout.getPlid(), persistedLayout.getPlid());
+			originalLayout.getPlid(), persistedPublishedLayout.getPlid());
 		Assert.assertEquals(
-			originalLayout.getRobotsMap(), persistedLayout.getRobotsMap());
+			originalLayout.getRobotsMap(),
+			persistedPublishedLayout.getRobotsMap());
 		Assert.assertEquals(
-			originalLayout.getTitleMap(), persistedLayout.getTitleMap());
-		Assert.assertEquals("content", persistedLayout.getType());
+			originalLayout.getTitleMap(),
+			persistedPublishedLayout.getTitleMap());
+		Assert.assertEquals("content", persistedPublishedLayout.getType());
 		Assert.assertEquals(
 			originalLayout.getTypeSettings(),
-			persistedLayout.getTypeSettings());
+			persistedPublishedLayout.getTypeSettings());
 		Assert.assertEquals(
-			originalLayout.getUserId(), persistedLayout.getUserId());
+			originalLayout.getUserId(), persistedPublishedLayout.getUserId());
 		Assert.assertEquals(
-			originalLayout.isSystem(), persistedLayout.isSystem());
+			originalLayout.isSystem(), persistedPublishedLayout.isSystem());
 	}
 
 	private MockActionRequest _getMockActionRequest(long plid)
@@ -204,10 +216,13 @@ public class ConvertLayoutMVCActionCommandTest {
 	private Group _group;
 
 	@Inject
-	private LayoutService _layoutService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout/convert_layout")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

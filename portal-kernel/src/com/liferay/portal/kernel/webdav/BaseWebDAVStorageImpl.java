@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
@@ -157,20 +156,6 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (!group.isUser()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x)
-	 */
-	@Deprecated
-	protected boolean isAddGuestPermissions(long groupId) throws Exception {
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.getType() == GroupConstants.TYPE_SITE_OPEN) {
 			return true;
 		}
 

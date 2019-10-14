@@ -3010,38 +3010,6 @@ log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-k8s-database">
-		<attribute name="database.port" />
-		<attribute name="database.type" />
-		<attribute name="database.version" />
-
-		<sequential>
-			<fail message="Please set the property ${env.KUBERNETES_SERVICE_HOST}. Note that this script should only be run from a Kubernetes pod." unless="env.KUBERNETES_SERVICE_HOST" />
-
-			<get-ip-address />
-
-			<beanshell>
-				<![CDATA[
-					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-					import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
-					import com.liferay.jenkins.results.parser.k8s.Pod;
-					import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
-
-					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
-
-					Pod pod = liferayK8sConnection.createPod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
-
-					String databaseIP = pod.getIP();
-					String hostIP = project.getProperty("ip.address");
-
-					String[] commands = {"iptables -A OUTPUT -t nat -o lo -p tcp -m tcp --dport @{database.port} -j DNAT --to-destination " + databaseIP + ":@{database.port} && iptables -A POSTROUTING -t nat -p tcp -d " + databaseIP + " --dport @{database.port} -j SNAT --to-source " + hostIP};
-
-					JenkinsResultsParserUtil.executeBashCommands(commands);
-				]]>
-			</beanshell>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="stop-docker-database">
 		<sequential>
 			<get-database-property property.name="database.host" />
@@ -3081,31 +3049,6 @@ log.sanitizer.enabled=false</echo>
 			</exec>
 
 			<delete file="${docker.stop.script}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-k8s-database">
-		<attribute name="database.type" />
-		<attribute name="database.version" />
-
-		<sequential>
-			<fail message="Please set the property ${env.KUBERNETES_SERVICE_HOST}. Note that this script should only be run from a Kubernetes pod." unless="env.KUBERNETES_SERVICE_HOST" />
-
-			<beanshell>
-				<![CDATA[
-					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-					import com.liferay.jenkins.results.parser.k8s.LiferayK8sConnection;
-					import com.liferay.jenkins.results.parser.k8s.ResourceConfigurationFactory;
-
-					LiferayK8sConnection liferayK8sConnection = LiferayK8sConnection.getInstance();
-
-					liferayK8sConnection.deletePod(ResourceConfigurationFactory.getConfigurationPod("@{database.type}", "@{database.version}"));
-
-					String[] commands = {"iptables -t nat -F"};
-
-					JenkinsResultsParserUtil.executeBashCommands(commands);
-				]]>
-			</beanshell>
 		</sequential>
 	</macrodef>
 

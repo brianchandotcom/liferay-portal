@@ -29,12 +29,12 @@ import java.util.Map;
 public class ColumnUtil {
 
 	public static Object convertValue(
-			Class<?> itemClass, Map<String, Object> columnValues)
+			Class<?> itemClass, Map<String, Object> columnNameValueMap)
 		throws Exception {
 
 		Object item = itemClass.newInstance();
 
-		for (Map.Entry<String, Object> entry : columnValues.entrySet()) {
+		for (Map.Entry<String, Object> entry : columnNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
 			Field field = null;
@@ -57,7 +57,7 @@ public class ColumnUtil {
 	}
 
 	public static void handleLocalizationColumn(
-		String columnName, Map<String, Object> columnValues,
+		String columnName, Map<String, Object> columnNameValueMap,
 		int lastDelimiterIndex, String value) {
 
 		String languageId = columnName.substring(lastDelimiterIndex + 1);
@@ -65,12 +65,12 @@ public class ColumnUtil {
 		columnName = columnName.substring(0, lastDelimiterIndex);
 
 		Map<String, String> localizationMap =
-			(Map<String, String>)columnValues.get(columnName);
+			(Map<String, String>)columnNameValueMap.get(columnName);
 
 		if (localizationMap == null) {
 			localizationMap = new HashMap<>();
 
-			columnValues.put(columnName, localizationMap);
+			columnNameValueMap.put(columnName, localizationMap);
 		}
 
 		localizationMap.put(languageId, value);

@@ -54,12 +54,12 @@ public class JSONLBatchEngineTaskItemReader
 			return null;
 		}
 
-		Map<String, Object> columnValues = _objectMapper.readValue(
+		Map<String, Object> columnNameValueMap = _objectMapper.readValue(
 			line,
 			new TypeReference<Map<String, Object>>() {
 			});
 
-		return ColumnUtil.convertValue(_itemClass, columnValues);
+		return ColumnUtil.convertValue(_itemClass, columnNameValueMap);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();

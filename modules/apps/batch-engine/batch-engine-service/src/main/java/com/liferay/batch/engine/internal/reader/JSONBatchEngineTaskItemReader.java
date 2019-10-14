@@ -52,12 +52,12 @@ public class JSONBatchEngineTaskItemReader
 	@Override
 	public Object read() throws Exception {
 		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
-			Map<String, Object> columnValues = _objectMapper.readValue(
+			Map<String, Object> columnNameValueMap = _objectMapper.readValue(
 				_jsonParser,
 				new TypeReference<Map<String, Object>>() {
 				});
 
-			return ColumnUtil.convertValue(_itemClass, columnValues);
+			return ColumnUtil.convertValue(_itemClass, columnNameValueMap);
 		}
 
 		return null;

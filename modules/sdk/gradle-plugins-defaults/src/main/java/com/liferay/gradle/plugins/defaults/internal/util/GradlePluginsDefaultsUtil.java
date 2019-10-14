@@ -150,7 +150,9 @@ public class GradlePluginsDefaultsUtil {
 		fileNames.add(
 			_BUILD_PROFILE_FILE_NAME_PREFIX + buildProfile + "-" + suffix);
 
-		if (buildProfile.equals("portal-deprecated")) {
+		if (buildProfile.equals("dxp") ||
+			buildProfile.equals("portal-deprecated")) {
+
 			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal");
 			fileNames.add(_BUILD_PROFILE_FILE_NAME_PREFIX + "portal-" + suffix);
 		}

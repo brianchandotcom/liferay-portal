@@ -2994,8 +2994,13 @@ log.sanitizer.enabled=false</echo>
 				]]>
 			</echo>
 
-			<chmod perm="a+x">
-				<fileset dir="." includes="${docker.start.script}" />
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.start.script}"
+				/>
 			</chmod>
 
 			<exec executable="/bin/bash" os="${os.apple},${os.unix}">
@@ -3036,8 +3041,13 @@ log.sanitizer.enabled=false</echo>
 				]]>
 			</echo>
 
-			<chmod perm="a+x">
-				<fileset dir="." includes="${docker.stop.script}" />
+			<chmod
+				perm="a+x"
+			>
+				<fileset
+					dir="."
+					includes="${docker.stop.script}"
+				/>
 			</chmod>
 
 			<exec executable="/bin/bash" failonerror="false" os="${os.apple},${os.unix}">

@@ -102,7 +102,6 @@ function ToolbarBody() {
 
 	const {languageIcon} = availableLanguages[defaultLanguageId];
 
-	// TODO: add error boundary
 	return (
 		<div className="page-editor-toolbar container-fluid container-fluid-max-xl">
 			<ul className="navbar-nav">
@@ -110,17 +109,21 @@ function ToolbarBody() {
 					({loadingPlaceholder, pluginEntryPoint}) => {
 						return (
 							<li className="nav-item" key={pluginEntryPoint}>
-								<Suspense
-									fallback={
-										<UnsafeHTML
-											markup={loadingPlaceholder}
+								<ErrorBoundary>
+									<Suspense
+										fallback={
+											<UnsafeHTML
+												markup={loadingPlaceholder}
+											/>
+										}
+									>
+										<ToolbarSection
+											plugin={getInstance(
+												pluginEntryPoint
+											)}
 										/>
-									}
-								>
-									<ToolbarSection
-										plugin={getInstance(pluginEntryPoint)}
-									/>
-								</Suspense>
+									</Suspense>
+								</ErrorBoundary>
 							</li>
 						);
 					}
@@ -164,6 +167,32 @@ function ToolbarBody() {
 			</ul>
 		</div>
 	);
+}
+
+class ErrorBoundary extends React.Component {
+	static getDerivedStateFromError(_error) {
+		return {hasError: true};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {hasError: false};
+	}
+
+	componentDidCatch(error) {
+		if (process.env.NODE_ENV === 'development') {
+			console.error(error);
+		}
+	}
+
+	render() {
+		if (this.state.hasError) {
+			return null;
+		} else {
+			return this.props.children;
+		}
+	}
 }
 
 export default function Toolbar() {

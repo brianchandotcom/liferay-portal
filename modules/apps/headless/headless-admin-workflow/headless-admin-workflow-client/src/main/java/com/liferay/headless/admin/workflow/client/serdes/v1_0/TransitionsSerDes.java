@@ -14,7 +14,7 @@
 
 package com.liferay.headless.admin.workflow.client.serdes.v1_0;
 
-import com.liferay.headless.admin.workflow.client.dto.v1_0.ChangeTransition;
+import com.liferay.headless.admin.workflow.client.dto.v1_0.Transitions;
 import com.liferay.headless.admin.workflow.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +30,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChangeTransitionSerDes {
+public class TransitionsSerDes {
 
-	public static ChangeTransition toDTO(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+	public static Transitions toDTO(String json) {
+		TransitionsJSONParser transitionsJSONParser =
+			new TransitionsJSONParser();
 
-		return changeTransitionJSONParser.parseToDTO(json);
+		return transitionsJSONParser.parseToDTO(json);
 	}
 
-	public static ChangeTransition[] toDTOs(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+	public static Transitions[] toDTOs(String json) {
+		TransitionsJSONParser transitionsJSONParser =
+			new TransitionsJSONParser();
 
-		return changeTransitionJSONParser.parseToDTOs(json);
+		return transitionsJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(ChangeTransition changeTransition) {
-		if (changeTransition == null) {
+	public static String toJSON(Transitions transitions) {
+		if (transitions == null) {
 			return "null";
 		}
 
@@ -55,30 +55,16 @@ public class ChangeTransitionSerDes {
 
 		sb.append("{");
 
-		if (changeTransition.getComment() != null) {
+		if (transitions.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"comment\": ");
+			sb.append("\"name\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(changeTransition.getComment()));
-
-			sb.append("\"");
-		}
-
-		if (changeTransition.getTransition() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"transition\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(changeTransition.getTransition()));
+			sb.append(_escape(transitions.getName()));
 
 			sb.append("\"");
 		}
@@ -89,64 +75,50 @@ public class ChangeTransitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		ChangeTransitionJSONParser changeTransitionJSONParser =
-			new ChangeTransitionJSONParser();
+		TransitionsJSONParser transitionsJSONParser =
+			new TransitionsJSONParser();
 
-		return changeTransitionJSONParser.parseToMap(json);
+		return transitionsJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(ChangeTransition changeTransition) {
-		if (changeTransition == null) {
+	public static Map<String, String> toMap(Transitions transitions) {
+		if (transitions == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (changeTransition.getComment() == null) {
-			map.put("comment", null);
+		if (transitions.getName() == null) {
+			map.put("name", null);
 		}
 		else {
-			map.put("comment", String.valueOf(changeTransition.getComment()));
-		}
-
-		if (changeTransition.getTransition() == null) {
-			map.put("transition", null);
-		}
-		else {
-			map.put(
-				"transition", String.valueOf(changeTransition.getTransition()));
+			map.put("name", String.valueOf(transitions.getName()));
 		}
 
 		return map;
 	}
 
-	public static class ChangeTransitionJSONParser
-		extends BaseJSONParser<ChangeTransition> {
+	public static class TransitionsJSONParser
+		extends BaseJSONParser<Transitions> {
 
 		@Override
-		protected ChangeTransition createDTO() {
-			return new ChangeTransition();
+		protected Transitions createDTO() {
+			return new Transitions();
 		}
 
 		@Override
-		protected ChangeTransition[] createDTOArray(int size) {
-			return new ChangeTransition[size];
+		protected Transitions[] createDTOArray(int size) {
+			return new Transitions[size];
 		}
 
 		@Override
 		protected void setField(
-			ChangeTransition changeTransition, String jsonParserFieldName,
+			Transitions transitions, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "comment")) {
+			if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					changeTransition.setComment((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "transition")) {
-				if (jsonParserFieldValue != null) {
-					changeTransition.setTransition(
-						(String)jsonParserFieldValue);
+					transitions.setName((String)jsonParserFieldValue);
 				}
 			}
 			else {

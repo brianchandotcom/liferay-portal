@@ -17,6 +17,7 @@ package com.liferay.headless.admin.workflow.internal.graphql.mutation.v1_0;
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -64,6 +65,21 @@ public class Mutation {
 			workflowTaskResource ->
 				workflowTaskResource.postWorkflowTaskAssignToMe(
 					workflowTaskId, workflowTaskAssignToMe));
+	}
+
+	@GraphQLField
+	public WorkflowTask createWorkflowTaskAssignToRole(
+			@GraphQLName("workflowTaskId") Long workflowTaskId,
+			@GraphQLName("workflowTaskAssignToRole") WorkflowTaskAssignToRole
+				workflowTaskAssignToRole)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource ->
+				workflowTaskResource.postWorkflowTaskAssignToRole(
+					workflowTaskId, workflowTaskAssignToRole));
 	}
 
 	@GraphQLField

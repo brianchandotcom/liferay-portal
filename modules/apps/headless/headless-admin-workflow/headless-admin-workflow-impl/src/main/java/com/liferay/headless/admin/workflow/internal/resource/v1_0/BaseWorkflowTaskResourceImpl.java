@@ -17,11 +17,14 @@ package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 import com.liferay.headless.admin.workflow.dto.v1_0.ChangeTransition;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToMe;
+import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToRole;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -49,6 +52,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -64,23 +68,74 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/roles/{roleId}/workflow-tasks'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-instance/{workflowInstanceId}/workflow-tasks'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "roleId"),
+			@Parameter(in = ParameterIn.PATH, name = "workflowInstanceId"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
 	)
-	@Path("/roles/{roleId}/workflow-tasks")
+	@Path("/workflow-instance/{workflowInstanceId}/workflow-tasks")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public Page<WorkflowTask> getRoleWorkflowTasksPage(
-			@NotNull @Parameter(hidden = true) @PathParam("roleId") Long roleId,
+	public Page<WorkflowTask> getWorkflowInstanceWorkflowTasksPage(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowInstanceId")
+				Long workflowInstanceId,
 			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "andOperator"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetPrimaryKeys"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetTitle"),
+			@Parameter(in = ParameterIn.QUERY, name = "assetTypes"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateDueEnd"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateDueStart"),
+			@Parameter(in = ParameterIn.QUERY, name = "searchByUserRoles"),
+			@Parameter(in = ParameterIn.QUERY, name = "taskName"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
+		}
+	)
+	@Path("/workflow-tasks")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTasksPage(
+			@Parameter(hidden = true) @QueryParam("andOperator") Boolean
+				andOperator,
+			@Parameter(hidden = true) @QueryParam("assetPrimaryKeys") Long[]
+				assetPrimaryKeys,
+			@Parameter(hidden = true) @QueryParam("assetTitle") String
+				assetTitle,
+			@Parameter(hidden = true) @QueryParam("assetTypes") String[]
+				assetTypes,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
+			@Parameter(hidden = true) @QueryParam("dateDueEnd") java.util.Date
+				dateDueEnd,
+			@Parameter(hidden = true) @QueryParam("dateDueStart") java.util.Date
+				dateDueStart,
+			@Parameter(hidden = true) @QueryParam("searchByUserRoles") Boolean
+				searchByUserRoles,
+			@Parameter(hidden = true) @QueryParam("taskName") String taskName,
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -135,6 +190,107 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-role'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "roleId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-role")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTasksAssignedToRolePage(
+			@NotNull @Parameter(hidden = true) @QueryParam("roleId") Long
+				roleId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-user'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "assigneeId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-user")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTasksAssignedToUserPage(
+			@Parameter(hidden = true) @QueryParam("assigneeId") Long assigneeId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/assigned-to-user-roles'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "assigneeId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/assigned-to-user-roles")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTasksAssignedToUserRolesPage(
+			@Parameter(hidden = true) @QueryParam("assigneeId") Long assigneeId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/submitting-user'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.QUERY, name = "creatorId"),
+			@Parameter(in = ParameterIn.QUERY, name = "page"),
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+		}
+	)
+	@Path("/workflow-tasks/submitting-user")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public Page<WorkflowTask> getWorkflowTasksSubmittingUserPage(
+			@Parameter(hidden = true) @QueryParam("creatorId") Long creatorId,
+			@Context Pagination pagination)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}'  -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -179,6 +335,29 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-role' -d $'{"comment": ___, "dueDate": ___, "roleId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Override
+	@Consumes({"application/json", "application/xml"})
+	@POST
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "workflowTaskId")}
+	)
+	@Path("/workflow-tasks/{workflowTaskId}/assign-to-role")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public WorkflowTask postWorkflowTaskAssignToRole(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
+				workflowTaskId,
+			WorkflowTaskAssignToRole workflowTaskAssignToRole)
+		throws Exception {
+
+		return new WorkflowTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/assign-to-user' -d $'{"assigneeId": ___, "comment": ___, "dueDate": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
@@ -202,7 +381,7 @@ public abstract class BaseWorkflowTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/change-transition' -d $'{"transition": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/change-transition' -d $'{"comment": ___, "transition": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -220,6 +399,27 @@ public abstract class BaseWorkflowTaskResourceImpl
 		throws Exception {
 
 		return new WorkflowTask();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-workflow/v1.0/workflow-tasks/{workflowTaskId}/has-other-assignable-users'  -u 'test@liferay.com:test'
+	 */
+	@Override
+	@GET
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.PATH, name = "workflowTaskId")}
+	)
+	@Path("/workflow-tasks/{workflowTaskId}/has-other-assignable-users")
+	@Produces("text/plain")
+	@Tags(value = {@Tag(name = "WorkflowTask")})
+	public String getWorkflowTaskHasOtherAssignableUser(
+			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
+				workflowTaskId)
+		throws Exception {
+
+		return StringPool.BLANK;
 	}
 
 	/**

@@ -15,8 +15,9 @@
 package com.liferay.headless.admin.workflow.client.dto.v1_0;
 
 import com.liferay.headless.admin.workflow.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.workflow.client.serdes.v1_0.ChangeTransitionSerDes;
+import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowTaskAssignToRoleSerDes;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -26,7 +27,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ChangeTransition {
+public class WorkflowTaskAssignToRole {
 
 	public String getComment() {
 		return comment;
@@ -49,26 +50,47 @@ public class ChangeTransition {
 
 	protected String comment;
 
-	public String getTransition() {
-		return transition;
+	public Date getDueDate() {
+		return dueDate;
 	}
 
-	public void setTransition(String transition) {
-		this.transition = transition;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 
-	public void setTransition(
-		UnsafeSupplier<String, Exception> transitionUnsafeSupplier) {
+	public void setDueDate(
+		UnsafeSupplier<Date, Exception> dueDateUnsafeSupplier) {
 
 		try {
-			transition = transitionUnsafeSupplier.get();
+			dueDate = dueDateUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String transition;
+	protected Date dueDate;
+
+	public Long getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
+
+	public void setRoleId(
+		UnsafeSupplier<Long, Exception> roleIdUnsafeSupplier) {
+
+		try {
+			roleId = roleIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long roleId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -76,13 +98,14 @@ public class ChangeTransition {
 			return true;
 		}
 
-		if (!(object instanceof ChangeTransition)) {
+		if (!(object instanceof WorkflowTaskAssignToRole)) {
 			return false;
 		}
 
-		ChangeTransition changeTransition = (ChangeTransition)object;
+		WorkflowTaskAssignToRole workflowTaskAssignToRole =
+			(WorkflowTaskAssignToRole)object;
 
-		return Objects.equals(toString(), changeTransition.toString());
+		return Objects.equals(toString(), workflowTaskAssignToRole.toString());
 	}
 
 	@Override
@@ -93,7 +116,7 @@ public class ChangeTransition {
 	}
 
 	public String toString() {
-		return ChangeTransitionSerDes.toJSON(this);
+		return WorkflowTaskAssignToRoleSerDes.toJSON(this);
 	}
 
 }

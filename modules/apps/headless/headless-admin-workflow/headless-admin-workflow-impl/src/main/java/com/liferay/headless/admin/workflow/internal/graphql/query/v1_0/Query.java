@@ -14,8 +14,12 @@
 
 package com.liferay.headless.admin.workflow.internal.graphql.query.v1_0;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Creator;
+import com.liferay.headless.admin.workflow.dto.v1_0.Transitions;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTask;
+import com.liferay.headless.admin.workflow.resource.v1_0.CreatorResource;
+import com.liferay.headless.admin.workflow.resource.v1_0.TransitionsResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -31,6 +35,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.Date;
 import java.util.function.BiFunction;
 
 import javax.annotation.Generated;
@@ -48,6 +53,22 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setCreatorResourceComponentServiceObjects(
+		ComponentServiceObjects<CreatorResource>
+			creatorResourceComponentServiceObjects) {
+
+		_creatorResourceComponentServiceObjects =
+			creatorResourceComponentServiceObjects;
+	}
+
+	public static void setTransitionsResourceComponentServiceObjects(
+		ComponentServiceObjects<TransitionsResource>
+			transitionsResourceComponentServiceObjects) {
+
+		_transitionsResourceComponentServiceObjects =
+			transitionsResourceComponentServiceObjects;
+	}
 
 	public static void setWorkflowLogResourceComponentServiceObjects(
 		ComponentServiceObjects<WorkflowLogResource>
@@ -68,7 +89,47 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowLog(workflowLogId: ___){auditPerson, commentLog, dateCreated, id, person, previousPerson, previousState, state, taskId, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskAssignableUsers(page: ___, pageSize: ___, workflowTaskId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public CreatorPage workflowTaskAssignableUsers(
+			@GraphQLName("workflowTaskId") Long workflowTaskId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_creatorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			creatorResource -> new CreatorPage(
+				creatorResource.getWorkflowTaskAssignableUsersPage(
+					workflowTaskId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskNextTransitions(page: ___, pageSize: ___, workflowTaskId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public TransitionsPage workflowTaskNextTransitions(
+			@GraphQLName("workflowTaskId") Long workflowTaskId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_transitionsResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			transitionsResource -> new TransitionsPage(
+				transitionsResource.getWorkflowTaskNextTransitionsPage(
+					workflowTaskId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowLog(workflowLogId: ___){auditPerson, commentLog, dateCreated, id, person, previousPerson, previousRole, previousState, role, state, taskId, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowLog workflowLog(
@@ -105,11 +166,11 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roleWorkflowTasks(page: ___, pageSize: ___, roleId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowInstanceWorkflowTasks(page: ___, pageSize: ___, workflowInstanceId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public WorkflowTaskPage roleWorkflowTasks(
-			@GraphQLName("roleId") Long roleId,
+	public WorkflowTaskPage workflowInstanceWorkflowTasks(
+			@GraphQLName("workflowInstanceId") Long workflowInstanceId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -118,8 +179,41 @@ public class Query {
 			_workflowTaskResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			workflowTaskResource -> new WorkflowTaskPage(
-				workflowTaskResource.getRoleWorkflowTasksPage(
-					roleId, Pagination.of(page, pageSize))));
+				workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
+					workflowInstanceId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasks(andOperator: ___, assetPrimaryKeys: ___, assetTitle: ___, assetTypes: ___, completed: ___, dateDueEnd: ___, dateDueStart: ___, page: ___, pageSize: ___, searchByUserRoles: ___, sorts: ___, taskName: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowTasks(
+			@GraphQLName("andOperator") Boolean andOperator,
+			@GraphQLName("assetPrimaryKeys") Long[] assetPrimaryKeys,
+			@GraphQLName("assetTitle") String assetTitle,
+			@GraphQLName("assetTypes") String[] assetTypes,
+			@GraphQLName("completed") Boolean completed,
+			@GraphQLName("dateDueEnd") Date dateDueEnd,
+			@GraphQLName("dateDueStart") Date dateDueStart,
+			@GraphQLName("searchByUserRoles") Boolean searchByUserRoles,
+			@GraphQLName("taskName") String taskName,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.getWorkflowTasksPage(
+					andOperator, assetPrimaryKeys, assetTitle, assetTypes,
+					completed, dateDueEnd, dateDueStart, searchByUserRoles,
+					taskName, Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						workflowTaskResource, sortsString))));
 	}
 
 	/**
@@ -163,7 +257,87 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTask(workflowTaskId: ___){completed, dateCompleted, dateCreated, definitionName, description, dueDate, id, name, objectReviewed, transitions}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasksAssignedToRole(page: ___, pageSize: ___, roleId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowTasksAssignedToRole(
+			@GraphQLName("roleId") Long roleId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.getWorkflowTasksAssignedToRolePage(
+					roleId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasksAssignedToUser(assigneeId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowTasksAssignedToUser(
+			@GraphQLName("assigneeId") Long assigneeId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.getWorkflowTasksAssignedToUserPage(
+					assigneeId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasksAssignedToUserRoles(assigneeId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowTasksAssignedToUserRoles(
+			@GraphQLName("assigneeId") Long assigneeId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.getWorkflowTasksAssignedToUserRolesPage(
+					assigneeId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTasksSubmittingUser(creatorId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public WorkflowTaskPage workflowTasksSubmittingUser(
+			@GraphQLName("creatorId") Long creatorId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource -> new WorkflowTaskPage(
+				workflowTaskResource.getWorkflowTasksSubmittingUserPage(
+					creatorId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTask(workflowTaskId: ___){assigneePerson, assigneeRoles, completed, dateCompletion, dateCreated, dateDue, definitionId, definitionName, definitionVersion, description, id, instanceId, name, objectReviewed}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowTask workflowTask(
@@ -175,6 +349,101 @@ public class Query {
 			this::_populateResourceContext,
 			workflowTaskResource -> workflowTaskResource.getWorkflowTask(
 				workflowTaskId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskHasOtherAssignableUser(workflowTaskId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String workflowTaskHasOtherAssignableUser(
+			@GraphQLName("workflowTaskId") Long workflowTaskId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_workflowTaskResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workflowTaskResource ->
+				workflowTaskResource.getWorkflowTaskHasOtherAssignableUser(
+					workflowTaskId));
+	}
+
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskHasOtherAssignableUserTypeExtension {
+
+		public GetWorkflowTaskHasOtherAssignableUserTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public String hasOtherAssignableUser() throws Exception {
+			return _applyComponentServiceObjects(
+				_workflowTaskResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				workflowTaskResource ->
+					workflowTaskResource.getWorkflowTaskHasOtherAssignableUser(
+						_workflowTask.getId()));
+		}
+
+		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskAssignableUsersPageTypeExtension {
+
+		public GetWorkflowTaskAssignableUsersPageTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public CreatorPage assignableUsers(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_creatorResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				creatorResource -> new CreatorPage(
+					creatorResource.getWorkflowTaskAssignableUsersPage(
+						_workflowTask.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLTypeExtension(WorkflowTask.class)
+	public class GetWorkflowTaskNextTransitionsPageTypeExtension {
+
+		public GetWorkflowTaskNextTransitionsPageTypeExtension(
+			WorkflowTask workflowTask) {
+
+			_workflowTask = workflowTask;
+		}
+
+		@GraphQLField
+		public TransitionsPage nextTransitions(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_transitionsResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				transitionsResource -> new TransitionsPage(
+					transitionsResource.getWorkflowTaskNextTransitionsPage(
+						_workflowTask.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private WorkflowTask _workflowTask;
+
 	}
 
 	@GraphQLTypeExtension(WorkflowTask.class)
@@ -201,6 +470,54 @@ public class Query {
 		}
 
 		private WorkflowTask _workflowTask;
+
+	}
+
+	@GraphQLName("CreatorPage")
+	public class CreatorPage {
+
+		public CreatorPage(Page creatorPage) {
+			items = creatorPage.getItems();
+			page = creatorPage.getPage();
+			pageSize = creatorPage.getPageSize();
+			totalCount = creatorPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Creator> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("TransitionsPage")
+	public class TransitionsPage {
+
+		public TransitionsPage(Page transitionsPage) {
+			items = transitionsPage.getItems();
+			page = transitionsPage.getPage();
+			pageSize = transitionsPage.getPageSize();
+			totalCount = transitionsPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Transitions> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
 
 	}
 
@@ -271,6 +588,29 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(CreatorResource creatorResource)
+		throws Exception {
+
+		creatorResource.setContextAcceptLanguage(_acceptLanguage);
+		creatorResource.setContextCompany(_company);
+		creatorResource.setContextHttpServletRequest(_httpServletRequest);
+		creatorResource.setContextHttpServletResponse(_httpServletResponse);
+		creatorResource.setContextUriInfo(_uriInfo);
+		creatorResource.setContextUser(_user);
+	}
+
+	private void _populateResourceContext(
+			TransitionsResource transitionsResource)
+		throws Exception {
+
+		transitionsResource.setContextAcceptLanguage(_acceptLanguage);
+		transitionsResource.setContextCompany(_company);
+		transitionsResource.setContextHttpServletRequest(_httpServletRequest);
+		transitionsResource.setContextHttpServletResponse(_httpServletResponse);
+		transitionsResource.setContextUriInfo(_uriInfo);
+		transitionsResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(
 			WorkflowLogResource workflowLogResource)
 		throws Exception {
@@ -296,6 +636,10 @@ public class Query {
 		workflowTaskResource.setContextUser(_user);
 	}
 
+	private static ComponentServiceObjects<CreatorResource>
+		_creatorResourceComponentServiceObjects;
+	private static ComponentServiceObjects<TransitionsResource>
+		_transitionsResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowLogResource>
 		_workflowLogResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WorkflowTaskResource>

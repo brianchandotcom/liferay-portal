@@ -112,6 +112,8 @@ message.
 			</then>
 		</if>
 
+		<property name="gradle.execute.silent" value="true" />
+
 		<antcall target="clean" />
 		<antcall target="compile" />
 		<antcall target="deploy" />

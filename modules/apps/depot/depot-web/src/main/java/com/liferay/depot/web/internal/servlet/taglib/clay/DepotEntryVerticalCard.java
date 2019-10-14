@@ -14,6 +14,7 @@
 
 package com.liferay.depot.web.internal.servlet.taglib.clay;
 
+import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.util.DepotEntryURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 
@@ -58,6 +60,13 @@ public class DepotEntryVerticalCard
 		_group = (Group)baseModel;
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
+
+		_contentRepositoryAdminGroupUrlProvider =
+			(GroupURLProvider)httpServletRequest.getAttribute(
+				DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER);
 	}
 
 	@Override
@@ -82,6 +91,12 @@ public class DepotEntryVerticalCard
 				}
 			}
 		};
+	}
+
+	@Override
+	public String getHref() {
+		return _contentRepositoryAdminGroupUrlProvider.getGroupURL(
+			_group, _liferayPortletRequest);
 	}
 
 	@Override
@@ -121,6 +136,7 @@ public class DepotEntryVerticalCard
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotEntryVerticalCard.class);
 
+	private final GroupURLProvider _contentRepositoryAdminGroupUrlProvider;
 	private final Group _group;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

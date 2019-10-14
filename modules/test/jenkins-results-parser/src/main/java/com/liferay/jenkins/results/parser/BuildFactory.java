@@ -80,20 +80,6 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
-		if ((parentBuild != null) &&
-			jobName.equals("test-portal-acceptance-pullrequest(ee-6.2.x)")) {
-
-			String jenkinsJobVariant = topLevelBuild.getParameterValue(
-				"JENKINS_JOB_VARIANT");
-
-			if ((jenkinsJobVariant != null) &&
-				jenkinsJobVariant.equals("rebase-error")) {
-
-				return new RebaseErrorTopLevelBuild(
-					url, (TopLevelBuild)parentBuild);
-			}
-		}
-
 		return topLevelBuild;
 	}
 

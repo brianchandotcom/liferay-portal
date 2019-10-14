@@ -26,6 +26,10 @@ class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
+	deleteMasterPagePreview(itemData) {
+		this._send(itemData.deleteMasterPagePreviewURL);
+	}
+
 	renameMasterPage(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-master-page'),
@@ -38,6 +42,35 @@ class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldValue: itemData.layoutPageTemplateEntryName,
 			namespace: this.namespace,
 			spritemap: this.spritemap
+		});
+	}
+
+	updateMasterPagePreview(itemData) {
+		AUI().use('liferay-item-selector-dialog', A => {
+			const itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: this.ns('changePreview'),
+				on: {
+					selectedItemChange: function(event) {
+						const selectedItem = event.newVal;
+
+						if (selectedItem) {
+							const itemValue = JSON.parse(selectedItem.value);
+
+							this.one('#layoutPageTemplateEntryId').value =
+								itemData.layoutPageTemplateEntryId;
+							this.one('#fileEntryId').value =
+								itemValue.fileEntryId;
+
+							submitForm(this.one('#masterPagePreviewFm'));
+						}
+					}.bind(this)
+				},
+				'strings.add': Liferay.Language.get('ok'),
+				title: Liferay.Language.get('master-page-thumbnail'),
+				url: itemData.itemSelectorURL
+			});
+
+			itemSelectorDialog.open();
 		});
 	}
 

@@ -16,14 +16,22 @@ package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -51,7 +59,8 @@ public class MasterPageActionDropdownItemsProvider {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-
+		_itemSelector = (ItemSelector)renderRequest.getAttribute(
+			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -64,6 +73,13 @@ public class MasterPageActionDropdownItemsProvider {
 						_layoutPageTemplateEntry, ActionKeys.UPDATE)) {
 
 					add(_getEditMasterPageActionUnsafeConsumer());
+
+					add(_getUpdateMasterPagePreviewActionUnsafeConsumer());
+
+					if (_layoutPageTemplateEntry.getPreviewFileEntryId() > 0) {
+						add(_getDeleteMasterPagePreviewActionUnsafeConsumer());
+					}
+
 					add(_getRenameMasterPageActionUnsafeConsumer());
 				}
 
@@ -103,6 +119,37 @@ public class MasterPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteMasterPagePreviewActionUnsafeConsumer() {
+
+		PortletURL deleteMasterPagePreviewURL =
+			_renderResponse.createActionURL();
+
+		deleteMasterPagePreviewURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/delete_layout_page_template_entry_preview");
+
+		deleteMasterPagePreviewURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteMasterPagePreviewURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteMasterPagePreview");
+			dropdownItem.putData(
+				"deleteMasterPagePreviewURL",
+				deleteMasterPagePreviewURL.toString());
+			dropdownItem.putData(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
 		_getEditMasterPageActionUnsafeConsumer() {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
@@ -125,6 +172,35 @@ public class MasterPageActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
+	}
+
+	private String _getItemSelectorURL() {
+		PortletURL uploadURL = _renderResponse.createActionURL();
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/upload_layout_page_template_entry_preview");
+		uploadURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				uploadURL.toString(),
+				LanguageUtil.get(_themeDisplay.getLocale(), "master-page"),
+				UploadServletRequestConfigurationHelperUtil.getMaxSize());
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			_renderResponse.getNamespace() + "changePreview",
+			itemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -163,7 +239,23 @@ public class MasterPageActionDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getUpdateMasterPagePreviewActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "updateMasterPagePreview");
+			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
+			dropdownItem.putData(
+				"layoutPageTemplateEntryId",
+				String.valueOf(
+					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
+		};
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

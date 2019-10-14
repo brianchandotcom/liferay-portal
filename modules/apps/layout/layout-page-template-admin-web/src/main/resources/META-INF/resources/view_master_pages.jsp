@@ -63,6 +63,15 @@ MasterPageManagementToolbarDisplayContext masterPageManagementToolbarDisplayCont
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="/layout_page_template/update_layout_page_template_entry_preview" var="masterPagePreviewURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= masterPagePreviewURL %>" name="masterPagePreviewFm">
+	<aui:input name="layoutPageTemplateEntryId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" />
+</aui:form>
+
 <liferay-frontend:component
 	componentId="<%= LayoutPageTemplateAdminWebKeys.MASTER_PAGE_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/MasterPageDropdownDefaultEventHandler.es"

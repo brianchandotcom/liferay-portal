@@ -14,6 +14,8 @@
 
 package com.liferay.mule.internal.operation;
 
+import static org.mule.runtime.http.api.HttpConstants.Method;
+
 import com.liferay.mule.internal.connection.LiferayConnection;
 import com.liferay.mule.internal.error.LiferayResponseErrorProvider;
 import com.liferay.mule.internal.error.LiferayResponseValidator;
@@ -69,7 +71,7 @@ public class LiferayOperations {
 				String endpoint)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(endpoint);
+		_logEndpointParams(Method.DELETE, endpoint);
 
 		HttpResponse httpResponse = connection.delete(
 			_pathParams, _queryParams, endpoint);
@@ -93,7 +95,7 @@ public class LiferayOperations {
 			@MetadataKeyId(GETEndpointTypeKeysResolver.class) String endpoint)
 		throws Exception {
 
-		_logEndpointParams(endpoint);
+		_logEndpointParams(Method.GET, endpoint);
 
 		HttpResponse httpResponse = connection.get(
 			_pathParams, _queryParams, endpoint);
@@ -120,7 +122,7 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(endpoint);
+		_logEndpointParams(Method.PATCH, endpoint);
 
 		HttpResponse httpResponse = connection.patch(
 			inputStream, _pathParams, _queryParams, endpoint);
@@ -145,7 +147,7 @@ public class LiferayOperations {
 				InputStream inputStream)
 		throws IOException, TimeoutException {
 
-		_logEndpointParams(endpoint);
+		_logEndpointParams(Method.POST, endpoint);
 
 		HttpResponse httpResponse = connection.post(
 			inputStream, _pathParams, _queryParams, endpoint);
@@ -160,13 +162,11 @@ public class LiferayOperations {
 		).build();
 	}
 
-	private void _logEndpointParams(String endpoint) {
-		if (_logger.isDebugEnabled()) {
-			_logger.debug(
-				"Send DELETE request to endpoint {}, with path parameters {} " +
-					"and query parameters {}",
-				endpoint, _pathParams, _queryParams);
-		}
+	private void _logEndpointParams(Method method, String endpoint) {
+		_logger.debug(
+			"Send {} request to endpoint {}, with path parameters {} and " +
+				"query parameters {}",
+			method, endpoint, _pathParams, _queryParams);
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

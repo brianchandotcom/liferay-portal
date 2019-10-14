@@ -31,7 +31,6 @@ public class DepotEntryURLUtil {
 		ActionURL addDepotURL = liferayPortletResponse.createActionURL();
 
 		addDepotURL.setParameter(ActionRequest.ACTION_NAME, "/depot_entry/add");
-
 		addDepotURL.setParameter("redirect", redirect);
 
 		return addDepotURL;
@@ -56,10 +55,9 @@ public class DepotEntryURLUtil {
 		RenderURL editDepotEntryURL = liferayPortletResponse.createRenderURL();
 
 		editDepotEntryURL.setParameter(
-			"depotEntryId", String.valueOf(depotEntryId));
-
-		editDepotEntryURL.setParameter(
 			"mvcRenderCommandName", "/depot_entry/edit");
+		editDepotEntryURL.setParameter(
+			"depotEntryId", String.valueOf(depotEntryId));
 
 		editDepotEntryURL.setParameter("redirect", redirect);
 

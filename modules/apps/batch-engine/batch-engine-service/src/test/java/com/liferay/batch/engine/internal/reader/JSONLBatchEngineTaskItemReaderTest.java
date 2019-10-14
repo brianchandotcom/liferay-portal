@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringBundler;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -57,8 +56,6 @@ public class JSONLBatchEngineTaskItemReaderTest
 
 	@Test
 	public void testReadMultipleRows() throws Exception {
-		Date createDate = new Date();
-
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
 					new Object[][] {
@@ -166,28 +163,25 @@ public class JSONLBatchEngineTaskItemReaderTest
 	private byte[] _getContent(Object[][] rowValues) {
 		StringBundler sb = new StringBundler();
 
-		for (int i = 0; i < rowValues.length; i++) {
+		for (Object[] singleRowValues : rowValues) {
 			sb.append("{");
 
-			for (int j = 0; j < rowValues[i].length; j++) {
-				if (rowValues[i][j] != null) {
+			for (int j = 0; j < singleRowValues.length; j++) {
+				if (singleRowValues[j] != null) {
 					sb.append("\"");
 					sb.append(_CELL_NAMES[j]);
 					sb.append("\":");
-					sb.append(rowValues[i][j]);
-
-					if (j < (rowValues[i].length - 1)) {
-						sb.append(",");
-					}
+					sb.append(singleRowValues[j]);
+					sb.append(",");
 				}
 			}
 
-			sb.append("}");
-
-			if (i < (rowValues.length - 1)) {
-				sb.append("\n");
-			}
+			sb.setIndex(sb.index() - 1);
+			sb.append("}\n");
 		}
+
+		sb.setIndex(sb.index() - 1);
+		sb.append("}");
 
 		String content = sb.toString();
 

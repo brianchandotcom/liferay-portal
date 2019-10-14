@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -41,6 +45,8 @@ public class AccountEntryUserRelModelListener
 		throws ModelListenerException {
 
 		_updateDefaultAccountAssignment(accountEntryUserRel.getAccountUserId());
+
+		_reindexUser(accountEntryUserRel.getAccountUserId());
 	}
 
 	@Override
@@ -48,6 +54,20 @@ public class AccountEntryUserRelModelListener
 		throws ModelListenerException {
 
 		_updateDefaultAccountAssignment(accountEntryUserRel.getAccountUserId());
+
+		_reindexUser(accountEntryUserRel.getAccountUserId());
+	}
+
+	private void _reindexUser(long accountUserId) {
+		try {
+			Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				User.class);
+
+			indexer.reindex(User.class.getName(), accountUserId);
+		}
+		catch (SearchException se) {
+			throw new ModelListenerException(se);
+		}
 	}
 
 	private void _updateDefaultAccountAssignment(long accountUserId)

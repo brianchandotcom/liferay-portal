@@ -24,6 +24,7 @@ import {
 	UPDATE_SEGMENTS_EXPERIENCE_PRIORITY
 } from '../../actions/actions.es';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
+import {STATUS_DRAFT} from '../../utils/ExperimentsStatus.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SegmentsExperienceSelector.soy';
 import './ExperimentsLabel.es';
@@ -426,14 +427,28 @@ class SegmentsExperienceSelector extends Component {
 		this._experiencesErrorHandler({
 			deletion: false
 		});
-		const confirmed = confirm(
-			Liferay.Language.get('do-you-want-to-delete-this-experience')
+
+		const segmentsExperienceId = event.currentTarget.getAttribute(
+			'data-segmentsExperienceId'
 		);
 
+		const experienceToDelete = this.availableSegmentsExperiences[
+			segmentsExperienceId
+		];
+
+		const experienceHasRunningExperiment =
+			experienceToDelete.segmentsExperimentStatus &&
+			experienceToDelete.segmentsExperimentStatus.value === STATUS_DRAFT;
+
+		const confirmationMessage = experienceHasRunningExperiment
+			? Liferay.Language.get(
+					'delete-experience-with-running-test-confirmation-message'
+			  )
+			: Liferay.Language.get('do-you-want-to-delete-this-experience');
+
+		const confirmed = confirm(confirmationMessage);
+
 		if (confirmed) {
-			const segmentsExperienceId = event.currentTarget.getAttribute(
-				'data-segmentsExperienceId'
-			);
 			this._deleteSegmentsExperience(segmentsExperienceId);
 		}
 	}

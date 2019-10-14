@@ -17,35 +17,7 @@ import Soy, {Config} from 'metal-soy';
 import 'clay-label';
 
 import templates from './ExperimentsLabel.soy';
-
-/**
- * This code lives also in `segments/segments-experiment-web` module
- */
-
-const STATUS_COMPLETED = 2;
-const STATUS_DRAFT = 0;
-const STATUS_FINISHED_NO_WINNER = 4;
-const STATUS_FINISHED_WINNER = 3;
-const STATUS_PAUSED = 5;
-const STATUS_RUNNING = 1;
-const STATUS_SCHEDULED = 7;
-const STATUS_TERMINATED = 6;
-
-const statusToLabelDisplayType = status => STATUS_TO_TYPE[status];
-
-/**
- * Maps the Experiment status code to its label style
- */
-const STATUS_TO_TYPE = {
-	[STATUS_COMPLETED]: 'success',
-	[STATUS_DRAFT]: undefined,
-	[STATUS_FINISHED_NO_WINNER]: undefined,
-	[STATUS_FINISHED_WINNER]: 'success',
-	[STATUS_PAUSED]: 'warning',
-	[STATUS_RUNNING]: 'info',
-	[STATUS_SCHEDULED]: 'warning',
-	[STATUS_TERMINATED]: 'danger'
-};
+import statusToLabelDisplayType from '../../utils/ExperimentsStatus.es';
 
 /**
  * This component is wrapper of ClayLabel

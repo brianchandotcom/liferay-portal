@@ -53,7 +53,7 @@ export function getConfig(data) {
 	const syntheticItems = {
 		sidebarPanels: partitionPanels(augmentPanelData(sidebarPanels)),
 		toolbarId: portletNamespace + DEFAULT_CONFIG.toolbarId,
-		toolbarPlugins: getToolbarPlugins()
+		toolbarPlugins: getToolbarPlugins(data)
 	};
 
 	return {
@@ -108,14 +108,29 @@ function augmentPanelData(sidebarPanels) {
 	});
 }
 
-function getToolbarPlugins() {
-	// Currently we have segments experience data sprinkled throughout the
-	// server data. In the future we may choose to encapsulate it better and
-	// deal with it inside the plugin.
+/**
+ * Currently we have segments experience data sprinkled throughout the
+ * server data. In the future we may choose to encapsulate it better and
+ * deal with it inside the plugin.
+ */
+function getToolbarPlugins({toolbarId}) {
+	const toolbarPluginId = 'experience';
+	const selectId = `${toolbarId}_${toolbarPluginId}`;
+
 	return [
 		{
-			loadingPlaceholder: `<div>loading</div>`,
-			pluginEntryPoint: `${PLUGIN_ROOT}/experience/index`
+			loadingPlaceholder: `
+				<div class="align-items-center d-flex mr-2">
+					<label class="mr-2" for="${selectId}">
+						Experience
+					</label>
+					<select class="form-control" disabled id="${selectId}">
+						<option value="1">Default</option>
+					</select>
+				</div>
+			`,
+			pluginEntryPoint: `${PLUGIN_ROOT}/experience/index`,
+			toolbarPluginId: 'experience'
 		}
 	];
 }

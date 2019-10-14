@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClaySelectWithOption} from '@clayui/form';
 import React from 'react';
 
 import {Component} from '../../core/AppContext';
@@ -20,16 +21,36 @@ import {Component} from '../../core/AppContext';
  * Entry-point for "Experience" (toolbar drop-down) functionality.
  */
 export default class Experience {
-	constructor({app}) {
+	constructor({app, toolbarPlugin}) {
 		this.Component = Component(app);
+
+		this.toolbarId = app.config.toolbarId;
+		this.toolbarPluginId = {toolbarPlugin};
 	}
 
 	renderToolbarSection() {
 		const {Component} = this;
 
+		const selectId = `${this.toolbarId}_${this.toolbarPluginId}`;
+
+		// TODO: show how to colocate CSS with plugins (may use loaders)
 		return (
 			<Component>
-				<div>Experience</div>
+				<div className="align-items-center d-flex mr-2">
+					<label className="mr-2" htmlFor={selectId}>
+						Experience
+					</label>
+					<ClaySelectWithOption
+						disabled={false}
+						id={selectId}
+						options={[
+							{
+								label: 'Default',
+								value: '1'
+							}
+						]}
+					/>
+				</div>
 			</Component>
 		);
 	}

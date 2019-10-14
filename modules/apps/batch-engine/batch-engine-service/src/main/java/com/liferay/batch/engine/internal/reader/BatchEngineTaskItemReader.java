@@ -15,13 +15,12 @@
 package com.liferay.batch.engine.internal.reader;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 /**
  * @author Ivica Cardic
  */
 public interface BatchEngineTaskItemReader extends Closeable {
 
-	public Object read() throws IOException;
+	public Object read() throws Exception;
 
 }

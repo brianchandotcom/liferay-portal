@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -52,7 +50,7 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 	}
 
 	@Override
-	public Object read() throws IOException {
+	public Object read() throws Exception {
 		String line = _unsyncBufferedReader.readLine();
 
 		if (line == null) {
@@ -87,10 +85,8 @@ public class CSVBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 			}
 		}
 
-		return _objectMapper.convertValue(columnValues, _itemClass);
+		return ColumnUtil.convertValue(_itemClass, columnValues);
 	}
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final String[] _columnNames;
 	private final String _delimiter;

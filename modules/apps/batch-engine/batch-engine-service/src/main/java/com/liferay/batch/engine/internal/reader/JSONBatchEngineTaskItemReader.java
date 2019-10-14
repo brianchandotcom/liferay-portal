@@ -17,10 +17,13 @@ package com.liferay.batch.engine.internal.reader;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
@@ -47,9 +50,14 @@ public class JSONBatchEngineTaskItemReader
 	}
 
 	@Override
-	public Object read() throws IOException {
+	public Object read() throws Exception {
 		if (_jsonParser.nextToken() == JsonToken.START_OBJECT) {
-			return _objectMapper.readValue(_jsonParser, _itemClass);
+			Map<String, Object> columnValues = _objectMapper.readValue(
+				_jsonParser,
+				new TypeReference<Map<String, Object>>() {
+				});
+
+			return ColumnUtil.convertValue(_itemClass, columnValues);
 		}
 
 		return null;

@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
@@ -21,6 +22,8 @@ import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import java.util.Map;
 
 /**
  * @author Ivica Cardic
@@ -44,14 +47,19 @@ public class JSONLBatchEngineTaskItemReader
 	}
 
 	@Override
-	public Object read() throws IOException {
+	public Object read() throws Exception {
 		String line = _unsyncBufferedReader.readLine();
 
 		if (line == null) {
 			return null;
 		}
 
-		return _objectMapper.readValue(line, _itemClass);
+		Map<String, Object> columnValues = _objectMapper.readValue(
+			line,
+			new TypeReference<Map<String, Object>>() {
+			});
+
+		return ColumnUtil.convertValue(_itemClass, columnValues);
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();

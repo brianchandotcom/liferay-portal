@@ -14,8 +14,6 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -69,7 +67,7 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 	}
 
 	@Override
-	public Object read() {
+	public Object read() throws Exception {
 		if (!_iterator.hasNext()) {
 			return null;
 		}
@@ -119,10 +117,8 @@ public class XLSBatchEngineTaskItemReader implements BatchEngineTaskItemReader {
 			}
 		}
 
-		return _objectMapper.convertValue(columnValues, _itemClass);
+		return ColumnUtil.convertValue(_itemClass, columnValues);
 	}
-
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private final String[] _columnNames;
 	private final InputStream _inputStream;

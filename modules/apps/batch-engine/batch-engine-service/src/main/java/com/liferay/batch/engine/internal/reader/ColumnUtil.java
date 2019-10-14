@@ -14,6 +14,12 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.liferay.petra.string.StringPool;
+
+import java.lang.reflect.Field;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +27,34 @@ import java.util.Map;
  * @author Ivica Cardic
  */
 public class ColumnUtil {
+
+	public static Object convertValue(
+			Class<?> itemClass, Map<String, Object> columnValues)
+		throws Exception {
+
+		Object item = itemClass.newInstance();
+
+		for (Map.Entry<String, Object> entry : columnValues.entrySet()) {
+			String name = entry.getKey();
+
+			Field field = null;
+
+			try {
+				field = itemClass.getDeclaredField(name);
+			}
+			catch (NoSuchFieldException nsfe) {
+				field = itemClass.getDeclaredField(StringPool.UNDERLINE + name);
+			}
+
+			field.setAccessible(true);
+
+			field.set(
+				item,
+				_objectMapper.convertValue(entry.getValue(), field.getType()));
+		}
+
+		return item;
+	}
 
 	public static void handleLocalizationColumn(
 		String columnName, Map<String, Object> columnValues,
@@ -41,5 +75,7 @@ public class ColumnUtil {
 
 		localizationMap.put(languageId, value);
 	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 }

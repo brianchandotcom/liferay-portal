@@ -44,7 +44,7 @@ export default function Sidebar() {
 	const [open, setOpen] = useStateSafe(false);
 	const [activePluginId, setActivePluginId] = useStateSafe(null);
 
-	const {sidebarPanels} = store;
+	const {sidebarPanels} = config;
 
 	const isMounted = useIsMounted();
 

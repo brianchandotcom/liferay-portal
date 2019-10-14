@@ -57,14 +57,13 @@ function ToolbarBody() {
 	const {
 		availableLanguages,
 		defaultLanguageId,
-		singleSegmentsExperienceMode
+		singleSegmentsExperienceMode,
+		toolbarPlugins
 	} = config;
 
 	const dispatch = useContext(DispatchContext);
 
 	const store = useContext(StoreContext);
-
-	const {toolbarPlugins} = store;
 
 	const isMounted = useIsMounted();
 

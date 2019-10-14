@@ -18,39 +18,22 @@
 
 <%
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
+
+List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries();
 %>
 
 <div class="lfr-search-container-wrapper" id="<portlet:namespace/>layoutTypes">
-	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypesCount() > 0 %>">
-		<h6 class="sheet-subtitle">
-			<liferay-ui:message key="main-types" />
-		</h6>
-
+	<c:if test="<%= ListUtil.isNotEmpty(masterLayoutPageTemplateEntries) %>">
 		<ul class="card-page card-page-equal-height">
 
 			<%
-			for (String primaryType : selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypes()) {
-				SelectBasicPagesVerticalCard selectBasicPagesVerticalCard = new SelectBasicPagesVerticalCard(primaryType, renderRequest, renderResponse);
+			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
 			%>
 
 				<li class="card-page-item col-md-4 col-sm-6">
-					<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-template template-card " <%= AUIUtil.buildData(selectBasicPagesVerticalCard.getDataLink()) %> tabindex="0">
-						<div class="aspect-ratio">
-							<div class="aspect-ratio-item-center-middle aspect-ratio-item-flush layout-type-img">
-								<img src="<%= selectBasicPagesVerticalCard.getImageSrc() %>" />
-							</div>
-						</div>
-
-						<div class="card-body">
-							<div class="card-title">
-								<%= selectBasicPagesVerticalCard.getTitle() %>
-							</div>
-
-							<div class="card-text">
-								<%= selectBasicPagesVerticalCard.getSubtitle() %>
-							</div>
-						</div>
-					</div>
+					<clay:vertical-card
+						verticalCard="<%= new SelectBasicPagesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+					/>
 				</li>
 
 			<%

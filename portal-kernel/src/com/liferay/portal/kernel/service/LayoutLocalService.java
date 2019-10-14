@@ -111,6 +111,69 @@ public interface LayoutLocalService
 	 See {@link UnicodeProperties #fastLoad(String)}.
 	 * @param hidden whether the layout is hidden
 	 * @param system whether the layout is of system type
+	 * @param masterLayoutPageTemplateEntryId the primary key of the master
+	 template
+	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
+	 To see how the URL is normalized when accessed, see {@link
+	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
+	 String)}.
+	 * @param serviceContext the service context to be applied. Must set the
+	 UUID for the layout. Can set the creation date, modification
+	 date, and expando bridge attributes for the layout. For layouts
+	 that belong to a layout set prototype, an attribute named
+	 <code>layoutUpdateable</code> can be set to specify whether site
+	 administrators can modify this page within their site. For
+	 layouts that are created from a layout prototype, attributes
+	 named <code>layoutPrototypeUuid</code> and
+	 <code>layoutPrototypeLinkedEnabled</code> can be specified to
+	 provide the unique identifier of the source prototype and a
+	 boolean to determine whether a link to it should be enabled to
+	 activate propagation of changes made to the linked page in the
+	 prototype.
+	 * @return the layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public Layout addLayout(
+			long userId, long groupId, boolean privateLayout,
+			long parentLayoutId, long classNameId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, String type, String typeSettings,
+			boolean hidden, boolean system,
+			long masterLayoutPageTemplateEntryId,
+			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * Adds a layout with additional parameters.
+	 *
+	 * <p>
+	 * This method handles the creation of the layout including its resources,
+	 * metadata, and internal data structures. It is not necessary to make
+	 * subsequent calls to any methods to setup default groups, resources, ...
+	 * etc.
+	 * </p>
+	 *
+	 * @param userId the primary key of the user
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param parentLayoutId the layout ID of the parent layout (optionally
+	 {@link LayoutConstants#DEFAULT_PARENT_LAYOUT_ID})
+	 * @param classNameId the class name ID of the entity
+	 * @param classPK the primary key of the entity
+	 * @param nameMap the layout's locales and localized names
+	 * @param titleMap the layout's locales and localized titles
+	 * @param descriptionMap the layout's locales and localized descriptions
+	 * @param keywordsMap the layout's locales and localized keywords
+	 * @param robotsMap the layout's locales and localized robots
+	 * @param type the layout's type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 in {@link LayoutConstants}.
+	 * @param typeSettings the settings to load the unicode properties object.
+	 See {@link UnicodeProperties #fastLoad(String)}.
+	 * @param hidden whether the layout is hidden
+	 * @param system whether the layout is of system type
 	 * @param friendlyURLMap the layout's locales and localized friendly URLs.
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(

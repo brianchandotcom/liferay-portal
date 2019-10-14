@@ -109,7 +109,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					_javaFileObjectResolvers))) {
 
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
-				null, javaFileManager, diagnosticCollector, options, null,
+				null, javaFileManager, diagnosticCollector, _options, null,
 				Arrays.asList(
 					new StringJavaFileObject(
 						className.substring(className.lastIndexOf('.') + 1),
@@ -157,7 +157,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
-		options.add("-XDuseUnsharedTable");
+		_options.add("-XDuseUnsharedTable");
 
 		Options options = jspCompilationContext.getOptions();
 
@@ -236,6 +236,32 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			servletContext, jspCompilationContext.getTagFileJarUrls());
 
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
+
+		_options.add("-proc:none");
+	}
+
+	public void setDebug(boolean debug) {
+		if (debug) {
+			_options.add("-g");
+		}
+		else {
+			_options.add("-g:none");
+		}
+	}
+
+	public void setExtdirs(String exts) {
+		_options.add("-extdirs");
+		_options.add(exts);
+	}
+
+	public void setSourceVM(String sourceVM) {
+		_options.add("-source");
+		_options.add(sourceVM);
+	}
+
+	public void setTargetVM(String targetVM) {
+		_options.add("-target");
+		_options.add(targetVM);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -462,6 +488,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private final List<File> _classPath = new ArrayList<>();
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
 		new ArrayList<>();
+	private final List<String> _options = new ArrayList<>();
 
 	private class JavaFileManagerWrapper
 		extends ForwardingJavaFileManager<JavaFileManager> {

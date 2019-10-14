@@ -241,7 +241,7 @@ public class ContentPageLayoutEditorDisplayContext
 
 		defaultSegmentsExperienceSoyContext.put(
 			"hasLockedSegmentsExperiment",
-			_hasLockedSegmentsExperiment(SegmentsExperienceConstants.ID_DEFAULT)
+			_hasDefaultSegmentsExperienceLockedSegmentsExperiment()
 		).put(
 			"name",
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
@@ -411,19 +411,12 @@ public class ContentPageLayoutEditorDisplayContext
 		return true;
 	}
 
-	private boolean _hasLockedSegmentsExperiment(long segmentsExperienceId)
+	private boolean _hasDefaultSegmentsExperienceLockedSegmentsExperiment()
 		throws PortalException {
 
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			SegmentsExperience segmentsExperience =
-				SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-					segmentsExperienceId);
-
-			return segmentsExperience.hasSegmentsExperiment();
-		}
-
 		Optional<SegmentsExperiment> segmentsExperimentOptional =
-			_getSegmentsExperimentOptional(segmentsExperienceId);
+			_getSegmentsExperimentOptional(
+				SegmentsExperienceConstants.ID_DEFAULT);
 
 		if (!segmentsExperimentOptional.isPresent()) {
 			return false;

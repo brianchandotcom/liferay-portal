@@ -435,11 +435,7 @@ public class ContentPageLayoutEditorDisplayContext
 		List<Integer> lockedStatusValuesList = ListUtil.toList(
 			SegmentsExperimentConstants.Status.getLockedStatusValues());
 
-		if (lockedStatusValuesList.contains(segmentsExperiment.getStatus())) {
-			return true;
-		}
-
-		return false;
+		return lockedStatusValuesList.contains(segmentsExperiment.getStatus());
 	}
 
 	private boolean _isShowSegmentsExperiences() throws PortalException {

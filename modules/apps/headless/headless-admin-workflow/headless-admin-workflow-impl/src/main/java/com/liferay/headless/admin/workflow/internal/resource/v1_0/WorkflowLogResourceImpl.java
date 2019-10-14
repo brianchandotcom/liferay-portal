@@ -14,10 +14,14 @@
 
 package com.liferay.headless.admin.workflow.internal.resource.v1_0;
 
+import com.liferay.headless.admin.workflow.dto.v1_0.Role;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowLog;
 import com.liferay.headless.admin.workflow.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowLogResource;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -63,6 +67,32 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 				contextCompany.getCompanyId(), workflowTaskId, null));
 	}
 
+	private Role _toRole(long roleId) throws PortalException {
+		com.liferay.portal.kernel.model.Role role = _roleLocalService.getRole(
+			roleId);
+
+		if (role == null) {
+			return null;
+		}
+
+		return new Role() {
+			{
+				availableLanguages = LocaleUtil.toW3cLanguageIds(
+					role.getAvailableLanguageIds());
+				creator = CreatorUtil.toCreator(
+					_portal, _userLocalService.getUserById(role.getUserId()));
+				dateCreated = role.getCreateDate();
+				dateModified = role.getModifiedDate();
+				description = role.getDescription(
+					contextAcceptLanguage.getPreferredLocale());
+				id = role.getRoleId();
+				name = role.getTitle(
+					contextAcceptLanguage.getPreferredLocale());
+				roleType = role.getTypeLabel();
+			}
+		};
+	}
+
 	private WorkflowLog _toWorkflowLog(
 			com.liferay.portal.kernel.workflow.WorkflowLog workflowLog)
 		throws Exception {
@@ -82,7 +112,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 					_portal,
 					_userLocalService.fetchUser(
 						workflowLog.getPreviousUserId()));
+				previousRole = _toRole(workflowLog.getPreviousRoleId());
 				previousState = workflowLog.getPreviousState();
+				role = _toRole(workflowLog.getRoleId());
 				state = workflowLog.getState();
 				taskId = workflowLog.getWorkflowTaskId();
 				type = KaleoLogUtil.convert(workflowLog.getType());
@@ -98,6 +130,9 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

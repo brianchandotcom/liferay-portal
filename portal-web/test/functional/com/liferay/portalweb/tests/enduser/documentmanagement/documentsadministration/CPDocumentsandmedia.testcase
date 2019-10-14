@@ -575,6 +575,8 @@ definition {
 	@description = "This is a test for LPS-91751. It ensures that a user cannot preview a file with size that exceeds the preview limit."
 	@priority = "4"
 	test PreviewFileThatExceedsLimit {
+		property test.name.skip.portal.instance = "CPDocumentsandmedia#PreviewFileThatExceedsLimit";
+
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(

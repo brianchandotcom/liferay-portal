@@ -886,7 +886,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		boolean privateLayout = false;
 		String layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
 
-		if (type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+			(type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_PAGE)) {
+
 			privateLayout = true;
 			layoutType = LayoutConstants.TYPE_CONTENT;
 		}

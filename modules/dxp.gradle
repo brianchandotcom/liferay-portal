@@ -1,11 +1,14 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.tasks.DownloadFileTask
 
+import org.gradle.util.GUtil
+
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
 task downloadDXPCredentials(type: DownloadFileTask)
+task replaceDXPTokens
 task setUpDXP
 
 String dxpCredentialsURL = "https://files.liferay.com/private/ee/.DXP_CREDENTIALS"
@@ -16,6 +19,83 @@ downloadDXPCredentials {
 	url = dxpCredentialsURL
 }
 
+replaceDXPTokens {
+	doLast {
+		Properties dxpProperties = GUtil.loadProperties(new File(projectDir.parentFile, "dxp.properties"))
+
+		File releaseInfoJavaFile = new File(projectDir.parentFile, "portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		ant.replaceregexp(
+			file: releaseInfoJavaFile,
+			match: dxpProperties.getProperty("release.info.build[master]"),
+			replace: dxpProperties.getProperty("release.info.build[dxp]")
+		)
+
+		ant.replaceregexp(
+			file: releaseInfoJavaFile,
+			match: dxpProperties.getProperty("release.info.date[master]"),
+			replace: dxpProperties.getProperty("release.info.date[dxp]")
+		)
+
+		ant.replace(
+			file: releaseInfoJavaFile,
+			token: dxpProperties.getProperty("release.info.name[master]"),
+			value: dxpProperties.getProperty("release.info.name[dxp]")
+		)
+
+		ant.replaceregexp(
+			file: releaseInfoJavaFile,
+			match: dxpProperties.getProperty("release.info.version[master]"),
+			replace: dxpProperties.getProperty("release.info.version[dxp]")
+		)
+
+		ant.replaceregexp(
+			file: releaseInfoJavaFile,
+			match: dxpProperties.getProperty("release.info.version.display.name[master]"),
+			replace: dxpProperties.getProperty("release.info.version.display.name[dxp]")
+		)
+
+		File buildPropertiesFile = new File(projectDir.parentFile, "build.properties")
+
+		ant.replace(
+			file: buildPropertiesFile,
+			token: "snapshot.bundle.base.url=" + dxpProperties.getProperty("snapshot.bundle.base.url[master]"),
+			value: "snapshot.bundle.base.url=" + dxpProperties.getProperty("snapshot.bundle.base.url[dxp]")
+		)
+
+		File releasePropertiesFile = new File(projectDir.parentFile, "release.properties")
+
+		ant.replace(
+			file: releasePropertiesFile,
+			token: "lp.version=" + dxpProperties.getProperty("lp.version[master]"),
+			value: "lp.version=" + dxpProperties.getProperty("lp.version[dxp]")
+		)
+
+		File sqlPropertiesFile = new File(projectDir.parentFile, "sql/sql.properties")
+
+		ant.replace(
+			file: sqlPropertiesFile,
+			token: "database.types=" + dxpProperties.getProperty("database.types[master]"),
+			value: "database.types=" + dxpProperties.getProperty("database.types[dxp]")
+		)
+
+		File testPropertiesFile = new File(projectDir.parentFile, "test.properties")
+
+		ant.replace(
+			file: testPropertiesFile,
+			token: "test.run.environment=" + dxpProperties.getProperty("test.run.environment[master]"),
+			value: "test.run.environment=" + dxpProperties.getProperty("test.run.environment[dxp]")
+		)
+
+		ant.replace(
+			file: testPropertiesFile,
+			token: "testray.build.type=" + dxpProperties.getProperty("testray.build.type[master]"),
+			value: "testray.build.type=" + dxpProperties.getProperty("testray.build.type[dxp]")
+		)
+	}
+}
+
 setUpDXP {
 	dependsOn downloadDXPCredentials
+	dependsOn replaceDXPTokens
 }

@@ -124,27 +124,6 @@ public class FileUtil {
 			tryLocalNetwork);
 	}
 
-	public static File getDestinationFile(String url) throws IOException {
-		String mirrorsCacheArtifactSubdir = url.replaceFirst(
-			"https?:\\/\\/(.+\\/).+", "$1");
-
-		StringBuilder sb = new StringBuilder();
-
-		for (String segment : mirrorsCacheArtifactSubdir.split("/")) {
-			sb.append(URLEncoder.encode(segment, "UTF-8"));
-			sb.append('/');
-		}
-
-		mirrorsCacheArtifactSubdir = sb.toString();
-
-		File mirrorsCacheArtifactDir = new File(
-			_getMirrorsCacheDir(), mirrorsCacheArtifactSubdir);
-
-		String fileName = url.replaceFirst(".+\\/(.+)", "$1");
-
-		return new File(mirrorsCacheArtifactDir, fileName);
-	}
-
 	public static synchronized File get(
 			Project project, String url, String username, String password,
 			File destinationFile, boolean ignoreErrors, boolean tryLocalNetwork)
@@ -207,6 +186,27 @@ public class FileUtil {
 		String absolutePath = file.getAbsolutePath();
 
 		return absolutePath.replace('\\', '/');
+	}
+
+	public static File getDestinationFile(String url) throws IOException {
+		String mirrorsCacheArtifactSubdir = url.replaceFirst(
+			"https?:\\/\\/(.+\\/).+", "$1");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String segment : mirrorsCacheArtifactSubdir.split("/")) {
+			sb.append(URLEncoder.encode(segment, "UTF-8"));
+			sb.append('/');
+		}
+
+		mirrorsCacheArtifactSubdir = sb.toString();
+
+		File mirrorsCacheArtifactDir = new File(
+			_getMirrorsCacheDir(), mirrorsCacheArtifactSubdir);
+
+		String fileName = url.replaceFirst(".+\\/(.+)", "$1");
+
+		return new File(mirrorsCacheArtifactDir, fileName);
 	}
 
 	public static char getDriveLetter(File file) {

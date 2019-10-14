@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -73,6 +74,10 @@ public class WorkflowTaskManagerProxyBean
 	public List<String> getNextTransitionNames(
 		long companyId, long userId, long workflowTaskId) {
 
+		throw new UnsupportedOperationException();
+	}
+
+	public List<User> getPooledActors(long companyId, long workflowTaskId) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -207,6 +212,16 @@ public class WorkflowTaskManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	public List<WorkflowTask> search(
+		long companyId, long userId, String assetTitle, String taskName,
+		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		Boolean andOperator, int start, int end,
+		OrderByComparator<WorkflowTask> orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public List<WorkflowTask> search(
 		long companyId, long userId, String keywords, String[] assetTypes,
@@ -229,6 +244,15 @@ public class WorkflowTaskManagerProxyBean
 		long companyId, long userId, String taskName, String assetType,
 		Long[] assetPrimaryKey, Date dueDateGT, Date dueDateLT,
 		Boolean completed, Boolean searchByUserRoles, boolean andOperator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public int searchCount(
+		long companyId, long userId, String assetTitle, String taskName,
+		String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+		Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+		Boolean andOperator) {
 
 		throw new UnsupportedOperationException();
 	}

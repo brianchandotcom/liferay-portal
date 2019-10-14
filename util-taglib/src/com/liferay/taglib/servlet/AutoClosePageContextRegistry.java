@@ -36,7 +36,10 @@ public class AutoClosePageContextRegistry {
 	public static void registerCloseCallback(
 		PageContext pageContext, Runnable runnable) {
 
-		if (!_isAutoCloseable(pageContext)) {
+		Object autoCloseable = pageContext.getAttribute(
+			AutoClosePageContextRegistry.AUTO_CLOSEABLE);
+
+		if ((autoCloseable == null) || Boolean.FALSE.equals(autoCloseable)) {
 			return;
 		}
 
@@ -54,17 +57,6 @@ public class AutoClosePageContextRegistry {
 		}
 
 		runnables.forEach(Runnable::run);
-	}
-
-	private static boolean _isAutoCloseable(PageContext pageContext) {
-		Object autoCloseable = pageContext.getAttribute(
-			AutoClosePageContextRegistry.AUTO_CLOSEABLE);
-
-		if ((autoCloseable != null) && (Boolean)autoCloseable) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Map<PageContext, List<Runnable>> _runnables;

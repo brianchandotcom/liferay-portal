@@ -34,9 +34,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -65,12 +66,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -258,8 +259,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
-	public long[] getPooledActorsIds(
-			long companyId, long workflowTaskId)
+	public List<User> getPooledActors(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
 		try {
@@ -270,7 +270,7 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
 				getCalculatedKaleoTaskAssignments(kaleoTaskInstanceToken);
 
-			Set<User> users = new HashSet<>();
+			Set<User> users = new TreeSet<>(new UserFirstNameComparator(true));
 
 			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
 					calculatedKaleoTaskAssignments) {
@@ -280,18 +280,29 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 					users);
 			}
 
-			Map<String, Long> pooledActors = new TreeMap<>(
-				new NaturalOrderStringComparator());
-
-			for (User user : users) {
-				pooledActors.put(user.getFullName(), user.getUserId());
-			}
-
-			return ArrayUtil.toLongArray(pooledActors.values());
+			return ListUtil.fromCollection(users);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getPooledActors(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public long[] getPooledActorsIds(long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		List<User> users = getPooledActors(companyId, workflowTaskId);
+
+		Stream<User> stream = users.stream();
+
+		return stream.mapToLong(
+			User::getUserId
+		).toArray();
 	}
 
 	@Override
@@ -658,6 +669,12 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
+	 *             long, String, String, String[], Long[], Date, Date, Boolean,
+	 *             Boolean, Boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowTask> search(
 			long companyId, long userId, String keywords, Boolean completed,
@@ -665,27 +682,18 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
-				_kaleoTaskInstanceTokenLocalService.search(
-					keywords, completed, searchByUserRoles, start, end,
-					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return toWorkflowTasks(kaleoTaskInstanceTokens);
-		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
-		}
+		return search(
+			companyId, userId, null, keywords, getAssetTypes(keywords), null,
+			null, null, completed, searchByUserRoles, false, start, end,
+			orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
+	 *             long, String, String, String[], Long[], Date, Date, Boolean,
+	 *             Boolean, Boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
 	@Override
 	public List<WorkflowTask> search(
 			long companyId, long userId, String taskName, String assetType,
@@ -695,32 +703,18 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-
-			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
-				_kaleoTaskInstanceTokenLocalService.search(
-					completed, searchByUserRoles, andOperator, start, end,
-					taskName, assetType, assetPrimaryKeys, dueDateGT, dueDateLT,
-					KaleoTaskInstanceTokenOrderByComparator.
-						getOrderByComparator(
-							orderByComparator, _kaleoWorkflowModelConverter),
-					serviceContext);
-
-			return toWorkflowTasks(kaleoTaskInstanceTokens);
-		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
-		}
+		return search(
+			companyId, userId, null, taskName, getAssetTypes(assetType),
+			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<WorkflowTask> search(
-			long companyId, long userId, String keywords, String[] assetTypes,
-			Boolean completed, Boolean searchByUserRoles, int start, int end,
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator, int start, int end,
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException {
 
@@ -732,8 +726,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 			List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens =
 				_kaleoTaskInstanceTokenLocalService.search(
-					keywords, assetTypes, completed, searchByUserRoles, start,
-					end,
+					assetTitle, taskName, assetTypes, assetPrimaryKeys,
+					dueDateGT, dueDateLT, completed, searchByUserRoles,
+					andOperator, start, end,
 					KaleoTaskInstanceTokenOrderByComparator.
 						getOrderByComparator(
 							orderByComparator, _kaleoWorkflowModelConverter),
@@ -746,26 +741,47 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #search(long,
+	 *             long, String, String, String[], Long[], Date, Date, Boolean,
+	 *             Boolean, Boolean, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<WorkflowTask> search(
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles, int start, int end,
+			OrderByComparator<WorkflowTask> orderByComparator)
+		throws WorkflowException {
+
+		return search(
+			companyId, userId, keywords, keywords, assetTypes, null, null, null,
+			completed, searchByUserRoles, false, start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #searchCount(long, long, String, String, String[], Long[],
+	 *             Date, Date, Boolean, Boolean, Boolean)}
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 			long companyId, long userId, String keywords, Boolean completed,
 			Boolean searchByUserRoles)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-
-			return _kaleoTaskInstanceTokenLocalService.searchCount(
-				keywords, completed, searchByUserRoles, serviceContext);
-		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
-		}
+		return searchCount(
+			companyId, userId, null, keywords, getAssetTypes(keywords), null,
+			null, null, completed, searchByUserRoles, false);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #searchCount(long, long, String, String, String[], Long[],
+	 *             Date, Date, Boolean, Boolean, Boolean)}
+	 */
+	@Deprecated
 	@Override
 	public int searchCount(
 			long companyId, long userId, String taskName, String assetType,
@@ -773,25 +789,18 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException {
 
-		try {
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-
-			return _kaleoTaskInstanceTokenLocalService.searchCount(
-				completed, searchByUserRoles, andOperator, serviceContext);
-				taskName, assetType, assetPrimaryKeys, dueDateGT, dueDateLT,
-		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
-		}
+		return searchCount(
+			companyId, userId, null, taskName, getAssetTypes(assetType),
+			assetPrimaryKeys, dueDateGT, dueDateLT, completed,
+			searchByUserRoles, andOperator);
 	}
 
 	@Override
 	public int searchCount(
-			long companyId, long userId, String keywords, String[] assetTypes,
-			Boolean completed, Boolean searchByUserRoles)
+			long companyId, long userId, String assetTitle, String taskName,
+			String[] assetTypes, Long[] assetPrimaryKeys, Date dueDateGT,
+			Date dueDateLT, Boolean completed, Boolean searchByUserRoles,
+			Boolean andOperator)
 		throws WorkflowException {
 
 		try {
@@ -801,12 +810,30 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			serviceContext.setUserId(userId);
 
 			return _kaleoTaskInstanceTokenLocalService.searchCount(
-				keywords, assetTypes, completed, searchByUserRoles,
+				null, assetTitle, taskName, assetTypes, assetPrimaryKeys,
+				dueDateGT, dueDateLT, completed, searchByUserRoles, andOperator,
 				serviceContext);
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #searchCount(long, long, String, String, String[], Long[],
+	 *             Date, Date, Boolean, Boolean, Boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int searchCount(
+			long companyId, long userId, String keywords, String[] assetTypes,
+			Boolean completed, Boolean searchByUserRoles)
+		throws WorkflowException {
+
+		return searchCount(
+			companyId, userId, keywords, keywords, assetTypes, null, null, null,
+			completed, searchByUserRoles, false);
 	}
 
 	@Override
@@ -840,6 +867,14 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return new ExecutionContext(
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
+	}
+
+	protected String[] getAssetTypes(String assetType) {
+		if (Validator.isNull(assetType)) {
+			return null;
+		}
+
+		return new String[] {assetType};
 	}
 
 	protected List<KaleoTaskAssignment> getCalculatedKaleoTaskAssignments(
@@ -908,10 +943,15 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
 			if (Objects.equals(role.getName(), RoleConstants.SITE_MEMBER)) {
-				long[] userGroupUserIds = _userLocalService.getGroupUserIds(
-					kaleoTaskInstanceToken.getGroupId());
+				List<User> users = _userLocalService.getGroupUsers(
+					kaleoTaskInstanceToken.getGroupId(),
+					WorkflowConstants.STATUS_APPROVED, null);
 
-				return ArrayUtil.contains(userGroupUserIds, userId);
+				for (User user : users) {
+					if (user.getUserId() != userId) {
+						return true;
+					}
+				}
 			}
 
 			List<UserGroupRole> userGroupRoles =
@@ -984,14 +1024,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
 
 			if (Objects.equals(role.getName(), RoleConstants.SITE_MEMBER)) {
-				List<User> userGroupUsers = _userLocalService.getGroupUsers(
-					kaleoTaskInstanceToken.getGroupId());
-
-				for (User user : userGroupUsers) {
-					if (user.isActive()) {
-						users.add(user);
-					}
-				}
+				users.addAll(
+					_userLocalService.getGroupUsers(
+						kaleoTaskInstanceToken.getGroupId(),
+						WorkflowConstants.STATUS_APPROVED, null));
 
 				return;
 			}

@@ -132,7 +132,8 @@ public class DDMFormFieldTypeSettingsEvaluatorTest {
 		DDMFormFieldValue dataSourceTypeFormFieldValue = ddmFormFieldValues.get(
 			0);
 
-		dataSourceTypeFormFieldValue.setValue(new UnlocalizedValue("manual"));
+		dataSourceTypeFormFieldValue.setValue(
+			new UnlocalizedValue("[\"manual\"]"));
 
 		DDMFormEvaluatorEvaluateRequest.Builder builder =
 			DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(

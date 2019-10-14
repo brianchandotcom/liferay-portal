@@ -73,7 +73,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(dataSourceTypeDDMFormField);
 		Assert.assertNotNull(dataSourceTypeDDMFormField.getLabel());
 		Assert.assertNotNull(dataSourceTypeDDMFormField.getPredefinedValue());
-		Assert.assertEquals("radio", dataSourceTypeDDMFormField.getType());
+		Assert.assertEquals("select", dataSourceTypeDDMFormField.getType());
 
 		DDMFormField ddmDataProviderInstanceIdDDMFormField =
 			ddmFormFieldsMap.get("ddmDataProviderInstanceId");

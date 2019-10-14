@@ -66,7 +66,39 @@ public class MasterPageActionDropdownItemsProvider {
 					add(_getEditMasterPageActionUnsafeConsumer());
 					add(_getRenameMasterPageActionUnsafeConsumer());
 				}
+
+				if (LayoutPageTemplateEntryPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						_layoutPageTemplateEntry, ActionKeys.DELETE)) {
+
+					add(_getDeleteMasterPageActionUnsafeConsumer());
+				}
 			}
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteMasterPageActionUnsafeConsumer() {
+
+		PortletURL deleteMasterPageURL = _renderResponse.createActionURL();
+
+		deleteMasterPageURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/delete_master_page");
+
+		deleteMasterPageURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteMasterPageURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteMasterPage");
+			dropdownItem.putData(
+				"deleteMasterPageURL", deleteMasterPageURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
 	}
 

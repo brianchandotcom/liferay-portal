@@ -16,6 +16,16 @@ import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
+	deleteMasterPage(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			this._send(itemData.deleteMasterPageURL);
+		}
+	}
+
 	renameMasterPage(itemData) {
 		openSimpleInputModal({
 			dialogTitle: Liferay.Language.get('rename-master-page'),
@@ -29,6 +39,10 @@ class MasterPageDropdownDefaultEventHandler extends DefaultEventHandler {
 			namespace: this.namespace,
 			spritemap: this.spritemap
 		});
+	}
+
+	_send(url) {
+		submitForm(document.hrefFm, url);
 	}
 }
 

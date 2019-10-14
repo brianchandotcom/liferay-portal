@@ -19,13 +19,19 @@ import com.liferay.gradle.util.Validator;
 import groovy.json.JsonSlurper;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.file.Files;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 
 /**
@@ -95,6 +101,33 @@ public class GradlePluginsDefaultsUtil {
 			GradleUtil.addMavenArtifactRepository(
 				repositoryHandler, repositoryPrivateUrl,
 				repositoryPrivateUsername, repositoryPrivatePassword);
+		}
+
+		try {
+			File dxpCredentialsFile = FileUtil.getDestinationFile(
+				_DXP_CREDENTIALS_URL);
+
+			if (dxpCredentialsFile.exists()) {
+				try (InputStream inputStream = Files.newInputStream(
+						dxpCredentialsFile.toPath())) {
+
+					Properties properties = new Properties();
+
+					properties.load(inputStream);
+
+					String repositoryDXPPassword = properties.getProperty(
+						"build.repository.private.password");
+					String repositoryDXPUsername = properties.getProperty(
+						"build.repository.private.username");
+
+					GradleUtil.addMavenArtifactRepository(
+						repositoryHandler, _REPOSITORY_DXP_URL,
+						repositoryDXPUsername, repositoryDXPPassword);
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
 		}
 	}
 
@@ -261,6 +294,13 @@ public class GradlePluginsDefaultsUtil {
 	}
 
 	private static final String _BUILD_PROFILE_FILE_NAME_PREFIX = ".lfrbuild-";
+
+	private static final String _DXP_CREDENTIALS_URL =
+		"https://files.liferay.com/private/ee/.DXP_CREDENTIALS";
+
+	private static final String _REPOSITORY_DXP_URL =
+		"https://repository-cdn.liferay.com/nexus/service/local/repo_groups" +
+			"/private/content/";
 
 	private static final String _TEST_PROJECT_SUFFIX = "-test";
 

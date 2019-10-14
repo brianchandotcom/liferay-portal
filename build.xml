@@ -112,6 +112,15 @@ message.
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${build.profile}" arg2="dxp" />
+			<then>
+				<gradle-execute setupbinariescache="false" task="setUpDXP">
+					<arg value="--build-file=${project.dir}/modules/dxp.gradle" />
+				</gradle-execute>
+			</then>
+		</if>
+
 		<antcall target="clean" />
 		<antcall target="compile" />
 		<antcall target="deploy" />

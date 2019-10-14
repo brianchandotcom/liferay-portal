@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.token.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

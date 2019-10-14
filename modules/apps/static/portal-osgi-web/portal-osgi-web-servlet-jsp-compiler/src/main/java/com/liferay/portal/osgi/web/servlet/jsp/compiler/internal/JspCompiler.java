@@ -17,8 +17,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
+import java.io.CharArrayWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 import java.net.URI;
 import java.net.URL;
@@ -83,7 +88,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 
 		if (javaCompiler == null) {
-			errDispatcher.jspError("jsp.error.nojdk");
+			_errorDispatcher.jspError("jsp.error.nojdk");
 
 			throw new JasperException("Unable to find Java compiler");
 		}
@@ -113,7 +118,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				Arrays.asList(
 					new StringJavaFileObject(
 						className.substring(className.lastIndexOf('.') + 1),
-						charArrayWriter.toString())));
+						_charArrayWriter.toString())));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Compiling JSP: ".concat(className));
@@ -144,12 +149,46 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				i);
 
 			javacErrorDetails[i] = ErrorDispatcher.createJavacError(
-				javaFileName, pageNodes,
+				_javaFileName, pageNodes,
 				new StringBuilder(diagnostic.getMessage(null)),
 				(int)diagnostic.getLineNumber());
 		}
 
 		return javacErrorDetails;
+	}
+
+	public void doJavaFile(boolean keep) throws JasperException {
+		if (!keep) {
+			_charArrayWriter = null;
+
+			return;
+		}
+
+		try {
+			Writer writer = new OutputStreamWriter(
+				new FileOutputStream(_javaFileName), _javaEncoding);
+
+			writer.write(_charArrayWriter.toString());
+
+			writer.close();
+
+			_charArrayWriter = null;
+		}
+		catch (UnsupportedEncodingException uee) {
+			_errorDispatcher.jspError(
+				"jsp.error.needAlternateJavaEncoding", _javaEncoding);
+		}
+		catch (IOException ioe) {
+			throw new JasperException(ioe);
+		}
+	}
+
+	public Writer getJavaWriter(String javaFileName, String javaEncoding) {
+		_javaFileName = javaFileName;
+		_javaEncoding = javaEncoding;
+		_charArrayWriter = new CharArrayWriter();
+
+		return _charArrayWriter;
 	}
 
 	@Override
@@ -238,6 +277,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		super.init(jspCompilationContext, errorDispatcher, suppressLogging);
 
 		_options.add("-proc:none");
+		_errorDispatcher = errorDispatcher;
 	}
 
 	@Override
@@ -488,8 +528,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle[] _allParticipatingBundles;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
 		new HashMap<>(_jspBundleWiringPackageNames);
+	private CharArrayWriter _charArrayWriter;
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
+	private ErrorDispatcher _errorDispatcher;
+	private String _javaEncoding;
+	private String _javaFileName;
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
 		new ArrayList<>();
 	private final List<String> _options = new ArrayList<>();

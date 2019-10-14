@@ -1,0 +1,7 @@
+.page-editor-toolbar-experience {
+	// There could have been done with Bootstrap classes (eg. d-flex and
+	// align-items-center), but we're doing this in here so that we have an
+	// example of plug-in CSS.
+	align-items: center;
+	display: flex;
+}

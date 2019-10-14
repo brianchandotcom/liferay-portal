@@ -18,7 +18,7 @@ import React from 'react';
 // TODO: show how to colocate CSS with plugins (may use loaders)
 export default function ExperienceToolbarSection({selectId}) {
 	return (
-		<div className="align-items-center d-flex mr-2">
+		<div className="page-editor-toolbar-experience mr-2">
 			<label className="mr-2" htmlFor={selectId}>
 				Experience
 			</label>

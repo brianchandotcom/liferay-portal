@@ -319,13 +319,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 							<if>
 								<and>
-									<isset property="env.KUBERNETES_SERVICE_HOST" />
+									<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 									<not>
 										<equals arg1="${database.type}" arg2="hypersonic" />
 									</not>
 								</and>
 								<then>
-									<echo>Using Kubernetes for ${database.type}.</echo>
+									<echo>Using Docker for ${database.type}.</echo>
 								</then>
 								<else>
 									<echo></echo>
@@ -348,15 +348,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<action>
 					<if>
 						<and>
-							<isset property="env.KUBERNETES_SERVICE_HOST" />
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 							<not>
 								<equals arg1="${database.type}" arg2="hypersonic" />
 							</not>
 						</and>
 						<then>
-							<get-database-property property.name="database.version" />
-
-							<stop-k8s-database database.type="@{database.type}" database.version="${database.version}" />
+							<stop-docker-database />
 						</then>
 						<else>
 							<exec executable="${database.service.executable}">
@@ -375,16 +373,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<if>
 						<and>
-							<isset property="env.KUBERNETES_SERVICE_HOST" />
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 							<not>
 								<equals arg1="${database.type}" arg2="hypersonic" />
 							</not>
 						</and>
 						<then>
-							<get-database-property property.name="database.port" />
-							<get-database-property property.name="database.version" />
-
-							<start-k8s-database database.port="${database.port}" database.type="@{database.type}" database.version="${database.version}" />
+							<start-docker-database />
 						</then>
 						<else>
 							<exec executable="${database.service.executable}" resultproperty="exec.result">
@@ -426,15 +421,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<if>
 						<and>
-							<isset property="env.KUBERNETES_SERVICE_HOST" />
+							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 							<not>
 								<equals arg1="${database.type}" arg2="hypersonic" />
 							</not>
 						</and>
 						<then>
-							<get-database-property property.name="database.version" />
-
-							<stop-k8s-database database.type="@{database.type}" database.version="${database.version}" />
+							<stop-docker-database />
 						</then>
 						<else>
 							<exec executable="${database.service.executable}" failonerror="true">

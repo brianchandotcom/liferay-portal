@@ -486,6 +486,7 @@ public class UIItemsBuilder {
 
 		Map<String, Object> data = new HashMap<>();
 
+		data.put("analytics-file-entry-id", _fileEntry.getFileEntryId());
 		data.put("senna-off", "true");
 
 		urlMenuItem.setData(data);

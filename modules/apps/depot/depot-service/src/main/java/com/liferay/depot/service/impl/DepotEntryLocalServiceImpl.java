@@ -14,7 +14,6 @@
 
 package com.liferay.depot.service.impl;
 
-import com.liferay.depot.constants.DepotEntryConstants;
 import com.liferay.depot.exception.DepotEntryNameException;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.base.DepotEntryLocalServiceBaseImpl;
@@ -60,7 +59,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			serviceContext.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			DepotEntry.class.getName(), depotEntry.getDepotEntryId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
-			DepotEntryConstants.GROUP_TYPE_DEPOT, false,
+			GroupConstants.TYPE_DEPOT, false,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, false,
 			true, serviceContext);
 

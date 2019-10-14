@@ -20,13 +20,13 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.depot.constants.DepotEntryConstants;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -284,7 +284,7 @@ public class DepotPanelAppController {
 		public boolean isShow(PermissionChecker permissionChecker, Group group)
 			throws PortalException {
 
-			if ((group.getType() == DepotEntryConstants.GROUP_TYPE_DEPOT) &&
+			if ((group.getType() == GroupConstants.TYPE_DEPOT) &&
 				!DepotPanelAppController.this.isShow(_panelApp)) {
 
 				return false;

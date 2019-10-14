@@ -2,7 +2,6 @@ Bundle-Name: Liferay Depot API
 Bundle-SymbolicName: com.liferay.depot.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.depot.constants,\
 	com.liferay.depot.exception,\
 	com.liferay.depot.model,\
 	com.liferay.depot.service,\

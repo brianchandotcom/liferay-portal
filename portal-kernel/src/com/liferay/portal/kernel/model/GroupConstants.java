@@ -51,6 +51,8 @@ public class GroupConstants {
 		CONTROL_PANEL, FORMS, GUEST, GroupConstants.USER_PERSONAL_SITE
 	};
 
+	public static final int TYPE_DEPOT = 5;
+
 	public static final String TYPE_SETTINGS_KEY_INHERIT_LOCALES =
 		"inheritLocales";
 

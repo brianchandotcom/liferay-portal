@@ -45,6 +45,7 @@ page import="com.liferay.layout.page.template.admin.web.internal.servlet.taglib.
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys" %><%@
 page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException" %><%@
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
+page import="com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

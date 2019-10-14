@@ -15,12 +15,15 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -71,6 +74,34 @@ public class DeleteMasterPageMVCActionCommand extends BaseMVCActionCommand {
 		for (long deleteLayoutPageTemplateEntryId :
 				deleteLayoutPageTemplateEntryIds) {
 
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+					deleteLayoutPageTemplateEntryId);
+
+			if (layoutPageTemplateEntry == null) {
+				SessionErrors.add(actionRequest, PortalException.class);
+
+				deleteLayoutPageTemplateIdsList.add(
+					deleteLayoutPageTemplateEntryId);
+
+				continue;
+			}
+
+			int count = _layoutLocalService.getLayoutsCount(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			if (count > 0) {
+				SessionErrors.add(
+					actionRequest,
+					RequiredLayoutPageTemplateEntryException.class);
+
+				deleteLayoutPageTemplateIdsList.add(
+					deleteLayoutPageTemplateEntryId);
+
+				continue;
+			}
+
 			try {
 				_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 					deleteLayoutPageTemplateEntryId);
@@ -80,14 +111,14 @@ public class DeleteMasterPageMVCActionCommand extends BaseMVCActionCommand {
 					_log.debug(pe, pe);
 				}
 
+				SessionErrors.add(actionRequest, PortalException.class);
+
 				deleteLayoutPageTemplateIdsList.add(
 					deleteLayoutPageTemplateEntryId);
 			}
 		}
 
-		if (!deleteLayoutPageTemplateIdsList.isEmpty()) {
-			SessionErrors.add(actionRequest, PortalException.class);
-
+		if (!SessionErrors.isEmpty(actionRequest)) {
 			hideDefaultErrorMessage(actionRequest);
 
 			sendRedirect(actionRequest, actionResponse);
@@ -96,6 +127,9 @@ public class DeleteMasterPageMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteMasterPageMVCActionCommand.class);
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

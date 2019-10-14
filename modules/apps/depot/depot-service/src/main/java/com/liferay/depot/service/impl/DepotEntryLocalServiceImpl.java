@@ -106,12 +106,12 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 	}
 
 	private void _validateNameMap(Map<Locale, String> nameMap)
-		throws DepotEntryNameException.MustNotBeNull {
+		throws DepotEntryNameException {
 
 		if (MapUtil.isEmpty(nameMap) ||
 			Validator.isNull(nameMap.get(LocaleUtil.getDefault()))) {
 
-			throw new DepotEntryNameException.MustNotBeNull();
+			throw new DepotEntryNameException();
 		}
 	}
 

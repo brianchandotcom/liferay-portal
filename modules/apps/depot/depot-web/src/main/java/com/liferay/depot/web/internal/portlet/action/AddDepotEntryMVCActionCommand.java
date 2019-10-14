@@ -103,7 +103,7 @@ public class AddDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getErrorMessage(Exception e, ThemeDisplay themeDisplay) {
-		if (e instanceof DepotEntryNameException.MustNotBeNull) {
+		if (e instanceof DepotEntryNameException) {
 			return LanguageUtil.get(
 				themeDisplay.getRequest(), "please-enter-a-name");
 		}

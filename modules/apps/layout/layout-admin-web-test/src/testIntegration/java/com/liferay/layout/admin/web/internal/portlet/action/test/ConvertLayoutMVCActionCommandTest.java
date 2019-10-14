@@ -21,13 +21,10 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -46,13 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -103,7 +93,7 @@ public class ConvertLayoutMVCActionCommandTest {
 	}
 
 	@Test
-	public void testDoProcessAction() throws Exception {
+	public void testConvertWidgetLayoutToContentLayout() throws Exception {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.setProperty(
@@ -111,65 +101,6 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		Layout originalLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), typeSettingsProperties.toString());
-
-		Map<String, String[]> sourcePortletIdsMap =
-			new HashMap<String, String[]>() {
-				{
-					put(
-						"column-1",
-						new String[] {
-							"com_liferay_hello_world_web_portlet_" +
-								"HelloWorldPortlet"
-						});
-				}
-			};
-
-		List<Map<String, String[]>> portletIdsMaps =
-			new ArrayList<Map<String, String[]>>() {
-				{
-					add(sourcePortletIdsMap);
-				}
-			};
-
-		List<Map<String, List<String>>> encodedPortletIdsMaps =
-			new ArrayList<>();
-
-		int columnId = 0;
-
-		for (Map<String, String[]> portletIdsMap : portletIdsMaps) {
-			Set<Map.Entry<String, String[]>> entries = portletIdsMap.entrySet();
-
-			Map<String, List<String>> encodedPortletIdsMap = new TreeMap<>();
-
-			for (Map.Entry<String, String[]> entry : entries) {
-				columnId++;
-
-				encodedPortletIdsMap.put(entry.getKey(), new ArrayList<>());
-
-				List<String> encodedPortletIds = encodedPortletIdsMap.get(
-					entry.getKey());
-
-				for (String portletId : entry.getValue()) {
-					Portlet portlet = _portletLocalService.getPortletById(
-						_group.getCompanyId(), portletId);
-
-					String encodedPortletId = portletId;
-
-					if (portlet.isInstanceable()) {
-						encodedPortletId = PortletIdCodec.encode(portletId);
-					}
-
-					LayoutTestUtil.addPortletToLayout(
-						TestPropsValues.getUserId(), originalLayout,
-						encodedPortletId, "column-" + columnId,
-						new HashMap<>());
-
-					encodedPortletIds.add(encodedPortletId);
-				}
-			}
-
-			encodedPortletIdsMaps.add(encodedPortletIdsMap);
-		}
 
 		ActionRequest actionRequest = _getMockActionRequest(
 			originalLayout.getPlid());
@@ -277,9 +208,6 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout/convert_layout")
 	private MVCActionCommand _mvcActionCommand;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
 
 	private ServiceContext _serviceContext;
 

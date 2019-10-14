@@ -47,7 +47,7 @@ ToolbarItem toolbarItem = (ToolbarItem)request.getAttribute("liferay-ui:toolbar-
 		URLToolbarItem urlToolbarItem = (URLToolbarItem)toolbarItem;
 		%>
 
-		<aui:a cssClass="btn btn-default" href="<%= urlToolbarItem.getURL() %>" target="<%= urlToolbarItem.getTarget() %>">
+		<aui:a cssClass="btn btn-default" data="<%= urlToolbarItem.getData() %>" href="<%= urlToolbarItem.getURL() %>" target="<%= urlToolbarItem.getTarget() %>">
 			<c:if test="<%= Validator.isNotNull(urlToolbarItem.getIcon()) %>">
 				<aui:icon image="<%= urlToolbarItem.getIcon() %>" markupView="lexicon" />
 			</c:if>

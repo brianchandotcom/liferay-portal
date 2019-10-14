@@ -14,10 +14,21 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Iván Zaera
  */
 public class URLToolbarItem extends ToolbarItem implements URLUIItem {
+
+	public Map<String, Object> getData() {
+		if (_data == null) {
+			_data = new HashMap<>();
+		}
+
+		return _data;
+	}
 
 	@Override
 	public String getTarget() {
@@ -27,6 +38,10 @@ public class URLToolbarItem extends ToolbarItem implements URLUIItem {
 	@Override
 	public String getURL() {
 		return _url;
+	}
+
+	public void setData(Map<String, Object> data) {
+		_data = data;
 	}
 
 	@Override
@@ -41,6 +56,7 @@ public class URLToolbarItem extends ToolbarItem implements URLUIItem {
 
 	private static final String _TARGET_DEFAULT = "_self";
 
+	private Map<String, Object> _data;
 	private String _target = _TARGET_DEFAULT;
 	private String _url;
 

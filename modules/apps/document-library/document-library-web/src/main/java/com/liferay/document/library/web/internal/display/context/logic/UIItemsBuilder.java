@@ -504,8 +504,17 @@ public class UIItemsBuilder {
 		String label = TextFormatter.formatStorageSize(
 			_fileVersion.getSize(), _themeDisplay.getLocale());
 
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		urlToolbarItem.setData(
+			new HashMap<String, Object>() {
+				{
+					put("analytics-file-entry-id", _fileEntry.getFileEntryId());
+				}
+			});
+
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
+			urlToolbarItem, toolbarItems, DLUIItemKeys.DOWNLOAD,
 			StringBundler.concat(
 				LanguageUtil.get(_resourceBundle, "download"), " (", label,
 				")"),

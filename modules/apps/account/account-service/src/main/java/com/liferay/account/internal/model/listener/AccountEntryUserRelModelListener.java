@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,8 +87,10 @@ public class AccountEntryUserRelModelListener
 			}
 		}
 		else if (accountEntryUserRels.size() > 1) {
-			accountEntryUserRels.stream(
-			).filter(
+			Stream<AccountEntryUserRel> accountEntryUserRelsStream =
+				accountEntryUserRels.stream();
+
+			accountEntryUserRelsStream.filter(
 				accountEntryUserRel ->
 					accountEntryUserRel.getAccountEntryId() ==
 						AccountConstants.DEFAULT_ACCOUNT_ENTRY_ID

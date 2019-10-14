@@ -72,7 +72,7 @@ function ToolbarBody() {
 	const {getInstance, register} = usePlugins();
 
 	const loading = useRef(() => {
-		return Promise.all(
+		Promise.all(
 			toolbarPlugins.map(({pluginEntryPoint}) => {
 				const promise = load(pluginEntryPoint, pluginEntryPoint);
 
@@ -84,17 +84,19 @@ function ToolbarBody() {
 					store
 				};
 
-				register(pluginEntryPoint, promise, {app}).then(plugin => {
-					if (!plugin) {
-						throw new Error(
-							`Failed to get instance from ${pluginEntryPoint}`
-						);
-					} else if (isMounted()) {
-						if (typeof plugin.activate === 'function') {
-							plugin.activate();
+				return register(pluginEntryPoint, promise, {app}).then(
+					plugin => {
+						if (!plugin) {
+							throw new Error(
+								`Failed to get instance from ${pluginEntryPoint}`
+							);
+						} else if (isMounted()) {
+							if (typeof plugin.activate === 'function') {
+								plugin.activate();
+							}
 						}
 					}
-				});
+				);
 			})
 		).catch(error => {
 			if (process.env.NODE_ENV === 'development') {

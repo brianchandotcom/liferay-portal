@@ -418,6 +418,8 @@ public class DLAdminDisplayContext {
 		portletURL.setParameter("navigation", navigation);
 		portletURL.setParameter("curFolder", currentFolder);
 		portletURL.setParameter("deltaFolder", deltaFolder);
+		portletURL.setParameter(
+			"fileEntryTypeId", String.valueOf(fileEntryTypeId));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		SearchContainer dlSearchContainer = new SearchContainer(

@@ -14,13 +14,11 @@
 
 package com.liferay.depot.constants;
 
-import com.liferay.portal.kernel.model.GroupConstants;
-
 /**
  * @author Alejandro Tardín
  */
 public class DepotEntryConstants {
 
-	public static final int TYPE_DEPOT = 372722318;
+	public static final int GROUP_TYPE_DEPOT = 372722318;
 
 }

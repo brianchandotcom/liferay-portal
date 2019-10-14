@@ -61,7 +61,8 @@ public class DepotEntryLocalServiceTest {
 
 		Assert.assertFalse(group.isSite());
 
-		Assert.assertEquals(DepotEntryConstants.TYPE_DEPOT, group.getType());
+		Assert.assertEquals(
+			DepotEntryConstants.GROUP_TYPE_DEPOT, group.getType());
 
 		Assert.assertEquals(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, group.getParentGroupId());

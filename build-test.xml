@@ -1286,6 +1286,10 @@ war.path=${app.server.portal.dir}/</echo>
 				</then>
 			</if>
 
+			<local name="gradle.execute.silent" />
+
+			<property name="gradle.execute.silent" value="false" />
+
 			<if>
 				<isset property="env.JENKINS_HOME" />
 				<then>

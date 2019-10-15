@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,20 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
-
-<%
-Map<String, Object> context = new HashMap<>();
-
-context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()));
-context.put("multiSelection", !assetCategoriesSelectorDisplayContext.isSingleSelect());
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("nodes", assetCategoriesSelectorDisplayContext.getCategoriesJSONArray());
-%>
-
-<react:component
-	data="<%= context %>"
-	module="js/SelectCategory.es"
-/>
+module.exports = {
+	extends: ['liferay/react']
+};

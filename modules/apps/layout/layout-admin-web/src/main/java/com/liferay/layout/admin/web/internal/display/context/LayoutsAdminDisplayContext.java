@@ -131,10 +131,12 @@ public class LayoutsAdminDisplayContext {
 
 	public LayoutsAdminDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		LayoutSEOLinkManager layoutSEOLinkManager) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_layoutSEOLinkManager = layoutSEOLinkManager;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
@@ -1570,12 +1572,6 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public void setLayoutSEOLinkManager(
-		LayoutSEOLinkManager layoutSEOLinkManager) {
-
-		_layoutSEOLinkManager = layoutSEOLinkManager;
-	}
-
 	private JSONObject _getActionURLsJSONObject(Layout layout)
 		throws Exception {
 
@@ -1938,7 +1934,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutCopyHelper _layoutCopyHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
-	private LayoutSEOLinkManager _layoutSEOLinkManager;
+	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private SearchContainer _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

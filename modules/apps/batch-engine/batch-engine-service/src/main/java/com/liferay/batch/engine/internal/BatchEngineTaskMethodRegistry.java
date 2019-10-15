@@ -16,7 +16,7 @@ package com.liferay.batch.engine.internal;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
-import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.model.User;
 public interface BatchEngineTaskMethodRegistry extends ItemClassRegistry {
 
 	public UnsafeBiFunction
-		<Company, User, BatchEngineTaskItemWriter, ReflectiveOperationException>
-			getUnsafeBiFunction(
-				String apiVersion,
-				BatchEngineTaskOperation batchEngineTaskOperation,
-				String itemClassName);
+		<Company, User, BatchEngineTaskItemResourceDelegate,
+		 ReflectiveOperationException> getUnsafeBiFunction(
+			String apiVersion,
+			BatchEngineTaskOperation batchEngineTaskOperation,
+			String itemClassName);
 
 }

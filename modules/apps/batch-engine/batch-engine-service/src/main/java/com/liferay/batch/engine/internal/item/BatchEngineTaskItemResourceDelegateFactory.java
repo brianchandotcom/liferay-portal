@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.writer;
+package com.liferay.batch.engine.internal.item;
 
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 /**
  * @author Ivica cardic
  */
-public class BatchEngineTaskItemWriterFactory {
+public class BatchEngineTaskItemResourceDelegateFactory {
 
-	public BatchEngineTaskItemWriterFactory(
+	public BatchEngineTaskItemResourceDelegateFactory(
 		BatchEngineTaskMethodRegistry batchEngineTaskMethodRegistry,
 		CompanyLocalService companyLocalService,
 		UserLocalService userLocalService) {
@@ -39,14 +39,15 @@ public class BatchEngineTaskItemWriterFactory {
 		_userLocalService = userLocalService;
 	}
 
-	public BatchEngineTaskItemWriter create(BatchEngineTask batchEngineTask)
+	public BatchEngineTaskItemResourceDelegate create(
+			BatchEngineTask batchEngineTask)
 		throws Exception {
 
 		BatchEngineTaskOperation batchEngineTaskOperation =
 			BatchEngineTaskOperation.valueOf(batchEngineTask.getOperation());
 
 		UnsafeBiFunction
-			<Company, User, BatchEngineTaskItemWriter,
+			<Company, User, BatchEngineTaskItemResourceDelegate,
 			 ReflectiveOperationException> unsafeBiFunction =
 				_batchEngineTaskMethodRegistry.getUnsafeBiFunction(
 					batchEngineTask.getVersion(), batchEngineTaskOperation,

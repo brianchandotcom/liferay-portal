@@ -300,8 +300,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getCanonicalLayoutURL() throws PortalException {
-		String completeURL = PortalUtil.getCurrentCompleteURL(
-			_httpServletRequest);
+		String completeURL = getViewLayoutURL(_selLayout);
 
 		String canonicalURL = PortalUtil.getCanonicalURL(
 			completeURL, _themeDisplay, _selLayout, false, false);

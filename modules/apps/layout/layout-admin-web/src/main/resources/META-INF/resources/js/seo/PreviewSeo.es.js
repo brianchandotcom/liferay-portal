@@ -48,26 +48,43 @@ const PreviewSeoContainer = ({portletNamespace, suffixTitle, targets}) => {
 	const [title, setTitle] = useState('');
 	const [url, setUrl] = useState('');
 
-	const handlerInputChange = ({event, type, usePlaceholderAsFallback}) => {
-		let value = event.target && event.target.value;
-
-		if (value === '' && usePlaceholderAsFallback) {
-			value = event.target.placeholder;
-		}
-
-		if (type === 'description') {
-			setDescription(value);
-		} else if (type === 'title') {
-			setTitle(value);
-		} else if (type === 'canonicalURL') {
-			setUrl(value);
-		}
-	};
-
 	useEffect(() => {
+		const setPreviewState = ({
+			placeholder = '',
+			type,
+			usePlaceholderAsFallback,
+			value
+		}) => {
+			if (value === '' && usePlaceholderAsFallback) {
+				value = placeholder;
+			}
+
+			if (type === 'description') {
+				setDescription(value);
+			} else if (type === 'title') {
+				setTitle(value);
+			} else if (type === 'canonicalURL') {
+				setUrl(value);
+			}
+		};
+
+		const handleInputChange = ({event, type, usePlaceholderAsFallback}) => {
+			const target = event.target;
+			if (!target) {
+				return;
+			}
+
+			setPreviewState({
+				placeholder: target.placeholder,
+				type,
+				usePlaceholderAsFallback,
+				value: target.value
+			});
+		};
+
 		const inputs = targets.map(({id, type, usePlaceholderAsFallback}) => {
 			const listener = event => {
-				handlerInputChange({
+				handleInputChange({
 					event,
 					type,
 					usePlaceholderAsFallback
@@ -77,7 +94,13 @@ const PreviewSeoContainer = ({portletNamespace, suffixTitle, targets}) => {
 			const node = document.getElementById(`_${portletNamespace}_${id}`);
 
 			node.addEventListener('input', listener);
-			node.dispatchEvent(new Event('input'));
+
+			setPreviewState({
+				placeholder: node.placeholder,
+				type,
+				usePlaceholderAsFallback,
+				value: node.value
+			});
 
 			return {listener, node};
 		});

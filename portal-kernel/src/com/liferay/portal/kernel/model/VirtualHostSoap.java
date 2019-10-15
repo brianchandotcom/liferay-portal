@@ -35,6 +35,8 @@ public class VirtualHostSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setLayoutSetId(model.getLayoutSetId());
 		soapModel.setHostname(model.getHostname());
+		soapModel.setDefaultVirtualHost(model.isDefaultVirtualHost());
+		soapModel.setLanguageId(model.getLanguageId());
 
 		return soapModel;
 	}
@@ -128,10 +130,32 @@ public class VirtualHostSoap implements Serializable {
 		_hostname = hostname;
 	}
 
+	public boolean getDefaultVirtualHost() {
+		return _defaultVirtualHost;
+	}
+
+	public boolean isDefaultVirtualHost() {
+		return _defaultVirtualHost;
+	}
+
+	public void setDefaultVirtualHost(boolean defaultVirtualHost) {
+		_defaultVirtualHost = defaultVirtualHost;
+	}
+
+	public String getLanguageId() {
+		return _languageId;
+	}
+
+	public void setLanguageId(String languageId) {
+		_languageId = languageId;
+	}
+
 	private long _mvccVersion;
 	private long _virtualHostId;
 	private long _companyId;
 	private long _layoutSetId;
 	private String _hostname;
+	private boolean _defaultVirtualHost;
+	private String _languageId;
 
 }

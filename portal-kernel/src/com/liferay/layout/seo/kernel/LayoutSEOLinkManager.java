@@ -41,7 +41,7 @@ public interface LayoutSEOLinkManager {
 			ListMergeable<String> subtitleListMergeable, Locale locale)
 		throws PortalException {
 
-		return "";
+		throw new UnsupportedOperationException();
 	}
 
 	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
@@ -56,14 +56,14 @@ public interface LayoutSEOLinkManager {
 			Locale locale)
 		throws PortalException {
 
-		return companyName;
+		throw new UnsupportedOperationException();
 	}
 
 	public default String getSiteAndCompanyName(
 			Layout layout, String companyName)
 		throws PortalException {
 
-		return companyName;
+		throw new UnsupportedOperationException();
 	}
 
 	public default boolean isOpenGraphEnabled(Layout layout)

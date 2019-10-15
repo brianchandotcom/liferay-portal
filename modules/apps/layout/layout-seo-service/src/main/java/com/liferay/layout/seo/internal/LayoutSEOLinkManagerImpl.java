@@ -61,14 +61,14 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
-	public String getLayoutTitle(
+	public String getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, Locale locale)
 		throws PortalException {
 
 		return _html.escape(
-			_getLayoutTitle(
+			_getPageTitle(
 				layout, portletId, tilesTitle, titleListMergeable,
 				subtitleListMergeable, locale));
 	}
@@ -108,14 +108,14 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	@Override
-	public String getPageTitle(
+	public String getFullPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, String companyName,
 			Locale locale)
 		throws PortalException {
 
-		String layoutTitle = _getLayoutTitle(
+		String layoutTitle = _getPageTitle(
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
 
@@ -180,7 +180,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return layoutSEOEntry.getCanonicalURL(locale);
 	}
 
-	private String _getLayoutTitle(
+	private String _getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, Locale locale)

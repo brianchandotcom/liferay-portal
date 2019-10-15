@@ -61,20 +61,20 @@ public class LayoutSEOLinkManagerPageTitleTest {
 	}
 
 	@Test
-	public void testGetPageTitleUsesLayoutTitle() throws Exception {
+	public void testGetFullPageTitleUsesLayoutTitle() throws Exception {
 		String companyName = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			StringBundler.concat(
 				_layout.getTitle(), " - ", _group.getName(), " - ",
 				companyName),
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleUsesLayoutTitleAndSubtitleList()
+	public void testGetFullPageTitleUsesLayoutTitleAndSubtitleList()
 		throws Exception {
 
 		ListMergeable<String> subtitleListMergeable = new ListMergeable<>();
@@ -89,13 +89,15 @@ public class LayoutSEOLinkManagerPageTitleTest {
 				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
 				_layout.getTitle(), " - ", _group.getName(), " - ",
 				companyName),
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, null, subtitleListMergeable, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleUsesLayoutTitleAndTitleList() throws Exception {
+	public void testGetFullPageTitleUsesLayoutTitleAndTitleList()
+		throws Exception {
+
 		ListMergeable<String> titleListMergeable = new ListMergeable<>();
 
 		titleListMergeable.add(RandomTestUtil.randomString());
@@ -107,13 +109,13 @@ public class LayoutSEOLinkManagerPageTitleTest {
 			StringBundler.concat(
 				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
 				_group.getName(), " - ", companyName),
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, titleListMergeable, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleUsesLayoutTitleAndTitleListAndSubtitleList()
+	public void testGetFullPageTitleUsesLayoutTitleAndTitleListAndSubtitleList()
 		throws Exception {
 
 		ListMergeable<String> titleListMergeable = new ListMergeable<>();
@@ -133,13 +135,13 @@ public class LayoutSEOLinkManagerPageTitleTest {
 				subtitleListMergeable.mergeToString(StringPool.SPACE), " - ",
 				titleListMergeable.mergeToString(StringPool.SPACE), " - ",
 				_group.getName(), " - ", companyName),
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, titleListMergeable, subtitleListMergeable,
 				companyName, LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleUsesTilesTitle() throws Exception {
+	public void testGetFullPageTitleUsesTilesTitle() throws Exception {
 		String tilesTitle = RandomTestUtil.randomString();
 
 		String companyName = RandomTestUtil.randomString();
@@ -147,13 +149,13 @@ public class LayoutSEOLinkManagerPageTitleTest {
 		Assert.assertEquals(
 			StringBundler.concat(
 				tilesTitle, " - ", _group.getName(), " - ", companyName),
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, tilesTitle, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageTitleUsesTilesTitleAndCompanyName()
+	public void testGetFullPageTitleUsesTilesTitleAndCompanyName()
 		throws Exception {
 
 		String tilesTitle = RandomTestUtil.randomString();
@@ -162,18 +164,20 @@ public class LayoutSEOLinkManagerPageTitleTest {
 
 		Assert.assertEquals(
 			tilesTitle + " - " + companyName,
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, tilesTitle, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}
 
 	@Test
-	public void testGetPageUsesLayoutTitleAndCompanyName() throws Exception {
+	public void testGetFullPageUsesLayoutTitleAndCompanyName()
+		throws Exception {
+
 		String companyName = _group.getName();
 
 		Assert.assertEquals(
 			_layout.getTitle() + " - " + companyName,
-			_layoutSEOLinkManager.getPageTitle(
+			_layoutSEOLinkManager.getFullPageTitle(
 				_layout, null, null, null, null, companyName,
 				LocaleUtil.getDefault()));
 	}

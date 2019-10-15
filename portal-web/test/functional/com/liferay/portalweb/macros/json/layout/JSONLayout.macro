@@ -14,6 +14,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
@@ -35,6 +36,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
@@ -56,6 +58,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",
@@ -77,6 +80,7 @@ definition {
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
+			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
 			parentLayoutId = "${parentLayoutId}",

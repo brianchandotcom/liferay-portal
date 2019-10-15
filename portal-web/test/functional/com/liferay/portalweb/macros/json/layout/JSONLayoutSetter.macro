@@ -8,6 +8,14 @@ definition {
 		return "${column}";
 	}
 
+	macro setFriendlyURL {
+		if (!(isSet(friendlyURL))) {
+			var friendlyURL = "";
+		}
+
+		return "${friendlyURL}";
+	}
+
 	macro setGroupId {
 		JSONUtil2._exclusiveOrCheck(
 			A = "${groupName}",

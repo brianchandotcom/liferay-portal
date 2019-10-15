@@ -31,6 +31,7 @@ const Widget = props => {
 			data-drag-source-label={props.widget.title}
 			data-instanceable={props.widget.instanceable || null}
 			data-portlet-id={props.widget.portletId}
+			disabled={props.widget.used && !props.widget.instanceable}
 			type="button"
 		>
 			<ClayIcon

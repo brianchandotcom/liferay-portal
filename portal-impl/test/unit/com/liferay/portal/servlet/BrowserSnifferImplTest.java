@@ -121,13 +121,8 @@ public class BrowserSnifferImplTest {
 
 	@Test
 	public void testParseVersion() throws IOException {
-		Class<?> clazz = getClass();
-
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(
-						clazz.getResourceAsStream(
-							"dependencies/user_agents.csv")))) {
+				getResourceAsUnsyncBufferedReader()) {
 
 			String line = null;
 
@@ -169,43 +164,43 @@ public class BrowserSnifferImplTest {
 			String key, Consumer<MockHttpServletRequest> requestConsumer)
 		throws IOException {
 
-		UnsyncBufferedReader unsyncBufferedReader =
-			getResourceAsUnsyncBufferedReader("dependencies/user_agents.csv");
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				getResourceAsUnsyncBufferedReader()) {
 
-		boolean matches = false;
-		String line = null;
+			boolean matches = false;
+			String line = null;
 
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = line.trim();
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = line.trim();
 
-			if (line.isEmpty()) {
-				continue;
-			}
+				if (line.isEmpty()) {
+					continue;
+				}
 
-			if (line.contains(key)) {
-				matches = true;
+				if (line.contains(key)) {
+					matches = true;
 
-				continue;
-			}
+					continue;
+				}
 
-			if (matches && (line.charAt(0) == CharPool.POUND)) {
-				break;
-			}
+				if (matches && (line.charAt(0) == CharPool.POUND)) {
+					break;
+				}
 
-			if (matches) {
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
+				if (matches) {
+					MockHttpServletRequest mockHttpServletRequest =
+						new MockHttpServletRequest();
 
-				mockHttpServletRequest.addHeader(HttpHeaders.USER_AGENT, line);
+					mockHttpServletRequest.addHeader(
+						HttpHeaders.USER_AGENT, line);
 
-				requestConsumer.accept(mockHttpServletRequest);
+					requestConsumer.accept(mockHttpServletRequest);
+				}
 			}
 		}
 	}
 
-	protected UnsyncBufferedReader getResourceAsUnsyncBufferedReader(
-		String name) {
-
+	protected UnsyncBufferedReader getResourceAsUnsyncBufferedReader() {
 		Class<?> clazz = getClass();
 
 		return new UnsyncBufferedReader(

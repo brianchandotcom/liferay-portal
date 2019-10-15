@@ -180,7 +180,7 @@ public class LayoutSetCacheModel
 		layoutSetImpl.setCompanyFallbackVirtualHostname(
 			_companyFallbackVirtualHostname);
 
-		layoutSetImpl.setVirtualHostname(_virtualHostname);
+		layoutSetImpl.setVirtualHostnames(_virtualHostnames);
 
 		return layoutSetImpl;
 	}
@@ -211,7 +211,7 @@ public class LayoutSetCacheModel
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
 
 		_companyFallbackVirtualHostname = (String)objectInput.readObject();
-		_virtualHostname = (String)objectInput.readObject();
+		_virtualHostnames = (java.util.TreeMap)objectInput.readObject();
 	}
 
 	@Override
@@ -268,7 +268,7 @@ public class LayoutSetCacheModel
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
 
 		objectOutput.writeObject(_companyFallbackVirtualHostname);
-		objectOutput.writeObject(_virtualHostname);
+		objectOutput.writeObject(_virtualHostnames);
 	}
 
 	public long mvccVersion;
@@ -286,6 +286,6 @@ public class LayoutSetCacheModel
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
 	public String _companyFallbackVirtualHostname;
-	public String _virtualHostname;
+	public java.util.TreeMap _virtualHostnames;
 
 }

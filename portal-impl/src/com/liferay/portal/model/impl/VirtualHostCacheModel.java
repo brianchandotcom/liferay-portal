@@ -75,7 +75,7 @@ public class VirtualHostCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -87,6 +87,10 @@ public class VirtualHostCacheModel
 		sb.append(layoutSetId);
 		sb.append(", hostname=");
 		sb.append(hostname);
+		sb.append(", defaultVirtualHost=");
+		sb.append(defaultVirtualHost);
+		sb.append(", languageId=");
+		sb.append(languageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,6 +112,15 @@ public class VirtualHostCacheModel
 			virtualHostImpl.setHostname(hostname);
 		}
 
+		virtualHostImpl.setDefaultVirtualHost(defaultVirtualHost);
+
+		if (languageId == null) {
+			virtualHostImpl.setLanguageId("");
+		}
+		else {
+			virtualHostImpl.setLanguageId(languageId);
+		}
+
 		virtualHostImpl.resetOriginalValues();
 
 		return virtualHostImpl;
@@ -123,6 +136,9 @@ public class VirtualHostCacheModel
 
 		layoutSetId = objectInput.readLong();
 		hostname = objectInput.readUTF();
+
+		defaultVirtualHost = objectInput.readBoolean();
+		languageId = objectInput.readUTF();
 	}
 
 	@Override
@@ -141,6 +157,15 @@ public class VirtualHostCacheModel
 		else {
 			objectOutput.writeUTF(hostname);
 		}
+
+		objectOutput.writeBoolean(defaultVirtualHost);
+
+		if (languageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(languageId);
+		}
 	}
 
 	public long mvccVersion;
@@ -148,5 +173,7 @@ public class VirtualHostCacheModel
 	public long companyId;
 	public long layoutSetId;
 	public String hostname;
+	public boolean defaultVirtualHost;
+	public String languageId;
 
 }

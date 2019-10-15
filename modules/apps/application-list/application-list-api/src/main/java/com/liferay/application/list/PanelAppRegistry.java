@@ -14,9 +14,11 @@
 
 package com.liferay.application.list;
 
-import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
+import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucket;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerBucketFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,9 +36,15 @@ import com.liferay.portal.kernel.util.PrefsProps;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -149,11 +157,16 @@ public class PanelAppRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, PanelApp.class, "(panel.category.key=*)",
-			new PanelCategoryServiceReferenceMapper(),
-			new PanelAppOrderComparator(),
-			new PanelAppsServiceTrackerMapListener());
+		_serviceTrackerMap =
+			ServiceTrackerMapBuilder.SelectorFactory.newSelector(
+				bundleContext, PanelApp.class
+			).map(
+				"panel.category.key"
+			).collect(
+				new PanelAppsServiceTrackerBucketFactory()
+			).newCollector(
+				new PanelAppsServiceTrackerMapListener()
+			).build();
 	}
 
 	@Deactivate
@@ -227,6 +240,86 @@ public class PanelAppRegistry {
 				(Comparable<Object>)propertyValue2;
 
 			return -propertyValueComparable2.compareTo(propertyValue1);
+		}
+
+	}
+
+	private class PanelAppsServiceTrackerBucketFactory
+		implements ServiceTrackerBucketFactory
+			<PanelApp, PanelApp, List<PanelApp>> {
+
+		@Override
+		public ServiceTrackerBucket create() {
+			return new PanelCategoryServiceTrackerBucket();
+		}
+
+		private class PanelCategoryServiceTrackerBucket
+			implements ServiceTrackerBucket
+				<PanelApp, PanelApp, List<PanelApp>> {
+
+			@Override
+			public List<PanelApp> getContent() {
+				return _services;
+			}
+
+			@Override
+			public synchronized boolean isDisposable() {
+				return _serviceReferenceServiceTuples.isEmpty();
+			}
+
+			@Override
+			public synchronized void remove(
+				ServiceReferenceServiceTuple<PanelApp, PanelApp>
+					serviceReferenceServiceTuple) {
+
+				_serviceReferenceServiceTuples.remove(
+					serviceReferenceServiceTuple);
+
+				_rebuild();
+			}
+
+			@Override
+			public synchronized void store(
+				ServiceReferenceServiceTuple<PanelApp, PanelApp>
+					serviceReferenceServiceTuple) {
+
+				_serviceReferenceServiceTuples.add(
+					serviceReferenceServiceTuple);
+
+				_rebuild();
+			}
+
+			private Predicate<PanelApp> _getDistinctByKeyPredicate() {
+				Map<String, Boolean> seen = new ConcurrentHashMap<>();
+
+				return panelApp ->
+					seen.putIfAbsent(panelApp.getKey(), true) == null;
+			}
+
+			private void _rebuild() {
+				Stream<ServiceReferenceServiceTuple<PanelApp, PanelApp>>
+					stream = _serviceReferenceServiceTuples.stream();
+
+				_services = stream.sorted(
+					_comparator
+				).map(
+					ServiceReferenceServiceTuple::getService
+				).filter(
+					_getDistinctByKeyPredicate()
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			private final Comparator
+				<ServiceReferenceServiceTuple<PanelApp, PanelApp>> _comparator =
+					Comparator.comparing(
+						ServiceReferenceServiceTuple::getServiceReference,
+						new PanelAppOrderComparator());
+			private final List<ServiceReferenceServiceTuple<PanelApp, PanelApp>>
+				_serviceReferenceServiceTuples = new ArrayList<>();
+			private List<PanelApp> _services = new ArrayList<>();
+
 		}
 
 	}

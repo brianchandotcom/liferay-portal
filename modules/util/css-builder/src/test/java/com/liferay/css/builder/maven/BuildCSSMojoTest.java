@@ -37,7 +37,7 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();
 
 	@Override
-	protected void executeCSSBuilder(
+	protected String executeCSSBuilder(
 			Path baseDirPath, String dirName, String[] excludes,
 			boolean generateSourceMap, Path importDirPath, String outputDirName,
 			int precision, String[] rtlExcludedPathRegexps,
@@ -53,6 +53,8 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 			baseDirPath.toFile(), "css-builder:build");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
+
+		return result.output;
 	}
 
 	private static void _preparePomXml(

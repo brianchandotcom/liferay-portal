@@ -15,6 +15,7 @@
 package com.liferay.css.builder.ant;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
+import com.liferay.css.builder.StringPrintStream;
 import com.liferay.css.builder.util.StringTestUtil;
 
 import java.io.File;
@@ -53,7 +54,7 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 	public final BuildFileRule buildFileRule = new BuildFileRule();
 
 	@Override
-	protected void executeCSSBuilder(
+	protected String executeCSSBuilder(
 			Path baseDirPath, String dirName, String[] excludes,
 			boolean generateSourceMap, Path importDirPath, String outputDirName,
 			int precision, String[] rtlExcludedPathRegexps,
@@ -82,7 +83,13 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 		project.setProperty(
 			"build.css.sass.compiler.class.name", sassCompilerClassName);
 
+		StringPrintStream output = new StringPrintStream();
+
+		System.setOut(output);
+
 		project.executeTarget("build-css");
+
+		return output.toString();
 	}
 
 }

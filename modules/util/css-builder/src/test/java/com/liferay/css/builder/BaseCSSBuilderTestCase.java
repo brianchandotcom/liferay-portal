@@ -145,38 +145,54 @@ public abstract class BaseCSSBuilderTestCase {
 
 	@Test
 	public void testCSSBuilderWithJni() throws Exception {
-		_testCSSBuilder(_importDirPath, "jni");
+		String output = _testCSSBuilder(_importDirPath, "jni");
+
+		Assert.assertTrue(
+			output, output.contains("Using native Sass compiler"));
 	}
 
 	@Test
 	public void testCSSBuilderWithJni32() throws Exception {
-		_testCSSBuilder(_importDirPath, "jni32");
+		String output = _testCSSBuilder(_importDirPath, "jni32");
+
+		Assert.assertTrue(
+			output, output.contains("Using native 32-bit Sass compiler"));
 	}
 
 	@Test
 	public void testCSSBuilderWithJni32AndPortalCommonJar() throws Exception {
-		_testCSSBuilder(_importJarPath, "jni32");
+		String output = _testCSSBuilder(_importJarPath, "jni32");
+
+		Assert.assertTrue(
+			output, output.contains("Using native 32-bit Sass compiler"));
 	}
 
 	@Test
 	public void testCSSBuilderWithJniAndPortalCommonJar() throws Exception {
-		_testCSSBuilder(_importJarPath, "jni");
+		String output = _testCSSBuilder(_importJarPath, "jni");
+
+		Assert.assertTrue(
+			output, output.contains("Using native Sass compiler"));
 	}
 
 	@Test
 	public void testCSSBuilderWithRuby() throws Exception {
-		_testCSSBuilder(_importDirPath, "ruby");
+		String output = _testCSSBuilder(_importDirPath, "ruby");
+
+		Assert.assertTrue(output, output.contains("Using Ruby Sass compiler"));
 	}
 
 	@Test
 	public void testCSSBuilderWithRubyAndPortalCommonJar() throws Exception {
-		_testCSSBuilder(_importJarPath, "ruby");
+		String output = _testCSSBuilder(_importJarPath, "ruby");
+
+		Assert.assertTrue(output, output.contains("Using Ruby Sass compiler"));
 	}
 
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	protected abstract void executeCSSBuilder(
+	protected abstract String executeCSSBuilder(
 			Path baseDirPath, String dirName, String[] excludes,
 			boolean generateSourceMap, Path importDirPath, String outputDirName,
 			int precision, String[] rtlExcludedPathRegexps,
@@ -197,11 +213,11 @@ public abstract class BaseCSSBuilderTestCase {
 		Assert.assertEquals(expectedCount, count);
 	}
 
-	private void _testCSSBuilder(
+	private String _testCSSBuilder(
 			Path importDirPath, String sassCompilerClassName)
 		throws Exception {
 
-		executeCSSBuilder(
+		String output = executeCSSBuilder(
 			_baseDirPath, "/css", _EXCLUDES, false, importDirPath,
 			".sass-cache/", 6, new String[0], sassCompilerClassName);
 
@@ -251,6 +267,8 @@ public abstract class BaseCSSBuilderTestCase {
 			_baseDirPath.resolve("css/.sass-cache/test_unicode.css"));
 
 		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
+
+		return output;
 	}
 
 	private static final String[] _EXCLUDES = CSSBuilderArgs.EXCLUDES;

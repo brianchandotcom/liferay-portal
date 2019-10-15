@@ -53,6 +53,12 @@ public class ViewCountEntryLocalServiceImpl
 	}
 
 	@Override
+	public long getViewCount(long companyId, Class<?> clazz, long classPK) {
+		return viewCountEntryLocalService.getViewCount(
+			companyId, _classNameLocalService.getClassNameId(clazz), classPK);
+	}
+
+	@Override
 	public long getViewCount(long companyId, long classNameId, long classPK) {
 		ViewCountEntry viewCountEntry =
 			viewCountEntryPersistence.fetchByPrimaryKey(

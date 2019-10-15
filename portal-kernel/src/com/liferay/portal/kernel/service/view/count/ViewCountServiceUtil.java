@@ -29,6 +29,12 @@ public class ViewCountServiceUtil {
 	}
 
 	public static long getViewCount(
+		long companyId, Class<?> clazz, long classPK) {
+
+		return _viewCountService.getViewCount(companyId, clazz, classPK);
+	}
+
+	public static long getViewCount(
 		long companyId, long classNameId, long classPK) {
 
 		return _viewCountService.getViewCount(companyId, classNameId, classPK);

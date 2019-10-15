@@ -4,6 +4,8 @@ definition {
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
 		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
@@ -25,6 +27,8 @@ definition {
 	@summary = "Add a private site page or private child site page to an existing site via groupName"
 	macro addPrivateLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
@@ -48,6 +52,8 @@ definition {
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
+
 		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
@@ -69,6 +75,8 @@ definition {
 	@summary = "Add a public site page or public child site page to an existing site via groupName"
 	macro addPublicLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 

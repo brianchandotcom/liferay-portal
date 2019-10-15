@@ -821,7 +821,7 @@ public class LayoutsAdminDisplayContext {
 			(ListMergeable<String>)_httpServletRequest.getAttribute(
 				WebKeys.PAGE_SUBTITLE);
 
-		return _layoutSEOLinkManager.getLayoutTitle(
+		return _layoutSEOLinkManager.getPageTitle(
 			_selLayout, portletId, _themeDisplay.getTilesTitle(),
 			titleListMergeable, subtitleListMergeable,
 			_themeDisplay.getLocale());
@@ -950,7 +950,7 @@ public class LayoutsAdminDisplayContext {
 
 		Company company = _themeDisplay.getCompany();
 
-		return _layoutSEOLinkManager.getPageTitle(
+		return _layoutSEOLinkManager.getFullPageTitle(
 			_selLayout, portletId, _themeDisplay.getTilesTitle(),
 			titleListMergeable, subtitleListMergeable, company.getName(),
 			_themeDisplay.getLocale());

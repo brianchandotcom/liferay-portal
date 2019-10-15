@@ -14,8 +14,6 @@
 
 package com.liferay.layout.internal.util;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
@@ -49,7 +47,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,15 +96,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			return;
 		}
 
-		long[] assetCategoryIds = ListUtil.toLongArray(
-			_assetCategoryLocalService.getCategories(
-				Layout.class.getName(), sourceLayout.getPlid()),
-			AssetCategory.CATEGORY_ID_ACCESSOR);
+		long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
+			Layout.class.getName(), sourceLayout.getPlid());
 
-		String[] assetTags = ListUtil.toArray(
-			_assetTagLocalService.getTags(
-				Layout.class.getName(), sourceLayout.getPlid()),
-			AssetTag.NAME_ACCESSOR);
+		String[] assetTagNames = _assetTagLocalService.getTagNames(
+			Layout.class.getName(), sourceLayout.getPlid());
 
 		Layout layout = targetLayout;
 
@@ -116,7 +109,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		_layoutLocalService.updateAsset(
-			layout.getUserId(), layout, assetCategoryIds, assetTags);
+			layout.getUserId(), layout, assetCategoryIds, assetTagNames);
 	}
 
 	private void _copyLayoutPageTemplateStructure(

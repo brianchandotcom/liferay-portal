@@ -28,6 +28,8 @@ const URL_SELECTION = '/bulk/v1.0/bulk-selection',
 	URL_TAGS = '/bulk/v1.0/keywords/common',
 	URL_UPDATE_TAGS = '/bulk/v1.0/keywords/batch';
 
+const noop = () => {};
+
 const EditTagsModal = ({
 	fileEntries,
 	folderId,
@@ -36,7 +38,7 @@ const EditTagsModal = ({
 	repositoryId,
 	selectAll = false,
 	observer,
-	onModalClose = () => {}
+	onModalClose = noop
 }) => {
 	const {namespace} = useContext(EditTagsContext);
 
@@ -77,12 +79,12 @@ const EditTagsModal = ({
 			fetchTags(URL_SELECTION, 'POST', selection)
 		]).then(([responseTags, responseSelection]) => {
 			if (responseTags && responseSelection) {
-				const selectedItems = (responseTags.items || []).map(item => {
-					return {
-						label: item.name,
-						value: item.name
-					};
-				});
+				const selectedItems = (responseTags.items || []).map(
+					({name}) => ({
+						label: name,
+						value: name
+					})
+				);
 
 				if (isMounted()) {
 					setLoading(false);

@@ -54,7 +54,7 @@ public class BundleJavaFileManager
 	@Override
 	public ClassLoader getClassLoader(Location location) {
 		if (location != StandardLocation.CLASS_PATH) {
-			return fileManager.getClassLoader(location);
+			return super.getClassLoader(location);
 		}
 
 		return _classLoader;
@@ -113,7 +113,7 @@ public class BundleJavaFileManager
 			return baseJavaFileObject.getClassName();
 		}
 
-		return fileManager.inferBinaryName(location, javaFileObject);
+		return super.inferBinaryName(location, javaFileObject);
 	}
 
 	@Override
@@ -165,7 +165,7 @@ public class BundleJavaFileManager
 			}
 		}
 
-		return fileManager.list(location, packagePath, _kinds, recurse);
+		return super.list(location, packagePath, _kinds, recurse);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

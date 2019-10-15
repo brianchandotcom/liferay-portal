@@ -74,7 +74,7 @@ definition {
 	}
 
 	macro viewSuccessMessage {
-		AssertElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
 			Click(locator1 = "Button#CLOSE_MESSAGE");

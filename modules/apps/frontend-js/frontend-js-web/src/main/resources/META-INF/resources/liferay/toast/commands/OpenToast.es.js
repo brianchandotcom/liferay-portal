@@ -19,7 +19,7 @@ import React, {useState, useLayoutEffect} from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
 const DEFAULT_RENDER_DATA = {
-	portletId: 'UNKNOWN_PPID'
+	portletId: 'UNKNOWN_PORTLET_ID'
 };
 
 const Toast = ({

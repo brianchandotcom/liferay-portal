@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+spawn [db.upgrade.client.home]/db_upgrade[file.suffix.bat]
+
+expect "Please enter your application server" {
+    send "\r"
+}
+
+expect "Please enter your application server directory" {
+    send "\r"
+}
+
+expect "Please enter your extra library directories in application server directory" {
+    send "\r"
+}
+
+expect "Please enter your global library directory in application server directory" {
+    send "\r"
+}
+
+expect "Please enter your portal directory in application server directory" {
+    send "\r"
+}
+
+set timeout 900
+
+expect "Checking to see if all upgrades have completed... done"

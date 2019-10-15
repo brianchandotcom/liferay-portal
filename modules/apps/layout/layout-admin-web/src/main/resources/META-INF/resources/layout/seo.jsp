@@ -50,30 +50,7 @@ String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 			<%
 			Map<String, Object> data = new HashMap<>();
 
-			data.put(
-				"targets",
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"id", "canonicalURL"
-					).put(
-						"type", "canonicalURL"
-					).put(
-						"usePlaceholderAsFallback", true
-					),
-					JSONUtil.put(
-						"id", "descriptionSEO"
-					).put(
-						"type", "description"
-					).put(
-						"usePlaceholderAsFallback", false
-					),
-					JSONUtil.put(
-						"id", "title"
-					).put(
-						"type", "title"
-					).put(
-						"usePlaceholderAsFallback", true
-					)));
+			data.put("targets", JSONUtil.putAll(JSONUtil.put("id", "canonicalURL").put("type", "canonicalURL").put("usePlaceholderAsFallback", true), JSONUtil.put("id", "descriptionSEO").put("type", "description").put("usePlaceholderAsFallback", false), JSONUtil.put("id", "title").put("type", "title").put("usePlaceholderAsFallback", true)));
 
 			data.put("titleSuffix", companyName);
 			%>

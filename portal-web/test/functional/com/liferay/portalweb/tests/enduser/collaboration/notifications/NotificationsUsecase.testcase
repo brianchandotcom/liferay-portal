@@ -65,12 +65,6 @@ definition {
 			pageName = "Blogs Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Blogs Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.addPG(portletName = "Blogs");
@@ -99,20 +93,8 @@ definition {
 			pageName = "Blank Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Blank Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		SitePages.addPublicPage(
 			pageName = "Invite Members Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Invite Members Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoSitePage(

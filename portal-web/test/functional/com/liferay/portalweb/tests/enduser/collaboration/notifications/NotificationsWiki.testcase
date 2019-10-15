@@ -23,12 +23,6 @@ definition {
 			pageName = "Wiki Test Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Wiki Test Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		Portlet.addPG(portletName = "Wiki");

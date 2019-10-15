@@ -22,12 +22,6 @@ definition {
 			pageName = "Message Boards Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Message Boards Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
 		Portlet.addPG(portletName = "Message Boards");

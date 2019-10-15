@@ -20,12 +20,6 @@ definition {
 			pageName = "Microblogs Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Microblogs Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Microblogs Page");
 
 		Portlet.addPG(portletName = "Microblogs");

@@ -21,12 +21,6 @@ definition {
 			pageName = "Wiki Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Wiki Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Wiki Page");
 
 		Portlet.addPG(portletName = "Wiki");

@@ -22,12 +22,6 @@ definition {
 			pageName = "Announcements Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Announcements Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Announcements Page");
 
 		Portlet.addPG(portletName = "Announcements");

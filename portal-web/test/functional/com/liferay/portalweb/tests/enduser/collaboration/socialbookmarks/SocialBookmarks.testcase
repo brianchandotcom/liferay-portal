@@ -43,12 +43,6 @@ definition {
 			pageName = "Knowledge Base Display Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Knowledge Base Display Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
 		Portlet.addPG(portletName = "Knowledge Base Display");
@@ -103,12 +97,6 @@ definition {
 			pageName = "Blogs Page",
 			sitePageType = "Widget Page");
 
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Blogs Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
-
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.addPG(portletName = "Blogs");
@@ -156,12 +144,6 @@ definition {
 
 		SitePages.addPublicPage(
 			pageName = "Knowledge Base Display Page",
-			sitePageType = "Widget Page");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Knowledge Base Display Page",
-			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");

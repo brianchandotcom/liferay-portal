@@ -128,4 +128,40 @@ public interface VirtualHostModel
 	 */
 	public void setHostname(String hostname);
 
+	/**
+	 * Returns the default virtual host of this virtual host.
+	 *
+	 * @return the default virtual host of this virtual host
+	 */
+	public boolean getDefaultVirtualHost();
+
+	/**
+	 * Returns <code>true</code> if this virtual host is default virtual host.
+	 *
+	 * @return <code>true</code> if this virtual host is default virtual host; <code>false</code> otherwise
+	 */
+	public boolean isDefaultVirtualHost();
+
+	/**
+	 * Sets whether this virtual host is default virtual host.
+	 *
+	 * @param defaultVirtualHost the default virtual host of this virtual host
+	 */
+	public void setDefaultVirtualHost(boolean defaultVirtualHost);
+
+	/**
+	 * Returns the language ID of this virtual host.
+	 *
+	 * @return the language ID of this virtual host
+	 */
+	@AutoEscape
+	public String getLanguageId();
+
+	/**
+	 * Sets the language ID of this virtual host.
+	 *
+	 * @param languageId the language ID of this virtual host
+	 */
+	public void setLanguageId(String languageId);
+
 }

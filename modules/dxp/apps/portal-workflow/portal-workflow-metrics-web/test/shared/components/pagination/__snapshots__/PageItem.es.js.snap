@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component as active 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    1
+  </a>
+</li>
+`;
+
+exports[`Should render component as type Next 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    <svg
+      className="lexicon-icon lexicon-icon-angle-right"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+        }
+      }
+      data-testid="icon"
+      focusable="false"
+      role="presentation"
+    />
+    <span
+      className="sr-only"
+    >
+      Next
+    </span>
+  </a>
+</li>
+`;
+
+exports[`Should render component as type Previous 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    <svg
+      className="lexicon-icon lexicon-icon-angle-left"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+        }
+      }
+      data-testid="icon"
+      focusable="false"
+      role="presentation"
+    />
+    <span
+      className="sr-only"
+    >
+      Previous
+    </span>
+  </a>
+</li>
+`;
+
+exports[`Should render component as type default 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    1
+  </a>
+</li>
+`;

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Sync OAuth
+Bundle-SymbolicName: com.liferay.sync.oauth
+Bundle-Version: 4.0.0
+Liferay-Releng-Module-Group-Title: Sync Connector

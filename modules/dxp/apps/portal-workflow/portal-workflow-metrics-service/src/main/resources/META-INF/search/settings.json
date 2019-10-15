@@ -1,0 +1,12 @@
+{
+	"analysis": {
+		"normalizer": {
+			"keyword_lowercase": {
+				"filter": "lowercase"
+			}
+		}
+	},
+	"index.mapping.total_fields.limit": 7500,
+	"index.number_of_replicas": 0,
+	"index.number_of_shards": 1
+}

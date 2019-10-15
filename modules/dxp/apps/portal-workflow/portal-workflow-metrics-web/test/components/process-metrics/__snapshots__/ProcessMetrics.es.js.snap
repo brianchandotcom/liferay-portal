@@ -1,0 +1,2898 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component with completed tab activated 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+  initialPath="/metrics/35315"
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/metrics/35315",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/metrics/35315",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/metrics/35315",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ProcessMetrics
+        processId={35315}
+      >
+        <div
+          className="workflow-process-dashboard"
+        >
+          <DropDownHeader>
+            <PortalComponent
+              container={
+                <div
+                  class="control-menu-icon"
+                >
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              replace={true}
+            >
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
+                          data-testid="icon"
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/metrics/35315",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/metrics/35315",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
+                                className="dropdown-item"
+                                currentPath="/metrics/35315?backPath=%2F"
+                                history={
+                                  Object {
+                                    "action": "POP",
+                                    "block": [Function],
+                                    "canGo": [Function],
+                                    "createHref": [Function],
+                                    "entries": Array [
+                                      Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/metrics/35315",
+                                        "search": "?backPath=%2F",
+                                      },
+                                    ],
+                                    "go": [Function],
+                                    "goBack": [Function],
+                                    "goForward": [Function],
+                                    "index": 0,
+                                    "length": 1,
+                                    "listen": [Function],
+                                    "location": Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                    "push": [Function],
+                                    "replace": [Function],
+                                  }
+                                }
+                                to="/slas/35315/20/1"
+                              >
+                                <Link
+                                  className="dropdown-item"
+                                  to={
+                                    Object {
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F",
+                                    }
+                                  }
+                                >
+                                  <a
+                                    className="dropdown-item"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                                    onClick={[Function]}
+                                  >
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
+                </div>
+              </Portal>
+            </PortalComponent>
+          </DropDownHeader>
+          <withRouter(Tabs)
+            tabs={
+              Array [
+                Object {
+                  "key": "dashboard",
+                  "name": "dashboard",
+                  "params": Object {
+                    "page": 1,
+                    "pageSize": 20,
+                    "processId": 35315,
+                    "sort": "overdueInstanceCount%3Aasc",
+                  },
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                  "query": undefined,
+                },
+                Object {
+                  "key": "performance",
+                  "name": "performance",
+                  "params": Object {
+                    "processId": 35315,
+                  },
+                  "path": "/metrics/:processId/performance",
+                  "query": undefined,
+                },
+              ]
+            }
+          >
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/metrics/35315",
+                      "search": "?backPath=%2F",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/metrics/35315",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/metrics/35315",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
+                  Object {
+                    "key": "dashboard",
+                    "name": "dashboard",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
+                    },
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "performance",
+                    "name": "performance",
+                    "params": Object {
+                      "processId": 35315,
+                    },
+                    "path": "/metrics/:processId/performance",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
+                  >
+                    <Icon
+                      iconName="caret-bottom"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
+                    <div
+                      className="container-fluid container-fluid-max-xl"
+                    >
+                      <ul
+                        className="navbar-nav"
+                      >
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="dashboard"
+                            name="dashboard"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  dashboard
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="performance"
+                            name="performance"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/metrics/:processId/performance"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/performance",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/performance?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  performance
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </Tabs>
+          </withRouter(Tabs)>
+          <HashRouter>
+            <Router
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "createHref": [Function],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+            >
+              <Switch />
+            </Router>
+          </HashRouter>
+        </div>
+      </ProcessMetrics>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component with default tab activated 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+  initialPath="/metrics/35315"
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/metrics/35315",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/metrics/35315",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/metrics/35315",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ProcessMetrics
+        processId={35315}
+      >
+        <div
+          className="workflow-process-dashboard"
+        >
+          <DropDownHeader>
+            <PortalComponent
+              container={
+                <div
+                  class="control-menu-icon"
+                >
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              replace={true}
+            >
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
+                          data-testid="icon"
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/metrics/35315",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/metrics/35315",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
+                                className="dropdown-item"
+                                currentPath="/metrics/35315?backPath=%2F"
+                                history={
+                                  Object {
+                                    "action": "POP",
+                                    "block": [Function],
+                                    "canGo": [Function],
+                                    "createHref": [Function],
+                                    "entries": Array [
+                                      Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/metrics/35315",
+                                        "search": "?backPath=%2F",
+                                      },
+                                    ],
+                                    "go": [Function],
+                                    "goBack": [Function],
+                                    "goForward": [Function],
+                                    "index": 0,
+                                    "length": 1,
+                                    "listen": [Function],
+                                    "location": Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315",
+                                      "search": "?backPath=%2F",
+                                    },
+                                    "push": [Function],
+                                    "replace": [Function],
+                                  }
+                                }
+                                to="/slas/35315/20/1"
+                              >
+                                <Link
+                                  className="dropdown-item"
+                                  to={
+                                    Object {
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F",
+                                    }
+                                  }
+                                >
+                                  <a
+                                    className="dropdown-item"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%3FbackPath%3D%252F"
+                                    onClick={[Function]}
+                                  >
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
+                </div>
+              </Portal>
+            </PortalComponent>
+          </DropDownHeader>
+          <withRouter(Tabs)
+            tabs={
+              Array [
+                Object {
+                  "key": "dashboard",
+                  "name": "dashboard",
+                  "params": Object {
+                    "page": 1,
+                    "pageSize": 20,
+                    "processId": 35315,
+                    "sort": "overdueInstanceCount%3Aasc",
+                  },
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                  "query": undefined,
+                },
+                Object {
+                  "key": "performance",
+                  "name": "performance",
+                  "params": Object {
+                    "processId": 35315,
+                  },
+                  "path": "/metrics/:processId/performance",
+                  "query": undefined,
+                },
+              ]
+            }
+          >
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/metrics/35315",
+                      "search": "?backPath=%2F",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/metrics/35315",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/metrics/35315",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
+                  Object {
+                    "key": "dashboard",
+                    "name": "dashboard",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
+                    },
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "performance",
+                    "name": "performance",
+                    "params": Object {
+                      "processId": 35315,
+                    },
+                    "path": "/metrics/:processId/performance",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
+                  >
+                    <Icon
+                      iconName="caret-bottom"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
+                    <div
+                      className="container-fluid container-fluid-max-xl"
+                    >
+                      <ul
+                        className="navbar-nav"
+                      >
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="dashboard"
+                            name="dashboard"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  dashboard
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="performance"
+                            name="performance"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/metrics/:processId/performance"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/performance",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/performance?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  performance
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </Tabs>
+          </withRouter(Tabs)>
+          <HashRouter>
+            <Router
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "createHref": [Function],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+            >
+              <Switch />
+            </Router>
+          </HashRouter>
+        </div>
+      </ProcessMetrics>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component with failure state 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+  initialPath="/metrics/35315/completed"
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/metrics/35315/completed",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/metrics/35315/completed",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/metrics/35315/completed",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ProcessMetrics
+        processId={35315}
+      >
+        <div
+          className="workflow-process-dashboard"
+        >
+          <DropDownHeader>
+            <PortalComponent
+              container={
+                <div
+                  class="control-menu-icon"
+                >
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              replace={true}
+            >
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
+                          data-testid="icon"
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/35315/20/1"
+                          >
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/metrics/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/metrics/35315/completed",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/35315/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
+                                className="dropdown-item"
+                                currentPath="/metrics/35315/completed?backPath=%2F"
+                                history={
+                                  Object {
+                                    "action": "POP",
+                                    "block": [Function],
+                                    "canGo": [Function],
+                                    "createHref": [Function],
+                                    "entries": Array [
+                                      Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/metrics/35315/completed",
+                                        "search": "?backPath=%2F",
+                                      },
+                                    ],
+                                    "go": [Function],
+                                    "goBack": [Function],
+                                    "goForward": [Function],
+                                    "index": 0,
+                                    "length": 1,
+                                    "listen": [Function],
+                                    "location": Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                    "push": [Function],
+                                    "replace": [Function],
+                                  }
+                                }
+                                to="/slas/35315/20/1"
+                              >
+                                <Link
+                                  className="dropdown-item"
+                                  to={
+                                    Object {
+                                      "pathname": "/slas/35315/20/1",
+                                      "search": "?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                    }
+                                  }
+                                >
+                                  <a
+                                    className="dropdown-item"
+                                    href="/slas/35315/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    onClick={[Function]}
+                                  >
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
+                </div>
+              </Portal>
+            </PortalComponent>
+          </DropDownHeader>
+          <withRouter(Tabs)
+            tabs={
+              Array [
+                Object {
+                  "key": "dashboard",
+                  "name": "dashboard",
+                  "params": Object {
+                    "page": 1,
+                    "pageSize": 20,
+                    "processId": 35315,
+                    "sort": "overdueInstanceCount%3Aasc",
+                  },
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                  "query": undefined,
+                },
+                Object {
+                  "key": "performance",
+                  "name": "performance",
+                  "params": Object {
+                    "processId": 35315,
+                  },
+                  "path": "/metrics/:processId/performance",
+                  "query": undefined,
+                },
+              ]
+            }
+          >
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/metrics/35315/completed",
+                      "search": "?backPath=%2F",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/metrics/35315/completed",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/metrics/35315/completed",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
+                  Object {
+                    "key": "dashboard",
+                    "name": "dashboard",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": 35315,
+                      "sort": "overdueInstanceCount%3Aasc",
+                    },
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "performance",
+                    "name": "performance",
+                    "params": Object {
+                      "processId": 35315,
+                    },
+                    "path": "/metrics/:processId/performance",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
+                  >
+                    <Icon
+                      iconName="caret-bottom"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
+                    <div
+                      className="container-fluid container-fluid-max-xl"
+                    >
+                      <ul
+                        className="navbar-nav"
+                      >
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="dashboard"
+                            name="dashboard"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": 35315,
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  dashboard
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="performance"
+                            name="performance"
+                            params={
+                              Object {
+                                "processId": 35315,
+                              }
+                            }
+                            path="/metrics/:processId/performance"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/35315/performance",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/35315/performance?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  performance
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </Tabs>
+          </withRouter(Tabs)>
+          <HashRouter>
+            <Router
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "createHref": [Function],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+            >
+              <Switch />
+            </Router>
+          </HashRouter>
+        </div>
+      </ProcessMetrics>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render dashboard route children 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <PendingItemsCard
+        key="0"
+        processId={35315}
+        query=""
+      >
+        <ProcessItemsCard
+          description="pending-items-description"
+          processId={35315}
+          title="pending-items"
+        >
+          <Request>
+            <Panel>
+              <div
+                className="container-fluid-1280 mt-4"
+              >
+                <div
+                  className="panel panel-secondary"
+                >
+                  <Header
+                    description="pending-items-description"
+                    title="pending-items"
+                  >
+                    <Header
+                      elementClasses={
+                        Array [
+                          "dashboard-panel-header",
+                          undefined,
+                        ]
+                      }
+                    >
+                      <div
+                        className="panel-header dashboard-panel-header"
+                      >
+                        <div>
+                          <div
+                            className="autofit-row"
+                          >
+                            <div
+                              className="autofit-col autofit-col-expand flex-row"
+                            >
+                              <span
+                                className="mr-2"
+                              >
+                                pending-items
+                              </span>
+                              <Tooltip
+                                message="pending-items-description"
+                                position="right"
+                                width="288"
+                              >
+                                <span
+                                  className="workflow-tooltip"
+                                  onMouseLeave={[Function]}
+                                >
+                                  <span
+                                    className="tooltip-trigger"
+                                    onMouseOver={[Function]}
+                                  >
+                                    <Icon
+                                      iconName="question-circle-full"
+                                    >
+                                      <svg
+                                        className="lexicon-icon lexicon-icon-question-circle-full"
+                                        dangerouslySetInnerHTML={
+                                          Object {
+                                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                          }
+                                        }
+                                        data-testid="icon"
+                                        focusable="false"
+                                        role="presentation"
+                                      />
+                                    </Icon>
+                                  </span>
+                                </span>
+                              </Tooltip>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Header>
+                  </Header>
+                  <Body
+                    processId={35315}
+                  >
+                    <Body>
+                      <div
+                        className="panel-body"
+                      >
+                        <Error />
+                        <Loading>
+                          <div
+                            className="pb-6 pt-5"
+                          >
+                            <LoadingState>
+                              <span
+                                aria-hidden="true"
+                                className="loading-animation"
+                              />
+                            </LoadingState>
+                          </div>
+                        </Loading>
+                        <Success />
+                      </div>
+                    </Body>
+                  </Body>
+                </div>
+              </div>
+            </Panel>
+          </Request>
+        </ProcessItemsCard>
+      </PendingItemsCard>
+      <WorkloadByStepCard
+        key="1"
+        processId={35315}
+        query=""
+      >
+        <Panel
+          className="container-fluid-1280 mt-4"
+        >
+          <div
+            className="container-fluid-1280 mt-4"
+          >
+            <div
+              className="panel panel-secondary"
+            >
+              <Header
+                elementClasses="dashboard-panel-header"
+              >
+                <div
+                  className="panel-header dashboard-panel-header"
+                >
+                  <div>
+                    <div>
+                      <span
+                        className="mr-2"
+                      >
+                        workload-by-step
+                      </span>
+                      <Tooltip
+                        message="workload-by-step-description"
+                        position="right"
+                        width="288"
+                      >
+                        <span
+                          className="workflow-tooltip"
+                          onMouseLeave={[Function]}
+                        >
+                          <span
+                            className="tooltip-trigger"
+                            onMouseOver={[Function]}
+                          >
+                            <Icon
+                              iconName="question-circle-full"
+                            >
+                              <svg
+                                className="lexicon-icon lexicon-icon-question-circle-full"
+                                dangerouslySetInnerHTML={
+                                  Object {
+                                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#question-circle-full\\" />",
+                                  }
+                                }
+                                data-testid="icon"
+                                focusable="false"
+                                role="presentation"
+                              />
+                            </Icon>
+                          </span>
+                        </span>
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
+              </Header>
+              <Body>
+                <div
+                  className="panel-body"
+                >
+                  <ListView
+                    className="border-0"
+                    emptyActionButton={<ReloadButton />}
+                    emptyMessageClassName="small"
+                    emptyMessageText="there-are-no-pending-items-at-the-moment"
+                    errorMessageText={null}
+                    fetching={false}
+                    hideAnimation={true}
+                    loading={true}
+                  >
+                    <div>
+                      <div
+                        className="border-0 pb-6 pt-6 sheet"
+                      >
+                        <LoadingState>
+                          <span
+                            aria-hidden="true"
+                            className="loading-animation"
+                          />
+                        </LoadingState>
+                      </div>
+                    </div>
+                  </ListView>
+                </div>
+              </Body>
+            </div>
+          </div>
+        </Panel>
+      </WorkloadByStepCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render with blocked SLA 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+  initialPath="/metrics/35315/completed"
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/metrics/35315/completed",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/metrics/35315/completed",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/metrics/35315/completed",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <ProcessMetrics
+        processId="123"
+      >
+        <div
+          className="workflow-process-dashboard"
+        >
+          <DropDownHeader>
+            <PortalComponent
+              container={
+                <div
+                  class="control-menu-icon"
+                >
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              replace={true}
+            >
+              <Portal
+                containerInfo={
+                  <div>
+                    <div
+                      class="dropdown lfr-icon-menu nav-item portlet-options"
+                    >
+                      <a
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        class="direction-right dropdown-toggle icon-monospaced"
+                        data-toggle="dropdown"
+                        href="javascript:;"
+                        role="button"
+                        title="Options"
+                      >
+                        <span>
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            data-testid="icon"
+                            focusable="false"
+                            role="presentation"
+                          >
+                            <use
+                              xlink:href="http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v"
+                            />
+                          </svg>
+                        </span>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                        role="menu"
+                      >
+                        <ul
+                          class="list-unstyled"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                            >
+                              sla-settings
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  className="dropdown lfr-icon-menu nav-item portlet-options"
+                >
+                  <a
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    className="direction-right dropdown-toggle icon-monospaced"
+                    data-toggle="dropdown"
+                    href="javascript:;"
+                    role="button"
+                    title="Options"
+                  >
+                    <span>
+                      <Icon
+                        iconName="ellipsis-v"
+                      >
+                        <svg
+                          className="lexicon-icon lexicon-icon-ellipsis-v"
+                          dangerouslySetInnerHTML={
+                            Object {
+                              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                            }
+                          }
+                          data-testid="icon"
+                          focusable="false"
+                          role="presentation"
+                        />
+                      </Icon>
+                    </span>
+                  </a>
+                  <div
+                    className="dropdown-menu dropdown-menu-header dropdown-menu-right"
+                    role="menu"
+                  >
+                    <ul
+                      className="list-unstyled"
+                    >
+                      <MenuItem>
+                        <li>
+                          <withRouter()
+                            className="dropdown-item"
+                            to="/slas/123/20/1"
+                          >
+                            <Component
+                              className="dropdown-item"
+                              history={
+                                Object {
+                                  "action": "POP",
+                                  "block": [Function],
+                                  "canGo": [Function],
+                                  "createHref": [Function],
+                                  "entries": Array [
+                                    Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                  ],
+                                  "go": [Function],
+                                  "goBack": [Function],
+                                  "goForward": [Function],
+                                  "index": 0,
+                                  "length": 1,
+                                  "listen": [Function],
+                                  "location": Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/metrics/35315/completed",
+                                    "search": "?backPath=%2F",
+                                  },
+                                  "push": [Function],
+                                  "replace": [Function],
+                                }
+                              }
+                              location={
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/metrics/35315/completed",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                              match={
+                                Object {
+                                  "isExact": false,
+                                  "params": Object {},
+                                  "path": "/",
+                                  "url": "/",
+                                }
+                              }
+                              to="/slas/123/20/1"
+                            >
+                              <ChildLinkWrapper
+                                backPath="/"
+                                className="dropdown-item"
+                                currentPath="/metrics/35315/completed?backPath=%2F"
+                                history={
+                                  Object {
+                                    "action": "POP",
+                                    "block": [Function],
+                                    "canGo": [Function],
+                                    "createHref": [Function],
+                                    "entries": Array [
+                                      Object {
+                                        "hash": "",
+                                        "match": Object {
+                                          "params": Object {
+                                            "page": 1,
+                                            "search": undefined,
+                                            "sort": undefined,
+                                          },
+                                        },
+                                        "pathname": "/metrics/35315/completed",
+                                        "search": "?backPath=%2F",
+                                      },
+                                    ],
+                                    "go": [Function],
+                                    "goBack": [Function],
+                                    "goForward": [Function],
+                                    "index": 0,
+                                    "length": 1,
+                                    "listen": [Function],
+                                    "location": Object {
+                                      "hash": "",
+                                      "match": Object {
+                                        "params": Object {
+                                          "page": 1,
+                                          "search": undefined,
+                                          "sort": undefined,
+                                        },
+                                      },
+                                      "pathname": "/metrics/35315/completed",
+                                      "search": "?backPath=%2F",
+                                    },
+                                    "push": [Function],
+                                    "replace": [Function],
+                                  }
+                                }
+                                to="/slas/123/20/1"
+                              >
+                                <Link
+                                  className="dropdown-item"
+                                  to={
+                                    Object {
+                                      "pathname": "/slas/123/20/1",
+                                      "search": "?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F",
+                                    }
+                                  }
+                                >
+                                  <a
+                                    className="dropdown-item"
+                                    href="/slas/123/20/1?backPath=%2Fmetrics%2F35315%2Fcompleted%3FbackPath%3D%252F"
+                                    onClick={[Function]}
+                                  >
+                                    sla-settings
+                                  </a>
+                                </Link>
+                              </ChildLinkWrapper>
+                            </Component>
+                          </withRouter()>
+                        </li>
+                      </MenuItem>
+                    </ul>
+                  </div>
+                </div>
+              </Portal>
+            </PortalComponent>
+          </DropDownHeader>
+          <withRouter(Tabs)
+            tabs={
+              Array [
+                Object {
+                  "key": "dashboard",
+                  "name": "dashboard",
+                  "params": Object {
+                    "page": 1,
+                    "pageSize": 20,
+                    "processId": "123",
+                    "sort": "overdueInstanceCount%3Aasc",
+                  },
+                  "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                  "query": undefined,
+                },
+                Object {
+                  "key": "performance",
+                  "name": "performance",
+                  "params": Object {
+                    "processId": "123",
+                  },
+                  "path": "/metrics/:processId/performance",
+                  "query": undefined,
+                },
+              ]
+            }
+          >
+            <Tabs
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "canGo": [Function],
+                  "createHref": [Function],
+                  "entries": Array [
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/metrics/35315/completed",
+                      "search": "?backPath=%2F",
+                    },
+                  ],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "index": 0,
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "match": Object {
+                      "params": Object {
+                        "page": 1,
+                        "search": undefined,
+                        "sort": undefined,
+                      },
+                    },
+                    "pathname": "/metrics/35315/completed",
+                    "search": "?backPath=%2F",
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+              location={
+                Object {
+                  "hash": "",
+                  "match": Object {
+                    "params": Object {
+                      "page": 1,
+                      "search": undefined,
+                      "sort": undefined,
+                    },
+                  },
+                  "pathname": "/metrics/35315/completed",
+                  "search": "?backPath=%2F",
+                }
+              }
+              match={
+                Object {
+                  "isExact": false,
+                  "params": Object {},
+                  "path": "/",
+                  "url": "/",
+                }
+              }
+              tabs={
+                Array [
+                  Object {
+                    "key": "dashboard",
+                    "name": "dashboard",
+                    "params": Object {
+                      "page": 1,
+                      "pageSize": 20,
+                      "processId": "123",
+                      "sort": "overdueInstanceCount%3Aasc",
+                    },
+                    "path": "/metrics/:processId/dashboard/:pageSize/:page/:sort",
+                    "query": undefined,
+                  },
+                  Object {
+                    "key": "performance",
+                    "name": "performance",
+                    "params": Object {
+                      "processId": "123",
+                    },
+                    "path": "/metrics/:processId/performance",
+                    "query": undefined,
+                  },
+                ]
+              }
+            >
+              <nav
+                className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+              >
+                <div
+                  className="container-fluid container-fluid-max-xl"
+                >
+                  <button
+                    aria-expanded={false}
+                    aria-label="toggle-navigation"
+                    className="collapsed navbar-toggler navbar-toggler-link"
+                    onClick={[Function]}
+                  >
+                    <Icon
+                      iconName="caret-bottom"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-caret-bottom"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                  <div
+                    className="collapse navbar-collapse "
+                  >
+                    <div
+                      className="container-fluid container-fluid-max-xl"
+                    >
+                      <ul
+                        className="navbar-nav"
+                      >
+                        <li
+                          className="nav-item"
+                          key="0"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="dashboard"
+                            name="dashboard"
+                            params={
+                              Object {
+                                "page": 1,
+                                "pageSize": 20,
+                                "processId": "123",
+                                "sort": "overdueInstanceCount%3Aasc",
+                              }
+                            }
+                            path="/metrics/:processId/dashboard/:pageSize/:page/:sort"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/123/dashboard/20/1/overdueInstanceCount%253Aasc",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/123/dashboard/20/1/overdueInstanceCount%253Aasc?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  dashboard
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                        <li
+                          className="nav-item"
+                          key="1"
+                          onClick={[Function]}
+                        >
+                          <TabItem
+                            active={false}
+                            key="performance"
+                            name="performance"
+                            params={
+                              Object {
+                                "processId": "123",
+                              }
+                            }
+                            path="/metrics/:processId/performance"
+                            query="?backPath=%2F"
+                          >
+                            <Link
+                              aria-label=""
+                              className=" nav-link"
+                              to={
+                                Object {
+                                  "pathname": "/metrics/123/performance",
+                                  "search": "?backPath=%2F",
+                                }
+                              }
+                            >
+                              <a
+                                aria-label=""
+                                className=" nav-link"
+                                href="/metrics/123/performance?backPath=%2F"
+                                onClick={[Function]}
+                              >
+                                <span
+                                  className="navbar-text-truncate"
+                                >
+                                  performance
+                                </span>
+                              </a>
+                            </Link>
+                          </TabItem>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </Tabs>
+          </withRouter(Tabs)>
+          <HashRouter>
+            <Router
+              history={
+                Object {
+                  "action": "POP",
+                  "block": [Function],
+                  "createHref": [Function],
+                  "go": [Function],
+                  "goBack": [Function],
+                  "goForward": [Function],
+                  "length": 1,
+                  "listen": [Function],
+                  "location": Object {
+                    "hash": "",
+                    "pathname": "/",
+                    "search": "",
+                    "state": undefined,
+                  },
+                  "push": [Function],
+                  "replace": [Function],
+                }
+              }
+            >
+              <Switch />
+            </Router>
+          </HashRouter>
+        </div>
+      </ProcessMetrics>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

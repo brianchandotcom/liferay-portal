@@ -1,0 +1,4 @@
+com.liferay.portal.dao.db.DB2DBFactory
+com.liferay.portal.dao.db.OracleDBFactory
+com.liferay.portal.dao.db.SQLServerDBFactory
+com.liferay.portal.dao.db.SybaseDBFactory

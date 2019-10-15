@@ -1,0 +1,28 @@
+{
+	"dependencies": {
+		"@clayui/button": "3.0.0",
+		"@clayui/form": "3.0.0",
+		"@clayui/icon": "3.0.0",
+		"@clayui/multi-select": "3.0.0-alpha.1",
+		"classnames": "2.2.6",
+		"prop-types": "15.7.2",
+		"react": "16.9.0",
+		"react-dom": "16.9.0"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"@testing-library/react/cleanup-after-each"
+		]
+	},
+	"main": "js/index-synonym-sets.es.js",
+	"name": "portal-search-synonyms-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"storybook": "liferay-npm-scripts storybook",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "2.0.0"
+}

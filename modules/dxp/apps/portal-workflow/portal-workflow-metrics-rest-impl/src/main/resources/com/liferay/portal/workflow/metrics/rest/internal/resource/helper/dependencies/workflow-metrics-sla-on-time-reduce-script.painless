@@ -1,0 +1,22 @@
+def onTimeMap = new HashMap();
+
+for (state in states) {
+	if (state == null) {
+		continue;
+	}
+
+	for (entry in state.onTimeMap.entrySet()) {
+		onTimeMap.merge(
+			entry.key, entry.value, (onTime1, onTime2) -> onTime1 && onTime2);
+	}
+}
+
+def instanceCount = 0;
+
+for (onTime in onTimeMap.entrySet()) {
+	if (onTime.value == true) {
+		instanceCount += 1;
+	}
+}
+
+return instanceCount;

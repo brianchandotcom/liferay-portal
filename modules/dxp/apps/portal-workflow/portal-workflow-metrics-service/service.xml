@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.workflow.metrics">
+	<namespace>WorkflowMetrics</namespace>
+	<entity local-service="true" name="WorkflowMetricsSLADefinition" remote-service="false" table="WMSLADefinition" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="active" type="boolean" />
+		<column name="calendarKey" type="String" />
+		<column name="description" type="String" />
+		<column name="duration" type="long" />
+		<column name="name" type="String" />
+		<column name="pauseNodeKeys" type="String" />
+		<column name="processId" type="long" />
+		<column name="processVersion" type="String" />
+		<column name="startNodeKeys" type="String" />
+		<column name="stopNodeKeys" type="String" />
+		<column name="version" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="WMSLAD_A" return-type="WorkflowMetricsSLADefinition">
+			<finder-column name="workflowMetricsSLADefinitionId" />
+			<finder-column name="active" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_A_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="processId" />
+		</finder>
+		<finder name="C_A_N_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="name" />
+			<finder-column name="processId" />
+		</finder>
+		<finder name="C_A_P_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="processId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_A_P_NotPV_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="processId" />
+			<finder-column comparator="!=" name="processVersion" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="WorkflowMetricsSLADefinitionVersion" remote-service="false" table="WMSLADefinitionVersion" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="wmSLADefinitionVersionId" name="workflowMetricsSLADefinitionVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="active" type="boolean" />
+		<column name="calendarKey" type="String" />
+		<column name="description" type="String" />
+		<column name="duration" type="long" />
+		<column name="name" type="String" />
+		<column name="pauseNodeKeys" type="String" />
+		<column name="processId" type="long" />
+		<column name="processVersion" type="String" />
+		<column name="startNodeKeys" type="String" />
+		<column name="stopNodeKeys" type="String" />
+		<column name="version" type="String" />
+		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="WorkflowMetricsSLADefinitionId" return-type="Collection">
+			<finder-column name="workflowMetricsSLADefinitionId" />
+		</finder>
+		<finder name="V_WMSLAD" return-type="WorkflowMetricsSLADefinitionVersion">
+			<finder-column name="version" />
+			<finder-column name="workflowMetricsSLADefinitionId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
+		<exception>WorkflowMetricsSLADefinitionDuration</exception>
+		<exception>WorkflowMetricsSLADefinitionName</exception>
+		<exception>WorkflowMetricsSLADefinitionStartNodeKeys</exception>
+		<exception>WorkflowMetricsSLADefinitionStopNodeKeys</exception>
+		<exception>WorkflowMetricsSLADefinitionTimeframe</exception>
+	</exceptions>
+</service-builder>

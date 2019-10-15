@@ -1,0 +1,26 @@
+.empty-state-root {
+	margin: 40px auto;
+	max-width: 340px;
+	text-align: center;
+
+	.empty-state-action {
+		margin-top: 16px;
+	}
+
+	.empty-state-description {
+		color: $mainLighten28;
+		font-size: 16px;
+	}
+
+	.empty-state-image {
+		margin-bottom: 40px;
+		max-width: 250px;
+	}
+
+	.empty-state-title {
+		color: $main;
+		font-size: 20px;
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+}

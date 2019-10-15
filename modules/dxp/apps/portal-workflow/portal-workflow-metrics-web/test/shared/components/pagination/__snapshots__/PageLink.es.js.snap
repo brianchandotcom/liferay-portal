@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should change page 1`] = `
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "match": Object {
+          "params": Object {
+            "page": 1,
+            "search": undefined,
+            "sort": undefined,
+          },
+        },
+        "pathname": "/processes/1/10/title%3Aasc",
+        "search": "?backPath=%2F",
+      },
+    ]
+  }
+  keyLength={0}
+>
+  <ContextProvider
+    value={
+      Object {
+        "client": undefined,
+        "companyId": 1,
+        "defaultDelta": 20,
+        "deltas": Array [
+          5,
+          10,
+          20,
+          30,
+          50,
+          75,
+        ],
+        "maxPages": 3,
+        "namespace": "workflow_",
+        "page": 1,
+        "query": undefined,
+        "search": undefined,
+        "setStatus": [Function],
+        "setTitle": [Function],
+        "sort": undefined,
+        "status": null,
+        "title": null,
+      }
+    }
+  >
+    <withRouter(PageLink)
+      page={2}
+    />
+  </ContextProvider>
+</MemoryRouter>
+`;
+
+exports[`Should render component as active 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    <span
+      className="sr-only"
+    />
+    1
+  </a>
+</li>
+`;
+
+exports[`Should render component as type default 1`] = `
+<li
+  className="page-item"
+>
+  <a
+    className="page-link"
+    href="/?backPath=%2F"
+    onClick={[Function]}
+  >
+    <span
+      className="sr-only"
+    />
+    1
+  </a>
+</li>
+`;
+
+exports[`Should test change page when disabled 1`] = `
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "match": Object {
+          "params": Object {
+            "page": 1,
+            "search": undefined,
+            "sort": undefined,
+          },
+        },
+        "pathname": "/processes/1/10/title%3Aasc",
+        "search": "?backPath=%2F",
+      },
+    ]
+  }
+  keyLength={0}
+>
+  <ContextProvider
+    value={
+      Object {
+        "client": undefined,
+        "companyId": 1,
+        "defaultDelta": 20,
+        "deltas": Array [
+          5,
+          10,
+          20,
+          30,
+          50,
+          75,
+        ],
+        "maxPages": 3,
+        "namespace": "workflow_",
+        "page": 1,
+        "query": undefined,
+        "search": undefined,
+        "setStatus": [Function],
+        "setTitle": [Function],
+        "sort": undefined,
+        "status": null,
+        "title": null,
+      }
+    }
+  >
+    <withRouter(PageLink)
+      disabled={true}
+      page={2}
+    />
+  </ContextProvider>
+</MemoryRouter>
+`;

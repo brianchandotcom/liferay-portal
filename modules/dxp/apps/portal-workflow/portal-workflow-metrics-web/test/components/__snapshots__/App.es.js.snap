@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render default component 1`] = `
+Array [
+  "metrics",
+  <div
+    className="portal-workflow-metrics-app"
+  >
+    <div>
+      <nav
+        className="management-bar management-bar-light navbar navbar-expand-md"
+      >
+        <div
+          className="container-fluid container-fluid-max-xl"
+        >
+          <div
+            className="navbar-form navbar-form-autofit"
+          >
+            <form
+              method="GET"
+              onSubmit={[Function]}
+              role="search"
+            >
+              <div
+                className="input-group"
+              >
+                <div
+                  className="input-group-item"
+                >
+                  <input
+                    className="form-control input-group-inset input-group-inset-after"
+                    disabled={false}
+                    onChange={[Function]}
+                    placeholder="search-for"
+                    type="text"
+                    value=""
+                  />
+                  <span
+                    className="input-group-inset-item input-group-inset-item-after"
+                  >
+                    <button
+                      className="btn btn-unstyled"
+                      disabled={false}
+                      type="submit"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-search"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div
+        className="container-fluid-1280"
+      >
+        <div>
+          <div
+            className="border-1 pb-6 pt-6 sheet"
+          >
+            <span
+              aria-hidden="true"
+              className="loading-animation"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+]
+`;
+
+exports[`Should render default component without custom header 1`] = `
+<div
+  className="portal-workflow-metrics-app"
+>
+  <div>
+    <nav
+      className="management-bar management-bar-light navbar navbar-expand-md"
+    >
+      <div
+        className="container-fluid container-fluid-max-xl"
+      >
+        <div
+          className="navbar-form navbar-form-autofit"
+        >
+          <form
+            method="GET"
+            onSubmit={[Function]}
+            role="search"
+          >
+            <div
+              className="input-group"
+            >
+              <div
+                className="input-group-item"
+              >
+                <input
+                  className="form-control input-group-inset input-group-inset-after"
+                  disabled={false}
+                  onChange={[Function]}
+                  placeholder="search-for"
+                  type="text"
+                  value=""
+                />
+                <span
+                  className="input-group-inset-item input-group-inset-item-after"
+                >
+                  <button
+                    className="btn btn-unstyled"
+                    disabled={false}
+                    type="submit"
+                  >
+                    <svg
+                      className="lexicon-icon lexicon-icon-search"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "<use xlink:href=\\"//lexicon/icons.svg#search\\" />",
+                        }
+                      }
+                      data-testid="icon"
+                      focusable="false"
+                      role="presentation"
+                    />
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div
+      className="container-fluid-1280"
+    >
+      <div>
+        <div
+          className="border-1 pb-6 pt-6 sheet"
+        >
+          <span
+            aria-hidden="true"
+            className="loading-animation"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

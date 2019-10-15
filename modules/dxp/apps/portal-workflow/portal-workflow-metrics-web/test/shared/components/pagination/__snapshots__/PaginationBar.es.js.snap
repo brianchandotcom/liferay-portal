@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="pagination-bar"
+>
+  <div
+    className="dropdown pagination-items-per-page"
+  >
+    <a
+      aria-expanded="false"
+      aria-haspopup="true"
+      className="dropdown-toggle"
+      data-toggle="dropdown"
+      href="#1"
+      role="button"
+    >
+      5 Entries
+      <svg
+        className="lexicon-icon lexicon-icon-caret-double-l"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-double-l\\" />",
+          }
+        }
+        data-testid="icon"
+        focusable="false"
+        role="presentation"
+      />
+    </a>
+    <div
+      className="dropdown-menu dropdown-menu-top"
+    >
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        5
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        10
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        20
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        30
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        50
+      </a>
+      <a
+        className="dropdown-item"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        75
+      </a>
+    </div>
+  </div>
+  <div
+    className="pagination-results"
+  >
+    showing-x-to-x-of-x-entries
+  </div>
+  <ul
+    className="pagination pull-right"
+  >
+    <li
+      className="page-item disabled"
+    >
+      <a
+        className="page-link"
+        href="javascript:;"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-angle-left"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-left\\" />",
+            }
+          }
+          data-testid="icon"
+          focusable="false"
+          role="presentation"
+        />
+        <span
+          className="sr-only"
+        >
+          Previous
+        </span>
+      </a>
+    </li>
+    <li
+      className="page-item active"
+    >
+      <a
+        className="page-link"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        1
+      </a>
+    </li>
+    <li
+      className="page-item"
+    >
+      <a
+        className="page-link"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        2
+      </a>
+    </li>
+    <li
+      className="page-item"
+    >
+      <a
+        className="page-link"
+        href="/?backPath=%2F"
+        onClick={[Function]}
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-angle-right"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#angle-right\\" />",
+            }
+          }
+          data-testid="icon"
+          focusable="false"
+          role="presentation"
+        />
+        <span
+          className="sr-only"
+        >
+          Next
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Should render component with total count minor than last page 1`] = `
+<div
+  className="pagination-bar"
+/>
+`;

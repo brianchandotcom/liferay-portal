@@ -1,0 +1,604 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<li
+  className="dropdown nav-item"
+>
+  <button
+    aria-expanded={false}
+    aria-haspopup="true"
+    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      className="mr-2 navbar-text-truncate"
+      data-testid="filterName"
+    >
+      SLA Status
+    </span>
+    <svg
+      className="lexicon-icon lexicon-icon-caret-bottom"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+        }
+      }
+      data-testid="icon"
+      focusable="false"
+      role="presentation"
+    />
+  </button>
+  <div
+    className="dropdown-menu"
+    role="menu"
+  >
+    <ul
+      className="list-unstyled"
+    >
+      <li>
+        <span
+          className="disabled dropdown-item"
+        >
+          no-results-were-found
+        </span>
+      </li>
+    </ul>
+    <ul
+      className="list-unstyled"
+    />
+  </div>
+  <div
+    className="custom dropdown-menu"
+  />
+</li>
+`;
+
+exports[`Should render component with search wrapper 1`] = `
+<li
+  className="dropdown nav-item"
+>
+  <button
+    aria-expanded={false}
+    aria-haspopup="true"
+    className="btn btn-secondary btn-sm dropdown-toggle nav-link"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      className="mr-2 navbar-text-truncate"
+      data-testid="filterName"
+    >
+      SLA Status
+    </span>
+    <svg
+      className="lexicon-icon lexicon-icon-caret-bottom"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#caret-bottom\\" />",
+        }
+      }
+      data-testid="icon"
+      focusable="false"
+      role="presentation"
+    />
+  </button>
+  <div
+    className="dropdown-menu"
+    role="menu"
+  >
+    <form>
+      <div
+        className="dropdown-section"
+      >
+        <div
+          className="input-group input-group-sm"
+        >
+          <div
+            className="input-group-item"
+          >
+            <input
+              className="form-control input-group-inset input-group-inset-after"
+              onChange={[Function]}
+              placeholder="search-for"
+              type="text"
+            />
+            <span
+              className="input-group-inset-item input-group-inset-item-after"
+            >
+              <button
+                className="btn btn-unstyled"
+                type="button"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-search"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                    }
+                  }
+                  data-testid="icon"
+                  focusable="false"
+                  role="presentation"
+                />
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <ul
+      className="list-unstyled"
+    >
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-0"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 0
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-1"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 1
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-2"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 2
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-3"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 3
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-4"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 4
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-5"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 5
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-6"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 6
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-7"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 7
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-8"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 8
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-9"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 9
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-10"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 10
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-11"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 11
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-12"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 12
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={false}
+            className="custom-control-input"
+            data-key="key-13"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 13
+            </span>
+          </span>
+        </label>
+      </li>
+      <li
+        className="dropdown-item active"
+      >
+        <label
+          className="custom-control custom-radio"
+        >
+          <input
+            checked={true}
+            className="custom-control-input"
+            data-key="key-14"
+            data-testid="filterItemInput"
+            name="filter-item-radio-group"
+            onChange={[Function]}
+            onClick={[Function]}
+            type="radio"
+          />
+          <span
+            className="custom-control-label"
+          />
+          <span
+            className="dropdown-item-text"
+          >
+            <span
+              className="dropdown-item-name"
+              data-testid="filterItemName"
+            >
+              Item Name 14
+            </span>
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+  <div
+    className="custom dropdown-menu"
+  />
+</li>
+`;

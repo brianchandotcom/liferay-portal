@@ -1,0 +1,32 @@
+Bundle-Activator: com.liferay.saml.persistence.internal.activator.SamlPersistenceServiceBundleActivator
+Bundle-Name: Liferay SAML Persistence Service
+Bundle-SymbolicName: com.liferay.saml.persistence.service
+Bundle-Version: 4.0.0
+Import-Package:\
+	!com.sun.*,\
+	\
+	!com.swabunga.*,\
+	\
+	!com.werken.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!net.jcip.*,\
+	\
+	!nu.xom,\
+	\
+	!org.apache.axis.*,\
+	!org.apache.commons.configuration,\
+	!org.apache.commons.ssl,\
+	!org.apache.log.*,\
+	!org.apache.oro.*,\
+	!org.apache.poi.*,\
+	\
+	!org.joda.convert,\
+	\
+	!org.owasp.validator.html,\
+	\
+	*
+Liferay-Releng-Module-Group-Title: SAML
+Liferay-Require-SchemaVersion: 2.1.0
+Liferay-Service: true

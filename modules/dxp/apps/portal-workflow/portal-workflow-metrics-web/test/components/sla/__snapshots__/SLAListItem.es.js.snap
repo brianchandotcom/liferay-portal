@@ -1,0 +1,931 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<tr>
+  <td
+    className="table-cell-expand"
+  >
+    <div
+      className="table-list-title"
+    >
+       
+      <a
+        href="/sla/edit/undefined/1234?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+        onClick={[Function]}
+      />
+    </div>
+  </td>
+  <td />
+  <td
+    className=""
+  >
+    running
+  </td>
+  <td>
+    
+  </td>
+  <td>
+    May 06
+  </td>
+  <td>
+    <div
+      className="dropdown dropdown-action"
+    >
+      <a
+        aria-expanded="false"
+        aria-haspopup="true"
+        className="component-action dropdown-toggle"
+        data-toggle="dropdown"
+        href="#1"
+        id="dropdownAction1"
+        role="button"
+      >
+        <svg
+          className="lexicon-icon lexicon-icon-ellipsis-v"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+            }
+          }
+          data-testid="icon"
+          focusable="false"
+          role="presentation"
+        />
+      </a>
+      <ul
+        aria-labelledby=""
+        className="dropdown-menu dropdown-menu-right"
+      >
+        <li>
+          <a
+            className="dropdown-item"
+            href="/sla/edit/undefined/1234?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            onClick={[Function]}
+          >
+            edit
+          </a>
+        </li>
+        <li>
+          <button
+            className="dropdown-item"
+            onClick={[Function]}
+          >
+            delete
+          </button>
+        </li>
+      </ul>
+    </div>
+  </td>
+</tr>
+`;
+
+exports[`Should render component 2`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListItem
+        dateModified={2019-05-06T20:32:18.000Z}
+        instancesCount="10"
+        onTime="5"
+        overdue="5"
+        processName="Process test"
+      >
+        <tr>
+          <td
+            className="table-cell-expand"
+          >
+            <div
+              className="table-list-title"
+            >
+               
+              <withRouter()
+                to="/sla/edit/undefined/undefined"
+              >
+                <Component
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 1,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  to="/sla/edit/undefined/undefined"
+                >
+                  <ChildLinkWrapper
+                    backPath="/"
+                    currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        "push": [Function],
+                        "replace": [Function],
+                      }
+                    }
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/sla/edit/undefined/undefined",
+                          "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                        }
+                      }
+                    >
+                      <a
+                        href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                        onClick={[Function]}
+                      />
+                    </Link>
+                  </ChildLinkWrapper>
+                </Component>
+              </withRouter()>
+            </div>
+          </td>
+          <td />
+          <td
+            className=""
+          >
+            running
+          </td>
+          <td />
+          <td>
+            May 06
+          </td>
+          <td>
+            <div
+              className="dropdown dropdown-action"
+            >
+              <a
+                aria-expanded="false"
+                aria-haspopup="true"
+                className="component-action dropdown-toggle"
+                data-toggle="dropdown"
+                href="#1"
+                id="dropdownAction1"
+                role="button"
+              >
+                <Icon
+                  iconName="ellipsis-v"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-ellipsis-v"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                      }
+                    }
+                    data-testid="icon"
+                    focusable="false"
+                    role="presentation"
+                  />
+                </Icon>
+              </a>
+              <ul
+                aria-labelledby=""
+                className="dropdown-menu dropdown-menu-right"
+              >
+                <li>
+                  <withRouter()
+                    className="dropdown-item"
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <Component
+                      className="dropdown-item"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      to="/sla/edit/undefined/undefined"
+                    >
+                      <ChildLinkWrapper
+                        backPath="/"
+                        className="dropdown-item"
+                        currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 1,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        to="/sla/edit/undefined/undefined"
+                      >
+                        <Link
+                          className="dropdown-item"
+                          to={
+                            Object {
+                              "pathname": "/sla/edit/undefined/undefined",
+                              "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                            }
+                          }
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
+                          >
+                            edit
+                          </a>
+                        </Link>
+                      </ChildLinkWrapper>
+                    </Component>
+                  </withRouter()>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={[Function]}
+                  >
+                    delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </SLAListItem>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component blocked 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListItem
+        dateModified={2019-05-06T20:32:18.000Z}
+        instancesCount="10"
+        onTime="5"
+        overdue="5"
+        processName="Process test"
+        status={2}
+      >
+        <tr>
+          <td
+            className="table-cell-expand"
+          >
+            <div
+              className="table-list-title"
+            >
+              <Icon
+                elementClasses="text-danger"
+                iconName="exclamation-full"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-exclamation-full text-danger"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#exclamation-full\\" />",
+                    }
+                  }
+                  data-testid="icon"
+                  focusable="false"
+                  role="presentation"
+                />
+              </Icon>
+               
+              <withRouter()
+                to="/sla/edit/undefined/undefined"
+              >
+                <Component
+                  history={
+                    Object {
+                      "action": "POP",
+                      "block": [Function],
+                      "canGo": [Function],
+                      "createHref": [Function],
+                      "entries": Array [
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                      ],
+                      "go": [Function],
+                      "goBack": [Function],
+                      "goForward": [Function],
+                      "index": 0,
+                      "length": 1,
+                      "listen": [Function],
+                      "location": Object {
+                        "hash": "",
+                        "match": Object {
+                          "params": Object {
+                            "page": 1,
+                            "search": undefined,
+                            "sort": undefined,
+                          },
+                        },
+                        "pathname": "/processes/1/10/title%3Aasc",
+                        "search": "?backPath=%2F",
+                      },
+                      "push": [Function],
+                      "replace": [Function],
+                    }
+                  }
+                  location={
+                    Object {
+                      "hash": "",
+                      "match": Object {
+                        "params": Object {
+                          "page": 1,
+                          "search": undefined,
+                          "sort": undefined,
+                        },
+                      },
+                      "pathname": "/processes/1/10/title%3Aasc",
+                      "search": "?backPath=%2F",
+                    }
+                  }
+                  match={
+                    Object {
+                      "isExact": false,
+                      "params": Object {},
+                      "path": "/",
+                      "url": "/",
+                    }
+                  }
+                  to="/sla/edit/undefined/undefined"
+                >
+                  <ChildLinkWrapper
+                    backPath="/"
+                    currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                    history={
+                      Object {
+                        "action": "POP",
+                        "block": [Function],
+                        "canGo": [Function],
+                        "createHref": [Function],
+                        "entries": Array [
+                          Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                        ],
+                        "go": [Function],
+                        "goBack": [Function],
+                        "goForward": [Function],
+                        "index": 0,
+                        "length": 1,
+                        "listen": [Function],
+                        "location": Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        },
+                        "push": [Function],
+                        "replace": [Function],
+                      }
+                    }
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <Link
+                      to={
+                        Object {
+                          "pathname": "/sla/edit/undefined/undefined",
+                          "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                        }
+                      }
+                    >
+                      <a
+                        href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                        onClick={[Function]}
+                      />
+                    </Link>
+                  </ChildLinkWrapper>
+                </Component>
+              </withRouter()>
+            </div>
+          </td>
+          <td />
+          <td
+            className="text-danger"
+          >
+            blocked
+          </td>
+          <td />
+          <td>
+            May 06
+          </td>
+          <td>
+            <div
+              className="dropdown dropdown-action"
+            >
+              <a
+                aria-expanded="false"
+                aria-haspopup="true"
+                className="component-action dropdown-toggle"
+                data-toggle="dropdown"
+                href="#1"
+                id="dropdownAction1"
+                role="button"
+              >
+                <Icon
+                  iconName="ellipsis-v"
+                >
+                  <svg
+                    className="lexicon-icon lexicon-icon-ellipsis-v"
+                    dangerouslySetInnerHTML={
+                      Object {
+                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                      }
+                    }
+                    data-testid="icon"
+                    focusable="false"
+                    role="presentation"
+                  />
+                </Icon>
+              </a>
+              <ul
+                aria-labelledby=""
+                className="dropdown-menu dropdown-menu-right"
+              >
+                <li>
+                  <withRouter()
+                    className="dropdown-item"
+                    to="/sla/edit/undefined/undefined"
+                  >
+                    <Component
+                      className="dropdown-item"
+                      history={
+                        Object {
+                          "action": "POP",
+                          "block": [Function],
+                          "canGo": [Function],
+                          "createHref": [Function],
+                          "entries": Array [
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                          ],
+                          "go": [Function],
+                          "goBack": [Function],
+                          "goForward": [Function],
+                          "index": 0,
+                          "length": 1,
+                          "listen": [Function],
+                          "location": Object {
+                            "hash": "",
+                            "match": Object {
+                              "params": Object {
+                                "page": 1,
+                                "search": undefined,
+                                "sort": undefined,
+                              },
+                            },
+                            "pathname": "/processes/1/10/title%3Aasc",
+                            "search": "?backPath=%2F",
+                          },
+                          "push": [Function],
+                          "replace": [Function],
+                        }
+                      }
+                      location={
+                        Object {
+                          "hash": "",
+                          "match": Object {
+                            "params": Object {
+                              "page": 1,
+                              "search": undefined,
+                              "sort": undefined,
+                            },
+                          },
+                          "pathname": "/processes/1/10/title%3Aasc",
+                          "search": "?backPath=%2F",
+                        }
+                      }
+                      match={
+                        Object {
+                          "isExact": false,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      to="/sla/edit/undefined/undefined"
+                    >
+                      <ChildLinkWrapper
+                        backPath="/"
+                        className="dropdown-item"
+                        currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "canGo": [Function],
+                            "createHref": [Function],
+                            "entries": Array [
+                              Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                            ],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "index": 0,
+                            "length": 1,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        to="/sla/edit/undefined/undefined"
+                      >
+                        <Link
+                          className="dropdown-item"
+                          to={
+                            Object {
+                              "pathname": "/sla/edit/undefined/undefined",
+                              "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                            }
+                          }
+                        >
+                          <a
+                            className="dropdown-item"
+                            href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                            onClick={[Function]}
+                          >
+                            edit
+                          </a>
+                        </Link>
+                      </ChildLinkWrapper>
+                    </Component>
+                  </withRouter()>
+                </li>
+                <li>
+                  <button
+                    className="dropdown-item"
+                    onClick={[Function]}
+                  >
+                    delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </SLAListItem>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;

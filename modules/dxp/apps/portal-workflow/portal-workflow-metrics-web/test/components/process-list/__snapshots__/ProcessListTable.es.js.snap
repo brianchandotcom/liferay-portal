@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "70%",
+            }
+          }
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="process-name"
+              title="process-name"
+            >
+              process-name
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="overdue"
+              title="overdue"
+            >
+              overdue
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="on-time"
+              title="on-time"
+            >
+              on-time
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </span>
+          </a>
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          <a
+            className="inline-item text-truncate-inline"
+            href="/?backPath=%2F"
+            onClick={[Function]}
+          >
+            <span
+              className="text-truncate title"
+              data-title="total-pending"
+              title="total-pending"
+            >
+              total-pending
+            </span>
+            <span
+              className="inline-item inline-item-after"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-order-arrow-down"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#order-arrow-down\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="table-cell-expand table-cell-minw-200 table-title lfr-title-column"
+        >
+          <a
+            href="/metrics/36401?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+            onClick={[Function]}
+          >
+            <span>
+              test
+            </span>
+          </a>
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+        <td>
+          -
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

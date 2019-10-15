@@ -1,0 +1,38 @@
+Bundle-Name: Liferay Portal Rules Engine Drools
+Bundle-SymbolicName: com.liferay.portal.rules.engine.drools
+Bundle-Version: 4.0.0
+DynamicImport-Package: *
+Import-Package:\
+	!com.bea.*,\
+	\
+	!com.sun.codemodel,\
+	!com.sun.tools.xjc.*,\
+	\
+	!javax.enterprise.*,\
+	\
+	!javax.inject,\
+	\
+	!net.sf.cglib.*,\
+	\
+	!nu.xom,\
+	\
+	!org.antlr.stringtemplate.*,\
+	\
+	!org.codehaus.janino.*,\
+	!org.codehaus.jettison.*,\
+	\
+	!org.eclipse.jdt.core.index.*,\
+	!org.eclipse.jdt.core.util.*,\
+	\
+	!org.joda.time.*,\
+	\
+	!org.kxml2.*,\
+	\
+	!org.quartz,\
+	\
+	!org.xmlpull.*,\
+	\
+	!sun.reflect.*,\
+	\
+	*
+Liferay-Releng-Module-Group-Title: Liferay Drools

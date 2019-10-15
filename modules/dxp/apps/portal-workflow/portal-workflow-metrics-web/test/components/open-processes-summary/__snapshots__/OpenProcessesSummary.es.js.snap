@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="row card-panel"
+>
+  <div
+    className="col-9"
+  >
+    <div
+      className="card"
+    >
+      <div
+        className="card-header bg-transparent border-secondary card-header-default text-secondary semi-bold"
+      >
+        open-processes-summary
+      </div>
+      <div
+        className="card-body"
+      >
+        <div
+          className="row d-flex justify-content-start"
+          style={
+            Object {
+              "marginTop": "8px",
+            }
+          }
+        >
+          <div
+            className="summary-card border col-2"
+            style={
+              Object {
+                "marginLeft": "16px",
+              }
+            }
+          >
+            <span
+              className="regular-text semi-bold text-secondary"
+            >
+              total-open
+            </span>
+            <div
+              className=""
+            >
+              <span
+                className="font-weight-normal"
+                style={
+                  Object {
+                    "fontSize": "2.5rem",
+                  }
+                }
+              >
+                15
+              </span>
+              <span
+                className="regular-text text-secondary"
+              >
+                items
+              </span>
+            </div>
+          </div>
+          <div
+            className="summary-card border col-2"
+            style={
+              Object {
+                "marginLeft": "16px",
+              }
+            }
+          >
+            <span
+              className="regular-text semi-bold text-secondary"
+            >
+              on-time
+            </span>
+            <div
+              className=""
+            >
+              <span
+                className="font-weight-normal"
+                style={
+                  Object {
+                    "fontSize": "2.5rem",
+                  }
+                }
+              >
+                82
+              </span>
+              <span
+                className="regular-text text-secondary"
+              >
+                items
+              </span>
+            </div>
+          </div>
+          <div
+            className="summary-card border col-2"
+            style={
+              Object {
+                "marginLeft": "16px",
+              }
+            }
+          >
+            <span
+              className="regular-text semi-bold text-secondary"
+            >
+              overdue
+            </span>
+            <div
+              className=""
+            >
+              <span
+                className="font-weight-normal"
+                style={
+                  Object {
+                    "fontSize": "2.5rem",
+                  }
+                }
+              >
+                33
+              </span>
+              <span
+                className="regular-text text-secondary"
+              >
+                items
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          className="col-12"
+          style={
+            Object {
+              "paddingTop": "30px",
+            }
+          }
+        >
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

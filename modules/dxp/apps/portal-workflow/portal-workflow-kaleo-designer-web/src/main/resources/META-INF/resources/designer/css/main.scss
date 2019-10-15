@@ -1,0 +1,430 @@
+#wrapper .portlet-layout {
+	margin: 0 !important;
+}
+
+.actions-cell-editor-hidden,
+.assignments-cell-editor-hidden,
+.forms-cell-editor-hidden,
+.notifications-cell-editor-hidden,
+.script-cell-editor-hidden,
+.task-timers-cell-editor-hidden {
+	display: none;
+}
+
+.basecelleditor {
+	background-color: #fff;
+	padding: 13px;
+
+	.basecelleditor {
+		border-width: 0;
+		padding: 0;
+	}
+
+	.form-control {
+		margin-bottom: 13px;
+	}
+}
+
+.celleditor-label {
+	display: block;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.celleditor-label-checkbox {
+	font-size: 11px;
+	font-weight: bold;
+	padding-left: 3px;
+}
+
+.celleditor-textarea,
+.celleditor-textarea-small {
+	height: 100px;
+}
+
+.celleditor-textarea-small.input-sm {
+	height: 50px;
+}
+
+.celleditor-view {
+	position: relative;
+}
+
+.celleditor-view + .celleditor-view {
+	border-top: 1px solid #efefef;
+	margin-top: 22px;
+	padding-top: 19px;
+}
+
+.celleditor-view-menu {
+	text-align: right;
+}
+
+.celleditor-view-menu-remove {
+	position: absolute;
+	right: -8px;
+	top: -8px;
+
+	.lexicon-icon-times {
+		width: 10px;
+	}
+}
+
+.diagram-builder {
+	.diagram-node {
+		transition: color 0.3s;
+
+		&.diagram-node-selected {
+			border-width: 0;
+			color: #65b6f0;
+		}
+
+		.diagram-node-content {
+			background: transparent;
+			font-size: 34px;
+			margin-left: 4px;
+			margin-top: 4px;
+			position: relative;
+			text-align: center;
+
+			&.icon-db-condition,
+			&.icon-db-fork,
+			&.icon-db-join,
+			&.icon-db-joinxor {
+				font-size: 62px;
+				padding-top: 0;
+				position: relative;
+
+				.diagram-node-shape-boundary {
+					height: 36px;
+					width: 36px;
+					x: 3px;
+					y: 3px;
+				}
+			}
+
+			&.icon-db-start,
+			&.icon-db-state,
+			&.icon-db-end {
+				font-size: 38px;
+				padding-left: 1px;
+				padding-top: 1px;
+				position: relative;
+				text-align: center;
+			}
+
+			&.icon-db-task {
+				font-size: 65px;
+				padding-left: 3px;
+				padding-top: 3px;
+				position: relative;
+
+				.diagram-node-content .yui3-widget-bd {
+					display: inline-block;
+					margin-top: -4px;
+				}
+			}
+
+			.diagram-node-shape-boundary {
+				stroke: #fff;
+				stroke-width: 5px;
+			}
+
+			.yui3-widget-bd {
+				display: inline;
+			}
+		}
+
+		.diagram-node-label {
+			font-size: 14px;
+			margin-top: 5px;
+			width: auto;
+		}
+	}
+
+	.property-builder-content-container {
+		padding-left: 0;
+
+		.nav-tabs {
+			margin-bottom: 20px;
+		}
+
+		.nav-tabs + .tab-content .tab-pane.active:first-child {
+			display: flex;
+		}
+
+		.tab-pane {
+			padding-left: 10px;
+			padding-top: 10px;
+		}
+
+		.property-builder-canvas {
+			margin-left: 270px;
+			width: 100%;
+		}
+
+		.tabbable-content.main-tab > .nav-tabs {
+			border-bottom: 1px solid #ddd;
+		}
+
+		.nav-item.active {
+			border: 1px solid #ddd;
+			border-bottom: transparent;
+			border-radius: 4px 4px 0 0;
+		}
+	}
+
+	.property-builder-tabs-content .property-builder-fields-container {
+		padding: 0;
+	}
+
+	.property-builder-content-container .btn-toolbar-button {
+		background-color: #869cad;
+		border-radius: 100%;
+		border-width: 0;
+		color: #fff;
+		font-size: 10px;
+		line-height: normal;
+		padding: 4px 5px;
+		position: absolute;
+		right: -11px;
+		top: -10px;
+
+		&:hover {
+			background-color: #65b6f0;
+		}
+	}
+
+	.property-builder-content-content {
+		.tabbable {
+			width: 15%;
+		}
+	}
+
+	.property-builder-field {
+		position: relative;
+		width: 78px;
+
+		.property-builder-field-icon {
+			font-size: 32px;
+		}
+	}
+
+	.table-property-list {
+		margin-top: 0;
+	}
+
+	.tab-pane {
+		height: 100%;
+
+		& > .btn-toolbar-content .btn-toolbar-button {
+			display: none;
+		}
+	}
+}
+
+.diagram-node-suggest-connector .popover-content {
+	.diagram-node-label {
+		font-size: 14px;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	.property-builder-field {
+		margin: 5px 0;
+		position: relative;
+		width: 50%;
+
+		.property-builder-field-icon {
+			font-size: 32px;
+		}
+	}
+}
+
+.dialog-iframe-popup,
+.info-bar-container {
+	background: #fff;
+}
+
+.info-bar-container .info-bar-default .btn-default.sidenav-transition {
+	pointer-events: none;
+}
+
+.dialog-with-footer {
+	.workflow-definition-content {
+		height: calc(100vh - 148px);
+		overflow: auto;
+	}
+}
+
+.info-bar-item {
+	margin-top: -3px;
+	position: absolute;
+}
+
+.info-content {
+	font-size: 0.875rem;
+	font-weight: 100;
+}
+
+.info-title {
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
+.lfr-portlet-workflowdesigner-draft-version {
+	display: inline;
+}
+
+.lfr-template-editor-wrapper {
+	margin-top: 20px;
+	width: 100% !important;
+}
+
+.property-builder-disabled {
+	.property-builder-controls {
+		display: none;
+	}
+
+	.property-builder-field-draggable,
+	.property-builder-anchor-node {
+		cursor: auto;
+	}
+}
+
+.recipients-editor-container {
+	position: relative;
+}
+
+.recipients-editor-container .celleditor-assignment-view {
+	margin: 3px 0 8px;
+}
+
+.recipients-editor-container,
+.recipients-editor-container .celleditor-assignment-view,
+.delays-editor-container,
+.timer-actions-editor-container {
+	border: 1px solid #efefef;
+	padding: 8px;
+}
+
+.script-cell-editor-content .ace-editor {
+	height: 300px;
+	position: relative;
+	width: 550px;
+}
+
+.sidenav-container {
+	padding-bottom: 75px;
+
+	.sidenav-menu-slider {
+		z-index: 101;
+	}
+
+	.sidebar-body {
+		padding-top: 0;
+	}
+
+	.tbar-visible-xs {
+		display: none;
+	}
+
+	@media (max-width: 767px) {
+		.tbar-visible-xs {
+			display: block !important;
+		}
+	}
+
+	@media (max-width: 576px) {
+		.sidenav-visible-xs {
+			width: 100% !important;
+		}
+	}
+
+	.lfr-nav.nav-tabs {
+		margin-bottom: 0;
+	}
+}
+
+.lfr-sidebar-list-group-workflow {
+	&.sidebar-list-group {
+		margin-top: 0;
+	}
+
+	.list-group-item {
+		border-bottom-width: 1px;
+		border-top-width: 1px;
+		box-shadow: none;
+
+		&:first-child {
+			border-top: 0;
+		}
+	}
+}
+
+.table-sort-liner {
+	height: auto;
+	word-break: keep-all;
+}
+
+.tall-editor {
+	max-height: 500px;
+	min-width: 364px;
+	overflow: auto;
+
+	.checkbox label {
+		padding-left: 0;
+	}
+
+	.yui3-widget-ft {
+		margin-top: 13px;
+	}
+
+	textarea {
+		width: 100%;
+	}
+}
+
+.timer-actions-editor-container .editor-container {
+	border: 1px solid #efefef;
+	margin-bottom: 8px;
+	padding: 8px;
+}
+
+.workflow-definition-container,
+.workflow-definition-sidebar {
+	.lfr-active-column,
+	.lfr-description-column,
+	.lfr-last-modified-column,
+	.lfr-version-column {
+		width: auto;
+	}
+}
+
+.workflow-definition-container {
+	margin-top: 20px;
+}
+
+.workflow-definition-content {
+	padding: 10px;
+
+	.workflow-definition-content-source {
+		border: 1px solid #b5b5b5;
+	}
+
+	.workflow-definition-content-source-wrapper {
+		margin-bottom: 15px;
+	}
+
+	.workflow-definition-upload {
+		margin-bottom: 24px;
+	}
+
+	.workflow-definition-upload-source {
+		display: none;
+	}
+}
+
+#workflowTasksPanelContainer {
+	border-width: 0;
+}

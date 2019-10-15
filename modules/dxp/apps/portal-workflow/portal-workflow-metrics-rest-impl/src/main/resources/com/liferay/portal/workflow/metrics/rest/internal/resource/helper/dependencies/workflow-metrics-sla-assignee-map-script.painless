@@ -1,0 +1,8 @@
+def instanceId = doc.instanceId.value;
+
+def tasksMap = state.map.computeIfAbsent(
+	instanceId, instanceId -> new HashMap());
+
+tasksMap.merge(
+	doc.taskName.value, doc.onTime.value,
+	(onTime1, onTime2) -> (onTime1 && onTime2));

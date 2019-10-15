@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="XMLServiceReferenceCheck" files="modules/private/apps/portal-reports-engine-console/portal-reports-engine-console-service/service\.xml" />
+	</source-check>
+</suppressions>

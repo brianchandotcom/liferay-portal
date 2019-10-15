@@ -1,0 +1,815 @@
+components:
+    schemas:
+        AssigneeUser:
+            description: https://schema.org/AssigneeUser
+            properties:
+                id:
+                    description: The user's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                image:
+                    description: A relative URL to the user's profile image.
+                    format: uri
+                    readOnly: true
+                    type: string
+                name:
+                    description: The user's full name.
+                    readOnly: true
+                    type: string
+                onTimeTaskCount:
+                    format: int64
+                    type: integer
+                overdueTaskCount:
+                    format: int64
+                    type: integer
+                taskCount:
+                    format: int64
+                    type: integer
+            type: object
+        Calendar:
+            description: https://www.schema.org/Calendar
+            properties:
+                defaultCalendar:
+                    type: boolean
+                key:
+                    type: string
+                title:
+                    type: string
+            type: object
+        CreatorUser:
+            description: https://schema.org/CreatorUser
+            properties:
+                id:
+                    description: The user's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description: The user's full name.
+                    readOnly: true
+                    type: string
+            type: object
+        GenericError:
+            description: https://www.schema.org/GenericError
+            properties:
+                fieldName:
+                    type: string
+                message:
+                    type: string
+            type: object
+        Histogram:
+            description: https://www.schema.org/Histogram
+            properties:
+                key:
+                    type: string
+                value:
+                    format: double
+                    type: number
+            type: object
+        Instance:
+            description: https://www.schema.org/Instance
+            properties:
+                assetTitle:
+                    type: string
+                assetType:
+                    type: string
+                assigneeUsers:
+                    items:
+                        $ref: "#/components/schemas/AssigneeUser"
+                    type: array
+                creatorUser:
+                    $ref: "#/components/schemas/CreatorUser"
+                dateCompletion:
+                    format: date-time
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                processId:
+                    format: int64
+                    type: integer
+                slaResults:
+                    items:
+                        $ref: "#/components/schemas/SLAResult"
+                    type: array
+                slaStatus:
+                    enum: [OnTime, Overdue, Untracked]
+                    type: string
+                status:
+                    enum: [Completed, Pending]
+                    type: string
+                taskNames:
+                    items:
+                        type: string
+                    type: array
+            type: object
+        Metric:
+            description: https://www.schema.org/Metric
+            properties:
+                histograms:
+                    items:
+                        $ref: "#/components/schemas/Histogram"
+                    type: array
+                unit:
+                    enum: [Days, Hours, Months, Weeks, Years]
+                    type: string
+                value:
+                    format: double
+                    type: number
+            type: object
+        Node:
+            description: https://www.schema.org/Node
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                initial:
+                    type: boolean
+                name:
+                    type: string
+                terminal:
+                    type: boolean
+                type:
+                    type: string
+            type: object
+        NodeKey:
+            description: https://www.schema.org/NodeKey
+            properties:
+                executionType:
+                    type: string
+                id:
+                    type: string
+            type: object
+        Process:
+            description: https://www.schema.org/Process
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                instanceCount:
+                    format: int64
+                    type: integer
+                onTimeInstanceCount:
+                    format: int64
+                    type: integer
+                overdueInstanceCount:
+                    format: int64
+                    type: integer
+                title:
+                    type: string
+                untrackedInstanceCount:
+                    format: int64
+                    type: integer
+            type: object
+        SLA:
+            description: https://www.schema.org/SLA
+            properties:
+                calendarKey:
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                duration:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                pauseNodeKeys:
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
+                processId:
+                    format: int64
+                    type: integer
+                startNodeKeys:
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
+                status:
+                    type: integer
+                stopNodeKeys:
+                    properties:
+                        nodeKeys:
+                            items:
+                                $ref: "#/components/schemas/NodeKey"
+                            type: array
+                        status:
+                            type: integer
+                    type: object
+            type: object
+        SLAResult:
+            description: https://www.schema.org/SLA
+            properties:
+                dateOverdue:
+                    format: date-time
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                name:
+                    type: string
+                onTime:
+                    type: boolean
+                remainingTime:
+                    format: int64
+                    type: integer
+                status:
+                    enum: [Paused, Running, Stopped]
+                    type: string
+            type: object
+        Task:
+            description: https://www.schema.org/Task
+            properties:
+                breachedInstanceCount:
+                    format: int64
+                    type: integer
+                durationAvg:
+                    format: int64
+                    type: integer
+                instanceCount:
+                    format: int64
+                    type: integer
+                key:
+                    type: string
+                name:
+                    type: string
+                onTimeInstanceCount:
+                    format: int64
+                    type: integer
+                overdueInstanceCount:
+                    format: int64
+                    type: integer
+            type: object
+        TimeRange:
+            description: https://www.schema.org/TimeRange
+            properties:
+                dateEnd:
+                    format: date-time
+                    type: string
+                dateStart:
+                    format: date-time
+                    type: string
+                defaultTimeRange:
+                    type: boolean
+                id:
+                    type: integer
+                name:
+                    type: string
+            type: object
+info:
+    description: ""
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: ""
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/calendars":
+        get:
+            operationId: getCalendarsPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Calendar"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Calendar"
+                                type: array
+                    description: ""
+            tags: ["Calendar"]
+    "/processes":
+        get:
+            operationId: getProcessesPage
+            parameters:
+                - in: query
+                  name: title
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Process"
+                                type: array
+                    description: ""
+            tags: ["Process"]
+    "/processes/{processId}":
+        get:
+            operationId: getProcess
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
+                  name: dateEnd
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateStart
+                  schema:
+                      format: date-time
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Process"
+                    description: ""
+            tags: ["Process"]
+    "/processes/{processId}/assignee-users":
+        get:
+            operationId: getProcessAssigneeUsersPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: taskKeys
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssigneeUser"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssigneeUser"
+                                type: array
+                    description: ""
+            tags: ["AssigneeUser"]
+    "/processes/{processId}/instances":
+        get:
+            operationId: getProcessInstancesPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: assigneeUserIds
+                  schema:
+                      items:
+                          format: int64
+                          type: integer
+                      type: array
+                - in: query
+                  name: dateEnd
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateStart
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: slaStatuses
+                  schema:
+                      items:
+                          enum: [OnTime, Overdue, Untracked]
+                          type: string
+                      type: array
+                - in: query
+                  name: statuses
+                  schema:
+                      items:
+                          enum: [Completed, Pending]
+                          type: string
+                      type: array
+                - in: query
+                  name: taskKeys
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Instance"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Instance"
+                                type: array
+                    description: ""
+            tags: ["Instance"]
+    "/processes/{processId}/instances/{instanceId}":
+        get:
+            operationId: getProcessInstance
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: instanceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Instance"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Instance"
+                    description: ""
+            tags: ["Instance"]
+    "/processes/{processId}/metric":
+        get:
+            operationId: getProcessMetric
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: dateEnd
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateStart
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: unit
+                  required: true
+                  schema:
+                      enum: [Days, Hours, Months, Weeks, Years]
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Metric"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Metric"
+                    description: ""
+            tags: ["Metric"]
+    "/processes/{processId}/nodes":
+        get:
+            operationId: getProcessNodesPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Node"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Node"
+                                type: array
+                    description: ""
+            tags: ["Node"]
+    "/processes/{processId}/slas":
+        get:
+            operationId: getProcessSLAsPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: status
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SLA"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SLA"
+                                type: array
+                    description: ""
+            tags: ["SLA"]
+        post:
+            operationId: postProcessSLA
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description: ""
+            tags: ["SLA"]
+    "/processes/{processId}/tasks":
+        get:
+            operationId: getProcessTasksPage
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
+                  name: dateEnd
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateStart
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: key
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Task"
+                                type: array
+                    description: ""
+            tags: ["Task"]
+    "/processes/{processId}/title":
+        get:
+            operationId: getProcessTitle
+            parameters:
+                - in: path
+                  name: processId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description: ""
+            tags: ["Process"]
+    "/slas/{slaId}":
+        delete:
+            operationId: deleteSLA
+            parameters:
+                - in: path
+                  name: slaId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["SLA"]
+        get:
+            operationId: getSLA
+            parameters:
+                - in: path
+                  name: slaId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+            tags: ["SLA"]
+        put:
+            operationId: putSLA
+            parameters:
+                - in: path
+                  name: slaId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SLA"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SLA"
+                    description: ""
+                400:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/GenericError"
+                    description: ""
+            tags: ["SLA"]
+    "/time-ranges":
+        get:
+            operationId: getTimeRangesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TimeRange"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TimeRange"
+                                type: array
+                    description: ""
+            tags: ["TimeRange"]

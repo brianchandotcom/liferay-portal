@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 7.0.0//EN" "http://www.liferay.com/dtd/liferay-hook_7_0_0.dtd">
+
+<hook>
+	<portal-properties>portal.properties</portal-properties>
+	<language-properties>content/Language*.properties</language-properties>
+	<custom-jsp-dir>/META-INF/custom_jsps</custom-jsp-dir>
+	<servlet-filter-mapping>
+		<servlet-filter-name>Auto Login Filter</servlet-filter-name>
+		<url-pattern>/c/portal/saml/auth_redirect</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</servlet-filter-mapping>
+</hook>

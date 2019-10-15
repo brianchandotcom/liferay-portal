@@ -1,0 +1,896 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should cancel dialog 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAConfirmDialog
+        itemToRemove={1234}
+      >
+        <div
+          className="modal show"
+          role="dialog"
+          tabIndex="-1"
+        >
+          <div
+            className="modal-dialog modal-lg"
+          >
+            <div
+              className="modal-content"
+            >
+              <div
+                className="modal-body"
+              >
+                <p>
+                  deleting-slas-will-reflect-on-report-data
+                </p>
+              </div>
+              <div
+                className="modal-footer"
+              >
+                <div
+                  className="modal-item-last"
+                >
+                  <div
+                    className="btn-group"
+                  >
+                    <div
+                      className="btn-group-item"
+                    >
+                      <button
+                        className="btn btn-secondary"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        cancel
+                      </button>
+                    </div>
+                    <div
+                      className="btn-group-item"
+                    >
+                      <button
+                        className="btn btn-secondary"
+                        id="remove_sla_button"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        ok
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SLAConfirmDialog>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should cancel dialog through SLA List 1`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListCard>
+        <nav
+          className="management-bar management-bar-light navbar navbar-expand-md"
+        >
+          <div
+            className="container-fluid container-fluid-max-xl"
+          >
+            <ul
+              className="navbar-nav autofit-row"
+            >
+              <li
+                className="nav-item autofit-col-expand autofit-float-end"
+              >
+                <Tooltip
+                  message="new-sla"
+                  position="bottom"
+                  width="85"
+                >
+                  <span
+                    className="workflow-tooltip"
+                    onMouseLeave={[Function]}
+                  >
+                    <span
+                      className="tooltip-trigger"
+                      onMouseOver={[Function]}
+                    >
+                      <withRouter()
+                        className="btn btn-primary nav-btn nav-btn-monospaced"
+                        to="/sla/new/undefined"
+                      >
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                            history={
+                              Object {
+                                "action": "POP",
+                                "block": [Function],
+                                "canGo": [Function],
+                                "createHref": [Function],
+                                "entries": Array [
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/processes/1/10/title%3Aasc",
+                                    "search": "?backPath=%2F",
+                                  },
+                                ],
+                                "go": [Function],
+                                "goBack": [Function],
+                                "goForward": [Function],
+                                "index": 0,
+                                "length": 1,
+                                "listen": [Function],
+                                "location": Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                                "push": [Function],
+                                "replace": [Function],
+                              }
+                            }
+                            to="/sla/new/undefined"
+                          >
+                            <Link
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              to={
+                                Object {
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                                }
+                              }
+                            >
+                              <a
+                                className="btn btn-primary nav-btn nav-btn-monospaced"
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
+                              >
+                                <Icon
+                                  iconName="plus"
+                                >
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                      }
+                                    }
+                                    data-testid="icon"
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
+                      </withRouter()>
+                    </span>
+                  </span>
+                </Tooltip>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div
+          className="container-fluid-1280"
+        >
+          <ListView
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
+            fetching={false}
+            loading={true}
+          >
+            <div>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
+            </div>
+          </ListView>
+        </div>
+      </SLAListCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should cancel dialog through SLA List 2`] = `
+<MockRouter
+  client={
+    Object {
+      "delete": [Function],
+      "get": [Function],
+      "post": [Function],
+      "put": [Function],
+    }
+  }
+>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAListCard>
+        <nav
+          className="management-bar management-bar-light navbar navbar-expand-md"
+        >
+          <div
+            className="container-fluid container-fluid-max-xl"
+          >
+            <ul
+              className="navbar-nav autofit-row"
+            >
+              <li
+                className="nav-item autofit-col-expand autofit-float-end"
+              >
+                <Tooltip
+                  message="new-sla"
+                  position="bottom"
+                  width="85"
+                >
+                  <span
+                    className="workflow-tooltip"
+                    onMouseLeave={[Function]}
+                  >
+                    <span
+                      className="tooltip-trigger"
+                      onMouseOver={[Function]}
+                    >
+                      <withRouter()
+                        className="btn btn-primary nav-btn nav-btn-monospaced"
+                        to="/sla/new/undefined"
+                      >
+                        <Component
+                          className="btn btn-primary nav-btn nav-btn-monospaced"
+                          history={
+                            Object {
+                              "action": "POP",
+                              "block": [Function],
+                              "canGo": [Function],
+                              "createHref": [Function],
+                              "entries": Array [
+                                Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                              ],
+                              "go": [Function],
+                              "goBack": [Function],
+                              "goForward": [Function],
+                              "index": 0,
+                              "length": 1,
+                              "listen": [Function],
+                              "location": Object {
+                                "hash": "",
+                                "match": Object {
+                                  "params": Object {
+                                    "page": 1,
+                                    "search": undefined,
+                                    "sort": undefined,
+                                  },
+                                },
+                                "pathname": "/processes/1/10/title%3Aasc",
+                                "search": "?backPath=%2F",
+                              },
+                              "push": [Function],
+                              "replace": [Function],
+                            }
+                          }
+                          location={
+                            Object {
+                              "hash": "",
+                              "match": Object {
+                                "params": Object {
+                                  "page": 1,
+                                  "search": undefined,
+                                  "sort": undefined,
+                                },
+                              },
+                              "pathname": "/processes/1/10/title%3Aasc",
+                              "search": "?backPath=%2F",
+                            }
+                          }
+                          match={
+                            Object {
+                              "isExact": false,
+                              "params": Object {},
+                              "path": "/",
+                              "url": "/",
+                            }
+                          }
+                          to="/sla/new/undefined"
+                        >
+                          <ChildLinkWrapper
+                            backPath="/"
+                            className="btn btn-primary nav-btn nav-btn-monospaced"
+                            currentPath="/processes/1/10/title%3Aasc?backPath=%2F"
+                            history={
+                              Object {
+                                "action": "POP",
+                                "block": [Function],
+                                "canGo": [Function],
+                                "createHref": [Function],
+                                "entries": Array [
+                                  Object {
+                                    "hash": "",
+                                    "match": Object {
+                                      "params": Object {
+                                        "page": 1,
+                                        "search": undefined,
+                                        "sort": undefined,
+                                      },
+                                    },
+                                    "pathname": "/processes/1/10/title%3Aasc",
+                                    "search": "?backPath=%2F",
+                                  },
+                                ],
+                                "go": [Function],
+                                "goBack": [Function],
+                                "goForward": [Function],
+                                "index": 0,
+                                "length": 1,
+                                "listen": [Function],
+                                "location": Object {
+                                  "hash": "",
+                                  "match": Object {
+                                    "params": Object {
+                                      "page": 1,
+                                      "search": undefined,
+                                      "sort": undefined,
+                                    },
+                                  },
+                                  "pathname": "/processes/1/10/title%3Aasc",
+                                  "search": "?backPath=%2F",
+                                },
+                                "push": [Function],
+                                "replace": [Function],
+                              }
+                            }
+                            to="/sla/new/undefined"
+                          >
+                            <Link
+                              className="btn btn-primary nav-btn nav-btn-monospaced"
+                              to={
+                                Object {
+                                  "pathname": "/sla/new/undefined",
+                                  "search": "?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F",
+                                }
+                              }
+                            >
+                              <a
+                                className="btn btn-primary nav-btn nav-btn-monospaced"
+                                href="/sla/new/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                                onClick={[Function]}
+                              >
+                                <Icon
+                                  iconName="plus"
+                                >
+                                  <svg
+                                    className="lexicon-icon lexicon-icon-plus"
+                                    dangerouslySetInnerHTML={
+                                      Object {
+                                        "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#plus\\" />",
+                                      }
+                                    }
+                                    data-testid="icon"
+                                    focusable="false"
+                                    role="presentation"
+                                  />
+                                </Icon>
+                              </a>
+                            </Link>
+                          </ChildLinkWrapper>
+                        </Component>
+                      </withRouter()>
+                    </span>
+                  </span>
+                </Tooltip>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div
+          className="container-fluid-1280"
+        >
+          <ListView
+            emptyMessageText="sla-allows-to-define-and-measure-process-performance"
+            emptyTitleText="no-slas-yet"
+            fetching={false}
+            loading={true}
+          >
+            <div>
+              <div
+                className="border-1 pb-6 pt-6 sheet"
+              >
+                <LoadingState>
+                  <span
+                    aria-hidden="true"
+                    className="loading-animation"
+                  />
+                </LoadingState>
+              </div>
+            </div>
+          </ListView>
+        </div>
+      </SLAListCard>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should remove item 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "match": Object {
+                "params": Object {
+                  "page": 1,
+                  "search": undefined,
+                  "sort": undefined,
+                },
+              },
+              "pathname": "/processes/1/10/title%3Aasc",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "match": Object {
+              "params": Object {
+                "page": 1,
+                "search": undefined,
+                "sort": undefined,
+              },
+            },
+            "pathname": "/processes/1/10/title%3Aasc",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <SLAConfirmDialog
+        itemToRemove={1234}
+      >
+        <div
+          className="modal show"
+          role="dialog"
+          tabIndex="-1"
+        >
+          <div
+            className="modal-dialog modal-lg"
+          >
+            <div
+              className="modal-content"
+            >
+              <div
+                className="modal-body"
+              >
+                <p>
+                  deleting-slas-will-reflect-on-report-data
+                </p>
+              </div>
+              <div
+                className="modal-footer"
+              >
+                <div
+                  className="modal-item-last"
+                >
+                  <div
+                    className="btn-group"
+                  >
+                    <div
+                      className="btn-group-item"
+                    >
+                      <button
+                        className="btn btn-secondary"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        cancel
+                      </button>
+                    </div>
+                    <div
+                      className="btn-group-item"
+                    >
+                      <button
+                        className="btn btn-secondary"
+                        id="remove_sla_button"
+                        onClick={[Function]}
+                        type="button"
+                      >
+                        ok
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SLAConfirmDialog>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component 1`] = `
+<div
+  className="modal show"
+  role="dialog"
+  tabIndex="-1"
+>
+  <div
+    className="modal-dialog modal-lg"
+  >
+    <div
+      className="modal-content"
+    >
+      <div
+        className="modal-body"
+      >
+        <p>
+          deleting-slas-will-reflect-on-report-data
+        </p>
+      </div>
+      <div
+        className="modal-footer"
+      >
+        <div
+          className="modal-item-last"
+        >
+          <div
+            className="btn-group"
+          >
+            <div
+              className="btn-group-item"
+            >
+              <button
+                className="btn btn-secondary"
+                onClick={[Function]}
+                type="button"
+              >
+                cancel
+              </button>
+            </div>
+            <div
+              className="btn-group-item"
+            >
+              <button
+                className="btn btn-secondary"
+                id="remove_sla_button"
+                onClick={[Function]}
+                type="button"
+              >
+                ok
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

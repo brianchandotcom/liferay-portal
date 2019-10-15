@@ -1,0 +1,59 @@
+{
+	"dependencies": {
+		"@clayui/charts": "3.0.0",
+		"axios": "0.18.0",
+		"classnames": "2.2.6",
+		"clay-charts-react": "2.4.1",
+		"custom-event-polyfill": "1.0.6",
+		"moment": "2.24.0",
+		"numeral": "2.0.6",
+		"path-to-regexp": "3.0.0",
+		"qs": "6.7.0",
+		"react": "16.9.0",
+		"react-dom": "16.9.0",
+		"react-router-dom": "5.0.1",
+		"react-text-mask": "5.4.3",
+		"string.prototype.startswith": "0.2.0",
+		"text-mask-addons": "3.8.0"
+	},
+	"devDependencies": {
+		"@testing-library/react-hooks": "1.0.4",
+		"enzyme": "3.10.0",
+		"enzyme-adapter-react-16": "1.14.0",
+		"enzyme-to-json": "3.3.5"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"src/main/resources/META-INF/resources/js/**/*.es.js"
+		],
+		"coverageDirectory": "build/coverage",
+		"moduleNameMapper": {
+			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/test/mock/openToast.es.js",
+			"react-text-mask": "<rootDir>/test/mock/reactTextMask.es.js"
+		},
+		"setupFilesAfterEnv": [
+			"<rootDir>/test/setup.es.js"
+		],
+		"snapshotSerializers": [
+			"enzyme-to-json/serializer"
+		],
+		"testMatch": [
+			"<rootDir>/test/**/*.es.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/mock",
+			"<rootDir>/test/setup.es.js"
+		],
+		"testURL": "http://liferay.com",
+		"timers": "fake"
+	},
+	"main": "js/index.es.js",
+	"name": "portal-workflow-metrics-web",
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test"
+	},
+	"version": "2.0.0"
+}

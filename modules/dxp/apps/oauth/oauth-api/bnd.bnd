@@ -1,0 +1,18 @@
+Bundle-Name: Liferay OAuth API
+Bundle-SymbolicName: com.liferay.oauth.api
+Bundle-Version: 4.0.0
+Export-Package:\
+	com.liferay.oauth.configuration,\
+	com.liferay.oauth.constants,\
+	com.liferay.oauth.exception,\
+	com.liferay.oauth.model,\
+	com.liferay.oauth.service,\
+	com.liferay.oauth.service.permission,\
+	com.liferay.oauth.service.persistence,\
+	com.liferay.oauth.util,\
+	\
+	net.oauth;-split-package:=merge-last,\
+	net.oauth.server;-split-package:=merge-last,\
+	net.oauth.signature;-split-package:=merge-last,\
+	net.oauth.signature.pem;-split-package:=merge-last
+Liferay-Releng-Module-Group-Title: OAuth Provider

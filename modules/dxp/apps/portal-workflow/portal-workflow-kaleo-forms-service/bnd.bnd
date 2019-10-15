@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Workflow Kaleo Forms Service
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.service
+Bundle-Version: 4.0.0
+Import-Package:\
+	com.liferay.portal.workflow.kaleo.forms.util.comparator,\
+	\
+	*
+Liferay-Require-SchemaVersion: 2.0.0
+Liferay-Service: true

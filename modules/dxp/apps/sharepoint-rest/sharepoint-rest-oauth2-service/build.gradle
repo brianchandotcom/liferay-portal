@@ -1,0 +1,13 @@
+buildService {
+	apiDir = "../sharepoint-rest-oauth2-api/src/main/java"
+	testDir = "../sharepoint-rest-oauth2-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
+}

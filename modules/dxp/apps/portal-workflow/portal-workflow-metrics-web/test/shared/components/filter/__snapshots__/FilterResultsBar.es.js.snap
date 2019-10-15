@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<nav
+  className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
+>
+  <div
+    className="container-fluid container-fluid-max-xl"
+  >
+    <ul
+      className="tbar-nav tbar-nav-wrap"
+    >
+      <li
+        className="tbar-item"
+      >
+        <div
+          className="tbar-section"
+        >
+          <span
+            className="component-text text-truncate-inline"
+          >
+            <span
+              className="text-truncate"
+            >
+              x-results-for-x
+            </span>
+          </span>
+        </div>
+      </li>
+      <li
+        className="tbar-item"
+      >
+        <div
+          className="tbar-section"
+        >
+          <span
+            className="component-label label label-dismissible tbar-label"
+          >
+            <span
+              className="label-item label-item-expand"
+            >
+              <div
+                className="label-section"
+              >
+                <span
+                  className="font-weight-normal"
+                >
+                  SLA Status: 
+                </span>
+                <strong>
+                  Overdue
+                </strong>
+              </div>
+            </span>
+            <span
+              className="label-item label-item-after"
+            >
+              <button
+                aria-label="close"
+                className="btn close"
+                onClick={[Function]}
+                type="button"
+              >
+                <svg
+                  className="lexicon-icon lexicon-icon-times"
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#times\\" />",
+                    }
+                  }
+                  data-testid="icon"
+                  focusable="false"
+                  role="presentation"
+                />
+              </button>
+            </span>
+          </span>
+        </div>
+      </li>
+      <li
+        className="tbar-item tbar-item-expand"
+      >
+        <div
+          className="tbar-section text-right"
+        >
+          <button
+            className="btn btn-unstyled component-link tbar-link"
+            onClick={[Function]}
+            type="button"
+          >
+            clear-all
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;

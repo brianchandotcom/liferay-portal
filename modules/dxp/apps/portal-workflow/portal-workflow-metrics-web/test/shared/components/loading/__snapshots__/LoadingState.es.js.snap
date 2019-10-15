@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should test component render 1`] = `
+<span
+  aria-hidden="true"
+  className="loading-animation"
+/>
+`;

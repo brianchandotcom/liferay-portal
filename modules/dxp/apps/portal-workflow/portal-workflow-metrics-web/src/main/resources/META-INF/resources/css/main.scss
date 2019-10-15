@@ -1,0 +1,22 @@
+@import 'app';
+@import 'dropdown';
+@import 'clay_chart';
+@import 'empty-content';
+@import 'global-colors';
+@import 'multi-select';
+@import 'process-dashboard';
+@import 'tooltip';
+@import 'velocity-chart';
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.text-semi-bold {
+	font-weight: normal;
+}
+
+.font-weight-medium {
+	font-weight: 500;
+}

@@ -1,0 +1,309 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render component 1`] = `
+<div
+  className="table-responsive"
+>
+  <table
+    className="show-quick-actions-on-hover table table-autofit table-heading-nowrap table-hover table-list"
+  >
+    <thead>
+      <tr>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "40%",
+            }
+          }
+        >
+          sla-name
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "35%",
+            }
+          }
+        >
+          description
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "15%",
+            }
+          }
+        >
+          status
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "25%",
+            }
+          }
+        >
+          duration
+        </th>
+        <th
+          className="table-cell-expand table-head-title"
+          style={
+            Object {
+              "width": "25%",
+            }
+          }
+        >
+          last-modified
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+             
+            <a
+              href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+              onClick={[Function]}
+            >
+              Total resolution time
+            </a>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          running
+        </td>
+        <td>
+          9999d 23h 59min
+        </td>
+        <td>
+          May 06
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                  onClick={[Function]}
+                >
+                  edit
+                </a>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={[Function]}
+                >
+                  delete
+                </button>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+             
+            <a
+              href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+              onClick={[Function]}
+            >
+              Total resolution time
+            </a>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          running
+        </td>
+        <td>
+          1min
+        </td>
+        <td>
+          May 06
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                  onClick={[Function]}
+                >
+                  edit
+                </a>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={[Function]}
+                >
+                  delete
+                </button>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="table-cell-expand"
+        >
+          <div
+            className="table-list-title"
+          >
+             
+            <a
+              href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+              onClick={[Function]}
+            >
+              Total resolution time
+            </a>
+          </div>
+        </td>
+        <td>
+          Total time to complete the request.
+        </td>
+        <td
+          className=""
+        >
+          running
+        </td>
+        <td>
+          1h 59min
+        </td>
+        <td>
+          May 06
+        </td>
+        <td>
+          <div
+            className="dropdown dropdown-action"
+          >
+            <a
+              aria-expanded="false"
+              aria-haspopup="true"
+              className="component-action dropdown-toggle"
+              data-toggle="dropdown"
+              href="#1"
+              id="dropdownAction1"
+              role="button"
+            >
+              <svg
+                className="lexicon-icon lexicon-icon-ellipsis-v"
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#ellipsis-v\\" />",
+                  }
+                }
+                data-testid="icon"
+                focusable="false"
+                role="presentation"
+              />
+            </a>
+            <ul
+              aria-labelledby=""
+              className="dropdown-menu dropdown-menu-right"
+            >
+              <li>
+                <a
+                  className="dropdown-item"
+                  href="/sla/edit/undefined/undefined?backPath=%2Fprocesses%2F1%2F10%2Ftitle%253Aasc%3FbackPath%3D%252F"
+                  onClick={[Function]}
+                >
+                  edit
+                </a>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={[Function]}
+                >
+                  delete
+                </button>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
+
+		<!-- Temporary suppressions for deprecated apps (LPS-100170) -->
+
+		<suppress checks="BNDSuiteCheck" files="modules/private/apps/documentum/app\.bnd" />
+	</source-check>
+</suppressions>

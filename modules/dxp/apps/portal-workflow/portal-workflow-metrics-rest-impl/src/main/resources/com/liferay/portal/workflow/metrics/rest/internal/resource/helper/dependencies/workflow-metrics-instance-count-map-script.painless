@@ -1,0 +1,53 @@
+def instanceId = doc.instanceId.value;
+
+if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
+	((state.assigneeUserIds == null) ||
+	 (state.assigneeUserIds.contains(doc.assigneeId.value) || 
+	 (state.assigneeUserIds.contains("-1") && (doc.assigneeId.value == null))))) {
+
+	state.assigneeUserIdInstanceIds.add(instanceId);
+}
+
+if (doc.uid.value.startsWith("WorkflowMetricsSLAProcessResult")) {
+	state.slaStatusMap.compute(
+		instanceId,
+		(key, oldSLAStatus) -> {
+			if (((oldSLAStatus == null) || oldSLAStatus.equals("untracked")) &&
+				((doc.elapsedTime.value == 0) ||
+				 doc.status.value.equals("EXPIRED"))) {
+
+				return "untracked";
+			}
+			else if (((oldSLAStatus == null) ||
+					  !oldSLAStatus.equals("overdue")) &&
+					 doc.onTime.value) {
+
+				return "onTime";
+			}
+
+			return "overdue";
+		});
+}
+
+if (doc.uid.value.startsWith("WorkflowMetricsInstance") &&
+	((state.statuses == null) ||
+	 (state.statuses.contains("Completed") && doc.completed.value) ||
+	 (state.statuses.contains("Pending") && !doc.completed.value)) &&
+	(((state.endDate == null) && (state.startDate == null)) ||
+	 (doc.completed.value &&
+	  (doc.completionDate.value.getMillis() <= state.endDate) &&
+	  (doc.completionDate.value.getMillis() >= state.startDate)))) {
+
+	state.statusInstanceIds.add(instanceId);
+
+	state.slaStatusMap.compute(
+		instanceId,
+		(key, slaStatus) -> (slaStatus == null) ? "untracked" : slaStatus);
+}
+
+if (doc.uid.value.startsWith("WorkflowMetricsToken") &&
+	((state.taskNames == null) ||
+	 state.taskNames.contains(doc.taskName.value))) {
+
+	state.taskNameInstanceIds.add(instanceId);
+}

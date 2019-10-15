@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should change search value 1`] = `
+<MockRouter>
+  <MemoryRouter
+    initialEntries={
+      Array [
+        Object {
+          "match": Object {
+            "params": Object {
+              "page": 1,
+              "search": undefined,
+              "sort": undefined,
+            },
+          },
+          "pathname": "/processes/1/10/title%3Aasc",
+          "search": "?backPath=%2F",
+        },
+      ]
+    }
+    keyLength={0}
+  >
+    <Router
+      history={
+        Object {
+          "action": "REPLACE",
+          "block": [Function],
+          "canGo": [Function],
+          "createHref": [Function],
+          "entries": Array [
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            },
+          ],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "index": 0,
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "?backPath=%2F",
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <withRouter(Search)>
+        <Search
+          history={
+            Object {
+              "action": "REPLACE",
+              "block": [Function],
+              "canGo": [Function],
+              "createHref": [Function],
+              "entries": Array [
+                Object {
+                  "hash": "",
+                  "pathname": "/",
+                  "search": "?backPath=%2F",
+                },
+              ],
+              "go": [Function],
+              "goBack": [Function],
+              "goForward": [Function],
+              "index": 0,
+              "length": 1,
+              "listen": [Function],
+              "location": Object {
+                "hash": "",
+                "pathname": "/",
+                "search": "?backPath=%2F",
+              },
+              "push": [Function],
+              "replace": [Function],
+            }
+          }
+          location={
+            Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "?backPath=%2F",
+            }
+          }
+          match={
+            Object {
+              "isExact": true,
+              "params": Object {},
+              "path": "/",
+              "url": "/",
+            }
+          }
+        >
+          <form
+            method="GET"
+            onSubmit={[Function]}
+            role="search"
+          >
+            <div
+              className="input-group"
+            >
+              <div
+                className="input-group-item"
+              >
+                <input
+                  className="form-control input-group-inset input-group-inset-after"
+                  onChange={[Function]}
+                  placeholder="search-for"
+                  type="text"
+                  value=""
+                />
+                <span
+                  className="input-group-inset-item input-group-inset-item-after"
+                >
+                  <button
+                    className="btn btn-unstyled"
+                    type="submit"
+                  >
+                    <Icon
+                      iconName="search"
+                    >
+                      <svg
+                        className="lexicon-icon lexicon-icon-search"
+                        dangerouslySetInnerHTML={
+                          Object {
+                            "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+                          }
+                        }
+                        data-testid="icon"
+                        focusable="false"
+                        role="presentation"
+                      />
+                    </Icon>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </Search>
+      </withRouter(Search)>
+    </Router>
+  </MemoryRouter>
+</MockRouter>
+`;
+
+exports[`Should render component 1`] = `
+<form
+  method="GET"
+  onSubmit={[Function]}
+  role="search"
+>
+  <div
+    className="input-group"
+  >
+    <div
+      className="input-group-item"
+    >
+      <input
+        className="form-control input-group-inset input-group-inset-after"
+        disabled={true}
+        onChange={[Function]}
+        placeholder="search-for"
+        type="text"
+        value=""
+      />
+      <span
+        className="input-group-inset-item input-group-inset-item-after"
+      >
+        <button
+          className="btn btn-unstyled"
+          disabled={true}
+          type="submit"
+        >
+          <svg
+            className="lexicon-icon lexicon-icon-search"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "<use xlink:href=\\"http://localhost:8080/o/admin-theme/images/lexicon/icons.svg#search\\" />",
+              }
+            }
+            data-testid="icon"
+            focusable="false"
+            role="presentation"
+          />
+        </button>
+      </span>
+    </div>
+  </div>
+</form>
+`;

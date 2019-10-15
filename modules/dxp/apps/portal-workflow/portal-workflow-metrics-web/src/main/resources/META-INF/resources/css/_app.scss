@@ -1,0 +1,53 @@
+.portal-workflow-metrics-app {
+	margin-top: 0 !important;
+	padding-top: 0;
+
+	.alert-container {
+		height: auto;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 800px;
+		padding-top: 1em;
+	}
+
+	.management-bar .navbar-text {
+		color: #6b6c7e;
+	}
+
+	.modal {
+		.modal-dialog.modal-lg {
+			max-width: 800px;
+		}
+
+		&.show {
+			display: block;
+		}
+	}
+
+	.navbar-nav .nav-link.active {
+		pointer-events: none;
+	}
+
+	.sla-form > .sheet {
+		margin-top: 24px;
+
+		> .sheet-section > h3.sheet-subtitle {
+			margin-bottom: 8px;
+		}
+	}
+
+	.table {
+		&.table-fixed {
+			table-layout: fixed;
+			white-space: normal;
+		}
+	}
+
+	.xsmall {
+		font-size: 0.75rem;
+	}
+}
+
+.control-menu-level-1-nav .dropdown-menu-header .dropdown-item {
+	color: #6b6c7e;
+}

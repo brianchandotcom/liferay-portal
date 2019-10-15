@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ReferenceAnnotationCheck" files="modules/private/apps/saml/saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
+	</checkstyle>
+</suppressions>

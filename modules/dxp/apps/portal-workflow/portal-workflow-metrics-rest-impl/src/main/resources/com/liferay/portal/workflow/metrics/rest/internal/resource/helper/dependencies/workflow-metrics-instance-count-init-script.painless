@@ -1,0 +1,10 @@
+state.assigneeUserIdInstanceIds = new HashSet();
+state.assigneeUserIds = params.assigneeUserIds;
+state.endDate = params.endDate;
+state.slaStatuses = params.slaStatuses;
+state.slaStatusMap = new HashMap();
+state.startDate = params.startDate;
+state.statuses = params.statuses;
+state.statusInstanceIds = new HashSet();
+state.taskNameInstanceIds = new HashSet();
+state.taskNames = params.taskNames;

@@ -1,0 +1,9 @@
+apiDir: "../portal-workflow-metrics-rest-api/src/main/java"
+apiPackagePath: "com.liferay.portal.workflow.metrics.rest"
+application:
+    baseURI: "/portal-workflow-metrics"
+    className: "PortalWorkflowMetricsRESTApplication"
+    name: "Liferay.Portal.Workflow.Metrics.REST"
+author: "Rafael Praxedes"
+clientDir: "../portal-workflow-metrics-rest-client/src/main/java"
+testDir: "../portal-workflow-metrics-rest-test/src/testIntegration/java"

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_TOPPER</td>
+	<td>//div[contains(@class,'fragment-entry-link-wrapper')][contains(.,'${key_fragmentName}')]//li[contains(@class,'fragments-editor__topper__title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_LAYOUT_BACKGROUND_IMAGE</td>
 	<td>//div[contains(@class,'layout-content')]//section[contains(@style,'${key_imageName}')]</td>
 	<td></td>

@@ -2915,14 +2915,10 @@ public class JenkinsResultsParserUtil {
 
 		List<String> propertyValues = new ArrayList<>();
 
-		for (String value : propertyValue.split(",")) {
-			String trimmedValue = value.trim();
-
-			if (trimmedValue.startsWith("#")) {
-				continue;
+		for (String value : propertyValue.split("\\s*,\\s*")) {
+			if (!value.startsWith("#")) {
+				propertyValues.add(value);
 			}
-
-			propertyValues.add(value);
 		}
 
 		return String.join(",", propertyValues);

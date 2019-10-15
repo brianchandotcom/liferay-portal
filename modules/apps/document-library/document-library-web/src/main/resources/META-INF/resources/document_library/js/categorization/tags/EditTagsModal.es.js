@@ -62,6 +62,8 @@ const EditTagsModal = ({
 		'add'
 	);
 
+	const fileEntriesLength = fileEntries && fileEntries.length;
+
 	// This makes the component fetch selected items only after mounting it
 	// (a.k.a. first render).
 	useEffect(() => {
@@ -98,7 +100,7 @@ const EditTagsModal = ({
 	}, [
 		fetchTags,
 		fileEntries,
-		fileEntries.length,
+		fileEntriesLength,
 		folderId,
 		isMounted,
 		repositoryId,

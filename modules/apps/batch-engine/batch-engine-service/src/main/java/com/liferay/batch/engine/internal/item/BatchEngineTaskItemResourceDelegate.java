@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.writer;
+package com.liferay.batch.engine.internal.item;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -33,9 +33,9 @@ import org.osgi.framework.ServiceObjects;
 /**
  * @author Ivica cardic
  */
-public class BatchEngineTaskItemWriter implements Closeable {
+public class BatchEngineTaskItemResourceDelegate implements Closeable {
 
-	public BatchEngineTaskItemWriter(
+	public BatchEngineTaskItemResourceDelegate(
 			Company company, String[] itemClassFieldNames,
 			Method resourceMethod,
 			ServiceObjects<Object> resourceServiceObjects, User user)
@@ -50,12 +50,7 @@ public class BatchEngineTaskItemWriter implements Closeable {
 		_resource = _getResource();
 	}
 
-	@Override
-	public void close() {
-		_resourceServiceObjects.ungetService(_resource);
-	}
-
-	public void write(List<?> items) throws Exception {
+	public void addItems(List<?> items) throws Exception {
 		for (Object item : items) {
 			Object[] args = new Object[_resourceMethod.getParameterCount()];
 
@@ -86,6 +81,11 @@ public class BatchEngineTaskItemWriter implements Closeable {
 
 			_resourceMethod.invoke(_resource, args);
 		}
+	}
+
+	@Override
+	public void close() {
+		_resourceServiceObjects.ungetService(_resource);
 	}
 
 	private Object _getResource() throws ReflectiveOperationException {

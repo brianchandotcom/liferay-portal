@@ -18,7 +18,7 @@ import com.liferay.batch.engine.BatchEngineTaskField;
 import com.liferay.batch.engine.BatchEngineTaskMethod;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.ItemClassRegistry;
-import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -89,11 +89,11 @@ public class BatchEngineTaskMethodRegistryImpl
 
 	@Override
 	public UnsafeBiFunction
-		<Company, User, BatchEngineTaskItemWriter, ReflectiveOperationException>
-			getUnsafeBiFunction(
-				String apiVersion,
-				BatchEngineTaskOperation batchEngineTaskOperation,
-				String itemClassName) {
+		<Company, User, BatchEngineTaskItemResourceDelegate,
+		 ReflectiveOperationException> getUnsafeBiFunction(
+			String apiVersion,
+			BatchEngineTaskOperation batchEngineTaskOperation,
+			String itemClassName) {
 
 		return _unsafeBiFunctions.get(
 			new FactoryKey(
@@ -106,7 +106,7 @@ public class BatchEngineTaskMethodRegistryImpl
 	private final Map
 		<FactoryKey,
 		 UnsafeBiFunction
-			 <Company, User, BatchEngineTaskItemWriter,
+			 <Company, User, BatchEngineTaskItemResourceDelegate,
 			  ReflectiveOperationException>> _unsafeBiFunctions =
 				new ConcurrentHashMap<>();
 
@@ -191,9 +191,10 @@ public class BatchEngineTaskMethodRegistryImpl
 
 					_unsafeBiFunctions.put(
 						factoryKey,
-						(company, user) -> new BatchEngineTaskItemWriter(
-							company, itemClassFieldNames, resourceMethod,
-							serviceObjects, user));
+						(company, user) ->
+							new BatchEngineTaskItemResourceDelegate(
+								company, itemClassFieldNames, resourceMethod,
+								serviceObjects, user));
 				}
 				catch (NoSuchMethodException nsme) {
 					throw new IllegalStateException(nsme);

@@ -17,10 +17,10 @@ package com.liferay.batch.engine.internal;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskExecutor;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegate;
+import com.liferay.batch.engine.internal.item.BatchEngineTaskItemResourceDelegateFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineTaskItemReaderFactory;
-import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
-import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriterFactory;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
 import com.liferay.petra.string.StringPool;
@@ -73,8 +73,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
 					StringPool.COMMA));
 
-		_batchEngineTaskItemWriterFactory =
-			new BatchEngineTaskItemWriterFactory(
+		_batchEngineTaskItemResourceDelegateFactory =
+			new BatchEngineTaskItemResourceDelegateFactory(
 				_batchEngineTaskMethodServiceRegistry, _companyLocalService,
 				_userLocalService);
 	}
@@ -115,14 +115,15 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 	private void _commitItems(
 			BatchEngineTask batchEngineTask,
-			BatchEngineTaskItemWriter batchEngineTaskItemWriter,
+			BatchEngineTaskItemResourceDelegate
+				batchEngineTaskItemResourceDelegate,
 			List<Object> items)
 		throws Throwable {
 
 		TransactionInvokerUtil.invoke(
 			_transactionConfig,
 			() -> {
-				batchEngineTaskItemWriter.write(items);
+				batchEngineTaskItemResourceDelegate.addItems(items);
 
 				_batchEngineTaskLocalService.updateBatchEngineTask(
 					batchEngineTask);
@@ -146,8 +147,10 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 		try (BatchEngineTaskItemReader batchEngineTaskItemReader =
 				_batchEngineTaskItemReaderFactory.create(batchEngineTask);
-			BatchEngineTaskItemWriter batchEngineTaskItemWriter =
-				_batchEngineTaskItemWriterFactory.create(batchEngineTask)) {
+			BatchEngineTaskItemResourceDelegate
+				batchEngineTaskItemResourceDelegate =
+					_batchEngineTaskItemResourceDelegateFactory.create(
+						batchEngineTask)) {
 
 			List<Object> items = new ArrayList<>();
 
@@ -162,14 +165,17 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 
 				if (items.size() == batchEngineTask.getBatchSize()) {
 					_commitItems(
-						batchEngineTask, batchEngineTaskItemWriter, items);
+						batchEngineTask, batchEngineTaskItemResourceDelegate,
+						items);
 
 					items.clear();
 				}
 			}
 
 			if (!items.isEmpty()) {
-				_commitItems(batchEngineTask, batchEngineTaskItemWriter, items);
+				_commitItems(
+					batchEngineTask, batchEngineTaskItemResourceDelegate,
+					items);
 			}
 		}
 		finally {
@@ -186,7 +192,8 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	private BatchEngineTaskItemReaderFactory _batchEngineTaskItemReaderFactory;
-	private BatchEngineTaskItemWriterFactory _batchEngineTaskItemWriterFactory;
+	private BatchEngineTaskItemResourceDelegateFactory
+		_batchEngineTaskItemResourceDelegateFactory;
 
 	@Reference
 	private BatchEngineTaskLocalService _batchEngineTaskLocalService;

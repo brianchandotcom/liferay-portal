@@ -560,7 +560,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\\W(\\w+)\\s+" + variableName + "\\W");
+			"\\W(\\w+)\\s+" + variableName + "\\s*[;=),]");
 
 		Matcher matcher = pattern.matcher(content);
 

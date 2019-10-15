@@ -28,6 +28,27 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-102526. User can activate fragment configuration by clicking on topper."
+	@priority = "5"
+	test ActivateFragmentConfigurationViaTopper {
+		property portal.acceptance = "true";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addBasicComponent(fragmentName = "Button");
+
+		PageEditor.clickFragmentTopper(fragmentName = "Button");
+
+		AssertVisible(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_CONFIGURATION_BUTTON");
+	}
+
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
 	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {

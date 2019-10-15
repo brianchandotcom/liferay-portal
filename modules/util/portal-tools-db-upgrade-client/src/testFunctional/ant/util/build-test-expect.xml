@@ -7,8 +7,12 @@
 		<attribute name="expect.file" />
 
 		<sequential>
+			<delete failonerror="false" file="temp.expect" />
+
 			<copy
+				failonerror = "true"
 				file="${db.upgrade.client.src.dir}/src/testFunctional/dependencies/@{expect.file}"
+				force = "true"
 				overwrite="true"
 				tofile="temp.expect"
 			/>
@@ -29,6 +33,11 @@
 
 			<chmod
 				file="temp.expect"
+				perm="+x"
+			/>
+
+			<chmod
+				file="@{db.upgrade.client.home}/db_upgrade@{file.suffix.bat}"
 				perm="+x"
 			/>
 

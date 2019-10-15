@@ -8,7 +8,7 @@
 
 		<sequential>
 			<copy
-				file="../dependencies/@{expect.file}"
+				file="${db.upgrade.client.src.dir}/src/testFunctional/dependencies/@{expect.file}"
 				overwrite="true"
 				tofile="temp.expect"
 			/>

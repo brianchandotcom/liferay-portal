@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <project basedir="." name="portal-test-db-upgrade-client" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="${liferay.home}/build-test.xml" />
+	<import file="${project.dir}/build-test.xml" />
 	<import file="util/build-test-expect.xml" />
 
 	<macrodef name="clean-database-upgrade-client">
@@ -214,7 +214,7 @@
 	<target name="check-upgrade-properties-app-db-set">
 		<get-database-upgrade-client-paths />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -228,7 +228,7 @@
 	<target name="check-upgrade-properties-app-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -242,7 +242,7 @@
 	<target name="check-upgrade-properties-db-ext-set">
 		<get-database-upgrade-client-paths />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/app-server.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/app-server.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"
@@ -256,11 +256,11 @@
 	<target name="check-upgrade-properties-none-set">
 		<get-database-upgrade-client-paths />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/app-server.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/app-server.properties" />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
 
-		<delete failonerror="false" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+		<delete failonerror="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
 
 		<run-expect
 			db.upgrade.client.home="${db.upgrade.client.home}"

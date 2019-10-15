@@ -19,6 +19,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -129,9 +132,18 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
-		Assert.assertNotNull(
-			layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
+		JSONObject expectedLayoutDataJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				_read("expected_layout_data.json"));
+
+		JSONObject actualLayoutDataJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				layoutPageTemplateStructure.getData(
+					SegmentsExperienceConstants.ID_DEFAULT));
+
+		Assert.assertEquals(
+			expectedLayoutDataJSONObject.toString(),
+			actualLayoutDataJSONObject.toString());
 
 		Layout persistedPublishedLayout = _layoutLocalService.getLayout(
 			originalLayout.getPlid());
@@ -226,6 +238,11 @@ public class ConvertLayoutMVCActionCommandTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private Company _company;

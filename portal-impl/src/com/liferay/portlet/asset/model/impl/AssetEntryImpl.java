@@ -81,7 +81,7 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 
 	public int getViewCount() {
 		return (int)ViewCountServiceUtil.getViewCount(
-			getCompanyId(), getClassNameId(), getPrimaryKey());
+			getCompanyId(), getClassNameId(), getClassPK());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(AssetEntryImpl.class);

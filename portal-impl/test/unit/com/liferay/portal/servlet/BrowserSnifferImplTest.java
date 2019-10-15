@@ -140,11 +140,15 @@ public class BrowserSnifferImplTest {
 
 				String[] parts = StringUtil.split(line, CharPool.COMMA);
 
-				if (parts.length != 4) {
+				if (parts.length < 4) {
 					continue;
 				}
 
 				String userAgent = parts[3].trim();
+
+				if (parts.length == 5) {
+					userAgent += ", " + parts[4].trim();
+				}
 
 				Assert.assertEquals(
 					parts[0].trim() + " version", parts[1].trim(),

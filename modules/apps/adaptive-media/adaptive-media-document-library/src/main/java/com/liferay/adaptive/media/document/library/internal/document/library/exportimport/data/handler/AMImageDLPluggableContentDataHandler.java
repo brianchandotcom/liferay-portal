@@ -146,14 +146,12 @@ public class AMImageDLPluggableContentDataHandler
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(4);
-
-					sb.append("Unable to find adaptive media for file entry ");
-					sb.append(fileEntry.getFileEntryId());
-					sb.append(" and configuration ");
-					sb.append(configurationUuidOptional.get());
-
-					_log.warn(sb.toString(), e);
+					_log.warn(
+						StringBundler.concat(
+							"Unable to find adaptive media for file entry ",
+							fileEntry.getFileEntryId(), " and configuration ",
+							configurationUuidOptional.get()),
+						e);
 				}
 
 				return;

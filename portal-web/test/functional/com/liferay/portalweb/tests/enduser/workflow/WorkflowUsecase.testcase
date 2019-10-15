@@ -893,6 +893,8 @@ definition {
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Approve");
 
+		Button.clickDone();
+
 		Alert.viewSuccessMessage();
 
 		Navigator.gotoPage(pageName = "Blogs Page");

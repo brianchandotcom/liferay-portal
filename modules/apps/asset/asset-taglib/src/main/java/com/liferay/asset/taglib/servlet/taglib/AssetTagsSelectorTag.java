@@ -48,7 +48,6 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Antonio Pol
  */
-@Deprecated
 public class AssetTagsSelectorTag extends IncludeTag {
 
 	public String getAddCallback() {

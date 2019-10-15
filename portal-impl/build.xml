@@ -326,7 +326,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<property name="com.liferay.portal.tools.service.builder.ignore.local" value="true" />
 
-		<gradle-execute dir="../modules" task="buildService">
+		<gradle-execute dir="../modules" forcedcacheenabled="false" task="buildService">
 			<arg value="--continue" />
 			<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
 			<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=${com.liferay.portal.tools.service.builder.ignore.local}" />

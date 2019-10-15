@@ -118,7 +118,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				null,
 				Arrays.asList(
 					new StringJavaFileObject(
-						className.substring(className.lastIndexOf('.') + 1),
+						className.substring(
+							className.lastIndexOf(CharPool.PERIOD) + 1),
 						_charArrayWriter.toString())));
 
 			if (_log.isDebugEnabled()) {
@@ -184,9 +185,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 	@Override
 	public long getClassLastModified() {
-		String className = _jspCompilationContext.getFullClassName();
-
-		return _jspRuntimeContext.getBytecodeBirthTime(className);
+		return _jspRuntimeContext.getBytecodeBirthTime(
+			_jspCompilationContext.getFullClassName());
 	}
 
 	@Override
@@ -308,7 +308,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 				outputFileName = outputFileName.concat(
 					bytecodeFileClassName.substring(
-						bytecodeFileClassName.lastIndexOf('.') + 1)
+						bytecodeFileClassName.lastIndexOf(CharPool.PERIOD) + 1)
 				).concat(
 					".class"
 				);
@@ -516,9 +516,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					public Void run() {
 						_addDependenciesToClassPath();
 
-						return null;
-					}
-
+					return null;
 				});
 		}
 		else {

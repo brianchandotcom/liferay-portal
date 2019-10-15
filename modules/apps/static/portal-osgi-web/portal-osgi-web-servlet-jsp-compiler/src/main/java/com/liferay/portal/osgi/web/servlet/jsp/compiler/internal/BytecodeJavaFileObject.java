@@ -46,6 +46,7 @@ public class BytecodeJavaFileObject extends BaseJavaFileObject {
 	public OutputStream openOutputStream() {
 		return new ByteArrayOutputStream() {
 
+			@Override
 			public void close() {
 				_bytecode = toByteArray();
 			}

@@ -1053,9 +1053,9 @@ public class AlloyMockUtil {
 
 		@Override
 		public void initialize(
-			Servlet servlet, ServletRequest request, ServletResponse response,
-			String errorPageURL, boolean needsSession, int bufferSize,
-			boolean autoFlush) {
+			Servlet servlet, ServletRequest servletRequest,
+			ServletResponse servletResponse, String errorPageURL,
+			boolean needsSession, int bufferSize, boolean autoFlush) {
 
 			throw new UnsupportedOperationException();
 		}

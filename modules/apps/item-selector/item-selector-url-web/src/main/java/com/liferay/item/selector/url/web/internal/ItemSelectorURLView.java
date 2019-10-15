@@ -76,7 +76,7 @@ public class ItemSelectorURLView
 
 	@Override
 	public void renderHTML(
-			ServletRequest request, ServletResponse response,
+			ServletRequest servletRequest, ServletResponse servletResponse,
 			URLItemSelectorCriterion urlItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
@@ -89,11 +89,11 @@ public class ItemSelectorURLView
 		ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext =
 			new ItemSelectorURLViewDisplayContext(this, itemSelectedEventName);
 
-		request.setAttribute(
+		servletRequest.setAttribute(
 			ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT,
 			itemSelectorURLViewDisplayContext);
 
-		requestDispatcher.include(request, response);
+		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
 	@Reference(

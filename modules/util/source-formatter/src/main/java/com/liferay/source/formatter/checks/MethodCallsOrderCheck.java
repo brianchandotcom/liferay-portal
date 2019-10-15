@@ -24,6 +24,7 @@ import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -156,6 +157,54 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 		return false;
 	}
 
+	private String _sortAnonymousClassMethodCalls(
+		String content, String methodName, String... variableTypeNames) {
+
+		for (String variableTypeName : variableTypeNames) {
+			Pattern pattern = Pattern.compile(
+				"\\Wnew " + variableTypeName + "[(<][^;]*?\\) \\{\n");
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				int lineNumber = getLineNumber(content, matcher.end() - 1);
+
+				if (!Objects.equals(
+						StringUtil.trim(getLine(content, lineNumber + 1)),
+						"{")) {
+
+					continue;
+				}
+
+				int x = getLineStartPos(content, lineNumber + 2);
+
+				int y = content.indexOf("\t}\n", x);
+
+				if (y == -1) {
+					continue;
+				}
+
+				int z = content.indexOf("\n\n", x);
+
+				if ((z != -1) && (z < y)) {
+					y = z;
+				}
+
+				String codeBlock = content.substring(x, y);
+
+				String sortedCodeBlock = _getSortedCodeBlock(
+					codeBlock, methodName + "(");
+
+				if (!codeBlock.equals(sortedCodeBlock)) {
+					return StringUtil.replaceFirst(
+						content, codeBlock, sortedCodeBlock, matcher.start());
+				}
+			}
+		}
+
+		return content;
+	}
+
 	private String _sortChainedMethodCalls(
 		String content, String methodName, int expectedParameterCount,
 		String... variableTypeNames) {
@@ -264,6 +313,9 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 	private String _sortMethodCalls(
 		String fileName, String content, String methodName,
 		String... variableTypeNames) {
+
+		content = _sortAnonymousClassMethodCalls(
+			content, methodName, variableTypeNames);
 
 		if (!content.contains("." + methodName + "(")) {
 			return content;

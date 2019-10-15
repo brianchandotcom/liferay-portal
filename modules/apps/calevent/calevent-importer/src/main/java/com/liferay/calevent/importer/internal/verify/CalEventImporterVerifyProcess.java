@@ -1333,21 +1333,21 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		new HashMap<Integer, Frequency>() {
 			{
 				put(TZSRecurrence.DAILY, Frequency.DAILY);
-				put(TZSRecurrence.WEEKLY, Frequency.WEEKLY);
 				put(TZSRecurrence.MONTHLY, Frequency.MONTHLY);
+				put(TZSRecurrence.WEEKLY, Frequency.WEEKLY);
 				put(TZSRecurrence.YEARLY, Frequency.YEARLY);
 			}
 		};
 	private static final Map<Integer, Weekday> _weekdays =
 		new HashMap<Integer, Weekday>() {
 			{
-				put(Calendar.SUNDAY, Weekday.SUNDAY);
+				put(Calendar.FRIDAY, Weekday.FRIDAY);
 				put(Calendar.MONDAY, Weekday.MONDAY);
+				put(Calendar.SATURDAY, Weekday.SATURDAY);
+				put(Calendar.SUNDAY, Weekday.SUNDAY);
+				put(Calendar.THURSDAY, Weekday.THURSDAY);
 				put(Calendar.TUESDAY, Weekday.TUESDAY);
 				put(Calendar.WEDNESDAY, Weekday.WEDNESDAY);
-				put(Calendar.THURSDAY, Weekday.THURSDAY);
-				put(Calendar.FRIDAY, Weekday.FRIDAY);
-				put(Calendar.SATURDAY, Weekday.SATURDAY);
 			}
 		};
 

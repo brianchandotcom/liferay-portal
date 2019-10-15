@@ -213,8 +213,8 @@ public class DDMIndexerImplTest {
 		Map<String, String> map = _withSortableValues(
 			new HashMap<String, String>() {
 				{
-					put("ddm__text__NNNNN__text1_ja_JP", fieldValueJP);
 					put("ddm__text__NNNNN__text1_en_US", fieldValueUS);
+					put("ddm__text__NNNNN__text1_ja_JP", fieldValueJP);
 				}
 			});
 

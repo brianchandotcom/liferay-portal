@@ -182,9 +182,9 @@ public class OrganizationMultiLanguageSearchTest {
 		return new HashMap<String, String>() {
 			{
 				put("name", keywords);
+				put("name_sortable", keywords);
 				put("nameTreePath", keywords);
 				put("nameTreePath_String_sortable", keywords);
-				put("name_sortable", keywords);
 			}
 		};
 	}

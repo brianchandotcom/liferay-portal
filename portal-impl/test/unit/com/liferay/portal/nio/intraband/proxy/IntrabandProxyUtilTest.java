@@ -2494,14 +2494,14 @@ public class IntrabandProxyUtilTest {
 				put(boolean.class, Boolean.FALSE);
 				put(byte.class, (byte)0);
 				put(char.class, (char)0);
+				put(Date.class, null);
 				put(double.class, (double)0);
 				put(float.class, (float)0);
 				put(int.class, 0);
 				put(long.class, (long)0);
+				put(Object.class, null);
 				put(short.class, (short)0);
 				put(String.class, null);
-				put(Date.class, null);
-				put(Object.class, null);
 				put(void.class, null);
 			}
 		};
@@ -2512,14 +2512,14 @@ public class IntrabandProxyUtilTest {
 				put(boolean.class, Boolean.TRUE);
 				put(byte.class, (byte)11);
 				put(char.class, 'X');
+				put(Date.class, new Date());
 				put(double.class, 12.345);
 				put(float.class, 5.325F);
 				put(int.class, 127);
 				put(long.class, (long)82465);
+				put(Object.class, new Locale("en"));
 				put(short.class, (short)-35);
 				put(String.class, "Hello");
-				put(Date.class, new Date());
-				put(Object.class, new Locale("en"));
 				put(void.class, null);
 			}
 		};

@@ -95,8 +95,8 @@ public class UserInitialsGeneratorImpl implements UserInitialsGenerator {
 		new HashMap<String, Integer>(3) {
 			{
 				put(LanguageConstants.VALUE_FIRST_NAME, 0);
-				put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
 				put(LanguageConstants.VALUE_LAST_NAME, 2);
+				put(LanguageConstants.VALUE_MIDDLE_NAME, 1);
 			}
 		};
 

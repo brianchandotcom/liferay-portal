@@ -117,8 +117,8 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 
 		Map<String, Object> properties = new HashMap<String, Object>() {
 			{
-				put("ddm.form.instance.record.writer.type", "csv");
 				put("ddm.form.instance.record.writer.extension", "csv");
+				put("ddm.form.instance.record.writer.type", "csv");
 			}
 		};
 
@@ -142,8 +142,8 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 
 		Map<String, Object> properties = new HashMap<String, Object>() {
 			{
-				put("ddm.form.instance.record.writer.type", "csv");
 				put("ddm.form.instance.record.writer.extension", "csv");
+				put("ddm.form.instance.record.writer.type", "csv");
 			}
 		};
 
@@ -160,8 +160,8 @@ public class DDMFormInstanceRecordWriterTrackerImplTest {
 
 		Map<String, Object> properties = new HashMap<String, Object>() {
 			{
-				put("ddm.form.instance.record.writer.type", "json");
 				put("ddm.form.instance.record.writer.extension", "json");
+				put("ddm.form.instance.record.writer.type", "json");
 			}
 		};
 

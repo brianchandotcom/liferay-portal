@@ -139,14 +139,14 @@ public class PollsQuestionMultiLanguageSearchTest {
 		pollsQuestionFixture.createPollsQuestion(
 			new HashMap<Locale, String>() {
 				{
-					put(LocaleUtil.US, _KEYWORD_US);
 					put(LocaleUtil.JAPAN, _KEYWORD_JP);
+					put(LocaleUtil.US, _KEYWORD_US);
 				}
 			},
 			new HashMap<Locale, String>() {
 				{
-					put(LocaleUtil.US, _KEYWORD_US);
 					put(LocaleUtil.JAPAN, _KEYWORD_JP);
+					put(LocaleUtil.US, _KEYWORD_US);
 				}
 			});
 	}

@@ -428,11 +428,11 @@ public class AssetDisplayPageFormProcessorTest {
 
 			_attributes = new HashMap<String, Object>() {
 				{
-					put(WebKeys.THEME_DISPLAY, _getThemeDisplay());
-					put(WebKeys.CURRENT_URL, RandomTestUtil.randomString());
 					put(
 						PortletServlet.PORTLET_SERVLET_REQUEST,
 						new MockHttpServletRequest());
+					put(WebKeys.CURRENT_URL, RandomTestUtil.randomString());
+					put(WebKeys.THEME_DISPLAY, _getThemeDisplay());
 				}
 			};
 

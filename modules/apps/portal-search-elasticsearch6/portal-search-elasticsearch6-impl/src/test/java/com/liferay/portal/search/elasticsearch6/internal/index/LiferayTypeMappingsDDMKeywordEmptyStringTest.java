@@ -58,7 +58,6 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 		index(
 			new HashMap<String, Object>() {
 				{
-					put(field1, RandomTestUtil.randomString());
 					put(ddmField2, StringPool.BLANK);
 					put(ddmField3, new Date());
 					put(ddmField4, "2011-07-01T01:32:33");
@@ -67,13 +66,13 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 					put(ddmField7, true);
 					put(ddmField8, "true");
 					put(ddmField9, "NULL");
+					put(field1, RandomTestUtil.randomString());
 				}
 			});
 
 		index(
 			new HashMap<String, Object>() {
 				{
-					put(field1, StringPool.BLANK);
 					put(ddmField2, StringPool.BLANK);
 					put(ddmField3, StringPool.BLANK);
 					put(ddmField4, StringPool.BLANK);
@@ -82,13 +81,13 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 					put(ddmField7, StringPool.BLANK);
 					put(ddmField8, StringPool.BLANK);
 					put(ddmField9, StringPool.BLANK);
+					put(field1, StringPool.BLANK);
 				}
 			});
 
 		index(
 			new HashMap<String, Object>() {
 				{
-					put(field1, RandomTestUtil.randomString());
 					put(ddmField2, RandomTestUtil.randomString());
 					put(ddmField3, RandomTestUtil.randomString());
 					put(ddmField4, RandomTestUtil.randomString());
@@ -97,6 +96,7 @@ public class LiferayTypeMappingsDDMKeywordEmptyStringTest {
 					put(ddmField7, StringPool.FALSE);
 					put(ddmField8, RandomTestUtil.randomString());
 					put(ddmField9, RandomTestUtil.randomString());
+					put(field1, RandomTestUtil.randomString());
 				}
 			});
 

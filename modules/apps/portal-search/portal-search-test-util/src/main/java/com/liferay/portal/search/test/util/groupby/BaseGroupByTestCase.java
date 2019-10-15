@@ -230,17 +230,17 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	public void testGroupByTermsSizeDefault() throws Exception {
 		Map<String, Integer> map1 = new HashMap<String, Integer>() {
 			{
-				put("one", 1);
-				put("two", 2);
-				put("three", 2);
-				put("four", 2);
-				put("five", 2);
-				put("six", 2);
-				put("seven", 2);
 				put("eight", 2);
-				put("nine", 2);
-				put("ten", 2);
 				put("eleven", 2);
+				put("five", 2);
+				put("four", 2);
+				put("nine", 2);
+				put("one", 1);
+				put("seven", 2);
+				put("six", 2);
+				put("ten", 2);
+				put("three", 2);
+				put("two", 2);
 			}
 		};
 
@@ -319,17 +319,17 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 	public void testGroupByTermsSizeMoreThanDefault() throws Exception {
 		Map<String, Integer> map1 = new HashMap<String, Integer>() {
 			{
-				put("one", 1);
-				put("two", 2);
-				put("three", 2);
-				put("four", 2);
-				put("five", 2);
-				put("six", 2);
-				put("seven", 2);
 				put("eight", 2);
-				put("nine", 2);
-				put("ten", 2);
 				put("eleven", 2);
+				put("five", 2);
+				put("four", 2);
+				put("nine", 2);
+				put("one", 1);
+				put("seven", 2);
+				put("six", 2);
+				put("ten", 2);
+				put("three", 2);
+				put("two", 2);
 			}
 		};
 

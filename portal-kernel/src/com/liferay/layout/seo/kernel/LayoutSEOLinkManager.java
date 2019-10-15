@@ -35,7 +35,7 @@ public interface LayoutSEOLinkManager {
 		throw new UnsupportedOperationException();
 	}
 
-	public default String getLayoutTitle(
+	public default String getPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, Locale locale)
@@ -49,7 +49,7 @@ public interface LayoutSEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws PortalException;
 
-	public default String getPageTitle(
+	public default String getFullPageTitle(
 			Layout layout, String portletId, String tilesTitle,
 			ListMergeable<String> titleListMergeable,
 			ListMergeable<String> subtitleListMergeable, String companyName,

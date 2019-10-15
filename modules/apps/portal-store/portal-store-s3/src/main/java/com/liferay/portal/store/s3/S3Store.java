@@ -244,6 +244,36 @@ public class S3Store extends BaseStore {
 		return objectMetadata.getContentLength();
 	}
 
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		String key = _s3KeyTransformer.getFileKey(
+			companyId, repositoryId, fileName);
+
+		List<S3ObjectSummary> s3ObjectSummaries = getS3ObjectSummaries(key);
+
+		if (s3ObjectSummaries.isEmpty()) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		String[] versions = new String[s3ObjectSummaries.size()];
+
+		for (int i = 0; i < s3ObjectSummaries.size(); i++) {
+			S3ObjectSummary s3ObjectSummary = s3ObjectSummaries.get(i);
+
+			String versionKey = s3ObjectSummary.getKey();
+
+			versions[i] = versionKey.substring(
+				versionKey.lastIndexOf(CharPool.SLASH) + 1);
+		}
+
+		Arrays.sort(versions);
+
+		return versions;
+	}
+
 	public TransferManager getTransferManager() {
 		return _transferManager;
 	}

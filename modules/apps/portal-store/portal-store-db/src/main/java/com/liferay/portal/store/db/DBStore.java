@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.AutoDeleteFileInputStream;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -45,6 +46,7 @@ import java.nio.channels.FileChannel;
 
 import java.sql.Blob;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -232,6 +234,31 @@ public class DBStore extends BaseStore {
 		}
 
 		return dlContent.getSize();
+	}
+
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		List<DLContent> dlContents = _dlContentLocalService.getContents(
+			companyId, repositoryId, fileName);
+
+		if (dlContents.isEmpty()) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		String[] versions = new String[dlContents.size()];
+
+		for (int i = 0; i < dlContents.size(); i++) {
+			DLContent dlContent = dlContents.get(i);
+
+			versions[i] = dlContent.getVersion();
+		}
+
+		Arrays.sort(versions);
+
+		return versions;
 	}
 
 	@Override

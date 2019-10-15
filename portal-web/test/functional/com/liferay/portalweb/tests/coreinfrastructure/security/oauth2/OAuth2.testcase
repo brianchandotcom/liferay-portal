@@ -667,6 +667,20 @@ definition {
 			applicationName = "OAuth Application",
 			checkboxUncheckList = "Authorization Code");
 
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(			
+			applicationName = "OAuth Application",
+			resourceCheckList = "liferay-json-web-services.everything.read,liferay-json-web-services.everything.write,liferay-json-web-services.everything.read.documents.download,liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "OAuth Application");
+
+		AssertTextEquals(locator1 = "Portlet#HEADER", value1 = "OAuth Application");
+
 		var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
 		var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
 		var portalURL = PropsUtil.get("portal.url");
@@ -687,6 +701,12 @@ definition {
 		OAuth2.revokeGrantedAuthViaAdmin(
 			applicationName = "OAuth Application",
 			userName = "Test Test");
+
+		OAuth2.viewScopes(
+			applicationName = "OAuth Application",
+			resourceCheckList = "liferay-json-web-services.everything.read,liferay-json-web-services.everything.write,liferay-json-web-services.everything.read.documents.download,liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services"
+		);
 
 		OAuth2.viewGrantedAuthViaAdmin(
 			applicationName = "OAuth Application",

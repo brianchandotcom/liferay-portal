@@ -1,6 +1,8 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:application-list:application-list-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
+	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

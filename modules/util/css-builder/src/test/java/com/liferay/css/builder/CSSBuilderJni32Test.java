@@ -23,14 +23,14 @@ import org.junit.runners.Parameterized;
  * @author Andrea Di Giorgi
  */
 @RunWith(Parameterized.class)
-public class CSSBuilderTest extends BaseCSSBuilderJniTestCase {
+public class CSSBuilderJni32Test extends BaseCSSBulderJni32TestCase {
 
 	@Parameterized.Parameters(name = "{0}")
 	public static String[] getSeparators() {
 		return new String[] {"=", " "};
 	}
 
-	public CSSBuilderTest(String separator) {
+	public CSSBuilderJni32Test(String separator) {
 		_separator = separator;
 	}
 

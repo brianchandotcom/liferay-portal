@@ -45,10 +45,10 @@ public class ExperimentStatusExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			segmentsExperimentStatusException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

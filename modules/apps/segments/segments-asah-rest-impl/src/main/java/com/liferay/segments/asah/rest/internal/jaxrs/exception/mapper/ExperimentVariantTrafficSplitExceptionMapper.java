@@ -46,10 +46,10 @@ public class ExperimentVariantTrafficSplitExceptionMapper
 
 		return Response.status(
 			400
-		).type(
-			MediaType.TEXT_PLAIN
 		).entity(
 			segmentsExperimentRelSplitException.getMessage()
+		).type(
+			MediaType.TEXT_PLAIN
 		).build();
 	}
 

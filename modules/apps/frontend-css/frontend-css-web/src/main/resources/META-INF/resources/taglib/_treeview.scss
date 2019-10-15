@@ -1,0 +1,80 @@
+.lfr-treeview {
+	&-label input:focus + label {
+		border-radius: 2px;
+		box-shadow: 0 0 0 0.125rem #fff, 0 0 0 0.25rem rgba(11, 95, 255, 0.5);
+	}
+
+	&-node-list {
+		padding-left: 12px;
+		position: relative;
+
+		&:before {
+			border-left: #e7e7ed 1px solid;
+			content: '';
+			display: block;
+			height: 100%;
+			left: 16px;
+			position: absolute;
+			top: 0;
+			width: 0;
+		}
+	}
+
+	&-node-list-item {
+		position: relative;
+
+		&:not(:first-child) {
+			margin-top: 0.25em;
+		}
+
+		.form-check-card {
+			margin-bottom: 0;
+		}
+
+		.card-body {
+			padding: 0.5em 0;
+		}
+
+		&__button {
+			background: transparent;
+			border: none;
+			display: block;
+			left: -11px;
+			padding: 10px;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+
+			&-icon {
+				background-color: #e7e7ed;
+				border-radius: 2px;
+				box-shadow: 0 0 0 0 #fff, 0 0 0 0 rgba(11, 95, 255, 0.5);
+				color: #272833;
+				display: block;
+				height: 12px;
+				padding: 3px;
+				transition: box-shadow ease 0.3s;
+				width: 12px;
+			}
+
+			&:focus {
+				outline: none;
+			}
+
+			&:focus &-icon {
+				box-shadow: 0 0 0 0.125rem #fff,
+				0 0 0 0.25rem rgba(11, 95, 255, 0.5);
+			}
+		}
+
+		&__node {
+			margin-left: 1.25em;
+			margin-right: 1em;
+		}
+
+		&__children {
+			margin-top: 0.25em;
+			padding-left: 1em;
+		}
+	}
+}

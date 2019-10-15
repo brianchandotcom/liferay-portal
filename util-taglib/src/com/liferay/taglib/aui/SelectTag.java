@@ -38,35 +38,6 @@ import javax.servlet.jsp.tagext.BodyTag;
  */
 public class SelectTag extends BaseSelectTag implements BodyTag {
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addRequiredValidatorTag() {
-		super.addRequiredValidatorTag();
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addValidatorTag(
-		String validatorName, ValidatorTag validatorTag) {
-
-		super.addValidatorTag(validatorName, validatorTag);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public int doEndTag() throws JspException {
-		return super.doEndTag();
-	}
-
 	@Override
 	public int doStartTag() throws JspException {
 		addModelValidatorTags();
@@ -230,14 +201,6 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 			setNamespacedAttribute(
 				httpServletRequest, "required", Boolean.TRUE.toString());
 		}
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	protected void updateFormValidators() {
-		super.updateFormValidatorTags();
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

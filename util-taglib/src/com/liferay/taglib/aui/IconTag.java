@@ -16,7 +16,6 @@ package com.liferay.taglib.aui;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -24,18 +23,12 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseIconTag;
-import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.ui.MessageTag;
 import com.liferay.taglib.util.InlineUtil;
 
-import java.io.IOException;
-
 import java.util.Objects;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
@@ -46,39 +39,6 @@ import javax.servlet.jsp.PageContext;
  * @author Julio Camarero
  */
 public class IconTag extends BaseIconTag {
-
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             DirectTag#doTagAsString(HttpServletRequest,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	public static String doTag(
-			String cssClass, String image, String markupView,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
-
-		IconTag iconTag = new IconTag();
-
-		iconTag.setCssClass(cssClass);
-		iconTag.setImage(image);
-		iconTag.setMarkupView(markupView);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		try {
-			iconTag.doTag(
-				httpServletRequest,
-				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter));
-		}
-		catch (JspException je) {
-			throw new ServletException(je);
-		}
-
-		return unsyncStringWriter.toString();
-	}
 
 	@Override
 	public String getId() {

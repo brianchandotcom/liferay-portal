@@ -43,16 +43,16 @@ PreviewSeo.propTypes = {
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({portletNamespace, suffixTitle, targetsIds}) => {
+const PreviewSeoContainer = ({portletNamespace, suffixTitle, targets}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
 	const [url, setUrl] = useState('');
 
-	const handlerInputChange = ({type, event}) => {
-		const value =
-			(event.target && event.target.value) || event.target.placeholder;
-		if (typeof value === undefined) {
-			return;
+	const handlerInputChange = ({type, event, usePlaceholderAsFallback}) => {
+		let value = event.target && event.target.value;
+
+		if (value === '' && usePlaceholderAsFallback) {
+			value = event.target.placeholder;
 		}
 
 		if (type === 'description') {
@@ -65,32 +65,29 @@ const PreviewSeoContainer = ({portletNamespace, suffixTitle, targetsIds}) => {
 	};
 
 	useEffect(() => {
-		const inputs = Object.entries(targetsIds).reduce(
-			(memo, [key, targetId]) => {
-				const listener = event => {
-					handlerInputChange({event, type: key});
-				};
+		const inputs = targets.map(({id, type, usePlaceholderAsFallback}) => {
+			const listener = event => {
+				handlerInputChange({
+					event,
+					type,
+					usePlaceholderAsFallback
+				});
+			};
 
-				const node = document.getElementById(
-					`_${portletNamespace}_${targetId}`
-				);
+			const node = document.getElementById(`_${portletNamespace}_${id}`);
 
-				node.addEventListener('input', listener);
-				node.dispatchEvent(new Event('input'));
+			node.addEventListener('input', listener);
+			node.dispatchEvent(new Event('input'));
 
-				memo[key] = {listener, node};
-
-				return memo;
-			},
-			{}
-		);
+			return {listener, node};
+		});
 
 		return () => {
-			Object.values(inputs).forEach(({node, listener}) =>
+			inputs.forEach(({listener, node}) =>
 				node.removeEventListener('input', listener)
 			);
 		};
-	}, [portletNamespace, targetsIds]);
+	}, [portletNamespace, targets]);
 
 	return (
 		<PreviewSeo
@@ -103,10 +100,13 @@ const PreviewSeoContainer = ({portletNamespace, suffixTitle, targetsIds}) => {
 };
 
 PreviewSeoContainer.propTypes = {
-	targetsIds: PropTypes.shape({
-		description: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired
-	}).isRequired
+	targets: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			type: PropTypes.string.isRequired,
+			usePlaceholderAsFallback: PropTypes.bool
+		})
+	).isRequired
 };
 
 export default PreviewSeoContainer;

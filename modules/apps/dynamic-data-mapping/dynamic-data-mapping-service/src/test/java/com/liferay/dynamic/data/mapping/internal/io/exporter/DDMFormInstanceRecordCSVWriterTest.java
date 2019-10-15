@@ -114,8 +114,8 @@ public class DDMFormInstanceRecordCSVWriterTest {
 					Map<String, String> map1 = new HashMap<String, String>() {
 						{
 							put("field1", "1");
-							put("field2", "esta é uma 'string'");
 							put("field1AfterChangeName", "");
+							put("field2", "esta é uma 'string'");
 						}
 					};
 
@@ -123,9 +123,9 @@ public class DDMFormInstanceRecordCSVWriterTest {
 
 					Map<String, String> map2 = new HashMap<String, String>() {
 						{
+							put("field1", "");
 							put("field1AfterChangeName", "2");
 							put("field2", "esta é uma 'string'");
-							put("field1", "");
 						}
 					};
 

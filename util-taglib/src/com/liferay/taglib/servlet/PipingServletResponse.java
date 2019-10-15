@@ -118,17 +118,6 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 		_printWriter = UnsyncPrintWriterPool.borrow(writer);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), replaced by {@link
-	 *             #createPipingServletResponse(PageContext)}
-	 */
-	@Deprecated
-	public PipingServletResponse(PageContext pageContext) {
-		this(
-			(HttpServletResponse)pageContext.getResponse(),
-			pageContext.getOut());
-	}
-
 	@Override
 	public ServletOutputStream getOutputStream() {
 		if (_servletOutputStream == null) {

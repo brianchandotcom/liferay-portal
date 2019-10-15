@@ -16,6 +16,8 @@ package com.liferay.css.builder;
 
 import com.liferay.css.builder.util.StringTestUtil;
 
+import java.io.PrintStream;
+
 import java.nio.file.Path;
 
 import java.util.ArrayList;
@@ -64,9 +66,16 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 		StringPrintStream output = new StringPrintStream();
 
+		PrintStream systemOut = System.out;
+
 		System.setOut(output);
 
-		CSSBuilder.main(args.toArray(new String[0]));
+		try {
+			CSSBuilder.main(args.toArray(new String[0]));
+		}
+		finally {
+			System.setOut(systemOut);
+		}
 
 		return output.toString();
 	}

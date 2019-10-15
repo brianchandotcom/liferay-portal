@@ -19,6 +19,7 @@ import com.liferay.css.builder.StringPrintStream;
 import com.liferay.css.builder.util.StringTestUtil;
 
 import java.io.File;
+import java.io.PrintStream;
 
 import java.net.URL;
 
@@ -83,11 +84,18 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 		project.setProperty(
 			"build.css.sass.compiler.class.name", sassCompilerClassName);
 
+		PrintStream systemOut = System.out;
+
 		StringPrintStream output = new StringPrintStream();
 
 		System.setOut(output);
 
-		project.executeTarget("build-css");
+		try {
+			project.executeTarget("build-css");
+		}
+		finally {
+			System.setOut(systemOut);
+		}
 
 		return output.toString();
 	}

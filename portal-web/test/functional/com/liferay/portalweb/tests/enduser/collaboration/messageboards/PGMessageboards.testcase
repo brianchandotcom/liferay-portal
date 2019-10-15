@@ -3,7 +3,6 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property custom.properties = "default.layout.template.id=1_column";
 	property testray.main.component.name = "Message Boards";
 	var pageName = "Message Boards Page";
 	var portletName = "Message Boards";
@@ -22,6 +21,17 @@ definition {
 			groupName = "Guest",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "Message Boards Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 	}

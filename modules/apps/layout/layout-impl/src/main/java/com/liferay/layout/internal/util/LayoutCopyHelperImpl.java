@@ -14,6 +14,10 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
@@ -27,6 +31,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,6 +49,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,6 +88,33 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 		catch (Throwable t) {
 			throw new Exception(t);
+		}
+	}
+
+	private void _copyCategorizationData(
+			Layout sourceLayout, Layout targetLayout)
+		throws PortalException {
+
+		if (!_isDraft(sourceLayout)) {
+			long[] assetCategoryIds = ListUtil.toLongArray(
+				_assetCategoryLocalService.getCategories(
+					Layout.class.getName(), sourceLayout.getPlid()),
+				AssetCategory.CATEGORY_ID_ACCESSOR);
+
+			String[] assetTags = ListUtil.toArray(
+				_assetTagLocalService.getTags(
+					Layout.class.getName(), sourceLayout.getPlid()),
+				AssetTag.NAME_ACCESSOR);
+
+			Layout layout = targetLayout;
+
+			if (_isDraft(targetLayout)) {
+				layout = _layoutLocalService.getLayout(
+					targetLayout.getClassPK());
+			}
+
+			_layoutLocalService.updateAsset(
+				layout.getUserId(), layout, assetCategoryIds, assetTags);
 		}
 	}
 
@@ -335,12 +368,29 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
 	}
 
+	private boolean _isDraft(Layout layout) {
+		if ((layout.getClassPK() > 0) &&
+			(layout.getClassNameId() == _portal.getClassNameId(
+				Layout.class.getName()))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private CommentManager _commentManager;
@@ -393,6 +443,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_sites.copyLookAndFeel(_targetLayout, _sourceLayout);
 			_sites.copyPortletSetups(_sourceLayout, _targetLayout);
 			_sites.copyPortletPermissions(_targetLayout, _sourceLayout);
+
+			_copyCategorizationData(_sourceLayout, _targetLayout);
 
 			_copyLayoutPageTemplateStructure(_sourceLayout, _targetLayout);
 

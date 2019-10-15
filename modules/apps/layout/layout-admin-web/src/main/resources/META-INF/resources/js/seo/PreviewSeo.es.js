@@ -19,14 +19,14 @@ const MAX_LENGTH_DESCIPTION = 160;
 
 const PreviewSeo = ({
 	description = '',
-	suffixTitle = '',
 	title = '',
+	titleSuffix = '',
 	url = ''
 }) => (
 	<div className="preview-seo preview-seo-serp">
 		<div className="preview-seo-title text-truncate">
 			{title}
-			{suffixTitle && ` - ${suffixTitle}`}
+			{titleSuffix && ` - ${titleSuffix}`}
 		</div>
 		<div className="preview-seo-url text-truncate">{url}</div>
 		<div className="preview-seo-description">
@@ -38,12 +38,12 @@ const PreviewSeo = ({
 );
 PreviewSeo.propTypes = {
 	description: PropTypes.string,
-	suffixTitle: PropTypes.string,
 	title: PropTypes.string,
+	titleSuffix: PropTypes.string,
 	url: PropTypes.string
 };
 
-const PreviewSeoContainer = ({portletNamespace, suffixTitle, targets}) => {
+const PreviewSeoContainer = ({portletNamespace, titleSuffix, targets}) => {
 	const [description, setDescription] = useState('');
 	const [title, setTitle] = useState('');
 	const [url, setUrl] = useState('');
@@ -115,8 +115,8 @@ const PreviewSeoContainer = ({portletNamespace, suffixTitle, targets}) => {
 	return (
 		<PreviewSeo
 			description={description}
-			suffixTitle={suffixTitle}
 			title={title}
+			titleSuffix={titleSuffix}
 			url={url}
 		/>
 	);

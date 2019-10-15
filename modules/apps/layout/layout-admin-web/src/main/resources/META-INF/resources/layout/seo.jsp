@@ -75,7 +75,7 @@ String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 						"usePlaceholderAsFallback", true
 					)));
 
-			data.put("suffixTitle", companyName);
+			data.put("titleSuffix", companyName);
 			%>
 
 			<react:component

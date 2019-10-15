@@ -188,6 +188,11 @@ public class VirtualHostLocalServiceUtil {
 		return getService().fetchVirtualHost(virtualHostId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getVirtualHosts(long, long)}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId) {
 
@@ -243,6 +248,11 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHost(virtualHostId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #getVirtualHosts(long, long)}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
 			long companyId, long layoutSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -274,6 +284,13 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHosts(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
+			getVirtualHosts(long companyId, long layoutSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getVirtualHosts(companyId, layoutSetId);
+	}
+
 	/**
 	 * Returns the number of virtual hosts.
 	 *
@@ -283,6 +300,11 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHostsCount();
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #updateVirtualHosts(long, long, TreeMap)}
+	 */
+	@Deprecated
 	public static com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
 		long companyId, long layoutSetId, String hostname) {
 
@@ -299,6 +321,15 @@ public class VirtualHostLocalServiceUtil {
 		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
 
 		return getService().updateVirtualHost(virtualHost);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.VirtualHost>
+		updateVirtualHosts(
+			long companyId, long layoutSetId,
+			java.util.TreeMap<String, String> hostnameMap) {
+
+		return getService().updateVirtualHosts(
+			companyId, layoutSetId, hostnameMap);
 	}
 
 	public static VirtualHostLocalService getService() {

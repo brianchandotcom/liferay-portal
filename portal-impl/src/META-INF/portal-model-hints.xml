@@ -1529,6 +1529,8 @@
 			<hint-collection name="HOSTNAME" />
 			<validator name="required" />
 		</field>
+		<field name="defaultVirtualHost" type="boolean" />
+		<field name="languageId" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.WebDAVProps">
 		<field name="mvccVersion" type="long" />

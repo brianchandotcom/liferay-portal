@@ -90,8 +90,6 @@ JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 			}
 		);
 
-		FragmentsEditorFetchUtilsModule.setStore(null);
-
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}
 

@@ -20,6 +20,10 @@
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
+
+String canonicalURL = layoutsAdminDisplayContext.getCanonicalLayoutURL();
+String companyName = layoutsAdminDisplayContext.getSiteAndCompanyName();
+String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 %>
 
 <liferay-ui:error-marker
@@ -30,7 +34,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
-	<aui:input id="title" label="html-title" name="title" placeholder="title" />
+	<aui:input id="title" label="html-title" name="title" placeholder="<%= layoutTitle %>" />
 
 	<h4><liferay-ui:message key="meta-tags" /></h4>
 
@@ -45,14 +49,33 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 
 			<%
 			Map<String, Object> data = new HashMap<>();
-			Map<String, String> targetsIds = new HashMap<>();
 
-			targetsIds.put("description", "descriptionSEO");
-			targetsIds.put("title", "title");
+			data.put(
+				"targets",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"id", "canonicalURL"
+					).put(
+						"type", "canonicalURL"
+					).put(
+						"usePlaceholderAsFallback", true
+					),
+					JSONUtil.put(
+						"id", "descriptionSEO"
+					).put(
+						"type", "description"
+					).put(
+						"usePlaceholderAsFallback", false
+					),
+					JSONUtil.put(
+						"id", "title"
+					).put(
+						"type", "title"
+					).put(
+						"usePlaceholderAsFallback", true
+					)));
 
-			data.put("suffixTitle", StringPool.BLANK);
-			data.put("targetsIds", targetsIds);
-			data.put("url", StringPool.BLANK);
+			data.put("titleSuffix", companyName);
 			%>
 
 			<react:component
@@ -123,7 +146,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
-				<aui:input name="canonicalURL" placeholder="canonical-url">
+				<aui:input name="canonicalURL" placeholder="<%= canonicalURL %>">
 					<aui:validator name="url" />
 				</aui:input>
 			</div>
@@ -132,7 +155,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
-				<aui:input localized="<%= true %>" name="canonicalURL" placeholder="canonical-url" type="text">
+				<aui:input localized="<%= true %>" name="canonicalURL" placeholder="<%= canonicalURL %>" type="text">
 					<aui:validator name="url" />
 				</aui:input>
 			</div>

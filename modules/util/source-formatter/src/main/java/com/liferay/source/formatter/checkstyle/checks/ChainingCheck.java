@@ -175,11 +175,12 @@ public class ChainingCheck extends BaseCheck {
 
 			_checkAllowedChaining(methodCallDetailAST);
 
-			List<String> chain = _getChain(methodCallDetailAST);
+			List<String> chainedMethodNames = _getChainedMethodNames(
+				methodCallDetailAST);
 
-			_checkRequiredChaining(methodCallDetailAST, chain);
+			_checkRequiredChaining(methodCallDetailAST, chainedMethodNames);
 
-			int chainSize = chain.size();
+			int chainSize = chainedMethodNames.size();
 
 			if (chainSize == 1) {
 				continue;
@@ -195,10 +196,11 @@ public class ChainingCheck extends BaseCheck {
 					continue;
 				}
 
-				_checkMethodName(chain, "getClass", methodCallDetailAST);
+				_checkMethodName(
+					chainedMethodNames, "getClass", methodCallDetailAST);
 
-				String name1 = chain.get(0);
-				String name2 = chain.get(1);
+				String name1 = chainedMethodNames.get(0);
+				String name2 = chainedMethodNames.get(1);
 
 				if (name1.equals("concat") && name2.equals("concat")) {
 					continue;
@@ -206,12 +208,13 @@ public class ChainingCheck extends BaseCheck {
 			}
 
 			if (_isAllowedChainingMethodCall(
-					methodCallDetailAST, chain, detailAST)) {
+					methodCallDetailAST, chainedMethodNames, detailAST)) {
 
 				continue;
 			}
 
-			int concatsCount = Collections.frequency(chain, "concat");
+			int concatsCount = Collections.frequency(
+				chainedMethodNames, "concat");
 
 			if (concatsCount > 2) {
 				log(methodCallDetailAST, _MSG_AVOID_TOO_MANY_CONCAT);
@@ -260,7 +263,7 @@ public class ChainingCheck extends BaseCheck {
 	}
 
 	private void _checkRequiredChaining(
-		DetailAST methodCallDetailAST, List<String> chain) {
+		DetailAST methodCallDetailAST, List<String> chainedMethodNames) {
 
 		String classOrVariableName = _getClassOrVariableName(
 			methodCallDetailAST);
@@ -291,7 +294,8 @@ public class ChainingCheck extends BaseCheck {
 			return;
 		}
 
-		String methodName = chain.get(chain.size() - 1);
+		String methodName = chainedMethodNames.get(
+			chainedMethodNames.size() - 1);
 
 		if (!requiredChainingMethodNames.contains(methodName)) {
 			return;
@@ -389,16 +393,17 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private List<String> _getChain(DetailAST methodCallDetailAST) {
-		List<String> chain = new ArrayList<>();
+	private List<String> _getChainedMethodNames(DetailAST methodCallDetailAST) {
+		List<String> chainedMethodNames = new ArrayList<>();
 
-		chain.add(DetailASTUtil.getMethodName(methodCallDetailAST));
+		chainedMethodNames.add(
+			DetailASTUtil.getMethodName(methodCallDetailAST));
 
 		while (true) {
 			DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
 			if (parentDetailAST.getType() != TokenTypes.DOT) {
-				return chain;
+				return chainedMethodNames;
 			}
 
 			DetailAST grandParentDetailAST = parentDetailAST.getParent();
@@ -408,15 +413,16 @@ public class ChainingCheck extends BaseCheck {
 					methodCallDetailAST.getNextSibling();
 
 				if (siblingDetailAST.getType() == TokenTypes.IDENT) {
-					chain.add(siblingDetailAST.getText());
+					chainedMethodNames.add(siblingDetailAST.getText());
 				}
 
-				return chain;
+				return chainedMethodNames;
 			}
 
 			methodCallDetailAST = grandParentDetailAST;
 
-			chain.add(DetailASTUtil.getMethodName(methodCallDetailAST));
+			chainedMethodNames.add(
+				DetailASTUtil.getMethodName(methodCallDetailAST));
 		}
 	}
 
@@ -783,8 +789,8 @@ public class ChainingCheck extends BaseCheck {
 
 		if (outerMethodCallDetailAST != null) {
 			return _isAllowedChainingMethodCall(
-				outerMethodCallDetailAST, _getChain(outerMethodCallDetailAST),
-				detailAST);
+				outerMethodCallDetailAST,
+				_getChainedMethodNames(outerMethodCallDetailAST), detailAST);
 		}
 
 		return false;

@@ -49,14 +49,33 @@ String layoutTitle = layoutsAdminDisplayContext.getLayoutTitle();
 
 			<%
 			Map<String, Object> data = new HashMap<>();
-			Map<String, Object> targetsIds = new HashMap<>();
 
-			targetsIds.put("canonicalURL", "canonicalURL");
-			targetsIds.put("description", "descriptionSEO");
-			targetsIds.put("title", "title");
+			data.put(
+				"targets",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"id", "canonicalURL"
+					).put(
+						"type", "canonicalURL"
+					).put(
+						"usePlaceholderAsFallback", true
+					),
+					JSONUtil.put(
+						"id", "descriptionSEO"
+					).put(
+						"type", "description"
+					).put(
+						"usePlaceholderAsFallback", false
+					),
+					JSONUtil.put(
+						"id", "title"
+					).put(
+						"type", "title"
+					).put(
+						"usePlaceholderAsFallback", true
+					)));
 
 			data.put("suffixTitle", companyName);
-			data.put("targetsIds", targetsIds);
 			%>
 
 			<react:component

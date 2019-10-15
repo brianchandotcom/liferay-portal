@@ -14,15 +14,28 @@
 
 import {render} from 'frontend-js-react-web';
 import ClayAlert from '@clayui/alert';
-import dom from 'metal-dom';
 import React, {useState, useLayoutEffect} from 'react';
 import {unmountComponentAtNode} from 'react-dom';
+
+const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
 
 const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID'
 };
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
+
+const getDefaultAlertContainer = () => {
+	let container = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
+
+	if (!container) {
+		container = document.createElement('div');
+		container.id = DEFAULT_ALERT_CONTAINER_ID;
+		document.body.appendChild(container);
+	}
+
+	return container;
+};
 
 const Toast = ({
 	displayType,
@@ -81,19 +94,8 @@ function openToast({
 	type = 'success',
 	variant
 }) {
-	const containerElement = document.getElementById(containerId);
-	let alertContainer = document.getElementById('alertContainer');
-
-	if (!containerElement) {
-		if (!alertContainer) {
-			alertContainer = document.createElement('div');
-			alertContainer.id = 'alertContainer';
-
-			dom.enterDocument(alertContainer);
-		}
-	}
-
-	const container = containerElement ? containerElement : alertContainer;
+	const container =
+		document.getElementById(containerId) || getDefaultAlertContainer();
 
 	const ToastComponent = () => (
 		<Toast
@@ -108,7 +110,7 @@ function openToast({
 		/>
 	);
 
-	if (containerElement) {
+	if (container) {
 		unmountComponentAtNode(container);
 	}
 

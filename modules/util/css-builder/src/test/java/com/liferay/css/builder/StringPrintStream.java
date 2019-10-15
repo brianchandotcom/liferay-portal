@@ -19,6 +19,9 @@ import java.io.PrintStream;
 
 import java.nio.charset.Charset;
 
+/**
+ * @author Christopher Bryan Boyd
+ */
 public class StringPrintStream extends PrintStream {
 
 	public StringPrintStream() {

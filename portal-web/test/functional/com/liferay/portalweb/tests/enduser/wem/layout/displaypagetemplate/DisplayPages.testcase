@@ -43,6 +43,22 @@ definition {
 	@description = "User can add a display page."
 	@priority = "3"
 	test AddBlankDisplayPage {
+		task ("Rename the display page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.renameDisplayPage(
+				displayPageName = "Display Page Name",
+				newDisplayPageName = "Display Page Name New");
+		}
+
+		task ("Assert the display page was renamed") {
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
+		}
+
+		task ("Navigate back to the display page") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		}
+
 		AssertElementPresent(
 			key_text = "Publish",
 			locator1 = "Button#ANY");
@@ -54,7 +70,7 @@ definition {
 		}
 
 		task ("View the display page") {
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
 		}
 	}
 
@@ -328,6 +344,22 @@ definition {
 	@description = "User cannot delete a display page that is in use by an asset."
 	@priority = "4"
 	test ViewCannotDeleteActiveDisplayPage {
+		task ("Rename the display page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.renameDisplayPage(
+				displayPageName = "Display Page Name",
+				newDisplayPageName = "Display Page Name New");
+		}
+
+		task ("Assert the display page was renamed") {
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
+		}
+
+		task ("Navigate back to the display page") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+		}
+
 		task ("Publish the display page") {
 			Button.clickPublish();
 
@@ -344,7 +376,7 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
+				pageName = "Display Page Name New",
 				pageType = "Display Page Templates");
 
 			PortletEntry.publish();
@@ -353,7 +385,7 @@ definition {
 		task ("Assert the display page cannot be deleted") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name New");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
@@ -363,7 +395,7 @@ definition {
 				locator1 = "Message#ERROR_2",
 				value1 = "Error:You cannot delete asset display page templates that are used by one or more assets.");
 
-			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name New");
 		}
 	}
 

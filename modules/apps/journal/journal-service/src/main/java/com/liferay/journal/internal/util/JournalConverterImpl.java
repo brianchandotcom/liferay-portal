@@ -164,7 +164,9 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 
 		try {
-			return XMLUtil.formatXML(document.asXML());
+			String documentContent = _stripInvalidChars(document.asXML());
+
+			return XMLUtil.formatXML(documentContent);
 		}
 		catch (Exception e) {
 			throw new ArticleContentException(
@@ -1157,6 +1159,28 @@ public class JournalConverterImpl implements JournalConverter {
 
 		return new AggregateResourceBundle(
 			classResourceBundle, _portal.getResourceBundle(locale));
+	}
+
+	private String _stripInvalidChars(String documentContent) {
+		int documentContentStringOriginalLength = documentContent.length();
+
+		documentContent = XMLUtil.stripInvalidChars(documentContent);
+
+		int documentContentStringStrippedLength = documentContent.length();
+
+		int numberOfRemovedInvalidChars =
+			documentContentStringOriginalLength -
+				documentContentStringStrippedLength;
+
+		if (numberOfRemovedInvalidChars > 0) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Number of invalid characters removed: " +
+						numberOfRemovedInvalidChars);
+			}
+		}
+
+		return documentContent;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

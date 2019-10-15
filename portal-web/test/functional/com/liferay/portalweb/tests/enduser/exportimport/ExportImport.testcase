@@ -1593,9 +1593,99 @@ definition {
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");
 	}
 
+	@description = "This is a use case for LPS-88743."
+	@priority = "3"
+	test ExportImportWebContentCircularReference {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Web Content",
+			fieldFieldLabel = "Web Content",
+			fieldName = "WebContent");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Web Content",
+			templateName = "WC Template Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentTitle = "WC WebContent Title 1");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			fieldName = "WebContent",
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentSelectWCFile = "WC WebContent Title 1",
+			webContentTitle = "WC WebContent Title 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title 1");
+
+		WebContent.editCP(
+			fieldName = "WebContent",
+			webContentSelectWCFile = "WC WebContent Title 2",
+			webContentTitle = "WC WebContent Title 1",
+			webContentTitleEdit = "WC WebContent Title 1");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		ProductMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.deleteAllCP();
+
+		JSONGroup.addGroup(groupName = "Site Name A");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Site Name A");
+
+		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
+	}
+
 	@description = "This is a use case for LPS-83326."
 	@priority = "5"
-	test ExportImportWebcontentFolderWithWorkflow {
+	test ExportImportWebContentFolderWithWorkflow {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentFolder.addCP(

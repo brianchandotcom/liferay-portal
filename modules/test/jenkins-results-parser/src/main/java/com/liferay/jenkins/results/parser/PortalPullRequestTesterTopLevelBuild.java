@@ -44,68 +44,78 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 		}
 	}
 
-	public String getStableResult() {
+	public String getStableJobResult() {
 		if (_stableJob == null) {
 			return null;
 		}
 
-		if (_stableResult != null) {
-			return _stableResult;
+		if (_stableJobResult != null) {
+			return _stableJobResult;
 		}
 
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
+		List<Build> stableJobDownstreamBuilds = getStableJobDownstreamBuilds();
 
-		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
+		int stableJobDownstreamBuildsSize = stableJobDownstreamBuilds.size();
 
-		if (stableDownstreamBuildsSize == 0) {
+		if (stableJobDownstreamBuildsSize == 0) {
 			return null;
 		}
 
-		List<String> stableBatchNames = new ArrayList<>(
+		List<String> stableJobBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
-		int completedCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, null, "completed");
+		int stableJobDownstreamBuildsCompletedCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, null, "completed");
 
-		if (completedCount != stableDownstreamBuildsSize) {
+		if (stableJobDownstreamBuildsCompletedCount !=
+				stableJobDownstreamBuildsSize) {
+
 			return null;
 		}
 
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
+		int stableJobDownstreamBuildsSuccessCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, "SUCCESS", null);
 
-		if (successCount == stableDownstreamBuildsSize) {
-			_stableResult = "SUCCESS";
+		if (stableJobDownstreamBuildsSuccessCount ==
+				stableJobDownstreamBuildsSize) {
+
+			_stableJobResult = "SUCCESS";
 		}
 		else {
-			_stableResult = "FAILURE";
+			_stableJobResult = "FAILURE";
 		}
 
-		return _stableResult;
+		return _stableJobResult;
 	}
 
 	protected Element getFailedStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
+		List<String> stableJobBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
 		Element jobSummaryListElement = getJobSummaryListElement(
-			false, stableBatchNames);
+			false, stableJobBatchNames);
 
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
+		int stableJobDownstreamBuildsSuccessCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, "SUCCESS", null);
 
-		int failCount =
-			getJobVariantsDownstreamBuildCount(stableBatchNames, null, null) -
-				successCount;
+		int stableJobDownstreamBuildsFailureCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, null, null) -
+					stableJobDownstreamBuildsSuccessCount;
 
 		return Dom4JUtil.getNewElement(
 			"div", null,
 			Dom4JUtil.getNewElement(
-				"h4", null, String.valueOf(failCount), " Failed Jobs:"),
+				"h4", null,
+				String.valueOf(stableJobDownstreamBuildsFailureCount),
+				" Failed Jobs:"),
 			jobSummaryListElement);
 	}
 
-	protected List<Build> getStableDownstreamBuilds() {
+	protected List<Build> getStableJobDownstreamBuilds() {
 		if (_stableJob != null) {
 			return getJobVariantsDownstreamBuilds(
 				_stableJob.getBatchNames(), null, null);
@@ -114,59 +124,27 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 		return Collections.emptyList();
 	}
 
-	protected Element getStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
-
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
-
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
-
-		Element detailsElement = Dom4JUtil.getNewElement(
-			"details", null,
-			Dom4JUtil.getNewElement(
-				"summary", null,
-				Dom4JUtil.getNewElement(
-					"strong", null, "ci:test:stable - ",
-					String.valueOf(successCount), " out of ",
-					String.valueOf(stableDownstreamBuilds.size()),
-					" jobs PASSED")));
-
-		int stableBuildCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, null, null);
-
-		if (successCount < stableBuildCount) {
-			Dom4JUtil.addToElement(
-				detailsElement, getFailedStableJobSummaryElement());
-		}
-
-		if (successCount > 0) {
-			Dom4JUtil.addToElement(
-				detailsElement, getSuccessfulStableJobSummaryElement());
-		}
-
-		return detailsElement;
-	}
-
-	protected Element getStableResultElement() {
+	protected Element getStableJobResultElement() {
 		if (_stableJob == null) {
 			return null;
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		List<String> stableBatchNames = new ArrayList<>(
+		List<String> stableJobBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
+		int stableJobDownstreamBuildsSuccessCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, "SUCCESS", null);
 
-		List<Build> stableDownstreamBuilds = getStableDownstreamBuilds();
+		List<Build> stableJobDownstreamBuilds = getStableJobDownstreamBuilds();
 
-		int stableDownstreamBuildsSize = stableDownstreamBuilds.size();
+		int stableJobDownstreamBuildsSize = stableJobDownstreamBuilds.size();
 
-		if (successCount == stableDownstreamBuildsSize) {
+		if (stableJobDownstreamBuildsSuccessCount ==
+				stableJobDownstreamBuildsSize) {
+
 			sb.append(":heavy_check_mark: ");
 		}
 		else {
@@ -174,52 +152,93 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 		}
 
 		sb.append("ci:test:stable - ");
-		sb.append(String.valueOf(successCount));
+		sb.append(String.valueOf(stableJobDownstreamBuildsSuccessCount));
 		sb.append(" out of ");
-		sb.append(String.valueOf(stableDownstreamBuildsSize));
+		sb.append(String.valueOf(stableJobDownstreamBuildsSize));
 		sb.append(" jobs passed");
 
 		return Dom4JUtil.getNewElement("h3", null, sb.toString());
 	}
 
-	protected Element getSuccessfulStableJobSummaryElement() {
-		List<String> stableBatchNames = new ArrayList<>(
+	protected Element getStableJobSuccessSummaryElement() {
+		List<String> stableJobBatchNames = new ArrayList<>(
 			_stableJob.getBatchNames());
 
-		Element jobSummaryListElement = getJobSummaryListElement(
-			true, stableBatchNames);
+		Element stableJobSummaryListElement = getJobSummaryListElement(
+			true, stableJobBatchNames);
 
-		int successCount = getJobVariantsDownstreamBuildCount(
-			stableBatchNames, "SUCCESS", null);
+		int stableJobDownstreamBuildsSuccessCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, "SUCCESS", null);
 
 		return Dom4JUtil.getNewElement(
 			"details", null,
 			Dom4JUtil.getNewElement(
 				"summary", null,
 				Dom4JUtil.getNewElement(
-					"strong", null, String.valueOf(successCount),
+					"strong", null,
+					String.valueOf(stableJobDownstreamBuildsSuccessCount),
 					" Successful Jobs:")),
-			jobSummaryListElement);
+			stableJobSummaryListElement);
+	}
+
+	protected Element getStableJobSummaryElement() {
+		List<String> stableJobBatchNames = new ArrayList<>(
+			_stableJob.getBatchNames());
+
+		int stableJobDownstreamBuildSuccessCount =
+			getJobVariantsDownstreamBuildCount(
+				stableJobBatchNames, "SUCCESS", null);
+
+		List<Build> stableJobDownstreamBuilds = getStableJobDownstreamBuilds();
+
+		Element detailsElement = Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null,
+				Dom4JUtil.getNewElement(
+					"strong", null, "ci:test:stable - ",
+					String.valueOf(stableJobDownstreamBuildSuccessCount),
+					" out of ",
+					String.valueOf(stableJobDownstreamBuilds.size()),
+					" jobs PASSED")));
+
+		int stableJobDownstreamBuildCount = getJobVariantsDownstreamBuildCount(
+			stableJobBatchNames, null, null);
+
+		if (stableJobDownstreamBuildSuccessCount <
+				stableJobDownstreamBuildCount) {
+
+			Dom4JUtil.addToElement(
+				detailsElement, getFailedStableJobSummaryElement());
+		}
+
+		if (stableJobDownstreamBuildSuccessCount > 0) {
+			Dom4JUtil.addToElement(
+				detailsElement, getStableJobSuccessSummaryElement());
+		}
+
+		return detailsElement;
 	}
 
 	@Override
 	protected Element getTopGitHubMessageElement() {
 		Element rootElement = super.getTopGitHubMessageElement();
 
-		List<Build> stableDownstreamBuilds = new ArrayList<>();
+		List<Build> stableJobDownstreamBuilds = new ArrayList<>();
 
 		if (_stableJob != null) {
-			stableDownstreamBuilds.addAll(getStableDownstreamBuilds());
+			stableJobDownstreamBuilds.addAll(getStableJobDownstreamBuilds());
 		}
 
-		if (!stableDownstreamBuilds.isEmpty()) {
+		if (!stableJobDownstreamBuilds.isEmpty()) {
 			Dom4JUtil.insertElementAfter(
-				rootElement, null, getStableResultElement());
+				rootElement, null, getStableJobResultElement());
 		}
 
 		Element detailsElement = rootElement.element("details");
 
-		if (!stableDownstreamBuilds.isEmpty()) {
+		if (!stableJobDownstreamBuilds.isEmpty()) {
 			Element jobSummaryElement = detailsElement.element("details");
 
 			Dom4JUtil.insertElementBefore(
@@ -231,6 +250,6 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 	}
 
 	private Job _stableJob;
-	private String _stableResult;
+	private String _stableJobResult;
 
 }

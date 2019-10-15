@@ -30,7 +30,7 @@ public class ColumnUtil {
 
 	public static Object convertValue(
 			Class<?> itemClass, Map<String, Object> columnNameValueMap)
-		throws Exception {
+		throws ReflectiveOperationException {
 
 		Object item = itemClass.newInstance();
 

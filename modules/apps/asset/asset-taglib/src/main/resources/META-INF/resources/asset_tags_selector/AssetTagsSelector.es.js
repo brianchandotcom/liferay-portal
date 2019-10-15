@@ -12,24 +12,17 @@
  * details.
  */
 
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {useResource} from '@clayui/data-provider';
 
+import {usePrevious} from 'frontend-js-react-web';
 import {ItemSelectorDialog} from 'frontend-js-web';
 
-function usePrevious(value) {
-	const ref = useRef();
-
-	useEffect(() => {
-		ref.current = value;
-	}, [value]);
-
-	return ref.current;
-}
+const noop = () => {};
 
 function AssetTagsSelector({
 	addCallback,
@@ -39,8 +32,8 @@ function AssetTagsSelector({
 	inputName,
 	inputValue,
 	label,
-	onInputValueChange = () => {},
-	onSelectedItemsChange = () => {},
+	onInputValueChange = noop,
+	onSelectedItemsChange = noop,
 	portletURL,
 	removeCallback,
 	selectedItems = [],
@@ -85,7 +78,7 @@ function AssetTagsSelector({
 	const handleInputBlur = () => {
 		const filteredItems = resource && resource.map(tag => tag.value);
 
-		if (!filteredItems || (filteredItems && filteredItems.length === 0)) {
+		if (!filteredItems || !filteredItems.length) {
 			if (inputValue) {
 				if (!selectedItems.find(item => item.label === inputValue)) {
 					onSelectedItemsChange(
@@ -146,16 +139,15 @@ function AssetTagsSelector({
 		itemSelectorDialog.on('selectedItemChange', event => {
 			const dialogSelectedItems = event.selectedItem;
 
-			if (dialogSelectedItems) {
-				const newValues =
-					dialogSelectedItems.items.length > 0
-						? dialogSelectedItems.items.split(',').map(value => {
-								return {
-									label: value,
-									value
-								};
-						  })
-						: [];
+			if (dialogSelectedItems && dialogSelectedItems.items.length) {
+				const newValues = dialogSelectedItems.items
+					.split(',')
+					.map(value => {
+						return {
+							label: value,
+							value
+						};
+					});
 
 				const addedItems = newValues.filter(
 					newValue =>

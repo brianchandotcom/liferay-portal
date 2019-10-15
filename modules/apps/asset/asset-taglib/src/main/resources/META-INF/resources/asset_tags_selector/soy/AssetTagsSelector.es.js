@@ -126,7 +126,7 @@ class AssetTagsSelector extends Component {
 	_handleInputBlur(event) {
 		const filteredItems = event.target.filteredItems;
 
-		if (!filteredItems || (filteredItems && filteredItems.length === 0)) {
+		if (!filteredItems || !filteredItems.length) {
 			const inputValue = event.target.inputValue;
 
 			if (inputValue) {

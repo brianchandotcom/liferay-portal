@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"clay-button": "2.18.1",
-		"clay-icon": "2.18.1",
-		"clay-label": "2.18.1",
+		"clay-button": "2.18.3",
+		"clay-icon": "2.18.3",
+		"clay-label": "2.18.3",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",

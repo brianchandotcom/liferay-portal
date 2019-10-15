@@ -95,27 +95,28 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			Layout sourceLayout, Layout targetLayout)
 		throws PortalException {
 
-		if (!_isDraft(sourceLayout)) {
-			long[] assetCategoryIds = ListUtil.toLongArray(
-				_assetCategoryLocalService.getCategories(
-					Layout.class.getName(), sourceLayout.getPlid()),
-				AssetCategory.CATEGORY_ID_ACCESSOR);
-
-			String[] assetTags = ListUtil.toArray(
-				_assetTagLocalService.getTags(
-					Layout.class.getName(), sourceLayout.getPlid()),
-				AssetTag.NAME_ACCESSOR);
-
-			Layout layout = targetLayout;
-
-			if (_isDraft(targetLayout)) {
-				layout = _layoutLocalService.getLayout(
-					targetLayout.getClassPK());
-			}
-
-			_layoutLocalService.updateAsset(
-				layout.getUserId(), layout, assetCategoryIds, assetTags);
+		if (_isDraft(sourceLayout)) {
+			return;
 		}
+
+		long[] assetCategoryIds = ListUtil.toLongArray(
+			_assetCategoryLocalService.getCategories(
+				Layout.class.getName(), sourceLayout.getPlid()),
+			AssetCategory.CATEGORY_ID_ACCESSOR);
+
+		String[] assetTags = ListUtil.toArray(
+			_assetTagLocalService.getTags(
+				Layout.class.getName(), sourceLayout.getPlid()),
+			AssetTag.NAME_ACCESSOR);
+
+		Layout layout = targetLayout;
+
+		if (_isDraft(targetLayout)) {
+			layout = _layoutLocalService.getLayout(targetLayout.getClassPK());
+		}
+
+		_layoutLocalService.updateAsset(
+			layout.getUserId(), layout, assetCategoryIds, assetTags);
 	}
 
 	private void _copyLayoutPageTemplateStructure(
@@ -369,14 +370,17 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private boolean _isDraft(Layout layout) {
-		if ((layout.getClassPK() > 0) &&
-			(layout.getClassNameId() == _portal.getClassNameId(
-				Layout.class.getName()))) {
-
-			return true;
+		if (layout.getClassPK() <= 0) {
+			return false;
 		}
 
-		return false;
+		if (layout.getClassNameId() != _portal.getClassNameId(
+				Layout.class.getName())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final TransactionConfig _transactionConfig =

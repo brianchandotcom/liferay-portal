@@ -526,6 +526,8 @@ definition {
 
 		MenuItem.click(menuItem = "Resubmit");
 
+		Button.clickDone();
+
 		Alert.viewSuccessMessage();
 
 		Workflow.viewCompletedTask(
@@ -549,6 +551,8 @@ definition {
 			workflowTask = "${workflowTask}");
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Resubmit");
+
+		Button.clickDone();
 
 		Alert.viewSuccessMessage();
 
@@ -681,6 +685,8 @@ definition {
 				locator1 = "MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD",
 				value1 = "${workflowActivityComment}");
 		}
+
+		Button.clickDone();
 
 		Alert.viewSuccessMessage();
 

@@ -64,15 +64,16 @@ public final class DDMFormInstanceRecordWriterRequest {
 		private Map<String, String> _formatLabels(
 			Map<String, String> ddmFormFieldsLabel) {
 
-			Map<String, String> labelsFieldName = new HashMap<>();
+			Map<String, String> currentDDMFormFieldsLabel = new HashMap<>();
 
 			ddmFormFieldsLabel.forEach(
 				(fieldName, label) -> {
-					if (!labelsFieldName.containsKey(label)) {
+					if (!currentDDMFormFieldsLabel.containsKey(label)) {
 						ddmFormFieldsLabel.put(fieldName, label);
 					}
 					else {
-						String previousFieldName = labelsFieldName.get(label);
+						String previousFieldName =
+							currentDDMFormFieldsLabel.get(label);
 
 						ddmFormFieldsLabel.put(
 							previousFieldName,
@@ -82,7 +83,7 @@ public final class DDMFormInstanceRecordWriterRequest {
 							fieldName, _formatLabelString(fieldName, label));
 					}
 
-					labelsFieldName.put(label, fieldName);
+					currentDDMFormFieldsLabel.put(label, fieldName);
 				});
 
 			return ddmFormFieldsLabel;

@@ -40,14 +40,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
-import javax.tools.FileObject;
-import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileManager;
 import javax.tools.JavaFileObject;
@@ -109,10 +106,9 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			throw new JasperException(ioException);
 		}
 
-		try (JavaFileManager javaFileManager = new JavaFileManagerWrapper(
-				new BundleJavaFileManager(
-					_classLoader, standardJavaFileManager,
-					_javaFileObjectResolvers))) {
+		try (JavaFileManager javaFileManager = new BundleJavaFileManager(
+				_classLoader, standardJavaFileManager, _javaFileObjectResolvers,
+				_bytecodeJavaFileObjects)) {
 
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
 				null, javaFileManager, diagnosticCollector, _compilerOptions,
@@ -527,7 +523,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					public Void run() {
 						_addDependenciesToClassPath();
 
-					return null;
+						return null;
+					}
+
+					;
 				});
 		}
 		else {
@@ -592,82 +591,5 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		new ArrayList<>();
 	private JspCompilationContext _jspCompilationContext;
 	private JspRuntimeContext _jspRuntimeContext;
-
-	private class JavaFileManagerWrapper
-		extends ForwardingJavaFileManager<JavaFileManager> {
-
-		public JavaFileManagerWrapper(JavaFileManager javaFileManager) {
-			super(javaFileManager);
-		}
-
-		@Override
-		public JavaFileObject getJavaFileForOutput(
-			Location location, String className, JavaFileObject.Kind kind,
-			FileObject fileObject) {
-
-			Map<String, Map<String, JavaFileObject>> packageMap = _packageMap;
-
-			String packageName = className.substring(
-				0, className.lastIndexOf(CharPool.PERIOD));
-
-			Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
-				packageName);
-
-			BytecodeJavaFileObject bytecodeJavaFileObject =
-				new BytecodeJavaFileObject(className);
-
-			if (javaFileObjectsMap == null) {
-				javaFileObjectsMap = new ConcurrentHashMap<>();
-
-				packageMap.put(packageName, javaFileObjectsMap);
-			}
-
-			javaFileObjectsMap.put(className, bytecodeJavaFileObject);
-
-			_bytecodeJavaFileObjects.add(bytecodeJavaFileObject);
-
-			return bytecodeJavaFileObject;
-		}
-
-		@Override
-		public String inferBinaryName(
-			Location location, JavaFileObject javaFileObject) {
-
-			if (javaFileObject instanceof BytecodeJavaFileObject) {
-				BytecodeJavaFileObject bytecodeJavaFileObject = (BytecodeJavaFileObject)javaFileObject;
-
-				return bytecodeJavaFileObject.getClassName();
-			}
-
-			return super.inferBinaryName(location, javaFileObject);
-		}
-
-		@Override
-		public Iterable<JavaFileObject> list(
-				Location location, String packageName,
-				Set<JavaFileObject.Kind> kinds, boolean recurse)
-			throws IOException {
-
-			if ((location == StandardLocation.CLASS_PATH) &&
-				packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
-
-				Map<String, Map<String, JavaFileObject>> packageMap =
-					_packageMap;
-
-				Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
-					packageName);
-
-				if (javaFileObjectsMap != null) {
-					return javaFileObjectsMap.values();
-				}
-			}
-
-			return super.list(location, packageName, kinds, recurse);
-		}
-
-		private final Map<String, Map<String, JavaFileObject>> _packageMap =
-			new ConcurrentHashMap<>();
-
-	}
 
 }

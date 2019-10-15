@@ -204,9 +204,7 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 
 	@Override
 	protected Element getTopGitHubMessageElement() {
-		update();
-
-		Element rootElement = Dom4JUtil.getNewElement("html");
+		Element rootElement = super.getTopGitHubMessageElement();
 
 		List<Build> stableDownstreamBuilds = new ArrayList<>();
 
@@ -215,52 +213,18 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 		}
 
 		if (!stableDownstreamBuilds.isEmpty()) {
-			rootElement.add(getStableResultElement());
+			Dom4JUtil.insertElementAfter(
+				rootElement, null, getStableResultElement());
 		}
 
-		rootElement.add(getResultElement());
-
-		Element detailsElement = Dom4JUtil.getNewElement(
-			"details", rootElement,
-			Dom4JUtil.getNewElement(
-				"summary", null, "Click here for more details."),
-			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement());
-
-		String branchName = getBranchName();
-		String companionBranchLabel = "Copied in Private Modules Branch:";
-
-		if (branchName.endsWith("-private")) {
-			companionBranchLabel = "Built off of Portal Core Branch:";
-		}
-
-		if (!branchName.startsWith("ee-") &&
-			getBaseGitRepositoryName().contains("liferay-portal")) {
-
-			try {
-				Dom4JUtil.addToElement(
-					detailsElement,
-					Dom4JUtil.getNewElement("h4", null, companionBranchLabel),
-					getCompanionBranchDetailsElement());
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		Element detailsElement = rootElement.element("details");
 
 		if (!stableDownstreamBuilds.isEmpty()) {
-			Dom4JUtil.addToElement(
-				detailsElement, getStableJobSummaryElement());
-		}
+			Element jobSummaryElement = detailsElement.element("details");
 
-		Dom4JUtil.addToElement(
-			detailsElement, getJobSummaryElement(), getMoreDetailsElement());
-
-		String result = getResult();
-
-		if ((result != null) && !result.equals("SUCCESS")) {
-			Dom4JUtil.addToElement(
-				detailsElement, (Object[])getBuildFailureElements());
+			Dom4JUtil.insertElementBefore(
+				detailsElement, jobSummaryElement,
+				getStableJobSummaryElement());
 		}
 
 		return rootElement;

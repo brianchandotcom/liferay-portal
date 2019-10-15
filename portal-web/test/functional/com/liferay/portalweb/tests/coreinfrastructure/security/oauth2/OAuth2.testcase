@@ -705,7 +705,7 @@ definition {
 
 		OAuth2.viewScopes(
 			applicationName = "OAuth Application",
-			resourceCheckList = "liferay-json-web-services.everything.read,liferay-json-web-services.everything.write,liferay-json-web-services.everything.read.documents.download,liferay-json-web-services.everything.read.userprofile",
+			resourceCheckedList = "liferay-json-web-services.everything.read,liferay-json-web-services.everything.write,liferay-json-web-services.everything.read.documents.download,liferay-json-web-services.everything.read.userprofile",
 			resourcePanels = "Portal Services");
 
 		OAuth2.viewGrantedAuthViaAdmin(

@@ -139,7 +139,14 @@ public class ConvertLayoutMVCActionCommandTest {
 		Assert.assertNotNull(persistedPublishedLayout);
 
 		Assert.assertEquals(
+			originalLayout.getPlid(), persistedPublishedLayout.getPlid());
+		Assert.assertEquals(
 			originalLayout.getGroupId(), persistedPublishedLayout.getGroupId());
+		Assert.assertEquals(
+			originalLayout.getUserId(), persistedPublishedLayout.getUserId());
+		Assert.assertEquals(
+			originalLayout.getParentPlid(),
+			persistedPublishedLayout.getParentPlid());
 		Assert.assertEquals(
 			originalLayout.isPrivateLayout(),
 			persistedPublishedLayout.isPrivateLayout());
@@ -147,41 +154,39 @@ public class ConvertLayoutMVCActionCommandTest {
 			originalLayout.getLayoutId(),
 			persistedPublishedLayout.getLayoutId());
 		Assert.assertEquals(
+			originalLayout.getParentLayoutId(),
+			persistedPublishedLayout.getParentLayoutId());
+		Assert.assertEquals(
 			originalLayout.getClassName(),
 			persistedPublishedLayout.getClassName());
 		Assert.assertEquals(
 			originalLayout.getClassNameId(),
 			persistedPublishedLayout.getClassNameId());
 		Assert.assertEquals(
+			originalLayout.getClassPK(), persistedPublishedLayout.getClassPK());
+		Assert.assertEquals(
+			originalLayout.getNameMap(), persistedPublishedLayout.getNameMap());
+		Assert.assertEquals(
+			originalLayout.getTitleMap(),
+			persistedPublishedLayout.getTitleMap());
+		Assert.assertEquals(
 			originalLayout.getDescriptionMap(),
 			persistedPublishedLayout.getDescriptionMap());
-		Assert.assertEquals(
-			originalLayout.getFriendlyURLMap(),
-			persistedPublishedLayout.getFriendlyURLMap());
 		Assert.assertEquals(
 			originalLayout.getKeywordsMap(),
 			persistedPublishedLayout.getKeywordsMap());
 		Assert.assertEquals(
-			originalLayout.getNameMap(), persistedPublishedLayout.getNameMap());
-		Assert.assertEquals(
-			originalLayout.getParentLayoutId(),
-			persistedPublishedLayout.getParentLayoutId());
-		Assert.assertEquals(
-			originalLayout.getPlid(), persistedPublishedLayout.getPlid());
-		Assert.assertEquals(
 			originalLayout.getRobotsMap(),
 			persistedPublishedLayout.getRobotsMap());
-		Assert.assertEquals(
-			originalLayout.getTitleMap(),
-			persistedPublishedLayout.getTitleMap());
 		Assert.assertEquals("content", persistedPublishedLayout.getType());
 		Assert.assertEquals(
 			originalLayout.getTypeSettings(),
 			persistedPublishedLayout.getTypeSettings());
 		Assert.assertEquals(
-			originalLayout.getUserId(), persistedPublishedLayout.getUserId());
-		Assert.assertEquals(
 			originalLayout.isSystem(), persistedPublishedLayout.isSystem());
+		Assert.assertEquals(
+			originalLayout.getFriendlyURLMap(),
+			persistedPublishedLayout.getFriendlyURLMap());
 	}
 
 	private MockActionRequest _getMockActionRequest(long plid)

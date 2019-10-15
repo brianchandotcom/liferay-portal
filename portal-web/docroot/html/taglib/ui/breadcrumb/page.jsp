@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
-<nav aria-label="<%= portletDisplay.getTitle() %>" id="<portlet:namespace />breadcrumbs-defaultScreen">
+<nav aria-label="<%= HtmlUtil.escapeAttribute(portletDisplay.getTitle()) %>" id="<portlet:namespace />breadcrumbs-defaultScreen">
 	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
 
 		<%

@@ -145,28 +145,28 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
-		boolean useCustomCanonicalURL = ParamUtil.getBoolean(
-			actionRequest, "useCustomCanonicalURL");
+		boolean canonicalURLEnabled = ParamUtil.getBoolean(
+			actionRequest, "canonicalURLEnabled");
 		Map<Locale, String> canonicalURLMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "canonicalURL");
-		boolean useCustomDescription = ParamUtil.getBoolean(
-			actionRequest, "useCustomDescription");
+		boolean openGraphDescriptionEnabled = ParamUtil.getBoolean(
+			actionRequest, "openGraphDescriptionEnabled");
 		Map<Locale, String> openGraphDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "openGraphDescription");
 		long openGraphImageFileEntryId = ParamUtil.getLong(
 			actionRequest, "openGraphImageFileEntryId");
-		boolean useCustomTitle = ParamUtil.getBoolean(
-			actionRequest, "useCustomTitle");
+		boolean openGraphTitleEnabled = ParamUtil.getBoolean(
+			actionRequest, "openGraphTitleEnabled");
 		Map<Locale, String> openGraphTitleMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "openGraphTitle");
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
-			groupId, privateLayout, layoutId, useCustomCanonicalURL,
-			canonicalURLMap, useCustomDescription, openGraphDescriptionMap,
-			openGraphImageFileEntryId, useCustomTitle, openGraphTitleMap,
-			serviceContext);
+			groupId, privateLayout, layoutId, canonicalURLEnabled,
+			canonicalURLMap, openGraphDescriptionEnabled,
+			openGraphDescriptionMap, openGraphImageFileEntryId,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -181,9 +181,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, draftLayout.getLayoutId(),
-				useCustomCanonicalURL, canonicalURLMap, useCustomDescription,
-				openGraphDescriptionMap, openGraphImageFileEntryId,
-				useCustomTitle, openGraphTitleMap, serviceContext);
+				canonicalURLEnabled, canonicalURLMap,
+				openGraphDescriptionEnabled, openGraphDescriptionMap,
+				openGraphImageFileEntryId, openGraphTitleEnabled,
+				openGraphTitleMap, serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

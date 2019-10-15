@@ -112,6 +112,13 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 					continue;
 				}
 
+				String lastLine = StringUtil.trim(
+					getLine(content, getLineNumber(content, x)));
+
+				if (lastLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+					break;
+				}
+
 				String codeSingleLine = StringUtil.replace(
 					codeBlock, new String[] {StringPool.TAB, ",\n", "\n"},
 					new String[] {StringPool.BLANK, ", ", StringPool.BLANK});

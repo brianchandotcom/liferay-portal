@@ -599,13 +599,13 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<unzip-boston-dataset-index />
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9200/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />
+			<arg line="-X PUT &quot;localhost:9201/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />
 		</exec>
 
 		<echo>Defining snapshot repository.${line.separator}${curl.output}</echo>
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X POST &quot;localhost:9200/_snapshot/my_backup/snapshot_2/_restore&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;indices&quot;: &quot;boston311&quot;,&quot;ignore_unavailable&quot;: true,&quot;include_global_state&quot;: true,&quot;rename_pattern&quot;: &quot;index_(.+)&quot;,&quot;rename_replacement&quot;: &quot;restored_index_$1&quot;}&apos;" />
+			<arg line="-X POST &quot;localhost:9201/_snapshot/my_backup/snapshot_2/_restore&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;indices&quot;: &quot;boston311&quot;,&quot;ignore_unavailable&quot;: true,&quot;include_global_state&quot;: true,&quot;rename_pattern&quot;: &quot;index_(.+)&quot;,&quot;rename_replacement&quot;: &quot;restored_index_$1&quot;}&apos;" />
 		</exec>
 
 		<echo>Restoring Boston dataset snapshot.${line.separator}${curl.output}</echo>

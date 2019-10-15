@@ -711,7 +711,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				_getTestClassNamesExcludesPropertyValue(testSuiteName, false),
 				portalGitWorkingDirectory.getWorkingDirectory()));
 
-		if (includeStableSuite && isStableTestSuiteBatch()) {
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
 			testClassNamesExcludesPathMatchers.addAll(
 				getPathMatchers(
 					_getTestClassNamesExcludesPropertyValue(
@@ -760,7 +760,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testBatchClassNamesIncludesRequiredPropertyValue));
 		}
 
-		if (includeStableSuite && isStableTestSuiteBatch()) {
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
 			Collections.addAll(
 				testClassNamesIncludesRelativeGlobs,
 				JenkinsResultsParserUtil.getGlobsFromProperty(

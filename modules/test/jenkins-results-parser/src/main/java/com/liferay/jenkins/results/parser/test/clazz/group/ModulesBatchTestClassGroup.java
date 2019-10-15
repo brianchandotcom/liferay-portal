@@ -85,7 +85,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 						getFirstPropertyValue("modules.includes.private"),
 						modulesDir));
 
-				if (includeStableSuite && isStableTestSuiteBatch()) {
+				if (includeStableTestSuite && isStableTestSuiteBatch()) {
 					excludesPathMatchers.addAll(
 						getPathMatchers(
 							getFirstPropertyValue(
@@ -112,7 +112,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 						getFirstPropertyValue("modules.includes.public"),
 						modulesDir));
 
-				if (includeStableSuite && isStableTestSuiteBatch()) {
+				if (includeStableTestSuite && isStableTestSuiteBatch()) {
 					excludesPathMatchers.addAll(
 						getPathMatchers(
 							getFirstPropertyValue(

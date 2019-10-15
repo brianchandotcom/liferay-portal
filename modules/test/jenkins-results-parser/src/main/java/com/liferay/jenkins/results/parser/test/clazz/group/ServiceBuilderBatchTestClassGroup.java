@@ -176,7 +176,7 @@ public class ServiceBuilderBatchTestClassGroup
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
 		if (testRelevantChanges &&
-			!(includeStableSuite && isStableTestSuiteBatch())) {
+			!(includeStableTestSuite && isStableTestSuiteBatch())) {
 
 			List<File> modifiedFiles =
 				portalGitWorkingDirectory.getModifiedFilesList();

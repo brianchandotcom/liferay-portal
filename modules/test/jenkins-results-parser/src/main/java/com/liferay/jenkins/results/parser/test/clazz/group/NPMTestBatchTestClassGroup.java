@@ -250,7 +250,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		try {
 			if (testRelevantChanges &&
-				!(includeStableSuite && isStableTestSuiteBatch())) {
+				!(includeStableTestSuite && isStableTestSuiteBatch())) {
 
 				moduleDirs =
 					portalGitWorkingDirectory.

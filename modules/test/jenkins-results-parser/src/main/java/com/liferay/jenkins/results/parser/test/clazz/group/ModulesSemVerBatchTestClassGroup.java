@@ -143,7 +143,7 @@ public class ModulesSemVerBatchTestClassGroup
 			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
 		if (testRelevantChanges &&
-			!(includeStableSuite && isStableTestSuiteBatch())) {
+			!(includeStableTestSuite && isStableTestSuiteBatch())) {
 
 			moduleDirsList.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList(

@@ -162,8 +162,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		String stableTestBatchRunPropertyQuery =
 			_getDefaultTestBatchRunPropertyQuery(NAME_STABLE_TEST_SUITE);
 
-		if ((stableTestBatchRunPropertyQuery != null) && includeStableSuite &&
-			isStableTestSuiteBatch()) {
+		if ((stableTestBatchRunPropertyQuery != null) &&
+			includeStableTestSuite && isStableTestSuiteBatch()) {
 
 			sb.append(" OR (");
 			sb.append(stableTestBatchRunPropertyQuery);

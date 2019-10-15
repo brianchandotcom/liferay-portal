@@ -127,19 +127,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jobProperties = portalTestClassJob.getJobProperties();
 
-		String stableTestBatchNamesString = getFirstPropertyValue(
-			"test.batch.names", batchName, NAME_STABLE_TEST_SUITE);
+		String stableTestSuiteBatchNamesFirstPropertyValue =
+			getFirstPropertyValue(
+				"test.batch.names", batchName, NAME_STABLE_TEST_SUITE);
 
-		if (stableTestBatchNamesString != null) {
+		if (stableTestSuiteBatchNamesFirstPropertyValue != null) {
 			Collections.addAll(
-				stableTestBatchNames, stableTestBatchNamesString.split(","));
+				stableTestSuiteBatchNames,
+				stableTestSuiteBatchNamesFirstPropertyValue.split("\\s*,\\s*"));
 		}
 
 		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 		_setTestRelevantIntegrationUnitOnly();
 
-		_setIncludeStableSuite();
+		_setIncludeStableTestSuite();
 	}
 
 	protected int getAxisMaxSize() {
@@ -369,7 +371,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected boolean isStableTestSuiteBatch() {
-		return stableTestBatchNames.contains(batchName);
+		return stableTestSuiteBatchNames.contains(batchName);
 	}
 
 	protected void setAxisTestClassGroups() {
@@ -408,10 +410,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final String batchName;
 	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
 	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
-	protected boolean includeStableSuite;
+	protected boolean includeStableTestSuite;
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
-	protected List<String> stableTestBatchNames = new ArrayList<>();
+	protected List<String> stableTestSuiteBatchNames = new ArrayList<>();
 	protected boolean testPrivatePortalBranch;
 	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
@@ -522,8 +524,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return Lists.newArrayList(requiredModuleDirs);
 	}
 
-	private void _setIncludeStableSuite() {
-		includeStableSuite = testRelevantChanges;
+	private void _setIncludeStableTestSuite() {
+		includeStableTestSuite = testRelevantChanges;
 	}
 
 	private void _setTestReleaseBundle() {

@@ -81,7 +81,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 				getFirstPropertyValue("test.batch.class.names.includes"),
 				_tckHomeDirectory));
 
-		if (includeStableSuite && isStableTestSuiteBatch()) {
+		if (includeStableTestSuite && isStableTestSuiteBatch()) {
 			excludesPathMatchers.addAll(
 				getPathMatchers(
 					getFirstPropertyValue(

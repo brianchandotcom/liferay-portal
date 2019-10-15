@@ -156,7 +156,7 @@ public class ModulesCompileBatchTestClassGroup
 			getPortalGitWorkingDirectory();
 
 		if (testRelevantChanges &&
-			!(includeStableSuite && isStableTestSuiteBatch())) {
+			!(includeStableTestSuite && isStableTestSuiteBatch())) {
 
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList(

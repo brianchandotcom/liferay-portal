@@ -31,7 +31,7 @@ public interface BatchEngineTaskConfiguration {
 	@Meta.AD(deflt = "100", name = "batch-size", required = false)
 	public int batchSize();
 
-	@Meta.AD(deflt = ",", name = "csv-file-column-delimiter", required = false)
+	@Meta.AD(name = "csv-file-column-delimiter", required = false)
 	public String csvFileColumnDelimiter();
 
 	@Meta.AD(deflt = "60", name = "orphan-scan-interval", required = false)

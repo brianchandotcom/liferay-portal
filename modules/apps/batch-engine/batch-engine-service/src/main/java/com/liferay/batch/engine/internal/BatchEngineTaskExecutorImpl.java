@@ -23,6 +23,7 @@ import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriter;
 import com.liferay.batch.engine.internal.writer.BatchEngineTaskItemWriterFactory;
 import com.liferay.batch.engine.model.BatchEngineTask;
 import com.liferay.batch.engine.service.BatchEngineTaskLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,7 +69,9 @@ public class BatchEngineTaskExecutorImpl implements BatchEngineTaskExecutor {
 		_batchEngineTaskItemReaderFactory =
 			new BatchEngineTaskItemReaderFactory(
 				_batchEngineTaskMethodServiceRegistry,
-				batchEngineTaskConfiguration.csvFileColumnDelimiter());
+				GetterUtil.getString(
+					batchEngineTaskConfiguration.csvFileColumnDelimiter(),
+					StringPool.COMMA));
 
 		_batchEngineTaskItemWriterFactory =
 			new BatchEngineTaskItemWriterFactory(

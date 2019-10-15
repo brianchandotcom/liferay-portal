@@ -101,10 +101,12 @@ public class PortalPullRequestTesterTopLevelBuild extends DefaultTopLevelBuild {
 			getJobVariantsDownstreamBuildCount(
 				stableJobBatchNames, "SUCCESS", null);
 
+		int stableJobDownstreamBuildsCount = getJobVariantsDownstreamBuildCount(
+			stableJobBatchNames, null, null);
+
 		int stableJobDownstreamBuildsFailureCount =
-			getJobVariantsDownstreamBuildCount(
-				stableJobBatchNames, null, null) -
-					stableJobDownstreamBuildsSuccessCount;
+			stableJobDownstreamBuildsCount -
+				stableJobDownstreamBuildsSuccessCount;
 
 		return Dom4JUtil.getNewElement(
 			"div", null,

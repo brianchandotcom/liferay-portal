@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>FLAG_LINK</td>
-	<td>//div[contains(@class,'taglib-flags')]//button[contains(@type,'button')]</td>
+	<td>//div[contains(@class,'taglib-flags')]//button[contains(@type,'button')]//span[contains(.,'Report')]</td>
 	<td></td>
 </tr>
 <tr>

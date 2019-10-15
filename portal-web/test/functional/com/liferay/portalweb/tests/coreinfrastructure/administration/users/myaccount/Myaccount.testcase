@@ -172,6 +172,41 @@ definition {
 			userLoginFullName = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-76106."
+	@priority = "5"
+	test ViewMyAccountUserViaURL {
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet&p_p_lifecycle=1");
+
+		MyAccount.view();
+
+		AssertConsoleTextPresent(value1 = "not allowed to access URL ${portalURL}/group/control_panel/manage and portlet com_liferay_my_account_web_portlet_MyAccountPortlet");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+	}
+
 	@priority = "4"
 	test ViewMyAccountViaSignInPortlet {
 		Portlet.addPG(portletName = "Sign In");

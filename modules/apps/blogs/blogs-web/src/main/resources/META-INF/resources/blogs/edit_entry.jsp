@@ -102,13 +102,6 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-		<div class="entry-options">
-			<div class="status">
-				<%= saveStatus %>
-				<%= readingTime %>
-			</div>
-		</div>
-
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />
 			<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />

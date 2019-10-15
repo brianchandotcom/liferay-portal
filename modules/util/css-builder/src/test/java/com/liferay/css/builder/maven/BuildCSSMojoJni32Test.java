@@ -14,7 +14,7 @@
 
 package com.liferay.css.builder.maven;
 
-import com.liferay.css.builder.BaseCSSBuilderJniTestCase;
+import com.liferay.css.builder.BaseCSSBulderJni32TestCase;
 import com.liferay.maven.executor.MavenExecutor;
 
 import java.nio.file.Path;
@@ -25,7 +25,7 @@ import org.junit.ClassRule;
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildCSSMojoTest extends BaseCSSBuilderJniTestCase {
+public class BuildCSSMojoJni32Test extends BaseCSSBulderJni32TestCase {
 
 	@ClassRule
 	public static final MavenExecutor mavenExecutor = new MavenExecutor();

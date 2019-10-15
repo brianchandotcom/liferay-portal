@@ -12,23 +12,44 @@
  * details.
  */
 
-package com.liferay.css.builder.maven;
+package com.liferay.css.builder.ant;
 
-import com.liferay.css.builder.BaseCSSBuilderJniTestCase;
-import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.css.builder.BaseCSSBulderJni32TestCase;
+
+import java.io.File;
+
+import java.net.URL;
 
 import java.nio.file.Path;
 
+import org.apache.tools.ant.BuildFileRule;
+
 import org.junit.Assert;
-import org.junit.ClassRule;
+import org.junit.Before;
+import org.junit.Rule;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class BuildCSSMojoTest extends BaseCSSBuilderJniTestCase {
+public class BuildCSSTaskJni32Test extends BaseCSSBulderJni32TestCase {
 
-	@ClassRule
-	public static final MavenExecutor mavenExecutor = new MavenExecutor();
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		URL url = BuildCSSTaskJni32Test.class.getResource(
+			"dependencies/build.xml");
+
+		File buildXmlFile = new File(url.toURI());
+
+		Assert.assertTrue(buildXmlFile.isFile());
+
+		buildFileRule.configureProject(buildXmlFile.getAbsolutePath());
+	}
+
+	@Rule
+	public final BuildFileRule buildFileRule = new BuildFileRule();
 
 	@Override
 	protected String executeCSSBuilder(
@@ -38,17 +59,10 @@ public class BuildCSSMojoTest extends BaseCSSBuilderJniTestCase {
 			String sassCompilerClassName)
 		throws Exception {
 
-		BuildCSSMojoTestUtil.preparePomXml(
-			baseDirPath, dirName, excludes, generateSourceMap, importDirPath,
-			outputDirName, precision, rtlExcludedPathRegexps,
+		return BuildCSSTaskTestUtil.executeCSSBuilder(
+			buildFileRule, baseDirPath, dirName, excludes, generateSourceMap,
+			importDirPath, outputDirName, precision, rtlExcludedPathRegexps,
 			sassCompilerClassName);
-
-		MavenExecutor.Result result = mavenExecutor.execute(
-			baseDirPath.toFile(), "css-builder:build");
-
-		Assert.assertEquals(result.output, 0, result.exitCode);
-
-		return result.output;
 	}
 
 }

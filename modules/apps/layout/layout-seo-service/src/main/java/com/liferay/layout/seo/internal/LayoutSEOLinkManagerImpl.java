@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -120,14 +119,9 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			layout, portletId, tilesTitle, titleListMergeable,
 			subtitleListMergeable, locale);
 
-		String pageTitle = "";
+		String siteAndCompanyName = _getSiteAndCompanyName(layout, companyName);
 
-		if (Validator.isNotNull(layoutTitle)) {
-			pageTitle = layoutTitle + " - ";
-		}
-
-		return _html.escape(
-			pageTitle + _getSiteAndCompanyName(layout, companyName));
+		return _html.escape(_merge(layoutTitle, siteAndCompanyName));
 	}
 
 	@Override
@@ -203,14 +197,13 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return _language.get(locale, tilesTitle);
 		}
 
-		Group group = layout.getGroup();
-
 		if (subtitleListMergeable == null) {
-			return _getTitle(group, layout, titleListMergeable, locale);
+			return _getTitle(layout, titleListMergeable, locale);
 		}
 
-		return subtitleListMergeable.mergeToString(StringPool.SPACE) + " - " +
-			_getTitle(group, layout, titleListMergeable, locale);
+		return _merge(
+			subtitleListMergeable.mergeToString(StringPool.SPACE),
+			_getTitle(layout, titleListMergeable, locale));
 	}
 
 	private String _getSiteAndCompanyName(Layout layout, String companyName)
@@ -224,14 +217,15 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			return companyName;
 		}
 
-		return StringBundler.concat(
-			group.getDescriptiveName(), " - ", companyName);
+		return _merge(group.getDescriptiveName(), companyName);
 	}
 
 	private String _getTitle(
-			Group group, Layout layout,
-			ListMergeable<String> titleListMergeable, Locale locale)
+			Layout layout, ListMergeable<String> titleListMergeable,
+			Locale locale)
 		throws PortalException {
+
+		Group group = layout.getGroup();
 
 		if (group.isLayoutPrototype()) {
 			return group.getDescriptiveName(locale);
@@ -242,6 +236,10 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		}
 
 		return layout.getHTMLTitle(_language.getLanguageId(locale));
+	}
+
+	private String _merge(String... strings) {
+		return StringUtil.merge(strings, " - ");
 	}
 
 	@Reference

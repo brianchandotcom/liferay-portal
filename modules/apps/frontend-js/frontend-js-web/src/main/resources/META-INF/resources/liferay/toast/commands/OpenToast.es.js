@@ -22,6 +22,8 @@ const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID'
 };
 
+const TOAST_AUTO_CLOSE_INTERVAL = 5000;
+
 const Toast = ({
 	displayType,
 	message,
@@ -43,7 +45,7 @@ const Toast = ({
 		return (
 			<ClayAlert.ToastContainer>
 				<ClayAlert
-					autoClose={5000}
+					autoClose={TOAST_AUTO_CLOSE_INTERVAL}
 					displayType={displayType}
 					onClose={() => setShowDismissible(false)}
 					spritemap={spritemap}

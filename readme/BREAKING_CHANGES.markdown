@@ -150,3 +150,27 @@ Liferay Frontend compat Slider component is not used and was already
 deprecated in 7.2.
 
 ---------------------------------------
+
+### Removed liferay.frontend.ProgressBar
+- **Date:** 2019-Aug-28
+- **JIRA Ticket:** [LPS-100122](https://issues.liferay.com/browse/LPS-100122)
+
+#### What changed?
+
+Liferay Frontend compat ProgressBar has been removed.
+
+#### Who is affected?
+
+This affects any code that relies on such component.
+
+#### How should I update my code?
+
+There's no direct replacement for this. Clay ProgessBar component can be used
+instead.
+
+#### Why was this change made?
+
+Liferay Frontend compat ProgressBar component is not used and was already
+deprecated in 7.2.
+
+---------------------------------------

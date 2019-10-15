@@ -87,6 +87,8 @@ test {
 		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
 	}
 
+	forkEvery = 1
+
 	systemProperty "css.builder.version", jar.version
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]

@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -117,6 +118,84 @@ public class ConvertLayoutMVCActionCommandTest {
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			actionRequest, new MockActionResponse());
 
+		_validateLayoutConversion(originalLayout);
+	}
+
+	@Test
+	public void testConvertWidgetLayoutToContentLayoutWithExistingStructure()
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.setProperty(
+			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column");
+
+		Layout originalLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), typeSettingsProperties.toString());
+
+		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(Layout.class.getName()),
+			originalLayout.getPlid(), StringPool.BLANK, _serviceContext);
+
+		ActionRequest actionRequest = _getMockActionRequest(
+			originalLayout.getPlid());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "processAction",
+			new Class<?>[] {ActionRequest.class, ActionResponse.class},
+			actionRequest, new MockActionResponse());
+
+		_validateLayoutConversion(originalLayout);
+	}
+
+	private MockActionRequest _getMockActionRequest(long plid)
+		throws PortalException {
+
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
+		mockActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		mockActionRequest.addParameter("selPlid", String.valueOf(plid));
+
+		return mockActionRequest;
+	}
+
+	private ServiceContext _getServiceContext(Group group, long userId) {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE, new MockActionResponse());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group, userId);
+
+		serviceContext.setRequest(httpServletRequest);
+
+		return serviceContext;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws PortalException {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(_company);
+
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
+	}
+
+	private String _read(String fileName) throws Exception {
+		return new String(
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
+	}
+
+	private void _validateLayoutConversion(Layout originalLayout)
+		throws Exception {
+
 		Layout persistedDraftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class.getName()),
 			originalLayout.getPlid());
@@ -199,50 +278,6 @@ public class ConvertLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			originalLayout.getFriendlyURLMap(),
 			persistedPublishedLayout.getFriendlyURLMap());
-	}
-
-	private MockActionRequest _getMockActionRequest(long plid)
-		throws PortalException {
-
-		MockActionRequest mockActionRequest = new MockActionRequest();
-
-		mockActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		mockActionRequest.addParameter("selPlid", String.valueOf(plid));
-
-		return mockActionRequest;
-	}
-
-	private ServiceContext _getServiceContext(Group group, long userId) {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE, new MockActionResponse());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group, userId);
-
-		serviceContext.setRequest(httpServletRequest);
-
-		return serviceContext;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws PortalException {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
-	}
-
-	private String _read(String fileName) throws Exception {
-		return new String(
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
 
 	private Company _company;

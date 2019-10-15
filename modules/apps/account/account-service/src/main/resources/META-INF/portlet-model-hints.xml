@@ -17,7 +17,9 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="domains" type="String" />
+		<field name="domains" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="logoId" type="long" />
 		<field name="status" type="int" />
 	</model>

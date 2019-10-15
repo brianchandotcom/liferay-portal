@@ -193,7 +193,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		Company company = themeDisplay.getCompany();
 
-		return _layoutSEOLinkManager.getPageTitle(
+		return _layoutSEOLinkManager.getFullPageTitle(
 			layout, portletId, themeDisplay.getTilesTitle(), titleListMergeable,
 			subtitleListMergeable, company.getName(), themeDisplay.getLocale());
 	}

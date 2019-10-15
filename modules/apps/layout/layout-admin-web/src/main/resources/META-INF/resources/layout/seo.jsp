@@ -120,7 +120,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		<c:when test="<%= selLayoutSEOEntry != null %>">
 			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+			<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
 				<aui:input name="canonicalURL" placeholder="canonical-url">
@@ -129,7 +129,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			</div>
 		</c:when>
 		<c:otherwise>
-			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
 				<aui:input localized="<%= true %>" name="canonicalURL" placeholder="canonical-url" type="text">
@@ -152,11 +152,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
 			<div id="<portlet:namespace />openGraphSettings">
-				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="useCustomTitle" type="checkbox" />
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphTitleEnabled() %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-title" name="openGraphTitleEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphTitle" placeholder="title" />
 
-				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="useCustomDescription" type="checkbox" />
+				<aui:input checked="<%= selLayoutSEOEntry.isOpenGraphDescriptionEnabled() %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-description" name="openGraphDescriptionEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" name="openGraphDescription" placeholder="description" />
 
@@ -165,11 +165,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		</c:when>
 		<c:otherwise>
 			<div id="<portlet:namespace />openGraphSettings">
-				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" id="useCustomTitle" label="use-custom-title" name="openGraphTitle" type="checkbox" />
+				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-title-help" label="use-custom-title" name="openGraphTitleEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphTitle" type="text" />
 
-				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" id="useCustomDescription" label="use-custom-description" name="openGraphDescription" type="checkbox" />
+				<aui:input checked="<%= false %>" helpMessage="use-custom-open-graph-description-help" label="use-custom-description" name="openGraphDescriptionEnabled" type="checkbox" />
 
 				<aui:input label="<%= StringPool.BLANK %>" localized="<%= true %>" name="openGraphDescription" type="textarea" />
 
@@ -234,5 +234,5 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 </c:if>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />useCustomCanonicalURL', '<portlet:namespace />customCanonicalURLSettings');
+	Liferay.Util.toggleBoxes('<portlet:namespace />canonicalURLEnabled', '<portlet:namespace />customCanonicalURLSettings');
 </aui:script>

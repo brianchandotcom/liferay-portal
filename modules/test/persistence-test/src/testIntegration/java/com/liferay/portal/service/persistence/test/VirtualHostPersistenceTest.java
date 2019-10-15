@@ -130,6 +130,10 @@ public class VirtualHostPersistenceTest {
 
 		newVirtualHost.setHostname(RandomTestUtil.randomString());
 
+		newVirtualHost.setDefaultVirtualHost(RandomTestUtil.randomBoolean());
+
+		newVirtualHost.setLanguageId(RandomTestUtil.randomString());
+
 		_virtualHosts.add(_persistence.update(newVirtualHost));
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
@@ -148,6 +152,12 @@ public class VirtualHostPersistenceTest {
 			newVirtualHost.getLayoutSetId());
 		Assert.assertEquals(
 			existingVirtualHost.getHostname(), newVirtualHost.getHostname());
+		Assert.assertEquals(
+			existingVirtualHost.isDefaultVirtualHost(),
+			newVirtualHost.isDefaultVirtualHost());
+		Assert.assertEquals(
+			existingVirtualHost.getLanguageId(),
+			newVirtualHost.getLanguageId());
 	}
 
 	@Test
@@ -165,6 +175,15 @@ public class VirtualHostPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByC_L(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_L_D() throws Exception {
+		_persistence.countByC_L_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_L_D(0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -193,7 +212,8 @@ public class VirtualHostPersistenceTest {
 	protected OrderByComparator<VirtualHost> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"VirtualHost", "mvccVersion", true, "virtualHostId", true,
-			"companyId", true, "layoutSetId", true, "hostname", true);
+			"companyId", true, "layoutSetId", true, "hostname", true,
+			"defaultVirtualHost", true, "languageId", true);
 	}
 
 	@Test
@@ -430,6 +450,11 @@ public class VirtualHostPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				existingVirtualHost, "getOriginalLayoutSetId",
 				new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(existingVirtualHost.getDefaultVirtualHost()),
+			ReflectionTestUtil.<Boolean>invoke(
+				existingVirtualHost, "getOriginalDefaultVirtualHost",
+				new Class<?>[0]));
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {
@@ -444,6 +469,10 @@ public class VirtualHostPersistenceTest {
 		virtualHost.setLayoutSetId(RandomTestUtil.nextLong());
 
 		virtualHost.setHostname(RandomTestUtil.randomString());
+
+		virtualHost.setDefaultVirtualHost(RandomTestUtil.randomBoolean());
+
+		virtualHost.setLanguageId(RandomTestUtil.randomString());
 
 		_virtualHosts.add(_persistence.update(virtualHost));
 

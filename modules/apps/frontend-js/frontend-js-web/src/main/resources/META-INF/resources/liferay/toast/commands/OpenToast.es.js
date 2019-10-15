@@ -28,7 +28,6 @@ const Toast = ({
 	displayType,
 	message,
 	onUnmount,
-	spritemap,
 	title,
 	toastProps,
 	variant
@@ -48,7 +47,6 @@ const Toast = ({
 					autoClose={TOAST_AUTO_CLOSE_INTERVAL}
 					displayType={displayType}
 					onClose={() => setShowDismissible(false)}
-					spritemap={spritemap}
 					title={title}
 					variant={variant}
 					{...toastProps}

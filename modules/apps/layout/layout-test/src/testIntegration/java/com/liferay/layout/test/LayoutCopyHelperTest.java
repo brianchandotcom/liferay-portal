@@ -15,6 +15,12 @@
 package com.liferay.layout.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -84,6 +90,40 @@ public class LayoutCopyHelperTest {
 			_group.getGroupId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@Test
+	public void testCopyCategorizationData() throws Exception {
+		Layout sourceLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		Layout targetLayout = LayoutTestUtil.addLayout(
+			_group.getGroupId(), StringPool.BLANK);
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		AssetTag assetTag = AssetTestUtil.addTag(_group.getGroupId());
+
+		_layoutLocalService.updateAsset(
+			sourceLayout.getUserId(), sourceLayout,
+			new long[] {assetCategory.getCategoryId()},
+			new String[] {assetTag.getName()});
+
+		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				Layout.class.getName(), targetLayout.getPlid());
+
+		List<AssetTag> assetTags = _assetTagLocalService.getTags(
+			Layout.class.getName(), targetLayout.getPlid());
+
+		Assert.assertEquals(assetCategory, assetCategories.get(0));
+		Assert.assertEquals(assetTag, assetTags.get(0));
 	}
 
 	@Test
@@ -293,6 +333,12 @@ public class LayoutCopyHelperTest {
 			Boolean.TRUE.toString(),
 			targetProperties.getProperty("lfr-theme:regular:show-header"));
 	}
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
 import java.io.ByteArrayInputStream;
@@ -89,7 +90,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	public JavacErrorDetail[] compile(String className, Node.Nodes pageNodes)
 		throws JasperException {
 
-		_classFiles = new ArrayList<>();
+		_bytecodeFiles = new ArrayList<>();
 
 		JavaCompiler javaCompiler = ToolProvider.getSystemJavaCompiler();
 
@@ -120,7 +121,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					_javaFileObjectResolvers))) {
 
 			JavaCompiler.CompilationTask compilationTask = javaCompiler.getTask(
-				null, javaFileManager, diagnosticCollector, _options, null,
+				null, javaFileManager, diagnosticCollector, _compilerOptions,
+				null,
 				Arrays.asList(
 					new StringJavaFileObject(
 						className.substring(className.lastIndexOf('.') + 1),
@@ -131,7 +133,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 
 			if (compilationTask.call()) {
-				for (BytecodeFile bytecodeFile : _classFiles) {
+				for (BytecodeFile bytecodeFile : _bytecodeFiles) {
 					_jspRuntimeContext.setBytecode(
 						bytecodeFile.getClassName(),
 						bytecodeFile.getBytecode());
@@ -163,6 +165,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		return javacErrorDetails;
 	}
 
+	@Override
 	public void doJavaFile(boolean keep) throws JasperException {
 		if (!keep) {
 			_charArrayWriter = null;
@@ -170,13 +173,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			return;
 		}
 
-		try {
-			Writer writer = new OutputStreamWriter(
-				new FileOutputStream(_javaFileName), _javaEncoding);
+		try (Writer writer = new OutputStreamWriter(
+				new FileOutputStream(_javaFileName), _javaEncoding)) {
 
 			writer.write(_charArrayWriter.toString());
-
-			writer.close();
 
 			_charArrayWriter = null;
 		}
@@ -189,12 +189,14 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 	}
 
+	@Override
 	public long getClassLastModified() {
 		String className = _jspCompilationContext.getFullClassName();
 
 		return _jspRuntimeContext.getBytecodeBirthTime(className);
 	}
 
+	@Override
 	public Writer getJavaWriter(String javaFileName, String javaEncoding) {
 		_javaFileName = javaFileName;
 		_javaEncoding = javaEncoding;
@@ -209,7 +211,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		JspCompilationContext jspCompilationContext,
 		ErrorDispatcher errorDispatcher, boolean suppressLogging) {
 
-		_options.add("-XDuseUnsharedTable");
+		_compilerOptions.add("-XDuseUnsharedTable");
 
 		Options options = jspCompilationContext.getOptions();
 
@@ -289,60 +291,71 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		_jspCompilationContext = jspCompilationContext;
 
+		_errorDispatcher = errorDispatcher;
+
 		_jspRuntimeContext = jspCompilationContext.getRuntimeContext();
 
-		_options.add("-proc:none");
-		_errorDispatcher = errorDispatcher;
+		_compilerOptions.add("-proc:none");
 	}
 
+	@Override
 	public void release() {
-		_classFiles = null; // release temp bytecodes
+		_bytecodeFiles = null;
 	}
 
+	@Override
 	public void saveClassFile(String className, String classFileName) {
-		for (BytecodeFile bytecodeFile : _classFiles) {
-			String c = bytecodeFile.getClassName();
-			String f = classFileName;
+		for (BytecodeFile bytecodeFile : _bytecodeFiles) {
+			String bytecodeFileClassName = bytecodeFile.getClassName();
+			String outputFileName = classFileName;
 
-			if (!className.equals(c)) {
+			if (!className.equals(bytecodeFileClassName)) {
+				outputFileName = outputFileName.substring(
+					0, outputFileName.lastIndexOf(File.separator) + 1);
 
-				// Compute inner class file name
-
-				f =
-					f.substring(0, f.lastIndexOf(File.separator) + 1) +
-						c.substring(c.lastIndexOf('.') + 1) + ".class";
+				outputFileName = outputFileName.concat(
+					bytecodeFileClassName.substring(
+						bytecodeFileClassName.lastIndexOf('.') + 1)
+				).concat(
+					".class"
+				);
 			}
 
-			_jspRuntimeContext.saveBytecode(c, f);
+			_jspRuntimeContext.saveBytecode(
+				bytecodeFileClassName, outputFileName);
 		}
 	}
 
 	@Override
-	public void setClassPath(List<File> path) {
+	public void setClassPath(List<File> classPath) {
 	}
 
+	@Override
 	public void setDebug(boolean debug) {
 		if (debug) {
-			_options.add("-g");
+			_compilerOptions.add("-g");
 		}
 		else {
-			_options.add("-g:none");
+			_compilerOptions.add("-g:none");
 		}
 	}
 
+	@Override
 	public void setExtdirs(String exts) {
-		_options.add("-extdirs");
-		_options.add(exts);
+		_compilerOptions.add("-extdirs");
+		_compilerOptions.add(exts);
 	}
 
+	@Override
 	public void setSourceVM(String sourceVM) {
-		_options.add("-source");
-		_options.add(sourceVM);
+		_compilerOptions.add("-source");
+		_compilerOptions.add(sourceVM);
 	}
 
+	@Override
 	public void setTargetVM(String targetVM) {
-		_options.add("-target");
-		_options.add(targetVM);
+		_compilerOptions.add("-target");
+		_compilerOptions.add(targetVM);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -565,10 +578,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private Bundle[] _allParticipatingBundles;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
 		new HashMap<>(_jspBundleWiringPackageNames);
+	private List<BytecodeFile> _bytecodeFiles;
 	private CharArrayWriter _charArrayWriter;
-	private ArrayList<BytecodeFile> _classFiles;
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
+	private final List<String> _compilerOptions = new ArrayList<>();
 	private ErrorDispatcher _errorDispatcher;
 	private String _javaEncoding;
 	private String _javaFileName;
@@ -576,7 +590,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		new ArrayList<>();
 	private JspCompilationContext _jspCompilationContext;
 	private JspRuntimeContext _jspRuntimeContext;
-	private final List<String> _options = new ArrayList<>();
 
 	private static class BytecodeFile extends SimpleJavaFileObject {
 
@@ -588,10 +601,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			return _className;
 		}
 
+		@Override
 		public InputStream openInputStream() {
 			return new ByteArrayInputStream(_bytecode);
 		}
 
+		@Override
 		public OutputStream openOutputStream() {
 			return new ByteArrayOutputStream() {
 
@@ -648,7 +663,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 			javaFileObjectsMap.put(className, bytecodeFile);
 
-			_classFiles.add(bytecodeFile);
+			_bytecodeFiles.add(bytecodeFile);
 
 			return bytecodeFile;
 		}

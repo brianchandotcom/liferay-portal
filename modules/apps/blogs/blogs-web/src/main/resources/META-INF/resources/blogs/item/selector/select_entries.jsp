@@ -186,7 +186,7 @@ BlogEntriesItemSelectorDisplayContext blogEntriesItemSelectorDisplayContext = (B
 
 	Liferay.on(
 		'destroyPortlet',
-		function() {
+		function removeListener() {
 			selectEntryHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', removeListener);

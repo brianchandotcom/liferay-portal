@@ -306,7 +306,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 	Liferay.on(
 		'destroyPortlet',
-		function() {
+		function removeListener() {
 			selectArticleHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', removeListener);

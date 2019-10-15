@@ -57,7 +57,7 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		depotEntry.setUuid(serviceContext.getUuid());
 
 		Group group = _groupLocalService.addGroup(
-			depotEntry.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			serviceContext.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			DepotEntry.class.getName(), depotEntry.getDepotEntryId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, descriptionMap,
 			DepotEntryConstants.GROUP_TYPE_DEPOT, false,

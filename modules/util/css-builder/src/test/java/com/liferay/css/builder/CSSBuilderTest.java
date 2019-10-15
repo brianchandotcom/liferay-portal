@@ -40,7 +40,7 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 	}
 
 	@Override
-	protected void executeCSSBuilder(
+	protected String executeCSSBuilder(
 			Path docrootDirPath, String dirName, String[] excludes,
 			boolean generateSourceMap, Path portalCommonPath,
 			String outputDirName, int precision,
@@ -62,7 +62,13 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 			"--rtl-excluded-path-regexps" + _separator +
 				StringTestUtil.merge(rtlExcludedPathRegexps));
 
+		StringPrintStream output = new StringPrintStream();
+
+		System.setOut(output);
+
 		CSSBuilder.main(args.toArray(new String[0]));
+
+		return output.toString();
 	}
 
 	private final String _separator;

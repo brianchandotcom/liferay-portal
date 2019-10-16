@@ -58,14 +58,15 @@ public class DepotEntryVerticalCard
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_group = (Group)baseModel;
-		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(_liferayPortletRequest);
 
 		_groupURLProvider = (GroupURLProvider)httpServletRequest.getAttribute(
 			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER);
+
+		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override

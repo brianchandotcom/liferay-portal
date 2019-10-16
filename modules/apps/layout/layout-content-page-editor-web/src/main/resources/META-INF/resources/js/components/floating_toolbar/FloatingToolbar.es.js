@@ -66,28 +66,24 @@ class FloatingToolbar extends Component {
 	 * Gets a suggested align of an element to an anchor, following this logic:
 	 * - Vertically, if the element fits at bottom, it's placed there, otherwise
 	 *   it is placed at top.
-	 * - Horizontally, the element is placed depending on the anchor position
-	 *   relative to the wrapper.
-	 * @param {HTMLElement} wrapper
+	 * - Horizontally, if the element fits at right, it's placed there, otherwise
+	 *   it is placed at left.
 	 * @param {HTMLElement|null} element
 	 * @param {HTMLElement|null} anchor
 	 * @private
 	 * @return {number} Selected align
 	 * @review
 	 */
-	static _getElementAlign(wrapper, element, anchor) {
+	static _getElementAlign(element, anchor) {
 		const alignFits = (align, availableAlign) =>
 			availableAlign.includes(
 				Align.suggestAlignBestRegion(element, anchor, align).position
 			);
 
 		const anchorRect = anchor.getBoundingClientRect();
-		const fragmentEntryLinkListWidth = wrapper.offsetWidth;
-
+		const elementRect = element.getBoundingClientRect();
 		const horizontal =
-			anchorRect.right > fragmentEntryLinkListWidth / 2
-				? 'right'
-				: 'left';
+			anchorRect.right - elementRect.width > 0 ? 'right' : 'left';
 
 		const fallbackVertical = 'top';
 		let vertical = 'bottom';
@@ -306,7 +302,6 @@ class FloatingToolbar extends Component {
 		AUI().use('portal-available-languages', () => {
 			if (this.refs.buttons && this.anchorElement) {
 				const buttonsAlign = FloatingToolbar._getElementAlign(
-					this._wrapper,
 					this.refs.panel || this.refs.buttons,
 					this.anchorElement
 				);
@@ -335,7 +330,6 @@ class FloatingToolbar extends Component {
 	_alignPanel() {
 		if (this.refs.panel && this.anchorElement) {
 			const panelAlign = FloatingToolbar._getElementAlign(
-				this._wrapper,
 				this.refs.panel,
 				this.refs.buttons || this.anchorElement
 			);

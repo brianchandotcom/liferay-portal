@@ -14,21 +14,24 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 
-import java.io.IOException;
+import org.apache.http.util.EntityUtils;
 
-import org.elasticsearch.action.admin.cluster.stats.ClusterStatsAction;
-import org.elasticsearch.action.admin.cluster.stats.ClusterStatsRequestBuilder;
-import org.elasticsearch.action.admin.cluster.stats.ClusterStatsResponse;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
-import org.elasticsearch.common.Strings;
-import org.elasticsearch.common.xcontent.ToXContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.client.Request;
+import org.elasticsearch.client.Response;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,40 +47,45 @@ public class StatsClusterRequestExecutorImpl
 	public StatsClusterResponse execute(
 		StatsClusterRequest statsClusterRequest) {
 
-		ClusterStatsRequestBuilder clusterStatsRequestBuilder =
-			createClusterStatsRequestBuilder(statsClusterRequest);
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
 
-		ClusterStatsResponse clusterStatsResponse =
-			clusterStatsRequestBuilder.get();
+		RestClient restClient = restHighLevelClient.getLowLevelClient();
+
+		String nodeIds = StringPool.BLANK;
+
+		if (ArrayUtil.isNotEmpty(statsClusterRequest.getNodeIds())) {
+			nodeIds =
+				"/nodes/" + StringUtil.merge(statsClusterRequest.getNodeIds());
+		}
+
+		String endpoint = "/_cluster/stats" + nodeIds;
+
+		Request request = new Request("GET", endpoint);
 
 		try {
-			XContentBuilder xContentBuilder = XContentFactory.jsonBuilder();
+			Response response = restClient.performRequest(request);
 
-			xContentBuilder.startObject();
+			String responseBody = EntityUtils.toString(response.getEntity());
 
-			xContentBuilder = clusterStatsResponse.toXContent(
-				xContentBuilder, ToXContent.EMPTY_PARAMS);
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				responseBody);
 
-			xContentBuilder.endObject();
+			String status = GetterUtil.getString(
+				responseJSONObject.get("status"));
 
-			ClusterHealthStatus clusterHealthStatus =
-				clusterStatsResponse.getStatus();
+			ClusterHealthStatus clusterHealthStatus = null;
 
-			return new StatsClusterResponse(
-				_clusterHealthStatusTranslator.translate(clusterHealthStatus),
-				Strings.toString(xContentBuilder));
+			if (!status.equals(StringPool.BLANK)) {
+				clusterHealthStatus = _clusterHealthStatusTranslator.translate(
+					status);
+			}
+
+			return new StatsClusterResponse(clusterHealthStatus, responseBody);
 		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
+		catch (Exception e) {
+			throw new SystemException(e);
 		}
-	}
-
-	protected ClusterStatsRequestBuilder createClusterStatsRequestBuilder(
-		StatsClusterRequest statsClusterRequest) {
-
-		return new ClusterStatsRequestBuilder(
-			_elasticsearchClientResolver.getClient(),
-			ClusterStatsAction.INSTANCE);
 	}
 
 	@Reference(unbind = "-")

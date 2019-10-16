@@ -20,8 +20,6 @@ import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 
 import java.util.Arrays;
 
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,13 +67,10 @@ public class DeleteIndexRequestExecutorTest {
 				}
 			};
 
-		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
-			deleteIndexRequestExecutorImpl.createDeleteIndexRequestBuilder(
-				deleteIndexRequest);
-
 		org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
 			elasticsearchDeleteIndexRequest =
-				deleteIndexRequestBuilder.request();
+				deleteIndexRequestExecutorImpl.createDeleteIndexRequest(
+					deleteIndexRequest);
 
 		String[] indices = elasticsearchDeleteIndexRequest.indices();
 

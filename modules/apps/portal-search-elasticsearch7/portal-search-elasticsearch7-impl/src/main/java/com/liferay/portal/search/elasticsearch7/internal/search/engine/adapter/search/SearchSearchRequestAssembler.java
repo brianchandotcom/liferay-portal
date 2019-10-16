@@ -16,7 +16,8 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
  * @author Michael C. Han
@@ -24,7 +25,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public interface SearchSearchRequestAssembler {
 
 	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		SearchSearchRequest searchSearchRequest);
+		SearchSourceBuilder searchSourceBuilder,
+		SearchSearchRequest searchSearchRequest, SearchRequest searchRequest);
 
 }

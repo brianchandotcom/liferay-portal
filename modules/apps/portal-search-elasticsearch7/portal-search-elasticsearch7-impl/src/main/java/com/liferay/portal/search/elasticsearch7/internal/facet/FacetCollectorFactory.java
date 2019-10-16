@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.elasticsearch.search.aggregations.bucket.filter.InternalFilter;
+import org.elasticsearch.search.aggregations.bucket.SingleBucketAggregation;
 import org.elasticsearch.search.aggregations.bucket.range.Range;
 
 /**
@@ -28,10 +28,12 @@ import org.elasticsearch.search.aggregations.bucket.range.Range;
 public class FacetCollectorFactory {
 
 	public FacetCollector getFacetCollector(Aggregation aggregation) {
-		if (aggregation instanceof InternalFilter) {
-			InternalFilter internalFilter = (InternalFilter)aggregation;
+		if (aggregation instanceof SingleBucketAggregation) {
+			SingleBucketAggregation singleBucketAggregation =
+				(SingleBucketAggregation)aggregation;
 
-			Aggregations aggregations = internalFilter.getAggregations();
+			Aggregations aggregations =
+				singleBucketAggregation.getAggregations();
 
 			return getFacetCollector(aggregations.get(aggregation.getName()));
 		}

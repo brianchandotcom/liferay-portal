@@ -27,7 +27,7 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -50,7 +50,6 @@ public class BulkDocumentRequestExecutorTest {
 		BulkableDocumentRequestTranslator bulkableDocumentRequestTranslator =
 			new ElasticsearchBulkableDocumentRequestTranslator() {
 				{
-					setElasticsearchClientResolver(elasticsearchFixture);
 					setElasticsearchDocumentFactory(
 						elasticsearchDocumentFactory);
 				}
@@ -110,11 +109,11 @@ public class BulkDocumentRequestExecutorTest {
 
 		bulkDocumentRequest.addBulkableDocumentRequest(updateDocumentRequest);
 
-		BulkRequestBuilder bulkRequestBuilder =
-			_bulkDocumentRequestExecutorImpl.createBulkRequestBuilder(
+		BulkRequest bulkRequest =
+			_bulkDocumentRequestExecutorImpl.createBulkRequest(
 				bulkDocumentRequest);
 
-		Assert.assertEquals(3, bulkRequestBuilder.numberOfActions());
+		Assert.assertEquals(3, bulkRequest.numberOfActions());
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

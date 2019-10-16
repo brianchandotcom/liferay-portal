@@ -17,22 +17,17 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch7.internal.util.LogUtil;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.spi.index.IndexRegistrar;
 import com.liferay.portal.search.elasticsearch7.spi.index.helper.IndexSettingsDefinition;
+import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
+import com.liferay.portal.search.engine.adapter.index.CreateIndexResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import org.elasticsearch.ResourceAlreadyExistsException;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.IndicesAdminClient;
-import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,13 +55,6 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 	}
 
 	@Reference(unbind = "-")
-	public void setElasticsearchClientResolver(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	@Reference(unbind = "-")
 	public void setIndexDefinitionsHolder(
 		IndexDefinitionsHolder indexDefinitionsHolder) {
 
@@ -77,18 +65,16 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 	public void synchronizeIndexDefinition(
 		IndexDefinitionData indexDefinitionData) {
 
-		createIndex(
-			createIndexRequestBuilder -> {
-				String index = indexDefinitionData.getIndex();
+		String index = indexDefinitionData.getIndex();
 
+		createIndex(
+			index,
+			createIndexRequest -> {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Synchronizing index " + index);
 				}
 
-				createIndexRequestBuilder.setIndex(index);
-
-				createIndexRequestBuilder.setSource(
-					indexDefinitionData.getSource(), XContentType.JSON);
+				createIndexRequest.setSource(indexDefinitionData.getSource());
 			});
 	}
 
@@ -107,72 +93,74 @@ public class IndexSynchronizerImpl implements IndexSynchronizer {
 	public void synchronizeIndexRegistrar(IndexRegistrar indexRegistrar) {
 		indexRegistrar.register(
 			(indexName, indexSettingsDefinitionConsumer) -> createIndex(
-				createIndexRequestBuilder -> {
-					createIndexRequestBuilder.setIndex(indexName);
+				indexName,
+				createIndexRequest -> indexSettingsDefinitionConsumer.accept(
+					new IndexSettingsDefinition() {
 
-					indexSettingsDefinitionConsumer.accept(
-						new IndexSettingsDefinition() {
+						@Override
+						public void setIndexSettingsResourceName(
+							String indexSettingsResourceName) {
 
-							@Override
-							public void setIndexSettingsResourceName(
-								String indexSettingsResourceName) {
+							createIndexRequest.setSource(
+								StringUtil.read(
+									indexSettingsDefinitionConsumer.getClass(),
+									indexSettingsResourceName));
+						}
 
-								createIndexRequestBuilder.setSource(
-									StringUtil.read(
-										indexSettingsDefinitionConsumer.
-											getClass(),
-										indexSettingsResourceName),
-									XContentType.JSON);
-							}
+						@Override
+						public void setSource(String source) {
+							createIndexRequest.setSource(source);
+						}
 
-							@Override
-							public void setSource(String source) {
-								createIndexRequestBuilder.setSource(
-									source, XContentType.JSON);
-							}
-
-						});
-				}));
+					})));
 	}
 
 	protected void createIndex(
-		Consumer<CreateIndexRequestBuilder> createIndexRequestBuilderConsumer) {
+		String index, Consumer<CreateIndexRequest> createIndexRequestConsumer) {
 
-		Client client = _elasticsearchClientResolver.getClient();
+		CreateIndexRequest createIndexRequest = new CreateIndexRequest(index);
 
-		AdminClient adminClient = client.admin();
-
-		IndicesAdminClient indicesAdminClient = adminClient.indices();
-
-		CreateIndexRequestBuilder createIndexRequestBuilder =
-			indicesAdminClient.prepareCreate(null);
-
-		createIndexRequestBuilderConsumer.accept(createIndexRequestBuilder);
+		createIndexRequestConsumer.accept(createIndexRequest);
 
 		try {
 			CreateIndexResponse createIndexResponse =
-				createIndexRequestBuilder.get();
-
-			LogUtil.logActionResponse(_log, createIndexResponse);
+				_createIndexRequestExecutor.execute(createIndexRequest);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Index created: " + createIndexResponse.index());
+				_log.info(
+					"Index created: " + createIndexResponse.getIndexName());
 			}
 		}
-		catch (ResourceAlreadyExistsException raee) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Skipping index creation because it already exists: " +
-						raee.getIndex(),
-					raee);
+		catch (ElasticsearchStatusException ese) {
+			String message = ese.getMessage();
+
+			if ((message != null) &&
+				message.contains("resource_already_exists_exception")) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping index creation because it already exists: " +
+							createIndexRequest.getIndexName(),
+						ese);
+				}
+			}
+			else {
+				throw ese;
 			}
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setCreateIndexRequestExecutor(
+		CreateIndexRequestExecutor createIndexRequestExecutor) {
+
+		_createIndexRequestExecutor = createIndexRequestExecutor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexSynchronizerImpl.class);
 
-	private ElasticsearchClientResolver _elasticsearchClientResolver;
+	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private IndexDefinitionsHolder _indexDefinitionsHolder;
 	private final ArrayList<IndexRegistrar> _indexRegistrarContributors =
 		new ArrayList<>();

@@ -23,7 +23,7 @@ import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchInd
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,16 +37,18 @@ public class ElasticsearchIndexSearcherExceptionsTest
 
 	@Test
 	public void testExceptionThrownWhenQueryMalformedSearch() {
-		expectedException.expect(SearchPhaseExecutionException.class);
-		expectedException.expectMessage("all shards failed");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=search_phase_execution_exception, reason=all shards failed");
 
 		search(createSearchContext(), getMalformedQuery());
 	}
 
 	@Test
 	public void testExceptionThrownWhenQueryMalformedSearchCount() {
-		expectedException.expect(SearchPhaseExecutionException.class);
-		expectedException.expectMessage("all shards failed");
+		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expectMessage(
+			"type=search_phase_execution_exception, reason=all shards failed");
 
 		searchCount(createSearchContext(), getMalformedQuery());
 	}

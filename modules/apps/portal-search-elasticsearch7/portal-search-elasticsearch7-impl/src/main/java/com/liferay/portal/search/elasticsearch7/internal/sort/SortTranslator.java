@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.sort;
 
 import com.liferay.portal.kernel.search.Sort;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
  * @author Michael C. Han
@@ -24,6 +24,6 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public interface SortTranslator {
 
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, Sort[] sorts);
+		SearchSourceBuilder searchSourceBuilder, Sort[] sorts);
 
 }

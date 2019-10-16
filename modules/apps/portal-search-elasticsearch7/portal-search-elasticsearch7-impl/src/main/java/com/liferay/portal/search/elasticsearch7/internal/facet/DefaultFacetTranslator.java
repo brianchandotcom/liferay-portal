@@ -34,6 +34,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +47,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 
 	@Override
 	public void translate(
-		SearchRequestBuilder searchRequestBuilder, Query query,
+		SearchSourceBuilder searchSourceBuilder, Query query,
 		Map<String, Facet> facetsMap, boolean basicFacetSelection) {
 
 		if (MapUtil.isEmpty(facetsMap)) {
@@ -83,12 +84,12 @@ public class DefaultFacetTranslator implements FacetTranslator {
 				aggregationBuilder -> postProcessAggregationBuilder(
 					aggregationBuilder, facetProcessorContext)
 			).ifPresent(
-				searchRequestBuilder::addAggregation
+				searchSourceBuilder::aggregation
 			);
 		}
 
 		if (!ListUtil.isEmpty(postFilterQueryBuilders)) {
-			searchRequestBuilder.setPostFilter(
+			searchSourceBuilder.postFilter(
 				getPostFilter(postFilterQueryBuilders));
 		}
 	}

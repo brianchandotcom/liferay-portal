@@ -16,46 +16,49 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
-import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
-import com.liferay.portal.search.elasticsearch7.settings.XPackSecuritySettings;
+import com.liferay.portal.search.elasticsearch7.configuration.XPackSecurityConfiguration;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.io.InputStream;
 
-import java.util.HashSet;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.security.KeyStore;
+
 import java.util.Map;
-import java.util.Set;
 
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.elasticsearch.xpack.client.PreBuiltXPackTransportClient;
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
+
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
+	configurationPid = {
+		"com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
+		"com.liferay.portal.search.elasticsearch7.configuration.XPackSecurityConfiguration"
+	},
 	immediate = true, property = "operation.mode=REMOTE",
 	service = ElasticsearchConnection.class
 )
@@ -66,104 +69,131 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		return OperationMode.REMOTE;
 	}
 
-	@Override
-	@Reference(unbind = "-")
-	public void setIndexFactory(IndexFactory indexFactory) {
-		super.setIndexFactory(indexFactory);
-	}
-
-	public void setTransportAddresses(Set<String> transportAddresses) {
-		_transportAddresses = transportAddresses;
-	}
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		replaceElasticsearchConfiguration(properties);
+		replaceConfigurations(properties);
 	}
 
-	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(operation.mode=REMOTE)"
-	)
-	protected void addSettingsContributor(
-		SettingsContributor settingsContributor) {
+	protected void configureSecurity(RestClientBuilder restClientBuilder) {
+		restClientBuilder.setHttpClientConfigCallback(
+			new RestClientBuilder.HttpClientConfigCallback() {
 
-		super.addSettingsContributor(settingsContributor);
-	}
+				@Override
+				public HttpAsyncClientBuilder customizeHttpClient(
+					HttpAsyncClientBuilder httpClientBuilder) {
 
-	protected void addTransportAddress(
-			TransportClient transportClient, String transportAddress)
-		throws UnknownHostException {
+					httpClientBuilder.setDefaultCredentialsProvider(
+						createCredentialsProvider());
 
-		String[] transportAddressParts = StringUtil.split(
-			transportAddress, StringPool.COLON);
-
-		String host = transportAddressParts[0];
-
-		int port = GetterUtil.getInteger(transportAddressParts[1]);
-
-		InetAddress inetAddress = InetAddressUtil.getInetAddressByName(host);
-
-		transportClient.addTransportAddress(
-			new TransportAddress(inetAddress, port));
-	}
-
-	@Override
-	protected Client createClient() {
-		if (_transportAddresses.isEmpty()) {
-			throw new IllegalStateException(
-				"There must be at least one transport address");
-		}
-
-		Thread thread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
-
-		Class<?> clazz = getClass();
-
-		thread.setContextClassLoader(clazz.getClassLoader());
-
-		try {
-			TransportClient transportClient = createTransportClient();
-
-			for (String transportAddress : _transportAddresses) {
-				try {
-					addTransportAddress(transportClient, transportAddress);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to add transport address " +
-								transportAddress,
-							e);
+					if (xPackSecurityConfiguration.transportSSLEnabled()) {
+						httpClientBuilder.setSSLContext(createSSLContext());
 					}
-				}
-			}
 
-			return transportClient;
-		}
-		finally {
-			thread.setContextClassLoader(contextClassLoader);
-		}
+					return httpClientBuilder;
+				}
+
+			});
 	}
 
-	protected TransportClient createTransportClient() {
-		Settings settings = settingsBuilder.build();
+	protected CredentialsProvider createCredentialsProvider() {
+		String usernamePassword =
+			xPackSecurityConfiguration.username() + StringPool.COLON +
+				xPackSecurityConfiguration.password();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Settings: " + settings.toString());
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		credentialsProvider.setCredentials(
+			AuthScope.ANY, new UsernamePasswordCredentials(usernamePassword));
+
+		return credentialsProvider;
+	}
+
+	protected RestHighLevelClient createRestHighLevelClient() {
+		String[] networkHostAddresses =
+			elasticsearchConfiguration.networkHostAddresses();
+
+		HttpHost[] httpHosts = new HttpHost[networkHostAddresses.length];
+
+		for (int i = 0; i < networkHostAddresses.length; i++) {
+			httpHosts[i] = HttpHost.create(networkHostAddresses[i]);
 		}
 
-		if ((xPackSecuritySettings != null) &&
-			xPackSecuritySettings.requiresXPackSecurity()) {
+		RestClientBuilder restClientBuilder = RestClient.builder(httpHosts);
 
-			return new PreBuiltXPackTransportClient(settings);
+		if (xPackSecurityConfiguration.requiresAuthentication()) {
+			configureSecurity(restClientBuilder);
 		}
 
-		return new PreBuiltTransportClient(settings);
+		return new RestHighLevelClient(restClientBuilder);
+	}
+
+	protected SSLContext createSSLContext() {
+
+		// This method will be updated in
+		// https://issues.liferay.com/browse/LPS-102296
+		// [Technical Task] Security and Encryption over https connection
+
+		// These are the existing properties for the transport client in
+		// XPackSecuritySettingsContributor. We need to determine which ones
+		// still apply to the REST client
+
+		//"xpack.security.transport.ssl.enabled", "true"
+
+		//"xpack.security.transport.ssl.verification_mode",
+		//XPackSecurityConfiguration.transportSSLVerificationMode()
+
+		String certificateFormat =
+			xPackSecurityConfiguration.certificateFormat();
+
+		if (certificateFormat.equals("PKCS#12")) {
+			//"xpack.ssl.certificate",
+			//xPackSecurityConfiguration.sslCertificatePath()
+
+			//"xpack.ssl.certificate_authorities",
+			//xPackSecurityConfiguration.sslCertificateAuthoritiesPaths()
+
+			//"xpack.ssl.key", xPackSecurityConfiguration.sslKeyPath()
+		}
+		else {
+			//"xpack.ssl.keystore.password",
+			//xPackSecurityConfiguration.sslKeystorePassword()
+
+			//"xpack.ssl.keystore.path",
+			//xPackSecurityConfiguration.sslKeystorePath()
+
+			//"xpack.ssl.truststore.password",
+			//xPackSecurityConfiguration.sslTruststorePassword()
+
+			//"xpack.ssl.truststore.path",
+			//xPackSecurityConfiguration.sslTruststorePath()
+		}
+
+		String keyStoreFilePath = xPackSecurityConfiguration.sslKeystorePath();
+
+		Path keyStorePath = Paths.get(keyStoreFilePath);
+
+		SSLContext sslContext;
+
+		try (InputStream is = Files.newInputStream(keyStorePath)) {
+			KeyStore truststore = KeyStore.getInstance("jks");
+
+			String keyStorePass =
+				xPackSecurityConfiguration.sslKeystorePassword();
+
+			truststore.load(is, keyStorePass.toCharArray());
+
+			SSLContextBuilder sslBuilder = SSLContexts.custom();
+
+			sslBuilder.loadTrustMaterial(truststore, null);
+
+			sslContext = sslBuilder.build();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return sslContext;
 	}
 
 	@Deactivate
@@ -171,30 +201,9 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		close();
 	}
 
-	@Override
-	protected void loadRequiredDefaultConfigurations() {
-		settingsBuilder.put(
-			"client.transport.ignore_cluster_name",
-			elasticsearchConfiguration.clientTransportIgnoreClusterName());
-		settingsBuilder.put(
-			"client.transport.nodes_sampler_interval",
-			elasticsearchConfiguration.clientTransportNodesSamplerInterval());
-		settingsBuilder.put(
-			"client.transport.ping_timeout",
-			elasticsearchConfiguration.clientTransportPingTimeout());
-		settingsBuilder.put(
-			"client.transport.sniff",
-			elasticsearchConfiguration.clientTransportSniff());
-		settingsBuilder.put(
-			"cluster.name", elasticsearchConfiguration.clusterName());
-		settingsBuilder.put(
-			"request.headers.X-Found-Cluster",
-			elasticsearchConfiguration.clusterName());
-	}
-
 	@Modified
 	protected synchronized void modified(Map<String, Object> properties) {
-		replaceElasticsearchConfiguration(properties);
+		replaceConfigurations(properties);
 
 		if (isConnected()) {
 			close();
@@ -209,34 +218,16 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		}
 	}
 
-	@Override
-	protected void removeSettingsContributor(
-		SettingsContributor settingsContributor) {
-
-		super.removeSettingsContributor(settingsContributor);
-	}
-
-	protected void replaceElasticsearchConfiguration(
-		Map<String, Object> properties) {
-
+	protected void replaceConfigurations(Map<String, Object> properties) {
 		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
-
-		String[] transportAddresses =
-			elasticsearchConfiguration.transportAddresses();
-
-		setTransportAddresses(SetUtil.fromArray(transportAddresses));
+		xPackSecurityConfiguration = ConfigurableUtil.createConfigurable(
+			XPackSecurityConfiguration.class, properties);
 	}
 
 	@Reference
 	protected Props props;
 
-	@Reference
-	protected XPackSecuritySettings xPackSecuritySettings;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RemoteElasticsearchConnection.class);
-
-	private Set<String> _transportAddresses = new HashSet<>();
+	protected volatile XPackSecurityConfiguration xPackSecurityConfiguration;
 
 }

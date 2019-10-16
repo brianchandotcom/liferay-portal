@@ -14,20 +14,21 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
-
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.util.JSONUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
-import org.elasticsearch.action.search.SearchAction;
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import java.io.IOException;
+
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,25 +44,31 @@ public class SearchSearchRequestExecutorImpl
 	public SearchSearchResponse execute(
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
-			_elasticsearchClientResolver.getClient(), SearchAction.INSTANCE);
+		SearchRequest searchRequest = new SearchRequest(
+			searchSearchRequest.getIndexNames());
+
+		if (searchSearchRequest.isRequestCache()) {
+			searchRequest.requestCache(searchSearchRequest.isRequestCache());
+		}
+
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		_searchSearchRequestAssembler.assemble(
-			searchRequestBuilder, searchSearchRequest);
+			searchSourceBuilder, searchSearchRequest, searchRequest);
 
 		if (_log.isTraceEnabled()) {
 			String prettyPrintedRequestString = _getPrettyPrintedRequestString(
-				searchRequestBuilder);
+				searchSourceBuilder);
 
 			_log.trace("Search query: " + prettyPrintedRequestString);
 		}
 
-		SearchResponse searchResponse = searchRequestBuilder.get();
+		SearchResponse searchResponse = getSearchResponse(searchRequest);
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
 		_searchSearchResponseAssembler.assemble(
-			searchRequestBuilder, searchResponse, searchSearchRequest,
+			searchSourceBuilder, searchResponse, searchSearchRequest,
 			searchSearchResponse);
 
 		if (_log.isDebugEnabled()) {
@@ -73,6 +80,19 @@ public class SearchSearchRequestExecutorImpl
 		}
 
 		return searchSearchResponse;
+	}
+
+	protected SearchResponse getSearchResponse(SearchRequest searchRequest) {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		try {
+			return restHighLevelClient.search(
+				searchRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -97,19 +117,10 @@ public class SearchSearchRequestExecutorImpl
 	}
 
 	private String _getPrettyPrintedRequestString(
-		SearchRequestBuilder searchRequestBuilder) {
-
-		GsonBuilder gsonBuilder = new GsonBuilder();
-
-		gsonBuilder.setPrettyPrinting();
-
-		Gson gson = gsonBuilder.create();
-
-		JsonParser jsonParser = new JsonParser();
+		SearchSourceBuilder searchSourceBuilder) {
 
 		try {
-			return gson.toJson(
-				jsonParser.parse(searchRequestBuilder.toString()));
+			return JSONUtil.getPrettyPrintedJSONString(searchSourceBuilder);
 		}
 		catch (Exception e) {
 			return e.getMessage();

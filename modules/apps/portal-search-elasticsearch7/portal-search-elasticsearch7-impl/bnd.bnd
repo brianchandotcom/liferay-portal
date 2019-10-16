@@ -52,6 +52,7 @@ Import-Package:\
 	\
 	!org.antlr.stringtemplate.*,\
 	\
+	!org.apache.avalon.framework.*,\
 	!org.apache.bsf.*,\
 	!org.apache.commons.cli.*,\
 	!org.apache.commons.compress.*,\
@@ -61,7 +62,7 @@ Import-Package:\
 	!org.apache.http.*,\
 	!org.apache.ivy.*,\
 	!org.apache.kafka.clients.producer.*,\
-	!org.apache.logging.log4j.*,\
+	!org.apache.log.*,\
 	!org.apache.lucene.expressions.*,\
 	!org.apache.lucene.geo3d.*,\
 	!org.apache.lucene.spatial.*,\

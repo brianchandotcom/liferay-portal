@@ -1806,7 +1806,7 @@ definition {
 	test SearchWithNonLiferayIndex {
 		property test.name.skip.portal.instance = "Search#SearchWithNonLiferayIndex";
 
-		Navigator.openSpecificURL(url = "http://localhost:9200");
+		Navigator.openSpecificURL(url = "http://localhost:9201");
 
 		if (IsTextEqual.isPartialText(locator1 = "//body", value1 = "&quot;number&quot; : &quot;7")) {
 			AntCommand(
@@ -1814,6 +1814,8 @@ definition {
 				value1 = "add-boston-dataset-index");
 		}
 		else {
+			Navigator.openSpecificURL(url = "http://localhost:9200");
+
 			AntCommand(
 				locator1 = "build-test-elasticsearch6.xml",
 				value1 = "add-boston-dataset-index");

@@ -16,15 +16,16 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface CommonSearchRequestBuilderAssembler {
+public interface CommonSearchSourceBuilderAssembler {
 
 	public void assemble(
-		SearchRequestBuilder searchRequestBuilder,
-		BaseSearchRequest baseSearchRequest);
+		SearchSourceBuilder searchSourceBuilder,
+		BaseSearchRequest baseSearchRequest, SearchRequest searchRequest);
 
 }

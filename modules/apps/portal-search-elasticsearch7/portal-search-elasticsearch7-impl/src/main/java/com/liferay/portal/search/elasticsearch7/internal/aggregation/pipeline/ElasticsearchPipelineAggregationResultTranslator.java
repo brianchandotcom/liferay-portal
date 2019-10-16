@@ -48,7 +48,7 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.pipeline.BucketMetricValue;
 import org.elasticsearch.search.aggregations.pipeline.Derivative;
 import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucket;
-import org.elasticsearch.search.aggregations.pipeline.PercentilesBucket;
+import org.elasticsearch.search.aggregations.pipeline.ParsedPercentilesBucket;
 import org.elasticsearch.search.aggregations.pipeline.SimpleValue;
 import org.elasticsearch.search.aggregations.pipeline.StatsBucket;
 
@@ -118,8 +118,13 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		Derivative derivative = (Derivative)_elasticsearchAggregation;
 
+		if (derivativePipelineAggregation.getUnit() != null) {
+			return _aggregationResults.derivative(
+				derivative.getName(), derivative.normalizedValue());
+		}
+
 		return _aggregationResults.derivative(
-			derivative.getName(), derivative.normalizedValue());
+			derivative.getName(), derivative.value());
 	}
 
 	@Override
@@ -186,8 +191,8 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation) {
 
-		PercentilesBucket percentilesBucket =
-			(PercentilesBucket)_elasticsearchAggregation;
+		ParsedPercentilesBucket percentilesBucket =
+			(ParsedPercentilesBucket)_elasticsearchAggregation;
 
 		PercentilesBucketPipelineAggregationResult
 			percentilesBucketPipelineAggregationResult =

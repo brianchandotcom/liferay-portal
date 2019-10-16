@@ -28,11 +28,15 @@ import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
+import java.io.IOException;
+
 import java.util.Arrays;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingAction;
-import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
+import org.elasticsearch.client.IndicesClient;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 
@@ -116,8 +120,7 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		}
 
 		@Override
-		public void contribute(
-			CreateIndexRequestBuilder createIndexRequestBuilder) {
+		public void contribute(CreateIndexRequest createIndexRequest) {
 		}
 
 		@Override
@@ -126,25 +129,31 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 
 		@Override
 		public void whenIndexCreated(String indexName) {
-			PutMappingRequestBuilder putMappingRequestBuilder =
-				new PutMappingRequestBuilder(
-					_elasticsearchClientResolver.getClient(),
-					PutMappingAction.INSTANCE);
+			PutMappingRequest putMappingRequest = new PutMappingRequest(
+				indexName);
 
 			String source = StringBundler.concat(
 				"{ \"properties\": { \"", _CUSTOM_FIELD, "\" : { \"fields\": ",
 				"{ \"geopoint\" : { \"store\": true, \"type\": \"keyword\" } ",
 				"}, \"store\": true, \"type\": \"geo_point\" } } }");
 
-			putMappingRequestBuilder.setIndices(
-				indexName
-			).setSource(
-				source, XContentType.JSON
-			).setType(
-				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE
-			);
+			putMappingRequest.source(source, XContentType.JSON);
 
-			putMappingRequestBuilder.get();
+			putMappingRequest.type(
+				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+
+			RestHighLevelClient restHighLevelClient =
+				_elasticsearchClientResolver.getRestHighLevelClient();
+
+			IndicesClient indicesClient = restHighLevelClient.indices();
+
+			try {
+				indicesClient.putMapping(
+					putMappingRequest, RequestOptions.DEFAULT);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
 		}
 
 		private final ElasticsearchClientResolver _elasticsearchClientResolver;

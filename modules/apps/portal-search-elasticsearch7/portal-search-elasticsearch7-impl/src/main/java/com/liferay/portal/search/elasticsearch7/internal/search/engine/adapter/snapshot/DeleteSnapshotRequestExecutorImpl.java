@@ -15,12 +15,15 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotResponse;
 
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotAction;
-import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequestBuilder;
+import java.io.IOException;
+
+import org.elasticsearch.action.admin.cluster.snapshots.delete.DeleteSnapshotRequest;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.SnapshotClient;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,32 +37,49 @@ public class DeleteSnapshotRequestExecutorImpl
 
 	@Override
 	public DeleteSnapshotResponse execute(
-		DeleteSnapshotRequest deleteSnapshotRequest) {
+		com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest
+			deleteSnapshotRequest) {
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			createDeleteSnapshotRequestBuilder(deleteSnapshotRequest);
+		DeleteSnapshotRequest elasticsearchDeleteSnapshotRequest =
+			createDeleteSnapshotRequest(deleteSnapshotRequest);
 
-		AcknowledgedResponse acknowledgedResponse =
-			deleteSnapshotRequestBuilder.get();
+		AcknowledgedResponse acknowledgedResponse = getAcknowledgedResponse(
+			elasticsearchDeleteSnapshotRequest);
 
 		return new DeleteSnapshotResponse(
 			acknowledgedResponse.isAcknowledged());
 	}
 
-	protected DeleteSnapshotRequestBuilder createDeleteSnapshotRequestBuilder(
-		DeleteSnapshotRequest deleteSnapshotRequest) {
+	protected DeleteSnapshotRequest createDeleteSnapshotRequest(
+		com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest
+			deleteSnapshotRequest) {
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			new DeleteSnapshotRequestBuilder(
-				_elasticsearchClientResolver.getClient(),
-				DeleteSnapshotAction.INSTANCE);
+		DeleteSnapshotRequest elasticsearchDeleteSnapshotRequest =
+			new DeleteSnapshotRequest();
 
-		deleteSnapshotRequestBuilder.setRepository(
+		elasticsearchDeleteSnapshotRequest.repository(
 			deleteSnapshotRequest.getRepositoryName());
-		deleteSnapshotRequestBuilder.setSnapshot(
+		elasticsearchDeleteSnapshotRequest.snapshot(
 			deleteSnapshotRequest.getSnapshotName());
 
-		return deleteSnapshotRequestBuilder;
+		return elasticsearchDeleteSnapshotRequest;
+	}
+
+	protected AcknowledgedResponse getAcknowledgedResponse(
+		DeleteSnapshotRequest deleteSnapshotRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
+
+		SnapshotClient snapshotClient = restHighLevelClient.snapshot();
+
+		try {
+			return snapshotClient.delete(
+				deleteSnapshotRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

@@ -34,8 +34,8 @@ import com.liferay.portal.search.query.Query;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,7 +46,7 @@ import org.junit.rules.TestName;
 /**
  * @author Wade Cao
  */
-public class CommonSearchRequestBuilderAssemblerImplTest {
+public class CommonSearchSourceBuilderAssemblerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -61,8 +61,8 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		Queries queries = new QueriesImpl();
 
-		_commonSearchRequestBuilderAssembler =
-			createCommonSearchRequestBuilderAssembler(queries);
+		_commonSearchSourceBuilderAssembler =
+			createCommonSearchSourceBuilderAssembler(queries);
 		_queries = queries;
 	}
 
@@ -117,8 +117,8 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	@Rule
 	public TestName testName = new TestName();
 
-	protected static CommonSearchRequestBuilderAssembler
-		createCommonSearchRequestBuilderAssembler(Queries queries) {
+	protected static CommonSearchSourceBuilderAssembler
+		createCommonSearchSourceBuilderAssembler(Queries queries) {
 
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture =
@@ -143,7 +143,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 				legacyElasticsearchQueryTranslatorFixture.
 					getElasticsearchQueryTranslator();
 
-		return new CommonSearchRequestBuilderAssemblerImpl() {
+		return new CommonSearchSourceBuilderAssemblerImpl() {
 			{
 				setComplexQueryBuilderFactory(
 					createComplexQueryBuilderFactory(queries));
@@ -196,14 +196,16 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			SearchSearchRequest searchSearchRequest, String... expected)
 		throws Exception {
 
-		Client client = _liferayIndexFixture.getClient();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		SearchRequestBuilder searchRequestBuilder = client.prepareSearch();
+		SearchRequest searchRequest = new SearchRequest();
 
-		_commonSearchRequestBuilderAssembler.assemble(
-			searchRequestBuilder, searchSearchRequest);
+		_commonSearchSourceBuilderAssembler.assemble(
+			searchSourceBuilder, searchSearchRequest, searchRequest);
 
-		SearchAssert.assertSearch(searchRequestBuilder, "title", expected);
+		SearchAssert.assertSearch(
+			_liferayIndexFixture.getRestHighLevelClient(), searchSourceBuilder,
+			searchRequest, "title", expected);
 	}
 
 	protected SearchSearchRequest createSearchSearchRequest() {
@@ -224,8 +226,8 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			});
 	}
 
-	private CommonSearchRequestBuilderAssembler
-		_commonSearchRequestBuilderAssembler;
+	private CommonSearchSourceBuilderAssembler
+		_commonSearchSourceBuilderAssembler;
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory =
 			new ComplexQueryPartBuilderFactoryImpl();

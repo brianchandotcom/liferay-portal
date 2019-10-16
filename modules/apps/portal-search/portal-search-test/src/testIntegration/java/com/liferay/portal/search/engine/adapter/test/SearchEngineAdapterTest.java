@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
@@ -160,6 +161,11 @@ public class SearchEngineAdapterTest {
 					message.contains(
 						"<p>Problem accessing /solr/" + index + "/update"));
 			}
+			else if (isSearchEngine("Elasticsearch7")) {
+				Assert.assertTrue(
+					message,
+					message.contains("reason=no such index [" + index + "]"));
+			}
 			else {
 				Assert.assertTrue(
 					message,
@@ -203,6 +209,16 @@ public class SearchEngineAdapterTest {
 
 		String vendor = searchEngine.getVendor();
 
+		if (engine.equals("Elasticsearch7")) {
+			String version = _searchEngineInformation.getClientVersionString();
+
+			if (vendor.equals("Elasticsearch") && version.startsWith("7")) {
+				return true;
+			}
+
+			return false;
+		}
+
 		return vendor.equals(engine);
 	}
 
@@ -227,6 +243,7 @@ public class SearchEngineAdapterTest {
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
 			getIndexName(), uid);
 
+		getDocumentRequest.setFetchSource(true);
 		getDocumentRequest.setRefresh(true);
 		getDocumentRequest.setType("LiferayDocumentType");
 
@@ -297,5 +314,8 @@ public class SearchEngineAdapterTest {
 
 	@Inject
 	private static SearchEngineHelper _searchEngineHelper;
+
+	@Inject
+	private static SearchEngineInformation _searchEngineInformation;
 
 }

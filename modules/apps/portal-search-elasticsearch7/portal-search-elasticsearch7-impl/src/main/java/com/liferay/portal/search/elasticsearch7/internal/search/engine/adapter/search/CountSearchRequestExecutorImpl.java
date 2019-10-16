@@ -21,12 +21,16 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 
+import java.io.IOException;
+
 import org.apache.lucene.search.TotalHits;
 
-import org.elasticsearch.action.search.SearchAction;
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,16 +44,22 @@ public class CountSearchRequestExecutorImpl
 
 	@Override
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
-		SearchRequestBuilder searchRequestBuilder = new SearchRequestBuilder(
-			_elasticsearchClientResolver.getClient(), SearchAction.INSTANCE);
+		SearchRequest searchRequest = new SearchRequest(
+			countSearchRequest.getIndexNames());
 
-		_commonSearchRequestBuilderAssembler.assemble(
-			searchRequestBuilder, countSearchRequest);
+		if (countSearchRequest.isRequestCache()) {
+			searchRequest.requestCache(countSearchRequest.isRequestCache());
+		}
 
-		searchRequestBuilder.setSize(0);
-		searchRequestBuilder.setTrackScores(false);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		SearchResponse searchResponse = searchRequestBuilder.get();
+		_commonSearchSourceBuilderAssembler.assemble(
+			searchSourceBuilder, countSearchRequest, searchRequest);
+
+		searchSourceBuilder.size(0);
+		searchSourceBuilder.trackScores(false);
+
+		SearchResponse searchResponse = getSearchResponse(searchRequest);
 
 		SearchHits searchHits = searchResponse.getHits();
 
@@ -60,7 +70,7 @@ public class CountSearchRequestExecutorImpl
 		countSearchResponse.setCount(totalHits.value);
 
 		_commonSearchResponseAssembler.assemble(
-			searchRequestBuilder, searchResponse, countSearchRequest,
+			searchSourceBuilder, searchResponse, countSearchRequest,
 			countSearchResponse);
 
 		if (_log.isDebugEnabled()) {
@@ -74,13 +84,17 @@ public class CountSearchRequestExecutorImpl
 		return countSearchResponse;
 	}
 
-	@Reference(unbind = "-")
-	protected void setCommonSearchRequestBuilderAssembler(
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler) {
+	protected SearchResponse getSearchResponse(SearchRequest searchRequest) {
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient();
 
-		_commonSearchRequestBuilderAssembler =
-			commonSearchRequestBuilderAssembler;
+		try {
+			return restHighLevelClient.search(
+				searchRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")
@@ -88,6 +102,14 @@ public class CountSearchRequestExecutorImpl
 		CommonSearchResponseAssembler commonSearchResponseAssembler) {
 
 		_commonSearchResponseAssembler = commonSearchResponseAssembler;
+	}
+
+	@Reference(unbind = "-")
+	protected void setCommonSearchSourceBuilderAssembler(
+		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler) {
+
+		_commonSearchSourceBuilderAssembler =
+			commonSearchSourceBuilderAssembler;
 	}
 
 	@Reference(unbind = "-")
@@ -100,9 +122,9 @@ public class CountSearchRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
 
-	private CommonSearchRequestBuilderAssembler
-		_commonSearchRequestBuilderAssembler;
 	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
+	private CommonSearchSourceBuilderAssembler
+		_commonSearchSourceBuilderAssembler;
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

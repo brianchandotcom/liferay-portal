@@ -28,4 +28,6 @@ public interface ClusterHealthStatusTranslator {
 		org.elasticsearch.cluster.health.ClusterHealthStatus
 			clusterHealthStatus);
 
+	public ClusterHealthStatus translate(String status);
+
 }

@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch7.settings;
+package com.liferay.portal.search.elasticsearch7.internal.util;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 
 /**
  * @author Bryan Engler
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
-@Deprecated
-@ProviderType
-public interface XPackSecuritySettings {
+public class JSONUtil {
 
-	public boolean requiresXPackSecurity();
+	public static String getPrettyPrintedJSONString(Object object) {
+		GsonBuilder gsonBuilder = new GsonBuilder();
+
+		gsonBuilder.setPrettyPrinting();
+
+		Gson gson = gsonBuilder.create();
+
+		JsonParser jsonParser = new JsonParser();
+
+		return gson.toJson(jsonParser.parse(object.toString()));
+	}
 
 }

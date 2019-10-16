@@ -18,7 +18,7 @@ import com.liferay.portal.search.elasticsearch7.internal.LiferayElasticsearchInd
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.search.test.util.suggest.BaseSuggestTestCase;
 
-import org.elasticsearch.action.search.SearchPhaseExecutionException;
+import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,7 +49,7 @@ public class ElasticsearchSuggestTest extends BaseSuggestTestCase {
 	@Override
 	@Test
 	public void testNull() throws Exception {
-		expectedException.expect(SearchPhaseExecutionException.class);
+		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage("all shards failed");
 
 		indexSuccessfulQuery("creating the keywordSearch mapping");

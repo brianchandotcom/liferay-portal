@@ -18,8 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 
-import org.elasticsearch.action.admin.cluster.snapshots.restore.RestoreSnapshotRequestBuilder;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +42,7 @@ public class RestoreSnapshotRequestExecutorImplTest {
 	}
 
 	@Test
-	public void testCreateRestoreSnapshotRequestBuilder() {
+	public void testCreateRestoreSnapshotRequest() {
 		RestoreSnapshotRequest restoreSnapshotRequest =
 			new RestoreSnapshotRequest("repositoryName", "snapshotName");
 
@@ -61,13 +59,10 @@ public class RestoreSnapshotRequestExecutorImplTest {
 				}
 			};
 
-		RestoreSnapshotRequestBuilder restoreSnapshotRequestBuilder =
-			restoreSnapshotRequestExecutorImpl.
-				createRestoreSnapshotRequestBuilder(restoreSnapshotRequest);
-
 		org.elasticsearch.action.admin.cluster.snapshots.restore.
 			RestoreSnapshotRequest elasticsearchRestoreSnapshotsRequest =
-				restoreSnapshotRequestBuilder.request();
+				restoreSnapshotRequestExecutorImpl.createRestoreSnapshotRequest(
+					restoreSnapshotRequest);
 
 		Assert.assertArrayEquals(
 			restoreSnapshotRequest.getIndexNames(),

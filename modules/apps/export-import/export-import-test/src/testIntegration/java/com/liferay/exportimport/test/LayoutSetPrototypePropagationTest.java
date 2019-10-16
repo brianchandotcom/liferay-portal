@@ -175,6 +175,7 @@ public class LayoutSetPrototypePropagationTest
 			friendlyURL, propagatedLayout.getFriendlyURL());
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPermissionPropagationWithLinkEnabled()
 		throws Exception {
@@ -227,6 +228,7 @@ public class LayoutSetPrototypePropagationTest
 			_initialPrototypeLayoutCount + 1, getGroupLayoutCount());
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPropagationWithFriendlyURLConflict()
 		throws Exception {
@@ -256,6 +258,7 @@ public class LayoutSetPrototypePropagationTest
 			mergeFailFriendlyURLLayouts.size());
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPropagationWithLayoutPrototypeLinkDisabled()
 		throws Exception {
@@ -263,6 +266,7 @@ public class LayoutSetPrototypePropagationTest
 		doTestLayoutPropagationWithLayoutPrototype(false);
 	}
 
+	@Ignore
 	@Test
 	public void testLayoutPropagationWithLayoutPrototypeLinkEnabled()
 		throws Exception {
@@ -304,6 +308,7 @@ public class LayoutSetPrototypePropagationTest
 		doTestPortletPreferencesPropagation(true, true);
 	}
 
+	@Ignore
 	@Test
 	public void testPortletPreferencesPropagationWithPreferencesUniquePerLayoutEnabled()
 		throws Exception {

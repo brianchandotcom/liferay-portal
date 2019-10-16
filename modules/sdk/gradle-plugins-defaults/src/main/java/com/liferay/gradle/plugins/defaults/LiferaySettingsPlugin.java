@@ -203,7 +203,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (!Objects.equals(buildProfile, "dxp")) {
+					if ((buildProfileFileNames != null) &&
+						!Objects.equals(buildProfile, "dxp")) {
+
 						Path dxpPath = projectPathRootDirPath.resolve("dxp");
 
 						if (dirPath.equals(dxpPath)) {

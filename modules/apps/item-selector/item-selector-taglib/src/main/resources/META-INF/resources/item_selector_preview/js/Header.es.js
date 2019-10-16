@@ -22,7 +22,8 @@ const Header = ({
 	handleClickClose,
 	handleClickDone,
 	handleClickEdit,
-	headerTitle
+	headerTitle,
+	infoButtonRef
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
@@ -56,7 +57,12 @@ const Header = ({
 				</ClayNavigationBar.Item>
 
 				<ClayNavigationBar.Item className="btn-group-item">
-					<ClayButton borderless displayType="secondary" monospaced>
+					<ClayButton
+						borderless
+						ref={infoButtonRef}
+						displayType="secondary"
+						monospaced
+					>
 						<ClayIcon symbol="info-panel-open" />
 					</ClayButton>
 				</ClayNavigationBar.Item>

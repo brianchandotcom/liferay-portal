@@ -49,7 +49,7 @@ import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es'
  * @review
  */
 function addFragment(
-	fragmentEntryLinkId,
+	fragmentEntryLink,
 	dropTargetBorder,
 	dropTargetItemId,
 	dropTargetItemType,
@@ -66,7 +66,7 @@ function addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLinkId,
+			fragmentEntryLink,
 			dropTargetItemId,
 			fragmentColumn.fragmentEntryLinkIds.length
 		);
@@ -84,7 +84,7 @@ function addFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLinkId,
+			fragmentEntryLink,
 			fragmentColumn.columnId,
 			position
 		);
@@ -97,14 +97,14 @@ function addFragment(
 
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLinkId,
+			fragmentEntryLink,
 			fragmentEntryLinkRowType,
 			position
 		);
 	} else {
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLinkId,
+			fragmentEntryLink,
 			fragmentEntryLinkRowType,
 			layoutData.structure.length
 		);
@@ -241,7 +241,7 @@ function addFragmentEntryLinkReducer(state, action) {
 				fragmentEntryLink = response;
 
 				nextData = addFragment(
-					fragmentEntryLink.fragmentEntryLinkId,
+					fragmentEntryLink,
 					nextState.dropTargetBorder,
 					nextState.dropTargetItemId,
 					nextState.dropTargetItemType,
@@ -382,8 +382,11 @@ function moveFragmentEntryLinkReducer(state, action) {
 			action.fragmentEntryLinkRowType
 		);
 
+		const fragmentEntryLink =
+			state.fragmentEntryLinks[action.fragmentEntryLinkId];
+
 		nextData = addFragment(
-			action.fragmentEntryLinkId,
+			fragmentEntryLink,
 			action.targetBorder,
 			action.targetItemId,
 			action.targetItemType,
@@ -655,7 +658,7 @@ function _addFragmentEntryLink(
  */
 function _addFragmentToColumn(
 	layoutData,
-	fragmentEntryLinkId,
+	fragmentEntryLink,
 	targetColumnId,
 	position
 ) {
@@ -669,11 +672,28 @@ function _addFragmentToColumn(
 	const columnIndex = row.columns.indexOf(column);
 	const rowIndex = structure.indexOf(row);
 
-	return updateIn(
+	const newLayoutData = updateIn(
 		layoutData,
+		['structure', rowIndex, 'columns', columnIndex],
+		column => ({
+			...column,
+			config: {
+				isDropZone:
+					fragmentEntryLink.fragmentEntryKey &&
+					fragmentEntryLink.fragmentEntryKey.startsWith('drop-zone')
+			}
+		})
+	);
+
+	return updateIn(
+		newLayoutData,
 		['structure', rowIndex, 'columns', columnIndex, 'fragmentEntryLinkIds'],
 		fragmentEntryLinkIds =>
-			add(fragmentEntryLinkIds, fragmentEntryLinkId, position)
+			add(
+				fragmentEntryLinkIds,
+				fragmentEntryLink.fragmentEntryLinkId,
+				position
+			)
 	);
 }
 
@@ -689,7 +709,7 @@ function _addFragmentToColumn(
  */
 function _addSingleFragmentRow(
 	layoutData,
-	fragmentEntryLinkId,
+	fragmentEntryLink,
 	fragmentEntryLinkRowType,
 	position
 ) {
@@ -697,7 +717,7 @@ function _addSingleFragmentRow(
 		['12'],
 		layoutData,
 		position,
-		[fragmentEntryLinkId],
+		[fragmentEntryLink],
 		fragmentEntryLinkRowType
 	);
 }
@@ -732,7 +752,7 @@ function _duplicateFragment(
 
 		nextData = _addFragmentToColumn(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLink,
 			fragmentColumn.columnId,
 			position + 1
 		);
@@ -745,7 +765,7 @@ function _duplicateFragment(
 
 		nextData = _addSingleFragmentRow(
 			layoutData,
-			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLink,
 			fragmentEntryLinkRowType,
 			position
 		);

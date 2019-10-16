@@ -63,7 +63,7 @@ function addRow(
 	layoutColumns,
 	layoutData,
 	position,
-	fragmentEntryLinkIds = [],
+	fragmentEntryLinks = [],
 	type = FRAGMENTS_EDITOR_ROW_TYPES.componentRow
 ) {
 	let nextColumnId = layoutData.nextColumnId || 0;
@@ -74,7 +74,9 @@ function addRow(
 	layoutColumns.forEach(columnSize => {
 		columns.push({
 			columnId: `${nextColumnId}`,
-			fragmentEntryLinkIds,
+			fragmentEntryLinkIds: fragmentEntryLinks.map(
+				fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId
+			),
 			size: columnSize
 		});
 
@@ -90,7 +92,16 @@ function addRow(
 		layoutData.structure,
 		{
 			columns,
-			config: defaultConfig,
+			config: {
+				...defaultConfig,
+				isDropZone: fragmentEntryLinks.some(
+					fragmentEntryLink =>
+						fragmentEntryLink.fragmentEntryKey &&
+						fragmentEntryLink.fragmentEntryKey.startsWith(
+							'drop-zone'
+						)
+				)
+			},
 			rowId: `${nextRowId}`,
 			type
 		},

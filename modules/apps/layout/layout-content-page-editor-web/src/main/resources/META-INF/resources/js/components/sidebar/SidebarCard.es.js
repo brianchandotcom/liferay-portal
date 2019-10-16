@@ -34,20 +34,18 @@ const ImagePreview = ({imagePreviewURL}) => {
 };
 
 const SidebarCard = ({item}) => {
-	const cardClassNames = classNames(
-		'card',
-		'card-interactive',
-		'card-interactive-secondary',
-		'selector-button',
-		'fragments-editor__drag-source',
-		'fragments-editor__drag-source--sidebar-fragment',
-		'fragments-editor-sidebar-section__card',
-		'overflow-hidden'
-	);
-
 	return (
 		<div
-			className={cardClassNames}
+			className={classNames(
+				'card',
+				'card-interactive',
+				'card-interactive-secondary',
+				'selector-button',
+				'fragments-editor__drag-source',
+				'fragments-editor__drag-source--sidebar-fragment',
+				'fragments-editor-sidebar-section__card',
+				'overflow-hidden'
+			)}
 			data-drag-source-label={item.name}
 			data-item-group-id={item.groupId}
 			data-item-id={item.fragmentEntryKey}

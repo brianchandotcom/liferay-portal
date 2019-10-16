@@ -29,7 +29,11 @@ const Collapse = props => {
 		setOpen(!open);
 	};
 
-	const collapseClassNames = classNames(
+	return (
+		<div className="mb-2">
+			<button
+				aria-expanded={open}
+				className={classNames(
 		'align-items-end',
 		'btn',
 		'btn-unstyled',
@@ -39,13 +43,7 @@ const Collapse = props => {
 		'justify-content-between',
 		'sheet-subtitle',
 		'w-100'
-	);
-
-	return (
-		<div className="mb-2">
-			<button
-				aria-expanded={open}
-				className={collapseClassNames}
+				)}
 				onClick={handleClick}
 				type="button"
 			>

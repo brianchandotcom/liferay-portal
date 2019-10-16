@@ -1046,6 +1046,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<gradle-execute setupbinariescache="false" task="setUpProfileDXP">
 			<arg value="--build-file=${project.dir}/modules/dxp.gradle" />
 		</gradle-execute>
+
+		<gradle-execute setupbinariescache="false" task="replaceDXPTokens">
+			<arg value="--build-file=${project.dir}/modules/dxp.gradle" />
+		</gradle-execute>
 	</target>
 
 	<target name="setup-sdk">

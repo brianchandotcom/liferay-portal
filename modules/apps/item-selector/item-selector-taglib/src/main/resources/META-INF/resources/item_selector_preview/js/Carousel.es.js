@@ -14,7 +14,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import ClayTabs from '@clayui/tabs';
+import React, {useState} from 'react';
 
 const Arrow = ({direction, handleClick}) => (
 	<div className={`pull-${direction}`}>
@@ -30,8 +31,55 @@ const Arrow = ({direction, handleClick}) => (
 	</div>
 );
 
-const InfoPanel = () => {
-	return <h1>Info Panel</h1>;
+const InfoPanel = (metadata) => {
+	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
+
+	const imageData = JSON.parse(metadata.metadata);
+
+	const itemsHeader = imageData.groups.map((group, index) => {
+		return (
+			<ClayTabs.Item
+				active={activeTabKeyValue == index}
+				onClick={() => setActiveTabKeyValue(index)}
+			>
+				{group.title}
+			</ClayTabs.Item>
+		);
+	});
+
+	const itemsContent = imageData.groups.map((group, index) => {
+		const itemContentTab = group.data.map((item) => {
+			return (
+				<>
+					<dt class="sidebar-dt">{item.key}</dt>
+					<dd class="sidebar-dd">{item.value}</dd>
+				</>
+			);
+		});
+
+		return (
+			<ClayTabs.TabPane aria-labelledby={`tab-${index}`}>
+				<dl class="sidebar-dl sidebar-section">
+					{itemContentTab}
+				</dl>
+			</ClayTabs.TabPane>
+		);
+	});
+
+	return (
+		<div className="info-panel sidenav-menu-slider">
+			<div className="sidebar-header">
+				<ClayTabs modern>
+				 	{itemsHeader}
+				</ClayTabs>
+			</div>
+			<div className="sidebar-body">
+				<ClayTabs.Content activeIndex={activeTabKeyValue} fade>
+					{itemsContent}
+				</ClayTabs.Content>
+			</div>
+		</div>
+	);
 };
 
 const Carousel = ({
@@ -41,9 +89,7 @@ const Carousel = ({
 	showArrows
 }) => (
 	<div className="carousel closed sidenav-container">
-		<div className="info-panel sidenav-menu-slider">
-			<InfoPanel imageData={currentItem.metadata} />
-		</div>
+		<InfoPanel metadata={currentItem.metadata} />
 
 		<div className="sidenav-content">
 			{showArrows && (

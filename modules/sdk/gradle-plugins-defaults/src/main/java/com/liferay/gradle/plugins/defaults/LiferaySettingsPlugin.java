@@ -178,6 +178,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 				buildProfile,
 				GradleUtil.getProperty(
 					settings, "liferay.releng.public", true));
+
 		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", projectPathRootDirPath);
 		final Set<Path> includedDirPaths = _getDirPaths(

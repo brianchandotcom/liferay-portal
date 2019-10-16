@@ -15,7 +15,7 @@ if (System.getenv("JENKINS_HOME")) {
 setUpProfileDXP {
 	doLast {
 		exec {
-			commandLine "git", "fetch", "--force", "--no-tags", repositoryURL, "master-private:master-private"
+			commandLine "git", "fetch", "--depth=1", "--force", "--no-tags", repositoryURL, "master-private:master-private"
 			workingDir = projectDir.parentFile
 		}
 

@@ -53,6 +53,6 @@ data.put("totalPages", previewFileCount);
 <div id="<%= renderResponse.getNamespace() + randomNamespace + "previewDocument" %>">
 	<react:component
 		data="<%= data %>"
-		module="preview/js/index.es"
+		module="preview/js/DocumentPreviewer.es"
 	/>
 </div>

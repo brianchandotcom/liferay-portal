@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.SafeLdapContext;
 import com.liferay.portal.security.ldap.SafeLdapFilter;
+import com.liferay.portal.security.ldap.SafeLdapFilterTemplate;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.SafePortalLDAP;
 import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConfiguration;
@@ -307,17 +308,18 @@ public class LDAPAuth implements Authenticator {
 
 			//  Process LDAP auth search filter
 
-			SafeLdapFilter authSearchSafeLdapFilter =
-				LDAPUtil.getAuthSearchSafeLdapFilter(
+			SafeLdapFilterTemplate authSearchSafeLdapFilterTemplate =
+				LDAPUtil.getAuthSearchSafeLdapFilterTemplate(
 					ldapServerConfiguration, _ldapFilterValidator);
 
-			if (authSearchSafeLdapFilter == null) {
+			if (authSearchSafeLdapFilterTemplate == null) {
 				_log.error("Missing authSearchFilter");
 
 				return FAILURE;
 			}
 
-			SafeLdapFilter safeLdapFilter = authSearchSafeLdapFilter.replace(
+			authSearchSafeLdapFilterTemplate =
+				authSearchSafeLdapFilterTemplate.replace(
 				new String[] {
 					"@company_id@", "@email_address@", "@screen_name@",
 					"@user_id@"
@@ -342,13 +344,13 @@ public class LDAPAuth implements Authenticator {
 
 			enu = safeLdapContext.search(
 				LDAPUtil.getBaseDNSafeLdapName(ldapServerConfiguration),
-				safeLdapFilter, searchControls);
+				authSearchSafeLdapFilterTemplate, searchControls);
 
 			if (!enu.hasMoreElements()) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"No results found with search filter: " +
-							safeLdapFilter);
+							authSearchSafeLdapFilterTemplate);
 				}
 
 				return DNE;
@@ -356,7 +358,8 @@ public class LDAPAuth implements Authenticator {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Found results with search filter: " + safeLdapFilter);
+					"Found results with search filter: " +
+						authSearchSafeLdapFilterTemplate);
 			}
 
 			SearchResult searchResult = enu.nextElement();

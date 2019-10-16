@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.display.context;
+package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
@@ -22,8 +22,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -125,7 +125,8 @@ public class DisplayPageManagementToolbarDisplayContext
 		PortletURL addDisplayPageURL = liferayPortletResponse.createActionURL();
 
 		addDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME, "/layout/add_display_page");
+			ActionRequest.ACTION_NAME,
+			"/layout_page_template/add_display_page");
 		addDisplayPageURL.setParameter(
 			"backURL", _themeDisplay.getURLCurrent());
 		addDisplayPageURL.setParameter(

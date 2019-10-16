@@ -50,15 +50,8 @@ public class MBUtil {
 	public static String getBBCodeQuoteBody(
 		HttpServletRequest httpServletRequest, MBMessage parentMessage) {
 
-		String parentAuthor = null;
-
-		if (parentMessage.isAnonymous()) {
-			parentAuthor = LanguageUtil.get(httpServletRequest, "anonymous");
-		}
-		else {
-			parentAuthor = HtmlUtil.escape(
-				PortalUtil.getUserName(parentMessage));
-		}
+		String parentAuthor = _getParentAuthor(
+			parentMessage, httpServletRequest);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -125,31 +118,26 @@ public class MBUtil {
 			"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 				"edit_message.html.jsp");
 
-		if (messageFormat.equals("bbcode")) {
-			editorName = PropsUtil.get(
-				com.liferay.message.boards.util.MBUtil.
-					BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
-
-			if (editorName.equals("bbcode")) {
-				editorName = "alloyeditor_bbcode";
-			}
+		if (!messageFormat.equals("bbcode")) {
+			return editorName;
 		}
 
-		return editorName;
+		String bbCodeEditorName = PropsUtil.get(
+			com.liferay.message.boards.util.MBUtil.
+				BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
+
+		if (!bbCodeEditorName.equals("bbcode")) {
+			return bbCodeEditorName;
+		}
+
+		return "alloyeditor_bbcode";
 	}
 
 	public static String getHtmlQuoteBody(
 		HttpServletRequest httpServletRequest, MBMessage parentMessage) {
 
-		String parentAuthor = null;
-
-		if (parentMessage.isAnonymous()) {
-			parentAuthor = LanguageUtil.get(httpServletRequest, "anonymous");
-		}
-		else {
-			parentAuthor = HtmlUtil.escape(
-				PortalUtil.getUserName(parentMessage));
-		}
+		String parentAuthor = _getParentAuthor(
+			parentMessage, httpServletRequest);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -202,25 +190,21 @@ public class MBUtil {
 	}
 
 	public static String[] getThreadPriority(
-			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
-			double value)
-		throws Exception {
+		MBGroupServiceSettings mbGroupServiceSettings, String languageId,
+		double value) {
 
-		String[] priorities = mbGroupServiceSettings.getPriorities(languageId);
+		String[] priorityPair = _findThreadPriority(
+			value, mbGroupServiceSettings.getPriorities(languageId));
 
-		String[] priorityPair = _findThreadPriority(value, priorities);
-
-		if (priorityPair == null) {
-			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getSiteDefault());
-
-			priorities = mbGroupServiceSettings.getPriorities(
-				defaultLanguageId);
-
-			priorityPair = _findThreadPriority(value, priorities);
+		if (priorityPair != null) {
+			return priorityPair;
 		}
 
-		return priorityPair;
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		return _findThreadPriority(
+			value, mbGroupServiceSettings.getPriorities(defaultLanguageId));
 	}
 
 	public static boolean isViewableMessage(
@@ -284,6 +268,16 @@ public class MBUtil {
 		}
 
 		return null;
+	}
+
+	private static String _getParentAuthor(
+		MBMessage parentMessage, HttpServletRequest httpServletRequest) {
+
+		if (parentMessage.isAnonymous()) {
+			return LanguageUtil.get(httpServletRequest, "anonymous");
+		}
+
+		return HtmlUtil.escape(PortalUtil.getUserName(parentMessage));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MBUtil.class);

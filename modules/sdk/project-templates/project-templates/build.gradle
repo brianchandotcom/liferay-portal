@@ -167,6 +167,18 @@ testAPIJar {
 	from sourceSets.test.output
 }
 
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		if (contentFile.name == "releng-pom.gradle") {
+			return false
+		}
+
+		return true
+	}])
+}
+
 uploadProjectTemplateArchives {
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:uploadArchives"

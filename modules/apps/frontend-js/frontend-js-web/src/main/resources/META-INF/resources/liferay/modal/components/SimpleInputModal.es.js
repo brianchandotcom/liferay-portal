@@ -22,6 +22,7 @@ import ClayModal, {useModal} from '@clayui/modal';
  * Manipulates small amounts of data with a form shown inside a modal.
  */
 const SimpleInputModal = ({
+	cleanUp,
 	dialogTitle,
 	formSubmitURL,
 	idFieldName,
@@ -60,82 +61,84 @@ const SimpleInputModal = ({
 	};
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false)
+		onClose: () => {
+			setVisible(false);
+
+			Liferay.once('destroyPortlet', cleanUp);
+		}
 	});
 
 	return (
-		<>
-			{visible && (
-				<ClayModal observer={observer}>
-					<ClayModal.Header>{dialogTitle}</ClayModal.Header>
+		visible && (
+			<ClayModal observer={observer} size="md">
+				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
 
-					<form id={`${namespace}form`} onSubmit={_handleSubmit}>
-						<ClayModal.Body>
-							<input
-								name={`${namespace}${idFieldName}`}
-								type="hidden"
-								value={idFieldValue}
-							/>
-
-							<label
-								className="control-label"
-								htmlFor={`${namespace}${mainFieldName}`}
-							>
-								{mainFieldLabel}
-
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
-
-							<input
-								autoFocus
-								className="form-control"
-								disabled={loadingResponse}
-								id={`${namespace}${mainFieldName}`}
-								name={`${namespace}${mainFieldName}`}
-								onChange={event => setValue(event.target.value)}
-								placeholder={placeholder}
-								required
-								type="text"
-								value={value}
-							/>
-						</ClayModal.Body>
-
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										disabled={loadingResponse}
-										displayType="secondary"
-										onClick={onClose}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
-
-									<ClayButton
-										disabled={loadingResponse}
-										displayType="primary"
-										type="submit"
-									>
-										{loadingResponse && (
-											<span className="inline-item inline-item-before">
-												<span
-													aria-hidden="true"
-													className="loading-animation"
-												></span>
-											</span>
-										)}
-
-										{Liferay.Language.get('save')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
+				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
+					<ClayModal.Body>
+						<input
+							name={`${namespace}${idFieldName}`}
+							type="hidden"
+							value={idFieldValue}
 						/>
-					</form>
-				</ClayModal>
-			)}
-		</>
+
+						<label
+							className="control-label"
+							htmlFor={`${namespace}${mainFieldName}`}
+						>
+							{mainFieldLabel}
+
+							<span className="reference-mark">
+								<ClayIcon symbol="asterisk" />
+							</span>
+						</label>
+
+						<input
+							autoFocus
+							className="form-control"
+							disabled={loadingResponse}
+							id={`${namespace}${mainFieldName}`}
+							name={`${namespace}${mainFieldName}`}
+							onChange={event => setValue(event.target.value)}
+							placeholder={placeholder}
+							required
+							type="text"
+							value={value}
+						/>
+					</ClayModal.Body>
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									disabled={loadingResponse}
+									displayType="secondary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton
+									disabled={loadingResponse}
+									displayType="primary"
+									type="submit"
+								>
+									{loadingResponse && (
+										<span className="inline-item inline-item-before">
+											<span
+												aria-hidden="true"
+												className="loading-animation"
+											></span>
+										</span>
+									)}
+
+									{Liferay.Language.get('save')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</form>
+			</ClayModal>
+		)
 	);
 };
 

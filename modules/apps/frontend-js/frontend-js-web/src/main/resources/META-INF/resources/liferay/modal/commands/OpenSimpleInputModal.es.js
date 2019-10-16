@@ -12,7 +12,7 @@
  * details.
  */
 
-import SimpleInputModal from '../components/SimpleInputModal.es';
+import {SimpleInputModal} from '../components/SimpleInputModal.es';
 import React from 'react';
 import {render} from 'frontend-js-react-web';
 
@@ -33,9 +33,18 @@ function openSimpleInputModal(data) {
 	render(renderComponent, data, container);
 }
 
+function cleanUp() {
+	if (container) {
+		document.body.removeChild(container);
+
+		container = null;
+	}
+}
+
 function renderComponent(data) {
 	return (
 		<SimpleInputModal
+			cleanUp={cleanUp}
 			dialogTitle={data.dialogTitle}
 			formSubmitURL={data.formSubmitURL}
 			idFieldName={data.idFieldName}

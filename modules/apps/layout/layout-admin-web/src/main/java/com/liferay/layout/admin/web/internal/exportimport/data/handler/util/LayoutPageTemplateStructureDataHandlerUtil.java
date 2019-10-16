@@ -51,7 +51,7 @@ public class LayoutPageTemplateStructureDataHandlerUtil {
 		throws Exception {
 
 		layoutPageTemplateStructureElement.addAttribute(
-			"classPk", String.valueOf(classPK));
+			"classPK", String.valueOf(classPK));
 
 		layoutPageTemplateStructureElement.addAttribute(
 			"classNameId", String.valueOf(classNameId));

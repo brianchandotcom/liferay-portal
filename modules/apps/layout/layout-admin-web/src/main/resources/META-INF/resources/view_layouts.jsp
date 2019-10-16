@@ -22,11 +22,6 @@
 
 <liferay-ui:error embed="<%= false %>" exception="<%= GroupInheritContentException.class %>" message="this-page-cannot-be-deleted-and-cannot-have-child-pages-because-it-is-associated-with-a-site-template" />
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	displayContext="<%= new LayoutsAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, layoutsAdminDisplayContext) %>"
 />

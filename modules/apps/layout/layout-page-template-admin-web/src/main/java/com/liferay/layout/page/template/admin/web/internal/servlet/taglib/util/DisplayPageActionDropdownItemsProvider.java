@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.servlet.taglib.util;
+package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -111,11 +113,14 @@ public class DisplayPageActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getConfigureDisplayPageActionUnsafeConsumer() {
 
+		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
+			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/layout/edit_layout", "redirect",
-				_themeDisplay.getURLCurrent(), "backURL",
+				editPageURL, "mvcRenderCommandName", "/layout/edit_layout",
+				"redirect", _themeDisplay.getURLCurrent(), "backURL",
 				_themeDisplay.getURLCurrent(), "selPlid",
 				_layoutPageTemplateEntry.getPlid());
 
@@ -131,7 +136,7 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		deleteDisplayPageURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout/delete_layout_page_template_entry");
+			"/layout_page_template/delete_layout_page_template_entry");
 
 		deleteDisplayPageURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
@@ -212,7 +217,7 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		markAsDefaultDisplayPageURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout/edit_layout_page_template_settings");
+			"/layout_page_template/edit_layout_page_template_settings");
 
 		markAsDefaultDisplayPageURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());
@@ -306,7 +311,7 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		updateDisplayPageURL.setParameter(
 			ActionRequest.ACTION_NAME,
-			"/layout/update_layout_page_template_entry");
+			"/layout_page_template/update_layout_page_template_entry");
 
 		updateDisplayPageURL.setParameter(
 			"redirect", _themeDisplay.getURLCurrent());

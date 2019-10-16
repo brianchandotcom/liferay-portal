@@ -100,7 +100,7 @@ public class FileSystemStore extends BaseStore {
 
 		FileUtil.deltree(dirNameDir);
 
-		deleteEmptyAncestors(-1, -1, parentFile);
+		_deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class FileSystemStore extends BaseStore {
 
 		fileNameVersionFile.delete();
 
-		deleteEmptyAncestors(companyId, repositoryId, parentFile);
+		_deleteEmptyAncestors(parentFile);
 	}
 
 	@Override
@@ -217,18 +217,6 @@ public class FileSystemStore extends BaseStore {
 		return fileNameVersionFile.exists();
 	}
 
-	protected void deleteEmptyAncestors(
-		long companyId, long repositoryId, File file) {
-
-		while (file != null) {
-			if (!file.delete()) {
-				return;
-			}
-
-			file = file.getParentFile();
-		}
-	}
-
 	protected File getDirNameDir(
 		long companyId, long repositoryId, String dirName) {
 
@@ -312,6 +300,16 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return repositoryDir;
+	}
+
+	private void _deleteEmptyAncestors(File file) {
+		while (file != null) {
+			if (!file.delete()) {
+				return;
+			}
+
+			file = file.getParentFile();
+		}
 	}
 
 	private final File _rootDir;

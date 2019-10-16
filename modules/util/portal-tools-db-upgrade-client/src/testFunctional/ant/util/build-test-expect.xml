@@ -10,9 +10,9 @@
 			<delete failonerror="false" file="temp.expect" />
 
 			<copy
-				failonerror = "true"
+				failonerror="true"
 				file="${db.upgrade.client.src.dir}/src/testFunctional/dependencies/@{expect.file}"
-				force = "true"
+				force="true"
 				overwrite="true"
 				tofile="temp.expect"
 			/>

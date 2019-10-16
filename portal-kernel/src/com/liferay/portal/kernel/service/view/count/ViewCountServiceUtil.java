@@ -22,12 +22,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
  */
 public class ViewCountServiceUtil {
 
-	public static void addViewCountEntry(
-		long companyId, long classNameId, long classPK) {
-
-		_viewCountService.addViewCountEntry(companyId, classNameId, classPK);
-	}
-
 	public static long getViewCount(
 		long companyId, Class<?> clazz, long classPK) {
 

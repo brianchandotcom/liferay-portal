@@ -401,23 +401,6 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Update's the file's name
-	 *
-	 * @param companyId the primary key of the company
-	 * @param repositoryId the primary key of the data repository (optionally
-	 *        {@link com.liferay.portal.kernel.model.CompanyConstants#SYSTEM})
-	 * @param fileName the file's name
-	 * @param newFileName the file's new name
-	 */
-	public static void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws PortalException {
-
-		getStore().updateFile(companyId, repositoryId, fileName, newFileName);
-	}
-
-	/**
 	 * Updates a file based on a {@link File} object.
 	 *
 	 * @param companyId the primary key of the company

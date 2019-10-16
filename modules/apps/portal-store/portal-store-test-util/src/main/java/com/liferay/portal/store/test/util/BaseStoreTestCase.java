@@ -14,7 +14,6 @@
 
 package com.liferay.portal.store.test.util;
 
-import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
@@ -406,77 +405,6 @@ public abstract class BaseStoreTestCase {
 		store.deleteFile(
 			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT);
-	}
-
-	@Test
-	public void testUpdateFileVersionWithNewFileName() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		addVersions(fileName, 2);
-
-		String newFileName = RandomTestUtil.randomString();
-
-		store.updateFile(companyId, repositoryId, fileName, newFileName);
-
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT));
-
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, newFileName, "1.0"));
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, newFileName, "1.1"));
-		Assert.assertTrue(
-			store.hasFile(companyId, repositoryId, newFileName, "1.2"));
-	}
-
-	@Test
-	public void testUpdateFileWithNewFileName() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		String newFileName = RandomTestUtil.randomString();
-
-		store.updateFile(companyId, repositoryId, fileName, newFileName);
-
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT));
-	}
-
-	@Test(expected = DuplicateFileException.class)
-	public void testUpdateFileWithNewFileNameDuplicateFileException()
-		throws Exception {
-
-		String fileName = RandomTestUtil.randomString();
-
-		store.addFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			new UnsyncByteArrayInputStream(_DATA_VERSION_1));
-
-		store.updateFile(companyId, repositoryId, fileName, fileName);
-	}
-
-	@Test(expected = NoSuchFileException.class)
-	public void testUpdateFileWithNewFileNameNoSuchFileException()
-		throws Exception {
-
-		store.updateFile(
-			companyId, repositoryId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
 	}
 
 	protected void addVersions(String fileName, int newVersionCount)

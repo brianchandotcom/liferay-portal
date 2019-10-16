@@ -305,24 +305,6 @@ public class S3Store extends BaseStore {
 		}
 	}
 
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws PortalException {
-
-		if (fileName.equals(newFileName)) {
-			throw new DuplicateFileException(companyId, repositoryId, fileName);
-		}
-
-		String oldKey = _s3KeyTransformer.getFileKey(
-			companyId, repositoryId, fileName);
-		String newKey = _s3KeyTransformer.getFileKey(
-			companyId, repositoryId, newFileName);
-
-		moveObjects(oldKey, newKey);
-	}
-
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_s3StoreConfiguration = ConfigurableUtil.createConfigurable(

@@ -264,34 +264,6 @@ public class DBStore extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 	}
 
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws DuplicateFileException, NoSuchFileException {
-
-		if (fileName.equals(newFileName)) {
-			throw new DuplicateFileException(
-				companyId, repositoryId, newFileName);
-		}
-
-		if (!hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
-
-			throw new NoSuchFileException(companyId, repositoryId, fileName);
-		}
-
-		if (hasFile(
-				companyId, repositoryId, newFileName, Store.VERSION_DEFAULT)) {
-
-			throw new DuplicateFileException(
-				companyId, repositoryId, newFileName);
-		}
-
-		_dlContentLocalService.updateDLContent(
-			companyId, repositoryId, repositoryId, fileName, newFileName);
-	}
-
 	@Activate
 	protected void activate() {
 		DB db = DBManagerUtil.getDB();

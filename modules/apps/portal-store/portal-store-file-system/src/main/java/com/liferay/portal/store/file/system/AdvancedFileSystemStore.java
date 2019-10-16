@@ -14,8 +14,6 @@
 
 package com.liferay.portal.store.file.system;
 
-import com.liferay.document.library.kernel.exception.DuplicateFileException;
-import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -46,45 +44,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			advancedFileSystemStoreConfiguration) {
 
 		super(advancedFileSystemStoreConfiguration);
-	}
-
-	@Override
-	public void updateFile(
-			long companyId, long repositoryId, String fileName,
-			String newFileName)
-		throws DuplicateFileException, NoSuchFileException {
-
-		super.updateFile(companyId, repositoryId, fileName, newFileName);
-
-		File newFileNameDir = getFileNameDir(
-			companyId, repositoryId, newFileName);
-
-		String[] fileNameVersions = FileUtil.listFiles(newFileNameDir);
-
-		for (String fileNameVersion : fileNameVersions) {
-			String ext = FileUtil.getExtension(fileNameVersion);
-
-			String newFileNameVersion = newFileName;
-
-			if (ext.equals(_HOOK_EXTENSION)) {
-				int pos = fileNameVersion.lastIndexOf(CharPool.UNDERLINE);
-
-				newFileNameVersion += fileNameVersion.substring(pos);
-			}
-
-			File fileNameVersionFile = new File(
-				newFileNameDir + StringPool.SLASH + fileNameVersion);
-
-			if (!fileNameVersionFile.exists()) {
-				throw new NoSuchFileException(
-					companyId, repositoryId, fileName, fileNameVersion);
-			}
-
-			File newFileNameVersionFile = new File(
-				newFileNameDir + StringPool.SLASH + newFileNameVersion);
-
-			move(fileNameVersionFile, newFileNameVersionFile);
-		}
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {

@@ -21,7 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -32,12 +31,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Dictionary;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.osgi.service.cm.Configuration;
@@ -94,27 +91,8 @@ public class S3StoreTest extends BaseStoreTestCase {
 	}
 
 	@Override
-	@Test
-	public void testUpdateFileWithNewFileNameNoSuchFileException()
-		throws Exception {
-
-		updateFileShouldNotUpdateFile();
-	}
-
-	@Override
 	protected Store getStore() {
 		return _store;
-	}
-
-	protected void updateFileShouldNotUpdateFile() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.updateFile(
-			companyId, repositoryId, fileName, RandomTestUtil.randomString());
-
-		Assert.assertFalse(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
 	private static Configuration _configuration;

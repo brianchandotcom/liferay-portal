@@ -104,35 +104,6 @@ public class IgnoreDuplicatesStore implements Store {
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
-	@Override
-	public void updateFile(
-			final long companyId, final long repositoryId,
-			final String fileName, final String newFileName)
-		throws PortalException {
-
-		if (fileName.equals(newFileName)) {
-			return;
-		}
-
-		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(companyId, repositoryId, newFileName),
-			() -> _store.updateFile(
-				companyId, repositoryId, fileName, newFileName));
-	}
-
-	protected StoreAction createDeleteFileStoreAction(
-		final long companyId, final long repositoryId, final String fileName) {
-
-		return () -> {
-			for (String versionLabel :
-					_store.getFileVersions(companyId, repositoryId, fileName)) {
-
-				_store.deleteFile(
-					companyId, repositoryId, fileName, versionLabel);
-			}
-		};
-	}
-
 	protected StoreAction createDeleteFileStoreAction(
 		final long companyId, final long repositoryId, final String fileName,
 		final String versionLabel) {

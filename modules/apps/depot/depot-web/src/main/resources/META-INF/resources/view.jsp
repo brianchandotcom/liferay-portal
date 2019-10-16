@@ -65,6 +65,11 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 </div>
 
 <liferay-frontend:component
+	componentId="<%= DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/DepotEntryDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
 	componentId="<%= depotAdminManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/DepotAdminManagementToolbarDefaultEventHandler.es"
 />

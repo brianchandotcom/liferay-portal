@@ -100,7 +100,10 @@ public class DepotEntryVerticalCard
 									_group.getClassPK(),
 									_liferayPortletResponse);
 
-							dropdownItem.setHref(
+							dropdownItem.putData("action", "deleteDepotEntry");
+
+							dropdownItem.putData(
+								"deleteDepotEntryURL",
 								deleteDepotEntryActionURL.toString());
 
 							dropdownItem.setLabel(
@@ -109,6 +112,11 @@ public class DepotEntryVerticalCard
 				}
 			}
 		};
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return DepotAdminWebKeys.DEPOT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	@Override

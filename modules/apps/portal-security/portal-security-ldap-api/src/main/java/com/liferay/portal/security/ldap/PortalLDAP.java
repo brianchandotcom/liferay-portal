@@ -26,7 +26,10 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Edward C. Han
+ * @deprecated As of Mueller (7.2.x), replaced by {@link
+ *            SafePortalLDAP}
  */
+@Deprecated
 @ProviderType
 public interface PortalLDAP {
 

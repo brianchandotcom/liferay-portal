@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserOperation;
+import com.liferay.portal.security.ldap.SafeLdapName;
 
 import java.io.Serializable;
 
@@ -27,15 +28,27 @@ import java.util.Properties;
 
 import javax.naming.directory.Attributes;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  * @author Wesley Gong
  */
+@ProviderType
 public interface PortalToLDAPConverter {
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getGroupSafeLdapName(long, UserGroup, Properties)}
+	 */
+	@Deprecated
 	public String getGroupDNName(
+			long ldapServerId, UserGroup userGroup, Properties groupMappings)
+		throws Exception;
+
+	public SafeLdapName getGroupSafeLdapName(
 			long ldapServerId, UserGroup userGroup, Properties groupMappings)
 		throws Exception;
 
@@ -69,7 +82,16 @@ public interface PortalToLDAPConverter {
 			Properties userMappings, Properties userExpandoMappings)
 		throws Exception;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getUserSafeLdapName(long, User, Properties)}
+	 */
+	@Deprecated
 	public String getUserDNName(
+			long ldapServerId, User user, Properties userMappings)
+		throws Exception;
+
+	public SafeLdapName getUserSafeLdapName(
 			long ldapServerId, User user, Properties userMappings)
 		throws Exception;
 

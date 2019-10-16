@@ -962,7 +962,7 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean _hasLiferayNpmScripts10Dependency(File packageJSONFile) {
+	private boolean _hasLiferayNpmScripts12Dependency(File packageJSONFile) {
 		if ((packageJSONFile == null) || !packageJSONFile.exists()) {
 			return false;
 		}
@@ -984,7 +984,7 @@ public class NodePlugin implements Plugin<Project> {
 		VersionNumber versionNumber = VersionNumber.parse(
 			(String)devDependencies.get("liferay-npm-scripts"));
 
-		if (_liferayNpmScripts10VersionNumber.compareTo(versionNumber) > 0) {
+		if (_liferayNpmScripts12VersionNumber.compareTo(versionNumber) > 0) {
 			return false;
 		}
 
@@ -996,14 +996,14 @@ public class NodePlugin implements Plugin<Project> {
 
 		File packageJSONFile = project.file("package.json");
 
-		if (_hasLiferayNpmScripts10Dependency(packageJSONFile)) {
+		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
 			return true;
 		}
 
 		if (yarnWorkingDir != null) {
 			packageJSONFile = new File(yarnWorkingDir, "package.json");
 
-			if (_hasLiferayNpmScripts10Dependency(packageJSONFile)) {
+			if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
 				return true;
 			}
 		}
@@ -1061,8 +1061,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	private static final String _PACKAGE_RUN_TASK_NAME_PREFIX = "packageRun";
 
-	private static final VersionNumber _liferayNpmScripts10VersionNumber =
-		VersionNumber.version(10);
+	private static final VersionNumber _liferayNpmScripts12VersionNumber =
+		VersionNumber.version(12);
 	private static final VersionNumber _node8VersionNumber =
 		VersionNumber.version(8);
 	private static final VersionNumber _npm5VersionNumber =

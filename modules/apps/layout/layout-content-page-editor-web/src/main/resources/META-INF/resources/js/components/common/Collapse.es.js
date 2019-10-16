@@ -29,23 +29,21 @@ const Collapse = props => {
 		setOpen(!open);
 	};
 
-	const collapseClassNames = classNames(
-		'align-items-end',
-		'btn',
-		'btn-unstyled',
-		'collapse-icon',
-		'd-flex',
-		'fragments-editor-sidebar-section__collapse',
-		'justify-content-between',
-		'sheet-subtitle',
-		'w-100'
-	);
-
 	return (
 		<div className="mb-2">
 			<button
 				aria-expanded={open}
-				className={collapseClassNames}
+				className={classNames(
+					'align-items-end',
+					'btn',
+					'btn-unstyled',
+					'collapse-icon',
+					'd-flex',
+					'fragments-editor-sidebar-section__collapse',
+					'justify-content-between',
+					'sheet-subtitle',
+					'w-100'
+				)}
 				onClick={handleClick}
 				type="button"
 			>

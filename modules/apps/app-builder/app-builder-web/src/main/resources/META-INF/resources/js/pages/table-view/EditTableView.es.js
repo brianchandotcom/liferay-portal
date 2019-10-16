@@ -51,16 +51,25 @@ const EditTableView = ({
 		title = Liferay.Language.get('edit-table-view');
 	}
 
-	const onAddFieldName = fieldName => {
-		setState(prevState => ({
-			...prevState,
-			dataListView: {
-				...prevState.dataListView,
-				fieldNames: prevState.dataListView.fieldNames
-					? prevState.dataListView.fieldNames.concat(fieldName)
-					: [fieldName]
-			}
-		}));
+	const onAddFieldName = (fieldName, index = 0) => {
+		setState(prevState => {
+			const {dataListView} = prevState;
+			const {fieldNames} = dataListView;
+
+			return {
+				...prevState,
+				dataListView: {
+					...dataListView,
+					fieldNames: fieldNames
+						? [
+								...fieldNames.slice(0, index),
+								fieldName,
+								...fieldNames.slice(index)
+						  ]
+						: [fieldName]
+				}
+			};
+		});
 	};
 
 	const onInput = event => {
@@ -171,7 +180,7 @@ const EditTableView = ({
 	} = dataListView;
 
 	return (
-		<>
+		<div className="app-builder-table-view">
 			<ControlMenu backURL="../" title={title} />
 
 			<Loading isLoading={dataDefinition === null}>
@@ -256,7 +265,7 @@ const EditTableView = ({
 					</div>
 				</div>
 			</Loading>
-		</>
+		</div>
 	);
 };
 

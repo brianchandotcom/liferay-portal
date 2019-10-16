@@ -146,7 +146,7 @@ function LayoutFinder(props) {
 
 					{totalCount > MAX_ITEMS_TO_SHOW && (
 						<div>
-							<div className="mt-2 text-center">
+							<div className="mb-3 mt-3 text-center">
 								{Liferay.Util.sub(
 									Liferay.Language.get(
 										'there-are-x-more-results-narrow-your-searc-to-get-more-precise-results'

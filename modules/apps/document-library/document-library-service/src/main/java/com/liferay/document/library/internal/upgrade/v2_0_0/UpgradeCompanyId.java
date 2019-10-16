@@ -24,7 +24,8 @@ public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
-			new TableUpdater("DLFileVersionPreview", "Group_", "groupId")
+			new TableUpdater(
+				"DLFileVersionPreview", "DLFileVersion", "fileVersionId")
 		};
 	}
 

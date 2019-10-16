@@ -25,7 +25,7 @@ public class UpgradeCompanyId extends BaseUpgradeCompanyId {
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new TableUpdater(
-				"AssetEntryAssetCategoryRel", "entryId",
+				"AssetEntryAssetCategoryRel", "assetEntryId",
 				new String[][] {{"AssetEntry", "entryId"}})
 		};
 	}

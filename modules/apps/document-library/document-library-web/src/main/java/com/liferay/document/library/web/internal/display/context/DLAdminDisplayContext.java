@@ -415,12 +415,12 @@ public class DLAdminDisplayContext {
 				"mvcRenderCommandName", "/document_library/view_folder");
 		}
 
-		portletURL.setParameter("navigation", navigation);
 		portletURL.setParameter("curFolder", currentFolder);
 		portletURL.setParameter("deltaFolder", deltaFolder);
 		portletURL.setParameter(
 			"fileEntryTypeId", String.valueOf(fileEntryTypeId));
 		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter("navigation", navigation);
 
 		SearchContainer dlSearchContainer = new SearchContainer(
 			_liferayPortletRequest, null, null, "curEntry",

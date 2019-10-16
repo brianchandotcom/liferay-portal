@@ -14,15 +14,16 @@
 
 package com.liferay.portal.store.file.system.safe.file.name;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
-import java.io.IOException;
 import java.io.InputStream;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -41,28 +42,8 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName,
-				DLFileEntryConstants.VERSION_DEFAULT)) {
-
-			for (String curVersionLabel :
-					_store.getFileVersions(companyId, repositoryId, fileName)) {
-
-				try (InputStream inputStream = _store.getFileAsStream(
-						companyId, repositoryId, fileName, curVersionLabel)) {
-
-					_store.addFile(
-						companyId, repositoryId, safeFileName, curVersionLabel,
-						inputStream);
-				}
-				catch (IOException ioe) {
-					throw new PortalException(ioe);
-				}
-
-				_store.deleteFile(
-					companyId, repositoryId, fileName, curVersionLabel);
-			}
+		if (!safeFileName.equals(fileName)) {
+			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 		}
 
 		_store.addFile(companyId, repositoryId, safeFileName, versionLabel, is);
@@ -75,16 +56,7 @@ public class SafeFileNameStore implements Store {
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
 		if (!safeDirName.equals(dirName)) {
-			try {
-				_store.deleteDirectory(companyId, repositoryId, dirName);
-
-				return;
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
+			_store.deleteDirectory(companyId, repositoryId, dirName);
 		}
 
 		_store.deleteDirectory(companyId, repositoryId, safeDirName);
@@ -97,12 +69,8 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
-
+		if (!safeFileName.equals(fileName)) {
 			_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-
-			return;
 		}
 
 		_store.deleteFile(companyId, repositoryId, safeFileName, versionLabel);
@@ -116,33 +84,45 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
+		if (safeFileName.equals(fileName) ||
+			_store.hasFile(
+				companyId, repositoryId, safeFileName, versionLabel)) {
 
 			return _store.getFileAsStream(
-				companyId, repositoryId, fileName, versionLabel);
+				companyId, repositoryId, safeFileName, versionLabel);
 		}
 
 		return _store.getFileAsStream(
-			companyId, repositoryId, safeFileName, versionLabel);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
+		Set<String> decodedFileNameSet = new HashSet<>();
+
 		String safeDirName = FileUtil.encodeSafeFileName(dirName);
 
-		String[] fileNames = _store.getFileNames(
-			companyId, repositoryId, safeDirName);
+		for (String fileName :
+				_store.getFileNames(companyId, repositoryId, safeDirName)) {
 
-		String[] decodedFileNames = new String[fileNames.length];
-
-		for (int i = 0; i < fileNames.length; i++) {
-			decodedFileNames[i] = FileUtil.decodeSafeFileName(fileNames[i]);
+			decodedFileNameSet.add(FileUtil.decodeSafeFileName(fileName));
 		}
 
-		return decodedFileNames;
+		if (!safeDirName.equals(dirName)) {
+			for (String fileName :
+					_store.getFileNames(companyId, repositoryId, dirName)) {
+
+				decodedFileNameSet.add(FileUtil.decodeSafeFileName(fileName));
+			}
+		}
+
+		String[] decodedFilesNames = decodedFileNameSet.toArray(new String[0]);
+
+		Arrays.sort(decodedFilesNames);
+
+		return decodedFilesNames;
 	}
 
 	@Override
@@ -153,16 +133,16 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
+		if (safeFileName.equals(fileName) ||
 			_store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+				companyId, repositoryId, safeFileName, versionLabel)) {
 
 			return _store.getFileSize(
-				companyId, repositoryId, fileName, versionLabel);
+				companyId, repositoryId, safeFileName, versionLabel);
 		}
 
 		return _store.getFileSize(
-			companyId, repositoryId, safeFileName, versionLabel);
+			companyId, repositoryId, fileName, versionLabel);
 	}
 
 	@Override
@@ -170,16 +150,25 @@ public class SafeFileNameStore implements Store {
 			long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
+		Set<String> versionSet = new HashSet<>();
+
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT)) {
+		Collections.addAll(
+			versionSet,
+			_store.getFileVersions(companyId, repositoryId, safeFileName));
 
-			return _store.getFileVersions(companyId, repositoryId, fileName);
+		if (!safeFileName.equals(fileName)) {
+			Collections.addAll(
+				versionSet,
+				_store.getFileVersions(companyId, repositoryId, fileName));
 		}
 
-		return _store.getFileVersions(companyId, repositoryId, safeFileName);
+		String[] versions = versionSet.toArray(new String[0]);
+
+		Arrays.sort(versions);
+
+		return versions;
 	}
 
 	@Override
@@ -189,18 +178,18 @@ public class SafeFileNameStore implements Store {
 
 		String safeFileName = FileUtil.encodeSafeFileName(fileName);
 
-		if (!safeFileName.equals(fileName) &&
-			_store.hasFile(companyId, repositoryId, fileName, versionLabel)) {
+		if (_store.hasFile(
+				companyId, repositoryId, safeFileName, versionLabel)) {
 
 			return true;
 		}
 
-		return _store.hasFile(
-			companyId, repositoryId, safeFileName, versionLabel);
-	}
+		if (safeFileName.equals(fileName)) {
+			return false;
+		}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SafeFileNameStore.class);
+		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
+	}
 
 	private final Store _store;
 

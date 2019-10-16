@@ -1431,6 +1431,7 @@ components:
                 viewCount:
                     description:
                         The number of views of this thread.
+                    format: int64
                     readOnly: true
                     type: integer
                 viewableBy:

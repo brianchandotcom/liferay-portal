@@ -40,8 +40,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.increment.BufferedIncrement;
-import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -58,11 +56,15 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -270,6 +272,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		assetEntryLocalService.deleteEntry(
 			MBThread.class.getName(), thread.getThreadId());
+
+		// View count
+
+		_viewCountManager.deleteViewCount(
+			thread.getCompanyId(),
+			_classNameLocalService.getClassNameId(MBThread.class),
+			thread.getThreadId());
 
 		// Indexer
 
@@ -498,13 +507,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return false;
 	}
 
-	@BufferedIncrement(
-		configuration = "MBThread", incrementClass = NumberIncrement.class
-	)
 	@Override
-	public void incrementViewCounter(long threadId, int increment)
-		throws PortalException {
-
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void incrementViewCounter(long threadId, int increment) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
@@ -515,10 +520,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return;
 		}
 
-		thread.setModifiedDate(thread.getModifiedDate());
-		thread.setViewCount(thread.getViewCount() + increment);
-
-		mbThreadPersistence.update(thread);
+		_viewCountManager.incrementViewCount(
+			thread.getCompanyId(),
+			_classNameLocalService.getClassNameId(MBThread.class),
+			thread.getThreadId(), increment);
 	}
 
 	@Override
@@ -1229,6 +1234,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private IndexerRegistry _indexerRegistry;
 
 	@Reference
@@ -1236,5 +1244,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference
+	private ViewCountManager _viewCountManager;
 
 }

@@ -25,11 +25,14 @@ import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBMessageTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBStatsUserTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadFlagTable;
 import com.liferay.message.boards.internal.upgrade.v2_0_0.util.MBThreadTable;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
+import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.view.count.service.ViewCountEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +66,11 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 					MBMessageTable.class, MBStatsUserTable.class,
 					MBThreadFlagTable.class, MBThreadTable.class
 				}));
+
+		registry.register(
+			"2.0.0", "3.0.0",
+			new UpgradeViewCount(
+				"MBThread", MBThread.class, "threadId", "viewCount"));
 	}
 
 	@Reference
@@ -73,5 +81,11 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	/**
+	 * See LPS-101086. The ViewCount table needs to exist.
+	 */
+	@Reference
+	private ViewCountEntryLocalService _viewCountEntryLocalService;
 
 }

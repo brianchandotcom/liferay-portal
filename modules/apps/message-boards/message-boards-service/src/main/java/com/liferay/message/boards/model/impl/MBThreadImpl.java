@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashSet;
@@ -145,6 +147,14 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return ArrayUtil.toLongArray(participantUserIds);
+	}
+
+	@Override
+	public long getViewCount() {
+		return ViewCountManagerUtil.getViewCount(
+			getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(MBThread.class),
+			getPrimaryKey());
 	}
 
 	@Override

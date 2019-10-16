@@ -248,7 +248,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 
 							<%
 							int repliesCount = Math.max(thread.getMessageCount() - 1, 0);
-							int viewCount = thread.getViewCount();
+							long viewCount = thread.getViewCount();
 							%>
 
 							<div>

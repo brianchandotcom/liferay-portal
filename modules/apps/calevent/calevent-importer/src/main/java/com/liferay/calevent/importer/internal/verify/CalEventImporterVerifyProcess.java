@@ -379,7 +379,7 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		String uuid, long threadId, long groupId, long companyId, long userId,
 		String userName, Date createDate, Date modifiedDate, long categoryId,
 		long rootMessageId, long rootMessageUserId, String title,
-		int messageCount, int viewCount, long lastPostByUserId,
+		int messageCount, long viewCount, long lastPostByUserId,
 		Date lastPostDate, double priority, boolean question, int status,
 		long statusByUserId, String statusByUserName, Date statusDate) {
 
@@ -397,7 +397,6 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		mbThread.setRootMessageUserId(rootMessageUserId);
 		mbThread.setTitle(title);
 		mbThread.setMessageCount(messageCount);
-		mbThread.setViewCount(viewCount);
 		mbThread.setLastPostByUserId(lastPostByUserId);
 		mbThread.setLastPostDate(lastPostDate);
 		mbThread.setPriority(priority);
@@ -408,6 +407,17 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		mbThread.setStatusDate(statusDate);
 
 		_mbThreadLocalService.updateMBThread(mbThread);
+
+		ViewCountEntry viewCountEntry =
+			_viewCountEntryLocalService.createViewCountEntry(
+				new ViewCountEntryPK(
+					companyId,
+					_classNameLocalService.getClassNameId(MBThread.class),
+					threadId));
+
+		viewCountEntry.setViewCount(viewCount);
+
+		_viewCountEntryLocalService.addViewCountEntry(viewCountEntry);
 	}
 
 	private RatingsEntry _addRatingsEntry(

@@ -477,7 +477,6 @@
 		<column name="rootMessageUserId" type="long" />
 		<column name="title" type="String" uad-nonanonymizable="true" />
 		<column name="messageCount" type="int" />
-		<column name="viewCount" type="int" />
 		<column name="lastPostByUserId" type="long" />
 		<column name="lastPostDate" type="Date" />
 		<column name="priority" type="double" />

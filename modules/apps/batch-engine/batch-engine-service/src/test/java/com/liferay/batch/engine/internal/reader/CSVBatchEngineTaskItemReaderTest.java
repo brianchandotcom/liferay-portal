@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringUtil;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -33,10 +34,147 @@ public class CSVBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
 	@Test
+	public void testColumnMapping() throws Exception {
+		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
+				_getCSVBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					StringPool.SEMICOLON,
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", "name");
+					}
+				},
+				csvBatchEngineTaskItemReader.read(),
+				new HashMap<String, String>() {
+					{
+						put("en", "sample name");
+						put("hr", "naziv");
+					}
+				});
+		}
+	}
+
+	@Test
+	public void testColumnMappingWithUndefinedColumn() throws Exception {
+		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
+				_getCSVBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					StringPool.SEMICOLON,
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+					}
+				},
+				csvBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testColumnMappingWithUndefinedTargetColumn() throws Exception {
+		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
+				_getCSVBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					StringPool.SEMICOLON,
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
+				csvBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testInvalidColumnMapping() throws Exception {
+		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
+				_getCSVBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					StringPool.SEMICOLON,
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			try {
+				validate(
+					createDateString, "sample description", null,
+					new HashMap<String, String>() {
+						{
+							put("createDate1", "description");
+							put("description1", "createDate");
+							put("id1", "id");
+							put("name1", "name");
+						}
+					},
+					csvBatchEngineTaskItemReader.read(),
+					new HashMap<String, String>() {
+						{
+							put("en", "sample name");
+							put("hr", "naziv");
+						}
+					});
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+	}
+
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					StringPool.COMMA,
+					CELL_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{
 							"", "sample description", 1, "sample name", "naziv",
@@ -58,7 +196,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					StringPool.COMMA,
+					CELL_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{
 							createDateString, "sample description 1", 1,
@@ -75,7 +213,8 @@ public class CSVBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount, (Item)csvBatchEngineTaskItemReader.read(),
+					rowCount, Collections.emptyMap(),
+					csvBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);
@@ -90,7 +229,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					StringPool.SEMICOLON,
+					CELL_NAMES, StringPool.SEMICOLON,
 					new Object[][] {
 						{
 							createDateString, "hey, here is comma inside", 1,
@@ -100,7 +239,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
-				(Item)csvBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name");
@@ -114,11 +253,12 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					StringPool.COMMA, new Object[][] {{"", "", 1}})) {
+					CELL_NAMES, StringPool.COMMA,
+					new Object[][] {{"", "", 1}})) {
 
 			validate(
-				null, null, 1L, (Item)csvBatchEngineTaskItemReader.read(),
-				null);
+				null, null, 1L, Collections.emptyMap(),
+				csvBatchEngineTaskItemReader.read(), null);
 		}
 	}
 
@@ -126,7 +266,7 @@ public class CSVBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (CSVBatchEngineTaskItemReader csvBatchEngineTaskItemReader =
 				_getCSVBatchEngineTaskItemReader(
-					StringPool.COMMA,
+					CELL_NAMES, StringPool.COMMA,
 					new Object[][] {
 						{createDateString, "", 1, "", "naziv 1"},
 						{
@@ -136,8 +276,8 @@ public class CSVBatchEngineTaskItemReaderTest
 					})) {
 
 			validate(
-				createDateString, null, 1L,
-				(Item)csvBatchEngineTaskItemReader.read(),
+				createDateString, null, 1L, Collections.emptyMap(),
+				csvBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", null);
@@ -147,7 +287,7 @@ public class CSVBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description 2", 2L,
-				(Item)csvBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), csvBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name 2");
@@ -157,10 +297,12 @@ public class CSVBatchEngineTaskItemReaderTest
 		}
 	}
 
-	private byte[] _getContent(String delimiter, Object[][] rowValues) {
+	private byte[] _getContent(
+		String[] cellNames, String delimiter, Object[][] rowValues) {
+
 		StringBundler sb = new StringBundler();
 
-		sb.append(StringUtil.merge(CELL_NAMES, delimiter));
+		sb.append(StringUtil.merge(cellNames, delimiter));
 		sb.append("\n");
 
 		for (Object[] cellValues : rowValues) {
@@ -174,13 +316,13 @@ public class CSVBatchEngineTaskItemReaderTest
 	}
 
 	private CSVBatchEngineTaskItemReader _getCSVBatchEngineTaskItemReader(
-			String delimiter, Object[][] rowValues)
+			String[] cellNames, String delimiter, Object[][] rowValues)
 		throws IOException {
 
 		return new CSVBatchEngineTaskItemReader(
 			delimiter,
-			new ByteArrayInputStream(_getContent(delimiter, rowValues)),
-			Item.class);
+			new ByteArrayInputStream(
+				_getContent(cellNames, delimiter, rowValues)));
 	}
 
 }

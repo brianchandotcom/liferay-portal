@@ -17,8 +17,8 @@ package com.liferay.batch.engine.internal.reader;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Assert;
@@ -31,9 +31,143 @@ public class JSONLBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
 	@Test
+	public void testColumnMapping() throws Exception {
+		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
+				_getJSONLBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1"
+					},
+					new Object[][] {
+						{
+							"\"" + createDateString + "\"",
+							"\"sample description\"", 1,
+							"{\"en\": \"sample name\", \"hr\": \"naziv\"}"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", "name");
+					}
+				},
+				jsonlBatchEngineTaskItemReader.read(),
+				new HashMap<String, String>() {
+					{
+						put("en", "sample name");
+						put("hr", "naziv");
+					}
+				});
+		}
+	}
+
+	@Test
+	public void testColumnMappingWithUndefinedColumn() throws Exception {
+		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
+				_getJSONLBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1"
+					},
+					new Object[][] {
+						{
+							"\"" + createDateString + "\"",
+							"\"sample description\"", 1,
+							"{\"en\": \"sample name\", \"hr\": \"naziv\"}"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+					}
+				},
+				jsonlBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testColumnMappingWithUndefinedTargetColumn() throws Exception {
+		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
+				_getJSONLBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1"
+					},
+					new Object[][] {
+						{
+							"\"" + createDateString + "\"",
+							"\"sample description\"", 1,
+							"{\"en\": \"sample name\", \"hr\": \"naziv\"}"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
+				jsonlBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testInvalidColumnMapping() throws Exception {
+		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
+				_getJSONLBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1"
+					},
+					new Object[][] {
+						{
+							"\"" + createDateString + "\"",
+							"\"sample description\"", 1,
+							"{\"en\": \"sample name\", \"hr\": \"naziv\"}"
+						}
+					})) {
+
+			try {
+				validate(
+					createDateString, "sample description", null,
+					new HashMap<String, String>() {
+						{
+							put("createDate1", "description");
+							put("description1", "createDate");
+							put("id1", "id");
+							put("name1", "name");
+						}
+					},
+					jsonlBatchEngineTaskItemReader.read(),
+					new HashMap<String, String>() {
+						{
+							put("en", "sample name");
+							put("hr", "naziv");
+						}
+					});
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+	}
+
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
+					_CELL_NAMES,
 					new Object[][] {
 						{
 							null, "\"sample description\"", 1,
@@ -43,7 +177,16 @@ public class JSONLBatchEngineTaskItemReaderTest
 					})) {
 
 			try {
-				jsonlBatchEngineTaskItemReader.read();
+				validate(
+					createDateString, "sample description", null,
+					Collections.emptyMap(),
+					jsonlBatchEngineTaskItemReader.read(),
+					new HashMap<String, String>() {
+						{
+							put("en", "sample name");
+							put("hr", "naziv");
+						}
+					});
 
 				Assert.fail();
 			}
@@ -56,6 +199,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
+					_CELL_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -74,7 +218,8 @@ public class JSONLBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount, (Item)jsonlBatchEngineTaskItemReader.read(),
+					rowCount, Collections.emptyMap(),
+					jsonlBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);
@@ -89,6 +234,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
+					_CELL_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"",
@@ -99,7 +245,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
-				(Item)jsonlBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), jsonlBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name");
@@ -113,11 +259,11 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
-					new Object[][] {{"null", "null", 1}})) {
+					_CELL_NAMES, new Object[][] {{"null", "null", 1}})) {
 
 			validate(
-				null, null, 1L, (Item)jsonlBatchEngineTaskItemReader.read(),
-				null);
+				null, null, 1L, Collections.emptyMap(),
+				jsonlBatchEngineTaskItemReader.read(), null);
 		}
 	}
 
@@ -125,6 +271,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (JSONLBatchEngineTaskItemReader jsonlBatchEngineTaskItemReader =
 				_getJSONLBatchEngineTaskItemReader(
+					_CELL_NAMES,
 					new Object[][] {
 						{
 							"\"" + createDateString + "\"", "null", 1,
@@ -138,8 +285,8 @@ public class JSONLBatchEngineTaskItemReaderTest
 					})) {
 
 			validate(
-				createDateString, null, 1L,
-				(Item)jsonlBatchEngineTaskItemReader.read(),
+				createDateString, null, 1L, Collections.emptyMap(),
+				jsonlBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("hr", "naziv 1");
@@ -148,7 +295,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description 2", 2L,
-				(Item)jsonlBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), jsonlBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name 2");
@@ -158,7 +305,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 		}
 	}
 
-	private byte[] _getContent(Object[][] rowValues) {
+	private byte[] _getContent(String[] cellNames, Object[][] rowValues) {
 		StringBundler sb = new StringBundler();
 
 		for (Object[] singleRowValues : rowValues) {
@@ -167,7 +314,7 @@ public class JSONLBatchEngineTaskItemReaderTest
 			for (int j = 0; j < singleRowValues.length; j++) {
 				if (singleRowValues[j] != null) {
 					sb.append("\"");
-					sb.append(_CELL_NAMES[j]);
+					sb.append(cellNames[j]);
 					sb.append("\": ");
 					sb.append(singleRowValues[j]);
 					sb.append(",");
@@ -187,11 +334,10 @@ public class JSONLBatchEngineTaskItemReaderTest
 	}
 
 	private JSONLBatchEngineTaskItemReader _getJSONLBatchEngineTaskItemReader(
-			Object[][] rowValues)
-		throws IOException {
+		String[] cellNames, Object[][] rowValues) {
 
 		return new JSONLBatchEngineTaskItemReader(
-			new ByteArrayInputStream(_getContent(rowValues)), Item.class);
+			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 
 	private static final String[] _CELL_NAMES = {

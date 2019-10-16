@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -39,9 +40,143 @@ public class XLSBatchEngineTaskItemReaderTest
 	extends BaseBatchEngineTaskItemReaderTestCase {
 
 	@Test
+	public void testColumnMapping() throws Exception {
+		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
+				_getXLSBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", "name");
+					}
+				},
+				xlsBatchEngineTaskItemReader.read(),
+				new HashMap<String, String>() {
+					{
+						put("en", "sample name");
+						put("hr", "naziv");
+					}
+				});
+		}
+	}
+
+	@Test
+	public void testColumnMappingWitUndefinedColumn() throws Exception {
+		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
+				_getXLSBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+					}
+				},
+				xlsBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testColumnMappingWitUndefinedTargetColumn() throws Exception {
+		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
+				_getXLSBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			validate(
+				createDateString, "sample description", 1L,
+				new HashMap<String, String>() {
+					{
+						put("createDate1", "createDate");
+						put("description1", "description");
+						put("id1", "id");
+						put("name1", null);
+					}
+				},
+				xlsBatchEngineTaskItemReader.read(), null);
+		}
+	}
+
+	@Test
+	public void testInvalidColumnMapping() throws Exception {
+		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
+				_getXLSBatchEngineTaskItemReader(
+					new String[] {
+						"createDate1", "description1", "id1", "name1_en",
+						"name1_hr"
+					},
+					new Object[][] {
+						{
+							createDateString, "sample description", 1,
+							"sample name", "naziv"
+						}
+					})) {
+
+			try {
+				validate(
+					createDateString, "sample description", null,
+					new HashMap<String, String>() {
+						{
+							put("createDate1", "description");
+							put("description1", "createDate");
+							put("id1", "id");
+							put("name1", "name");
+						}
+					},
+					xlsBatchEngineTaskItemReader.read(),
+					new HashMap<String, String>() {
+						{
+							put("en", "sample name");
+							put("hr", "naziv");
+						}
+					});
+
+				Assert.fail();
+			}
+			catch (IllegalArgumentException iae) {
+			}
+		}
+	}
+
+	@Test
 	public void testReadInvalidRow() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
+					CELL_NAMES,
 					new Object[][] {
 						{
 							new Date(), "sample description", 1L, "sample name",
@@ -63,6 +198,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadMultipleRows() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
+					CELL_NAMES,
 					new Object[][] {
 						{
 							createDate, "sample description 1", 1L,
@@ -79,7 +215,8 @@ public class XLSBatchEngineTaskItemReaderTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount, (Item)xlsBatchEngineTaskItemReader.read(),
+					rowCount, Collections.emptyMap(),
+					xlsBatchEngineTaskItemReader.read(),
 					new HashMap<String, String>() {
 						{
 							put("en", "sample name " + rowCount);
@@ -94,6 +231,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithCommaInsideQuotes() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
+					CELL_NAMES,
 					new Object[][] {
 						{
 							createDate, "hey, here is comma inside", 1L,
@@ -103,7 +241,7 @@ public class XLSBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
-				(Item)xlsBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), xlsBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name");
@@ -117,11 +255,11 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithLessValues() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
-					new Object[][] {{null, null, 1}})) {
+					CELL_NAMES, new Object[][] {{null, null, 1}})) {
 
 			validate(
-				null, null, 1L, (Item)xlsBatchEngineTaskItemReader.read(),
-				null);
+				null, null, 1L, Collections.emptyMap(),
+				xlsBatchEngineTaskItemReader.read(), null);
 		}
 	}
 
@@ -129,6 +267,7 @@ public class XLSBatchEngineTaskItemReaderTest
 	public void testReadRowsWithNullValues() throws Exception {
 		try (XLSBatchEngineTaskItemReader xlsBatchEngineTaskItemReader =
 				_getXLSBatchEngineTaskItemReader(
+					CELL_NAMES,
 					new Object[][] {
 						{createDate, null, 1L, null, "naziv"},
 						{
@@ -138,8 +277,8 @@ public class XLSBatchEngineTaskItemReaderTest
 					})) {
 
 			validate(
-				createDateString, null, 1L,
-				(Item)xlsBatchEngineTaskItemReader.read(),
+				createDateString, null, 1L, Collections.emptyMap(),
+				xlsBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", null);
@@ -149,7 +288,7 @@ public class XLSBatchEngineTaskItemReaderTest
 
 			validate(
 				createDateString, "sample description 2", 2L,
-				(Item)xlsBatchEngineTaskItemReader.read(),
+				Collections.emptyMap(), xlsBatchEngineTaskItemReader.read(),
 				new HashMap<String, String>() {
 					{
 						put("en", "sample name 2");
@@ -159,12 +298,13 @@ public class XLSBatchEngineTaskItemReaderTest
 		}
 	}
 
-	private byte[] _getContent(Object[][] rowValues) throws IOException {
+	private byte[] _getContent(String[] cellNames, Object[][] rowValues)
+		throws IOException {
+
 		try (XSSFWorkbook xssfWorkbook = new XSSFWorkbook()) {
 			Sheet sheet = xssfWorkbook.createSheet();
 
-			_populateRow(
-				sheet.createRow(0), xssfWorkbook, (Object[])CELL_NAMES);
+			_populateRow(sheet.createRow(0), xssfWorkbook, (Object[])cellNames);
 
 			for (int i = 0; i < rowValues.length; i++) {
 				_populateRow(
@@ -181,11 +321,11 @@ public class XLSBatchEngineTaskItemReaderTest
 	}
 
 	private XLSBatchEngineTaskItemReader _getXLSBatchEngineTaskItemReader(
-			Object[][] values)
+			String[] cellNames, Object[][] rowValues)
 		throws IOException {
 
 		return new XLSBatchEngineTaskItemReader(
-			new ByteArrayInputStream(_getContent(values)), Item.class);
+			new ByteArrayInputStream(_getContent(cellNames, rowValues)));
 	}
 
 	private void _populateRow(

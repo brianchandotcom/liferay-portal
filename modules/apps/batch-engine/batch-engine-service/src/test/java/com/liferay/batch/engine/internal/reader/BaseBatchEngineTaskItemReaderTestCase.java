@@ -77,8 +77,15 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 	}
 
 	protected void validate(
-		String createDateString, String description, Long id, Item item,
-		Map<String, String> name) {
+			String createDateString, String description, Long id,
+			Map<String, String> fieldNameMappingMap,
+			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
+		throws ReflectiveOperationException {
+
+		Item item = BatchEngineTaskItemReaderUtil.convertValue(
+			Item.class,
+			BatchEngineTaskItemReaderUtil.mapFieldNames(
+				fieldNameMappingMap, fieldNameValueMap));
 
 		if (createDateString == null) {
 			Assert.assertNull(item.getCreateDate());
@@ -90,7 +97,7 @@ public abstract class BaseBatchEngineTaskItemReaderTestCase {
 
 		Assert.assertEquals(description, item.getDescription());
 		Assert.assertEquals(id, item.getId());
-		Assert.assertEquals(name, item.getName());
+		Assert.assertEquals(nameMap, item.getName());
 	}
 
 	protected static final String[] CELL_NAMES = {

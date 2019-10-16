@@ -56,7 +56,7 @@ function SegmentsExperimentsModal({
 					)}
 
 					<ValidatedInput
-						autofocus={true}
+						autofocus
 						errorMessage={Liferay.Language.get(
 							'test-name-is-required'
 						)}

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import getCN from 'classnames';
@@ -24,6 +24,7 @@ function _isValueValid(value) {
 
 function ValidatedInput(props) {
 	const {
+		autofocus = false,
 		errorMessage,
 		label,
 		onBlur = () => {},
@@ -34,7 +35,13 @@ function ValidatedInput(props) {
 	} = props;
 
 	const [invalid, setInvalid] = useState(false);
+
 	const node = useRef();
+	useEffect(() => {
+		if (node.current && autofocus) {
+			node.current.focus();
+		}
+	}, [autofocus]);
 
 	const formGroupClasses = getCN('form-group w-100', {
 		'has-error': invalid
@@ -86,6 +93,7 @@ function ValidatedInput(props) {
 }
 
 ValidatedInput.propTypes = {
+	autofocus: PropTypes.bool,
 	errorMessage: PropTypes.string,
 	label: PropTypes.string,
 	onBlur: PropTypes.func,

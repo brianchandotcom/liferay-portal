@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletURL;
@@ -226,15 +225,6 @@ public class DepotPanelAppController {
 		}
 
 		@Override
-		public boolean equals(Object object) {
-			if (this == object) {
-				return true;
-			}
-
-			return Objects.equals(_panelApp, object);
-		}
-
-		@Override
 		public String getKey() {
 			return _panelApp.getKey();
 		}
@@ -264,11 +254,6 @@ public class DepotPanelAppController {
 			throws PortalException {
 
 			return _panelApp.getPortletURL(httpServletRequest);
-		}
-
-		@Override
-		public int hashCode() {
-			return _panelApp.hashCode();
 		}
 
 		@Override

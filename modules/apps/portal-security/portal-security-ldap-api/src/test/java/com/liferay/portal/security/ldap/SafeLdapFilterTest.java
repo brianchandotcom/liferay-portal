@@ -42,51 +42,82 @@ public class SafeLdapFilterTest {
 	public void testApprox() {
 		test(SafeLdapFilter.approx("key", "value"), "(key~={0})", "value");
 	}
-
-/*
- 	@Test
+	
+	@Test
 	public void testComplexScenario() throws LDAPFilterException {
-		SafeLdapFilter safeLdapFilter = SafeLdapFilter.validate(
-			"(|(key1=@placeholder1@)((key2=@placeholder2@)))", filter -> true);
+		SafeLdapFilter safeLdapFilter = SafeLdapFilter.fromUnsafeFilter(
+			"(|(key1={0})((key2={1})))", filter -> true);
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilter.validate(
-				"(|(key2=@placeholder2@)((key1=@placeholder1@)))",
-				filter -> true));
+			SafeLdapFilterTemplate.fromUnsafeFilter(
+				"(|(key2={2})((key1={3})))", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilter.validate(
-				"(|(key3=@placeholder1@)((key4=@placeholder2@)))",
-				filter -> true));
+			SafeLdapFilterTemplate.fromUnsafeFilter(
+				"(|(key3={4})((key4={5})))", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.and(
-			SafeLdapFilter.eq("(keyInvalid=@placeholderInvalid@)", "invalid"));
+			SafeLdapFilter.fromUnsafeFilter(
+				"(keyInvalid={6})", filter -> true));
 
 		safeLdapFilter = safeLdapFilter.or(safeLdapFilter.not());
-
-		safeLdapFilter = safeLdapFilter.replace(
-			new String[] {
-				"@placeholder1@", "@placeholder2@", "@placeholderInvalid@"
-			},
-			new String[] {"value1", "value2", "valueInvalid"});
 
 		test(
 			safeLdapFilter,
 			StringBundler.concat(
 				"(|(&(&(&(|(key1={0})((key2={1})))",
 				"(|(key2={2})((key1={3}))))(|(key3={4})((key4={5}))))",
-				"(\\28keyInvalid={6}\\29={7}))(!(&(&(&",
-				"(|(key1={8})((key2={9})))(|(key2={10})((key1={11}))))",
-				"(|(key3={12})((key4={13}))))",
-				"(\\28keyInvalid={14}\\29={15}))))"),
+				"(keyInvalid={6}))(!(&(&(&",
+				"(|(key1={0})((key2={1})))(|(key2={2})((key1={3}))))",
+				"(|(key3={4})((key4={5}))))(keyInvalid={6}))))"));
+	}
+
+
+
+	@Test
+	public void testTemplateComplexScenario() throws LDAPFilterException {
+		String template = StringBundler.concat(
+			"(|(key1=@placeholder1@)((key2=@placeholder2@)))",
+			"(|(key2=@placeholder2@)((key1=@placeholder1@)))",
+			"(|(key3=@placeholder1@)((key4=@placeholder2@)))",
+			"(keyInvalid=@placeholderInvalid@)");
+
+		try {
+			new SafeLdapFilterTemplate(
+				template,
+				new String[] {
+					"@placeholder1@", "@placeholder2@", "@placeholderInvalid@"
+				},
+				filter -> true);
+		}
+		catch (LDAPFilterException ldapfe) {
+			Assert.fail(ldapfe.getMessage());
+		}
+
+		String result =
+			"(|(key1={0})((key2={1})))(|(key2={2})((key1={3})))" +
+			"(|(key3={4})((key4={5})))(keyInvalid={6})";
+
+		test(
+			new SafeLdapFilterTemplate(
+				new StringBundler(template), Collections.emptyList(),
+				new String[] {
+					"@placeholder1@", "@placeholder2@", "@placeholderInvalid@"
+				},
+				filter -> true
+			).replace(
+				new String[] {
+					"@placeholder1@", "@placeholder2@", "@placeholderInvalid@"
+				},
+				new String[] {"value1", "value2", "valueInvalid"}
+			),
+			result,
 			new Object[] {
 				"value1", "value2", "value2", "value1", "value1", "value2",
-				"valueInvalid", "invalid", "value1", "value2", "value2",
-				"value1", "value1", "value2", "valueInvalid", "invalid"
+				"valueInvalid"
 			});
 	}
-*/
-
+	
 	@Test
 	public void testReplaceInTemplateKey() {
 		try {

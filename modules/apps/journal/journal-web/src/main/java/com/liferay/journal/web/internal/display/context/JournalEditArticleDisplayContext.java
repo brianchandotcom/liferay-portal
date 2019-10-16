@@ -514,7 +514,7 @@ public class JournalEditArticleDisplayContext {
 			return _smallImageSource;
 		}
 
-		if (!_article.getSmallImage()) {
+		if (!_article.isSmallImage()) {
 			_smallImageSource = "none";
 		}
 		else if (Validator.isNotNull(_article.getSmallImageURL())) {

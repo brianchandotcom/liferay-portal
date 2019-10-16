@@ -168,7 +168,7 @@ public class DisplayPageVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		if (_layoutPageTemplateEntry.getDefaultTemplate()) {
+		if (_layoutPageTemplateEntry.isDefaultTemplate()) {
 			return "check-circle";
 		}
 

@@ -91,8 +91,6 @@ public class LayoutServiceTest {
 	public void testUpdateLayoutLookAndFeel() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		long userId = layout.getUserId();
-
 		layout = LayoutLocalServiceUtil.updateLookAndFeel(
 			_group.getGroupId(), false, layout.getLayoutId(),
 			"test_WAR_testtheme", "01", StringPool.BLANK);
@@ -100,9 +98,10 @@ public class LayoutServiceTest {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		layoutTypePortlet.setLayoutTemplateId(userId, "1_column", false);
+		layoutTypePortlet.setLayoutTemplateId(
+			layout.getUserId(), "1_column", false);
 
-		layout = LayoutLocalServiceUtil.updateLayout(layout);
+		LayoutLocalServiceUtil.updateLayout(layout);
 	}
 
 	@Test
@@ -116,9 +115,7 @@ public class LayoutServiceTest {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		long userId = layout.getUserId();
-
-		serviceContext.setUserId(userId);
+		serviceContext.setUserId(layout.getUserId());
 
 		LayoutLocalServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),

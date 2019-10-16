@@ -174,14 +174,14 @@ public class ContentPageEditorDisplayContext {
 		return getFragmentEntryActionURL("/content_layout/publish_layout");
 	}
 
-	public SoyContext getEditorReactContext() throws Exception {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+	public Map<String, Object> getEditorReactContext() throws Exception {
+		Map<String, Object> reactContext = new HashMap<>();
 
-		soyContext.putAll(getEditorSoyContext());
+		reactContext.putAll(getEditorSoyContext());
 
-		soyContext.putAll(getFragmentsEditorToolbarSoyContext());
+		reactContext.putAll(getFragmentsEditorToolbarSoyContext());
 
-		return soyContext;
+		return reactContext;
 	}
 
 	public SoyContext getEditorSoyContext() throws Exception {

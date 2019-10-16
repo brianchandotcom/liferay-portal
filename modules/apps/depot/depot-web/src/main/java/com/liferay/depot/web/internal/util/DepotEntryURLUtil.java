@@ -28,12 +28,13 @@ public class DepotEntryURLUtil {
 	public static ActionURL getAddDepotEntryActionURL(
 		String redirect, LiferayPortletResponse liferayPortletResponse) {
 
-		ActionURL addDepotURL = liferayPortletResponse.createActionURL();
+		ActionURL addDepotEntryURL = liferayPortletResponse.createActionURL();
 
-		addDepotURL.setParameter(ActionRequest.ACTION_NAME, "/depot_entry/add");
-		addDepotURL.setParameter("redirect", redirect);
+		addDepotEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/depot_entry/add");
+		addDepotEntryURL.setParameter("redirect", redirect);
 
-		return addDepotURL;
+		return addDepotEntryURL;
 	}
 
 	public static ActionURL getDeleteDepotEntryActionURL(
@@ -45,7 +46,6 @@ public class DepotEntryURLUtil {
 
 		deleteDepotEntryActionURL.setParameter(
 			ActionRequest.ACTION_NAME, "/depot_entry/delete");
-
 		deleteDepotEntryActionURL.setParameter(
 			"depotEntryId", String.valueOf(depotEntryId));
 

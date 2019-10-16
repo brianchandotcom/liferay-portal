@@ -40,6 +40,8 @@ import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 
+import javax.portlet.ActionURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -89,6 +91,22 @@ public class DepotEntryVerticalCard
 								LanguageUtil.get(httpServletRequest, "edit"));
 						});
 				}
+
+				if (_hasDeletePermission()) {
+					add(
+						dropdownItem -> {
+							ActionURL deleteDepotEntryActionURL =
+								DepotEntryURLUtil.getDeleteDepotEntryActionURL(
+									_group.getClassPK(),
+									_liferayPortletResponse);
+
+							dropdownItem.setHref(
+								deleteDepotEntryActionURL.toString());
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(httpServletRequest, "delete"));
+						});
+				}
 			}
 		};
 	}
@@ -119,6 +137,22 @@ public class DepotEntryVerticalCard
 	@Override
 	public boolean isSelectable() {
 		return false;
+	}
+
+	private boolean _hasDeletePermission() {
+		try {
+			if (!GroupPermissionUtil.contains(
+					_themeDisplay.getPermissionChecker(), _group,
+					ActionKeys.DELETE)) {
+
+				return false;
+			}
+
+			return true;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	private boolean _hasUpdatePermission() {

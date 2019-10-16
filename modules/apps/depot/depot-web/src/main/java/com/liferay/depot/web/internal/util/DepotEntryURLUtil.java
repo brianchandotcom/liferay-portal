@@ -36,6 +36,21 @@ public class DepotEntryURLUtil {
 		return addDepotURL;
 	}
 
+	public static ActionURL getDeleteDepotEntryActionURL(
+		long depotEntryId, LiferayPortletResponse liferayPortletResponse) {
+
+		ActionURL deleteDepotEntryActionURL =
+			liferayPortletResponse.createActionURL();
+
+		deleteDepotEntryActionURL.setParameter(
+			ActionRequest.ACTION_NAME, "/depot_entry/delete");
+
+		deleteDepotEntryActionURL.setParameter(
+			"depotEntryId", String.valueOf(depotEntryId));
+
+		return deleteDepotEntryActionURL;
+	}
+
 	public static ActionURL getEditDepotEntryActionURL(
 		LiferayPortletResponse liferayPortletResponse) {
 

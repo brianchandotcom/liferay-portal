@@ -14,11 +14,14 @@
 
 package com.liferay.bookmarks.model.impl;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,6 +48,14 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		}
 
 		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
+	}
+
+	@Override
+	public long getVisits() {
+		return ViewCountManagerUtil.getViewCount(
+			getCompanyId(),
+			ClassNameLocalServiceUtil.getClassNameId(BookmarksEntry.class),
+			getPrimaryKey());
 	}
 
 }

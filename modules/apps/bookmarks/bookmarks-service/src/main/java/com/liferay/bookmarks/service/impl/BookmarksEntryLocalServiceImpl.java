@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -222,6 +223,13 @@ public class BookmarksEntryLocalServiceImpl
 			_trashVersionLocalService.deleteTrashVersion(
 				BookmarksEntry.class.getName(), entry.getEntryId());
 		}
+
+		// View count
+
+		_viewCountManager.deleteViewCount(
+			entry.getCompanyId(),
+			classNameLocalService.getClassNameId(BookmarksEntry.class),
+			entry.getEntryId());
 
 		return entry;
 	}
@@ -419,12 +427,9 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Override
 	public BookmarksEntry openEntry(long userId, BookmarksEntry entry) {
-		entry.setVisits(entry.getVisits() + 1);
-
-		entry = bookmarksEntryPersistence.update(entry);
-
-		assetEntryLocalService.incrementViewCounter(
-			entry.getCompanyId(), userId, BookmarksEntry.class.getName(),
+		_viewCountManager.incrementViewCount(
+			entry.getCompanyId(),
+			classNameLocalService.getClassNameId(BookmarksEntry.class),
 			entry.getEntryId(), 1);
 
 		return entry;
@@ -872,5 +877,8 @@ public class BookmarksEntryLocalServiceImpl
 
 	@Reference
 	private TrashVersionLocalService _trashVersionLocalService;
+
+	@Reference
+	private ViewCountManager _viewCountManager;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.batch.engine.internal.reader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
@@ -26,15 +27,15 @@ import java.util.Map;
 /**
  * @author Ivica Cardic
  */
-public class ColumnUtil {
+public class BatchEngineTaskItemReaderUtil {
 
-	public static Object convertValue(
-			Class<?> itemClass, Map<String, Object> columnNameValueMap)
+	public static <T> T convertValue(
+			Class<T> itemClass, Map<String, Object> fieldNameValueMap)
 		throws ReflectiveOperationException {
 
-		Object item = itemClass.newInstance();
+		T item = itemClass.newInstance();
 
-		for (Map.Entry<String, Object> entry : columnNameValueMap.entrySet()) {
+		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
 			Field field = null;
@@ -56,8 +57,9 @@ public class ColumnUtil {
 		return item;
 	}
 
-	public static void handleLocalizationColumn(
-		String columnName, Map<String, Object> columnNameValueMap,
+	@SuppressWarnings("unchecked")
+	public static void handleLocalizationField(
+		String columnName, Map<String, Object> fieldNameValueMap,
 		int lastDelimiterIndex, String value) {
 
 		String languageId = columnName.substring(lastDelimiterIndex + 1);
@@ -65,15 +67,36 @@ public class ColumnUtil {
 		columnName = columnName.substring(0, lastDelimiterIndex);
 
 		Map<String, String> localizationMap =
-			(Map<String, String>)columnNameValueMap.get(columnName);
+			(Map<String, String>)fieldNameValueMap.get(columnName);
 
 		if (localizationMap == null) {
 			localizationMap = new HashMap<>();
 
-			columnNameValueMap.put(columnName, localizationMap);
+			fieldNameValueMap.put(columnName, localizationMap);
 		}
 
 		localizationMap.put(languageId, value);
+	}
+
+	public static Map<String, Object> mapFieldNames(
+		Map<String, String> fieldNameMappingMap,
+		Map<String, Object> fieldNameValueMap) {
+
+		if (fieldNameMappingMap.isEmpty()) {
+			return fieldNameValueMap;
+		}
+
+		Map<String, Object> targetFieldNameValueMap = new HashMap<>();
+
+		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
+			String targetFieldName = fieldNameMappingMap.get(entry.getKey());
+
+			if (Validator.isNotNull(targetFieldName)) {
+				targetFieldNameValueMap.put(targetFieldName, entry.getValue());
+			}
+		}
+
+		return targetFieldNameValueMap;
 	}
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper();

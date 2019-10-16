@@ -19,6 +19,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Page",
 			widgetName = "Web Content Display");
+
+		AutoTagging.enableOpenNLP(
+			assetType = "Web Content Article",
+			confidenceThreshold = "0.001");
 	}
 
 	tearDown {
@@ -36,10 +40,6 @@ definition {
 	@priority = "4"
 	test PublishAutoTaggedDraft {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#PublishAutoTaggedDraft";
-
-		AutoTagging.enableOpenNLP(
-			assetType = "Web Content Article",
-			confidenceThreshold = "0.001");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/web-content-page");
 
@@ -75,10 +75,6 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property test.name.skip.portal.instance = "WebContentAutoTagging#Smoke";
-
-		AutoTagging.enableOpenNLP(
-			assetType = "Web Content Article",
-			confidenceThreshold = "0.001");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/web-content-page");
 

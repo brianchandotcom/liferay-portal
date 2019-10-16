@@ -60,7 +60,7 @@ public class DropZoneFragmentComponentRenderer implements FragmentRenderer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "Drop zone component");
+		return LanguageUtil.get(resourceBundle, "drop-zone-component");
 	}
 
 	@Override

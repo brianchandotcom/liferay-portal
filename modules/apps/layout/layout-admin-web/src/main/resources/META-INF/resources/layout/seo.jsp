@@ -181,9 +181,17 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<portlet:actionURL name="/layout/upload_open_graph_image" var="uploadOpenGraphImageURL" />
 
 	<div>
-		<aui:input disabled="<%= true %>" id="openGraphImageTitle" label="image" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" />
+		<label class="control-label"><liferay-ui:message key="image" /></label>
 
-		<aui:button name="openGraphImageButton" value="select" />
+		<div class="input-group">
+			<div class="input-group-item">
+				<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" type="text" value="<%= layoutsAdminDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="w-100" />
+			</div>
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button name="openGraphImageButton" value="select" />
+			</div>
+		</div>
 
 		<aui:script use="liferay-item-selector-dialog">
 			var openGraphImageButton = document.getElementById('<portlet:namespace />openGraphImageButton');
@@ -207,13 +215,13 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 												var openGraphImageFileEntryId = document.getElementById('<portlet:namespace />openGraphImageFileEntryId');
 
 												if (openGraphImageFileEntryId) {
-													openGraphImageFileEntryId.value = itemValue.fileEntryId
+													openGraphImageFileEntryId.value = itemValue.fileEntryId;
 												}
 
 												var openGraphImageTitle = document.getElementById('<portlet:namespace />openGraphImageTitle');
 
 												if (openGraphImageTitle) {
-													openGraphImageTitle.value = itemValue.title
+													openGraphImageTitle.value = itemValue.title;
 												}
 										}
 

@@ -14,10 +14,12 @@
 
 package com.liferay.portal.kernel.service;
 
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.SQLException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,15 +31,17 @@ public class SQLStateAcceptor implements RetryAcceptor {
 
 	public static final String SQLSTATE_INTEGRITY_CONSTRAINT_VIOLATION = "23";
 
+	public static final String SQLSTATE_TRANSACTION_ROLLBACK = "40";
+
 	@Override
 	public boolean acceptException(
 		Throwable throwable, Map<String, String> propertyMap) {
 
-		String sqlState = propertyMap.get(SQLSTATE);
+		List<String> sqlStates = StringUtil.split(propertyMap.get(SQLSTATE));
 
 		while (true) {
 			if ((throwable instanceof SQLException) &&
-				_scanForSQLState((SQLException)throwable, sqlState)) {
+				_scanForSQLState((SQLException)throwable, sqlStates)) {
 
 				return true;
 			}
@@ -61,28 +65,38 @@ public class SQLStateAcceptor implements RetryAcceptor {
 		return false;
 	}
 
+	private boolean _hasSQLState(
+		String sqlState, List<String> expectedSQLStates) {
+
+		if (Validator.isNull(sqlState)) {
+			return false;
+		}
+
+		for (String expectedSQLState : expectedSQLStates) {
+			if (sqlState.startsWith(expectedSQLState)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _scanForSQLState(
-		SQLException sqle, String expectedSQLState) {
+		SQLException sqle, List<String> expectedSQLStates) {
 
 		while (true) {
-			String sqlState = sqle.getSQLState();
-
-			if (Validator.isNotNull(sqlState) &&
-				sqlState.startsWith(expectedSQLState)) {
-
+			if (_hasSQLState(sqle.getSQLState(), expectedSQLStates)) {
 				return true;
 			}
 
 			SQLException nextSQLE = sqle.getNextException();
 
 			if ((nextSQLE == null) || nextSQLE.equals(sqle)) {
-				break;
+				return false;
 			}
 
 			sqle = nextSQLE;
 		}
-
-		return false;
 	}
 
 }

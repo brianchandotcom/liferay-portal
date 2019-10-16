@@ -360,6 +360,10 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
+		KaleoDesigner.deleteNode(nodeNodeLabel = "StartNode");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "EndNode");
+
 		KaleoDesigner.addNodeViaViewTab(
 			nodeDescription = "Task Node Description",
 			nodeName = "Task",

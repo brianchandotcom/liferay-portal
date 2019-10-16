@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet;
 
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.configuration.LayoutPageTemplateAdminWebConfiguration;
@@ -116,6 +118,9 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
+			_infoDisplayContributorTracker);
+		renderRequest.setAttribute(
 			LayoutPageTemplateAdminWebConfiguration.class.getName(),
 			_layoutPageTemplateAdminWebConfiguration);
 		renderRequest.setAttribute(
@@ -126,6 +131,9 @@ public class LayoutPageTemplatesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplatesPortlet.class);
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

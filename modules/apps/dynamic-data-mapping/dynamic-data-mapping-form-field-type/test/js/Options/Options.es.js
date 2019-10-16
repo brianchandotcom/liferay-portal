@@ -14,6 +14,20 @@
 
 import Options from '../../../src/main/resources/META-INF/resources/Options/Options.es';
 
+const fireEvent = {
+	input: (element, config) => {
+		element.value = config.target.value;
+
+		var event = new Event('input', {
+			...config,
+			bubbles: true,
+			cancelable: true
+		});
+
+		element.dispatchEvent(event);
+	}
+};
+
 let component;
 const spritemap = 'icons.svg';
 
@@ -41,6 +55,7 @@ describe('Options', () => {
 
 	it('shows the options', () => {
 		component = new Options({
+			name: 'options',
 			spritemap,
 			value: optionsValue
 		});
@@ -48,67 +63,147 @@ describe('Options', () => {
 		expect(component).toMatchSnapshot();
 	});
 
-	it('deletes an option when delete button is clicked', () => {
+	it('shows an empty option when value is an array of size 1', () => {
 		component = new Options({
+			name: 'options',
 			spritemap,
-			value: optionsValue
+			value: {
+				[themeDisplay.getLanguageId()]: [
+					{
+						label: 'Option',
+						value: 'Option'
+					}
+				]
+			}
 		});
-
-		const before = component.items.length;
-
-		component.deleteOption(0);
-
-		expect(component.items.length).toEqual(before - 1);
-	});
-
-	it('.normalizeValue() does not allow options with the same value', () => {
-		component = new Options({
-			spritemap
-		});
-
-		const value = {
-			en_US: [
-				{
-					label: 'One',
-					value: 'One'
-				},
-				{
-					label: 'One',
-					value: 'One'
-				}
-			]
-		};
-
-		expect(component.normalizeValue(value, true)).toEqual({
-			en_US: [
-				{
-					label: 'One',
-					value: 'One'
-				},
-				{
-					label: 'One',
-					value: 'One1'
-				}
-			]
-		});
-	});
-
-	it('allows the user to order the fieldName options by dragging and dropping the options', () => {
-		component = new Options({
-			spritemap,
-			value: optionsValue
-		});
-
-		const spy = jest.spyOn(component, 'emit');
 
 		jest.runAllTimers();
 
-		component.moveOption(1, 0);
+		expect(component.defaultOption).toEqual(true);
+
+		const {element} = component;
+		const labelInputs = element.querySelectorAll('.ddm-field-text');
+
+		expect(labelInputs.length).toEqual(2);
+		expect(labelInputs[0].value).toEqual('Option');
+		expect(labelInputs[1].value).toEqual('');
+
+		const valueInputs = element.querySelectorAll('.key-value-input');
+
+		expect(valueInputs.length).toEqual(2);
+		expect(valueInputs[0].value).toEqual('Option');
+		expect(valueInputs[1].value).toEqual('');
+	});
+
+	it('does not show an empty option when translating', () => {
+		component = new Options({
+			defaultLanguageId: themeDisplay.getLanguageId(),
+			editingLanguageId: 'pt_BR',
+			name: 'options',
+			spritemap,
+			value: {
+				[themeDisplay.getLanguageId()]: [
+					{
+						label: 'Option',
+						value: 'Option'
+					}
+				]
+			}
+		});
 
 		jest.runAllTimers();
 
-		expect(component).toMatchSnapshot();
+		expect(component.defaultOption).toEqual(true);
 
-		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.anything());
+		const {element} = component;
+		const labelInputs = element.querySelectorAll('.ddm-field-text');
+
+		expect(labelInputs.length).toEqual(1);
+	});
+
+	it('edits the value of an option based on the label', () => {
+		component = new Options({
+			name: 'options',
+			spritemap,
+			value: {
+				[themeDisplay.getLanguageId()]: [
+					{
+						label: 'Option',
+						value: 'Option'
+					}
+				]
+			}
+		});
+
+		jest.runAllTimers();
+
+		const {element} = component;
+		const labelInputs = element.querySelectorAll('.ddm-field-text');
+
+		fireEvent.input(labelInputs[0], {target: {value: 'Hello'}});
+
+		jest.runAllTimers();
+
+		const valueInputs = element.querySelectorAll('.key-value-input');
+
+		expect(valueInputs[0].value).toEqual('Hello');
+	});
+
+	it('inserts a new empty option when editing the last option', () => {
+		component = new Options({
+			name: 'options',
+			spritemap,
+			value: {
+				[themeDisplay.getLanguageId()]: [
+					{
+						label: 'Option',
+						value: 'Option'
+					}
+				]
+			}
+		});
+
+		jest.runAllTimers();
+
+		const {element} = component;
+		const labelInputs = element.querySelectorAll('.ddm-field-text');
+
+		fireEvent.input(labelInputs[1], {target: {value: 'Hello'}});
+
+		jest.runAllTimers();
+
+		const valueInputs = element.querySelectorAll('.key-value-input');
+
+		expect(valueInputs.length).toEqual(labelInputs.length + 1);
+	});
+
+	it('does not insert a new empty option automatically if translating', () => {
+		component = new Options({
+			defaultLanguageId: themeDisplay.getLanguageId(),
+			editingLanguageId: 'pt_BR',
+			name: 'options',
+			spritemap,
+			value: {
+				[themeDisplay.getLanguageId()]: [
+					{
+						label: 'Option',
+						value: 'Option'
+					}
+				]
+			}
+		});
+
+		jest.runAllTimers();
+
+		const {element} = component;
+		const labelInputs = element.querySelectorAll('.ddm-field-text');
+
+		fireEvent.input(labelInputs[0], {target: {value: 'Hello'}});
+
+		jest.runAllTimers();
+
+		const valueInputs = element.querySelectorAll('.key-value-input');
+
+		expect(valueInputs.length).toEqual(labelInputs.length);
 	});
 });

@@ -11,7 +11,7 @@ task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
-	it.name.startsWith "project-templates-"
+	(!it.name.equals("project-templates-extensions")) && it.name.startsWith("project-templates-")
 }
 
 ProjectConfigurer projectConfigurer = gradle.services.get(ProjectConfigurer)

@@ -37,7 +37,8 @@ public class DepotEntryURLUtil {
 	}
 
 	public static ActionURL getDeleteDepotEntryActionURL(
-		long depotEntryId, LiferayPortletResponse liferayPortletResponse) {
+		long depotEntryId, String redirect,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		ActionURL deleteDepotEntryActionURL =
 			liferayPortletResponse.createActionURL();
@@ -47,6 +48,8 @@ public class DepotEntryURLUtil {
 
 		deleteDepotEntryActionURL.setParameter(
 			"depotEntryId", String.valueOf(depotEntryId));
+
+		deleteDepotEntryActionURL.setParameter("redirect", redirect);
 
 		return deleteDepotEntryActionURL;
 	}

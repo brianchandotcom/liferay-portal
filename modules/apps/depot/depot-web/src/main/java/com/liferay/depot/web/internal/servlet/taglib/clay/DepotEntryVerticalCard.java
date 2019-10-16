@@ -98,6 +98,7 @@ public class DepotEntryVerticalCard
 							ActionURL deleteDepotEntryActionURL =
 								DepotEntryURLUtil.getDeleteDepotEntryActionURL(
 									_group.getClassPK(),
+									_themeDisplay.getURLCurrent(),
 									_liferayPortletResponse);
 
 							dropdownItem.putData("action", "deleteDepotEntry");

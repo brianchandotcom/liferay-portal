@@ -41,6 +41,7 @@ import com.liferay.segments.model.SegmentsEntry;
 
 import java.io.Serializable;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -338,6 +339,13 @@ public interface SegmentsEntryLocalService
 			long companyId, long groupId, String keywords,
 			boolean includeAncestorSegmentsEntries, int start, int end,
 			Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
+			long companyId, long groupId, String keywords,
+			boolean includeAncestorSegmentsEntries,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

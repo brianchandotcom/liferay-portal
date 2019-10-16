@@ -1,4 +1,4 @@
-@component-name = "core-infrastructure"
+@component-name = "portal-friendly-url"
 definition {
 
 	property portal.release = "true";

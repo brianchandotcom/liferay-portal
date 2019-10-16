@@ -45,12 +45,12 @@ AUI.add(
 
 		var structureFieldIndexEnable = function() {
 			for (var i = 0; i < Liferay.Portlet.list.length; i++) {
-				var indexTypeNode = A.one(
+				var indexableNode = A.one(
 					'#_' + Liferay.Portlet.list[i] + '_indexable'
 				);
 
-				if (indexTypeNode) {
-					var indexable = indexTypeNode.getAttribute('value');
+				if (indexableNode) {
+					var indexable = indexableNode.getAttribute('value');
 
 					if (indexable === 'false') {
 						return false;

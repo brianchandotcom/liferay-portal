@@ -13,6 +13,7 @@
  */
 
 import 'asset-taglib/asset_categories_selector/AssetCategoriesSelector.es';
+import 'clay-alert';
 import 'clay-multi-select';
 import 'clay-radio';
 import 'frontend-js-web/liferay/compat/modal/Modal.es';

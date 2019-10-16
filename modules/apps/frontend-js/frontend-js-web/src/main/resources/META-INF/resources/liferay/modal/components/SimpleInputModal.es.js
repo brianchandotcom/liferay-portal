@@ -12,6 +12,7 @@
  * details.
  */
 
+import 'clay-alert';
 import {Config} from 'metal-state';
 import fetch from './../../util/fetch.es';
 import {isString} from 'metal';

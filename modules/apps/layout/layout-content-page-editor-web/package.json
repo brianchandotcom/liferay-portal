@@ -7,6 +7,7 @@
 		"@clayui/icon": "3.0.0",
 		"@clayui/label": "3.0.0",
 		"@clayui/sticker": "3.0.0",
+		"clay-alert": "2.18.1",
 		"clay-checkbox": "2.18.1",
 		"clay-dropdown": "2.18.1",
 		"clay-icon": "2.18.1",

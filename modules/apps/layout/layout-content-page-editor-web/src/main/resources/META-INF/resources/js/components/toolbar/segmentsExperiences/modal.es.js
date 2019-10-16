@@ -16,6 +16,7 @@ import 'frontend-js-web/liferay/compat/modal/Modal.es';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
+import 'clay-alert';
 import templates from './modal.soy';
 
 class SegmentsExperienceSelectorModal extends Component {

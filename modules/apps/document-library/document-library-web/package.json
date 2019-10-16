@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"clay-alert": "2.18.1",
 		"clay-button": "2.18.1",
 		"clay-multi-select": "2.18.1",
 		"clay-radio": "2.18.1",

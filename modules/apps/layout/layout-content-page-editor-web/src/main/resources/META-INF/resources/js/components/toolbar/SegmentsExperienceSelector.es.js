@@ -29,6 +29,7 @@ import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './SegmentsExperienceSelector.soy';
 import './ExperimentsLabel.es';
 import './segmentsExperiences/modal.es';
+import 'clay-alert';
 import 'clay-icon';
 
 const DISMISS_ALERT_ANIMATION_WAIT = 500;

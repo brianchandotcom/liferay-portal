@@ -232,25 +232,23 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return null;
 	}
 
-	protected String getTagNames() {
-		String tagNames = _tagNames;
-
+	protected List<String> getTagNames() {
 		if (Validator.isNotNull(_className) && (_classPK > 0)) {
 			List<AssetTag> tags = AssetTagServiceUtil.getTags(
 				_className, _classPK);
 
-			tagNames = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
+			return ListUtil.toList(tags, AssetTag.NAME_ACCESSOR);
 		}
 
 		if (!_ignoreRequestValue) {
 			String curTagsParam = request.getParameter(_hiddenInput);
 
 			if (Validator.isNotNull(curTagsParam)) {
-				tagNames = curTagsParam;
+				return StringUtil.split(curTagsParam);
 			}
 		}
 
-		return tagNames;
+		return StringUtil.split(_tagNames);
 	}
 
 	@Override
@@ -276,11 +274,9 @@ public class AssetTagsSelectorTag extends IncludeTag {
 					put("removeCallback", _getNamespace() + _removeCallback);
 				}
 
-				List<String> tagNames = StringUtil.split(getTagNames());
-
 				List<Map<String, String>> selectedItems = new ArrayList<>();
 
-				for (String tagName : tagNames) {
+				for (String tagName : getTagNames()) {
 					Map<String, String> selectedItem = new HashMap<>();
 
 					selectedItem.put("label", tagName);
@@ -290,6 +286,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				}
 
 				put("selectedItems", selectedItems);
+
 				put("showSelectButton", _showSelectButton);
 			}
 		};

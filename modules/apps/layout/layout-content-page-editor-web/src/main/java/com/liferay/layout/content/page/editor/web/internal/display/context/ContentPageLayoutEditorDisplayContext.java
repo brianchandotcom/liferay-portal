@@ -116,6 +116,19 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	@Override
+	public boolean isSingleSegmentsExperienceMode() {
+		long segmentsExperienceId = ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(request),
+			"segmentsExperienceId", -1);
+
+		if (segmentsExperienceId == -1) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected long getSegmentsExperienceId() {
 		if (_segmentsExperienceId != null) {
 			return _segmentsExperienceId;
@@ -448,18 +461,6 @@ public class ContentPageLayoutEditorDisplayContext
 		return _showSegmentsExperiences;
 	}
 
-	private boolean _isSingleSegmentsExperienceMode() {
-		long segmentsExperienceId = ParamUtil.getLong(
-			PortalUtil.getOriginalServletRequest(request),
-			"segmentsExperienceId", -1);
-
-		if (segmentsExperienceId == -1) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _populateSegmentsExperiencesSoyContext(SoyContext soyContext)
 		throws PortalException {
 
@@ -494,7 +495,7 @@ public class ContentPageLayoutEditorDisplayContext
 		).put(
 			"selectedSegmentsEntryId", String.valueOf(_getSegmentsEntryId())
 		).put(
-			"singleSegmentsExperienceMode", _isSingleSegmentsExperienceMode()
+			"singleSegmentsExperienceMode", isSingleSegmentsExperienceMode()
 		);
 	}
 

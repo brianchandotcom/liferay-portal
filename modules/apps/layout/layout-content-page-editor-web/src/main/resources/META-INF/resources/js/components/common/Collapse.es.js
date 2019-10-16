@@ -29,27 +29,30 @@ const Collapse = props => {
 		setOpen(!open);
 	};
 
+	// "key" here in ClayIcon works around a bug caused by svg4everybody
+	// wherein the icon doesn't update when "symbol" changes.
+	const iconKey = icon;
+
 	return (
 		<div className="mb-2">
 			<button
 				aria-expanded={open}
 				className={classNames(
-		'align-items-end',
-		'btn',
-		'btn-unstyled',
-		'collapse-icon',
-		'd-flex',
-		'fragments-editor-sidebar-section__collapse',
-		'justify-content-between',
-		'sheet-subtitle',
-		'w-100'
+					'align-items-end',
+					'btn',
+					'btn-unstyled',
+					'collapse-icon',
+					'd-flex',
+					'fragments-editor-sidebar-section__collapse',
+					'justify-content-between',
+					'sheet-subtitle',
+					'w-100'
 				)}
 				onClick={handleClick}
 				type="button"
 			>
 				{props.label}
-
-				<ClayIcon key={icon} symbol={icon} />
+				<ClayIcon key={iconKey} symbol={icon} />
 			</button>
 
 			{open && props.children}

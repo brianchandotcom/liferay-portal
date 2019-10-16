@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.item.selector.web.internal.display.context;
+package com.liferay.site.item.selector.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;

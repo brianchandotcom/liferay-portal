@@ -3,4 +3,6 @@ Bundle-SymbolicName: com.liferay.site.item.selector.api
 Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.site.item.selector.criteria,\
-	com.liferay.site.item.selector.criterion
+	com.liferay.site.item.selector.criterion,\
+	com.liferay.site.item.selector.display.context,\
+	com.liferay.site.item.selector.renderer

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;

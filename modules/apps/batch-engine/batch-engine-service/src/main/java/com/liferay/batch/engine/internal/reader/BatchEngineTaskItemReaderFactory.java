@@ -15,7 +15,6 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.BatchEngineTaskMethodRegistry;
 import com.liferay.batch.engine.model.BatchEngineTask;
 
 import java.sql.Blob;
@@ -26,11 +25,7 @@ import java.sql.Blob;
  */
 public class BatchEngineTaskItemReaderFactory {
 
-	public BatchEngineTaskItemReaderFactory(
-		BatchEngineTaskMethodRegistry batchEngineTaskMethodRegistry,
-		String csvFileColumnDelimiter) {
-
-		_batchEngineTaskMethodRegistry = batchEngineTaskMethodRegistry;
+	public BatchEngineTaskItemReaderFactory(String csvFileColumnDelimiter) {
 		_csvFileColumnDelimiter = csvFileColumnDelimiter;
 	}
 
@@ -42,29 +37,24 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTask.getContentType());
 		Blob content = batchEngineTask.getContent();
 
-		Class<?> itemClass = _batchEngineTaskMethodRegistry.getItemClass(
-			batchEngineTask.getClassName());
-
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineTaskItemReader(
-				_csvFileColumnDelimiter, content.getBinaryStream(), itemClass);
+				_csvFileColumnDelimiter, content.getBinaryStream());
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSON) {
-			return new JSONBatchEngineTaskItemReader(
-				content.getBinaryStream(), itemClass);
+			return new JSONBatchEngineTaskItemReader(content.getBinaryStream());
 		}
 
 		if (batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
 			return new JSONLBatchEngineTaskItemReader(
-				content.getBinaryStream(), itemClass);
+				content.getBinaryStream());
 		}
 
 		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
-			return new XLSBatchEngineTaskItemReader(
-				content.getBinaryStream(), itemClass);
+			return new XLSBatchEngineTaskItemReader(content.getBinaryStream());
 		}
 
 		throw new IllegalArgumentException(
@@ -72,7 +62,6 @@ public class BatchEngineTaskItemReaderFactory {
 				batchEngineTaskContentType);
 	}
 
-	private final BatchEngineTaskMethodRegistry _batchEngineTaskMethodRegistry;
 	private final String _csvFileColumnDelimiter;
 
 }
